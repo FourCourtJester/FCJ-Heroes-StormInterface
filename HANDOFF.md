@@ -64,9 +64,33 @@ Packs `src/FCJH.StormInterface/` into an uncompressed **MPQ v1** archive and dep
 5. Reopen the replay. **The game re-reads the interface on every replay load** — no client
    restart.
 
-What `pack.py` checks before writing: every XML file parses (an unbalanced file makes the
-game **silently ignore the entire interface** — stock UI, no build stamp, no error), and the
-archive reads back identical to the source. What it does **not** check yet: frame paths.
+`pack.py` runs **`tools/validate.py`** first and refuses to pack on an error. The validator
+rebuilds the GameUI frame tree the way the game does — Blizzard's layouts from the JamiePhan
+extract in DescIndex order, templates expanded, every `file=` override applied — then checks
+what our files contribute. It runs in about a second.
+
+- **Errors:** XML that doesn't parse (the game drops the *whole* interface silently),
+  undefined `#Constant`s, templates or `file=` targets that don't exist, any frame reference
+  that resolves to nothing (anchors, animation/state `frame=`, `{bindings}`), bad anchor
+  side/pos/offset, and **editing a Blizzard child that doesn't exist** — the game creates a
+  new empty frame instead, silently. Frames we add on purpose carry the `FCJH_` prefix.
+- **Warnings:** parking a frame others anchor to (the `IconFrame` bug), anchoring a side
+  Blizzard re-anchors at runtime via `SetAnchor`, `Visible=false` on Blizzard frames, `Fill`
+  without `AdjustmentColor`, partial `#Constant`s, type mismatches, layouts DescIndex skips.
+- Build 50 validates with 0 errors and 7 warnings, all "parking `TopBarBacking` drags the team
+  XP/level/core/name frames" — true, and harmless since we don't want those.
+
+The Java builder, for the record, checked much less than we believed: its anchor
+`ReferenceValidator` is all `TODO` stubs, and a misnamed child in an override silently became
+a new frame there too.
+
+**`python tools/validate.py --show <frame path>`** prints the merged tree under any frame —
+every child, type, and anchor, marked Blizzard or ours with file:line. The quickest way to
+answer "what is this frame actually anchored to after everything is applied?" Example:
+`--show GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1`
+
+`python tools/test_validate.py` — 19 tests that break a copy of the real layout on purpose
+(including re-creating the `IconFrame` bug) and check each is caught.
 
 Other tools:
 
@@ -239,18 +263,20 @@ the **cell**, not the portrait.
   is long (~115px) and the inner four show only ~40px, even at full HP pre-game; the dark
   rails merge into one continuous strip, so slot edges are invisible. Bars do track HP. Two
   builds have now missed on this, so the next step is diagnostic, not a fix: paint
-  alternating garish rail colours per slot and see where each cell really sits. Working
-  theory (unconfirmed): Blizzard's inner bar keeps its fixed 134 width regardless of our
-  anchors, overflows into neighbours, and their opaque rails paint over the overflow.
+  alternating garish rail colours per slot and see where each cell really sits. Prime
+  suspect, found while building the validator: `HeroStatus` contains an `ImageMaskFrame`
+  with `AlphaMaskTexture @UI/obs_bar_player_blue` + `AlphaMaskSiblings` over a `BarCount 5`
+  bar — the fill is cut out by a mask texture drawn for Blizzard's 134px bar, which would
+  produce short, slanted segments when squeezed to ~96px (`stormobserverpanel.stormlayout:270`).
+  Older theory: the bar overflows its slot and neighbours' rails paint over it.
 - ⚠️ The CC state text (e.g. `UNSTOPPABLE`) is half hidden — its top half sits behind the
   bar row.
 
 **Toolchain, to finish dropping Java:**
 
-- **Frame-path validator** against the JamiePhan extract. The Java builder resolved every
-  frame reference offline; we currently only check that the XML parses. Start with the easy
-  checks (constants defined, templates exist, top-level paths exist in the base UI), then
-  `$parent`/`$this`/`$handle` resolution and template merging.
+- ~~Frame-path validator~~ — done 2026-09-25, `tools/validate.py` (§2). Not yet covered:
+  dynamic list children (`Item0`… — warned, not errored), map-specific mods (only `core` and
+  `heroesdata` are loaded), and whether a *property* name is valid for a frame type.
 - **Watcher**: rebuild on save with `--wait`. The lock behaviour makes this straightforward.
 - **Generation**, starting with the hand-computed slot constants (`L1_L`…`R5_R`).
 

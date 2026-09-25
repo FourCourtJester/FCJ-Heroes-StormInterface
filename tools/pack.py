@@ -3,9 +3,9 @@ Pack an interface source folder into a .StormInterface (MPQ v1) and deploy it.
 Replaces the Java builder's compile step, which turned out to be a byte-for-byte
 copy of the source folder into an archive.
 
-Checks before writing: every XML file parses, and the archive reads back
-identical to the source. Frame paths are NOT validated yet - the Java builder
-still does that better.
+Checks before writing: tools/validate.py (XML, constants, templates, frame
+paths, anchors - against Blizzard's base UI), and that the archive reads back
+identical to the source. Validation errors stop the build; warnings are shown.
 
 Heroes locks the deployed file only while a replay or match is open; at the
 main menu it can be overwritten, and reopening a replay loads the new build.
@@ -15,6 +15,7 @@ With --wait, a locked write is retried until the lock releases.
     python tools/pack.py --name FCJHTest.StormInterface
     python tools/pack.py --wait
     python tools/pack.py --no-deploy
+    python tools/pack.py --no-validate   # pack even if validation fails
 """
 
 import argparse
@@ -24,6 +25,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 import mpq
+import validate
 
 REPO = Path(__file__).resolve().parent.parent
 DEFAULT_SOURCE = REPO / "src" / "FCJH.StormInterface"
@@ -79,9 +81,19 @@ def main():
     parser.add_argument("--name", help="deployed filename (default: the source folder's name)")
     parser.add_argument("--no-deploy", action="store_true")
     parser.add_argument("--wait", action="store_true", help="retry a locked write until it succeeds")
+    parser.add_argument("--no-validate", action="store_true", help="skip tools/validate.py")
     args = parser.parse_args()
 
     source = args.source.resolve()
+    if not args.no_validate:
+        errors, warnings, lines, _ = validate.validate(source)
+        if lines:
+            print("\n".join(lines))
+        print(f"validate: {errors} error(s), {warnings} warning(s)")
+        if errors:
+            print("not packed - fix the errors, or rerun with --no-validate")
+            return 1
+
     files = collect(source)
     bad = check_xml(files)
     if bad:

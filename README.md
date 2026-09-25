@@ -26,7 +26,9 @@ After a rebuild, leave the replay and reopen it — no client restart needed.
 | Path | What |
 |---|---|
 | `src/FCJH.StormInterface/` | Interface source; the archive's file tree, one to one |
-| `tools/pack.py` | Pack + deploy |
+| `tools/pack.py` | Validate, pack, deploy |
+| `tools/validate.py` | Check layouts against Blizzard's base UI; `--show <frame>` prints the merged tree |
+| `tools/test_validate.py` | Validator tests |
 | `tools/mpq.py` | MPQ reader/writer; `list` / `extract` any archive |
 | `tools/make_test_ui.py` | Smoke test: a minimal Python-authored interface |
 
