@@ -12,8 +12,8 @@ Python toolchain, not the Java builder. See §7 for what it fixed and what it di
 
 **The build toolchain is now ours** (§2). The Java builder turned out to be a byte-for-byte
 copy of the source folder into an MPQ archive; `tools/pack.py` does the same in Python, and
-Heroes loads the result. The Java wrapper stays in `tools/` only until it is in git history,
-then goes. The one thing it still did that we don't — frame-path validation — is §7's top item.
+Heroes loads the result. The Java wrapper was removed after commit `dde9af7`, which still
+holds it. The one thing it did that we don't — frame-path validation — is §7's top item.
 
 The interface currently:
 
@@ -76,8 +76,8 @@ Other tools:
   (a magenta box) as `FCJHTest.StormInterface`. If a patch ever breaks loading, this
   separates "the packer broke" from "the layout broke".
 
-**Legacy:** `tools/build-and-run.ps1` wraps Ahli's Java builder and no longer works as-is
-(it points at the old `builds/` path). Kept only until it is committed, then deleted.
+**Legacy:** the old PowerShell wrapper around Ahli's Java builder, `tools/build-and-run.ps1`,
+is in history at `dde9af7` if its post-patch retry or XML gate ever needs consulting.
 
 ---
 
