@@ -1,0 +1,561 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+	<!-- =========================================================================
+	     FourCourtJester Heroes observer interface
+
+	     RULES, all confirmed in game:
+
+	     1. Visible=false does NOT stick on Blizzard panels. Move frames off-screen.
+	     2. Parking a PARENT does not move children whose anchors point at some
+	        other frame. Override all four sides to sever the reference.
+	     3. RenderPriority sorts SIBLINGS. A whole subtree paints as one unit, so
+	        our top-level frames always paint above everything in UIContainer. To
+	        put something behind a Blizzard frame, inject it beside that frame AND
+	        give the frames it must sit behind an explicit higher priority - they
+	        often have none, in which case ours beats their default and covers them.
+	        (The missing icons in builds 36-38 were NOT this - that was rule 2, via
+	        IconFrame. Both were live at once, which is why it took so long.)
+	     4. Duplicate frame names are everywhere. Confirm ownership by displacing a
+	        frame, not by matching a name.
+	     5. A custom SelectionUnitStatusPanel displaces Blizzard's in the role of
+	        asserting the console widgets visible - see FCJH_Console.
+	     6. Relocating a team container BRINGS ITS SIBLINGS: TownsRemainingValueLabel
+	        and TeamKillsValueFrame are children of Team1/Team2HeroOverview, so
+	        towers and kills travel with the hero cells unless parked.
+	     7. The builder does NOT check XML well-formedness - only frame paths. An
+	        unbalanced file builds fine and the game silently ignores it: stock UI,
+	        no build stamp. tools/pack.py refuses to pack one.
+	     8. The base UI binds NO player to the hero cells - no PlayerId, no slot, no
+	        index. The engine fills them by ordinal position, so the mapping does not
+	        exist in XML to be read. Addressing heroes separately by PlayerId is a
+	        DIFFERENT axis; the two agree in a normal 5v5 and diverge in a scrambled
+	        custom lobby. Never rebuild a binding the engine already owns - put the
+	        frame inside the one that has it and inherit.
+	     ========================================================================= -->
+
+	<Constant name="BUILD_STAMP" val="FCJH BUILD 50"/>
+
+	<!-- Cluster: ten heroes in one row, bottom-middle. CLUSTER_TOP is measured up
+	     from the screen bottom; a cell is 130 tall with its health bar at y111. -->
+	<Constant name="CLUSTER_TOP"       val="-150"/>
+	<Constant name="CLUSTER_HALF"      val="600"/>
+	<Constant name="CLUSTER_HALF_NEG"  val="-600"/>
+
+	<!-- Backing is sized separately from the team containers. The containers' OUTER edges
+	     are irrelevant to icon position - each team's five-cell chain anchors from its
+	     INNER edge at centre - so the backing can be tightened without moving anything.
+	     Trimmed to hug the icons: they span roughly Mid +/-540, and vertically the content
+	     ends at the debuff text (~ -52), not the old -8. -->
+	<Constant name="BG_HALF"           val="574"/>
+	<Constant name="BG_HALF_NEG"       val="-574"/>
+	<Constant name="CLUSTER_BG_BOTTOM" val="-46"/>
+
+	<!-- Objective hexagon, relocated from the top of the screen into the gap between the
+	     two teams. The chains leave roughly 100px clear at centre, so it drops in without
+	     widening the cluster. -->
+	<Constant name="OBJ_HALF"          val="46"/>
+	<Constant name="OBJ_HALF_NEG"      val="-46"/>
+	<Constant name="OBJ_BOTTOM"        val="-88"/>
+
+	<!-- Top bar: three blocks, roster strips left transparent. -->
+	<Constant name="BAR_HEIGHT"        val="64"/>
+	<Constant name="LOGO_HALF"         val="96"/>
+	<Constant name="LOGO_HALF_NEG"     val="-96"/>
+	<Constant name="ROSTER_OUTER"      val="696"/>
+	<Constant name="ROSTER_OUTER_NEG"  val="-696"/>
+
+	<!-- Health bar position inside a hero cell. Blizzard's default is 111, leaving a gap
+	     where the talent grid used to be. -->
+	<Constant name="HP_TOP"        val="66"/>
+	<Constant name="HP_BOTTOM"     val="74"/>
+	<!-- Inset from the portrait edges. HeroPortraitImage is 165 units wide, but Blizzard's
+	     cell chain uses stacking offsets so the VISIBLE icons sit only ~102px apart. A bar
+	     spanning the full portrait therefore overruns both neighbours by ~30px each side,
+	     which is what read as bars spilling into a dead hero's slot. 32 brings the bar to
+	     roughly 100 wide, matching the icon you actually see. -->
+	<Constant name="HP_INSET"      val="2"/>
+	<Constant name="HP_INSET_NEG"  val="-2"/>
+
+	<!-- ===================== Explicit cell layout =====================
+	     Blizzard chains the five cells with stacking offsets so they overlap, and the chain
+	     runs further from the container's inner edge than 600 allows - which is why the
+	     outermost heroes were being clipped rather than mis-sized.
+
+	     Positioning every cell explicitly instead. Each slot is SLOT_W wide with SLOT_GAP
+	     between, measured outward from screen centre, leaving OBJ_GAP clear in the middle
+	     for the hexagon:
+
+	       slot N inner edge = OBJ_GAP + (N-1) * (SLOT_W + SLOT_GAP)
+	       slot N outer edge = inner + SLOT_W
+
+	     With 50 / 100 / 2 that puts the outermost edge at 558, comfortably inside the 600
+	     container. Recompute these if SLOT_W, SLOT_GAP or OBJ_GAP change.
+	     ================================================================= -->
+	<Constant name="SLOT_W"    val="100"/>
+	<Constant name="SLOT_GAP"  val="2"/>
+	<Constant name="PORTRAIT_H" val="58"/>
+
+	<Constant name="L1_L" val="-150"/>  <Constant name="L1_R" val="-50"/>
+	<Constant name="L2_L" val="-252"/>  <Constant name="L2_R" val="-152"/>
+	<Constant name="L3_L" val="-354"/>  <Constant name="L3_R" val="-254"/>
+	<Constant name="L4_L" val="-456"/>  <Constant name="L4_R" val="-356"/>
+	<Constant name="L5_L" val="-558"/>  <Constant name="L5_R" val="-458"/>
+
+	<Constant name="R1_L" val="50"/>    <Constant name="R1_R" val="150"/>
+	<Constant name="R2_L" val="152"/>   <Constant name="R2_R" val="252"/>
+	<Constant name="R3_L" val="254"/>   <Constant name="R3_R" val="354"/>
+	<Constant name="R4_L" val="356"/>   <Constant name="R4_R" val="456"/>
+	<Constant name="R5_L" val="458"/>   <Constant name="R5_R" val="558"/>
+
+	<!-- Rail colours, per team. Dull enough to read as an empty track, not a full bar. -->
+	<Constant name="RAIL_BLUE"     val="255,20,38,72"/>
+	<Constant name="RAIL_RED"      val="255,72,22,22"/>
+
+	<!-- CC marker size, centred on the hero portrait. The portrait renders roughly 90x55
+	     in the cluster, and the source icon carries some transparent padding, so the
+	     drawn glyph reads smaller than this number suggests. -->
+	<Constant name="CC_ICON"         val="56"/>
+	<!-- Gap between the health bar and the debuff text sitting under it. -->
+	<Constant name="CC_TEXT_GAP"     val="6"/>
+
+	<!-- The parking lot. Reverting a frame is deleting its override. -->
+	<Constant name="PARK_LEFT"   val="-9999"/>
+	<Constant name="PARK_RIGHT"  val="-9699"/>
+	<Constant name="PARK_TOP"    val="9999"/>
+	<Constant name="PARK_BOTTOM" val="10299"/>
+
+	<!-- ============================= Templates ============================= -->
+
+	<!-- Park anything, four sides, severing whatever it was anchored to. -->
+	<Frame type="Frame" name="ParkedTemplate">
+		<Anchor side="Top"    relative="$parent" pos="Min" offset="#PARK_TOP"/>
+		<Anchor side="Left"   relative="$parent" pos="Min" offset="#PARK_LEFT"/>
+		<Anchor side="Bottom" relative="$parent" pos="Min" offset="#PARK_BOTTOM"/>
+		<Anchor side="Right"  relative="$parent" pos="Min" offset="#PARK_RIGHT"/>
+	</Frame>
+
+	<!-- Strips a relocated hero cell to icon + click + health + death status.
+	     Merged into Blizzard's HeroOverviewN frames.
+
+	     IconFrame is hidden with Alpha, NOT parked. HeroPortraitImage anchors its
+	     Top/Left/Right to $parent/IconFrame, so parking IconFrame dragged the
+	     portrait off-screen with it - that is why no icons appeared in builds 36
+	     and 38. Alpha 0 removes the chrome while leaving the geometry the portrait
+	     depends on. Nothing anchors to the other two, so those still park. -->
+	<Frame type="Frame" name="StrippedCellTemplate">
+		<Frame type="Image" name="HeroPortraitBackground" template="_FCJH/ParkedTemplate"/>
+		<Frame type="Image" name="TalentsBgImage" template="_FCJH/ParkedTemplate"/>
+		<Frame type="Image" name="IconFrame">
+			<Alpha val="0"/>
+		</Frame>
+
+		<!-- Portrait deliberately NOT resized. Build 49 forced it to fill the cell and the
+		     art came out mangled - Blizzard's 165-unit frame and its texture coordinates are
+		     chosen together to crop the face properly, so changing the width distorts it.
+		     Left alone; the cell clips it to the slot instead, which crops rather than
+		     squashes.
+
+		     Consequence: the portrait is NOT a reliable width reference. Everything that
+		     needs to match the visible slot anchors to the CELL instead - see below. -->
+		<!-- Health bar: pulled up under the icon, and aligned TO the icon.
+		     Vertically, Blizzard puts the portrait at y0-60 and the bar at y111, leaving
+		     ~50px for the talent grid that used to sit between them - dead space now.
+		     Horizontally they never lined up: the bar is right-aligned in the cell
+		     (Right = parent Max -6, fixed Width 134) while the portrait is centred on
+		     IconFrame and 165 wide. Anchoring both sides to HeroPortraitImage makes the
+		     bar match the icon exactly and supersedes the fixed width. -->
+		<!-- Always-visible track behind the health bar. A dead hero's bar empties out, and
+		     with nothing behind it the slot reads as blank - which is why the neighbours
+		     looked like they were spilling into the dead hero's space. This gives every
+		     hero a persistent dull-red rail, so an empty bar reads as empty rather than
+		     absent. Lower RenderPriority than HeroStatus below, so it sits behind. -->
+		<!-- Anchored to the CELL, not the portrait. The cell is exactly one slot wide, so
+		     bars are guaranteed to match their hero's footprint. Anchoring to the portrait
+		     was the cause of the spilling - it is 165 units wide against a 100-wide slot. -->
+		<Frame type="Image" name="FCJH_HpTrack">
+			<Anchor side="Top"    relative="$parent" pos="Min" offset="#HP_TOP"/>
+			<Anchor side="Bottom" relative="$parent" pos="Min" offset="#HP_BOTTOM"/>
+			<Anchor side="Left"   relative="$parent" pos="Min" offset="#HP_INSET"/>
+			<Anchor side="Right"  relative="$parent" pos="Max" offset="#HP_INSET_NEG"/>
+			<Texture val="@UI/PauseScreenDimImage"/>
+			<ColorAdjustMode val="Fill"/>
+			<AdjustmentColor val="#RAIL_RED"/>
+			<RenderPriority val="500"/>
+			<AcceptsMouse val="false"/>
+		</Frame>
+
+		<Frame type="UnitStatusFrame" name="HeroStatus">
+			<Anchor side="Top"   relative="$parent" pos="Min" offset="#HP_TOP"/>
+			<Anchor side="Left"  relative="$parent" pos="Min" offset="#HP_INSET"/>
+			<Anchor side="Right" relative="$parent" pos="Max" offset="#HP_INSET_NEG"/>
+			<RenderPriority val="520"/>
+
+			<!-- CC marker, living INSIDE the hero cell.
+			     The base UI binds no player to these cells - no PlayerId, no slot, no index.
+			     The engine fills them by ordinal position, so the mapping simply does not
+			     exist in XML to be read. Our old CC layer addressed heroes by PlayerId, a
+			     different axis entirely; the two coincide in a normal 5v5 but diverged in a
+			     scrambled custom lobby, and no offset can reconcile them.
+
+			     Putting the sensor inside HeroStatus - itself a UnitStatusFrame - means it
+			     shares whatever unit the engine gave this cell. Same hero as the portrait
+			     above it, by construction, with no mapping to maintain.
+
+			     Icon only: DebuffLabel and DebuffPlateBg hidden by Alpha rather than parked,
+			     because DebuffIconLeft anchors to the label and would follow it off-screen.
+			     The icon is re-anchored to centre on the portrait. -->
+			<!-- Also anchored to the CELL rather than the portrait, for the same reason:
+			     the portrait is wider than the slot, so centring on it would drift the
+			     marker off the hero it belongs to. -->
+			<Frame type="UnitStatusBuffDebuffElement" name="FCJH_CC" template="UnitStatus/UnitStatusBuffDebuffDisplayTemplate">
+				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="#PORTRAIT_H"/>
+				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="0"/>
+				<Anchor side="Right"  relative="$parent/$parent" pos="Max" offset="0"/>
+				<CollapseLayout val="true"/>
+				<VisibleToOwner val="true"/>
+				<VisibleToAlly val="true"/>
+				<VisibleToEnemy val="true"/>
+				<Unclipped val="true"/>
+				<!-- Debuff text ON the health bar, centred both axes. All four anchors to
+				     $parent/$parent (HeroStatus, the bar) Mid collapses it to a point and the
+				     text grows out from there.
+
+				     Build 46 put it BELOW the bar with a Style override and nothing appeared.
+				     Two likely reasons, both removed here: it sat outside this element's rect
+				     (clipping), and the overridden style may render dark on a black backing.
+				     Blizzard's own style is kept - it is designed to be legible on a plate. -->
+				<Frame type="Label" name="DebuffLabel">
+					<Anchor side="Top"    relative="$parent/$parent" pos="Mid" offset="0"/>
+					<Anchor side="Bottom" relative="$parent/$parent" pos="Mid" offset="0"/>
+					<Anchor side="Left"   relative="$parent/$parent" pos="Mid" offset="0"/>
+					<Anchor side="Right"  relative="$parent/$parent" pos="Mid" offset="0"/>
+					<Unclipped val="true"/>
+					<Options val="NoWrapping"/>
+				</Frame>
+				<Frame type="Image" name="DebuffPlateBg">
+					<Alpha val="0"/>
+				</Frame>
+				<Frame type="Image" name="DebuffIconLeft">
+					<Anchor side="Top"    relative="$parent" pos="Mid" offset="0"/>
+					<Anchor side="Bottom" relative="$parent" pos="Mid" offset="0"/>
+					<Anchor side="Left"   relative="$parent" pos="Mid" offset="0"/>
+					<Anchor side="Right"  relative="$parent" pos="Mid" offset="0"/>
+					<Width val="#CC_ICON"/>
+					<Height val="#CC_ICON"/>
+					<Unclipped val="true"/>
+				</Frame>
+			</Frame>
+		</Frame>
+	</Frame>
+
+	<!-- Per-team rail colour. Template chaining: both inherit the whole stripped cell and
+	     override only the rail's colour, so there is one definition of the cell itself. -->
+	<Frame type="Frame" name="StrippedCellBlue" template="_FCJH/StrippedCellTemplate">
+		<Frame type="Image" name="FCJH_HpTrack">
+			<AdjustmentColor val="#RAIL_BLUE"/>
+		</Frame>
+	</Frame>
+
+	<Frame type="Frame" name="StrippedCellRed" template="_FCJH/StrippedCellTemplate">
+		<Frame type="Image" name="FCJH_HpTrack">
+			<AdjustmentColor val="#RAIL_RED"/>
+		</Frame>
+	</Frame>
+
+	<!-- Carved branding region: negative space, left EMPTY for OBS. Caption is a
+	     placement guide only and comes out before air. -->
+	<Frame type="Frame" name="BrandingSpaceTemplate">
+		<Frame type="Label" name="Caption">
+			<Anchor side="Top"   relative="$parent" pos="Mid" offset="0"/>
+			<Anchor side="Left"  relative="$parent" pos="Min" offset="8"/>
+			<Anchor side="Right" relative="$parent" pos="Max" offset="-8"/>
+			<Style val="WaitingForPlayersDialogChat"/>
+			<Text val="?"/>
+			<Options val="NoWrapping | ScaleToPreventTruncation"/>
+		</Frame>
+	</Frame>
+
+	<!-- Back to black. The magenta test (build 39) settled it: these blocks were
+	     rendering all along - black on a dark scene simply read as "not there".
+	     Worth remembering as a diagnostic: colour a frame garishly before concluding
+	     it does not draw. -->
+	<Frame type="Image" name="BarBlockTemplate">
+		<Texture val="@UI/PauseScreenDimImage"/>
+		<ColorAdjustMode val="Fill"/>
+		<AdjustmentColor val="255,0,0,0"/>
+		<AcceptsMouse val="false"/>
+	</Frame>
+
+
+	<!-- ============================= Interface ============================= -->
+
+	<Frame type="GameUI" name="GameUI" file="GameUI">
+
+		<Frame type="Label" name="FCJH_BuildStamp">
+			<Anchor side="Top"  relative="$parent" pos="Min" offset="70"/>
+			<Anchor side="Left" relative="$parent" pos="Min" offset="20"/>
+			<Style val="WaitingForPlayersDialogChat"/>
+			<Text val="#BUILD_STAMP"/>
+			<Unclipped val="true"/>
+			<Options val="NoWrapping"/>
+			<AcceptsMouse val="false"/>
+		</Frame>
+
+		<Frame type="Frame" name="UIContainer">
+			<Frame type="Frame" name="FullscreenUpperContainer">
+				<Frame type="Frame" name="ObserverHeroOverviewPanel">
+
+					<Frame type="ObserverBottomPanel" name="BottomPanel" template="_FCJH/ParkedTemplate"/>
+
+					<!-- ObserverTopPanel is LOAD-BEARING for the hero portraits; park only
+					     its art. That also removes the talent tier grid. -->
+					<Frame type="Frame" name="ObserverTopPanel">
+						<Frame type="Image" name="TopBarBacking" template="_FCJH/ParkedTemplate"/>
+
+						<!-- The hexagon and its timer. Both are ObserverTopPanel children we
+						     left alone when parking the bar art, which is exactly why they
+						     survived at top-centre. Relocated into the gap between the teams;
+						     the two five-cell chains leave roughly 100px clear there.
+						     Anchored to $GameUI so they ignore their parent's geometry. -->
+						<!-- Unclipped matters here. Build 47/48 moved both this and GameTimerLabel;
+						     the timer appeared and this did not, and the only difference was
+						     that the timer had Unclipped and this did not. It was being clipped
+						     to ObserverTopPanel's original rect at the top of the screen. -->
+						<Frame type="Image" name="TopBarLogoOverlay">
+							<Anchor side="Top"    relative="$GameUI" pos="Max" offset="#CLUSTER_TOP"/>
+							<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#OBJ_BOTTOM"/>
+							<Anchor side="Left"   relative="$GameUI" pos="Mid" offset="#OBJ_HALF_NEG"/>
+							<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#OBJ_HALF"/>
+							<Unclipped val="true"/>
+							<RenderPriority val="700"/>
+						</Frame>
+
+						<Frame type="Label" name="GameTimerLabel">
+							<Anchor side="Top"    relative="$GameUI" pos="Max" offset="#OBJ_BOTTOM"/>
+							<Anchor side="Left"   relative="$GameUI" pos="Mid" offset="0"/>
+							<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="0"/>
+							<Unclipped val="true"/>
+						</Frame>
+					</Frame>
+
+					<!-- Backing, injected beside the hero containers so it can sort against
+					     them: 400 here against their explicit 600 below. -->
+					<Frame type="Image" name="FCJH_ClusterBacking">
+						<Anchor side="Top"    relative="$GameUI" pos="Max" offset="#CLUSTER_TOP"/>
+						<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#CLUSTER_BG_BOTTOM"/>
+						<Anchor side="Left"   relative="$GameUI" pos="Mid" offset="#BG_HALF_NEG"/>
+						<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#BG_HALF"/>
+						<Texture val="@UI/PauseScreenDimImage"/>
+						<ColorAdjustMode val="Fill"/>
+						<AdjustmentColor val="255,0,0,0"/>
+						<!-- 100, not 400. ObserverTopPanel renders at 200, so a backing at 400
+						     paints over its whole subtree - which is where the relocated
+						     hexagon and timer live. They moved correctly in build 47 and were
+						     simply hidden behind this. Dropping below 200 lets them through
+						     while still sitting behind the hero cells at 600. -->
+						<RenderPriority val="100"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
+
+					<Frame type="Frame" name="Team1HeroOverview">
+						<Anchor side="Top"   relative="$GameUI" pos="Max" offset="#CLUSTER_TOP"/>
+						<Anchor side="Left"  relative="$GameUI" pos="Mid" offset="#CLUSTER_HALF_NEG"/>
+						<Anchor side="Right" relative="$GameUI" pos="Mid" offset="0"/>
+						<RenderPriority val="600"/>
+						<Frame type="Label" name="TownsRemainingValueLabel" template="_FCJH/ParkedTemplate"/>
+						<Frame type="TeamScoreValueFrame" name="TeamKillsValueFrame" template="_FCJH/ParkedTemplate"/>
+						<Frame type="Frame" name="HeroOverview1" template="_FCJH/StrippedCellBlue">
+							<Anchor side="Left"  relative="$GameUI" pos="Mid" offset="#L1_L"/>
+							<Anchor side="Right" relative="$GameUI" pos="Mid" offset="#L1_R"/>
+						</Frame>
+						<Frame type="Frame" name="HeroOverview2" template="_FCJH/StrippedCellBlue">
+							<Anchor side="Left"  relative="$GameUI" pos="Mid" offset="#L2_L"/>
+							<Anchor side="Right" relative="$GameUI" pos="Mid" offset="#L2_R"/>
+						</Frame>
+						<Frame type="Frame" name="HeroOverview3" template="_FCJH/StrippedCellBlue">
+							<Anchor side="Left"  relative="$GameUI" pos="Mid" offset="#L3_L"/>
+							<Anchor side="Right" relative="$GameUI" pos="Mid" offset="#L3_R"/>
+						</Frame>
+						<Frame type="Frame" name="HeroOverview4" template="_FCJH/StrippedCellBlue">
+							<Anchor side="Left"  relative="$GameUI" pos="Mid" offset="#L4_L"/>
+							<Anchor side="Right" relative="$GameUI" pos="Mid" offset="#L4_R"/>
+						</Frame>
+						<Frame type="Frame" name="HeroOverview5" template="_FCJH/StrippedCellBlue">
+							<Anchor side="Left"  relative="$GameUI" pos="Mid" offset="#L5_L"/>
+							<Anchor side="Right" relative="$GameUI" pos="Mid" offset="#L5_R"/>
+						</Frame>
+					</Frame>
+
+					<Frame type="Frame" name="Team2HeroOverview">
+						<Anchor side="Top"   relative="$GameUI" pos="Max" offset="#CLUSTER_TOP"/>
+						<Anchor side="Left"  relative="$GameUI" pos="Mid" offset="0"/>
+						<Anchor side="Right" relative="$GameUI" pos="Mid" offset="#CLUSTER_HALF"/>
+						<RenderPriority val="600"/>
+						<Frame type="Label" name="TownsRemainingValueLabel" template="_FCJH/ParkedTemplate"/>
+						<Frame type="TeamScoreValueFrame" name="TeamKillsValueFrame" template="_FCJH/ParkedTemplate"/>
+						<Frame type="Frame" name="HeroOverview1" template="_FCJH/StrippedCellRed">
+							<Anchor side="Left"  relative="$GameUI" pos="Mid" offset="#R1_L"/>
+							<Anchor side="Right" relative="$GameUI" pos="Mid" offset="#R1_R"/>
+						</Frame>
+						<Frame type="Frame" name="HeroOverview2" template="_FCJH/StrippedCellRed">
+							<Anchor side="Left"  relative="$GameUI" pos="Mid" offset="#R2_L"/>
+							<Anchor side="Right" relative="$GameUI" pos="Mid" offset="#R2_R"/>
+						</Frame>
+						<Frame type="Frame" name="HeroOverview3" template="_FCJH/StrippedCellRed">
+							<Anchor side="Left"  relative="$GameUI" pos="Mid" offset="#R3_L"/>
+							<Anchor side="Right" relative="$GameUI" pos="Mid" offset="#R3_R"/>
+						</Frame>
+						<Frame type="Frame" name="HeroOverview4" template="_FCJH/StrippedCellRed">
+							<Anchor side="Left"  relative="$GameUI" pos="Mid" offset="#R4_L"/>
+							<Anchor side="Right" relative="$GameUI" pos="Mid" offset="#R4_R"/>
+						</Frame>
+						<Frame type="Frame" name="HeroOverview5" template="_FCJH/StrippedCellRed">
+							<Anchor side="Left"  relative="$GameUI" pos="Mid" offset="#R5_L"/>
+							<Anchor side="Right" relative="$GameUI" pos="Mid" offset="#R5_R"/>
+						</Frame>
+					</Frame>
+
+				</Frame>
+
+				<Frame type="TargetInfoFrame" name="TargetInfoFrame">
+					<Frame type="Frame" name="TargetInfoPanel" template="_FCJH/ParkedTemplate"/>
+				</Frame>
+
+				<!-- ObjectivePanel was the wrong target in build 46 - overriding it changed
+				     nothing, so the hexagon is not this frame. The real one is
+				     ObserverTopPanel/TopBarLogoOverlay, relocated below. -->
+
+
+				<!-- Replay controls to bottom-left. The base positions this with only
+				     Right+Top plus an explicit 420x170, so override those SAME two sides -
+				     adding Left/Bottom would stretch it. Anchored to $GameUI because its
+				     parent is a MovingFrame positioned off another frame. -->
+				<Frame type="MovingFrame" name="ObserverPanelMovingContainer">
+					<Frame type="ReplayPanel" name="ReplayPanel">
+						<Anchor side="Right" relative="$GameUI" pos="Min" offset="440"/>
+						<Anchor side="Top"   relative="$GameUI" pos="Max" offset="-190"/>
+					</Frame>
+				</Frame>
+
+			</Frame>
+
+			<Frame type="Frame" name="ConsoleUIContainer">
+				<Frame type="HeroTalentTreeSelectionToggleButton" name="HeroTalentTreeSelectionToggleButton" template="_FCJH/ParkedTemplate"/>
+				<Frame type="HeroTalentTreeSelectionIndicator" name="HeroTalentTreeSelectionIndicator" template="_FCJH/ParkedTemplate"/>
+				<Frame type="Frame" name="HeroTalentTreeSelectionIndicatorContainer" template="_FCJH/ParkedTemplate"/>
+				<Frame type="SelectionUnitStatusPanel" name="FloatingCombatUnitSelectionPanel">
+					<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+						<Frame type="HeroTalentTreeSelectionPanel" name="HeroTalentTreeSelectionPanel" template="_FCJH/ParkedTemplate"/>
+					</Frame>
+				</Frame>
+			</Frame>
+		</Frame>
+
+		<Frame type="Frame" name="FCJH_Bar">
+			<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+			<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+			<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
+			<Anchor side="Bottom" relative="$parent" pos="Min" offset="#BAR_HEIGHT"/>
+			<AcceptsMouse val="false"/>
+
+			<Frame type="Image" name="BlockLeft" template="_FCJH/BarBlockTemplate">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+				<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Right"  relative="$parent" pos="Mid" offset="#ROSTER_OUTER_NEG"/>
+			</Frame>
+			<Frame type="Image" name="BlockLogo" template="_FCJH/BarBlockTemplate">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+				<Anchor side="Left"   relative="$parent" pos="Mid" offset="#LOGO_HALF_NEG"/>
+				<Anchor side="Right"  relative="$parent" pos="Mid" offset="#LOGO_HALF"/>
+			</Frame>
+			<Frame type="Image" name="BlockRight" template="_FCJH/BarBlockTemplate">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+				<Anchor side="Left"   relative="$parent" pos="Mid" offset="#ROSTER_OUTER"/>
+				<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
+			</Frame>
+
+			<Frame type="Frame" name="NameLeft" template="_FCJH/BrandingSpaceTemplate">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+				<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Right"  relative="$parent/BlockLeft" pos="Max" offset="-90"/>
+				<Frame type="Label" name="Caption"><Text val="TEAM NAME LEFT"/></Frame>
+			</Frame>
+			<Frame type="Frame" name="ScoreLeft" template="_FCJH/BrandingSpaceTemplate">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+				<Anchor side="Left"   relative="$parent/NameLeft" pos="Max" offset="0"/>
+				<Anchor side="Right"  relative="$parent/BlockLeft" pos="Max" offset="0"/>
+				<Frame type="Label" name="Caption"><Text val="0"/></Frame>
+			</Frame>
+			<Frame type="Frame" name="LogoSpace" template="_FCJH/BrandingSpaceTemplate">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+				<Anchor side="Left"   relative="$parent/BlockLogo" pos="Min" offset="0"/>
+				<Anchor side="Right"  relative="$parent/BlockLogo" pos="Max" offset="0"/>
+				<Frame type="Label" name="Caption"><Text val="LOGO"/></Frame>
+			</Frame>
+			<Frame type="Frame" name="ScoreRight" template="_FCJH/BrandingSpaceTemplate">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+				<Anchor side="Left"   relative="$parent/BlockRight" pos="Min" offset="0"/>
+				<Anchor side="Right"  relative="$parent/BlockRight" pos="Min" offset="90"/>
+				<Frame type="Label" name="Caption"><Text val="0"/></Frame>
+			</Frame>
+			<Frame type="Frame" name="NameRight" template="_FCJH/BrandingSpaceTemplate">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+				<Anchor side="Left"   relative="$parent/ScoreRight" pos="Max" offset="0"/>
+				<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
+				<Frame type="Label" name="Caption">
+					<Anchor side="Right" relative="$parent" pos="Max" offset="-8"/>
+					<Anchor side="Left"  relative="$this" pos="Max" offset="0"/>
+					<Text val="TEAM NAME RIGHT"/>
+				</Frame>
+			</Frame>
+		</Frame>
+
+
+		<!-- Load-bearing: a custom SelectionUnitStatusPanel takes over the duty of
+		     asserting the console widgets. Delete this and the stock bottom UI returns.
+		     It asserts them OFF. Parked - nothing here needs to be seen. -->
+		<Frame type="SelectionUnitStatusPanel" name="FCJH_Console">
+			<Anchor side="Top"    relative="$parent" pos="Min" offset="#PARK_TOP"/>
+			<Anchor side="Left"   relative="$parent" pos="Min" offset="#PARK_LEFT"/>
+			<Anchor side="Bottom" relative="$parent" pos="Min" offset="#PARK_BOTTOM"/>
+			<Anchor side="Right"  relative="$parent" pos="Min" offset="#PARK_RIGHT"/>
+			<PlayerId val="1"/>
+			<HeroesOnly val="true"/>
+			<AlwaysShowHero val="true"/>
+			<AcceptsMouse val="false"/>
+			<AcceptsMouseTooltip val="false"/>
+			<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Animation name="FCJH_AbilityBar">
+					<Event event="OnShown" action="Play"/>
+					<Controller type="Visibility" end="Loop" frame="$GameUICommandPanel">
+						<Key type="Bool" time="0" value="false"/>
+					</Controller>
+				</Animation>
+				<Animation name="FCJH_HeroPortrait">
+					<Event event="OnShown" action="Play"/>
+					<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/ConsoleUIContainer/HeroConsolePanel">
+						<Key type="Bool" time="0" value="false"/>
+					</Controller>
+					<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/ConsoleUIContainer/HeroBuffDebuffPanel">
+						<Key type="Bool" time="0" value="false"/>
+					</Controller>
+					<Controller type="Visibility" end="Loop" frame="$ConsolePortraitPanelContainer/PortraitPanel">
+						<Key type="Bool" time="0" value="false"/>
+					</Controller>
+				</Animation>
+			</Frame>
+		</Frame>
+
+	</Frame>
+</Desc>
