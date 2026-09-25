@@ -1,6 +1,9 @@
 """
-Tests for tools/validate.py: break a copy of the real interface on purpose and
+Tests for tools/validate.py: break a copy of a real interface on purpose and
 check each mistake is caught at the right level.
+
+The subject is build 50 (tests/fixtures/build50), the last layout of the first attempt,
+kept because it exercises every check against a real, screen-verified layout.
 
     python tools/test_validate.py
 """
@@ -15,6 +18,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import validate  # noqa: E402
 
+FIXTURE = Path(__file__).resolve().parent.parent / "tests" / "fixtures" / "build50" / "FCJH.StormInterface"
 LAYOUT = Path("Base.StormData/UI/Layout/_FCJH.StormLayout")
 DESC_INDEX = Path("Base.StormData/UI/Layout/DescIndex.StormLayout")
 
@@ -25,7 +29,7 @@ class BrokenCopy:
     def __init__(self, testcase):
         self.tmp = Path(tempfile.mkdtemp())
         self.root = self.tmp / "FCJH.StormInterface"
-        shutil.copytree(validate.DEFAULT_SOURCE, self.root)
+        shutil.copytree(FIXTURE, self.root)
         testcase.addCleanup(shutil.rmtree, self.tmp)
 
     def edit(self, rel, old, new, regex=False, count=1):
@@ -57,8 +61,8 @@ class ValidateTests(unittest.TestCase):
 
     # ---------------------------------------------------------- baseline
 
-    def test_current_source_has_no_errors(self):
-        errors, _, lines = validate.validate()[:3]
+    def test_fixture_has_no_errors(self):
+        errors, _, lines = validate.validate(FIXTURE)[:3]
         self.assertEqual(errors, 0, "\n".join(lines))
 
     # ---------------------------------------------------------- errors

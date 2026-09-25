@@ -7,38 +7,31 @@ Written for whoever picks this up next, human or model.
 
 ## 1. Where things stand
 
-**Build 50** is the current source, **screen-verified on 2026-09-25** — packed by our own
-Python toolchain, not the Java builder. See §7 for what it fixed and what it didn't.
+**Fresh start, 2026-09-25.** The first attempt (builds 1–50) proved nearly every technique
+we need but drifted, because no one had drawn the target screen. It is archived, not lost:
+build 50 lives in git history and as the validator's test fixture
+(`tests/fixtures/build50/`). Everything it taught is in §3 and §6.
 
-**The build toolchain is now ours** (§2). The Java builder turned out to be a byte-for-byte
-copy of the source folder into an MPQ archive; `tools/pack.py` does the same in Python, and
-Heroes loads the result. The Java wrapper was removed after commit `dde9af7`, which still
-holds it. The one thing it did that we don't — frame-path validation — is §7's top item.
+**The design is agreed** and lives in a canvas of to-scale wireframes:
+**https://claude.ai/artifact/6MmAcxcKjfAAprCN3oc3ZK** — the stock UI annotated, the
+proposed default view at 1920×1080, and a spec table giving each element's position and
+how sure we are the game allows it. **Every build is checked against it.**
 
-The interface currently:
+In one paragraph: the ten hero cells sit along the bottom (blue 1–5 left of the minimap,
+red 6–0 right of it) with portrait, HP, mana and CC; the minimap and its objective widgets
+at bottom-centre; team core HP above the cells; a two-line top bar of series score, team
+name, logo and level either side of Blizzard's hexagon, with bans, bracket and game count
+beneath; the kill feed top-right; replay controls top-left, collapsible; info panes
+(talents, KDA/damage, healing, siege) at middle-left on hotkeys; talent pop-ups on the
+cells. **Fight mode is not a separate layout** — it is one hotkey that hides a list of
+elements (list TBD, info pane first). The top bar and minimap always stay.
 
-- Strips the stock observer console — hero portrait panel, ability bar, unit-select box,
-  talent-select UI, stock top bar art
-- Relocates Blizzard's **ten hero cells** into a custom cluster at bottom-centre, one row,
-  with portraits, click handling, health bars and death status intact
-- Draws a black backing behind the cluster, and a black top bar carving five branding
-  regions (team names, series scores, tournament logo) as empty space for OBS
-- Shows a **CC marker** on each hero's portrait and CC text on their health bar
-- Moves replay controls to the bottom-left corner
+**Branding is negative space**: names, logos, scores, bans, bracket and game count are
+drawn by OBS over empty regions the interface leaves (§6).
 
-### Test ladder (from the original brief)
-
-| | Test | Result |
-|---|---|---|
-| T0 | One visible change reaches the screen | **PASS** |
-| T1 | Hide a Blizzard frame | **PASS** — by parking, not `Visible` |
-| T2 | Bind HP for a non-selected hero | **PASS** — inherited via relocated cells |
-| T3 | Sum two heroes' HP | **Ruled out** — layouts have no arithmetic |
-| T3b | CC state for a non-selected hero | **PASS** |
-| T4 | Reparent per-hero panels | **PASS** |
-
-T3's failure means the "pooled team HP bar" is off the table; the brief's five-adjacent-
-segments fallback is the design.
+**Phase 0 (foundation) is done**: the toolchain, `layout.toml`, generated layouts,
+dev/release profiles, and an in-game wireframe overlay. The source holds no overlay
+elements yet. Next is Phase 1 (§7).
 
 ---
 
@@ -48,107 +41,114 @@ segments fallback is the design.
 python tools/pack.py --wait
 ```
 
-Packs `src/FCJH.StormInterface/` into an uncompressed **MPQ v1** archive and deploys it as
-`Documents/Heroes of the Storm/Interfaces/FCJH.StormInterface`. Takes milliseconds. Flags:
-`--no-deploy`, `--name <file>` to deploy under another filename, `--wait` (below).
+One command: **generate → stage → validate → pack → deploy.**
 
-**The loop, with the client left open** (all confirmed 2026-09-25):
+1. **generate** — `tools/gen.py` rewrites the committed generated layouts from `layout.toml`
+2. **stage** — `src/FCJH.StormInterface/` is copied to `build/<profile>/`. A dev build adds
+   the build stamp and the wireframe overlay there, and only there
+3. **validate** — `tools/validate.py` on the staged tree; an error stops the build
+4. **pack** — an uncompressed MPQ v1 archive, read back and compared file by file
+5. **deploy** — `Documents/Heroes of the Storm/Interfaces/FCJH.StormInterface`
 
-1. Launch Heroes **from the Battle.net app**. Launching by double-clicking a replay goes
-   through `HeroesSwitcher`, which has no Battle.net auth token — that is the password prompt
-   that never remembers.
-2. Open a **current-patch** replay from the in-game Replays tab (§5 for why current-patch).
+**With the client left open** (all confirmed 2026-09-25):
+
+1. Launch Heroes **from the Battle.net app**. Double-clicking a replay goes through
+   `HeroesSwitcher`, which has no auth token — that is the password prompt that never remembers.
+2. Open a **current-patch** replay from the in-game Replays tab (§5).
 3. Edit, then `python tools/pack.py --wait`.
-4. Leave the replay. **The file is locked while a replay is open** and writable at the main
-   menu; `--wait` retries until the lock releases, so the build lands the moment you exit.
-5. Reopen the replay. **The game re-reads the interface on every replay load** — no client
-   restart.
+4. Leave the replay. The file is **locked while a replay is open** and writable at the main
+   menu; `--wait` retries, so the build lands the moment you exit.
+5. Reopen the replay. **The game re-reads the interface on every replay load.**
 
-`pack.py` runs **`tools/validate.py`** first and refuses to pack on an error. The validator
-rebuilds the GameUI frame tree the way the game does — Blizzard's layouts from the JamiePhan
-extract in DescIndex order, templates expanded, every `file=` override applied — then checks
-what our files contribute. It runs in about a second.
+**Profiles.** Dev (the default) shows a build stamp — `FCJH DEV <version> <commit>[+] <time>`,
+`+` meaning uncommitted changes — and tints every wireframe box on screen in its legend
+colour (white: ours, orange: OBS space, teal: on demand), so each element can be built
+against where it is meant to land. `--release` is exactly what `src/` holds: it refuses
+while `src/`, `layout.toml` or `tools/` have uncommitted changes, so every release is
+reproducible from its commit, and writes `dist/v<version>/FCJH.StormInterface`
+(`--deploy` to also install it). GitHub releases ship that file.
 
-- **Errors:** XML that doesn't parse (the game drops the *whole* interface silently),
-  undefined `#Constant`s, templates or `file=` targets that don't exist, any frame reference
-  that resolves to nothing (anchors, animation/state `frame=`, `{bindings}`), bad anchor
-  side/pos/offset, and **editing a Blizzard child that doesn't exist** — the game creates a
-  new empty frame instead, silently. Frames we add on purpose carry the `FCJH_` prefix.
-- **Warnings:** parking a frame others anchor to (the `IconFrame` bug), anchoring a side
-  Blizzard re-anchors at runtime via `SetAnchor`, `Visible=false` on Blizzard frames, `Fill`
-  without `AdjustmentColor`, partial `#Constant`s, type mismatches, layouts DescIndex skips.
-- Build 50 validates with 0 errors and 7 warnings, all "parking `TopBarBacking` drags the team
-  XP/level/core/name frames" — true, and harmless since we don't want those.
+### Tools
 
-The Java builder, for the record, checked much less than we believed: its anchor
-`ReferenceValidator` is all `TODO` stubs, and a misnamed child in an override silently became
-a new frame there too.
+| Command | What |
+|---|---|
+| `python tools/pack.py --wait` | The loop above |
+| `python tools/gen.py [--check]` | Regenerate; `--check` fails if a generated file is stale or hand-edited |
+| `python tools/validate.py [--show <frame path>]` | Validate `src/`; `--show` prints the merged tree under any frame |
+| `python tools/test_validate.py` | 19 validator tests against the build 50 fixture |
+| `python tools/mpq.py list\|extract <archive>` | Inspect any archive, including Ahli's and Spazzo's |
+| `python tools/make_test_ui.py` | Smoke test: a magenta box as `FCJHTest.StormInterface`, to tell "packer broke" from "layout broke" |
 
-**`python tools/validate.py --show <frame path>`** prints the merged tree under any frame —
-every child, type, and anchor, marked Blizzard or ours with file:line. The quickest way to
-answer "what is this frame actually anchored to after everything is applied?" Example:
-`--show GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1`
-
-`python tools/test_validate.py` — 19 tests that break a copy of the real layout on purpose
-(including re-creating the `IconFrame` bug) and check each is caught.
-
-Other tools:
-
-- `python tools/mpq.py list|extract <archive> [dest]` — inspect any `.StormInterface` or
-  `.SC2Map`, including Ahli's and Spazzo's (it reads their MPQ v4 archives too).
-- `python tools/make_test_ui.py` — smoke test. Deploys a tiny Python-authored interface
-  (a magenta box) as `FCJHTest.StormInterface`. If a patch ever breaks loading, this
-  separates "the packer broke" from "the layout broke".
-
-**Legacy:** the old PowerShell wrapper around Ahli's Java builder, `tools/build-and-run.ps1`,
-is in history at `dde9af7` if its post-patch retry or XML gate ever needs consulting.
+**The validator** rebuilds the GameUI frame tree the way the game does — Blizzard's layouts
+from the JamiePhan extract in DescIndex order, templates expanded, `file=` overrides applied
+— and checks what our files contribute. Errors: unparseable XML (the game silently drops the
+*whole* interface), undefined constants, missing templates or override targets, frame
+references that resolve to nothing, malformed anchors, and edits to Blizzard children that
+don't exist (the game silently creates an empty frame). Warnings: parking a frame others
+anchor to, anchoring a side Blizzard re-anchors at runtime, `Visible=false` on Blizzard
+frames, `Fill` without `AdjustmentColor`, partial constants, type mismatches. The Java
+builder it replaced checked far less — its anchor validator was `TODO` stubs.
 
 ---
 
-## 3. Layout, and how to work on it
+## 3. Authoring
 
-Everything lives in one file:
+**The user never touches XML.** Their surfaces are `layout.toml`, the wireframe canvas, and
+the game. Describe effects, not diffs; verify with screenshots.
 
 ```
-src/FCJH.StormInterface/Base.StormData/UI/Layout/_FCJH.StormLayout
+layout.toml                                  every placement number, in wireframe PIXELS
+tools/gen.py                                 turns it into layouts
+src/FCJH.StormInterface/                     the archive's file tree, one to one
+  Base.StormData/UI/Layout/
+    DescIndex.StormLayout                    GENERATED — every layout, constants first
+    FCJH_Constants.StormLayout               GENERATED — layout.toml in layout units
+    FCJH_*.StormLayout                       hand-written, one per concern (from Phase 2)
 ```
 
-The folder is the archive's file tree, one to one: `pack.py` stores every file under
-`src/FCJH.StormInterface/` at the same path inside the archive. `DescIndex.StormLayout` lists
-the layouts to load; `DocumentHeader` is binary editor metadata, copied as-is.
+- **Layout units are not pixels.** The game lays out on a 1200-unit-tall grid, so at 1080p
+  **1 unit = 0.9 px** on both axes (the screen is 2133 × 1200 units). Build 50 proved it:
+  slots set 102 units apart measured ~92 px. `layout.toml` holds pixels straight off the
+  wireframe; `gen.py` converts. Never hand-convert.
+- Every element becomes constants `FCJH_<NAME>_L/_T/_R/_B/_W/_H`, edges measured from the
+  screen's top-left — anchor them to `$GameUI` with `pos="Min"`. Hero cells are
+  `FCJH_HERO_1` … `FCJH_HERO_0`.
+- **Generated files are committed** and carry a do-not-edit header; `gen.py --check` catches
+  hand edits. Hand-written XML for one-off structure (it maps one to one onto Blizzard's and
+  Ahli's files); Python generation for anything arithmetic or repetitive.
+- **Frames we add carry the `FCJH_` prefix.** The validator relies on it: an unprefixed child
+  that doesn't exist in Blizzard's tree is an error, because the game would silently create
+  an empty frame. Constants are global across all files, so ours are `FCJH_` too.
+- Split layouts by concern, not one file.
 
-(`src/` was `builds/` until 2026-09-25 — the old name was forced by the Java builder's
-project database. `builds/FCJH.SC2Map` is a blank StarCraft II map from July, likely left by
-the builder's `--compileRun` launching SC2; not part of the interface.)
+### Rules learned the hard way (all confirmed in game)
 
-The file's header comment carries eight rules, all learned the hard way and all confirmed in
-game. Read them before editing. The three that caused the most damage:
-
+- **Park, don't hide.** `Visible=false` does not stick on Blizzard panels; move the frame
+  off-screen, pinning all four anchors.
 - **Parking a frame drags anything anchored TO it.** `HeroPortraitImage` anchors to
-  `IconFrame`; parking `IconFrame` sent all ten portraits off-screen and cost three builds
-  of "the icons don't render". When something you want depends on a frame's geometry, hide
-  it with `<Alpha val="0"/>` instead of moving it.
-- **Render order follows the frame TREE; `RenderPriority` only sorts siblings.** Frames this
-  interface adds to `GameUI` paint above *everything* in `UIContainer`, whatever priority is
-  set. To put something behind a Blizzard frame, inject it *beside* that frame inside their
-  hierarchy — that is how the cluster backing works.
-- **The base UI binds no player to the hero cells.** No `PlayerId`, no slot, no index — the
-  engine fills them by ordinal position, so the hero-to-cell mapping does not exist in XML
-  and cannot be reconstructed. Four builds were lost tuning offsets against this. See §6.
+  `IconFrame`; parking `IconFrame` sent all ten portraits off-screen for three builds. Hide
+  such frames with `Alpha 0`. (The validator now warns.)
+- **Render order follows the frame TREE; `RenderPriority` only sorts siblings.** Frames added
+  to `GameUI` paint above everything in `UIContainer`. To sit behind a Blizzard frame, inject
+  beside it inside its own hierarchy.
+- **The base UI binds no player to the hero cells** — the engine fills them by ordinal
+  position. Addressing heroes by `PlayerId` is a different axis. Inherit, never rebuild (§6).
+- **Blizzard StateGroups can `SetAnchor` at runtime**, overriding our anchors (e.g.
+  `HeroDeathTimeLabel`). The validator warns.
+- **`#Constant` substitutes only as a whole attribute value.** `Fill` reads `AdjustmentColor`
+  (`A,R,G,B`), not `Color`.
+- **`ObserverTopPanel` is load-bearing for the portraits** — park only its art.
+- **Duplicate frame names are everywhere** (`PartyFramePanel` has its own `Team1HeroOverview`).
+  Confirm ownership by displacing a frame, not by matching a name.
 
-### Practices that worked
+### Practices
 
-- **Keep the build stamp.** `BUILD_STAMP` renders top-left. If the number on screen is stale,
-  the game loaded a cached interface and nothing else you're looking at is evidence.
-- **Displace, don't guess.** When two builds fail to explain a symptom, move each suspect
-  frame somewhere obvious and see which one carries the content. Frame names are duplicated
-  all over this codebase — a name match is not proof.
-- **Colour a frame garishly before concluding it doesn't render.** The top bar "wasn't
-  rendering" for several builds; it was black on a dark scene the whole time.
-- **Never edit this file by line-number surgery.** It orphaned two `</Frame>` tags and broke
-  the interface silently. Use string-anchored edits.
-- **One change per build where possible.** Four stacked unverified builds produced a mess
-  nobody could attribute.
+- **Keep the build stamp.** A stale stamp means a cached interface; nothing else on screen is
+  evidence.
+- **Displace, don't guess.** After two unexplained builds, move each suspect somewhere obvious.
+- **Colour a frame garishly before concluding it doesn't render.**
+- **One change per build.** Stacked unverified builds produce an unattributable mess.
+- **`python tools/validate.py --show <path>`** before guessing what a frame is anchored to.
 
 ---
 
@@ -156,27 +156,22 @@ game. Read them before editing. The three that caused the most damage:
 
 - **`references/JamiePhan/`** — shallow clone of
   [jamiephan/HeroesOfTheStorm_Gamedata](https://github.com/jamiephan/HeroesOfTheStorm_Gamedata),
-  an automated extract of Heroes game data. Currently game version **2.55.17.97650**. This is
-  the source of truth for frame names and paths. Refresh with
-  `git -C references/JamiePhan pull --depth 1`.
-- **`references/Galaxy-Observer-UI-HeroesFix/`** — Spazzo's fork of Ahli's builder. Contains
-  the legacy builder jar (`dev/compile-spring-boot.jar`), an older local base-UI extraction,
-  and Ladik's `tools/plugins/mpq/MPQEditor.exe` — which is all the Java builder uses to write
-  archives. Handy as an independent check of our packer's output (`MPQEditor.exe e <mpq> *
-  <dest> /fp`).
+  an automated extract of Heroes game data, currently **2.55.17.97650**. The validator's
+  source of truth. Refresh with `git -C references/JamiePhan pull --depth 1`.
+- **`references/Galaxy-Observer-UI-HeroesFix/`** — Spazzo's fork of Ahli's (retired) builder.
+  Its `tools/plugins/mpq/MPQEditor.exe` is an independent check of our archives
+  (`MPQEditor.exe e <mpq> * <dest> /fp`).
 - **`references/AhliObs.StormInterface/`, `references/Spazzo/`** — two mature observer
-  interfaces, unpacked. Ahli's is MIT. Invaluable for "how does anyone do X" — most
-  techniques here were found by reading these.
+  interfaces, unpacked. Ahli's is MIT. Most techniques here came from reading them.
 
-`references/` is gitignored.
-
-Key base-UI files, all under
+`references/` is gitignored. Key base-UI files, under
 `references/JamiePhan/mods/core.stormmod/base.stormdata/ui/layout/ui/`:
 
 | File | What's in it |
 |---|---|
 | `gameui.stormlayout` | The root frame tree and most handles |
-| `stormobserverpanel.stormlayout` | Observer top bar, hero cells, team containers |
+| `stormobserverpanel.stormlayout` | Observer top bar, hero cells, team containers, core HP, levels |
+| `partyframe.stormlayout` | Player HUD top bar — has `TeamTalentAdvantageFrame`, the talent-lead flame (line 3268) |
 | `unitstatus.stormlayout` | World nameplates, CC validators, buff/debuff element |
 | `heroconsole.stormlayout` | Bottom-left portrait/stats cluster |
 | `talentsoverviewpanel.stormlayout` | Talent tier grid |
@@ -185,129 +180,79 @@ Key base-UI files, all under
 
 ## 5. Environment gotchas
 
-**Interface selection lives in TWO files**, and both matter:
+**Interface selection lives in TWO files**: `Documents/Heroes of the Storm/Variables.txt` and
+`.../Accounts/<id>/Variables.txt`, keys `observerinterface=` and `replayinterface=`, full
+filename with extension. Edit only while Heroes is closed — it rewrites both on exit (it
+blanked the top-level keys and kept the account file's on 2026-09-25). Set both.
 
-```
-Documents/Heroes of the Storm/Variables.txt
-Documents/Heroes of the Storm/Accounts/<id>/Variables.txt
-```
+**Out-of-patch replays wipe the selection** via a client version switch — five times so far.
+Keep a current-patch replay; an AI-vs-AI custom lobby you observe produces one.
 
-Keys are `observerinterface=` and `replayinterface=`, each taking the full filename
-including the `.StormInterface` extension. Only edit them while Heroes is closed — the game
-rewrites both on exit. Observed 2026-09-25: on exit it **blanked the top-level keys** and
-kept the account file's, so the account file is the one that persists. Setting both is
-still the safe routine.
+**File lock**: the selected interface is locked while a replay (presumably a match) is open.
 
-**Out-of-patch replays wipe the selection.** Watching a replay from an older patch forces a
-client version switch, and that switch clears these keys. Symptom: next launch shows stock
-UI. This happened five times (it had happened again by 2026-09-25). Keep a current-patch
-replay to hand: a custom lobby of AI vs AI with you observing produces one, and exercises
-the live observer path too.
+**Resolution is locked to 1920×1080** in the top-level `Variables.txt` (backup
+`Variables.txt.res-bak`). `layout.toml` assumes it.
 
-**File lock.** Heroes locks the *selected* interface file while a replay (and presumably a
-match) is open; at the main menu, or with Heroes closed, it can be overwritten. Presumably
-only the selected file is locked — an unselected one was overwritten with Heroes running,
-though not confirmed mid-replay.
-
-**Resolution is locked to 1920×1080** via `width`/`height`/`windowwidth`/`windowheight` in
-the top-level `Variables.txt`. The layout's pixel constants assume it. Backup at
-`Variables.txt.res-bak`.
-
-**Screenshots** land in `Documents/Heroes of the Storm/Screenshots/` and can be read
-directly. Ask for one rather than a verbal description — it catches things neither party
-thought to look for.
+**Screenshots** land in `Documents/Heroes of the Storm/Screenshots/` and can be read directly.
+Ask for one rather than a description.
 
 ---
 
 ## 6. Design decisions worth not relitigating
 
-**Relocate Blizzard's hero cells; don't rebuild them.** There is no bindable "icon for
-whichever hero this player picked". Spazzo's kit hardcodes a texture per hero and switches
-with state groups, which is why his files run to 13,000 lines. Relocating Blizzard's cells
-gets portraits, health bars, click handling and death status already wired, and they survive
-new hero releases. The cost is less styling freedom.
+**Relocate Blizzard's hero cells; don't rebuild them.** No bindable "icon for this player's
+hero" exists; relocated cells bring portraits, HP, click handling and death state, and
+survive new heroes. Spazzo's per-hero textures are why his files run to 13,000 lines.
 
-**Inherit bindings; never reconstruct them.** The CC sensor lives *inside* each cell's
-`HeroStatus`, so it shares whatever unit the engine gave that cell and always matches the
-portrait above it. An earlier version addressed heroes by `PlayerId` in a parallel layer;
-that is a different axis from slot ordinal, the two agree in a normal 5v5 and diverge in a
-scrambled custom lobby, and no offset reconciles them.
+**Inherit bindings; never reconstruct them.** Put new frames *inside* the frame that owns the
+binding — the CC sensor lives inside each cell's `HeroStatus`, so it always matches the
+portrait above it. The mana bar should follow the same pattern.
 
-**Use Blizzard's CC plate, not a rebuilt one.** A hand-built animated label rendered nothing
-at all. The engine's element is already styled and self-managing. Its label and backing are
-hidden with `Alpha` and only the icon is shown, centred on the portrait, with the state text
-on the health bar. Trade-off: the engine owns its visibility, so no custom animation.
+**Use Blizzard's CC plate, not a rebuilt one.** A hand-built label rendered nothing; the
+engine's element is self-managing.
 
-**Branding is negative space.** Team names, series scores and tournament logos are never
-rendered by the interface — it carves the regions and leaves them empty for OBS to composite
-underneath. Otherwise every team swap means rebuilding and reselecting an interface file
-mid-broadcast. The captions currently in those regions are placement guides and come out
-before air.
+**Branding is negative space**, drawn by OBS. The interface can't see OBS, so there is no
+in-game fallback for missing names or logos.
 
-**Don't resize the portraits.** Blizzard's 165-unit frame and its texture coordinates are
-chosen together to crop the face. Forcing the width to match the slot mangles the art
-(tried in build 49, reverted in 50). Anything that must match the visible slot anchors to
-the **cell**, not the portrait.
+**Don't resize the portraits.** The 165-unit frame and its texture coordinates are chosen
+together; anything matching the visible slot anchors to the cell.
+
+**Fight mode = a hotkey that hides a list, not a layout.** The agreed default view already
+is the old fight-mode cluster. Pooled team HP is dropped: layouts have no arithmetic, and
+five segments would duplicate the hero row. If plates read too small, widen them.
 
 ---
 
-## 7. Outstanding
+## 7. What's next
 
-**Verified in build 50** (2026-09-25, screenshots):
+**Phase 1 — the unknowns, before building anything they could change.** One sitting in a
+replay; each is a small dev build.
 
-- ✅ Outer heroes no longer clipped — all ten portraits fully visible
-- ✅ Objective hexagon appears between the teams, timer beneath it (`Unclipped` was the fix)
-- ✅ A dead hero reads as an empty rail; portrait greys with the respawn timer
-- ✅ CC marker icon shows on the portrait
-- ❌ **Health bars are not sized or aligned to their slots.** On each team the outermost fill
-  is long (~115px) and the inner four show only ~40px, even at full HP pre-game; the dark
-  rails merge into one continuous strip, so slot edges are invisible. Bars do track HP. Two
-  builds have now missed on this, so the next step is diagnostic, not a fix: paint
-  alternating garish rail colours per slot and see where each cell really sits. Prime
-  suspect, found while building the validator: `HeroStatus` contains an `ImageMaskFrame`
-  with `AlphaMaskTexture @UI/obs_bar_player_blue` + `AlphaMaskSiblings` over a `BarCount 5`
-  bar — the fill is cut out by a mask texture drawn for Blizzard's 134px bar, which would
-  produce short, slanted segments when squeezed to ~96px (`stormobserverpanel.stormlayout:270`).
-  Older theory: the bar overflows its slot and neighbours' rails paint over it.
-- ⚠️ The CC state text (e.g. `UNSTOPPABLE`) is half hidden — its top half sits behind the
-  bar row.
+- **Calibration:** does the wireframe overlay land where the canvas says? (Confirms the
+  0.9 px/unit conversion on screen.)
+- **Minimap:** does it fit each map's shape, and can a layout tell which map is loaded?
+- **Talent-lead flame:** `TeamTalentAdvantageFrame` lives in the *player* HUD — does the
+  engine drive it while observing?
+- **Mana bar** inside each cell's `HeroStatus`, for mana, energy, fury and brew heroes.
+- **Hide-hotkey** mechanism. Known pattern: `ToggleControl + Shortcut → StateGroup →
+  SendEvent → Animation`; a StateGroup's single active state gives the brief's exclusivity.
+- **Talent pop-ups:** read how Ahli wires his first (no launch needed).
+- **Info pane:** can Blizzard's 1035-wide talent table be re-laid out with teams stacked?
 
-**Toolchain, to finish dropping Java:**
+**Phase 2 — build the default view one element at a time**, each checked by screenshot
+against the canvas: hero row → minimap → top bar → info pane → kill feed → replay tab →
+pop-ups → fight hotkey.
 
-- ~~Frame-path validator~~ — done 2026-09-25, `tools/validate.py` (§2). Not yet covered:
-  dynamic list children (`Item0`… — warned, not errored), map-specific mods (only `core` and
-  `heroesdata` are loaded), and whether a *property* name is valid for a frame type.
-- **Watcher**: rebuild on save with `--wait`. The lock behaviour makes this straightforward.
-- **Generation**, starting with the hand-computed slot constants (`L1_L`…`R5_R`).
-
-**Known remaining on screen:** talent tier `?` markers at the top. They're tied to
-`ObserverTopPanel`, which is **load-bearing for the hero portraits** — parking that panel
-kills the icons, so it needs surgical treatment rather than removal.
-
-**Not started:**
-
-- Fight mode as a *mode*. The toggle machinery was built and then removed when the cluster
-  became default-on. The pattern that works:
-  `ToggleControl + Shortcut → StateGroup → SendEvent → Animation`. Mutual exclusion is
-  structural — a StateGroup has one active state — which is what the brief's §8.1 wants.
-  Note fight mode should **move** the existing cells rather than draw a second cluster;
-  there is only one set and a frame has one position.
-- Art pass. Masking is well supported (`AlphaMaskTexture` / `ImageMaskTexture`, ~93 uses in
-  the base UI), so parallelogram and hex cuts are achievable, and Blizzard's own angled
-  masks can be referenced for free. Mask a bar as three pieces — angled cap, stretchable
-  middle, angled cap — or an angled edge shears when the frame stretches.
-- Radial pulse on the CC marker. A `Dimension` controller on a loop, roughly eight lines.
-- Stat pane (brief §8.3), lowest priority.
+**Carried over from build 50, to solve again in Phase 2:** its health bars were cut into short
+slanted segments — prime suspect `HeroStatus`'s `ImageMaskFrame` (`AlphaMaskTexture
+@UI/obs_bar_player_blue`, drawn for a 134 px bar, `stormobserverpanel.stormlayout:270`); and
+its CC text sat half behind the bar row.
 
 ---
 
 ## 8. Original brief
 
-The session brief lives outside the repo at `~/Downloads/hots-observer-interface-brief.md`.
-Worth reading for intent — the operating model is a **solo observer/commentator** who also
-talks, so anything used mid-fight must be one keypress, and the default view must look right
-untouched.
-
-Two of its assumptions have since been tested and corrected: the top bar *can* be displaced
-(the "it can't be hidden" recollection was overstated), and per-hero CC for non-selected
-heroes *is* readable, which the brief flagged as the pivotal unknown.
+`~/Downloads/hots-observer-interface-brief.md`, outside the repo. The operating model is a
+**solo observer/commentator** who also talks: anything mid-fight is one keypress, and the
+default view must look right untouched. Since tested: the top bar *can* be displaced, and
+per-hero CC for non-selected heroes *is* readable.

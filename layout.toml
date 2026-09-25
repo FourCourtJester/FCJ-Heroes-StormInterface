@@ -1,0 +1,129 @@
+# FCJH overlay — every number that places something on screen.
+#
+# Units are SCREEN PIXELS at the locked 1920 x 1080, straight off the agreed wireframe
+# (https://claude.ai/artifact/6MmAcxcKjfAAprCN3oc3ZK). tools/gen.py converts them to
+# layout units (the game lays out on a 1200-tall grid, so 1 unit = 0.9 px at 1080p).
+#
+# Change a number, run `python tools/pack.py --wait`, leave and reopen the replay.
+
+[meta]
+name = "FCJH"
+version = "0.1.0"
+
+[screen]
+width = 1920
+height = 1080
+ui_reference_height = 1200   # the game's layout grid height; fixed by the engine
+
+# Dev builds only. Release builds leave all of this out.
+[dev]
+build_stamp = [16, 936]      # x, y of the build stamp
+wireframe_overlay = true     # tint every element's wireframe box in game, to build against
+overlay_alpha = 60           # 0-255
+
+# ---------------------------------------------------------------------------
+# Elements: rect = [x, y, width, height].
+# kind: "ui"     drawn by the interface, always on
+#       "obs"    left empty for OBS to fill
+#       "demand" on demand, or temporary
+# ---------------------------------------------------------------------------
+
+# Top bar, blue side (outside in: score, name, logo, level)
+[element.blue_score]
+rect = [416, 8, 68, 50]
+kind = "obs"
+[element.blue_name]
+rect = [490, 8, 240, 50]
+kind = "ui"                  # the plate is ours; OBS draws the name on it
+[element.blue_logo]
+rect = [736, 8, 58, 50]
+kind = "obs"
+[element.blue_level]
+rect = [800, 8, 80, 50]
+kind = "ui"
+[element.blue_talent_lead]
+rect = [794, 0, 92, 64]      # Blizzard's flame, behind the level plate of the team ahead
+kind = "demand"
+[element.blue_bans]
+rect = [622, 64, 108, 32]
+kind = "obs"
+[element.bracket]
+rect = [736, 64, 148, 24]
+kind = "obs"
+
+# Top bar, centre
+[element.logo_plate]
+rect = [892, 0, 136, 125]
+kind = "ui"
+[element.clock]
+rect = [906, 128, 108, 32]
+kind = "ui"
+
+# Top bar, red side (inside out: level, logo, name, score)
+[element.red_level]
+rect = [1040, 8, 80, 50]
+kind = "ui"
+[element.red_talent_lead]
+rect = [1034, 0, 92, 64]
+kind = "demand"
+[element.red_logo]
+rect = [1126, 8, 58, 50]
+kind = "obs"
+[element.red_name]
+rect = [1190, 8, 240, 50]
+kind = "ui"
+[element.red_score]
+rect = [1436, 8, 68, 50]
+kind = "obs"
+[element.red_bans]
+rect = [1190, 64, 108, 32]
+kind = "obs"
+[element.game_count]
+rect = [1036, 64, 148, 24]
+kind = "obs"
+
+# Around the edges
+[element.replay]
+rect = [16, 12, 360, 118]
+kind = "ui"
+[element.replay_collapsed]
+rect = [16, 0, 200, 24]      # hidden state: a slim tab on the top edge
+kind = "demand"
+[element.kill_feed]
+rect = [1636, 96, 268, 236]
+kind = "ui"
+[element.info_pane]
+rect = [16, 196, 382, 572]
+kind = "demand"
+[element.centre_banners]
+rect = [640, 196, 640, 78]   # Blizzard's; untouched, may shift on y
+kind = "ui"
+
+# Bottom centre
+[element.map_objectives]
+rect = [745, 742, 430, 56]
+kind = "demand"
+[element.minimap]
+rect = [765, 804, 390, 264]
+kind = "ui"
+[element.blue_core]
+rect = [453, 950, 300, 18]
+kind = "ui"
+[element.red_core]
+rect = [1167, 950, 300, 18]
+kind = "ui"
+
+# ---------------------------------------------------------------------------
+# Hero row. Ten cells, reading 1-5 (blue, left to right) then 6-0 (red).
+# ---------------------------------------------------------------------------
+[hero_row]
+top = 976
+cell_width = 112
+cell_height = 92
+gap = 6
+blue_left = 169              # cell 1; cells 2-5 follow to the right
+red_left = 1167              # cell 6; cells 7-0 follow to the right
+portrait_height = 62
+hp_height = 10
+mana_height = 6
+talent_popup_size = 40       # the talent's icon, centred on the cell's top edge
