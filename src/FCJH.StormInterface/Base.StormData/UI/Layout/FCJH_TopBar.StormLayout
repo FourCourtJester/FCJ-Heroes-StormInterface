@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+	<!-- Top bar, first pass: strip Blizzard's observer top bar down to what we keep, and move
+	     the per-team pieces that now belong with the hero rows at the bottom.
+
+	     Blizzard's backplate is ONE image (TopBarBacking, @UI/obs_bar_middle_bg: the wings,
+	     level plates and the towers/kills tray under the clock). The hexagon is a separate
+	     overlay on top of it (TopBarLogoOverlay, @UI/obs_bar_middle_logo). So:
+	       - backplate hidden with Alpha 0, NOT parked: the level labels, XP bars, core frames,
+	         and both hero containers all anchor to it - parking it drags them off-screen
+	       - hexagon, clock and team levels left as they are, now floating on their own
+	       - towers / kills counters parked (the icons beside them were backplate art)
+	       - team XP: moved under each team's hero row, the row's full width (blue_xp, red_xp),
+	         over our own dark track; Blizzard's small frame art around it hidden
+	       - core health: moved above the hero rows (blue_core, red_core). Blizzard keeps these
+	         hidden until they're needed, and we leave that logic alone. -->
+	<Frame type="GameUI" name="GameUI" file="GameUI">
+		<Frame type="Frame" name="UIContainer">
+			<Frame type="Frame" name="FullscreenUpperContainer">
+				<Frame type="Frame" name="ObserverHeroOverviewPanel">
+					<Frame type="Frame" name="ObserverTopPanel">
+						<Frame type="Image" name="TopBarBacking"><Alpha val="0"/></Frame>
+
+						<!-- Team XP -->
+						<Frame type="Image" name="Team1XPUnitStatusFrameBgImage"><Alpha val="0"/></Frame>
+						<Frame type="Image" name="Team2XPUnitStatusFrameBgImage"><Alpha val="0"/></Frame>
+						<Frame type="Image" name="FCJH_BlueXPTrack">
+							<Anchor side="Top"    relative="$GameUI" pos="Min" offset="#FCJH_BLUE_XP_T"/>
+							<Anchor side="Left"   relative="$GameUI" pos="Min" offset="#FCJH_BLUE_XP_L"/>
+							<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_BLUE_XP_B"/>
+							<Anchor side="Right"  relative="$GameUI" pos="Min" offset="#FCJH_BLUE_XP_R"/>
+							<Texture val="@UI/PauseScreenDimImage"/>
+							<ColorAdjustMode val="Fill"/>
+							<AdjustmentColor val="220,11,12,20"/>
+							<RenderPriority val="100"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<Frame type="Image" name="FCJH_RedXPTrack">
+							<Anchor side="Top"    relative="$GameUI" pos="Min" offset="#FCJH_RED_XP_T"/>
+							<Anchor side="Left"   relative="$GameUI" pos="Min" offset="#FCJH_RED_XP_L"/>
+							<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_RED_XP_B"/>
+							<Anchor side="Right"  relative="$GameUI" pos="Min" offset="#FCJH_RED_XP_R"/>
+							<Texture val="@UI/PauseScreenDimImage"/>
+							<ColorAdjustMode val="Fill"/>
+							<AdjustmentColor val="220,20,11,12"/>
+							<RenderPriority val="100"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<Frame type="TeamVeterancyUnitStatusFrame" name="Team1XPUnitStatusFrame">
+							<Anchor side="Top"    relative="$GameUI" pos="Min" offset="#FCJH_BLUE_XP_T"/>
+							<Anchor side="Left"   relative="$GameUI" pos="Min" offset="#FCJH_BLUE_XP_L"/>
+							<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_BLUE_XP_B"/>
+							<Anchor side="Right"  relative="$GameUI" pos="Min" offset="#FCJH_BLUE_XP_R"/>
+							<Width val="0"/>
+							<Height val="0"/>
+							<Unclipped val="true"/>
+						</Frame>
+						<Frame type="TeamVeterancyUnitStatusFrame" name="Team2XPUnitStatusFrame">
+							<Anchor side="Top"    relative="$GameUI" pos="Min" offset="#FCJH_RED_XP_T"/>
+							<Anchor side="Left"   relative="$GameUI" pos="Min" offset="#FCJH_RED_XP_L"/>
+							<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_RED_XP_B"/>
+							<Anchor side="Right"  relative="$GameUI" pos="Min" offset="#FCJH_RED_XP_R"/>
+							<Width val="0"/>
+							<Height val="0"/>
+							<Unclipped val="true"/>
+						</Frame>
+
+						<!-- Core health: blue anchors by its right edge, red by its left (Blizzard's
+						     own sides); the fixed 300 x 100 frame keeps its size. -->
+						<Frame type="UnitStatusFrame" name="Team1CoreUnitStatus">
+							<Anchor side="Top"   relative="$GameUI" pos="Min" offset="#FCJH_BLUE_CORE_FRAME_T"/>
+							<Anchor side="Right" relative="$GameUI" pos="Min" offset="#FCJH_BLUE_CORE_FRAME_R"/>
+							<Unclipped val="true"/>
+						</Frame>
+						<Frame type="UnitStatusFrame" name="Team2CoreUnitStatus">
+							<Anchor side="Top"  relative="$GameUI" pos="Min" offset="#FCJH_RED_CORE_FRAME_T"/>
+							<Anchor side="Left" relative="$GameUI" pos="Min" offset="#FCJH_RED_CORE_FRAME_L"/>
+							<Unclipped val="true"/>
+						</Frame>
+					</Frame>
+
+					<!-- Towers and kills -->
+					<Frame type="Frame" name="Team1HeroOverview">
+						<Frame type="Label" name="TownsRemainingValueLabel" template="FCJH_HeroRow/FCJH_Parked"/>
+						<Frame type="TeamScoreValueFrame" name="TeamKillsValueFrame" template="FCJH_HeroRow/FCJH_Parked"/>
+					</Frame>
+					<Frame type="Frame" name="Team2HeroOverview">
+						<Frame type="Label" name="TownsRemainingValueLabel" template="FCJH_HeroRow/FCJH_Parked"/>
+						<Frame type="TeamScoreValueFrame" name="TeamKillsValueFrame" template="FCJH_HeroRow/FCJH_Parked"/>
+					</Frame>
+				</Frame>
+			</Frame>
+		</Frame>
+	</Frame>
+</Desc>

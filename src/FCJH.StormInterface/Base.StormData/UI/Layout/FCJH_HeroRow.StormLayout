@@ -141,6 +141,33 @@
 				<ColorStyle val="StandardEnergy" index="0"/>
 				<Unclipped val="true"/>
 			</Frame>
+			<!-- CC: Blizzard's nameplate debuff element as an invisible SENSOR (it ships at
+			     Alpha 0 and only fades in on a world-nameplate event observer cells never get).
+			     Inside HeroStatus, so it reads this cell's own hero. Its text - "STUNNED",
+			     "ROOTED"... - is mirrored into our own label. Recipe from build 50. -->
+			<Frame type="UnitStatusBuffDebuffElement" name="FCJH_CC" template="UnitStatus/UnitStatusBuffDebuffDisplayTemplate">
+				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="28"/>
+				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="45"/>
+				<Anchor side="Right"  relative="$parent/$parent" pos="Max" offset="0"/>
+				<CollapseLayout val="true"/>
+				<VisibleToOwner val="true"/>
+				<VisibleToAlly val="true"/>
+				<VisibleToEnemy val="true"/>
+				<Unclipped val="true"/>
+			</Frame>
+			<Frame type="Label" name="FCJH_CCText">
+				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="28"/>
+				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="3"/>
+				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="45"/>
+				<Anchor side="Right"  relative="$parent/$parent" pos="Max" offset="3"/>
+				<Text val="{$parent/FCJH_CC/DebuffLabel/@Text}"/>
+				<Style val="TalentChoiceAlertNameplateLabel"/>
+				<Options val="NoWrapping | ScaleToPreventTruncation"/>
+				<RenderPriority val="530"/>
+				<Unclipped val="true"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
 			<StateGroup name="FCJH_ResourceColour">
 				<DefaultState val="Normal"/>
 				<State name="Auriel"><When type="Property" Unit="HeroAuriel"/><Action type="SetProperty" frame="FCJH_Resource" ColorStyle="BrewEnergy"/></State>

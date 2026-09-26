@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+	<!-- Replay controls, top-left (layout.toml element.replay), collapsible.
+
+	     Collapse: Blizzard's own. Control+Shift+O (ToggleControlObserverTools in
+	     stormobserverpanel.stormlayout) slides ReplayPanel out to the left and fades it, and
+	     back. We keep that and only move the panel: left and top edges ours, native size.
+
+	     While it's collapsed, a slim tab shows on the top edge (element.replay_collapsed) so
+	     the operator can see it's there and how to bring it back. The tab watches the panel's
+	     visibility; its pieces fade rather than the tab hiding itself, so its watcher keeps
+	     running. -->
+	<Frame type="GameUI" name="GameUI" file="GameUI">
+		<Frame type="Frame" name="UIContainer">
+			<Frame type="Frame" name="FullscreenUpperContainer">
+				<Frame type="MovingFrame" name="ObserverPanelMovingContainer">
+					<Frame type="ReplayPanel" name="ReplayPanel">
+						<Anchor side="Top"   relative="$GameUI" pos="Min" offset="#FCJH_REPLAY_T"/>
+						<Anchor side="Left"  relative="$GameUI" pos="Min" offset="#FCJH_REPLAY_L"/>
+						<Anchor side="Right" relative="$this"   pos="Min" offset="0"/>
+						<Unclipped val="true"/>
+					</Frame>
+				</Frame>
+			</Frame>
+		</Frame>
+
+		<Frame type="Frame" name="FCJH_ReplayTab">
+			<Anchor side="Top"    relative="$parent" pos="Min" offset="#FCJH_REPLAY_COLLAPSED_T"/>
+			<Anchor side="Left"   relative="$parent" pos="Min" offset="#FCJH_REPLAY_COLLAPSED_L"/>
+			<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_REPLAY_COLLAPSED_B"/>
+			<Anchor side="Right"  relative="$parent" pos="Min" offset="#FCJH_REPLAY_COLLAPSED_R"/>
+			<AcceptsMouse val="false"/>
+			<Frame type="Image" name="FCJH_TabBack">
+				<Anchor relative="$parent"/>
+				<Texture val="@UI/PauseScreenDimImage"/>
+				<ColorAdjustMode val="Fill"/>
+				<AdjustmentColor val="220,11,12,20"/>
+				<Alpha val="0"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
+			<Frame type="Label" name="FCJH_TabLabel">
+				<Anchor relative="$parent"/>
+				<Style val="ObsBar_MatchTimer"/>
+				<Text val="REPLAY  Ctrl+Shift+O"/>
+				<Options val="NoWrapping | ScaleToPreventTruncation"/>
+				<Alpha val="0"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
+			<StateGroup name="FCJH_Collapsed">
+				<DefaultState val="Open"/>
+				<State name="Collapsed">
+					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverPanelMovingContainer/ReplayPanel" Visible="false"/>
+					<Action type="SetProperty" frame="FCJH_TabBack" Alpha="255"/>
+					<Action type="SetProperty" frame="FCJH_TabLabel" Alpha="255"/>
+				</State>
+				<State name="Open">
+					<Action type="SetProperty" frame="FCJH_TabBack" Alpha="0"/>
+					<Action type="SetProperty" frame="FCJH_TabLabel" Alpha="0"/>
+				</State>
+			</StateGroup>
+		</Frame>
+	</Frame>
+</Desc>

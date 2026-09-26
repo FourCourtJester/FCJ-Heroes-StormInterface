@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+	<!-- Kill feed, top-right (layout.toml element.kill_feed).
+
+	     Blizzard's KillLogPanel (gameui.stormlayout) holds the kill rows; the engine adds
+	     them, each 600 units wide and anchored to the panel's top-left, sliding down as new
+	     ones arrive. We only move the panel: its right edge to kill_feed's right, its top to
+	     kill_feed's top; the width stays Blizzard's 600, so Left follows from it. The rows
+	     still read left to right as Blizzard draws them - mirroring them is later work. -->
+	<Frame type="GameUI" name="GameUI" file="GameUI">
+		<Frame type="Frame" name="UIContainer">
+			<Frame type="ConsolePanel" name="ConsolePanel">
+				<Frame type="Frame" name="KillLogPanel">
+					<Anchor side="Top"    relative="$GameUI" pos="Min" offset="#FCJH_KILL_FEED_T"/>
+					<Anchor side="Right"  relative="$GameUI" pos="Min" offset="#FCJH_KILL_FEED_R"/>
+					<Anchor side="Left"   relative="$this"   pos="Max" offset="0"/>
+					<!-- Blizzard's own bottom (the screen's): rows stack downward past the box -->
+					<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+					<Unclipped val="true"/>
+				</Frame>
+			</Frame>
+		</Frame>
+	</Frame>
+</Desc>

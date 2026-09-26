@@ -95,17 +95,22 @@ kind = "obs"
 
 # Around the edges
 [element.replay]
-rect = [16, 12, 360, 118]
+rect = [16, 12, 378, 153]    # Blizzard's ReplayPanel, native 420 x 170 units
 kind = "ui"
 [element.replay_collapsed]
 rect = [16, 0, 200, 24]      # hidden state: a slim tab on the top edge
 kind = "demand"
 [element.kill_feed]
-rect = [1636, 96, 268, 236]
+rect = [1364, 96, 540, 300]  # Blizzard's kill log rows are 600 units (540 px) wide; right edge 1904
 kind = "ui"
 [element.info_pane]
-rect = [16, 196, 530, 572]   # widened from 382 (2026-09-25) to fit Blizzard's native talent rows
+rect = [16, 196, 530, 600]   # widened from 382 (2026-09-25) to fit Blizzard's native talent rows;
+                             # 600 tall (was 572) for the title band
 kind = "demand"
+
+[info_pane]
+title_height = 26            # the title band across the top of the pane
+border = 2                   # the frame line around it
 [element.centre_banners]
 rect = [640, 196, 640, 78]   # Blizzard's; untouched, may shift on y
 kind = "ui"
@@ -118,10 +123,16 @@ kind = "demand"
 rect = [765, 804, 390, 264]
 kind = "ui"
 [element.blue_core]
-rect = [453, 950, 300, 18]
+rect = [540, 950, 213, 24]   # the core's health bar (Blizzard's, 237 x 27 units); shown only when needed
 kind = "ui"
 [element.red_core]
-rect = [1167, 950, 300, 18]
+rect = [1167, 950, 213, 24]
+kind = "ui"
+[element.blue_xp]
+rect = [169, 1070, 583, 8]   # team XP, the full width of the team's hero row, under it
+kind = "ui"
+[element.red_xp]
+rect = [1167, 1070, 583, 8]
 kind = "ui"
 
 # ---------------------------------------------------------------------------

@@ -119,6 +119,9 @@ class HeroCell:
     }
     # Blizzard's death timer spans IconFrame +15 .. -10: centred 2.5 right of the middle
     DEATH_SHIFT = 2.5
+    # Crowd control text ("STUNNED"...): a band across the bottom of the portrait, just
+    # above the health backing (36). Ours, not Blizzard's - their cell shows no CC.
+    CC_BAND = (22, 36)
     # The observer's portrait art is wide with the face on the right; Blizzard's observer
     # crops [0.1, 0.45, 0.65, 1.0] into 165 x 60, i.e. the art is 2.75x as wide as tall per
     # unit of crop. Same top/bottom/right here, left worked out for this cell's shape.
@@ -133,6 +136,7 @@ class HeroCell:
         self.team = {team: {part: tuple(s(v) for v in rect) for part, rect in g.items()}
                      for team, g in (("blue", self.BLUE), ("red", self.RED))}
         self.death_shift = s(self.DEATH_SHIFT)
+        self.cc_band = tuple(s(v) for v in self.CC_BAND)
         # the plate leans, so its top edge is centred half the overlap off the box's middle:
         # left on blue (leans \), right on red (leans /)
         self.top_edge_shift = {"blue": -s(self.OVERLAP / 2), "red": s(self.OVERLAP / 2)}
@@ -184,6 +188,25 @@ def constants_layout(cfg):
     const(name("minimap", "panel", "l"), left)
     const(name("minimap", "panel", "r"), left + MINIMAP_PANEL_W)
     const(name("minimap", "panel", "bottom"), u(mm["bottom"]) - cfg["screen"]["ui_reference_height"])
+
+    # Blizzard's core frame (stormobserverpanel Team1/2CoreUnitStatus) holds its health bar
+    # 18 units down, 34 in from the right (blue) / 28 in from the left (red); place the frame
+    # so the BAR lands on the [element.*_core] rect.
+    lines.append("")
+    lines.append("\t<!-- Core frames, placed so their health bars land on blue_core / red_core -->")
+    (bx, by, bw, _), _ = rects(cfg)["blue_core"]
+    (rx, ry, _, _), _ = rects(cfg)["red_core"]
+    const(name("blue", "core", "frame", "t"), u(by) - 18)
+    const(name("blue", "core", "frame", "r"), u(bx + bw) + 34)
+    const(name("red", "core", "frame", "t"), u(ry) - 18)
+    const(name("red", "core", "frame", "l"), u(rx) - 28)
+
+    pane = cfg["info_pane"]
+    lines.append("")
+    lines.append("\t<!-- Info pane chrome -->")
+    const(name("info", "pane", "title", "h"), u(pane["title_height"]))
+    const(name("info", "pane", "border"), max(1, u(pane["border"])))
+    const(name("info", "pane", "border", "neg"), -max(1, u(pane["border"])))
 
     row = cfg["hero_row"]
     lines.append("")
@@ -333,6 +356,36 @@ def hero_cell_template(team, c):
 				<Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm{suffix}"/>
 				<Tiled val="true"/>
 			</Frame>{health_backing}{mana_backing}{energy}"""
+    if blue:  # red inherits these unchanged
+        cc_top, cc_bottom = c.cc_band
+        health += f"""
+			<!-- CC: Blizzard's nameplate debuff element as an invisible SENSOR (it ships at
+			     Alpha 0 and only fades in on a world-nameplate event observer cells never get).
+			     Inside HeroStatus, so it reads this cell's own hero. Its text - "STUNNED",
+			     "ROOTED"... - is mirrored into our own label. Recipe from build 50. -->
+			<Frame type="UnitStatusBuffDebuffElement" name="FCJH_CC" template="UnitStatus/UnitStatusBuffDebuffDisplayTemplate">
+				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="{cc_top}"/>
+				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="{cc_bottom}"/>
+				<Anchor side="Right"  relative="$parent/$parent" pos="Max" offset="0"/>
+				<CollapseLayout val="true"/>
+				<VisibleToOwner val="true"/>
+				<VisibleToAlly val="true"/>
+				<VisibleToEnemy val="true"/>
+				<Unclipped val="true"/>
+			</Frame>
+			<Frame type="Label" name="FCJH_CCText">
+				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="{cc_top}"/>
+				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="{c.death_shift}"/>
+				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="{cc_bottom}"/>
+				<Anchor side="Right"  relative="$parent/$parent" pos="Max" offset="{c.death_shift}"/>
+				<Text val="{{$parent/FCJH_CC/DebuffLabel/@Text}}"/>
+				<Style val="TalentChoiceAlertNameplateLabel"/>
+				<Options val="NoWrapping | ScaleToPreventTruncation"/>
+				<RenderPriority val="530"/>
+				<Unclipped val="true"/>
+				<AcceptsMouse val="false"/>
+			</Frame>"""
     if blue:
         colour_states = "".join(
             f'\n\t\t\t\t<State name="{n}"><When type="Property" Unit="{unit}"/>'

@@ -1,18 +1,26 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <Desc>
-	<!-- PROBE (dev only): the Talents info pane as OUR OWN instance of Blizzard's talent panel.
+	<!-- Info pane: Talents (layout.toml element.info_pane, [info_pane]).
 
-	     Our bound-image table (previous probe) showed the data, but tooltips come from
-	     Blizzard's talent-icon frame type - plain images can't have them. Blizzard runs three
-	     engine-filled copies of its talent table already (top bar, bottom table, stats), so
-	     this makes a fourth, ours: a HeroTalentsPanel from CleanTalentsPanelTemplate, rows from
-	     Blizzard's own row template, placed in the info-pane box and laid out by us. As our
-	     frame, none of the bottom panel's clipping or fixed-height problems apply.
-	       - rows: blue 0-4 stacked over red 5-9, both from the left edge, native width
-	       - Blizzard's decorations (hex art, borders, close/sort buttons, team stats) hidden
-	     THE question: does the engine fill in a panel it didn't create? Look for portraits,
-	     "?" tiers, picked talents, and a tooltip when hovering a talent. -->
+	     OUR OWN instance of Blizzard's talent panel: a HeroTalentsPanel from
+	     CleanTalentsPanelTemplate, which the engine fills - portraits, picks, tooltips - with
+	     none of the bottom panel's clipping. Rows from Blizzard's own row template: blue 0-4
+	     stacked over red 5-9, red un-mirrored so every row reads portrait-first.
+	     Blizzard's decorations (hex art, borders, buttons, team stats) are hidden; ours are a
+	     dark backdrop under the rows, and a title band plus frame line over them.
+	     (Promoted from the dev probe of the same design, 2026-09-26.) -->
 	<Frame type="GameUI" name="GameUI" file="GameUI">
+		<Frame type="Image" name="FCJH_InfoPaneBack">
+			<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
+			<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_L"/>
+			<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_B"/>
+			<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
+			<Texture val="@UI/PauseScreenDimImage"/>
+			<ColorAdjustMode val="Fill"/>
+			<AdjustmentColor val="215,11,12,20"/>
+			<RenderPriority val="400"/>
+			<AcceptsMouse val="false"/>
+		</Frame>
 		<Frame type="HeroTalentsPanel" name="FCJH_TalentPanel" template="TalentsOverviewPanel/CleanTalentsPanelTemplate">
 			<Anchor side="Top"    relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
 			<Anchor side="Left"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_L"/>
@@ -21,6 +29,7 @@
 			<Width val="#FCJH_INFO_PANE_W"/>
 			<Height val="#FCJH_INFO_PANE_H"/>
 			<Visible val="true"/>
+			<RenderPriority val="500"/>
 			<Frame type="Frame"  name="TopHexContainer"><Alpha val="0"/></Frame>
 			<Frame type="Image"  name="HexImage"><Alpha val="0"/></Frame>
 			<Frame type="Image"  name="HexOverlayImage"><Alpha val="0"/></Frame>
@@ -30,7 +39,7 @@
 			<Frame type="Frame"  name="BlueTeamStats"><Alpha val="0"/></Frame>
 			<Frame type="Frame"  name="RedTeamStats"><Alpha val="0"/></Frame>
 			<Frame type="Frame" name="HeroTalentsPanelContainer" template="TalentsOverviewPanel/HeroTalentsPanelContainerTemplate">
-				<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
 				<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 				<Anchor side="Bottom" relative="$parent" pos="Max" offset="-8"/>
 				<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
@@ -308,6 +317,93 @@
 						</Frame>
 					</Frame>
 				</Frame>
+			</Frame>
+		</Frame>
+		<!-- Chrome: title band and a frame line, over the rows (they're drawn on top, so they
+		     never hide a talent; they let the mouse through to the tooltips). -->
+		<Frame type="Frame" name="FCJH_InfoPaneChrome">
+			<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
+			<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_L"/>
+			<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_B"/>
+			<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
+			<RenderPriority val="600"/>
+			<AcceptsMouse val="false"/>
+			<Frame type="Image" name="FCJH_TitleBand">
+				<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
+				<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+				<Texture val="@UI/PauseScreenDimImage"/>
+				<ColorAdjustMode val="Fill"/>
+				<AdjustmentColor val="235,24,28,48"/>
+				<RenderPriority val="600"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
+			<Frame type="Label" name="FCJH_Title">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
+				<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
+				<Style val="ObsBar_MatchTimer"/>
+				<Text val="TALENTS"/>
+				<RenderPriority val="610"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
+			<Frame type="Image" name="FCJH_BorderTop">
+				<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+				<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+				<Texture val="@UI/PauseScreenDimImage"/>
+				<ColorAdjustMode val="Fill"/>
+				<AdjustmentColor val="130,106,122,170"/>
+				<RenderPriority val="620"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
+			<Frame type="Image" name="FCJH_BorderBottom">
+				<Anchor side="Top" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+				<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+				<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+				<Texture val="@UI/PauseScreenDimImage"/>
+				<ColorAdjustMode val="Fill"/>
+				<AdjustmentColor val="130,106,122,170"/>
+				<RenderPriority val="620"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
+			<Frame type="Image" name="FCJH_BorderLeft">
+				<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+				<Texture val="@UI/PauseScreenDimImage"/>
+				<ColorAdjustMode val="Fill"/>
+				<AdjustmentColor val="130,106,122,170"/>
+				<RenderPriority val="620"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
+			<Frame type="Image" name="FCJH_BorderRight">
+				<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Left" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+				<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+				<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+				<Texture val="@UI/PauseScreenDimImage"/>
+				<ColorAdjustMode val="Fill"/>
+				<AdjustmentColor val="130,106,122,170"/>
+				<RenderPriority val="620"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
+			<Frame type="Image" name="FCJH_TitleRule">
+				<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
+				<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
+				<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+				<Texture val="@UI/PauseScreenDimImage"/>
+				<ColorAdjustMode val="Fill"/>
+				<AdjustmentColor val="130,106,122,170"/>
+				<RenderPriority val="620"/>
+				<AcceptsMouse val="false"/>
+				<Height val="#FCJH_INFO_PANE_BORDER"/>
 			</Frame>
 		</Frame>
 	</Frame>
