@@ -16,6 +16,8 @@ Layout units: the game lays its UI out on a grid ui_reference_height units tall,
 """
 
 import argparse
+import functools
+import hashlib
 import sys
 import tomllib
 from pathlib import Path
@@ -98,6 +100,9 @@ class HeroCell:
     W, H = 128, 61
     OVERLAP = 30                # HeroStackShift: each cell overlaps the next by 30
     PORTRAIT_H = 56             # 128 x 56, one unit above the cell's top
+    # The frame art's black border along each slanted edge is ~3 units wide and draws UNDER
+    # the portrait; portraits stop this far short of the edge so it shows between heroes.
+    BORDER = 2
     # (left, top, right, bottom)
     BLUE = {
         "health_backing": (21, 36, 126, 53),    # status frame 105 wide, 2 in from the right
@@ -219,9 +224,13 @@ WHITE = TEXTURE_DIR + "\\FCJH_White.dds"
 
 
 def portrait_mask_file(team):
-    return f"FCJH_Portrait_{team}.dds"
+    # Heroes caches a texture by its path across replay reloads (layouts reload, textures
+    # don't), so every version of a mask gets its own name: a hash of its content.
+    digest = hashlib.sha1(portrait_mask(team)).hexdigest()[:8]
+    return f"FCJH_Portrait_{team}_{digest}.dds"
 
 
+@functools.cache
 def portrait_mask(team, size=(256, 128), sub=4):
     """The portrait cut to the in-game cell's parallelogram, as an alpha mask.
 
@@ -233,6 +242,10 @@ def portrait_mask(team, size=(256, 128), sub=4):
     w, h = size
     c = HeroCell
     top, bottom = -1, c.PORTRAIT_H - 1  # the portrait frame, in cell units
+    # the portrait runs 2 units below the bar backings; Blizzard's art hides that strip,
+    # ours showed the hero under the resource bar - so stop where the backing does
+    # (1 unit early, so the mask's soft edge lands under the backing, not a hairline below it)
+    cut = c.BLUE["health_backing"][3] - 1
 
     def left_edge(y):
         down = y / c.H
@@ -245,8 +258,11 @@ def portrait_mask(team, size=(256, 128), sub=4):
             x0, x1 = tx / w * c.W, (tx + 1) / w * c.W
             cover = 0.0
             for s in range(sub):
-                left = left_edge(top + (ty + (s + 0.5) / sub) / h * (bottom - top))
-                right = left + c.W - c.OVERLAP
+                y = top + (ty + (s + 0.5) / sub) / h * (bottom - top)
+                if y > cut:
+                    continue
+                left = left_edge(y) + c.BORDER
+                right = left_edge(y) + c.W - c.OVERLAP - c.BORDER
                 cover += max(0.0, min(x1, right) - max(x0, left)) / (x1 - x0)
             a = round(255 * cover / sub)
             row += bytes((a, a, a, a))  # B, G, R, A: grey = alpha, whichever the engine reads
@@ -478,7 +494,15 @@ def stale(cfg, source=SOURCE, files=None):
         # git (core.autocrlf) may check text files out with CRLF; that isn't a change
         return data if rel.suffix == ".dds" else data.replace(b"\r\n", b"\n")
 
-    return [rel for rel, data in files.items() if not (source / rel).is_file() or on_disk(rel) != data]
+    return [rel for rel, data in files.items() if not (source / rel).is_file() or on_disk(rel) != data] \
+        + orphans(files, source)
+
+
+def orphans(files, source=SOURCE):
+    """Generated textures on disk that gen no longer writes (superseded hashed versions)."""
+    folder = source / TEXTURE_REL
+    return sorted(p.relative_to(source) for p in folder.glob("FCJH_*.dds")
+                  if p.relative_to(source) not in files) if folder.is_dir() else []
 
 
 def write(cfg, source=SOURCE):
@@ -486,8 +510,11 @@ def write(cfg, source=SOURCE):
     changed = stale(cfg, source, files)
     for rel in changed:
         path = source / rel
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_bytes(files[rel])
+        if rel in files:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(files[rel])
+        else:
+            path.unlink()
     return changed
 
 
@@ -589,7 +616,8 @@ def main():
             print(f"stale: {rel.as_posix()} (run python tools/gen.py)")
         return 1 if bad else 0
     changed = write(cfg)
-    print("\n".join(f"wrote {rel.as_posix()}" for rel in changed) or "generated files up to date")
+    print("\n".join(f"{'wrote' if (SOURCE / rel).exists() else 'removed'} {rel.as_posix()}"
+                    for rel in changed) or "generated files up to date")
     return 0
 
 
