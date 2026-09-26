@@ -91,6 +91,14 @@
 			<Texture val="@UI/HUD_TopBar_Team_HeroFrame_Glass"/>
 			<RenderPriority val="505"/>
 		</Frame>
+		<!-- EXPERIMENT: the in-game cell's heroic slot (icon, cooldown, ready frame), copied
+		     whole. Observer cells don't have one; if the engine fills it by name here too,
+		     it shows. If not, it stays hidden, as Blizzard ships it. -->
+		<Frame type="Frame" name="HeroicTalentPanel" template="PartyFrame/HeroOverviewTemplate/HeroicTalentPanel">
+			<Anchor side="Bottom" relative="$parent" pos="Min" offset="45"/>
+			<Anchor side="Left"   relative="$parent" pos="Min" offset="25"/>
+			<Unclipped val="true"/>
+		</Frame>
 		<Frame type="UnitStatusFrame" name="HeroStatus">
 			<Anchor side="Left" relative="$parent" pos="Min" offset="30"/>
 			<Anchor side="Top" relative="$parent" pos="Min" offset="48"/>
@@ -208,6 +216,38 @@
 				<State name="Gazlowe"><When type="Property" Unit="HeroTinker"/><Action type="SetProperty" frame="FCJH_Resource" ColorStyle="FuryEnergy"/></State>
 				<State name="Normal"><Action type="SetProperty" frame="FCJH_Resource" ColorStyle="StandardEnergy"/></State>
 			</StateGroup>
+			<!-- Fountain: Blizzard's fountain behaviour icon (hero console) as an invisible
+			     SENSOR - present only while this hero's fountain is on cooldown. Our marker,
+			     Blizzard's own "fountain ready" art, shows whenever the sensor is absent. -->
+			<Frame type="UnitStatusBehaviorIcon" name="FCJH_FountainSensor">
+				<Anchor relative="$parent"/>
+				<Behavior val="HealingFountainCooldown"/>
+				<Alpha val="0"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="BehaviorIcon" name="BehaviorIcon" template="BehaviorBar/BehaviorIconTemplate">
+					<Anchor relative="$parent"/>
+				</Frame>
+			</Frame>
+			<Frame type="Image" name="FCJH_FountainReady">
+				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="2"/>
+				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="10"/>
+				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="22"/>
+				<Anchor side="Right"  relative="$parent/$parent" pos="Min" offset="30"/>
+				<Texture val="@UI/Storm_UI_Ingame_HealingWell_Active"/>
+				<RenderPriority val="525"/>
+				<Unclipped val="true"/>
+				<AcceptsMouse val="false"/>
+				<StateGroup name="FCJH_Fountain">
+					<DefaultState val="Ready"/>
+					<State name="Cooldown">
+						<When type="Property" frame="$parent/FCJH_FountainSensor" Visible="true"/>
+						<Action type="SetProperty" frame="$this" Alpha="0"/>
+					</State>
+					<State name="Ready">
+						<Action type="SetProperty" frame="$this" Alpha="255"/>
+					</State>
+				</StateGroup>
+			</Frame>
 		</Frame>
 	</Frame>
 
@@ -257,6 +297,9 @@
 			<Texture val="@UI/HUD_TopBar_Team_HeroFrame_Glass"/>
 			<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>
 			<RenderPriority val="505"/>
+		</Frame>
+		<Frame type="Frame" name="HeroicTalentPanel">
+			<Anchor side="Left"   relative="$parent" pos="Min" offset="18"/>
 		</Frame>
 		<Frame type="UnitStatusFrame" name="HeroStatus">
 			<Anchor side="Left" relative="$parent" pos="Min" offset="10"/>
@@ -309,6 +352,12 @@
 				<BarCount val="1"/>
 				<ColorStyle val="StandardEnergy" index="0"/>
 				<Unclipped val="true"/>
+			</Frame>
+			<Frame type="Image" name="FCJH_FountainReady">
+				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="2"/>
+				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="130"/>
+				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="22"/>
+				<Anchor side="Right"  relative="$parent/$parent" pos="Min" offset="150"/>
 			</Frame>
 		</Frame>
 	</Frame>

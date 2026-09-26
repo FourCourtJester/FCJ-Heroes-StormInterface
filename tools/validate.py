@@ -44,6 +44,13 @@ MODS = REPO / "references" / "JamiePhan" / "mods"
 BASE_MODS = ["core.stormmod", "heroesdata.stormmod"]
 
 OUR_PREFIX = "FCJH_"
+# Blizzard-named frames we add ON PURPOSE to Blizzard frames that lack them, because the
+# engine may fill a frame by its name. Each is an experiment; keep the reason with it.
+DELIBERATE_NEW = {
+    # the in-game party frame's heroic slot, added to the observer hero cells in case the
+    # engine fills it there too (hero plates, 2026-09-26)
+    "HeroicTalentPanel",
+}
 PARK_THRESHOLD = 5000  # an anchor offset this large means "moved off-screen"
 
 SIDES = {"top", "bottom", "left", "right"}
@@ -283,7 +290,7 @@ class Catalog:
                 dst.add(sc.clone())
 
     def check_new_child(self, parent, name, el):
-        if el.ours and not parent.ours and not name.startswith(OUR_PREFIX):
+        if el.ours and not parent.ours and not name.startswith(OUR_PREFIX) and name not in DELIBERATE_NEW:
             self.error(el, f"no frame '{name}' in Blizzard's {parent.path()} - this silently creates a "
                            f"new, empty frame. A typo or a renamed frame? (Prefix new frames {OUR_PREFIX})")
 
