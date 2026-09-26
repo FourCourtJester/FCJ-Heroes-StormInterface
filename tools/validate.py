@@ -245,7 +245,8 @@ class Catalog:
         return frame
 
     def template(self, path, el):
-        path = self.const(path)
+        # Blizzard writes paths with either separator (TalentsOverviewPanel\Foo); the game accepts both.
+        path = self.const(path).replace("\\", "/")
         parts = path.split("/")
         if len(parts) < 2:
             self.error(el, f"template '{path}' must be File/Frame")
@@ -369,7 +370,7 @@ class Catalog:
 
     def resolve(self, ctx, path):
         """Resolve a frame path from ctx. Returns (frame, None) or (None, (last good frame, segment))."""
-        path = self.const(path)
+        path = self.const(path).replace("\\", "/")
         cur = ctx
         for i, seg in enumerate(path.split("/")):
             s = seg.lower()

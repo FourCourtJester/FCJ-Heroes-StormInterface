@@ -303,6 +303,22 @@ were removed from `src/dev/`; they're in history at `a0180f9`.
   and watching the icons from outside; **`<Handle>`s added to the icons resolved for only
   one player** → full paths from `$GameUI` work for all.
 
+**Info pane (Talents) — solved, probe `FCJH_Probe_TalentPanel`:**
+- Moving Blizzard's bottom talent table failed three ways: it's clipped to its parent
+  (`Unclipped` needed), its rows hang off wide grid art (`TalentGridImage`), and its panel has
+  a fixed `Height` 410 — **a fixed-size frame anchored on both sides is CENTRED between the
+  anchors, not stretched**, and clips its children to that.
+- Our own table of images bound to Blizzard's talent icons showed the data but **can't have
+  tooltips** — those belong to Blizzard's `UnitStatusTalentIcon` frame type.
+- ✅ **What works: our OWN instance of Blizzard's panel** — `FCJH_TalentPanel`, type
+  `HeroTalentsPanel`, template `TalentsOverviewPanel/CleanTalentsPanelTemplate`, rows from
+  `HeroTalentsPanelContainerTemplate`. **The engine fills it** (portraits, "?" tiers, picks,
+  **tooltips**), and as our frame it has none of the bottom panel's problems. Blue stacked
+  over red; red rows un-mirrored by giving their portrait + seven tier icons blue's anchors.
+- The pane is widened 382 → **530 px** (`layout.toml`) to fit Blizzard's native rows.
+  To do: backdrops for empty tier slots, a pane title, the Ctrl hotkey, the canvas update.
+- Validator fix: Blizzard writes paths with backslashes too (`Foo\Bar`); both now resolve.
+
 Superseded round 1–2 notes (kept for the record):
 
 - `FCJH_Probe_Icons` — a numbered column of Blizzard heal-looking textures on the right
