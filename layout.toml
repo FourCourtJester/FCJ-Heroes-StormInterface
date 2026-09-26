@@ -112,7 +112,9 @@ kind = "demand"
 title_height = 26            # the title band across the top of the pane
 border = 2                   # the frame line around it
 header_height = 22           # the stats panes' column headings, under the title
-# Each pane has its own hotkey and starts hidden; they share the one info_pane box.
+team_height = 24             # each team's band (name + team totals) above its five rows
+# Each pane has its own hotkey and starts hidden; they share the one info_pane box, and
+# opening one closes whichever is open.
 hotkeys = { talents = "Control+Shift+1", kda = "Control+Shift+2", healing = "Control+Shift+3", structures = "Control+Shift+4" }
 [element.centre_banners]
 rect = [640, 196, 640, 78]   # Blizzard's; untouched, may shift on y

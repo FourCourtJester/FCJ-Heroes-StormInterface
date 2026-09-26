@@ -9,8 +9,8 @@
 	     Blizzard's decorations (hex art, borders, buttons, team stats) are hidden; ours are a
 	     dark backdrop under the rows, and a title band plus frame line over them.
 	     (Promoted from the dev probe of the same design, 2026-09-26.)
-	     Shown and hidden by its hotkey (#FCJH_INFO_PANE_KEY_TALENTS, layout.toml
-	     [info_pane]); starts hidden, like the stats panes. -->
+	     Shown by its hotkey (layout.toml [info_pane]); starts hidden, and only one info
+	     pane shows at a time - the hotkeys for all four live in FCJH_StatPanes. -->
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<Frame type="Frame" name="FCJH_Pane_Talents">
 			<Anchor relative="$parent"/>
@@ -412,27 +412,6 @@
 					<Height val="#FCJH_INFO_PANE_BORDER"/>
 				</Frame>
 			</Frame>
-		</Frame>
-		<Frame type="ToggleControl" name="FCJH_Pane_TalentsToggle">
-			<Anchor side="Top"  relative="$parent" pos="Min" offset="0"/>
-			<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-			<Width val="1"/>
-			<Height val="1"/>
-			<Shortcut val="#FCJH_INFO_PANE_KEY_TALENTS"/>
-			<Visible val="false"/>
-			<AcceptsMouse val="false"/>
-			<Animation name="FCJH_Show">
-				<Event event="OnShown" action="DirectionForward,Play"/>
-				<Event event="OnHidden" action="DirectionReverse,Play"/>
-				<Controller type="Visibility" end="Pause" frame="$parent/FCJH_Pane_Talents">
-					<Key type="Bool" time="0" value="false"/>
-					<Key type="Bool" time="0.001" value="true"/>
-				</Controller>
-				<Controller type="Fade" end="Pause" frame="$parent/FCJH_Pane_Talents">
-					<Key type="Curve" time="0" value="0"/>
-					<Key type="Curve" time="0.15" value="255"/>
-				</Controller>
-			</Animation>
 		</Frame>
 	</Frame>
 </Desc>
