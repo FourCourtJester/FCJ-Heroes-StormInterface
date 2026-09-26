@@ -168,6 +168,29 @@
 				<Unclipped val="true"/>
 				<AcceptsMouse val="false"/>
 			</Frame>
+			<!-- ...and its icon, mirrored the same way. Shown only while there IS CC text: a
+			     mirrored image with no picture could otherwise draw as a blank square. -->
+			<Frame type="Image" name="FCJH_CCIcon">
+				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="2"/>
+				<Anchor side="Left"   relative="$parent/$parent" pos="Mid" offset="-8"/>
+				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="25"/>
+				<Anchor side="Right"  relative="$parent/$parent" pos="Mid" offset="14"/>
+				<Texture val="{$parent/FCJH_CC/DebuffIconLeft/@Texture}"/>
+				<Alpha val="0"/>
+				<RenderPriority val="530"/>
+				<Unclipped val="true"/>
+				<AcceptsMouse val="false"/>
+				<StateGroup name="FCJH_WhenCC">
+					<DefaultState val="CC"/>
+					<State name="None">
+						<When type="Property" frame="$parent/FCJH_CCText" Text=""/>
+						<Action type="SetProperty" frame="$this" Alpha="0"/>
+					</State>
+					<State name="CC">
+						<Action type="SetProperty" frame="$this" Alpha="255"/>
+					</State>
+				</StateGroup>
+			</Frame>
 			<StateGroup name="FCJH_ResourceColour">
 				<DefaultState val="Normal"/>
 				<State name="Auriel"><When type="Property" Unit="HeroAuriel"/><Action type="SetProperty" frame="FCJH_Resource" ColorStyle="BrewEnergy"/></State>

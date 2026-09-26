@@ -122,6 +122,8 @@ class HeroCell:
     # Crowd control text ("STUNNED"...): a band across the bottom of the portrait, just
     # above the health backing (36). Ours, not Blizzard's - their cell shows no CC.
     CC_BAND = (22, 36)
+    # ...and its icon, centred on the portrait above that text: top, bottom, half-width
+    CC_ICON = (2, 20, 9)
     # The observer's portrait art is wide with the face on the right; Blizzard's observer
     # crops [0.1, 0.45, 0.65, 1.0] into 165 x 60, i.e. the art is 2.75x as wide as tall per
     # unit of crop. Same top/bottom/right here, left worked out for this cell's shape.
@@ -137,6 +139,7 @@ class HeroCell:
                      for team, g in (("blue", self.BLUE), ("red", self.RED))}
         self.death_shift = s(self.DEATH_SHIFT)
         self.cc_band = tuple(s(v) for v in self.CC_BAND)
+        self.cc_icon = tuple(s(v) for v in self.CC_ICON)
         # the plate leans, so its top edge is centred half the overlap off the box's middle:
         # left on blue (leans \), right on red (leans /)
         self.top_edge_shift = {"blue": -s(self.OVERLAP / 2), "red": s(self.OVERLAP / 2)}
@@ -388,6 +391,29 @@ def hero_cell_template(team, c):
 				<RenderPriority val="530"/>
 				<Unclipped val="true"/>
 				<AcceptsMouse val="false"/>
+			</Frame>
+			<!-- ...and its icon, mirrored the same way. Shown only while there IS CC text: a
+			     mirrored image with no picture could otherwise draw as a blank square. -->
+			<Frame type="Image" name="FCJH_CCIcon">
+				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="{c.cc_icon[0]}"/>
+				<Anchor side="Left"   relative="$parent/$parent" pos="Mid" offset="{c.death_shift - c.cc_icon[2]}"/>
+				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="{c.cc_icon[1]}"/>
+				<Anchor side="Right"  relative="$parent/$parent" pos="Mid" offset="{c.death_shift + c.cc_icon[2]}"/>
+				<Texture val="{{$parent/FCJH_CC/DebuffIconLeft/@Texture}}"/>
+				<Alpha val="0"/>
+				<RenderPriority val="530"/>
+				<Unclipped val="true"/>
+				<AcceptsMouse val="false"/>
+				<StateGroup name="FCJH_WhenCC">
+					<DefaultState val="CC"/>
+					<State name="None">
+						<When type="Property" frame="$parent/FCJH_CCText" Text=""/>
+						<Action type="SetProperty" frame="$this" Alpha="0"/>
+					</State>
+					<State name="CC">
+						<Action type="SetProperty" frame="$this" Alpha="255"/>
+					</State>
+				</StateGroup>
 			</Frame>"""
     if blue:
         colour_states = "".join(
