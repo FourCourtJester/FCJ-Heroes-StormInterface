@@ -17,7 +17,10 @@
 	          icon (HeroBuffDebuffPanel), hero mechanics (HeroSpecificStatusContainer).
 	          They show when the engine decides - in observer, while a hero is selected.
 	     Look for: the card top-left when you click a hero plate; which parts appear, which
-	     don't, and what's where. Expect overlaps - this is to see what's available. -->
+	     don't, and what's where. Expect overlaps - this is to see what's available.
+	     Escape test (card up): "ESC SEEN" appearing/disappearing in the title band means our
+	     Escape binding fires; note whether the game menu opens too, and whether the
+	     selection (and so the card) clears. -->
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 
 		<!-- 1. Our copy of the inspect box -->
@@ -57,6 +60,37 @@
 				<Text val="INSPECT"/>
 				<RenderPriority val="215"/>
 				<AcceptsMouse val="false"/>
+			</Frame>
+
+			<!-- Escape experiment: does a layout hotkey on Escape fire at all, and does the
+			     game menu open as well? The marker flips on each press our binding sees. -->
+			<Frame type="Label" name="FCJH_EscMarker">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
+				<Anchor side="Right"  relative="$parent" pos="Max" offset="-10"/>
+				<Width val="120"/>
+				<Style val="ObsBar_MatchTimer"/>
+				<Text val="ESC SEEN"/>
+				<Alpha val="0"/>
+				<RenderPriority val="215"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
+			<Frame type="ToggleControl" name="FCJH_EscToggle">
+				<Anchor side="Top"  relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+				<Width val="1"/>
+				<Height val="1"/>
+				<Shortcut val="Escape"/>
+				<Visible val="false"/>
+				<AcceptsMouse val="false"/>
+				<Animation name="FCJH_Mark">
+					<Event event="OnShown" action="DirectionForward,Play"/>
+					<Event event="OnHidden" action="DirectionReverse,Play"/>
+					<Controller type="Fade" end="Pause" frame="$parent/FCJH_EscMarker">
+						<Key type="Curve" time="0" value="0"/>
+						<Key type="Curve" time="0.05" value="255"/>
+					</Controller>
+				</Animation>
 			</Frame>
 
 			<Frame type="Frame" name="TargetInfoPanel" template="TargetInfoPanel/TargetInfoPanelTemplate">
