@@ -8,403 +8,431 @@
 	     stacked over red 5-9, red un-mirrored so every row reads portrait-first.
 	     Blizzard's decorations (hex art, borders, buttons, team stats) are hidden; ours are a
 	     dark backdrop under the rows, and a title band plus frame line over them.
-	     (Promoted from the dev probe of the same design, 2026-09-26.) -->
+	     (Promoted from the dev probe of the same design, 2026-09-26.)
+	     Shown and hidden by its hotkey (#FCJH_INFO_PANE_KEY_TALENTS, layout.toml
+	     [info_pane]); starts hidden, like the stats panes. -->
 	<Frame type="GameUI" name="GameUI" file="GameUI">
-		<Frame type="Image" name="FCJH_InfoPaneBack">
-			<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
-			<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_L"/>
-			<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_B"/>
-			<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
-			<Texture val="@UI/PauseScreenDimImage"/>
-			<ColorAdjustMode val="Fill"/>
-			<AdjustmentColor val="215,11,12,20"/>
-			<RenderPriority val="400"/>
+		<Frame type="Frame" name="FCJH_Pane_Talents">
+			<Anchor relative="$parent"/>
+			<Visible val="false"/>
 			<AcceptsMouse val="false"/>
-		</Frame>
-		<Frame type="HeroTalentsPanel" name="FCJH_TalentPanel" template="TalentsOverviewPanel/CleanTalentsPanelTemplate">
-			<Anchor side="Top"    relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
-			<Anchor side="Left"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_L"/>
-			<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_B"/>
-			<Anchor side="Right"  relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
-			<Width val="#FCJH_INFO_PANE_W"/>
-			<Height val="#FCJH_INFO_PANE_H"/>
-			<Visible val="true"/>
-			<RenderPriority val="500"/>
-			<Frame type="Frame"  name="TopHexContainer"><Alpha val="0"/></Frame>
-			<Frame type="Image"  name="HexImage"><Alpha val="0"/></Frame>
-			<Frame type="Image"  name="HexOverlayImage"><Alpha val="0"/></Frame>
-			<Frame type="Frame"  name="BorderContainer"><Alpha val="0"/></Frame>
-			<Frame type="Button" name="CloseButton"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
-			<Frame type="Button" name="ClearSortButton"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
-			<Frame type="Frame"  name="BlueTeamStats"><Alpha val="0"/></Frame>
-			<Frame type="Frame"  name="RedTeamStats"><Alpha val="0"/></Frame>
-			<Frame type="Frame" name="HeroTalentsPanelContainer" template="TalentsOverviewPanel/HeroTalentsPanelContainerTemplate">
-				<Anchor side="Top"    relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
-				<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-				<Anchor side="Bottom" relative="$parent" pos="Max" offset="-8"/>
-				<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
-				<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame0">
-					<Anchor side="Left"  relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Right" relative="$this"   pos="Min" offset="0"/>
-				</Frame>
-				<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame4">
-					<Anchor side="Bottom" relative="$parent/PlayerFrame5" pos="Min" offset="0"/>
-				</Frame>
-				<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame5">
-					<Anchor side="Left"  relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Right" relative="$this"   pos="Min" offset="0"/>
-				</Frame>
-				<!-- Red rows un-mirrored: Blizzard's red row template anchors the portrait and the
-				     seven tier icons from the right edge. Give them blue's anchors (all four sides,
-				     read off the merged tree) so every row reads portrait-first, like blue. -->
-				<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame5">
-					<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-						<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-						<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+			<Frame type="Image" name="FCJH_InfoPaneBack">
+				<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
+				<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_L"/>
+				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_B"/>
+				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
+				<Texture val="@UI/PauseScreenDimImage"/>
+				<ColorAdjustMode val="Fill"/>
+				<AdjustmentColor val="215,11,12,20"/>
+				<RenderPriority val="400"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
+			<Frame type="HeroTalentsPanel" name="FCJH_TalentPanel" template="TalentsOverviewPanel/CleanTalentsPanelTemplate">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
+				<Anchor side="Left"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_L"/>
+				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_B"/>
+				<Anchor side="Right"  relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
+				<Width val="#FCJH_INFO_PANE_W"/>
+				<Height val="#FCJH_INFO_PANE_H"/>
+				<Visible val="true"/>
+				<RenderPriority val="500"/>
+				<Frame type="Frame"  name="TopHexContainer"><Alpha val="0"/></Frame>
+				<Frame type="Image"  name="HexImage"><Alpha val="0"/></Frame>
+				<Frame type="Image"  name="HexOverlayImage"><Alpha val="0"/></Frame>
+				<Frame type="Frame"  name="BorderContainer"><Alpha val="0"/></Frame>
+				<Frame type="Button" name="CloseButton"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
+				<Frame type="Button" name="ClearSortButton"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
+				<Frame type="Frame"  name="BlueTeamStats"><Alpha val="0"/></Frame>
+				<Frame type="Frame"  name="RedTeamStats"><Alpha val="0"/></Frame>
+				<Frame type="Frame" name="HeroTalentsPanelContainer" template="TalentsOverviewPanel/HeroTalentsPanelContainerTemplate">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Bottom" relative="$parent" pos="Max" offset="-8"/>
+					<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
+					<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame0">
+						<Anchor side="Left"  relative="$parent" pos="Min" offset="0"/>
+						<Anchor side="Right" relative="$this"   pos="Min" offset="0"/>
 					</Frame>
-					<Frame type="PlayerHeroSelectedTalentTreeFrame" name="TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame">
-						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
-							<Anchor side="Left"   relative="$parent" pos="Min" offset="133"/>
-							<Anchor side="Top"    relative="$parent" pos="Min" offset="7"/>
-							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-						</Frame>
-						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
-							<Anchor side="Left"   relative="$parent/TalentTreeIcon1" pos="Max" offset="#BottomPanelHorizTalentGapBlue"/>
-							<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
-							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-						</Frame>
-						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
-							<Anchor side="Left"   relative="$parent/TalentTreeIcon2" pos="Max" offset="#BottomPanelHorizTalentGapBlue"/>
-							<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
-							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-						</Frame>
-						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
-							<Anchor side="Left"   relative="$parent/TalentTreeIcon3" pos="Max" offset="22"/>
-							<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="1"/>
-							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-						</Frame>
-						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5">
-							<Anchor side="Left"   relative="$parent/TalentTreeIcon4" pos="Max" offset="#BottomPanelHorizHeroicGapBlue"/>
-							<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
-							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-						</Frame>
-						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6">
-							<Anchor side="Left"   relative="$parent/TalentTreeIcon5" pos="Max" offset="#BottomPanelHorizTalentGapBlue"/>
-							<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
-							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-						</Frame>
-						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7">
-							<Anchor side="Left"   relative="$parent/TalentTreeIcon6" pos="Max" offset="22"/>
-							<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="1"/>
-							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-						</Frame>
+					<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame4">
+						<Anchor side="Bottom" relative="$parent/PlayerFrame5" pos="Min" offset="0"/>
 					</Frame>
-				</Frame>
-				<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame6">
-					<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-						<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-						<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+					<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame5">
+						<Anchor side="Left"  relative="$parent" pos="Min" offset="0"/>
+						<Anchor side="Right" relative="$this"   pos="Min" offset="0"/>
 					</Frame>
-					<Frame type="PlayerHeroSelectedTalentTreeFrame" name="TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame">
-						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
-							<Anchor side="Left"   relative="$parent" pos="Min" offset="133"/>
-							<Anchor side="Top"    relative="$parent" pos="Min" offset="7"/>
+					<!-- Red rows un-mirrored: Blizzard's red row template anchors the portrait and the
+					     seven tier icons from the right edge. Give them blue's anchors (all four sides,
+					     read off the merged tree) so every row reads portrait-first, like blue. -->
+					<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame5">
+						<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
 							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 						</Frame>
-						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
-							<Anchor side="Left"   relative="$parent/TalentTreeIcon1" pos="Max" offset="#BottomPanelHorizTalentGapBlue"/>
-							<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
-							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-						</Frame>
-						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
-							<Anchor side="Left"   relative="$parent/TalentTreeIcon2" pos="Max" offset="#BottomPanelHorizTalentGapBlue"/>
-							<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
-							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-						</Frame>
-						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
-							<Anchor side="Left"   relative="$parent/TalentTreeIcon3" pos="Max" offset="22"/>
-							<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="1"/>
-							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-						</Frame>
-						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5">
-							<Anchor side="Left"   relative="$parent/TalentTreeIcon4" pos="Max" offset="#BottomPanelHorizHeroicGapBlue"/>
-							<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
-							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-						</Frame>
-						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6">
-							<Anchor side="Left"   relative="$parent/TalentTreeIcon5" pos="Max" offset="#BottomPanelHorizTalentGapBlue"/>
-							<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
-							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-						</Frame>
-						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7">
-							<Anchor side="Left"   relative="$parent/TalentTreeIcon6" pos="Max" offset="22"/>
-							<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="1"/>
-							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+						<Frame type="PlayerHeroSelectedTalentTreeFrame" name="TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame">
+							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="133"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="7"/>
+								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
+								<Anchor side="Left"   relative="$parent/TalentTreeIcon1" pos="Max" offset="#BottomPanelHorizTalentGapBlue"/>
+								<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
+								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
+								<Anchor side="Left"   relative="$parent/TalentTreeIcon2" pos="Max" offset="#BottomPanelHorizTalentGapBlue"/>
+								<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
+								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
+								<Anchor side="Left"   relative="$parent/TalentTreeIcon3" pos="Max" offset="22"/>
+								<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="1"/>
+								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5">
+								<Anchor side="Left"   relative="$parent/TalentTreeIcon4" pos="Max" offset="#BottomPanelHorizHeroicGapBlue"/>
+								<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
+								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6">
+								<Anchor side="Left"   relative="$parent/TalentTreeIcon5" pos="Max" offset="#BottomPanelHorizTalentGapBlue"/>
+								<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
+								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7">
+								<Anchor side="Left"   relative="$parent/TalentTreeIcon6" pos="Max" offset="22"/>
+								<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="1"/>
+								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							</Frame>
 						</Frame>
 					</Frame>
-				</Frame>
-				<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame7">
-					<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-						<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-						<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-					</Frame>
-					<Frame type="PlayerHeroSelectedTalentTreeFrame" name="TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame">
-						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
-							<Anchor side="Left"   relative="$parent" pos="Min" offset="133"/>
-							<Anchor side="Top"    relative="$parent" pos="Min" offset="7"/>
+					<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame6">
+						<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
 							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 						</Frame>
-						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
-							<Anchor side="Left"   relative="$parent/TalentTreeIcon1" pos="Max" offset="#BottomPanelHorizTalentGapBlue"/>
-							<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
-							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-						</Frame>
-						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
-							<Anchor side="Left"   relative="$parent/TalentTreeIcon2" pos="Max" offset="#BottomPanelHorizTalentGapBlue"/>
-							<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
-							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-						</Frame>
-						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
-							<Anchor side="Left"   relative="$parent/TalentTreeIcon3" pos="Max" offset="22"/>
-							<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="1"/>
-							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-						</Frame>
-						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5">
-							<Anchor side="Left"   relative="$parent/TalentTreeIcon4" pos="Max" offset="#BottomPanelHorizHeroicGapBlue"/>
-							<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
-							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-						</Frame>
-						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6">
-							<Anchor side="Left"   relative="$parent/TalentTreeIcon5" pos="Max" offset="#BottomPanelHorizTalentGapBlue"/>
-							<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
-							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-						</Frame>
-						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7">
-							<Anchor side="Left"   relative="$parent/TalentTreeIcon6" pos="Max" offset="22"/>
-							<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="1"/>
-							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-						</Frame>
-					</Frame>
-				</Frame>
-				<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame8">
-					<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-						<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-						<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-					</Frame>
-					<Frame type="PlayerHeroSelectedTalentTreeFrame" name="TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame">
-						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
-							<Anchor side="Left"   relative="$parent" pos="Min" offset="133"/>
-							<Anchor side="Top"    relative="$parent" pos="Min" offset="7"/>
-							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-						</Frame>
-						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
-							<Anchor side="Left"   relative="$parent/TalentTreeIcon1" pos="Max" offset="#BottomPanelHorizTalentGapBlue"/>
-							<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
-							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-						</Frame>
-						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
-							<Anchor side="Left"   relative="$parent/TalentTreeIcon2" pos="Max" offset="#BottomPanelHorizTalentGapBlue"/>
-							<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
-							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-						</Frame>
-						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
-							<Anchor side="Left"   relative="$parent/TalentTreeIcon3" pos="Max" offset="22"/>
-							<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="1"/>
-							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-						</Frame>
-						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5">
-							<Anchor side="Left"   relative="$parent/TalentTreeIcon4" pos="Max" offset="#BottomPanelHorizHeroicGapBlue"/>
-							<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
-							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-						</Frame>
-						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6">
-							<Anchor side="Left"   relative="$parent/TalentTreeIcon5" pos="Max" offset="#BottomPanelHorizTalentGapBlue"/>
-							<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
-							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-						</Frame>
-						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7">
-							<Anchor side="Left"   relative="$parent/TalentTreeIcon6" pos="Max" offset="22"/>
-							<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="1"/>
-							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+						<Frame type="PlayerHeroSelectedTalentTreeFrame" name="TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame">
+							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="133"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="7"/>
+								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
+								<Anchor side="Left"   relative="$parent/TalentTreeIcon1" pos="Max" offset="#BottomPanelHorizTalentGapBlue"/>
+								<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
+								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
+								<Anchor side="Left"   relative="$parent/TalentTreeIcon2" pos="Max" offset="#BottomPanelHorizTalentGapBlue"/>
+								<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
+								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
+								<Anchor side="Left"   relative="$parent/TalentTreeIcon3" pos="Max" offset="22"/>
+								<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="1"/>
+								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5">
+								<Anchor side="Left"   relative="$parent/TalentTreeIcon4" pos="Max" offset="#BottomPanelHorizHeroicGapBlue"/>
+								<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
+								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6">
+								<Anchor side="Left"   relative="$parent/TalentTreeIcon5" pos="Max" offset="#BottomPanelHorizTalentGapBlue"/>
+								<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
+								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7">
+								<Anchor side="Left"   relative="$parent/TalentTreeIcon6" pos="Max" offset="22"/>
+								<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="1"/>
+								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							</Frame>
 						</Frame>
 					</Frame>
-				</Frame>
-				<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame9">
-					<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-						<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-						<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+					<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame7">
+						<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
+							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+						</Frame>
+						<Frame type="PlayerHeroSelectedTalentTreeFrame" name="TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame">
+							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="133"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="7"/>
+								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
+								<Anchor side="Left"   relative="$parent/TalentTreeIcon1" pos="Max" offset="#BottomPanelHorizTalentGapBlue"/>
+								<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
+								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
+								<Anchor side="Left"   relative="$parent/TalentTreeIcon2" pos="Max" offset="#BottomPanelHorizTalentGapBlue"/>
+								<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
+								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
+								<Anchor side="Left"   relative="$parent/TalentTreeIcon3" pos="Max" offset="22"/>
+								<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="1"/>
+								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5">
+								<Anchor side="Left"   relative="$parent/TalentTreeIcon4" pos="Max" offset="#BottomPanelHorizHeroicGapBlue"/>
+								<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
+								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6">
+								<Anchor side="Left"   relative="$parent/TalentTreeIcon5" pos="Max" offset="#BottomPanelHorizTalentGapBlue"/>
+								<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
+								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7">
+								<Anchor side="Left"   relative="$parent/TalentTreeIcon6" pos="Max" offset="22"/>
+								<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="1"/>
+								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							</Frame>
+						</Frame>
 					</Frame>
-					<Frame type="PlayerHeroSelectedTalentTreeFrame" name="TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame">
-						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
-							<Anchor side="Left"   relative="$parent" pos="Min" offset="133"/>
-							<Anchor side="Top"    relative="$parent" pos="Min" offset="7"/>
+					<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame8">
+						<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
 							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 						</Frame>
-						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
-							<Anchor side="Left"   relative="$parent/TalentTreeIcon1" pos="Max" offset="#BottomPanelHorizTalentGapBlue"/>
-							<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
+						<Frame type="PlayerHeroSelectedTalentTreeFrame" name="TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame">
+							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="133"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="7"/>
+								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
+								<Anchor side="Left"   relative="$parent/TalentTreeIcon1" pos="Max" offset="#BottomPanelHorizTalentGapBlue"/>
+								<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
+								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
+								<Anchor side="Left"   relative="$parent/TalentTreeIcon2" pos="Max" offset="#BottomPanelHorizTalentGapBlue"/>
+								<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
+								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
+								<Anchor side="Left"   relative="$parent/TalentTreeIcon3" pos="Max" offset="22"/>
+								<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="1"/>
+								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5">
+								<Anchor side="Left"   relative="$parent/TalentTreeIcon4" pos="Max" offset="#BottomPanelHorizHeroicGapBlue"/>
+								<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
+								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6">
+								<Anchor side="Left"   relative="$parent/TalentTreeIcon5" pos="Max" offset="#BottomPanelHorizTalentGapBlue"/>
+								<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
+								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7">
+								<Anchor side="Left"   relative="$parent/TalentTreeIcon6" pos="Max" offset="22"/>
+								<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="1"/>
+								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							</Frame>
+						</Frame>
+					</Frame>
+					<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame9">
+						<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
 							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 						</Frame>
-						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
-							<Anchor side="Left"   relative="$parent/TalentTreeIcon2" pos="Max" offset="#BottomPanelHorizTalentGapBlue"/>
-							<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
-							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-						</Frame>
-						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
-							<Anchor side="Left"   relative="$parent/TalentTreeIcon3" pos="Max" offset="22"/>
-							<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="1"/>
-							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-						</Frame>
-						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5">
-							<Anchor side="Left"   relative="$parent/TalentTreeIcon4" pos="Max" offset="#BottomPanelHorizHeroicGapBlue"/>
-							<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
-							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-						</Frame>
-						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6">
-							<Anchor side="Left"   relative="$parent/TalentTreeIcon5" pos="Max" offset="#BottomPanelHorizTalentGapBlue"/>
-							<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
-							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-						</Frame>
-						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7">
-							<Anchor side="Left"   relative="$parent/TalentTreeIcon6" pos="Max" offset="22"/>
-							<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="1"/>
-							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+						<Frame type="PlayerHeroSelectedTalentTreeFrame" name="TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame">
+							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="133"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="7"/>
+								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
+								<Anchor side="Left"   relative="$parent/TalentTreeIcon1" pos="Max" offset="#BottomPanelHorizTalentGapBlue"/>
+								<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
+								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
+								<Anchor side="Left"   relative="$parent/TalentTreeIcon2" pos="Max" offset="#BottomPanelHorizTalentGapBlue"/>
+								<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
+								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
+								<Anchor side="Left"   relative="$parent/TalentTreeIcon3" pos="Max" offset="22"/>
+								<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="1"/>
+								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5">
+								<Anchor side="Left"   relative="$parent/TalentTreeIcon4" pos="Max" offset="#BottomPanelHorizHeroicGapBlue"/>
+								<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
+								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6">
+								<Anchor side="Left"   relative="$parent/TalentTreeIcon5" pos="Max" offset="#BottomPanelHorizTalentGapBlue"/>
+								<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
+								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7">
+								<Anchor side="Left"   relative="$parent/TalentTreeIcon6" pos="Max" offset="22"/>
+								<Anchor side="Top"    relative="$parent/TalentTreeIcon1" pos="Min" offset="1"/>
+								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							</Frame>
 						</Frame>
 					</Frame>
 				</Frame>
 			</Frame>
-		</Frame>
-		<!-- Chrome: title band and a frame line, over the rows (they're drawn on top, so they
-		     never hide a talent; they let the mouse through to the tooltips). -->
-		<Frame type="Frame" name="FCJH_InfoPaneChrome">
-			<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
-			<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_L"/>
-			<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_B"/>
-			<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
-			<RenderPriority val="600"/>
-			<AcceptsMouse val="false"/>
-			<Frame type="Image" name="FCJH_TitleBand">
-				<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-				<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
-				<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-				<Texture val="@UI/PauseScreenDimImage"/>
-				<ColorAdjustMode val="Fill"/>
-				<AdjustmentColor val="235,24,28,48"/>
+			<!-- Chrome: title band and a frame line, over the rows (they're drawn on top, so they
+			     never hide a talent; they let the mouse through to the tooltips). -->
+			<Frame type="Frame" name="FCJH_InfoPaneChrome">
+				<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
+				<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_L"/>
+				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_B"/>
+				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
 				<RenderPriority val="600"/>
 				<AcceptsMouse val="false"/>
+				<Frame type="Image" name="FCJH_TitleBand">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="235,24,28,48"/>
+					<RenderPriority val="600"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Label" name="FCJH_Title">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
+					<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
+					<Style val="ObsBar_MatchTimer"/>
+					<Text val="TALENTS"/>
+					<RenderPriority val="610"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_BorderTop">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="130,106,122,170"/>
+					<RenderPriority val="620"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_BorderBottom">
+					<Anchor side="Top" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="130,106,122,170"/>
+					<RenderPriority val="620"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_BorderLeft">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+					<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="130,106,122,170"/>
+					<RenderPriority val="620"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_BorderRight">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Left" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="130,106,122,170"/>
+					<RenderPriority val="620"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_TitleRule">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="130,106,122,170"/>
+					<RenderPriority val="620"/>
+					<AcceptsMouse val="false"/>
+					<Height val="#FCJH_INFO_PANE_BORDER"/>
+				</Frame>
 			</Frame>
-			<Frame type="Label" name="FCJH_Title">
-				<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-				<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
-				<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
-				<Style val="ObsBar_MatchTimer"/>
-				<Text val="TALENTS"/>
-				<RenderPriority val="610"/>
-				<AcceptsMouse val="false"/>
-			</Frame>
-			<Frame type="Image" name="FCJH_BorderTop">
-				<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-				<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
-				<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-				<Texture val="@UI/PauseScreenDimImage"/>
-				<ColorAdjustMode val="Fill"/>
-				<AdjustmentColor val="130,106,122,170"/>
-				<RenderPriority val="620"/>
-				<AcceptsMouse val="false"/>
-			</Frame>
-			<Frame type="Image" name="FCJH_BorderBottom">
-				<Anchor side="Top" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
-				<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-				<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-				<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-				<Texture val="@UI/PauseScreenDimImage"/>
-				<ColorAdjustMode val="Fill"/>
-				<AdjustmentColor val="130,106,122,170"/>
-				<RenderPriority val="620"/>
-				<AcceptsMouse val="false"/>
-			</Frame>
-			<Frame type="Image" name="FCJH_BorderLeft">
-				<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-				<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-				<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
-				<Texture val="@UI/PauseScreenDimImage"/>
-				<ColorAdjustMode val="Fill"/>
-				<AdjustmentColor val="130,106,122,170"/>
-				<RenderPriority val="620"/>
-				<AcceptsMouse val="false"/>
-			</Frame>
-			<Frame type="Image" name="FCJH_BorderRight">
-				<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-				<Anchor side="Left" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
-				<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-				<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-				<Texture val="@UI/PauseScreenDimImage"/>
-				<ColorAdjustMode val="Fill"/>
-				<AdjustmentColor val="130,106,122,170"/>
-				<RenderPriority val="620"/>
-				<AcceptsMouse val="false"/>
-			</Frame>
-			<Frame type="Image" name="FCJH_TitleRule">
-				<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
-				<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
-				<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-				<Texture val="@UI/PauseScreenDimImage"/>
-				<ColorAdjustMode val="Fill"/>
-				<AdjustmentColor val="130,106,122,170"/>
-				<RenderPriority val="620"/>
-				<AcceptsMouse val="false"/>
-				<Height val="#FCJH_INFO_PANE_BORDER"/>
-			</Frame>
+		</Frame>
+		<Frame type="ToggleControl" name="FCJH_Pane_TalentsToggle">
+			<Anchor side="Top"  relative="$parent" pos="Min" offset="0"/>
+			<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+			<Width val="1"/>
+			<Height val="1"/>
+			<Shortcut val="#FCJH_INFO_PANE_KEY_TALENTS"/>
+			<Visible val="false"/>
+			<AcceptsMouse val="false"/>
+			<Animation name="FCJH_Show">
+				<Event event="OnShown" action="DirectionForward,Play"/>
+				<Event event="OnHidden" action="DirectionReverse,Play"/>
+				<Controller type="Visibility" end="Pause" frame="$parent/FCJH_Pane_Talents">
+					<Key type="Bool" time="0" value="false"/>
+					<Key type="Bool" time="0.001" value="true"/>
+				</Controller>
+				<Controller type="Fade" end="Pause" frame="$parent/FCJH_Pane_Talents">
+					<Key type="Curve" time="0" value="0"/>
+					<Key type="Curve" time="0.15" value="255"/>
+				</Controller>
+			</Animation>
 		</Frame>
 	</Frame>
 </Desc>

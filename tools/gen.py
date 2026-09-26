@@ -207,6 +207,9 @@ def constants_layout(cfg):
     const(name("info", "pane", "title", "h"), u(pane["title_height"]))
     const(name("info", "pane", "border"), max(1, u(pane["border"])))
     const(name("info", "pane", "border", "neg"), -max(1, u(pane["border"])))
+    const(name("info", "pane", "header", "h"), u(pane["header_height"]))
+    for key, shortcut in pane["hotkeys"].items():
+        const(name("info", "pane", "key", key), shortcut)
 
     row = cfg["hero_row"]
     lines.append("")
@@ -514,14 +517,218 @@ def hero_row_layout(cfg):
 '''
 
 
+STAT_PANES_FILE = "FCJH_StatPanes.StormLayout"
+GENERATED_LAYOUTS = (HERO_ROW_FILE, STAT_PANES_FILE)
+
+# Blizzard's observer stats row (statsoverviewpanel / cleanleaderpanel) carries eight score
+# columns, each a PlayerScoreValueFrame whose ScoreValueFrame0 shows ONE score value - which
+# one is just its ScoreValueLink (Blizzard's own template repoints one at Healing). So a pane
+# is: our own copy of the observer stats panel, the columns we want repointed and placed,
+# the rest hidden. Score ids: core scorevaluedata.xml.
+SCORE_COLUMNS = ["SoloKillScoreValueFrame", "AssistsScoreValueFrame", "DeathsScoreValueFrame",
+                 "SiegeDamageScoreValueFrame", "HeroDamageScoreValueFrame",
+                 "HealingScoreValueFrame", "DamageTakenScoreValueFrame",
+                 "ExperienceScoreValueFrame"]
+# (key, title, [(column frame, score value, heading, width in units)])
+STAT_PANES = [
+    ("kda", "KDA  ·  HERO DAMAGE", [
+        ("SoloKillScoreValueFrame", "SoloKill", "K", 60),
+        ("DeathsScoreValueFrame", "Deaths", "D", 60),
+        ("AssistsScoreValueFrame", "Assists", "A", 60),
+        ("HeroDamageScoreValueFrame", "HeroDamage", "HERO DMG", 130)]),
+    ("healing", "HEALING  ·  SHIELDING", [
+        ("HealingScoreValueFrame", "Healing", "HEALING", 130),
+        ("DamageTakenScoreValueFrame", "SelfHealing", "SELF", 130),
+        ("SiegeDamageScoreValueFrame", "ProtectionGivenToAllies", "SHIELDING", 130)]),
+    ("structures", "STRUCTURES  ·  EXPERIENCE", [
+        ("SiegeDamageScoreValueFrame", "SiegeDamage", "SIEGE", 130),
+        ("HeroDamageScoreValueFrame", "StructureDamage", "STRUCTURES", 130),
+        ("ExperienceScoreValueFrame", "ExperienceContribution", "XP", 130)]),
+]
+STAT_ROW_H, STAT_ROW_GAP, STAT_TEAM_GAP = 40, 4, 12   # Blizzard's rows are 40 units tall
+STAT_ROW_W = 565                                     # Blizzard's slot width
+STAT_FIRST_COLUMN, STAT_COLUMN_GAP = 130, 10         # Blizzard's first column / gap
+
+
+def fill_image(name, anchors, colour, prio, indent, extra=""):
+    """A flat colour block: Blizzard's dim image, filled (the build-50 technique)."""
+    t = "\t" * indent
+    return (f'{t}<Frame type="Image" name="{name}">\n' + anchors(indent + 1) +
+            f'{t}\t<Texture val="@UI/PauseScreenDimImage"/>\n'
+            f'{t}\t<ColorAdjustMode val="Fill"/>\n'
+            f'{t}\t<AdjustmentColor val="{colour}"/>\n'
+            f'{t}\t<RenderPriority val="{prio}"/>\n'
+            f'{t}\t<AcceptsMouse val="false"/>{extra}\n'
+            f'{t}</Frame>\n')
+
+
+def box(top, left, bottom, right, relative="$parent"):
+    """Anchors from (pos, offset) pairs, as a function of indent."""
+    return lambda indent: "".join(
+        f'{chr(9) * indent}<Anchor side="{side}" relative="{relative}" pos="{p}" offset="{o}"/>\n'
+        for side, (p, o) in zip(("Top", "Left", "Bottom", "Right"), (top, left, bottom, right)))
+
+
+PANE = box(("Min", "#FCJH_INFO_PANE_T"), ("Min", "#FCJH_INFO_PANE_L"),
+           ("Min", "#FCJH_INFO_PANE_B"), ("Min", "#FCJH_INFO_PANE_R"))
+PANE_BACK, PANE_BAND, PANE_LINE = "215,11,12,20", "235,24,28,48", "130,106,122,170"
+
+
+def pane_toggle(key, container):
+    """A hotkey that shows/hides one info pane (fade + visibility, Blizzard's replay-toggle
+    pattern). Starts hidden: the toggle is invisible, and so is the pane."""
+    return f'''		<Frame type="ToggleControl" name="FCJH_{container}Toggle">
+			<Anchor side="Top"  relative="$parent" pos="Min" offset="0"/>
+			<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+			<Width val="1"/>
+			<Height val="1"/>
+			<Shortcut val="#FCJH_INFO_PANE_KEY_{key.upper()}"/>
+			<Visible val="false"/>
+			<AcceptsMouse val="false"/>
+			<Animation name="FCJH_Show">
+				<Event event="OnShown" action="DirectionForward,Play"/>
+				<Event event="OnHidden" action="DirectionReverse,Play"/>
+				<Controller type="Visibility" end="Pause" frame="$parent/FCJH_{container}">
+					<Key type="Bool" time="0" value="false"/>
+					<Key type="Bool" time="0.001" value="true"/>
+				</Controller>
+				<Controller type="Fade" end="Pause" frame="$parent/FCJH_{container}">
+					<Key type="Curve" time="0" value="0"/>
+					<Key type="Curve" time="0.15" value="255"/>
+				</Controller>
+			</Animation>
+		</Frame>
+'''
+
+
+def pane_chrome(title, headings, indent=3):
+    """Title band, heading row and frame line - drawn over the rows, mouse passes through."""
+    t = "\t" * indent
+    band = box(("Min", "0"), ("Min", "0"), ("Min", "#FCJH_INFO_PANE_TITLE_H"), ("Max", "0"))
+    lines = [
+        ("FCJH_BorderTop", box(("Min", "0"), ("Min", "0"), ("Min", "#FCJH_INFO_PANE_BORDER"), ("Max", "0"))),
+        ("FCJH_BorderBottom", box(("Max", "#FCJH_INFO_PANE_BORDER_NEG"), ("Min", "0"), ("Max", "0"), ("Max", "0"))),
+        ("FCJH_BorderLeft", box(("Min", "0"), ("Min", "0"), ("Max", "0"), ("Min", "#FCJH_INFO_PANE_BORDER"))),
+        ("FCJH_BorderRight", box(("Min", "0"), ("Max", "#FCJH_INFO_PANE_BORDER_NEG"), ("Max", "0"), ("Max", "0"))),
+    ]
+    out = f'{t}<Frame type="Frame" name="FCJH_Chrome">\n' + PANE(indent + 1) + \
+        f'{t}\t<RenderPriority val="600"/>\n{t}\t<AcceptsMouse val="false"/>\n'
+    out += fill_image("FCJH_TitleBand", band, PANE_BAND, 600, indent + 1)
+    out += (f'{t}\t<Frame type="Label" name="FCJH_Title">\n' + band(indent + 2) +
+            f'{t}\t\t<Style val="ObsBar_MatchTimer"/>\n{t}\t\t<Text val="{title}"/>\n'
+            f'{t}\t\t<RenderPriority val="610"/>\n{t}\t\t<AcceptsMouse val="false"/>\n{t}\t</Frame>\n')
+    for i, (text, x, w) in enumerate(headings):
+        out += (f'{t}\t<Frame type="Label" name="FCJH_Heading{i}">\n'
+                f'{t}\t\t<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>\n'
+                f'{t}\t\t<Anchor side="Left"  relative="$parent" pos="Min" offset="{x}"/>\n'
+                f'{t}\t\t<Anchor side="Right" relative="$parent" pos="Min" offset="{x + w}"/>\n'
+                f'{t}\t\t<Height val="#FCJH_INFO_PANE_HEADER_H"/>\n'
+                f'{t}\t\t<Style val="BottomPanel_ColumnTitle_L"/>\n{t}\t\t<Text val="{text}"/>\n'
+                f'{t}\t\t<Options val="NoWrapping | ScaleToPreventTruncation"/>\n'
+                f'{t}\t\t<RenderPriority val="610"/>\n{t}\t\t<AcceptsMouse val="false"/>\n{t}\t</Frame>\n')
+    for n, anchors in lines:
+        out += fill_image(n, anchors, PANE_LINE, 620, indent + 1)
+    return out + f'{t}</Frame>\n'
+
+
+def stat_pane(key, title, columns, header):
+    container = f"Pane_{key.capitalize()}"
+    # columns laid left to right from Blizzard's first column; the heading row sits under
+    # the title, offset by the rows' own left inset (the pane's left edge + the row's x)
+    placed, x = [], STAT_FIRST_COLUMN
+    for frame, score, heading, w in columns:
+        placed.append((frame, score, heading, x, w))
+        x += w + STAT_COLUMN_GAP
+    used = {p[0] for p in placed}
+    rows = []
+    for i in range(10):
+        y = header + i * (STAT_ROW_H + STAT_ROW_GAP) + (STAT_TEAM_GAP if i >= 5 else 0)
+        cols = []
+        for frame in SCORE_COLUMNS:
+            if frame not in used:
+                cols.append(f'\t\t\t\t\t\t\t\t<Frame type="PlayerScoreValueFrame" name="{frame}"><Alpha val="0"/></Frame>\n')
+        for frame, score, _, cx, w in placed:
+            cols.append(f'''							<Frame type="PlayerScoreValueFrame" name="{frame}">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="{cx}"/>
+								<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="{cx + w}"/>
+								<Width val="0"/>
+								<Visible val="true"/>
+								<Alpha val="255"/>
+								<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="{score}"/></Frame>
+							</Frame>
+''')
+        rows.append(f'''						<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame{i}">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="{y}"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+							<Anchor side="Bottom" relative="$parent" pos="Min" offset="{y + STAT_ROW_H}"/>
+							<Anchor side="Right"  relative="$parent" pos="Min" offset="{STAT_ROW_W}"/>
+							<Width val="0"/>
+							<Height val="0"/>
+							<!-- every row portrait-first (Blizzard mirrors red): blue's hero icon spot -->
+							<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="10"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
+								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="Frame" name="StatsContainerFrame">
+{"".join(cols)}							</Frame>
+						</Frame>
+''')
+    hide = "".join(f'\t\t\t\t<Frame type="{typ}" name="{n}"><Alpha val="0"/></Frame>\n' for typ, n in
+                   [("Image", "CustomBackgroundImage"), ("Image", "StatsGridImage"), ("Label", "PanelHeader")] +
+                   [("Label", f"ColumnHeader{c}_{s}") for s in "LR" for c in range(1, 6)])
+    top_rows = "#FCJH_INFO_PANE_TITLE_H"
+    return f'''		<!-- {title}: Blizzard's observer stats panel, our copy, on #FCJH_INFO_PANE_KEY_{key.upper()} -->
+		<Frame type="Frame" name="FCJH_{container}">
+			<Anchor relative="$parent"/>
+			<Visible val="false"/>
+			<AcceptsMouse val="false"/>
+''' + fill_image("FCJH_Back", PANE, PANE_BACK, 400, 3) + f'''			<Frame type="HeroLeaderPanel" name="FCJH_Stats" template="StatsOverviewPanel/StatsOverviewPanelTemplate/StatsOverviewBottomPanel">
+{PANE(4)}				<Width val="0"/>
+				<Height val="0"/>
+				<Visible val="true"/>
+				<RenderPriority val="500"/>
+{hide}				<Frame type="Frame" name="HeroLeaderPanelContainer">
+					<Frame type="TabControl" name="TabControl">
+						<!-- the rows' box: under the title; rows start under the headings -->
+						<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="{top_rows}"/>
+						<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="0"/>
+						<Anchor side="Bottom" relative="$parent/$parent" pos="Max" offset="0"/>
+						<Anchor side="Right"  relative="$parent/$parent" pos="Max" offset="0"/>
+						<Width val="0"/>
+						<Height val="0"/>
+{"".join(rows)}					</Frame>
+				</Frame>
+			</Frame>
+''' + pane_chrome(title, [(h, cx, w) for _, _, h, cx, w in placed]) + '''		</Frame>
+''' + pane_toggle(key, container)
+
+
+def stat_panes_layout(cfg):
+    return XML_DECL + "<Desc>\n" + GENERATED + '''
+	<!-- Info panes: KDA, healing, structures (layout.toml [info_pane]; one box, one hotkey
+	     each, all start hidden). Each is our own copy of Blizzard's observer stats panel -
+	     the engine fills it, as it does our talents pane - with its score columns repointed
+	     at the values we want (tools/gen.py STAT_PANES). Rows: blue over red, every row
+	     portrait-first. Chrome drawn over the rows lets the mouse through. -->
+	<Frame type="GameUI" name="GameUI" file="GameUI">
+''' + "".join(stat_pane(*p, Units(cfg)(cfg["info_pane"]["header_height"])) for p in STAT_PANES) + '''	</Frame>
+</Desc>
+'''
+
+
 def desc_index(layout_names):
     includes = "".join(f'\t<Include path="{(LAYOUT_REL / n).as_posix()}"/>\n' for n in layout_names)
     return XML_DECL + GENERATED + "<Desc>\n" + includes + "</Desc>\n"
 
 
-def layout_order(layout_dir, extra=(), generated=(HERO_ROW_FILE,)):
+def layout_order(layout_dir, extra=(), generated=None):
     """Constants first, then the rest by name (including generated layouts, whether or not
     they exist on disk yet), then extras (dev layouts) last."""
+    generated = GENERATED_LAYOUTS if generated is None else generated
     names = {p.name for p in layout_dir.glob("*.StormLayout")} | set(generated)
     names -= {INDEX_FILE, CONSTANTS_FILE}
     return [CONSTANTS_FILE] + sorted(names) + list(extra)
@@ -533,7 +740,8 @@ def committed_files(cfg, source=SOURCE):
     texts = {
         LAYOUT_REL / CONSTANTS_FILE: constants_layout(cfg),
         LAYOUT_REL / HERO_ROW_FILE: hero_row_layout(cfg),
-        LAYOUT_REL / INDEX_FILE: desc_index(layout_order(layout_dir, generated=[HERO_ROW_FILE])),
+        LAYOUT_REL / STAT_PANES_FILE: stat_panes_layout(cfg),
+        LAYOUT_REL / INDEX_FILE: desc_index(layout_order(layout_dir, generated=GENERATED_LAYOUTS)),
     }
     return {rel: text.encode("utf-8") for rel, text in texts.items()} | texture_files(cfg)
 
