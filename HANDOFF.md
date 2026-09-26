@@ -281,6 +281,28 @@ correct. ❌ Health icon: nothing on Sonya at ~10% or on dead heroes, even with
 using `TargetLifeFull` (yellow plus, lower down): yellow pluses at game start = the element
 runs and the 25% check is at fault; none = validator elements don't run in observer cells.
 
+**Round 5 result:** ❌ no yellow pluses even at full health — **validator anim elements do not
+run in observer cells.** The critical-health icon is parked; leads: read a property off the
+cell's `HealthBar` in a StateGroup (property name unknown — probe several), or piggyback a
+Blizzard low-health effect that works for observers. Answered probes (level, mana, health)
+were removed from `src/dev/`; they're in history at `a0180f9`.
+
+**Talent pop-ups — research done, probe deployed (build `21:31:34`, `FCJH_Probe_Talent`):**
+- The top-bar talent rows, `ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/
+  HeroTalentsPanelContainer/PlayerFrame0..9`, are **anchored to the hero cells in Blizzard's
+  own layout** (`PlayerFrame0` → `Team1HeroOverview/HeroOverview1` … `PlayerFrame9` →
+  `Team2HeroOverview/HeroOverview5`, `talentsoverviewpanel.stormlayout:1842+`). The
+  player-to-cell mapping is Blizzard's, and the rows follow the cells when we move them.
+- Trigger (Ahli, `_LeaderPanelNotifications.StormLayout`): each `UnitStatusTalentIcon`'s
+  animation state `TalentTierState` becomes `TierSelected` when picked; a hidden flag frame
+  latches it to fire once; the picture is a binding to the icon's own `IconImage` texture.
+  Ahli also uses runtime `Action type="ApplyTemplate"` into rotating notification slots.
+- The probe pops each picked talent's icon for 4 s below the stock top-bar cell.
+- **Result: ✅ works for all ten heroes** (build `21:43:00`), including load-time level-1
+  picks. Getting there: pop-ups *inside* talent icons never draw (clipped) → built outside
+  and watching the icons from outside; **`<Handle>`s added to the icons resolved for only
+  one player** → full paths from `$GameUI` work for all.
+
 Superseded round 1–2 notes (kept for the record):
 
 - `FCJH_Probe_Icons` — a numbered column of Blizzard heal-looking textures on the right

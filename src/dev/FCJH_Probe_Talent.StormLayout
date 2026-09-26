@@ -1,0 +1,2552 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+	<!-- PROBE (dev only): talent pop-ups, round 4.
+
+	     Round 2: the TierSelected trigger WORKS when watched from outside the talent tree (by
+	     full path), but anything placed INSIDE a talent icon never draws.
+	     Round 3: pop-ups outside the tree, icons addressed by added HANDLES - only ONE player
+	     (Auriel, PlayerFrame4) ever fired, through level 7.
+	     Round 4: identical, but every icon addressed by its FULL PATH, the form that worked.
+	       - one pop-up per player, anchored to that player's hero cell by Blizzard's mapping
+	         (PlayerFrameN -> Team1 HeroOverview1..5, Team2 HeroOverview1..5); seven images
+	         inside, one per tier, each bound to its tier icon's picture
+	       - 70 watchers: when a tier fires (once, latched), show that image and pop for 4 s
+	     Look for: the picked talent's icon for ~4 s just below the right hero's top-bar cell. -->
+
+	<Frame type="GameUI" name="GameUI" file="GameUI">
+		<Frame type="Frame" name="FCJH_TalentPopups">
+			<Anchor relative="$parent"/>
+			<AcceptsMouse val="false"/>
+			<Frame type="Frame" name="FCJH_Pop0">
+				<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Max" offset="30"/>
+				<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Mid" offset="-31"/>
+				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Mid" offset="31"/>
+				<Height val="62"/>
+				<Visible val="false"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Image" name="T1">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T2">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T3">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T4">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T5">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T6">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T7">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Animation name="Pop">
+					<Event event="FCJH_Pop" action="Restart,Play"/>
+					<Controller type="Visibility" end="Pause">
+						<Key type="Bool" time="0" value="true"/>
+						<Key type="Bool" time="4" value="false"/>
+					</Controller>
+				</Animation>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Pop1">
+				<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Max" offset="30"/>
+				<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Mid" offset="-31"/>
+				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Mid" offset="31"/>
+				<Height val="62"/>
+				<Visible val="false"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Image" name="T1">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T2">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T3">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T4">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T5">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T6">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T7">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Animation name="Pop">
+					<Event event="FCJH_Pop" action="Restart,Play"/>
+					<Controller type="Visibility" end="Pause">
+						<Key type="Bool" time="0" value="true"/>
+						<Key type="Bool" time="4" value="false"/>
+					</Controller>
+				</Animation>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Pop2">
+				<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Max" offset="30"/>
+				<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Mid" offset="-31"/>
+				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Mid" offset="31"/>
+				<Height val="62"/>
+				<Visible val="false"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Image" name="T1">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T2">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T3">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T4">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T5">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T6">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T7">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Animation name="Pop">
+					<Event event="FCJH_Pop" action="Restart,Play"/>
+					<Controller type="Visibility" end="Pause">
+						<Key type="Bool" time="0" value="true"/>
+						<Key type="Bool" time="4" value="false"/>
+					</Controller>
+				</Animation>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Pop3">
+				<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Max" offset="30"/>
+				<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Mid" offset="-31"/>
+				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Mid" offset="31"/>
+				<Height val="62"/>
+				<Visible val="false"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Image" name="T1">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T2">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T3">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T4">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T5">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T6">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T7">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Animation name="Pop">
+					<Event event="FCJH_Pop" action="Restart,Play"/>
+					<Controller type="Visibility" end="Pause">
+						<Key type="Bool" time="0" value="true"/>
+						<Key type="Bool" time="4" value="false"/>
+					</Controller>
+				</Animation>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Pop4">
+				<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Max" offset="30"/>
+				<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Mid" offset="-31"/>
+				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Mid" offset="31"/>
+				<Height val="62"/>
+				<Visible val="false"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Image" name="T1">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T2">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T3">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T4">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T5">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T6">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T7">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Animation name="Pop">
+					<Event event="FCJH_Pop" action="Restart,Play"/>
+					<Controller type="Visibility" end="Pause">
+						<Key type="Bool" time="0" value="true"/>
+						<Key type="Bool" time="4" value="false"/>
+					</Controller>
+				</Animation>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Pop5">
+				<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Max" offset="30"/>
+				<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Mid" offset="-31"/>
+				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Mid" offset="31"/>
+				<Height val="62"/>
+				<Visible val="false"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Image" name="T1">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T2">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T3">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T4">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T5">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T6">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T7">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Animation name="Pop">
+					<Event event="FCJH_Pop" action="Restart,Play"/>
+					<Controller type="Visibility" end="Pause">
+						<Key type="Bool" time="0" value="true"/>
+						<Key type="Bool" time="4" value="false"/>
+					</Controller>
+				</Animation>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Pop6">
+				<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Max" offset="30"/>
+				<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Mid" offset="-31"/>
+				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Mid" offset="31"/>
+				<Height val="62"/>
+				<Visible val="false"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Image" name="T1">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T2">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T3">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T4">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T5">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T6">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T7">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Animation name="Pop">
+					<Event event="FCJH_Pop" action="Restart,Play"/>
+					<Controller type="Visibility" end="Pause">
+						<Key type="Bool" time="0" value="true"/>
+						<Key type="Bool" time="4" value="false"/>
+					</Controller>
+				</Animation>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Pop7">
+				<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Max" offset="30"/>
+				<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Mid" offset="-31"/>
+				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Mid" offset="31"/>
+				<Height val="62"/>
+				<Visible val="false"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Image" name="T1">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T2">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T3">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T4">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T5">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T6">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T7">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Animation name="Pop">
+					<Event event="FCJH_Pop" action="Restart,Play"/>
+					<Controller type="Visibility" end="Pause">
+						<Key type="Bool" time="0" value="true"/>
+						<Key type="Bool" time="4" value="false"/>
+					</Controller>
+				</Animation>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Pop8">
+				<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Max" offset="30"/>
+				<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Mid" offset="-31"/>
+				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Mid" offset="31"/>
+				<Height val="62"/>
+				<Visible val="false"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Image" name="T1">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T2">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T3">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T4">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T5">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T6">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T7">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Animation name="Pop">
+					<Event event="FCJH_Pop" action="Restart,Play"/>
+					<Controller type="Visibility" end="Pause">
+						<Key type="Bool" time="0" value="true"/>
+						<Key type="Bool" time="4" value="false"/>
+					</Controller>
+				</Animation>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Pop9">
+				<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Max" offset="30"/>
+				<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Mid" offset="-31"/>
+				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Mid" offset="31"/>
+				<Height val="62"/>
+				<Visible val="false"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Image" name="T1">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T2">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T3">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T4">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T5">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T6">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="T7">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Animation name="Pop">
+					<Event event="FCJH_Pop" action="Restart,Play"/>
+					<Controller type="Visibility" end="Pause">
+						<Key type="Bool" time="0" value="true"/>
+						<Key type="Bool" time="4" value="false"/>
+					</Controller>
+				</Animation>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch0_1">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T1" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop0" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch0_2">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T2" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop0" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch0_3">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T3" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop0" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch0_4">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T4" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop0" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch0_5">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T5" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop0" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch0_6">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T6" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop0" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch0_7">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop0/T7" Visible="true"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop0" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch1_1">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T1" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop1" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch1_2">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T2" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop1" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch1_3">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T3" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop1" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch1_4">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T4" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop1" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch1_5">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T5" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop1" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch1_6">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T6" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop1" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch1_7">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop1/T7" Visible="true"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop1" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch2_1">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T1" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop2" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch2_2">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T2" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop2" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch2_3">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T3" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop2" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch2_4">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T4" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop2" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch2_5">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T5" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop2" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch2_6">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T6" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop2" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch2_7">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop2/T7" Visible="true"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop2" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch3_1">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T1" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop3" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch3_2">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T2" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop3" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch3_3">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T3" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop3" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch3_4">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T4" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop3" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch3_5">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T5" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop3" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch3_6">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T6" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop3" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch3_7">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop3/T7" Visible="true"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop3" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch4_1">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T1" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop4" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch4_2">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T2" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop4" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch4_3">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T3" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop4" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch4_4">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T4" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop4" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch4_5">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T5" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop4" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch4_6">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T6" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop4" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch4_7">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop4/T7" Visible="true"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop4" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch5_1">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T1" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop5" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch5_2">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T2" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop5" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch5_3">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T3" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop5" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch5_4">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T4" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop5" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch5_5">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T5" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop5" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch5_6">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T6" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop5" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch5_7">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop5/T7" Visible="true"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop5" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch6_1">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T1" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop6" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch6_2">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T2" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop6" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch6_3">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T3" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop6" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch6_4">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T4" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop6" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch6_5">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T5" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop6" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch6_6">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T6" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop6" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch6_7">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop6/T7" Visible="true"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop6" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch7_1">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T1" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop7" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch7_2">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T2" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop7" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch7_3">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T3" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop7" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch7_4">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T4" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop7" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch7_5">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T5" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop7" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch7_6">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T6" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop7" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch7_7">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop7/T7" Visible="true"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop7" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch8_1">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T1" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop8" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch8_2">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T2" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop8" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch8_3">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T3" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop8" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch8_4">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T4" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop8" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch8_5">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T5" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop8" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch8_6">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T6" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop8" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch8_7">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop8/T7" Visible="true"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop8" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch9_1">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T1" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop9" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch9_2">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T2" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop9" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch9_3">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T3" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop9" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch9_4">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T4" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop9" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch9_5">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T5" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop9" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch9_6">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T6" Visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T7" Visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop9" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="FCJH_Watch9_7">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<StateGroup name="Pick">
+					<DefaultState val="Waiting"/>
+					<State name="Fire">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7" TalentTierState="TierSelected"/>
+						<When type="Property" frame="Shown" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T1" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T2" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T3" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T4" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T5" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T6" Visible="false"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Pop9/T7" Visible="true"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Pop9" event="FCJH_Pop"/>
+					</State>
+					<State name="Done">
+						<When type="Property" frame="Shown" visible="true"/>
+					</State>
+					<State name="Waiting">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7" operator="NotEqual" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+					</State>
+				</StateGroup>
+			</Frame>
+		</Frame>
+	</Frame>
+</Desc>
