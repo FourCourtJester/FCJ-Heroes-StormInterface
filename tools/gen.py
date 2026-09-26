@@ -74,12 +74,74 @@ def rects(cfg):
     out = {}
     for key, el in cfg.get("element", {}).items():
         out[key] = (tuple(el["rect"]), el["kind"])
+    px = 1 / Units(cfg).scale  # hero cells are laid out in layout units; these are exact
     row = cfg["hero_row"]
-    step = row["cell_width"] + row["gap"]
+    cell = HeroCell(cfg)
     for team, left, slots in (("blue", row["blue_left"], BLUE_SLOTS), ("red", row["red_left"], RED_SLOTS)):
         for i, slot in enumerate(slots):
-            out[f"hero_{slot}"] = ((left + i * step, row["top"], row["cell_width"], row["cell_height"]), "ui")
+            out[f"hero_{slot}"] = ((round(left + i * cell.pitch * px, 1), row["top"],
+                                    round(cell.w * px, 1), round(cell.h * px, 1)), "ui")
     return out
+
+
+class HeroCell:
+    """Blizzard's in-game top-bar hero cell, rebuilt and scaled by [hero_row] scale.
+
+    Source: core partyframe.stormlayout - HeroOverviewTemplate (blue), HeroOverviewTemplate_R
+    (red), HeroUnitStatusNoHealthTemplate / HeroUnitStatusTemplate (the bars), and
+    PartyFrameOverview/Team1HeroOverview (the stacking). The slanted look lives in Blizzard's
+    art (HUD_TopBar_Team_HeroFrame*), drawn for exactly these numbers, so the NATIVE numbers
+    below are Blizzard's, not ours: layout units, x from the cell's left, y from its top.
+    Red is blue mirrored. Every piece is pinned on all four sides, so the art stretches.
+    """
+
+    W, H = 128, 61
+    OVERLAP = 30                # HeroStackShift: each cell overlaps the next by 30
+    PORTRAIT_H = 56             # 128 x 56, one unit above the cell's top
+    # (left, top, right, bottom)
+    BLUE = {
+        "health_backing": (21, 36, 126, 53),    # status frame 105 wide, 2 in from the right
+        "health": (24, 38, 121, 46),            # 97 x 8, backing +2 down, 5 in from its right
+        "mana_backing": (26, 46, 127, 53),      # backing's left +5 .. right +1, bottom-aligned;
+                                                # Blizzard leaves its height to the art: 7 is ours
+        "energy": (30, 48, 125, 52),            # 95 x 4, 2 under health, 6 in from its left
+    }
+    RED = {
+        "health_backing": (2, 36, 107, 53),
+        "health": (8, 38, 105, 46),             # 2 in from the backing's right
+        "mana_backing": (2, 46, 102, 53),       # backing's left .. right -5
+        "energy": (4, 48, 99, 52),              # 4 left of the health bar
+    }
+    # Blizzard's death timer spans IconFrame +15 .. -10: centred 2.5 right of the middle
+    DEATH_SHIFT = 2.5
+    # The observer's portrait art is wide with the face on the right; Blizzard's observer
+    # crops [0.1, 0.45, 0.65, 1.0] into 165 x 60, i.e. the art is 2.75x as wide as tall per
+    # unit of crop. Same top/bottom/right here, left worked out for this cell's shape.
+    ART_ASPECT, CROP_TOP, CROP_BOTTOM = 2.75, 0.1, 0.65
+
+    def __init__(self, cfg):
+        k = cfg["hero_row"]["scale"]
+        s = lambda v: round(v * k)
+        self.w, self.h = s(self.W), s(self.H)
+        self.pitch = s(self.W - self.OVERLAP)
+        self.portrait_top, self.portrait_bottom = s(-1), s(self.PORTRAIT_H - 1)
+        self.team = {team: {part: tuple(s(v) for v in rect) for part, rect in g.items()}
+                     for team, g in (("blue", self.BLUE), ("red", self.RED))}
+        self.death_shift = s(self.DEATH_SHIFT)
+        # the plate leans, so its top edge is centred half the overlap off the box's middle:
+        # left on blue (leans \), right on red (leans /)
+        self.top_edge_shift = {"blue": -s(self.OVERLAP / 2), "red": s(self.OVERLAP / 2)}
+        across = self.W / self.PORTRAIT_H * (self.CROP_BOTTOM - self.CROP_TOP) / self.ART_ASPECT
+        self.crop = (self.CROP_TOP, round(1 - across, 3), self.CROP_BOTTOM, 1.0)
+
+
+def dds_bgra(w, h, pixels):
+    """An uncompressed 32-bit DDS (A8R8G8B8), no mipmaps."""
+    import struct
+    pf = struct.pack("<8I", 32, 0x41, 0, 32, 0x00FF0000, 0x0000FF00, 0x000000FF, 0xFF000000)
+    header = struct.pack("<7I", 124, 0x100F, h, w, w * 4, 0, 0) + b"\0" * 44 + pf \
+        + struct.pack("<5I", 0x1000, 0, 0, 0, 0)
+    return b"DDS " + header + pixels
 
 
 # ------------------------------------------------------------------ committed files
@@ -120,17 +182,267 @@ def constants_layout(cfg):
 
     row = cfg["hero_row"]
     lines.append("")
-    lines.append("\t<!-- Hero cell internals, measured from the cell's own top -->")
-    const(name("hero", "portrait", "h"), u(row["portrait_height"]))
-    const(name("hero", "hp", "t"), u(row["portrait_height"]))
-    const(name("hero", "hp", "b"), u(row["portrait_height"] + row["hp_height"]))
-    const(name("hero", "mana", "t"), u(row["portrait_height"] + row["hp_height"]))
-    const(name("hero", "mana", "b"), u(row["portrait_height"] + row["hp_height"] + row["mana_height"]))
-    const(name("hero", "popup", "size"), u(row["talent_popup_size"]))
-    const(name("hero", "popup", "half"), u(row["talent_popup_size"] / 2))
-    const(name("hero", "popup", "half", "neg"), -u(row["talent_popup_size"] / 2))
+    lines.append("\t<!-- Hero cells: Blizzard's in-game cell at native size (tools/gen.py HeroCell) -->")
+    size = row["talent_popup_size"]
+    const(name("hero", "popup", "size"), u(size))
+    const(name("hero", "popup", "t"), -u(size / 2), "the icon straddles the cell's top edge")
+    for team in ("blue", "red"):
+        # pop-ups sit on the middle of the plate's top edge; offsets from the cell's middle
+        mid = HeroCell(cfg).top_edge_shift[team]
+        const(name("hero", team, "popup", "l"), mid - u(size / 2))
+        const(name("hero", team, "popup", "r"), mid + u(size / 2))
 
     return XML_DECL + GENERATED + "<Desc>\n" + "\n".join(lines) + "\n</Desc>\n"
+
+
+# Blizzard's hero -> resource colour table: HeroResourceStates in
+# core targetinfopanelunitstatustemplate.stormlayout:257, colour names -> ColorStyle from the
+# *EnergyBar frames in the same file. Unlisted heroes use StandardEnergy (mana blue).
+RESOURCE_STYLE = {"Yellow": "BrewEnergy", "Orange": "FuryEnergy", "Pink": "DivaEnergy",
+                  "Deathwing": "DeathwingEnergy", "Normal": "StandardEnergy"}
+RESOURCE_TABLE = [
+    ("Auriel", "HeroAuriel", "Yellow"), ("Chen", "HeroChen", "Yellow"),
+    ("Deathwing", "HeroDeathwing", "Deathwing"), ("DVaPilot", "HeroDVaPilot", "Pink"),
+    ("DVaMech", "HeroDVaMech", "Pink"), ("Junkrat", "HeroJunkrat", "Orange"),
+    ("Morales", "HeroMedic", "Yellow"), ("Sonya", "HeroBarbarian", "Orange"),
+    ("Tracer", "HeroTracer", "Normal"), ("Valeera", "HeroValeera", "Yellow"),
+    ("VolskayaGunner", "VolskayaVehicleGunner", "Pink"), ("Zarya", "HeroZarya", "Pink"),
+    ("Gazlowe", "HeroTinker", "Orange"),
+]
+
+HERO_ROW_FILE = "FCJH_HeroRow.StormLayout"
+
+# Generated textures, at the interface root like Ahli's (layouts name them from there).
+TEXTURE_REL = Path("_Assets") / "Textures"
+TEXTURE_DIR = "_Assets\\Textures"
+WHITE = TEXTURE_DIR + "\\FCJH_White.dds"
+
+
+def portrait_mask_file(team):
+    return f"FCJH_Portrait_{team}.dds"
+
+
+def portrait_mask(team, size=(256, 128), sub=4):
+    """The portrait cut to the in-game cell's parallelogram, as an alpha mask.
+
+    Blizzard's own ImageMaskTexture follows the portrait's TextureCoords, so cropping the
+    observer's wide portrait art to its face also crops away the mask's left-edge cut (red
+    portraits spilled over their neighbours). An AlphaMaskTexture spans the frame instead.
+    Worked in native cell units, so it holds at any scale: the plate leans OVERLAP across
+    its full height H - blue \\ (top edge on the left), red / (top edge on the right)."""
+    w, h = size
+    c = HeroCell
+    top, bottom = -1, c.PORTRAIT_H - 1  # the portrait frame, in cell units
+
+    def left_edge(y):
+        down = y / c.H
+        return c.OVERLAP * (down if team == "blue" else 1 - down)
+
+    rows = []
+    for ty in range(h):
+        row = bytearray()
+        for tx in range(w):
+            x0, x1 = tx / w * c.W, (tx + 1) / w * c.W
+            cover = 0.0
+            for s in range(sub):
+                left = left_edge(top + (ty + (s + 0.5) / sub) / h * (bottom - top))
+                right = left + c.W - c.OVERLAP
+                cover += max(0.0, min(x1, right) - max(x0, left)) / (x1 - x0)
+            a = round(255 * cover / sub)
+            row += bytes((a, a, a, a))  # B, G, R, A: grey = alpha, whichever the engine reads
+        rows.append(bytes(row))
+    return dds_bgra(w, h, b"".join(rows))
+
+
+def texture_files(cfg):
+    out = {TEXTURE_REL / portrait_mask_file(team): portrait_mask(team) for team in ("blue", "red")}
+    # an opaque mask: replaces a Blizzard mask we don't want (there's no "none")
+    out[TEXTURE_REL / "FCJH_White.dds"] = dds_bgra(4, 4, b"\xff" * 64)
+    return out
+
+
+def _anchors(rect, relative, indent):
+    """Anchors pinning a frame to rect (left, top, right, bottom) in cell units."""
+    sides = zip(("Left", "Top", "Right", "Bottom"), rect)
+    return "".join(f'\n{indent}<Anchor side="{side}" relative="{relative}" pos="Min" offset="{v}"/>'
+                   for side, v in sides if v is not None)
+
+
+def hero_cell_template(team, c):
+    """One cell template (c: a HeroCell). Blue is the base; red inherits it and mirrors it."""
+    blue = team == "blue"
+    g = c.team[team]
+    suffix = "" if blue else "_Right"
+    flip = "" if blue else '\n\t\t\t<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>'
+    art = lambda name, tex, prio: f"""
+		<Frame type="Image" name="{name}">
+			<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+			<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+			<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+			<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
+			<Width val="0"/>
+			<Height val="0"/>
+			<Texture val="@UI/{tex}"/>{flip}
+			<RenderPriority val="{prio}"/>
+		</Frame>"""
+    cell = "$parent/$parent"
+    backing = lambda name, tex, rect, height: f"""
+			<Frame type="Image" name="{name}">{_anchors(rect, cell, chr(9) * 4)}
+				<Texture val="@UI/{tex}"/>
+				<TextureType val="Nineslice"/>{flip.replace(chr(9) * 3, chr(9) * 4)}
+				{height}<RenderPriority val="450"/>
+				<Unclipped val="true"/>
+			</Frame>"""
+    hb, mb = g["health_backing"], g["mana_backing"]
+    size = '<Width val="0"/>\n\t\t\t\t<Height val="0"/>\n\t\t\t\t'
+    health_backing = backing("FCJH_HealthBacking", "HUD_TopBar_Team_HeroFrame_HealthFrame", hb, size)
+    mana_backing = backing("FCJH_ManaBacking", "HUD_TopBar_Team_HeroFrame_ManaFrame", mb, size)
+    energy = f"""
+			<Frame type="UnitStatusEnergyBar" name="FCJH_Resource">{_anchors(g["energy"], cell, chr(9) * 4)}
+				<Width val="0"/>
+				<Height val="0"/>
+				<Texture val="@UI/HUD_TopBar_Team_HeroFrame_ManaFill{suffix}"/>
+				<Tiled val="true"/>
+				<BarCount val="1"/>
+				<ColorStyle val="StandardEnergy" index="0"/>
+				<Unclipped val="true"/>
+			</Frame>"""
+    health = f"""
+		<Frame type="UnitStatusFrame" name="HeroStatus">{_anchors(g["health"], "$parent", chr(9) * 3)}
+			<Width val="0"/>
+			<Height val="0"/>
+			<RenderPriority val="510"/>
+			<Frame type="Frame" name="ImageMaskFrame"><AlphaMaskSiblings val="false"/></Frame>
+			<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">
+				<Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm{suffix}"/>
+				<Tiled val="true"/>
+			</Frame>{health_backing}{mana_backing}{energy}"""
+    if blue:
+        colour_states = "".join(
+            f'\n\t\t\t\t<State name="{n}"><When type="Property" Unit="{unit}"/>'
+            f'<Action type="SetProperty" frame="FCJH_Resource" ColorStyle="{RESOURCE_STYLE[c]}"/></State>'
+            for n, unit, c in RESOURCE_TABLE)
+        health += f"""
+			<StateGroup name="FCJH_ResourceColour">
+				<DefaultState val="Normal"/>{colour_states}
+				<State name="Normal"><Action type="SetProperty" frame="FCJH_Resource" ColorStyle="StandardEnergy"/></State>
+			</StateGroup>"""
+    health += "\n\t\t</Frame>"
+    shift = c.death_shift
+    mid = (c.portrait_top + c.portrait_bottom) // 2
+    header = (f'<Frame type="Frame" name="FCJH_HeroCell">\n\t\t<Width val="{c.w}"/>\n\t\t<Height val="{c.h}"/>'
+              '\n\t\t<Unclipped val="true"/>' if blue else
+              '<Frame type="Frame" name="FCJH_HeroCellRed" template="FCJH_HeroRow/FCJH_HeroCell">')
+    common = f"""
+		<Frame type="Image" name="IconFrame">
+			<Anchor side="Top"    relative="$parent" pos="Min" offset="{mid + 30}"/>
+			<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+			<Anchor side="Bottom" relative="$parent" pos="Min" offset="{mid + 30}"/>
+			<Anchor side="Right"  relative="$parent" pos="Max" offset="{60 + shift}"/>
+			<Width val="0"/>
+			<Height val="0"/>
+			<Alpha val="0"/>
+		</Frame>
+		<Frame type="Image" name="HeroPortraitBackground" template="FCJH_HeroRow/FCJH_Parked"/>
+		<Frame type="Image" name="TalentsBgImage" template="FCJH_HeroRow/FCJH_Parked"/>
+		<Frame type="Label" name="HeroDeathTimeLabel">
+			<Anchor side="Top"    relative="$parent" pos="Min" offset="2"/>
+			<Anchor side="Left"   relative="$parent" pos="Min" offset="{shift}"/>
+			<Anchor side="Bottom" relative="$parent" pos="Min" offset="{c.h - 1}"/>
+			<Anchor side="Right"  relative="$parent" pos="Max" offset="{shift}"/>
+			<Width val="0"/>
+			<Height val="0"/>
+			<Style val="Storm_TopBar_DeathTimer"/>
+			<RenderPriority val="520"/>
+		</Frame>""" if blue else ""
+    portrait = f"""
+		<Frame type="Image" name="HeroPortraitImage">
+			<Anchor side="Top"    relative="$parent" pos="Min" offset="{c.portrait_top}"/>
+			<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+			<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
+			<Anchor side="Bottom" relative="$parent" pos="Min" offset="{c.portrait_bottom}"/>
+			<Width val="0"/>
+			<Height val="0"/>
+			<TextureCoords top="{c.crop[0]}" left="{c.crop[1]}" bottom="{c.crop[2]}" right="{c.crop[3]}"/>
+			<ImageMaskTexture val="{WHITE}"/>
+			<AlphaMaskTexture val="{TEXTURE_DIR}\\{portrait_mask_file(team)}"/>
+			<RenderPriority val="500"/>
+		</Frame>"""
+    return (f"\t{header}"
+            + art("FCJH_FrameBg", "HUD_TopBar_Team_HeroFrame", 400)
+            + art("FCJH_TeamBg", f"HUD_TopBar_Team_HeroFrame_BG_{'Blue' if blue else 'Red'}", 401)
+            + common + portrait
+            + art("FCJH_Glass", "HUD_TopBar_Team_HeroFrame_Glass", 505)
+            + health + "\n\t</Frame>\n")
+
+
+def hero_row_layout(cfg):
+    """Blizzard's ten observer hero cells, moved into the bottom row and dressed as the
+    in-game top bar's cells (HeroCell).
+
+    Each cell keeps Blizzard's observer bindings (portrait, health, death, click) - the
+    engine fills cells by ordinal, so we only ever move and restyle them. Numbering reads
+    1-5 left to right on blue (Team1 HeroOverview1..5), then 6-0 on red (Team2 1..5).
+    """
+    cells = []
+    for team, slots in (("Team1HeroOverview", BLUE_SLOTS), ("Team2HeroOverview", RED_SLOTS)):
+        blue = team == "Team1HeroOverview"
+        inner = []
+        for i, slot in enumerate(slots, start=1):
+            e = lambda side: f"#{name('hero', slot, side)}"
+            # like the in-game bar, the OUTERMOST cell draws on top (higher RenderPriority wins):
+            # each cell then covers its inner neighbour's overhang. Confirmed 2026-09-26 by
+            # flipping it - the inner cell's portrait then spilled over the outer cell's bars.
+            prio = 506 - i if blue else 500 + i
+            inner.append(f'''						<Frame type="Frame" name="HeroOverview{i}" template="FCJH_HeroRow/{"FCJH_HeroCell" if blue else "FCJH_HeroCellRed"}">
+							<Anchor side="Top"    relative="$GameUI" pos="Min" offset="{e('t')}"/>
+							<Anchor side="Left"   relative="$GameUI" pos="Min" offset="{e('l')}"/>
+							<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="{e('b')}"/>
+							<Anchor side="Right"  relative="$GameUI" pos="Min" offset="{e('r')}"/>
+							<RenderPriority val="{prio}"/>
+						</Frame>''')
+        cells.append(f'\t\t\t\t\t<Frame type="Frame" name="{team}">\n' + "\n".join(inner) + '\n\t\t\t\t\t</Frame>')
+
+    return XML_DECL + "<Desc>\n" + GENERATED + f'''
+	<!-- Hero row: Blizzard's observer hero cells, moved to the bottom row (layout.toml
+	     [hero_row]) and dressed as Blizzard's IN-GAME top-bar cells: the same art, sizes and
+	     stacking (tools/gen.py HeroCell). Cells overlap by 30 and the outermost draws on top,
+	     so the slanted frames interlock. Rules this follows, all learned in game:
+	       - Unclipped: a frame moved outside its parent's rectangle is otherwise clipped away
+	       - IconFrame hidden with Alpha 0, not parked: Blizzard's death-timer states anchor
+	         to it, so it is placed where those anchors land centred
+	       - HeroStatus IS the health fill's rectangle: Blizzard's HeightOverride state pins
+	         the bar's bottom to HeroStatus's, so the bar can't be sized any other way
+	       - portraits are cut by our own alpha masks (FCJH_Portrait_*), not Blizzard's
+	         ImageMaskTexture: that one follows the face crop and loses its left-edge cut
+	       - the resource bar lives inside HeroStatus to inherit the hero; its colour comes
+	         from Blizzard's own hero table, on HeroStatus itself (unit checks only work there) -->
+
+	<Frame type="Frame" name="FCJH_Parked">
+		<Anchor side="Top"    relative="$parent" pos="Min" offset="9999"/>
+		<Anchor side="Left"   relative="$parent" pos="Min" offset="9999"/>
+		<Anchor side="Bottom" relative="$parent" pos="Min" offset="10299"/>
+		<Anchor side="Right"  relative="$parent" pos="Min" offset="10299"/>
+	</Frame>
+
+{hero_cell_template("blue", HeroCell(cfg))}
+	<!-- Red: the same cell, mirrored -->
+{hero_cell_template("red", HeroCell(cfg))}
+	<Frame type="GameUI" name="GameUI" file="GameUI">
+		<Frame type="Frame" name="UIContainer">
+			<Frame type="Frame" name="FullscreenUpperContainer">
+				<Frame type="Frame" name="ObserverHeroOverviewPanel">
+					<!-- Blizzard's top-bar talent rows are anchored to the cells, so they follow
+					     them down here. Hidden with Alpha 0, not parked: the talent pop-ups watch
+					     their icons, which must stay alive. -->
+					<Frame type="Frame" name="TalentsOverview"><Alpha val="0"/></Frame>
+{chr(10).join(cells)}
+				</Frame>
+			</Frame>
+		</Frame>
+	</Frame>
+</Desc>
+'''
 
 
 def desc_index(layout_names):
@@ -138,39 +450,44 @@ def desc_index(layout_names):
     return XML_DECL + GENERATED + "<Desc>\n" + includes + "</Desc>\n"
 
 
-def layout_order(layout_dir, extra=()):
-    """Constants first, then the rest by name, then extras (dev layouts) last."""
-    names = sorted(p.name for p in layout_dir.glob("*.StormLayout")
-                   if p.name not in (INDEX_FILE, CONSTANTS_FILE))
-    return [CONSTANTS_FILE] + names + list(extra)
+def layout_order(layout_dir, extra=(), generated=(HERO_ROW_FILE,)):
+    """Constants first, then the rest by name (including generated layouts, whether or not
+    they exist on disk yet), then extras (dev layouts) last."""
+    names = {p.name for p in layout_dir.glob("*.StormLayout")} | set(generated)
+    names -= {INDEX_FILE, CONSTANTS_FILE}
+    return [CONSTANTS_FILE] + sorted(names) + list(extra)
 
 
 def committed_files(cfg, source=SOURCE):
-    """{path under source: text} for every generated file that lives in the repo."""
+    """{path under source: bytes} for every generated file that lives in the repo."""
     layout_dir = source / LAYOUT_REL
-    return {
+    texts = {
         LAYOUT_REL / CONSTANTS_FILE: constants_layout(cfg),
-        LAYOUT_REL / INDEX_FILE: desc_index(layout_order(layout_dir)),
+        LAYOUT_REL / HERO_ROW_FILE: hero_row_layout(cfg),
+        LAYOUT_REL / INDEX_FILE: desc_index(layout_order(layout_dir, generated=[HERO_ROW_FILE])),
     }
+    return {rel: text.encode("utf-8") for rel, text in texts.items()} | texture_files(cfg)
 
 
-def stale(cfg, source=SOURCE):
+def stale(cfg, source=SOURCE, files=None):
     """Generated files whose content on disk differs from what gen would write."""
-    out = []
-    for rel, text in committed_files(cfg, source).items():
-        path = source / rel
-        if not path.is_file() or path.read_text(encoding="utf-8") != text:
-            out.append(rel)
-    return out
+    files = committed_files(cfg, source) if files is None else files
+
+    def on_disk(rel):
+        data = (source / rel).read_bytes()
+        # git (core.autocrlf) may check text files out with CRLF; that isn't a change
+        return data if rel.suffix == ".dds" else data.replace(b"\r\n", b"\n")
+
+    return [rel for rel, data in files.items() if not (source / rel).is_file() or on_disk(rel) != data]
 
 
 def write(cfg, source=SOURCE):
-    changed = stale(cfg, source)
-    for rel, text in committed_files(cfg, source).items():
-        if rel in changed:
-            path = source / rel
-            path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(text, encoding="utf-8", newline="\n")
+    files = committed_files(cfg, source)
+    changed = stale(cfg, source, files)
+    for rel in changed:
+        path = source / rel
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(files[rel])
     return changed
 
 

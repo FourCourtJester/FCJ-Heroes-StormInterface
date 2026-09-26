@@ -11,17 +11,19 @@
 	         (PlayerFrameN -> Team1 HeroOverview1..5, Team2 HeroOverview1..5); seven images
 	         inside, one per tier, each bound to its tier icon's picture
 	       - 70 watchers: when a tier fires (once, latched), show that image and pop for 4 s
-	     Look for: the picked talent's icon for ~4 s just below the right hero's top-bar cell. -->
+	     Look for: the picked talent's icon sliding up from the plate's middle to straddle its
+	     top edge (0.35 s, fading in), holding, then fading out at 4 s; framed in the talent
+	     pane's team-coloured square. -->
 
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<Frame type="Frame" name="FCJH_TalentPopups">
 			<Anchor relative="$parent"/>
 			<AcceptsMouse val="false"/>
 			<Frame type="Frame" name="FCJH_Pop0">
-				<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Max" offset="30"/>
-				<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Mid" offset="-31"/>
-				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Mid" offset="31"/>
-				<Height val="62"/>
+				<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="#FCJH_HERO_POPUP_T"/>
+				<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Mid" offset="#FCJH_HERO_BLUE_POPUP_L"/>
+				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Mid" offset="#FCJH_HERO_BLUE_POPUP_R"/>
+				<Height val="#FCJH_HERO_POPUP_SIZE"/>
 				<Visible val="false"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Image" name="T1">
@@ -66,19 +68,40 @@
 					<Visible val="false"/>
 					<AcceptsMouse val="false"/>
 				</Frame>
+				<!-- the talent pane's own square, just outside the icon (it slides and fades with it) -->
+				<Frame type="Image" name="FCJH_Border">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+					<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+					<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+					<Texture val="@UI/obs_talents_highlight_blue"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
 				<Animation name="Pop">
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
 						<Key type="Bool" time="4" value="false"/>
 					</Controller>
+					<!-- slide up from the plate's middle (38 units down) to its top edge -->
+					<Controller type="Anchor" end="Pause" side="Top" relative="true">
+						<Key type="Curve" time="0" value="38" inout="Slow"/>
+						<Key type="Curve" time="0.35" value="0" inout="Slow"/>
+					</Controller>
+					<Controller type="Fade" end="Pause">
+						<Key type="Curve" time="0" value="0"/>
+						<Key type="Curve" time="0.25" value="255"/>
+						<Key type="Curve" time="3.5" value="255"/>
+						<Key type="Curve" time="4" value="0"/>
+					</Controller>
 				</Animation>
 			</Frame>
 			<Frame type="Frame" name="FCJH_Pop1">
-				<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Max" offset="30"/>
-				<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Mid" offset="-31"/>
-				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Mid" offset="31"/>
-				<Height val="62"/>
+				<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="#FCJH_HERO_POPUP_T"/>
+				<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Mid" offset="#FCJH_HERO_BLUE_POPUP_L"/>
+				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Mid" offset="#FCJH_HERO_BLUE_POPUP_R"/>
+				<Height val="#FCJH_HERO_POPUP_SIZE"/>
 				<Visible val="false"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Image" name="T1">
@@ -123,19 +146,40 @@
 					<Visible val="false"/>
 					<AcceptsMouse val="false"/>
 				</Frame>
+				<!-- the talent pane's own square, just outside the icon (it slides and fades with it) -->
+				<Frame type="Image" name="FCJH_Border">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+					<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+					<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+					<Texture val="@UI/obs_talents_highlight_blue"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
 				<Animation name="Pop">
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
 						<Key type="Bool" time="4" value="false"/>
 					</Controller>
+					<!-- slide up from the plate's middle (38 units down) to its top edge -->
+					<Controller type="Anchor" end="Pause" side="Top" relative="true">
+						<Key type="Curve" time="0" value="38" inout="Slow"/>
+						<Key type="Curve" time="0.35" value="0" inout="Slow"/>
+					</Controller>
+					<Controller type="Fade" end="Pause">
+						<Key type="Curve" time="0" value="0"/>
+						<Key type="Curve" time="0.25" value="255"/>
+						<Key type="Curve" time="3.5" value="255"/>
+						<Key type="Curve" time="4" value="0"/>
+					</Controller>
 				</Animation>
 			</Frame>
 			<Frame type="Frame" name="FCJH_Pop2">
-				<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Max" offset="30"/>
-				<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Mid" offset="-31"/>
-				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Mid" offset="31"/>
-				<Height val="62"/>
+				<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="#FCJH_HERO_POPUP_T"/>
+				<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Mid" offset="#FCJH_HERO_BLUE_POPUP_L"/>
+				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Mid" offset="#FCJH_HERO_BLUE_POPUP_R"/>
+				<Height val="#FCJH_HERO_POPUP_SIZE"/>
 				<Visible val="false"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Image" name="T1">
@@ -180,19 +224,40 @@
 					<Visible val="false"/>
 					<AcceptsMouse val="false"/>
 				</Frame>
+				<!-- the talent pane's own square, just outside the icon (it slides and fades with it) -->
+				<Frame type="Image" name="FCJH_Border">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+					<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+					<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+					<Texture val="@UI/obs_talents_highlight_blue"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
 				<Animation name="Pop">
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
 						<Key type="Bool" time="4" value="false"/>
 					</Controller>
+					<!-- slide up from the plate's middle (38 units down) to its top edge -->
+					<Controller type="Anchor" end="Pause" side="Top" relative="true">
+						<Key type="Curve" time="0" value="38" inout="Slow"/>
+						<Key type="Curve" time="0.35" value="0" inout="Slow"/>
+					</Controller>
+					<Controller type="Fade" end="Pause">
+						<Key type="Curve" time="0" value="0"/>
+						<Key type="Curve" time="0.25" value="255"/>
+						<Key type="Curve" time="3.5" value="255"/>
+						<Key type="Curve" time="4" value="0"/>
+					</Controller>
 				</Animation>
 			</Frame>
 			<Frame type="Frame" name="FCJH_Pop3">
-				<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Max" offset="30"/>
-				<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Mid" offset="-31"/>
-				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Mid" offset="31"/>
-				<Height val="62"/>
+				<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="#FCJH_HERO_POPUP_T"/>
+				<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Mid" offset="#FCJH_HERO_BLUE_POPUP_L"/>
+				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Mid" offset="#FCJH_HERO_BLUE_POPUP_R"/>
+				<Height val="#FCJH_HERO_POPUP_SIZE"/>
 				<Visible val="false"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Image" name="T1">
@@ -237,19 +302,40 @@
 					<Visible val="false"/>
 					<AcceptsMouse val="false"/>
 				</Frame>
+				<!-- the talent pane's own square, just outside the icon (it slides and fades with it) -->
+				<Frame type="Image" name="FCJH_Border">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+					<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+					<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+					<Texture val="@UI/obs_talents_highlight_blue"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
 				<Animation name="Pop">
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
 						<Key type="Bool" time="4" value="false"/>
 					</Controller>
+					<!-- slide up from the plate's middle (38 units down) to its top edge -->
+					<Controller type="Anchor" end="Pause" side="Top" relative="true">
+						<Key type="Curve" time="0" value="38" inout="Slow"/>
+						<Key type="Curve" time="0.35" value="0" inout="Slow"/>
+					</Controller>
+					<Controller type="Fade" end="Pause">
+						<Key type="Curve" time="0" value="0"/>
+						<Key type="Curve" time="0.25" value="255"/>
+						<Key type="Curve" time="3.5" value="255"/>
+						<Key type="Curve" time="4" value="0"/>
+					</Controller>
 				</Animation>
 			</Frame>
 			<Frame type="Frame" name="FCJH_Pop4">
-				<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Max" offset="30"/>
-				<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Mid" offset="-31"/>
-				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Mid" offset="31"/>
-				<Height val="62"/>
+				<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="#FCJH_HERO_POPUP_T"/>
+				<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Mid" offset="#FCJH_HERO_BLUE_POPUP_L"/>
+				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Mid" offset="#FCJH_HERO_BLUE_POPUP_R"/>
+				<Height val="#FCJH_HERO_POPUP_SIZE"/>
 				<Visible val="false"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Image" name="T1">
@@ -294,19 +380,40 @@
 					<Visible val="false"/>
 					<AcceptsMouse val="false"/>
 				</Frame>
+				<!-- the talent pane's own square, just outside the icon (it slides and fades with it) -->
+				<Frame type="Image" name="FCJH_Border">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+					<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+					<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+					<Texture val="@UI/obs_talents_highlight_blue"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
 				<Animation name="Pop">
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
 						<Key type="Bool" time="4" value="false"/>
 					</Controller>
+					<!-- slide up from the plate's middle (38 units down) to its top edge -->
+					<Controller type="Anchor" end="Pause" side="Top" relative="true">
+						<Key type="Curve" time="0" value="38" inout="Slow"/>
+						<Key type="Curve" time="0.35" value="0" inout="Slow"/>
+					</Controller>
+					<Controller type="Fade" end="Pause">
+						<Key type="Curve" time="0" value="0"/>
+						<Key type="Curve" time="0.25" value="255"/>
+						<Key type="Curve" time="3.5" value="255"/>
+						<Key type="Curve" time="4" value="0"/>
+					</Controller>
 				</Animation>
 			</Frame>
 			<Frame type="Frame" name="FCJH_Pop5">
-				<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Max" offset="30"/>
-				<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Mid" offset="-31"/>
-				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Mid" offset="31"/>
-				<Height val="62"/>
+				<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="#FCJH_HERO_POPUP_T"/>
+				<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Mid" offset="#FCJH_HERO_RED_POPUP_L"/>
+				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Mid" offset="#FCJH_HERO_RED_POPUP_R"/>
+				<Height val="#FCJH_HERO_POPUP_SIZE"/>
 				<Visible val="false"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Image" name="T1">
@@ -351,19 +458,40 @@
 					<Visible val="false"/>
 					<AcceptsMouse val="false"/>
 				</Frame>
+				<!-- the talent pane's own square, just outside the icon (it slides and fades with it) -->
+				<Frame type="Image" name="FCJH_Border">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+					<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+					<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+					<Texture val="@UI/obs_talents_highlight_red"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
 				<Animation name="Pop">
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
 						<Key type="Bool" time="4" value="false"/>
 					</Controller>
+					<!-- slide up from the plate's middle (38 units down) to its top edge -->
+					<Controller type="Anchor" end="Pause" side="Top" relative="true">
+						<Key type="Curve" time="0" value="38" inout="Slow"/>
+						<Key type="Curve" time="0.35" value="0" inout="Slow"/>
+					</Controller>
+					<Controller type="Fade" end="Pause">
+						<Key type="Curve" time="0" value="0"/>
+						<Key type="Curve" time="0.25" value="255"/>
+						<Key type="Curve" time="3.5" value="255"/>
+						<Key type="Curve" time="4" value="0"/>
+					</Controller>
 				</Animation>
 			</Frame>
 			<Frame type="Frame" name="FCJH_Pop6">
-				<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Max" offset="30"/>
-				<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Mid" offset="-31"/>
-				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Mid" offset="31"/>
-				<Height val="62"/>
+				<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="#FCJH_HERO_POPUP_T"/>
+				<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Mid" offset="#FCJH_HERO_RED_POPUP_L"/>
+				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Mid" offset="#FCJH_HERO_RED_POPUP_R"/>
+				<Height val="#FCJH_HERO_POPUP_SIZE"/>
 				<Visible val="false"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Image" name="T1">
@@ -408,19 +536,40 @@
 					<Visible val="false"/>
 					<AcceptsMouse val="false"/>
 				</Frame>
+				<!-- the talent pane's own square, just outside the icon (it slides and fades with it) -->
+				<Frame type="Image" name="FCJH_Border">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+					<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+					<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+					<Texture val="@UI/obs_talents_highlight_red"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
 				<Animation name="Pop">
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
 						<Key type="Bool" time="4" value="false"/>
 					</Controller>
+					<!-- slide up from the plate's middle (38 units down) to its top edge -->
+					<Controller type="Anchor" end="Pause" side="Top" relative="true">
+						<Key type="Curve" time="0" value="38" inout="Slow"/>
+						<Key type="Curve" time="0.35" value="0" inout="Slow"/>
+					</Controller>
+					<Controller type="Fade" end="Pause">
+						<Key type="Curve" time="0" value="0"/>
+						<Key type="Curve" time="0.25" value="255"/>
+						<Key type="Curve" time="3.5" value="255"/>
+						<Key type="Curve" time="4" value="0"/>
+					</Controller>
 				</Animation>
 			</Frame>
 			<Frame type="Frame" name="FCJH_Pop7">
-				<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Max" offset="30"/>
-				<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Mid" offset="-31"/>
-				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Mid" offset="31"/>
-				<Height val="62"/>
+				<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="#FCJH_HERO_POPUP_T"/>
+				<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Mid" offset="#FCJH_HERO_RED_POPUP_L"/>
+				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Mid" offset="#FCJH_HERO_RED_POPUP_R"/>
+				<Height val="#FCJH_HERO_POPUP_SIZE"/>
 				<Visible val="false"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Image" name="T1">
@@ -465,19 +614,40 @@
 					<Visible val="false"/>
 					<AcceptsMouse val="false"/>
 				</Frame>
+				<!-- the talent pane's own square, just outside the icon (it slides and fades with it) -->
+				<Frame type="Image" name="FCJH_Border">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+					<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+					<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+					<Texture val="@UI/obs_talents_highlight_red"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
 				<Animation name="Pop">
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
 						<Key type="Bool" time="4" value="false"/>
 					</Controller>
+					<!-- slide up from the plate's middle (38 units down) to its top edge -->
+					<Controller type="Anchor" end="Pause" side="Top" relative="true">
+						<Key type="Curve" time="0" value="38" inout="Slow"/>
+						<Key type="Curve" time="0.35" value="0" inout="Slow"/>
+					</Controller>
+					<Controller type="Fade" end="Pause">
+						<Key type="Curve" time="0" value="0"/>
+						<Key type="Curve" time="0.25" value="255"/>
+						<Key type="Curve" time="3.5" value="255"/>
+						<Key type="Curve" time="4" value="0"/>
+					</Controller>
 				</Animation>
 			</Frame>
 			<Frame type="Frame" name="FCJH_Pop8">
-				<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Max" offset="30"/>
-				<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Mid" offset="-31"/>
-				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Mid" offset="31"/>
-				<Height val="62"/>
+				<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="#FCJH_HERO_POPUP_T"/>
+				<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Mid" offset="#FCJH_HERO_RED_POPUP_L"/>
+				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Mid" offset="#FCJH_HERO_RED_POPUP_R"/>
+				<Height val="#FCJH_HERO_POPUP_SIZE"/>
 				<Visible val="false"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Image" name="T1">
@@ -522,19 +692,40 @@
 					<Visible val="false"/>
 					<AcceptsMouse val="false"/>
 				</Frame>
+				<!-- the talent pane's own square, just outside the icon (it slides and fades with it) -->
+				<Frame type="Image" name="FCJH_Border">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+					<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+					<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+					<Texture val="@UI/obs_talents_highlight_red"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
 				<Animation name="Pop">
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
 						<Key type="Bool" time="4" value="false"/>
 					</Controller>
+					<!-- slide up from the plate's middle (38 units down) to its top edge -->
+					<Controller type="Anchor" end="Pause" side="Top" relative="true">
+						<Key type="Curve" time="0" value="38" inout="Slow"/>
+						<Key type="Curve" time="0.35" value="0" inout="Slow"/>
+					</Controller>
+					<Controller type="Fade" end="Pause">
+						<Key type="Curve" time="0" value="0"/>
+						<Key type="Curve" time="0.25" value="255"/>
+						<Key type="Curve" time="3.5" value="255"/>
+						<Key type="Curve" time="4" value="0"/>
+					</Controller>
 				</Animation>
 			</Frame>
 			<Frame type="Frame" name="FCJH_Pop9">
-				<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Max" offset="30"/>
-				<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Mid" offset="-31"/>
-				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Mid" offset="31"/>
-				<Height val="62"/>
+				<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="#FCJH_HERO_POPUP_T"/>
+				<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Mid" offset="#FCJH_HERO_RED_POPUP_L"/>
+				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Mid" offset="#FCJH_HERO_RED_POPUP_R"/>
+				<Height val="#FCJH_HERO_POPUP_SIZE"/>
 				<Visible val="false"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Image" name="T1">
@@ -579,11 +770,32 @@
 					<Visible val="false"/>
 					<AcceptsMouse val="false"/>
 				</Frame>
+				<!-- the talent pane's own square, just outside the icon (it slides and fades with it) -->
+				<Frame type="Image" name="FCJH_Border">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+					<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+					<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+					<Texture val="@UI/obs_talents_highlight_red"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
 				<Animation name="Pop">
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
 						<Key type="Bool" time="4" value="false"/>
+					</Controller>
+					<!-- slide up from the plate's middle (38 units down) to its top edge -->
+					<Controller type="Anchor" end="Pause" side="Top" relative="true">
+						<Key type="Curve" time="0" value="38" inout="Slow"/>
+						<Key type="Curve" time="0.35" value="0" inout="Slow"/>
+					</Controller>
+					<Controller type="Fade" end="Pause">
+						<Key type="Curve" time="0" value="0"/>
+						<Key type="Curve" time="0.25" value="255"/>
+						<Key type="Curve" time="3.5" value="255"/>
+						<Key type="Curve" time="4" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
