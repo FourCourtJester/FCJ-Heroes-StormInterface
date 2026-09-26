@@ -23,8 +23,9 @@ at bottom-centre; team core HP above the cells; a two-line top bar of series sco
 name, logo and level either side of Blizzard's hexagon, with bans, bracket and game count
 beneath; the kill feed top-right; replay controls top-left, collapsible; info panes
 (talents, KDA/damage, healing, siege) at middle-left on hotkeys; talent pop-ups on the
-cells. **Fight mode is not a separate layout** — it is one hotkey that hides a list of
-elements (list TBD, info pane first). The top bar and minimap always stay.
+cells, and a green-plus pop-up on any hero below 25% health (drawn under the talent
+pop-up). **Fight mode is not a separate layout** — it is one hotkey that hides a list of
+elements (so far: the info pane and the health markers). The top bar and minimap always stay.
 
 **Branding is negative space**: names, logos, scores, bans, bracket and game count are
 drawn by OBS over empty regions the interface leaves (§6).
@@ -225,17 +226,81 @@ five segments would duplicate the hero row. If plates read too small, widen them
 
 ## 7. What's next
 
-**Phase 1 — the unknowns, before building anything they could change.** One sitting in a
-replay; each is a small dev build.
+**Phase 1 — the unknowns, before building anything they could change.** Probes live in
+`src/dev/` (dev builds only). Results so far, all 2026-09-25 on Garden of Terror:
 
-- **Calibration:** does the wireframe overlay land where the canvas says? (Confirms the
-  0.9 px/unit conversion on screen.)
-- **Minimap:** does it fit each map's shape, and can a layout tell which map is loaded?
-- **Talent-lead flame:** `TeamTalentAdvantageFrame` lives in the *player* HUD — does the
-  engine drive it while observing?
-- **Mana bar** inside each cell's `HeroStatus`, for mana, energy, fury and brew heroes.
-- **Hide-hotkey** mechanism. Known pattern: `ToggleControl + Shortcut → StateGroup →
-  SendEvent → Animation`; a StateGroup's single active state gives the brief's exclusivity.
+- ✅ **Calibration:** every wireframe box landed exactly where the canvas puts it — the
+  0.9 px/unit conversion is confirmed on screen.
+- ✅ **Minimap** (`FCJH_Minimap.StormLayout`, shipped): Blizzard's minimap is a fixed
+  438-unit square and the engine fits each map inside it, centred — no map detection needed
+  to size it. At bottom-centre, hanging 59 units off-screen, Garden sits inside its wireframe
+  box. Still to check: a *tall* map. **Map objective widgets are not on the minimap** — they
+  live in `MapMechanicPanel`, filled by each battleground's own mod; per-map work happens there.
+- ✅ **Hide hotkey:** a `ToggleControl` with `<Shortcut val="Control+Shift+W"/>` whose
+  OnShown/OnHidden animation fades a target — works (the dev overlay toggle). This is the
+  fight-mode hide-list mechanism.
+- ✅ **Resource bars:** a `UnitStatusEnergyBar` inside a cell's `HeroStatus` binds to that
+  cell's hero — bars appeared only for resource heroes (none for Sonya, Illidan). Open:
+  confirm it drains mid-game; colour — Blizzard colours per resource type with separate
+  templates (`StandardEnergy`, `BrewEnergy`, `FuryEnergy`, …), so ours are all mana-blue.
+- ❌ **Talent-lead flame, as is:** `PartyFramePanel` is hidden for observers (a probe marker
+  inside it never rendered), so `TeamTalentAdvantageFrame` can't show. Next: can a StateGroup
+  read a level label's text? If so, generate the tier comparison ourselves from
+  `Team1/2LevelLabel` and play Blizzard's flame cutscene in our own frame. A team leads when
+  it has reached a talent tier (4, 7, 10, 13, 16, 20) the other hasn't: blue leads iff, for
+  some tier T, blue ≥ T and red < T — six `GreaterThan`/`LessThan` conditions per team.
+
+**Round 2 results (build `19:18:07`):** StateGroups **read label text** (A→B at level 2) but
+compare it **as text** (C never showed at 10: "10" < "9"). Resource bars **drain** — confirmed.
+Chen's bar did **not** turn yellow (cause unknown). Icon gallery: #1 blue heart, #2 person +
+plus, **#4 white plus — the user's pick**, #7 purple boxed plus; #3/#5/#6 don't exist.
+
+**Round 3 (build `21:11:13`):** tier probe rebuilt in two stages — level text → one-digit
+tier label (30 generated states per team), then compare tier digits, where text and number
+order agree. Colour split into three checks (static BrewEnergy on blue bars / runtime
+SetProperty FuryEnergy on red bars / a "CHEN" label via `Unit="HeroChen"`). Health icon is
+now #4 (`Storm_UI_Play_RandomHero_Button_Icon_Active_Healer`) tinted green with `<Color>`.
+
+**Round 3 results (build `21:11:13`):** ✅ **Talent-tier lead works** — tiers 0/0 → EVEN at
+the start; blue 3 vs red 4 → tiers 0/1 → RED LEADS. ✅ Static `ColorStyle` renders (blue bars
+yellow); ✅ runtime `SetProperty ColorStyle` works (red bars orange). ❌ A unit check owned by a
+child frame (`frame="$parent" Unit="HeroChen"`) never matched. ❌ Health icon never showed.
+
+**Round 4 (build `21:17:15`):** resource colour uses **Blizzard's own hero→colour table**,
+`HeroResourceStates` in `targetinfopanelunitstatustemplate.stormlayout:257` (Yellow=BrewEnergy:
+Auriel, Chen, Morales, Valeera; Orange=FuryEnergy: Sonya, Junkrat, Gazlowe; Pink=DivaEnergy:
+D.Va, Zarya, Volskaya gunner; DeathwingEnergy: Deathwing; Normal=StandardEnergy: everyone
+else), placed like Blizzard's — the StateGroup **on the unit-status frame itself**, no
+`frame=` on the When, and a condition-less "Normal" state as the fallback. Health element now
+has `VisibleToOwner/Ally/Enemy` (unit-status elements hide by viewer relation otherwise).
+
+**Round 4 results (build `21:17:15`):** ✅ **Per-hero resource colour works** with Blizzard's
+table on `HeroStatus` (Sonya orange, Auriel yellow, mana heroes blue). ✅ Tier lead still
+correct. ❌ Health icon: nothing on Sonya at ~10% or on dead heroes, even with
+`VisibleToOwner/Ally/Enemy`. **Round 5 (build `21:23:27`)** adds a control element per cell
+using `TargetLifeFull` (yellow plus, lower down): yellow pluses at game start = the element
+runs and the 25% check is at fault; none = validator elements don't run in observer cells.
+
+Superseded round 1–2 notes (kept for the record):
+
+- `FCJH_Probe_Icons` — a numbered column of Blizzard heal-looking textures on the right
+  (score-screen healing icons, the healer role icon, `HealingDisplay`, `Restore`, a boost
+  plus) for the user to pick the critical-health icon from.
+
+- `FCJH_Probe_Level` — markers A (`Text="1"`), B (`GreaterThan 1`), C (`GreaterThan 9`, shows
+  at level 10 only if comparisons are numeric) watching blue's level label. Decides the flame.
+- `FCJH_Probe_Mana` — resource bars under the stock top-bar heroes; Chen's should be
+  brew-yellow via `When Unit="HeroChen"` → `SetProperty ColorStyle`. Also check they drain.
+  If colour works, a generator maps every hero from game data (`CustomUnitStatusFrame` on
+  each `CUnit`: `HeroUnitStatusFrameYellowEnergy` = brew, `...OrangeEnergy` = fury, …).
+- `FCJH_Probe_Health` — **new feature idea (user, 2026-09-25): a green-plus pop-up on a
+  hero's plate at critical health**, reusing the talent pop-up slot. A
+  `UnitStatusValidatorAnimElement` inside each cell's `HeroStatus` with Blizzard's own
+  `TargetLifeLT25Percent` validator (also 30/33/35/40/50% exist; no 20%) fires an event when
+  true and `NoState` otherwise. Watch: does it also sit on dead heroes (0% life)?
+  **Decided:** the talent pop-up draws *above* the health plus (talent choices matter more);
+  both share the slot, the talent one on a higher render priority. **Fight mode hides the
+  health markers** — they join the hide list with the info pane.
 - **Talent pop-ups:** read how Ahli wires his first (no launch needed).
 - **Info pane:** can Blizzard's 1035-wide talent table be re-laid out with teams stacked?
 

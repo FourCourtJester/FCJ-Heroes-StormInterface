@@ -18,8 +18,19 @@ ui_reference_height = 1200   # the game's layout grid height; fixed by the engin
 # Dev builds only. Release builds leave all of this out.
 [dev]
 build_stamp = [16, 936]      # x, y of the build stamp
-wireframe_overlay = true     # tint every element's wireframe box in game, to build against
-overlay_alpha = 60           # 0-255
+wireframe_overlay = true     # outline every element's wireframe box in game, to build against
+overlay_alpha = 200          # 0-255
+overlay_line = 2             # outline thickness
+overlay_hotkey = "Control+Shift+W"   # shows / hides the overlay
+
+# ---------------------------------------------------------------------------
+# Minimap. Blizzard's minimap is a fixed square (438 layout units = 394 px); the engine
+# fits each map's shape inside it, centred. Wide maps draw short, tall maps draw tall.
+# Like Blizzard, we let the square hang below the screen edge so wide maps sit low.
+# ---------------------------------------------------------------------------
+[minimap]
+centre_x = 960               # the square's horizontal centre
+bottom = 1133                # the square's bottom edge; > 1080 hangs off-screen
 
 # ---------------------------------------------------------------------------
 # Elements: rect = [x, y, width, height].

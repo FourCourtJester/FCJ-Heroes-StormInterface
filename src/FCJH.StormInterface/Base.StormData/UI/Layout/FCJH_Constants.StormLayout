@@ -255,6 +255,12 @@
 	<Constant name="FCJH_HERO_0_W" val="124"/>
 	<Constant name="FCJH_HERO_0_H" val="102"/>
 
+	<!-- MinimapPanel edges: the square centred on centre_x, its bottom edge at `bottom`.
+	     _BOTTOM is an offset from $GameUI pos=Max, so a positive value hangs off-screen. -->
+	<Constant name="FCJH_MINIMAP_PANEL_L" val="848"/>
+	<Constant name="FCJH_MINIMAP_PANEL_R" val="1316"/>
+	<Constant name="FCJH_MINIMAP_PANEL_BOTTOM" val="59"/>
+
 	<!-- Hero cell internals, measured from the cell's own top -->
 	<Constant name="FCJH_HERO_PORTRAIT_H" val="69"/>
 	<Constant name="FCJH_HERO_HP_T" val="69"/>

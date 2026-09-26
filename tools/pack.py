@@ -3,7 +3,8 @@ Build the interface: generate, stage, validate, pack, deploy.
 
   1. generate  tools/gen.py rewrites the committed generated layouts from layout.toml
   2. stage     src/FCJH.StormInterface is copied to build/<profile>/; a dev build adds
-               the build stamp and in-game wireframe overlay there, and only there
+               the build stamp, the in-game wireframe overlay and src/dev/ layouts
+               (experiments and probes) there, and only there
   3. validate  tools/validate.py on the staged tree; an error stops the build
   4. pack      the staged tree becomes an MPQ v1 archive, read back and checked
   5. deploy    written to the Heroes Interfaces folder
@@ -39,6 +40,7 @@ import validate
 
 REPO = Path(__file__).resolve().parent.parent
 DEFAULT_SOURCE = gen.SOURCE
+DEV_LAYOUTS = REPO / "src" / "dev"
 BUILD = REPO / "build"
 DIST = REPO / "dist"
 INTERFACES = Path.home() / "OneDrive" / "Documents" / "Heroes of the Storm" / "Interfaces"
@@ -78,7 +80,11 @@ def stage(cfg, source, profile):
     shutil.copytree(source, staged)
     if profile == "dev":
         layout_dir = staged / gen.LAYOUT_REL
-        order = gen.layout_order(source / gen.LAYOUT_REL, extra=[gen.DEV_FILE])
+        # src/dev/*.StormLayout: dev-only layouts (experiments, probes). Committed, never shipped.
+        probes = sorted(DEV_LAYOUTS.glob("*.StormLayout")) if DEV_LAYOUTS.is_dir() else []
+        for probe in probes:
+            shutil.copy(probe, layout_dir / probe.name)
+        order = gen.layout_order(source / gen.LAYOUT_REL, extra=[p.name for p in probes] + [gen.DEV_FILE])
         commit = git("rev-parse", "--short", "HEAD") or "nogit"
         dirty = "+" if git("status", "--porcelain", "--", *RELEASE_PATHS) else ""
         stamp = f"FCJH DEV {cfg['meta']['version']} {commit}{dirty} {datetime.now():%H:%M:%S}"
