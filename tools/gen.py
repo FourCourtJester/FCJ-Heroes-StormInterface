@@ -409,6 +409,13 @@ def slant_bars(cfg):
                 data = slant_texture(team, cut, colour, alpha)
                 digest = hashlib.sha1(data).hexdigest()[:8]
                 out[name(bar, part, team)] = (f"FCJH_Bar_{bar}_{part}_{team}_{digest}.dds", data)
+    # the team level's backdrop (top bar, blue_level / red_level): a plate cut to the team's lean
+    level = cfg["team_level"]
+    for team in ("blue", "red"):
+        (_, _, w, h), _ = rects(cfg)[f"{team}_level"]
+        data = slant_texture(team, lean * h / w, level[f"{team}_colour"], level["alpha"], size=(256, 160))
+        digest = hashlib.sha1(data).hexdigest()[:8]
+        out[name("level", "back", team)] = (f"FCJH_LevelBack_{team}_{digest}.dds", data)
     # plate tokens (the heroic): a white mask to cut an icon to the slant, a dark overlay for
     # cooldown, and a plain backing for the "?" state
     cell = HeroCell(cfg)

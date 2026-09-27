@@ -8,7 +8,10 @@
 	     overlay on top of it (TopBarLogoOverlay, @UI/obs_bar_middle_logo). So:
 	       - backplate hidden with Alpha 0, NOT parked: the level labels, XP bars, core frames,
 	         and both hero containers all anchor to it - parking it drags them off-screen
-	       - hexagon, clock and team levels left as they are, now floating on their own
+	       - hexagon and clock left as they are, now floating on their own
+	       - team levels moved up to the top edge (blue_level, red_level) on our backdrop,
+	         a plate cut to the team's lean (layout.toml [team_level]); the bracket and game
+	         count (OBS) sit under them, beside the hexagon
 	       - towers / kills counters parked (the icons beside them were backplate art)
 	       - team XP: on each hero row's top edge, the full width of that edge; core health on
 	         top of it at the row's inner end (blue_xp, red_xp, blue_core, red_core: placed by
@@ -23,6 +26,44 @@
 				<Frame type="Frame" name="ObserverHeroOverviewPanel">
 					<Frame type="Frame" name="ObserverTopPanel">
 						<Frame type="Image" name="TopBarBacking"><Alpha val="0"/></Frame>
+
+						<!-- Team levels: on the top edge, on our backdrop -->
+						<Frame type="Image" name="FCJH_BlueLevelBack">
+							<Anchor side="Top" relative="$GameUI" pos="Min" offset="#FCJH_BLUE_LEVEL_T"/>
+							<Anchor side="Left" relative="$GameUI" pos="Min" offset="#FCJH_BLUE_LEVEL_L"/>
+							<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_BLUE_LEVEL_B"/>
+							<Anchor side="Right" relative="$GameUI" pos="Min" offset="#FCJH_BLUE_LEVEL_R"/>
+							<Texture val="#FCJH_LEVEL_BACK_BLUE"/>
+							<RenderPriority val="490"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<Frame type="Label" name="Team1LevelLabel">
+							<Anchor side="Top" relative="$GameUI" pos="Min" offset="#FCJH_BLUE_LEVEL_T"/>
+							<Anchor side="Left" relative="$GameUI" pos="Min" offset="#FCJH_BLUE_LEVEL_L"/>
+							<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_BLUE_LEVEL_B"/>
+							<Anchor side="Right" relative="$GameUI" pos="Min" offset="#FCJH_BLUE_LEVEL_R"/>
+							<Width val="0"/>
+							<Unclipped val="true"/>
+						</Frame>
+						<Frame type="Image" name="FCJH_RedLevelBack">
+							<Anchor side="Top" relative="$GameUI" pos="Min" offset="#FCJH_RED_LEVEL_T"/>
+							<Anchor side="Left" relative="$GameUI" pos="Min" offset="#FCJH_RED_LEVEL_L"/>
+							<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_RED_LEVEL_B"/>
+							<Anchor side="Right" relative="$GameUI" pos="Min" offset="#FCJH_RED_LEVEL_R"/>
+							<Texture val="#FCJH_LEVEL_BACK_RED"/>
+							<RenderPriority val="490"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<Frame type="Label" name="Team2LevelLabel">
+							<Anchor side="Top" relative="$GameUI" pos="Min" offset="#FCJH_RED_LEVEL_T"/>
+							<Anchor side="Left" relative="$GameUI" pos="Min" offset="#FCJH_RED_LEVEL_L"/>
+							<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_RED_LEVEL_B"/>
+							<Anchor side="Right" relative="$GameUI" pos="Min" offset="#FCJH_RED_LEVEL_R"/>
+							<Width val="0"/>
+							<Unclipped val="true"/>
+						</Frame>
 
 						<!-- Team XP -->
 						<Frame type="Image" name="Team1XPUnitStatusFrameBgImage"><Alpha val="0"/></Frame>
