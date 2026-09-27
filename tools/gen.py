@@ -184,9 +184,6 @@ class HeroCell:
         self.cc_band = tuple(s(v) for v in self.CC_BAND)
         self.cc_icon = tuple(s(v) for v in self.CC_ICON)
         self.fountain = {t: tuple(s(v) for v in r) for t, r in self.FOUNTAIN.items()}
-        # the plate leans, so its top edge is centred half the overlap off the box's middle:
-        # left on blue (leans \), right on red (leans /)
-        self.top_edge_shift = {"blue": -s(self.OVERLAP / 2), "red": s(self.OVERLAP / 2)}
         across = self.W / self.PORTRAIT_H * (self.CROP_BOTTOM - self.CROP_TOP) / self.ART_ASPECT
         self.crop = (self.CROP_TOP, round(1 - across, 3), self.CROP_BOTTOM, 1.0)
 
@@ -279,10 +276,11 @@ def constants_layout(cfg):
     const(name("hero", "popup", "size"), u(size))
     const(name("hero", "popup", "t"), -u(size / 2), "the icon straddles the cell's top edge")
     for team in ("blue", "red"):
-        # pop-ups sit on the middle of the plate's top edge; offsets from the cell's middle
-        mid = HeroCell(cfg).top_edge_shift[team]
-        const(name("hero", team, "popup", "l"), mid - u(size / 2))
-        const(name("hero", team, "popup", "r"), mid + u(size / 2))
+        # pop-ups sit on the cell box's horizontal centre (user's call, 2026-09-27, after
+        # comparing it with the top edge's centre, 19 units toward the lean); offsets from
+        # the cell's middle, kept per team so either side can be nudged on its own
+        const(name("hero", team, "popup", "l"), -u(size / 2))
+        const(name("hero", team, "popup", "r"), u(size / 2))
 
     return XML_DECL + GENERATED + "<Desc>\n" + "\n".join(lines) + "\n</Desc>\n"
 
