@@ -12,11 +12,13 @@
 	         with the seconds left
 	     The token: a parallelogram in the plate's corner opposite the fountain (tools/gen.py
 	     HeroCell.HEROIC), leaning with the plate. States: nothing / "?" / the icon / the icon
-	     dimmed with the cooldown on it. Not handled yet: Tracer (heroic from level 1) and
-	     Varian (heroic picked at level 4, tier 2) - Ahli special-cases both.
+	     dimmed with the cooldown on it. Keyed to the heroic TIER, not to a level: Chromie's
+	     heroic tier comes at level 8 and needs nothing special. Not handled yet - Ahli
+	     special-cases all three: Tracer (heroic from level 1, charge-based), Varian (heroic
+	     picked at level 4, tier 2), Deathwing (Cataclysm usable before his heroic tier).
 	     Written by a one-off script (10 copies); edit by regenerating.
-	     Look for: "?" on a plate at level 10 until the pick; then the icon; after a cast, a dark
-	     overlay with seconds counting down; nothing before 10. -->
+	     Look for: "?" on a plate from its heroic tier (10; Chromie 8) until the pick; then the icon; after a cast, a dark
+	     overlay with seconds counting down; nothing before that tier. -->
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<Frame type="Frame" name="FCJH_HeroicTokens">
 			<Anchor relative="$parent"/>
