@@ -17,4 +17,7 @@
 	<!-- Plate CC text ("STUNNED"): Blizzard's TalentChoiceAlertNameplateLabel, but centred
 	     vertically too, so it sits across the middle of the health bar -->
 	<Style name="FCJH_CCText" template="HeaderExtendedTemplate" height="17" textcolor="ffffff" hjustify="Center" vjustify="Middle" fontflags="Outline" styleflags="!Shadow"/>
+	<!-- Plate heroic token: the "?" before the pick, and the cooldown seconds over the icon -->
+	<Style name="FCJH_HeroicMark" template="HeaderExtendedTemplate" height="18" textcolor="e7c8ff" hjustify="Center" vjustify="Middle" fontflags="Outline" styleflags="!Shadow"/>
+	<Style name="FCJH_HeroicCooldown" template="HeaderExtendedTemplate" height="15" textcolor="ffffff" hjustify="Center" vjustify="Middle" fontflags="Outline" styleflags="!Shadow"/>
 </StyleFile>

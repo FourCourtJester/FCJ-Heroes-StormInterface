@@ -164,6 +164,9 @@ class HeroCell:
     # Fountain-ready marker: a small square in the plate's top corner on the portrait side,
     # away from the slant (left on blue, right on red). (left, top, right, bottom)
     FOUNTAIN = {"blue": (8, 2, 24, 18), "red": (104, 2, 120, 18)}
+    # Heroic token: the corner opposite the fountain, just above the bars (36), clear of the
+    # slanted edge; a parallelogram leaning with the plate (our mask). Red mirrors blue.
+    HEROIC = {"blue": (90, 18, 111, 34), "red": (17, 18, 38, 34)}
     # The observer's portrait art is wide with the face on the right; Blizzard's observer
     # crops [0.1, 0.45, 0.65, 1.0] into 165 x 60, i.e. the art is 2.75x as wide as tall per
     # unit of crop. Same top/bottom/right here, left worked out for this cell's shape.
@@ -184,6 +187,7 @@ class HeroCell:
         self.cc_band = tuple(s(v) for v in self.CC_BAND)
         self.cc_icon = tuple(s(v) for v in self.CC_ICON)
         self.fountain = {t: tuple(s(v) for v in r) for t, r in self.FOUNTAIN.items()}
+        self.heroic = {t: tuple(s(v) for v in r) for t, r in self.HEROIC.items()}
         across = self.W / self.PORTRAIT_H * (self.CROP_BOTTOM - self.CROP_TOP) / self.ART_ASPECT
         self.crop = (self.CROP_TOP, round(1 - across, 3), self.CROP_BOTTOM, 1.0)
 
@@ -275,6 +279,10 @@ def constants_layout(cfg):
     size = row["talent_popup_size"]
     const(name("hero", "popup", "size"), u(size))
     const(name("hero", "popup", "t"), -u(size / 2), "the icon straddles the cell's top edge")
+    cell = HeroCell(cfg)
+    for team in ("blue", "red"):
+        for side, v in zip("ltrb", cell.heroic[team]):
+            const(name("hero", team, "heroic", side), v)
     for team in ("blue", "red"):
         # pop-ups sit on the cell box's horizontal centre (user's call, 2026-09-27, after
         # comparing it with the top edge's centre, 19 units toward the lean); offsets from
@@ -377,7 +385,7 @@ def slant_texture(team, cut, colour, alpha=255, size=(512, 32), sub=4):
 
 
 def slant_bars(cfg):
-    """Every slanted bar texture, by constant name: {name: (file name, dds bytes)}. Names
+    """Every slanted texture (bars and plate tokens), by constant name: {name: (file name, dds bytes)}. Names
     carry a content hash (textures are cached by path across replay reloads)."""
     rects_ = team_bar_rects(cfg)
     lean = HeroCell(cfg).overlap / HeroCell(cfg).h
@@ -394,6 +402,16 @@ def slant_bars(cfg):
                 data = slant_texture(team, cut, colour, alpha)
                 digest = hashlib.sha1(data).hexdigest()[:8]
                 out[name(bar, part, team)] = (f"FCJH_Bar_{bar}_{part}_{team}_{digest}.dds", data)
+    # plate tokens (the heroic): a white mask to cut an icon to the slant, a dark overlay for
+    # cooldown, and a plain backing for the "?" state
+    cell = HeroCell(cfg)
+    for team in ("blue", "red"):
+        l, t, r, b = cell.heroic[team]
+        cut = lean * (b - t) / (r - l)
+        for part, colour, alpha in (("mask", "ffffff", 255), ("dim", "0a0a10", 175), ("back", "2a1c44", 240)):
+            data = slant_texture(team, cut, colour, alpha, size=(128, 96))
+            digest = hashlib.sha1(data).hexdigest()[:8]
+            out[name("token", part, team)] = (f"FCJH_Token_{part}_{team}_{digest}.dds", data)
     return out
 
 

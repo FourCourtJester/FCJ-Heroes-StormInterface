@@ -1,0 +1,866 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+	<!-- PROBE (dev only): heroic token on each hero plate (2026-09-27).
+
+	     Ahli's recipe (AhliObs _TopPanel.StormLayout): everything comes from Blizzard's own
+	     talent row, which the engine fills for observers - the same stock rows our talent
+	     pop-ups already read (TalentsOverview/TalentOverview, PlayerFrame0-9):
+	       - TalentTreeIcon4 is the heroic tier: its TalentTierState says TierAvailable (level
+	         10, not picked yet) or TierSelected (picked); its IconImage is the heroic's icon
+	       - UnitStatusAbil is Blizzard's heroic ability element for that row (AbilityLink bound
+	         to the hero's HeroicAbilLink); its AbilIcon/CooldownLabel shows only on cooldown,
+	         with the seconds left
+	     The token: a parallelogram in the plate's corner opposite the fountain (tools/gen.py
+	     HeroCell.HEROIC), leaning with the plate. States: nothing / "?" / the icon / the icon
+	     dimmed with the cooldown on it. Not handled yet: Tracer (heroic from level 1) and
+	     Varian (heroic picked at level 4, tier 2) - Ahli special-cases both.
+	     Written by a one-off script (10 copies); edit by regenerating.
+	     Look for: "?" on a plate at level 10 until the pick; then the icon; after a cast, a dark
+	     overlay with seconds counting down; nothing before 10. -->
+	<Frame type="GameUI" name="GameUI" file="GameUI">
+		<Frame type="Frame" name="FCJH_HeroicTokens">
+			<Anchor relative="$parent"/>
+			<AcceptsMouse val="false"/>
+			<!-- PlayerFrame0 -> its plate -->
+			<Frame type="Frame" name="FCJH_Heroic0">
+				<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="#FCJH_HERO_BLUE_HEROIC_T"/>
+				<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="#FCJH_HERO_BLUE_HEROIC_L"/>
+				<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="#FCJH_HERO_BLUE_HEROIC_B"/>
+				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="#FCJH_HERO_BLUE_HEROIC_R"/>
+				<RenderPriority val="560"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Image" name="FCJH_Back">
+					<Anchor relative="$parent"/>
+					<Texture val="#FCJH_TOKEN_BACK_BLUE"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Label" name="FCJH_Mark">
+					<Anchor relative="$parent"/>
+					<Text val="?"/>
+					<Style val="FCJH_HeroicMark"/>
+					<Options val="NoWrapping | ScaleToPreventTruncation"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Icon">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
+					<AlphaMaskTexture val="#FCJH_TOKEN_MASK_BLUE"/>
+					<TextureCoords top="0.12" left="0.0" bottom="0.88" right="1.0"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Dim">
+					<Anchor relative="$parent"/>
+					<Texture val="#FCJH_TOKEN_DIM_BLUE"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Label" name="FCJH_Cooldown">
+					<Anchor relative="$parent"/>
+					<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
+					<Style val="FCJH_HeroicCooldown"/>
+					<Options val="NoWrapping | ScaleToPreventTruncation"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<!-- the heroic tier: nothing, "?" (available, not picked), or its icon (picked) -->
+				<StateGroup name="FCJH_Tier">
+					<DefaultState val="None"/>
+					<State name="Picked">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="$this/FCJH_Back" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Mark" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Icon" Alpha="255"/>
+					</State>
+					<State name="Available">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierAvailable"/>
+						<Action type="SetProperty" frame="$this/FCJH_Back" Alpha="255"/>
+						<Action type="SetProperty" frame="$this/FCJH_Mark" Alpha="255"/>
+						<Action type="SetProperty" frame="$this/FCJH_Icon" Alpha="0"/>
+					</State>
+					<State name="None">
+						<Action type="SetProperty" frame="$this/FCJH_Back" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Mark" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Icon" Alpha="0"/>
+					</State>
+				</StateGroup>
+				<!-- cooldown: while Blizzard's cooldown label for this heroic is showing -->
+				<StateGroup name="FCJH_Cooldown">
+					<DefaultState val="Ready"/>
+					<State name="OnCooldown">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
+						<Action type="SetProperty" frame="$this/FCJH_Dim" Alpha="255"/>
+						<Action type="SetProperty" frame="$this/FCJH_Cooldown" Alpha="255"/>
+					</State>
+					<State name="Ready">
+						<Action type="SetProperty" frame="$this/FCJH_Dim" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Cooldown" Alpha="0"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<!-- PlayerFrame1 -> its plate -->
+			<Frame type="Frame" name="FCJH_Heroic1">
+				<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="#FCJH_HERO_BLUE_HEROIC_T"/>
+				<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="#FCJH_HERO_BLUE_HEROIC_L"/>
+				<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="#FCJH_HERO_BLUE_HEROIC_B"/>
+				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="#FCJH_HERO_BLUE_HEROIC_R"/>
+				<RenderPriority val="560"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Image" name="FCJH_Back">
+					<Anchor relative="$parent"/>
+					<Texture val="#FCJH_TOKEN_BACK_BLUE"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Label" name="FCJH_Mark">
+					<Anchor relative="$parent"/>
+					<Text val="?"/>
+					<Style val="FCJH_HeroicMark"/>
+					<Options val="NoWrapping | ScaleToPreventTruncation"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Icon">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
+					<AlphaMaskTexture val="#FCJH_TOKEN_MASK_BLUE"/>
+					<TextureCoords top="0.12" left="0.0" bottom="0.88" right="1.0"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Dim">
+					<Anchor relative="$parent"/>
+					<Texture val="#FCJH_TOKEN_DIM_BLUE"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Label" name="FCJH_Cooldown">
+					<Anchor relative="$parent"/>
+					<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
+					<Style val="FCJH_HeroicCooldown"/>
+					<Options val="NoWrapping | ScaleToPreventTruncation"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<!-- the heroic tier: nothing, "?" (available, not picked), or its icon (picked) -->
+				<StateGroup name="FCJH_Tier">
+					<DefaultState val="None"/>
+					<State name="Picked">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="$this/FCJH_Back" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Mark" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Icon" Alpha="255"/>
+					</State>
+					<State name="Available">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierAvailable"/>
+						<Action type="SetProperty" frame="$this/FCJH_Back" Alpha="255"/>
+						<Action type="SetProperty" frame="$this/FCJH_Mark" Alpha="255"/>
+						<Action type="SetProperty" frame="$this/FCJH_Icon" Alpha="0"/>
+					</State>
+					<State name="None">
+						<Action type="SetProperty" frame="$this/FCJH_Back" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Mark" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Icon" Alpha="0"/>
+					</State>
+				</StateGroup>
+				<!-- cooldown: while Blizzard's cooldown label for this heroic is showing -->
+				<StateGroup name="FCJH_Cooldown">
+					<DefaultState val="Ready"/>
+					<State name="OnCooldown">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
+						<Action type="SetProperty" frame="$this/FCJH_Dim" Alpha="255"/>
+						<Action type="SetProperty" frame="$this/FCJH_Cooldown" Alpha="255"/>
+					</State>
+					<State name="Ready">
+						<Action type="SetProperty" frame="$this/FCJH_Dim" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Cooldown" Alpha="0"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<!-- PlayerFrame2 -> its plate -->
+			<Frame type="Frame" name="FCJH_Heroic2">
+				<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="#FCJH_HERO_BLUE_HEROIC_T"/>
+				<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="#FCJH_HERO_BLUE_HEROIC_L"/>
+				<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="#FCJH_HERO_BLUE_HEROIC_B"/>
+				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="#FCJH_HERO_BLUE_HEROIC_R"/>
+				<RenderPriority val="560"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Image" name="FCJH_Back">
+					<Anchor relative="$parent"/>
+					<Texture val="#FCJH_TOKEN_BACK_BLUE"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Label" name="FCJH_Mark">
+					<Anchor relative="$parent"/>
+					<Text val="?"/>
+					<Style val="FCJH_HeroicMark"/>
+					<Options val="NoWrapping | ScaleToPreventTruncation"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Icon">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
+					<AlphaMaskTexture val="#FCJH_TOKEN_MASK_BLUE"/>
+					<TextureCoords top="0.12" left="0.0" bottom="0.88" right="1.0"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Dim">
+					<Anchor relative="$parent"/>
+					<Texture val="#FCJH_TOKEN_DIM_BLUE"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Label" name="FCJH_Cooldown">
+					<Anchor relative="$parent"/>
+					<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
+					<Style val="FCJH_HeroicCooldown"/>
+					<Options val="NoWrapping | ScaleToPreventTruncation"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<!-- the heroic tier: nothing, "?" (available, not picked), or its icon (picked) -->
+				<StateGroup name="FCJH_Tier">
+					<DefaultState val="None"/>
+					<State name="Picked">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="$this/FCJH_Back" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Mark" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Icon" Alpha="255"/>
+					</State>
+					<State name="Available">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierAvailable"/>
+						<Action type="SetProperty" frame="$this/FCJH_Back" Alpha="255"/>
+						<Action type="SetProperty" frame="$this/FCJH_Mark" Alpha="255"/>
+						<Action type="SetProperty" frame="$this/FCJH_Icon" Alpha="0"/>
+					</State>
+					<State name="None">
+						<Action type="SetProperty" frame="$this/FCJH_Back" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Mark" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Icon" Alpha="0"/>
+					</State>
+				</StateGroup>
+				<!-- cooldown: while Blizzard's cooldown label for this heroic is showing -->
+				<StateGroup name="FCJH_Cooldown">
+					<DefaultState val="Ready"/>
+					<State name="OnCooldown">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
+						<Action type="SetProperty" frame="$this/FCJH_Dim" Alpha="255"/>
+						<Action type="SetProperty" frame="$this/FCJH_Cooldown" Alpha="255"/>
+					</State>
+					<State name="Ready">
+						<Action type="SetProperty" frame="$this/FCJH_Dim" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Cooldown" Alpha="0"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<!-- PlayerFrame3 -> its plate -->
+			<Frame type="Frame" name="FCJH_Heroic3">
+				<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="#FCJH_HERO_BLUE_HEROIC_T"/>
+				<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="#FCJH_HERO_BLUE_HEROIC_L"/>
+				<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="#FCJH_HERO_BLUE_HEROIC_B"/>
+				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="#FCJH_HERO_BLUE_HEROIC_R"/>
+				<RenderPriority val="560"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Image" name="FCJH_Back">
+					<Anchor relative="$parent"/>
+					<Texture val="#FCJH_TOKEN_BACK_BLUE"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Label" name="FCJH_Mark">
+					<Anchor relative="$parent"/>
+					<Text val="?"/>
+					<Style val="FCJH_HeroicMark"/>
+					<Options val="NoWrapping | ScaleToPreventTruncation"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Icon">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
+					<AlphaMaskTexture val="#FCJH_TOKEN_MASK_BLUE"/>
+					<TextureCoords top="0.12" left="0.0" bottom="0.88" right="1.0"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Dim">
+					<Anchor relative="$parent"/>
+					<Texture val="#FCJH_TOKEN_DIM_BLUE"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Label" name="FCJH_Cooldown">
+					<Anchor relative="$parent"/>
+					<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
+					<Style val="FCJH_HeroicCooldown"/>
+					<Options val="NoWrapping | ScaleToPreventTruncation"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<!-- the heroic tier: nothing, "?" (available, not picked), or its icon (picked) -->
+				<StateGroup name="FCJH_Tier">
+					<DefaultState val="None"/>
+					<State name="Picked">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="$this/FCJH_Back" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Mark" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Icon" Alpha="255"/>
+					</State>
+					<State name="Available">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierAvailable"/>
+						<Action type="SetProperty" frame="$this/FCJH_Back" Alpha="255"/>
+						<Action type="SetProperty" frame="$this/FCJH_Mark" Alpha="255"/>
+						<Action type="SetProperty" frame="$this/FCJH_Icon" Alpha="0"/>
+					</State>
+					<State name="None">
+						<Action type="SetProperty" frame="$this/FCJH_Back" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Mark" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Icon" Alpha="0"/>
+					</State>
+				</StateGroup>
+				<!-- cooldown: while Blizzard's cooldown label for this heroic is showing -->
+				<StateGroup name="FCJH_Cooldown">
+					<DefaultState val="Ready"/>
+					<State name="OnCooldown">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
+						<Action type="SetProperty" frame="$this/FCJH_Dim" Alpha="255"/>
+						<Action type="SetProperty" frame="$this/FCJH_Cooldown" Alpha="255"/>
+					</State>
+					<State name="Ready">
+						<Action type="SetProperty" frame="$this/FCJH_Dim" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Cooldown" Alpha="0"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<!-- PlayerFrame4 -> its plate -->
+			<Frame type="Frame" name="FCJH_Heroic4">
+				<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="#FCJH_HERO_BLUE_HEROIC_T"/>
+				<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="#FCJH_HERO_BLUE_HEROIC_L"/>
+				<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="#FCJH_HERO_BLUE_HEROIC_B"/>
+				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="#FCJH_HERO_BLUE_HEROIC_R"/>
+				<RenderPriority val="560"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Image" name="FCJH_Back">
+					<Anchor relative="$parent"/>
+					<Texture val="#FCJH_TOKEN_BACK_BLUE"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Label" name="FCJH_Mark">
+					<Anchor relative="$parent"/>
+					<Text val="?"/>
+					<Style val="FCJH_HeroicMark"/>
+					<Options val="NoWrapping | ScaleToPreventTruncation"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Icon">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
+					<AlphaMaskTexture val="#FCJH_TOKEN_MASK_BLUE"/>
+					<TextureCoords top="0.12" left="0.0" bottom="0.88" right="1.0"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Dim">
+					<Anchor relative="$parent"/>
+					<Texture val="#FCJH_TOKEN_DIM_BLUE"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Label" name="FCJH_Cooldown">
+					<Anchor relative="$parent"/>
+					<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
+					<Style val="FCJH_HeroicCooldown"/>
+					<Options val="NoWrapping | ScaleToPreventTruncation"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<!-- the heroic tier: nothing, "?" (available, not picked), or its icon (picked) -->
+				<StateGroup name="FCJH_Tier">
+					<DefaultState val="None"/>
+					<State name="Picked">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="$this/FCJH_Back" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Mark" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Icon" Alpha="255"/>
+					</State>
+					<State name="Available">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierAvailable"/>
+						<Action type="SetProperty" frame="$this/FCJH_Back" Alpha="255"/>
+						<Action type="SetProperty" frame="$this/FCJH_Mark" Alpha="255"/>
+						<Action type="SetProperty" frame="$this/FCJH_Icon" Alpha="0"/>
+					</State>
+					<State name="None">
+						<Action type="SetProperty" frame="$this/FCJH_Back" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Mark" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Icon" Alpha="0"/>
+					</State>
+				</StateGroup>
+				<!-- cooldown: while Blizzard's cooldown label for this heroic is showing -->
+				<StateGroup name="FCJH_Cooldown">
+					<DefaultState val="Ready"/>
+					<State name="OnCooldown">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
+						<Action type="SetProperty" frame="$this/FCJH_Dim" Alpha="255"/>
+						<Action type="SetProperty" frame="$this/FCJH_Cooldown" Alpha="255"/>
+					</State>
+					<State name="Ready">
+						<Action type="SetProperty" frame="$this/FCJH_Dim" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Cooldown" Alpha="0"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<!-- PlayerFrame5 -> its plate -->
+			<Frame type="Frame" name="FCJH_Heroic5">
+				<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="#FCJH_HERO_RED_HEROIC_T"/>
+				<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="#FCJH_HERO_RED_HEROIC_L"/>
+				<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="#FCJH_HERO_RED_HEROIC_B"/>
+				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="#FCJH_HERO_RED_HEROIC_R"/>
+				<RenderPriority val="560"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Image" name="FCJH_Back">
+					<Anchor relative="$parent"/>
+					<Texture val="#FCJH_TOKEN_BACK_RED"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Label" name="FCJH_Mark">
+					<Anchor relative="$parent"/>
+					<Text val="?"/>
+					<Style val="FCJH_HeroicMark"/>
+					<Options val="NoWrapping | ScaleToPreventTruncation"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Icon">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
+					<AlphaMaskTexture val="#FCJH_TOKEN_MASK_RED"/>
+					<TextureCoords top="0.12" left="0.0" bottom="0.88" right="1.0"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Dim">
+					<Anchor relative="$parent"/>
+					<Texture val="#FCJH_TOKEN_DIM_RED"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Label" name="FCJH_Cooldown">
+					<Anchor relative="$parent"/>
+					<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
+					<Style val="FCJH_HeroicCooldown"/>
+					<Options val="NoWrapping | ScaleToPreventTruncation"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<!-- the heroic tier: nothing, "?" (available, not picked), or its icon (picked) -->
+				<StateGroup name="FCJH_Tier">
+					<DefaultState val="None"/>
+					<State name="Picked">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="$this/FCJH_Back" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Mark" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Icon" Alpha="255"/>
+					</State>
+					<State name="Available">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierAvailable"/>
+						<Action type="SetProperty" frame="$this/FCJH_Back" Alpha="255"/>
+						<Action type="SetProperty" frame="$this/FCJH_Mark" Alpha="255"/>
+						<Action type="SetProperty" frame="$this/FCJH_Icon" Alpha="0"/>
+					</State>
+					<State name="None">
+						<Action type="SetProperty" frame="$this/FCJH_Back" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Mark" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Icon" Alpha="0"/>
+					</State>
+				</StateGroup>
+				<!-- cooldown: while Blizzard's cooldown label for this heroic is showing -->
+				<StateGroup name="FCJH_Cooldown">
+					<DefaultState val="Ready"/>
+					<State name="OnCooldown">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
+						<Action type="SetProperty" frame="$this/FCJH_Dim" Alpha="255"/>
+						<Action type="SetProperty" frame="$this/FCJH_Cooldown" Alpha="255"/>
+					</State>
+					<State name="Ready">
+						<Action type="SetProperty" frame="$this/FCJH_Dim" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Cooldown" Alpha="0"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<!-- PlayerFrame6 -> its plate -->
+			<Frame type="Frame" name="FCJH_Heroic6">
+				<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="#FCJH_HERO_RED_HEROIC_T"/>
+				<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="#FCJH_HERO_RED_HEROIC_L"/>
+				<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="#FCJH_HERO_RED_HEROIC_B"/>
+				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="#FCJH_HERO_RED_HEROIC_R"/>
+				<RenderPriority val="560"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Image" name="FCJH_Back">
+					<Anchor relative="$parent"/>
+					<Texture val="#FCJH_TOKEN_BACK_RED"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Label" name="FCJH_Mark">
+					<Anchor relative="$parent"/>
+					<Text val="?"/>
+					<Style val="FCJH_HeroicMark"/>
+					<Options val="NoWrapping | ScaleToPreventTruncation"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Icon">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
+					<AlphaMaskTexture val="#FCJH_TOKEN_MASK_RED"/>
+					<TextureCoords top="0.12" left="0.0" bottom="0.88" right="1.0"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Dim">
+					<Anchor relative="$parent"/>
+					<Texture val="#FCJH_TOKEN_DIM_RED"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Label" name="FCJH_Cooldown">
+					<Anchor relative="$parent"/>
+					<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
+					<Style val="FCJH_HeroicCooldown"/>
+					<Options val="NoWrapping | ScaleToPreventTruncation"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<!-- the heroic tier: nothing, "?" (available, not picked), or its icon (picked) -->
+				<StateGroup name="FCJH_Tier">
+					<DefaultState val="None"/>
+					<State name="Picked">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="$this/FCJH_Back" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Mark" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Icon" Alpha="255"/>
+					</State>
+					<State name="Available">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierAvailable"/>
+						<Action type="SetProperty" frame="$this/FCJH_Back" Alpha="255"/>
+						<Action type="SetProperty" frame="$this/FCJH_Mark" Alpha="255"/>
+						<Action type="SetProperty" frame="$this/FCJH_Icon" Alpha="0"/>
+					</State>
+					<State name="None">
+						<Action type="SetProperty" frame="$this/FCJH_Back" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Mark" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Icon" Alpha="0"/>
+					</State>
+				</StateGroup>
+				<!-- cooldown: while Blizzard's cooldown label for this heroic is showing -->
+				<StateGroup name="FCJH_Cooldown">
+					<DefaultState val="Ready"/>
+					<State name="OnCooldown">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
+						<Action type="SetProperty" frame="$this/FCJH_Dim" Alpha="255"/>
+						<Action type="SetProperty" frame="$this/FCJH_Cooldown" Alpha="255"/>
+					</State>
+					<State name="Ready">
+						<Action type="SetProperty" frame="$this/FCJH_Dim" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Cooldown" Alpha="0"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<!-- PlayerFrame7 -> its plate -->
+			<Frame type="Frame" name="FCJH_Heroic7">
+				<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="#FCJH_HERO_RED_HEROIC_T"/>
+				<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="#FCJH_HERO_RED_HEROIC_L"/>
+				<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="#FCJH_HERO_RED_HEROIC_B"/>
+				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="#FCJH_HERO_RED_HEROIC_R"/>
+				<RenderPriority val="560"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Image" name="FCJH_Back">
+					<Anchor relative="$parent"/>
+					<Texture val="#FCJH_TOKEN_BACK_RED"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Label" name="FCJH_Mark">
+					<Anchor relative="$parent"/>
+					<Text val="?"/>
+					<Style val="FCJH_HeroicMark"/>
+					<Options val="NoWrapping | ScaleToPreventTruncation"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Icon">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
+					<AlphaMaskTexture val="#FCJH_TOKEN_MASK_RED"/>
+					<TextureCoords top="0.12" left="0.0" bottom="0.88" right="1.0"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Dim">
+					<Anchor relative="$parent"/>
+					<Texture val="#FCJH_TOKEN_DIM_RED"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Label" name="FCJH_Cooldown">
+					<Anchor relative="$parent"/>
+					<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
+					<Style val="FCJH_HeroicCooldown"/>
+					<Options val="NoWrapping | ScaleToPreventTruncation"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<!-- the heroic tier: nothing, "?" (available, not picked), or its icon (picked) -->
+				<StateGroup name="FCJH_Tier">
+					<DefaultState val="None"/>
+					<State name="Picked">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="$this/FCJH_Back" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Mark" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Icon" Alpha="255"/>
+					</State>
+					<State name="Available">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierAvailable"/>
+						<Action type="SetProperty" frame="$this/FCJH_Back" Alpha="255"/>
+						<Action type="SetProperty" frame="$this/FCJH_Mark" Alpha="255"/>
+						<Action type="SetProperty" frame="$this/FCJH_Icon" Alpha="0"/>
+					</State>
+					<State name="None">
+						<Action type="SetProperty" frame="$this/FCJH_Back" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Mark" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Icon" Alpha="0"/>
+					</State>
+				</StateGroup>
+				<!-- cooldown: while Blizzard's cooldown label for this heroic is showing -->
+				<StateGroup name="FCJH_Cooldown">
+					<DefaultState val="Ready"/>
+					<State name="OnCooldown">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
+						<Action type="SetProperty" frame="$this/FCJH_Dim" Alpha="255"/>
+						<Action type="SetProperty" frame="$this/FCJH_Cooldown" Alpha="255"/>
+					</State>
+					<State name="Ready">
+						<Action type="SetProperty" frame="$this/FCJH_Dim" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Cooldown" Alpha="0"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<!-- PlayerFrame8 -> its plate -->
+			<Frame type="Frame" name="FCJH_Heroic8">
+				<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="#FCJH_HERO_RED_HEROIC_T"/>
+				<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="#FCJH_HERO_RED_HEROIC_L"/>
+				<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="#FCJH_HERO_RED_HEROIC_B"/>
+				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="#FCJH_HERO_RED_HEROIC_R"/>
+				<RenderPriority val="560"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Image" name="FCJH_Back">
+					<Anchor relative="$parent"/>
+					<Texture val="#FCJH_TOKEN_BACK_RED"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Label" name="FCJH_Mark">
+					<Anchor relative="$parent"/>
+					<Text val="?"/>
+					<Style val="FCJH_HeroicMark"/>
+					<Options val="NoWrapping | ScaleToPreventTruncation"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Icon">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
+					<AlphaMaskTexture val="#FCJH_TOKEN_MASK_RED"/>
+					<TextureCoords top="0.12" left="0.0" bottom="0.88" right="1.0"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Dim">
+					<Anchor relative="$parent"/>
+					<Texture val="#FCJH_TOKEN_DIM_RED"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Label" name="FCJH_Cooldown">
+					<Anchor relative="$parent"/>
+					<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
+					<Style val="FCJH_HeroicCooldown"/>
+					<Options val="NoWrapping | ScaleToPreventTruncation"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<!-- the heroic tier: nothing, "?" (available, not picked), or its icon (picked) -->
+				<StateGroup name="FCJH_Tier">
+					<DefaultState val="None"/>
+					<State name="Picked">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="$this/FCJH_Back" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Mark" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Icon" Alpha="255"/>
+					</State>
+					<State name="Available">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierAvailable"/>
+						<Action type="SetProperty" frame="$this/FCJH_Back" Alpha="255"/>
+						<Action type="SetProperty" frame="$this/FCJH_Mark" Alpha="255"/>
+						<Action type="SetProperty" frame="$this/FCJH_Icon" Alpha="0"/>
+					</State>
+					<State name="None">
+						<Action type="SetProperty" frame="$this/FCJH_Back" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Mark" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Icon" Alpha="0"/>
+					</State>
+				</StateGroup>
+				<!-- cooldown: while Blizzard's cooldown label for this heroic is showing -->
+				<StateGroup name="FCJH_Cooldown">
+					<DefaultState val="Ready"/>
+					<State name="OnCooldown">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
+						<Action type="SetProperty" frame="$this/FCJH_Dim" Alpha="255"/>
+						<Action type="SetProperty" frame="$this/FCJH_Cooldown" Alpha="255"/>
+					</State>
+					<State name="Ready">
+						<Action type="SetProperty" frame="$this/FCJH_Dim" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Cooldown" Alpha="0"/>
+					</State>
+				</StateGroup>
+			</Frame>
+			<!-- PlayerFrame9 -> its plate -->
+			<Frame type="Frame" name="FCJH_Heroic9">
+				<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="#FCJH_HERO_RED_HEROIC_T"/>
+				<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="#FCJH_HERO_RED_HEROIC_L"/>
+				<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="#FCJH_HERO_RED_HEROIC_B"/>
+				<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="#FCJH_HERO_RED_HEROIC_R"/>
+				<RenderPriority val="560"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Image" name="FCJH_Back">
+					<Anchor relative="$parent"/>
+					<Texture val="#FCJH_TOKEN_BACK_RED"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Label" name="FCJH_Mark">
+					<Anchor relative="$parent"/>
+					<Text val="?"/>
+					<Style val="FCJH_HeroicMark"/>
+					<Options val="NoWrapping | ScaleToPreventTruncation"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Icon">
+					<Anchor relative="$parent"/>
+					<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
+					<AlphaMaskTexture val="#FCJH_TOKEN_MASK_RED"/>
+					<TextureCoords top="0.12" left="0.0" bottom="0.88" right="1.0"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Dim">
+					<Anchor relative="$parent"/>
+					<Texture val="#FCJH_TOKEN_DIM_RED"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Label" name="FCJH_Cooldown">
+					<Anchor relative="$parent"/>
+					<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
+					<Style val="FCJH_HeroicCooldown"/>
+					<Options val="NoWrapping | ScaleToPreventTruncation"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<!-- the heroic tier: nothing, "?" (available, not picked), or its icon (picked) -->
+				<StateGroup name="FCJH_Tier">
+					<DefaultState val="None"/>
+					<State name="Picked">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierSelected"/>
+						<Action type="SetProperty" frame="$this/FCJH_Back" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Mark" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Icon" Alpha="255"/>
+					</State>
+					<State name="Available">
+						<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierAvailable"/>
+						<Action type="SetProperty" frame="$this/FCJH_Back" Alpha="255"/>
+						<Action type="SetProperty" frame="$this/FCJH_Mark" Alpha="255"/>
+						<Action type="SetProperty" frame="$this/FCJH_Icon" Alpha="0"/>
+					</State>
+					<State name="None">
+						<Action type="SetProperty" frame="$this/FCJH_Back" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Mark" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Icon" Alpha="0"/>
+					</State>
+				</StateGroup>
+				<!-- cooldown: while Blizzard's cooldown label for this heroic is showing -->
+				<StateGroup name="FCJH_Cooldown">
+					<DefaultState val="Ready"/>
+					<State name="OnCooldown">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
+						<Action type="SetProperty" frame="$this/FCJH_Dim" Alpha="255"/>
+						<Action type="SetProperty" frame="$this/FCJH_Cooldown" Alpha="255"/>
+					</State>
+					<State name="Ready">
+						<Action type="SetProperty" frame="$this/FCJH_Dim" Alpha="0"/>
+						<Action type="SetProperty" frame="$this/FCJH_Cooldown" Alpha="0"/>
+					</State>
+				</StateGroup>
+			</Frame>
+		</Frame>
+	</Frame>
+</Desc>
