@@ -9,9 +9,10 @@
 	       - backplate hidden with Alpha 0, NOT parked: the level labels, XP bars, core frames,
 	         and both hero containers all anchor to it - parking it drags them off-screen
 	       - hexagon and clock left as they are, now floating on their own
-	       - team levels moved up to the top edge (blue_level, red_level) on our backdrop,
-	         a plate cut to the team's lean (layout.toml [team_level]); the bracket and game
-	         count (OBS) sit under them, beside the hexagon
+	       - team levels moved up to the top edge (blue_level, red_level) on our backdrop, a
+	         team-coloured hexagon pattern fading away from the centre (layout.toml
+	         [team_level]; a placeholder until the OBS package); the bracket and game count
+	         (OBS) sit under them, beside the hexagon
 	       - towers / kills counters parked (the icons beside them were backplate art)
 	       - team XP: on each hero row's top edge, the full width of that edge; core health on
 	         top of it at the row's inner end (blue_xp, red_xp, blue_core, red_core: placed by

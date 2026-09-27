@@ -391,6 +391,47 @@ def slant_texture(team, cut, colour, alpha=255, size=(512, 32), sub=4):
     return dds_bgra(w, h, b"".join(rows))
 
 
+def hex_fade_texture(team, colour, alpha, hex_px, box_px, size=(256, 128)):
+    """A flat-topped hexagon lattice in one colour, outlines bright and cells faint, fading to
+    nothing away from the screen centre (leftward on blue, rightward on red). box_px is the
+    backdrop's size on screen, hex_px the hexagons' width there; the texture (a power of two)
+    is stretched onto that box, so the lattice is drawn in box coordinates."""
+    import math
+    w, h = size
+    sx, sy = box_px[0] / w, box_px[1] / h        # texel -> screen px
+    R = hex_px / 2                              # circumradius, screen px
+    r3 = math.sqrt(3)
+    red, green, blue = bytes.fromhex(colour)
+    line = 0.12                                 # outline thickness, fraction of R
+    rows = []
+    for ty in range(h):
+        row = bytearray()
+        for tx in range(w):
+            x, y = (tx + 0.5) * sx, (ty + 0.5) * sy
+            # nearest hex centre in a flat-topped axial grid
+            q = (2 / 3 * x) / R
+            rr = (-1 / 3 * x + r3 / 3 * y) / R
+            cx, cz = q, rr
+            cy = -cx - cz
+            rx, ry, rz = round(cx), round(cy), round(cz)
+            dx, dy, dz = abs(rx - cx), abs(ry - cy), abs(rz - cz)
+            if dx > dy and dx > dz:
+                rx = -ry - rz
+            elif dy > dz:
+                ry = -rx - rz
+            else:
+                rz = -rx - ry
+            hx, hy = R * 1.5 * rx, R * r3 * (rz + rx / 2)
+            ox, oy = abs(x - hx), abs(y - hy)
+            edge = max(oy / (r3 / 2 * R), (ox + oy / r3) / R)    # 0 centre .. 1 edge
+            cell = 1.0 if edge > 1 - line else 0.28
+            t = tx / (w - 1)
+            fade = (t if team == "blue" else 1 - t) ** 1.6
+            row += bytes((blue, green, red, round(alpha * cell * fade)))
+        rows.append(bytes(row))
+    return dds_bgra(w, h, b"".join(rows))
+
+
 def slant_bars(cfg):
     """Every slanted texture (bars and plate tokens), by constant name: {name: (file name, dds bytes)}. Names
     carry a content hash (textures are cached by path across replay reloads)."""
@@ -409,11 +450,13 @@ def slant_bars(cfg):
                 data = slant_texture(team, cut, colour, alpha)
                 digest = hashlib.sha1(data).hexdigest()[:8]
                 out[name(bar, part, team)] = (f"FCJH_Bar_{bar}_{part}_{team}_{digest}.dds", data)
-    # the team level's backdrop (top bar, blue_level / red_level): a plate cut to the team's lean
+    # the team level's backdrop (top bar, blue_level / red_level): a hexagon pattern in the team
+    # colour, strongest beside the centre hexagon and fading outward - after Blizzard's old
+    # level wings. A placeholder until the OBS graphics package sets the look.
     level = cfg["team_level"]
     for team in ("blue", "red"):
         (_, _, w, h), _ = rects(cfg)[f"{team}_level"]
-        data = slant_texture(team, lean * h / w, level[f"{team}_colour"], level["alpha"], size=(256, 160))
+        data = hex_fade_texture(team, level[f"{team}_colour"], level["alpha"], level["hex_px"], (w, h))
         digest = hashlib.sha1(data).hexdigest()[:8]
         out[name("level", "back", team)] = (f"FCJH_LevelBack_{team}_{digest}.dds", data)
     # plate tokens (the heroic): a white mask to cut an icon to the slant, a dark overlay for

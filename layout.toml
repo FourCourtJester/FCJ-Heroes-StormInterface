@@ -151,11 +151,13 @@ talent_popup_size = 40       # the talent's icon, straddling the cell's top edge
 heroic_token = [24, 18]      # w, h px: the heroic token in the plate's bottom corner (widen to taste)
 
 # Team level: Blizzard's level number, moved to the top edge (element.blue_level /
-# red_level), on a backdrop cut to the team's lean. First pass; the backdrop's look is open.
+# red_level), on a hexagon-pattern backdrop in the team colour that fades away from the
+# centre hexagon (after Blizzard's old level wings). Placeholder until the OBS package.
 [team_level]
-blue_colour = "14264a"
-red_colour = "4a1420"
-alpha = 225
+blue_colour = "3f8cff"
+red_colour = "ff4a5e"
+alpha = 230
+hex_px = 14                  # the hexagons' width on screen
 
 # Bars stacked on each hero row, placed by tools/gen.py from [hero_row] so they follow it.
 # Both are cut to the plates' slant: their ends continue the row's slanted outer edges.
