@@ -660,10 +660,13 @@ STAT_PANES = [
 INFO_PANES = [("talents", "Pane_Talents")] + [(k, f"Pane_{k.capitalize()}") for k, _, _ in STAT_PANES]
 STAT_ROW_H, STAT_TEAM_GAP = 40, 8        # Blizzard's rows are 40 units tall
 STAT_ROW_W = 565                         # Blizzard's slot width
-# The table's margins match the talents pane's: the portrait sits 23 in from the left, so
-# the last column stops 23 short of the right edge. Columns start where Blizzard's first
-# one does (130), 10 apart. The rows spread out to fill the pane's height, less this.
-STAT_MARGIN, STAT_FIRST_COLUMN, STAT_COLUMN_GAP, STAT_BOTTOM_PAD = 23, 130, 10, 14
+# The table's margins match the talents pane's: the portrait (90 wide) sits 23 in from the
+# left, so the last number ends 23 short of the right edge. Numbers are right-aligned in
+# columns 48 units wide per width share (a count's "12", a total's "126,660"). The team
+# name spans the portrait's width. The rows spread out to fill the pane's height, less the
+# bottom pad.
+STAT_MARGIN, STAT_PORTRAIT_W, STAT_SHARE_W, STAT_BOTTOM_PAD = 23, 90, 48, 14
+STAT_FIRST_COLUMN = STAT_MARGIN + STAT_PORTRAIT_W
 # Columns whose ScoreValueFrame0 carries Blizzard's best-value underline (statsoverviewpanel
 # ScoreValueFrameHighlightAnimation_*). Kept, re-centred - except on deaths, where "best"
 # means most.
@@ -810,19 +813,22 @@ def stat_geometry(cfg):
     row_tops = [blue_band + team_h + i * step for i in range(5)] + \
                [red_band + team_h + i * step for i in range(5)]
     return {"title": title, "team_h": team_h, "team_tops": (blue_band, red_band), "row_tops": row_tops,
-            "columns": (STAT_FIRST_COLUMN, width - STAT_MARGIN)}
+            "columns": (STAT_MARGIN + STAT_PORTRAIT_W, width - STAT_MARGIN)}
 
 
 def place_columns(columns, span):
-    """Columns left to right across span (left, right), sized by their width share."""
+    """Columns sized to their numbers (STAT_SHARE_W per width share), right-aligned, with the
+    spare room shared out as equal gaps: one after the portrait, one between each pair of
+    columns. So the last number ends exactly on the right margin, the same distance in as
+    the portrait is from the left edge."""
     left, right = span
-    room = right - left - STAT_COLUMN_GAP * (len(columns) - 1)
-    shares = sum(c[3] for c in columns)
+    widths = [share * STAT_SHARE_W for _, _, _, share, _ in columns]
+    gap = (right - left - sum(widths)) / len(columns)
     placed, x = [], left
-    for i, (frame, score, heading, share, total) in enumerate(columns):
-        w = right - x if i == len(columns) - 1 else round(room * share / shares)
-        placed.append((frame, score, heading, x, w, total))
-        x += w + STAT_COLUMN_GAP
+    for (frame, score, heading, _, total), w in zip(columns, widths):
+        x += gap
+        placed.append((frame, score, heading, round(x), w, total))
+        x += w
     return placed
 
 
