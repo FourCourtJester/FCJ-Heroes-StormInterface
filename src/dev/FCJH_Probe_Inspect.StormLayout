@@ -15,8 +15,10 @@
 	        3 fountain: ready art + "Fountain ready" / "on cooldown"
 	        4 buff and debuff bars
 	        5 talent strip, one row of 7, tier levels under it
-	        6 ability icons with cooldowns: D Q W E for Sonya, Johanna, Auriel only (a table
-	          for every hero comes if this works); R from the talent strip's heroic
+	        6 ability icons with cooldowns, laid out like the ability card: 1-5 on top, D Q W E R Z
+	          below, at the talent strip's size. D Q W E for Sonya, Johanna, Auriel only (a table
+	          for every hero comes if this works); R from the talent strip's heroic; Z the mount;
+	          1-2 two of Auriel's talent actives (should only show once she picks them)
 	     Look for: select a hero (Sonya, Johanna or Auriel for the abilities) and screenshot the
 	     card; then one on cooldown. Tell me which numbered parts show and which stay empty.
 	     Player view (Ctrl+5) stays off: none of this should need it. -->
@@ -103,9 +105,9 @@
 				<AcceptsMouse val="false"/>
 			</Frame>
 			<Frame type="Label" name="FCJH_SectionTalents">
-				<Anchor side="Top"    relative="$parent" pos="Min" offset="500"/>
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="514"/>
 				<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-				<Anchor side="Bottom" relative="$parent" pos="Min" offset="515"/>
+				<Anchor side="Bottom" relative="$parent" pos="Min" offset="529"/>
 				<Anchor side="Right"  relative="$parent" pos="Max" offset="-14"/>
 				<Style val="FCJH_InspectSection"/>
 				<Text val="TALENTS"/>
@@ -113,9 +115,9 @@
 				<AcceptsMouse val="false"/>
 			</Frame>
 			<Frame type="Label" name="FCJH_SectionStats">
-				<Anchor side="Top"    relative="$parent" pos="Min" offset="580"/>
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="594"/>
 				<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-				<Anchor side="Bottom" relative="$parent" pos="Min" offset="595"/>
+				<Anchor side="Bottom" relative="$parent" pos="Min" offset="609"/>
 				<Anchor side="Right"  relative="$parent" pos="Max" offset="-14"/>
 				<Style val="FCJH_InspectSection"/>
 				<Text val="STATS"/>
@@ -157,9 +159,9 @@
 						<Frame type="UnitStatusEnergyBar" name="YellowEnergyBar"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/></Frame>
 						<Frame type="UnitStatusEnergyBar" name="DeathwingEnergyBar"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/></Frame>
 					<Frame type="Frame" name="TargetStatsPanel">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="598"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="612"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="694"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="708"/>
 						<Anchor side="Right"  relative="$parent" pos="Max" offset="-14"/>
 						<Frame type="TargetInfoStatFrame" name="AttackDamageFrame">
 							<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
@@ -316,9 +318,9 @@
 
 				<!-- 5. talents: Blizzard's talent strip, one row, for the selected hero -->
 				<Frame type="PlayerHeroSelectedTalentTreeFrame" name="FCJH_Talents" template="TalentsOverviewPanel/BottomPanelTalentTreeCustomTemplateBlue">
-					<Anchor side="Top"    relative="$parent" pos="Min" offset="516"/>
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="530"/>
 					<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="552"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="566"/>
 					<Anchor side="Right"  relative="$parent" pos="Min" offset="315"/>
 					<RenderPriority val="670"/>
 						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
@@ -379,9 +381,9 @@
 						</Frame>
 				</Frame>
 					<Frame type="Label" name="FCJH_Tier1">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="554"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="568"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="568"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="582"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Style val="FCJH_InspectTier"/>
 						<Text val="1"/>
@@ -389,9 +391,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Label" name="FCJH_Tier2">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="554"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="568"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="57"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="568"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="582"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Style val="FCJH_InspectTier"/>
 						<Text val="4"/>
@@ -399,9 +401,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Label" name="FCJH_Tier3">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="554"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="568"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="100"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="568"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="582"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Style val="FCJH_InspectTier"/>
 						<Text val="7"/>
@@ -409,9 +411,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Label" name="FCJH_Tier4">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="554"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="568"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="143"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="568"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="582"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Style val="FCJH_InspectTier"/>
 						<Text val="10"/>
@@ -419,9 +421,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Label" name="FCJH_Tier5">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="554"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="568"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="186"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="568"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="582"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Style val="FCJH_InspectTier"/>
 						<Text val="13"/>
@@ -429,9 +431,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Label" name="FCJH_Tier6">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="554"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="568"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="229"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="568"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="582"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Style val="FCJH_InspectTier"/>
 						<Text val="16"/>
@@ -439,9 +441,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Label" name="FCJH_Tier7">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="554"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="568"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="272"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="568"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="582"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Style val="FCJH_InspectTier"/>
 						<Text val="20"/>
@@ -449,13 +451,191 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 
-				<!-- 6. abilities: ability icons with cooldowns. D Q W E from a per-hero table (3 heroes for
-				     now); R from the talent strip's heroic, as Blizzard's talent rows do -->
-					<Frame type="UnitStatusAbilIcon" name="FCJH_AbilD">
+				<!-- 6. abilities, laid out like Blizzard's ability card: 1-5 on top (talent actives: two of
+				     Auriel's as a test, shown only if she has them), D Q W E R Z below. D Q W E from a
+				     per-hero table (3 heroes for now); R from the talent strip's heroic; Z the mount -->
+					<Frame type="UnitStatusAbilIcon" name="FCJH_Abil1">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="425"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="469"/>
-						<Anchor side="Right"  relative="$parent" pos="Min" offset="58"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="461"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
+						<Unclipped val="true"/>
+						<AbilityLink val="AurielAngelicFlight"/>
+						<Frame type="AbilIcon" name="AbilIcon">
+							<Anchor relative="$parent"/>
+							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Unclipped val="true"/></Frame>
+							<Frame type="Label" name="CooldownLabel">
+								<Anchor relative="$parent"/>
+								<Style val="FCJH_HeroicCooldown"/>
+								<RenderPriority val="700"/>
+								<Animation name="FCJH_Dim">
+									<Event event="OnShown" action="DirectionForward,Play"/>
+									<Event event="OnHidden" action="DirectionReverse,Play"/>
+									<Controller type="Color" end="Pause" frame="$parent/IconImage">
+										<Key type="Curve" time="0" value="255,255,255" inout="Step"/>
+										<Key type="Curve" time="0.01" value="70,70,70" inout="Step"/>
+									</Controller>
+								</Animation>
+							</Frame>
+							<Frame type="ProgressBar" name="CooldownBar"><Anchor relative="$parent"/><Alpha val="0"/></Frame>
+						</Frame>
+					</Frame>
+					<Frame type="Label" name="FCJH_Abil1Key">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="447"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="16"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="461"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="30"/>
+						<Style val="FCJH_InspectKey"/>
+						<Text val="1"/>
+						<Options val="NoWrapping | ScaleToPreventTruncation"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
+					<Frame type="UnitStatusAbilIcon" name="FCJH_Abil2">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="425"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="57"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="461"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
+						<Unclipped val="true"/>
+						<AbilityLink val="AurielShieldOfHope"/>
+						<Frame type="AbilIcon" name="AbilIcon">
+							<Anchor relative="$parent"/>
+							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Unclipped val="true"/></Frame>
+							<Frame type="Label" name="CooldownLabel">
+								<Anchor relative="$parent"/>
+								<Style val="FCJH_HeroicCooldown"/>
+								<RenderPriority val="700"/>
+								<Animation name="FCJH_Dim">
+									<Event event="OnShown" action="DirectionForward,Play"/>
+									<Event event="OnHidden" action="DirectionReverse,Play"/>
+									<Controller type="Color" end="Pause" frame="$parent/IconImage">
+										<Key type="Curve" time="0" value="255,255,255" inout="Step"/>
+										<Key type="Curve" time="0.01" value="70,70,70" inout="Step"/>
+									</Controller>
+								</Animation>
+							</Frame>
+							<Frame type="ProgressBar" name="CooldownBar"><Anchor relative="$parent"/><Alpha val="0"/></Frame>
+						</Frame>
+					</Frame>
+					<Frame type="Label" name="FCJH_Abil2Key">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="447"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="59"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="461"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="73"/>
+						<Style val="FCJH_InspectKey"/>
+						<Text val="2"/>
+						<Options val="NoWrapping | ScaleToPreventTruncation"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
+					<Frame type="UnitStatusAbilIcon" name="FCJH_Abil3">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="425"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="100"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="461"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
+						<Unclipped val="true"/>
+						<Frame type="AbilIcon" name="AbilIcon">
+							<Anchor relative="$parent"/>
+							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Unclipped val="true"/></Frame>
+							<Frame type="Label" name="CooldownLabel">
+								<Anchor relative="$parent"/>
+								<Style val="FCJH_HeroicCooldown"/>
+								<RenderPriority val="700"/>
+								<Animation name="FCJH_Dim">
+									<Event event="OnShown" action="DirectionForward,Play"/>
+									<Event event="OnHidden" action="DirectionReverse,Play"/>
+									<Controller type="Color" end="Pause" frame="$parent/IconImage">
+										<Key type="Curve" time="0" value="255,255,255" inout="Step"/>
+										<Key type="Curve" time="0.01" value="70,70,70" inout="Step"/>
+									</Controller>
+								</Animation>
+							</Frame>
+							<Frame type="ProgressBar" name="CooldownBar"><Anchor relative="$parent"/><Alpha val="0"/></Frame>
+						</Frame>
+					</Frame>
+					<Frame type="Label" name="FCJH_Abil3Key">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="447"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="102"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="461"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="116"/>
+						<Style val="FCJH_InspectKey"/>
+						<Text val="3"/>
+						<Options val="NoWrapping | ScaleToPreventTruncation"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
+					<Frame type="UnitStatusAbilIcon" name="FCJH_Abil4">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="425"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="143"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="461"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
+						<Unclipped val="true"/>
+						<Frame type="AbilIcon" name="AbilIcon">
+							<Anchor relative="$parent"/>
+							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Unclipped val="true"/></Frame>
+							<Frame type="Label" name="CooldownLabel">
+								<Anchor relative="$parent"/>
+								<Style val="FCJH_HeroicCooldown"/>
+								<RenderPriority val="700"/>
+								<Animation name="FCJH_Dim">
+									<Event event="OnShown" action="DirectionForward,Play"/>
+									<Event event="OnHidden" action="DirectionReverse,Play"/>
+									<Controller type="Color" end="Pause" frame="$parent/IconImage">
+										<Key type="Curve" time="0" value="255,255,255" inout="Step"/>
+										<Key type="Curve" time="0.01" value="70,70,70" inout="Step"/>
+									</Controller>
+								</Animation>
+							</Frame>
+							<Frame type="ProgressBar" name="CooldownBar"><Anchor relative="$parent"/><Alpha val="0"/></Frame>
+						</Frame>
+					</Frame>
+					<Frame type="Label" name="FCJH_Abil4Key">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="447"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="145"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="461"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="159"/>
+						<Style val="FCJH_InspectKey"/>
+						<Text val="4"/>
+						<Options val="NoWrapping | ScaleToPreventTruncation"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
+					<Frame type="UnitStatusAbilIcon" name="FCJH_Abil5">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="425"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="186"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="461"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
+						<Unclipped val="true"/>
+						<Frame type="AbilIcon" name="AbilIcon">
+							<Anchor relative="$parent"/>
+							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Unclipped val="true"/></Frame>
+							<Frame type="Label" name="CooldownLabel">
+								<Anchor relative="$parent"/>
+								<Style val="FCJH_HeroicCooldown"/>
+								<RenderPriority val="700"/>
+								<Animation name="FCJH_Dim">
+									<Event event="OnShown" action="DirectionForward,Play"/>
+									<Event event="OnHidden" action="DirectionReverse,Play"/>
+									<Controller type="Color" end="Pause" frame="$parent/IconImage">
+										<Key type="Curve" time="0" value="255,255,255" inout="Step"/>
+										<Key type="Curve" time="0.01" value="70,70,70" inout="Step"/>
+									</Controller>
+								</Animation>
+							</Frame>
+							<Frame type="ProgressBar" name="CooldownBar"><Anchor relative="$parent"/><Alpha val="0"/></Frame>
+						</Frame>
+					</Frame>
+					<Frame type="Label" name="FCJH_Abil5Key">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="447"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="188"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="461"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="202"/>
+						<Style val="FCJH_InspectKey"/>
+						<Text val="5"/>
+						<Options val="NoWrapping | ScaleToPreventTruncation"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
+					<Frame type="UnitStatusAbilIcon" name="FCJH_AbilD">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="468"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="504"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Unclipped val="true"/>
 						<Frame type="AbilIcon" name="AbilIcon">
 							<Anchor relative="$parent"/>
@@ -477,9 +657,9 @@
 						</Frame>
 					</Frame>
 					<Frame type="Label" name="FCJH_AbilDKey">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="455"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="490"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="16"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="469"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="504"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="30"/>
 						<Style val="FCJH_InspectKey"/>
 						<Text val="D"/>
@@ -487,10 +667,10 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_AbilQ">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="425"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="65"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="469"/>
-						<Anchor side="Right"  relative="$parent" pos="Min" offset="109"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="468"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="57"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="504"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Unclipped val="true"/>
 						<Frame type="AbilIcon" name="AbilIcon">
 							<Anchor relative="$parent"/>
@@ -512,20 +692,20 @@
 						</Frame>
 					</Frame>
 					<Frame type="Label" name="FCJH_AbilQKey">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="455"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="67"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="469"/>
-						<Anchor side="Right"  relative="$parent" pos="Min" offset="81"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="490"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="59"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="504"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="73"/>
 						<Style val="FCJH_InspectKey"/>
 						<Text val="Q"/>
 						<Options val="NoWrapping | ScaleToPreventTruncation"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_AbilW">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="425"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="116"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="469"/>
-						<Anchor side="Right"  relative="$parent" pos="Min" offset="160"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="468"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="100"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="504"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Unclipped val="true"/>
 						<Frame type="AbilIcon" name="AbilIcon">
 							<Anchor relative="$parent"/>
@@ -547,20 +727,20 @@
 						</Frame>
 					</Frame>
 					<Frame type="Label" name="FCJH_AbilWKey">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="455"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="118"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="469"/>
-						<Anchor side="Right"  relative="$parent" pos="Min" offset="132"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="490"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="102"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="504"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="116"/>
 						<Style val="FCJH_InspectKey"/>
 						<Text val="W"/>
 						<Options val="NoWrapping | ScaleToPreventTruncation"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_AbilE">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="425"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="167"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="469"/>
-						<Anchor side="Right"  relative="$parent" pos="Min" offset="211"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="468"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="143"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="504"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Unclipped val="true"/>
 						<Frame type="AbilIcon" name="AbilIcon">
 							<Anchor relative="$parent"/>
@@ -582,22 +762,22 @@
 						</Frame>
 					</Frame>
 					<Frame type="Label" name="FCJH_AbilEKey">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="455"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="169"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="469"/>
-						<Anchor side="Right"  relative="$parent" pos="Min" offset="183"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="490"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="145"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="504"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="159"/>
 						<Style val="FCJH_InspectKey"/>
 						<Text val="E"/>
 						<Options val="NoWrapping | ScaleToPreventTruncation"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_AbilR">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="425"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="218"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="469"/>
-						<Anchor side="Right"  relative="$parent" pos="Min" offset="262"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="468"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="186"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="504"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Unclipped val="true"/>
-							<AbilityLink val="{$parent/FCJH_Talents/@HeroicAbilLink}"/>
+						<AbilityLink val="{$parent/FCJH_Talents/@HeroicAbilLink}"/>
 						<Frame type="AbilIcon" name="AbilIcon">
 							<Anchor relative="$parent"/>
 							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Unclipped val="true"/></Frame>
@@ -618,12 +798,48 @@
 						</Frame>
 					</Frame>
 					<Frame type="Label" name="FCJH_AbilRKey">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="455"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="220"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="469"/>
-						<Anchor side="Right"  relative="$parent" pos="Min" offset="234"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="490"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="188"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="504"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="202"/>
 						<Style val="FCJH_InspectKey"/>
 						<Text val="R"/>
+						<Options val="NoWrapping | ScaleToPreventTruncation"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
+					<Frame type="UnitStatusAbilIcon" name="FCJH_AbilZ">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="468"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="229"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="504"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
+						<Unclipped val="true"/>
+						<AbilityLink val="Mount"/>
+						<Frame type="AbilIcon" name="AbilIcon">
+							<Anchor relative="$parent"/>
+							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Unclipped val="true"/></Frame>
+							<Frame type="Label" name="CooldownLabel">
+								<Anchor relative="$parent"/>
+								<Style val="FCJH_HeroicCooldown"/>
+								<RenderPriority val="700"/>
+								<Animation name="FCJH_Dim">
+									<Event event="OnShown" action="DirectionForward,Play"/>
+									<Event event="OnHidden" action="DirectionReverse,Play"/>
+									<Controller type="Color" end="Pause" frame="$parent/IconImage">
+										<Key type="Curve" time="0" value="255,255,255" inout="Step"/>
+										<Key type="Curve" time="0.01" value="70,70,70" inout="Step"/>
+									</Controller>
+								</Animation>
+							</Frame>
+							<Frame type="ProgressBar" name="CooldownBar"><Anchor relative="$parent"/><Alpha val="0"/></Frame>
+						</Frame>
+					</Frame>
+					<Frame type="Label" name="FCJH_AbilZKey">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="490"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="231"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="504"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="245"/>
+						<Style val="FCJH_InspectKey"/>
+						<Text val="Z"/>
 						<Options val="NoWrapping | ScaleToPreventTruncation"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
