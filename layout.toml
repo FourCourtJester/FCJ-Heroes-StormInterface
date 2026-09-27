@@ -150,7 +150,7 @@ talent_popup_size = 40       # the talent's icon, straddling the cell's top edge
 # Team XP: on the plates' top edge, the full width of that edge.
 [team_xp]
 height = 8                   # the bar
-gap = 3                      # between the bar and the plates' top edge
+gap = 1                      # between the bar and the plates' top edge (tight: one unit with the plates)
 colour = "9a6cff"            # the fill, both teams (hex RGB)
 track_colour = "0b0c14"      # the empty part
 track_alpha = 220
@@ -159,7 +159,7 @@ track_alpha = 220
 # is Blizzard's (237 x 27 units = 213 x 24 px, 39% of the XP bar), fixed; Blizzard shows it
 # only when a core is taking damage.
 [team_core]
-gap = 4                      # between core and XP
+gap = 1                      # between core and XP
 blue_colour = "3f8cff"
 red_colour = "ff4a5e"
 track_colour = "0b0c14"

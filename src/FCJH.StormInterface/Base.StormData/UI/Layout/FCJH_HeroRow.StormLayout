@@ -156,25 +156,28 @@
 				<VisibleToEnemy val="true"/>
 				<Unclipped val="true"/>
 			</Frame>
+			<!-- The text sits across the health bar (HeroStatus is the bar's rect), centred on it
+			     both ways; the box reaches past the bar by the same amount on every side, so the
+			     text can be bigger than the bar and stay centred. -->
 			<Frame type="Label" name="FCJH_CCText">
-				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="28"/>
-				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="3"/>
-				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="45"/>
-				<Anchor side="Right"  relative="$parent/$parent" pos="Max" offset="3"/>
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="-20"/>
+				<Anchor side="Left"   relative="$parent" pos="Min" offset="-20"/>
+				<Anchor side="Bottom" relative="$parent" pos="Max" offset="20"/>
+				<Anchor side="Right"  relative="$parent" pos="Max" offset="20"/>
 				<Text val="{$parent/FCJH_CC/DebuffLabel/@Text}"/>
-				<Style val="TalentChoiceAlertNameplateLabel"/>
+				<Style val="FCJH_CCText"/>
 				<Options val="NoWrapping | ScaleToPreventTruncation"/>
 				<RenderPriority val="530"/>
 				<Unclipped val="true"/>
 				<AcceptsMouse val="false"/>
 			</Frame>
-			<!-- ...and its icon, mirrored the same way. Shown only while the sensor is showing
+			<!-- ...and its icon, mirrored the same way, centred where the death timer is. Shown only while the sensor is showing
 			     a CC: with no picture, the mirrored image draws as a dark square (seen in game;
 			     matching the label's text against "" never fired). -->
 			<Frame type="Image" name="FCJH_CCIcon">
-				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="2"/>
+				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="27"/>
 				<Anchor side="Left"   relative="$parent/$parent" pos="Mid" offset="-8"/>
-				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="25"/>
+				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="49"/>
 				<Anchor side="Right"  relative="$parent/$parent" pos="Mid" offset="14"/>
 				<Texture val="{$parent/FCJH_CC/DebuffIconLeft/@Texture}"/>
 				<Alpha val="0"/>

@@ -14,4 +14,7 @@
 	<Style name="FCJH_StatTotal_Red" template="HeaderExtendedTemplate" height="21" textcolor="ffe2e8" vjustify="Middle" hjustify="Right" styleflags="!Shadow|Glow|!Uppercase" glowcolor="e42626"/>
 	<Style name="FCJH_StatTeam_Blue" template="HeaderExtendedTemplate" height="15" textcolor="55a9f8" vjustify="Middle" hjustify="Left" styleflags="!Shadow|!Glow|!Uppercase"/>
 	<Style name="FCJH_StatTeam_Red" template="HeaderExtendedTemplate" height="15" textcolor="e0668f" vjustify="Middle" hjustify="Left" styleflags="!Shadow|!Glow|!Uppercase"/>
+	<!-- Plate CC text ("STUNNED"): Blizzard's TalentChoiceAlertNameplateLabel, but centred
+	     vertically too, so it sits across the middle of the health bar -->
+	<Style name="FCJH_CCText" template="HeaderExtendedTemplate" height="17" textcolor="ffffff" hjustify="Center" vjustify="Middle" fontflags="Outline" styleflags="!Shadow"/>
 </StyleFile>

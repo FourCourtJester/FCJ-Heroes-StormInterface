@@ -43,7 +43,8 @@ RED_SLOTS = ["6", "7", "8", "9", "0"]
 # Minimap child (438 x 438) at its top-left. The engine fits each map inside that square.
 MINIMAP_SQUARE = 438
 MINIMAP_PANEL_W = 468
-KILL_ROW_CONTENT = 210   # layout units: where a kill row's victim portrait ends
+KILL_ROW_CONTENT = 210
+CC_TEXT_OVERHANG = 20    # layout units the CC text's box reaches past the health bar, each side   # layout units: where a kill row's victim portrait ends
 
 KIND_COLORS = {  # A,R,G,B without the alpha, which comes from [dev] overlay_alpha
     "ui": "250,249,245",
@@ -158,7 +159,7 @@ class HeroCell:
     # Crowd control text ("STUNNED"...): a band across the bottom of the portrait, just
     # above the health backing (36). Ours, not Blizzard's - their cell shows no CC.
     CC_BAND = (22, 36)
-    # ...and its icon, centred on the portrait above that text: top, bottom, half-width
+    # ...and its icon, a square centred where the death timer is: (unused, unused, half-width)
     CC_ICON = (2, 20, 9)
     # Fountain-ready marker: a small square in the plate's top corner on the portrait side,
     # away from the slant (left on blue, right on red). (left, top, right, bottom)
@@ -178,6 +179,8 @@ class HeroCell:
         self.team = {team: {part: tuple(s(v) for v in rect) for part, rect in g.items()}
                      for team, g in (("blue", self.BLUE), ("red", self.RED))}
         self.death_shift = s(self.DEATH_SHIFT)
+        # the death timer's label spans 2 .. h-1 of the cell, text centred: its middle
+        self.death_mid = round((2 + self.h - 1) / 2)
         self.cc_band = tuple(s(v) for v in self.CC_BAND)
         self.cc_icon = tuple(s(v) for v in self.CC_ICON)
         self.fountain = {t: tuple(s(v) for v in r) for t, r in self.FOUNTAIN.items()}
@@ -479,25 +482,28 @@ def hero_cell_template(team, c):
 				<VisibleToEnemy val="true"/>
 				<Unclipped val="true"/>
 			</Frame>
+			<!-- The text sits across the health bar (HeroStatus is the bar's rect), centred on it
+			     both ways; the box reaches past the bar by the same amount on every side, so the
+			     text can be bigger than the bar and stay centred. -->
 			<Frame type="Label" name="FCJH_CCText">
-				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="{cc_top}"/>
-				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="{c.death_shift}"/>
-				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="{cc_bottom}"/>
-				<Anchor side="Right"  relative="$parent/$parent" pos="Max" offset="{c.death_shift}"/>
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="-{CC_TEXT_OVERHANG}"/>
+				<Anchor side="Left"   relative="$parent" pos="Min" offset="-{CC_TEXT_OVERHANG}"/>
+				<Anchor side="Bottom" relative="$parent" pos="Max" offset="{CC_TEXT_OVERHANG}"/>
+				<Anchor side="Right"  relative="$parent" pos="Max" offset="{CC_TEXT_OVERHANG}"/>
 				<Text val="{{$parent/FCJH_CC/DebuffLabel/@Text}}"/>
-				<Style val="TalentChoiceAlertNameplateLabel"/>
+				<Style val="FCJH_CCText"/>
 				<Options val="NoWrapping | ScaleToPreventTruncation"/>
 				<RenderPriority val="530"/>
 				<Unclipped val="true"/>
 				<AcceptsMouse val="false"/>
 			</Frame>
-			<!-- ...and its icon, mirrored the same way. Shown only while the sensor is showing
+			<!-- ...and its icon, mirrored the same way, centred where the death timer is. Shown only while the sensor is showing
 			     a CC: with no picture, the mirrored image draws as a dark square (seen in game;
 			     matching the label's text against "" never fired). -->
 			<Frame type="Image" name="FCJH_CCIcon">
-				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="{c.cc_icon[0]}"/>
+				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="{c.death_mid - c.cc_icon[2]}"/>
 				<Anchor side="Left"   relative="$parent/$parent" pos="Mid" offset="{c.death_shift - c.cc_icon[2]}"/>
-				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="{c.cc_icon[1]}"/>
+				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="{c.death_mid + c.cc_icon[2]}"/>
 				<Anchor side="Right"  relative="$parent/$parent" pos="Mid" offset="{c.death_shift + c.cc_icon[2]}"/>
 				<Texture val="{{$parent/FCJH_CC/DebuffIconLeft/@Texture}}"/>
 				<Alpha val="0"/>
