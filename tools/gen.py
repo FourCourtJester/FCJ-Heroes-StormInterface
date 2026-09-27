@@ -43,6 +43,7 @@ RED_SLOTS = ["6", "7", "8", "9", "0"]
 # Minimap child (438 x 438) at its top-left. The engine fits each map inside that square.
 MINIMAP_SQUARE = 438
 MINIMAP_PANEL_W = 468
+KILL_ROW_CONTENT = 210   # layout units: where a kill row's victim portrait ends
 
 KIND_COLORS = {  # A,R,G,B without the alpha, which comes from [dev] overlay_alpha
     "ui": "250,249,245",
@@ -83,6 +84,15 @@ def rects(cfg):
         for i, slot in enumerate(slots):
             out[f"hero_{slot}"] = ((round(left + i * cell.pitch * px, 1), row["top"],
                                     round(cell.w * px, 1), round(cell.h * px, 1)), "ui")
+    # Team XP rides just above its hero row, exactly as wide as the row's slanted top edge:
+    # the plates lean, so that edge starts at the row's left on blue (\) and one overlap in
+    # on red (/), and runs four pitches plus one plate's top edge.
+    xp = cfg["team_xp"]
+    top_edge = (4 * cell.pitch + cell.w - cell.overlap) * px
+    for team, left in (("blue", row["blue_left"]), ("red", row["red_left"])):
+        x = left + (cell.overlap * px if team == "red" else 0)
+        out[f"{team}_xp"] = ((round(x, 1), row["top"] - xp["gap"] - xp["height"],
+                              round(top_edge, 1), xp["height"]), "ui")
     return out
 
 
@@ -137,6 +147,7 @@ class HeroCell:
         s = lambda v: round(v * k)
         self.w, self.h = s(self.W), s(self.H)
         self.pitch = s(self.W - self.OVERLAP)
+        self.overlap = self.w - self.pitch
         self.portrait_top, self.portrait_bottom = s(-1), s(self.PORTRAIT_H - 1)
         self.team = {team: {part: tuple(s(v) for v in rect) for part, rect in g.items()}
                      for team, g in (("blue", self.BLUE), ("red", self.RED))}
@@ -207,6 +218,19 @@ def constants_layout(cfg):
     const(name("blue", "core", "frame", "r"), u(bx + bw) + 34)
     const(name("red", "core", "frame", "t"), u(ry) - 18)
     const(name("red", "core", "frame", "l"), u(rx) - 28)
+
+    lines.append("")
+    lines.append("\t<!-- Team XP fill: a solid colour, so it fills the bar at any size (Blizzard's")
+    lines.append("\t     obs_bar_xp_* art is a thin glowing line drawn for a 156 x 17 box) -->")
+    const(name("xp", "fill"), f'{TEXTURE_DIR}\\{fill_file(cfg["team_xp"]["colour"])}')
+
+    # Blizzard's kill rows are 600 wide, drawn from their left: killer at 27, victim ending at
+    # 210 (killlog.stormlayout Item: SrcPortrait / TgtPortrait0, their images inset 27).
+    # Place the rows so that content ends on kill_feed's right edge.
+    (kx, _, kw, _), _ = rects(cfg)["kill_feed"]
+    lines.append("")
+    lines.append("\t<!-- Kill feed rows' left edge: a single kill's portraits end on kill_feed's right -->")
+    const(name("kill", "feed", "row", "l"), u(kx + kw) - KILL_ROW_CONTENT)
 
     pane = cfg["info_pane"]
     lines.append("")
@@ -303,10 +327,23 @@ def portrait_mask(team, size=(256, 128), sub=4):
     return dds_bgra(w, h, b"".join(rows))
 
 
+def fill_file(colour):
+    """A solid-colour texture, named by its colour (so a new colour is a new path: textures
+    are cached by path across replay reloads)."""
+    return f"FCJH_Fill_{colour.lower()}.dds"
+
+
+def fill_texture(colour):
+    r, g, b = bytes.fromhex(colour)
+    return dds_bgra(4, 4, bytes((b, g, r, 255)) * 16)
+
+
 def texture_files(cfg):
     out = {TEXTURE_REL / portrait_mask_file(team): portrait_mask(team) for team in ("blue", "red")}
     # an opaque mask: replaces a Blizzard mask we don't want (there's no "none")
     out[TEXTURE_REL / "FCJH_White.dds"] = dds_bgra(4, 4, b"\xff" * 64)
+    colour = cfg["team_xp"]["colour"]
+    out[TEXTURE_REL / fill_file(colour)] = fill_texture(colour)
     return out
 
 
@@ -600,33 +637,43 @@ SCORE_COLUMNS = ["SoloKillScoreValueFrame", "AssistsScoreValueFrame", "DeathsSco
                  "SiegeDamageScoreValueFrame", "HeroDamageScoreValueFrame",
                  "HealingScoreValueFrame", "DamageTakenScoreValueFrame",
                  "ExperienceScoreValueFrame"]
-# (key, title, [(column frame, score value, heading, width in units, team total)])
-# The team total is the score a TeamScoreValueFrame sums for the team header; usually the
-# column's own, but Blizzard counts team kills as TeamTakedowns.
+# (key, title, [(column frame, score value, heading, width share, team total)])
+# The columns share the row right of the portrait by their width share (a count takes 1, a
+# big number 2). The team total is the score a TeamScoreValueFrame sums for the team band;
+# usually the column's own, but Blizzard counts team kills as TeamTakedowns.
 STAT_PANES = [
     ("kda", "KDA  ·  HERO DAMAGE", [
-        ("SoloKillScoreValueFrame", "SoloKill", "K", 60, "TeamTakedowns"),
-        ("DeathsScoreValueFrame", "Deaths", "D", 60, "Deaths"),
-        ("AssistsScoreValueFrame", "Assists", "A", 60, "Assists"),
-        ("HeroDamageScoreValueFrame", "HeroDamage", "HERO DMG", 130, "HeroDamage")]),
+        ("SoloKillScoreValueFrame", "SoloKill", "K", 1, "TeamTakedowns"),
+        ("DeathsScoreValueFrame", "Deaths", "D", 1, "Deaths"),
+        ("AssistsScoreValueFrame", "Assists", "A", 1, "Assists"),
+        ("HeroDamageScoreValueFrame", "HeroDamage", "HERO DMG", 2, "HeroDamage")]),
     ("healing", "HEALING  ·  SHIELDING", [
-        ("DamageTakenScoreValueFrame", "SelfHealing", "SELF", 130, "SelfHealing"),
-        ("HealingScoreValueFrame", "Healing", "HEALING", 130, "Healing"),
-        ("SiegeDamageScoreValueFrame", "ProtectionGivenToAllies", "SHIELDING", 130, "ProtectionGivenToAllies")]),
+        ("DamageTakenScoreValueFrame", "SelfHealing", "SELF", 2, "SelfHealing"),
+        ("HealingScoreValueFrame", "Healing", "HEALING", 2, "Healing"),
+        ("SiegeDamageScoreValueFrame", "ProtectionGivenToAllies", "SHIELDING", 2, "ProtectionGivenToAllies")]),
     ("structures", "STRUCTURES  ·  EXPERIENCE", [
-        ("SiegeDamageScoreValueFrame", "SiegeDamage", "SIEGE", 130, "SiegeDamage"),
-        ("HeroDamageScoreValueFrame", "StructureDamage", "STRUCTURES", 130, "StructureDamage"),
-        ("ExperienceScoreValueFrame", "ExperienceContribution", "XP", 130, "ExperienceContribution")]),
+        ("SiegeDamageScoreValueFrame", "SiegeDamage", "SIEGE", 2, "SiegeDamage"),
+        ("HeroDamageScoreValueFrame", "StructureDamage", "STRUCTURES", 2, "StructureDamage"),
+        ("ExperienceScoreValueFrame", "ExperienceContribution", "XP", 2, "ExperienceContribution")]),
 ]
 # Every info pane, in hotkey order: (key, container). Only one shows at a time.
 INFO_PANES = [("talents", "Pane_Talents")] + [(k, f"Pane_{k.capitalize()}") for k, _, _ in STAT_PANES]
-STAT_ROW_H, STAT_ROW_GAP, STAT_TEAM_GAP = 40, 4, 8   # Blizzard's rows are 40 units tall
-STAT_ROW_W = 565                                    # Blizzard's slot width
-STAT_FIRST_COLUMN, STAT_COLUMN_GAP = 130, 10        # Blizzard's first column / gap
+STAT_ROW_H, STAT_TEAM_GAP = 40, 8        # Blizzard's rows are 40 units tall
+STAT_ROW_W = 565                         # Blizzard's slot width
+# The table's margins match the talents pane's: the portrait sits 23 in from the left, so
+# the last column stops 23 short of the right edge. Columns start where Blizzard's first
+# one does (130), 10 apart. The rows spread out to fill the pane's height, less this.
+STAT_MARGIN, STAT_FIRST_COLUMN, STAT_COLUMN_GAP, STAT_BOTTOM_PAD = 23, 130, 10, 14
+# Columns whose ScoreValueFrame0 carries Blizzard's best-value underline (statsoverviewpanel
+# ScoreValueFrameHighlightAnimation_*). Kept, re-centred - except on deaths, where "best"
+# means most.
+STAT_UNDERLINED = {"DamageTakenScoreValueFrame", "SiegeDamageScoreValueFrame",
+                   "HeroDamageScoreValueFrame", "HealingScoreValueFrame"}
+STAT_NO_UNDERLINE = {"DeathsScoreValueFrame"}
 # TeamScoreValueFrame TeamId: 0 blue, 1 red (Blizzard's top bar counts blue's kills as
 # TeamId 1's deaths). Team band colours, and the totals' styles, per team.
-TEAMS = [("blue", 0, "200,20,52,120", "BottomPanel_ColumnTitle_L", "BottomPanel_ValueHighlighted_L"),
-         ("red", 1, "200,120,20,32", "BottomPanel_ColumnTitle_R", "BottomPanel_ValueHighlighted_R")]
+TEAMS = [("blue", 0, "200,20,52,120", "FCJH_StatTeam_Blue", "FCJH_StatTotal_Blue"),
+         ("red", 1, "200,120,20,32", "FCJH_StatTeam_Red", "FCJH_StatTotal_Red")]
 
 
 def fill_image(name, anchors, colour, prio, indent, extra=""):
@@ -699,12 +746,12 @@ def team_header(team_id, colour, title_style, value_style, name, top, height, pl
     band = box(("Min", str(top)), ("Min", "#FCJH_INFO_PANE_BORDER"), ("Min", str(top + height)),
                ("Max", "#FCJH_INFO_PANE_BORDER_NEG"))
     out = fill_image(f"FCJH_{name.capitalize()}Band", band, colour, 602, indent)
-    out += (f'{t}<Frame type="Label" name="FCJH_{name.capitalize()}Name">\n' + at(23, STAT_FIRST_COLUMN) +
+    out += (f'{t}<Frame type="Label" name="FCJH_{name.capitalize()}Name">\n' + at(STAT_MARGIN, STAT_FIRST_COLUMN) +
             f'{t}\t<Style val="{title_style}"/>\n{t}\t<Text val="{name.upper()}"/>\n'
             f'{t}\t<RenderPriority val="610"/>\n{t}\t<AcceptsMouse val="false"/>\n{t}</Frame>\n')
     for i, (_, _, _, cx, w, total) in enumerate(placed):
         out += (f'{t}<Frame type="TeamScoreValueFrame" name="FCJH_{name.capitalize()}Total{i}">\n' +
-                at(cx + 16, cx + w) +
+                at(cx, cx + w) +
                 f'{t}\t<ScoreValueLink val="{total}"/>\n{t}\t<TeamId val="{team_id}"/>\n'
                 f'{t}\t<RenderPriority val="610"/>\n{t}\t<AcceptsMouse val="false"/>\n'
                 f'{t}\t<Frame type="Label" name="TeamScoreValueLabel">\n{t}\t\t<Anchor relative="$parent"/>\n'
@@ -732,10 +779,10 @@ def pane_chrome(title, placed, geometry, indent=3):
     for i, (_, _, text, x, w, _) in enumerate(placed):
         out += (f'{t}\t<Frame type="Label" name="FCJH_Heading{i}">\n'
                 f'{t}\t\t<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>\n'
-                f'{t}\t\t<Anchor side="Left"  relative="$parent" pos="Min" offset="{x + 16}"/>\n'
+                f'{t}\t\t<Anchor side="Left"  relative="$parent" pos="Min" offset="{x}"/>\n'
                 f'{t}\t\t<Anchor side="Right" relative="$parent" pos="Min" offset="{x + w}"/>\n'
                 f'{t}\t\t<Height val="#FCJH_INFO_PANE_HEADER_H"/>\n'
-                f'{t}\t\t<Style val="BottomPanel_ColumnTitle_L"/>\n{t}\t\t<Text val="{text}"/>\n'
+                f'{t}\t\t<Style val="FCJH_StatHeading"/>\n{t}\t\t<Text val="{text}"/>\n'
                 f'{t}\t\t<Options val="NoWrapping | ScaleToPreventTruncation"/>\n'
                 f'{t}\t\t<RenderPriority val="610"/>\n{t}\t\t<AcceptsMouse val="false"/>\n{t}\t</Frame>\n')
     for (name, team_id, colour, title_style, value_style), top in zip(TEAMS, geometry["team_tops"]):
@@ -747,28 +794,73 @@ def pane_chrome(title, placed, geometry, indent=3):
 
 
 def stat_geometry(cfg):
-    """Vertical layout of a stats pane, in layout units from the pane's top:
-    title | headings | blue band | 5 blue rows | gap | red band | 5 red rows."""
+    """Layout of a stats pane, in layout units from the pane's top-left. Top down:
+    title | headings | blue band | 5 blue rows | gap | red band | 5 red rows | pad.
+    The pane is the info_pane box every pane shares; the rows' gaps grow to fill its height,
+    so switching panes never changes the box."""
     u, pane = Units(cfg), cfg["info_pane"]
+    (_, _, w, h), _ = rects(cfg)["info_pane"]
+    width, height = u(w), u(h)
     title, heading, team_h = u(pane["title_height"]), u(pane["header_height"]), u(pane["team_height"])
-    step = STAT_ROW_H + STAT_ROW_GAP
+    fixed = title + heading + 2 * team_h + STAT_TEAM_GAP + STAT_BOTTOM_PAD + 10 * STAT_ROW_H
+    gap = max(2, (height - fixed) // 9)   # 4 inside each team, 1 more before red's band
+    step = STAT_ROW_H + gap
     blue_band = title + heading
     red_band = blue_band + team_h + 5 * step + STAT_TEAM_GAP
     row_tops = [blue_band + team_h + i * step for i in range(5)] + \
                [red_band + team_h + i * step for i in range(5)]
-    return {"title": title, "team_h": team_h, "team_tops": (blue_band, red_band), "row_tops": row_tops}
+    return {"title": title, "team_h": team_h, "team_tops": (blue_band, red_band), "row_tops": row_tops,
+            "columns": (STAT_FIRST_COLUMN, width - STAT_MARGIN)}
+
+
+def place_columns(columns, span):
+    """Columns left to right across span (left, right), sized by their width share."""
+    left, right = span
+    room = right - left - STAT_COLUMN_GAP * (len(columns) - 1)
+    shares = sum(c[3] for c in columns)
+    placed, x = [], left
+    for i, (frame, score, heading, share, total) in enumerate(columns):
+        w = right - x if i == len(columns) - 1 else round(room * share / shares)
+        placed.append((frame, score, heading, x, w, total))
+        x += w + STAT_COLUMN_GAP
+    return placed
+
+
+def stat_value(frame, score, team, indent):
+    """One column's number. Blizzard's own label (left-justified, restyled at runtime by its
+    best-value animations) is hidden; ours copies its text, centred, zeros shown as 0."""
+    t = "\t" * indent
+    underline = ""
+    if frame in STAT_UNDERLINED:
+        underline = (f'{t}\t<Frame type="Image" name="HighlightImage">\n'
+                     f'{t}\t\t<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>\n'
+                     f'{t}\t\t<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>\n'
+                     f'{t}\t</Frame>\n')
+    elif frame in STAT_NO_UNDERLINE:
+        underline = f'{t}\t<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>\n'
+    return (f'{t}<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0">\n'
+            f'{t}\t<Visible val="true"/>\n'
+            f'{t}\t<ScoreValueLink val="{score}"/>\n'
+            f'{t}\t<UseDashForZero val="false"/>\n'
+            f'{t}\t<Frame type="Label" name="Label"><Alpha val="0"/></Frame>\n'
+            f'{t}\t<Frame type="Label" name="FCJH_Value">\n'
+            f'{t}\t\t<Anchor relative="$parent"/>\n'
+            f'{t}\t\t<Text val="{{$parent/Label/@Text}}"/>\n'
+            f'{t}\t\t<Style val="FCJH_StatValue_{team.capitalize()}"/>\n'
+            f'{t}\t\t<Options val="NoWrapping | ScaleToPreventTruncation"/>\n'
+            f'{t}\t\t<AcceptsMouse val="false"/>\n'
+            f'{t}\t</Frame>\n' + underline +
+            f'{t}</Frame>\n')
 
 
 def stat_pane(key, title, columns, geometry):
     container = f"Pane_{key.capitalize()}"
-    placed, x = [], STAT_FIRST_COLUMN   # columns left to right from Blizzard's first column
-    for frame, score, heading, w, total in columns:
-        placed.append((frame, score, heading, x, w, total))
-        x += w + STAT_COLUMN_GAP
+    placed = place_columns(columns, geometry["columns"])
     used = {p[0] for p in placed}
     rows = []
     for i, top in enumerate(geometry["row_tops"]):
         y = top - geometry["title"]  # the rows' box (TabControl) starts under the title
+        team = "blue" if i < 5 else "red"
         cols = []
         for frame in SCORE_COLUMNS:
             if frame not in used:
@@ -782,8 +874,7 @@ def stat_pane(key, title, columns, geometry):
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="{score}"/></Frame>
-								</Frame>
+''' + stat_value(frame, score, team, 9) + '''								</Frame>
 ''')
         rows.append(f'''						<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame{i}">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="{y}"/>
@@ -800,6 +891,10 @@ def stat_pane(key, title, columns, geometry):
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							</Frame>
 							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
+							<!-- Blizzard's shaded boxes behind groups of columns -->
+							<Frame type="Image" name="BGSeparatorImage1"><Alpha val="0"/></Frame>
+							<Frame type="Image" name="BGSeparatorImage2"><Alpha val="0"/></Frame>
+							<Frame type="Image" name="BGSeparatorImage3"><Alpha val="0"/></Frame>
 							<Frame type="Frame" name="StatsContainerFrame">
 {"".join(cols)}							</Frame>
 						</Frame>
@@ -818,6 +913,8 @@ def stat_pane(key, title, columns, geometry):
 				<Visible val="true"/>
 				<RenderPriority val="500"/>
 {hide}				<Frame type="Frame" name="HeroLeaderPanelContainer">
+					<!-- the voice-channel picker (a headset icon, top-left) -->
+					<Frame type="Frame" name="ChannelSelector"><Alpha val="0"/></Frame>
 					<Frame type="TabControl" name="TabControl">
 						<!-- the rows' box, under the title band -->
 						<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>

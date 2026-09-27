@@ -142,13 +142,13 @@
 	<Constant name="FCJH_KILL_FEED_B" val="440"/>
 	<Constant name="FCJH_KILL_FEED_W" val="600"/>
 	<Constant name="FCJH_KILL_FEED_H" val="333"/>
-	<!-- info_pane: demand, px [16, 196, 530, 600] -->
+	<!-- info_pane: demand, px [16, 196, 494, 576] -->
 	<Constant name="FCJH_INFO_PANE_L" val="18"/>
 	<Constant name="FCJH_INFO_PANE_T" val="218"/>
-	<Constant name="FCJH_INFO_PANE_R" val="607"/>
-	<Constant name="FCJH_INFO_PANE_B" val="884"/>
-	<Constant name="FCJH_INFO_PANE_W" val="589"/>
-	<Constant name="FCJH_INFO_PANE_H" val="667"/>
+	<Constant name="FCJH_INFO_PANE_R" val="567"/>
+	<Constant name="FCJH_INFO_PANE_B" val="858"/>
+	<Constant name="FCJH_INFO_PANE_W" val="549"/>
+	<Constant name="FCJH_INFO_PANE_H" val="640"/>
 	<!-- centre_banners: ui, px [640, 196, 640, 78] -->
 	<Constant name="FCJH_CENTRE_BANNERS_L" val="711"/>
 	<Constant name="FCJH_CENTRE_BANNERS_T" val="218"/>
@@ -184,20 +184,6 @@
 	<Constant name="FCJH_RED_CORE_B" val="1082"/>
 	<Constant name="FCJH_RED_CORE_W" val="237"/>
 	<Constant name="FCJH_RED_CORE_H" val="27"/>
-	<!-- blue_xp: ui, px [169, 1070, 583, 8] -->
-	<Constant name="FCJH_BLUE_XP_L" val="188"/>
-	<Constant name="FCJH_BLUE_XP_T" val="1189"/>
-	<Constant name="FCJH_BLUE_XP_R" val="836"/>
-	<Constant name="FCJH_BLUE_XP_B" val="1198"/>
-	<Constant name="FCJH_BLUE_XP_W" val="648"/>
-	<Constant name="FCJH_BLUE_XP_H" val="9"/>
-	<!-- red_xp: ui, px [1167, 1070, 583, 8] -->
-	<Constant name="FCJH_RED_XP_L" val="1297"/>
-	<Constant name="FCJH_RED_XP_T" val="1189"/>
-	<Constant name="FCJH_RED_XP_R" val="1944"/>
-	<Constant name="FCJH_RED_XP_B" val="1198"/>
-	<Constant name="FCJH_RED_XP_W" val="648"/>
-	<Constant name="FCJH_RED_XP_H" val="9"/>
 	<!-- hero_1: ui, px [169.0, 1000, 144.0, 68.4] -->
 	<Constant name="FCJH_HERO_1_L" val="188"/>
 	<Constant name="FCJH_HERO_1_T" val="1111"/>
@@ -268,6 +254,20 @@
 	<Constant name="FCJH_HERO_0_B" val="1187"/>
 	<Constant name="FCJH_HERO_0_W" val="160"/>
 	<Constant name="FCJH_HERO_0_H" val="76"/>
+	<!-- blue_xp: ui, px [169, 991, 549.0, 6] -->
+	<Constant name="FCJH_BLUE_XP_L" val="188"/>
+	<Constant name="FCJH_BLUE_XP_T" val="1101"/>
+	<Constant name="FCJH_BLUE_XP_R" val="798"/>
+	<Constant name="FCJH_BLUE_XP_B" val="1108"/>
+	<Constant name="FCJH_BLUE_XP_W" val="610"/>
+	<Constant name="FCJH_BLUE_XP_H" val="7"/>
+	<!-- red_xp: ui, px [1201.2, 991, 549.0, 6] -->
+	<Constant name="FCJH_RED_XP_L" val="1335"/>
+	<Constant name="FCJH_RED_XP_T" val="1101"/>
+	<Constant name="FCJH_RED_XP_R" val="1945"/>
+	<Constant name="FCJH_RED_XP_B" val="1108"/>
+	<Constant name="FCJH_RED_XP_W" val="610"/>
+	<Constant name="FCJH_RED_XP_H" val="7"/>
 
 	<!-- MinimapPanel edges: the square centred on centre_x, its bottom edge at `bottom`.
 	     _BOTTOM is an offset from $GameUI pos=Max, so a positive value hangs off-screen. -->
@@ -280,6 +280,13 @@
 	<Constant name="FCJH_BLUE_CORE_FRAME_R" val="871"/>
 	<Constant name="FCJH_RED_CORE_FRAME_T" val="1038"/>
 	<Constant name="FCJH_RED_CORE_FRAME_L" val="1269"/>
+
+	<!-- Team XP fill: a solid colour, so it fills the bar at any size (Blizzard's
+	     obs_bar_xp_* art is a thin glowing line drawn for a 156 x 17 box) -->
+	<Constant name="FCJH_XP_FILL" val="_Assets\Textures\FCJH_Fill_9a6cff.dds"/>
+
+	<!-- Kill feed rows' left edge: a single kill's portraits end on kill_feed's right -->
+	<Constant name="FCJH_KILL_FEED_ROW_L" val="1906"/>
 
 	<!-- Info pane chrome -->
 	<Constant name="FCJH_INFO_PANE_TITLE_H" val="29"/>

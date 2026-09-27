@@ -101,11 +101,13 @@ kind = "ui"
 rect = [16, 0, 200, 24]      # hidden state: a slim tab on the top edge
 kind = "demand"
 [element.kill_feed]
-rect = [1364, 96, 540, 300]  # Blizzard's kill log rows are 600 units (540 px) wide; right edge 1904
+rect = [1364, 96, 540, 300]  # right edge 1904: where each kill's portraits end (rows right-aligned)
 kind = "ui"
 [element.info_pane]
-rect = [16, 196, 530, 600]   # widened from 382 (2026-09-25) to fit Blizzard's native talent rows;
-                             # 600 tall (was 572) for the title band
+rect = [16, 196, 494, 576]   # sized to the talents table: 23-unit margins either side of its
+                             # rows (portrait at 23, last talent ending at 526 of 549 units) and
+                             # just tall enough for its ten 60-unit rows under the title band.
+                             # The stats panes spread their rows to fill the same box.
 kind = "demand"
 
 [info_pane]
@@ -133,12 +135,6 @@ kind = "ui"
 [element.red_core]
 rect = [1167, 950, 213, 24]
 kind = "ui"
-[element.blue_xp]
-rect = [169, 1070, 583, 8]   # team XP, the full width of the team's hero row, under it
-kind = "ui"
-[element.red_xp]
-rect = [1167, 1070, 583, 8]
-kind = "ui"
 
 # ---------------------------------------------------------------------------
 # Hero row. Ten cells, reading 1-5 (blue, left to right) then 6-0 (red).
@@ -153,3 +149,10 @@ top = 1000                   # the row's top edge
 blue_left = 169              # cell 1; cells 2-5 follow to the right
 red_left = 1167              # cell 6; cells 7-0 follow to the right
 talent_popup_size = 40       # the talent's icon, straddling the cell's top edge
+
+# Team XP: a bar above each hero row, as wide as the row's slanted top edge (placed by
+# tools/gen.py from [hero_row], so it follows the row).
+[team_xp]
+height = 6                   # the bar
+gap = 3                      # between the bar and the plates' top edge
+colour = "9a6cff"            # the fill, both teams (hex RGB)

@@ -4,16 +4,17 @@
 
 	     Blizzard's KillLogPanel (gameui.stormlayout) holds the kill rows; the engine adds
 	     them, each 600 units wide and anchored to the panel's top-left, sliding down as new
-	     ones arrive. We only move the panel: its right edge to kill_feed's right, its top to
-	     kill_feed's top; the width stays Blizzard's 600, so Left follows from it. The rows
-	     still read left to right as Blizzard draws them - mirroring them is later work. -->
+	     ones arrive. A row draws its portraits at the LEFT of those 600 units (killer from 27,
+	     victim ending at 210), so we place the panel's left edge 210 short of kill_feed's
+	     right: a kill's portraits then end on that edge, and the rest of the row (Blizzard's
+	     streak art) hangs off-screen. Rows still read killer -> victim, left to right. -->
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<Frame type="Frame" name="UIContainer">
 			<Frame type="ConsolePanel" name="ConsolePanel">
 				<Frame type="Frame" name="KillLogPanel">
 					<Anchor side="Top"    relative="$GameUI" pos="Min" offset="#FCJH_KILL_FEED_T"/>
-					<Anchor side="Right"  relative="$GameUI" pos="Min" offset="#FCJH_KILL_FEED_R"/>
-					<Anchor side="Left"   relative="$this"   pos="Max" offset="0"/>
+					<Anchor side="Left"   relative="$GameUI" pos="Min" offset="#FCJH_KILL_FEED_ROW_L"/>
+					<Anchor side="Right"  relative="$this"   pos="Min" offset="0"/>
 					<!-- Blizzard's own bottom (the screen's): rows stack downward past the box -->
 					<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 					<Unclipped val="true"/>

@@ -10,8 +10,10 @@
 	         and both hero containers all anchor to it - parking it drags them off-screen
 	       - hexagon, clock and team levels left as they are, now floating on their own
 	       - towers / kills counters parked (the icons beside them were backplate art)
-	       - team XP: moved under each team's hero row, the row's full width (blue_xp, red_xp),
-	         over our own dark track; Blizzard's small frame art around it hidden
+	       - team XP: moved just above each team's hero row, as wide as the row's slanted top
+	         edge (blue_xp, red_xp, placed by tools/gen.py from [team_xp]), over our own dark
+	         track; Blizzard's small frame art around it hidden, and its fill art (a thin
+	         glowing line drawn for a 156 x 17 box) swapped for a solid colour
 	       - core health: moved above the hero rows (blue_core, red_core). Blizzard keeps these
 	         hidden until they're needed, and we leave that logic alone. -->
 	<Frame type="GameUI" name="GameUI" file="GameUI">
@@ -56,6 +58,9 @@
 							<Width val="0"/>
 							<Height val="0"/>
 							<Unclipped val="true"/>
+							<Frame type="UnitStatusVeterancyBar" name="XPBar">
+								<Texture val="#FCJH_XP_FILL"/>
+							</Frame>
 						</Frame>
 						<Frame type="TeamVeterancyUnitStatusFrame" name="Team2XPUnitStatusFrame">
 							<Anchor side="Top"    relative="$GameUI" pos="Min" offset="#FCJH_RED_XP_T"/>
@@ -65,6 +70,9 @@
 							<Width val="0"/>
 							<Height val="0"/>
 							<Unclipped val="true"/>
+							<Frame type="UnitStatusVeterancyBar" name="XPBar">
+								<Texture val="#FCJH_XP_FILL"/>
+							</Frame>
 						</Frame>
 
 						<!-- Core health: blue anchors by its right edge, red by its left (Blizzard's
