@@ -94,15 +94,18 @@ def rects(cfg):
 CORE_BAR_W, CORE_BAR_H = 237, 27
 
 
-def team_bar_rects(cfg):
+def team_bar_rects(cfg, n=5):
     """The bars stacked on each hero row: team XP on the plates' top edge, core health on
     top of that. Both are parallelograms continuing the row's slanted outer edges, so each
     bar's rect here is its bounding box and its slant is `lean` px per px of height.
-    XP runs the full top edge; core sits at the row's inner end (toward the minimap)."""
+    XP runs the full top edge; core sits at the row's inner end (toward the minimap).
+    n: heroes per team. With fewer than 5 the rows pack toward the minimap (blue's plates
+    shift inward - FCJH_RowPacker), so XP spans only those n plates."""
     row, px = cfg["hero_row"], 1 / Units(cfg).scale
     cell = HeroCell(cfg)
     lean = cell.overlap / cell.h                       # the plates' slant, px across per px up
-    edge = (4 * cell.pitch + cell.w - cell.overlap) * px   # the row's top edge
+    edge = ((n - 1) * cell.pitch + cell.w - cell.overlap) * px   # the row's top edge
+    shift = (5 - n) * cell.pitch * px                  # blue's plates move this far inward
     top = row["top"]
     xp, core = cfg["team_xp"], cfg["team_core"]
     xp_bottom = top - xp["gap"]
@@ -113,7 +116,7 @@ def team_bar_rects(cfg):
     out = {}
     # the row's outer edges, as x at height y: blue leans \ (its top edge starts at the
     # row's left), red leans / (one overlap in)
-    blue_l = lambda y: row["blue_left"] - lean * (top - y)
+    blue_l = lambda y: row["blue_left"] + shift - lean * (top - y)
     red_l = lambda y: row["red_left"] + cell.overlap * px + lean * (top - y)
     r1 = lambda v: round(v, 1)
     out["blue_xp"] = ((r1(blue_l(xp_top)), r1(xp_top), r1(edge + lean * xp["height"]), xp["height"]), "ui")
@@ -450,6 +453,13 @@ def slant_bars(cfg):
                 data = slant_texture(team, cut, colour, alpha)
                 digest = hashlib.sha1(data).hexdigest()[:8]
                 out[name(bar, part, team)] = (f"FCJH_Bar_{bar}_{part}_{team}_{digest}.dds", data)
+        # XP for rows of 1-4 heroes: a shorter bar keeps the same slant only with its own cut
+        for n in range(1, 5):
+            (_, _, w, h), _ = team_bar_rects(cfg, n)[f"{team}_xp"]
+            for part, colour, alpha in (("fill", xp["colour"], 255), ("track", xp["track_colour"], xp["track_alpha"])):
+                data = slant_texture(team, lean * h / w, colour, alpha)
+                digest = hashlib.sha1(data).hexdigest()[:8]
+                out[name("xp", part, team, f"n{n}")] = (f"FCJH_Bar_xp_{part}_{team}_n{n}_{digest}.dds", data)
     # the team level's backdrop (top bar, blue_level / red_level): a hexagon pattern in the team
     # colour, strongest beside the centre hexagon and fading outward - after Blizzard's old
     # level wings. A placeholder until the OBS graphics package sets the look.
@@ -768,6 +778,62 @@ def hero_cell_template(team, c):
             + health + "\n\t</Frame>\n")
 
 
+OVERVIEW = "$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel"
+
+
+def row_packer(cfg):
+    """Fewer than five heroes a side (3v3, 1v1...). The engine fills the cells in order and
+    hides the rest, and every cell is pinned in place, so a short blue team would sit out at
+    the screen edge with a hole by the minimap (red already fills from the minimap out).
+    This counts each team's visible cells and, for n heroes: moves blue's cells 1..n onto
+    the n slots nearest the minimap, and cuts both XP bars (track and fill, with textures
+    cut for that length) to span only n plates. Core bars already sit at the inner ends.
+    Every state sets everything it touches, so no state depends on another's undo."""
+    u = Units(cfg)
+    bars = slant_bars(cfg)
+    all_rects = rects(cfg)
+    tex = lambda key: f"{TEXTURE_DIR}\\{bars[key][0]}"
+    top_panel = f"{OVERVIEW}/ObserverTopPanel"
+
+    def anchor(frame, side, px):
+        return f'\t\t\t\t<Action type="SetAnchor" frame="{frame}" side="{side}" relative="$GameUI" pos="Min" offset="{u(px)}"/>\n'
+
+    def state(team, n):
+        tn = "Team1" if team == "blue" else "Team2"
+        cell = lambda i: f"{OVERVIEW}/{tn}HeroOverview/HeroOverview{i}"
+        # n visible: cell n shown and cell n+1 hidden (n = 5: all shown)
+        when = f'\t\t\t\t<When type="Property" frame="{cell(n)}" Visible="true"/>\n'
+        if n < 5:
+            when += f'\t\t\t\t<When type="Property" frame="{cell(n + 1)}" Visible="false"/>\n'
+        acts = ""
+        if team == "blue":
+            for i in range(1, n + 1):
+                (x, _, w, _), _ = all_rects[f"hero_{BLUE_SLOTS[i + 5 - n - 1]}"]
+                acts += anchor(cell(i), "Left", x) + anchor(cell(i), "Right", x + w)
+        (x, _, w, _), _ = team_bar_rects(cfg, n)[f"{team}_xp"]
+        suffix = "" if n == 5 else f"_N{n}"
+        Team = team.capitalize()
+        for frame in (f"{top_panel}/FCJH_{Team}XPTrack", f"{top_panel}/{tn}XPUnitStatusFrame"):
+            acts += anchor(frame, "Left", x) + anchor(frame, "Right", x + w)
+        track = tex(name("xp", "track", team) + suffix)
+        fill = tex(name("xp", "fill", team) + suffix)
+        acts += (f'\t\t\t\t<Action type="SetProperty" frame="{top_panel}/FCJH_{Team}XPTrack" Texture="{track}"/>\n'
+                 f'\t\t\t\t<Action type="SetProperty" frame="{top_panel}/{tn}XPUnitStatusFrame/XPBar" Texture="{fill}"/>\n')
+        return f'\t\t\t<State name="Heroes{n}">\n{when}{acts}\t\t\t</State>\n'
+
+    groups = ""
+    for team in ("blue", "red"):
+        groups += (f'\t\t<StateGroup name="FCJH_{team.capitalize()}Count">\n\t\t\t<DefaultState val="Heroes5"/>\n'
+                   + "".join(state(team, n) for n in (1, 2, 3, 4, 5)) + '\t\t</StateGroup>\n')
+    groups = "".join("\t" + line for line in groups.splitlines(keepends=True))
+    return f'''		<!-- Fewer than five heroes a side: pack the rows toward the minimap (tools/gen.py
+		     row_packer). UNTESTED: assumes the engine hides the cells it doesn't fill. -->
+		<Frame type="Frame" name="FCJH_RowPacker">
+			<Anchor relative="$parent"/>
+			<AcceptsMouse val="false"/>
+{groups}		</Frame>'''
+
+
 def hero_row_layout(cfg):
     """Blizzard's ten observer hero cells, moved into the bottom row and dressed as the
     in-game top bar's cells (HeroCell).
@@ -821,6 +887,7 @@ def hero_row_layout(cfg):
 	<!-- Red: the same cell, mirrored -->
 {hero_cell_template("red", HeroCell(cfg))}
 	<Frame type="GameUI" name="GameUI" file="GameUI">
+{row_packer(cfg)}
 		<Frame type="Frame" name="UIContainer">
 			<Frame type="Frame" name="FullscreenUpperContainer">
 				<Frame type="Frame" name="ObserverHeroOverviewPanel">
