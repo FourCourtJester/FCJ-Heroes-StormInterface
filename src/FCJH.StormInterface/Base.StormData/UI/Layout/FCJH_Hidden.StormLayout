@@ -1,19 +1,47 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <Desc>
-	<!-- Blizzard panels we hide by default. Parked off-screen (all four sides pinned), since
-	     Visible=false doesn't stick on Blizzard panels.
+	<!-- Blizzard panels we keep hidden.
 
-	       - TargetInfoFrame: the small draggable "inspect" rectangle that shows whatever unit
-	         is selected. Hidden until we design an inspect panel of our own. -->
+	     The player HUD (ability bar, hero console, buffs, 3D portrait) and the small
+	     draggable inspect box: the engine switches these back on whenever it likes (a
+	     camera or follow change brought the HUD back mid-replay), and Visible=false or
+	     parking doesn't hold against that. What does - build 50's recipe - is an animation
+	     that asserts them hidden every frame (end="Loop"; animations outrank properties).
+	     It lives on a SelectionUnitStatusPanel pinned to a hero, so it always has a unit and
+	     its OnShown always fires. Parked: nothing here needs to be seen. -->
 	<Frame type="GameUI" name="GameUI" file="GameUI">
-		<Frame type="Frame" name="UIContainer">
-			<Frame type="Frame" name="FullscreenUpperContainer">
-				<Frame type="TargetInfoFrame" name="TargetInfoFrame">
-					<Anchor side="Top"    relative="$GameUI" pos="Min" offset="9999"/>
-					<Anchor side="Left"   relative="$GameUI" pos="Min" offset="9999"/>
-					<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="10115"/>
-					<Anchor side="Right"  relative="$GameUI" pos="Min" offset="10225"/>
-				</Frame>
+		<Frame type="SelectionUnitStatusPanel" name="FCJH_HudHider">
+			<Anchor side="Top"    relative="$parent" pos="Min" offset="9999"/>
+			<Anchor side="Left"   relative="$parent" pos="Min" offset="9999"/>
+			<Anchor side="Bottom" relative="$parent" pos="Min" offset="10099"/>
+			<Anchor side="Right"  relative="$parent" pos="Min" offset="10099"/>
+			<PlayerId val="1"/>
+			<HeroesOnly val="true"/>
+			<AlwaysShowHero val="true"/>
+			<AcceptsMouse val="false"/>
+			<AcceptsMouseTooltip val="false"/>
+			<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<Animation name="FCJH_KeepHidden">
+					<Event event="OnShown" action="Play"/>
+					<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel">
+						<Key type="Bool" time="0" value="false"/>
+					</Controller>
+					<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/ConsoleUIContainer/HeroConsolePanel">
+						<Key type="Bool" time="0" value="false"/>
+					</Controller>
+					<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/ConsoleUIContainer/HeroBuffDebuffPanel">
+						<Key type="Bool" time="0" value="false"/>
+					</Controller>
+					<Controller type="Visibility" end="Loop" frame="$ConsolePortraitPanelContainer/PortraitPanel">
+						<Key type="Bool" time="0" value="false"/>
+					</Controller>
+					<!-- Blizzard's small inspect box; our inspect card replaces it -->
+					<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/FullscreenUpperContainer/TargetInfoFrame">
+						<Key type="Bool" time="0" value="false"/>
+					</Controller>
+				</Animation>
 			</Frame>
 		</Frame>
 	</Frame>

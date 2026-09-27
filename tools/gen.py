@@ -127,9 +127,6 @@ class HeroCell:
     # Fountain-ready marker: a small square in the plate's top corner on the portrait side,
     # away from the slant (left on blue, right on red). (left, top, right, bottom)
     FOUNTAIN = {"blue": (8, 2, 24, 18), "red": (104, 2, 120, 18)}
-    # Heroic (the in-game cell's HeroicTalentPanel, Blizzard-sized): its bottom-left corner,
-    # at the portrait's bottom-left just inside the slant
-    HEROIC = {"blue": (20, 36), "red": (14, 36)}
     # The observer's portrait art is wide with the face on the right; Blizzard's observer
     # crops [0.1, 0.45, 0.65, 1.0] into 165 x 60, i.e. the art is 2.75x as wide as tall per
     # unit of crop. Same top/bottom/right here, left worked out for this cell's shape.
@@ -147,7 +144,6 @@ class HeroCell:
         self.cc_band = tuple(s(v) for v in self.CC_BAND)
         self.cc_icon = tuple(s(v) for v in self.CC_ICON)
         self.fountain = {t: tuple(s(v) for v in r) for t, r in self.FOUNTAIN.items()}
-        self.heroic = {t: tuple(s(v) for v in r) for t, r in self.HEROIC.items()}
         # the plate leans, so its top edge is centred half the overlap off the box's middle:
         # left on blue (leans \), right on red (leans /)
         self.top_edge_shift = {"blue": -s(self.OVERLAP / 2), "red": s(self.OVERLAP / 2)}
@@ -400,8 +396,9 @@ def hero_cell_template(team, c):
 				<Unclipped val="true"/>
 				<AcceptsMouse val="false"/>
 			</Frame>
-			<!-- ...and its icon, mirrored the same way. Shown only while there IS CC text: a
-			     mirrored image with no picture could otherwise draw as a blank square. -->
+			<!-- ...and its icon, mirrored the same way. Shown only while the sensor is showing
+			     a CC: with no picture, the mirrored image draws as a dark square (seen in game;
+			     matching the label's text against "" never fired). -->
 			<Frame type="Image" name="FCJH_CCIcon">
 				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="{c.cc_icon[0]}"/>
 				<Anchor side="Left"   relative="$parent/$parent" pos="Mid" offset="{c.death_shift - c.cc_icon[2]}"/>
@@ -413,13 +410,13 @@ def hero_cell_template(team, c):
 				<Unclipped val="true"/>
 				<AcceptsMouse val="false"/>
 				<StateGroup name="FCJH_WhenCC">
-					<DefaultState val="CC"/>
-					<State name="None">
-						<When type="Property" frame="$parent/FCJH_CCText" Text=""/>
-						<Action type="SetProperty" frame="$this" Alpha="0"/>
-					</State>
+					<DefaultState val="None"/>
 					<State name="CC">
+						<When type="Property" frame="$parent/FCJH_CC" Visible="true"/>
 						<Action type="SetProperty" frame="$this" Alpha="255"/>
+					</State>
+					<State name="None">
+						<Action type="SetProperty" frame="$this" Alpha="0"/>
 					</State>
 				</StateGroup>
 			</Frame>"""
@@ -474,19 +471,6 @@ def hero_cell_template(team, c):
 			<Frame type="Image" name="FCJH_FountainReady">{fountain_anchors}
 			</Frame>"""
     health += "\n\t\t</Frame>"
-    hx, hb = c.heroic[team]
-    heroic = f"""
-		<!-- EXPERIMENT: the in-game cell's heroic slot (icon, cooldown, ready frame), copied
-		     whole. Observer cells don't have one; if the engine fills it by name here too,
-		     it shows. If not, it stays hidden, as Blizzard ships it. -->
-		<Frame type="Frame" name="HeroicTalentPanel" template="PartyFrame/HeroOverviewTemplate/HeroicTalentPanel">
-			<Anchor side="Bottom" relative="$parent" pos="Min" offset="{hb}"/>
-			<Anchor side="Left"   relative="$parent" pos="Min" offset="{hx}"/>
-			<Unclipped val="true"/>
-		</Frame>""" if blue else f"""
-		<Frame type="Frame" name="HeroicTalentPanel">
-			<Anchor side="Left"   relative="$parent" pos="Min" offset="{hx}"/>
-		</Frame>"""
     shift = c.death_shift
     mid = (c.portrait_top + c.portrait_bottom) // 2
     header = (f'<Frame type="Frame" name="FCJH_HeroCell">\n\t\t<Width val="{c.w}"/>\n\t\t<Height val="{c.h}"/>'
@@ -532,7 +516,7 @@ def hero_cell_template(team, c):
             + art("FCJH_TeamBg", f"HUD_TopBar_Team_HeroFrame_BG_{'Blue' if blue else 'Red'}", 401)
             + common + portrait
             + art("FCJH_Glass", "HUD_TopBar_Team_HeroFrame_Glass", 505)
-            + heroic + health + "\n\t</Frame>\n")
+            + health + "\n\t</Frame>\n")
 
 
 def hero_row_layout(cfg):
@@ -626,8 +610,8 @@ STAT_PANES = [
         ("AssistsScoreValueFrame", "Assists", "A", 60, "Assists"),
         ("HeroDamageScoreValueFrame", "HeroDamage", "HERO DMG", 130, "HeroDamage")]),
     ("healing", "HEALING  ·  SHIELDING", [
-        ("HealingScoreValueFrame", "Healing", "HEALING", 130, "Healing"),
         ("DamageTakenScoreValueFrame", "SelfHealing", "SELF", 130, "SelfHealing"),
+        ("HealingScoreValueFrame", "Healing", "HEALING", 130, "Healing"),
         ("SiegeDamageScoreValueFrame", "ProtectionGivenToAllies", "SHIELDING", 130, "ProtectionGivenToAllies")]),
     ("structures", "STRUCTURES  ·  EXPERIENCE", [
         ("SiegeDamageScoreValueFrame", "SiegeDamage", "SIEGE", 130, "SiegeDamage"),
@@ -798,7 +782,7 @@ def stat_pane(key, title, columns, geometry):
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="{score}"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="{score}"/></Frame>
 								</Frame>
 ''')
         rows.append(f'''						<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame{i}">
@@ -815,6 +799,7 @@ def stat_pane(key, title, columns, geometry):
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							</Frame>
+							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<Frame type="Frame" name="StatsContainerFrame">
 {"".join(cols)}							</Frame>
 						</Frame>

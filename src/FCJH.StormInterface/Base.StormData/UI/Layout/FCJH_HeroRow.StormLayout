@@ -91,14 +91,6 @@
 			<Texture val="@UI/HUD_TopBar_Team_HeroFrame_Glass"/>
 			<RenderPriority val="505"/>
 		</Frame>
-		<!-- EXPERIMENT: the in-game cell's heroic slot (icon, cooldown, ready frame), copied
-		     whole. Observer cells don't have one; if the engine fills it by name here too,
-		     it shows. If not, it stays hidden, as Blizzard ships it. -->
-		<Frame type="Frame" name="HeroicTalentPanel" template="PartyFrame/HeroOverviewTemplate/HeroicTalentPanel">
-			<Anchor side="Bottom" relative="$parent" pos="Min" offset="45"/>
-			<Anchor side="Left"   relative="$parent" pos="Min" offset="25"/>
-			<Unclipped val="true"/>
-		</Frame>
 		<Frame type="UnitStatusFrame" name="HeroStatus">
 			<Anchor side="Left" relative="$parent" pos="Min" offset="30"/>
 			<Anchor side="Top" relative="$parent" pos="Min" offset="48"/>
@@ -176,8 +168,9 @@
 				<Unclipped val="true"/>
 				<AcceptsMouse val="false"/>
 			</Frame>
-			<!-- ...and its icon, mirrored the same way. Shown only while there IS CC text: a
-			     mirrored image with no picture could otherwise draw as a blank square. -->
+			<!-- ...and its icon, mirrored the same way. Shown only while the sensor is showing
+			     a CC: with no picture, the mirrored image draws as a dark square (seen in game;
+			     matching the label's text against "" never fired). -->
 			<Frame type="Image" name="FCJH_CCIcon">
 				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="2"/>
 				<Anchor side="Left"   relative="$parent/$parent" pos="Mid" offset="-8"/>
@@ -189,13 +182,13 @@
 				<Unclipped val="true"/>
 				<AcceptsMouse val="false"/>
 				<StateGroup name="FCJH_WhenCC">
-					<DefaultState val="CC"/>
-					<State name="None">
-						<When type="Property" frame="$parent/FCJH_CCText" Text=""/>
-						<Action type="SetProperty" frame="$this" Alpha="0"/>
-					</State>
+					<DefaultState val="None"/>
 					<State name="CC">
+						<When type="Property" frame="$parent/FCJH_CC" Visible="true"/>
 						<Action type="SetProperty" frame="$this" Alpha="255"/>
+					</State>
+					<State name="None">
+						<Action type="SetProperty" frame="$this" Alpha="0"/>
 					</State>
 				</StateGroup>
 			</Frame>
@@ -297,9 +290,6 @@
 			<Texture val="@UI/HUD_TopBar_Team_HeroFrame_Glass"/>
 			<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>
 			<RenderPriority val="505"/>
-		</Frame>
-		<Frame type="Frame" name="HeroicTalentPanel">
-			<Anchor side="Left"   relative="$parent" pos="Min" offset="18"/>
 		</Frame>
 		<Frame type="UnitStatusFrame" name="HeroStatus">
 			<Anchor side="Left" relative="$parent" pos="Min" offset="10"/>

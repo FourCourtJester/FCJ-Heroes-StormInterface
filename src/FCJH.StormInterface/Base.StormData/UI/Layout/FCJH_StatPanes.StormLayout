@@ -72,6 +72,7 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							</Frame>
+							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<Frame type="Frame" name="StatsContainerFrame">
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame"><Alpha val="0"/></Frame>
@@ -85,7 +86,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="SoloKill"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="SoloKill"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -95,7 +96,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="Deaths"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="Deaths"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -105,7 +106,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="Assists"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="Assists"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -115,7 +116,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="HeroDamage"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="HeroDamage"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -133,6 +134,7 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							</Frame>
+							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<Frame type="Frame" name="StatsContainerFrame">
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame"><Alpha val="0"/></Frame>
@@ -146,7 +148,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="SoloKill"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="SoloKill"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -156,7 +158,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="Deaths"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="Deaths"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -166,7 +168,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="Assists"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="Assists"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -176,7 +178,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="HeroDamage"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="HeroDamage"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -194,6 +196,7 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							</Frame>
+							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<Frame type="Frame" name="StatsContainerFrame">
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame"><Alpha val="0"/></Frame>
@@ -207,7 +210,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="SoloKill"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="SoloKill"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -217,7 +220,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="Deaths"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="Deaths"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -227,7 +230,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="Assists"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="Assists"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -237,7 +240,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="HeroDamage"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="HeroDamage"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -255,6 +258,7 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							</Frame>
+							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<Frame type="Frame" name="StatsContainerFrame">
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame"><Alpha val="0"/></Frame>
@@ -268,7 +272,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="SoloKill"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="SoloKill"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -278,7 +282,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="Deaths"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="Deaths"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -288,7 +292,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="Assists"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="Assists"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -298,7 +302,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="HeroDamage"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="HeroDamage"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -316,6 +320,7 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							</Frame>
+							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<Frame type="Frame" name="StatsContainerFrame">
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame"><Alpha val="0"/></Frame>
@@ -329,7 +334,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="SoloKill"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="SoloKill"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -339,7 +344,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="Deaths"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="Deaths"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -349,7 +354,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="Assists"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="Assists"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -359,7 +364,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="HeroDamage"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="HeroDamage"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -377,6 +382,7 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							</Frame>
+							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<Frame type="Frame" name="StatsContainerFrame">
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame"><Alpha val="0"/></Frame>
@@ -390,7 +396,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="SoloKill"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="SoloKill"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -400,7 +406,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="Deaths"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="Deaths"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -410,7 +416,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="Assists"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="Assists"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -420,7 +426,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="HeroDamage"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="HeroDamage"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -438,6 +444,7 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							</Frame>
+							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<Frame type="Frame" name="StatsContainerFrame">
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame"><Alpha val="0"/></Frame>
@@ -451,7 +458,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="SoloKill"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="SoloKill"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -461,7 +468,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="Deaths"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="Deaths"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -471,7 +478,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="Assists"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="Assists"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -481,7 +488,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="HeroDamage"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="HeroDamage"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -499,6 +506,7 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							</Frame>
+							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<Frame type="Frame" name="StatsContainerFrame">
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame"><Alpha val="0"/></Frame>
@@ -512,7 +520,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="SoloKill"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="SoloKill"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -522,7 +530,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="Deaths"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="Deaths"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -532,7 +540,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="Assists"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="Assists"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -542,7 +550,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="HeroDamage"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="HeroDamage"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -560,6 +568,7 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							</Frame>
+							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<Frame type="Frame" name="StatsContainerFrame">
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame"><Alpha val="0"/></Frame>
@@ -573,7 +582,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="SoloKill"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="SoloKill"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -583,7 +592,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="Deaths"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="Deaths"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -593,7 +602,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="Assists"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="Assists"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -603,7 +612,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="HeroDamage"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="HeroDamage"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -621,6 +630,7 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							</Frame>
+							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<Frame type="Frame" name="StatsContainerFrame">
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame"><Alpha val="0"/></Frame>
@@ -634,7 +644,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="SoloKill"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="SoloKill"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -644,7 +654,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="Deaths"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="Deaths"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -654,7 +664,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="Assists"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="Assists"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -664,7 +674,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="HeroDamage"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="HeroDamage"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -1012,13 +1022,14 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							</Frame>
+							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<Frame type="Frame" name="StatsContainerFrame">
 								<Frame type="PlayerScoreValueFrame" name="SoloKillScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame"><Alpha val="0"/></Frame>
-								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame">
+								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="130"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
@@ -1026,9 +1037,9 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="Healing"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="SelfHealing"/></Frame>
 								</Frame>
-								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame">
+								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="270"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
@@ -1036,7 +1047,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="SelfHealing"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="Healing"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -1046,7 +1057,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="ProtectionGivenToAllies"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="ProtectionGivenToAllies"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -1064,13 +1075,14 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							</Frame>
+							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<Frame type="Frame" name="StatsContainerFrame">
 								<Frame type="PlayerScoreValueFrame" name="SoloKillScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame"><Alpha val="0"/></Frame>
-								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame">
+								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="130"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
@@ -1078,9 +1090,9 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="Healing"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="SelfHealing"/></Frame>
 								</Frame>
-								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame">
+								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="270"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
@@ -1088,7 +1100,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="SelfHealing"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="Healing"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -1098,7 +1110,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="ProtectionGivenToAllies"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="ProtectionGivenToAllies"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -1116,13 +1128,14 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							</Frame>
+							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<Frame type="Frame" name="StatsContainerFrame">
 								<Frame type="PlayerScoreValueFrame" name="SoloKillScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame"><Alpha val="0"/></Frame>
-								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame">
+								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="130"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
@@ -1130,9 +1143,9 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="Healing"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="SelfHealing"/></Frame>
 								</Frame>
-								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame">
+								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="270"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
@@ -1140,7 +1153,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="SelfHealing"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="Healing"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -1150,7 +1163,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="ProtectionGivenToAllies"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="ProtectionGivenToAllies"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -1168,13 +1181,14 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							</Frame>
+							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<Frame type="Frame" name="StatsContainerFrame">
 								<Frame type="PlayerScoreValueFrame" name="SoloKillScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame"><Alpha val="0"/></Frame>
-								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame">
+								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="130"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
@@ -1182,9 +1196,9 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="Healing"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="SelfHealing"/></Frame>
 								</Frame>
-								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame">
+								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="270"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
@@ -1192,7 +1206,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="SelfHealing"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="Healing"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -1202,7 +1216,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="ProtectionGivenToAllies"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="ProtectionGivenToAllies"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -1220,13 +1234,14 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							</Frame>
+							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<Frame type="Frame" name="StatsContainerFrame">
 								<Frame type="PlayerScoreValueFrame" name="SoloKillScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame"><Alpha val="0"/></Frame>
-								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame">
+								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="130"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
@@ -1234,9 +1249,9 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="Healing"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="SelfHealing"/></Frame>
 								</Frame>
-								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame">
+								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="270"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
@@ -1244,7 +1259,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="SelfHealing"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="Healing"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -1254,7 +1269,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="ProtectionGivenToAllies"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="ProtectionGivenToAllies"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -1272,13 +1287,14 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							</Frame>
+							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<Frame type="Frame" name="StatsContainerFrame">
 								<Frame type="PlayerScoreValueFrame" name="SoloKillScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame"><Alpha val="0"/></Frame>
-								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame">
+								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="130"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
@@ -1286,9 +1302,9 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="Healing"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="SelfHealing"/></Frame>
 								</Frame>
-								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame">
+								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="270"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
@@ -1296,7 +1312,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="SelfHealing"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="Healing"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -1306,7 +1322,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="ProtectionGivenToAllies"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="ProtectionGivenToAllies"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -1324,13 +1340,14 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							</Frame>
+							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<Frame type="Frame" name="StatsContainerFrame">
 								<Frame type="PlayerScoreValueFrame" name="SoloKillScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame"><Alpha val="0"/></Frame>
-								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame">
+								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="130"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
@@ -1338,9 +1355,9 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="Healing"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="SelfHealing"/></Frame>
 								</Frame>
-								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame">
+								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="270"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
@@ -1348,7 +1365,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="SelfHealing"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="Healing"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -1358,7 +1375,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="ProtectionGivenToAllies"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="ProtectionGivenToAllies"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -1376,13 +1393,14 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							</Frame>
+							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<Frame type="Frame" name="StatsContainerFrame">
 								<Frame type="PlayerScoreValueFrame" name="SoloKillScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame"><Alpha val="0"/></Frame>
-								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame">
+								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="130"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
@@ -1390,9 +1408,9 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="Healing"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="SelfHealing"/></Frame>
 								</Frame>
-								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame">
+								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="270"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
@@ -1400,7 +1418,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="SelfHealing"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="Healing"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -1410,7 +1428,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="ProtectionGivenToAllies"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="ProtectionGivenToAllies"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -1428,13 +1446,14 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							</Frame>
+							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<Frame type="Frame" name="StatsContainerFrame">
 								<Frame type="PlayerScoreValueFrame" name="SoloKillScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame"><Alpha val="0"/></Frame>
-								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame">
+								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="130"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
@@ -1442,9 +1461,9 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="Healing"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="SelfHealing"/></Frame>
 								</Frame>
-								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame">
+								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="270"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
@@ -1452,7 +1471,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="SelfHealing"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="Healing"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -1462,7 +1481,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="ProtectionGivenToAllies"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="ProtectionGivenToAllies"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -1480,13 +1499,14 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							</Frame>
+							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<Frame type="Frame" name="StatsContainerFrame">
 								<Frame type="PlayerScoreValueFrame" name="SoloKillScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame"><Alpha val="0"/></Frame>
-								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame">
+								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="130"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
@@ -1494,9 +1514,9 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="Healing"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="SelfHealing"/></Frame>
 								</Frame>
-								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame">
+								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="270"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
@@ -1504,7 +1524,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="SelfHealing"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="Healing"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -1514,7 +1534,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="ProtectionGivenToAllies"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="ProtectionGivenToAllies"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -1555,7 +1575,7 @@
 					<Anchor side="Right" relative="$parent" pos="Min" offset="260"/>
 					<Height val="#FCJH_INFO_PANE_HEADER_H"/>
 					<Style val="BottomPanel_ColumnTitle_L"/>
-					<Text val="HEALING"/>
+					<Text val="SELF"/>
 					<Options val="NoWrapping | ScaleToPreventTruncation"/>
 					<RenderPriority val="610"/>
 					<AcceptsMouse val="false"/>
@@ -1566,7 +1586,7 @@
 					<Anchor side="Right" relative="$parent" pos="Min" offset="400"/>
 					<Height val="#FCJH_INFO_PANE_HEADER_H"/>
 					<Style val="BottomPanel_ColumnTitle_L"/>
-					<Text val="SELF"/>
+					<Text val="HEALING"/>
 					<Options val="NoWrapping | ScaleToPreventTruncation"/>
 					<RenderPriority val="610"/>
 					<AcceptsMouse val="false"/>
@@ -1608,7 +1628,7 @@
 					<Anchor side="Left" relative="$parent" pos="Min" offset="146"/>
 					<Anchor side="Bottom" relative="$parent" pos="Min" offset="80"/>
 					<Anchor side="Right" relative="$parent" pos="Min" offset="260"/>
-					<ScoreValueLink val="Healing"/>
+					<ScoreValueLink val="SelfHealing"/>
 					<TeamId val="0"/>
 					<RenderPriority val="610"/>
 					<AcceptsMouse val="false"/>
@@ -1623,7 +1643,7 @@
 					<Anchor side="Left" relative="$parent" pos="Min" offset="286"/>
 					<Anchor side="Bottom" relative="$parent" pos="Min" offset="80"/>
 					<Anchor side="Right" relative="$parent" pos="Min" offset="400"/>
-					<ScoreValueLink val="SelfHealing"/>
+					<ScoreValueLink val="Healing"/>
 					<TeamId val="0"/>
 					<RenderPriority val="610"/>
 					<AcceptsMouse val="false"/>
@@ -1674,7 +1694,7 @@
 					<Anchor side="Left" relative="$parent" pos="Min" offset="146"/>
 					<Anchor side="Bottom" relative="$parent" pos="Min" offset="335"/>
 					<Anchor side="Right" relative="$parent" pos="Min" offset="260"/>
-					<ScoreValueLink val="Healing"/>
+					<ScoreValueLink val="SelfHealing"/>
 					<TeamId val="1"/>
 					<RenderPriority val="610"/>
 					<AcceptsMouse val="false"/>
@@ -1689,7 +1709,7 @@
 					<Anchor side="Left" relative="$parent" pos="Min" offset="286"/>
 					<Anchor side="Bottom" relative="$parent" pos="Min" offset="335"/>
 					<Anchor side="Right" relative="$parent" pos="Min" offset="400"/>
-					<ScoreValueLink val="SelfHealing"/>
+					<ScoreValueLink val="Healing"/>
 					<TeamId val="1"/>
 					<RenderPriority val="610"/>
 					<AcceptsMouse val="false"/>
@@ -1821,6 +1841,7 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							</Frame>
+							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<Frame type="Frame" name="StatsContainerFrame">
 								<Frame type="PlayerScoreValueFrame" name="SoloKillScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame"><Alpha val="0"/></Frame>
@@ -1835,7 +1856,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="SiegeDamage"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="SiegeDamage"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -1845,7 +1866,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="StructureDamage"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="StructureDamage"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -1855,7 +1876,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="ExperienceContribution"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="ExperienceContribution"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -1873,6 +1894,7 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							</Frame>
+							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<Frame type="Frame" name="StatsContainerFrame">
 								<Frame type="PlayerScoreValueFrame" name="SoloKillScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame"><Alpha val="0"/></Frame>
@@ -1887,7 +1909,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="SiegeDamage"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="SiegeDamage"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -1897,7 +1919,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="StructureDamage"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="StructureDamage"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -1907,7 +1929,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="ExperienceContribution"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="ExperienceContribution"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -1925,6 +1947,7 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							</Frame>
+							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<Frame type="Frame" name="StatsContainerFrame">
 								<Frame type="PlayerScoreValueFrame" name="SoloKillScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame"><Alpha val="0"/></Frame>
@@ -1939,7 +1962,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="SiegeDamage"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="SiegeDamage"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -1949,7 +1972,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="StructureDamage"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="StructureDamage"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -1959,7 +1982,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="ExperienceContribution"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="ExperienceContribution"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -1977,6 +2000,7 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							</Frame>
+							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<Frame type="Frame" name="StatsContainerFrame">
 								<Frame type="PlayerScoreValueFrame" name="SoloKillScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame"><Alpha val="0"/></Frame>
@@ -1991,7 +2015,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="SiegeDamage"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="SiegeDamage"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -2001,7 +2025,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="StructureDamage"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="StructureDamage"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -2011,7 +2035,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="ExperienceContribution"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="ExperienceContribution"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -2029,6 +2053,7 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							</Frame>
+							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<Frame type="Frame" name="StatsContainerFrame">
 								<Frame type="PlayerScoreValueFrame" name="SoloKillScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame"><Alpha val="0"/></Frame>
@@ -2043,7 +2068,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="SiegeDamage"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="SiegeDamage"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -2053,7 +2078,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="StructureDamage"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="StructureDamage"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -2063,7 +2088,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="ExperienceContribution"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="ExperienceContribution"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -2081,6 +2106,7 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							</Frame>
+							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<Frame type="Frame" name="StatsContainerFrame">
 								<Frame type="PlayerScoreValueFrame" name="SoloKillScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame"><Alpha val="0"/></Frame>
@@ -2095,7 +2121,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="SiegeDamage"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="SiegeDamage"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -2105,7 +2131,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="StructureDamage"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="StructureDamage"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -2115,7 +2141,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="ExperienceContribution"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="ExperienceContribution"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -2133,6 +2159,7 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							</Frame>
+							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<Frame type="Frame" name="StatsContainerFrame">
 								<Frame type="PlayerScoreValueFrame" name="SoloKillScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame"><Alpha val="0"/></Frame>
@@ -2147,7 +2174,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="SiegeDamage"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="SiegeDamage"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -2157,7 +2184,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="StructureDamage"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="StructureDamage"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -2167,7 +2194,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="ExperienceContribution"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="ExperienceContribution"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -2185,6 +2212,7 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							</Frame>
+							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<Frame type="Frame" name="StatsContainerFrame">
 								<Frame type="PlayerScoreValueFrame" name="SoloKillScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame"><Alpha val="0"/></Frame>
@@ -2199,7 +2227,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="SiegeDamage"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="SiegeDamage"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -2209,7 +2237,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="StructureDamage"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="StructureDamage"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -2219,7 +2247,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="ExperienceContribution"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="ExperienceContribution"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -2237,6 +2265,7 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							</Frame>
+							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<Frame type="Frame" name="StatsContainerFrame">
 								<Frame type="PlayerScoreValueFrame" name="SoloKillScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame"><Alpha val="0"/></Frame>
@@ -2251,7 +2280,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="SiegeDamage"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="SiegeDamage"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -2261,7 +2290,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="StructureDamage"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="StructureDamage"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -2271,7 +2300,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="ExperienceContribution"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="ExperienceContribution"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -2289,6 +2318,7 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							</Frame>
+							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<Frame type="Frame" name="StatsContainerFrame">
 								<Frame type="PlayerScoreValueFrame" name="SoloKillScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame"><Alpha val="0"/></Frame>
@@ -2303,7 +2333,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="SiegeDamage"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="SiegeDamage"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -2313,7 +2343,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="StructureDamage"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="StructureDamage"/></Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
@@ -2323,7 +2353,7 @@
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
-									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><ScoreValueLink val="ExperienceContribution"/></Frame>
+									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0"><Visible val="true"/><ScoreValueLink val="ExperienceContribution"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>

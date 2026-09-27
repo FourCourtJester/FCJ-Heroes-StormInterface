@@ -7,7 +7,12 @@
 	     for now the card simply shows while something is selected, like Blizzard's own
 	     inspect box. Square panel, none of the slanted plate art.
 
-	     Two kinds of parts, and the probe asks whether each works:
+	     Round 2 (2026-09-26): round 1 showed our copy of the inspect box DOES fill for the
+	     selection (portrait, health/resource with numbers and regen, stats), and clicking
+	     off the unit hides it; a layout Escape binding fires but can't clear the selection.
+	     Blizzard's HUD panels (abilities, buffs, mechanics) only fill in the observer's
+	     player-view mode, not for a selection - moved out again, and kept hidden
+	     (FCJH_Hidden). What follows is round 1's notes:
 	       1. OUR OWN copy of Blizzard's inspect box (a TargetInfoFrame from
 	          TargetInfoPanel/TargetInfoPanelTemplate), re-laid out tall: portrait, health and
 	          resource with numbers and regen, and the seven stats. THE question: does the
@@ -17,10 +22,7 @@
 	          icon (HeroBuffDebuffPanel), hero mechanics (HeroSpecificStatusContainer).
 	          They show when the engine decides - in observer, while a hero is selected.
 	     Look for: the card top-left when you click a hero plate; which parts appear, which
-	     don't, and what's where. Expect overlaps - this is to see what's available.
-	     Escape test (card up): "ESC SEEN" appearing/disappearing in the title band means our
-	     Escape binding fires; note whether the game menu opens too, and whether the
-	     selection (and so the card) clears. -->
+	     don't, and what's where. Expect overlaps - this is to see what's available. -->
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 
 		<!-- 1. Our copy of the inspect box -->
@@ -60,37 +62,6 @@
 				<Text val="INSPECT"/>
 				<RenderPriority val="215"/>
 				<AcceptsMouse val="false"/>
-			</Frame>
-
-			<!-- Escape experiment: does a layout hotkey on Escape fire at all, and does the
-			     game menu open as well? The marker flips on each press our binding sees. -->
-			<Frame type="Label" name="FCJH_EscMarker">
-				<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
-				<Anchor side="Right"  relative="$parent" pos="Max" offset="-10"/>
-				<Width val="120"/>
-				<Style val="ObsBar_MatchTimer"/>
-				<Text val="ESC SEEN"/>
-				<Alpha val="0"/>
-				<RenderPriority val="215"/>
-				<AcceptsMouse val="false"/>
-			</Frame>
-			<Frame type="ToggleControl" name="FCJH_EscToggle">
-				<Anchor side="Top"  relative="$parent" pos="Min" offset="0"/>
-				<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-				<Width val="1"/>
-				<Height val="1"/>
-				<Shortcut val="Escape"/>
-				<Visible val="false"/>
-				<AcceptsMouse val="false"/>
-				<Animation name="FCJH_Mark">
-					<Event event="OnShown" action="DirectionForward,Play"/>
-					<Event event="OnHidden" action="DirectionReverse,Play"/>
-					<Controller type="Fade" end="Pause" frame="$parent/FCJH_EscMarker">
-						<Key type="Curve" time="0" value="0"/>
-						<Key type="Curve" time="0.05" value="255"/>
-					</Controller>
-				</Animation>
 			</Frame>
 
 			<Frame type="Frame" name="TargetInfoPanel" template="TargetInfoPanel/TargetInfoPanelTemplate">
@@ -186,31 +157,5 @@
 			</Frame>
 		</Frame>
 
-		<!-- 2. Blizzard's player-HUD panels, moved into the card (by the card's own edges) -->
-		<Frame type="Frame" name="UIContainer">
-			<Frame type="Frame" name="ConsoleUIContainer">
-				<!-- Abilities: under the stats -->
-				<Frame type="CommandPanel" name="CommandPanel">
-					<Anchor side="Top"    relative="$GameUI/FCJH_Inspect" pos="Min" offset="275"/>
-					<Anchor side="Left"   relative="$GameUI/FCJH_Inspect" pos="Min" offset="12"/>
-					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-					<Unclipped val="true"/>
-				</Frame>
-				<!-- Buffs/debuffs, with the fountain icon inside -->
-				<Frame type="Frame" name="HeroBuffDebuffPanel">
-					<Anchor side="Top"  relative="$GameUI/FCJH_Inspect" pos="Min" offset="440"/>
-					<Anchor side="Left" relative="$GameUI/FCJH_Inspect" pos="Min" offset="12"/>
-					<Unclipped val="true"/>
-				</Frame>
-				<!-- Hero mechanics (stacks, eggs, quest counters) -->
-				<Frame type="HeroSpecificContainerPanel" name="HeroSpecificStatusContainer">
-					<Anchor side="Top"    relative="$GameUI/FCJH_Inspect" pos="Min" offset="540"/>
-					<Anchor side="Left"   relative="$GameUI/FCJH_Inspect" pos="Min" offset="12"/>
-					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-					<Unclipped val="true"/>
-				</Frame>
-			</Frame>
-		</Frame>
 	</Frame>
 </Desc>
