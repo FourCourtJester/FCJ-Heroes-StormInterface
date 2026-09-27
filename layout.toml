@@ -143,6 +143,7 @@ top = 1000                   # the row's top edge
 blue_left = 169              # cell 1; cells 2-5 follow to the right
 red_left = 1167              # cell 6; cells 7-0 follow to the right
 talent_popup_size = 40       # the talent's icon, straddling the cell's top edge
+heroic_token = [24, 18]      # w, h px: the heroic token in the plate's bottom corner (widen to taste)
 
 # Bars stacked on each hero row, placed by tools/gen.py from [hero_row] so they follow it.
 # Both are cut to the plates' slant: their ends continue the row's slanted outer edges.

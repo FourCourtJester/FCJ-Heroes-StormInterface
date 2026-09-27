@@ -165,8 +165,10 @@ class HeroCell:
     # away from the slant (left on blue, right on red). (left, top, right, bottom)
     FOUNTAIN = {"blue": (8, 2, 24, 18), "red": (104, 2, 120, 18)}
     # Heroic token: the corner opposite the fountain, just above the bars (36), clear of the
-    # slanted edge; a parallelogram leaning with the plate (our mask). Red mirrors blue.
-    HEROIC = {"blue": (90, 18, 111, 34), "red": (17, 18, 38, 34)}
+    # slanted edge; a parallelogram leaning with the plate (our mask). Its size comes from
+    # layout.toml ([hero_row] heroic_token); it grows from this fixed corner - bottom-right
+    # on blue, bottom-left on red (x, y).
+    HEROIC_CORNER = {"blue": (111, 34), "red": (17, 34)}
     # The observer's portrait art is wide with the face on the right; Blizzard's observer
     # crops [0.1, 0.45, 0.65, 1.0] into 165 x 60, i.e. the art is 2.75x as wide as tall per
     # unit of crop. Same top/bottom/right here, left worked out for this cell's shape.
@@ -187,7 +189,12 @@ class HeroCell:
         self.cc_band = tuple(s(v) for v in self.CC_BAND)
         self.cc_icon = tuple(s(v) for v in self.CC_ICON)
         self.fountain = {t: tuple(s(v) for v in r) for t, r in self.FOUNTAIN.items()}
-        self.heroic = {t: tuple(s(v) for v in r) for t, r in self.HEROIC.items()}
+        tw, th = (Units(cfg)(v) for v in cfg["hero_row"]["heroic_token"])
+        bx, by = (s(v) for v in self.HEROIC_CORNER["blue"])
+        rx, ry = (s(v) for v in self.HEROIC_CORNER["red"])
+        self.heroic = {"blue": (bx - tw, by - th, bx, by), "red": (rx, ry - th, rx + tw, ry)}
+        # the heroic's icon is square: cut top and bottom to the token's shape
+        self.heroic_crop = round(max(0.0, (1 - th / tw) / 2), 3)
         across = self.W / self.PORTRAIT_H * (self.CROP_BOTTOM - self.CROP_TOP) / self.ART_ASPECT
         self.crop = (self.CROP_TOP, round(1 - across, 3), self.CROP_BOTTOM, 1.0)
 
