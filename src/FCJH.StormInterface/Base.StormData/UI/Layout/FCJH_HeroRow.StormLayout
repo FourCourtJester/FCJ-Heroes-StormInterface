@@ -81,6 +81,23 @@
 			<AlphaMaskTexture val="_Assets\Textures\FCJH_Portrait_blue_409bbae7.dds"/>
 			<RenderPriority val="500"/>
 		</Frame>
+		<!-- EXPERIMENT: the same portrait mirrored, shown over it while Abathur has a clone
+		     (HeroStatus's FCJH_Clone state). The mask spans the frame, so the cut stays put. -->
+		<Frame type="Image" name="FCJH_ClonePortrait">
+			<Anchor side="Top"    relative="$parent" pos="Min" offset="-1"/>
+			<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+			<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
+			<Anchor side="Bottom" relative="$parent" pos="Min" offset="69"/>
+			<Width val="0"/>
+			<Height val="0"/>
+			<Texture val="{$parent/HeroPortraitImage/@Texture}"/>
+			<TextureCoords top="0.1" left="1.0" bottom="0.65" right="0.543"/>
+			<ImageMaskTexture val="_Assets\Textures\FCJH_White.dds"/>
+			<AlphaMaskTexture val="_Assets\Textures\FCJH_Portrait_blue_409bbae7.dds"/>
+			<Alpha val="0"/>
+			<RenderPriority val="501"/>
+			<AcceptsMouse val="false"/>
+		</Frame>
 		<Frame type="Image" name="FCJH_Glass">
 			<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 			<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
@@ -247,6 +264,60 @@
 					</State>
 				</StateGroup>
 			</Frame>
+			<!-- EXPERIMENT (2026-09-27): Abathur's clone (Ultimate Evolution). Blizzard puts
+			     AbathurUltimateEvolutionVehicleCasterBehavior on Abathur when the clone spawns
+			     (UltimateEvolutionCastSet, WhichUnit Source) and removes it when the clone ends;
+			     an interrupted cast doesn't reach it. Same sensor trick as the fountain. While it's
+			     on: the portrait mirrors (FCJH_ClonePortrait, in the cell), the Ultimate Evolution
+			     icon sits where the death timer does, and "CLONE" runs across the health bar.
+			     The bar itself stays Abathur's: nothing links him to the clone unit (his only unit
+			     tracker is the Monstrosity's). -->
+			<Frame type="UnitStatusBehaviorIcon" name="FCJH_CloneSensor">
+				<Anchor relative="$parent"/>
+				<Behavior val="AbathurUltimateEvolutionVehicleCasterBehavior"/>
+				<Alpha val="0"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="BehaviorIcon" name="BehaviorIcon" template="BehaviorBar/BehaviorIconTemplate">
+					<Anchor relative="$parent"/>
+				</Frame>
+			</Frame>
+			<Frame type="Image" name="FCJH_CloneIcon">
+				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="27"/>
+				<Anchor side="Left"   relative="$parent/$parent" pos="Mid" offset="-8"/>
+				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="49"/>
+				<Anchor side="Right"  relative="$parent/$parent" pos="Mid" offset="14"/>
+				<Texture val="Assets\Textures\storm_ui_icon_abathur_ultimateevolution.dds"/>
+				<Alpha val="0"/>
+				<RenderPriority val="531"/>
+				<Unclipped val="true"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
+			<Frame type="Label" name="FCJH_CloneText">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="-20"/>
+				<Anchor side="Left"   relative="$parent" pos="Min" offset="-20"/>
+				<Anchor side="Bottom" relative="$parent" pos="Max" offset="20"/>
+				<Anchor side="Right"  relative="$parent" pos="Max" offset="20"/>
+				<Text val="CLONE"/>
+				<Style val="FCJH_CCText"/>
+				<Alpha val="0"/>
+				<RenderPriority val="531"/>
+				<Unclipped val="true"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
+			<StateGroup name="FCJH_Clone">
+				<DefaultState val="None"/>
+				<State name="Clone">
+					<When type="Property" frame="$this/FCJH_CloneSensor" Visible="true"/>
+					<Action type="SetProperty" frame="$this/FCJH_CloneIcon" Alpha="255"/>
+					<Action type="SetProperty" frame="$this/FCJH_CloneText" Alpha="255"/>
+					<Action type="SetProperty" frame="$parent/FCJH_ClonePortrait" Alpha="255"/>
+				</State>
+				<State name="None">
+					<Action type="SetProperty" frame="$this/FCJH_CloneIcon" Alpha="0"/>
+					<Action type="SetProperty" frame="$this/FCJH_CloneText" Alpha="0"/>
+					<Action type="SetProperty" frame="$parent/FCJH_ClonePortrait" Alpha="0"/>
+				</State>
+			</StateGroup>
 		</Frame>
 	</Frame>
 
@@ -285,6 +356,23 @@
 			<ImageMaskTexture val="_Assets\Textures\FCJH_White.dds"/>
 			<AlphaMaskTexture val="_Assets\Textures\FCJH_Portrait_red_61268ab3.dds"/>
 			<RenderPriority val="500"/>
+		</Frame>
+		<!-- EXPERIMENT: the same portrait mirrored, shown over it while Abathur has a clone
+		     (HeroStatus's FCJH_Clone state). The mask spans the frame, so the cut stays put. -->
+		<Frame type="Image" name="FCJH_ClonePortrait">
+			<Anchor side="Top"    relative="$parent" pos="Min" offset="-1"/>
+			<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+			<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
+			<Anchor side="Bottom" relative="$parent" pos="Min" offset="69"/>
+			<Width val="0"/>
+			<Height val="0"/>
+			<Texture val="{$parent/HeroPortraitImage/@Texture}"/>
+			<TextureCoords top="0.1" left="1.0" bottom="0.65" right="0.543"/>
+			<ImageMaskTexture val="_Assets\Textures\FCJH_White.dds"/>
+			<AlphaMaskTexture val="_Assets\Textures\FCJH_Portrait_red_61268ab3.dds"/>
+			<Alpha val="0"/>
+			<RenderPriority val="501"/>
+			<AcceptsMouse val="false"/>
 		</Frame>
 		<Frame type="Image" name="FCJH_Glass">
 			<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>

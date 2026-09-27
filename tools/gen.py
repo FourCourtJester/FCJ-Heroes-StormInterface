@@ -592,7 +592,61 @@ def hero_cell_template(team, c):
 						<Action type="SetProperty" frame="$this" Alpha="255"/>
 					</State>
 				</StateGroup>
-			</Frame>"""
+			</Frame>
+			<!-- EXPERIMENT (2026-09-27): Abathur's clone (Ultimate Evolution). Blizzard puts
+			     AbathurUltimateEvolutionVehicleCasterBehavior on Abathur when the clone spawns
+			     (UltimateEvolutionCastSet, WhichUnit Source) and removes it when the clone ends;
+			     an interrupted cast doesn't reach it. Same sensor trick as the fountain. While it's
+			     on: the portrait mirrors (FCJH_ClonePortrait, in the cell), the Ultimate Evolution
+			     icon sits where the death timer does, and "CLONE" runs across the health bar.
+			     The bar itself stays Abathur's: nothing links him to the clone unit (his only unit
+			     tracker is the Monstrosity's). -->
+			<Frame type="UnitStatusBehaviorIcon" name="FCJH_CloneSensor">
+				<Anchor relative="$parent"/>
+				<Behavior val="AbathurUltimateEvolutionVehicleCasterBehavior"/>
+				<Alpha val="0"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="BehaviorIcon" name="BehaviorIcon" template="BehaviorBar/BehaviorIconTemplate">
+					<Anchor relative="$parent"/>
+				</Frame>
+			</Frame>
+			<Frame type="Image" name="FCJH_CloneIcon">
+				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="{c.death_mid - c.cc_icon[2]}"/>
+				<Anchor side="Left"   relative="$parent/$parent" pos="Mid" offset="{c.death_shift - c.cc_icon[2]}"/>
+				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="{c.death_mid + c.cc_icon[2]}"/>
+				<Anchor side="Right"  relative="$parent/$parent" pos="Mid" offset="{c.death_shift + c.cc_icon[2]}"/>
+				<Texture val="Assets\\Textures\\storm_ui_icon_abathur_ultimateevolution.dds"/>
+				<Alpha val="0"/>
+				<RenderPriority val="531"/>
+				<Unclipped val="true"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
+			<Frame type="Label" name="FCJH_CloneText">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="-{CC_TEXT_OVERHANG}"/>
+				<Anchor side="Left"   relative="$parent" pos="Min" offset="-{CC_TEXT_OVERHANG}"/>
+				<Anchor side="Bottom" relative="$parent" pos="Max" offset="{CC_TEXT_OVERHANG}"/>
+				<Anchor side="Right"  relative="$parent" pos="Max" offset="{CC_TEXT_OVERHANG}"/>
+				<Text val="CLONE"/>
+				<Style val="FCJH_CCText"/>
+				<Alpha val="0"/>
+				<RenderPriority val="531"/>
+				<Unclipped val="true"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
+			<StateGroup name="FCJH_Clone">
+				<DefaultState val="None"/>
+				<State name="Clone">
+					<When type="Property" frame="$this/FCJH_CloneSensor" Visible="true"/>
+					<Action type="SetProperty" frame="$this/FCJH_CloneIcon" Alpha="255"/>
+					<Action type="SetProperty" frame="$this/FCJH_CloneText" Alpha="255"/>
+					<Action type="SetProperty" frame="$parent/FCJH_ClonePortrait" Alpha="255"/>
+				</State>
+				<State name="None">
+					<Action type="SetProperty" frame="$this/FCJH_CloneIcon" Alpha="0"/>
+					<Action type="SetProperty" frame="$this/FCJH_CloneText" Alpha="0"/>
+					<Action type="SetProperty" frame="$parent/FCJH_ClonePortrait" Alpha="0"/>
+				</State>
+			</StateGroup>"""
     else:
         health += f"""
 			<Frame type="Image" name="FCJH_FountainReady">{fountain_anchors}
@@ -638,6 +692,23 @@ def hero_cell_template(team, c):
 			<ImageMaskTexture val="{WHITE}"/>
 			<AlphaMaskTexture val="{TEXTURE_DIR}\\{portrait_mask_file(team)}"/>
 			<RenderPriority val="500"/>
+		</Frame>
+		<!-- EXPERIMENT: the same portrait mirrored, shown over it while Abathur has a clone
+		     (HeroStatus's FCJH_Clone state). The mask spans the frame, so the cut stays put. -->
+		<Frame type="Image" name="FCJH_ClonePortrait">
+			<Anchor side="Top"    relative="$parent" pos="Min" offset="{c.portrait_top}"/>
+			<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+			<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
+			<Anchor side="Bottom" relative="$parent" pos="Min" offset="{c.portrait_bottom}"/>
+			<Width val="0"/>
+			<Height val="0"/>
+			<Texture val="{{$parent/HeroPortraitImage/@Texture}}"/>
+			<TextureCoords top="{c.crop[0]}" left="{c.crop[3]}" bottom="{c.crop[2]}" right="{c.crop[1]}"/>
+			<ImageMaskTexture val="{WHITE}"/>
+			<AlphaMaskTexture val="{TEXTURE_DIR}\\{portrait_mask_file(team)}"/>
+			<Alpha val="0"/>
+			<RenderPriority val="501"/>
+			<AcceptsMouse val="false"/>
 		</Frame>"""
     return (f"\t{header}"
             + art("FCJH_FrameBg", "HUD_TopBar_Team_HeroFrame", 400)
