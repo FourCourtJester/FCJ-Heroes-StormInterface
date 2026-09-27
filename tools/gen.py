@@ -84,15 +84,41 @@ def rects(cfg):
         for i, slot in enumerate(slots):
             out[f"hero_{slot}"] = ((round(left + i * cell.pitch * px, 1), row["top"],
                                     round(cell.w * px, 1), round(cell.h * px, 1)), "ui")
-    # Team XP rides just above its hero row, exactly as wide as the row's slanted top edge:
-    # the plates lean, so that edge starts at the row's left on blue (\) and one overlap in
-    # on red (/), and runs four pitches plus one plate's top edge.
-    xp = cfg["team_xp"]
-    top_edge = (4 * cell.pitch + cell.w - cell.overlap) * px
-    for team, left in (("blue", row["blue_left"]), ("red", row["red_left"])):
-        x = left + (cell.overlap * px if team == "red" else 0)
-        out[f"{team}_xp"] = ((round(x, 1), row["top"] - xp["gap"] - xp["height"],
-                              round(top_edge, 1), xp["height"]), "ui")
+    out.update(team_bar_rects(cfg))
+    return out
+
+
+# Blizzard's core health bar: fixed at 237 x 27 units (stormobserverpanel Team1/2CoreUnitStatus
+# HealthBar). Never resized, only moved; our cut is drawn inside it.
+CORE_BAR_W, CORE_BAR_H = 237, 27
+
+
+def team_bar_rects(cfg):
+    """The bars stacked on each hero row: team XP on the plates' top edge, core health on
+    top of that. Both are parallelograms continuing the row's slanted outer edges, so each
+    bar's rect here is its bounding box and its slant is `lean` px per px of height.
+    XP runs the full top edge; core sits at the row's inner end (toward the minimap)."""
+    row, px = cfg["hero_row"], 1 / Units(cfg).scale
+    cell = HeroCell(cfg)
+    lean = cell.overlap / cell.h                       # the plates' slant, px across per px up
+    edge = (4 * cell.pitch + cell.w - cell.overlap) * px   # the row's top edge
+    top = row["top"]
+    xp, core = cfg["team_xp"], cfg["team_core"]
+    xp_bottom = top - xp["gap"]
+    xp_top = xp_bottom - xp["height"]
+    core_w, core_h = CORE_BAR_W * px, CORE_BAR_H * px
+    core_bottom = xp_top - core["gap"]
+    core_top = core_bottom - core_h
+    out = {}
+    # the row's outer edges, as x at height y: blue leans \ (its top edge starts at the
+    # row's left), red leans / (one overlap in)
+    blue_l = lambda y: row["blue_left"] - lean * (top - y)
+    red_l = lambda y: row["red_left"] + cell.overlap * px + lean * (top - y)
+    r1 = lambda v: round(v, 1)
+    out["blue_xp"] = ((r1(blue_l(xp_top)), r1(xp_top), r1(edge + lean * xp["height"]), xp["height"]), "ui")
+    out["red_xp"] = ((r1(red_l(xp_bottom)), r1(xp_top), r1(edge + lean * xp["height"]), xp["height"]), "ui")
+    out["blue_core"] = ((r1(blue_l(core_bottom) + edge - core_w), r1(core_top), r1(core_w), r1(core_h)), "ui")
+    out["red_core"] = ((r1(red_l(core_bottom)), r1(core_top), r1(core_w), r1(core_h)), "ui")
     return out
 
 
@@ -220,9 +246,10 @@ def constants_layout(cfg):
     const(name("red", "core", "frame", "l"), u(rx) - 28)
 
     lines.append("")
-    lines.append("\t<!-- Team XP fill: a solid colour, so it fills the bar at any size (Blizzard's")
-    lines.append("\t     obs_bar_xp_* art is a thin glowing line drawn for a 156 x 17 box) -->")
-    const(name("xp", "fill"), f'{TEXTURE_DIR}\\{fill_file(cfg["team_xp"]["colour"])}')
+    lines.append("\t<!-- Team XP and core health: tracks and fills cut to the plates' slant (solid colour;")
+    lines.append("\t     Blizzard's obs_bar_xp_* art is a thin glowing line drawn for a 156 x 17 box) -->")
+    for const_name, (file, _) in slant_bars(cfg).items():
+        const(const_name, f"{TEXTURE_DIR}\\{file}")
 
     # Blizzard's kill rows are 600 wide, drawn from their left: killer at 27, victim ending at
     # 210 (killlog.stormlayout Item: SrcPortrait / TgtPortrait0, their images inset 27).
@@ -327,23 +354,54 @@ def portrait_mask(team, size=(256, 128), sub=4):
     return dds_bgra(w, h, b"".join(rows))
 
 
-def fill_file(colour):
-    """A solid-colour texture, named by its colour (so a new colour is a new path: textures
-    are cached by path across replay reloads)."""
-    return f"FCJH_Fill_{colour.lower()}.dds"
-
-
-def fill_texture(colour):
+def slant_texture(team, cut, colour, alpha=255, size=(512, 32), sub=4):
+    """A solid-colour parallelogram: the team's lean, cut `cut` of the width in (the slant's
+    horizontal run over the bar's height, as a fraction of its width). Blue leans \\ (top edge
+    flush left), red / (top edge flush right)."""
+    w, h = size
     r, g, b = bytes.fromhex(colour)
-    return dds_bgra(4, 4, bytes((b, g, r, 255)) * 16)
+    rows = []
+    for ty in range(h):
+        row = bytearray()
+        for tx in range(w):
+            cover = 0.0
+            for s in range(sub):
+                down = (ty + (s + 0.5) / sub) / h          # 0 at the top, 1 at the bottom
+                shift = cut * (down if team == "blue" else 1 - down)
+                left, right = shift * w, (1 - cut + shift) * w
+                cover += max(0.0, min(tx + 1, right) - max(tx, left))
+            row += bytes((b, g, r, round(alpha * cover / sub)))
+        rows.append(bytes(row))
+    return dds_bgra(w, h, b"".join(rows))
+
+
+def slant_bars(cfg):
+    """Every slanted bar texture, by constant name: {name: (file name, dds bytes)}. Names
+    carry a content hash (textures are cached by path across replay reloads)."""
+    rects_ = team_bar_rects(cfg)
+    lean = HeroCell(cfg).overlap / HeroCell(cfg).h
+    xp, core = cfg["team_xp"], cfg["team_core"]
+    out = {}
+    for team in ("blue", "red"):
+        for bar, spec, colours in (("xp", xp, {"fill": xp["colour"]}),
+                                   ("core", core, {"fill": core[f"{team}_colour"]})):
+            (_, _, w, h), _ = rects_[f"{team}_{bar}"]
+            cut = lean * h / w
+            parts = dict(colours, track=spec["track_colour"])
+            for part, colour in parts.items():
+                alpha = spec["track_alpha"] if part == "track" else 255
+                data = slant_texture(team, cut, colour, alpha)
+                digest = hashlib.sha1(data).hexdigest()[:8]
+                out[name(bar, part, team)] = (f"FCJH_Bar_{bar}_{part}_{team}_{digest}.dds", data)
+    return out
 
 
 def texture_files(cfg):
     out = {TEXTURE_REL / portrait_mask_file(team): portrait_mask(team) for team in ("blue", "red")}
     # an opaque mask: replaces a Blizzard mask we don't want (there's no "none")
     out[TEXTURE_REL / "FCJH_White.dds"] = dds_bgra(4, 4, b"\xff" * 64)
-    colour = cfg["team_xp"]["colour"]
-    out[TEXTURE_REL / fill_file(colour)] = fill_texture(colour)
+    for file, data in slant_bars(cfg).values():
+        out[TEXTURE_REL / file] = data
     return out
 
 

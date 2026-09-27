@@ -10,12 +10,13 @@
 	         and both hero containers all anchor to it - parking it drags them off-screen
 	       - hexagon, clock and team levels left as they are, now floating on their own
 	       - towers / kills counters parked (the icons beside them were backplate art)
-	       - team XP: moved just above each team's hero row, as wide as the row's slanted top
-	         edge (blue_xp, red_xp, placed by tools/gen.py from [team_xp]), over our own dark
-	         track; Blizzard's small frame art around it hidden, and its fill art (a thin
-	         glowing line drawn for a 156 x 17 box) swapped for a solid colour
-	       - core health: moved above the hero rows (blue_core, red_core). Blizzard keeps these
-	         hidden until they're needed, and we leave that logic alone. -->
+	       - team XP: on each hero row's top edge, the full width of that edge; core health on
+	         top of it at the row's inner end (blue_xp, red_xp, blue_core, red_core: placed by
+	         tools/gen.py from [team_xp] / [team_core]). Both are cut to the plates' slant: our
+	         parallelogram textures for the tracks and fills (FCJH_XP_* / FCJH_CORE_*).
+	         Blizzard's frame art around both is hidden, and the XP fill art (a thin glowing
+	         line drawn for a 156 x 17 box) replaced. The core bar keeps Blizzard's size and
+	         its show-when-needed logic. -->
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<Frame type="Frame" name="UIContainer">
 			<Frame type="Frame" name="FullscreenUpperContainer">
@@ -31,9 +32,7 @@
 							<Anchor side="Left"   relative="$GameUI" pos="Min" offset="#FCJH_BLUE_XP_L"/>
 							<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_BLUE_XP_B"/>
 							<Anchor side="Right"  relative="$GameUI" pos="Min" offset="#FCJH_BLUE_XP_R"/>
-							<Texture val="@UI/PauseScreenDimImage"/>
-							<ColorAdjustMode val="Fill"/>
-							<AdjustmentColor val="220,11,12,20"/>
+							<Texture val="#FCJH_XP_TRACK_BLUE"/>
 							<RenderPriority val="100"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
@@ -43,9 +42,7 @@
 							<Anchor side="Left"   relative="$GameUI" pos="Min" offset="#FCJH_RED_XP_L"/>
 							<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_RED_XP_B"/>
 							<Anchor side="Right"  relative="$GameUI" pos="Min" offset="#FCJH_RED_XP_R"/>
-							<Texture val="@UI/PauseScreenDimImage"/>
-							<ColorAdjustMode val="Fill"/>
-							<AdjustmentColor val="220,20,11,12"/>
+							<Texture val="#FCJH_XP_TRACK_RED"/>
 							<RenderPriority val="100"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
@@ -59,7 +56,7 @@
 							<Height val="0"/>
 							<Unclipped val="true"/>
 							<Frame type="UnitStatusVeterancyBar" name="XPBar">
-								<Texture val="#FCJH_XP_FILL"/>
+								<Texture val="#FCJH_XP_FILL_BLUE"/>
 							</Frame>
 						</Frame>
 						<Frame type="TeamVeterancyUnitStatusFrame" name="Team2XPUnitStatusFrame">
@@ -71,21 +68,51 @@
 							<Height val="0"/>
 							<Unclipped val="true"/>
 							<Frame type="UnitStatusVeterancyBar" name="XPBar">
-								<Texture val="#FCJH_XP_FILL"/>
+								<Texture val="#FCJH_XP_FILL_RED"/>
 							</Frame>
 						</Frame>
 
 						<!-- Core health: blue anchors by its right edge, red by its left (Blizzard's
-						     own sides); the fixed 300 x 100 frame keeps its size. -->
+						     own sides); the fixed 300 x 100 frame keeps its size. Blizzard's
+						     backing art off; our slanted track under the bar, and the bar's
+						     fill swapped for our slanted one (untiled, untinted). -->
 						<Frame type="UnitStatusFrame" name="Team1CoreUnitStatus">
 							<Anchor side="Top"   relative="$GameUI" pos="Min" offset="#FCJH_BLUE_CORE_FRAME_T"/>
 							<Anchor side="Right" relative="$GameUI" pos="Min" offset="#FCJH_BLUE_CORE_FRAME_R"/>
 							<Unclipped val="true"/>
+							<Frame type="UnitStatusElement" name="HealthBarBackingBlue">
+								<Frame type="Image" name="Image"><Alpha val="0"/></Frame>
+							</Frame>
+							<Frame type="Image" name="FCJH_CoreTrack">
+								<Anchor relative="$parent/HealthBar"/>
+								<Texture val="#FCJH_CORE_TRACK_BLUE"/>
+								<RenderPriority val="100"/>
+								<AcceptsMouse val="false"/>
+							</Frame>
+							<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">
+								<Texture val="#FCJH_CORE_FILL_BLUE"/>
+								<ColorStyle val="AllWhite" index="0"/>
+								<Tiled val="false" index="0"/>
+							</Frame>
 						</Frame>
 						<Frame type="UnitStatusFrame" name="Team2CoreUnitStatus">
 							<Anchor side="Top"  relative="$GameUI" pos="Min" offset="#FCJH_RED_CORE_FRAME_T"/>
 							<Anchor side="Left" relative="$GameUI" pos="Min" offset="#FCJH_RED_CORE_FRAME_L"/>
 							<Unclipped val="true"/>
+							<Frame type="UnitStatusElement" name="HealthBarBackingRed">
+								<Frame type="Image" name="ImageUnmirrored"><Alpha val="0"/></Frame>
+							</Frame>
+							<Frame type="Image" name="FCJH_CoreTrack">
+								<Anchor relative="$parent/HealthBar"/>
+								<Texture val="#FCJH_CORE_TRACK_RED"/>
+								<RenderPriority val="100"/>
+								<AcceptsMouse val="false"/>
+							</Frame>
+							<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">
+								<Texture val="#FCJH_CORE_FILL_RED"/>
+								<ColorStyle val="AllWhite" index="0"/>
+								<Tiled val="false" index="0"/>
+							</Frame>
 						</Frame>
 					</Frame>
 

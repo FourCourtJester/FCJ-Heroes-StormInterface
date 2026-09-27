@@ -129,12 +129,6 @@ kind = "demand"
 [element.minimap]
 rect = [765, 804, 390, 264]
 kind = "ui"
-[element.blue_core]
-rect = [540, 950, 213, 24]   # the core's health bar (Blizzard's, 237 x 27 units); shown only when needed
-kind = "ui"
-[element.red_core]
-rect = [1167, 950, 213, 24]
-kind = "ui"
 
 # ---------------------------------------------------------------------------
 # Hero row. Ten cells, reading 1-5 (blue, left to right) then 6-0 (red).
@@ -150,9 +144,23 @@ blue_left = 169              # cell 1; cells 2-5 follow to the right
 red_left = 1167              # cell 6; cells 7-0 follow to the right
 talent_popup_size = 40       # the talent's icon, straddling the cell's top edge
 
-# Team XP: a bar above each hero row, as wide as the row's slanted top edge (placed by
-# tools/gen.py from [hero_row], so it follows the row).
+# Bars stacked on each hero row, placed by tools/gen.py from [hero_row] so they follow it.
+# Both are cut to the plates' slant: their ends continue the row's slanted outer edges.
+
+# Team XP: on the plates' top edge, the full width of that edge.
 [team_xp]
-height = 6                   # the bar
+height = 8                   # the bar
 gap = 3                      # between the bar and the plates' top edge
 colour = "9a6cff"            # the fill, both teams (hex RGB)
+track_colour = "0b0c14"      # the empty part
+track_alpha = 220
+
+# Core health: on top of the XP bar, at the row's inner end (toward the minimap). Its size
+# is Blizzard's (237 x 27 units = 213 x 24 px, 39% of the XP bar), fixed; Blizzard shows it
+# only when a core is taking damage.
+[team_core]
+gap = 4                      # between core and XP
+blue_colour = "3f8cff"
+red_colour = "ff4a5e"
+track_colour = "0b0c14"
+track_alpha = 220

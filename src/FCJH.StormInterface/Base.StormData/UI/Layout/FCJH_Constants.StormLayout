@@ -170,20 +170,6 @@
 	<Constant name="FCJH_MINIMAP_B" val="1187"/>
 	<Constant name="FCJH_MINIMAP_W" val="433"/>
 	<Constant name="FCJH_MINIMAP_H" val="293"/>
-	<!-- blue_core: ui, px [540, 950, 213, 24] -->
-	<Constant name="FCJH_BLUE_CORE_L" val="600"/>
-	<Constant name="FCJH_BLUE_CORE_T" val="1056"/>
-	<Constant name="FCJH_BLUE_CORE_R" val="837"/>
-	<Constant name="FCJH_BLUE_CORE_B" val="1082"/>
-	<Constant name="FCJH_BLUE_CORE_W" val="237"/>
-	<Constant name="FCJH_BLUE_CORE_H" val="27"/>
-	<!-- red_core: ui, px [1167, 950, 213, 24] -->
-	<Constant name="FCJH_RED_CORE_L" val="1297"/>
-	<Constant name="FCJH_RED_CORE_T" val="1056"/>
-	<Constant name="FCJH_RED_CORE_R" val="1533"/>
-	<Constant name="FCJH_RED_CORE_B" val="1082"/>
-	<Constant name="FCJH_RED_CORE_W" val="237"/>
-	<Constant name="FCJH_RED_CORE_H" val="27"/>
 	<!-- hero_1: ui, px [169.0, 1000, 144.0, 68.4] -->
 	<Constant name="FCJH_HERO_1_L" val="188"/>
 	<Constant name="FCJH_HERO_1_T" val="1111"/>
@@ -254,20 +240,34 @@
 	<Constant name="FCJH_HERO_0_B" val="1187"/>
 	<Constant name="FCJH_HERO_0_W" val="160"/>
 	<Constant name="FCJH_HERO_0_H" val="76"/>
-	<!-- blue_xp: ui, px [169, 991, 549.0, 6] -->
-	<Constant name="FCJH_BLUE_XP_L" val="188"/>
-	<Constant name="FCJH_BLUE_XP_T" val="1101"/>
-	<Constant name="FCJH_BLUE_XP_R" val="798"/>
+	<!-- blue_xp: ui, px [163.5, 989, 553.0, 8] -->
+	<Constant name="FCJH_BLUE_XP_L" val="182"/>
+	<Constant name="FCJH_BLUE_XP_T" val="1099"/>
+	<Constant name="FCJH_BLUE_XP_R" val="796"/>
 	<Constant name="FCJH_BLUE_XP_B" val="1108"/>
-	<Constant name="FCJH_BLUE_XP_W" val="610"/>
-	<Constant name="FCJH_BLUE_XP_H" val="7"/>
-	<!-- red_xp: ui, px [1201.2, 991, 549.0, 6] -->
-	<Constant name="FCJH_RED_XP_L" val="1335"/>
-	<Constant name="FCJH_RED_XP_T" val="1101"/>
-	<Constant name="FCJH_RED_XP_R" val="1945"/>
+	<Constant name="FCJH_BLUE_XP_W" val="614"/>
+	<Constant name="FCJH_BLUE_XP_H" val="9"/>
+	<!-- red_xp: ui, px [1202.7, 989, 553.0, 8] -->
+	<Constant name="FCJH_RED_XP_L" val="1336"/>
+	<Constant name="FCJH_RED_XP_T" val="1099"/>
+	<Constant name="FCJH_RED_XP_R" val="1951"/>
 	<Constant name="FCJH_RED_XP_B" val="1108"/>
-	<Constant name="FCJH_RED_XP_W" val="610"/>
-	<Constant name="FCJH_RED_XP_H" val="7"/>
+	<Constant name="FCJH_RED_XP_W" val="614"/>
+	<Constant name="FCJH_RED_XP_H" val="9"/>
+	<!-- blue_core: ui, px [497.2, 960.7, 213.3, 24.3] -->
+	<Constant name="FCJH_BLUE_CORE_L" val="552"/>
+	<Constant name="FCJH_BLUE_CORE_T" val="1067"/>
+	<Constant name="FCJH_BLUE_CORE_R" val="789"/>
+	<Constant name="FCJH_BLUE_CORE_B" val="1094"/>
+	<Constant name="FCJH_BLUE_CORE_W" val="237"/>
+	<Constant name="FCJH_BLUE_CORE_H" val="27"/>
+	<!-- red_core: ui, px [1208.7, 960.7, 213.3, 24.3] -->
+	<Constant name="FCJH_RED_CORE_L" val="1343"/>
+	<Constant name="FCJH_RED_CORE_T" val="1067"/>
+	<Constant name="FCJH_RED_CORE_R" val="1580"/>
+	<Constant name="FCJH_RED_CORE_B" val="1094"/>
+	<Constant name="FCJH_RED_CORE_W" val="237"/>
+	<Constant name="FCJH_RED_CORE_H" val="27"/>
 
 	<!-- MinimapPanel edges: the square centred on centre_x, its bottom edge at `bottom`.
 	     _BOTTOM is an offset from $GameUI pos=Max, so a positive value hangs off-screen. -->
@@ -276,14 +276,21 @@
 	<Constant name="FCJH_MINIMAP_PANEL_BOTTOM" val="59"/>
 
 	<!-- Core frames, placed so their health bars land on blue_core / red_core -->
-	<Constant name="FCJH_BLUE_CORE_FRAME_T" val="1038"/>
-	<Constant name="FCJH_BLUE_CORE_FRAME_R" val="871"/>
-	<Constant name="FCJH_RED_CORE_FRAME_T" val="1038"/>
-	<Constant name="FCJH_RED_CORE_FRAME_L" val="1269"/>
+	<Constant name="FCJH_BLUE_CORE_FRAME_T" val="1049"/>
+	<Constant name="FCJH_BLUE_CORE_FRAME_R" val="823"/>
+	<Constant name="FCJH_RED_CORE_FRAME_T" val="1049"/>
+	<Constant name="FCJH_RED_CORE_FRAME_L" val="1315"/>
 
-	<!-- Team XP fill: a solid colour, so it fills the bar at any size (Blizzard's
-	     obs_bar_xp_* art is a thin glowing line drawn for a 156 x 17 box) -->
-	<Constant name="FCJH_XP_FILL" val="_Assets\Textures\FCJH_Fill_9a6cff.dds"/>
+	<!-- Team XP and core health: tracks and fills cut to the plates' slant (solid colour;
+	     Blizzard's obs_bar_xp_* art is a thin glowing line drawn for a 156 x 17 box) -->
+	<Constant name="FCJH_XP_FILL_BLUE" val="_Assets\Textures\FCJH_Bar_xp_fill_blue_93c2872c.dds"/>
+	<Constant name="FCJH_XP_TRACK_BLUE" val="_Assets\Textures\FCJH_Bar_xp_track_blue_bc86f878.dds"/>
+	<Constant name="FCJH_CORE_FILL_BLUE" val="_Assets\Textures\FCJH_Bar_core_fill_blue_e13f101d.dds"/>
+	<Constant name="FCJH_CORE_TRACK_BLUE" val="_Assets\Textures\FCJH_Bar_core_track_blue_15472a90.dds"/>
+	<Constant name="FCJH_XP_FILL_RED" val="_Assets\Textures\FCJH_Bar_xp_fill_red_f7bd48e4.dds"/>
+	<Constant name="FCJH_XP_TRACK_RED" val="_Assets\Textures\FCJH_Bar_xp_track_red_0ad29eeb.dds"/>
+	<Constant name="FCJH_CORE_FILL_RED" val="_Assets\Textures\FCJH_Bar_core_fill_red_720502af.dds"/>
+	<Constant name="FCJH_CORE_TRACK_RED" val="_Assets\Textures\FCJH_Bar_core_track_red_441bdb37.dds"/>
 
 	<!-- Kill feed rows' left edge: a single kill's portraits end on kill_feed's right -->
 	<Constant name="FCJH_KILL_FEED_ROW_L" val="1906"/>

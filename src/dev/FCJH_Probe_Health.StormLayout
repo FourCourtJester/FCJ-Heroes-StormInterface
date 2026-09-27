@@ -6,8 +6,9 @@
 	     cells. This one reads Blizzard's health PERCENT label instead (UnitStatusHealthLabel,
 	     ShowPercent - the same element their core bars use), placed inside each cell's
 	     HeroStatus so it reads that cell's hero.
-	       - the percent text shows small at the right end of each health bar: its exact
-	         format ("23%", "23", "23.4%"?) is what the trigger below has to match
+	       - the percent label sits at the right end of each health bar, INVISIBLE: it's only
+	         a sensor (its text drives the plus). The user doesn't want a percent on the
+	         plates in the final product (2026-09-27)
 	       - label comparisons are STRING compares, so the trigger lists every value: 1-25,
 	         with and without "%". A match shows the green plus (#4) centred on the portrait.
 	     Look for: the percent text on every plate; the plus on any hero at 25% or less. -->
@@ -27,6 +28,7 @@
 								<Frame type="Label" name="StatusLabel">
 									<Anchor relative="$parent"/>
 									<Style val="ObsBar_MatchTimer"/>
+									<Alpha val="0"/>  <!-- a sensor only: its text drives the plus; not shown (user, 2026-09-27) -->
 									<Unclipped val="true"/>
 								</Frame>
 							</Frame>
@@ -260,6 +262,7 @@
 								<Frame type="Label" name="StatusLabel">
 									<Anchor relative="$parent"/>
 									<Style val="ObsBar_MatchTimer"/>
+									<Alpha val="0"/>  <!-- a sensor only: its text drives the plus; not shown (user, 2026-09-27) -->
 									<Unclipped val="true"/>
 								</Frame>
 							</Frame>
@@ -493,6 +496,7 @@
 								<Frame type="Label" name="StatusLabel">
 									<Anchor relative="$parent"/>
 									<Style val="ObsBar_MatchTimer"/>
+									<Alpha val="0"/>  <!-- a sensor only: its text drives the plus; not shown (user, 2026-09-27) -->
 									<Unclipped val="true"/>
 								</Frame>
 							</Frame>
@@ -726,6 +730,7 @@
 								<Frame type="Label" name="StatusLabel">
 									<Anchor relative="$parent"/>
 									<Style val="ObsBar_MatchTimer"/>
+									<Alpha val="0"/>  <!-- a sensor only: its text drives the plus; not shown (user, 2026-09-27) -->
 									<Unclipped val="true"/>
 								</Frame>
 							</Frame>
@@ -959,6 +964,7 @@
 								<Frame type="Label" name="StatusLabel">
 									<Anchor relative="$parent"/>
 									<Style val="ObsBar_MatchTimer"/>
+									<Alpha val="0"/>  <!-- a sensor only: its text drives the plus; not shown (user, 2026-09-27) -->
 									<Unclipped val="true"/>
 								</Frame>
 							</Frame>
@@ -1194,6 +1200,7 @@
 								<Frame type="Label" name="StatusLabel">
 									<Anchor relative="$parent"/>
 									<Style val="ObsBar_MatchTimer"/>
+									<Alpha val="0"/>  <!-- a sensor only: its text drives the plus; not shown (user, 2026-09-27) -->
 									<Unclipped val="true"/>
 								</Frame>
 							</Frame>
@@ -1427,6 +1434,7 @@
 								<Frame type="Label" name="StatusLabel">
 									<Anchor relative="$parent"/>
 									<Style val="ObsBar_MatchTimer"/>
+									<Alpha val="0"/>  <!-- a sensor only: its text drives the plus; not shown (user, 2026-09-27) -->
 									<Unclipped val="true"/>
 								</Frame>
 							</Frame>
@@ -1660,6 +1668,7 @@
 								<Frame type="Label" name="StatusLabel">
 									<Anchor relative="$parent"/>
 									<Style val="ObsBar_MatchTimer"/>
+									<Alpha val="0"/>  <!-- a sensor only: its text drives the plus; not shown (user, 2026-09-27) -->
 									<Unclipped val="true"/>
 								</Frame>
 							</Frame>
@@ -1893,6 +1902,7 @@
 								<Frame type="Label" name="StatusLabel">
 									<Anchor relative="$parent"/>
 									<Style val="ObsBar_MatchTimer"/>
+									<Alpha val="0"/>  <!-- a sensor only: its text drives the plus; not shown (user, 2026-09-27) -->
 									<Unclipped val="true"/>
 								</Frame>
 							</Frame>
@@ -2126,6 +2136,7 @@
 								<Frame type="Label" name="StatusLabel">
 									<Anchor relative="$parent"/>
 									<Style val="ObsBar_MatchTimer"/>
+									<Alpha val="0"/>  <!-- a sensor only: its text drives the plus; not shown (user, 2026-09-27) -->
 									<Unclipped val="true"/>
 								</Frame>
 							</Frame>
