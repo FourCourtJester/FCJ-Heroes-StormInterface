@@ -224,12 +224,15 @@
 					<Anchor relative="$parent"/>
 				</Frame>
 			</Frame>
+			<!-- Blizzard's token art is already slanted, leaning / like the red plates: blue
+			     shows it mirrored so it leans the same way as its own plate -->
 			<Frame type="Image" name="FCJH_FountainReady">
 				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="2"/>
 				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="10"/>
 				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="22"/>
 				<Anchor side="Right"  relative="$parent/$parent" pos="Min" offset="30"/>
 				<Texture val="@UI/Storm_UI_Ingame_HealingWell_Active"/>
+				<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>
 				<RenderPriority val="525"/>
 				<Unclipped val="true"/>
 				<AcceptsMouse val="false"/>
@@ -351,6 +354,7 @@
 				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="130"/>
 				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="22"/>
 				<Anchor side="Right"  relative="$parent/$parent" pos="Min" offset="150"/>
+				<TextureCoords top="0.0" left="0.0" bottom="1.0" right="1.0"/>
 			</Frame>
 		</Frame>
 	</Frame>

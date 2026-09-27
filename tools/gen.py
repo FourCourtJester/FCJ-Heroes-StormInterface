@@ -549,8 +549,11 @@ def hero_cell_template(team, c):
 					<Anchor relative="$parent"/>
 				</Frame>
 			</Frame>
+			<!-- Blizzard's token art is already slanted, leaning / like the red plates: blue
+			     shows it mirrored so it leans the same way as its own plate -->
 			<Frame type="Image" name="FCJH_FountainReady">{fountain_anchors}
 				<Texture val="@UI/Storm_UI_Ingame_HealingWell_Active"/>
+				<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>
 				<RenderPriority val="525"/>
 				<Unclipped val="true"/>
 				<AcceptsMouse val="false"/>
@@ -568,6 +571,7 @@ def hero_cell_template(team, c):
     else:
         health += f"""
 			<Frame type="Image" name="FCJH_FountainReady">{fountain_anchors}
+				<TextureCoords top="0.0" left="0.0" bottom="1.0" right="1.0"/>
 			</Frame>"""
     health += "\n\t\t</Frame>"
     shift = c.death_shift
