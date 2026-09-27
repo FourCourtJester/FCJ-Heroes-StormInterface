@@ -110,6 +110,11 @@ rect = [16, 196, 494, 576]   # sized to the talents table: 23-unit margins eithe
                              # The stats panes spread their rows to fill the same box.
 kind = "demand"
 
+[element.inspect]
+rect = [16, 196, 300, 750]   # the inspect card (selected hero): tall and skinny, left column;
+                             # its bottom (946) clears the blue core bar and plates
+kind = "demand"
+
 [info_pane]
 title_height = 26            # the title band across the top of the pane
 border = 2                   # the frame line around it

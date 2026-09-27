@@ -1,41 +1,39 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <Desc>
-	<!-- PROBE (dev only): the inspect pane, first experiment (2026-09-26).
+	<!-- PROBE (dev only): the inspect card, round 3 (2026-09-27) - the tall card from the
+	     canvas's "Inspect pane, tall" board (layout.toml element.inspect, 300 x 750 px).
 
-	     A tall hero card in the info-pane box for whatever unit is SELECTED (click a hero's
-	     plate). No hotkey yet - the real trigger will be a modifier-click, worked out later;
-	     for now the card simply shows while something is selected, like Blizzard's own
-	     inspect box. Square panel, none of the slanted plate art.
+	     Rounds 1-2: our copy of Blizzard's inspect box fills for the SELECTED unit (portrait,
+	     health/resource with regen, stats) and hides on click-off; Blizzard's HUD panels
+	     (abilities, buffs) only fill in player view. Written by a one-off script.
 
-	     Round 2 (2026-09-26): round 1 showed our copy of the inspect box DOES fill for the
-	     selection (portrait, health/resource with numbers and regen, stats), and clicking
-	     off the unit hides it; a layout Escape binding fires but can't clear the selection.
-	     Blizzard's HUD panels (abilities, buffs, mechanics) only fill in the observer's
-	     player-view mode, not for a selection - moved out again, and kept hidden
-	     (FCJH_Hidden). What follows is round 1's notes:
-	       1. OUR OWN copy of Blizzard's inspect box (a TargetInfoFrame from
-	          TargetInfoPanel/TargetInfoPanelTemplate), re-laid out tall: portrait, health and
-	          resource with numbers and regen, and the seven stats. THE question: does the
-	          engine fill (and show) a second TargetInfoFrame for the selection?
-	       2. Blizzard's player-HUD panels, MOVED into the card (they're one-offs, so they
-	          can't be copied): abilities (CommandPanel), buffs/debuffs plus the fountain
-	          icon (HeroBuffDebuffPanel), hero mechanics (HeroSpecificStatusContainer).
-	          They show when the engine decides - in observer, while a hero is selected.
-	     Look for: the card top-left when you click a hero plate; which parts appear, which
-	     don't, and what's where. Expect overlaps - this is to see what's available. -->
+	     A. Proven parts, re-laid out tall: portrait across the top, health and resource, stats.
+	     B. Experiments - a SelectionUnitStatusPanel over the card holding Blizzard's per-unit
+	        widgets (the recipe of Spazzo's SelectedUnitFrame). Each is numbered in the file:
+	        1 animated model (hero cutscene portrait) over the static portrait
+	        2 hero name, player name, level
+	        3 fountain: ready art + "Fountain ready" / "on cooldown"
+	        4 buff and debuff bars
+	        5 talent strip, one row of 7, tier levels under it
+	        6 ability icons with cooldowns: D Q W E for Sonya, Johanna, Auriel only (a table
+	          for every hero comes if this works); R from the talent strip's heroic
+	     Look for: select a hero (Sonya, Johanna or Auriel for the abilities) and screenshot the
+	     card; then one on cooldown. Tell me which numbered parts show and which stay empty.
+	     Player view (Ctrl+5) stays off: none of this should need it. -->
 	<Frame type="GameUI" name="GameUI" file="GameUI">
-
-		<!-- 1. Our copy of the inspect box -->
+		<!-- A. The card and the parts already proven: our copy of Blizzard's inspect box -->
 		<Frame type="TargetInfoFrame" name="FCJH_Inspect">
-			<Anchor side="Top"    relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
-			<Anchor side="Left"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_L"/>
-			<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_B"/>
-			<Anchor side="Right"  relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
+			<Anchor side="Top"    relative="$parent" pos="Min" offset="#FCJH_INSPECT_T"/>
+			<Anchor side="Left"   relative="$parent" pos="Min" offset="#FCJH_INSPECT_L"/>
+			<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INSPECT_B"/>
+			<Anchor side="Right"  relative="$parent" pos="Min" offset="#FCJH_INSPECT_R"/>
 			<AcceptsMouse val="false"/>
 			<RenderPriority val="650"/>
-
 			<Frame type="Image" name="FCJH_Back">
-				<Anchor relative="$parent"/>
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent" pos="Min" offset="833"/>
+				<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
 				<Texture val="@UI/PauseScreenDimImage"/>
 				<ColorAdjustMode val="Fill"/>
 				<AdjustmentColor val="215,11,12,20"/>
@@ -45,7 +43,7 @@
 			<Frame type="Image" name="FCJH_TitleBand">
 				<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 				<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
+				<Anchor side="Bottom" relative="$parent" pos="Min" offset="29"/>
 				<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
 				<Texture val="@UI/PauseScreenDimImage"/>
 				<ColorAdjustMode val="Fill"/>
@@ -56,29 +54,87 @@
 			<Frame type="Label" name="FCJH_Title">
 				<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 				<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
+				<Anchor side="Bottom" relative="$parent" pos="Min" offset="29"/>
 				<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
 				<Style val="ObsBar_MatchTimer"/>
 				<Text val="INSPECT"/>
-				<RenderPriority val="215"/>
+				<Options val="NoWrapping | ScaleToPreventTruncation"/>
 				<AcceptsMouse val="false"/>
 			</Frame>
-
+			<Frame type="Image" name="FCJH_NameBand">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="154"/>
+				<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent" pos="Min" offset="196"/>
+				<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
+				<Texture val="@UI/PauseScreenDimImage"/>
+				<ColorAdjustMode val="Fill"/>
+				<AdjustmentColor val="180,8,10,20"/>
+				<RenderPriority val="240"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
+			<Frame type="Label" name="FCJH_SectionBuffs">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="291"/>
+				<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
+				<Anchor side="Bottom" relative="$parent" pos="Min" offset="306"/>
+				<Anchor side="Right"  relative="$parent" pos="Max" offset="-14"/>
+				<Style val="FCJH_InspectSection"/>
+				<Text val="BUFFS"/>
+				<Options val="NoWrapping | ScaleToPreventTruncation"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
+			<Frame type="Label" name="FCJH_SectionDebuffs">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="349"/>
+				<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
+				<Anchor side="Bottom" relative="$parent" pos="Min" offset="364"/>
+				<Anchor side="Right"  relative="$parent" pos="Max" offset="-14"/>
+				<Style val="FCJH_InspectSection"/>
+				<Text val="DEBUFFS"/>
+				<Options val="NoWrapping | ScaleToPreventTruncation"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
+			<Frame type="Label" name="FCJH_SectionAbilities">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="409"/>
+				<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
+				<Anchor side="Bottom" relative="$parent" pos="Min" offset="424"/>
+				<Anchor side="Right"  relative="$parent" pos="Max" offset="-14"/>
+				<Style val="FCJH_InspectSection"/>
+				<Text val="ABILITIES"/>
+				<Options val="NoWrapping | ScaleToPreventTruncation"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
+			<Frame type="Label" name="FCJH_SectionTalents">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="500"/>
+				<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
+				<Anchor side="Bottom" relative="$parent" pos="Min" offset="515"/>
+				<Anchor side="Right"  relative="$parent" pos="Max" offset="-14"/>
+				<Style val="FCJH_InspectSection"/>
+				<Text val="TALENTS"/>
+				<Options val="NoWrapping | ScaleToPreventTruncation"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
+			<Frame type="Label" name="FCJH_SectionStats">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="580"/>
+				<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
+				<Anchor side="Bottom" relative="$parent" pos="Min" offset="595"/>
+				<Anchor side="Right"  relative="$parent" pos="Max" offset="-14"/>
+				<Style val="FCJH_InspectSection"/>
+				<Text val="STATS"/>
+				<Options val="NoWrapping | ScaleToPreventTruncation"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
 			<Frame type="Frame" name="TargetInfoPanel" template="TargetInfoPanel/TargetInfoPanelTemplate">
 				<Anchor relative="$parent"/>
 				<Visible val="{$this/@Enabled}"/>
-				<!-- Blizzard's small-box art, off -->
 				<Frame type="Image" name="BackgroundFrame"><Alpha val="0"/></Frame>
 				<Frame type="Image" name="TopBackground"><Alpha val="0"/></Frame>
 				<Frame type="Image" name="BottomBorderImage"><Alpha val="0"/></Frame>
 				<Frame type="Image" name="BorderFrame"><Alpha val="0"/></Frame>
-
-				<!-- Portrait: top-left, Blizzard's 128 x 56 shape at 1.75x -->
+				<!-- portrait: the full width under the title -->
 				<Frame type="Frame" name="TargetPortraitFrame">
-					<Anchor side="Top"    relative="$parent" pos="Min" offset="40"/>
-					<Anchor side="Left"   relative="$parent" pos="Min" offset="12"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="138"/>
-					<Anchor side="Right"  relative="$parent" pos="Min" offset="236"/>
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="29"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="2"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="196"/>
+					<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
 					<Width val="0"/>
 					<Height val="0"/>
 					<Frame type="Image" name="TargetPortraitImage">
@@ -87,75 +143,516 @@
 						<Height val="0"/>
 					</Frame>
 				</Frame>
-
 				<Frame type="UnitStatusFrame" name="HealthAndManaUnitStatusFrame">
-					<!-- Health, right of the portrait, stretched to the card's edge; the resource
-					     bars hang under it (they anchor to it) and stretch with it -->
 					<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">
-						<Anchor side="Top"   relative="$parent" pos="Min" offset="48"/>
-						<Anchor side="Left"  relative="$parent" pos="Min" offset="250"/>
+						<Anchor side="Top"   relative="$parent" pos="Min" offset="207"/>
+						<Anchor side="Left"  relative="$parent" pos="Min" offset="14"/>
 						<Anchor side="Right" relative="$parent" pos="Max" offset="-14"/>
 						<Height val="24"/>
 						<Width val="0"/>
 					</Frame>
-					<Frame type="UnitStatusEnergyBar" name="NormalEnergyBar"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/></Frame>
-					<Frame type="UnitStatusEnergyBar" name="OrangeEnergyBar"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/></Frame>
-					<Frame type="UnitStatusEnergyBar" name="PinkEnergyBar"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/></Frame>
-					<Frame type="UnitStatusEnergyBar" name="YellowEnergyBar"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/></Frame>
-					<Frame type="UnitStatusEnergyBar" name="DeathwingEnergyBar"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/></Frame>
-
-					<!-- Stats: two columns under the portrait -->
+						<Frame type="UnitStatusEnergyBar" name="NormalEnergyBar"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/></Frame>
+						<Frame type="UnitStatusEnergyBar" name="OrangeEnergyBar"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/></Frame>
+						<Frame type="UnitStatusEnergyBar" name="PinkEnergyBar"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/></Frame>
+						<Frame type="UnitStatusEnergyBar" name="YellowEnergyBar"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/></Frame>
+						<Frame type="UnitStatusEnergyBar" name="DeathwingEnergyBar"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/></Frame>
 					<Frame type="Frame" name="TargetStatsPanel">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="150"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="12"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="260"/>
-						<Anchor side="Right"  relative="$parent" pos="Max" offset="-12"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="598"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="694"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="-14"/>
 						<Frame type="TargetInfoStatFrame" name="AttackDamageFrame">
 							<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
 							<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
 							<Anchor side="Right" relative="$this" pos="Min" offset="0"/>
-							<Width val="260"/>
-						</Frame>
-						<Frame type="TargetInfoStatFrame" name="AttackSpeedFrame">
-							<Anchor side="Top" relative="$parent" pos="Min" offset="26"/>
-							<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-							<Anchor side="Right" relative="$this" pos="Min" offset="0"/>
-							<Width val="260"/>
-						</Frame>
-						<Frame type="TargetInfoStatFrame" name="AttackRangeFrame">
-							<Anchor side="Top" relative="$parent" pos="Min" offset="52"/>
-							<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-							<Anchor side="Right" relative="$this" pos="Min" offset="0"/>
-							<Width val="260"/>
-						</Frame>
-						<Frame type="TargetInfoStatFrame" name="AbilityPowerFrame">
-							<Anchor side="Top" relative="$parent" pos="Min" offset="78"/>
-							<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-							<Anchor side="Right" relative="$this" pos="Min" offset="0"/>
-							<Width val="260"/>
+							<Width val="150"/>
 						</Frame>
 						<Frame type="TargetInfoStatFrame" name="MoveSpeedFrame">
 							<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-							<Anchor side="Left" relative="$parent" pos="Min" offset="290"/>
+							<Anchor side="Left" relative="$parent" pos="Min" offset="155"/>
 							<Anchor side="Right" relative="$this" pos="Min" offset="0"/>
-							<Width val="260"/>
+							<Width val="150"/>
+						</Frame>
+						<Frame type="TargetInfoStatFrame" name="AttackSpeedFrame">
+							<Anchor side="Top" relative="$parent" pos="Min" offset="24"/>
+							<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+							<Anchor side="Right" relative="$this" pos="Min" offset="0"/>
+							<Width val="150"/>
 						</Frame>
 						<Frame type="TargetInfoStatFrame" name="PhysicalArmorFrame">
-							<Anchor side="Top" relative="$parent" pos="Min" offset="26"/>
-							<Anchor side="Left" relative="$parent" pos="Min" offset="290"/>
+							<Anchor side="Top" relative="$parent" pos="Min" offset="24"/>
+							<Anchor side="Left" relative="$parent" pos="Min" offset="155"/>
 							<Anchor side="Right" relative="$this" pos="Min" offset="0"/>
-							<Width val="260"/>
+							<Width val="150"/>
+						</Frame>
+						<Frame type="TargetInfoStatFrame" name="AttackRangeFrame">
+							<Anchor side="Top" relative="$parent" pos="Min" offset="48"/>
+							<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+							<Anchor side="Right" relative="$this" pos="Min" offset="0"/>
+							<Width val="150"/>
 						</Frame>
 						<Frame type="TargetInfoStatFrame" name="AbilityArmorFrame">
-							<Anchor side="Top" relative="$parent" pos="Min" offset="52"/>
-							<Anchor side="Left" relative="$parent" pos="Min" offset="290"/>
+							<Anchor side="Top" relative="$parent" pos="Min" offset="48"/>
+							<Anchor side="Left" relative="$parent" pos="Min" offset="155"/>
 							<Anchor side="Right" relative="$this" pos="Min" offset="0"/>
-							<Width val="260"/>
+							<Width val="150"/>
+						</Frame>
+						<Frame type="TargetInfoStatFrame" name="AbilityPowerFrame">
+							<Anchor side="Top" relative="$parent" pos="Min" offset="72"/>
+							<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+							<Anchor side="Right" relative="$this" pos="Min" offset="0"/>
+							<Width val="150"/>
 						</Frame>
 					</Frame>
 				</Frame>
 			</Frame>
 		</Frame>
 
+		<!-- B. The experiments, each labelled 1-6 in the header: Blizzard's per-unit widgets in a
+		     selection panel over the card -->
+		<Frame type="SelectionUnitStatusPanel" name="FCJH_InspectUnit">
+			<Anchor side="Top"    relative="$parent" pos="Min" offset="#FCJH_INSPECT_T"/>
+			<Anchor side="Left"   relative="$parent" pos="Min" offset="#FCJH_INSPECT_L"/>
+			<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INSPECT_B"/>
+			<Anchor side="Right"  relative="$parent" pos="Min" offset="#FCJH_INSPECT_R"/>
+			<AcceptsMouse val="false"/>
+			<AcceptsMouseTooltip val="false"/>
+			<RenderPriority val="660"/>
+			<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+
+				<!-- 1. animated model: a hero cutscene portrait (Spazzo tried one; untested) -->
+				<Frame type="UnitStatusHeroCutscene" name="FCJH_Model">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="29"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="2"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="154"/>
+					<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
+					<Frame type="HeroCutsceneFrame" name="StatusCutscene">
+						<Anchor relative="$parent"/>
+						<AutoPlay val="true"/>
+						<Unclipped val="true"/>
+						<HeroCutsceneType val="InGameUnitStatus"/>
+						<RenderPriority val="670"/>
+					</Frame>
+				</Frame>
+
+				<!-- 2. name, player, level -->
+				<Frame type="UnitStatusName" name="FCJH_HeroName" template="UnitStatus/UnitStatusUnitNameTemplate">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="157"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="179"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="250"/>
+					<UseNameTypeVisibilityRules val="false"/>
+					<Frame type="Label" name="Label"><Anchor relative="$parent"/><Style val="FCJH_InspectName"/></Frame>
+				</Frame>
+				<Frame type="UnitStatusName" name="FCJH_PlayerName" template="UnitStatus/UnitStatusPlayerNameTemplate">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="178"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="194"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="250"/>
+					<UseNameTypeVisibilityRules val="false"/>
+					<Frame type="Label" name="Label"><Anchor relative="$parent"/><Style val="FCJH_InspectSub"/></Frame>
+				</Frame>
+				<Frame type="UnitStatusLevel" name="FCJH_Level" template="UnitStatus/UnitStatusLevelTemplate">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="160"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="270"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="190"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="318"/>
+					<Frame type="Label" name="Label"><Anchor relative="$parent"/><Style val="FCJH_InspectLevel"/></Frame>
+				</Frame>
+
+				<!-- 3. fountain: the plates' sensor, and Blizzard's "ready" art while it's up -->
+				<Frame type="UnitStatusBehaviorIcon" name="FCJH_FountainSensor">
+					<Anchor relative="$parent"/>
+					<Behavior val="HealingFountainCooldown"/>
+					<Alpha val="0"/>
+					<AcceptsMouse val="false"/>
+					<Frame type="BehaviorIcon" name="BehaviorIcon" template="BehaviorBar/BehaviorIconTemplate"><Anchor relative="$parent"/></Frame>
+				</Frame>
+				<Frame type="Image" name="FCJH_FountainReady">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="258"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="280"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="44"/>
+					<Texture val="@UI/Storm_UI_Ingame_HealingWell_Active"/>
+					<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>
+					<AcceptsMouse val="false"/>
+					<StateGroup name="FCJH_Fountain">
+						<DefaultState val="Ready"/>
+						<State name="Cooldown">
+							<When type="Property" frame="$parent/FCJH_FountainSensor" Visible="true"/>
+							<Action type="SetProperty" frame="$this" Alpha="60"/>
+							<Action type="SetProperty" frame="$parent/FCJH_FountainText" Text="Fountain on cooldown"/>
+						</State>
+						<State name="Ready">
+							<Action type="SetProperty" frame="$this" Alpha="255"/>
+							<Action type="SetProperty" frame="$parent/FCJH_FountainText" Text="Fountain ready"/>
+						</State>
+					</StateGroup>
+				</Frame>
+				<Frame type="Label" name="FCJH_FountainText">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="258"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="52"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="280"/>
+					<Anchor side="Right"  relative="$parent" pos="Max" offset="-14"/>
+					<Style val="FCJH_InspectSub"/>
+					<Text val=""/>
+					<Options val="NoWrapping | ScaleToPreventTruncation"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+
+				<!-- 4. buffs and debuffs: Blizzard's buff bars, inside the selection panel (as Spazzo does) -->
+				<Frame type="BehaviorBar" name="FCJH_Buffs" template="BehaviorBar/BuffBehaviorBarTemplate">
+					<Anchor side="Top"  relative="$parent" pos="Min" offset="307"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="14"/>
+					<RenderPriority val="670"/>
+				</Frame>
+				<Frame type="BehaviorBar" name="FCJH_Debuffs" template="BehaviorBar/DebuffBehaviorBarTemplate">
+					<Anchor side="Top"  relative="$parent" pos="Min" offset="365"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="14"/>
+					<RenderPriority val="670"/>
+				</Frame>
+
+				<!-- 5. talents: Blizzard's talent strip, one row, for the selected hero -->
+				<Frame type="PlayerHeroSelectedTalentTreeFrame" name="FCJH_Talents" template="TalentsOverviewPanel/BottomPanelTalentTreeCustomTemplateBlue">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="516"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="552"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="315"/>
+					<RenderPriority val="670"/>
+						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+							<Width val="36"/>
+							<Height val="36"/>
+						</Frame>
+						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="43"/>
+							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+							<Width val="36"/>
+							<Height val="36"/>
+						</Frame>
+						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="86"/>
+							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+							<Width val="36"/>
+							<Height val="36"/>
+						</Frame>
+						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="129"/>
+							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+							<Width val="36"/>
+							<Height val="36"/>
+						</Frame>
+						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="172"/>
+							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+							<Width val="36"/>
+							<Height val="36"/>
+						</Frame>
+						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="215"/>
+							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+							<Width val="36"/>
+							<Height val="36"/>
+						</Frame>
+						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="258"/>
+							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+							<Width val="36"/>
+							<Height val="36"/>
+						</Frame>
+				</Frame>
+					<Frame type="Label" name="FCJH_Tier1">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="554"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="568"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
+						<Style val="FCJH_InspectTier"/>
+						<Text val="1"/>
+						<Options val="NoWrapping | ScaleToPreventTruncation"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
+					<Frame type="Label" name="FCJH_Tier2">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="554"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="57"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="568"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
+						<Style val="FCJH_InspectTier"/>
+						<Text val="4"/>
+						<Options val="NoWrapping | ScaleToPreventTruncation"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
+					<Frame type="Label" name="FCJH_Tier3">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="554"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="100"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="568"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
+						<Style val="FCJH_InspectTier"/>
+						<Text val="7"/>
+						<Options val="NoWrapping | ScaleToPreventTruncation"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
+					<Frame type="Label" name="FCJH_Tier4">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="554"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="143"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="568"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
+						<Style val="FCJH_InspectTier"/>
+						<Text val="10"/>
+						<Options val="NoWrapping | ScaleToPreventTruncation"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
+					<Frame type="Label" name="FCJH_Tier5">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="554"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="186"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="568"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
+						<Style val="FCJH_InspectTier"/>
+						<Text val="13"/>
+						<Options val="NoWrapping | ScaleToPreventTruncation"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
+					<Frame type="Label" name="FCJH_Tier6">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="554"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="229"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="568"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
+						<Style val="FCJH_InspectTier"/>
+						<Text val="16"/>
+						<Options val="NoWrapping | ScaleToPreventTruncation"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
+					<Frame type="Label" name="FCJH_Tier7">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="554"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="272"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="568"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
+						<Style val="FCJH_InspectTier"/>
+						<Text val="20"/>
+						<Options val="NoWrapping | ScaleToPreventTruncation"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
+
+				<!-- 6. abilities: ability icons with cooldowns. D Q W E from a per-hero table (3 heroes for
+				     now); R from the talent strip's heroic, as Blizzard's talent rows do -->
+					<Frame type="UnitStatusAbilIcon" name="FCJH_AbilD">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="425"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="469"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="58"/>
+						<Unclipped val="true"/>
+						<Frame type="AbilIcon" name="AbilIcon">
+							<Anchor relative="$parent"/>
+							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Unclipped val="true"/></Frame>
+							<Frame type="Label" name="CooldownLabel">
+								<Anchor relative="$parent"/>
+								<Style val="FCJH_HeroicCooldown"/>
+								<RenderPriority val="700"/>
+								<Animation name="FCJH_Dim">
+									<Event event="OnShown" action="DirectionForward,Play"/>
+									<Event event="OnHidden" action="DirectionReverse,Play"/>
+									<Controller type="Color" end="Pause" frame="$parent/IconImage">
+										<Key type="Curve" time="0" value="255,255,255" inout="Step"/>
+										<Key type="Curve" time="0.01" value="70,70,70" inout="Step"/>
+									</Controller>
+								</Animation>
+							</Frame>
+							<Frame type="ProgressBar" name="CooldownBar"><Anchor relative="$parent"/><Alpha val="0"/></Frame>
+						</Frame>
+					</Frame>
+					<Frame type="Label" name="FCJH_AbilDKey">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="455"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="16"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="469"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="30"/>
+						<Style val="FCJH_InspectKey"/>
+						<Text val="D"/>
+						<Options val="NoWrapping | ScaleToPreventTruncation"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
+					<Frame type="UnitStatusAbilIcon" name="FCJH_AbilQ">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="425"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="65"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="469"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="109"/>
+						<Unclipped val="true"/>
+						<Frame type="AbilIcon" name="AbilIcon">
+							<Anchor relative="$parent"/>
+							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Unclipped val="true"/></Frame>
+							<Frame type="Label" name="CooldownLabel">
+								<Anchor relative="$parent"/>
+								<Style val="FCJH_HeroicCooldown"/>
+								<RenderPriority val="700"/>
+								<Animation name="FCJH_Dim">
+									<Event event="OnShown" action="DirectionForward,Play"/>
+									<Event event="OnHidden" action="DirectionReverse,Play"/>
+									<Controller type="Color" end="Pause" frame="$parent/IconImage">
+										<Key type="Curve" time="0" value="255,255,255" inout="Step"/>
+										<Key type="Curve" time="0.01" value="70,70,70" inout="Step"/>
+									</Controller>
+								</Animation>
+							</Frame>
+							<Frame type="ProgressBar" name="CooldownBar"><Anchor relative="$parent"/><Alpha val="0"/></Frame>
+						</Frame>
+					</Frame>
+					<Frame type="Label" name="FCJH_AbilQKey">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="455"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="67"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="469"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="81"/>
+						<Style val="FCJH_InspectKey"/>
+						<Text val="Q"/>
+						<Options val="NoWrapping | ScaleToPreventTruncation"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
+					<Frame type="UnitStatusAbilIcon" name="FCJH_AbilW">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="425"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="116"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="469"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="160"/>
+						<Unclipped val="true"/>
+						<Frame type="AbilIcon" name="AbilIcon">
+							<Anchor relative="$parent"/>
+							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Unclipped val="true"/></Frame>
+							<Frame type="Label" name="CooldownLabel">
+								<Anchor relative="$parent"/>
+								<Style val="FCJH_HeroicCooldown"/>
+								<RenderPriority val="700"/>
+								<Animation name="FCJH_Dim">
+									<Event event="OnShown" action="DirectionForward,Play"/>
+									<Event event="OnHidden" action="DirectionReverse,Play"/>
+									<Controller type="Color" end="Pause" frame="$parent/IconImage">
+										<Key type="Curve" time="0" value="255,255,255" inout="Step"/>
+										<Key type="Curve" time="0.01" value="70,70,70" inout="Step"/>
+									</Controller>
+								</Animation>
+							</Frame>
+							<Frame type="ProgressBar" name="CooldownBar"><Anchor relative="$parent"/><Alpha val="0"/></Frame>
+						</Frame>
+					</Frame>
+					<Frame type="Label" name="FCJH_AbilWKey">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="455"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="118"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="469"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="132"/>
+						<Style val="FCJH_InspectKey"/>
+						<Text val="W"/>
+						<Options val="NoWrapping | ScaleToPreventTruncation"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
+					<Frame type="UnitStatusAbilIcon" name="FCJH_AbilE">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="425"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="167"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="469"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="211"/>
+						<Unclipped val="true"/>
+						<Frame type="AbilIcon" name="AbilIcon">
+							<Anchor relative="$parent"/>
+							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Unclipped val="true"/></Frame>
+							<Frame type="Label" name="CooldownLabel">
+								<Anchor relative="$parent"/>
+								<Style val="FCJH_HeroicCooldown"/>
+								<RenderPriority val="700"/>
+								<Animation name="FCJH_Dim">
+									<Event event="OnShown" action="DirectionForward,Play"/>
+									<Event event="OnHidden" action="DirectionReverse,Play"/>
+									<Controller type="Color" end="Pause" frame="$parent/IconImage">
+										<Key type="Curve" time="0" value="255,255,255" inout="Step"/>
+										<Key type="Curve" time="0.01" value="70,70,70" inout="Step"/>
+									</Controller>
+								</Animation>
+							</Frame>
+							<Frame type="ProgressBar" name="CooldownBar"><Anchor relative="$parent"/><Alpha val="0"/></Frame>
+						</Frame>
+					</Frame>
+					<Frame type="Label" name="FCJH_AbilEKey">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="455"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="169"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="469"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="183"/>
+						<Style val="FCJH_InspectKey"/>
+						<Text val="E"/>
+						<Options val="NoWrapping | ScaleToPreventTruncation"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
+					<Frame type="UnitStatusAbilIcon" name="FCJH_AbilR">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="425"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="218"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="469"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="262"/>
+						<Unclipped val="true"/>
+							<AbilityLink val="{$parent/FCJH_Talents/@HeroicAbilLink}"/>
+						<Frame type="AbilIcon" name="AbilIcon">
+							<Anchor relative="$parent"/>
+							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Unclipped val="true"/></Frame>
+							<Frame type="Label" name="CooldownLabel">
+								<Anchor relative="$parent"/>
+								<Style val="FCJH_HeroicCooldown"/>
+								<RenderPriority val="700"/>
+								<Animation name="FCJH_Dim">
+									<Event event="OnShown" action="DirectionForward,Play"/>
+									<Event event="OnHidden" action="DirectionReverse,Play"/>
+									<Controller type="Color" end="Pause" frame="$parent/IconImage">
+										<Key type="Curve" time="0" value="255,255,255" inout="Step"/>
+										<Key type="Curve" time="0.01" value="70,70,70" inout="Step"/>
+									</Controller>
+								</Animation>
+							</Frame>
+							<Frame type="ProgressBar" name="CooldownBar"><Anchor relative="$parent"/><Alpha val="0"/></Frame>
+						</Frame>
+					</Frame>
+					<Frame type="Label" name="FCJH_AbilRKey">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="455"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="220"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="469"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="234"/>
+						<Style val="FCJH_InspectKey"/>
+						<Text val="R"/>
+						<Options val="NoWrapping | ScaleToPreventTruncation"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
+				<StateGroup name="FCJH_Abilities">
+					<DefaultState val="Other"/>
+						<State name="HeroBarbarian">
+							<When type="Property" Unit="HeroBarbarian"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="BarbarianShotofFury"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="BarbarianAncientSpear"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="BarbarianSeismicSlam"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="BarbarianWhirlwind"/>
+						</State>
+						<State name="HeroCrusader">
+							<When type="Property" Unit="HeroCrusader"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="CrusaderIronSkin"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="CrusaderPunish"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="CrusaderCondemn"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="CrusaderShieldGlare"/>
+						</State>
+						<State name="HeroAuriel">
+							<When type="Property" Unit="HeroAuriel"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="AurielBestowHope"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="AurielSacredSweep"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="AurielRayOfHeaven"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="AurielDetainmentStrike"/>
+						</State>
+					<State name="Other"/>
+				</StateGroup>
+			</Frame>
+		</Frame>
 	</Frame>
 </Desc>
