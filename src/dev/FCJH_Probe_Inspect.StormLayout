@@ -46,92 +46,94 @@
 			<Anchor side="Right"  relative="$parent" pos="Min" offset="#FCJH_INSPECT_R"/>
 			<AcceptsMouse val="false"/>
 			<RenderPriority val="650"/>
-			<Frame type="Image" name="FCJH_Back">
-				<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-				<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-				<Anchor side="Bottom" relative="$parent" pos="Min" offset="833"/>
-				<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
-				<Texture val="@UI/PauseScreenDimImage"/>
-				<ColorAdjustMode val="Fill"/>
-				<AdjustmentColor val="215,11,12,20"/>
-				<RenderPriority val="200"/>
-				<AcceptsMouse val="false"/>
-			</Frame>
-			<Frame type="Image" name="FCJH_TitleBand">
-				<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-				<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-				<Anchor side="Bottom" relative="$parent" pos="Min" offset="29"/>
-				<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
-				<Texture val="@UI/PauseScreenDimImage"/>
-				<ColorAdjustMode val="Fill"/>
-				<AdjustmentColor val="235,24,28,48"/>
-				<RenderPriority val="210"/>
-				<AcceptsMouse val="false"/>
-			</Frame>
-			<Frame type="Label" name="FCJH_Title">
-				<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-				<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-				<Anchor side="Bottom" relative="$parent" pos="Min" offset="29"/>
-				<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
-				<Style val="ObsBar_MatchTimer"/>
-				<Text val="INSPECT"/>
-				<Options val="NoWrapping | ScaleToPreventTruncation"/>
-				<AcceptsMouse val="false"/>
-			</Frame>
-			<Frame type="Image" name="FCJH_NameBand">
-				<Anchor side="Top"    relative="$parent" pos="Min" offset="154"/>
-				<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-				<Anchor side="Bottom" relative="$parent" pos="Min" offset="196"/>
-				<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
-				<Texture val="@UI/PauseScreenDimImage"/>
-				<ColorAdjustMode val="Fill"/>
-				<AdjustmentColor val="235,16,18,32"/>
-				<RenderPriority val="240"/>
-				<AcceptsMouse val="false"/>
-			</Frame>
-			<Frame type="Label" name="FCJH_SectionBuffs">
-				<Anchor side="Top"    relative="$parent" pos="Min" offset="258"/>
-				<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-				<Anchor side="Bottom" relative="$parent" pos="Min" offset="273"/>
-				<Anchor side="Right"  relative="$parent" pos="Max" offset="-14"/>
-				<Style val="FCJH_InspectSection"/>
-				<Text val="BUFFS  ·  DEBUFFS"/>
-				<Options val="NoWrapping | ScaleToPreventTruncation"/>
-				<AcceptsMouse val="false"/>
-			</Frame>
-			<Frame type="Label" name="FCJH_SectionAbilities">
-				<Anchor side="Top"    relative="$parent" pos="Min" offset="366"/>
-				<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-				<Anchor side="Bottom" relative="$parent" pos="Min" offset="381"/>
-				<Anchor side="Right"  relative="$parent" pos="Max" offset="-14"/>
-				<Style val="FCJH_InspectSection"/>
-				<Text val="ABILITIES"/>
-				<Options val="NoWrapping | ScaleToPreventTruncation"/>
-				<AcceptsMouse val="false"/>
-			</Frame>
-			<Frame type="Label" name="FCJH_SectionTalents">
-				<Anchor side="Top"    relative="$parent" pos="Min" offset="471"/>
-				<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-				<Anchor side="Bottom" relative="$parent" pos="Min" offset="486"/>
-				<Anchor side="Right"  relative="$parent" pos="Max" offset="-14"/>
-				<Style val="FCJH_InspectSection"/>
-				<Text val="TALENTS"/>
-				<Options val="NoWrapping | ScaleToPreventTruncation"/>
-				<AcceptsMouse val="false"/>
-			</Frame>
-			<Frame type="Label" name="FCJH_SectionStats">
-				<Anchor side="Top"    relative="$parent" pos="Min" offset="551"/>
-				<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-				<Anchor side="Bottom" relative="$parent" pos="Min" offset="566"/>
-				<Anchor side="Right"  relative="$parent" pos="Max" offset="-14"/>
-				<Style val="FCJH_InspectSection"/>
-				<Text val="STATS"/>
-				<Options val="NoWrapping | ScaleToPreventTruncation"/>
-				<AcceptsMouse val="false"/>
-			</Frame>
 			<Frame type="Frame" name="TargetInfoPanel" template="TargetInfoPanel/TargetInfoPanelTemplate">
 				<Anchor relative="$parent"/>
 				<Visible val="{$this/@Enabled}"/>
+				<!-- everything of ours lives in here (round 6): this panel hides itself with no target;
+				     the card frame around it showed empty at game load -->
+				<Frame type="Image" name="FCJH_Back">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="833"/>
+					<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="215,11,12,20"/>
+					<RenderPriority val="200"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_TitleBand">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="29"/>
+					<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="235,24,28,48"/>
+					<RenderPriority val="210"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Label" name="FCJH_Title">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="29"/>
+					<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
+					<Style val="ObsBar_MatchTimer"/>
+					<Text val="INSPECT"/>
+					<Options val="NoWrapping | ScaleToPreventTruncation"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_NameBand">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="154"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="196"/>
+					<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="235,16,18,32"/>
+					<RenderPriority val="240"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Label" name="FCJH_SectionBuffs">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="258"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="273"/>
+					<Anchor side="Right"  relative="$parent" pos="Max" offset="-14"/>
+					<Style val="FCJH_InspectSection"/>
+					<Text val="BUFFS  ·  DEBUFFS"/>
+					<Options val="NoWrapping | ScaleToPreventTruncation"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Label" name="FCJH_SectionAbilities">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="366"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="381"/>
+					<Anchor side="Right"  relative="$parent" pos="Max" offset="-14"/>
+					<Style val="FCJH_InspectSection"/>
+					<Text val="ABILITIES"/>
+					<Options val="NoWrapping | ScaleToPreventTruncation"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Label" name="FCJH_SectionTalents">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="471"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="486"/>
+					<Anchor side="Right"  relative="$parent" pos="Max" offset="-14"/>
+					<Style val="FCJH_InspectSection"/>
+					<Text val="TALENTS"/>
+					<Options val="NoWrapping | ScaleToPreventTruncation"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Label" name="FCJH_SectionStats">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="551"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="566"/>
+					<Anchor side="Right"  relative="$parent" pos="Max" offset="-14"/>
+					<Style val="FCJH_InspectSection"/>
+					<Text val="STATS"/>
+					<Options val="NoWrapping | ScaleToPreventTruncation"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
 				<Frame type="Image" name="BackgroundFrame"><Alpha val="0"/></Frame>
 				<Frame type="Image" name="TopBackground"><Alpha val="0"/></Frame>
 				<Frame type="Image" name="BottomBorderImage"><Alpha val="0"/></Frame>
@@ -212,7 +214,6 @@
 						</Frame>
 					</Frame>
 				</Frame>
-			</Frame>
 
 		<!-- B. The experiments, each labelled 1-6 in the header: Blizzard's per-unit widgets in a
 		     selection panel over the card -->
@@ -227,20 +228,8 @@
 				<Anchor relative="$parent"/>
 				<AcceptsMouse val="false"/>
 
-				<!-- 1. animated model: a hero cutscene portrait (Spazzo tried one; untested) -->
-				<Frame type="UnitStatusHeroCutscene" name="FCJH_Model">
-					<Anchor side="Top"    relative="$parent" pos="Min" offset="29"/>
-					<Anchor side="Left"   relative="$parent" pos="Min" offset="2"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="154"/>
-					<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
-					<Frame type="HeroCutsceneFrame" name="StatusCutscene">
-						<Anchor relative="$parent"/>
-						<AutoPlay val="true"/>
-						<Unclipped val="true"/>
-						<HeroCutsceneType val="InGameUnitStatus"/>
-						<RenderPriority val="670"/>
-					</Frame>
-				</Frame>
+				<!-- 1. animated model: DROPPED (round 6). The hero cutscene kept the first hero clicked
+				     (Chromie) over every later selection; the static portrait underneath updates. -->
 
 				<!-- 2. name, player, level -->
 				<Frame type="UnitStatusName" name="FCJH_HeroName" template="UnitStatus/UnitStatusUnitNameTemplate">
@@ -268,7 +257,8 @@
 					<Behavior val="HealingFountainCooldown"/>
 					<Alpha val="0"/>
 					<AcceptsMouse val="false"/>
-					<Frame type="BehaviorIcon" name="BehaviorIcon" template="BehaviorBar/BehaviorIconTemplate"><Anchor relative="$parent"/></Frame>
+					<AcceptsMouseTooltip val="false"/>  <!-- its tooltip ("use the fountain...") covered the whole card -->
+					<Frame type="BehaviorIcon" name="BehaviorIcon" template="BehaviorBar/BehaviorIconTemplate"><Anchor relative="$parent"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 				</Frame>
 				<Frame type="Image" name="FCJH_FountainReady">
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="164"/>
@@ -407,6 +397,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent2">
@@ -415,6 +406,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent3">
@@ -423,6 +415,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent4">
@@ -431,6 +424,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent5">
@@ -439,6 +433,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent6">
@@ -447,6 +442,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent7">
@@ -455,6 +451,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_Heroic">
@@ -570,6 +567,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent2">
@@ -578,6 +576,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent3">
@@ -586,6 +585,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent4">
@@ -594,6 +594,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent5">
@@ -602,6 +603,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent6">
@@ -610,6 +612,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent7">
@@ -618,6 +621,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_Heroic">
@@ -733,6 +737,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent2">
@@ -741,6 +746,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent3">
@@ -749,6 +755,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent4">
@@ -757,6 +764,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent5">
@@ -765,6 +773,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent6">
@@ -773,6 +782,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent7">
@@ -781,6 +791,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_Heroic">
@@ -896,6 +907,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent2">
@@ -904,6 +916,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent3">
@@ -912,6 +925,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent4">
@@ -920,6 +934,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent5">
@@ -928,6 +943,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent6">
@@ -936,6 +952,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent7">
@@ -944,6 +961,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_Heroic">
@@ -1059,6 +1077,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent2">
@@ -1067,6 +1086,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent3">
@@ -1075,6 +1095,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent4">
@@ -1083,6 +1104,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent5">
@@ -1091,6 +1113,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent6">
@@ -1099,6 +1122,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent7">
@@ -1107,6 +1131,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_Heroic">
@@ -1222,6 +1247,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent2">
@@ -1230,6 +1256,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent3">
@@ -1238,6 +1265,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent4">
@@ -1246,6 +1274,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent5">
@@ -1254,6 +1283,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent6">
@@ -1262,6 +1292,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent7">
@@ -1270,6 +1301,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_Heroic">
@@ -1385,6 +1417,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent2">
@@ -1393,6 +1426,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent3">
@@ -1401,6 +1435,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent4">
@@ -1409,6 +1444,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent5">
@@ -1417,6 +1453,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent6">
@@ -1425,6 +1462,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent7">
@@ -1433,6 +1471,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_Heroic">
@@ -1548,6 +1587,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent2">
@@ -1556,6 +1596,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent3">
@@ -1564,6 +1605,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent4">
@@ -1572,6 +1614,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent5">
@@ -1580,6 +1623,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent6">
@@ -1588,6 +1632,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent7">
@@ -1596,6 +1641,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_Heroic">
@@ -1711,6 +1757,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent2">
@@ -1719,6 +1766,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent3">
@@ -1727,6 +1775,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent4">
@@ -1735,6 +1784,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent5">
@@ -1743,6 +1793,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent6">
@@ -1751,6 +1802,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent7">
@@ -1759,6 +1811,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_Heroic">
@@ -1874,6 +1927,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent2">
@@ -1882,6 +1936,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent3">
@@ -1890,6 +1945,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent4">
@@ -1898,6 +1954,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent5">
@@ -1906,6 +1963,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent6">
@@ -1914,6 +1972,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent7">
@@ -1922,6 +1981,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_Heroic">
@@ -2263,12 +2323,6 @@
 						<Text val="D"/>
 						<Options val="NoWrapping | ScaleToPreventTruncation"/>
 						<AcceptsMouse val="false"/>
-					<StateGroup name="FCJH_AbilDPresent">
-						<DefaultState val="Yes"/>
-						<State name="NoIcon"><When type="Property" frame="$parent/FCJH_AbilD" Visible="false"/><Action type="SetProperty" frame="$this" Alpha="0"/></State>
-						<State name="NoAbil"><When type="Property" frame="$parent/FCJH_AbilD/AbilIcon" Visible="false"/><Action type="SetProperty" frame="$this" Alpha="0"/></State>
-						<State name="Yes"><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-					</StateGroup>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_AbilQ">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="425"/>
@@ -2304,12 +2358,6 @@
 						<Text val="Q"/>
 						<Options val="NoWrapping | ScaleToPreventTruncation"/>
 						<AcceptsMouse val="false"/>
-					<StateGroup name="FCJH_AbilQPresent">
-						<DefaultState val="Yes"/>
-						<State name="NoIcon"><When type="Property" frame="$parent/FCJH_AbilQ" Visible="false"/><Action type="SetProperty" frame="$this" Alpha="0"/></State>
-						<State name="NoAbil"><When type="Property" frame="$parent/FCJH_AbilQ/AbilIcon" Visible="false"/><Action type="SetProperty" frame="$this" Alpha="0"/></State>
-						<State name="Yes"><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-					</StateGroup>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_AbilW">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="425"/>
@@ -2345,12 +2393,6 @@
 						<Text val="W"/>
 						<Options val="NoWrapping | ScaleToPreventTruncation"/>
 						<AcceptsMouse val="false"/>
-					<StateGroup name="FCJH_AbilWPresent">
-						<DefaultState val="Yes"/>
-						<State name="NoIcon"><When type="Property" frame="$parent/FCJH_AbilW" Visible="false"/><Action type="SetProperty" frame="$this" Alpha="0"/></State>
-						<State name="NoAbil"><When type="Property" frame="$parent/FCJH_AbilW/AbilIcon" Visible="false"/><Action type="SetProperty" frame="$this" Alpha="0"/></State>
-						<State name="Yes"><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-					</StateGroup>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_AbilE">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="425"/>
@@ -2386,12 +2428,6 @@
 						<Text val="E"/>
 						<Options val="NoWrapping | ScaleToPreventTruncation"/>
 						<AcceptsMouse val="false"/>
-					<StateGroup name="FCJH_AbilEPresent">
-						<DefaultState val="Yes"/>
-						<State name="NoIcon"><When type="Property" frame="$parent/FCJH_AbilE" Visible="false"/><Action type="SetProperty" frame="$this" Alpha="0"/></State>
-						<State name="NoAbil"><When type="Property" frame="$parent/FCJH_AbilE/AbilIcon" Visible="false"/><Action type="SetProperty" frame="$this" Alpha="0"/></State>
-						<State name="Yes"><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-					</StateGroup>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_AbilR">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="425"/>
@@ -2463,35 +2499,1525 @@
 						<Text val="Z"/>
 						<Options val="NoWrapping | ScaleToPreventTruncation"/>
 						<AcceptsMouse val="false"/>
-					<StateGroup name="FCJH_AbilZPresent">
-						<DefaultState val="Yes"/>
-						<State name="NoIcon"><When type="Property" frame="$parent/FCJH_AbilZ" Visible="false"/><Action type="SetProperty" frame="$this" Alpha="0"/></State>
-						<State name="NoAbil"><When type="Property" frame="$parent/FCJH_AbilZ/AbilIcon" Visible="false"/><Action type="SetProperty" frame="$this" Alpha="0"/></State>
-						<State name="Yes"><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-					</StateGroup>
 					</Frame>
 				<StateGroup name="FCJH_Abilities">
 					<DefaultState val="Other"/>
-						<State name="HeroBarbarian">
-							<When type="Property" Unit="HeroBarbarian"/>
-							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="BarbarianShotofFury"/>
-							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="BarbarianAncientSpear"/>
-							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="BarbarianSeismicSlam"/>
-							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="BarbarianWhirlwind"/>
+						<State name="HeroAbathur">
+							<When type="Property" Unit="HeroAbathur"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="AbathurSpawnLocusts"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="AbathurSymbiote"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="AbathurToxicNest"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" AbilityLink="AbathurDeepTunnel"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="255"/>
 						</State>
-						<State name="HeroCrusader">
-							<When type="Property" Unit="HeroCrusader"/>
-							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="CrusaderIronSkin"/>
-							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="CrusaderPunish"/>
-							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="CrusaderCondemn"/>
-							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="CrusaderShieldGlare"/>
+						<State name="HeroAlarak">
+							<When type="Property" Unit="HeroAlarak"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="AlarakDiscordStrike"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="AlarakTelekinesis"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="AlarakLightningSurgeLightningBarrage"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroAlexstrasza">
+							<When type="Property" Unit="HeroAlexstrasza"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="AlexstraszaDragonqueen"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="AlexstraszaGiftOfLife"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="AlexstraszaAbundance"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="AlexstraszaFlameBuffet"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroAmazon">
+							<When type="Property" Unit="HeroAmazon"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="AmazonLightningFury"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="AmazonBlindingLight"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="AmazonFend"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" AbilityLink="AmazonWarTravelerSummonMount"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="255"/>
+						</State>
+						<State name="HeroAna">
+							<When type="Property" Unit="HeroAna"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="AnaEyeOfHorusAttackDummy"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="AnaBioticGrenade"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="AnaSleepDart"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroAnduin">
+							<When type="Property" Unit="HeroAnduin"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="AnduinLeapOfFaithInstant"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="AnduinFlashHeal"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="AnduinDivineStar"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="AnduinChastise"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroAnubarak">
+							<When type="Property" Unit="HeroAnubarak"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="AnubarakLegionOfBeetlesVisual"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="AnubarakImpale"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="AnubarakHardenCarapace"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="AnubarakBurrowCharge"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroArtanis">
+							<When type="Property" Unit="HeroArtanis"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="ArtanisShieldOverloadDummy"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="ArtanisBladeDash"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="ArtanisTwinBlades"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="ArtanisPhasePrism"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroArthas">
+							<When type="Property" Unit="HeroArthas"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="ArthasFrostmourneHungers"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="ArthasDeathCoil"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="ArthasHowlingBlast"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="ArthasFrozenTempestCancel"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
 						</State>
 						<State name="HeroAuriel">
 							<When type="Property" Unit="HeroAuriel"/>
 							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="AurielBestowHope"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
 							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="AurielSacredSweep"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
 							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="AurielRayOfHeaven"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
 							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="AurielDetainmentStrike"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroAzmodan">
+							<When type="Property" Unit="HeroAzmodan"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="AzmodanDemonLieutenant"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="AzmodanGlobeOfAnnihilation"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="AzmodanSummonDemonWarrior"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="AzmodanAllShallBurn"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroBarbarian">
+							<When type="Property" Unit="HeroBarbarian"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="BarbarianAncientSpear"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="BarbarianSeismicSlam"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="BarbarianWhirlwind"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroButcher">
+							<When type="Property" Unit="HeroButcher"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="ButcherFreshMeatDummy"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="ButcherHamstring"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="ButcherButchersBrand"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="ButcherRuthlessOnslaught"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroChen">
+							<When type="Property" Unit="HeroChen"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="ChenFortifyingBrew"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="ChenStorm"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="ChenEarth"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="ChenStagger"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroCho">
+							<When type="Property" Unit="HeroCho"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="ChoOgreHide"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="ChoSurgingFistTrigger"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="ChoConsumingBlaze"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="ChoRuneBomb"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroChromie">
+							<When type="Property" Unit="HeroChromie"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="ChromieSandBlast"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="ChromieDragonsBreath"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="ChromieTimeTrap"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroCrusader">
+							<When type="Property" Unit="HeroCrusader"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="CrusaderIronSkin"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="CrusaderPunish"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="CrusaderCondemn"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="CrusaderShieldGlare"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroDVaPilot">
+							<When type="Property" Unit="HeroDVaPilot"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="DVaPilotTorpedoDash"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="DVaPilotConcussivePulse"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="DVaPilotCallMech"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroDeathwing">
+							<When type="Property" Unit="HeroDeathwing"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="DeathwingDestroyerForm"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="DeathwingWorldbreakerForm"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="DeathwingSkyfall"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" AbilityLink="DeathwingDragonflight"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="255"/>
+						</State>
+						<State name="HeroDeckard">
+							<When type="Property" Unit="HeroDeckard"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="DeckardHealingPotion"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="DeckardHoradricCube"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="DeckardScrollOfSealing"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroDehaka">
+							<When type="Property" Unit="HeroDehaka"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="DehakaEssenceCollection"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="DehakaDrag"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="DehakaDarkSwarm"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="DehakaBurrow"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" AbilityLink="DehakaBrushstalker"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="255"/>
+						</State>
+						<State name="HeroDemonHunter">
+							<When type="Property" Unit="HeroDemonHunter"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="DemonHunterHungeringArrow"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="DemonHunterMultishot"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="DemonHunterVault"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroDiablo">
+							<When type="Property" Unit="HeroDiablo"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="DiabloShadowCharge"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="DiabloFireStomp"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="DiabloOverpower"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroDryad">
+							<When type="Property" Unit="HeroDryad"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="DryadNoxiousBlossom"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="DryadCripplingSpores"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="DryadWispRedirect"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" AbilityLink="DryadGallopingGait"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="255"/>
+						</State>
+						<State name="HeroFaerieDragon">
+							<When type="Property" Unit="HeroFaerieDragon"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="BrightwingCalmingMist"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="FaerieDragonArcaneFlare"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="FaerieDragonPolymorph"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="FaerieDragonPixieDust"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" AbilityLink="BrightwingPhaseShift"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="255"/>
+						</State>
+						<State name="HeroFalstad">
+							<When type="Property" Unit="HeroFalstad"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="FalstadTailwindCooldownDisplay"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="FalstadHammerang"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="FalstadLightningRod"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="FalstadBarrelRoll"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" AbilityLink="FalstadFlight"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="255"/>
+						</State>
+						<State name="HeroFenix">
+							<When type="Property" Unit="HeroFenix"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="FenixShieldCapacitorVisual"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="FenixPlasmaCutter"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="FenixRepeaterCannon"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="FenixWarp"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroFirebat">
+							<When type="Property" Unit="HeroFirebat"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="FirebatIgnite"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="FirebatFlameStream"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="FirebatOilSpill"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="FirebatJetPropulsion"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroGall">
+							<When type="Property" Unit="HeroGall"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="GallShadowflame"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="GallDoubleBack"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="GallRunicBlast"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" AbilityLink="GallShove"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="255"/>
+						</State>
+						<State name="HeroGarrosh">
+							<When type="Property" Unit="HeroGarrosh"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="GarroshGroundbreaker"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="GarroshBloodthirst"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="GarroshWreckingBall"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroGenji">
+							<When type="Property" Unit="HeroGenji"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="GenjiCyberAgility"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="GenjiDragonbladeAttack"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="GenjiDeflectInstant"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="GenjiSwiftStrike"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroGreymane">
+							<When type="Property" Unit="HeroGreymane"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="GreymaneRazorSwipe"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="GreymaneInnerBeast"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="GreymaneDisengage"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroGuldan">
+							<When type="Property" Unit="HeroGuldan"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="GuldanLifeTapFree"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="GuldanFelFlame"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="GuldanDrainLife"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="GuldanCorruption"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroHanzo">
+							<When type="Property" Unit="HeroHanzo"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="HanzoNaturalAgilityButton"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="HanzoStormBowFireTargetPoint"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="HanzoScatterArrow"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="HanzoSonicArrow"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroHogger">
+							<When type="Property" Unit="HeroHogger"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="HoggerCancelLootHoard"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="HoggerStaggeringBlow"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="HoggerEzThroDynamite"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="HoggerHoggWild"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroIllidan">
+							<When type="Property" Unit="HeroIllidan"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="IllidanDive"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="IllidanSweepingStrike"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="IllidanEvasion"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" AbilityLink="IllidanMetamorphosisDismountCustom"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="255"/>
+						</State>
+						<State name="HeroImperius">
+							<When type="Property" Unit="HeroImperius"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="ImperiusCelestialCharge"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="ImperiusSolarionsFire"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="ImperiusMoltenArmor"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroJaina">
+							<When type="Property" Unit="HeroJaina"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="JainaFrostbolt"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="JainaBlizzard"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="JainaConeOfCold"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroJunkrat">
+							<When type="Property" Unit="HeroJunkrat"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="JunkratRIPTireJump"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="JunkratConcussionMine"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="JunkratSteelTrap"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" AbilityLink="JunkratRocketRideDismount"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="255"/>
+						</State>
+						<State name="HeroKaelthas">
+							<When type="Property" Unit="HeroKaelthas"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="KaelthasVerdantSpheres"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="KaelthasFlamestrike"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="KaelthasLivingBomb"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="KaelthasGravityLapse"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroKelThuzad">
+							<When type="Property" Unit="HeroKelThuzad"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="KelThuzadDeathAndDecay"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="KelThuzadFrostNova"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="KelThuzadChainsLink"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroKerrigan">
+							<When type="Property" Unit="HeroKerrigan"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="KerriganRavage"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="KerriganImpalingBlades"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="KerriganPrimalGrasp"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroL90ETC">
+							<When type="Property" Unit="HeroL90ETC"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="RockstarDummy"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="L90ETCPowerslide"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="L90ETCFaceMelt"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="L90ETCGuitarSolo"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroLeoric">
+							<When type="Property" Unit="HeroLeoric"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="LeoricGhastlySwing"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="LeoricDrainEssence"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="LeoricWraithWalk"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroLiLi">
+							<When type="Property" Unit="HeroLiLi"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="LiLiHealingBrew"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="LiLiCloudSerpent"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="LiLiBlindingWind"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroLostVikingsController">
+							<When type="Property" Unit="HeroLostVikingsController"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" AbilityLink="LostVikingsGoGoGo"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="255"/>
+						</State>
+						<State name="HeroLucio">
+							<When type="Property" Unit="HeroLucio"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="LucioPushOff"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="LucioSoundwave"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="LucioCrossfade"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="LucioAmpItUp"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" AbilityLink="LucioWallRide"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="255"/>
+						</State>
+						<State name="HeroMaiev">
+							<When type="Property" Unit="HeroMaiev"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="MaievVaultOfTheWardens"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="MaievFanOfKnives"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="MaievUmbralBind"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="MaievSpiritOfVengeanceBlink"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroMalGanis">
+							<When type="Property" Unit="HeroMalGanis"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="MalGanisFelClawsThird"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="MalGanisNecroticEmbrace"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="MalGanisNightRush"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroMalfurion">
+							<When type="Property" Unit="HeroMalfurion"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="MalfurionInnervate"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="MalfurionRegrowth"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="MalfurionMoonfire"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="MalfurionEntanglingRoots"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroMalthael">
+							<When type="Property" Unit="HeroMalthael"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="MalthaelSoulRip"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="MalthaelWraithStrike"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="MalthaelDeathShroud"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroMedic">
+							<When type="Property" Unit="HeroMedic"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="MedicRedirectHealingBeam"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="MedicSafeguard"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="MedicDetonateDisplacementGrenade"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroMedivh">
+							<When type="Property" Unit="HeroMedivh"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="MedivhArcaneRift"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="MedivhForceOfWill"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="MedivhPortal2"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" AbilityLink="MedivhTransformRavenLand"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="255"/>
+						</State>
+						<State name="HeroMeiOW">
+							<When type="Property" Unit="HeroMeiOW"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="MeiOWCryoFreeze"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="MeiOWSnowBlind"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="MeiOWBlizzard"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="MeiOWIcing"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroMephisto">
+							<When type="Property" Unit="HeroMephisto"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="MephistoSkullMissile"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="MephistoLightningNova"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="MephistoShadeOfMephisto"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroMonk">
+							<When type="Property" Unit="HeroMonk"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="MonkRadiantDash"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="MonkBreathOfHeaven"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="MonkDeadlyReach"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroMuradin">
+							<When type="Property" Unit="HeroMuradin"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="MuradinStormBolt"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="MuradinThunderclap"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="MuradinDwarfToss"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroMurky">
+							<When type="Property" Unit="HeroMurky"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="MurkyRespawnEgg"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="MurkySlime"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="MurkyPufferfish"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="MurkySafetyBubble"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroNecromancer">
+							<When type="Property" Unit="HeroNecromancer"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="NecromancerRaiseSkeletonDisplayAbility"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="NecromancerSpectralScythe"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="NecromancerCursedStrikes"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="NecromancerBonePrison"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroNexusHunter">
+							<When type="Property" Unit="HeroNexusHunter"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="NexusHunterGrapplingHook"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="NexusHunterCarnage"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="NexusHunterBloodRage"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="NexusHunterRevolvingSweepSecondary"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroNova">
+							<When type="Property" Unit="HeroNova"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="NovaSnipeStorm"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="NovaPinningShot"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="NovaHoloDecoy"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroOrphea">
+							<When type="Property" Unit="HeroOrphea"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="OrpheaShadowWaltz"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="OrpheaChomp"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="OrpheaDread"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroProbius">
+							<When type="Property" Unit="HeroProbius"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="ProbiusWarpInPylon"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="ProbiusDisruptionPulse"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="ProbiusWarpRift"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="ProbiusPhotonCannon"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" AbilityLink="ProbiusWorkerRush"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="255"/>
+						</State>
+						<State name="HeroRagnaros">
+							<When type="Property" Unit="HeroRagnaros"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="RagnarosMoltenCore"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="RagnarosEmpowerSulfuras"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="RagnarosLivingMeteorShiftingMeteor"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="RagnarosBlastWave"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroRaynor">
+							<When type="Property" Unit="HeroRaynor"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="RaynorPenetratingRound"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="RaynorInspire"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="RaynorAdrenalineRush"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroRehgar">
+							<When type="Property" Unit="HeroRehgar"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="RehgarPurge"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="RehgarChainHeal"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="RehgarLightningShield"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="RehgarTotemicProjection"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" AbilityLink="RehgarGhostWolfDeactivate"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="255"/>
+						</State>
+						<State name="HeroRexxar">
+							<When type="Property" Unit="HeroRexxar"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="RexxarMishaFocus"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="RexxarSpiritSwoop"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="RexxarMishaChargeRedirect"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="RexxarMendPet"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroSamuro">
+							<When type="Property" Unit="HeroSamuro"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="SamuroIllusionMasterNoTarget"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="SamuroMirrorImageTargeted"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="SamuroCriticalStrike"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="SamuroWindwalk"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroSgtHammer">
+							<When type="Property" Unit="HeroSgtHammer"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="SgtHammerTankMode"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="SgtHammerSpiderMinesSiegeMode"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="SgtHammerConcussiveBlast"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="SgtHammerNeosteelPlating"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" AbilityLink="SgtHammerThrusters"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="255"/>
+						</State>
+						<State name="HeroStitches">
+							<When type="Property" Unit="HeroStitches"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="StitchesShamblingHorror"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="StitchesHook"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="StitchesSlam"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="StitchesDevour"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroStukov">
+							<When type="Property" Unit="HeroStukov"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="StukovBioKillSwitch"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="StukovHealingPathogen"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="StukovWeightedPustule"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="StukovLurkingArm"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroSylvanas">
+							<When type="Property" Unit="HeroSylvanas"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="SylvanasWitheringFire"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="SylvanasShadowDagger"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="SylvanasHauntingWaveActivate"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroTassadar">
+							<When type="Property" Unit="HeroTassadar"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="TassadarShockRay"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="TassadarPsionicStorm"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="TassadarForceWall"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroThrall">
+							<When type="Property" Unit="HeroThrall"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="ThrallChainLightning"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="ThrallFeralSpirit"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="ThrallWindfury"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroTinker">
+							<When type="Property" Unit="HeroTinker"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="GazloweSalvagerSalvageTurretAbility"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="TinkerRockItTurret"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="GazloweDethLazor"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="TinkerXplodiumBomb"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroTracer">
+							<When type="Property" Unit="HeroTracer"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="TracerLockedandLoadedFailReload"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="TracerBlink"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="TracerMelee"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="TracerRecall"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroTychus">
+							<When type="Property" Unit="HeroTychus"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="TychusOdinAnnihilate"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="TychusOdinRagnarokMissilesTargeted"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="TychusRunAndGunOverkill"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroTyrael">
+							<When type="Property" Unit="HeroTyrael"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="TyraelAspectofJustice"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="ElDruinsMightEldruinsFlash"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="TyraelRighteousness"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="TyraelSmite"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroTyrande">
+							<When type="Property" Unit="HeroTyrande"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="TyrandeHuntersMark"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="TyrandeLightofElune"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="TyrandeSentinelShot"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="TyrandeLunarFlare"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroUther">
+							<When type="Property" Unit="HeroUther"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="UtherHolyLight"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="UtherHolyRadiance"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="UtherHammerOfJustice"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroValeera">
+							<When type="Property" Unit="HeroValeera"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="ValeeraStealth"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="ValeeraAmbush"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="ValeeraCheapShot"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="ValeeraGarrote"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroVarian">
+							<When type="Property" Unit="HeroVarian"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="VarianHeroicStrike"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="VarianLionsFang"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="VarianParry"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="VarianCharge"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroWhitemane">
+							<When type="Property" Unit="HeroWhitemane"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="WhitemaneFanaticalPower"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="WhitemaneDesperatePlea"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="WhitemaneInquisition"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="WhitemaneSearingLash"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroWitchDoctor">
+							<When type="Property" Unit="HeroWitchDoctor"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="WitchDoctorCorpseSpiders"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="WitchDoctorZombieWall"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="WitchDoctorPlagueofToads"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroWizard">
+							<When type="Property" Unit="HeroWizard"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="WizardMagicMissiles"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="WizardArcaneOrb"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="WizardTeleport"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroXalatath">
+							<When type="Property" Unit="HeroXalatath"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="XalatathVoidVolley"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="XalatathShadowMark"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="XalatathDarkHeartRitual"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="XalatathVoidStep"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroYrel">
+							<When type="Property" Unit="HeroYrel"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="YrelVindicationCast"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="YrelRighteousHammerDivinePurpose"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="YrelAvengingWrathDivinePurpose"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" AbilityLink="YrelDivineSteedSummonMount"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="255"/>
+						</State>
+						<State name="HeroZagara">
+							<When type="Property" Unit="HeroZagara"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="ZagaraSummonCreepTumor"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="ZagaraBanelingBarrage"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="ZagaraSummonHydralisk"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="ZagaraInfestedDrop"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroZarya">
+							<When type="Property" Unit="HeroZarya"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="ZaryaParticleGrenade"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="ZaryaPersonalBarrier"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="ZaryaShieldAlly"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroZeratul">
+							<When type="Property" Unit="HeroZeratul"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="ZeratulCleave"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="ZeratulSeekerInTheDark"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="ZeratulBlinkStorm"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
+						</State>
+						<State name="HeroZuljin">
+							<When type="Property" Unit="HeroZuljin"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" AbilityLink="ZuljinBerserker"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilD" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilDKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" AbilityLink="ZuljinGrievousThrow"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQ" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilQKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" AbilityLink="ZuljinTwinCleave"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilW" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilWKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" AbilityLink="ZuljinRegenerationForestMedicine"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilE" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilEKey" Alpha="255"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZ" Alpha="0"/>
+							<Action type="SetProperty" frame="$this/FCJH_AbilZKey" Alpha="0"/>
 						</State>
 					<State name="Other"/>
 				</StateGroup>
@@ -3771,6 +5297,7 @@
 				</StateGroup>
 			</Frame>
 		</Frame>
+			</Frame>
 		</Frame>
 	</Frame>
 </Desc>

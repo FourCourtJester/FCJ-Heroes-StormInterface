@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <Desc>
-	<!-- PROBE (dev only): heal pop-ups, round 1 (2026-09-29). Written by a one-off script.
+	<!-- PROBE (dev only): heal pop-ups, round 2 (2026-09-29). Written by a one-off script.
 
 	     Spec (user, 2026-09-27/29): the talent pop-up's spot and motion - slide up from the
 	     plate's middle to its top edge, hold 5 s, fade - with a green plus in a green border;
@@ -87,11 +87,18 @@
 						<Action type="SetProperty" frame="$parent/FCJH_Heal0/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal0" event="FCJH_Pop"/>
 					</State>
+					<!-- round 2: the latch (Shown) only resets once the hero is above 25% AND the pop-up has
+					     finished. Round 1 reset it the moment the flag dropped, and a heal under 25% flickers
+					     the flag (the percent changes), which restarted the pop-up on every tick of healing -->
 					<State name="Low">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus/FCJH_CritMark" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Heal0/FCJH_Body" visible="true"/>
+					</State>
+					<State name="Rearm">
+						<When type="Property" frame="$parent/FCJH_Heal0" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
 					</State>
 					<State name="Fine">
-						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal0/FCJH_Body" visible="false"/>
 					</State>
 				</StateGroup>
@@ -167,11 +174,18 @@
 						<Action type="SetProperty" frame="$parent/FCJH_Heal1/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal1" event="FCJH_Pop"/>
 					</State>
+					<!-- round 2: the latch (Shown) only resets once the hero is above 25% AND the pop-up has
+					     finished. Round 1 reset it the moment the flag dropped, and a heal under 25% flickers
+					     the flag (the percent changes), which restarted the pop-up on every tick of healing -->
 					<State name="Low">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus/FCJH_CritMark" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Heal1/FCJH_Body" visible="true"/>
+					</State>
+					<State name="Rearm">
+						<When type="Property" frame="$parent/FCJH_Heal1" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
 					</State>
 					<State name="Fine">
-						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal1/FCJH_Body" visible="false"/>
 					</State>
 				</StateGroup>
@@ -247,11 +261,18 @@
 						<Action type="SetProperty" frame="$parent/FCJH_Heal2/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal2" event="FCJH_Pop"/>
 					</State>
+					<!-- round 2: the latch (Shown) only resets once the hero is above 25% AND the pop-up has
+					     finished. Round 1 reset it the moment the flag dropped, and a heal under 25% flickers
+					     the flag (the percent changes), which restarted the pop-up on every tick of healing -->
 					<State name="Low">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus/FCJH_CritMark" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Heal2/FCJH_Body" visible="true"/>
+					</State>
+					<State name="Rearm">
+						<When type="Property" frame="$parent/FCJH_Heal2" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
 					</State>
 					<State name="Fine">
-						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal2/FCJH_Body" visible="false"/>
 					</State>
 				</StateGroup>
@@ -327,11 +348,18 @@
 						<Action type="SetProperty" frame="$parent/FCJH_Heal3/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal3" event="FCJH_Pop"/>
 					</State>
+					<!-- round 2: the latch (Shown) only resets once the hero is above 25% AND the pop-up has
+					     finished. Round 1 reset it the moment the flag dropped, and a heal under 25% flickers
+					     the flag (the percent changes), which restarted the pop-up on every tick of healing -->
 					<State name="Low">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus/FCJH_CritMark" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Heal3/FCJH_Body" visible="true"/>
+					</State>
+					<State name="Rearm">
+						<When type="Property" frame="$parent/FCJH_Heal3" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
 					</State>
 					<State name="Fine">
-						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal3/FCJH_Body" visible="false"/>
 					</State>
 				</StateGroup>
@@ -407,11 +435,18 @@
 						<Action type="SetProperty" frame="$parent/FCJH_Heal4/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal4" event="FCJH_Pop"/>
 					</State>
+					<!-- round 2: the latch (Shown) only resets once the hero is above 25% AND the pop-up has
+					     finished. Round 1 reset it the moment the flag dropped, and a heal under 25% flickers
+					     the flag (the percent changes), which restarted the pop-up on every tick of healing -->
 					<State name="Low">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus/FCJH_CritMark" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Heal4/FCJH_Body" visible="true"/>
+					</State>
+					<State name="Rearm">
+						<When type="Property" frame="$parent/FCJH_Heal4" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
 					</State>
 					<State name="Fine">
-						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal4/FCJH_Body" visible="false"/>
 					</State>
 				</StateGroup>
@@ -487,11 +522,18 @@
 						<Action type="SetProperty" frame="$parent/FCJH_Heal5/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal5" event="FCJH_Pop"/>
 					</State>
+					<!-- round 2: the latch (Shown) only resets once the hero is above 25% AND the pop-up has
+					     finished. Round 1 reset it the moment the flag dropped, and a heal under 25% flickers
+					     the flag (the percent changes), which restarted the pop-up on every tick of healing -->
 					<State name="Low">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus/FCJH_CritMark" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Heal5/FCJH_Body" visible="true"/>
+					</State>
+					<State name="Rearm">
+						<When type="Property" frame="$parent/FCJH_Heal5" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
 					</State>
 					<State name="Fine">
-						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal5/FCJH_Body" visible="false"/>
 					</State>
 				</StateGroup>
@@ -567,11 +609,18 @@
 						<Action type="SetProperty" frame="$parent/FCJH_Heal6/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal6" event="FCJH_Pop"/>
 					</State>
+					<!-- round 2: the latch (Shown) only resets once the hero is above 25% AND the pop-up has
+					     finished. Round 1 reset it the moment the flag dropped, and a heal under 25% flickers
+					     the flag (the percent changes), which restarted the pop-up on every tick of healing -->
 					<State name="Low">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus/FCJH_CritMark" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Heal6/FCJH_Body" visible="true"/>
+					</State>
+					<State name="Rearm">
+						<When type="Property" frame="$parent/FCJH_Heal6" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
 					</State>
 					<State name="Fine">
-						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal6/FCJH_Body" visible="false"/>
 					</State>
 				</StateGroup>
@@ -647,11 +696,18 @@
 						<Action type="SetProperty" frame="$parent/FCJH_Heal7/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal7" event="FCJH_Pop"/>
 					</State>
+					<!-- round 2: the latch (Shown) only resets once the hero is above 25% AND the pop-up has
+					     finished. Round 1 reset it the moment the flag dropped, and a heal under 25% flickers
+					     the flag (the percent changes), which restarted the pop-up on every tick of healing -->
 					<State name="Low">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus/FCJH_CritMark" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Heal7/FCJH_Body" visible="true"/>
+					</State>
+					<State name="Rearm">
+						<When type="Property" frame="$parent/FCJH_Heal7" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
 					</State>
 					<State name="Fine">
-						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal7/FCJH_Body" visible="false"/>
 					</State>
 				</StateGroup>
@@ -727,11 +783,18 @@
 						<Action type="SetProperty" frame="$parent/FCJH_Heal8/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal8" event="FCJH_Pop"/>
 					</State>
+					<!-- round 2: the latch (Shown) only resets once the hero is above 25% AND the pop-up has
+					     finished. Round 1 reset it the moment the flag dropped, and a heal under 25% flickers
+					     the flag (the percent changes), which restarted the pop-up on every tick of healing -->
 					<State name="Low">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus/FCJH_CritMark" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Heal8/FCJH_Body" visible="true"/>
+					</State>
+					<State name="Rearm">
+						<When type="Property" frame="$parent/FCJH_Heal8" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
 					</State>
 					<State name="Fine">
-						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal8/FCJH_Body" visible="false"/>
 					</State>
 				</StateGroup>
@@ -807,11 +870,18 @@
 						<Action type="SetProperty" frame="$parent/FCJH_Heal9/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal9" event="FCJH_Pop"/>
 					</State>
+					<!-- round 2: the latch (Shown) only resets once the hero is above 25% AND the pop-up has
+					     finished. Round 1 reset it the moment the flag dropped, and a heal under 25% flickers
+					     the flag (the percent changes), which restarted the pop-up on every tick of healing -->
 					<State name="Low">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus/FCJH_CritMark" visible="true"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Heal9/FCJH_Body" visible="true"/>
+					</State>
+					<State name="Rearm">
+						<When type="Property" frame="$parent/FCJH_Heal9" visible="false"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
 					</State>
 					<State name="Fine">
-						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal9/FCJH_Body" visible="false"/>
 					</State>
 				</StateGroup>

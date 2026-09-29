@@ -62,7 +62,8 @@
 		<Frame type="Image" name="HeroPortraitBackground" template="FCJH_HeroRow/FCJH_Parked"/>
 		<Frame type="Image" name="TalentsBgImage" template="FCJH_HeroRow/FCJH_Parked"/>
 		<!-- Blizzard's click target (select, centre the camera): the whole plate, above
-		     everything we draw, so no art of ours can take the click -->
+		     everything we draw, so no art of ours can take the click; its hit test is the
+		     plate's slanted shape (FCJH_PLATE_HIT_*), not the square -->
 		<Frame type="UnitTargetFrame" name="TargetHeroUnitFrame">
 			<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 			<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
@@ -70,6 +71,7 @@
 			<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
 			<Width val="0"/>
 			<Height val="0"/>
+			<HitTestTexture val="#FCJH_PLATE_HIT_BLUE"/>
 			<RenderPriority val="600"/>
 		</Frame>
 		<Frame type="Label" name="HeroDeathTimeLabel">
@@ -285,8 +287,11 @@
 				<Behavior val="HealingFountainCooldown"/>
 				<Alpha val="0"/>
 				<AcceptsMouse val="false"/>
+				<AcceptsMouseTooltip val="false"/>
 				<Frame type="BehaviorIcon" name="BehaviorIcon" template="BehaviorBar/BehaviorIconTemplate">
 					<Anchor relative="$parent"/>
+					<AcceptsMouse val="false"/>
+					<AcceptsMouseTooltip val="false"/>
 				</Frame>
 			</Frame>
 			<!-- Blizzard's token art is already slanted, leaning / like the red plates: blue
@@ -325,8 +330,11 @@
 				<Behavior val="AbathurUltimateEvolutionVehicleCasterBehavior"/>
 				<Alpha val="0"/>
 				<AcceptsMouse val="false"/>
+				<AcceptsMouseTooltip val="false"/>
 				<Frame type="BehaviorIcon" name="BehaviorIcon" template="BehaviorBar/BehaviorIconTemplate">
 					<Anchor relative="$parent"/>
+					<AcceptsMouse val="false"/>
+					<AcceptsMouseTooltip val="false"/>
 				</Frame>
 			</Frame>
 			<Frame type="Image" name="FCJH_CloneIcon">
@@ -395,6 +403,7 @@
 			<RenderPriority val="401"/>
 			<AcceptsMouse val="false"/>
 		</Frame>
+		<Frame type="UnitTargetFrame" name="TargetHeroUnitFrame"><HitTestTexture val="#FCJH_PLATE_HIT_RED"/></Frame>
 		<Frame type="Image" name="HeroPortraitImage">
 			<Anchor side="Top"    relative="$parent" pos="Min" offset="-1"/>
 			<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>

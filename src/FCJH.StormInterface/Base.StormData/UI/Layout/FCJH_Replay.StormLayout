@@ -18,7 +18,42 @@
 						<Anchor side="Top"   relative="$GameUI" pos="Min" offset="#FCJH_REPLAY_T"/>
 						<Anchor side="Left"  relative="$GameUI" pos="Min" offset="#FCJH_REPLAY_L"/>
 						<Anchor side="Right" relative="$this"   pos="Min" offset="0"/>
+						<Width val="#FCJH_REPLAY_W"/>
 						<Unclipped val="true"/>
+						<!-- Blizzard chains everything up from the bottom (backing top = slider - 60,
+						     slider above the play button, play button on the backing's bottom), so
+						     hiding the timeline (the chevron) shrank the panel DOWNWARD. Re-chained
+						     from the top edge: backing top fixed, labels, slider, then the buttons;
+						     the backing's bottom follows the buttons. Hiding the timeline now pulls
+						     the buttons and the bottom edge up. -->
+						<Frame type="Image" name="BackgroundImage">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
+							<Anchor side="Bottom" relative="$parent/PlayButton" pos="Max" offset="12"/>
+							<Width val="0"/>
+						</Frame>
+						<Frame type="Label" name="TimeValue">
+							<Anchor side="Top"    relative="$parent/BackgroundImage" pos="Min" offset="12"/>
+							<Anchor side="Bottom" relative="$this" pos="Min" offset="24"/>
+							<Anchor side="Left"   relative="$parent/BackgroundImage" pos="Min" offset="20"/>
+						</Frame>
+						<Frame type="Label" name="SpeedValue">
+							<Anchor side="Top"    relative="$parent/BackgroundImage" pos="Min" offset="12"/>
+							<Anchor side="Bottom" relative="$this" pos="Min" offset="24"/>
+							<Anchor side="Right"  relative="$parent/BackgroundImage" pos="Max" offset="-20"/>
+						</Frame>
+						<Frame type="Slider" name="ProgressSlider">
+							<Anchor side="Top"    relative="$parent/TimeValue" pos="Max" offset="4"/>
+							<Anchor side="Bottom" relative="$this" pos="Min" offset="30"/>
+							<Anchor side="Left"   relative="$parent/BackgroundImage" pos="Min" offset="18"/>
+							<Anchor side="Right"  relative="$parent/BackgroundImage" pos="Max" offset="-18"/>
+						</Frame>
+						<Frame type="Button" name="PlayButton">
+							<Anchor side="Top"    relative="$parent/ProgressSlider" pos="Max" offset="6"/>
+							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+							<Anchor side="Left"   relative="$parent/BackgroundImage" pos="Min" offset="12"/>
+						</Frame>
 					</Frame>
 				</Frame>
 			</Frame>

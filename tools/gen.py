@@ -474,6 +474,12 @@ def slant_bars(cfg):
     # plate tokens (the heroic): a white mask to cut an icon to the slant, a dark overlay for
     # cooldown, and a plain backing for the "?" state
     cell = HeroCell(cfg)
+    # the plate's own shape, as the click target's hit-test texture: plates overlap along the
+    # slant, and a square click area sent clicks on one plate's corner to its neighbour
+    for team in ("blue", "red"):
+        data = slant_texture(team, cell.overlap / cell.w, "ffffff", size=(256, 128))
+        digest = hashlib.sha1(data).hexdigest()[:8]
+        out[name("plate", "hit", team)] = (f"FCJH_PlateHit_{team}_{digest}.dds", data)
     for team in ("blue", "red"):
         l, t, r, b = cell.heroic[team]
         cut = lean * (b - t) / (r - l)
@@ -689,8 +695,11 @@ def hero_cell_template(team, c):
 				<Behavior val="HealingFountainCooldown"/>
 				<Alpha val="0"/>
 				<AcceptsMouse val="false"/>
+				<AcceptsMouseTooltip val="false"/>
 				<Frame type="BehaviorIcon" name="BehaviorIcon" template="BehaviorBar/BehaviorIconTemplate">
 					<Anchor relative="$parent"/>
+					<AcceptsMouse val="false"/>
+					<AcceptsMouseTooltip val="false"/>
 				</Frame>
 			</Frame>
 			<!-- Blizzard's token art is already slanted, leaning / like the red plates: blue
@@ -725,8 +734,11 @@ def hero_cell_template(team, c):
 				<Behavior val="AbathurUltimateEvolutionVehicleCasterBehavior"/>
 				<Alpha val="0"/>
 				<AcceptsMouse val="false"/>
+				<AcceptsMouseTooltip val="false"/>
 				<Frame type="BehaviorIcon" name="BehaviorIcon" template="BehaviorBar/BehaviorIconTemplate">
 					<Anchor relative="$parent"/>
+					<AcceptsMouse val="false"/>
+					<AcceptsMouseTooltip val="false"/>
 				</Frame>
 			</Frame>
 			<Frame type="Image" name="FCJH_CloneIcon">
@@ -790,7 +802,8 @@ def hero_cell_template(team, c):
 		<Frame type="Image" name="HeroPortraitBackground" template="FCJH_HeroRow/FCJH_Parked"/>
 		<Frame type="Image" name="TalentsBgImage" template="FCJH_HeroRow/FCJH_Parked"/>
 		<!-- Blizzard's click target (select, centre the camera): the whole plate, above
-		     everything we draw, so no art of ours can take the click -->
+		     everything we draw, so no art of ours can take the click; its hit test is the
+		     plate's slanted shape (FCJH_PLATE_HIT_*), not the square -->
 		<Frame type="UnitTargetFrame" name="TargetHeroUnitFrame">
 			<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 			<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
@@ -798,6 +811,7 @@ def hero_cell_template(team, c):
 			<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
 			<Width val="0"/>
 			<Height val="0"/>
+			<HitTestTexture val="#FCJH_PLATE_HIT_BLUE"/>
 			<RenderPriority val="600"/>
 		</Frame>
 		<Frame type="Label" name="HeroDeathTimeLabel">
@@ -840,6 +854,9 @@ def hero_cell_template(team, c):
 			<RenderPriority val="501"/>
 			<AcceptsMouse val="false"/>
 		</Frame>"""
+    if not blue:
+        common = """
+		<Frame type="UnitTargetFrame" name="TargetHeroUnitFrame"><HitTestTexture val="#FCJH_PLATE_HIT_RED"/></Frame>"""
     return (f"\t{header}"
             + art("FCJH_FrameBg", "HUD_TopBar_Team_HeroFrame", 400)
             + art("FCJH_TeamBg", f"HUD_TopBar_Team_HeroFrame_BG_{'Blue' if blue else 'Red'}", 401)
