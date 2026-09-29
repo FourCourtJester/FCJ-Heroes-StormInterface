@@ -54,9 +54,45 @@
 				<Frame type="Image" name="TopBackground"><Alpha val="0"/></Frame>
 				<Frame type="Image" name="BottomBorderImage"><Alpha val="0"/></Frame>
 				<Frame type="Image" name="BorderFrame"><Alpha val="0"/></Frame>
-				<Frame type="Frame" name="TargetPortraitFrame"><Alpha val="0"/></Frame>
-				<Frame type="UnitStatusFrame" name="HealthAndManaUnitStatusFrame"><Alpha val="0"/></Frame>
-				<Frame type="Image" name="AdditionalInfoIcon"><Alpha val="0"/></Frame>
+				<!-- parked off screen, not just faded: faded, their stat rows still answered the mouse
+				     under our portrait (duplicate tooltips, round 7) -->
+				<Frame type="Frame" name="TargetPortraitFrame">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="10099"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="10099"/>
+					<Alpha val="0"/>
+					<AcceptsMouse val="false"/>
+					<AcceptsMouseTooltip val="false"/>
+				</Frame>
+				<Frame type="UnitStatusFrame" name="HealthAndManaUnitStatusFrame">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="10099"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="10099"/>
+					<Alpha val="0"/>
+					<AcceptsMouse val="false"/>
+					<AcceptsMouseTooltip val="false"/>
+				</Frame>
+				<Frame type="Image" name="AdditionalInfoIcon">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="10099"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="10099"/>
+					<Alpha val="0"/>
+					<AcceptsMouse val="false"/>
+					<AcceptsMouseTooltip val="false"/>
+				</Frame>
+				<Frame type="UnitTargetFrame" name="TargetHeroUnitFrame">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="10099"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="10099"/>
+					<Alpha val="0"/>
+					<AcceptsMouse val="false"/>
+					<AcceptsMouseTooltip val="false"/>
+				</Frame>
+
 
 		<!-- B. The experiments, each labelled 1-6 in the header: Blizzard's per-unit widgets in a
 		     selection panel over the card -->
@@ -215,6 +251,15 @@
 							<Anchor side="Right" relative="$this" pos="Min" offset="0"/>
 							<Width val="150"/>
 						</Frame>
+					<!-- the stat tooltips open off the card's right edge, level with the stats (Blizzard's
+					     hung them under the box - the bottom of our tall card, round 7) -->
+					<Frame type="Frame" name="TooltipAnchorFrame">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+						<Anchor side="Left"   relative="$parent/$parent" pos="Max" offset="14"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+						<Width val="10"/>
+						<TooltipAnchorPosition val="TopToTop | LeftToLeft"/>
+					</Frame>
 				</Frame>
 
 				<!-- 1. animated model: DROPPED (round 6). The hero cutscene kept the first hero clicked
@@ -233,10 +278,11 @@
 				     "Player 5" for every hero in round 4) -->
 				<Frame type="UnitStatusLevel" name="FCJH_Level" template="UnitStatus/UnitStatusLevelTemplate">
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="160"/>
-					<Anchor side="Left"   relative="$parent" pos="Min" offset="270"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="266"/>
 					<Anchor side="Bottom" relative="$parent" pos="Min" offset="190"/>
-					<Anchor side="Right"  relative="$parent" pos="Min" offset="318"/>
-					<Frame type="Label" name="Label"><Anchor relative="$parent"/><Style val="FCJH_InspectLevel"/></Frame>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="324"/>
+					<!-- no truncation: "13" read "..." in round 7 -->
+					<Frame type="Label" name="Label"><Anchor relative="$parent"/><Style val="FCJH_InspectLevel"/><Options val="NoWrapping | ScaleToPreventTruncation"/></Frame>
 				</Frame>
 
 				<!-- 3. fountain: the plates' sensor; Blizzard's "ready" art in the name band, just left of
@@ -398,7 +444,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -422,7 +470,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -446,7 +496,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -470,7 +522,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -494,7 +548,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -518,7 +574,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -542,7 +600,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -563,11 +623,11 @@
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="186"/>
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="461"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
-						<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/@AbilityLink}"/>
+						<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/@HeroicAbilLink}"/>
 						<AcceptsMouse val="false"/>
 						<Frame type="AbilIcon" name="AbilIcon">
 							<Anchor relative="$parent"/>
-							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/></Frame>
+							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><AcceptsMouse val="true"/><AcceptsMouseTooltip val="true"/></Frame>
 							<Frame type="Label" name="CooldownLabel"><Anchor relative="$parent"/><Style val="FCJH_HeroicCooldown"/></Frame>
 						</Frame>
 					</Frame>
@@ -683,7 +743,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -707,7 +769,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -731,7 +795,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -755,7 +821,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -779,7 +847,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -803,7 +873,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -827,7 +899,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -848,11 +922,11 @@
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="186"/>
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="461"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
-						<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/@AbilityLink}"/>
+						<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/@HeroicAbilLink}"/>
 						<AcceptsMouse val="false"/>
 						<Frame type="AbilIcon" name="AbilIcon">
 							<Anchor relative="$parent"/>
-							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/></Frame>
+							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><AcceptsMouse val="true"/><AcceptsMouseTooltip val="true"/></Frame>
 							<Frame type="Label" name="CooldownLabel"><Anchor relative="$parent"/><Style val="FCJH_HeroicCooldown"/></Frame>
 						</Frame>
 					</Frame>
@@ -968,7 +1042,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -992,7 +1068,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -1016,7 +1094,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -1040,7 +1120,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -1064,7 +1146,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -1088,7 +1172,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -1112,7 +1198,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -1133,11 +1221,11 @@
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="186"/>
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="461"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
-						<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/@AbilityLink}"/>
+						<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/@HeroicAbilLink}"/>
 						<AcceptsMouse val="false"/>
 						<Frame type="AbilIcon" name="AbilIcon">
 							<Anchor relative="$parent"/>
-							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/></Frame>
+							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><AcceptsMouse val="true"/><AcceptsMouseTooltip val="true"/></Frame>
 							<Frame type="Label" name="CooldownLabel"><Anchor relative="$parent"/><Style val="FCJH_HeroicCooldown"/></Frame>
 						</Frame>
 					</Frame>
@@ -1253,7 +1341,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -1277,7 +1367,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -1301,7 +1393,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -1325,7 +1419,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -1349,7 +1445,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -1373,7 +1471,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -1397,7 +1497,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -1418,11 +1520,11 @@
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="186"/>
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="461"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
-						<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/@AbilityLink}"/>
+						<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/@HeroicAbilLink}"/>
 						<AcceptsMouse val="false"/>
 						<Frame type="AbilIcon" name="AbilIcon">
 							<Anchor relative="$parent"/>
-							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/></Frame>
+							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><AcceptsMouse val="true"/><AcceptsMouseTooltip val="true"/></Frame>
 							<Frame type="Label" name="CooldownLabel"><Anchor relative="$parent"/><Style val="FCJH_HeroicCooldown"/></Frame>
 						</Frame>
 					</Frame>
@@ -1538,7 +1640,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -1562,7 +1666,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -1586,7 +1692,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -1610,7 +1718,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -1634,7 +1744,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -1658,7 +1770,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -1682,7 +1796,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -1703,11 +1819,11 @@
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="186"/>
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="461"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
-						<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/@AbilityLink}"/>
+						<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/@HeroicAbilLink}"/>
 						<AcceptsMouse val="false"/>
 						<Frame type="AbilIcon" name="AbilIcon">
 							<Anchor relative="$parent"/>
-							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/></Frame>
+							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><AcceptsMouse val="true"/><AcceptsMouseTooltip val="true"/></Frame>
 							<Frame type="Label" name="CooldownLabel"><Anchor relative="$parent"/><Style val="FCJH_HeroicCooldown"/></Frame>
 						</Frame>
 					</Frame>
@@ -1823,7 +1939,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -1847,7 +1965,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -1871,7 +1991,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -1895,7 +2017,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -1919,7 +2043,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -1943,7 +2069,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -1967,7 +2095,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -1988,11 +2118,11 @@
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="186"/>
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="461"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
-						<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/@AbilityLink}"/>
+						<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/@HeroicAbilLink}"/>
 						<AcceptsMouse val="false"/>
 						<Frame type="AbilIcon" name="AbilIcon">
 							<Anchor relative="$parent"/>
-							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/></Frame>
+							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><AcceptsMouse val="true"/><AcceptsMouseTooltip val="true"/></Frame>
 							<Frame type="Label" name="CooldownLabel"><Anchor relative="$parent"/><Style val="FCJH_HeroicCooldown"/></Frame>
 						</Frame>
 					</Frame>
@@ -2108,7 +2238,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -2132,7 +2264,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -2156,7 +2290,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -2180,7 +2316,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -2204,7 +2342,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -2228,7 +2368,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -2252,7 +2394,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -2273,11 +2417,11 @@
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="186"/>
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="461"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
-						<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/@AbilityLink}"/>
+						<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/@HeroicAbilLink}"/>
 						<AcceptsMouse val="false"/>
 						<Frame type="AbilIcon" name="AbilIcon">
 							<Anchor relative="$parent"/>
-							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/></Frame>
+							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><AcceptsMouse val="true"/><AcceptsMouseTooltip val="true"/></Frame>
 							<Frame type="Label" name="CooldownLabel"><Anchor relative="$parent"/><Style val="FCJH_HeroicCooldown"/></Frame>
 						</Frame>
 					</Frame>
@@ -2393,7 +2537,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -2417,7 +2563,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -2441,7 +2589,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -2465,7 +2615,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -2489,7 +2641,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -2513,7 +2667,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -2537,7 +2693,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -2558,11 +2716,11 @@
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="186"/>
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="461"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
-						<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/@AbilityLink}"/>
+						<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/@HeroicAbilLink}"/>
 						<AcceptsMouse val="false"/>
 						<Frame type="AbilIcon" name="AbilIcon">
 							<Anchor relative="$parent"/>
-							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/></Frame>
+							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><AcceptsMouse val="true"/><AcceptsMouseTooltip val="true"/></Frame>
 							<Frame type="Label" name="CooldownLabel"><Anchor relative="$parent"/><Style val="FCJH_HeroicCooldown"/></Frame>
 						</Frame>
 					</Frame>
@@ -2678,7 +2836,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -2702,7 +2862,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -2726,7 +2888,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -2750,7 +2914,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -2774,7 +2940,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -2798,7 +2966,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -2822,7 +2992,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -2843,11 +3015,11 @@
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="186"/>
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="461"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
-						<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/@AbilityLink}"/>
+						<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/@HeroicAbilLink}"/>
 						<AcceptsMouse val="false"/>
 						<Frame type="AbilIcon" name="AbilIcon">
 							<Anchor relative="$parent"/>
-							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/></Frame>
+							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><AcceptsMouse val="true"/><AcceptsMouseTooltip val="true"/></Frame>
 							<Frame type="Label" name="CooldownLabel"><Anchor relative="$parent"/><Style val="FCJH_HeroicCooldown"/></Frame>
 						</Frame>
 					</Frame>
@@ -2963,7 +3135,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -2987,7 +3161,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -3011,7 +3187,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -3035,7 +3213,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -3059,7 +3239,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -3083,7 +3265,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -3107,7 +3291,9 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
 						<Alpha val="0"/>
-						<AcceptsMouse val="false"/>
+						<AcceptsMouse val="true"/>
+						<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon's own tooltip -->
+						<Tooltip val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/@Tooltip}"/>
 						<Frame type="Image" name="FCJH_Border">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
@@ -3128,11 +3314,11 @@
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="186"/>
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="461"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
-						<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/@AbilityLink}"/>
+						<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/@HeroicAbilLink}"/>
 						<AcceptsMouse val="false"/>
 						<Frame type="AbilIcon" name="AbilIcon">
 							<Anchor relative="$parent"/>
-							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/></Frame>
+							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><AcceptsMouse val="true"/><AcceptsMouseTooltip val="true"/></Frame>
 							<Frame type="Label" name="CooldownLabel"><Anchor relative="$parent"/><Style val="FCJH_HeroicCooldown"/></Frame>
 						</Frame>
 					</Frame>
@@ -3230,7 +3416,7 @@
 						<AbilityLink val="AurielAngelicFlight"/>
 						<Frame type="AbilIcon" name="AbilIcon">
 							<Anchor relative="$parent"/>
-							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Unclipped val="true"/></Frame>
+							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Unclipped val="true"/><AcceptsMouse val="true"/><AcceptsMouseTooltip val="true"/></Frame>
 							<Frame type="Label" name="CooldownLabel">
 								<Anchor relative="$parent"/>
 								<Style val="FCJH_HeroicCooldown"/>
@@ -3272,7 +3458,7 @@
 						<AbilityLink val="AurielShieldOfHope"/>
 						<Frame type="AbilIcon" name="AbilIcon">
 							<Anchor relative="$parent"/>
-							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Unclipped val="true"/></Frame>
+							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Unclipped val="true"/><AcceptsMouse val="true"/><AcceptsMouseTooltip val="true"/></Frame>
 							<Frame type="Label" name="CooldownLabel">
 								<Anchor relative="$parent"/>
 								<Style val="FCJH_HeroicCooldown"/>
@@ -3313,7 +3499,7 @@
 						<Unclipped val="true"/>
 						<Frame type="AbilIcon" name="AbilIcon">
 							<Anchor relative="$parent"/>
-							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Unclipped val="true"/></Frame>
+							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Unclipped val="true"/><AcceptsMouse val="true"/><AcceptsMouseTooltip val="true"/></Frame>
 							<Frame type="Label" name="CooldownLabel">
 								<Anchor relative="$parent"/>
 								<Style val="FCJH_HeroicCooldown"/>
@@ -3354,7 +3540,7 @@
 						<Unclipped val="true"/>
 						<Frame type="AbilIcon" name="AbilIcon">
 							<Anchor relative="$parent"/>
-							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Unclipped val="true"/></Frame>
+							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Unclipped val="true"/><AcceptsMouse val="true"/><AcceptsMouseTooltip val="true"/></Frame>
 							<Frame type="Label" name="CooldownLabel">
 								<Anchor relative="$parent"/>
 								<Style val="FCJH_HeroicCooldown"/>
@@ -3395,7 +3581,7 @@
 						<Unclipped val="true"/>
 						<Frame type="AbilIcon" name="AbilIcon">
 							<Anchor relative="$parent"/>
-							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Unclipped val="true"/></Frame>
+							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Unclipped val="true"/><AcceptsMouse val="true"/><AcceptsMouseTooltip val="true"/></Frame>
 							<Frame type="Label" name="CooldownLabel">
 								<Anchor relative="$parent"/>
 								<Style val="FCJH_HeroicCooldown"/>
@@ -3436,7 +3622,7 @@
 						<Unclipped val="true"/>
 						<Frame type="AbilIcon" name="AbilIcon">
 							<Anchor relative="$parent"/>
-							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Unclipped val="true"/></Frame>
+							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Unclipped val="true"/><AcceptsMouse val="true"/><AcceptsMouseTooltip val="true"/></Frame>
 							<Frame type="Label" name="CooldownLabel">
 								<Anchor relative="$parent"/>
 								<Style val="FCJH_HeroicCooldown"/>
@@ -3471,7 +3657,7 @@
 						<Unclipped val="true"/>
 						<Frame type="AbilIcon" name="AbilIcon">
 							<Anchor relative="$parent"/>
-							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Unclipped val="true"/></Frame>
+							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Unclipped val="true"/><AcceptsMouse val="true"/><AcceptsMouseTooltip val="true"/></Frame>
 							<Frame type="Label" name="CooldownLabel">
 								<Anchor relative="$parent"/>
 								<Style val="FCJH_HeroicCooldown"/>
@@ -3506,7 +3692,7 @@
 						<Unclipped val="true"/>
 						<Frame type="AbilIcon" name="AbilIcon">
 							<Anchor relative="$parent"/>
-							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Unclipped val="true"/></Frame>
+							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Unclipped val="true"/><AcceptsMouse val="true"/><AcceptsMouseTooltip val="true"/></Frame>
 							<Frame type="Label" name="CooldownLabel">
 								<Anchor relative="$parent"/>
 								<Style val="FCJH_HeroicCooldown"/>
@@ -3541,7 +3727,7 @@
 						<Unclipped val="true"/>
 						<Frame type="AbilIcon" name="AbilIcon">
 							<Anchor relative="$parent"/>
-							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Unclipped val="true"/></Frame>
+							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Unclipped val="true"/><AcceptsMouse val="true"/><AcceptsMouseTooltip val="true"/></Frame>
 							<Frame type="Label" name="CooldownLabel">
 								<Anchor relative="$parent"/>
 								<Style val="FCJH_HeroicCooldown"/>
@@ -3576,7 +3762,7 @@
 						<Unclipped val="true"/>
 						<Frame type="AbilIcon" name="AbilIcon">
 							<Anchor relative="$parent"/>
-							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Unclipped val="true"/></Frame>
+							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Unclipped val="true"/><AcceptsMouse val="true"/><AcceptsMouseTooltip val="true"/></Frame>
 							<Frame type="Label" name="CooldownLabel">
 								<Anchor relative="$parent"/>
 								<Style val="FCJH_HeroicCooldown"/>
@@ -3612,7 +3798,7 @@
 						<AbilityLink val="Mount"/>
 						<Frame type="AbilIcon" name="AbilIcon">
 							<Anchor relative="$parent"/>
-							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Unclipped val="true"/></Frame>
+							<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Unclipped val="true"/><AcceptsMouse val="true"/><AcceptsMouseTooltip val="true"/></Frame>
 							<Frame type="Label" name="CooldownLabel">
 								<Anchor relative="$parent"/>
 								<Style val="FCJH_HeroicCooldown"/>

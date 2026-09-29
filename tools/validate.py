@@ -44,11 +44,6 @@ MODS = REPO / "references" / "JamiePhan" / "mods"
 BASE_MODS = ["core.stormmod", "heroesdata.stormmod"]
 
 OUR_PREFIX = "FCJH_"
-# Blizzard names we add on purpose where this copy of a frame lacks them: the engine fills
-# them by name in another copy of the same template (the in-game top bar's HeroOverviewTemplate,
-# partyframe.stormlayout, has per-Viking and pet death timers; the observer's doesn't).
-ENGINE_NAMED = {"HeroDeathTimeVikingOlafLabel", "HeroDeathTimeVikingBaleogLabel",
-                "HeroDeathTimeVikingErikLabel", "HeroDeathTimePetLabel"}
 PARK_THRESHOLD = 5000  # an anchor offset this large means "moved off-screen"
 
 SIDES = {"top", "bottom", "left", "right"}
@@ -288,7 +283,7 @@ class Catalog:
                 dst.add(sc.clone())
 
     def check_new_child(self, parent, name, el):
-        if el.ours and not parent.ours and not name.startswith(OUR_PREFIX) and name not in ENGINE_NAMED:
+        if el.ours and not parent.ours and not name.startswith(OUR_PREFIX):
             self.error(el, f"no frame '{name}' in Blizzard's {parent.path()} - this silently creates a "
                            f"new, empty frame. A typo or a renamed frame? (Prefix new frames {OUR_PREFIX})")
 

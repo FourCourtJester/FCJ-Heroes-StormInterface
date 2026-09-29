@@ -538,22 +538,31 @@ def trackers(team, health):
     third = (w - 2 * VIKING_GAP) / 3
     bar = (f'<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">'
            f'<Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm{suffix}"/><Tiled val="true"/></Frame>')
-    # each Viking also gets its own click target, the full height of the plate over its third
-    # (select that Viking, centre the camera on them), above the plate's own (600)
-    cell = "$parent/$parent/$parent/$parent"
+    # Each Viking also gets its own click target (select that Viking, centre the camera), over
+    # its third of the plate at full height, above the plate's own (600). Round 1 hung it off
+    # the bar-high strip and clicks landed only now and then (clipped to the strip, likely), so
+    # the tracker and each Viking's frame now span the whole plate; only the bar sits in the strip.
+    hl, ht, hr, hb = health
+    strip = "$parent/$parent/$parent"          # bar -> Viking -> tracker -> HeroStatus (the strip)
     vikings = "".join(
         f"""
 					<Frame type="UnitStatusFrame" name="TrackedUnitStatusFrame{i}">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 						<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="{round(i * (third + VIKING_GAP))}"/>
-						<Anchor side="Right"  relative="$parent" pos="Min" offset="{round(i * (third + VIKING_GAP) + third)}"/>
-						{bar}
-						<Frame type="UnitTargetFrame" name="FCJH_Target">
-							<Anchor side="Top"    relative="{cell}" pos="Min" offset="0"/>
-							<Anchor side="Bottom" relative="{cell}" pos="Max" offset="0"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="{round(hl + i * (third + VIKING_GAP))}"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="{round(hl + i * (third + VIKING_GAP) + third)}"/>
+						<Unclipped val="true"/>
+						<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">
+							<Anchor side="Top"    relative="{strip}" pos="Min" offset="0"/>
+							<Anchor side="Bottom" relative="{strip}" pos="Max" offset="0"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 							<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
+							<Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm{suffix}"/>
+							<Tiled val="true"/>
+							<Unclipped val="true"/>
+						</Frame>
+						<Frame type="UnitTargetFrame" name="FCJH_Target">
+							<Anchor relative="$parent"/>
 							<AllowTargeting val="false"/>
 							<AllowSelection val="true"/>
 							<AllowCameraCentering val="true"/>
@@ -563,7 +572,13 @@ def trackers(team, health):
 						</Frame>
 					</Frame>""" for i in range(3))
     return f"""
-			<Frame type="UnitStatusUnitTrackingBehavior" name="VikingTrackingElement">{vikings}
+			<Frame type="UnitStatusUnitTrackingBehavior" name="VikingTrackingElement">
+				<!-- the whole plate, not the bar strip (see the click targets) -->
+				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="0"/>
+				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent/$parent" pos="Max" offset="0"/>
+				<Anchor side="Right"  relative="$parent/$parent" pos="Max" offset="0"/>
+				<Unclipped val="true"/>{vikings}
 			</Frame>
 			<Frame type="UnitStatusUnitTrackingBehavior" name="RexxarTrackingElement">
 				<Anchor side="Left"  relative="$parent" pos="Min" offset="0"/>
@@ -576,43 +591,77 @@ def trackers(team, health):
 			</Frame>"""
 
 
+PET_TIMERS = {"Olaf": "HeroDeathTimeVikingOlafLabel", "Baleog": "HeroDeathTimeVikingBaleogLabel",
+              "Erik": "HeroDeathTimeVikingErikLabel", "Pet": "HeroDeathTimePetLabel"}
+PARTY = "$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel"
+
+
 def pet_death_labels(team, c):
-    """EXPERIMENT (2026-09-29): per-unit death timers. Blizzard's in-game top bar cells (its
-    own HeroOverviewTemplate, partyframe.stormlayout) carry one label per Viking and one for
-    Misha, which the engine fills by name; its observer cells don't. Same names here, each
-    over its own unit's slice of the plate, so a dead Viking's timer covers only its third.
-    Named exactly as Blizzard's; if the engine doesn't fill them for observer cells they
-    simply never show."""
+    """EXPERIMENT (2026-09-29): per-unit death timers - placement (the cell template). Our
+    observer cells only have one death timer, which took the whole plate when one Viking
+    died. Blizzard's in-game top bar (the hidden party frame) has one per Viking and one for
+    Misha; hero_row_layout binds each of ours to its cell there (pet_death_bindings)."""
     hl, ht, hr, hb = c.team[team]["health"]
     third = (hr - hl - 2 * VIKING_GAP) / 3
     labels = ""
     for i, viking in enumerate(("Olaf", "Baleog", "Erik")):
         left = round(hl + i * (third + VIKING_GAP))
         labels += f"""
-		<Frame type="Label" name="HeroDeathTimeViking{viking}Label">
+		<Frame type="Label" name="FCJH_Death{viking}">
 			<Anchor side="Top"    relative="$parent" pos="Min" offset="2"/>
 			<Anchor side="Left"   relative="$parent" pos="Min" offset="{left}"/>
 			<Anchor side="Bottom" relative="$parent" pos="Min" offset="{hb}"/>
 			<Anchor side="Right"  relative="$parent" pos="Min" offset="{round(left + third)}"/>
 			<Style val="Storm_TopBar_DeathTimer_Pet"/>
-			<Visible val="false"/>
+			<Alpha val="0"/>
 			<RenderPriority val="521"/>
 			<Unclipped val="true"/>
 			<AcceptsMouse val="false"/>
 		</Frame>"""
     labels += f"""
-		<Frame type="Label" name="HeroDeathTimePetLabel">
+		<Frame type="Label" name="FCJH_DeathPet">
 			<Anchor side="Top"    relative="$parent" pos="Min" offset="{ht - 20}"/>
 			<Anchor side="Left"   relative="$parent" pos="Min" offset="{hl}"/>
 			<Anchor side="Bottom" relative="$parent" pos="Min" offset="{hb + 6}"/>
 			<Anchor side="Right"  relative="$parent" pos="Min" offset="{hr}"/>
 			<Style val="Storm_TopBar_DeathTimer_Pet"/>
-			<Visible val="false"/>
+			<Alpha val="0"/>
 			<RenderPriority val="521"/>
 			<Unclipped val="true"/>
 			<AcceptsMouse val="false"/>
 		</Frame>"""
     return labels
+
+
+def pet_death_bindings(team_frame, i):
+    """Per cell: our per-unit death timers show the hidden party frame's matching label (same
+    team and cell), and the plate's own timer steps aside while any Viking's shows."""
+    cell = f"{PARTY}/{team_frame}/HeroOverview{i}"
+    out = ""
+    for ours, theirs in PET_TIMERS.items():
+        out += f"""
+							<Frame type="Label" name="FCJH_Death{ours}">
+								<Text val="{{{cell}/{theirs}/@Text}}"/>
+								<StateGroup name="FCJH_Shown">
+									<DefaultState val="No"/>
+									<State name="Yes"><When type="Property" frame="{cell}/{theirs}" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+								</StateGroup>
+							</Frame>"""
+    states = "".join(
+        f'\n\t\t\t\t\t\t\t\t\t<State name="{v}Dead"><When type="Property" frame="{cell}/{PET_TIMERS[v]}" Visible="true"/>'
+        f'<Action type="SetProperty" frame="$parent/HeroDeathTimeLabel" Alpha="0"/></State>'
+        for v in ("Olaf", "Baleog", "Erik"))
+    out += f"""
+							<Frame type="Frame" name="FCJH_VikingDeathWatch">
+								<Anchor relative="$parent"/>
+								<AcceptsMouse val="false"/>
+								<StateGroup name="FCJH_OneDown">
+									<DefaultState val="No"/>{states}
+									<State name="No"><Action type="SetProperty" frame="$parent/HeroDeathTimeLabel" Alpha="255"/></State>
+								</StateGroup>
+							</Frame>"""
+    return out
 
 
 def hero_cell_template(team, c):
@@ -999,7 +1048,7 @@ def hero_row_layout(cfg):
 							<Anchor side="Left"   relative="$GameUI" pos="Min" offset="{e('l')}"/>
 							<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="{e('b')}"/>
 							<Anchor side="Right"  relative="$GameUI" pos="Min" offset="{e('r')}"/>
-							<RenderPriority val="{prio}"/>
+							<RenderPriority val="{prio}"/>{pet_death_bindings(team, i)}
 						</Frame>''')
         cells.append(f'\t\t\t\t\t<Frame type="Frame" name="{team}">\n' + "\n".join(inner) + '\n\t\t\t\t\t</Frame>')
 
