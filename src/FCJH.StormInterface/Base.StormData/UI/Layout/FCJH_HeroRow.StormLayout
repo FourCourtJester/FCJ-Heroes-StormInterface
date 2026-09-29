@@ -84,6 +84,50 @@
 			<Style val="Storm_TopBar_DeathTimer"/>
 			<RenderPriority val="520"/>
 		</Frame>
+		<Frame type="Label" name="HeroDeathTimeVikingOlafLabel">
+			<Anchor side="Top"    relative="$parent" pos="Min" offset="2"/>
+			<Anchor side="Left"   relative="$parent" pos="Min" offset="33"/>
+			<Anchor side="Bottom" relative="$parent" pos="Min" offset="63"/>
+			<Anchor side="Right"  relative="$parent" pos="Min" offset="76"/>
+			<Style val="Storm_TopBar_DeathTimer_Pet"/>
+			<Visible val="false"/>
+			<RenderPriority val="521"/>
+			<Unclipped val="true"/>
+			<AcceptsMouse val="false"/>
+		</Frame>
+		<Frame type="Label" name="HeroDeathTimeVikingBaleogLabel">
+			<Anchor side="Top"    relative="$parent" pos="Min" offset="2"/>
+			<Anchor side="Left"   relative="$parent" pos="Min" offset="78"/>
+			<Anchor side="Bottom" relative="$parent" pos="Min" offset="63"/>
+			<Anchor side="Right"  relative="$parent" pos="Min" offset="121"/>
+			<Style val="Storm_TopBar_DeathTimer_Pet"/>
+			<Visible val="false"/>
+			<RenderPriority val="521"/>
+			<Unclipped val="true"/>
+			<AcceptsMouse val="false"/>
+		</Frame>
+		<Frame type="Label" name="HeroDeathTimeVikingErikLabel">
+			<Anchor side="Top"    relative="$parent" pos="Min" offset="2"/>
+			<Anchor side="Left"   relative="$parent" pos="Min" offset="123"/>
+			<Anchor side="Bottom" relative="$parent" pos="Min" offset="63"/>
+			<Anchor side="Right"  relative="$parent" pos="Min" offset="166"/>
+			<Style val="Storm_TopBar_DeathTimer_Pet"/>
+			<Visible val="false"/>
+			<RenderPriority val="521"/>
+			<Unclipped val="true"/>
+			<AcceptsMouse val="false"/>
+		</Frame>
+		<Frame type="Label" name="HeroDeathTimePetLabel">
+			<Anchor side="Top"    relative="$parent" pos="Min" offset="32"/>
+			<Anchor side="Left"   relative="$parent" pos="Min" offset="33"/>
+			<Anchor side="Bottom" relative="$parent" pos="Min" offset="69"/>
+			<Anchor side="Right"  relative="$parent" pos="Min" offset="166"/>
+			<Style val="Storm_TopBar_DeathTimer_Pet"/>
+			<Visible val="false"/>
+			<RenderPriority val="521"/>
+			<Unclipped val="true"/>
+			<AcceptsMouse val="false"/>
+		</Frame>
 		<Frame type="Image" name="HeroPortraitImage">
 			<Anchor side="Top"    relative="$parent" pos="Min" offset="-1"/>
 			<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
@@ -144,6 +188,18 @@
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="43"/>
 						<Frame type="UnitStatusShieldedHealthBar" name="HealthBar"><Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm"/><Tiled val="true"/></Frame>
+						<Frame type="UnitTargetFrame" name="FCJH_Target">
+							<Anchor side="Top"    relative="$parent/$parent/$parent/$parent" pos="Min" offset="0"/>
+							<Anchor side="Bottom" relative="$parent/$parent/$parent/$parent" pos="Max" offset="0"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
+							<AllowTargeting val="false"/>
+							<AllowSelection val="true"/>
+							<AllowCameraCentering val="true"/>
+							<AllowSmartCommand val="false"/>
+							<Unclipped val="true"/>
+							<RenderPriority val="610"/>
+						</Frame>
 					</Frame>
 					<Frame type="UnitStatusFrame" name="TrackedUnitStatusFrame1">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
@@ -151,6 +207,18 @@
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="45"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="88"/>
 						<Frame type="UnitStatusShieldedHealthBar" name="HealthBar"><Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm"/><Tiled val="true"/></Frame>
+						<Frame type="UnitTargetFrame" name="FCJH_Target">
+							<Anchor side="Top"    relative="$parent/$parent/$parent/$parent" pos="Min" offset="0"/>
+							<Anchor side="Bottom" relative="$parent/$parent/$parent/$parent" pos="Max" offset="0"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
+							<AllowTargeting val="false"/>
+							<AllowSelection val="true"/>
+							<AllowCameraCentering val="true"/>
+							<AllowSmartCommand val="false"/>
+							<Unclipped val="true"/>
+							<RenderPriority val="610"/>
+						</Frame>
 					</Frame>
 					<Frame type="UnitStatusFrame" name="TrackedUnitStatusFrame2">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
@@ -158,6 +226,18 @@
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="90"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="133"/>
 						<Frame type="UnitStatusShieldedHealthBar" name="HealthBar"><Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm"/><Tiled val="true"/></Frame>
+						<Frame type="UnitTargetFrame" name="FCJH_Target">
+							<Anchor side="Top"    relative="$parent/$parent/$parent/$parent" pos="Min" offset="0"/>
+							<Anchor side="Bottom" relative="$parent/$parent/$parent/$parent" pos="Max" offset="0"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
+							<AllowTargeting val="false"/>
+							<AllowSelection val="true"/>
+							<AllowCameraCentering val="true"/>
+							<AllowSmartCommand val="false"/>
+							<Unclipped val="true"/>
+							<RenderPriority val="610"/>
+						</Frame>
 					</Frame>
 			</Frame>
 			<Frame type="UnitStatusUnitTrackingBehavior" name="RexxarTrackingElement">
@@ -404,6 +484,50 @@
 			<AcceptsMouse val="false"/>
 		</Frame>
 		<Frame type="UnitTargetFrame" name="TargetHeroUnitFrame"><HitTestTexture val="#FCJH_PLATE_HIT_RED"/></Frame>
+		<Frame type="Label" name="HeroDeathTimeVikingOlafLabel">
+			<Anchor side="Top"    relative="$parent" pos="Min" offset="2"/>
+			<Anchor side="Left"   relative="$parent" pos="Min" offset="11"/>
+			<Anchor side="Bottom" relative="$parent" pos="Min" offset="63"/>
+			<Anchor side="Right"  relative="$parent" pos="Min" offset="54"/>
+			<Style val="Storm_TopBar_DeathTimer_Pet"/>
+			<Visible val="false"/>
+			<RenderPriority val="521"/>
+			<Unclipped val="true"/>
+			<AcceptsMouse val="false"/>
+		</Frame>
+		<Frame type="Label" name="HeroDeathTimeVikingBaleogLabel">
+			<Anchor side="Top"    relative="$parent" pos="Min" offset="2"/>
+			<Anchor side="Left"   relative="$parent" pos="Min" offset="56"/>
+			<Anchor side="Bottom" relative="$parent" pos="Min" offset="63"/>
+			<Anchor side="Right"  relative="$parent" pos="Min" offset="99"/>
+			<Style val="Storm_TopBar_DeathTimer_Pet"/>
+			<Visible val="false"/>
+			<RenderPriority val="521"/>
+			<Unclipped val="true"/>
+			<AcceptsMouse val="false"/>
+		</Frame>
+		<Frame type="Label" name="HeroDeathTimeVikingErikLabel">
+			<Anchor side="Top"    relative="$parent" pos="Min" offset="2"/>
+			<Anchor side="Left"   relative="$parent" pos="Min" offset="101"/>
+			<Anchor side="Bottom" relative="$parent" pos="Min" offset="63"/>
+			<Anchor side="Right"  relative="$parent" pos="Min" offset="144"/>
+			<Style val="Storm_TopBar_DeathTimer_Pet"/>
+			<Visible val="false"/>
+			<RenderPriority val="521"/>
+			<Unclipped val="true"/>
+			<AcceptsMouse val="false"/>
+		</Frame>
+		<Frame type="Label" name="HeroDeathTimePetLabel">
+			<Anchor side="Top"    relative="$parent" pos="Min" offset="32"/>
+			<Anchor side="Left"   relative="$parent" pos="Min" offset="11"/>
+			<Anchor side="Bottom" relative="$parent" pos="Min" offset="69"/>
+			<Anchor side="Right"  relative="$parent" pos="Min" offset="144"/>
+			<Style val="Storm_TopBar_DeathTimer_Pet"/>
+			<Visible val="false"/>
+			<RenderPriority val="521"/>
+			<Unclipped val="true"/>
+			<AcceptsMouse val="false"/>
+		</Frame>
 		<Frame type="Image" name="HeroPortraitImage">
 			<Anchor side="Top"    relative="$parent" pos="Min" offset="-1"/>
 			<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
@@ -465,6 +589,18 @@
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="43"/>
 						<Frame type="UnitStatusShieldedHealthBar" name="HealthBar"><Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm_Right"/><Tiled val="true"/></Frame>
+						<Frame type="UnitTargetFrame" name="FCJH_Target">
+							<Anchor side="Top"    relative="$parent/$parent/$parent/$parent" pos="Min" offset="0"/>
+							<Anchor side="Bottom" relative="$parent/$parent/$parent/$parent" pos="Max" offset="0"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
+							<AllowTargeting val="false"/>
+							<AllowSelection val="true"/>
+							<AllowCameraCentering val="true"/>
+							<AllowSmartCommand val="false"/>
+							<Unclipped val="true"/>
+							<RenderPriority val="610"/>
+						</Frame>
 					</Frame>
 					<Frame type="UnitStatusFrame" name="TrackedUnitStatusFrame1">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
@@ -472,6 +608,18 @@
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="45"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="88"/>
 						<Frame type="UnitStatusShieldedHealthBar" name="HealthBar"><Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm_Right"/><Tiled val="true"/></Frame>
+						<Frame type="UnitTargetFrame" name="FCJH_Target">
+							<Anchor side="Top"    relative="$parent/$parent/$parent/$parent" pos="Min" offset="0"/>
+							<Anchor side="Bottom" relative="$parent/$parent/$parent/$parent" pos="Max" offset="0"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
+							<AllowTargeting val="false"/>
+							<AllowSelection val="true"/>
+							<AllowCameraCentering val="true"/>
+							<AllowSmartCommand val="false"/>
+							<Unclipped val="true"/>
+							<RenderPriority val="610"/>
+						</Frame>
 					</Frame>
 					<Frame type="UnitStatusFrame" name="TrackedUnitStatusFrame2">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
@@ -479,6 +627,18 @@
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="90"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="133"/>
 						<Frame type="UnitStatusShieldedHealthBar" name="HealthBar"><Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm_Right"/><Tiled val="true"/></Frame>
+						<Frame type="UnitTargetFrame" name="FCJH_Target">
+							<Anchor side="Top"    relative="$parent/$parent/$parent/$parent" pos="Min" offset="0"/>
+							<Anchor side="Bottom" relative="$parent/$parent/$parent/$parent" pos="Max" offset="0"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
+							<AllowTargeting val="false"/>
+							<AllowSelection val="true"/>
+							<AllowCameraCentering val="true"/>
+							<AllowSmartCommand val="false"/>
+							<Unclipped val="true"/>
+							<RenderPriority val="610"/>
+						</Frame>
 					</Frame>
 			</Frame>
 			<Frame type="UnitStatusUnitTrackingBehavior" name="RexxarTrackingElement">

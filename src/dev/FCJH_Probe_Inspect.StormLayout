@@ -49,127 +49,130 @@
 			<Frame type="Frame" name="TargetInfoPanel" template="TargetInfoPanel/TargetInfoPanelTemplate">
 				<Anchor relative="$parent"/>
 				<Visible val="{$this/@Enabled}"/>
-				<!-- everything of ours lives in here (round 6): this panel hides itself with no target;
-				     the card frame around it showed empty at game load -->
-				<Frame type="Image" name="FCJH_Back">
-					<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="833"/>
-					<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
-					<Texture val="@UI/PauseScreenDimImage"/>
-					<ColorAdjustMode val="Fill"/>
-					<AdjustmentColor val="215,11,12,20"/>
-					<RenderPriority val="200"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
-				<Frame type="Image" name="FCJH_TitleBand">
-					<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="29"/>
-					<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
-					<Texture val="@UI/PauseScreenDimImage"/>
-					<ColorAdjustMode val="Fill"/>
-					<AdjustmentColor val="235,24,28,48"/>
-					<RenderPriority val="210"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
-				<Frame type="Label" name="FCJH_Title">
-					<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="29"/>
-					<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
-					<Style val="ObsBar_MatchTimer"/>
-					<Text val="INSPECT"/>
-					<Options val="NoWrapping | ScaleToPreventTruncation"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
-				<Frame type="Image" name="FCJH_NameBand">
-					<Anchor side="Top"    relative="$parent" pos="Min" offset="154"/>
-					<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="196"/>
-					<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
-					<Texture val="@UI/PauseScreenDimImage"/>
-					<ColorAdjustMode val="Fill"/>
-					<AdjustmentColor val="235,16,18,32"/>
-					<RenderPriority val="240"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
-				<Frame type="Label" name="FCJH_SectionBuffs">
-					<Anchor side="Top"    relative="$parent" pos="Min" offset="258"/>
-					<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="273"/>
-					<Anchor side="Right"  relative="$parent" pos="Max" offset="-14"/>
-					<Style val="FCJH_InspectSection"/>
-					<Text val="BUFFS  ·  DEBUFFS"/>
-					<Options val="NoWrapping | ScaleToPreventTruncation"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
-				<Frame type="Label" name="FCJH_SectionAbilities">
-					<Anchor side="Top"    relative="$parent" pos="Min" offset="366"/>
-					<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="381"/>
-					<Anchor side="Right"  relative="$parent" pos="Max" offset="-14"/>
-					<Style val="FCJH_InspectSection"/>
-					<Text val="ABILITIES"/>
-					<Options val="NoWrapping | ScaleToPreventTruncation"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
-				<Frame type="Label" name="FCJH_SectionTalents">
-					<Anchor side="Top"    relative="$parent" pos="Min" offset="471"/>
-					<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="486"/>
-					<Anchor side="Right"  relative="$parent" pos="Max" offset="-14"/>
-					<Style val="FCJH_InspectSection"/>
-					<Text val="TALENTS"/>
-					<Options val="NoWrapping | ScaleToPreventTruncation"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
-				<Frame type="Label" name="FCJH_SectionStats">
-					<Anchor side="Top"    relative="$parent" pos="Min" offset="551"/>
-					<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="566"/>
-					<Anchor side="Right"  relative="$parent" pos="Max" offset="-14"/>
-					<Style val="FCJH_InspectSection"/>
-					<Text val="STATS"/>
-					<Options val="NoWrapping | ScaleToPreventTruncation"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
+				<!-- the on/off switch only: none of Blizzard's own pieces drawn -->
 				<Frame type="Image" name="BackgroundFrame"><Alpha val="0"/></Frame>
 				<Frame type="Image" name="TopBackground"><Alpha val="0"/></Frame>
 				<Frame type="Image" name="BottomBorderImage"><Alpha val="0"/></Frame>
 				<Frame type="Image" name="BorderFrame"><Alpha val="0"/></Frame>
-				<!-- portrait: the full width under the title -->
-				<Frame type="Frame" name="TargetPortraitFrame">
-					<Anchor side="Top"    relative="$parent" pos="Min" offset="29"/>
-					<Anchor side="Left"   relative="$parent" pos="Min" offset="2"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="154"/>
-					<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
+				<Frame type="Frame" name="TargetPortraitFrame"><Alpha val="0"/></Frame>
+				<Frame type="UnitStatusFrame" name="HealthAndManaUnitStatusFrame"><Alpha val="0"/></Frame>
+				<Frame type="Image" name="AdditionalInfoIcon"><Alpha val="0"/></Frame>
+
+		<!-- B. The experiments, each labelled 1-6 in the header: Blizzard's per-unit widgets in a
+		     selection panel over the card -->
+		<Frame type="SelectionUnitStatusPanel" name="FCJH_InspectUnit">
+			<Anchor relative="$parent"/>
+			<AcceptsMouse val="false"/>
+			<AcceptsMouseTooltip val="false"/>
+			<RenderPriority val="660"/>
+			<!-- INSIDE the card (round 5), so it hides with it. Beside the card (rounds 3-4) its
+			     parts stayed on screen after click-off, bound to the card's Visible or faded by Alpha -->
+			<Frame type="UnitStatusFrame" name="UnitStatusFrame0" template="TargetInfoPanelUnitStatusTemplate/TargetInfoPanelUnitStatusBarTemplate">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<!-- the card itself, inside the selection panel: shown only with a selection -->
+			<Frame type="Image" name="FCJH_Back">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent" pos="Min" offset="833"/>
+				<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
+				<Texture val="@UI/PauseScreenDimImage"/>
+				<ColorAdjustMode val="Fill"/>
+				<AdjustmentColor val="215,11,12,20"/>
+				<RenderPriority val="200"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
+			<Frame type="Image" name="FCJH_TitleBand">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent" pos="Min" offset="29"/>
+				<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
+				<Texture val="@UI/PauseScreenDimImage"/>
+				<ColorAdjustMode val="Fill"/>
+				<AdjustmentColor val="235,24,28,48"/>
+				<RenderPriority val="210"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
+			<Frame type="Label" name="FCJH_Title">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent" pos="Min" offset="29"/>
+				<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
+				<Style val="ObsBar_MatchTimer"/>
+				<Text val="INSPECT"/>
+				<Options val="NoWrapping | ScaleToPreventTruncation"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
+			<Frame type="Image" name="FCJH_NameBand">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="154"/>
+				<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent" pos="Min" offset="196"/>
+				<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
+				<Texture val="@UI/PauseScreenDimImage"/>
+				<ColorAdjustMode val="Fill"/>
+				<AdjustmentColor val="235,16,18,32"/>
+				<RenderPriority val="240"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
+			<Frame type="Label" name="FCJH_SectionBuffs">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="258"/>
+				<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
+				<Anchor side="Bottom" relative="$parent" pos="Min" offset="273"/>
+				<Anchor side="Right"  relative="$parent" pos="Max" offset="-14"/>
+				<Style val="FCJH_InspectSection"/>
+				<Text val="BUFFS  ·  DEBUFFS"/>
+				<Options val="NoWrapping | ScaleToPreventTruncation"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
+			<Frame type="Label" name="FCJH_SectionAbilities">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="366"/>
+				<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
+				<Anchor side="Bottom" relative="$parent" pos="Min" offset="381"/>
+				<Anchor side="Right"  relative="$parent" pos="Max" offset="-14"/>
+				<Style val="FCJH_InspectSection"/>
+				<Text val="ABILITIES"/>
+				<Options val="NoWrapping | ScaleToPreventTruncation"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
+			<Frame type="Label" name="FCJH_SectionTalents">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="471"/>
+				<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
+				<Anchor side="Bottom" relative="$parent" pos="Min" offset="486"/>
+				<Anchor side="Right"  relative="$parent" pos="Max" offset="-14"/>
+				<Style val="FCJH_InspectSection"/>
+				<Text val="TALENTS"/>
+				<Options val="NoWrapping | ScaleToPreventTruncation"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
+			<Frame type="Label" name="FCJH_SectionStats">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="551"/>
+				<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
+				<Anchor side="Bottom" relative="$parent" pos="Min" offset="566"/>
+				<Anchor side="Right"  relative="$parent" pos="Max" offset="-14"/>
+				<Style val="FCJH_InspectSection"/>
+				<Text val="STATS"/>
+				<Options val="NoWrapping | ScaleToPreventTruncation"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
+				<!-- health and resource: Blizzard's inspect-box bars (this frame's template), placed -->
+				<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">
+					<Anchor side="Top"   relative="$parent" pos="Min" offset="207"/>
+					<Anchor side="Left"  relative="$parent" pos="Min" offset="14"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="-14"/>
+					<Height val="24"/>
 					<Width val="0"/>
-					<Height val="0"/>
-					<Frame type="Image" name="TargetPortraitImage">
-						<Anchor relative="$parent"/>
-						<Width val="0"/>
-						<Height val="0"/>
-					</Frame>
 				</Frame>
-				<Frame type="UnitStatusFrame" name="HealthAndManaUnitStatusFrame">
-					<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">
-						<Anchor side="Top"   relative="$parent" pos="Min" offset="207"/>
-						<Anchor side="Left"  relative="$parent" pos="Min" offset="14"/>
-						<Anchor side="Right" relative="$parent" pos="Max" offset="-14"/>
-						<Height val="24"/>
-						<Width val="0"/>
-					</Frame>
-						<Frame type="UnitStatusEnergyBar" name="NormalEnergyBar"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/></Frame>
-						<Frame type="UnitStatusEnergyBar" name="OrangeEnergyBar"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/></Frame>
-						<Frame type="UnitStatusEnergyBar" name="PinkEnergyBar"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/></Frame>
-						<Frame type="UnitStatusEnergyBar" name="YellowEnergyBar"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/></Frame>
-						<Frame type="UnitStatusEnergyBar" name="DeathwingEnergyBar"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/></Frame>
-					<Frame type="Frame" name="TargetStatsPanel">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="569"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="665"/>
-						<Anchor side="Right"  relative="$parent" pos="Max" offset="-14"/>
+				<Frame type="UnitStatusEnergyBar" name="NormalEnergyBar"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/></Frame>
+				<Frame type="UnitStatusEnergyBar" name="OrangeEnergyBar"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/></Frame>
+				<Frame type="UnitStatusEnergyBar" name="PinkEnergyBar"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/></Frame>
+				<Frame type="UnitStatusEnergyBar" name="YellowEnergyBar"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/></Frame>
+				<Frame type="UnitStatusEnergyBar" name="DeathwingEnergyBar"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/></Frame>
+				<!-- stats: Blizzard's stat rows, from the inspect box's template -->
+				<Frame type="Frame" name="FCJH_Stats" template="TargetInfoPanel/TargetInfoPanelTemplate/HealthAndManaUnitStatusFrame/TargetStatsPanel">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="569"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="665"/>
+					<Anchor side="Right"  relative="$parent" pos="Max" offset="-14"/>
 						<Frame type="TargetInfoStatFrame" name="AttackDamageFrame">
 							<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
 							<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
@@ -212,21 +215,7 @@
 							<Anchor side="Right" relative="$this" pos="Min" offset="0"/>
 							<Width val="150"/>
 						</Frame>
-					</Frame>
 				</Frame>
-
-		<!-- B. The experiments, each labelled 1-6 in the header: Blizzard's per-unit widgets in a
-		     selection panel over the card -->
-		<Frame type="SelectionUnitStatusPanel" name="FCJH_InspectUnit">
-			<Anchor relative="$parent"/>
-			<AcceptsMouse val="false"/>
-			<AcceptsMouseTooltip val="false"/>
-			<RenderPriority val="660"/>
-			<!-- INSIDE the card (round 5), so it hides with it. Beside the card (rounds 3-4) its
-			     parts stayed on screen after click-off, bound to the card's Visible or faded by Alpha -->
-			<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
-				<Anchor relative="$parent"/>
-				<AcceptsMouse val="false"/>
 
 				<!-- 1. animated model: DROPPED (round 6). The hero cutscene kept the first hero clicked
 				     (Chromie) over every later selection; the static portrait underneath updates. -->
@@ -391,14 +380,39 @@
 						<RenderPriority val="665"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
+					<Frame type="Image" name="FCJH_Portrait">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="29"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="2"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="154"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
+						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroPortraitImage/@Texture}"/>
+						<TextureCoords top="0.1" left="0.543" bottom="0.65" right="1.0"/>
+						<RenderPriority val="668"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
 					<Frame type="Image" name="FCJH_Talent1">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent2">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -406,8 +420,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent3">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -415,8 +444,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent4">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -424,8 +468,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent5">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -433,8 +492,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent6">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -442,8 +516,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent7">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -451,8 +540,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_Heroic">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="425"/>
@@ -561,14 +665,39 @@
 						<RenderPriority val="665"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
+					<Frame type="Image" name="FCJH_Portrait">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="29"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="2"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="154"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
+						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroPortraitImage/@Texture}"/>
+						<TextureCoords top="0.1" left="0.543" bottom="0.65" right="1.0"/>
+						<RenderPriority val="668"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
 					<Frame type="Image" name="FCJH_Talent1">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent2">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -576,8 +705,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent3">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -585,8 +729,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent4">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -594,8 +753,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent5">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -603,8 +777,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent6">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -612,8 +801,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent7">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -621,8 +825,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_Heroic">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="425"/>
@@ -731,14 +950,39 @@
 						<RenderPriority val="665"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
+					<Frame type="Image" name="FCJH_Portrait">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="29"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="2"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="154"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
+						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroPortraitImage/@Texture}"/>
+						<TextureCoords top="0.1" left="0.543" bottom="0.65" right="1.0"/>
+						<RenderPriority val="668"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
 					<Frame type="Image" name="FCJH_Talent1">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent2">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -746,8 +990,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent3">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -755,8 +1014,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent4">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -764,8 +1038,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent5">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -773,8 +1062,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent6">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -782,8 +1086,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent7">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -791,8 +1110,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_Heroic">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="425"/>
@@ -901,14 +1235,39 @@
 						<RenderPriority val="665"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
+					<Frame type="Image" name="FCJH_Portrait">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="29"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="2"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="154"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
+						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroPortraitImage/@Texture}"/>
+						<TextureCoords top="0.1" left="0.543" bottom="0.65" right="1.0"/>
+						<RenderPriority val="668"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
 					<Frame type="Image" name="FCJH_Talent1">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent2">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -916,8 +1275,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent3">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -925,8 +1299,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent4">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -934,8 +1323,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent5">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -943,8 +1347,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent6">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -952,8 +1371,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent7">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -961,8 +1395,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_Heroic">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="425"/>
@@ -1071,14 +1520,39 @@
 						<RenderPriority val="665"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
+					<Frame type="Image" name="FCJH_Portrait">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="29"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="2"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="154"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
+						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroPortraitImage/@Texture}"/>
+						<TextureCoords top="0.1" left="0.543" bottom="0.65" right="1.0"/>
+						<RenderPriority val="668"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
 					<Frame type="Image" name="FCJH_Talent1">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent2">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -1086,8 +1560,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent3">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -1095,8 +1584,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent4">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -1104,8 +1608,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent5">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -1113,8 +1632,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent6">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -1122,8 +1656,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent7">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -1131,8 +1680,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_Heroic">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="425"/>
@@ -1241,14 +1805,39 @@
 						<RenderPriority val="665"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
+					<Frame type="Image" name="FCJH_Portrait">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="29"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="2"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="154"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
+						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroPortraitImage/@Texture}"/>
+						<TextureCoords top="0.1" left="0.543" bottom="0.65" right="1.0"/>
+						<RenderPriority val="668"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
 					<Frame type="Image" name="FCJH_Talent1">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_red"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent2">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -1256,8 +1845,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_red"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent3">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -1265,8 +1869,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_red"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent4">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -1274,8 +1893,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_red"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent5">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -1283,8 +1917,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_red"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent6">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -1292,8 +1941,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_red"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent7">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -1301,8 +1965,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_red"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_Heroic">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="425"/>
@@ -1411,14 +2090,39 @@
 						<RenderPriority val="665"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
+					<Frame type="Image" name="FCJH_Portrait">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="29"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="2"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="154"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
+						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroPortraitImage/@Texture}"/>
+						<TextureCoords top="0.1" left="0.543" bottom="0.65" right="1.0"/>
+						<RenderPriority val="668"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
 					<Frame type="Image" name="FCJH_Talent1">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_red"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent2">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -1426,8 +2130,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_red"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent3">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -1435,8 +2154,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_red"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent4">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -1444,8 +2178,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_red"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent5">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -1453,8 +2202,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_red"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent6">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -1462,8 +2226,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_red"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent7">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -1471,8 +2250,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_red"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_Heroic">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="425"/>
@@ -1581,14 +2375,39 @@
 						<RenderPriority val="665"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
+					<Frame type="Image" name="FCJH_Portrait">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="29"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="2"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="154"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
+						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroPortraitImage/@Texture}"/>
+						<TextureCoords top="0.1" left="0.543" bottom="0.65" right="1.0"/>
+						<RenderPriority val="668"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
 					<Frame type="Image" name="FCJH_Talent1">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_red"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent2">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -1596,8 +2415,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_red"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent3">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -1605,8 +2439,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_red"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent4">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -1614,8 +2463,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_red"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent5">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -1623,8 +2487,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_red"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent6">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -1632,8 +2511,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_red"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent7">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -1641,8 +2535,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_red"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_Heroic">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="425"/>
@@ -1751,14 +2660,39 @@
 						<RenderPriority val="665"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
+					<Frame type="Image" name="FCJH_Portrait">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="29"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="2"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="154"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
+						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroPortraitImage/@Texture}"/>
+						<TextureCoords top="0.1" left="0.543" bottom="0.65" right="1.0"/>
+						<RenderPriority val="668"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
 					<Frame type="Image" name="FCJH_Talent1">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_red"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent2">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -1766,8 +2700,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_red"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent3">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -1775,8 +2724,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_red"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent4">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -1784,8 +2748,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_red"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent5">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -1793,8 +2772,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_red"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent6">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -1802,8 +2796,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_red"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent7">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -1811,8 +2820,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_red"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_Heroic">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="425"/>
@@ -1921,14 +2945,39 @@
 						<RenderPriority val="665"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
+					<Frame type="Image" name="FCJH_Portrait">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="29"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="2"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="154"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
+						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroPortraitImage/@Texture}"/>
+						<TextureCoords top="0.1" left="0.543" bottom="0.65" right="1.0"/>
+						<RenderPriority val="668"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
 					<Frame type="Image" name="FCJH_Talent1">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_red"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent2">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -1936,8 +2985,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_red"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent3">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -1945,8 +3009,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_red"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent4">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -1954,8 +3033,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_red"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent5">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -1963,8 +3057,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_red"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent6">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -1972,8 +3081,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_red"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent7">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
@@ -1981,8 +3105,23 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
-						<RenderPriority val="668"/>  <!-- over the dark tier squares (665); round 5 drew under them -->
+						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+							<Texture val="@UI/obs_talents_highlight_red"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<StateGroup name="FCJH_Picked">
+							<DefaultState val="No"/>
+							<State name="Yes"><When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7" TalentTierState="TierSelected"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+							<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						</StateGroup>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_Heroic">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="425"/>

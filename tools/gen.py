@@ -538,6 +538,9 @@ def trackers(team, health):
     third = (w - 2 * VIKING_GAP) / 3
     bar = (f'<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">'
            f'<Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm{suffix}"/><Tiled val="true"/></Frame>')
+    # each Viking also gets its own click target, the full height of the plate over its third
+    # (select that Viking, centre the camera on them), above the plate's own (600)
+    cell = "$parent/$parent/$parent/$parent"
     vikings = "".join(
         f"""
 					<Frame type="UnitStatusFrame" name="TrackedUnitStatusFrame{i}">
@@ -546,6 +549,18 @@ def trackers(team, health):
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="{round(i * (third + VIKING_GAP))}"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="{round(i * (third + VIKING_GAP) + third)}"/>
 						{bar}
+						<Frame type="UnitTargetFrame" name="FCJH_Target">
+							<Anchor side="Top"    relative="{cell}" pos="Min" offset="0"/>
+							<Anchor side="Bottom" relative="{cell}" pos="Max" offset="0"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
+							<AllowTargeting val="false"/>
+							<AllowSelection val="true"/>
+							<AllowCameraCentering val="true"/>
+							<AllowSmartCommand val="false"/>
+							<Unclipped val="true"/>
+							<RenderPriority val="610"/>
+						</Frame>
 					</Frame>""" for i in range(3))
     return f"""
 			<Frame type="UnitStatusUnitTrackingBehavior" name="VikingTrackingElement">{vikings}
@@ -559,6 +574,45 @@ def trackers(team, health):
 					{bar}
 				</Frame>
 			</Frame>"""
+
+
+def pet_death_labels(team, c):
+    """EXPERIMENT (2026-09-29): per-unit death timers. Blizzard's in-game top bar cells (its
+    own HeroOverviewTemplate, partyframe.stormlayout) carry one label per Viking and one for
+    Misha, which the engine fills by name; its observer cells don't. Same names here, each
+    over its own unit's slice of the plate, so a dead Viking's timer covers only its third.
+    Named exactly as Blizzard's; if the engine doesn't fill them for observer cells they
+    simply never show."""
+    hl, ht, hr, hb = c.team[team]["health"]
+    third = (hr - hl - 2 * VIKING_GAP) / 3
+    labels = ""
+    for i, viking in enumerate(("Olaf", "Baleog", "Erik")):
+        left = round(hl + i * (third + VIKING_GAP))
+        labels += f"""
+		<Frame type="Label" name="HeroDeathTimeViking{viking}Label">
+			<Anchor side="Top"    relative="$parent" pos="Min" offset="2"/>
+			<Anchor side="Left"   relative="$parent" pos="Min" offset="{left}"/>
+			<Anchor side="Bottom" relative="$parent" pos="Min" offset="{hb}"/>
+			<Anchor side="Right"  relative="$parent" pos="Min" offset="{round(left + third)}"/>
+			<Style val="Storm_TopBar_DeathTimer_Pet"/>
+			<Visible val="false"/>
+			<RenderPriority val="521"/>
+			<Unclipped val="true"/>
+			<AcceptsMouse val="false"/>
+		</Frame>"""
+    labels += f"""
+		<Frame type="Label" name="HeroDeathTimePetLabel">
+			<Anchor side="Top"    relative="$parent" pos="Min" offset="{ht - 20}"/>
+			<Anchor side="Left"   relative="$parent" pos="Min" offset="{hl}"/>
+			<Anchor side="Bottom" relative="$parent" pos="Min" offset="{hb + 6}"/>
+			<Anchor side="Right"  relative="$parent" pos="Min" offset="{hr}"/>
+			<Style val="Storm_TopBar_DeathTimer_Pet"/>
+			<Visible val="false"/>
+			<RenderPriority val="521"/>
+			<Unclipped val="true"/>
+			<AcceptsMouse val="false"/>
+		</Frame>"""
+    return labels
 
 
 def hero_cell_template(team, c):
@@ -860,7 +914,7 @@ def hero_cell_template(team, c):
     return (f"\t{header}"
             + art("FCJH_FrameBg", "HUD_TopBar_Team_HeroFrame", 400)
             + art("FCJH_TeamBg", f"HUD_TopBar_Team_HeroFrame_BG_{'Blue' if blue else 'Red'}", 401)
-            + common + portrait
+            + common + pet_death_labels(team, c) + portrait
             + art("FCJH_Glass", "HUD_TopBar_Team_HeroFrame_Glass", 505)
             + health + "\n\t</Frame>\n")
 
