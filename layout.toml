@@ -95,9 +95,8 @@ kind = "obs"
 
 # Around the edges
 [element.replay]
-rect = [16, 12, 378, 153]    # Blizzard's ReplayPanel at its native width (user: keep the size),
-                             # chained from its top edge so hiding the timeline shrinks it
-                             # upward. Width sets the panel; the height follows its contents.
+rect = [16, 12, 378, 153]    # Blizzard's ReplayPanel, native 420 x 170 units - only moved here
+                             # (user: nothing else about it changes)
 kind = "ui"
 [element.replay_collapsed]
 rect = [16, 0, 200, 24]      # hidden state: a slim tab on the top edge
