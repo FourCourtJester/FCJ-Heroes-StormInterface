@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <Desc>
-	<!-- PROBE (dev only): heal pop-ups, round 3 (2026-09-29). Written by a one-off script.
+	<!-- PROBE (dev only): heal pop-ups, round 4 (2026-09-29). Written by a one-off script.
 
 	     Spec (user, 2026-09-27/29): the talent pop-up's spot and motion - slide up from the
 	     plate's middle to its top edge, hold 5 s, fade - with a green plus in a green border;
@@ -23,10 +23,19 @@
 				<Height val="#FCJH_HERO_POPUP_SIZE"/>
 				<Visible val="false"/>
 				<AcceptsMouse val="false"/>
-				<!-- the content, hidden at once if the hero heals back above 25% mid-pop -->
+				<!-- the content: fades out early (0.5 s) if the hero heals back above 25% mid-pop; a new
+				     pop-up resets it -->
 				<Frame type="Frame" name="FCJH_Body">
 					<Anchor relative="$parent"/>
 					<AcceptsMouse val="false"/>
+					<Animation name="Leave">
+						<Event event="FCJH_Leave" action="Reset,Play"/>
+						<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
+						<Controller type="Fade" end="Pause">
+							<Key type="Curve" time="0" value="255"/>
+							<Key type="Curve" time="0.5" value="0"/>
+						</Controller>
+					</Animation>
 					<Frame type="Image" name="FCJH_Back">
 						<Anchor relative="$parent"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
@@ -60,7 +69,7 @@
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="5.85" value="false"/>
+						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
 						<Key type="Curve" time="0" value="38" inout="Slow"/>
@@ -70,7 +79,7 @@
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
 						<Key type="Curve" time="5.35" value="255"/>
-						<Key type="Curve" time="5.85" value="0"/>
+						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -80,9 +89,12 @@
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
+					<!-- round 4: never restart a pop-up that's still on screen (Auriel under fire restarted
+					     hers on every hit - something still flickers; whatever it is, it can't restart it now) -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
+						<When type="Property" frame="$parent/FCJH_Heal0" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal0/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal0" event="FCJH_Pop"/>
@@ -95,7 +107,7 @@
 					<State name="Healthy">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus/FCJH_HealthyMark" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SetProperty" frame="$parent/FCJH_Heal0/FCJH_Body" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal0/FCJH_Body" event="FCJH_Leave"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
@@ -107,10 +119,19 @@
 				<Height val="#FCJH_HERO_POPUP_SIZE"/>
 				<Visible val="false"/>
 				<AcceptsMouse val="false"/>
-				<!-- the content, hidden at once if the hero heals back above 25% mid-pop -->
+				<!-- the content: fades out early (0.5 s) if the hero heals back above 25% mid-pop; a new
+				     pop-up resets it -->
 				<Frame type="Frame" name="FCJH_Body">
 					<Anchor relative="$parent"/>
 					<AcceptsMouse val="false"/>
+					<Animation name="Leave">
+						<Event event="FCJH_Leave" action="Reset,Play"/>
+						<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
+						<Controller type="Fade" end="Pause">
+							<Key type="Curve" time="0" value="255"/>
+							<Key type="Curve" time="0.5" value="0"/>
+						</Controller>
+					</Animation>
 					<Frame type="Image" name="FCJH_Back">
 						<Anchor relative="$parent"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
@@ -144,7 +165,7 @@
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="5.85" value="false"/>
+						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
 						<Key type="Curve" time="0" value="38" inout="Slow"/>
@@ -154,7 +175,7 @@
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
 						<Key type="Curve" time="5.35" value="255"/>
-						<Key type="Curve" time="5.85" value="0"/>
+						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -164,9 +185,12 @@
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
+					<!-- round 4: never restart a pop-up that's still on screen (Auriel under fire restarted
+					     hers on every hit - something still flickers; whatever it is, it can't restart it now) -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
+						<When type="Property" frame="$parent/FCJH_Heal1" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal1/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal1" event="FCJH_Pop"/>
@@ -179,7 +203,7 @@
 					<State name="Healthy">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus/FCJH_HealthyMark" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SetProperty" frame="$parent/FCJH_Heal1/FCJH_Body" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal1/FCJH_Body" event="FCJH_Leave"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
@@ -191,10 +215,19 @@
 				<Height val="#FCJH_HERO_POPUP_SIZE"/>
 				<Visible val="false"/>
 				<AcceptsMouse val="false"/>
-				<!-- the content, hidden at once if the hero heals back above 25% mid-pop -->
+				<!-- the content: fades out early (0.5 s) if the hero heals back above 25% mid-pop; a new
+				     pop-up resets it -->
 				<Frame type="Frame" name="FCJH_Body">
 					<Anchor relative="$parent"/>
 					<AcceptsMouse val="false"/>
+					<Animation name="Leave">
+						<Event event="FCJH_Leave" action="Reset,Play"/>
+						<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
+						<Controller type="Fade" end="Pause">
+							<Key type="Curve" time="0" value="255"/>
+							<Key type="Curve" time="0.5" value="0"/>
+						</Controller>
+					</Animation>
 					<Frame type="Image" name="FCJH_Back">
 						<Anchor relative="$parent"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
@@ -228,7 +261,7 @@
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="5.85" value="false"/>
+						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
 						<Key type="Curve" time="0" value="38" inout="Slow"/>
@@ -238,7 +271,7 @@
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
 						<Key type="Curve" time="5.35" value="255"/>
-						<Key type="Curve" time="5.85" value="0"/>
+						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -248,9 +281,12 @@
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
+					<!-- round 4: never restart a pop-up that's still on screen (Auriel under fire restarted
+					     hers on every hit - something still flickers; whatever it is, it can't restart it now) -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
+						<When type="Property" frame="$parent/FCJH_Heal2" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal2/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal2" event="FCJH_Pop"/>
@@ -263,7 +299,7 @@
 					<State name="Healthy">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus/FCJH_HealthyMark" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SetProperty" frame="$parent/FCJH_Heal2/FCJH_Body" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal2/FCJH_Body" event="FCJH_Leave"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
@@ -275,10 +311,19 @@
 				<Height val="#FCJH_HERO_POPUP_SIZE"/>
 				<Visible val="false"/>
 				<AcceptsMouse val="false"/>
-				<!-- the content, hidden at once if the hero heals back above 25% mid-pop -->
+				<!-- the content: fades out early (0.5 s) if the hero heals back above 25% mid-pop; a new
+				     pop-up resets it -->
 				<Frame type="Frame" name="FCJH_Body">
 					<Anchor relative="$parent"/>
 					<AcceptsMouse val="false"/>
+					<Animation name="Leave">
+						<Event event="FCJH_Leave" action="Reset,Play"/>
+						<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
+						<Controller type="Fade" end="Pause">
+							<Key type="Curve" time="0" value="255"/>
+							<Key type="Curve" time="0.5" value="0"/>
+						</Controller>
+					</Animation>
 					<Frame type="Image" name="FCJH_Back">
 						<Anchor relative="$parent"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
@@ -312,7 +357,7 @@
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="5.85" value="false"/>
+						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
 						<Key type="Curve" time="0" value="38" inout="Slow"/>
@@ -322,7 +367,7 @@
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
 						<Key type="Curve" time="5.35" value="255"/>
-						<Key type="Curve" time="5.85" value="0"/>
+						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -332,9 +377,12 @@
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
+					<!-- round 4: never restart a pop-up that's still on screen (Auriel under fire restarted
+					     hers on every hit - something still flickers; whatever it is, it can't restart it now) -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
+						<When type="Property" frame="$parent/FCJH_Heal3" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal3/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal3" event="FCJH_Pop"/>
@@ -347,7 +395,7 @@
 					<State name="Healthy">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus/FCJH_HealthyMark" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SetProperty" frame="$parent/FCJH_Heal3/FCJH_Body" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal3/FCJH_Body" event="FCJH_Leave"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
@@ -359,10 +407,19 @@
 				<Height val="#FCJH_HERO_POPUP_SIZE"/>
 				<Visible val="false"/>
 				<AcceptsMouse val="false"/>
-				<!-- the content, hidden at once if the hero heals back above 25% mid-pop -->
+				<!-- the content: fades out early (0.5 s) if the hero heals back above 25% mid-pop; a new
+				     pop-up resets it -->
 				<Frame type="Frame" name="FCJH_Body">
 					<Anchor relative="$parent"/>
 					<AcceptsMouse val="false"/>
+					<Animation name="Leave">
+						<Event event="FCJH_Leave" action="Reset,Play"/>
+						<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
+						<Controller type="Fade" end="Pause">
+							<Key type="Curve" time="0" value="255"/>
+							<Key type="Curve" time="0.5" value="0"/>
+						</Controller>
+					</Animation>
 					<Frame type="Image" name="FCJH_Back">
 						<Anchor relative="$parent"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
@@ -396,7 +453,7 @@
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="5.85" value="false"/>
+						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
 						<Key type="Curve" time="0" value="38" inout="Slow"/>
@@ -406,7 +463,7 @@
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
 						<Key type="Curve" time="5.35" value="255"/>
-						<Key type="Curve" time="5.85" value="0"/>
+						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -416,9 +473,12 @@
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
+					<!-- round 4: never restart a pop-up that's still on screen (Auriel under fire restarted
+					     hers on every hit - something still flickers; whatever it is, it can't restart it now) -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
+						<When type="Property" frame="$parent/FCJH_Heal4" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal4/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal4" event="FCJH_Pop"/>
@@ -431,7 +491,7 @@
 					<State name="Healthy">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus/FCJH_HealthyMark" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SetProperty" frame="$parent/FCJH_Heal4/FCJH_Body" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal4/FCJH_Body" event="FCJH_Leave"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
@@ -443,10 +503,19 @@
 				<Height val="#FCJH_HERO_POPUP_SIZE"/>
 				<Visible val="false"/>
 				<AcceptsMouse val="false"/>
-				<!-- the content, hidden at once if the hero heals back above 25% mid-pop -->
+				<!-- the content: fades out early (0.5 s) if the hero heals back above 25% mid-pop; a new
+				     pop-up resets it -->
 				<Frame type="Frame" name="FCJH_Body">
 					<Anchor relative="$parent"/>
 					<AcceptsMouse val="false"/>
+					<Animation name="Leave">
+						<Event event="FCJH_Leave" action="Reset,Play"/>
+						<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
+						<Controller type="Fade" end="Pause">
+							<Key type="Curve" time="0" value="255"/>
+							<Key type="Curve" time="0.5" value="0"/>
+						</Controller>
+					</Animation>
 					<Frame type="Image" name="FCJH_Back">
 						<Anchor relative="$parent"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
@@ -480,7 +549,7 @@
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="5.85" value="false"/>
+						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
 						<Key type="Curve" time="0" value="38" inout="Slow"/>
@@ -490,7 +559,7 @@
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
 						<Key type="Curve" time="5.35" value="255"/>
-						<Key type="Curve" time="5.85" value="0"/>
+						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -500,9 +569,12 @@
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
+					<!-- round 4: never restart a pop-up that's still on screen (Auriel under fire restarted
+					     hers on every hit - something still flickers; whatever it is, it can't restart it now) -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
+						<When type="Property" frame="$parent/FCJH_Heal5" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal5/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal5" event="FCJH_Pop"/>
@@ -515,7 +587,7 @@
 					<State name="Healthy">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus/FCJH_HealthyMark" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SetProperty" frame="$parent/FCJH_Heal5/FCJH_Body" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal5/FCJH_Body" event="FCJH_Leave"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
@@ -527,10 +599,19 @@
 				<Height val="#FCJH_HERO_POPUP_SIZE"/>
 				<Visible val="false"/>
 				<AcceptsMouse val="false"/>
-				<!-- the content, hidden at once if the hero heals back above 25% mid-pop -->
+				<!-- the content: fades out early (0.5 s) if the hero heals back above 25% mid-pop; a new
+				     pop-up resets it -->
 				<Frame type="Frame" name="FCJH_Body">
 					<Anchor relative="$parent"/>
 					<AcceptsMouse val="false"/>
+					<Animation name="Leave">
+						<Event event="FCJH_Leave" action="Reset,Play"/>
+						<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
+						<Controller type="Fade" end="Pause">
+							<Key type="Curve" time="0" value="255"/>
+							<Key type="Curve" time="0.5" value="0"/>
+						</Controller>
+					</Animation>
 					<Frame type="Image" name="FCJH_Back">
 						<Anchor relative="$parent"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
@@ -564,7 +645,7 @@
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="5.85" value="false"/>
+						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
 						<Key type="Curve" time="0" value="38" inout="Slow"/>
@@ -574,7 +655,7 @@
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
 						<Key type="Curve" time="5.35" value="255"/>
-						<Key type="Curve" time="5.85" value="0"/>
+						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -584,9 +665,12 @@
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
+					<!-- round 4: never restart a pop-up that's still on screen (Auriel under fire restarted
+					     hers on every hit - something still flickers; whatever it is, it can't restart it now) -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
+						<When type="Property" frame="$parent/FCJH_Heal6" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal6/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal6" event="FCJH_Pop"/>
@@ -599,7 +683,7 @@
 					<State name="Healthy">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus/FCJH_HealthyMark" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SetProperty" frame="$parent/FCJH_Heal6/FCJH_Body" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal6/FCJH_Body" event="FCJH_Leave"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
@@ -611,10 +695,19 @@
 				<Height val="#FCJH_HERO_POPUP_SIZE"/>
 				<Visible val="false"/>
 				<AcceptsMouse val="false"/>
-				<!-- the content, hidden at once if the hero heals back above 25% mid-pop -->
+				<!-- the content: fades out early (0.5 s) if the hero heals back above 25% mid-pop; a new
+				     pop-up resets it -->
 				<Frame type="Frame" name="FCJH_Body">
 					<Anchor relative="$parent"/>
 					<AcceptsMouse val="false"/>
+					<Animation name="Leave">
+						<Event event="FCJH_Leave" action="Reset,Play"/>
+						<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
+						<Controller type="Fade" end="Pause">
+							<Key type="Curve" time="0" value="255"/>
+							<Key type="Curve" time="0.5" value="0"/>
+						</Controller>
+					</Animation>
 					<Frame type="Image" name="FCJH_Back">
 						<Anchor relative="$parent"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
@@ -648,7 +741,7 @@
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="5.85" value="false"/>
+						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
 						<Key type="Curve" time="0" value="38" inout="Slow"/>
@@ -658,7 +751,7 @@
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
 						<Key type="Curve" time="5.35" value="255"/>
-						<Key type="Curve" time="5.85" value="0"/>
+						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -668,9 +761,12 @@
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
+					<!-- round 4: never restart a pop-up that's still on screen (Auriel under fire restarted
+					     hers on every hit - something still flickers; whatever it is, it can't restart it now) -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
+						<When type="Property" frame="$parent/FCJH_Heal7" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal7/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal7" event="FCJH_Pop"/>
@@ -683,7 +779,7 @@
 					<State name="Healthy">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus/FCJH_HealthyMark" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SetProperty" frame="$parent/FCJH_Heal7/FCJH_Body" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal7/FCJH_Body" event="FCJH_Leave"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
@@ -695,10 +791,19 @@
 				<Height val="#FCJH_HERO_POPUP_SIZE"/>
 				<Visible val="false"/>
 				<AcceptsMouse val="false"/>
-				<!-- the content, hidden at once if the hero heals back above 25% mid-pop -->
+				<!-- the content: fades out early (0.5 s) if the hero heals back above 25% mid-pop; a new
+				     pop-up resets it -->
 				<Frame type="Frame" name="FCJH_Body">
 					<Anchor relative="$parent"/>
 					<AcceptsMouse val="false"/>
+					<Animation name="Leave">
+						<Event event="FCJH_Leave" action="Reset,Play"/>
+						<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
+						<Controller type="Fade" end="Pause">
+							<Key type="Curve" time="0" value="255"/>
+							<Key type="Curve" time="0.5" value="0"/>
+						</Controller>
+					</Animation>
 					<Frame type="Image" name="FCJH_Back">
 						<Anchor relative="$parent"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
@@ -732,7 +837,7 @@
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="5.85" value="false"/>
+						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
 						<Key type="Curve" time="0" value="38" inout="Slow"/>
@@ -742,7 +847,7 @@
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
 						<Key type="Curve" time="5.35" value="255"/>
-						<Key type="Curve" time="5.85" value="0"/>
+						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -752,9 +857,12 @@
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
+					<!-- round 4: never restart a pop-up that's still on screen (Auriel under fire restarted
+					     hers on every hit - something still flickers; whatever it is, it can't restart it now) -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
+						<When type="Property" frame="$parent/FCJH_Heal8" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal8/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal8" event="FCJH_Pop"/>
@@ -767,7 +875,7 @@
 					<State name="Healthy">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus/FCJH_HealthyMark" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SetProperty" frame="$parent/FCJH_Heal8/FCJH_Body" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal8/FCJH_Body" event="FCJH_Leave"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
@@ -779,10 +887,19 @@
 				<Height val="#FCJH_HERO_POPUP_SIZE"/>
 				<Visible val="false"/>
 				<AcceptsMouse val="false"/>
-				<!-- the content, hidden at once if the hero heals back above 25% mid-pop -->
+				<!-- the content: fades out early (0.5 s) if the hero heals back above 25% mid-pop; a new
+				     pop-up resets it -->
 				<Frame type="Frame" name="FCJH_Body">
 					<Anchor relative="$parent"/>
 					<AcceptsMouse val="false"/>
+					<Animation name="Leave">
+						<Event event="FCJH_Leave" action="Reset,Play"/>
+						<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
+						<Controller type="Fade" end="Pause">
+							<Key type="Curve" time="0" value="255"/>
+							<Key type="Curve" time="0.5" value="0"/>
+						</Controller>
+					</Animation>
 					<Frame type="Image" name="FCJH_Back">
 						<Anchor relative="$parent"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
@@ -816,7 +933,7 @@
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="5.85" value="false"/>
+						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
 						<Key type="Curve" time="0" value="38" inout="Slow"/>
@@ -826,7 +943,7 @@
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
 						<Key type="Curve" time="5.35" value="255"/>
-						<Key type="Curve" time="5.85" value="0"/>
+						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -836,9 +953,12 @@
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
+					<!-- round 4: never restart a pop-up that's still on screen (Auriel under fire restarted
+					     hers on every hit - something still flickers; whatever it is, it can't restart it now) -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
+						<When type="Property" frame="$parent/FCJH_Heal9" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal9/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal9" event="FCJH_Pop"/>
@@ -851,7 +971,7 @@
 					<State name="Healthy">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus/FCJH_HealthyMark" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SetProperty" frame="$parent/FCJH_Heal9/FCJH_Body" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal9/FCJH_Body" event="FCJH_Leave"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>

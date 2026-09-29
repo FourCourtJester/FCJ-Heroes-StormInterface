@@ -89,7 +89,7 @@
 			<Anchor side="Left"   relative="$parent" pos="Min" offset="33"/>
 			<Anchor side="Bottom" relative="$parent" pos="Min" offset="63"/>
 			<Anchor side="Right"  relative="$parent" pos="Min" offset="76"/>
-			<Style val="Storm_TopBar_DeathTimer_Pet"/>
+			<Style val="FCJH_PetDeathTimer"/>
 			<Alpha val="0"/>
 			<RenderPriority val="521"/>
 			<Unclipped val="true"/>
@@ -100,7 +100,7 @@
 			<Anchor side="Left"   relative="$parent" pos="Min" offset="78"/>
 			<Anchor side="Bottom" relative="$parent" pos="Min" offset="63"/>
 			<Anchor side="Right"  relative="$parent" pos="Min" offset="121"/>
-			<Style val="Storm_TopBar_DeathTimer_Pet"/>
+			<Style val="FCJH_PetDeathTimer"/>
 			<Alpha val="0"/>
 			<RenderPriority val="521"/>
 			<Unclipped val="true"/>
@@ -111,7 +111,7 @@
 			<Anchor side="Left"   relative="$parent" pos="Min" offset="123"/>
 			<Anchor side="Bottom" relative="$parent" pos="Min" offset="63"/>
 			<Anchor side="Right"  relative="$parent" pos="Min" offset="166"/>
-			<Style val="Storm_TopBar_DeathTimer_Pet"/>
+			<Style val="FCJH_PetDeathTimer"/>
 			<Alpha val="0"/>
 			<RenderPriority val="521"/>
 			<Unclipped val="true"/>
@@ -122,7 +122,7 @@
 			<Anchor side="Left"   relative="$parent" pos="Min" offset="33"/>
 			<Anchor side="Bottom" relative="$parent" pos="Min" offset="69"/>
 			<Anchor side="Right"  relative="$parent" pos="Min" offset="166"/>
-			<Style val="Storm_TopBar_DeathTimer_Pet"/>
+			<Style val="FCJH_PetDeathTimer"/>
 			<Alpha val="0"/>
 			<RenderPriority val="521"/>
 			<Unclipped val="true"/>
@@ -478,6 +478,18 @@
 					<Action type="SetProperty" frame="$parent/FCJH_ClonePortrait" Alpha="0"/>
 				</State>
 			</StateGroup>
+			<!-- Vikings: the plate's own click target steps aside so each Viking's (inside this
+			     frame, which sits under the plate's target in the cell) gets the click -->
+			<StateGroup name="FCJH_VikingClicks">
+				<DefaultState val="Plate"/>
+				<State name="Vikings">
+					<When type="Property" frame="$this/VikingTrackingElement" Visible="true"/>
+					<Action type="SetProperty" frame="$parent/TargetHeroUnitFrame" Visible="false"/>
+				</State>
+				<State name="Plate">
+					<Action type="SetProperty" frame="$parent/TargetHeroUnitFrame" Visible="true"/>
+				</State>
+			</StateGroup>
 		</Frame>
 	</Frame>
 
@@ -513,7 +525,7 @@
 			<Anchor side="Left"   relative="$parent" pos="Min" offset="11"/>
 			<Anchor side="Bottom" relative="$parent" pos="Min" offset="63"/>
 			<Anchor side="Right"  relative="$parent" pos="Min" offset="54"/>
-			<Style val="Storm_TopBar_DeathTimer_Pet"/>
+			<Style val="FCJH_PetDeathTimer"/>
 			<Alpha val="0"/>
 			<RenderPriority val="521"/>
 			<Unclipped val="true"/>
@@ -524,7 +536,7 @@
 			<Anchor side="Left"   relative="$parent" pos="Min" offset="56"/>
 			<Anchor side="Bottom" relative="$parent" pos="Min" offset="63"/>
 			<Anchor side="Right"  relative="$parent" pos="Min" offset="99"/>
-			<Style val="Storm_TopBar_DeathTimer_Pet"/>
+			<Style val="FCJH_PetDeathTimer"/>
 			<Alpha val="0"/>
 			<RenderPriority val="521"/>
 			<Unclipped val="true"/>
@@ -535,7 +547,7 @@
 			<Anchor side="Left"   relative="$parent" pos="Min" offset="101"/>
 			<Anchor side="Bottom" relative="$parent" pos="Min" offset="63"/>
 			<Anchor side="Right"  relative="$parent" pos="Min" offset="144"/>
-			<Style val="Storm_TopBar_DeathTimer_Pet"/>
+			<Style val="FCJH_PetDeathTimer"/>
 			<Alpha val="0"/>
 			<RenderPriority val="521"/>
 			<Unclipped val="true"/>
@@ -546,7 +558,7 @@
 			<Anchor side="Left"   relative="$parent" pos="Min" offset="11"/>
 			<Anchor side="Bottom" relative="$parent" pos="Min" offset="69"/>
 			<Anchor side="Right"  relative="$parent" pos="Min" offset="144"/>
-			<Style val="Storm_TopBar_DeathTimer_Pet"/>
+			<Style val="FCJH_PetDeathTimer"/>
 			<Alpha val="0"/>
 			<RenderPriority val="521"/>
 			<Unclipped val="true"/>

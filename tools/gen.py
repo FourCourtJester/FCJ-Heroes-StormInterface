@@ -612,7 +612,7 @@ def pet_death_labels(team, c):
 			<Anchor side="Left"   relative="$parent" pos="Min" offset="{left}"/>
 			<Anchor side="Bottom" relative="$parent" pos="Min" offset="{hb}"/>
 			<Anchor side="Right"  relative="$parent" pos="Min" offset="{round(left + third)}"/>
-			<Style val="Storm_TopBar_DeathTimer_Pet"/>
+			<Style val="FCJH_PetDeathTimer"/>
 			<Alpha val="0"/>
 			<RenderPriority val="521"/>
 			<Unclipped val="true"/>
@@ -624,7 +624,7 @@ def pet_death_labels(team, c):
 			<Anchor side="Left"   relative="$parent" pos="Min" offset="{hl}"/>
 			<Anchor side="Bottom" relative="$parent" pos="Min" offset="{hb + 6}"/>
 			<Anchor side="Right"  relative="$parent" pos="Min" offset="{hr}"/>
-			<Style val="Storm_TopBar_DeathTimer_Pet"/>
+			<Style val="FCJH_PetDeathTimer"/>
 			<Alpha val="0"/>
 			<RenderPriority val="521"/>
 			<Unclipped val="true"/>
@@ -879,6 +879,18 @@ def hero_cell_template(team, c):
 					<Action type="SetProperty" frame="$this/FCJH_CloneIcon" Alpha="0"/>
 					<Action type="SetProperty" frame="$this/FCJH_CloneText" Alpha="0"/>
 					<Action type="SetProperty" frame="$parent/FCJH_ClonePortrait" Alpha="0"/>
+				</State>
+			</StateGroup>
+			<!-- Vikings: the plate's own click target steps aside so each Viking's (inside this
+			     frame, which sits under the plate's target in the cell) gets the click -->
+			<StateGroup name="FCJH_VikingClicks">
+				<DefaultState val="Plate"/>
+				<State name="Vikings">
+					<When type="Property" frame="$this/VikingTrackingElement" Visible="true"/>
+					<Action type="SetProperty" frame="$parent/TargetHeroUnitFrame" Visible="false"/>
+				</State>
+				<State name="Plate">
+					<Action type="SetProperty" frame="$parent/TargetHeroUnitFrame" Visible="true"/>
 				</State>
 			</StateGroup>"""
     else:
@@ -1233,6 +1245,33 @@ def team_header(team_id, colour, title_style, value_style, name, top, height, pl
     return out
 
 
+def close_button(container, indent=3):
+    """An X in the pane's top-right corner. A click hides the pane's hotkey toggle, which
+    closes the pane exactly as the hotkey does (its OnHidden plays FCJH_Show backwards)."""
+    t = "\t" * indent
+    return f'''{t}<Frame type="Button" name="FCJH_Close">
+{t}	<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
+{t}	<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
+{t}	<Width val="#FCJH_INFO_PANE_TITLE_H"/>
+{t}	<Height val="#FCJH_INFO_PANE_TITLE_H"/>
+{t}	<RenderPriority val="650"/>
+{t}	<AcceptsMouse val="true"/>
+{t}	<Frame type="Label" name="FCJH_X">
+{t}		<Anchor relative="$parent"/>
+{t}		<Style val="ObsBar_MatchTimer"/>
+{t}		<Text val="X"/>
+{t}		<AcceptsMouse val="false"/>
+{t}	</Frame>
+{t}	<Animation name="FCJH_Close">
+{t}		<Event event="OnClick" action="Reset,Play"/>
+{t}		<Controller type="Visibility" end="Stop" frame="$parent/$parent/FCJH_{container}Toggle">
+{t}			<Key type="Bool" time="0" value="false"/>
+{t}		</Controller>
+{t}	</Animation>
+{t}</Frame>
+'''
+
+
 def pane_chrome(title, placed, geometry, indent=3):
     """Title band, headings, team bands and frame line - over the rows, mouse passes through."""
     t = "\t" * indent
@@ -1307,13 +1346,33 @@ def stat_value(frame, score, team, indent):
     best-value animations) is hidden; ours copies its text, centred, zeros shown as 0."""
     t = "\t" * indent
     underline = ""
-    if frame in STAT_UNDERLINED:
-        underline = (f'{t}\t<Frame type="Image" name="HighlightImage">\n'
-                     f'{t}\t\t<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>\n'
-                     f'{t}\t\t<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>\n'
-                     f'{t}\t</Frame>\n')
-    elif frame in STAT_NO_UNDERLINE:
+    if frame in STAT_UNDERLINED or frame in STAT_NO_UNDERLINE:
+        # Blizzard's best-value underline: off everywhere (user, 2026-09-29: a soft highlight
+        # instead - FCJH_Lead below; none on deaths, where "best" means most)
         underline = f'{t}\t<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>\n'
+    if frame not in STAT_NO_UNDERLINE:
+        # the leader's cell, softly lit in the team colour. It answers the same best-value
+        # events as Blizzard's underline, so it works on columns that never had one (XP)
+        colour = "70,90,150,255" if team == "blue" else "70,255,90,110"
+        underline += (
+            f'{t}\t<Frame type="Image" name="FCJH_Lead">\n'
+            f'{t}\t\t<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>\n'
+            f'{t}\t\t<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>\n'
+            f'{t}\t\t<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>\n'
+            f'{t}\t\t<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>\n'
+            f'{t}\t\t<Texture val="@UI/PauseScreenDimImage"/>\n'
+            f'{t}\t\t<ColorAdjustMode val="Fill"/>\n{t}\t\t<AdjustmentColor val="{colour}"/>\n'
+            f'{t}\t\t<Visible val="false"/>\n{t}\t\t<Unclipped val="true"/>\n{t}\t\t<AcceptsMouse val="false"/>\n'
+            f'{t}\t\t<Animation name="FCJH_ShowLead">\n'
+            f'{t}\t\t\t<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>\n'
+            f'{t}\t\t\t<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>\n'
+            f'{t}\t\t\t<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>\n'
+            f'{t}\t\t</Animation>\n'
+            f'{t}\t\t<Animation name="FCJH_HideLead">\n'
+            f'{t}\t\t\t<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>\n'
+            f'{t}\t\t\t<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>\n'
+            f'{t}\t\t\t<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>\n'
+            f'{t}\t\t</Animation>\n{t}\t</Frame>\n')
     return (f'{t}<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0">\n'
             f'{t}\t<Visible val="true"/>\n'
             f'{t}\t<ScoreValueLink val="{score}"/>\n'
@@ -1402,7 +1461,7 @@ def stat_pane(key, title, columns, geometry):
 {"".join(rows)}					</Frame>
 				</Frame>
 			</Frame>
-''' + pane_chrome(title, placed, geometry) + '''		</Frame>
+''' + pane_chrome(title, placed, geometry) + close_button(container) + '''		</Frame>
 '''
 
 

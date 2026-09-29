@@ -412,6 +412,27 @@
 					<Height val="#FCJH_INFO_PANE_BORDER"/>
 				</Frame>
 			</Frame>
+			<!-- close: the X in the corner (tools/gen.py close_button) -->
+			<Frame type="Button" name="FCJH_Close">
+				<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
+				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
+				<Width val="#FCJH_INFO_PANE_TITLE_H"/>
+				<Height val="#FCJH_INFO_PANE_TITLE_H"/>
+				<RenderPriority val="650"/>
+				<AcceptsMouse val="true"/>
+				<Frame type="Label" name="FCJH_X">
+					<Anchor relative="$parent"/>
+					<Style val="ObsBar_MatchTimer"/>
+					<Text val="X"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Animation name="FCJH_Close">
+					<Event event="OnClick" action="Reset,Play"/>
+					<Controller type="Visibility" end="Stop" frame="$parent/$parent/FCJH_Pane_TalentsToggle">
+						<Key type="Bool" time="0" value="false"/>
+					</Controller>
+				</Animation>
+			</Frame>
 		</Frame>
 	</Frame>
 </Desc>

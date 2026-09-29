@@ -104,6 +104,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
+										</Frame>
 									</Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame">
@@ -149,6 +171,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
+										</Frame>
 									</Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
@@ -171,9 +215,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -223,6 +286,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
+										</Frame>
 									</Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame">
@@ -268,6 +353,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
+										</Frame>
 									</Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
@@ -290,9 +397,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -342,6 +468,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
+										</Frame>
 									</Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame">
@@ -387,6 +535,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
+										</Frame>
 									</Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
@@ -409,9 +579,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -461,6 +650,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
+										</Frame>
 									</Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame">
@@ -506,6 +717,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
+										</Frame>
 									</Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
@@ -528,9 +761,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -580,6 +832,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
+										</Frame>
 									</Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame">
@@ -625,6 +899,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
+										</Frame>
 									</Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
@@ -647,9 +943,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -699,6 +1014,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
+										</Frame>
 									</Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame">
@@ -744,6 +1081,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
+										</Frame>
 									</Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
@@ -766,9 +1125,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -818,6 +1196,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
+										</Frame>
 									</Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame">
@@ -863,6 +1263,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
+										</Frame>
 									</Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
@@ -885,9 +1307,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -937,6 +1378,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
+										</Frame>
 									</Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame">
@@ -982,6 +1445,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
+										</Frame>
 									</Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
@@ -1004,9 +1489,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -1056,6 +1560,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
+										</Frame>
 									</Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame">
@@ -1101,6 +1627,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
+										</Frame>
 									</Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
@@ -1123,9 +1671,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -1175,6 +1742,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
+										</Frame>
 									</Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame">
@@ -1220,6 +1809,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
+										</Frame>
 									</Frame>
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
@@ -1242,9 +1853,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -1532,6 +2162,26 @@
 					<AcceptsMouse val="false"/>
 				</Frame>
 			</Frame>
+			<Frame type="Button" name="FCJH_Close">
+				<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
+				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
+				<Width val="#FCJH_INFO_PANE_TITLE_H"/>
+				<Height val="#FCJH_INFO_PANE_TITLE_H"/>
+				<RenderPriority val="650"/>
+				<AcceptsMouse val="true"/>
+				<Frame type="Label" name="FCJH_X">
+					<Anchor relative="$parent"/>
+					<Style val="ObsBar_MatchTimer"/>
+					<Text val="X"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Animation name="FCJH_Close">
+					<Event event="OnClick" action="Reset,Play"/>
+					<Controller type="Visibility" end="Stop" frame="$parent/$parent/FCJH_Pane_KdaToggle">
+						<Key type="Bool" time="0" value="false"/>
+					</Controller>
+				</Animation>
+			</Frame>
 		</Frame>
 		<!-- HEALING  ·  SHIELDING: Blizzard's observer stats panel, our copy -->
 		<Frame type="Frame" name="FCJH_Pane_Healing">
@@ -1627,9 +2277,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -1653,9 +2322,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -1679,9 +2367,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -1732,9 +2439,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -1758,9 +2484,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -1784,9 +2529,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -1837,9 +2601,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -1863,9 +2646,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -1889,9 +2691,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -1942,9 +2763,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -1968,9 +2808,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -1994,9 +2853,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -2047,9 +2925,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -2073,9 +2970,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -2099,9 +3015,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -2152,9 +3087,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -2178,9 +3132,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -2204,9 +3177,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -2257,9 +3249,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -2283,9 +3294,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -2309,9 +3339,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -2362,9 +3411,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -2388,9 +3456,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -2414,9 +3501,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -2467,9 +3573,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -2493,9 +3618,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -2519,9 +3663,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -2572,9 +3735,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -2598,9 +3780,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -2624,9 +3825,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -2873,6 +4093,26 @@
 					<AcceptsMouse val="false"/>
 				</Frame>
 			</Frame>
+			<Frame type="Button" name="FCJH_Close">
+				<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
+				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
+				<Width val="#FCJH_INFO_PANE_TITLE_H"/>
+				<Height val="#FCJH_INFO_PANE_TITLE_H"/>
+				<RenderPriority val="650"/>
+				<AcceptsMouse val="true"/>
+				<Frame type="Label" name="FCJH_X">
+					<Anchor relative="$parent"/>
+					<Style val="ObsBar_MatchTimer"/>
+					<Text val="X"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Animation name="FCJH_Close">
+					<Event event="OnClick" action="Reset,Play"/>
+					<Controller type="Visibility" end="Stop" frame="$parent/$parent/FCJH_Pane_HealingToggle">
+						<Key type="Bool" time="0" value="false"/>
+					</Controller>
+				</Animation>
+			</Frame>
 		</Frame>
 		<!-- STRUCTURES  ·  EXPERIENCE: Blizzard's observer stats panel, our copy -->
 		<Frame type="Frame" name="FCJH_Pane_Structures">
@@ -2968,9 +4208,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -2994,9 +4253,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -3019,6 +4297,28 @@
 											<Style val="FCJH_StatValue_Blue"/>
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
+										</Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -3069,9 +4369,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -3095,9 +4414,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -3120,6 +4458,28 @@
 											<Style val="FCJH_StatValue_Blue"/>
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
+										</Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -3170,9 +4530,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -3196,9 +4575,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -3221,6 +4619,28 @@
 											<Style val="FCJH_StatValue_Blue"/>
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
+										</Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -3271,9 +4691,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -3297,9 +4736,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -3322,6 +4780,28 @@
 											<Style val="FCJH_StatValue_Blue"/>
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
+										</Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -3372,9 +4852,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -3398,9 +4897,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -3423,6 +4941,28 @@
 											<Style val="FCJH_StatValue_Blue"/>
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
+										</Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,90,150,255"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -3473,9 +5013,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -3499,9 +5058,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -3524,6 +5102,28 @@
 											<Style val="FCJH_StatValue_Red"/>
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
+										</Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -3574,9 +5174,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -3600,9 +5219,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -3625,6 +5263,28 @@
 											<Style val="FCJH_StatValue_Red"/>
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
+										</Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -3675,9 +5335,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -3701,9 +5380,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -3726,6 +5424,28 @@
 											<Style val="FCJH_StatValue_Red"/>
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
+										</Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -3776,9 +5496,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -3802,9 +5541,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -3827,6 +5585,28 @@
 											<Style val="FCJH_StatValue_Red"/>
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
+										</Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -3877,9 +5657,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -3903,9 +5702,28 @@
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
-										<Frame type="Image" name="HighlightImage">
-											<Anchor side="Left"  relative="$parent" pos="Mid" offset="0"/>
-											<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+										<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -3928,6 +5746,28 @@
 											<Style val="FCJH_StatValue_Red"/>
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
+										</Frame>
+										<Frame type="Image" name="FCJH_Lead">
+											<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
+											<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>
+											<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>
+											<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="70,255,90,110"/>
+											<Visible val="false"/>
+											<Unclipped val="true"/>
+											<AcceptsMouse val="false"/>
+											<Animation name="FCJH_ShowLead">
+												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>
+											</Animation>
+											<Animation name="FCJH_HideLead">
+												<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>
+												<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>
+											</Animation>
 										</Frame>
 									</Frame>
 								</Frame>
@@ -4173,6 +6013,26 @@
 					<RenderPriority val="620"/>
 					<AcceptsMouse val="false"/>
 				</Frame>
+			</Frame>
+			<Frame type="Button" name="FCJH_Close">
+				<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
+				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
+				<Width val="#FCJH_INFO_PANE_TITLE_H"/>
+				<Height val="#FCJH_INFO_PANE_TITLE_H"/>
+				<RenderPriority val="650"/>
+				<AcceptsMouse val="true"/>
+				<Frame type="Label" name="FCJH_X">
+					<Anchor relative="$parent"/>
+					<Style val="ObsBar_MatchTimer"/>
+					<Text val="X"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Animation name="FCJH_Close">
+					<Event event="OnClick" action="Reset,Play"/>
+					<Controller type="Visibility" end="Stop" frame="$parent/$parent/FCJH_Pane_StructuresToggle">
+						<Key type="Bool" time="0" value="false"/>
+					</Controller>
+				</Animation>
 			</Frame>
 		</Frame>
 

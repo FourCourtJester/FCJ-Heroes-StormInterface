@@ -12,8 +12,8 @@
 	         inside, one per tier, each bound to its tier icon's picture
 	       - 70 watchers: when a tier fires (once, latched), show that image and pop for 4 s
 	     Look for: the picked talent's icon sliding up from the plate's middle to straddle its
-	     top edge (0.35 s, fading in), holding there 5 s, then fading out over 0.5 s (gone at
-	     5.85 s); framed in the talent pane's team-coloured square. The heal pop-up is to share
+	     top edge (0.35 s, fading in), holding there 5 s, then fading out over 0.75 s (gone at
+	     6.1 s; +0.25 s, user 2026-09-29); framed in the talent pane's team-coloured square. The heal pop-up is to share
 	     this exact motion and spot (user, 2026-09-27). -->
 
 	<Frame type="GameUI" name="GameUI" file="GameUI">
@@ -84,7 +84,7 @@
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="5.85" value="false"/>
+						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<!-- slide up from the plate's middle (38 units down) to its top edge -->
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
@@ -95,7 +95,7 @@
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
 						<Key type="Curve" time="5.35" value="255"/>
-						<Key type="Curve" time="5.85" value="0"/>
+						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -162,7 +162,7 @@
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="5.85" value="false"/>
+						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<!-- slide up from the plate's middle (38 units down) to its top edge -->
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
@@ -173,7 +173,7 @@
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
 						<Key type="Curve" time="5.35" value="255"/>
-						<Key type="Curve" time="5.85" value="0"/>
+						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -240,7 +240,7 @@
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="5.85" value="false"/>
+						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<!-- slide up from the plate's middle (38 units down) to its top edge -->
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
@@ -251,7 +251,7 @@
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
 						<Key type="Curve" time="5.35" value="255"/>
-						<Key type="Curve" time="5.85" value="0"/>
+						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -318,7 +318,7 @@
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="5.85" value="false"/>
+						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<!-- slide up from the plate's middle (38 units down) to its top edge -->
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
@@ -329,7 +329,7 @@
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
 						<Key type="Curve" time="5.35" value="255"/>
-						<Key type="Curve" time="5.85" value="0"/>
+						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -396,7 +396,7 @@
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="5.85" value="false"/>
+						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<!-- slide up from the plate's middle (38 units down) to its top edge -->
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
@@ -407,7 +407,7 @@
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
 						<Key type="Curve" time="5.35" value="255"/>
-						<Key type="Curve" time="5.85" value="0"/>
+						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -474,7 +474,7 @@
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="5.85" value="false"/>
+						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<!-- slide up from the plate's middle (38 units down) to its top edge -->
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
@@ -485,7 +485,7 @@
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
 						<Key type="Curve" time="5.35" value="255"/>
-						<Key type="Curve" time="5.85" value="0"/>
+						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -552,7 +552,7 @@
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="5.85" value="false"/>
+						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<!-- slide up from the plate's middle (38 units down) to its top edge -->
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
@@ -563,7 +563,7 @@
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
 						<Key type="Curve" time="5.35" value="255"/>
-						<Key type="Curve" time="5.85" value="0"/>
+						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -630,7 +630,7 @@
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="5.85" value="false"/>
+						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<!-- slide up from the plate's middle (38 units down) to its top edge -->
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
@@ -641,7 +641,7 @@
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
 						<Key type="Curve" time="5.35" value="255"/>
-						<Key type="Curve" time="5.85" value="0"/>
+						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -708,7 +708,7 @@
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="5.85" value="false"/>
+						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<!-- slide up from the plate's middle (38 units down) to its top edge -->
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
@@ -719,7 +719,7 @@
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
 						<Key type="Curve" time="5.35" value="255"/>
-						<Key type="Curve" time="5.85" value="0"/>
+						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -786,7 +786,7 @@
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="5.85" value="false"/>
+						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<!-- slide up from the plate's middle (38 units down) to its top edge -->
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
@@ -797,7 +797,7 @@
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
 						<Key type="Curve" time="5.35" value="255"/>
-						<Key type="Curve" time="5.85" value="0"/>
+						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
