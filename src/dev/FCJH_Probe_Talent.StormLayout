@@ -20,6 +20,7 @@
 		<Frame type="Frame" name="FCJH_TalentPopups">
 			<Anchor relative="$parent"/>
 			<AcceptsMouse val="false"/>
+			<RenderPriority val="530"/>  <!-- over the heal pop-ups (FCJH_Probe_HealPop, 520) -->
 			<Frame type="Frame" name="FCJH_Pop0">
 				<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="#FCJH_HERO_POPUP_T"/>
 				<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Mid" offset="#FCJH_HERO_BLUE_POPUP_L"/>

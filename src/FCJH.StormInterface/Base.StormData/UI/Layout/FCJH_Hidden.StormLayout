@@ -37,6 +37,20 @@
 					<Controller type="Visibility" end="Loop" frame="$ConsolePortraitPanelContainer/PortraitPanel">
 						<Key type="Bool" time="0" value="false"/>
 					</Controller>
+					<!-- the selected hero's cast / channel bars ("Mounting"...), bottom centre: part
+					     of the player HUD, seen stuck on screen (2026-09-29) -->
+					<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/ConsoleUIContainer/HeroCastChannelBarFrame">
+						<Key type="Bool" time="0" value="false"/>
+					</Controller>
+					<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/ConsoleUIContainer/HeroBehaviorChannelBarSurroundFrame">
+						<Key type="Bool" time="0" value="false"/>
+					</Controller>
+					<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/ConsoleUIContainer/HeroBehaviorChannelBarFrame">
+						<Key type="Bool" time="0" value="false"/>
+					</Controller>
+					<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/ConsoleUIContainer/HeroBehaviorChannelBarFrameRight">
+						<Key type="Bool" time="0" value="false"/>
+					</Controller>
 					<!-- Blizzard's small inspect box; our inspect card replaces it -->
 					<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/FullscreenUpperContainer/TargetInfoFrame">
 						<Key type="Bool" time="0" value="false"/>

@@ -442,21 +442,23 @@ def slant_bars(cfg):
     lean = HeroCell(cfg).overlap / HeroCell(cfg).h
     xp, core = cfg["team_xp"], cfg["team_core"]
     out = {}
+    # The bars' fills are STRETCHED to the value (seen in game, 2026-09-29: a draining core's
+    # slanted ends squashed toward vertical), so a fill is a plain block of colour and the
+    # slant comes from a mask over the bar (mask frames, AlphaMaskSiblings). Tracks don't
+    # move, so they keep the slant in their own texture.
     for team in ("blue", "red"):
-        for bar, spec, colours in (("xp", xp, {"fill": xp["colour"]}),
-                                   ("core", core, {"fill": core[f"{team}_colour"]})):
+        for bar, spec, fill in (("xp", xp, xp["colour"]), ("core", core, core[f"{team}_colour"])):
             (_, _, w, h), _ = rects_[f"{team}_{bar}"]
             cut = lean * h / w
-            parts = dict(colours, track=spec["track_colour"])
-            for part, colour in parts.items():
-                alpha = spec["track_alpha"] if part == "track" else 255
-                data = slant_texture(team, cut, colour, alpha)
+            for part, data in (("fill", slant_texture(team, 0, fill, size=(32, 32))),
+                               ("track", slant_texture(team, cut, spec["track_colour"], spec["track_alpha"])),
+                               ("mask", slant_texture(team, cut, "ffffff"))):
                 digest = hashlib.sha1(data).hexdigest()[:8]
                 out[name(bar, part, team)] = (f"FCJH_Bar_{bar}_{part}_{team}_{digest}.dds", data)
         # XP for rows of 1-4 heroes: a shorter bar keeps the same slant only with its own cut
         for n in range(1, 5):
             (_, _, w, h), _ = team_bar_rects(cfg, n)[f"{team}_xp"]
-            for part, colour, alpha in (("fill", xp["colour"], 255), ("track", xp["track_colour"], xp["track_alpha"])):
+            for part, colour, alpha in (("mask", "ffffff", 255), ("track", xp["track_colour"], xp["track_alpha"])):
                 data = slant_texture(team, lean * h / w, colour, alpha)
                 digest = hashlib.sha1(data).hexdigest()[:8]
                 out[name("xp", part, team, f"n{n}")] = (f"FCJH_Bar_xp_{part}_{team}_n{n}_{digest}.dds", data)
@@ -482,10 +484,29 @@ def slant_bars(cfg):
     return out
 
 
+HEAL_BORDER = "FCJH_PopBorder_Heal.dds"   # the heal pop-up's frame (dev probe FCJH_Probe_HealPop)
+
+
+def square_border(colour, size=64, edge=4):
+    """A square outline in one colour, transparent inside: the heal pop-up's frame, in the
+    spirit of the talent pop-up's team square."""
+    r, g, b = bytes.fromhex(colour)
+    rows = []
+    for y in range(size):
+        row = bytearray()
+        for x in range(size):
+            d = min(x, y, size - 1 - x, size - 1 - y)          # distance to the nearest edge
+            a = 255 if d < edge else (90 if d < edge + 2 else 0)  # the line, then a faint inner glow
+            row += bytes((b, g, r, a))
+        rows.append(bytes(row))
+    return dds_bgra(size, size, b"".join(rows))
+
+
 def texture_files(cfg):
     out = {TEXTURE_REL / portrait_mask_file(team): portrait_mask(team) for team in ("blue", "red")}
     # an opaque mask: replaces a Blizzard mask we don't want (there's no "none")
     out[TEXTURE_REL / "FCJH_White.dds"] = dds_bgra(4, 4, b"\xff" * 64)
+    out[TEXTURE_REL / HEAL_BORDER] = square_border("3cff5a")
     for file, data in slant_bars(cfg).values():
         out[TEXTURE_REL / file] = data
     return out
@@ -496,6 +517,42 @@ def _anchors(rect, relative, indent):
     sides = zip(("Left", "Top", "Right", "Bottom"), rect)
     return "".join(f'\n{indent}<Anchor side="{side}" relative="{relative}" pos="Min" offset="{v}"/>'
                    for side, v in sides if v is not None)
+
+
+VIKING_GAP = 2   # layout units between the three Vikings' bars
+
+
+def trackers(team, health):
+    """Blizzard's extra health bars inside HeroStatus, refitted to our bar (their templates
+    assume the stock 134 x 6 box): Misha under Rexxar's bar (Blizzard halves his bar when she
+    is up), and the three Vikings side by side, a third of the bar each (Blizzard hides the
+    main bar for them). Same fill art as the main bar."""
+    suffix = "" if team == "blue" else "_Right"
+    w = health[2] - health[0]
+    third = (w - 2 * VIKING_GAP) / 3
+    bar = (f'<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">'
+           f'<Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm{suffix}"/><Tiled val="true"/></Frame>')
+    vikings = "".join(
+        f"""
+					<Frame type="UnitStatusFrame" name="TrackedUnitStatusFrame{i}">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="{round(i * (third + VIKING_GAP))}"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="{round(i * (third + VIKING_GAP) + third)}"/>
+						{bar}
+					</Frame>""" for i in range(3))
+    return f"""
+			<Frame type="UnitStatusUnitTrackingBehavior" name="VikingTrackingElement">{vikings}
+			</Frame>
+			<Frame type="UnitStatusUnitTrackingBehavior" name="RexxarTrackingElement">
+				<Anchor side="Left"  relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+				<Width val="0"/>
+				<Frame type="UnitStatusFrame" name="TrackedUnitStatusFrame0">
+					<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+					{bar}
+				</Frame>
+			</Frame>"""
 
 
 def hero_cell_template(team, c):
@@ -514,6 +571,7 @@ def hero_cell_template(team, c):
 			<Height val="0"/>
 			<Texture val="@UI/{tex}"/>{flip}
 			<RenderPriority val="{prio}"/>
+			<AcceptsMouse val="false"/>
 		</Frame>"""
     cell = "$parent/$parent"
     backing = lambda name, tex, rect, height: f"""
@@ -522,6 +580,7 @@ def hero_cell_template(team, c):
 				<TextureType val="Nineslice"/>{flip.replace(chr(9) * 3, chr(9) * 4)}
 				{height}<RenderPriority val="450"/>
 				<Unclipped val="true"/>
+				<AcceptsMouse val="false"/>
 			</Frame>"""
     hb, mb = g["health_backing"], g["mana_backing"]
     size = '<Width val="0"/>\n\t\t\t\t<Height val="0"/>\n\t\t\t\t'
@@ -546,7 +605,7 @@ def hero_cell_template(team, c):
 			<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">
 				<Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm{suffix}"/>
 				<Tiled val="true"/>
-			</Frame>{health_backing}{mana_backing}{energy}"""
+			</Frame>{trackers(team, g["health"])}{health_backing}{mana_backing}{energy}"""
     if blue:  # red inherits these unchanged
         cc_top, cc_bottom = c.cc_band
         health += f"""
@@ -730,6 +789,17 @@ def hero_cell_template(team, c):
 		</Frame>
 		<Frame type="Image" name="HeroPortraitBackground" template="FCJH_HeroRow/FCJH_Parked"/>
 		<Frame type="Image" name="TalentsBgImage" template="FCJH_HeroRow/FCJH_Parked"/>
+		<!-- Blizzard's click target (select, centre the camera): the whole plate, above
+		     everything we draw, so no art of ours can take the click -->
+		<Frame type="UnitTargetFrame" name="TargetHeroUnitFrame">
+			<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+			<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+			<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+			<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
+			<Width val="0"/>
+			<Height val="0"/>
+			<RenderPriority val="600"/>
+		</Frame>
 		<Frame type="Label" name="HeroDeathTimeLabel">
 			<Anchor side="Top"    relative="$parent" pos="Min" offset="2"/>
 			<Anchor side="Left"   relative="$parent" pos="Min" offset="{shift}"/>
@@ -786,8 +856,8 @@ def row_packer(cfg):
     hides the rest, and every cell is pinned in place, so a short blue team would sit out at
     the screen edge with a hole by the minimap (red already fills from the minimap out).
     This counts each team's visible cells and, for n heroes: moves blue's cells 1..n onto
-    the n slots nearest the minimap, and cuts both XP bars (track and fill, with textures
-    cut for that length) to span only n plates. Core bars already sit at the inner ends.
+    the n slots nearest the minimap, and cuts both XP bars (the track's texture and the fill's
+    mask, each cut for that length) to span only n plates. Core bars already sit at the inner ends.
     Every state sets everything it touches, so no state depends on another's undo."""
     u = Units(cfg)
     bars = slant_bars(cfg)
@@ -816,9 +886,9 @@ def row_packer(cfg):
         for frame in (f"{top_panel}/FCJH_{Team}XPTrack", f"{top_panel}/{tn}XPUnitStatusFrame"):
             acts += anchor(frame, "Left", x) + anchor(frame, "Right", x + w)
         track = tex(name("xp", "track", team) + suffix)
-        fill = tex(name("xp", "fill", team) + suffix)
+        mask = tex(name("xp", "mask", team) + suffix)
         acts += (f'\t\t\t\t<Action type="SetProperty" frame="{top_panel}/FCJH_{Team}XPTrack" Texture="{track}"/>\n'
-                 f'\t\t\t\t<Action type="SetProperty" frame="{top_panel}/{tn}XPUnitStatusFrame/XPBar" Texture="{fill}"/>\n')
+                 f'\t\t\t\t<Action type="SetProperty" frame="{top_panel}/{tn}XPUnitStatusFrame/FCJH_XPMask" AlphaMaskTexture="{mask}"/>\n')
         return f'\t\t\t<State name="Heroes{n}">\n{when}{acts}\t\t\t</State>\n'
 
     groups = ""

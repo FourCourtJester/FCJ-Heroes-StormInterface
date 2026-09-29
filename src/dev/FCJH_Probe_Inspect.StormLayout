@@ -21,7 +21,15 @@
 	          1-2 two of Auriel's talent actives (should only show once she picks them)
 	     Look for: select a hero (Sonya, Johanna or Auriel for the abilities) and screenshot the
 	     card; then one on cooldown. Tell me which numbered parts show and which stay empty.
-	     Player view (Ctrl+5) stays off: none of this should need it. -->
+	     Player view (Ctrl+5) stays off: none of this should need it.
+
+	     Round 4 (2026-09-29), from round 3 in game: the card's parts now hide with it; the
+	     portrait stops above the name band (it hid the level and fountain); the fountain is
+	     unmirrored here; talents get the selected unit's player (they were blank squares); a
+	     slot's key letter hides when no ability shows in it. Still open: the portrait doesn't
+	     span the width; "Player 1" didn't change between heroes; no ability tooltips (Spazzo
+	     writes his own per ability); which D and Z to show needs the per-hero table (D only
+	     when the trait is activatable, Z only for a custom mount - user). -->
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<!-- A. The card and the parts already proven: our copy of Blizzard's inspect box -->
 		<Frame type="TargetInfoFrame" name="FCJH_Inspect">
@@ -70,7 +78,7 @@
 				<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
 				<Texture val="@UI/PauseScreenDimImage"/>
 				<ColorAdjustMode val="Fill"/>
-				<AdjustmentColor val="180,8,10,20"/>
+				<AdjustmentColor val="235,16,18,32"/>
 				<RenderPriority val="240"/>
 				<AcceptsMouse val="false"/>
 			</Frame>
@@ -125,7 +133,7 @@
 				<Frame type="Frame" name="TargetPortraitFrame">
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="29"/>
 					<Anchor side="Left"   relative="$parent" pos="Min" offset="2"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="196"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="154"/>
 					<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
 					<Width val="0"/>
 					<Height val="0"/>
@@ -210,6 +218,8 @@
 			<AcceptsMouse val="false"/>
 			<AcceptsMouseTooltip val="false"/>
 			<RenderPriority val="660"/>
+			<!-- shown only while the card is (round 3: the card hid on click-off, these stayed) -->
+			<Visible val="{$parent/FCJH_Inspect/TargetInfoPanel/@Enabled}"/>
 			<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 				<Anchor relative="$parent"/>
 				<AcceptsMouse val="false"/>
@@ -269,7 +279,6 @@
 					<Anchor side="Bottom" relative="$parent" pos="Min" offset="186"/>
 					<Anchor side="Right"  relative="$parent" pos="Min" offset="260"/>
 					<Texture val="@UI/Storm_UI_Ingame_HealingWell_Active"/>
-					<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>
 					<RenderPriority val="680"/>
 					<AcceptsMouse val="false"/>
 					<StateGroup name="FCJH_Fountain">
@@ -307,12 +316,14 @@
 					<State name="OneRow"/>
 				</StateGroup>
 
-				<!-- 5. talents: Blizzard's talent strip, one row, for the selected hero -->
+				<!-- 5. talents: Blizzard's talent strip, one row. Round 3 drew blank squares: the strip is
+				     keyed to a player, not a unit, so round 4 hands it the selected unit's owner -->
 				<Frame type="PlayerHeroSelectedTalentTreeFrame" name="FCJH_Talents" template="TalentsOverviewPanel/BottomPanelTalentTreeCustomTemplateBlue">
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
 					<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
 					<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
 					<Anchor side="Right"  relative="$parent" pos="Min" offset="315"/>
+					<PlayerId val="{$parent/@ControlPlayerId}"/>
 					<RenderPriority val="670"/>
 						<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
@@ -480,6 +491,12 @@
 						<Text val="1"/>
 						<Options val="NoWrapping | ScaleToPreventTruncation"/>
 						<AcceptsMouse val="false"/>
+					<StateGroup name="FCJH_Abil1Present">
+						<DefaultState val="Yes"/>
+						<State name="NoIcon"><When type="Property" frame="$parent/FCJH_Abil1" Visible="false"/><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						<State name="NoAbil"><When type="Property" frame="$parent/FCJH_Abil1/AbilIcon" Visible="false"/><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						<State name="Yes"><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+					</StateGroup>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_Abil2">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="382"/>
@@ -516,6 +533,12 @@
 						<Text val="2"/>
 						<Options val="NoWrapping | ScaleToPreventTruncation"/>
 						<AcceptsMouse val="false"/>
+					<StateGroup name="FCJH_Abil2Present">
+						<DefaultState val="Yes"/>
+						<State name="NoIcon"><When type="Property" frame="$parent/FCJH_Abil2" Visible="false"/><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						<State name="NoAbil"><When type="Property" frame="$parent/FCJH_Abil2/AbilIcon" Visible="false"/><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						<State name="Yes"><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+					</StateGroup>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_Abil3">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="382"/>
@@ -551,6 +574,12 @@
 						<Text val="3"/>
 						<Options val="NoWrapping | ScaleToPreventTruncation"/>
 						<AcceptsMouse val="false"/>
+					<StateGroup name="FCJH_Abil3Present">
+						<DefaultState val="Yes"/>
+						<State name="NoIcon"><When type="Property" frame="$parent/FCJH_Abil3" Visible="false"/><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						<State name="NoAbil"><When type="Property" frame="$parent/FCJH_Abil3/AbilIcon" Visible="false"/><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						<State name="Yes"><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+					</StateGroup>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_Abil4">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="382"/>
@@ -586,6 +615,12 @@
 						<Text val="4"/>
 						<Options val="NoWrapping | ScaleToPreventTruncation"/>
 						<AcceptsMouse val="false"/>
+					<StateGroup name="FCJH_Abil4Present">
+						<DefaultState val="Yes"/>
+						<State name="NoIcon"><When type="Property" frame="$parent/FCJH_Abil4" Visible="false"/><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						<State name="NoAbil"><When type="Property" frame="$parent/FCJH_Abil4/AbilIcon" Visible="false"/><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						<State name="Yes"><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+					</StateGroup>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_Abil5">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="382"/>
@@ -621,6 +656,12 @@
 						<Text val="5"/>
 						<Options val="NoWrapping | ScaleToPreventTruncation"/>
 						<AcceptsMouse val="false"/>
+					<StateGroup name="FCJH_Abil5Present">
+						<DefaultState val="Yes"/>
+						<State name="NoIcon"><When type="Property" frame="$parent/FCJH_Abil5" Visible="false"/><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						<State name="NoAbil"><When type="Property" frame="$parent/FCJH_Abil5/AbilIcon" Visible="false"/><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						<State name="Yes"><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+					</StateGroup>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_AbilD">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="425"/>
@@ -656,6 +697,12 @@
 						<Text val="D"/>
 						<Options val="NoWrapping | ScaleToPreventTruncation"/>
 						<AcceptsMouse val="false"/>
+					<StateGroup name="FCJH_AbilDPresent">
+						<DefaultState val="Yes"/>
+						<State name="NoIcon"><When type="Property" frame="$parent/FCJH_AbilD" Visible="false"/><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						<State name="NoAbil"><When type="Property" frame="$parent/FCJH_AbilD/AbilIcon" Visible="false"/><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						<State name="Yes"><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+					</StateGroup>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_AbilQ">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="425"/>
@@ -691,6 +738,12 @@
 						<Text val="Q"/>
 						<Options val="NoWrapping | ScaleToPreventTruncation"/>
 						<AcceptsMouse val="false"/>
+					<StateGroup name="FCJH_AbilQPresent">
+						<DefaultState val="Yes"/>
+						<State name="NoIcon"><When type="Property" frame="$parent/FCJH_AbilQ" Visible="false"/><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						<State name="NoAbil"><When type="Property" frame="$parent/FCJH_AbilQ/AbilIcon" Visible="false"/><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						<State name="Yes"><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+					</StateGroup>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_AbilW">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="425"/>
@@ -726,6 +779,12 @@
 						<Text val="W"/>
 						<Options val="NoWrapping | ScaleToPreventTruncation"/>
 						<AcceptsMouse val="false"/>
+					<StateGroup name="FCJH_AbilWPresent">
+						<DefaultState val="Yes"/>
+						<State name="NoIcon"><When type="Property" frame="$parent/FCJH_AbilW" Visible="false"/><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						<State name="NoAbil"><When type="Property" frame="$parent/FCJH_AbilW/AbilIcon" Visible="false"/><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						<State name="Yes"><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+					</StateGroup>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_AbilE">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="425"/>
@@ -761,6 +820,12 @@
 						<Text val="E"/>
 						<Options val="NoWrapping | ScaleToPreventTruncation"/>
 						<AcceptsMouse val="false"/>
+					<StateGroup name="FCJH_AbilEPresent">
+						<DefaultState val="Yes"/>
+						<State name="NoIcon"><When type="Property" frame="$parent/FCJH_AbilE" Visible="false"/><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						<State name="NoAbil"><When type="Property" frame="$parent/FCJH_AbilE/AbilIcon" Visible="false"/><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						<State name="Yes"><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+					</StateGroup>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_AbilR">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="425"/>
@@ -797,6 +862,12 @@
 						<Text val="R"/>
 						<Options val="NoWrapping | ScaleToPreventTruncation"/>
 						<AcceptsMouse val="false"/>
+					<StateGroup name="FCJH_AbilRPresent">
+						<DefaultState val="Yes"/>
+						<State name="NoIcon"><When type="Property" frame="$parent/FCJH_AbilR" Visible="false"/><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						<State name="NoAbil"><When type="Property" frame="$parent/FCJH_AbilR/AbilIcon" Visible="false"/><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						<State name="Yes"><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+					</StateGroup>
 					</Frame>
 					<Frame type="UnitStatusAbilIcon" name="FCJH_AbilZ">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="425"/>
@@ -833,6 +904,12 @@
 						<Text val="Z"/>
 						<Options val="NoWrapping | ScaleToPreventTruncation"/>
 						<AcceptsMouse val="false"/>
+					<StateGroup name="FCJH_AbilZPresent">
+						<DefaultState val="Yes"/>
+						<State name="NoIcon"><When type="Property" frame="$parent/FCJH_AbilZ" Visible="false"/><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						<State name="NoAbil"><When type="Property" frame="$parent/FCJH_AbilZ/AbilIcon" Visible="false"/><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+						<State name="Yes"><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+					</StateGroup>
 					</Frame>
 				<StateGroup name="FCJH_Abilities">
 					<DefaultState val="Other"/>

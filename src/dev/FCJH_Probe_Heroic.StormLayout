@@ -16,6 +16,9 @@
 	     heroic tier comes at level 8 and needs nothing special. Not handled yet - Ahli
 	     special-cases both: Tracer (heroic from level 1, charge-based), Varian (heroic picked
 	     at level 4, tier 2). Deathwing needs nothing (no Cataclysm before 10; user, 2026-09-27).
+	     Round 2 (2026-09-29): "?" and the icon showed in game; the cooldown never did. It now
+	     comes from our own ability icon inside each plate's HeroStatus (bound to that hero,
+	     Ahli's way), given the heroic's link from the stock row.
 	     Written by a one-off script (10 copies); edit by regenerating.
 	     Look for: "?" on a plate from its heroic tier (10; Chromie 8) until the pick; then the icon; after a cast, a dark
 	     overlay with seconds counting down; nothing before that tier. -->
@@ -65,7 +68,7 @@
 				</Frame>
 				<Frame type="Label" name="FCJH_Cooldown">
 					<Anchor relative="$parent"/>
-					<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
+					<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel/@Text}"/>
 					<Style val="FCJH_HeroicCooldown"/>
 					<Options val="NoWrapping | ScaleToPreventTruncation"/>
 					<Alpha val="0"/>
@@ -97,7 +100,7 @@
 				<StateGroup name="FCJH_Cooldown">
 					<DefaultState val="Ready"/>
 					<State name="OnCooldown">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel" Visible="true"/>
 						<Action type="SetProperty" frame="$this/FCJH_Dim" Alpha="255"/>
 						<Action type="SetProperty" frame="$this/FCJH_Cooldown" Alpha="255"/>
 					</State>
@@ -149,7 +152,7 @@
 				</Frame>
 				<Frame type="Label" name="FCJH_Cooldown">
 					<Anchor relative="$parent"/>
-					<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
+					<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel/@Text}"/>
 					<Style val="FCJH_HeroicCooldown"/>
 					<Options val="NoWrapping | ScaleToPreventTruncation"/>
 					<Alpha val="0"/>
@@ -181,7 +184,7 @@
 				<StateGroup name="FCJH_Cooldown">
 					<DefaultState val="Ready"/>
 					<State name="OnCooldown">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel" Visible="true"/>
 						<Action type="SetProperty" frame="$this/FCJH_Dim" Alpha="255"/>
 						<Action type="SetProperty" frame="$this/FCJH_Cooldown" Alpha="255"/>
 					</State>
@@ -233,7 +236,7 @@
 				</Frame>
 				<Frame type="Label" name="FCJH_Cooldown">
 					<Anchor relative="$parent"/>
-					<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
+					<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel/@Text}"/>
 					<Style val="FCJH_HeroicCooldown"/>
 					<Options val="NoWrapping | ScaleToPreventTruncation"/>
 					<Alpha val="0"/>
@@ -265,7 +268,7 @@
 				<StateGroup name="FCJH_Cooldown">
 					<DefaultState val="Ready"/>
 					<State name="OnCooldown">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel" Visible="true"/>
 						<Action type="SetProperty" frame="$this/FCJH_Dim" Alpha="255"/>
 						<Action type="SetProperty" frame="$this/FCJH_Cooldown" Alpha="255"/>
 					</State>
@@ -317,7 +320,7 @@
 				</Frame>
 				<Frame type="Label" name="FCJH_Cooldown">
 					<Anchor relative="$parent"/>
-					<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
+					<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel/@Text}"/>
 					<Style val="FCJH_HeroicCooldown"/>
 					<Options val="NoWrapping | ScaleToPreventTruncation"/>
 					<Alpha val="0"/>
@@ -349,7 +352,7 @@
 				<StateGroup name="FCJH_Cooldown">
 					<DefaultState val="Ready"/>
 					<State name="OnCooldown">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel" Visible="true"/>
 						<Action type="SetProperty" frame="$this/FCJH_Dim" Alpha="255"/>
 						<Action type="SetProperty" frame="$this/FCJH_Cooldown" Alpha="255"/>
 					</State>
@@ -401,7 +404,7 @@
 				</Frame>
 				<Frame type="Label" name="FCJH_Cooldown">
 					<Anchor relative="$parent"/>
-					<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
+					<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel/@Text}"/>
 					<Style val="FCJH_HeroicCooldown"/>
 					<Options val="NoWrapping | ScaleToPreventTruncation"/>
 					<Alpha val="0"/>
@@ -433,7 +436,7 @@
 				<StateGroup name="FCJH_Cooldown">
 					<DefaultState val="Ready"/>
 					<State name="OnCooldown">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel" Visible="true"/>
 						<Action type="SetProperty" frame="$this/FCJH_Dim" Alpha="255"/>
 						<Action type="SetProperty" frame="$this/FCJH_Cooldown" Alpha="255"/>
 					</State>
@@ -485,7 +488,7 @@
 				</Frame>
 				<Frame type="Label" name="FCJH_Cooldown">
 					<Anchor relative="$parent"/>
-					<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
+					<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel/@Text}"/>
 					<Style val="FCJH_HeroicCooldown"/>
 					<Options val="NoWrapping | ScaleToPreventTruncation"/>
 					<Alpha val="0"/>
@@ -517,7 +520,7 @@
 				<StateGroup name="FCJH_Cooldown">
 					<DefaultState val="Ready"/>
 					<State name="OnCooldown">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel" Visible="true"/>
 						<Action type="SetProperty" frame="$this/FCJH_Dim" Alpha="255"/>
 						<Action type="SetProperty" frame="$this/FCJH_Cooldown" Alpha="255"/>
 					</State>
@@ -569,7 +572,7 @@
 				</Frame>
 				<Frame type="Label" name="FCJH_Cooldown">
 					<Anchor relative="$parent"/>
-					<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
+					<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel/@Text}"/>
 					<Style val="FCJH_HeroicCooldown"/>
 					<Options val="NoWrapping | ScaleToPreventTruncation"/>
 					<Alpha val="0"/>
@@ -601,7 +604,7 @@
 				<StateGroup name="FCJH_Cooldown">
 					<DefaultState val="Ready"/>
 					<State name="OnCooldown">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel" Visible="true"/>
 						<Action type="SetProperty" frame="$this/FCJH_Dim" Alpha="255"/>
 						<Action type="SetProperty" frame="$this/FCJH_Cooldown" Alpha="255"/>
 					</State>
@@ -653,7 +656,7 @@
 				</Frame>
 				<Frame type="Label" name="FCJH_Cooldown">
 					<Anchor relative="$parent"/>
-					<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
+					<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel/@Text}"/>
 					<Style val="FCJH_HeroicCooldown"/>
 					<Options val="NoWrapping | ScaleToPreventTruncation"/>
 					<Alpha val="0"/>
@@ -685,7 +688,7 @@
 				<StateGroup name="FCJH_Cooldown">
 					<DefaultState val="Ready"/>
 					<State name="OnCooldown">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel" Visible="true"/>
 						<Action type="SetProperty" frame="$this/FCJH_Dim" Alpha="255"/>
 						<Action type="SetProperty" frame="$this/FCJH_Cooldown" Alpha="255"/>
 					</State>
@@ -737,7 +740,7 @@
 				</Frame>
 				<Frame type="Label" name="FCJH_Cooldown">
 					<Anchor relative="$parent"/>
-					<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
+					<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel/@Text}"/>
 					<Style val="FCJH_HeroicCooldown"/>
 					<Options val="NoWrapping | ScaleToPreventTruncation"/>
 					<Alpha val="0"/>
@@ -769,7 +772,7 @@
 				<StateGroup name="FCJH_Cooldown">
 					<DefaultState val="Ready"/>
 					<State name="OnCooldown">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel" Visible="true"/>
 						<Action type="SetProperty" frame="$this/FCJH_Dim" Alpha="255"/>
 						<Action type="SetProperty" frame="$this/FCJH_Cooldown" Alpha="255"/>
 					</State>
@@ -821,7 +824,7 @@
 				</Frame>
 				<Frame type="Label" name="FCJH_Cooldown">
 					<Anchor relative="$parent"/>
-					<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
+					<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel/@Text}"/>
 					<Style val="FCJH_HeroicCooldown"/>
 					<Options val="NoWrapping | ScaleToPreventTruncation"/>
 					<Alpha val="0"/>
@@ -853,7 +856,7 @@
 				<StateGroup name="FCJH_Cooldown">
 					<DefaultState val="Ready"/>
 					<State name="OnCooldown">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel" Visible="true"/>
 						<Action type="SetProperty" frame="$this/FCJH_Dim" Alpha="255"/>
 						<Action type="SetProperty" frame="$this/FCJH_Cooldown" Alpha="255"/>
 					</State>
@@ -862,6 +865,147 @@
 						<Action type="SetProperty" frame="$this/FCJH_Cooldown" Alpha="0"/>
 					</State>
 				</StateGroup>
+			</Frame>
+		</Frame>
+		<Frame type="Frame" name="UIContainer">
+			<Frame type="Frame" name="FullscreenUpperContainer">
+				<Frame type="Frame" name="ObserverHeroOverviewPanel">
+				<!-- cooldown sensors: the heroic as an invisible ability icon in each plate's HeroStatus -->
+				<Frame type="Frame" name="Team1HeroOverview">
+					<Frame type="Frame" name="HeroOverview1"><Frame type="UnitStatusFrame" name="HeroStatus">
+						<Frame type="UnitStatusAbilIcon" name="FCJH_HeroicAbil">
+							<Anchor relative="$parent"/>
+							<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/@AbilityLink}"/>
+							<Alpha val="0"/>
+							<AcceptsMouse val="false"/>
+							<Frame type="AbilIcon" name="AbilIcon">
+								<Anchor relative="$parent"/>
+								<Frame type="Image" name="IconImage"><Anchor relative="$parent"/></Frame>
+								<Frame type="Label" name="CooldownLabel"><Anchor relative="$parent"/></Frame>
+							</Frame>
+						</Frame>
+					</Frame></Frame>
+					<Frame type="Frame" name="HeroOverview2"><Frame type="UnitStatusFrame" name="HeroStatus">
+						<Frame type="UnitStatusAbilIcon" name="FCJH_HeroicAbil">
+							<Anchor relative="$parent"/>
+							<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/@AbilityLink}"/>
+							<Alpha val="0"/>
+							<AcceptsMouse val="false"/>
+							<Frame type="AbilIcon" name="AbilIcon">
+								<Anchor relative="$parent"/>
+								<Frame type="Image" name="IconImage"><Anchor relative="$parent"/></Frame>
+								<Frame type="Label" name="CooldownLabel"><Anchor relative="$parent"/></Frame>
+							</Frame>
+						</Frame>
+					</Frame></Frame>
+					<Frame type="Frame" name="HeroOverview3"><Frame type="UnitStatusFrame" name="HeroStatus">
+						<Frame type="UnitStatusAbilIcon" name="FCJH_HeroicAbil">
+							<Anchor relative="$parent"/>
+							<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/@AbilityLink}"/>
+							<Alpha val="0"/>
+							<AcceptsMouse val="false"/>
+							<Frame type="AbilIcon" name="AbilIcon">
+								<Anchor relative="$parent"/>
+								<Frame type="Image" name="IconImage"><Anchor relative="$parent"/></Frame>
+								<Frame type="Label" name="CooldownLabel"><Anchor relative="$parent"/></Frame>
+							</Frame>
+						</Frame>
+					</Frame></Frame>
+					<Frame type="Frame" name="HeroOverview4"><Frame type="UnitStatusFrame" name="HeroStatus">
+						<Frame type="UnitStatusAbilIcon" name="FCJH_HeroicAbil">
+							<Anchor relative="$parent"/>
+							<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/@AbilityLink}"/>
+							<Alpha val="0"/>
+							<AcceptsMouse val="false"/>
+							<Frame type="AbilIcon" name="AbilIcon">
+								<Anchor relative="$parent"/>
+								<Frame type="Image" name="IconImage"><Anchor relative="$parent"/></Frame>
+								<Frame type="Label" name="CooldownLabel"><Anchor relative="$parent"/></Frame>
+							</Frame>
+						</Frame>
+					</Frame></Frame>
+					<Frame type="Frame" name="HeroOverview5"><Frame type="UnitStatusFrame" name="HeroStatus">
+						<Frame type="UnitStatusAbilIcon" name="FCJH_HeroicAbil">
+							<Anchor relative="$parent"/>
+							<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/@AbilityLink}"/>
+							<Alpha val="0"/>
+							<AcceptsMouse val="false"/>
+							<Frame type="AbilIcon" name="AbilIcon">
+								<Anchor relative="$parent"/>
+								<Frame type="Image" name="IconImage"><Anchor relative="$parent"/></Frame>
+								<Frame type="Label" name="CooldownLabel"><Anchor relative="$parent"/></Frame>
+							</Frame>
+						</Frame>
+					</Frame></Frame>
+				</Frame>
+				<Frame type="Frame" name="Team2HeroOverview">
+					<Frame type="Frame" name="HeroOverview1"><Frame type="UnitStatusFrame" name="HeroStatus">
+						<Frame type="UnitStatusAbilIcon" name="FCJH_HeroicAbil">
+							<Anchor relative="$parent"/>
+							<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/@AbilityLink}"/>
+							<Alpha val="0"/>
+							<AcceptsMouse val="false"/>
+							<Frame type="AbilIcon" name="AbilIcon">
+								<Anchor relative="$parent"/>
+								<Frame type="Image" name="IconImage"><Anchor relative="$parent"/></Frame>
+								<Frame type="Label" name="CooldownLabel"><Anchor relative="$parent"/></Frame>
+							</Frame>
+						</Frame>
+					</Frame></Frame>
+					<Frame type="Frame" name="HeroOverview2"><Frame type="UnitStatusFrame" name="HeroStatus">
+						<Frame type="UnitStatusAbilIcon" name="FCJH_HeroicAbil">
+							<Anchor relative="$parent"/>
+							<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/@AbilityLink}"/>
+							<Alpha val="0"/>
+							<AcceptsMouse val="false"/>
+							<Frame type="AbilIcon" name="AbilIcon">
+								<Anchor relative="$parent"/>
+								<Frame type="Image" name="IconImage"><Anchor relative="$parent"/></Frame>
+								<Frame type="Label" name="CooldownLabel"><Anchor relative="$parent"/></Frame>
+							</Frame>
+						</Frame>
+					</Frame></Frame>
+					<Frame type="Frame" name="HeroOverview3"><Frame type="UnitStatusFrame" name="HeroStatus">
+						<Frame type="UnitStatusAbilIcon" name="FCJH_HeroicAbil">
+							<Anchor relative="$parent"/>
+							<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/@AbilityLink}"/>
+							<Alpha val="0"/>
+							<AcceptsMouse val="false"/>
+							<Frame type="AbilIcon" name="AbilIcon">
+								<Anchor relative="$parent"/>
+								<Frame type="Image" name="IconImage"><Anchor relative="$parent"/></Frame>
+								<Frame type="Label" name="CooldownLabel"><Anchor relative="$parent"/></Frame>
+							</Frame>
+						</Frame>
+					</Frame></Frame>
+					<Frame type="Frame" name="HeroOverview4"><Frame type="UnitStatusFrame" name="HeroStatus">
+						<Frame type="UnitStatusAbilIcon" name="FCJH_HeroicAbil">
+							<Anchor relative="$parent"/>
+							<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/@AbilityLink}"/>
+							<Alpha val="0"/>
+							<AcceptsMouse val="false"/>
+							<Frame type="AbilIcon" name="AbilIcon">
+								<Anchor relative="$parent"/>
+								<Frame type="Image" name="IconImage"><Anchor relative="$parent"/></Frame>
+								<Frame type="Label" name="CooldownLabel"><Anchor relative="$parent"/></Frame>
+							</Frame>
+						</Frame>
+					</Frame></Frame>
+					<Frame type="Frame" name="HeroOverview5"><Frame type="UnitStatusFrame" name="HeroStatus">
+						<Frame type="UnitStatusAbilIcon" name="FCJH_HeroicAbil">
+							<Anchor relative="$parent"/>
+							<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/@AbilityLink}"/>
+							<Alpha val="0"/>
+							<AcceptsMouse val="false"/>
+							<Frame type="AbilIcon" name="AbilIcon">
+								<Anchor relative="$parent"/>
+								<Frame type="Image" name="IconImage"><Anchor relative="$parent"/></Frame>
+								<Frame type="Label" name="CooldownLabel"><Anchor relative="$parent"/></Frame>
+							</Frame>
+						</Frame>
+					</Frame></Frame>
+				</Frame>
+				</Frame>
 			</Frame>
 		</Frame>
 	</Frame>
