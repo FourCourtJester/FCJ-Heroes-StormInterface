@@ -218,11 +218,23 @@
 			<AcceptsMouse val="false"/>
 			<AcceptsMouseTooltip val="false"/>
 			<RenderPriority val="660"/>
-			<!-- shown only while the card is (round 3: the card hid on click-off, these stayed) -->
-			<Visible val="{$parent/FCJH_Inspect/TargetInfoPanel/@Enabled}"/>
+			<!-- shown only while the card is. Round 3 left these on screen after click-off; round 4
+			     bound Visible to the card and they still showed (the engine owns this panel's
+			     visibility), so round 5 fades them by Alpha, the switch that has always held -->
+			<StateGroup name="FCJH_WithCard">
+				<DefaultState val="Hidden"/>
+				<State name="Shown">
+					<When type="Property" frame="$parent/FCJH_Inspect/TargetInfoPanel" Visible="true"/>
+					<Action type="SetProperty" frame="$this/UnitStatusFrame0" Alpha="255"/>
+				</State>
+				<State name="Hidden">
+					<Action type="SetProperty" frame="$this/UnitStatusFrame0" Alpha="0"/>
+				</State>
+			</StateGroup>
 			<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 				<Anchor relative="$parent"/>
 				<AcceptsMouse val="false"/>
+				<Alpha val="0"/>
 
 				<!-- 1. animated model: a hero cutscene portrait (Spazzo tried one; untested) -->
 				<Frame type="UnitStatusHeroCutscene" name="FCJH_Model">

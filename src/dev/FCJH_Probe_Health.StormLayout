@@ -11,9 +11,10 @@
 	         plates in the final product (2026-09-27)
 	       - label comparisons are STRING compares, so the trigger lists every value: 1-25,
 	         with and without "%". A match shows the green plus (#4) centred on the portrait.
-	     FCJH_CritMark (2026-09-29): a hidden flag that follows the plus, for the heal
-	     pop-ups (FCJH_Probe_HealPop) to watch.
-	     Look for: the percent text on every plate; the plus on any hero at 25% or less. -->
+	     FCJH_CritMark (2026-09-29): a hidden flag that follows the critical state, for the
+	     heal pop-ups (FCJH_Probe_HealPop) to watch. The plus itself no longer shows - the
+	     pop-up replaces it (user, 2026-09-29) - so its states only drive the flag.
+	     Look for: nothing here; see FCJH_Probe_HealPop. -->
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<Frame type="Frame" name="UIContainer">
 			<Frame type="Frame" name="FullscreenUpperContainer">
@@ -50,252 +51,252 @@
 									<DefaultState val="Fine"/>
 									<State name="Crit1pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="1%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit1">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="1"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit2pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="2%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit2">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="2"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit3pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="3%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit3">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="3"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit4pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="4%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit4">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="4"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit5pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="5%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit5">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="5"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit6pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="6%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit6">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="6"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit7pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="7%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit7">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="7"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit8pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="8%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit8">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="8"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit9pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="9%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit9">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="9"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit10pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="10%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit10">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="10"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit11pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="11%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit11">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="11"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit12pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="12%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit12">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="12"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit13pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="13%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit13">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="13"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit14pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="14%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit14">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="14"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit15pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="15%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit15">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="15"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit16pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="16%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit16">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="16"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit17pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="17%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit17">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="17"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit18pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="18%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit18">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="18"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit19pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="19%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit19">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="19"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit20pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="20%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit20">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="20"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit21pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="21%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit21">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="21"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit22pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="22%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit22">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="22"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit23pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="23%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit23">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="23"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit24pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="24%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit24">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="24"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit25pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="25%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit25">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="25"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Fine">
@@ -336,252 +337,252 @@
 									<DefaultState val="Fine"/>
 									<State name="Crit1pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="1%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit1">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="1"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit2pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="2%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit2">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="2"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit3pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="3%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit3">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="3"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit4pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="4%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit4">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="4"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit5pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="5%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit5">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="5"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit6pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="6%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit6">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="6"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit7pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="7%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit7">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="7"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit8pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="8%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit8">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="8"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit9pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="9%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit9">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="9"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit10pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="10%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit10">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="10"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit11pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="11%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit11">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="11"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit12pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="12%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit12">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="12"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit13pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="13%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit13">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="13"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit14pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="14%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit14">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="14"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit15pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="15%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit15">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="15"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit16pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="16%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit16">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="16"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit17pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="17%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit17">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="17"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit18pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="18%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit18">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="18"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit19pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="19%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit19">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="19"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit20pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="20%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit20">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="20"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit21pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="21%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit21">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="21"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit22pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="22%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit22">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="22"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit23pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="23%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit23">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="23"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit24pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="24%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit24">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="24"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit25pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="25%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit25">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="25"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Fine">
@@ -622,252 +623,252 @@
 									<DefaultState val="Fine"/>
 									<State name="Crit1pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="1%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit1">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="1"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit2pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="2%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit2">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="2"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit3pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="3%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit3">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="3"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit4pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="4%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit4">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="4"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit5pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="5%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit5">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="5"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit6pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="6%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit6">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="6"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit7pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="7%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit7">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="7"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit8pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="8%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit8">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="8"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit9pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="9%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit9">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="9"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit10pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="10%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit10">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="10"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit11pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="11%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit11">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="11"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit12pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="12%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit12">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="12"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit13pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="13%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit13">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="13"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit14pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="14%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit14">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="14"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit15pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="15%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit15">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="15"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit16pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="16%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit16">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="16"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit17pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="17%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit17">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="17"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit18pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="18%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit18">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="18"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit19pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="19%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit19">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="19"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit20pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="20%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit20">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="20"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit21pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="21%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit21">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="21"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit22pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="22%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit22">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="22"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit23pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="23%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit23">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="23"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit24pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="24%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit24">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="24"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit25pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="25%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit25">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="25"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Fine">
@@ -908,252 +909,252 @@
 									<DefaultState val="Fine"/>
 									<State name="Crit1pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="1%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit1">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="1"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit2pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="2%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit2">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="2"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit3pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="3%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit3">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="3"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit4pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="4%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit4">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="4"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit5pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="5%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit5">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="5"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit6pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="6%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit6">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="6"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit7pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="7%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit7">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="7"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit8pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="8%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit8">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="8"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit9pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="9%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit9">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="9"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit10pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="10%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit10">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="10"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit11pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="11%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit11">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="11"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit12pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="12%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit12">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="12"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit13pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="13%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit13">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="13"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit14pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="14%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit14">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="14"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit15pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="15%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit15">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="15"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit16pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="16%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit16">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="16"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit17pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="17%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit17">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="17"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit18pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="18%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit18">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="18"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit19pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="19%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit19">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="19"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit20pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="20%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit20">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="20"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit21pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="21%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit21">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="21"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit22pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="22%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit22">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="22"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit23pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="23%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit23">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="23"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit24pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="24%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit24">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="24"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit25pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="25%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit25">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="25"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Fine">
@@ -1194,252 +1195,252 @@
 									<DefaultState val="Fine"/>
 									<State name="Crit1pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="1%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit1">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="1"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit2pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="2%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit2">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="2"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit3pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="3%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit3">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="3"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit4pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="4%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit4">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="4"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit5pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="5%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit5">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="5"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit6pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="6%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit6">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="6"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit7pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="7%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit7">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="7"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit8pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="8%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit8">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="8"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit9pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="9%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit9">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="9"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit10pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="10%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit10">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="10"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit11pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="11%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit11">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="11"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit12pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="12%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit12">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="12"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit13pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="13%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit13">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="13"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit14pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="14%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit14">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="14"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit15pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="15%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit15">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="15"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit16pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="16%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit16">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="16"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit17pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="17%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit17">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="17"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit18pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="18%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit18">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="18"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit19pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="19%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit19">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="19"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit20pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="20%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit20">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="20"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit21pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="21%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit21">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="21"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit22pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="22%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit22">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="22"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit23pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="23%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit23">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="23"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit24pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="24%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit24">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="24"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit25pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="25%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit25">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="25"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Fine">
@@ -1482,252 +1483,252 @@
 									<DefaultState val="Fine"/>
 									<State name="Crit1pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="1%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit1">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="1"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit2pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="2%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit2">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="2"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit3pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="3%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit3">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="3"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit4pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="4%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit4">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="4"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit5pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="5%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit5">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="5"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit6pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="6%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit6">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="6"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit7pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="7%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit7">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="7"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit8pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="8%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit8">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="8"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit9pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="9%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit9">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="9"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit10pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="10%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit10">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="10"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit11pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="11%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit11">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="11"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit12pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="12%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit12">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="12"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit13pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="13%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit13">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="13"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit14pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="14%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit14">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="14"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit15pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="15%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit15">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="15"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit16pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="16%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit16">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="16"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit17pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="17%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit17">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="17"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit18pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="18%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit18">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="18"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit19pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="19%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit19">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="19"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit20pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="20%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit20">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="20"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit21pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="21%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit21">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="21"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit22pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="22%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit22">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="22"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit23pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="23%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit23">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="23"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit24pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="24%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit24">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="24"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit25pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="25%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit25">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="25"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Fine">
@@ -1768,252 +1769,252 @@
 									<DefaultState val="Fine"/>
 									<State name="Crit1pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="1%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit1">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="1"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit2pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="2%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit2">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="2"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit3pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="3%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit3">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="3"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit4pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="4%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit4">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="4"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit5pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="5%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit5">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="5"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit6pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="6%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit6">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="6"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit7pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="7%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit7">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="7"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit8pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="8%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit8">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="8"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit9pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="9%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit9">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="9"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit10pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="10%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit10">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="10"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit11pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="11%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit11">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="11"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit12pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="12%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit12">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="12"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit13pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="13%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit13">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="13"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit14pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="14%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit14">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="14"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit15pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="15%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit15">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="15"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit16pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="16%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit16">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="16"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit17pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="17%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit17">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="17"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit18pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="18%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit18">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="18"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit19pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="19%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit19">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="19"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit20pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="20%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit20">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="20"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit21pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="21%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit21">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="21"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit22pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="22%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit22">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="22"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit23pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="23%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit23">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="23"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit24pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="24%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit24">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="24"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit25pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="25%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit25">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="25"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Fine">
@@ -2054,252 +2055,252 @@
 									<DefaultState val="Fine"/>
 									<State name="Crit1pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="1%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit1">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="1"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit2pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="2%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit2">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="2"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit3pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="3%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit3">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="3"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit4pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="4%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit4">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="4"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit5pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="5%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit5">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="5"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit6pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="6%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit6">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="6"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit7pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="7%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit7">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="7"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit8pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="8%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit8">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="8"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit9pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="9%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit9">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="9"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit10pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="10%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit10">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="10"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit11pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="11%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit11">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="11"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit12pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="12%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit12">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="12"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit13pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="13%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit13">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="13"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit14pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="14%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit14">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="14"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit15pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="15%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit15">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="15"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit16pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="16%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit16">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="16"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit17pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="17%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit17">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="17"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit18pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="18%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit18">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="18"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit19pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="19%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit19">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="19"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit20pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="20%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit20">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="20"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit21pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="21%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit21">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="21"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit22pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="22%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit22">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="22"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit23pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="23%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit23">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="23"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit24pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="24%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit24">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="24"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit25pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="25%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit25">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="25"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Fine">
@@ -2340,252 +2341,252 @@
 									<DefaultState val="Fine"/>
 									<State name="Crit1pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="1%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit1">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="1"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit2pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="2%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit2">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="2"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit3pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="3%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit3">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="3"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit4pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="4%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit4">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="4"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit5pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="5%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit5">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="5"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit6pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="6%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit6">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="6"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit7pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="7%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit7">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="7"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit8pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="8%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit8">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="8"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit9pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="9%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit9">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="9"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit10pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="10%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit10">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="10"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit11pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="11%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit11">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="11"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit12pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="12%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit12">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="12"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit13pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="13%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit13">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="13"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit14pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="14%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit14">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="14"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit15pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="15%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit15">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="15"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit16pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="16%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit16">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="16"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit17pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="17%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit17">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="17"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit18pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="18%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit18">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="18"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit19pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="19%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit19">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="19"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit20pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="20%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit20">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="20"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit21pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="21%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit21">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="21"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit22pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="22%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit22">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="22"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit23pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="23%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit23">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="23"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit24pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="24%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit24">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="24"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit25pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="25%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit25">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="25"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Fine">
@@ -2626,252 +2627,252 @@
 									<DefaultState val="Fine"/>
 									<State name="Crit1pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="1%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit1">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="1"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit2pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="2%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit2">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="2"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit3pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="3%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit3">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="3"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit4pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="4%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit4">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="4"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit5pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="5%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit5">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="5"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit6pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="6%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit6">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="6"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit7pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="7%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit7">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="7"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit8pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="8%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit8">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="8"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit9pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="9%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit9">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="9"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit10pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="10%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit10">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="10"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit11pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="11%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit11">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="11"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit12pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="12%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit12">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="12"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit13pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="13%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit13">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="13"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit14pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="14%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit14">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="14"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit15pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="15%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit15">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="15"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit16pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="16%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit16">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="16"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit17pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="17%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit17">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="17"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit18pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="18%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit18">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="18"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit19pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="19%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit19">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="19"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit20pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="20%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit20">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="20"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit21pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="21%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit21">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="21"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit22pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="22%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit22">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="22"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit23pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="23%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit23">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="23"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit24pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="24%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit24">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="24"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit25pc">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="25%"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Crit25">
 										<When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="25"/>
-										<Action type="SetProperty" frame="$this" Alpha="255"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
 										<Action type="SetProperty" frame="$parent/FCJH_CritMark" visible="true"/>
 									</State>
 									<State name="Fine">
