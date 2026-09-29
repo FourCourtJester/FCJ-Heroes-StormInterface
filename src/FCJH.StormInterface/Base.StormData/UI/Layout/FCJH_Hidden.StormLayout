@@ -51,6 +51,24 @@
 					<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/ConsoleUIContainer/HeroBehaviorChannelBarFrameRight">
 						<Key type="Bool" time="0" value="false"/>
 					</Controller>
+					<!-- "choose a talent": the picker, its toggle button and indicators. Observing
+					     one player (Blizzard's 1-8 keys) brings them up; never wanted in a replay
+					     (user, 2026-09-29) -->
+					<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/ConsoleUIContainer/FloatingCombatUnitSelectionPanel/UnitStatusFrame0/HeroTalentTreeSelectionPanel">
+						<Key type="Bool" time="0" value="false"/>
+					</Controller>
+					<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/ConsoleUIContainer/HeroTalentTreeSelectionToggleButton">
+						<Key type="Bool" time="0" value="false"/>
+					</Controller>
+					<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/ConsoleUIContainer/HeroTalentTreeSelectionIndicator">
+						<Key type="Bool" time="0" value="false"/>
+					</Controller>
+					<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/ConsoleUIContainer/HeroTalentTreeSelectionIndicatorContainer">
+						<Key type="Bool" time="0" value="false"/>
+					</Controller>
+					<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/ConsoleUIContainer/TalentPauseNotificationContainer">
+						<Key type="Bool" time="0" value="false"/>
+					</Controller>
 					<!-- Blizzard's small inspect box; our inspect card replaces it -->
 					<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/FullscreenUpperContainer/TargetInfoFrame">
 						<Key type="Bool" time="0" value="false"/>
