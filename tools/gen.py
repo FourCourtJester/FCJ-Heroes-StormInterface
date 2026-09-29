@@ -603,9 +603,14 @@ def pet_death_labels(team, c):
     Misha; hero_row_layout binds each of ours to its cell there (pet_death_bindings)."""
     hl, ht, hr, hb = c.team[team]["health"]
     third = (hr - hl - 2 * VIKING_GAP) / 3
+    # The slices are measured along the bar, but the timer sits higher up the slanted plate,
+    # where each slice has shifted with the lean: left on blue (\), right on red (/). Seen in
+    # game (2026-09-29): a timer just off its slice toward the plate's slanted edge.
+    lean = c.overlap / c.h
+    shift = round(lean * ((ht + hb) / 2 - (2 + hb) / 2)) * (-1 if team == "blue" else 1)
     labels = ""
     for i, viking in enumerate(("Olaf", "Baleog", "Erik")):
-        left = round(hl + i * (third + VIKING_GAP))
+        left = round(hl + i * (third + VIKING_GAP)) + shift
         labels += f"""
 		<Frame type="Label" name="FCJH_Death{viking}">
 			<Anchor side="Top"    relative="$parent" pos="Min" offset="2"/>
@@ -685,6 +690,11 @@ def heroic_panel(cfg, team_frame, i):
         out = "".join(
             f'\t\t\t\t\t\t\t\t\t\t<Action type="SetAnchor" frame="{cell}/{f}" side="Left" relative="{cell}" pos="Min" '
             f'offset="{x + (s(NARROW) if narrow else 0)}"/>\n' for f, x in bars)
+        # ...and Blizzard's own art for the short bars (its ends are drawn for the icon beside
+        # them): *_Narrow while the heroic shows, as UpdateHealthBarWidths does
+        n, r = ("_Narrow" if narrow else ""), ("" if blue else "_Right")
+        out += (f'\t\t\t\t\t\t\t\t\t\t<Action type="SetProperty" frame="{cell}/HeroStatus/HealthBar" Texture="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm{n}{r}"/>\n'
+                f'\t\t\t\t\t\t\t\t\t\t<Action type="SetProperty" frame="{cell}/HeroStatus/FCJH_Resource" Texture="@UI/HUD_TopBar_Team_HeroFrame_ManaFill{n}{r}"/>\n')
         # the Vikings' three bars share the narrowed width (trackers: tools/gen.py trackers)
         hl, _, hr, _ = g["health"]
         hl += s(NARROW) if narrow else 0

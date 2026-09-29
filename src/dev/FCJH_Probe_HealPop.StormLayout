@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <Desc>
-	<!-- PROBE (dev only): heal pop-ups, round 4 (2026-09-29). Written by a one-off script.
+	<!-- PROBE (dev only): heal pop-ups, round 5 (2026-09-29). Written by a one-off script.
 
 	     Spec (user, 2026-09-27/29): the talent pop-up's spot and motion - slide up from the
-	     plate's middle to its top edge, hold 5 s, fade - with a green plus in a green border;
+	     plate's middle to its top edge - with a green plus in a green border; since round 5 it
+	     STAYS while the hero is at 25% or less and fades out when they're healed past 25% or die;
 	     fires when a hero drops to 25% health or less; leaves early once they're back above
 	     25%; a talent pop-up draws over it. Dead heroes get none (their percent isn't 1-25).
 	     The trigger is the health probe's critical-health state (FCJH_Probe_Health), which
@@ -23,8 +24,8 @@
 				<Height val="#FCJH_HERO_POPUP_SIZE"/>
 				<Visible val="false"/>
 				<AcceptsMouse val="false"/>
-				<!-- the content: fades out early (0.5 s) if the hero heals back above 25% mid-pop; a new
-				     pop-up resets it -->
+				<!-- round 5: the content fades out (0.75 s) when the hero is healed past 25% or dies;
+				     a new pop-up resets it -->
 				<Frame type="Frame" name="FCJH_Body">
 					<Anchor relative="$parent"/>
 					<AcceptsMouse val="false"/>
@@ -33,7 +34,7 @@
 						<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
 						<Controller type="Fade" end="Pause">
 							<Key type="Curve" time="0" value="255"/>
-							<Key type="Curve" time="0.5" value="0"/>
+							<Key type="Curve" time="0.75" value="0"/>
 						</Controller>
 					</Animation>
 					<Frame type="Image" name="FCJH_Back">
@@ -65,11 +66,12 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 				</Frame>
+				<!-- round 5 (user): no timed exit - it slides in and stays while the hero is at 25% or
+				     less; FCJH_Body fades it out on recovery or death -->
 				<Animation name="Pop">
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
 						<Key type="Curve" time="0" value="38" inout="Slow"/>
@@ -78,8 +80,6 @@
 					<Controller type="Fade" end="Pause">
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
-						<Key type="Curve" time="5.35" value="255"/>
-						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -89,23 +89,27 @@
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
-					<!-- round 4: never restart a pop-up that's still on screen (Auriel under fire restarted
-					     hers on every hit - something still flickers; whatever it is, it can't restart it now) -->
+					<!-- round 5 (user): shows on a drop to 25% or less and stays until the hero is healed
+					     past 25% (the health probe's FCJH_HealthyMark, 26-100%) or dies (the plate's death
+					     timer shows). Only those two end it, so the critical flag's flicker can't restart or
+					     cut it (rounds 1-4 kept tripping over that flicker). -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
-						<When type="Property" frame="$parent/FCJH_Heal0" visible="false"/>
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroDeathTimeLabel" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal0/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal0" event="FCJH_Pop"/>
 					</State>
-					<!-- round 3: the latch (Shown) resets ONLY on positive evidence of recovery - the health
-					     probe's FCJH_HealthyMark, set at 26-100%. The critical flag flickers while the percent
-					     changes, so round 1 (reset when it dropped) restarted on every heal tick and round 2
-					     (reset when it dropped and the pop-up was done) fired every ~6 s while a hero sat low.
-					     The same evidence cuts the pop-up short when they're healed. -->
-					<State name="Healthy">
+					<State name="Healed">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus/FCJH_HealthyMark" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal0/FCJH_Body" event="FCJH_Leave"/>
+					</State>
+					<State name="Died">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroDeathTimeLabel" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal0/FCJH_Body" event="FCJH_Leave"/>
 					</State>
@@ -119,8 +123,8 @@
 				<Height val="#FCJH_HERO_POPUP_SIZE"/>
 				<Visible val="false"/>
 				<AcceptsMouse val="false"/>
-				<!-- the content: fades out early (0.5 s) if the hero heals back above 25% mid-pop; a new
-				     pop-up resets it -->
+				<!-- round 5: the content fades out (0.75 s) when the hero is healed past 25% or dies;
+				     a new pop-up resets it -->
 				<Frame type="Frame" name="FCJH_Body">
 					<Anchor relative="$parent"/>
 					<AcceptsMouse val="false"/>
@@ -129,7 +133,7 @@
 						<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
 						<Controller type="Fade" end="Pause">
 							<Key type="Curve" time="0" value="255"/>
-							<Key type="Curve" time="0.5" value="0"/>
+							<Key type="Curve" time="0.75" value="0"/>
 						</Controller>
 					</Animation>
 					<Frame type="Image" name="FCJH_Back">
@@ -161,11 +165,12 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 				</Frame>
+				<!-- round 5 (user): no timed exit - it slides in and stays while the hero is at 25% or
+				     less; FCJH_Body fades it out on recovery or death -->
 				<Animation name="Pop">
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
 						<Key type="Curve" time="0" value="38" inout="Slow"/>
@@ -174,8 +179,6 @@
 					<Controller type="Fade" end="Pause">
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
-						<Key type="Curve" time="5.35" value="255"/>
-						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -185,23 +188,27 @@
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
-					<!-- round 4: never restart a pop-up that's still on screen (Auriel under fire restarted
-					     hers on every hit - something still flickers; whatever it is, it can't restart it now) -->
+					<!-- round 5 (user): shows on a drop to 25% or less and stays until the hero is healed
+					     past 25% (the health probe's FCJH_HealthyMark, 26-100%) or dies (the plate's death
+					     timer shows). Only those two end it, so the critical flag's flicker can't restart or
+					     cut it (rounds 1-4 kept tripping over that flicker). -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
-						<When type="Property" frame="$parent/FCJH_Heal1" visible="false"/>
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroDeathTimeLabel" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal1/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal1" event="FCJH_Pop"/>
 					</State>
-					<!-- round 3: the latch (Shown) resets ONLY on positive evidence of recovery - the health
-					     probe's FCJH_HealthyMark, set at 26-100%. The critical flag flickers while the percent
-					     changes, so round 1 (reset when it dropped) restarted on every heal tick and round 2
-					     (reset when it dropped and the pop-up was done) fired every ~6 s while a hero sat low.
-					     The same evidence cuts the pop-up short when they're healed. -->
-					<State name="Healthy">
+					<State name="Healed">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus/FCJH_HealthyMark" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal1/FCJH_Body" event="FCJH_Leave"/>
+					</State>
+					<State name="Died">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroDeathTimeLabel" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal1/FCJH_Body" event="FCJH_Leave"/>
 					</State>
@@ -215,8 +222,8 @@
 				<Height val="#FCJH_HERO_POPUP_SIZE"/>
 				<Visible val="false"/>
 				<AcceptsMouse val="false"/>
-				<!-- the content: fades out early (0.5 s) if the hero heals back above 25% mid-pop; a new
-				     pop-up resets it -->
+				<!-- round 5: the content fades out (0.75 s) when the hero is healed past 25% or dies;
+				     a new pop-up resets it -->
 				<Frame type="Frame" name="FCJH_Body">
 					<Anchor relative="$parent"/>
 					<AcceptsMouse val="false"/>
@@ -225,7 +232,7 @@
 						<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
 						<Controller type="Fade" end="Pause">
 							<Key type="Curve" time="0" value="255"/>
-							<Key type="Curve" time="0.5" value="0"/>
+							<Key type="Curve" time="0.75" value="0"/>
 						</Controller>
 					</Animation>
 					<Frame type="Image" name="FCJH_Back">
@@ -257,11 +264,12 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 				</Frame>
+				<!-- round 5 (user): no timed exit - it slides in and stays while the hero is at 25% or
+				     less; FCJH_Body fades it out on recovery or death -->
 				<Animation name="Pop">
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
 						<Key type="Curve" time="0" value="38" inout="Slow"/>
@@ -270,8 +278,6 @@
 					<Controller type="Fade" end="Pause">
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
-						<Key type="Curve" time="5.35" value="255"/>
-						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -281,23 +287,27 @@
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
-					<!-- round 4: never restart a pop-up that's still on screen (Auriel under fire restarted
-					     hers on every hit - something still flickers; whatever it is, it can't restart it now) -->
+					<!-- round 5 (user): shows on a drop to 25% or less and stays until the hero is healed
+					     past 25% (the health probe's FCJH_HealthyMark, 26-100%) or dies (the plate's death
+					     timer shows). Only those two end it, so the critical flag's flicker can't restart or
+					     cut it (rounds 1-4 kept tripping over that flicker). -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
-						<When type="Property" frame="$parent/FCJH_Heal2" visible="false"/>
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroDeathTimeLabel" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal2/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal2" event="FCJH_Pop"/>
 					</State>
-					<!-- round 3: the latch (Shown) resets ONLY on positive evidence of recovery - the health
-					     probe's FCJH_HealthyMark, set at 26-100%. The critical flag flickers while the percent
-					     changes, so round 1 (reset when it dropped) restarted on every heal tick and round 2
-					     (reset when it dropped and the pop-up was done) fired every ~6 s while a hero sat low.
-					     The same evidence cuts the pop-up short when they're healed. -->
-					<State name="Healthy">
+					<State name="Healed">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus/FCJH_HealthyMark" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal2/FCJH_Body" event="FCJH_Leave"/>
+					</State>
+					<State name="Died">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroDeathTimeLabel" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal2/FCJH_Body" event="FCJH_Leave"/>
 					</State>
@@ -311,8 +321,8 @@
 				<Height val="#FCJH_HERO_POPUP_SIZE"/>
 				<Visible val="false"/>
 				<AcceptsMouse val="false"/>
-				<!-- the content: fades out early (0.5 s) if the hero heals back above 25% mid-pop; a new
-				     pop-up resets it -->
+				<!-- round 5: the content fades out (0.75 s) when the hero is healed past 25% or dies;
+				     a new pop-up resets it -->
 				<Frame type="Frame" name="FCJH_Body">
 					<Anchor relative="$parent"/>
 					<AcceptsMouse val="false"/>
@@ -321,7 +331,7 @@
 						<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
 						<Controller type="Fade" end="Pause">
 							<Key type="Curve" time="0" value="255"/>
-							<Key type="Curve" time="0.5" value="0"/>
+							<Key type="Curve" time="0.75" value="0"/>
 						</Controller>
 					</Animation>
 					<Frame type="Image" name="FCJH_Back">
@@ -353,11 +363,12 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 				</Frame>
+				<!-- round 5 (user): no timed exit - it slides in and stays while the hero is at 25% or
+				     less; FCJH_Body fades it out on recovery or death -->
 				<Animation name="Pop">
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
 						<Key type="Curve" time="0" value="38" inout="Slow"/>
@@ -366,8 +377,6 @@
 					<Controller type="Fade" end="Pause">
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
-						<Key type="Curve" time="5.35" value="255"/>
-						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -377,23 +386,27 @@
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
-					<!-- round 4: never restart a pop-up that's still on screen (Auriel under fire restarted
-					     hers on every hit - something still flickers; whatever it is, it can't restart it now) -->
+					<!-- round 5 (user): shows on a drop to 25% or less and stays until the hero is healed
+					     past 25% (the health probe's FCJH_HealthyMark, 26-100%) or dies (the plate's death
+					     timer shows). Only those two end it, so the critical flag's flicker can't restart or
+					     cut it (rounds 1-4 kept tripping over that flicker). -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
-						<When type="Property" frame="$parent/FCJH_Heal3" visible="false"/>
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroDeathTimeLabel" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal3/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal3" event="FCJH_Pop"/>
 					</State>
-					<!-- round 3: the latch (Shown) resets ONLY on positive evidence of recovery - the health
-					     probe's FCJH_HealthyMark, set at 26-100%. The critical flag flickers while the percent
-					     changes, so round 1 (reset when it dropped) restarted on every heal tick and round 2
-					     (reset when it dropped and the pop-up was done) fired every ~6 s while a hero sat low.
-					     The same evidence cuts the pop-up short when they're healed. -->
-					<State name="Healthy">
+					<State name="Healed">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus/FCJH_HealthyMark" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal3/FCJH_Body" event="FCJH_Leave"/>
+					</State>
+					<State name="Died">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroDeathTimeLabel" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal3/FCJH_Body" event="FCJH_Leave"/>
 					</State>
@@ -407,8 +420,8 @@
 				<Height val="#FCJH_HERO_POPUP_SIZE"/>
 				<Visible val="false"/>
 				<AcceptsMouse val="false"/>
-				<!-- the content: fades out early (0.5 s) if the hero heals back above 25% mid-pop; a new
-				     pop-up resets it -->
+				<!-- round 5: the content fades out (0.75 s) when the hero is healed past 25% or dies;
+				     a new pop-up resets it -->
 				<Frame type="Frame" name="FCJH_Body">
 					<Anchor relative="$parent"/>
 					<AcceptsMouse val="false"/>
@@ -417,7 +430,7 @@
 						<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
 						<Controller type="Fade" end="Pause">
 							<Key type="Curve" time="0" value="255"/>
-							<Key type="Curve" time="0.5" value="0"/>
+							<Key type="Curve" time="0.75" value="0"/>
 						</Controller>
 					</Animation>
 					<Frame type="Image" name="FCJH_Back">
@@ -449,11 +462,12 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 				</Frame>
+				<!-- round 5 (user): no timed exit - it slides in and stays while the hero is at 25% or
+				     less; FCJH_Body fades it out on recovery or death -->
 				<Animation name="Pop">
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
 						<Key type="Curve" time="0" value="38" inout="Slow"/>
@@ -462,8 +476,6 @@
 					<Controller type="Fade" end="Pause">
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
-						<Key type="Curve" time="5.35" value="255"/>
-						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -473,23 +485,27 @@
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
-					<!-- round 4: never restart a pop-up that's still on screen (Auriel under fire restarted
-					     hers on every hit - something still flickers; whatever it is, it can't restart it now) -->
+					<!-- round 5 (user): shows on a drop to 25% or less and stays until the hero is healed
+					     past 25% (the health probe's FCJH_HealthyMark, 26-100%) or dies (the plate's death
+					     timer shows). Only those two end it, so the critical flag's flicker can't restart or
+					     cut it (rounds 1-4 kept tripping over that flicker). -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
-						<When type="Property" frame="$parent/FCJH_Heal4" visible="false"/>
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroDeathTimeLabel" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal4/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal4" event="FCJH_Pop"/>
 					</State>
-					<!-- round 3: the latch (Shown) resets ONLY on positive evidence of recovery - the health
-					     probe's FCJH_HealthyMark, set at 26-100%. The critical flag flickers while the percent
-					     changes, so round 1 (reset when it dropped) restarted on every heal tick and round 2
-					     (reset when it dropped and the pop-up was done) fired every ~6 s while a hero sat low.
-					     The same evidence cuts the pop-up short when they're healed. -->
-					<State name="Healthy">
+					<State name="Healed">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus/FCJH_HealthyMark" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal4/FCJH_Body" event="FCJH_Leave"/>
+					</State>
+					<State name="Died">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroDeathTimeLabel" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal4/FCJH_Body" event="FCJH_Leave"/>
 					</State>
@@ -503,8 +519,8 @@
 				<Height val="#FCJH_HERO_POPUP_SIZE"/>
 				<Visible val="false"/>
 				<AcceptsMouse val="false"/>
-				<!-- the content: fades out early (0.5 s) if the hero heals back above 25% mid-pop; a new
-				     pop-up resets it -->
+				<!-- round 5: the content fades out (0.75 s) when the hero is healed past 25% or dies;
+				     a new pop-up resets it -->
 				<Frame type="Frame" name="FCJH_Body">
 					<Anchor relative="$parent"/>
 					<AcceptsMouse val="false"/>
@@ -513,7 +529,7 @@
 						<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
 						<Controller type="Fade" end="Pause">
 							<Key type="Curve" time="0" value="255"/>
-							<Key type="Curve" time="0.5" value="0"/>
+							<Key type="Curve" time="0.75" value="0"/>
 						</Controller>
 					</Animation>
 					<Frame type="Image" name="FCJH_Back">
@@ -545,11 +561,12 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 				</Frame>
+				<!-- round 5 (user): no timed exit - it slides in and stays while the hero is at 25% or
+				     less; FCJH_Body fades it out on recovery or death -->
 				<Animation name="Pop">
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
 						<Key type="Curve" time="0" value="38" inout="Slow"/>
@@ -558,8 +575,6 @@
 					<Controller type="Fade" end="Pause">
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
-						<Key type="Curve" time="5.35" value="255"/>
-						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -569,23 +584,27 @@
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
-					<!-- round 4: never restart a pop-up that's still on screen (Auriel under fire restarted
-					     hers on every hit - something still flickers; whatever it is, it can't restart it now) -->
+					<!-- round 5 (user): shows on a drop to 25% or less and stays until the hero is healed
+					     past 25% (the health probe's FCJH_HealthyMark, 26-100%) or dies (the plate's death
+					     timer shows). Only those two end it, so the critical flag's flicker can't restart or
+					     cut it (rounds 1-4 kept tripping over that flicker). -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
-						<When type="Property" frame="$parent/FCJH_Heal5" visible="false"/>
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroDeathTimeLabel" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal5/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal5" event="FCJH_Pop"/>
 					</State>
-					<!-- round 3: the latch (Shown) resets ONLY on positive evidence of recovery - the health
-					     probe's FCJH_HealthyMark, set at 26-100%. The critical flag flickers while the percent
-					     changes, so round 1 (reset when it dropped) restarted on every heal tick and round 2
-					     (reset when it dropped and the pop-up was done) fired every ~6 s while a hero sat low.
-					     The same evidence cuts the pop-up short when they're healed. -->
-					<State name="Healthy">
+					<State name="Healed">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus/FCJH_HealthyMark" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal5/FCJH_Body" event="FCJH_Leave"/>
+					</State>
+					<State name="Died">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroDeathTimeLabel" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal5/FCJH_Body" event="FCJH_Leave"/>
 					</State>
@@ -599,8 +618,8 @@
 				<Height val="#FCJH_HERO_POPUP_SIZE"/>
 				<Visible val="false"/>
 				<AcceptsMouse val="false"/>
-				<!-- the content: fades out early (0.5 s) if the hero heals back above 25% mid-pop; a new
-				     pop-up resets it -->
+				<!-- round 5: the content fades out (0.75 s) when the hero is healed past 25% or dies;
+				     a new pop-up resets it -->
 				<Frame type="Frame" name="FCJH_Body">
 					<Anchor relative="$parent"/>
 					<AcceptsMouse val="false"/>
@@ -609,7 +628,7 @@
 						<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
 						<Controller type="Fade" end="Pause">
 							<Key type="Curve" time="0" value="255"/>
-							<Key type="Curve" time="0.5" value="0"/>
+							<Key type="Curve" time="0.75" value="0"/>
 						</Controller>
 					</Animation>
 					<Frame type="Image" name="FCJH_Back">
@@ -641,11 +660,12 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 				</Frame>
+				<!-- round 5 (user): no timed exit - it slides in and stays while the hero is at 25% or
+				     less; FCJH_Body fades it out on recovery or death -->
 				<Animation name="Pop">
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
 						<Key type="Curve" time="0" value="38" inout="Slow"/>
@@ -654,8 +674,6 @@
 					<Controller type="Fade" end="Pause">
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
-						<Key type="Curve" time="5.35" value="255"/>
-						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -665,23 +683,27 @@
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
-					<!-- round 4: never restart a pop-up that's still on screen (Auriel under fire restarted
-					     hers on every hit - something still flickers; whatever it is, it can't restart it now) -->
+					<!-- round 5 (user): shows on a drop to 25% or less and stays until the hero is healed
+					     past 25% (the health probe's FCJH_HealthyMark, 26-100%) or dies (the plate's death
+					     timer shows). Only those two end it, so the critical flag's flicker can't restart or
+					     cut it (rounds 1-4 kept tripping over that flicker). -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
-						<When type="Property" frame="$parent/FCJH_Heal6" visible="false"/>
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroDeathTimeLabel" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal6/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal6" event="FCJH_Pop"/>
 					</State>
-					<!-- round 3: the latch (Shown) resets ONLY on positive evidence of recovery - the health
-					     probe's FCJH_HealthyMark, set at 26-100%. The critical flag flickers while the percent
-					     changes, so round 1 (reset when it dropped) restarted on every heal tick and round 2
-					     (reset when it dropped and the pop-up was done) fired every ~6 s while a hero sat low.
-					     The same evidence cuts the pop-up short when they're healed. -->
-					<State name="Healthy">
+					<State name="Healed">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus/FCJH_HealthyMark" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal6/FCJH_Body" event="FCJH_Leave"/>
+					</State>
+					<State name="Died">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroDeathTimeLabel" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal6/FCJH_Body" event="FCJH_Leave"/>
 					</State>
@@ -695,8 +717,8 @@
 				<Height val="#FCJH_HERO_POPUP_SIZE"/>
 				<Visible val="false"/>
 				<AcceptsMouse val="false"/>
-				<!-- the content: fades out early (0.5 s) if the hero heals back above 25% mid-pop; a new
-				     pop-up resets it -->
+				<!-- round 5: the content fades out (0.75 s) when the hero is healed past 25% or dies;
+				     a new pop-up resets it -->
 				<Frame type="Frame" name="FCJH_Body">
 					<Anchor relative="$parent"/>
 					<AcceptsMouse val="false"/>
@@ -705,7 +727,7 @@
 						<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
 						<Controller type="Fade" end="Pause">
 							<Key type="Curve" time="0" value="255"/>
-							<Key type="Curve" time="0.5" value="0"/>
+							<Key type="Curve" time="0.75" value="0"/>
 						</Controller>
 					</Animation>
 					<Frame type="Image" name="FCJH_Back">
@@ -737,11 +759,12 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 				</Frame>
+				<!-- round 5 (user): no timed exit - it slides in and stays while the hero is at 25% or
+				     less; FCJH_Body fades it out on recovery or death -->
 				<Animation name="Pop">
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
 						<Key type="Curve" time="0" value="38" inout="Slow"/>
@@ -750,8 +773,6 @@
 					<Controller type="Fade" end="Pause">
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
-						<Key type="Curve" time="5.35" value="255"/>
-						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -761,23 +782,27 @@
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
-					<!-- round 4: never restart a pop-up that's still on screen (Auriel under fire restarted
-					     hers on every hit - something still flickers; whatever it is, it can't restart it now) -->
+					<!-- round 5 (user): shows on a drop to 25% or less and stays until the hero is healed
+					     past 25% (the health probe's FCJH_HealthyMark, 26-100%) or dies (the plate's death
+					     timer shows). Only those two end it, so the critical flag's flicker can't restart or
+					     cut it (rounds 1-4 kept tripping over that flicker). -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
-						<When type="Property" frame="$parent/FCJH_Heal7" visible="false"/>
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroDeathTimeLabel" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal7/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal7" event="FCJH_Pop"/>
 					</State>
-					<!-- round 3: the latch (Shown) resets ONLY on positive evidence of recovery - the health
-					     probe's FCJH_HealthyMark, set at 26-100%. The critical flag flickers while the percent
-					     changes, so round 1 (reset when it dropped) restarted on every heal tick and round 2
-					     (reset when it dropped and the pop-up was done) fired every ~6 s while a hero sat low.
-					     The same evidence cuts the pop-up short when they're healed. -->
-					<State name="Healthy">
+					<State name="Healed">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus/FCJH_HealthyMark" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal7/FCJH_Body" event="FCJH_Leave"/>
+					</State>
+					<State name="Died">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroDeathTimeLabel" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal7/FCJH_Body" event="FCJH_Leave"/>
 					</State>
@@ -791,8 +816,8 @@
 				<Height val="#FCJH_HERO_POPUP_SIZE"/>
 				<Visible val="false"/>
 				<AcceptsMouse val="false"/>
-				<!-- the content: fades out early (0.5 s) if the hero heals back above 25% mid-pop; a new
-				     pop-up resets it -->
+				<!-- round 5: the content fades out (0.75 s) when the hero is healed past 25% or dies;
+				     a new pop-up resets it -->
 				<Frame type="Frame" name="FCJH_Body">
 					<Anchor relative="$parent"/>
 					<AcceptsMouse val="false"/>
@@ -801,7 +826,7 @@
 						<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
 						<Controller type="Fade" end="Pause">
 							<Key type="Curve" time="0" value="255"/>
-							<Key type="Curve" time="0.5" value="0"/>
+							<Key type="Curve" time="0.75" value="0"/>
 						</Controller>
 					</Animation>
 					<Frame type="Image" name="FCJH_Back">
@@ -833,11 +858,12 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 				</Frame>
+				<!-- round 5 (user): no timed exit - it slides in and stays while the hero is at 25% or
+				     less; FCJH_Body fades it out on recovery or death -->
 				<Animation name="Pop">
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
 						<Key type="Curve" time="0" value="38" inout="Slow"/>
@@ -846,8 +872,6 @@
 					<Controller type="Fade" end="Pause">
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
-						<Key type="Curve" time="5.35" value="255"/>
-						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -857,23 +881,27 @@
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
-					<!-- round 4: never restart a pop-up that's still on screen (Auriel under fire restarted
-					     hers on every hit - something still flickers; whatever it is, it can't restart it now) -->
+					<!-- round 5 (user): shows on a drop to 25% or less and stays until the hero is healed
+					     past 25% (the health probe's FCJH_HealthyMark, 26-100%) or dies (the plate's death
+					     timer shows). Only those two end it, so the critical flag's flicker can't restart or
+					     cut it (rounds 1-4 kept tripping over that flicker). -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
-						<When type="Property" frame="$parent/FCJH_Heal8" visible="false"/>
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroDeathTimeLabel" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal8/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal8" event="FCJH_Pop"/>
 					</State>
-					<!-- round 3: the latch (Shown) resets ONLY on positive evidence of recovery - the health
-					     probe's FCJH_HealthyMark, set at 26-100%. The critical flag flickers while the percent
-					     changes, so round 1 (reset when it dropped) restarted on every heal tick and round 2
-					     (reset when it dropped and the pop-up was done) fired every ~6 s while a hero sat low.
-					     The same evidence cuts the pop-up short when they're healed. -->
-					<State name="Healthy">
+					<State name="Healed">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus/FCJH_HealthyMark" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal8/FCJH_Body" event="FCJH_Leave"/>
+					</State>
+					<State name="Died">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroDeathTimeLabel" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal8/FCJH_Body" event="FCJH_Leave"/>
 					</State>
@@ -887,8 +915,8 @@
 				<Height val="#FCJH_HERO_POPUP_SIZE"/>
 				<Visible val="false"/>
 				<AcceptsMouse val="false"/>
-				<!-- the content: fades out early (0.5 s) if the hero heals back above 25% mid-pop; a new
-				     pop-up resets it -->
+				<!-- round 5: the content fades out (0.75 s) when the hero is healed past 25% or dies;
+				     a new pop-up resets it -->
 				<Frame type="Frame" name="FCJH_Body">
 					<Anchor relative="$parent"/>
 					<AcceptsMouse val="false"/>
@@ -897,7 +925,7 @@
 						<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
 						<Controller type="Fade" end="Pause">
 							<Key type="Curve" time="0" value="255"/>
-							<Key type="Curve" time="0.5" value="0"/>
+							<Key type="Curve" time="0.75" value="0"/>
 						</Controller>
 					</Animation>
 					<Frame type="Image" name="FCJH_Back">
@@ -929,11 +957,12 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 				</Frame>
+				<!-- round 5 (user): no timed exit - it slides in and stays while the hero is at 25% or
+				     less; FCJH_Body fades it out on recovery or death -->
 				<Animation name="Pop">
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
 						<Key type="Curve" time="0" value="38" inout="Slow"/>
@@ -942,8 +971,6 @@
 					<Controller type="Fade" end="Pause">
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
-						<Key type="Curve" time="5.35" value="255"/>
-						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -953,23 +980,27 @@
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
-					<!-- round 4: never restart a pop-up that's still on screen (Auriel under fire restarted
-					     hers on every hit - something still flickers; whatever it is, it can't restart it now) -->
+					<!-- round 5 (user): shows on a drop to 25% or less and stays until the hero is healed
+					     past 25% (the health probe's FCJH_HealthyMark, 26-100%) or dies (the plate's death
+					     timer shows). Only those two end it, so the critical flag's flicker can't restart or
+					     cut it (rounds 1-4 kept tripping over that flicker). -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
-						<When type="Property" frame="$parent/FCJH_Heal9" visible="false"/>
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroDeathTimeLabel" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal9/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal9" event="FCJH_Pop"/>
 					</State>
-					<!-- round 3: the latch (Shown) resets ONLY on positive evidence of recovery - the health
-					     probe's FCJH_HealthyMark, set at 26-100%. The critical flag flickers while the percent
-					     changes, so round 1 (reset when it dropped) restarted on every heal tick and round 2
-					     (reset when it dropped and the pop-up was done) fired every ~6 s while a hero sat low.
-					     The same evidence cuts the pop-up short when they're healed. -->
-					<State name="Healthy">
+					<State name="Healed">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus/FCJH_HealthyMark" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal9/FCJH_Body" event="FCJH_Leave"/>
+					</State>
+					<State name="Died">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroDeathTimeLabel" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal9/FCJH_Body" event="FCJH_Leave"/>
 					</State>
