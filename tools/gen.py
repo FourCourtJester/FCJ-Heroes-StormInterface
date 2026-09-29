@@ -633,6 +633,128 @@ def pet_death_labels(team, c):
     return labels
 
 
+# Blizzard's in-game heroic panel (partyframe HeroOverviewTemplate / _R HeroicTalentPanel),
+# native units: (panel left, icon left inside it) per team; panel 48 x 38, icon 38 x 38,
+# gold frame 45 x 25 centred on the icon. Both teams keep it on the plate's LEFT.
+HEROIC_PANEL = {"blue": (14, 5), "red": (0, 3)}
+# While it shows, Blizzard narrows the bars from the left (right edge fixed): health 97 -> 69,
+# energy 95 -> 67 (UpdateHealthBarWidths). The backing frames follow the bars by the same 28.
+NARROW = 28
+HEROIC_ART = {"blue": ("HUD_TopBar_Team_HeroFrame_Ult_Bg", "HUD_TopBar_Team_HeroFrame_Ult", False,
+                       "HUD_TopBar_Team_HeroFrame_Ult_ProgressFill"),
+              "red": ("HUD_TopBar_Team_HeroFrame_Ult_Bg_Right", "HUD_TopBar_Team_HeroFrame_Ult_Enemy", True,
+                      "HUD_TopBar_Team_HeroFrame_Ult_ProgressFill_Right")}
+
+
+def heroic_panel(cfg, team_frame, i):
+    """Per cell: Blizzard's own heroic panel, mirrored from the hidden in-game top bar's cell
+    (the engine keeps that bar current for observers - the per-Viking timers proved it):
+    its icon ("?" until picked), gold frame, ready glow, cooldown count and charge fill, and
+    the dim-and-grey on cooldown. While it shows, the bars narrow as Blizzard's do.
+    Replaces the talent-row heroic token probe (user, 2026-09-29: "that layout is what I
+    want" - design/ref_ingame_topbar_*.png)."""
+    blue = team_frame == "Team1HeroOverview"
+    team = "blue" if blue else "red"
+    k = cfg["hero_row"]["scale"]
+    s = lambda v: round(v * k)
+    c = HeroCell(cfg)
+    g = c.team[team]
+    party = f"{PARTY}/{team_frame}/HeroOverview{i}/HeroicTalentPanel"
+    cell = f"{OVERVIEW}/{team_frame}/HeroOverview{i}"
+    pl, il = HEROIC_PANEL[team]
+    mask, frame_tex, flip, fill_tex = HEROIC_ART[team]
+    coords = '<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>' if flip else ""
+    img_l, img_r, img_t, img_b = s(pl + il), s(pl + il + 38), c.h - s(38), c.h
+    fcx, fcy = (img_l + img_r) / 2, (img_t + img_b) / 2
+    fr = (round(fcx - s(45) / 2), round(fcy - s(25) / 2), round(fcx + s(45) / 2), round(fcy + s(25) / 2))
+    rect = lambda l, t, r, b, ind="\t" * 8: (
+        f'{ind}<Anchor side="Left"   relative="{cell}" pos="Min" offset="{l}"/>\n'
+        f'{ind}<Anchor side="Top"    relative="{cell}" pos="Min" offset="{t}"/>\n'
+        f'{ind}<Anchor side="Right"  relative="{cell}" pos="Min" offset="{r}"/>\n'
+        f'{ind}<Anchor side="Bottom" relative="{cell}" pos="Min" offset="{b}"/>\n')
+    image = lambda name, tex, l, t, r, b, extra="": (
+        f'\t\t\t\t\t\t\t\t<Frame type="Image" name="{name}">\n' + rect(l, t, r, b, "\t" * 9) +
+        f'\t\t\t\t\t\t\t\t\t<Texture val="{tex}"/>\n{extra}'
+        f'\t\t\t\t\t\t\t\t\t<Unclipped val="true"/>\n\t\t\t\t\t\t\t\t\t<AcceptsMouse val="false"/>\n'
+        f'\t\t\t\t\t\t\t\t</Frame>\n')
+    t9 = "\t" * 9
+    # bars: wide (no heroic) and narrow (heroic showing) left edges, in cell units
+    bars = [("HeroStatus", g["health"][0]), ("HeroStatus/FCJH_HealthBacking", g["health_backing"][0]),
+            ("HeroStatus/FCJH_ManaBacking", g["mana_backing"][0]), ("HeroStatus/FCJH_Resource", g["energy"][0])]
+    def lefts(narrow):
+        out = "".join(
+            f'\t\t\t\t\t\t\t\t\t\t<Action type="SetAnchor" frame="{cell}/{f}" side="Left" relative="{cell}" pos="Min" '
+            f'offset="{x + (s(NARROW) if narrow else 0)}"/>\n' for f, x in bars)
+        # the Vikings' three bars share the narrowed width (trackers: tools/gen.py trackers)
+        hl, _, hr, _ = g["health"]
+        hl += s(NARROW) if narrow else 0
+        third = (hr - hl - 2 * VIKING_GAP) / 3
+        for v in range(3):
+            left = hl + v * (third + VIKING_GAP)
+            f = f"{cell}/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame{v}"
+            out += (f'\t\t\t\t\t\t\t\t\t\t<Action type="SetAnchor" frame="{f}" side="Left" relative="{cell}" pos="Min" offset="{round(left)}"/>\n'
+                    f'\t\t\t\t\t\t\t\t\t\t<Action type="SetAnchor" frame="{f}" side="Right" relative="{cell}" pos="Min" offset="{round(left + third)}"/>\n')
+        return out
+    watch = lambda frame_: f'{party}/{frame_}'
+    return f"""
+							<!-- the heroic, Blizzard's in-game panel mirrored (tools/gen.py heroic_panel) -->
+							<Frame type="Frame" name="FCJH_HeroicPanel">
+{rect(s(pl), c.h - s(38), s(pl + 48), c.h)}								<Alpha val="0"/>
+								<RenderPriority val="529"/>
+								<Unclipped val="true"/>
+								<AcceptsMouse val="false"/>
+""" + image("FCJH_UltBg", f"@UI/{mask}", img_l, img_t, img_r, img_b, f"{t9}{coords}\n" if flip else "") + \
+        image("FCJH_UltIcon", f"{{{watch('HeroicTalentImage')}/@Texture}}", img_l, img_t, img_r, img_b,
+              f"{t9}<AlphaMaskTexture val=\"@UI/{mask}\"/>\n") + \
+        image("FCJH_UltFrame", f"@UI/{frame_tex}", *fr, f"{t9}{coords}\n" if flip else "") + \
+        image("FCJH_UltReady", "@UI/HUD_TopBar_Team_HeroFrame_Ult_Ready", *fr,
+              (f"{t9}{coords}\n" if flip else "") + f"{t9}<Alpha val=\"0\"/>\n") + \
+        image("FCJH_UltCharge", f"@UI/{fill_tex}", *fr, f"{t9}<Alpha val=\"0\"/>\n") + f"""\
+								<Frame type="Label" name="FCJH_UltCooldown">
+{rect(*fr, t9)}{t9}<Text val="{{{watch('HeroicTalentCooldownLabel')}/@Text}}"/>
+{t9}<Style val="PartyFrame_HeroicTalentCooldown"/>
+{t9}<Options val="NoWrapping | ScaleToPreventTruncation"/>
+{t9}<Alpha val="0"/>
+{t9}<Unclipped val="true"/>
+{t9}<AcceptsMouse val="false"/>
+								</Frame>
+								<StateGroup name="FCJH_Shown">
+									<DefaultState val="No"/>
+									<State name="Yes">
+										<When type="Property" frame="{party}" Visible="true"/>
+										<Action type="SetProperty" frame="$this" Alpha="255"/>
+{lefts(True)}									</State>
+									<State name="No">
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
+{lefts(False)}									</State>
+								</StateGroup>
+								<StateGroup name="FCJH_Cooldown">
+									<DefaultState val="Ready"/>
+									<State name="Cooldown">
+										<When type="Property" frame="{watch('HeroicTalentCooldownLabel')}" Visible="true"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
+									</State>
+									<State name="Ready">
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
+									</State>
+								</StateGroup>
+								<StateGroup name="FCJH_ReadyGlow">
+									<DefaultState val="No"/>
+									<State name="Yes"><When type="Property" frame="{watch('HeroicTalentFrame_Ready')}" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltReady" Alpha="255"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this/FCJH_UltReady" Alpha="0"/></State>
+								</StateGroup>
+								<StateGroup name="FCJH_Charges">
+									<DefaultState val="No"/>
+									<State name="Yes"><When type="Property" frame="{watch('HeroicTalentChargeFillProgress')}" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="255"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="0"/></State>
+								</StateGroup>
+							</Frame>"""
+
+
 def pet_death_bindings(team_frame, i):
     """Per cell: our per-unit death timers show the hidden party frame's matching label (same
     team and cell), and the plate's own timer steps aside while any Viking's shows."""
@@ -1060,7 +1182,7 @@ def hero_row_layout(cfg):
 							<Anchor side="Left"   relative="$GameUI" pos="Min" offset="{e('l')}"/>
 							<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="{e('b')}"/>
 							<Anchor side="Right"  relative="$GameUI" pos="Min" offset="{e('r')}"/>
-							<RenderPriority val="{prio}"/>{pet_death_bindings(team, i)}
+							<RenderPriority val="{prio}"/>{pet_death_bindings(team, i)}{heroic_panel(cfg, team, i)}
 						</Frame>''')
         cells.append(f'\t\t\t\t\t<Frame type="Frame" name="{team}">\n' + "\n".join(inner) + '\n\t\t\t\t\t</Frame>')
 
