@@ -880,9 +880,11 @@ def hero_cell_template(team, c):
 				<Unclipped val="true"/>
 				<AcceptsMouse val="false"/>
 			</Frame>
-			<!-- ...and its icon, mirrored the same way, centred where the death timer is. Shown only while the sensor is showing
-			     a CC: with no picture, the mirrored image draws as a dark square (seen in game;
-			     matching the label's text against "" never fired). -->
+			<!-- ...and its icon, mirrored the same way, centred where the death timer is. Shown only while
+			     Blizzard's own ICON is (not merely the element): when a CC ends, Blizzard's
+			     NoState hides its icon and label but the element stays up for its ~1 s fade, and
+			     the icon's default picture is @UI/Editor/BorderImage - a thin black box, seen in
+			     game 2026-09-29 (matching the label's text against "" never fired). -->
 			<Frame type="Image" name="FCJH_CCIcon">
 				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="{c.death_mid - c.cc_icon[2]}"/>
 				<Anchor side="Left"   relative="$parent/$parent" pos="Mid" offset="{c.death_shift - c.cc_icon[2]}"/>
@@ -897,10 +899,13 @@ def hero_cell_template(team, c):
 					<DefaultState val="None"/>
 					<State name="CC">
 						<When type="Property" frame="$parent/FCJH_CC" Visible="true"/>
+						<When type="Property" frame="$parent/FCJH_CC/DebuffIconLeft" Visible="true"/>
 						<Action type="SetProperty" frame="$this" Alpha="255"/>
+						<Action type="SetProperty" frame="$parent/FCJH_CCText" Alpha="255"/>
 					</State>
 					<State name="None">
 						<Action type="SetProperty" frame="$this" Alpha="0"/>
+						<Action type="SetProperty" frame="$parent/FCJH_CCText" Alpha="0"/>
 					</State>
 				</StateGroup>
 			</Frame>"""
