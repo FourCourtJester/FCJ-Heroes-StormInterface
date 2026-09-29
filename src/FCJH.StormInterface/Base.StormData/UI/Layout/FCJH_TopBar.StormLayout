@@ -156,10 +156,12 @@
 								<Anchor relative="$parent"/>
 								<AlphaMaskTexture val="#FCJH_XP_MASK_BLUE"/>
 								<AlphaMaskSiblings val="true"/>
+								<RenderPriority val="1"/>  <!-- as Blizzard's own bar mask (HeroStatus ImageMaskFrame) -->
 								<AcceptsMouse val="false"/>
 							</Frame>
 							<Frame type="UnitStatusVeterancyBar" name="XPBar">
 								<Texture val="#FCJH_XP_FILL_BLUE"/>
+								<AlphaMaskTexture val="#FCJH_XP_MASK_BLUE"/>  <!-- and on the bar itself (the sibling mask alone didn't cut it in game) -->
 							</Frame>
 						</Frame>
 						<Frame type="TeamVeterancyUnitStatusFrame" name="Team2XPUnitStatusFrame">
@@ -175,10 +177,12 @@
 								<Anchor relative="$parent"/>
 								<AlphaMaskTexture val="#FCJH_XP_MASK_RED"/>
 								<AlphaMaskSiblings val="true"/>
+								<RenderPriority val="1"/>  <!-- as Blizzard's own bar mask (HeroStatus ImageMaskFrame) -->
 								<AcceptsMouse val="false"/>
 							</Frame>
 							<Frame type="UnitStatusVeterancyBar" name="XPBar">
 								<Texture val="#FCJH_XP_FILL_RED"/>
+								<AlphaMaskTexture val="#FCJH_XP_MASK_RED"/>  <!-- and on the bar itself (the sibling mask alone didn't cut it in game) -->
 							</Frame>
 						</Frame>
 
@@ -204,10 +208,12 @@
 								<Anchor relative="$parent/HealthBar"/>
 								<AlphaMaskTexture val="#FCJH_CORE_MASK_BLUE"/>
 								<AlphaMaskSiblings val="true"/>
+								<RenderPriority val="1"/>  <!-- as Blizzard's own bar mask (HeroStatus ImageMaskFrame) -->
 								<AcceptsMouse val="false"/>
 							</Frame>
 							<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">
 								<Texture val="#FCJH_CORE_FILL_BLUE"/>
+								<AlphaMaskTexture val="#FCJH_CORE_MASK_BLUE"/>
 								<ColorStyle val="AllWhite" index="0"/>
 								<Tiled val="false" index="0"/>
 							</Frame>
@@ -229,10 +235,12 @@
 								<Anchor relative="$parent/HealthBar"/>
 								<AlphaMaskTexture val="#FCJH_CORE_MASK_RED"/>
 								<AlphaMaskSiblings val="true"/>
+								<RenderPriority val="1"/>  <!-- as Blizzard's own bar mask (HeroStatus ImageMaskFrame) -->
 								<AcceptsMouse val="false"/>
 							</Frame>
 							<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">
 								<Texture val="#FCJH_CORE_FILL_RED"/>
+								<AlphaMaskTexture val="#FCJH_CORE_MASK_RED"/>
 								<ColorStyle val="AllWhite" index="0"/>
 								<Tiled val="false" index="0"/>
 							</Frame>

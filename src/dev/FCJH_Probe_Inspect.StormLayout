@@ -206,35 +206,19 @@
 					</Frame>
 				</Frame>
 			</Frame>
-		</Frame>
 
 		<!-- B. The experiments, each labelled 1-6 in the header: Blizzard's per-unit widgets in a
 		     selection panel over the card -->
 		<Frame type="SelectionUnitStatusPanel" name="FCJH_InspectUnit">
-			<Anchor side="Top"    relative="$parent" pos="Min" offset="#FCJH_INSPECT_T"/>
-			<Anchor side="Left"   relative="$parent" pos="Min" offset="#FCJH_INSPECT_L"/>
-			<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INSPECT_B"/>
-			<Anchor side="Right"  relative="$parent" pos="Min" offset="#FCJH_INSPECT_R"/>
+			<Anchor relative="$parent"/>
 			<AcceptsMouse val="false"/>
 			<AcceptsMouseTooltip val="false"/>
 			<RenderPriority val="660"/>
-			<!-- shown only while the card is. Round 3 left these on screen after click-off; round 4
-			     bound Visible to the card and they still showed (the engine owns this panel's
-			     visibility), so round 5 fades them by Alpha, the switch that has always held -->
-			<StateGroup name="FCJH_WithCard">
-				<DefaultState val="Hidden"/>
-				<State name="Shown">
-					<When type="Property" frame="$parent/FCJH_Inspect/TargetInfoPanel" Visible="true"/>
-					<Action type="SetProperty" frame="$this/UnitStatusFrame0" Alpha="255"/>
-				</State>
-				<State name="Hidden">
-					<Action type="SetProperty" frame="$this/UnitStatusFrame0" Alpha="0"/>
-				</State>
-			</StateGroup>
+			<!-- INSIDE the card (round 5), so it hides with it. Beside the card (rounds 3-4) its
+			     parts stayed on screen after click-off, bound to the card's Visible or faded by Alpha -->
 			<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 				<Anchor relative="$parent"/>
 				<AcceptsMouse val="false"/>
-				<Alpha val="0"/>
 
 				<!-- 1. animated model: a hero cutscene portrait (Spazzo tried one; untested) -->
 				<Frame type="UnitStatusHeroCutscene" name="FCJH_Model">
@@ -266,6 +250,7 @@
 					<Anchor side="Bottom" relative="$parent" pos="Min" offset="194"/>
 					<Anchor side="Right"  relative="$parent" pos="Min" offset="220"/>
 					<UseNameTypeVisibilityRules val="false"/>
+					<Alpha val="0"/>  <!-- read "Player 5" for every hero (round 4): hidden until it has a real source -->
 					<Frame type="Label" name="Label"><Anchor relative="$parent"/><Style val="FCJH_InspectSub"/></Frame>
 				</Frame>
 				<Frame type="UnitStatusLevel" name="FCJH_Level" template="UnitStatus/UnitStatusLevelTemplate">
@@ -949,6 +934,7 @@
 					<State name="Other"/>
 				</StateGroup>
 			</Frame>
+		</Frame>
 		</Frame>
 	</Frame>
 </Desc>

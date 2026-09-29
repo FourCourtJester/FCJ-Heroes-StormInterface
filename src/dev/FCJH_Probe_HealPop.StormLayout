@@ -35,19 +35,22 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Plus">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="4"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="4"/>
-						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-4"/>
-						<Anchor side="Right"  relative="$parent" pos="Max" offset="-4"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="3"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-3"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="-3"/>
 						<Texture val="@UI/Storm_UI_Play_RandomHero_Button_Icon_Active_Healer"/>
 						<Color val="60,255,90"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
+					<!-- 1 unit outside the box: measured in game, the talent pop-up's square shows ~42 px
+					     wide on its 40 px icon (Blizzard's art sits inside its -5..+5 frame); ours at -5..+5
+					     drew 48 px (2026-09-29) -->
 					<Frame type="Image" name="FCJH_Border">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
-						<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
-						<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="-1"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="-1"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="1"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="1"/>
 						<Texture val="_Assets\Textures\FCJH_PopBorder_Heal.dds"/>
 						<Unclipped val="true"/>
 						<AcceptsMouse val="false"/>
@@ -112,19 +115,22 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Plus">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="4"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="4"/>
-						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-4"/>
-						<Anchor side="Right"  relative="$parent" pos="Max" offset="-4"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="3"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-3"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="-3"/>
 						<Texture val="@UI/Storm_UI_Play_RandomHero_Button_Icon_Active_Healer"/>
 						<Color val="60,255,90"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
+					<!-- 1 unit outside the box: measured in game, the talent pop-up's square shows ~42 px
+					     wide on its 40 px icon (Blizzard's art sits inside its -5..+5 frame); ours at -5..+5
+					     drew 48 px (2026-09-29) -->
 					<Frame type="Image" name="FCJH_Border">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
-						<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
-						<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="-1"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="-1"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="1"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="1"/>
 						<Texture val="_Assets\Textures\FCJH_PopBorder_Heal.dds"/>
 						<Unclipped val="true"/>
 						<AcceptsMouse val="false"/>
@@ -189,19 +195,22 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Plus">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="4"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="4"/>
-						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-4"/>
-						<Anchor side="Right"  relative="$parent" pos="Max" offset="-4"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="3"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-3"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="-3"/>
 						<Texture val="@UI/Storm_UI_Play_RandomHero_Button_Icon_Active_Healer"/>
 						<Color val="60,255,90"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
+					<!-- 1 unit outside the box: measured in game, the talent pop-up's square shows ~42 px
+					     wide on its 40 px icon (Blizzard's art sits inside its -5..+5 frame); ours at -5..+5
+					     drew 48 px (2026-09-29) -->
 					<Frame type="Image" name="FCJH_Border">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
-						<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
-						<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="-1"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="-1"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="1"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="1"/>
 						<Texture val="_Assets\Textures\FCJH_PopBorder_Heal.dds"/>
 						<Unclipped val="true"/>
 						<AcceptsMouse val="false"/>
@@ -266,19 +275,22 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Plus">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="4"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="4"/>
-						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-4"/>
-						<Anchor side="Right"  relative="$parent" pos="Max" offset="-4"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="3"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-3"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="-3"/>
 						<Texture val="@UI/Storm_UI_Play_RandomHero_Button_Icon_Active_Healer"/>
 						<Color val="60,255,90"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
+					<!-- 1 unit outside the box: measured in game, the talent pop-up's square shows ~42 px
+					     wide on its 40 px icon (Blizzard's art sits inside its -5..+5 frame); ours at -5..+5
+					     drew 48 px (2026-09-29) -->
 					<Frame type="Image" name="FCJH_Border">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
-						<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
-						<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="-1"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="-1"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="1"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="1"/>
 						<Texture val="_Assets\Textures\FCJH_PopBorder_Heal.dds"/>
 						<Unclipped val="true"/>
 						<AcceptsMouse val="false"/>
@@ -343,19 +355,22 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Plus">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="4"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="4"/>
-						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-4"/>
-						<Anchor side="Right"  relative="$parent" pos="Max" offset="-4"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="3"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-3"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="-3"/>
 						<Texture val="@UI/Storm_UI_Play_RandomHero_Button_Icon_Active_Healer"/>
 						<Color val="60,255,90"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
+					<!-- 1 unit outside the box: measured in game, the talent pop-up's square shows ~42 px
+					     wide on its 40 px icon (Blizzard's art sits inside its -5..+5 frame); ours at -5..+5
+					     drew 48 px (2026-09-29) -->
 					<Frame type="Image" name="FCJH_Border">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
-						<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
-						<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="-1"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="-1"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="1"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="1"/>
 						<Texture val="_Assets\Textures\FCJH_PopBorder_Heal.dds"/>
 						<Unclipped val="true"/>
 						<AcceptsMouse val="false"/>
@@ -420,19 +435,22 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Plus">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="4"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="4"/>
-						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-4"/>
-						<Anchor side="Right"  relative="$parent" pos="Max" offset="-4"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="3"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-3"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="-3"/>
 						<Texture val="@UI/Storm_UI_Play_RandomHero_Button_Icon_Active_Healer"/>
 						<Color val="60,255,90"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
+					<!-- 1 unit outside the box: measured in game, the talent pop-up's square shows ~42 px
+					     wide on its 40 px icon (Blizzard's art sits inside its -5..+5 frame); ours at -5..+5
+					     drew 48 px (2026-09-29) -->
 					<Frame type="Image" name="FCJH_Border">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
-						<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
-						<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="-1"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="-1"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="1"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="1"/>
 						<Texture val="_Assets\Textures\FCJH_PopBorder_Heal.dds"/>
 						<Unclipped val="true"/>
 						<AcceptsMouse val="false"/>
@@ -497,19 +515,22 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Plus">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="4"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="4"/>
-						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-4"/>
-						<Anchor side="Right"  relative="$parent" pos="Max" offset="-4"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="3"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-3"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="-3"/>
 						<Texture val="@UI/Storm_UI_Play_RandomHero_Button_Icon_Active_Healer"/>
 						<Color val="60,255,90"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
+					<!-- 1 unit outside the box: measured in game, the talent pop-up's square shows ~42 px
+					     wide on its 40 px icon (Blizzard's art sits inside its -5..+5 frame); ours at -5..+5
+					     drew 48 px (2026-09-29) -->
 					<Frame type="Image" name="FCJH_Border">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
-						<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
-						<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="-1"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="-1"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="1"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="1"/>
 						<Texture val="_Assets\Textures\FCJH_PopBorder_Heal.dds"/>
 						<Unclipped val="true"/>
 						<AcceptsMouse val="false"/>
@@ -574,19 +595,22 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Plus">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="4"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="4"/>
-						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-4"/>
-						<Anchor side="Right"  relative="$parent" pos="Max" offset="-4"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="3"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-3"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="-3"/>
 						<Texture val="@UI/Storm_UI_Play_RandomHero_Button_Icon_Active_Healer"/>
 						<Color val="60,255,90"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
+					<!-- 1 unit outside the box: measured in game, the talent pop-up's square shows ~42 px
+					     wide on its 40 px icon (Blizzard's art sits inside its -5..+5 frame); ours at -5..+5
+					     drew 48 px (2026-09-29) -->
 					<Frame type="Image" name="FCJH_Border">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
-						<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
-						<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="-1"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="-1"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="1"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="1"/>
 						<Texture val="_Assets\Textures\FCJH_PopBorder_Heal.dds"/>
 						<Unclipped val="true"/>
 						<AcceptsMouse val="false"/>
@@ -651,19 +675,22 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Plus">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="4"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="4"/>
-						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-4"/>
-						<Anchor side="Right"  relative="$parent" pos="Max" offset="-4"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="3"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-3"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="-3"/>
 						<Texture val="@UI/Storm_UI_Play_RandomHero_Button_Icon_Active_Healer"/>
 						<Color val="60,255,90"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
+					<!-- 1 unit outside the box: measured in game, the talent pop-up's square shows ~42 px
+					     wide on its 40 px icon (Blizzard's art sits inside its -5..+5 frame); ours at -5..+5
+					     drew 48 px (2026-09-29) -->
 					<Frame type="Image" name="FCJH_Border">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
-						<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
-						<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="-1"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="-1"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="1"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="1"/>
 						<Texture val="_Assets\Textures\FCJH_PopBorder_Heal.dds"/>
 						<Unclipped val="true"/>
 						<AcceptsMouse val="false"/>
@@ -728,19 +755,22 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Plus">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="4"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="4"/>
-						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-4"/>
-						<Anchor side="Right"  relative="$parent" pos="Max" offset="-4"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="3"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-3"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="-3"/>
 						<Texture val="@UI/Storm_UI_Play_RandomHero_Button_Icon_Active_Healer"/>
 						<Color val="60,255,90"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
+					<!-- 1 unit outside the box: measured in game, the talent pop-up's square shows ~42 px
+					     wide on its 40 px icon (Blizzard's art sits inside its -5..+5 frame); ours at -5..+5
+					     drew 48 px (2026-09-29) -->
 					<Frame type="Image" name="FCJH_Border">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>
-						<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
-						<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="-1"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="-1"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="1"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="1"/>
 						<Texture val="_Assets\Textures\FCJH_PopBorder_Heal.dds"/>
 						<Unclipped val="true"/>
 						<AcceptsMouse val="false"/>

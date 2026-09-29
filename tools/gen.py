@@ -888,7 +888,8 @@ def row_packer(cfg):
         track = tex(name("xp", "track", team) + suffix)
         mask = tex(name("xp", "mask", team) + suffix)
         acts += (f'\t\t\t\t<Action type="SetProperty" frame="{top_panel}/FCJH_{Team}XPTrack" Texture="{track}"/>\n'
-                 f'\t\t\t\t<Action type="SetProperty" frame="{top_panel}/{tn}XPUnitStatusFrame/FCJH_XPMask" AlphaMaskTexture="{mask}"/>\n')
+                 f'\t\t\t\t<Action type="SetProperty" frame="{top_panel}/{tn}XPUnitStatusFrame/FCJH_XPMask" AlphaMaskTexture="{mask}"/>\n'
+                 f'\t\t\t\t<Action type="SetProperty" frame="{top_panel}/{tn}XPUnitStatusFrame/XPBar" AlphaMaskTexture="{mask}"/>\n')
         return f'\t\t\t<State name="Heroes{n}">\n{when}{acts}\t\t\t</State>\n'
 
     groups = ""
