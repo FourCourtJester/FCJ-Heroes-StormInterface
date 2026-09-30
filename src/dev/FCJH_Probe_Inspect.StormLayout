@@ -38,8 +38,28 @@
 	     that player's heroic at R and their real name. Look for: talent icons for the
 	     selected hero, their heroic at R, their name under the hero name. -->
 	<Frame type="GameUI" name="GameUI" file="GameUI">
+		<!-- Round 9 (2026-09-30): the card shows exactly when Blizzard's own small inspector
+		     would. Ours alone (a TargetInfoFrame the game doesn't manage) came up on the first
+		     plate click of a game; the default UI's doesn't (user). Blizzard's is now parked
+		     off screen rather than forced hidden (FCJH_Hidden), so its visibility is still the
+		     game's, and this watcher copies it onto the card. -->
+		<Frame type="Frame" name="FCJH_InspectGate">
+			<Anchor relative="$parent"/>
+			<AcceptsMouse val="false"/>
+			<StateGroup name="FCJH_Gate">
+				<DefaultState val="Hide"/>
+				<State name="Show">
+					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/TargetInfoFrame" Visible="true"/>
+					<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="true"/>
+				</State>
+				<State name="Hide">
+					<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="false"/>
+				</State>
+			</StateGroup>
+		</Frame>
 		<!-- A. The card and the parts already proven: our copy of Blizzard's inspect box -->
 		<Frame type="TargetInfoFrame" name="FCJH_Inspect">
+			<Visible val="false"/>
 			<Anchor side="Top"    relative="$parent" pos="Min" offset="#FCJH_INSPECT_T"/>
 			<Anchor side="Left"   relative="$parent" pos="Min" offset="#FCJH_INSPECT_L"/>
 			<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INSPECT_B"/>

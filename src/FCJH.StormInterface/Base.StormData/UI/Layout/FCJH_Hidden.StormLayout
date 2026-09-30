@@ -69,11 +69,26 @@
 					<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/ConsoleUIContainer/TalentPauseNotificationContainer">
 						<Key type="Bool" time="0" value="false"/>
 					</Controller>
-					<!-- Blizzard's small inspect box; our inspect card replaces it -->
-					<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/FullscreenUpperContainer/TargetInfoFrame">
-						<Key type="Bool" time="0" value="false"/>
-					</Controller>
 				</Animation>
+			</Frame>
+		</Frame>
+		<!-- Blizzard's small inspect box: our inspect card replaces it, but it must NOT be forced
+		     hidden like the HUD above - its visibility is what our card follows (the default
+		     UI's rule: shown for a unit selected in the world, not for a plate click; our card
+		     on its own came up on a game's first plate click, 2026-09-30). So it's left to the
+		     game to show and hide, and made unseeable instead: parked off screen, see-through,
+		     mouse off, not draggable (a drag position could bring it back on screen). -->
+		<Frame type="Frame" name="UIContainer">
+			<Frame type="Frame" name="FullscreenUpperContainer">
+				<Frame type="TargetInfoFrame" name="TargetInfoFrame">
+					<Anchor side="Top"    relative="$GameUI" pos="Min" offset="9999"/>
+					<Anchor side="Left"   relative="$GameUI" pos="Min" offset="9999"/>
+					<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="10116"/>
+					<Anchor side="Right"  relative="$GameUI" pos="Min" offset="10225"/>
+					<Alpha val="0"/>
+					<AcceptsMouse val="false"/>
+					<Draggable val="false"/>
+				</Frame>
 			</Frame>
 		</Frame>
 	</Frame>
