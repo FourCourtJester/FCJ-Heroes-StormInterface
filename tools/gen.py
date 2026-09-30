@@ -662,7 +662,7 @@ def trackers(team, health):
     third = (w - 2 * VIKING_GAP) / 3
     bar = (f'<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">'
            f'<Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm{suffix}"/><Tiled val="true"/></Frame>')
-    # Each Viking also gets its own click target (centre the camera on that Viking), over
+    # Each Viking also gets its own click target (select that Viking, centre the camera), over
     # its third of the plate at full height, above the plate's own (600). Round 1 hung it off
     # the bar-high strip and clicks landed only now and then (clipped to the strip, likely), so
     # the tracker and each Viking's frame now span the whole plate; only the bar sits in the strip.
@@ -688,7 +688,7 @@ def trackers(team, health):
 						<Frame type="UnitTargetFrame" name="FCJH_Target">
 							<Anchor relative="$parent"/>
 							<AllowTargeting val="false"/>
-							<AllowSelection val="false"/>   <!-- as the plate's: no inspect from a plate click -->
+							<AllowSelection val="true"/>
 							<AllowCameraCentering val="true"/>
 							<AllowSmartCommand val="false"/>
 							<Unclipped val="true"/>
@@ -1529,14 +1529,10 @@ def hero_cell_template(team, c, cfg):
 		</Frame>
 		<Frame type="Image" name="HeroPortraitBackground" template="FCJH_HeroRow/FCJH_Parked"/>
 		<Frame type="Image" name="TalentsBgImage" template="FCJH_HeroRow/FCJH_Parked"/>
-		<!-- Blizzard's click target: the whole plate, above everything we draw, so no art of
-		     ours can take the click; its hit test is the plate's slanted shape
-		     (FCJH_PLATE_HIT_*), not the square. It centres the camera but no longer SELECTS:
-		     a selection brings up the inspect card, which should come from clicking the hero
-		     in the world, not the plate (user, 2026-09-30). -->
+		<!-- Blizzard's click target (select, centre the camera): the whole plate, above
+		     everything we draw, so no art of ours can take the click; its hit test is the
+		     plate's slanted shape (FCJH_PLATE_HIT_*), not the square -->
 		<Frame type="UnitTargetFrame" name="TargetHeroUnitFrame">
-			<AllowSelection val="false"/>
-			<AllowCameraCentering val="true"/>
 			<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 			<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 			<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
