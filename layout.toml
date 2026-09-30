@@ -176,6 +176,7 @@ fade = 0.75                  # s to fade out at the end
 death_fade = 0.35            # s to fade out when the hero dies
 lock = 6.0                   # s after a pop-up fires before that plate can fire another (10 while it showed 6.1 s)
 colour = "3cff5a"            # the plus and the border
+plus_scale = 1.2             # the plus art, drawn this much larger than the box (its art has a wide margin); 0.86 until 2026-09-30
 
 # Top bar backplate (tools/gen.py top_backplate_texture): one texture behind Blizzard's
 # hexagon - wings along the top edge out past each team level (element.blue_level /

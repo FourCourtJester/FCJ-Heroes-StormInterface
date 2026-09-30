@@ -595,7 +595,13 @@ def slant_bars(cfg):
     # the plate's own shape, as the click target's hit-test texture: plates overlap along the
     # slant, and a square click area sent clicks on one plate's corner to its neighbour
     for team in ("blue", "red"):
-        data = slant_texture(team, cell.overlap / cell.w, "ffffff", size=(256, 128))
+        data = bytearray(slant_texture(team, cell.overlap / cell.w, "ffffff", size=(256, 128)))
+        # ...with the heroic icon cut away, so the heroic's tooltip frame under it gets the mouse
+        l, t, r, b = heroic_icon_rect(cfg, team)
+        for ty in range(round(t / cell.h * 128), min(128, round(b / cell.h * 128))):
+            for tx in range(round(l / cell.w * 256), round(r / cell.w * 256)):
+                data[128 + (ty * 256 + tx) * 4 + 3] = 0
+        data = bytes(data)
         digest = hashlib.sha1(data).hexdigest()[:8]
         out[name("plate", "hit", team)] = (f"FCJH_PlateHit_{team}_{digest}.dds", data)
     for team in ("blue", "red"):
@@ -762,6 +768,16 @@ def pet_death_labels(team, c):
 # native units: (panel left, icon left inside it) per team; panel 48 x 38, icon 38 x 38,
 # gold frame 45 x 25 centred on the icon. Both teams keep it on the plate's LEFT.
 HEROIC_PANEL = {"blue": (14, 5), "red": (0, 3)}
+
+
+def heroic_icon_rect(cfg, team):
+    """The heroic icon's square in cell units (left, top, right, bottom): 38 x 38, at the
+    panel's left + its inset, on the cell's bottom edge."""
+    k = cfg["hero_row"]["scale"]
+    s = lambda v: round(v * k)
+    h = HeroCell(cfg).h
+    pl, il = HEROIC_PANEL[team]
+    return s(pl + il), h - s(38), s(pl + il + 38), h
 # While it shows, Blizzard narrows the bars from the left (right edge fixed): health 97 -> 69,
 # energy 95 -> 67 (UpdateHealthBarWidths). The backing frames follow the bars by the same 28.
 NARROW = 28
@@ -797,7 +813,11 @@ def heroic_panel(cfg, team_frame, i):
     # backplate the wrong way under the icon - obvious on Rexxar (2026-09-30)
     back = "HUD_TopBar_Team_HeroFrame_Ult_Bg"
     coords = '<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>' if flip else ""
-    img_l, img_r, img_t, img_b = s(pl + il), s(pl + il + 38), c.h - s(38), c.h
+    img_l, img_t, img_r, img_b = heroic_icon_rect(cfg, team)
+    # Tracer's Pulse Bomb has no cooldown: it charges. Blizzard's observer bar shows the charge
+    # as a meter from a Tracer-only frame in the same talent row (TracerChargeContainer; it only
+    # shows for a hero with that ability)
+    charge = f"{row}/TracerChargeContainer/TracerPulseBombChargeFrame"
     fcx, fcy = (img_l + img_r) / 2, (img_t + img_b) / 2
     fr = (round(fcx - s(45) / 2), round(fcy - s(25) / 2), round(fcx + s(45) / 2), round(fcy + s(25) / 2))
     rect = lambda l, t, r, b, ind="\t" * 8: (
@@ -849,7 +869,28 @@ def heroic_panel(cfg, team_frame, i):
         image("FCJH_UltFrame", f"@UI/{frame_tex}", *fr, f"{t9}{coords}\n" if flip else "") + \
         image("FCJH_UltReady", "@UI/HUD_TopBar_Team_HeroFrame_Ult_Ready", *fr,
               (f"{t9}{coords}\n" if flip else "") + f"{t9}<Alpha val=\"0\"/>\n") + \
-        image("FCJH_UltCharge", f"@UI/{fill_tex}", *fr, f"{t9}<Alpha val=\"0\"/>\n") + f"""\
+        f"""\
+								<!-- Tracer's Pulse Bomb charge, Blizzard's in-game meter art (partyframe
+								     HeroicTalentChargeFillProgress) filled from their observer bar's value -->
+								<Frame type="ProgressBar" name="FCJH_UltCharge">
+{rect(*fr, t9)}{t9}<Vertical val="true"/>
+{t9}<FillInset val="0.0"/>
+{t9}<MinValue val="{{{charge}/ChargeFillProgress/@MinValue}}"/>
+{t9}<MaxValue val="{{{charge}/ChargeFillProgress/@MaxValue}}"/>
+{t9}<Value val="{{{charge}/ChargeFillProgress/@Value}}"/>
+{t9}<Alpha val="0"/>
+{t9}<Unclipped val="true"/>
+{t9}<AcceptsMouse val="false"/>
+{t9}<Frame type="Frame" name="FillImageContainer">
+{t9}	<Anchor relative="$parent"/>
+{t9}	<Frame type="Image" name="FillImage">
+{t9}		<Anchor relative="$parent/$parent"/>
+{t9}		<TextureCoords top="0" left="0.5" bottom="0" right="1"/>
+{t9}		<Texture val="@UI/{fill_tex}"/>
+{t9}	</Frame>
+{t9}</Frame>
+								</Frame>
+""" + f"""\
 								<Frame type="Label" name="FCJH_UltCooldown">
 {rect(*fr, t9)}{t9}<Text val="{{{watch('HeroicTalentCooldownLabel')}/@Text}}"/>
 {t9}<Style val="PartyFrame_HeroicTalentCooldown"/>
@@ -881,6 +922,15 @@ def heroic_panel(cfg, team_frame, i):
 								</Frame>
 								<StateGroup name="FCJH_Cooldown">
 									<DefaultState val="Ready"/>
+									<!-- Tracer: never "on cooldown" - her meter shows instead (it read as
+									     permanently greyed out, 2026-09-30) -->
+									<State name="Charge">
+										<When type="Property" frame="{charge}" Visible="true"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
+									</State>
 									<State name="Cooldown">
 										<When type="Property" frame="{watch('HeroicTalentCooldownLabel')}" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
@@ -909,9 +959,24 @@ def heroic_panel(cfg, team_frame, i):
 								</StateGroup>
 								<StateGroup name="FCJH_Charges">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="{watch('HeroicTalentChargeFillProgress')}" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="255"/></State>
+									<State name="Yes"><When type="Property" frame="{charge}" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="255"/></State>
 									<State name="No"><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="0"/></State>
 								</StateGroup>
+							</Frame>
+							<Frame type="UnitStatusFrame" name="HeroStatus">
+								<!-- the heroic's tooltip: an ability icon for this plate's hero (inside
+								     HeroStatus, so it reads that hero), given the heroic from the talent
+								     row, drawing nothing, over the heroic icon. It gets the mouse because
+								     the plate's click target is cut away there (FCJH_PLATE_HIT_*): clicking
+								     the heroic shows its tooltip instead of selecting the hero. -->
+								<Frame type="UnitStatusAbilIcon" name="FCJH_HeroicTip">
+{rect(img_l, img_t, img_r, img_b, t9)}{t9}<AbilityLink val="{{{row}/HeroSelectedTalentTreeFrame/@HeroicAbilLink}}"/>
+{t9}<Unclipped val="true"/>
+{t9}<Frame type="AbilIcon" name="AbilIcon">
+{t9}	<Anchor relative="$parent"/>
+{t9}	<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Alpha val="0"/></Frame>
+{t9}</Frame>
+								</Frame>
 							</Frame>"""
 
 
@@ -1072,9 +1137,12 @@ def heal_popups(cfg):
     health change - never waited on (probe rounds 6-8 waited on such a flag and never cleared)."""
     hp = cfg["heal_popup"]
     plus = ",".join(str(int(hp["colour"][i:i + 2], 16)) for i in (0, 2, 4))
+    # the plus art carries a wide transparent margin, so it's drawn larger than the box
+    box = Units(cfg)(cfg["hero_row"]["talent_popup_size"])
+    plus_inset = round(box * (1 - hp["plus_scale"]) / 2)
     content = (popup_image("FCJH_Back", "@UI/PauseScreenDimImage", 0,
                            '\n\t\t\t\t\t\t\t<ColorAdjustMode val="Fill"/>\n\t\t\t\t\t\t\t<AdjustmentColor val="235,8,24,12"/>')
-               + popup_image("FCJH_Plus", "@UI/Storm_UI_Play_RandomHero_Button_Icon_Active_Healer", 3,
+               + popup_image("FCJH_Plus", "@UI/Storm_UI_Play_RandomHero_Button_Icon_Active_Healer", plus_inset,
                              f'\n\t\t\t\t\t\t\t<Color val="{plus}"/>')
                # 1 unit outside the box: the talent pop-up's square shows ~42 px on its 40 px icon
                + popup_image("FCJH_Border", f"{TEXTURE_DIR}\\{HEAL_BORDER}", -1))
@@ -1300,6 +1368,7 @@ def hero_cell_template(team, c, cfg):
 					<State name="CC">
 						<When type="Property" frame="$parent/FCJH_CC" Visible="true"/>
 						<When type="Property" frame="$parent/FCJH_CC/DebuffIconLeft" Visible="true"/>
+						<When type="Property" frame="$parent/FCJH_CloneSensor" Visible="false"/>
 						<Action type="SetProperty" frame="$this" Alpha="255"/>
 						<Action type="SetProperty" frame="$parent/FCJH_CCText" Alpha="255"/>
 					</State>
@@ -1563,6 +1632,15 @@ def row_packer(cfg):
     def state(team, n):
         tn = "Team1" if team == "blue" else "Team2"
         cell = lambda i: f"{OVERVIEW}/{tn}HeroOverview/HeroOverview{i}"
+        Team = team.capitalize()
+        xp_frames = (f"{top_panel}/FCJH_{Team}XPTrack", f"{top_panel}/{tn}XPUnitStatusFrame")
+        if n == 0:
+            # no hero loaded yet (the loading seconds): the bar spanned all five slots over
+            # empty space, then snapped as heroes arrived (user, 2026-09-30) - hidden instead
+            return (f'\t\t\t<State name="Heroes0">\n'
+                    f'\t\t\t\t<When type="Property" frame="{cell(1)}" Visible="false"/>\n'
+                    + "".join(f'\t\t\t\t<Action type="SetProperty" frame="{f}" Alpha="0"/>\n' for f in xp_frames)
+                    + '\t\t\t</State>\n')
         # n visible: cell n shown and cell n+1 hidden (n = 5: all shown)
         when = f'\t\t\t\t<When type="Property" frame="{cell(n)}" Visible="true"/>\n'
         if n < 5:
@@ -1574,9 +1652,9 @@ def row_packer(cfg):
                 acts += anchor(cell(i), "Left", x) + anchor(cell(i), "Right", x + w)
         (x, _, w, _), _ = team_bar_rects(cfg, n)[f"{team}_xp"]
         suffix = "" if n == 5 else f"_N{n}"
-        Team = team.capitalize()
-        for frame in (f"{top_panel}/FCJH_{Team}XPTrack", f"{top_panel}/{tn}XPUnitStatusFrame"):
+        for frame in xp_frames:
             acts += anchor(frame, "Left", x) + anchor(frame, "Right", x + w)
+            acts += f'\t\t\t\t<Action type="SetProperty" frame="{frame}" Alpha="255"/>\n'
         track = tex(name("xp", "track", team) + suffix)
         mask = tex(name("xp", "mask", team) + suffix)
         acts += (f'\t\t\t\t<Action type="SetProperty" frame="{top_panel}/FCJH_{Team}XPTrack" Texture="{track}"/>\n'
@@ -1587,7 +1665,7 @@ def row_packer(cfg):
     groups = ""
     for team in ("blue", "red"):
         groups += (f'\t\t<StateGroup name="FCJH_{team.capitalize()}Count">\n\t\t\t<DefaultState val="Heroes5"/>\n'
-                   + "".join(state(team, n) for n in (1, 2, 3, 4, 5)) + '\t\t</StateGroup>\n')
+                   + "".join(state(team, n) for n in (0, 1, 2, 3, 4, 5)) + '\t\t</StateGroup>\n')
     groups = "".join("\t" + line for line in groups.splitlines(keepends=True))
     return f'''		<!-- Fewer than five heroes a side: pack the rows toward the minimap (tools/gen.py
 		     row_packer). UNTESTED: assumes the engine hides the cells it doesn't fill. -->

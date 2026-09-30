@@ -355,6 +355,7 @@
 					<State name="CC">
 						<When type="Property" frame="$parent/FCJH_CC" Visible="true"/>
 						<When type="Property" frame="$parent/FCJH_CC/DebuffIconLeft" Visible="true"/>
+						<When type="Property" frame="$parent/FCJH_CloneSensor" Visible="false"/>
 						<Action type="SetProperty" frame="$this" Alpha="255"/>
 						<Action type="SetProperty" frame="$parent/FCJH_CCText" Alpha="255"/>
 					</State>
@@ -1006,6 +1007,11 @@
 			<AcceptsMouse val="false"/>
 			<StateGroup name="FCJH_BlueCount">
 				<DefaultState val="Heroes5"/>
+				<State name="Heroes0">
+					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" Visible="false"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_BlueXPTrack" Alpha="0"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame" Alpha="0"/>
+				</State>
 				<State name="Heroes1">
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" Visible="true"/>
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" Visible="false"/>
@@ -1013,8 +1019,10 @@
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" side="Right" relative="$GameUI" pos="Min" offset="836"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_BlueXPTrack" side="Left" relative="$GameUI" pos="Min" offset="655"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_BlueXPTrack" side="Right" relative="$GameUI" pos="Min" offset="794"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_BlueXPTrack" Alpha="255"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame" side="Left" relative="$GameUI" pos="Min" offset="655"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame" side="Right" relative="$GameUI" pos="Min" offset="794"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame" Alpha="255"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_BlueXPTrack" Texture="_Assets\Textures\FCJH_Bar_xp_track_blue_n1_2d3acd6a.dds"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame/FCJH_XPMask" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_blue_n1_5fb89822.dds"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame/XPBar" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_blue_n1_5fb89822.dds"/>
@@ -1028,8 +1036,10 @@
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" side="Right" relative="$GameUI" pos="Min" offset="836"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_BlueXPTrack" side="Left" relative="$GameUI" pos="Min" offset="520"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_BlueXPTrack" side="Right" relative="$GameUI" pos="Min" offset="794"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_BlueXPTrack" Alpha="255"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame" side="Left" relative="$GameUI" pos="Min" offset="520"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame" side="Right" relative="$GameUI" pos="Min" offset="794"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame" Alpha="255"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_BlueXPTrack" Texture="_Assets\Textures\FCJH_Bar_xp_track_blue_n2_3aba86b7.dds"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame/FCJH_XPMask" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_blue_n2_0a6cb1c1.dds"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame/XPBar" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_blue_n2_0a6cb1c1.dds"/>
@@ -1045,8 +1055,10 @@
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" side="Right" relative="$GameUI" pos="Min" offset="836"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_BlueXPTrack" side="Left" relative="$GameUI" pos="Min" offset="385"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_BlueXPTrack" side="Right" relative="$GameUI" pos="Min" offset="794"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_BlueXPTrack" Alpha="255"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame" side="Left" relative="$GameUI" pos="Min" offset="385"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame" side="Right" relative="$GameUI" pos="Min" offset="794"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame" Alpha="255"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_BlueXPTrack" Texture="_Assets\Textures\FCJH_Bar_xp_track_blue_n3_48cbadd6.dds"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame/FCJH_XPMask" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_blue_n3_e7fef299.dds"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame/XPBar" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_blue_n3_e7fef299.dds"/>
@@ -1064,8 +1076,10 @@
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" side="Right" relative="$GameUI" pos="Min" offset="836"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_BlueXPTrack" side="Left" relative="$GameUI" pos="Min" offset="250"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_BlueXPTrack" side="Right" relative="$GameUI" pos="Min" offset="794"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_BlueXPTrack" Alpha="255"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame" side="Left" relative="$GameUI" pos="Min" offset="250"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame" side="Right" relative="$GameUI" pos="Min" offset="794"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame" Alpha="255"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_BlueXPTrack" Texture="_Assets\Textures\FCJH_Bar_xp_track_blue_n4_3ec64cd0.dds"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame/FCJH_XPMask" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_blue_n4_5f7e0727.dds"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame/XPBar" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_blue_n4_5f7e0727.dds"/>
@@ -1084,8 +1098,10 @@
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" side="Right" relative="$GameUI" pos="Min" offset="836"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_BlueXPTrack" side="Left" relative="$GameUI" pos="Min" offset="115"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_BlueXPTrack" side="Right" relative="$GameUI" pos="Min" offset="794"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_BlueXPTrack" Alpha="255"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame" side="Left" relative="$GameUI" pos="Min" offset="115"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame" side="Right" relative="$GameUI" pos="Min" offset="794"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame" Alpha="255"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_BlueXPTrack" Texture="_Assets\Textures\FCJH_Bar_xp_track_blue_54294742.dds"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame/FCJH_XPMask" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_blue_195aaf3a.dds"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame/XPBar" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_blue_195aaf3a.dds"/>
@@ -1093,13 +1109,20 @@
 			</StateGroup>
 			<StateGroup name="FCJH_RedCount">
 				<DefaultState val="Heroes5"/>
+				<State name="Heroes0">
+					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" Visible="false"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_RedXPTrack" Alpha="0"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame" Alpha="0"/>
+				</State>
 				<State name="Heroes1">
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" Visible="true"/>
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" Visible="false"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_RedXPTrack" side="Left" relative="$GameUI" pos="Min" offset="1338"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_RedXPTrack" side="Right" relative="$GameUI" pos="Min" offset="1478"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_RedXPTrack" Alpha="255"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame" side="Left" relative="$GameUI" pos="Min" offset="1338"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame" side="Right" relative="$GameUI" pos="Min" offset="1478"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame" Alpha="255"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_RedXPTrack" Texture="_Assets\Textures\FCJH_Bar_xp_track_red_n1_a513362a.dds"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame/FCJH_XPMask" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_red_n1_cb1cddb9.dds"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame/XPBar" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_red_n1_cb1cddb9.dds"/>
@@ -1109,8 +1132,10 @@
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" Visible="false"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_RedXPTrack" side="Left" relative="$GameUI" pos="Min" offset="1338"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_RedXPTrack" side="Right" relative="$GameUI" pos="Min" offset="1613"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_RedXPTrack" Alpha="255"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame" side="Left" relative="$GameUI" pos="Min" offset="1338"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame" side="Right" relative="$GameUI" pos="Min" offset="1613"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame" Alpha="255"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_RedXPTrack" Texture="_Assets\Textures\FCJH_Bar_xp_track_red_n2_96b4552c.dds"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame/FCJH_XPMask" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_red_n2_c3c7cff3.dds"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame/XPBar" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_red_n2_c3c7cff3.dds"/>
@@ -1120,8 +1145,10 @@
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" Visible="false"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_RedXPTrack" side="Left" relative="$GameUI" pos="Min" offset="1338"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_RedXPTrack" side="Right" relative="$GameUI" pos="Min" offset="1748"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_RedXPTrack" Alpha="255"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame" side="Left" relative="$GameUI" pos="Min" offset="1338"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame" side="Right" relative="$GameUI" pos="Min" offset="1748"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame" Alpha="255"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_RedXPTrack" Texture="_Assets\Textures\FCJH_Bar_xp_track_red_n3_6db06b2d.dds"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame/FCJH_XPMask" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_red_n3_53ef6417.dds"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame/XPBar" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_red_n3_53ef6417.dds"/>
@@ -1131,8 +1158,10 @@
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" Visible="false"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_RedXPTrack" side="Left" relative="$GameUI" pos="Min" offset="1338"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_RedXPTrack" side="Right" relative="$GameUI" pos="Min" offset="1883"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_RedXPTrack" Alpha="255"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame" side="Left" relative="$GameUI" pos="Min" offset="1338"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame" side="Right" relative="$GameUI" pos="Min" offset="1883"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame" Alpha="255"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_RedXPTrack" Texture="_Assets\Textures\FCJH_Bar_xp_track_red_n4_954e1def.dds"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame/FCJH_XPMask" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_red_n4_793d7373.dds"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame/XPBar" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_red_n4_793d7373.dds"/>
@@ -1141,8 +1170,10 @@
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" Visible="true"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_RedXPTrack" side="Left" relative="$GameUI" pos="Min" offset="1338"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_RedXPTrack" side="Right" relative="$GameUI" pos="Min" offset="2018"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_RedXPTrack" Alpha="255"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame" side="Left" relative="$GameUI" pos="Min" offset="1338"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame" side="Right" relative="$GameUI" pos="Min" offset="2018"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame" Alpha="255"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_RedXPTrack" Texture="_Assets\Textures\FCJH_Bar_xp_track_red_bf922347.dds"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame/FCJH_XPMask" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_red_a34c2d7e.dds"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame/XPBar" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_red_a34c2d7e.dds"/>
@@ -1187,10 +1218,10 @@
 							<AcceptsMouse val="false"/>
 						</Frame>
 						<Frame type="Image" name="FCJH_Plus">
-							<Anchor side="Top"    relative="$parent" pos="Min" offset="3"/>
-							<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
-							<Anchor side="Bottom" relative="$parent" pos="Max" offset="-3"/>
-							<Anchor side="Right"  relative="$parent" pos="Max" offset="-3"/>
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-4"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-4"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="4"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="4"/>
 							<Texture val="@UI/Storm_UI_Play_RandomHero_Button_Icon_Active_Healer"/>
 							<Color val="60,255,90"/>
 							<Unclipped val="true"/>
@@ -1288,10 +1319,10 @@
 							<AcceptsMouse val="false"/>
 						</Frame>
 						<Frame type="Image" name="FCJH_Plus">
-							<Anchor side="Top"    relative="$parent" pos="Min" offset="3"/>
-							<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
-							<Anchor side="Bottom" relative="$parent" pos="Max" offset="-3"/>
-							<Anchor side="Right"  relative="$parent" pos="Max" offset="-3"/>
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-4"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-4"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="4"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="4"/>
 							<Texture val="@UI/Storm_UI_Play_RandomHero_Button_Icon_Active_Healer"/>
 							<Color val="60,255,90"/>
 							<Unclipped val="true"/>
@@ -1389,10 +1420,10 @@
 							<AcceptsMouse val="false"/>
 						</Frame>
 						<Frame type="Image" name="FCJH_Plus">
-							<Anchor side="Top"    relative="$parent" pos="Min" offset="3"/>
-							<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
-							<Anchor side="Bottom" relative="$parent" pos="Max" offset="-3"/>
-							<Anchor side="Right"  relative="$parent" pos="Max" offset="-3"/>
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-4"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-4"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="4"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="4"/>
 							<Texture val="@UI/Storm_UI_Play_RandomHero_Button_Icon_Active_Healer"/>
 							<Color val="60,255,90"/>
 							<Unclipped val="true"/>
@@ -1490,10 +1521,10 @@
 							<AcceptsMouse val="false"/>
 						</Frame>
 						<Frame type="Image" name="FCJH_Plus">
-							<Anchor side="Top"    relative="$parent" pos="Min" offset="3"/>
-							<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
-							<Anchor side="Bottom" relative="$parent" pos="Max" offset="-3"/>
-							<Anchor side="Right"  relative="$parent" pos="Max" offset="-3"/>
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-4"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-4"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="4"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="4"/>
 							<Texture val="@UI/Storm_UI_Play_RandomHero_Button_Icon_Active_Healer"/>
 							<Color val="60,255,90"/>
 							<Unclipped val="true"/>
@@ -1591,10 +1622,10 @@
 							<AcceptsMouse val="false"/>
 						</Frame>
 						<Frame type="Image" name="FCJH_Plus">
-							<Anchor side="Top"    relative="$parent" pos="Min" offset="3"/>
-							<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
-							<Anchor side="Bottom" relative="$parent" pos="Max" offset="-3"/>
-							<Anchor side="Right"  relative="$parent" pos="Max" offset="-3"/>
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-4"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-4"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="4"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="4"/>
 							<Texture val="@UI/Storm_UI_Play_RandomHero_Button_Icon_Active_Healer"/>
 							<Color val="60,255,90"/>
 							<Unclipped val="true"/>
@@ -1692,10 +1723,10 @@
 							<AcceptsMouse val="false"/>
 						</Frame>
 						<Frame type="Image" name="FCJH_Plus">
-							<Anchor side="Top"    relative="$parent" pos="Min" offset="3"/>
-							<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
-							<Anchor side="Bottom" relative="$parent" pos="Max" offset="-3"/>
-							<Anchor side="Right"  relative="$parent" pos="Max" offset="-3"/>
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-4"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-4"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="4"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="4"/>
 							<Texture val="@UI/Storm_UI_Play_RandomHero_Button_Icon_Active_Healer"/>
 							<Color val="60,255,90"/>
 							<Unclipped val="true"/>
@@ -1793,10 +1824,10 @@
 							<AcceptsMouse val="false"/>
 						</Frame>
 						<Frame type="Image" name="FCJH_Plus">
-							<Anchor side="Top"    relative="$parent" pos="Min" offset="3"/>
-							<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
-							<Anchor side="Bottom" relative="$parent" pos="Max" offset="-3"/>
-							<Anchor side="Right"  relative="$parent" pos="Max" offset="-3"/>
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-4"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-4"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="4"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="4"/>
 							<Texture val="@UI/Storm_UI_Play_RandomHero_Button_Icon_Active_Healer"/>
 							<Color val="60,255,90"/>
 							<Unclipped val="true"/>
@@ -1894,10 +1925,10 @@
 							<AcceptsMouse val="false"/>
 						</Frame>
 						<Frame type="Image" name="FCJH_Plus">
-							<Anchor side="Top"    relative="$parent" pos="Min" offset="3"/>
-							<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
-							<Anchor side="Bottom" relative="$parent" pos="Max" offset="-3"/>
-							<Anchor side="Right"  relative="$parent" pos="Max" offset="-3"/>
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-4"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-4"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="4"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="4"/>
 							<Texture val="@UI/Storm_UI_Play_RandomHero_Button_Icon_Active_Healer"/>
 							<Color val="60,255,90"/>
 							<Unclipped val="true"/>
@@ -1995,10 +2026,10 @@
 							<AcceptsMouse val="false"/>
 						</Frame>
 						<Frame type="Image" name="FCJH_Plus">
-							<Anchor side="Top"    relative="$parent" pos="Min" offset="3"/>
-							<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
-							<Anchor side="Bottom" relative="$parent" pos="Max" offset="-3"/>
-							<Anchor side="Right"  relative="$parent" pos="Max" offset="-3"/>
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-4"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-4"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="4"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="4"/>
 							<Texture val="@UI/Storm_UI_Play_RandomHero_Button_Icon_Active_Healer"/>
 							<Color val="60,255,90"/>
 							<Unclipped val="true"/>
@@ -2096,10 +2127,10 @@
 							<AcceptsMouse val="false"/>
 						</Frame>
 						<Frame type="Image" name="FCJH_Plus">
-							<Anchor side="Top"    relative="$parent" pos="Min" offset="3"/>
-							<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
-							<Anchor side="Bottom" relative="$parent" pos="Max" offset="-3"/>
-							<Anchor side="Right"  relative="$parent" pos="Max" offset="-3"/>
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-4"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-4"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="4"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="4"/>
 							<Texture val="@UI/Storm_UI_Play_RandomHero_Button_Icon_Active_Healer"/>
 							<Color val="60,255,90"/>
 							<Unclipped val="true"/>
@@ -5313,15 +5344,29 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
-								<Frame type="Image" name="FCJH_UltCharge">
+								<!-- Tracer's Pulse Bomb charge, Blizzard's in-game meter art (partyframe
+								     HeroicTalentChargeFillProgress) filled from their observer bar's value -->
+								<Frame type="ProgressBar" name="FCJH_UltCharge">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="21"/>
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="41"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="83"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="75"/>
-									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_Ult_ProgressFill"/>
+									<Vertical val="true"/>
+									<FillInset val="0.0"/>
+									<MinValue val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame/ChargeFillProgress/@MinValue}"/>
+									<MaxValue val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame/ChargeFillProgress/@MaxValue}"/>
+									<Value val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame/ChargeFillProgress/@Value}"/>
 									<Alpha val="0"/>
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
+									<Frame type="Frame" name="FillImageContainer">
+										<Anchor relative="$parent"/>
+										<Frame type="Image" name="FillImage">
+											<Anchor relative="$parent/$parent"/>
+											<TextureCoords top="0" left="0.5" bottom="0" right="1"/>
+											<Texture val="@UI/HUD_TopBar_Team_HeroFrame_Ult_ProgressFill"/>
+										</Frame>
+									</Frame>
 								</Frame>
 								<Frame type="Label" name="FCJH_UltCooldown">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="21"/>
@@ -5382,6 +5427,15 @@
 								</Frame>
 								<StateGroup name="FCJH_Cooldown">
 									<DefaultState val="Ready"/>
+									<!-- Tracer: never "on cooldown" - her meter shows instead (it read as
+									     permanently greyed out, 2026-09-30) -->
+									<State name="Charge">
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
+									</State>
 									<State name="Cooldown">
 										<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/HeroicTalentPanel/HeroicTalentCooldownLabel" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
@@ -5410,9 +5464,28 @@
 								</StateGroup>
 								<StateGroup name="FCJH_Charges">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/HeroicTalentPanel/HeroicTalentChargeFillProgress" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="255"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="255"/></State>
 									<State name="No"><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="0"/></State>
 								</StateGroup>
+							</Frame>
+							<Frame type="UnitStatusFrame" name="HeroStatus">
+								<!-- the heroic's tooltip: an ability icon for this plate's hero (inside
+								     HeroStatus, so it reads that hero), given the heroic from the talent
+								     row, drawing nothing, over the heroic icon. It gets the mouse because
+								     the plate's click target is cut away there (FCJH_PLATE_HIT_*): clicking
+								     the heroic shows its tooltip instead of selecting the hero. -->
+								<Frame type="UnitStatusAbilIcon" name="FCJH_HeroicTip">
+									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="26"/>
+									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="32"/>
+									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="78"/>
+									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="84"/>
+									<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/@HeroicAbilLink}"/>
+									<Unclipped val="true"/>
+									<Frame type="AbilIcon" name="AbilIcon">
+										<Anchor relative="$parent"/>
+										<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Alpha val="0"/></Frame>
+									</Frame>
+								</Frame>
 							</Frame>
 						</Frame>
 						<Frame type="Frame" name="HeroOverview2" template="FCJH_HeroRow/FCJH_HeroCell">
@@ -5504,15 +5577,29 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
-								<Frame type="Image" name="FCJH_UltCharge">
+								<!-- Tracer's Pulse Bomb charge, Blizzard's in-game meter art (partyframe
+								     HeroicTalentChargeFillProgress) filled from their observer bar's value -->
+								<Frame type="ProgressBar" name="FCJH_UltCharge">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="21"/>
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="41"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="83"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="75"/>
-									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_Ult_ProgressFill"/>
+									<Vertical val="true"/>
+									<FillInset val="0.0"/>
+									<MinValue val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame/ChargeFillProgress/@MinValue}"/>
+									<MaxValue val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame/ChargeFillProgress/@MaxValue}"/>
+									<Value val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame/ChargeFillProgress/@Value}"/>
 									<Alpha val="0"/>
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
+									<Frame type="Frame" name="FillImageContainer">
+										<Anchor relative="$parent"/>
+										<Frame type="Image" name="FillImage">
+											<Anchor relative="$parent/$parent"/>
+											<TextureCoords top="0" left="0.5" bottom="0" right="1"/>
+											<Texture val="@UI/HUD_TopBar_Team_HeroFrame_Ult_ProgressFill"/>
+										</Frame>
+									</Frame>
 								</Frame>
 								<Frame type="Label" name="FCJH_UltCooldown">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="21"/>
@@ -5573,6 +5660,15 @@
 								</Frame>
 								<StateGroup name="FCJH_Cooldown">
 									<DefaultState val="Ready"/>
+									<!-- Tracer: never "on cooldown" - her meter shows instead (it read as
+									     permanently greyed out, 2026-09-30) -->
+									<State name="Charge">
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
+									</State>
 									<State name="Cooldown">
 										<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/HeroicTalentPanel/HeroicTalentCooldownLabel" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
@@ -5601,9 +5697,28 @@
 								</StateGroup>
 								<StateGroup name="FCJH_Charges">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/HeroicTalentPanel/HeroicTalentChargeFillProgress" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="255"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="255"/></State>
 									<State name="No"><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="0"/></State>
 								</StateGroup>
+							</Frame>
+							<Frame type="UnitStatusFrame" name="HeroStatus">
+								<!-- the heroic's tooltip: an ability icon for this plate's hero (inside
+								     HeroStatus, so it reads that hero), given the heroic from the talent
+								     row, drawing nothing, over the heroic icon. It gets the mouse because
+								     the plate's click target is cut away there (FCJH_PLATE_HIT_*): clicking
+								     the heroic shows its tooltip instead of selecting the hero. -->
+								<Frame type="UnitStatusAbilIcon" name="FCJH_HeroicTip">
+									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="26"/>
+									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="32"/>
+									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="78"/>
+									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="84"/>
+									<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/@HeroicAbilLink}"/>
+									<Unclipped val="true"/>
+									<Frame type="AbilIcon" name="AbilIcon">
+										<Anchor relative="$parent"/>
+										<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Alpha val="0"/></Frame>
+									</Frame>
+								</Frame>
 							</Frame>
 						</Frame>
 						<Frame type="Frame" name="HeroOverview3" template="FCJH_HeroRow/FCJH_HeroCell">
@@ -5695,15 +5810,29 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
-								<Frame type="Image" name="FCJH_UltCharge">
+								<!-- Tracer's Pulse Bomb charge, Blizzard's in-game meter art (partyframe
+								     HeroicTalentChargeFillProgress) filled from their observer bar's value -->
+								<Frame type="ProgressBar" name="FCJH_UltCharge">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="21"/>
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="41"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="83"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="75"/>
-									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_Ult_ProgressFill"/>
+									<Vertical val="true"/>
+									<FillInset val="0.0"/>
+									<MinValue val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame/ChargeFillProgress/@MinValue}"/>
+									<MaxValue val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame/ChargeFillProgress/@MaxValue}"/>
+									<Value val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame/ChargeFillProgress/@Value}"/>
 									<Alpha val="0"/>
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
+									<Frame type="Frame" name="FillImageContainer">
+										<Anchor relative="$parent"/>
+										<Frame type="Image" name="FillImage">
+											<Anchor relative="$parent/$parent"/>
+											<TextureCoords top="0" left="0.5" bottom="0" right="1"/>
+											<Texture val="@UI/HUD_TopBar_Team_HeroFrame_Ult_ProgressFill"/>
+										</Frame>
+									</Frame>
 								</Frame>
 								<Frame type="Label" name="FCJH_UltCooldown">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="21"/>
@@ -5764,6 +5893,15 @@
 								</Frame>
 								<StateGroup name="FCJH_Cooldown">
 									<DefaultState val="Ready"/>
+									<!-- Tracer: never "on cooldown" - her meter shows instead (it read as
+									     permanently greyed out, 2026-09-30) -->
+									<State name="Charge">
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
+									</State>
 									<State name="Cooldown">
 										<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/HeroicTalentPanel/HeroicTalentCooldownLabel" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
@@ -5792,9 +5930,28 @@
 								</StateGroup>
 								<StateGroup name="FCJH_Charges">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/HeroicTalentPanel/HeroicTalentChargeFillProgress" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="255"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="255"/></State>
 									<State name="No"><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="0"/></State>
 								</StateGroup>
+							</Frame>
+							<Frame type="UnitStatusFrame" name="HeroStatus">
+								<!-- the heroic's tooltip: an ability icon for this plate's hero (inside
+								     HeroStatus, so it reads that hero), given the heroic from the talent
+								     row, drawing nothing, over the heroic icon. It gets the mouse because
+								     the plate's click target is cut away there (FCJH_PLATE_HIT_*): clicking
+								     the heroic shows its tooltip instead of selecting the hero. -->
+								<Frame type="UnitStatusAbilIcon" name="FCJH_HeroicTip">
+									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="26"/>
+									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="32"/>
+									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="78"/>
+									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="84"/>
+									<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/@HeroicAbilLink}"/>
+									<Unclipped val="true"/>
+									<Frame type="AbilIcon" name="AbilIcon">
+										<Anchor relative="$parent"/>
+										<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Alpha val="0"/></Frame>
+									</Frame>
+								</Frame>
 							</Frame>
 						</Frame>
 						<Frame type="Frame" name="HeroOverview4" template="FCJH_HeroRow/FCJH_HeroCell">
@@ -5886,15 +6043,29 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
-								<Frame type="Image" name="FCJH_UltCharge">
+								<!-- Tracer's Pulse Bomb charge, Blizzard's in-game meter art (partyframe
+								     HeroicTalentChargeFillProgress) filled from their observer bar's value -->
+								<Frame type="ProgressBar" name="FCJH_UltCharge">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="21"/>
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="41"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="83"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="75"/>
-									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_Ult_ProgressFill"/>
+									<Vertical val="true"/>
+									<FillInset val="0.0"/>
+									<MinValue val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame/ChargeFillProgress/@MinValue}"/>
+									<MaxValue val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame/ChargeFillProgress/@MaxValue}"/>
+									<Value val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame/ChargeFillProgress/@Value}"/>
 									<Alpha val="0"/>
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
+									<Frame type="Frame" name="FillImageContainer">
+										<Anchor relative="$parent"/>
+										<Frame type="Image" name="FillImage">
+											<Anchor relative="$parent/$parent"/>
+											<TextureCoords top="0" left="0.5" bottom="0" right="1"/>
+											<Texture val="@UI/HUD_TopBar_Team_HeroFrame_Ult_ProgressFill"/>
+										</Frame>
+									</Frame>
 								</Frame>
 								<Frame type="Label" name="FCJH_UltCooldown">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="21"/>
@@ -5955,6 +6126,15 @@
 								</Frame>
 								<StateGroup name="FCJH_Cooldown">
 									<DefaultState val="Ready"/>
+									<!-- Tracer: never "on cooldown" - her meter shows instead (it read as
+									     permanently greyed out, 2026-09-30) -->
+									<State name="Charge">
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
+									</State>
 									<State name="Cooldown">
 										<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/HeroicTalentPanel/HeroicTalentCooldownLabel" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
@@ -5983,9 +6163,28 @@
 								</StateGroup>
 								<StateGroup name="FCJH_Charges">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/HeroicTalentPanel/HeroicTalentChargeFillProgress" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="255"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="255"/></State>
 									<State name="No"><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="0"/></State>
 								</StateGroup>
+							</Frame>
+							<Frame type="UnitStatusFrame" name="HeroStatus">
+								<!-- the heroic's tooltip: an ability icon for this plate's hero (inside
+								     HeroStatus, so it reads that hero), given the heroic from the talent
+								     row, drawing nothing, over the heroic icon. It gets the mouse because
+								     the plate's click target is cut away there (FCJH_PLATE_HIT_*): clicking
+								     the heroic shows its tooltip instead of selecting the hero. -->
+								<Frame type="UnitStatusAbilIcon" name="FCJH_HeroicTip">
+									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="26"/>
+									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="32"/>
+									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="78"/>
+									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="84"/>
+									<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/@HeroicAbilLink}"/>
+									<Unclipped val="true"/>
+									<Frame type="AbilIcon" name="AbilIcon">
+										<Anchor relative="$parent"/>
+										<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Alpha val="0"/></Frame>
+									</Frame>
+								</Frame>
 							</Frame>
 						</Frame>
 						<Frame type="Frame" name="HeroOverview5" template="FCJH_HeroRow/FCJH_HeroCell">
@@ -6077,15 +6276,29 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
-								<Frame type="Image" name="FCJH_UltCharge">
+								<!-- Tracer's Pulse Bomb charge, Blizzard's in-game meter art (partyframe
+								     HeroicTalentChargeFillProgress) filled from their observer bar's value -->
+								<Frame type="ProgressBar" name="FCJH_UltCharge">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="21"/>
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="41"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="83"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="75"/>
-									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_Ult_ProgressFill"/>
+									<Vertical val="true"/>
+									<FillInset val="0.0"/>
+									<MinValue val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame/ChargeFillProgress/@MinValue}"/>
+									<MaxValue val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame/ChargeFillProgress/@MaxValue}"/>
+									<Value val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame/ChargeFillProgress/@Value}"/>
 									<Alpha val="0"/>
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
+									<Frame type="Frame" name="FillImageContainer">
+										<Anchor relative="$parent"/>
+										<Frame type="Image" name="FillImage">
+											<Anchor relative="$parent/$parent"/>
+											<TextureCoords top="0" left="0.5" bottom="0" right="1"/>
+											<Texture val="@UI/HUD_TopBar_Team_HeroFrame_Ult_ProgressFill"/>
+										</Frame>
+									</Frame>
 								</Frame>
 								<Frame type="Label" name="FCJH_UltCooldown">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="21"/>
@@ -6146,6 +6359,15 @@
 								</Frame>
 								<StateGroup name="FCJH_Cooldown">
 									<DefaultState val="Ready"/>
+									<!-- Tracer: never "on cooldown" - her meter shows instead (it read as
+									     permanently greyed out, 2026-09-30) -->
+									<State name="Charge">
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
+									</State>
 									<State name="Cooldown">
 										<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/HeroicTalentPanel/HeroicTalentCooldownLabel" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
@@ -6174,9 +6396,28 @@
 								</StateGroup>
 								<StateGroup name="FCJH_Charges">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/HeroicTalentPanel/HeroicTalentChargeFillProgress" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="255"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="255"/></State>
 									<State name="No"><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="0"/></State>
 								</StateGroup>
+							</Frame>
+							<Frame type="UnitStatusFrame" name="HeroStatus">
+								<!-- the heroic's tooltip: an ability icon for this plate's hero (inside
+								     HeroStatus, so it reads that hero), given the heroic from the talent
+								     row, drawing nothing, over the heroic icon. It gets the mouse because
+								     the plate's click target is cut away there (FCJH_PLATE_HIT_*): clicking
+								     the heroic shows its tooltip instead of selecting the hero. -->
+								<Frame type="UnitStatusAbilIcon" name="FCJH_HeroicTip">
+									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="26"/>
+									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="32"/>
+									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="78"/>
+									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="84"/>
+									<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/@HeroicAbilLink}"/>
+									<Unclipped val="true"/>
+									<Frame type="AbilIcon" name="AbilIcon">
+										<Anchor relative="$parent"/>
+										<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Alpha val="0"/></Frame>
+									</Frame>
+								</Frame>
 							</Frame>
 						</Frame>
 					</Frame>
@@ -6273,15 +6514,29 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
-								<Frame type="Image" name="FCJH_UltCharge">
+								<!-- Tracer's Pulse Bomb charge, Blizzard's in-game meter art (partyframe
+								     HeroicTalentChargeFillProgress) filled from their observer bar's value -->
+								<Frame type="ProgressBar" name="FCJH_UltCharge">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="-1"/>
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="41"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="61"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="75"/>
-									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_Ult_ProgressFill_Right"/>
+									<Vertical val="true"/>
+									<FillInset val="0.0"/>
+									<MinValue val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame/ChargeFillProgress/@MinValue}"/>
+									<MaxValue val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame/ChargeFillProgress/@MaxValue}"/>
+									<Value val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame/ChargeFillProgress/@Value}"/>
 									<Alpha val="0"/>
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
+									<Frame type="Frame" name="FillImageContainer">
+										<Anchor relative="$parent"/>
+										<Frame type="Image" name="FillImage">
+											<Anchor relative="$parent/$parent"/>
+											<TextureCoords top="0" left="0.5" bottom="0" right="1"/>
+											<Texture val="@UI/HUD_TopBar_Team_HeroFrame_Ult_ProgressFill_Right"/>
+										</Frame>
+									</Frame>
 								</Frame>
 								<Frame type="Label" name="FCJH_UltCooldown">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="-1"/>
@@ -6342,6 +6597,15 @@
 								</Frame>
 								<StateGroup name="FCJH_Cooldown">
 									<DefaultState val="Ready"/>
+									<!-- Tracer: never "on cooldown" - her meter shows instead (it read as
+									     permanently greyed out, 2026-09-30) -->
+									<State name="Charge">
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
+									</State>
 									<State name="Cooldown">
 										<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/HeroicTalentPanel/HeroicTalentCooldownLabel" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
@@ -6370,9 +6634,28 @@
 								</StateGroup>
 								<StateGroup name="FCJH_Charges">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/HeroicTalentPanel/HeroicTalentChargeFillProgress" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="255"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="255"/></State>
 									<State name="No"><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="0"/></State>
 								</StateGroup>
+							</Frame>
+							<Frame type="UnitStatusFrame" name="HeroStatus">
+								<!-- the heroic's tooltip: an ability icon for this plate's hero (inside
+								     HeroStatus, so it reads that hero), given the heroic from the talent
+								     row, drawing nothing, over the heroic icon. It gets the mouse because
+								     the plate's click target is cut away there (FCJH_PLATE_HIT_*): clicking
+								     the heroic shows its tooltip instead of selecting the hero. -->
+								<Frame type="UnitStatusAbilIcon" name="FCJH_HeroicTip">
+									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="4"/>
+									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="32"/>
+									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="56"/>
+									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="84"/>
+									<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/@HeroicAbilLink}"/>
+									<Unclipped val="true"/>
+									<Frame type="AbilIcon" name="AbilIcon">
+										<Anchor relative="$parent"/>
+										<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Alpha val="0"/></Frame>
+									</Frame>
+								</Frame>
 							</Frame>
 						</Frame>
 						<Frame type="Frame" name="HeroOverview2" template="FCJH_HeroRow/FCJH_HeroCellRed">
@@ -6467,15 +6750,29 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
-								<Frame type="Image" name="FCJH_UltCharge">
+								<!-- Tracer's Pulse Bomb charge, Blizzard's in-game meter art (partyframe
+								     HeroicTalentChargeFillProgress) filled from their observer bar's value -->
+								<Frame type="ProgressBar" name="FCJH_UltCharge">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="-1"/>
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="41"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="61"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="75"/>
-									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_Ult_ProgressFill_Right"/>
+									<Vertical val="true"/>
+									<FillInset val="0.0"/>
+									<MinValue val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame/ChargeFillProgress/@MinValue}"/>
+									<MaxValue val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame/ChargeFillProgress/@MaxValue}"/>
+									<Value val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame/ChargeFillProgress/@Value}"/>
 									<Alpha val="0"/>
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
+									<Frame type="Frame" name="FillImageContainer">
+										<Anchor relative="$parent"/>
+										<Frame type="Image" name="FillImage">
+											<Anchor relative="$parent/$parent"/>
+											<TextureCoords top="0" left="0.5" bottom="0" right="1"/>
+											<Texture val="@UI/HUD_TopBar_Team_HeroFrame_Ult_ProgressFill_Right"/>
+										</Frame>
+									</Frame>
 								</Frame>
 								<Frame type="Label" name="FCJH_UltCooldown">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="-1"/>
@@ -6536,6 +6833,15 @@
 								</Frame>
 								<StateGroup name="FCJH_Cooldown">
 									<DefaultState val="Ready"/>
+									<!-- Tracer: never "on cooldown" - her meter shows instead (it read as
+									     permanently greyed out, 2026-09-30) -->
+									<State name="Charge">
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
+									</State>
 									<State name="Cooldown">
 										<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/HeroicTalentPanel/HeroicTalentCooldownLabel" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
@@ -6564,9 +6870,28 @@
 								</StateGroup>
 								<StateGroup name="FCJH_Charges">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/HeroicTalentPanel/HeroicTalentChargeFillProgress" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="255"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="255"/></State>
 									<State name="No"><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="0"/></State>
 								</StateGroup>
+							</Frame>
+							<Frame type="UnitStatusFrame" name="HeroStatus">
+								<!-- the heroic's tooltip: an ability icon for this plate's hero (inside
+								     HeroStatus, so it reads that hero), given the heroic from the talent
+								     row, drawing nothing, over the heroic icon. It gets the mouse because
+								     the plate's click target is cut away there (FCJH_PLATE_HIT_*): clicking
+								     the heroic shows its tooltip instead of selecting the hero. -->
+								<Frame type="UnitStatusAbilIcon" name="FCJH_HeroicTip">
+									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="4"/>
+									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="32"/>
+									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="56"/>
+									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="84"/>
+									<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/@HeroicAbilLink}"/>
+									<Unclipped val="true"/>
+									<Frame type="AbilIcon" name="AbilIcon">
+										<Anchor relative="$parent"/>
+										<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Alpha val="0"/></Frame>
+									</Frame>
+								</Frame>
 							</Frame>
 						</Frame>
 						<Frame type="Frame" name="HeroOverview3" template="FCJH_HeroRow/FCJH_HeroCellRed">
@@ -6661,15 +6986,29 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
-								<Frame type="Image" name="FCJH_UltCharge">
+								<!-- Tracer's Pulse Bomb charge, Blizzard's in-game meter art (partyframe
+								     HeroicTalentChargeFillProgress) filled from their observer bar's value -->
+								<Frame type="ProgressBar" name="FCJH_UltCharge">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="-1"/>
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="41"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="61"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="75"/>
-									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_Ult_ProgressFill_Right"/>
+									<Vertical val="true"/>
+									<FillInset val="0.0"/>
+									<MinValue val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame/ChargeFillProgress/@MinValue}"/>
+									<MaxValue val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame/ChargeFillProgress/@MaxValue}"/>
+									<Value val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame/ChargeFillProgress/@Value}"/>
 									<Alpha val="0"/>
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
+									<Frame type="Frame" name="FillImageContainer">
+										<Anchor relative="$parent"/>
+										<Frame type="Image" name="FillImage">
+											<Anchor relative="$parent/$parent"/>
+											<TextureCoords top="0" left="0.5" bottom="0" right="1"/>
+											<Texture val="@UI/HUD_TopBar_Team_HeroFrame_Ult_ProgressFill_Right"/>
+										</Frame>
+									</Frame>
 								</Frame>
 								<Frame type="Label" name="FCJH_UltCooldown">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="-1"/>
@@ -6730,6 +7069,15 @@
 								</Frame>
 								<StateGroup name="FCJH_Cooldown">
 									<DefaultState val="Ready"/>
+									<!-- Tracer: never "on cooldown" - her meter shows instead (it read as
+									     permanently greyed out, 2026-09-30) -->
+									<State name="Charge">
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
+									</State>
 									<State name="Cooldown">
 										<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/HeroicTalentPanel/HeroicTalentCooldownLabel" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
@@ -6758,9 +7106,28 @@
 								</StateGroup>
 								<StateGroup name="FCJH_Charges">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/HeroicTalentPanel/HeroicTalentChargeFillProgress" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="255"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="255"/></State>
 									<State name="No"><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="0"/></State>
 								</StateGroup>
+							</Frame>
+							<Frame type="UnitStatusFrame" name="HeroStatus">
+								<!-- the heroic's tooltip: an ability icon for this plate's hero (inside
+								     HeroStatus, so it reads that hero), given the heroic from the talent
+								     row, drawing nothing, over the heroic icon. It gets the mouse because
+								     the plate's click target is cut away there (FCJH_PLATE_HIT_*): clicking
+								     the heroic shows its tooltip instead of selecting the hero. -->
+								<Frame type="UnitStatusAbilIcon" name="FCJH_HeroicTip">
+									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="4"/>
+									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="32"/>
+									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="56"/>
+									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="84"/>
+									<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/@HeroicAbilLink}"/>
+									<Unclipped val="true"/>
+									<Frame type="AbilIcon" name="AbilIcon">
+										<Anchor relative="$parent"/>
+										<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Alpha val="0"/></Frame>
+									</Frame>
+								</Frame>
 							</Frame>
 						</Frame>
 						<Frame type="Frame" name="HeroOverview4" template="FCJH_HeroRow/FCJH_HeroCellRed">
@@ -6855,15 +7222,29 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
-								<Frame type="Image" name="FCJH_UltCharge">
+								<!-- Tracer's Pulse Bomb charge, Blizzard's in-game meter art (partyframe
+								     HeroicTalentChargeFillProgress) filled from their observer bar's value -->
+								<Frame type="ProgressBar" name="FCJH_UltCharge">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="-1"/>
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="41"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="61"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="75"/>
-									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_Ult_ProgressFill_Right"/>
+									<Vertical val="true"/>
+									<FillInset val="0.0"/>
+									<MinValue val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame/ChargeFillProgress/@MinValue}"/>
+									<MaxValue val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame/ChargeFillProgress/@MaxValue}"/>
+									<Value val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame/ChargeFillProgress/@Value}"/>
 									<Alpha val="0"/>
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
+									<Frame type="Frame" name="FillImageContainer">
+										<Anchor relative="$parent"/>
+										<Frame type="Image" name="FillImage">
+											<Anchor relative="$parent/$parent"/>
+											<TextureCoords top="0" left="0.5" bottom="0" right="1"/>
+											<Texture val="@UI/HUD_TopBar_Team_HeroFrame_Ult_ProgressFill_Right"/>
+										</Frame>
+									</Frame>
 								</Frame>
 								<Frame type="Label" name="FCJH_UltCooldown">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="-1"/>
@@ -6924,6 +7305,15 @@
 								</Frame>
 								<StateGroup name="FCJH_Cooldown">
 									<DefaultState val="Ready"/>
+									<!-- Tracer: never "on cooldown" - her meter shows instead (it read as
+									     permanently greyed out, 2026-09-30) -->
+									<State name="Charge">
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
+									</State>
 									<State name="Cooldown">
 										<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/HeroicTalentPanel/HeroicTalentCooldownLabel" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
@@ -6952,9 +7342,28 @@
 								</StateGroup>
 								<StateGroup name="FCJH_Charges">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/HeroicTalentPanel/HeroicTalentChargeFillProgress" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="255"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="255"/></State>
 									<State name="No"><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="0"/></State>
 								</StateGroup>
+							</Frame>
+							<Frame type="UnitStatusFrame" name="HeroStatus">
+								<!-- the heroic's tooltip: an ability icon for this plate's hero (inside
+								     HeroStatus, so it reads that hero), given the heroic from the talent
+								     row, drawing nothing, over the heroic icon. It gets the mouse because
+								     the plate's click target is cut away there (FCJH_PLATE_HIT_*): clicking
+								     the heroic shows its tooltip instead of selecting the hero. -->
+								<Frame type="UnitStatusAbilIcon" name="FCJH_HeroicTip">
+									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="4"/>
+									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="32"/>
+									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="56"/>
+									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="84"/>
+									<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/@HeroicAbilLink}"/>
+									<Unclipped val="true"/>
+									<Frame type="AbilIcon" name="AbilIcon">
+										<Anchor relative="$parent"/>
+										<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Alpha val="0"/></Frame>
+									</Frame>
+								</Frame>
 							</Frame>
 						</Frame>
 						<Frame type="Frame" name="HeroOverview5" template="FCJH_HeroRow/FCJH_HeroCellRed">
@@ -7049,15 +7458,29 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
-								<Frame type="Image" name="FCJH_UltCharge">
+								<!-- Tracer's Pulse Bomb charge, Blizzard's in-game meter art (partyframe
+								     HeroicTalentChargeFillProgress) filled from their observer bar's value -->
+								<Frame type="ProgressBar" name="FCJH_UltCharge">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="-1"/>
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="41"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="61"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="75"/>
-									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_Ult_ProgressFill_Right"/>
+									<Vertical val="true"/>
+									<FillInset val="0.0"/>
+									<MinValue val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame/ChargeFillProgress/@MinValue}"/>
+									<MaxValue val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame/ChargeFillProgress/@MaxValue}"/>
+									<Value val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame/ChargeFillProgress/@Value}"/>
 									<Alpha val="0"/>
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
+									<Frame type="Frame" name="FillImageContainer">
+										<Anchor relative="$parent"/>
+										<Frame type="Image" name="FillImage">
+											<Anchor relative="$parent/$parent"/>
+											<TextureCoords top="0" left="0.5" bottom="0" right="1"/>
+											<Texture val="@UI/HUD_TopBar_Team_HeroFrame_Ult_ProgressFill_Right"/>
+										</Frame>
+									</Frame>
 								</Frame>
 								<Frame type="Label" name="FCJH_UltCooldown">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="-1"/>
@@ -7118,6 +7541,15 @@
 								</Frame>
 								<StateGroup name="FCJH_Cooldown">
 									<DefaultState val="Ready"/>
+									<!-- Tracer: never "on cooldown" - her meter shows instead (it read as
+									     permanently greyed out, 2026-09-30) -->
+									<State name="Charge">
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
+									</State>
 									<State name="Cooldown">
 										<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/HeroicTalentPanel/HeroicTalentCooldownLabel" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
@@ -7146,9 +7578,28 @@
 								</StateGroup>
 								<StateGroup name="FCJH_Charges">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/HeroicTalentPanel/HeroicTalentChargeFillProgress" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="255"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="255"/></State>
 									<State name="No"><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="0"/></State>
 								</StateGroup>
+							</Frame>
+							<Frame type="UnitStatusFrame" name="HeroStatus">
+								<!-- the heroic's tooltip: an ability icon for this plate's hero (inside
+								     HeroStatus, so it reads that hero), given the heroic from the talent
+								     row, drawing nothing, over the heroic icon. It gets the mouse because
+								     the plate's click target is cut away there (FCJH_PLATE_HIT_*): clicking
+								     the heroic shows its tooltip instead of selecting the hero. -->
+								<Frame type="UnitStatusAbilIcon" name="FCJH_HeroicTip">
+									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="4"/>
+									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="32"/>
+									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="56"/>
+									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="84"/>
+									<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/@HeroicAbilLink}"/>
+									<Unclipped val="true"/>
+									<Frame type="AbilIcon" name="AbilIcon">
+										<Anchor relative="$parent"/>
+										<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Alpha val="0"/></Frame>
+									</Frame>
+								</Frame>
 							</Frame>
 						</Frame>
 					</Frame>
