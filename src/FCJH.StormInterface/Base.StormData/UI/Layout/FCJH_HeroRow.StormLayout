@@ -117,17 +117,6 @@
 			<Unclipped val="true"/>
 			<AcceptsMouse val="false"/>
 		</Frame>
-		<Frame type="Label" name="FCJH_DeathPet">
-			<Anchor side="Top"    relative="$parent" pos="Min" offset="32"/>
-			<Anchor side="Left"   relative="$parent" pos="Min" offset="33"/>
-			<Anchor side="Bottom" relative="$parent" pos="Min" offset="69"/>
-			<Anchor side="Right"  relative="$parent" pos="Min" offset="166"/>
-			<Style val="FCJH_PetDeathTimer"/>
-			<Alpha val="0"/>
-			<RenderPriority val="521"/>
-			<Unclipped val="true"/>
-			<AcceptsMouse val="false"/>
-		</Frame>
 		<Frame type="Image" name="HeroPortraitImage">
 			<Anchor side="Top"    relative="$parent" pos="Min" offset="-1"/>
 			<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
@@ -583,17 +572,6 @@
 			<Unclipped val="true"/>
 			<AcceptsMouse val="false"/>
 		</Frame>
-		<Frame type="Label" name="FCJH_DeathPet">
-			<Anchor side="Top"    relative="$parent" pos="Min" offset="32"/>
-			<Anchor side="Left"   relative="$parent" pos="Min" offset="11"/>
-			<Anchor side="Bottom" relative="$parent" pos="Min" offset="69"/>
-			<Anchor side="Right"  relative="$parent" pos="Min" offset="144"/>
-			<Style val="FCJH_PetDeathTimer"/>
-			<Alpha val="0"/>
-			<RenderPriority val="521"/>
-			<Unclipped val="true"/>
-			<AcceptsMouse val="false"/>
-		</Frame>
 		<Frame type="Image" name="HeroPortraitImage">
 			<Anchor side="Top"    relative="$parent" pos="Min" offset="-1"/>
 			<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
@@ -983,14 +961,6 @@
 									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
 								</StateGroup>
 							</Frame>
-							<Frame type="Label" name="FCJH_DeathPet">
-								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/HeroDeathTimePetLabel/@Text}"/>
-								<StateGroup name="FCJH_Shown">
-									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/HeroDeathTimePetLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
-								</StateGroup>
-							</Frame>
 							<Frame type="Frame" name="FCJH_VikingDeathWatch">
 								<Anchor relative="$parent"/>
 								<AcceptsMouse val="false"/>
@@ -1179,14 +1149,6 @@
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
 									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/HeroDeathTimeVikingErikLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
-								</StateGroup>
-							</Frame>
-							<Frame type="Label" name="FCJH_DeathPet">
-								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/HeroDeathTimePetLabel/@Text}"/>
-								<StateGroup name="FCJH_Shown">
-									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/HeroDeathTimePetLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
 									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
 								</StateGroup>
 							</Frame>
@@ -1381,14 +1343,6 @@
 									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
 								</StateGroup>
 							</Frame>
-							<Frame type="Label" name="FCJH_DeathPet">
-								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/HeroDeathTimePetLabel/@Text}"/>
-								<StateGroup name="FCJH_Shown">
-									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/HeroDeathTimePetLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
-								</StateGroup>
-							</Frame>
 							<Frame type="Frame" name="FCJH_VikingDeathWatch">
 								<Anchor relative="$parent"/>
 								<AcceptsMouse val="false"/>
@@ -1577,14 +1531,6 @@
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
 									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/HeroDeathTimeVikingErikLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
-								</StateGroup>
-							</Frame>
-							<Frame type="Label" name="FCJH_DeathPet">
-								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/HeroDeathTimePetLabel/@Text}"/>
-								<StateGroup name="FCJH_Shown">
-									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/HeroDeathTimePetLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
 									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
 								</StateGroup>
 							</Frame>
@@ -1779,14 +1725,6 @@
 									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
 								</StateGroup>
 							</Frame>
-							<Frame type="Label" name="FCJH_DeathPet">
-								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/HeroDeathTimePetLabel/@Text}"/>
-								<StateGroup name="FCJH_Shown">
-									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/HeroDeathTimePetLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
-								</StateGroup>
-							</Frame>
 							<Frame type="Frame" name="FCJH_VikingDeathWatch">
 								<Anchor relative="$parent"/>
 								<AcceptsMouse val="false"/>
@@ -1977,14 +1915,6 @@
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
 									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/HeroDeathTimeVikingErikLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
-								</StateGroup>
-							</Frame>
-							<Frame type="Label" name="FCJH_DeathPet">
-								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/HeroDeathTimePetLabel/@Text}"/>
-								<StateGroup name="FCJH_Shown">
-									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/HeroDeathTimePetLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
 									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
 								</StateGroup>
 							</Frame>
@@ -2182,14 +2112,6 @@
 									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
 								</StateGroup>
 							</Frame>
-							<Frame type="Label" name="FCJH_DeathPet">
-								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/HeroDeathTimePetLabel/@Text}"/>
-								<StateGroup name="FCJH_Shown">
-									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/HeroDeathTimePetLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
-								</StateGroup>
-							</Frame>
 							<Frame type="Frame" name="FCJH_VikingDeathWatch">
 								<Anchor relative="$parent"/>
 								<AcceptsMouse val="false"/>
@@ -2381,14 +2303,6 @@
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
 									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/HeroDeathTimeVikingErikLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
-								</StateGroup>
-							</Frame>
-							<Frame type="Label" name="FCJH_DeathPet">
-								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/HeroDeathTimePetLabel/@Text}"/>
-								<StateGroup name="FCJH_Shown">
-									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/HeroDeathTimePetLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
 									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
 								</StateGroup>
 							</Frame>
@@ -2586,14 +2500,6 @@
 									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
 								</StateGroup>
 							</Frame>
-							<Frame type="Label" name="FCJH_DeathPet">
-								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/HeroDeathTimePetLabel/@Text}"/>
-								<StateGroup name="FCJH_Shown">
-									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/HeroDeathTimePetLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
-								</StateGroup>
-							</Frame>
 							<Frame type="Frame" name="FCJH_VikingDeathWatch">
 								<Anchor relative="$parent"/>
 								<AcceptsMouse val="false"/>
@@ -2785,14 +2691,6 @@
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
 									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/HeroDeathTimeVikingErikLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
-								</StateGroup>
-							</Frame>
-							<Frame type="Label" name="FCJH_DeathPet">
-								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/HeroDeathTimePetLabel/@Text}"/>
-								<StateGroup name="FCJH_Shown">
-									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/HeroDeathTimePetLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
 									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
 								</StateGroup>
 							</Frame>

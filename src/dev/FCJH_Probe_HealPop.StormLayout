@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <Desc>
-	<!-- PROBE (dev only): heal pop-ups, round 7 (2026-09-30). Written by a one-off script.
+	<!-- PROBE (dev only): heal pop-ups, round 8 (2026-09-30). Written by a one-off script.
 
 	     Spec (user, 2026-09-27/29): the talent pop-up's spot and motion - slide up from the
 	     plate's middle to its top edge - with a green plus in a green border; since round 5 it
@@ -99,48 +99,66 @@
 						<Key type="Bool" time="1.0" value="true"/>
 					</Controller>
 				</Animation>
+				<!-- round 8: after a pop-up leaves, this plate rests 4.0 s before it can pop again - the
+				     duration-based guard (user, 2026-09-30) on top of the sticky logic -->
+				<Frame type="Frame" name="FCJH_Rest"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<Animation name="Rest">
+					<Event event="FCJH_Rest" action="Reset,Play"/>
+					<Controller type="Visibility" end="Pause" frame="FCJH_Rest">
+						<Key type="Bool" time="0" value="true"/>
+						<Key type="Bool" time="4.0" value="false"/>
+					</Controller>
+				</Animation>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
-					<!-- round 5 (user): shows on a drop to 25% or less and stays until the hero is healed
-					     past 25% (the health probe's FCJH_HealthyMark, 26-100%) or dies (the plate's death
-					     timer shows). Only those two end it, so the critical flag's flicker can't restart or
-					     cut it (rounds 1-4 kept tripping over that flicker). -->
+					<!-- Shows on a drop to 25% or less and STAYS until the hero dies or has read healthy (26-100%)
+					     for 1 s straight. Both health flags flicker as the percent changes, so:
+					       - any reading that isn't healthy cancels the 1 s timer (round 7 only cancelled on a
+					         critical reading; a moment with neither flag let the timer run out, and the next
+					         flicker of "healthy" then read as healed - the come-and-go, 2026-09-30)
+					       - FCJH_Settled is cleared by hand whenever the timer restarts or stops, in case
+					         Reset alone doesn't put its visibility back
+					       - after leaving, FCJH_Rest blocks a new pop-up for 4.0 s -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
+						<When type="Property" frame="FCJH_Rest" visible="false"/>
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroDeathTimeLabel" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal0/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal0" event="FCJH_Pop"/>
-					</State>
-					<!-- round 6: "healed" must HOLD for 1 s. Round 5 still restarted under fire, so the healthy
-					     flag itself flickers on while a hero is low; one reading of it no longer counts.
-					     FCJH_Settled turns visible 1 s after the healthy flag comes on (FCJH_Settle), and any
-					     return to low health cancels it. -->
-					<State name="Healed">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus/FCJH_HealthyMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<When type="Property" frame="FCJH_Settled" visible="true"/>
-						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$parent/FCJH_Heal0/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-					</State>
-					<State name="MaybeHealed">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus/FCJH_HealthyMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
-					</State>
-					<State name="StillLow">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus/FCJH_CritMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="Died">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroDeathTimeLabel" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$parent/FCJH_Heal0/FCJH_Body" event="FCJH_Leave"/>
 						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal0/FCJH_Body" event="FCJH_Leave"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
+					</State>
+					<State name="Healed">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus/FCJH_HealthyMark" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
+						<When type="Property" frame="FCJH_Settled" visible="true"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal0/FCJH_Body" event="FCJH_Leave"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
+					</State>
+					<State name="MaybeHealed">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus/FCJH_HealthyMark" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
+					</State>
+					<State name="NotHealthy">
+						<When type="Property" frame="Shown" visible="true"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
@@ -227,48 +245,66 @@
 						<Key type="Bool" time="1.0" value="true"/>
 					</Controller>
 				</Animation>
+				<!-- round 8: after a pop-up leaves, this plate rests 4.0 s before it can pop again - the
+				     duration-based guard (user, 2026-09-30) on top of the sticky logic -->
+				<Frame type="Frame" name="FCJH_Rest"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<Animation name="Rest">
+					<Event event="FCJH_Rest" action="Reset,Play"/>
+					<Controller type="Visibility" end="Pause" frame="FCJH_Rest">
+						<Key type="Bool" time="0" value="true"/>
+						<Key type="Bool" time="4.0" value="false"/>
+					</Controller>
+				</Animation>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
-					<!-- round 5 (user): shows on a drop to 25% or less and stays until the hero is healed
-					     past 25% (the health probe's FCJH_HealthyMark, 26-100%) or dies (the plate's death
-					     timer shows). Only those two end it, so the critical flag's flicker can't restart or
-					     cut it (rounds 1-4 kept tripping over that flicker). -->
+					<!-- Shows on a drop to 25% or less and STAYS until the hero dies or has read healthy (26-100%)
+					     for 1 s straight. Both health flags flicker as the percent changes, so:
+					       - any reading that isn't healthy cancels the 1 s timer (round 7 only cancelled on a
+					         critical reading; a moment with neither flag let the timer run out, and the next
+					         flicker of "healthy" then read as healed - the come-and-go, 2026-09-30)
+					       - FCJH_Settled is cleared by hand whenever the timer restarts or stops, in case
+					         Reset alone doesn't put its visibility back
+					       - after leaving, FCJH_Rest blocks a new pop-up for 4.0 s -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
+						<When type="Property" frame="FCJH_Rest" visible="false"/>
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroDeathTimeLabel" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal1/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal1" event="FCJH_Pop"/>
-					</State>
-					<!-- round 6: "healed" must HOLD for 1 s. Round 5 still restarted under fire, so the healthy
-					     flag itself flickers on while a hero is low; one reading of it no longer counts.
-					     FCJH_Settled turns visible 1 s after the healthy flag comes on (FCJH_Settle), and any
-					     return to low health cancels it. -->
-					<State name="Healed">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus/FCJH_HealthyMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<When type="Property" frame="FCJH_Settled" visible="true"/>
-						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$parent/FCJH_Heal1/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-					</State>
-					<State name="MaybeHealed">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus/FCJH_HealthyMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
-					</State>
-					<State name="StillLow">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus/FCJH_CritMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="Died">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroDeathTimeLabel" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$parent/FCJH_Heal1/FCJH_Body" event="FCJH_Leave"/>
 						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal1/FCJH_Body" event="FCJH_Leave"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
+					</State>
+					<State name="Healed">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus/FCJH_HealthyMark" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
+						<When type="Property" frame="FCJH_Settled" visible="true"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal1/FCJH_Body" event="FCJH_Leave"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
+					</State>
+					<State name="MaybeHealed">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus/FCJH_HealthyMark" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
+					</State>
+					<State name="NotHealthy">
+						<When type="Property" frame="Shown" visible="true"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
@@ -355,48 +391,66 @@
 						<Key type="Bool" time="1.0" value="true"/>
 					</Controller>
 				</Animation>
+				<!-- round 8: after a pop-up leaves, this plate rests 4.0 s before it can pop again - the
+				     duration-based guard (user, 2026-09-30) on top of the sticky logic -->
+				<Frame type="Frame" name="FCJH_Rest"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<Animation name="Rest">
+					<Event event="FCJH_Rest" action="Reset,Play"/>
+					<Controller type="Visibility" end="Pause" frame="FCJH_Rest">
+						<Key type="Bool" time="0" value="true"/>
+						<Key type="Bool" time="4.0" value="false"/>
+					</Controller>
+				</Animation>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
-					<!-- round 5 (user): shows on a drop to 25% or less and stays until the hero is healed
-					     past 25% (the health probe's FCJH_HealthyMark, 26-100%) or dies (the plate's death
-					     timer shows). Only those two end it, so the critical flag's flicker can't restart or
-					     cut it (rounds 1-4 kept tripping over that flicker). -->
+					<!-- Shows on a drop to 25% or less and STAYS until the hero dies or has read healthy (26-100%)
+					     for 1 s straight. Both health flags flicker as the percent changes, so:
+					       - any reading that isn't healthy cancels the 1 s timer (round 7 only cancelled on a
+					         critical reading; a moment with neither flag let the timer run out, and the next
+					         flicker of "healthy" then read as healed - the come-and-go, 2026-09-30)
+					       - FCJH_Settled is cleared by hand whenever the timer restarts or stops, in case
+					         Reset alone doesn't put its visibility back
+					       - after leaving, FCJH_Rest blocks a new pop-up for 4.0 s -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
+						<When type="Property" frame="FCJH_Rest" visible="false"/>
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroDeathTimeLabel" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal2/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal2" event="FCJH_Pop"/>
-					</State>
-					<!-- round 6: "healed" must HOLD for 1 s. Round 5 still restarted under fire, so the healthy
-					     flag itself flickers on while a hero is low; one reading of it no longer counts.
-					     FCJH_Settled turns visible 1 s after the healthy flag comes on (FCJH_Settle), and any
-					     return to low health cancels it. -->
-					<State name="Healed">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus/FCJH_HealthyMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<When type="Property" frame="FCJH_Settled" visible="true"/>
-						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$parent/FCJH_Heal2/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-					</State>
-					<State name="MaybeHealed">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus/FCJH_HealthyMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
-					</State>
-					<State name="StillLow">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus/FCJH_CritMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="Died">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroDeathTimeLabel" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$parent/FCJH_Heal2/FCJH_Body" event="FCJH_Leave"/>
 						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal2/FCJH_Body" event="FCJH_Leave"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
+					</State>
+					<State name="Healed">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus/FCJH_HealthyMark" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
+						<When type="Property" frame="FCJH_Settled" visible="true"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal2/FCJH_Body" event="FCJH_Leave"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
+					</State>
+					<State name="MaybeHealed">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus/FCJH_HealthyMark" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
+					</State>
+					<State name="NotHealthy">
+						<When type="Property" frame="Shown" visible="true"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
@@ -483,48 +537,66 @@
 						<Key type="Bool" time="1.0" value="true"/>
 					</Controller>
 				</Animation>
+				<!-- round 8: after a pop-up leaves, this plate rests 4.0 s before it can pop again - the
+				     duration-based guard (user, 2026-09-30) on top of the sticky logic -->
+				<Frame type="Frame" name="FCJH_Rest"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<Animation name="Rest">
+					<Event event="FCJH_Rest" action="Reset,Play"/>
+					<Controller type="Visibility" end="Pause" frame="FCJH_Rest">
+						<Key type="Bool" time="0" value="true"/>
+						<Key type="Bool" time="4.0" value="false"/>
+					</Controller>
+				</Animation>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
-					<!-- round 5 (user): shows on a drop to 25% or less and stays until the hero is healed
-					     past 25% (the health probe's FCJH_HealthyMark, 26-100%) or dies (the plate's death
-					     timer shows). Only those two end it, so the critical flag's flicker can't restart or
-					     cut it (rounds 1-4 kept tripping over that flicker). -->
+					<!-- Shows on a drop to 25% or less and STAYS until the hero dies or has read healthy (26-100%)
+					     for 1 s straight. Both health flags flicker as the percent changes, so:
+					       - any reading that isn't healthy cancels the 1 s timer (round 7 only cancelled on a
+					         critical reading; a moment with neither flag let the timer run out, and the next
+					         flicker of "healthy" then read as healed - the come-and-go, 2026-09-30)
+					       - FCJH_Settled is cleared by hand whenever the timer restarts or stops, in case
+					         Reset alone doesn't put its visibility back
+					       - after leaving, FCJH_Rest blocks a new pop-up for 4.0 s -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
+						<When type="Property" frame="FCJH_Rest" visible="false"/>
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroDeathTimeLabel" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal3/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal3" event="FCJH_Pop"/>
-					</State>
-					<!-- round 6: "healed" must HOLD for 1 s. Round 5 still restarted under fire, so the healthy
-					     flag itself flickers on while a hero is low; one reading of it no longer counts.
-					     FCJH_Settled turns visible 1 s after the healthy flag comes on (FCJH_Settle), and any
-					     return to low health cancels it. -->
-					<State name="Healed">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus/FCJH_HealthyMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<When type="Property" frame="FCJH_Settled" visible="true"/>
-						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$parent/FCJH_Heal3/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-					</State>
-					<State name="MaybeHealed">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus/FCJH_HealthyMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
-					</State>
-					<State name="StillLow">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus/FCJH_CritMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="Died">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroDeathTimeLabel" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$parent/FCJH_Heal3/FCJH_Body" event="FCJH_Leave"/>
 						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal3/FCJH_Body" event="FCJH_Leave"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
+					</State>
+					<State name="Healed">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus/FCJH_HealthyMark" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
+						<When type="Property" frame="FCJH_Settled" visible="true"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal3/FCJH_Body" event="FCJH_Leave"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
+					</State>
+					<State name="MaybeHealed">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus/FCJH_HealthyMark" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
+					</State>
+					<State name="NotHealthy">
+						<When type="Property" frame="Shown" visible="true"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
@@ -611,48 +683,66 @@
 						<Key type="Bool" time="1.0" value="true"/>
 					</Controller>
 				</Animation>
+				<!-- round 8: after a pop-up leaves, this plate rests 4.0 s before it can pop again - the
+				     duration-based guard (user, 2026-09-30) on top of the sticky logic -->
+				<Frame type="Frame" name="FCJH_Rest"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<Animation name="Rest">
+					<Event event="FCJH_Rest" action="Reset,Play"/>
+					<Controller type="Visibility" end="Pause" frame="FCJH_Rest">
+						<Key type="Bool" time="0" value="true"/>
+						<Key type="Bool" time="4.0" value="false"/>
+					</Controller>
+				</Animation>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
-					<!-- round 5 (user): shows on a drop to 25% or less and stays until the hero is healed
-					     past 25% (the health probe's FCJH_HealthyMark, 26-100%) or dies (the plate's death
-					     timer shows). Only those two end it, so the critical flag's flicker can't restart or
-					     cut it (rounds 1-4 kept tripping over that flicker). -->
+					<!-- Shows on a drop to 25% or less and STAYS until the hero dies or has read healthy (26-100%)
+					     for 1 s straight. Both health flags flicker as the percent changes, so:
+					       - any reading that isn't healthy cancels the 1 s timer (round 7 only cancelled on a
+					         critical reading; a moment with neither flag let the timer run out, and the next
+					         flicker of "healthy" then read as healed - the come-and-go, 2026-09-30)
+					       - FCJH_Settled is cleared by hand whenever the timer restarts or stops, in case
+					         Reset alone doesn't put its visibility back
+					       - after leaving, FCJH_Rest blocks a new pop-up for 4.0 s -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
+						<When type="Property" frame="FCJH_Rest" visible="false"/>
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroDeathTimeLabel" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal4/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal4" event="FCJH_Pop"/>
-					</State>
-					<!-- round 6: "healed" must HOLD for 1 s. Round 5 still restarted under fire, so the healthy
-					     flag itself flickers on while a hero is low; one reading of it no longer counts.
-					     FCJH_Settled turns visible 1 s after the healthy flag comes on (FCJH_Settle), and any
-					     return to low health cancels it. -->
-					<State name="Healed">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus/FCJH_HealthyMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<When type="Property" frame="FCJH_Settled" visible="true"/>
-						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$parent/FCJH_Heal4/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-					</State>
-					<State name="MaybeHealed">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus/FCJH_HealthyMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
-					</State>
-					<State name="StillLow">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus/FCJH_CritMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="Died">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroDeathTimeLabel" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$parent/FCJH_Heal4/FCJH_Body" event="FCJH_Leave"/>
 						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal4/FCJH_Body" event="FCJH_Leave"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
+					</State>
+					<State name="Healed">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus/FCJH_HealthyMark" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
+						<When type="Property" frame="FCJH_Settled" visible="true"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal4/FCJH_Body" event="FCJH_Leave"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
+					</State>
+					<State name="MaybeHealed">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus/FCJH_HealthyMark" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
+					</State>
+					<State name="NotHealthy">
+						<When type="Property" frame="Shown" visible="true"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
@@ -739,48 +829,66 @@
 						<Key type="Bool" time="1.0" value="true"/>
 					</Controller>
 				</Animation>
+				<!-- round 8: after a pop-up leaves, this plate rests 4.0 s before it can pop again - the
+				     duration-based guard (user, 2026-09-30) on top of the sticky logic -->
+				<Frame type="Frame" name="FCJH_Rest"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<Animation name="Rest">
+					<Event event="FCJH_Rest" action="Reset,Play"/>
+					<Controller type="Visibility" end="Pause" frame="FCJH_Rest">
+						<Key type="Bool" time="0" value="true"/>
+						<Key type="Bool" time="4.0" value="false"/>
+					</Controller>
+				</Animation>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
-					<!-- round 5 (user): shows on a drop to 25% or less and stays until the hero is healed
-					     past 25% (the health probe's FCJH_HealthyMark, 26-100%) or dies (the plate's death
-					     timer shows). Only those two end it, so the critical flag's flicker can't restart or
-					     cut it (rounds 1-4 kept tripping over that flicker). -->
+					<!-- Shows on a drop to 25% or less and STAYS until the hero dies or has read healthy (26-100%)
+					     for 1 s straight. Both health flags flicker as the percent changes, so:
+					       - any reading that isn't healthy cancels the 1 s timer (round 7 only cancelled on a
+					         critical reading; a moment with neither flag let the timer run out, and the next
+					         flicker of "healthy" then read as healed - the come-and-go, 2026-09-30)
+					       - FCJH_Settled is cleared by hand whenever the timer restarts or stops, in case
+					         Reset alone doesn't put its visibility back
+					       - after leaving, FCJH_Rest blocks a new pop-up for 4.0 s -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
+						<When type="Property" frame="FCJH_Rest" visible="false"/>
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroDeathTimeLabel" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal5/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal5" event="FCJH_Pop"/>
-					</State>
-					<!-- round 6: "healed" must HOLD for 1 s. Round 5 still restarted under fire, so the healthy
-					     flag itself flickers on while a hero is low; one reading of it no longer counts.
-					     FCJH_Settled turns visible 1 s after the healthy flag comes on (FCJH_Settle), and any
-					     return to low health cancels it. -->
-					<State name="Healed">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus/FCJH_HealthyMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<When type="Property" frame="FCJH_Settled" visible="true"/>
-						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$parent/FCJH_Heal5/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-					</State>
-					<State name="MaybeHealed">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus/FCJH_HealthyMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
-					</State>
-					<State name="StillLow">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus/FCJH_CritMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="Died">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroDeathTimeLabel" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$parent/FCJH_Heal5/FCJH_Body" event="FCJH_Leave"/>
 						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal5/FCJH_Body" event="FCJH_Leave"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
+					</State>
+					<State name="Healed">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus/FCJH_HealthyMark" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
+						<When type="Property" frame="FCJH_Settled" visible="true"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal5/FCJH_Body" event="FCJH_Leave"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
+					</State>
+					<State name="MaybeHealed">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus/FCJH_HealthyMark" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
+					</State>
+					<State name="NotHealthy">
+						<When type="Property" frame="Shown" visible="true"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
@@ -867,48 +975,66 @@
 						<Key type="Bool" time="1.0" value="true"/>
 					</Controller>
 				</Animation>
+				<!-- round 8: after a pop-up leaves, this plate rests 4.0 s before it can pop again - the
+				     duration-based guard (user, 2026-09-30) on top of the sticky logic -->
+				<Frame type="Frame" name="FCJH_Rest"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<Animation name="Rest">
+					<Event event="FCJH_Rest" action="Reset,Play"/>
+					<Controller type="Visibility" end="Pause" frame="FCJH_Rest">
+						<Key type="Bool" time="0" value="true"/>
+						<Key type="Bool" time="4.0" value="false"/>
+					</Controller>
+				</Animation>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
-					<!-- round 5 (user): shows on a drop to 25% or less and stays until the hero is healed
-					     past 25% (the health probe's FCJH_HealthyMark, 26-100%) or dies (the plate's death
-					     timer shows). Only those two end it, so the critical flag's flicker can't restart or
-					     cut it (rounds 1-4 kept tripping over that flicker). -->
+					<!-- Shows on a drop to 25% or less and STAYS until the hero dies or has read healthy (26-100%)
+					     for 1 s straight. Both health flags flicker as the percent changes, so:
+					       - any reading that isn't healthy cancels the 1 s timer (round 7 only cancelled on a
+					         critical reading; a moment with neither flag let the timer run out, and the next
+					         flicker of "healthy" then read as healed - the come-and-go, 2026-09-30)
+					       - FCJH_Settled is cleared by hand whenever the timer restarts or stops, in case
+					         Reset alone doesn't put its visibility back
+					       - after leaving, FCJH_Rest blocks a new pop-up for 4.0 s -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
+						<When type="Property" frame="FCJH_Rest" visible="false"/>
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroDeathTimeLabel" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal6/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal6" event="FCJH_Pop"/>
-					</State>
-					<!-- round 6: "healed" must HOLD for 1 s. Round 5 still restarted under fire, so the healthy
-					     flag itself flickers on while a hero is low; one reading of it no longer counts.
-					     FCJH_Settled turns visible 1 s after the healthy flag comes on (FCJH_Settle), and any
-					     return to low health cancels it. -->
-					<State name="Healed">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus/FCJH_HealthyMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<When type="Property" frame="FCJH_Settled" visible="true"/>
-						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$parent/FCJH_Heal6/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-					</State>
-					<State name="MaybeHealed">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus/FCJH_HealthyMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
-					</State>
-					<State name="StillLow">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus/FCJH_CritMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="Died">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroDeathTimeLabel" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$parent/FCJH_Heal6/FCJH_Body" event="FCJH_Leave"/>
 						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal6/FCJH_Body" event="FCJH_Leave"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
+					</State>
+					<State name="Healed">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus/FCJH_HealthyMark" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
+						<When type="Property" frame="FCJH_Settled" visible="true"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal6/FCJH_Body" event="FCJH_Leave"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
+					</State>
+					<State name="MaybeHealed">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus/FCJH_HealthyMark" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
+					</State>
+					<State name="NotHealthy">
+						<When type="Property" frame="Shown" visible="true"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
@@ -995,48 +1121,66 @@
 						<Key type="Bool" time="1.0" value="true"/>
 					</Controller>
 				</Animation>
+				<!-- round 8: after a pop-up leaves, this plate rests 4.0 s before it can pop again - the
+				     duration-based guard (user, 2026-09-30) on top of the sticky logic -->
+				<Frame type="Frame" name="FCJH_Rest"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<Animation name="Rest">
+					<Event event="FCJH_Rest" action="Reset,Play"/>
+					<Controller type="Visibility" end="Pause" frame="FCJH_Rest">
+						<Key type="Bool" time="0" value="true"/>
+						<Key type="Bool" time="4.0" value="false"/>
+					</Controller>
+				</Animation>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
-					<!-- round 5 (user): shows on a drop to 25% or less and stays until the hero is healed
-					     past 25% (the health probe's FCJH_HealthyMark, 26-100%) or dies (the plate's death
-					     timer shows). Only those two end it, so the critical flag's flicker can't restart or
-					     cut it (rounds 1-4 kept tripping over that flicker). -->
+					<!-- Shows on a drop to 25% or less and STAYS until the hero dies or has read healthy (26-100%)
+					     for 1 s straight. Both health flags flicker as the percent changes, so:
+					       - any reading that isn't healthy cancels the 1 s timer (round 7 only cancelled on a
+					         critical reading; a moment with neither flag let the timer run out, and the next
+					         flicker of "healthy" then read as healed - the come-and-go, 2026-09-30)
+					       - FCJH_Settled is cleared by hand whenever the timer restarts or stops, in case
+					         Reset alone doesn't put its visibility back
+					       - after leaving, FCJH_Rest blocks a new pop-up for 4.0 s -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
+						<When type="Property" frame="FCJH_Rest" visible="false"/>
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroDeathTimeLabel" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal7/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal7" event="FCJH_Pop"/>
-					</State>
-					<!-- round 6: "healed" must HOLD for 1 s. Round 5 still restarted under fire, so the healthy
-					     flag itself flickers on while a hero is low; one reading of it no longer counts.
-					     FCJH_Settled turns visible 1 s after the healthy flag comes on (FCJH_Settle), and any
-					     return to low health cancels it. -->
-					<State name="Healed">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus/FCJH_HealthyMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<When type="Property" frame="FCJH_Settled" visible="true"/>
-						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$parent/FCJH_Heal7/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-					</State>
-					<State name="MaybeHealed">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus/FCJH_HealthyMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
-					</State>
-					<State name="StillLow">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus/FCJH_CritMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="Died">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroDeathTimeLabel" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$parent/FCJH_Heal7/FCJH_Body" event="FCJH_Leave"/>
 						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal7/FCJH_Body" event="FCJH_Leave"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
+					</State>
+					<State name="Healed">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus/FCJH_HealthyMark" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
+						<When type="Property" frame="FCJH_Settled" visible="true"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal7/FCJH_Body" event="FCJH_Leave"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
+					</State>
+					<State name="MaybeHealed">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus/FCJH_HealthyMark" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
+					</State>
+					<State name="NotHealthy">
+						<When type="Property" frame="Shown" visible="true"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
@@ -1123,48 +1267,66 @@
 						<Key type="Bool" time="1.0" value="true"/>
 					</Controller>
 				</Animation>
+				<!-- round 8: after a pop-up leaves, this plate rests 4.0 s before it can pop again - the
+				     duration-based guard (user, 2026-09-30) on top of the sticky logic -->
+				<Frame type="Frame" name="FCJH_Rest"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<Animation name="Rest">
+					<Event event="FCJH_Rest" action="Reset,Play"/>
+					<Controller type="Visibility" end="Pause" frame="FCJH_Rest">
+						<Key type="Bool" time="0" value="true"/>
+						<Key type="Bool" time="4.0" value="false"/>
+					</Controller>
+				</Animation>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
-					<!-- round 5 (user): shows on a drop to 25% or less and stays until the hero is healed
-					     past 25% (the health probe's FCJH_HealthyMark, 26-100%) or dies (the plate's death
-					     timer shows). Only those two end it, so the critical flag's flicker can't restart or
-					     cut it (rounds 1-4 kept tripping over that flicker). -->
+					<!-- Shows on a drop to 25% or less and STAYS until the hero dies or has read healthy (26-100%)
+					     for 1 s straight. Both health flags flicker as the percent changes, so:
+					       - any reading that isn't healthy cancels the 1 s timer (round 7 only cancelled on a
+					         critical reading; a moment with neither flag let the timer run out, and the next
+					         flicker of "healthy" then read as healed - the come-and-go, 2026-09-30)
+					       - FCJH_Settled is cleared by hand whenever the timer restarts or stops, in case
+					         Reset alone doesn't put its visibility back
+					       - after leaving, FCJH_Rest blocks a new pop-up for 4.0 s -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
+						<When type="Property" frame="FCJH_Rest" visible="false"/>
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroDeathTimeLabel" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal8/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal8" event="FCJH_Pop"/>
-					</State>
-					<!-- round 6: "healed" must HOLD for 1 s. Round 5 still restarted under fire, so the healthy
-					     flag itself flickers on while a hero is low; one reading of it no longer counts.
-					     FCJH_Settled turns visible 1 s after the healthy flag comes on (FCJH_Settle), and any
-					     return to low health cancels it. -->
-					<State name="Healed">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus/FCJH_HealthyMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<When type="Property" frame="FCJH_Settled" visible="true"/>
-						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$parent/FCJH_Heal8/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-					</State>
-					<State name="MaybeHealed">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus/FCJH_HealthyMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
-					</State>
-					<State name="StillLow">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus/FCJH_CritMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="Died">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroDeathTimeLabel" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$parent/FCJH_Heal8/FCJH_Body" event="FCJH_Leave"/>
 						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal8/FCJH_Body" event="FCJH_Leave"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
+					</State>
+					<State name="Healed">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus/FCJH_HealthyMark" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
+						<When type="Property" frame="FCJH_Settled" visible="true"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal8/FCJH_Body" event="FCJH_Leave"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
+					</State>
+					<State name="MaybeHealed">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus/FCJH_HealthyMark" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
+					</State>
+					<State name="NotHealthy">
+						<When type="Property" frame="Shown" visible="true"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
@@ -1251,48 +1413,66 @@
 						<Key type="Bool" time="1.0" value="true"/>
 					</Controller>
 				</Animation>
+				<!-- round 8: after a pop-up leaves, this plate rests 4.0 s before it can pop again - the
+				     duration-based guard (user, 2026-09-30) on top of the sticky logic -->
+				<Frame type="Frame" name="FCJH_Rest"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<Animation name="Rest">
+					<Event event="FCJH_Rest" action="Reset,Play"/>
+					<Controller type="Visibility" end="Pause" frame="FCJH_Rest">
+						<Key type="Bool" time="0" value="true"/>
+						<Key type="Bool" time="4.0" value="false"/>
+					</Controller>
+				</Animation>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
-					<!-- round 5 (user): shows on a drop to 25% or less and stays until the hero is healed
-					     past 25% (the health probe's FCJH_HealthyMark, 26-100%) or dies (the plate's death
-					     timer shows). Only those two end it, so the critical flag's flicker can't restart or
-					     cut it (rounds 1-4 kept tripping over that flicker). -->
+					<!-- Shows on a drop to 25% or less and STAYS until the hero dies or has read healthy (26-100%)
+					     for 1 s straight. Both health flags flicker as the percent changes, so:
+					       - any reading that isn't healthy cancels the 1 s timer (round 7 only cancelled on a
+					         critical reading; a moment with neither flag let the timer run out, and the next
+					         flicker of "healthy" then read as healed - the come-and-go, 2026-09-30)
+					       - FCJH_Settled is cleared by hand whenever the timer restarts or stops, in case
+					         Reset alone doesn't put its visibility back
+					       - after leaving, FCJH_Rest blocks a new pop-up for 4.0 s -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
+						<When type="Property" frame="FCJH_Rest" visible="false"/>
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroDeathTimeLabel" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal9/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal9" event="FCJH_Pop"/>
-					</State>
-					<!-- round 6: "healed" must HOLD for 1 s. Round 5 still restarted under fire, so the healthy
-					     flag itself flickers on while a hero is low; one reading of it no longer counts.
-					     FCJH_Settled turns visible 1 s after the healthy flag comes on (FCJH_Settle), and any
-					     return to low health cancels it. -->
-					<State name="Healed">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus/FCJH_HealthyMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<When type="Property" frame="FCJH_Settled" visible="true"/>
-						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$parent/FCJH_Heal9/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-					</State>
-					<State name="MaybeHealed">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus/FCJH_HealthyMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
-					</State>
-					<State name="StillLow">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus/FCJH_CritMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="Died">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroDeathTimeLabel" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$parent/FCJH_Heal9/FCJH_Body" event="FCJH_Leave"/>
 						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal9/FCJH_Body" event="FCJH_Leave"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
+					</State>
+					<State name="Healed">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus/FCJH_HealthyMark" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
+						<When type="Property" frame="FCJH_Settled" visible="true"/>
+						<Action type="SetProperty" frame="Shown" visible="false"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$parent/FCJH_Heal9/FCJH_Body" event="FCJH_Leave"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
+					</State>
+					<State name="MaybeHealed">
+						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus/FCJH_HealthyMark" visible="true"/>
+						<When type="Property" frame="Shown" visible="true"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
+					</State>
+					<State name="NotHealthy">
+						<When type="Property" frame="Shown" visible="true"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
+						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>

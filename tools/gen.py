@@ -710,8 +710,10 @@ def trackers(team, health):
 			</Frame>"""
 
 
+# Misha's timer (HeroDeathTimePetLabel) too was mirrored at first; dropped 2026-09-30 (user):
+# with no portrait of her own to sit on, it just overhung Rexxar's bar
 PET_TIMERS = {"Olaf": "HeroDeathTimeVikingOlafLabel", "Baleog": "HeroDeathTimeVikingBaleogLabel",
-              "Erik": "HeroDeathTimeVikingErikLabel", "Pet": "HeroDeathTimePetLabel"}
+              "Erik": "HeroDeathTimeVikingErikLabel"}
 PARTY = "$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel"
 VIKING_SLOT = {"Baleog": 0, "Erik": 1, "Olaf": 2}   # which third of the plate each Viking's bar is
 # Blizzard's VikingTrackingElement orders its TrackedUnitStatusFrame0-2 Olaf, Baleog, Erik (seen in
@@ -745,18 +747,6 @@ def pet_death_labels(team, c):
 			<Anchor side="Left"   relative="$parent" pos="Min" offset="{left}"/>
 			<Anchor side="Bottom" relative="$parent" pos="Min" offset="{hb}"/>
 			<Anchor side="Right"  relative="$parent" pos="Min" offset="{round(left + third)}"/>
-			<Style val="FCJH_PetDeathTimer"/>
-			<Alpha val="0"/>
-			<RenderPriority val="521"/>
-			<Unclipped val="true"/>
-			<AcceptsMouse val="false"/>
-		</Frame>"""
-    labels += f"""
-		<Frame type="Label" name="FCJH_DeathPet">
-			<Anchor side="Top"    relative="$parent" pos="Min" offset="{ht - 20}"/>
-			<Anchor side="Left"   relative="$parent" pos="Min" offset="{hl}"/>
-			<Anchor side="Bottom" relative="$parent" pos="Min" offset="{hb + 6}"/>
-			<Anchor side="Right"  relative="$parent" pos="Min" offset="{hr}"/>
 			<Style val="FCJH_PetDeathTimer"/>
 			<Alpha val="0"/>
 			<RenderPriority val="521"/>
