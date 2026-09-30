@@ -33,7 +33,8 @@ from committed sources only.
 | `layout.toml` | Every placement, in screen pixels at 1920×1080, from the wireframe |
 | `src/FCJH.StormInterface/` | Interface source; the archive's file tree, one to one |
 | `tools/pack.py` | Generate, stage, validate, pack, deploy (dev or `--release`) |
-| `tools/gen.py` | Generated layouts from `layout.toml`; `--check` for staleness |
+| `tools/gen.py` | Generated layouts and textures from `layout.toml`; `--check` for staleness |
+| `tools/inspect_card.py` | The inspect card, written by `gen.py` (reads hero data from JamiePhan) |
 | `tools/validate.py` | Check layouts against Blizzard's base UI; `--show <frame>` prints the merged tree |
 | `tools/test_validate.py` | Validator tests, against the archived build 50 in `tests/fixtures/` |
 | `tools/mpq.py` | MPQ reader/writer; `list` / `extract` any archive |
@@ -45,7 +46,7 @@ from committed sources only.
 `references/JamiePhan` — shallow clone of
 [jamiephan/HeroesOfTheStorm_Gamedata](https://github.com/jamiephan/HeroesOfTheStorm_Gamedata),
 an automated extract of Heroes game data (xml, txt, galaxy, `.StormLayout`, `.StormStyle`).
-Currently at game version **2.55.17.97650**. Refresh with:
+Currently at game version **2.57.0.98304**. Refresh with:
 
 ```
 git -C references/JamiePhan pull --depth 1
