@@ -163,8 +163,10 @@ class HeroCell:
     # Crowd control text ("STUNNED"...): a band across the bottom of the portrait, just
     # above the health backing (36). Ours, not Blizzard's - their cell shows no CC.
     CC_BAND = (22, 36)
-    # ...and its icon, a square centred where the death timer is: (unused, unused, half-width)
-    CC_ICON = (2, 20, 9)
+    # ...and its icon, a square (half-width 9) centred in the portrait above the bars (2..36).
+    # It sat on the whole cell's middle at first, which put it on top of the CC text rather
+    # than in the plate's picture (user, 2026-09-30).
+    CC_ICON_MID, CC_ICON_HALF = 19, 9
     # Fountain-ready marker: a small square in the plate's top corner on the portrait side,
     # away from the slant (left on blue, right on red). (left, top, right, bottom)
     FOUNTAIN = {"blue": (8, 2, 24, 18), "red": (104, 2, 120, 18)}
@@ -191,7 +193,7 @@ class HeroCell:
         # the death timer's label spans 2 .. h-1 of the cell, text centred: its middle
         self.death_mid = round((2 + self.h - 1) / 2)
         self.cc_band = tuple(s(v) for v in self.CC_BAND)
-        self.cc_icon = tuple(s(v) for v in self.CC_ICON)
+        self.cc_mid, self.cc_half = s(self.CC_ICON_MID), s(self.CC_ICON_HALF)
         self.fountain = {t: tuple(s(v) for v in r) for t, r in self.FOUNTAIN.items()}
         tw, th = (Units(cfg)(v) for v in cfg["hero_row"]["heroic_token"])
         bx, by = (s(v) for v in self.HEROIC_CORNER["blue"])
@@ -606,7 +608,7 @@ def slant_bars(cfg):
     return out
 
 
-HEAL_BORDER = "FCJH_PopBorder_Heal.dds"   # the heal pop-up's frame (dev probe FCJH_Probe_HealPop)
+HEAL_BORDER = "FCJH_PopBorder_Heal.dds"   # the heal pop-up's frame (heal_popups)
 
 
 def square_border(colour, size=64, edge=4):
@@ -628,7 +630,7 @@ def texture_files(cfg):
     out = {TEXTURE_REL / portrait_mask_file(team): portrait_mask(team) for team in ("blue", "red")}
     # an opaque mask: replaces a Blizzard mask we don't want (there's no "none")
     out[TEXTURE_REL / "FCJH_White.dds"] = dds_bgra(4, 4, b"\xff" * 64)
-    out[TEXTURE_REL / HEAL_BORDER] = square_border("3cff5a")
+    out[TEXTURE_REL / HEAL_BORDER] = square_border(cfg["heal_popup"]["colour"])
     for file, data in slant_bars(cfg).values():
         out[TEXTURE_REL / file] = data
     return out
@@ -944,7 +946,180 @@ def pet_death_bindings(team_frame, i):
     return out
 
 
-def hero_cell_template(team, c):
+def health_sensor(cfg):
+    """The heal pop-ups' sensor, inside the cell's HeroStatus so it reads that cell's hero:
+    Blizzard's health PERCENT label (UnitStatusHealthLabel, ShowPercent), invisible, and two
+    flags set from its text - FCJH_LowMark at 1..threshold, FCJH_HealthyMark above it. Both
+    clear on any other text (dead, empty). The text is matched as a string, with and without
+    "%", since that's all a state can do with it; it flickers as the value changes, which is
+    why the pop-up never trusts a single reading (heal_popups).
+    Probe history: Blizzard's own low-life elements don't run in observer cells (first try,
+    2026-09-26); this label does."""
+    t = cfg["heal_popup"]["threshold"]
+    state = lambda name, text, low: (
+        f'\n\t\t\t\t\t<State name="{name}"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="{text}"/>'
+        f'<Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="{str(low).lower()}"/>'
+        f'<Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="{str(not low).lower()}"/></State>')
+    states = "".join(state(f"{'Low' if v <= t else 'Ok'}{v}{tag}", f"{v}{pc}", v <= t)
+                     for v in range(1, 101) for tag, pc in (("pc", "%"), ("", "")))
+    return f"""
+			<!-- Heal pop-ups: the health sensor (tools/gen.py health_sensor) -->
+			<Frame type="UnitStatusHealthLabel" name="FCJH_HPPercent">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+				<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
+				<Width val="60"/>
+				<ShowPercent val="true"/>
+				<Unclipped val="true"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Label" name="StatusLabel">
+					<Anchor relative="$parent"/>
+					<Style val="ObsBar_MatchTimer"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+				</Frame>
+			</Frame>
+			<Frame type="Frame" name="FCJH_LowMark"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+			<Frame type="Frame" name="FCJH_HealthyMark"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+			<Frame type="Frame" name="FCJH_HealthWatch">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<StateGroup name="FCJH_Health">
+					<DefaultState val="Unknown"/>{states}
+					<State name="Unknown"><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+				</StateGroup>
+			</Frame>"""
+
+
+def heal_popups(cfg):
+    """One heal pop-up per plate (layout.toml [heal_popup]), in the talent pop-up's spot and
+    motion, drawn under the talent pop-ups (520 vs their 530). Each plate's watcher:
+      - Died first: the hero's death timer shows -> fade out at once, re-arm
+      - Fire: low (FCJH_LowMark), armed, not locked -> pop; disarm ("Shown"); lock
+      - Rearm: a healthy reading re-arms it
+    The pop-up leaves on its own (its Pop animation), so nothing has to see it recover. The
+    lock (FCJH_Lock) is animation-driven, but only ever READ as a condition on the next health
+    change - never waited on (rounds 6-8 waited on such a flag and never cleared)."""
+    hp = cfg["heal_popup"]
+    hold, fade, death_fade, lock = hp["hold"], hp["fade"], hp["death_fade"], hp["lock"]
+    end = round(0.25 + hold + fade, 2)
+    plus = ",".join(str(int(hp["colour"][i:i + 2], 16)) for i in (0, 2, 4))
+    out = []
+    for n in range(10):
+        team, tn, m = ("BLUE", 1, n + 1) if n < 5 else ("RED", 2, n - 4)
+        cell = f"{OVERVIEW}/Team{tn}HeroOverview/HeroOverview{m}"
+        out.append(f"""
+				<Frame type="Frame" name="FCJH_Heal{n}">
+					<Anchor side="Top"   relative="{cell}" pos="Min" offset="#FCJH_HERO_POPUP_T"/>
+					<Anchor side="Left"  relative="{cell}" pos="Mid" offset="#FCJH_HERO_{team}_POPUP_L"/>
+					<Anchor side="Right" relative="{cell}" pos="Mid" offset="#FCJH_HERO_{team}_POPUP_R"/>
+					<Height val="#FCJH_HERO_POPUP_SIZE"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+					<Frame type="Frame" name="FCJH_Body">
+						<Anchor relative="$parent"/>
+						<AcceptsMouse val="false"/>
+						<Animation name="Leave">
+							<Event event="FCJH_Leave" action="Reset,Play"/>
+							<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
+							<Controller type="Fade" end="Pause">
+								<Key type="Curve" time="0" value="255"/>
+								<Key type="Curve" time="{death_fade}" value="0"/>
+							</Controller>
+						</Animation>
+						<Frame type="Image" name="FCJH_Back">
+							<Anchor relative="$parent"/>
+							<Texture val="@UI/PauseScreenDimImage"/>
+							<ColorAdjustMode val="Fill"/>
+							<AdjustmentColor val="235,8,24,12"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<Frame type="Image" name="FCJH_Plus">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="3"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="-3"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="-3"/>
+							<Texture val="@UI/Storm_UI_Play_RandomHero_Button_Icon_Active_Healer"/>
+							<Color val="{plus}"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<!-- 1 unit outside the box: the talent pop-up's square shows ~42 px on its
+						     40 px icon (Blizzard's art sits inside its frame) -->
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-1"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-1"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="1"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="1"/>
+							<Texture val="{TEXTURE_DIR}\\{HEAL_BORDER}"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+					</Frame>
+					<Animation name="Pop">
+						<Event event="FCJH_Pop" action="Restart,Play"/>
+						<Controller type="Visibility" end="Pause">
+							<Key type="Bool" time="0" value="true"/>
+							<Key type="Bool" time="{end}" value="false"/>
+						</Controller>
+						<Controller type="Anchor" end="Pause" side="Top" relative="true">
+							<Key type="Curve" time="0" value="38" inout="Slow"/>
+							<Key type="Curve" time="0.35" value="0" inout="Slow"/>
+						</Controller>
+						<Controller type="Fade" end="Pause">
+							<Key type="Curve" time="0" value="0"/>
+							<Key type="Curve" time="0.25" value="255"/>
+							<Key type="Curve" time="{round(0.25 + hold, 2)}" value="255"/>
+							<Key type="Curve" time="{end}" value="0"/>
+						</Controller>
+					</Animation>
+				</Frame>
+				<Frame type="Frame" name="FCJH_HealWatch{n}">
+					<Anchor relative="$parent"/>
+					<AcceptsMouse val="false"/>
+					<Frame type="Frame" name="FCJH_Armed"><Anchor relative="$parent"/></Frame>
+					<Frame type="Frame" name="FCJH_Lock"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+					<Animation name="Lock">
+						<Event event="FCJH_Lock" action="Reset,Play"/>
+						<Controller type="Visibility" end="Pause" frame="FCJH_Lock">
+							<Key type="Bool" time="0" value="true"/>
+							<Key type="Bool" time="{lock}" value="false"/>
+						</Controller>
+					</Animation>
+					<StateGroup name="FCJH_Heal">
+						<DefaultState val="Hold"/>
+						<State name="Died">
+							<When type="Property" frame="{cell}/HeroDeathTimeLabel" visible="true"/>
+							<Action type="SetProperty" frame="FCJH_Armed" visible="true"/>
+							<Action type="SendEvent" frame="$parent/FCJH_Heal{n}/FCJH_Body" event="FCJH_Leave"/>
+						</State>
+						<State name="Fire">
+							<When type="Property" frame="{cell}/HeroStatus/FCJH_LowMark" visible="true"/>
+							<When type="Property" frame="FCJH_Armed" visible="true"/>
+							<When type="Property" frame="FCJH_Lock" visible="false"/>
+							<Action type="SetProperty" frame="FCJH_Armed" visible="false"/>
+							<Action type="SendEvent" frame="$this" event="FCJH_Lock"/>
+							<Action type="SendEvent" frame="$parent/FCJH_Heal{n}" event="FCJH_Pop"/>
+						</State>
+						<State name="Rearm">
+							<When type="Property" frame="{cell}/HeroStatus/FCJH_HealthyMark" visible="true"/>
+							<Action type="SetProperty" frame="FCJH_Armed" visible="true"/>
+						</State>
+						<State name="Hold"/>
+					</StateGroup>
+				</Frame>""")
+    return f"""
+		<!-- Heal pop-ups (tools/gen.py heal_popups; layout.toml [heal_popup]): a plate whose hero
+		     drops to {hp["threshold"]}% or less pops a green plus, in the talent pop-up's spot
+		     and motion; gone after {end} s, or at once if the hero dies. Once per dip (re-armed
+		     by a healthy reading or a death), and at most once per {lock} s per plate. -->
+		<Frame type="Frame" name="FCJH_HealPopups">
+			<Anchor relative="$parent"/>
+			<AcceptsMouse val="false"/>
+			<RenderPriority val="520"/>""" + "".join(out) + """
+		</Frame>"""
+
+
+def hero_cell_template(team, c, cfg):
     """One cell template (c: a HeroCell). Blue is the base; red inherits it and mirrors it."""
     blue = team == "blue"
     g = c.team[team]
@@ -1029,16 +1204,16 @@ def hero_cell_template(team, c):
 				<Unclipped val="true"/>
 				<AcceptsMouse val="false"/>
 			</Frame>
-			<!-- ...and its icon, mirrored the same way, centred where the death timer is. Shown only while
+			<!-- ...and its icon, mirrored the same way, centred in the portrait. Shown only while
 			     Blizzard's own ICON is (not merely the element): when a CC ends, Blizzard's
 			     NoState hides its icon and label but the element stays up for its ~1 s fade, and
 			     the icon's default picture is @UI/Editor/BorderImage - a thin black box, seen in
 			     game 2026-09-29 (matching the label's text against "" never fired). -->
 			<Frame type="Image" name="FCJH_CCIcon">
-				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="{c.death_mid - c.cc_icon[2]}"/>
-				<Anchor side="Left"   relative="$parent/$parent" pos="Mid" offset="{c.death_shift - c.cc_icon[2]}"/>
-				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="{c.death_mid + c.cc_icon[2]}"/>
-				<Anchor side="Right"  relative="$parent/$parent" pos="Mid" offset="{c.death_shift + c.cc_icon[2]}"/>
+				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="{c.cc_mid - c.cc_half}"/>
+				<Anchor side="Left"   relative="$parent/$parent" pos="Mid" offset="{c.death_shift - c.cc_half}"/>
+				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="{c.cc_mid + c.cc_half}"/>
+				<Anchor side="Right"  relative="$parent/$parent" pos="Mid" offset="{c.death_shift + c.cc_half}"/>
 				<Texture val="{{$parent/FCJH_CC/DebuffIconLeft/@Texture}}"/>
 				<Alpha val="0"/>
 				<RenderPriority val="530"/>
@@ -1131,10 +1306,10 @@ def hero_cell_template(team, c):
 				</Frame>
 			</Frame>
 			<Frame type="Image" name="FCJH_CloneIcon">
-				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="{c.death_mid - c.cc_icon[2]}"/>
-				<Anchor side="Left"   relative="$parent/$parent" pos="Mid" offset="{c.death_shift - c.cc_icon[2]}"/>
-				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="{c.death_mid + c.cc_icon[2]}"/>
-				<Anchor side="Right"  relative="$parent/$parent" pos="Mid" offset="{c.death_shift + c.cc_icon[2]}"/>
+				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="{c.cc_mid - c.cc_half}"/>
+				<Anchor side="Left"   relative="$parent/$parent" pos="Mid" offset="{c.death_shift - c.cc_half}"/>
+				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="{c.cc_mid + c.cc_half}"/>
+				<Anchor side="Right"  relative="$parent/$parent" pos="Mid" offset="{c.death_shift + c.cc_half}"/>
 				<Texture val="Assets\\Textures\\storm_ui_icon_abathur_ultimateevolution.dds"/>
 				<Alpha val="0"/>
 				<RenderPriority val="531"/>
@@ -1205,6 +1380,8 @@ def hero_cell_template(team, c):
 			<Frame type="Image" name="FCJH_FountainReady">{fountain_anchors}
 				<TextureCoords top="0.0" left="0.0" bottom="1.0" right="1.0"/>
 			</Frame>"""
+    if blue:
+        health += health_sensor(cfg)
     health += "\n\t\t</Frame>"
     shift = c.death_shift
     mid = (c.portrait_top + c.portrait_bottom) // 2
@@ -1393,11 +1570,11 @@ def hero_row_layout(cfg):
 		<Anchor side="Right"  relative="$parent" pos="Min" offset="10299"/>
 	</Frame>
 
-{hero_cell_template("blue", HeroCell(cfg))}
+{hero_cell_template("blue", HeroCell(cfg), cfg)}
 	<!-- Red: the same cell, mirrored -->
-{hero_cell_template("red", HeroCell(cfg))}
+{hero_cell_template("red", HeroCell(cfg), cfg)}
 	<Frame type="GameUI" name="GameUI" file="GameUI">
-{row_packer(cfg)}
+{row_packer(cfg)}{heal_popups(cfg)}
 		<Frame type="Frame" name="UIContainer">
 			<Frame type="Frame" name="FullscreenUpperContainer">
 				<Frame type="Frame" name="ObserverHeroOverviewPanel">

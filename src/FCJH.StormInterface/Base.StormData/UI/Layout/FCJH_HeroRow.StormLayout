@@ -335,15 +335,15 @@
 				<Unclipped val="true"/>
 				<AcceptsMouse val="false"/>
 			</Frame>
-			<!-- ...and its icon, mirrored the same way, centred where the death timer is. Shown only while
+			<!-- ...and its icon, mirrored the same way, centred in the portrait. Shown only while
 			     Blizzard's own ICON is (not merely the element): when a CC ends, Blizzard's
 			     NoState hides its icon and label but the element stays up for its ~1 s fade, and
 			     the icon's default picture is @UI/Editor/BorderImage - a thin black box, seen in
 			     game 2026-09-29 (matching the label's text against "" never fired). -->
 			<Frame type="Image" name="FCJH_CCIcon">
-				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="30"/>
+				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="14"/>
 				<Anchor side="Left"   relative="$parent/$parent" pos="Mid" offset="-9"/>
-				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="54"/>
+				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="38"/>
 				<Anchor side="Right"  relative="$parent/$parent" pos="Mid" offset="15"/>
 				<Texture val="{$parent/FCJH_CC/DebuffIconLeft/@Texture}"/>
 				<Alpha val="0"/>
@@ -440,9 +440,9 @@
 				</Frame>
 			</Frame>
 			<Frame type="Image" name="FCJH_CloneIcon">
-				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="30"/>
+				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="14"/>
 				<Anchor side="Left"   relative="$parent/$parent" pos="Mid" offset="-9"/>
-				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="54"/>
+				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="38"/>
 				<Anchor side="Right"  relative="$parent/$parent" pos="Mid" offset="15"/>
 				<Texture val="Assets\Textures\storm_ui_icon_abathur_ultimateevolution.dds"/>
 				<Alpha val="0"/>
@@ -509,6 +509,232 @@
 					<Action type="SetProperty" frame="$parent/TargetHeroUnitFrame" Visible="true"/>
 				</State>
 			</StateGroup>
+			<!-- Heal pop-ups: the health sensor (tools/gen.py health_sensor) -->
+			<Frame type="UnitStatusHealthLabel" name="FCJH_HPPercent">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+				<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
+				<Width val="60"/>
+				<ShowPercent val="true"/>
+				<Unclipped val="true"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Label" name="StatusLabel">
+					<Anchor relative="$parent"/>
+					<Style val="ObsBar_MatchTimer"/>
+					<Alpha val="0"/>
+					<Unclipped val="true"/>
+				</Frame>
+			</Frame>
+			<Frame type="Frame" name="FCJH_LowMark"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+			<Frame type="Frame" name="FCJH_HealthyMark"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+			<Frame type="Frame" name="FCJH_HealthWatch">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<StateGroup name="FCJH_Health">
+					<DefaultState val="Unknown"/>
+					<State name="Low1pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="1%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low1"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="1"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low2pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="2%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low2"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="2"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low3pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="3%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low3"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="3"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low4pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="4%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low4"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="4"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low5pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="5%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low5"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="5"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low6pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="6%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low6"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="6"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low7pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="7%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low7"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="7"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low8pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="8%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low8"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="8"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low9pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="9%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low9"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="9"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low10pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="10%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low10"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="10"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low11pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="11%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low11"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="11"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low12pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="12%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low12"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="12"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low13pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="13%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low13"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="13"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low14pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="14%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low14"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="14"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low15pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="15%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low15"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="15"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low16pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="16%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low16"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="16"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low17pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="17%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low17"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="17"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low18pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="18%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low18"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="18"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low19pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="19%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low19"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="19"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low20pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="20%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low20"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="20"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low21pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="21%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low21"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="21"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low22pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="22%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low22"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="22"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low23pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="23%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low23"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="23"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low24pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="24%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low24"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="24"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low25pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="25%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Low25"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="25"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="true"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Ok26pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="26%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok26"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="26"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok27pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="27%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok27"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="27"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok28pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="28%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok28"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="28"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok29pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="29%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok29"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="29"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok30pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="30%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok30"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="30"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok31pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="31%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok31"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="31"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok32pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="32%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok32"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="32"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok33pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="33%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok33"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="33"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok34pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="34%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok34"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="34"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok35pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="35%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok35"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="35"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok36pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="36%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok36"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="36"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok37pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="37%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok37"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="37"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok38pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="38%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok38"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="38"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok39pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="39%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok39"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="39"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok40pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="40%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok40"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="40"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok41pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="41%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok41"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="41"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok42pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="42%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok42"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="42"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok43pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="43%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok43"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="43"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok44pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="44%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok44"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="44"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok45pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="45%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok45"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="45"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok46pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="46%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok46"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="46"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok47pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="47%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok47"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="47"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok48pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="48%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok48"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="48"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok49pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="49%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok49"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="49"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok50pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="50%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok50"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="50"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok51pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="51%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok51"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="51"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok52pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="52%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok52"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="52"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok53pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="53%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok53"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="53"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok54pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="54%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok54"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="54"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok55pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="55%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok55"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="55"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok56pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="56%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok56"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="56"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok57pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="57%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok57"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="57"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok58pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="58%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok58"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="58"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok59pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="59%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok59"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="59"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok60pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="60%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok60"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="60"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok61pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="61%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok61"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="61"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok62pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="62%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok62"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="62"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok63pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="63%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok63"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="63"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok64pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="64%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok64"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="64"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok65pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="65%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok65"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="65"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok66pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="66%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok66"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="66"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok67pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="67%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok67"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="67"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok68pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="68%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok68"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="68"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok69pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="69%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok69"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="69"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok70pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="70%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok70"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="70"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok71pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="71%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok71"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="71"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok72pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="72%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok72"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="72"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok73pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="73%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok73"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="73"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok74pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="74%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok74"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="74"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok75pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="75%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok75"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="75"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok76pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="76%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok76"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="76"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok77pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="77%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok77"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="77"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok78pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="78%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok78"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="78"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok79pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="79%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok79"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="79"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok80pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="80%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok80"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="80"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok81pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="81%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok81"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="81"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok82pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="82%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok82"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="82"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok83pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="83%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok83"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="83"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok84pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="84%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok84"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="84"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok85pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="85%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok85"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="85"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok86pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="86%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok86"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="86"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok87pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="87%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok87"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="87"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok88pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="88%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok88"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="88"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok89pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="89%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok89"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="89"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok90pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="90%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok90"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="90"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok91pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="91%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok91"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="91"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok92pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="92%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok92"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="92"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok93pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="93%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok93"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="93"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok94pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="94%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok94"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="94"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok95pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="95%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok95"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="95"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok96pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="96%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok96"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="96"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok97pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="97%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok97"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="97"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok98pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="98%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok98"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="98"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok99pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="99%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok99"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="99"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok100pc"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="100%"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Ok100"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="100"/><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="true"/></State>
+					<State name="Unknown"><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+				</StateGroup>
+			</Frame>
 		</Frame>
 	</Frame>
 
@@ -922,6 +1148,995 @@
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame/XPBar" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_red_a34c2d7e.dds"/>
 				</State>
 			</StateGroup>
+		</Frame>
+		<!-- Heal pop-ups (tools/gen.py heal_popups; layout.toml [heal_popup]): a plate whose hero
+		     drops to 25% or less pops a green plus, in the talent pop-up's spot
+		     and motion; gone after 3.75 s, or at once if the hero dies. Once per dip (re-armed
+		     by a healthy reading or a death), and at most once per 10.0 s per plate. -->
+		<Frame type="Frame" name="FCJH_HealPopups">
+			<Anchor relative="$parent"/>
+			<AcceptsMouse val="false"/>
+			<RenderPriority val="520"/>
+				<Frame type="Frame" name="FCJH_Heal0">
+					<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="#FCJH_HERO_POPUP_T"/>
+					<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Mid" offset="#FCJH_HERO_BLUE_POPUP_L"/>
+					<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Mid" offset="#FCJH_HERO_BLUE_POPUP_R"/>
+					<Height val="#FCJH_HERO_POPUP_SIZE"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+					<Frame type="Frame" name="FCJH_Body">
+						<Anchor relative="$parent"/>
+						<AcceptsMouse val="false"/>
+						<Animation name="Leave">
+							<Event event="FCJH_Leave" action="Reset,Play"/>
+							<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
+							<Controller type="Fade" end="Pause">
+								<Key type="Curve" time="0" value="255"/>
+								<Key type="Curve" time="0.35" value="0"/>
+							</Controller>
+						</Animation>
+						<Frame type="Image" name="FCJH_Back">
+							<Anchor relative="$parent"/>
+							<Texture val="@UI/PauseScreenDimImage"/>
+							<ColorAdjustMode val="Fill"/>
+							<AdjustmentColor val="235,8,24,12"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<Frame type="Image" name="FCJH_Plus">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="3"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="-3"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="-3"/>
+							<Texture val="@UI/Storm_UI_Play_RandomHero_Button_Icon_Active_Healer"/>
+							<Color val="60,255,90"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<!-- 1 unit outside the box: the talent pop-up's square shows ~42 px on its
+						     40 px icon (Blizzard's art sits inside its frame) -->
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-1"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-1"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="1"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="1"/>
+							<Texture val="_Assets\Textures\FCJH_PopBorder_Heal.dds"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+					</Frame>
+					<Animation name="Pop">
+						<Event event="FCJH_Pop" action="Restart,Play"/>
+						<Controller type="Visibility" end="Pause">
+							<Key type="Bool" time="0" value="true"/>
+							<Key type="Bool" time="3.75" value="false"/>
+						</Controller>
+						<Controller type="Anchor" end="Pause" side="Top" relative="true">
+							<Key type="Curve" time="0" value="38" inout="Slow"/>
+							<Key type="Curve" time="0.35" value="0" inout="Slow"/>
+						</Controller>
+						<Controller type="Fade" end="Pause">
+							<Key type="Curve" time="0" value="0"/>
+							<Key type="Curve" time="0.25" value="255"/>
+							<Key type="Curve" time="3.0" value="255"/>
+							<Key type="Curve" time="3.75" value="0"/>
+						</Controller>
+					</Animation>
+				</Frame>
+				<Frame type="Frame" name="FCJH_HealWatch0">
+					<Anchor relative="$parent"/>
+					<AcceptsMouse val="false"/>
+					<Frame type="Frame" name="FCJH_Armed"><Anchor relative="$parent"/></Frame>
+					<Frame type="Frame" name="FCJH_Lock"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+					<Animation name="Lock">
+						<Event event="FCJH_Lock" action="Reset,Play"/>
+						<Controller type="Visibility" end="Pause" frame="FCJH_Lock">
+							<Key type="Bool" time="0" value="true"/>
+							<Key type="Bool" time="10.0" value="false"/>
+						</Controller>
+					</Animation>
+					<StateGroup name="FCJH_Heal">
+						<DefaultState val="Hold"/>
+						<State name="Died">
+							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroDeathTimeLabel" visible="true"/>
+							<Action type="SetProperty" frame="FCJH_Armed" visible="true"/>
+							<Action type="SendEvent" frame="$parent/FCJH_Heal0/FCJH_Body" event="FCJH_Leave"/>
+						</State>
+						<State name="Fire">
+							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus/FCJH_LowMark" visible="true"/>
+							<When type="Property" frame="FCJH_Armed" visible="true"/>
+							<When type="Property" frame="FCJH_Lock" visible="false"/>
+							<Action type="SetProperty" frame="FCJH_Armed" visible="false"/>
+							<Action type="SendEvent" frame="$this" event="FCJH_Lock"/>
+							<Action type="SendEvent" frame="$parent/FCJH_Heal0" event="FCJH_Pop"/>
+						</State>
+						<State name="Rearm">
+							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus/FCJH_HealthyMark" visible="true"/>
+							<Action type="SetProperty" frame="FCJH_Armed" visible="true"/>
+						</State>
+						<State name="Hold"/>
+					</StateGroup>
+				</Frame>
+				<Frame type="Frame" name="FCJH_Heal1">
+					<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="#FCJH_HERO_POPUP_T"/>
+					<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Mid" offset="#FCJH_HERO_BLUE_POPUP_L"/>
+					<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Mid" offset="#FCJH_HERO_BLUE_POPUP_R"/>
+					<Height val="#FCJH_HERO_POPUP_SIZE"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+					<Frame type="Frame" name="FCJH_Body">
+						<Anchor relative="$parent"/>
+						<AcceptsMouse val="false"/>
+						<Animation name="Leave">
+							<Event event="FCJH_Leave" action="Reset,Play"/>
+							<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
+							<Controller type="Fade" end="Pause">
+								<Key type="Curve" time="0" value="255"/>
+								<Key type="Curve" time="0.35" value="0"/>
+							</Controller>
+						</Animation>
+						<Frame type="Image" name="FCJH_Back">
+							<Anchor relative="$parent"/>
+							<Texture val="@UI/PauseScreenDimImage"/>
+							<ColorAdjustMode val="Fill"/>
+							<AdjustmentColor val="235,8,24,12"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<Frame type="Image" name="FCJH_Plus">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="3"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="-3"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="-3"/>
+							<Texture val="@UI/Storm_UI_Play_RandomHero_Button_Icon_Active_Healer"/>
+							<Color val="60,255,90"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<!-- 1 unit outside the box: the talent pop-up's square shows ~42 px on its
+						     40 px icon (Blizzard's art sits inside its frame) -->
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-1"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-1"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="1"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="1"/>
+							<Texture val="_Assets\Textures\FCJH_PopBorder_Heal.dds"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+					</Frame>
+					<Animation name="Pop">
+						<Event event="FCJH_Pop" action="Restart,Play"/>
+						<Controller type="Visibility" end="Pause">
+							<Key type="Bool" time="0" value="true"/>
+							<Key type="Bool" time="3.75" value="false"/>
+						</Controller>
+						<Controller type="Anchor" end="Pause" side="Top" relative="true">
+							<Key type="Curve" time="0" value="38" inout="Slow"/>
+							<Key type="Curve" time="0.35" value="0" inout="Slow"/>
+						</Controller>
+						<Controller type="Fade" end="Pause">
+							<Key type="Curve" time="0" value="0"/>
+							<Key type="Curve" time="0.25" value="255"/>
+							<Key type="Curve" time="3.0" value="255"/>
+							<Key type="Curve" time="3.75" value="0"/>
+						</Controller>
+					</Animation>
+				</Frame>
+				<Frame type="Frame" name="FCJH_HealWatch1">
+					<Anchor relative="$parent"/>
+					<AcceptsMouse val="false"/>
+					<Frame type="Frame" name="FCJH_Armed"><Anchor relative="$parent"/></Frame>
+					<Frame type="Frame" name="FCJH_Lock"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+					<Animation name="Lock">
+						<Event event="FCJH_Lock" action="Reset,Play"/>
+						<Controller type="Visibility" end="Pause" frame="FCJH_Lock">
+							<Key type="Bool" time="0" value="true"/>
+							<Key type="Bool" time="10.0" value="false"/>
+						</Controller>
+					</Animation>
+					<StateGroup name="FCJH_Heal">
+						<DefaultState val="Hold"/>
+						<State name="Died">
+							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroDeathTimeLabel" visible="true"/>
+							<Action type="SetProperty" frame="FCJH_Armed" visible="true"/>
+							<Action type="SendEvent" frame="$parent/FCJH_Heal1/FCJH_Body" event="FCJH_Leave"/>
+						</State>
+						<State name="Fire">
+							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus/FCJH_LowMark" visible="true"/>
+							<When type="Property" frame="FCJH_Armed" visible="true"/>
+							<When type="Property" frame="FCJH_Lock" visible="false"/>
+							<Action type="SetProperty" frame="FCJH_Armed" visible="false"/>
+							<Action type="SendEvent" frame="$this" event="FCJH_Lock"/>
+							<Action type="SendEvent" frame="$parent/FCJH_Heal1" event="FCJH_Pop"/>
+						</State>
+						<State name="Rearm">
+							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus/FCJH_HealthyMark" visible="true"/>
+							<Action type="SetProperty" frame="FCJH_Armed" visible="true"/>
+						</State>
+						<State name="Hold"/>
+					</StateGroup>
+				</Frame>
+				<Frame type="Frame" name="FCJH_Heal2">
+					<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="#FCJH_HERO_POPUP_T"/>
+					<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Mid" offset="#FCJH_HERO_BLUE_POPUP_L"/>
+					<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Mid" offset="#FCJH_HERO_BLUE_POPUP_R"/>
+					<Height val="#FCJH_HERO_POPUP_SIZE"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+					<Frame type="Frame" name="FCJH_Body">
+						<Anchor relative="$parent"/>
+						<AcceptsMouse val="false"/>
+						<Animation name="Leave">
+							<Event event="FCJH_Leave" action="Reset,Play"/>
+							<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
+							<Controller type="Fade" end="Pause">
+								<Key type="Curve" time="0" value="255"/>
+								<Key type="Curve" time="0.35" value="0"/>
+							</Controller>
+						</Animation>
+						<Frame type="Image" name="FCJH_Back">
+							<Anchor relative="$parent"/>
+							<Texture val="@UI/PauseScreenDimImage"/>
+							<ColorAdjustMode val="Fill"/>
+							<AdjustmentColor val="235,8,24,12"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<Frame type="Image" name="FCJH_Plus">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="3"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="-3"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="-3"/>
+							<Texture val="@UI/Storm_UI_Play_RandomHero_Button_Icon_Active_Healer"/>
+							<Color val="60,255,90"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<!-- 1 unit outside the box: the talent pop-up's square shows ~42 px on its
+						     40 px icon (Blizzard's art sits inside its frame) -->
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-1"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-1"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="1"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="1"/>
+							<Texture val="_Assets\Textures\FCJH_PopBorder_Heal.dds"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+					</Frame>
+					<Animation name="Pop">
+						<Event event="FCJH_Pop" action="Restart,Play"/>
+						<Controller type="Visibility" end="Pause">
+							<Key type="Bool" time="0" value="true"/>
+							<Key type="Bool" time="3.75" value="false"/>
+						</Controller>
+						<Controller type="Anchor" end="Pause" side="Top" relative="true">
+							<Key type="Curve" time="0" value="38" inout="Slow"/>
+							<Key type="Curve" time="0.35" value="0" inout="Slow"/>
+						</Controller>
+						<Controller type="Fade" end="Pause">
+							<Key type="Curve" time="0" value="0"/>
+							<Key type="Curve" time="0.25" value="255"/>
+							<Key type="Curve" time="3.0" value="255"/>
+							<Key type="Curve" time="3.75" value="0"/>
+						</Controller>
+					</Animation>
+				</Frame>
+				<Frame type="Frame" name="FCJH_HealWatch2">
+					<Anchor relative="$parent"/>
+					<AcceptsMouse val="false"/>
+					<Frame type="Frame" name="FCJH_Armed"><Anchor relative="$parent"/></Frame>
+					<Frame type="Frame" name="FCJH_Lock"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+					<Animation name="Lock">
+						<Event event="FCJH_Lock" action="Reset,Play"/>
+						<Controller type="Visibility" end="Pause" frame="FCJH_Lock">
+							<Key type="Bool" time="0" value="true"/>
+							<Key type="Bool" time="10.0" value="false"/>
+						</Controller>
+					</Animation>
+					<StateGroup name="FCJH_Heal">
+						<DefaultState val="Hold"/>
+						<State name="Died">
+							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroDeathTimeLabel" visible="true"/>
+							<Action type="SetProperty" frame="FCJH_Armed" visible="true"/>
+							<Action type="SendEvent" frame="$parent/FCJH_Heal2/FCJH_Body" event="FCJH_Leave"/>
+						</State>
+						<State name="Fire">
+							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus/FCJH_LowMark" visible="true"/>
+							<When type="Property" frame="FCJH_Armed" visible="true"/>
+							<When type="Property" frame="FCJH_Lock" visible="false"/>
+							<Action type="SetProperty" frame="FCJH_Armed" visible="false"/>
+							<Action type="SendEvent" frame="$this" event="FCJH_Lock"/>
+							<Action type="SendEvent" frame="$parent/FCJH_Heal2" event="FCJH_Pop"/>
+						</State>
+						<State name="Rearm">
+							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus/FCJH_HealthyMark" visible="true"/>
+							<Action type="SetProperty" frame="FCJH_Armed" visible="true"/>
+						</State>
+						<State name="Hold"/>
+					</StateGroup>
+				</Frame>
+				<Frame type="Frame" name="FCJH_Heal3">
+					<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="#FCJH_HERO_POPUP_T"/>
+					<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Mid" offset="#FCJH_HERO_BLUE_POPUP_L"/>
+					<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Mid" offset="#FCJH_HERO_BLUE_POPUP_R"/>
+					<Height val="#FCJH_HERO_POPUP_SIZE"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+					<Frame type="Frame" name="FCJH_Body">
+						<Anchor relative="$parent"/>
+						<AcceptsMouse val="false"/>
+						<Animation name="Leave">
+							<Event event="FCJH_Leave" action="Reset,Play"/>
+							<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
+							<Controller type="Fade" end="Pause">
+								<Key type="Curve" time="0" value="255"/>
+								<Key type="Curve" time="0.35" value="0"/>
+							</Controller>
+						</Animation>
+						<Frame type="Image" name="FCJH_Back">
+							<Anchor relative="$parent"/>
+							<Texture val="@UI/PauseScreenDimImage"/>
+							<ColorAdjustMode val="Fill"/>
+							<AdjustmentColor val="235,8,24,12"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<Frame type="Image" name="FCJH_Plus">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="3"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="-3"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="-3"/>
+							<Texture val="@UI/Storm_UI_Play_RandomHero_Button_Icon_Active_Healer"/>
+							<Color val="60,255,90"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<!-- 1 unit outside the box: the talent pop-up's square shows ~42 px on its
+						     40 px icon (Blizzard's art sits inside its frame) -->
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-1"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-1"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="1"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="1"/>
+							<Texture val="_Assets\Textures\FCJH_PopBorder_Heal.dds"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+					</Frame>
+					<Animation name="Pop">
+						<Event event="FCJH_Pop" action="Restart,Play"/>
+						<Controller type="Visibility" end="Pause">
+							<Key type="Bool" time="0" value="true"/>
+							<Key type="Bool" time="3.75" value="false"/>
+						</Controller>
+						<Controller type="Anchor" end="Pause" side="Top" relative="true">
+							<Key type="Curve" time="0" value="38" inout="Slow"/>
+							<Key type="Curve" time="0.35" value="0" inout="Slow"/>
+						</Controller>
+						<Controller type="Fade" end="Pause">
+							<Key type="Curve" time="0" value="0"/>
+							<Key type="Curve" time="0.25" value="255"/>
+							<Key type="Curve" time="3.0" value="255"/>
+							<Key type="Curve" time="3.75" value="0"/>
+						</Controller>
+					</Animation>
+				</Frame>
+				<Frame type="Frame" name="FCJH_HealWatch3">
+					<Anchor relative="$parent"/>
+					<AcceptsMouse val="false"/>
+					<Frame type="Frame" name="FCJH_Armed"><Anchor relative="$parent"/></Frame>
+					<Frame type="Frame" name="FCJH_Lock"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+					<Animation name="Lock">
+						<Event event="FCJH_Lock" action="Reset,Play"/>
+						<Controller type="Visibility" end="Pause" frame="FCJH_Lock">
+							<Key type="Bool" time="0" value="true"/>
+							<Key type="Bool" time="10.0" value="false"/>
+						</Controller>
+					</Animation>
+					<StateGroup name="FCJH_Heal">
+						<DefaultState val="Hold"/>
+						<State name="Died">
+							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroDeathTimeLabel" visible="true"/>
+							<Action type="SetProperty" frame="FCJH_Armed" visible="true"/>
+							<Action type="SendEvent" frame="$parent/FCJH_Heal3/FCJH_Body" event="FCJH_Leave"/>
+						</State>
+						<State name="Fire">
+							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus/FCJH_LowMark" visible="true"/>
+							<When type="Property" frame="FCJH_Armed" visible="true"/>
+							<When type="Property" frame="FCJH_Lock" visible="false"/>
+							<Action type="SetProperty" frame="FCJH_Armed" visible="false"/>
+							<Action type="SendEvent" frame="$this" event="FCJH_Lock"/>
+							<Action type="SendEvent" frame="$parent/FCJH_Heal3" event="FCJH_Pop"/>
+						</State>
+						<State name="Rearm">
+							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus/FCJH_HealthyMark" visible="true"/>
+							<Action type="SetProperty" frame="FCJH_Armed" visible="true"/>
+						</State>
+						<State name="Hold"/>
+					</StateGroup>
+				</Frame>
+				<Frame type="Frame" name="FCJH_Heal4">
+					<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="#FCJH_HERO_POPUP_T"/>
+					<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Mid" offset="#FCJH_HERO_BLUE_POPUP_L"/>
+					<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Mid" offset="#FCJH_HERO_BLUE_POPUP_R"/>
+					<Height val="#FCJH_HERO_POPUP_SIZE"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+					<Frame type="Frame" name="FCJH_Body">
+						<Anchor relative="$parent"/>
+						<AcceptsMouse val="false"/>
+						<Animation name="Leave">
+							<Event event="FCJH_Leave" action="Reset,Play"/>
+							<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
+							<Controller type="Fade" end="Pause">
+								<Key type="Curve" time="0" value="255"/>
+								<Key type="Curve" time="0.35" value="0"/>
+							</Controller>
+						</Animation>
+						<Frame type="Image" name="FCJH_Back">
+							<Anchor relative="$parent"/>
+							<Texture val="@UI/PauseScreenDimImage"/>
+							<ColorAdjustMode val="Fill"/>
+							<AdjustmentColor val="235,8,24,12"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<Frame type="Image" name="FCJH_Plus">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="3"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="-3"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="-3"/>
+							<Texture val="@UI/Storm_UI_Play_RandomHero_Button_Icon_Active_Healer"/>
+							<Color val="60,255,90"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<!-- 1 unit outside the box: the talent pop-up's square shows ~42 px on its
+						     40 px icon (Blizzard's art sits inside its frame) -->
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-1"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-1"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="1"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="1"/>
+							<Texture val="_Assets\Textures\FCJH_PopBorder_Heal.dds"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+					</Frame>
+					<Animation name="Pop">
+						<Event event="FCJH_Pop" action="Restart,Play"/>
+						<Controller type="Visibility" end="Pause">
+							<Key type="Bool" time="0" value="true"/>
+							<Key type="Bool" time="3.75" value="false"/>
+						</Controller>
+						<Controller type="Anchor" end="Pause" side="Top" relative="true">
+							<Key type="Curve" time="0" value="38" inout="Slow"/>
+							<Key type="Curve" time="0.35" value="0" inout="Slow"/>
+						</Controller>
+						<Controller type="Fade" end="Pause">
+							<Key type="Curve" time="0" value="0"/>
+							<Key type="Curve" time="0.25" value="255"/>
+							<Key type="Curve" time="3.0" value="255"/>
+							<Key type="Curve" time="3.75" value="0"/>
+						</Controller>
+					</Animation>
+				</Frame>
+				<Frame type="Frame" name="FCJH_HealWatch4">
+					<Anchor relative="$parent"/>
+					<AcceptsMouse val="false"/>
+					<Frame type="Frame" name="FCJH_Armed"><Anchor relative="$parent"/></Frame>
+					<Frame type="Frame" name="FCJH_Lock"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+					<Animation name="Lock">
+						<Event event="FCJH_Lock" action="Reset,Play"/>
+						<Controller type="Visibility" end="Pause" frame="FCJH_Lock">
+							<Key type="Bool" time="0" value="true"/>
+							<Key type="Bool" time="10.0" value="false"/>
+						</Controller>
+					</Animation>
+					<StateGroup name="FCJH_Heal">
+						<DefaultState val="Hold"/>
+						<State name="Died">
+							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroDeathTimeLabel" visible="true"/>
+							<Action type="SetProperty" frame="FCJH_Armed" visible="true"/>
+							<Action type="SendEvent" frame="$parent/FCJH_Heal4/FCJH_Body" event="FCJH_Leave"/>
+						</State>
+						<State name="Fire">
+							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus/FCJH_LowMark" visible="true"/>
+							<When type="Property" frame="FCJH_Armed" visible="true"/>
+							<When type="Property" frame="FCJH_Lock" visible="false"/>
+							<Action type="SetProperty" frame="FCJH_Armed" visible="false"/>
+							<Action type="SendEvent" frame="$this" event="FCJH_Lock"/>
+							<Action type="SendEvent" frame="$parent/FCJH_Heal4" event="FCJH_Pop"/>
+						</State>
+						<State name="Rearm">
+							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus/FCJH_HealthyMark" visible="true"/>
+							<Action type="SetProperty" frame="FCJH_Armed" visible="true"/>
+						</State>
+						<State name="Hold"/>
+					</StateGroup>
+				</Frame>
+				<Frame type="Frame" name="FCJH_Heal5">
+					<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="#FCJH_HERO_POPUP_T"/>
+					<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Mid" offset="#FCJH_HERO_RED_POPUP_L"/>
+					<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Mid" offset="#FCJH_HERO_RED_POPUP_R"/>
+					<Height val="#FCJH_HERO_POPUP_SIZE"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+					<Frame type="Frame" name="FCJH_Body">
+						<Anchor relative="$parent"/>
+						<AcceptsMouse val="false"/>
+						<Animation name="Leave">
+							<Event event="FCJH_Leave" action="Reset,Play"/>
+							<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
+							<Controller type="Fade" end="Pause">
+								<Key type="Curve" time="0" value="255"/>
+								<Key type="Curve" time="0.35" value="0"/>
+							</Controller>
+						</Animation>
+						<Frame type="Image" name="FCJH_Back">
+							<Anchor relative="$parent"/>
+							<Texture val="@UI/PauseScreenDimImage"/>
+							<ColorAdjustMode val="Fill"/>
+							<AdjustmentColor val="235,8,24,12"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<Frame type="Image" name="FCJH_Plus">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="3"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="-3"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="-3"/>
+							<Texture val="@UI/Storm_UI_Play_RandomHero_Button_Icon_Active_Healer"/>
+							<Color val="60,255,90"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<!-- 1 unit outside the box: the talent pop-up's square shows ~42 px on its
+						     40 px icon (Blizzard's art sits inside its frame) -->
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-1"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-1"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="1"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="1"/>
+							<Texture val="_Assets\Textures\FCJH_PopBorder_Heal.dds"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+					</Frame>
+					<Animation name="Pop">
+						<Event event="FCJH_Pop" action="Restart,Play"/>
+						<Controller type="Visibility" end="Pause">
+							<Key type="Bool" time="0" value="true"/>
+							<Key type="Bool" time="3.75" value="false"/>
+						</Controller>
+						<Controller type="Anchor" end="Pause" side="Top" relative="true">
+							<Key type="Curve" time="0" value="38" inout="Slow"/>
+							<Key type="Curve" time="0.35" value="0" inout="Slow"/>
+						</Controller>
+						<Controller type="Fade" end="Pause">
+							<Key type="Curve" time="0" value="0"/>
+							<Key type="Curve" time="0.25" value="255"/>
+							<Key type="Curve" time="3.0" value="255"/>
+							<Key type="Curve" time="3.75" value="0"/>
+						</Controller>
+					</Animation>
+				</Frame>
+				<Frame type="Frame" name="FCJH_HealWatch5">
+					<Anchor relative="$parent"/>
+					<AcceptsMouse val="false"/>
+					<Frame type="Frame" name="FCJH_Armed"><Anchor relative="$parent"/></Frame>
+					<Frame type="Frame" name="FCJH_Lock"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+					<Animation name="Lock">
+						<Event event="FCJH_Lock" action="Reset,Play"/>
+						<Controller type="Visibility" end="Pause" frame="FCJH_Lock">
+							<Key type="Bool" time="0" value="true"/>
+							<Key type="Bool" time="10.0" value="false"/>
+						</Controller>
+					</Animation>
+					<StateGroup name="FCJH_Heal">
+						<DefaultState val="Hold"/>
+						<State name="Died">
+							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroDeathTimeLabel" visible="true"/>
+							<Action type="SetProperty" frame="FCJH_Armed" visible="true"/>
+							<Action type="SendEvent" frame="$parent/FCJH_Heal5/FCJH_Body" event="FCJH_Leave"/>
+						</State>
+						<State name="Fire">
+							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus/FCJH_LowMark" visible="true"/>
+							<When type="Property" frame="FCJH_Armed" visible="true"/>
+							<When type="Property" frame="FCJH_Lock" visible="false"/>
+							<Action type="SetProperty" frame="FCJH_Armed" visible="false"/>
+							<Action type="SendEvent" frame="$this" event="FCJH_Lock"/>
+							<Action type="SendEvent" frame="$parent/FCJH_Heal5" event="FCJH_Pop"/>
+						</State>
+						<State name="Rearm">
+							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus/FCJH_HealthyMark" visible="true"/>
+							<Action type="SetProperty" frame="FCJH_Armed" visible="true"/>
+						</State>
+						<State name="Hold"/>
+					</StateGroup>
+				</Frame>
+				<Frame type="Frame" name="FCJH_Heal6">
+					<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="#FCJH_HERO_POPUP_T"/>
+					<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Mid" offset="#FCJH_HERO_RED_POPUP_L"/>
+					<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Mid" offset="#FCJH_HERO_RED_POPUP_R"/>
+					<Height val="#FCJH_HERO_POPUP_SIZE"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+					<Frame type="Frame" name="FCJH_Body">
+						<Anchor relative="$parent"/>
+						<AcceptsMouse val="false"/>
+						<Animation name="Leave">
+							<Event event="FCJH_Leave" action="Reset,Play"/>
+							<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
+							<Controller type="Fade" end="Pause">
+								<Key type="Curve" time="0" value="255"/>
+								<Key type="Curve" time="0.35" value="0"/>
+							</Controller>
+						</Animation>
+						<Frame type="Image" name="FCJH_Back">
+							<Anchor relative="$parent"/>
+							<Texture val="@UI/PauseScreenDimImage"/>
+							<ColorAdjustMode val="Fill"/>
+							<AdjustmentColor val="235,8,24,12"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<Frame type="Image" name="FCJH_Plus">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="3"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="-3"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="-3"/>
+							<Texture val="@UI/Storm_UI_Play_RandomHero_Button_Icon_Active_Healer"/>
+							<Color val="60,255,90"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<!-- 1 unit outside the box: the talent pop-up's square shows ~42 px on its
+						     40 px icon (Blizzard's art sits inside its frame) -->
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-1"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-1"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="1"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="1"/>
+							<Texture val="_Assets\Textures\FCJH_PopBorder_Heal.dds"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+					</Frame>
+					<Animation name="Pop">
+						<Event event="FCJH_Pop" action="Restart,Play"/>
+						<Controller type="Visibility" end="Pause">
+							<Key type="Bool" time="0" value="true"/>
+							<Key type="Bool" time="3.75" value="false"/>
+						</Controller>
+						<Controller type="Anchor" end="Pause" side="Top" relative="true">
+							<Key type="Curve" time="0" value="38" inout="Slow"/>
+							<Key type="Curve" time="0.35" value="0" inout="Slow"/>
+						</Controller>
+						<Controller type="Fade" end="Pause">
+							<Key type="Curve" time="0" value="0"/>
+							<Key type="Curve" time="0.25" value="255"/>
+							<Key type="Curve" time="3.0" value="255"/>
+							<Key type="Curve" time="3.75" value="0"/>
+						</Controller>
+					</Animation>
+				</Frame>
+				<Frame type="Frame" name="FCJH_HealWatch6">
+					<Anchor relative="$parent"/>
+					<AcceptsMouse val="false"/>
+					<Frame type="Frame" name="FCJH_Armed"><Anchor relative="$parent"/></Frame>
+					<Frame type="Frame" name="FCJH_Lock"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+					<Animation name="Lock">
+						<Event event="FCJH_Lock" action="Reset,Play"/>
+						<Controller type="Visibility" end="Pause" frame="FCJH_Lock">
+							<Key type="Bool" time="0" value="true"/>
+							<Key type="Bool" time="10.0" value="false"/>
+						</Controller>
+					</Animation>
+					<StateGroup name="FCJH_Heal">
+						<DefaultState val="Hold"/>
+						<State name="Died">
+							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroDeathTimeLabel" visible="true"/>
+							<Action type="SetProperty" frame="FCJH_Armed" visible="true"/>
+							<Action type="SendEvent" frame="$parent/FCJH_Heal6/FCJH_Body" event="FCJH_Leave"/>
+						</State>
+						<State name="Fire">
+							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus/FCJH_LowMark" visible="true"/>
+							<When type="Property" frame="FCJH_Armed" visible="true"/>
+							<When type="Property" frame="FCJH_Lock" visible="false"/>
+							<Action type="SetProperty" frame="FCJH_Armed" visible="false"/>
+							<Action type="SendEvent" frame="$this" event="FCJH_Lock"/>
+							<Action type="SendEvent" frame="$parent/FCJH_Heal6" event="FCJH_Pop"/>
+						</State>
+						<State name="Rearm">
+							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus/FCJH_HealthyMark" visible="true"/>
+							<Action type="SetProperty" frame="FCJH_Armed" visible="true"/>
+						</State>
+						<State name="Hold"/>
+					</StateGroup>
+				</Frame>
+				<Frame type="Frame" name="FCJH_Heal7">
+					<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="#FCJH_HERO_POPUP_T"/>
+					<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Mid" offset="#FCJH_HERO_RED_POPUP_L"/>
+					<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Mid" offset="#FCJH_HERO_RED_POPUP_R"/>
+					<Height val="#FCJH_HERO_POPUP_SIZE"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+					<Frame type="Frame" name="FCJH_Body">
+						<Anchor relative="$parent"/>
+						<AcceptsMouse val="false"/>
+						<Animation name="Leave">
+							<Event event="FCJH_Leave" action="Reset,Play"/>
+							<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
+							<Controller type="Fade" end="Pause">
+								<Key type="Curve" time="0" value="255"/>
+								<Key type="Curve" time="0.35" value="0"/>
+							</Controller>
+						</Animation>
+						<Frame type="Image" name="FCJH_Back">
+							<Anchor relative="$parent"/>
+							<Texture val="@UI/PauseScreenDimImage"/>
+							<ColorAdjustMode val="Fill"/>
+							<AdjustmentColor val="235,8,24,12"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<Frame type="Image" name="FCJH_Plus">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="3"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="-3"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="-3"/>
+							<Texture val="@UI/Storm_UI_Play_RandomHero_Button_Icon_Active_Healer"/>
+							<Color val="60,255,90"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<!-- 1 unit outside the box: the talent pop-up's square shows ~42 px on its
+						     40 px icon (Blizzard's art sits inside its frame) -->
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-1"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-1"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="1"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="1"/>
+							<Texture val="_Assets\Textures\FCJH_PopBorder_Heal.dds"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+					</Frame>
+					<Animation name="Pop">
+						<Event event="FCJH_Pop" action="Restart,Play"/>
+						<Controller type="Visibility" end="Pause">
+							<Key type="Bool" time="0" value="true"/>
+							<Key type="Bool" time="3.75" value="false"/>
+						</Controller>
+						<Controller type="Anchor" end="Pause" side="Top" relative="true">
+							<Key type="Curve" time="0" value="38" inout="Slow"/>
+							<Key type="Curve" time="0.35" value="0" inout="Slow"/>
+						</Controller>
+						<Controller type="Fade" end="Pause">
+							<Key type="Curve" time="0" value="0"/>
+							<Key type="Curve" time="0.25" value="255"/>
+							<Key type="Curve" time="3.0" value="255"/>
+							<Key type="Curve" time="3.75" value="0"/>
+						</Controller>
+					</Animation>
+				</Frame>
+				<Frame type="Frame" name="FCJH_HealWatch7">
+					<Anchor relative="$parent"/>
+					<AcceptsMouse val="false"/>
+					<Frame type="Frame" name="FCJH_Armed"><Anchor relative="$parent"/></Frame>
+					<Frame type="Frame" name="FCJH_Lock"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+					<Animation name="Lock">
+						<Event event="FCJH_Lock" action="Reset,Play"/>
+						<Controller type="Visibility" end="Pause" frame="FCJH_Lock">
+							<Key type="Bool" time="0" value="true"/>
+							<Key type="Bool" time="10.0" value="false"/>
+						</Controller>
+					</Animation>
+					<StateGroup name="FCJH_Heal">
+						<DefaultState val="Hold"/>
+						<State name="Died">
+							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroDeathTimeLabel" visible="true"/>
+							<Action type="SetProperty" frame="FCJH_Armed" visible="true"/>
+							<Action type="SendEvent" frame="$parent/FCJH_Heal7/FCJH_Body" event="FCJH_Leave"/>
+						</State>
+						<State name="Fire">
+							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus/FCJH_LowMark" visible="true"/>
+							<When type="Property" frame="FCJH_Armed" visible="true"/>
+							<When type="Property" frame="FCJH_Lock" visible="false"/>
+							<Action type="SetProperty" frame="FCJH_Armed" visible="false"/>
+							<Action type="SendEvent" frame="$this" event="FCJH_Lock"/>
+							<Action type="SendEvent" frame="$parent/FCJH_Heal7" event="FCJH_Pop"/>
+						</State>
+						<State name="Rearm">
+							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus/FCJH_HealthyMark" visible="true"/>
+							<Action type="SetProperty" frame="FCJH_Armed" visible="true"/>
+						</State>
+						<State name="Hold"/>
+					</StateGroup>
+				</Frame>
+				<Frame type="Frame" name="FCJH_Heal8">
+					<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="#FCJH_HERO_POPUP_T"/>
+					<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Mid" offset="#FCJH_HERO_RED_POPUP_L"/>
+					<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Mid" offset="#FCJH_HERO_RED_POPUP_R"/>
+					<Height val="#FCJH_HERO_POPUP_SIZE"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+					<Frame type="Frame" name="FCJH_Body">
+						<Anchor relative="$parent"/>
+						<AcceptsMouse val="false"/>
+						<Animation name="Leave">
+							<Event event="FCJH_Leave" action="Reset,Play"/>
+							<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
+							<Controller type="Fade" end="Pause">
+								<Key type="Curve" time="0" value="255"/>
+								<Key type="Curve" time="0.35" value="0"/>
+							</Controller>
+						</Animation>
+						<Frame type="Image" name="FCJH_Back">
+							<Anchor relative="$parent"/>
+							<Texture val="@UI/PauseScreenDimImage"/>
+							<ColorAdjustMode val="Fill"/>
+							<AdjustmentColor val="235,8,24,12"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<Frame type="Image" name="FCJH_Plus">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="3"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="-3"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="-3"/>
+							<Texture val="@UI/Storm_UI_Play_RandomHero_Button_Icon_Active_Healer"/>
+							<Color val="60,255,90"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<!-- 1 unit outside the box: the talent pop-up's square shows ~42 px on its
+						     40 px icon (Blizzard's art sits inside its frame) -->
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-1"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-1"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="1"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="1"/>
+							<Texture val="_Assets\Textures\FCJH_PopBorder_Heal.dds"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+					</Frame>
+					<Animation name="Pop">
+						<Event event="FCJH_Pop" action="Restart,Play"/>
+						<Controller type="Visibility" end="Pause">
+							<Key type="Bool" time="0" value="true"/>
+							<Key type="Bool" time="3.75" value="false"/>
+						</Controller>
+						<Controller type="Anchor" end="Pause" side="Top" relative="true">
+							<Key type="Curve" time="0" value="38" inout="Slow"/>
+							<Key type="Curve" time="0.35" value="0" inout="Slow"/>
+						</Controller>
+						<Controller type="Fade" end="Pause">
+							<Key type="Curve" time="0" value="0"/>
+							<Key type="Curve" time="0.25" value="255"/>
+							<Key type="Curve" time="3.0" value="255"/>
+							<Key type="Curve" time="3.75" value="0"/>
+						</Controller>
+					</Animation>
+				</Frame>
+				<Frame type="Frame" name="FCJH_HealWatch8">
+					<Anchor relative="$parent"/>
+					<AcceptsMouse val="false"/>
+					<Frame type="Frame" name="FCJH_Armed"><Anchor relative="$parent"/></Frame>
+					<Frame type="Frame" name="FCJH_Lock"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+					<Animation name="Lock">
+						<Event event="FCJH_Lock" action="Reset,Play"/>
+						<Controller type="Visibility" end="Pause" frame="FCJH_Lock">
+							<Key type="Bool" time="0" value="true"/>
+							<Key type="Bool" time="10.0" value="false"/>
+						</Controller>
+					</Animation>
+					<StateGroup name="FCJH_Heal">
+						<DefaultState val="Hold"/>
+						<State name="Died">
+							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroDeathTimeLabel" visible="true"/>
+							<Action type="SetProperty" frame="FCJH_Armed" visible="true"/>
+							<Action type="SendEvent" frame="$parent/FCJH_Heal8/FCJH_Body" event="FCJH_Leave"/>
+						</State>
+						<State name="Fire">
+							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus/FCJH_LowMark" visible="true"/>
+							<When type="Property" frame="FCJH_Armed" visible="true"/>
+							<When type="Property" frame="FCJH_Lock" visible="false"/>
+							<Action type="SetProperty" frame="FCJH_Armed" visible="false"/>
+							<Action type="SendEvent" frame="$this" event="FCJH_Lock"/>
+							<Action type="SendEvent" frame="$parent/FCJH_Heal8" event="FCJH_Pop"/>
+						</State>
+						<State name="Rearm">
+							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus/FCJH_HealthyMark" visible="true"/>
+							<Action type="SetProperty" frame="FCJH_Armed" visible="true"/>
+						</State>
+						<State name="Hold"/>
+					</StateGroup>
+				</Frame>
+				<Frame type="Frame" name="FCJH_Heal9">
+					<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="#FCJH_HERO_POPUP_T"/>
+					<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Mid" offset="#FCJH_HERO_RED_POPUP_L"/>
+					<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Mid" offset="#FCJH_HERO_RED_POPUP_R"/>
+					<Height val="#FCJH_HERO_POPUP_SIZE"/>
+					<Visible val="false"/>
+					<AcceptsMouse val="false"/>
+					<Frame type="Frame" name="FCJH_Body">
+						<Anchor relative="$parent"/>
+						<AcceptsMouse val="false"/>
+						<Animation name="Leave">
+							<Event event="FCJH_Leave" action="Reset,Play"/>
+							<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
+							<Controller type="Fade" end="Pause">
+								<Key type="Curve" time="0" value="255"/>
+								<Key type="Curve" time="0.35" value="0"/>
+							</Controller>
+						</Animation>
+						<Frame type="Image" name="FCJH_Back">
+							<Anchor relative="$parent"/>
+							<Texture val="@UI/PauseScreenDimImage"/>
+							<ColorAdjustMode val="Fill"/>
+							<AdjustmentColor val="235,8,24,12"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<Frame type="Image" name="FCJH_Plus">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="3"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="-3"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="-3"/>
+							<Texture val="@UI/Storm_UI_Play_RandomHero_Button_Icon_Active_Healer"/>
+							<Color val="60,255,90"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<!-- 1 unit outside the box: the talent pop-up's square shows ~42 px on its
+						     40 px icon (Blizzard's art sits inside its frame) -->
+						<Frame type="Image" name="FCJH_Border">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="-1"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="-1"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="1"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="1"/>
+							<Texture val="_Assets\Textures\FCJH_PopBorder_Heal.dds"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+					</Frame>
+					<Animation name="Pop">
+						<Event event="FCJH_Pop" action="Restart,Play"/>
+						<Controller type="Visibility" end="Pause">
+							<Key type="Bool" time="0" value="true"/>
+							<Key type="Bool" time="3.75" value="false"/>
+						</Controller>
+						<Controller type="Anchor" end="Pause" side="Top" relative="true">
+							<Key type="Curve" time="0" value="38" inout="Slow"/>
+							<Key type="Curve" time="0.35" value="0" inout="Slow"/>
+						</Controller>
+						<Controller type="Fade" end="Pause">
+							<Key type="Curve" time="0" value="0"/>
+							<Key type="Curve" time="0.25" value="255"/>
+							<Key type="Curve" time="3.0" value="255"/>
+							<Key type="Curve" time="3.75" value="0"/>
+						</Controller>
+					</Animation>
+				</Frame>
+				<Frame type="Frame" name="FCJH_HealWatch9">
+					<Anchor relative="$parent"/>
+					<AcceptsMouse val="false"/>
+					<Frame type="Frame" name="FCJH_Armed"><Anchor relative="$parent"/></Frame>
+					<Frame type="Frame" name="FCJH_Lock"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+					<Animation name="Lock">
+						<Event event="FCJH_Lock" action="Reset,Play"/>
+						<Controller type="Visibility" end="Pause" frame="FCJH_Lock">
+							<Key type="Bool" time="0" value="true"/>
+							<Key type="Bool" time="10.0" value="false"/>
+						</Controller>
+					</Animation>
+					<StateGroup name="FCJH_Heal">
+						<DefaultState val="Hold"/>
+						<State name="Died">
+							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroDeathTimeLabel" visible="true"/>
+							<Action type="SetProperty" frame="FCJH_Armed" visible="true"/>
+							<Action type="SendEvent" frame="$parent/FCJH_Heal9/FCJH_Body" event="FCJH_Leave"/>
+						</State>
+						<State name="Fire">
+							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus/FCJH_LowMark" visible="true"/>
+							<When type="Property" frame="FCJH_Armed" visible="true"/>
+							<When type="Property" frame="FCJH_Lock" visible="false"/>
+							<Action type="SetProperty" frame="FCJH_Armed" visible="false"/>
+							<Action type="SendEvent" frame="$this" event="FCJH_Lock"/>
+							<Action type="SendEvent" frame="$parent/FCJH_Heal9" event="FCJH_Pop"/>
+						</State>
+						<State name="Rearm">
+							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus/FCJH_HealthyMark" visible="true"/>
+							<Action type="SetProperty" frame="FCJH_Armed" visible="true"/>
+						</State>
+						<State name="Hold"/>
+					</StateGroup>
+				</Frame>
 		</Frame>
 		<Frame type="Frame" name="UIContainer">
 			<Frame type="Frame" name="FullscreenUpperContainer">
