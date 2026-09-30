@@ -403,9 +403,9 @@ def top_backplate_geometry(cfg):
     its ends climbing with the plates' lean), Blizzard's hexagon, the hexagon padded out,
     and the texture box's top-left."""
     bp = cfg["top_backplate"]
-    cx, cy, hw, hh, he = bp["hexagon"]
-    hexagon = [(cx - he, cy - hh), (cx + he, cy - hh), (cx + hw, cy), (cx + he, cy + hh),
-               (cx - he, cy + hh), (cx - hw, cy)]
+    hexagon = [tuple(p) for p in bp["hexagon"]]
+    left, right = hexagon[5], hexagon[2]           # the side points: where the wings meet it
+    cx, cy = (left[0] + right[0]) / 2, (left[1] + right[1]) / 2
     padded = offset_polygon(hexagon, bp["padding"])
     lean = HeroCell(cfg).overlap / HeroCell(cfg).h
     rise = lean * cy
@@ -484,8 +484,8 @@ def top_backplate_texture(cfg):
     team = {"blue": rgb(bp["blue_colour"]), "red": rgb(bp["red_colour"])}
     line = {k: mix(v, (1, 1, 1), .45) for k, v in team.items()}
     # colour along each wing: nothing beside the hexagon, full at the outer end
-    fade = [(0, 0.0), (.2, 0.0), (.4, .3), (.65, .75), (1, 1.0)]
-    inner_l, inner_r = cx - bp["hexagon"][2] + 10, cx + bp["hexagon"][2] - 10
+    fade = [tuple(p) for p in bp["fade"]]
+    inner_l, inner_r = geo["hexagon"][5][0] + 10, geo["hexagon"][2][0] - 10
     R = bp["hex_px"] / 2
     r3 = math.sqrt(3)
     apothem = R * r3 / 2
@@ -665,8 +665,8 @@ def trackers(team, health):
 					<Frame type="UnitStatusFrame" name="TrackedUnitStatusFrame{i}">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 						<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="{round(hl + i * (third + VIKING_GAP))}"/>
-						<Anchor side="Right"  relative="$parent" pos="Min" offset="{round(hl + i * (third + VIKING_GAP) + third)}"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="{round(hl + VIKING_SLOT[VIKING_FRAMES[i]] * (third + VIKING_GAP))}"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="{round(hl + VIKING_SLOT[VIKING_FRAMES[i]] * (third + VIKING_GAP) + third)}"/>
 						<Unclipped val="true"/>
 						<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">
 							<Anchor side="Top"    relative="{strip}" pos="Min" offset="0"/>
@@ -696,7 +696,10 @@ def trackers(team, health):
 				<Anchor side="Right"  relative="$parent/$parent" pos="Max" offset="0"/>
 				<Unclipped val="true"/>{vikings}
 			</Frame>
+			<!-- Misha's bar: not shown (user, 2026-09-30 - she can't be selected, and it adds
+			     little); HeightOverride below keeps Rexxar's bar full height -->
 			<Frame type="UnitStatusUnitTrackingBehavior" name="RexxarTrackingElement">
+				<Alpha val="0"/>
 				<Anchor side="Left"  relative="$parent" pos="Min" offset="0"/>
 				<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
 				<Width val="0"/>
@@ -711,6 +714,9 @@ PET_TIMERS = {"Olaf": "HeroDeathTimeVikingOlafLabel", "Baleog": "HeroDeathTimeVi
               "Erik": "HeroDeathTimeVikingErikLabel", "Pet": "HeroDeathTimePetLabel"}
 PARTY = "$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel"
 VIKING_SLOT = {"Baleog": 0, "Erik": 1, "Olaf": 2}   # which third of the plate each Viking's bar is
+# Blizzard's VikingTrackingElement orders its TrackedUnitStatusFrame0-2 Olaf, Baleog, Erik (seen in
+# game 2026-09-30: a 40% Baleog showed in the middle third); each goes to its Viking's slot
+VIKING_FRAMES = ["Olaf", "Baleog", "Erik"]
 TALENT_ROW = ("$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/"
               "TalentOverview/HeroTalentsPanelContainer/PlayerFrame{n}/TalentsContainerFrame/"
               "SelectionUnitStatusPanel/UnitStatusFrame0")
@@ -832,7 +838,7 @@ def heroic_panel(cfg, team_frame, i):
         hl += s(NARROW) if narrow else 0
         third = (hr - hl - 2 * VIKING_GAP) / 3
         for v in range(3):
-            left = hl + v * (third + VIKING_GAP)
+            left = hl + VIKING_SLOT[VIKING_FRAMES[v]] * (third + VIKING_GAP)
             f = f"{cell}/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame{v}"
             out += (f'\t\t\t\t\t\t\t\t\t\t<Action type="SetAnchor" frame="{f}" side="Left" relative="{cell}" pos="Min" offset="{round(left)}"/>\n'
                     f'\t\t\t\t\t\t\t\t\t\t<Action type="SetAnchor" frame="{f}" side="Right" relative="{cell}" pos="Min" offset="{round(left + third)}"/>\n')
@@ -1018,13 +1024,14 @@ def hero_cell_template(team, c):
 				<Unclipped val="true"/>
 			</Frame>
 			<!-- The text sits across the health bar (HeroStatus is the bar's rect), centred on it
-			     both ways; the box reaches past the bar by the same amount on every side, so the
-			     text can be bigger than the bar and stay centred. -->
+			     both ways; the box reaches past the bar above and below, so the text can be taller
+			     than the bar, but not sideways: UNSTOPPABLE ran under the heroic icon (2026-09-30),
+			     and now scales down to the bar's width instead. -->
 			<Frame type="Label" name="FCJH_CCText">
 				<Anchor side="Top"    relative="$parent" pos="Min" offset="-{CC_TEXT_OVERHANG}"/>
-				<Anchor side="Left"   relative="$parent" pos="Min" offset="-{CC_TEXT_OVERHANG}"/>
+				<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 				<Anchor side="Bottom" relative="$parent" pos="Max" offset="{CC_TEXT_OVERHANG}"/>
-				<Anchor side="Right"  relative="$parent" pos="Max" offset="{CC_TEXT_OVERHANG}"/>
+				<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
 				<Text val="{{$parent/FCJH_CC/DebuffLabel/@Text}}"/>
 				<Style val="FCJH_CCText"/>
 				<Options val="NoWrapping | ScaleToPreventTruncation"/>
@@ -1172,6 +1179,27 @@ def hero_cell_template(team, c):
 			</StateGroup>
 			<!-- Vikings: the plate's own click target steps aside so each Viking's (inside this
 			     frame, which sits under the plate's target in the cell) gets the click -->
+			<!-- Blizzard's own, with "Present" (Misha up) no longer halving Rexxar's bar. All three
+			     states restated, so it's right whether the engine merges or replaces the group. -->
+			<StateGroup name="HeightOverride">
+				<DefaultState val="Default"/>
+				<State name="Default">
+					<When type="Property" frame="$this/RexxarTrackingElement" Visible="False"/>
+					<When type="Property" frame="$this/VikingTrackingElement" Visible="False"/>
+					<Action type="SetAnchor" frame="$this/HealthBar" side="Bottom" relative="$parent" pos="Max" offset="0"/>
+				</State>
+				<State name="Present">
+					<When type="Property" frame="$this/RexxarTrackingElement" Visible="True"/>
+					<Action type="SetAnchor" frame="$this/HealthBar" side="Bottom" relative="$parent" pos="Max" offset="0"/>
+				</State>
+				<State name="Vikings">
+					<When type="Property" frame="$this/VikingTrackingElement" Visible="True"/>
+					<Action type="SetAnchor" frame="$this/HealthBar" side="Bottom" relative="$parent" pos="Min" offset="0"/>
+					<Action type="SetProperty" frame="$this/HealthBar" Visible="False"/>
+					<Action type="SetProperty" frame="$this/HealthBar" RenderType="Offscreen"/>
+					<Action type="SetProperty" frame="$this/HealthBar" Alpha="0"/>
+				</State>
+			</StateGroup>
 			<StateGroup name="FCJH_VikingClicks">
 				<DefaultState val="Plate"/>
 				<State name="Vikings">

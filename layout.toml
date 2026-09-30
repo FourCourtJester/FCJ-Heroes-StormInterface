@@ -160,15 +160,20 @@ heroic_token = [24, 18]      # w, h px: the heroic token in the plate's bottom c
 # stock dark toward the hexagon; a hexagon lattice fading the same way. Variant C of the
 # canvas study (user, 2026-09-30) - the look the rest of the UI will follow.
 [top_backplate]
-# Blizzard's hexagon (TopBarLogoOverlay) as it lands at 1920 x 1080, measured from a
-# screenshot 2026-09-30: centre x, centre y, half-width (to the side points), half-height,
-# half-length of the flat top and bottom edges
-hexagon = [957.5, 63.25, 62.5, 55.75, 33]
+# Blizzard's hexagon frame (TopBarLogoOverlay) as it lands at 1920 x 1080, its outer edge
+# measured at 6x from a screenshot, 2026-09-30: corners clockwise from top-left, screen px.
+# Not regular - the top edge is wider than the bottom (a regular one left the padding thin
+# at the top and uneven down the lower sides)
+hexagon = [[920, 7.5], [990.8, 7.5], [1019.8, 63.3], [988.3, 119.2], [923.7, 119.2], [894.7, 63.3]]
 padding = 4                  # the neutral plate round the hexagon
 wing_margin = 6              # the wings run this far past the level plates' outer edges
-blue_colour = "3f8cff"
-red_colour = "ff4a5e"
-colour_alpha = 0.95
+# the plates' health bars' own blue and red (Blizzard's fill art, sampled in game 2026-09-30)
+blue_colour = "5cbcec"
+red_colour = "e75c79"
+colour_alpha = 1.0
+# how strong the colour is along each wing, [position, strength]: 0 beside the hexagon, 1 at
+# the wing's outer end
+fade = [[0, 0.0], [0.15, 0.0], [0.35, 0.45], [0.55, 0.85], [1, 1.0]]
 stock = ["221930", "170f20"] # the dark the colour fades to (top, bottom)
 plate = ["3a3350", "15101f"] # the hexagon's plate (top, bottom)
 rim = ["f4f6fb", "aab3cc", "5b637f", "c9d0e2"]   # chrome, top to bottom (stops 0, .35, .6, 1)

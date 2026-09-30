@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <Desc>
-	<!-- PROBE (dev only): heal pop-ups, round 6 (2026-09-30). Written by a one-off script.
+	<!-- PROBE (dev only): heal pop-ups, round 7 (2026-09-30). Written by a one-off script.
 
 	     Spec (user, 2026-09-27/29): the talent pop-up's spot and motion - slide up from the
 	     plate's middle to its top edge - with a green plus in a green border; since round 5 it
@@ -87,18 +87,18 @@
 				<Anchor relative="$parent"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<Frame type="Frame" name="FCJH_Settled">
-					<Anchor relative="$parent"/>
-					<Visible val="false"/>
-					<Animation name="Settle">
-						<Event event="FCJH_Settle" action="Reset,Play"/>
-						<Event event="FCJH_Cancel" action="Reset,Stop"/>
-						<Controller type="Visibility" end="Pause">
-							<Key type="Bool" time="0" value="false"/>
-							<Key type="Bool" time="1.0" value="true"/>
-						</Controller>
-					</Animation>
-				</Frame>
+				<Frame type="Frame" name="FCJH_Settled"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<!-- round 7: the 1 s timer runs HERE, on the always-visible watcher, and flips FCJH_Settled.
+				     In round 6 it ran on FCJH_Settled itself - a hidden frame, whose animation never
+				     advances - so "healed" never came and no pop-up cleared (2026-09-30). -->
+				<Animation name="Settle">
+					<Event event="FCJH_Settle" action="Reset,Play"/>
+					<Event event="FCJH_Cancel" action="Reset,Stop"/>
+					<Controller type="Visibility" end="Pause" frame="FCJH_Settled">
+						<Key type="Bool" time="0" value="false"/>
+						<Key type="Bool" time="1.0" value="true"/>
+					</Controller>
+				</Animation>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
 					<!-- round 5 (user): shows on a drop to 25% or less and stays until the hero is healed
@@ -123,23 +123,24 @@
 						<When type="Property" frame="FCJH_Settled" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal0/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="FCJH_Settled" event="FCJH_Cancel"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="MaybeHealed">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus/FCJH_HealthyMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="FCJH_Settled" event="FCJH_Settle"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
 					</State>
 					<State name="StillLow">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="FCJH_Settled" event="FCJH_Cancel"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="Died">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroDeathTimeLabel" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal0/FCJH_Body" event="FCJH_Leave"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
@@ -214,18 +215,18 @@
 				<Anchor relative="$parent"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<Frame type="Frame" name="FCJH_Settled">
-					<Anchor relative="$parent"/>
-					<Visible val="false"/>
-					<Animation name="Settle">
-						<Event event="FCJH_Settle" action="Reset,Play"/>
-						<Event event="FCJH_Cancel" action="Reset,Stop"/>
-						<Controller type="Visibility" end="Pause">
-							<Key type="Bool" time="0" value="false"/>
-							<Key type="Bool" time="1.0" value="true"/>
-						</Controller>
-					</Animation>
-				</Frame>
+				<Frame type="Frame" name="FCJH_Settled"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<!-- round 7: the 1 s timer runs HERE, on the always-visible watcher, and flips FCJH_Settled.
+				     In round 6 it ran on FCJH_Settled itself - a hidden frame, whose animation never
+				     advances - so "healed" never came and no pop-up cleared (2026-09-30). -->
+				<Animation name="Settle">
+					<Event event="FCJH_Settle" action="Reset,Play"/>
+					<Event event="FCJH_Cancel" action="Reset,Stop"/>
+					<Controller type="Visibility" end="Pause" frame="FCJH_Settled">
+						<Key type="Bool" time="0" value="false"/>
+						<Key type="Bool" time="1.0" value="true"/>
+					</Controller>
+				</Animation>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
 					<!-- round 5 (user): shows on a drop to 25% or less and stays until the hero is healed
@@ -250,23 +251,24 @@
 						<When type="Property" frame="FCJH_Settled" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal1/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="FCJH_Settled" event="FCJH_Cancel"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="MaybeHealed">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus/FCJH_HealthyMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="FCJH_Settled" event="FCJH_Settle"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
 					</State>
 					<State name="StillLow">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="FCJH_Settled" event="FCJH_Cancel"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="Died">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroDeathTimeLabel" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal1/FCJH_Body" event="FCJH_Leave"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
@@ -341,18 +343,18 @@
 				<Anchor relative="$parent"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<Frame type="Frame" name="FCJH_Settled">
-					<Anchor relative="$parent"/>
-					<Visible val="false"/>
-					<Animation name="Settle">
-						<Event event="FCJH_Settle" action="Reset,Play"/>
-						<Event event="FCJH_Cancel" action="Reset,Stop"/>
-						<Controller type="Visibility" end="Pause">
-							<Key type="Bool" time="0" value="false"/>
-							<Key type="Bool" time="1.0" value="true"/>
-						</Controller>
-					</Animation>
-				</Frame>
+				<Frame type="Frame" name="FCJH_Settled"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<!-- round 7: the 1 s timer runs HERE, on the always-visible watcher, and flips FCJH_Settled.
+				     In round 6 it ran on FCJH_Settled itself - a hidden frame, whose animation never
+				     advances - so "healed" never came and no pop-up cleared (2026-09-30). -->
+				<Animation name="Settle">
+					<Event event="FCJH_Settle" action="Reset,Play"/>
+					<Event event="FCJH_Cancel" action="Reset,Stop"/>
+					<Controller type="Visibility" end="Pause" frame="FCJH_Settled">
+						<Key type="Bool" time="0" value="false"/>
+						<Key type="Bool" time="1.0" value="true"/>
+					</Controller>
+				</Animation>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
 					<!-- round 5 (user): shows on a drop to 25% or less and stays until the hero is healed
@@ -377,23 +379,24 @@
 						<When type="Property" frame="FCJH_Settled" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal2/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="FCJH_Settled" event="FCJH_Cancel"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="MaybeHealed">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus/FCJH_HealthyMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="FCJH_Settled" event="FCJH_Settle"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
 					</State>
 					<State name="StillLow">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="FCJH_Settled" event="FCJH_Cancel"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="Died">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroDeathTimeLabel" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal2/FCJH_Body" event="FCJH_Leave"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
@@ -468,18 +471,18 @@
 				<Anchor relative="$parent"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<Frame type="Frame" name="FCJH_Settled">
-					<Anchor relative="$parent"/>
-					<Visible val="false"/>
-					<Animation name="Settle">
-						<Event event="FCJH_Settle" action="Reset,Play"/>
-						<Event event="FCJH_Cancel" action="Reset,Stop"/>
-						<Controller type="Visibility" end="Pause">
-							<Key type="Bool" time="0" value="false"/>
-							<Key type="Bool" time="1.0" value="true"/>
-						</Controller>
-					</Animation>
-				</Frame>
+				<Frame type="Frame" name="FCJH_Settled"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<!-- round 7: the 1 s timer runs HERE, on the always-visible watcher, and flips FCJH_Settled.
+				     In round 6 it ran on FCJH_Settled itself - a hidden frame, whose animation never
+				     advances - so "healed" never came and no pop-up cleared (2026-09-30). -->
+				<Animation name="Settle">
+					<Event event="FCJH_Settle" action="Reset,Play"/>
+					<Event event="FCJH_Cancel" action="Reset,Stop"/>
+					<Controller type="Visibility" end="Pause" frame="FCJH_Settled">
+						<Key type="Bool" time="0" value="false"/>
+						<Key type="Bool" time="1.0" value="true"/>
+					</Controller>
+				</Animation>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
 					<!-- round 5 (user): shows on a drop to 25% or less and stays until the hero is healed
@@ -504,23 +507,24 @@
 						<When type="Property" frame="FCJH_Settled" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal3/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="FCJH_Settled" event="FCJH_Cancel"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="MaybeHealed">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus/FCJH_HealthyMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="FCJH_Settled" event="FCJH_Settle"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
 					</State>
 					<State name="StillLow">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="FCJH_Settled" event="FCJH_Cancel"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="Died">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroDeathTimeLabel" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal3/FCJH_Body" event="FCJH_Leave"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
@@ -595,18 +599,18 @@
 				<Anchor relative="$parent"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<Frame type="Frame" name="FCJH_Settled">
-					<Anchor relative="$parent"/>
-					<Visible val="false"/>
-					<Animation name="Settle">
-						<Event event="FCJH_Settle" action="Reset,Play"/>
-						<Event event="FCJH_Cancel" action="Reset,Stop"/>
-						<Controller type="Visibility" end="Pause">
-							<Key type="Bool" time="0" value="false"/>
-							<Key type="Bool" time="1.0" value="true"/>
-						</Controller>
-					</Animation>
-				</Frame>
+				<Frame type="Frame" name="FCJH_Settled"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<!-- round 7: the 1 s timer runs HERE, on the always-visible watcher, and flips FCJH_Settled.
+				     In round 6 it ran on FCJH_Settled itself - a hidden frame, whose animation never
+				     advances - so "healed" never came and no pop-up cleared (2026-09-30). -->
+				<Animation name="Settle">
+					<Event event="FCJH_Settle" action="Reset,Play"/>
+					<Event event="FCJH_Cancel" action="Reset,Stop"/>
+					<Controller type="Visibility" end="Pause" frame="FCJH_Settled">
+						<Key type="Bool" time="0" value="false"/>
+						<Key type="Bool" time="1.0" value="true"/>
+					</Controller>
+				</Animation>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
 					<!-- round 5 (user): shows on a drop to 25% or less and stays until the hero is healed
@@ -631,23 +635,24 @@
 						<When type="Property" frame="FCJH_Settled" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal4/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="FCJH_Settled" event="FCJH_Cancel"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="MaybeHealed">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus/FCJH_HealthyMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="FCJH_Settled" event="FCJH_Settle"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
 					</State>
 					<State name="StillLow">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="FCJH_Settled" event="FCJH_Cancel"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="Died">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroDeathTimeLabel" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal4/FCJH_Body" event="FCJH_Leave"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
@@ -722,18 +727,18 @@
 				<Anchor relative="$parent"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<Frame type="Frame" name="FCJH_Settled">
-					<Anchor relative="$parent"/>
-					<Visible val="false"/>
-					<Animation name="Settle">
-						<Event event="FCJH_Settle" action="Reset,Play"/>
-						<Event event="FCJH_Cancel" action="Reset,Stop"/>
-						<Controller type="Visibility" end="Pause">
-							<Key type="Bool" time="0" value="false"/>
-							<Key type="Bool" time="1.0" value="true"/>
-						</Controller>
-					</Animation>
-				</Frame>
+				<Frame type="Frame" name="FCJH_Settled"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<!-- round 7: the 1 s timer runs HERE, on the always-visible watcher, and flips FCJH_Settled.
+				     In round 6 it ran on FCJH_Settled itself - a hidden frame, whose animation never
+				     advances - so "healed" never came and no pop-up cleared (2026-09-30). -->
+				<Animation name="Settle">
+					<Event event="FCJH_Settle" action="Reset,Play"/>
+					<Event event="FCJH_Cancel" action="Reset,Stop"/>
+					<Controller type="Visibility" end="Pause" frame="FCJH_Settled">
+						<Key type="Bool" time="0" value="false"/>
+						<Key type="Bool" time="1.0" value="true"/>
+					</Controller>
+				</Animation>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
 					<!-- round 5 (user): shows on a drop to 25% or less and stays until the hero is healed
@@ -758,23 +763,24 @@
 						<When type="Property" frame="FCJH_Settled" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal5/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="FCJH_Settled" event="FCJH_Cancel"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="MaybeHealed">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus/FCJH_HealthyMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="FCJH_Settled" event="FCJH_Settle"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
 					</State>
 					<State name="StillLow">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="FCJH_Settled" event="FCJH_Cancel"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="Died">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroDeathTimeLabel" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal5/FCJH_Body" event="FCJH_Leave"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
@@ -849,18 +855,18 @@
 				<Anchor relative="$parent"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<Frame type="Frame" name="FCJH_Settled">
-					<Anchor relative="$parent"/>
-					<Visible val="false"/>
-					<Animation name="Settle">
-						<Event event="FCJH_Settle" action="Reset,Play"/>
-						<Event event="FCJH_Cancel" action="Reset,Stop"/>
-						<Controller type="Visibility" end="Pause">
-							<Key type="Bool" time="0" value="false"/>
-							<Key type="Bool" time="1.0" value="true"/>
-						</Controller>
-					</Animation>
-				</Frame>
+				<Frame type="Frame" name="FCJH_Settled"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<!-- round 7: the 1 s timer runs HERE, on the always-visible watcher, and flips FCJH_Settled.
+				     In round 6 it ran on FCJH_Settled itself - a hidden frame, whose animation never
+				     advances - so "healed" never came and no pop-up cleared (2026-09-30). -->
+				<Animation name="Settle">
+					<Event event="FCJH_Settle" action="Reset,Play"/>
+					<Event event="FCJH_Cancel" action="Reset,Stop"/>
+					<Controller type="Visibility" end="Pause" frame="FCJH_Settled">
+						<Key type="Bool" time="0" value="false"/>
+						<Key type="Bool" time="1.0" value="true"/>
+					</Controller>
+				</Animation>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
 					<!-- round 5 (user): shows on a drop to 25% or less and stays until the hero is healed
@@ -885,23 +891,24 @@
 						<When type="Property" frame="FCJH_Settled" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal6/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="FCJH_Settled" event="FCJH_Cancel"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="MaybeHealed">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus/FCJH_HealthyMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="FCJH_Settled" event="FCJH_Settle"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
 					</State>
 					<State name="StillLow">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="FCJH_Settled" event="FCJH_Cancel"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="Died">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroDeathTimeLabel" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal6/FCJH_Body" event="FCJH_Leave"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
@@ -976,18 +983,18 @@
 				<Anchor relative="$parent"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<Frame type="Frame" name="FCJH_Settled">
-					<Anchor relative="$parent"/>
-					<Visible val="false"/>
-					<Animation name="Settle">
-						<Event event="FCJH_Settle" action="Reset,Play"/>
-						<Event event="FCJH_Cancel" action="Reset,Stop"/>
-						<Controller type="Visibility" end="Pause">
-							<Key type="Bool" time="0" value="false"/>
-							<Key type="Bool" time="1.0" value="true"/>
-						</Controller>
-					</Animation>
-				</Frame>
+				<Frame type="Frame" name="FCJH_Settled"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<!-- round 7: the 1 s timer runs HERE, on the always-visible watcher, and flips FCJH_Settled.
+				     In round 6 it ran on FCJH_Settled itself - a hidden frame, whose animation never
+				     advances - so "healed" never came and no pop-up cleared (2026-09-30). -->
+				<Animation name="Settle">
+					<Event event="FCJH_Settle" action="Reset,Play"/>
+					<Event event="FCJH_Cancel" action="Reset,Stop"/>
+					<Controller type="Visibility" end="Pause" frame="FCJH_Settled">
+						<Key type="Bool" time="0" value="false"/>
+						<Key type="Bool" time="1.0" value="true"/>
+					</Controller>
+				</Animation>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
 					<!-- round 5 (user): shows on a drop to 25% or less and stays until the hero is healed
@@ -1012,23 +1019,24 @@
 						<When type="Property" frame="FCJH_Settled" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal7/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="FCJH_Settled" event="FCJH_Cancel"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="MaybeHealed">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus/FCJH_HealthyMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="FCJH_Settled" event="FCJH_Settle"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
 					</State>
 					<State name="StillLow">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="FCJH_Settled" event="FCJH_Cancel"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="Died">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroDeathTimeLabel" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal7/FCJH_Body" event="FCJH_Leave"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
@@ -1103,18 +1111,18 @@
 				<Anchor relative="$parent"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<Frame type="Frame" name="FCJH_Settled">
-					<Anchor relative="$parent"/>
-					<Visible val="false"/>
-					<Animation name="Settle">
-						<Event event="FCJH_Settle" action="Reset,Play"/>
-						<Event event="FCJH_Cancel" action="Reset,Stop"/>
-						<Controller type="Visibility" end="Pause">
-							<Key type="Bool" time="0" value="false"/>
-							<Key type="Bool" time="1.0" value="true"/>
-						</Controller>
-					</Animation>
-				</Frame>
+				<Frame type="Frame" name="FCJH_Settled"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<!-- round 7: the 1 s timer runs HERE, on the always-visible watcher, and flips FCJH_Settled.
+				     In round 6 it ran on FCJH_Settled itself - a hidden frame, whose animation never
+				     advances - so "healed" never came and no pop-up cleared (2026-09-30). -->
+				<Animation name="Settle">
+					<Event event="FCJH_Settle" action="Reset,Play"/>
+					<Event event="FCJH_Cancel" action="Reset,Stop"/>
+					<Controller type="Visibility" end="Pause" frame="FCJH_Settled">
+						<Key type="Bool" time="0" value="false"/>
+						<Key type="Bool" time="1.0" value="true"/>
+					</Controller>
+				</Animation>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
 					<!-- round 5 (user): shows on a drop to 25% or less and stays until the hero is healed
@@ -1139,23 +1147,24 @@
 						<When type="Property" frame="FCJH_Settled" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal8/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="FCJH_Settled" event="FCJH_Cancel"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="MaybeHealed">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus/FCJH_HealthyMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="FCJH_Settled" event="FCJH_Settle"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
 					</State>
 					<State name="StillLow">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="FCJH_Settled" event="FCJH_Cancel"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="Died">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroDeathTimeLabel" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal8/FCJH_Body" event="FCJH_Leave"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
@@ -1230,18 +1239,18 @@
 				<Anchor relative="$parent"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<Frame type="Frame" name="FCJH_Settled">
-					<Anchor relative="$parent"/>
-					<Visible val="false"/>
-					<Animation name="Settle">
-						<Event event="FCJH_Settle" action="Reset,Play"/>
-						<Event event="FCJH_Cancel" action="Reset,Stop"/>
-						<Controller type="Visibility" end="Pause">
-							<Key type="Bool" time="0" value="false"/>
-							<Key type="Bool" time="1.0" value="true"/>
-						</Controller>
-					</Animation>
-				</Frame>
+				<Frame type="Frame" name="FCJH_Settled"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<!-- round 7: the 1 s timer runs HERE, on the always-visible watcher, and flips FCJH_Settled.
+				     In round 6 it ran on FCJH_Settled itself - a hidden frame, whose animation never
+				     advances - so "healed" never came and no pop-up cleared (2026-09-30). -->
+				<Animation name="Settle">
+					<Event event="FCJH_Settle" action="Reset,Play"/>
+					<Event event="FCJH_Cancel" action="Reset,Stop"/>
+					<Controller type="Visibility" end="Pause" frame="FCJH_Settled">
+						<Key type="Bool" time="0" value="false"/>
+						<Key type="Bool" time="1.0" value="true"/>
+					</Controller>
+				</Animation>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
 					<!-- round 5 (user): shows on a drop to 25% or less and stays until the hero is healed
@@ -1266,23 +1275,24 @@
 						<When type="Property" frame="FCJH_Settled" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal9/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="FCJH_Settled" event="FCJH_Cancel"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="MaybeHealed">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus/FCJH_HealthyMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="FCJH_Settled" event="FCJH_Settle"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
 					</State>
 					<State name="StillLow">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="FCJH_Settled" event="FCJH_Cancel"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="Died">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroDeathTimeLabel" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal9/FCJH_Body" event="FCJH_Leave"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
