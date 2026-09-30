@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <Desc>
-	<!-- PROBE (dev only): heal pop-ups, round 8 (2026-09-30). Written by a one-off script.
+	<!-- PROBE (dev only): heal pop-ups, round 9 (2026-09-30). Written by a one-off script.
 
 	     Spec (user, 2026-09-27/29): the talent pop-up's spot and motion - slide up from the
 	     plate's middle to its top edge - with a green plus in a green border; since round 5 it
@@ -66,12 +66,14 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 				</Frame>
-				<!-- round 5 (user): no timed exit - it slides in and stays while the hero is at 25% or
-				     less; FCJH_Body fades it out on recovery or death -->
+				<!-- round 9: timed again, the talent pop-up's exact motion - slide up, hold, fade out,
+				     gone at 6.1 s. Rounds 5-8 kept it up until a "healed" reading, and it never left:
+				     that reading comes from a flag whose change the watcher doesn't reliably see. -->
 				<Animation name="Pop">
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
+						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
 						<Key type="Curve" time="0" value="38" inout="Slow"/>
@@ -80,6 +82,8 @@
 					<Controller type="Fade" end="Pause">
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
+						<Key type="Curve" time="5.35" value="255"/>
+						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -87,46 +91,31 @@
 				<Anchor relative="$parent"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<Frame type="Frame" name="FCJH_Settled"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<!-- round 7: the 1 s timer runs HERE, on the always-visible watcher, and flips FCJH_Settled.
-				     In round 6 it ran on FCJH_Settled itself - a hidden frame, whose animation never
-				     advances - so "healed" never came and no pop-up cleared (2026-09-30). -->
-				<Animation name="Settle">
-					<Event event="FCJH_Settle" action="Reset,Play"/>
-					<Event event="FCJH_Cancel" action="Reset,Stop"/>
-					<Controller type="Visibility" end="Pause" frame="FCJH_Settled">
-						<Key type="Bool" time="0" value="false"/>
-						<Key type="Bool" time="1.0" value="true"/>
-					</Controller>
-				</Animation>
-				<!-- round 8: after a pop-up leaves, this plate rests 4.0 s before it can pop again - the
-				     duration-based guard (user, 2026-09-30) on top of the sticky logic -->
-				<Frame type="Frame" name="FCJH_Rest"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<Animation name="Rest">
-					<Event event="FCJH_Rest" action="Reset,Play"/>
-					<Controller type="Visibility" end="Pause" frame="FCJH_Rest">
+				<!-- after a pop-up fires, this plate can't fire another for 10.0 s, however the health
+				     flags flicker -->
+				<Frame type="Frame" name="FCJH_Lock"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<Animation name="Lock">
+					<Event event="FCJH_Lock" action="Reset,Play"/>
+					<Controller type="Visibility" end="Pause" frame="FCJH_Lock">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="4.0" value="false"/>
+						<Key type="Bool" time="10.0" value="false"/>
 					</Controller>
 				</Animation>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
-					<!-- Shows on a drop to 25% or less and STAYS until the hero dies or has read healthy (26-100%)
-					     for 1 s straight. Both health flags flicker as the percent changes, so:
-					       - any reading that isn't healthy cancels the 1 s timer (round 7 only cancelled on a
-					         critical reading; a moment with neither flag let the timer run out, and the next
-					         flicker of "healthy" then read as healed - the come-and-go, 2026-09-30)
-					       - FCJH_Settled is cleared by hand whenever the timer restarts or stops, in case
-					         Reset alone doesn't put its visibility back
-					       - after leaving, FCJH_Rest blocks a new pop-up for 4.0 s -->
+					<!-- round 9 (user, 2026-09-30: "if we can't make it sticky, go back to a duration"):
+					       - fires on a drop to 25% or less, once: "Shown" latches, and only a healthy reading
+					         (26-100%) or a death re-arms it, so a hero who stays low isn't re-popped
+					       - a flicker of "healthy" while low can re-arm it early; FCJH_Lock still holds any
+					         new pop-up back until 10.0 s after the last one
+					       - leaves by itself (Pop, 6.1 s), or fades at once if the hero dies -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
-						<When type="Property" frame="FCJH_Rest" visible="false"/>
+						<When type="Property" frame="FCJH_Lock" visible="false"/>
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroDeathTimeLabel" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Lock"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal0/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal0" event="FCJH_Pop"/>
 					</State>
@@ -134,31 +123,12 @@
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroDeathTimeLabel" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal0/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
 					</State>
-					<State name="Healed">
+					<State name="Rearm">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus/FCJH_HealthyMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
-						<When type="Property" frame="FCJH_Settled" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
-						<Action type="SendEvent" frame="$parent/FCJH_Heal0/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
-					</State>
-					<State name="MaybeHealed">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus/FCJH_HealthyMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
-					</State>
-					<State name="NotHealthy">
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
@@ -212,12 +182,14 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 				</Frame>
-				<!-- round 5 (user): no timed exit - it slides in and stays while the hero is at 25% or
-				     less; FCJH_Body fades it out on recovery or death -->
+				<!-- round 9: timed again, the talent pop-up's exact motion - slide up, hold, fade out,
+				     gone at 6.1 s. Rounds 5-8 kept it up until a "healed" reading, and it never left:
+				     that reading comes from a flag whose change the watcher doesn't reliably see. -->
 				<Animation name="Pop">
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
+						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
 						<Key type="Curve" time="0" value="38" inout="Slow"/>
@@ -226,6 +198,8 @@
 					<Controller type="Fade" end="Pause">
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
+						<Key type="Curve" time="5.35" value="255"/>
+						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -233,46 +207,31 @@
 				<Anchor relative="$parent"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<Frame type="Frame" name="FCJH_Settled"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<!-- round 7: the 1 s timer runs HERE, on the always-visible watcher, and flips FCJH_Settled.
-				     In round 6 it ran on FCJH_Settled itself - a hidden frame, whose animation never
-				     advances - so "healed" never came and no pop-up cleared (2026-09-30). -->
-				<Animation name="Settle">
-					<Event event="FCJH_Settle" action="Reset,Play"/>
-					<Event event="FCJH_Cancel" action="Reset,Stop"/>
-					<Controller type="Visibility" end="Pause" frame="FCJH_Settled">
-						<Key type="Bool" time="0" value="false"/>
-						<Key type="Bool" time="1.0" value="true"/>
-					</Controller>
-				</Animation>
-				<!-- round 8: after a pop-up leaves, this plate rests 4.0 s before it can pop again - the
-				     duration-based guard (user, 2026-09-30) on top of the sticky logic -->
-				<Frame type="Frame" name="FCJH_Rest"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<Animation name="Rest">
-					<Event event="FCJH_Rest" action="Reset,Play"/>
-					<Controller type="Visibility" end="Pause" frame="FCJH_Rest">
+				<!-- after a pop-up fires, this plate can't fire another for 10.0 s, however the health
+				     flags flicker -->
+				<Frame type="Frame" name="FCJH_Lock"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<Animation name="Lock">
+					<Event event="FCJH_Lock" action="Reset,Play"/>
+					<Controller type="Visibility" end="Pause" frame="FCJH_Lock">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="4.0" value="false"/>
+						<Key type="Bool" time="10.0" value="false"/>
 					</Controller>
 				</Animation>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
-					<!-- Shows on a drop to 25% or less and STAYS until the hero dies or has read healthy (26-100%)
-					     for 1 s straight. Both health flags flicker as the percent changes, so:
-					       - any reading that isn't healthy cancels the 1 s timer (round 7 only cancelled on a
-					         critical reading; a moment with neither flag let the timer run out, and the next
-					         flicker of "healthy" then read as healed - the come-and-go, 2026-09-30)
-					       - FCJH_Settled is cleared by hand whenever the timer restarts or stops, in case
-					         Reset alone doesn't put its visibility back
-					       - after leaving, FCJH_Rest blocks a new pop-up for 4.0 s -->
+					<!-- round 9 (user, 2026-09-30: "if we can't make it sticky, go back to a duration"):
+					       - fires on a drop to 25% or less, once: "Shown" latches, and only a healthy reading
+					         (26-100%) or a death re-arms it, so a hero who stays low isn't re-popped
+					       - a flicker of "healthy" while low can re-arm it early; FCJH_Lock still holds any
+					         new pop-up back until 10.0 s after the last one
+					       - leaves by itself (Pop, 6.1 s), or fades at once if the hero dies -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
-						<When type="Property" frame="FCJH_Rest" visible="false"/>
+						<When type="Property" frame="FCJH_Lock" visible="false"/>
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroDeathTimeLabel" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Lock"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal1/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal1" event="FCJH_Pop"/>
 					</State>
@@ -280,31 +239,12 @@
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroDeathTimeLabel" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal1/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
 					</State>
-					<State name="Healed">
+					<State name="Rearm">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus/FCJH_HealthyMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
-						<When type="Property" frame="FCJH_Settled" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
-						<Action type="SendEvent" frame="$parent/FCJH_Heal1/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
-					</State>
-					<State name="MaybeHealed">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus/FCJH_HealthyMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
-					</State>
-					<State name="NotHealthy">
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
@@ -358,12 +298,14 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 				</Frame>
-				<!-- round 5 (user): no timed exit - it slides in and stays while the hero is at 25% or
-				     less; FCJH_Body fades it out on recovery or death -->
+				<!-- round 9: timed again, the talent pop-up's exact motion - slide up, hold, fade out,
+				     gone at 6.1 s. Rounds 5-8 kept it up until a "healed" reading, and it never left:
+				     that reading comes from a flag whose change the watcher doesn't reliably see. -->
 				<Animation name="Pop">
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
+						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
 						<Key type="Curve" time="0" value="38" inout="Slow"/>
@@ -372,6 +314,8 @@
 					<Controller type="Fade" end="Pause">
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
+						<Key type="Curve" time="5.35" value="255"/>
+						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -379,46 +323,31 @@
 				<Anchor relative="$parent"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<Frame type="Frame" name="FCJH_Settled"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<!-- round 7: the 1 s timer runs HERE, on the always-visible watcher, and flips FCJH_Settled.
-				     In round 6 it ran on FCJH_Settled itself - a hidden frame, whose animation never
-				     advances - so "healed" never came and no pop-up cleared (2026-09-30). -->
-				<Animation name="Settle">
-					<Event event="FCJH_Settle" action="Reset,Play"/>
-					<Event event="FCJH_Cancel" action="Reset,Stop"/>
-					<Controller type="Visibility" end="Pause" frame="FCJH_Settled">
-						<Key type="Bool" time="0" value="false"/>
-						<Key type="Bool" time="1.0" value="true"/>
-					</Controller>
-				</Animation>
-				<!-- round 8: after a pop-up leaves, this plate rests 4.0 s before it can pop again - the
-				     duration-based guard (user, 2026-09-30) on top of the sticky logic -->
-				<Frame type="Frame" name="FCJH_Rest"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<Animation name="Rest">
-					<Event event="FCJH_Rest" action="Reset,Play"/>
-					<Controller type="Visibility" end="Pause" frame="FCJH_Rest">
+				<!-- after a pop-up fires, this plate can't fire another for 10.0 s, however the health
+				     flags flicker -->
+				<Frame type="Frame" name="FCJH_Lock"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<Animation name="Lock">
+					<Event event="FCJH_Lock" action="Reset,Play"/>
+					<Controller type="Visibility" end="Pause" frame="FCJH_Lock">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="4.0" value="false"/>
+						<Key type="Bool" time="10.0" value="false"/>
 					</Controller>
 				</Animation>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
-					<!-- Shows on a drop to 25% or less and STAYS until the hero dies or has read healthy (26-100%)
-					     for 1 s straight. Both health flags flicker as the percent changes, so:
-					       - any reading that isn't healthy cancels the 1 s timer (round 7 only cancelled on a
-					         critical reading; a moment with neither flag let the timer run out, and the next
-					         flicker of "healthy" then read as healed - the come-and-go, 2026-09-30)
-					       - FCJH_Settled is cleared by hand whenever the timer restarts or stops, in case
-					         Reset alone doesn't put its visibility back
-					       - after leaving, FCJH_Rest blocks a new pop-up for 4.0 s -->
+					<!-- round 9 (user, 2026-09-30: "if we can't make it sticky, go back to a duration"):
+					       - fires on a drop to 25% or less, once: "Shown" latches, and only a healthy reading
+					         (26-100%) or a death re-arms it, so a hero who stays low isn't re-popped
+					       - a flicker of "healthy" while low can re-arm it early; FCJH_Lock still holds any
+					         new pop-up back until 10.0 s after the last one
+					       - leaves by itself (Pop, 6.1 s), or fades at once if the hero dies -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
-						<When type="Property" frame="FCJH_Rest" visible="false"/>
+						<When type="Property" frame="FCJH_Lock" visible="false"/>
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroDeathTimeLabel" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Lock"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal2/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal2" event="FCJH_Pop"/>
 					</State>
@@ -426,31 +355,12 @@
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroDeathTimeLabel" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal2/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
 					</State>
-					<State name="Healed">
+					<State name="Rearm">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus/FCJH_HealthyMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
-						<When type="Property" frame="FCJH_Settled" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
-						<Action type="SendEvent" frame="$parent/FCJH_Heal2/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
-					</State>
-					<State name="MaybeHealed">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus/FCJH_HealthyMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
-					</State>
-					<State name="NotHealthy">
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
@@ -504,12 +414,14 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 				</Frame>
-				<!-- round 5 (user): no timed exit - it slides in and stays while the hero is at 25% or
-				     less; FCJH_Body fades it out on recovery or death -->
+				<!-- round 9: timed again, the talent pop-up's exact motion - slide up, hold, fade out,
+				     gone at 6.1 s. Rounds 5-8 kept it up until a "healed" reading, and it never left:
+				     that reading comes from a flag whose change the watcher doesn't reliably see. -->
 				<Animation name="Pop">
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
+						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
 						<Key type="Curve" time="0" value="38" inout="Slow"/>
@@ -518,6 +430,8 @@
 					<Controller type="Fade" end="Pause">
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
+						<Key type="Curve" time="5.35" value="255"/>
+						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -525,46 +439,31 @@
 				<Anchor relative="$parent"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<Frame type="Frame" name="FCJH_Settled"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<!-- round 7: the 1 s timer runs HERE, on the always-visible watcher, and flips FCJH_Settled.
-				     In round 6 it ran on FCJH_Settled itself - a hidden frame, whose animation never
-				     advances - so "healed" never came and no pop-up cleared (2026-09-30). -->
-				<Animation name="Settle">
-					<Event event="FCJH_Settle" action="Reset,Play"/>
-					<Event event="FCJH_Cancel" action="Reset,Stop"/>
-					<Controller type="Visibility" end="Pause" frame="FCJH_Settled">
-						<Key type="Bool" time="0" value="false"/>
-						<Key type="Bool" time="1.0" value="true"/>
-					</Controller>
-				</Animation>
-				<!-- round 8: after a pop-up leaves, this plate rests 4.0 s before it can pop again - the
-				     duration-based guard (user, 2026-09-30) on top of the sticky logic -->
-				<Frame type="Frame" name="FCJH_Rest"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<Animation name="Rest">
-					<Event event="FCJH_Rest" action="Reset,Play"/>
-					<Controller type="Visibility" end="Pause" frame="FCJH_Rest">
+				<!-- after a pop-up fires, this plate can't fire another for 10.0 s, however the health
+				     flags flicker -->
+				<Frame type="Frame" name="FCJH_Lock"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<Animation name="Lock">
+					<Event event="FCJH_Lock" action="Reset,Play"/>
+					<Controller type="Visibility" end="Pause" frame="FCJH_Lock">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="4.0" value="false"/>
+						<Key type="Bool" time="10.0" value="false"/>
 					</Controller>
 				</Animation>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
-					<!-- Shows on a drop to 25% or less and STAYS until the hero dies or has read healthy (26-100%)
-					     for 1 s straight. Both health flags flicker as the percent changes, so:
-					       - any reading that isn't healthy cancels the 1 s timer (round 7 only cancelled on a
-					         critical reading; a moment with neither flag let the timer run out, and the next
-					         flicker of "healthy" then read as healed - the come-and-go, 2026-09-30)
-					       - FCJH_Settled is cleared by hand whenever the timer restarts or stops, in case
-					         Reset alone doesn't put its visibility back
-					       - after leaving, FCJH_Rest blocks a new pop-up for 4.0 s -->
+					<!-- round 9 (user, 2026-09-30: "if we can't make it sticky, go back to a duration"):
+					       - fires on a drop to 25% or less, once: "Shown" latches, and only a healthy reading
+					         (26-100%) or a death re-arms it, so a hero who stays low isn't re-popped
+					       - a flicker of "healthy" while low can re-arm it early; FCJH_Lock still holds any
+					         new pop-up back until 10.0 s after the last one
+					       - leaves by itself (Pop, 6.1 s), or fades at once if the hero dies -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
-						<When type="Property" frame="FCJH_Rest" visible="false"/>
+						<When type="Property" frame="FCJH_Lock" visible="false"/>
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroDeathTimeLabel" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Lock"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal3/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal3" event="FCJH_Pop"/>
 					</State>
@@ -572,31 +471,12 @@
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroDeathTimeLabel" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal3/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
 					</State>
-					<State name="Healed">
+					<State name="Rearm">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus/FCJH_HealthyMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
-						<When type="Property" frame="FCJH_Settled" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
-						<Action type="SendEvent" frame="$parent/FCJH_Heal3/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
-					</State>
-					<State name="MaybeHealed">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus/FCJH_HealthyMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
-					</State>
-					<State name="NotHealthy">
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
@@ -650,12 +530,14 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 				</Frame>
-				<!-- round 5 (user): no timed exit - it slides in and stays while the hero is at 25% or
-				     less; FCJH_Body fades it out on recovery or death -->
+				<!-- round 9: timed again, the talent pop-up's exact motion - slide up, hold, fade out,
+				     gone at 6.1 s. Rounds 5-8 kept it up until a "healed" reading, and it never left:
+				     that reading comes from a flag whose change the watcher doesn't reliably see. -->
 				<Animation name="Pop">
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
+						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
 						<Key type="Curve" time="0" value="38" inout="Slow"/>
@@ -664,6 +546,8 @@
 					<Controller type="Fade" end="Pause">
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
+						<Key type="Curve" time="5.35" value="255"/>
+						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -671,46 +555,31 @@
 				<Anchor relative="$parent"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<Frame type="Frame" name="FCJH_Settled"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<!-- round 7: the 1 s timer runs HERE, on the always-visible watcher, and flips FCJH_Settled.
-				     In round 6 it ran on FCJH_Settled itself - a hidden frame, whose animation never
-				     advances - so "healed" never came and no pop-up cleared (2026-09-30). -->
-				<Animation name="Settle">
-					<Event event="FCJH_Settle" action="Reset,Play"/>
-					<Event event="FCJH_Cancel" action="Reset,Stop"/>
-					<Controller type="Visibility" end="Pause" frame="FCJH_Settled">
-						<Key type="Bool" time="0" value="false"/>
-						<Key type="Bool" time="1.0" value="true"/>
-					</Controller>
-				</Animation>
-				<!-- round 8: after a pop-up leaves, this plate rests 4.0 s before it can pop again - the
-				     duration-based guard (user, 2026-09-30) on top of the sticky logic -->
-				<Frame type="Frame" name="FCJH_Rest"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<Animation name="Rest">
-					<Event event="FCJH_Rest" action="Reset,Play"/>
-					<Controller type="Visibility" end="Pause" frame="FCJH_Rest">
+				<!-- after a pop-up fires, this plate can't fire another for 10.0 s, however the health
+				     flags flicker -->
+				<Frame type="Frame" name="FCJH_Lock"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<Animation name="Lock">
+					<Event event="FCJH_Lock" action="Reset,Play"/>
+					<Controller type="Visibility" end="Pause" frame="FCJH_Lock">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="4.0" value="false"/>
+						<Key type="Bool" time="10.0" value="false"/>
 					</Controller>
 				</Animation>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
-					<!-- Shows on a drop to 25% or less and STAYS until the hero dies or has read healthy (26-100%)
-					     for 1 s straight. Both health flags flicker as the percent changes, so:
-					       - any reading that isn't healthy cancels the 1 s timer (round 7 only cancelled on a
-					         critical reading; a moment with neither flag let the timer run out, and the next
-					         flicker of "healthy" then read as healed - the come-and-go, 2026-09-30)
-					       - FCJH_Settled is cleared by hand whenever the timer restarts or stops, in case
-					         Reset alone doesn't put its visibility back
-					       - after leaving, FCJH_Rest blocks a new pop-up for 4.0 s -->
+					<!-- round 9 (user, 2026-09-30: "if we can't make it sticky, go back to a duration"):
+					       - fires on a drop to 25% or less, once: "Shown" latches, and only a healthy reading
+					         (26-100%) or a death re-arms it, so a hero who stays low isn't re-popped
+					       - a flicker of "healthy" while low can re-arm it early; FCJH_Lock still holds any
+					         new pop-up back until 10.0 s after the last one
+					       - leaves by itself (Pop, 6.1 s), or fades at once if the hero dies -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
-						<When type="Property" frame="FCJH_Rest" visible="false"/>
+						<When type="Property" frame="FCJH_Lock" visible="false"/>
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroDeathTimeLabel" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Lock"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal4/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal4" event="FCJH_Pop"/>
 					</State>
@@ -718,31 +587,12 @@
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroDeathTimeLabel" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal4/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
 					</State>
-					<State name="Healed">
+					<State name="Rearm">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus/FCJH_HealthyMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
-						<When type="Property" frame="FCJH_Settled" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
-						<Action type="SendEvent" frame="$parent/FCJH_Heal4/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
-					</State>
-					<State name="MaybeHealed">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus/FCJH_HealthyMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
-					</State>
-					<State name="NotHealthy">
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
@@ -796,12 +646,14 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 				</Frame>
-				<!-- round 5 (user): no timed exit - it slides in and stays while the hero is at 25% or
-				     less; FCJH_Body fades it out on recovery or death -->
+				<!-- round 9: timed again, the talent pop-up's exact motion - slide up, hold, fade out,
+				     gone at 6.1 s. Rounds 5-8 kept it up until a "healed" reading, and it never left:
+				     that reading comes from a flag whose change the watcher doesn't reliably see. -->
 				<Animation name="Pop">
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
+						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
 						<Key type="Curve" time="0" value="38" inout="Slow"/>
@@ -810,6 +662,8 @@
 					<Controller type="Fade" end="Pause">
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
+						<Key type="Curve" time="5.35" value="255"/>
+						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -817,46 +671,31 @@
 				<Anchor relative="$parent"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<Frame type="Frame" name="FCJH_Settled"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<!-- round 7: the 1 s timer runs HERE, on the always-visible watcher, and flips FCJH_Settled.
-				     In round 6 it ran on FCJH_Settled itself - a hidden frame, whose animation never
-				     advances - so "healed" never came and no pop-up cleared (2026-09-30). -->
-				<Animation name="Settle">
-					<Event event="FCJH_Settle" action="Reset,Play"/>
-					<Event event="FCJH_Cancel" action="Reset,Stop"/>
-					<Controller type="Visibility" end="Pause" frame="FCJH_Settled">
-						<Key type="Bool" time="0" value="false"/>
-						<Key type="Bool" time="1.0" value="true"/>
-					</Controller>
-				</Animation>
-				<!-- round 8: after a pop-up leaves, this plate rests 4.0 s before it can pop again - the
-				     duration-based guard (user, 2026-09-30) on top of the sticky logic -->
-				<Frame type="Frame" name="FCJH_Rest"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<Animation name="Rest">
-					<Event event="FCJH_Rest" action="Reset,Play"/>
-					<Controller type="Visibility" end="Pause" frame="FCJH_Rest">
+				<!-- after a pop-up fires, this plate can't fire another for 10.0 s, however the health
+				     flags flicker -->
+				<Frame type="Frame" name="FCJH_Lock"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<Animation name="Lock">
+					<Event event="FCJH_Lock" action="Reset,Play"/>
+					<Controller type="Visibility" end="Pause" frame="FCJH_Lock">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="4.0" value="false"/>
+						<Key type="Bool" time="10.0" value="false"/>
 					</Controller>
 				</Animation>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
-					<!-- Shows on a drop to 25% or less and STAYS until the hero dies or has read healthy (26-100%)
-					     for 1 s straight. Both health flags flicker as the percent changes, so:
-					       - any reading that isn't healthy cancels the 1 s timer (round 7 only cancelled on a
-					         critical reading; a moment with neither flag let the timer run out, and the next
-					         flicker of "healthy" then read as healed - the come-and-go, 2026-09-30)
-					       - FCJH_Settled is cleared by hand whenever the timer restarts or stops, in case
-					         Reset alone doesn't put its visibility back
-					       - after leaving, FCJH_Rest blocks a new pop-up for 4.0 s -->
+					<!-- round 9 (user, 2026-09-30: "if we can't make it sticky, go back to a duration"):
+					       - fires on a drop to 25% or less, once: "Shown" latches, and only a healthy reading
+					         (26-100%) or a death re-arms it, so a hero who stays low isn't re-popped
+					       - a flicker of "healthy" while low can re-arm it early; FCJH_Lock still holds any
+					         new pop-up back until 10.0 s after the last one
+					       - leaves by itself (Pop, 6.1 s), or fades at once if the hero dies -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
-						<When type="Property" frame="FCJH_Rest" visible="false"/>
+						<When type="Property" frame="FCJH_Lock" visible="false"/>
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroDeathTimeLabel" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Lock"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal5/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal5" event="FCJH_Pop"/>
 					</State>
@@ -864,31 +703,12 @@
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroDeathTimeLabel" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal5/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
 					</State>
-					<State name="Healed">
+					<State name="Rearm">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus/FCJH_HealthyMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
-						<When type="Property" frame="FCJH_Settled" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
-						<Action type="SendEvent" frame="$parent/FCJH_Heal5/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
-					</State>
-					<State name="MaybeHealed">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus/FCJH_HealthyMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
-					</State>
-					<State name="NotHealthy">
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
@@ -942,12 +762,14 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 				</Frame>
-				<!-- round 5 (user): no timed exit - it slides in and stays while the hero is at 25% or
-				     less; FCJH_Body fades it out on recovery or death -->
+				<!-- round 9: timed again, the talent pop-up's exact motion - slide up, hold, fade out,
+				     gone at 6.1 s. Rounds 5-8 kept it up until a "healed" reading, and it never left:
+				     that reading comes from a flag whose change the watcher doesn't reliably see. -->
 				<Animation name="Pop">
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
+						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
 						<Key type="Curve" time="0" value="38" inout="Slow"/>
@@ -956,6 +778,8 @@
 					<Controller type="Fade" end="Pause">
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
+						<Key type="Curve" time="5.35" value="255"/>
+						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -963,46 +787,31 @@
 				<Anchor relative="$parent"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<Frame type="Frame" name="FCJH_Settled"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<!-- round 7: the 1 s timer runs HERE, on the always-visible watcher, and flips FCJH_Settled.
-				     In round 6 it ran on FCJH_Settled itself - a hidden frame, whose animation never
-				     advances - so "healed" never came and no pop-up cleared (2026-09-30). -->
-				<Animation name="Settle">
-					<Event event="FCJH_Settle" action="Reset,Play"/>
-					<Event event="FCJH_Cancel" action="Reset,Stop"/>
-					<Controller type="Visibility" end="Pause" frame="FCJH_Settled">
-						<Key type="Bool" time="0" value="false"/>
-						<Key type="Bool" time="1.0" value="true"/>
-					</Controller>
-				</Animation>
-				<!-- round 8: after a pop-up leaves, this plate rests 4.0 s before it can pop again - the
-				     duration-based guard (user, 2026-09-30) on top of the sticky logic -->
-				<Frame type="Frame" name="FCJH_Rest"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<Animation name="Rest">
-					<Event event="FCJH_Rest" action="Reset,Play"/>
-					<Controller type="Visibility" end="Pause" frame="FCJH_Rest">
+				<!-- after a pop-up fires, this plate can't fire another for 10.0 s, however the health
+				     flags flicker -->
+				<Frame type="Frame" name="FCJH_Lock"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<Animation name="Lock">
+					<Event event="FCJH_Lock" action="Reset,Play"/>
+					<Controller type="Visibility" end="Pause" frame="FCJH_Lock">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="4.0" value="false"/>
+						<Key type="Bool" time="10.0" value="false"/>
 					</Controller>
 				</Animation>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
-					<!-- Shows on a drop to 25% or less and STAYS until the hero dies or has read healthy (26-100%)
-					     for 1 s straight. Both health flags flicker as the percent changes, so:
-					       - any reading that isn't healthy cancels the 1 s timer (round 7 only cancelled on a
-					         critical reading; a moment with neither flag let the timer run out, and the next
-					         flicker of "healthy" then read as healed - the come-and-go, 2026-09-30)
-					       - FCJH_Settled is cleared by hand whenever the timer restarts or stops, in case
-					         Reset alone doesn't put its visibility back
-					       - after leaving, FCJH_Rest blocks a new pop-up for 4.0 s -->
+					<!-- round 9 (user, 2026-09-30: "if we can't make it sticky, go back to a duration"):
+					       - fires on a drop to 25% or less, once: "Shown" latches, and only a healthy reading
+					         (26-100%) or a death re-arms it, so a hero who stays low isn't re-popped
+					       - a flicker of "healthy" while low can re-arm it early; FCJH_Lock still holds any
+					         new pop-up back until 10.0 s after the last one
+					       - leaves by itself (Pop, 6.1 s), or fades at once if the hero dies -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
-						<When type="Property" frame="FCJH_Rest" visible="false"/>
+						<When type="Property" frame="FCJH_Lock" visible="false"/>
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroDeathTimeLabel" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Lock"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal6/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal6" event="FCJH_Pop"/>
 					</State>
@@ -1010,31 +819,12 @@
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroDeathTimeLabel" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal6/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
 					</State>
-					<State name="Healed">
+					<State name="Rearm">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus/FCJH_HealthyMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
-						<When type="Property" frame="FCJH_Settled" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
-						<Action type="SendEvent" frame="$parent/FCJH_Heal6/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
-					</State>
-					<State name="MaybeHealed">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus/FCJH_HealthyMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
-					</State>
-					<State name="NotHealthy">
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
@@ -1088,12 +878,14 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 				</Frame>
-				<!-- round 5 (user): no timed exit - it slides in and stays while the hero is at 25% or
-				     less; FCJH_Body fades it out on recovery or death -->
+				<!-- round 9: timed again, the talent pop-up's exact motion - slide up, hold, fade out,
+				     gone at 6.1 s. Rounds 5-8 kept it up until a "healed" reading, and it never left:
+				     that reading comes from a flag whose change the watcher doesn't reliably see. -->
 				<Animation name="Pop">
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
+						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
 						<Key type="Curve" time="0" value="38" inout="Slow"/>
@@ -1102,6 +894,8 @@
 					<Controller type="Fade" end="Pause">
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
+						<Key type="Curve" time="5.35" value="255"/>
+						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -1109,46 +903,31 @@
 				<Anchor relative="$parent"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<Frame type="Frame" name="FCJH_Settled"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<!-- round 7: the 1 s timer runs HERE, on the always-visible watcher, and flips FCJH_Settled.
-				     In round 6 it ran on FCJH_Settled itself - a hidden frame, whose animation never
-				     advances - so "healed" never came and no pop-up cleared (2026-09-30). -->
-				<Animation name="Settle">
-					<Event event="FCJH_Settle" action="Reset,Play"/>
-					<Event event="FCJH_Cancel" action="Reset,Stop"/>
-					<Controller type="Visibility" end="Pause" frame="FCJH_Settled">
-						<Key type="Bool" time="0" value="false"/>
-						<Key type="Bool" time="1.0" value="true"/>
-					</Controller>
-				</Animation>
-				<!-- round 8: after a pop-up leaves, this plate rests 4.0 s before it can pop again - the
-				     duration-based guard (user, 2026-09-30) on top of the sticky logic -->
-				<Frame type="Frame" name="FCJH_Rest"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<Animation name="Rest">
-					<Event event="FCJH_Rest" action="Reset,Play"/>
-					<Controller type="Visibility" end="Pause" frame="FCJH_Rest">
+				<!-- after a pop-up fires, this plate can't fire another for 10.0 s, however the health
+				     flags flicker -->
+				<Frame type="Frame" name="FCJH_Lock"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<Animation name="Lock">
+					<Event event="FCJH_Lock" action="Reset,Play"/>
+					<Controller type="Visibility" end="Pause" frame="FCJH_Lock">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="4.0" value="false"/>
+						<Key type="Bool" time="10.0" value="false"/>
 					</Controller>
 				</Animation>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
-					<!-- Shows on a drop to 25% or less and STAYS until the hero dies or has read healthy (26-100%)
-					     for 1 s straight. Both health flags flicker as the percent changes, so:
-					       - any reading that isn't healthy cancels the 1 s timer (round 7 only cancelled on a
-					         critical reading; a moment with neither flag let the timer run out, and the next
-					         flicker of "healthy" then read as healed - the come-and-go, 2026-09-30)
-					       - FCJH_Settled is cleared by hand whenever the timer restarts or stops, in case
-					         Reset alone doesn't put its visibility back
-					       - after leaving, FCJH_Rest blocks a new pop-up for 4.0 s -->
+					<!-- round 9 (user, 2026-09-30: "if we can't make it sticky, go back to a duration"):
+					       - fires on a drop to 25% or less, once: "Shown" latches, and only a healthy reading
+					         (26-100%) or a death re-arms it, so a hero who stays low isn't re-popped
+					       - a flicker of "healthy" while low can re-arm it early; FCJH_Lock still holds any
+					         new pop-up back until 10.0 s after the last one
+					       - leaves by itself (Pop, 6.1 s), or fades at once if the hero dies -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
-						<When type="Property" frame="FCJH_Rest" visible="false"/>
+						<When type="Property" frame="FCJH_Lock" visible="false"/>
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroDeathTimeLabel" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Lock"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal7/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal7" event="FCJH_Pop"/>
 					</State>
@@ -1156,31 +935,12 @@
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroDeathTimeLabel" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal7/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
 					</State>
-					<State name="Healed">
+					<State name="Rearm">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus/FCJH_HealthyMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
-						<When type="Property" frame="FCJH_Settled" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
-						<Action type="SendEvent" frame="$parent/FCJH_Heal7/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
-					</State>
-					<State name="MaybeHealed">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus/FCJH_HealthyMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
-					</State>
-					<State name="NotHealthy">
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
@@ -1234,12 +994,14 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 				</Frame>
-				<!-- round 5 (user): no timed exit - it slides in and stays while the hero is at 25% or
-				     less; FCJH_Body fades it out on recovery or death -->
+				<!-- round 9: timed again, the talent pop-up's exact motion - slide up, hold, fade out,
+				     gone at 6.1 s. Rounds 5-8 kept it up until a "healed" reading, and it never left:
+				     that reading comes from a flag whose change the watcher doesn't reliably see. -->
 				<Animation name="Pop">
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
+						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
 						<Key type="Curve" time="0" value="38" inout="Slow"/>
@@ -1248,6 +1010,8 @@
 					<Controller type="Fade" end="Pause">
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
+						<Key type="Curve" time="5.35" value="255"/>
+						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -1255,46 +1019,31 @@
 				<Anchor relative="$parent"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<Frame type="Frame" name="FCJH_Settled"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<!-- round 7: the 1 s timer runs HERE, on the always-visible watcher, and flips FCJH_Settled.
-				     In round 6 it ran on FCJH_Settled itself - a hidden frame, whose animation never
-				     advances - so "healed" never came and no pop-up cleared (2026-09-30). -->
-				<Animation name="Settle">
-					<Event event="FCJH_Settle" action="Reset,Play"/>
-					<Event event="FCJH_Cancel" action="Reset,Stop"/>
-					<Controller type="Visibility" end="Pause" frame="FCJH_Settled">
-						<Key type="Bool" time="0" value="false"/>
-						<Key type="Bool" time="1.0" value="true"/>
-					</Controller>
-				</Animation>
-				<!-- round 8: after a pop-up leaves, this plate rests 4.0 s before it can pop again - the
-				     duration-based guard (user, 2026-09-30) on top of the sticky logic -->
-				<Frame type="Frame" name="FCJH_Rest"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<Animation name="Rest">
-					<Event event="FCJH_Rest" action="Reset,Play"/>
-					<Controller type="Visibility" end="Pause" frame="FCJH_Rest">
+				<!-- after a pop-up fires, this plate can't fire another for 10.0 s, however the health
+				     flags flicker -->
+				<Frame type="Frame" name="FCJH_Lock"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<Animation name="Lock">
+					<Event event="FCJH_Lock" action="Reset,Play"/>
+					<Controller type="Visibility" end="Pause" frame="FCJH_Lock">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="4.0" value="false"/>
+						<Key type="Bool" time="10.0" value="false"/>
 					</Controller>
 				</Animation>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
-					<!-- Shows on a drop to 25% or less and STAYS until the hero dies or has read healthy (26-100%)
-					     for 1 s straight. Both health flags flicker as the percent changes, so:
-					       - any reading that isn't healthy cancels the 1 s timer (round 7 only cancelled on a
-					         critical reading; a moment with neither flag let the timer run out, and the next
-					         flicker of "healthy" then read as healed - the come-and-go, 2026-09-30)
-					       - FCJH_Settled is cleared by hand whenever the timer restarts or stops, in case
-					         Reset alone doesn't put its visibility back
-					       - after leaving, FCJH_Rest blocks a new pop-up for 4.0 s -->
+					<!-- round 9 (user, 2026-09-30: "if we can't make it sticky, go back to a duration"):
+					       - fires on a drop to 25% or less, once: "Shown" latches, and only a healthy reading
+					         (26-100%) or a death re-arms it, so a hero who stays low isn't re-popped
+					       - a flicker of "healthy" while low can re-arm it early; FCJH_Lock still holds any
+					         new pop-up back until 10.0 s after the last one
+					       - leaves by itself (Pop, 6.1 s), or fades at once if the hero dies -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
-						<When type="Property" frame="FCJH_Rest" visible="false"/>
+						<When type="Property" frame="FCJH_Lock" visible="false"/>
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroDeathTimeLabel" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Lock"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal8/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal8" event="FCJH_Pop"/>
 					</State>
@@ -1302,31 +1051,12 @@
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroDeathTimeLabel" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal8/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
 					</State>
-					<State name="Healed">
+					<State name="Rearm">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus/FCJH_HealthyMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
-						<When type="Property" frame="FCJH_Settled" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
-						<Action type="SendEvent" frame="$parent/FCJH_Heal8/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
-					</State>
-					<State name="MaybeHealed">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus/FCJH_HealthyMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
-					</State>
-					<State name="NotHealthy">
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
@@ -1380,12 +1110,14 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 				</Frame>
-				<!-- round 5 (user): no timed exit - it slides in and stays while the hero is at 25% or
-				     less; FCJH_Body fades it out on recovery or death -->
+				<!-- round 9: timed again, the talent pop-up's exact motion - slide up, hold, fade out,
+				     gone at 6.1 s. Rounds 5-8 kept it up until a "healed" reading, and it never left:
+				     that reading comes from a flag whose change the watcher doesn't reliably see. -->
 				<Animation name="Pop">
 					<Event event="FCJH_Pop" action="Restart,Play"/>
 					<Controller type="Visibility" end="Pause">
 						<Key type="Bool" time="0" value="true"/>
+						<Key type="Bool" time="6.1" value="false"/>
 					</Controller>
 					<Controller type="Anchor" end="Pause" side="Top" relative="true">
 						<Key type="Curve" time="0" value="38" inout="Slow"/>
@@ -1394,6 +1126,8 @@
 					<Controller type="Fade" end="Pause">
 						<Key type="Curve" time="0" value="0"/>
 						<Key type="Curve" time="0.25" value="255"/>
+						<Key type="Curve" time="5.35" value="255"/>
+						<Key type="Curve" time="6.1" value="0"/>
 					</Controller>
 				</Animation>
 			</Frame>
@@ -1401,46 +1135,31 @@
 				<Anchor relative="$parent"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<Frame type="Frame" name="FCJH_Settled"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<!-- round 7: the 1 s timer runs HERE, on the always-visible watcher, and flips FCJH_Settled.
-				     In round 6 it ran on FCJH_Settled itself - a hidden frame, whose animation never
-				     advances - so "healed" never came and no pop-up cleared (2026-09-30). -->
-				<Animation name="Settle">
-					<Event event="FCJH_Settle" action="Reset,Play"/>
-					<Event event="FCJH_Cancel" action="Reset,Stop"/>
-					<Controller type="Visibility" end="Pause" frame="FCJH_Settled">
-						<Key type="Bool" time="0" value="false"/>
-						<Key type="Bool" time="1.0" value="true"/>
-					</Controller>
-				</Animation>
-				<!-- round 8: after a pop-up leaves, this plate rests 4.0 s before it can pop again - the
-				     duration-based guard (user, 2026-09-30) on top of the sticky logic -->
-				<Frame type="Frame" name="FCJH_Rest"><Anchor relative="$parent"/><Visible val="false"/></Frame>
-				<Animation name="Rest">
-					<Event event="FCJH_Rest" action="Reset,Play"/>
-					<Controller type="Visibility" end="Pause" frame="FCJH_Rest">
+				<!-- after a pop-up fires, this plate can't fire another for 10.0 s, however the health
+				     flags flicker -->
+				<Frame type="Frame" name="FCJH_Lock"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+				<Animation name="Lock">
+					<Event event="FCJH_Lock" action="Reset,Play"/>
+					<Controller type="Visibility" end="Pause" frame="FCJH_Lock">
 						<Key type="Bool" time="0" value="true"/>
-						<Key type="Bool" time="4.0" value="false"/>
+						<Key type="Bool" time="10.0" value="false"/>
 					</Controller>
 				</Animation>
 				<StateGroup name="Crit">
 					<DefaultState val="Hold"/>
-					<!-- Shows on a drop to 25% or less and STAYS until the hero dies or has read healthy (26-100%)
-					     for 1 s straight. Both health flags flicker as the percent changes, so:
-					       - any reading that isn't healthy cancels the 1 s timer (round 7 only cancelled on a
-					         critical reading; a moment with neither flag let the timer run out, and the next
-					         flicker of "healthy" then read as healed - the come-and-go, 2026-09-30)
-					       - FCJH_Settled is cleared by hand whenever the timer restarts or stops, in case
-					         Reset alone doesn't put its visibility back
-					       - after leaving, FCJH_Rest blocks a new pop-up for 4.0 s -->
+					<!-- round 9 (user, 2026-09-30: "if we can't make it sticky, go back to a duration"):
+					       - fires on a drop to 25% or less, once: "Shown" latches, and only a healthy reading
+					         (26-100%) or a death re-arms it, so a hero who stays low isn't re-popped
+					       - a flicker of "healthy" while low can re-arm it early; FCJH_Lock still holds any
+					         new pop-up back until 10.0 s after the last one
+					       - leaves by itself (Pop, 6.1 s), or fades at once if the hero dies -->
 					<State name="Fire">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus/FCJH_CritMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="false"/>
-						<When type="Property" frame="FCJH_Rest" visible="false"/>
+						<When type="Property" frame="FCJH_Lock" visible="false"/>
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroDeathTimeLabel" visible="false"/>
 						<Action type="SetProperty" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
+						<Action type="SendEvent" frame="$this" event="FCJH_Lock"/>
 						<Action type="SetProperty" frame="$parent/FCJH_Heal9/FCJH_Body" visible="true"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal9" event="FCJH_Pop"/>
 					</State>
@@ -1448,31 +1167,12 @@
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroDeathTimeLabel" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 						<Action type="SendEvent" frame="$parent/FCJH_Heal9/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
 					</State>
-					<State name="Healed">
+					<State name="Rearm">
 						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus/FCJH_HealthyMark" visible="true"/>
 						<When type="Property" frame="Shown" visible="true"/>
-						<When type="Property" frame="FCJH_Settled" visible="true"/>
 						<Action type="SetProperty" frame="Shown" visible="false"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
-						<Action type="SendEvent" frame="$parent/FCJH_Heal9/FCJH_Body" event="FCJH_Leave"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Rest"/>
-					</State>
-					<State name="MaybeHealed">
-						<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus/FCJH_HealthyMark" visible="true"/>
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
-					</State>
-					<State name="NotHealthy">
-						<When type="Property" frame="Shown" visible="true"/>
-						<Action type="SendEvent" frame="$this" event="FCJH_Cancel"/>
-						<Action type="SetProperty" frame="FCJH_Settled" visible="false"/>
 					</State>
 					<State name="Hold"/>
 				</StateGroup>
