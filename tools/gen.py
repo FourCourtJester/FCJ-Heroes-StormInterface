@@ -435,6 +435,15 @@ def hex_fade_texture(team, colour, alpha, hex_px, box_px, size=(256, 128)):
     return dds_bgra(w, h, b"".join(rows))
 
 
+def bar_texture_size(w, h):
+    """A slanted bar texture close to its size on screen (w x h px), in powers of two. Our
+    DDS files carry no mipmaps, so a texture drawn much smaller than it is gets sampled
+    coarsely and its slanted edge steps: the core bar (213 x 24 px) from a 512 x 32
+    texture read "ragged" in game (2026-09-30)."""
+    p2 = lambda v: 1 << max(4, (round(v) - 1).bit_length())
+    return p2(w), p2(h)
+
+
 def slant_bars(cfg):
     """Every slanted texture (bars and plate tokens), by constant name: {name: (file name, dds bytes)}. Names
     carry a content hash (textures are cached by path across replay reloads)."""
@@ -450,16 +459,17 @@ def slant_bars(cfg):
         for bar, spec, fill in (("xp", xp, xp["colour"]), ("core", core, core[f"{team}_colour"])):
             (_, _, w, h), _ = rects_[f"{team}_{bar}"]
             cut = lean * h / w
+            size = bar_texture_size(w, h)
             for part, data in (("fill", slant_texture(team, 0, fill, size=(32, 32))),
-                               ("track", slant_texture(team, cut, spec["track_colour"], spec["track_alpha"])),
-                               ("mask", slant_texture(team, cut, "ffffff"))):
+                               ("track", slant_texture(team, cut, spec["track_colour"], spec["track_alpha"], size=size)),
+                               ("mask", slant_texture(team, cut, "ffffff", size=size))):
                 digest = hashlib.sha1(data).hexdigest()[:8]
                 out[name(bar, part, team)] = (f"FCJH_Bar_{bar}_{part}_{team}_{digest}.dds", data)
         # XP for rows of 1-4 heroes: a shorter bar keeps the same slant only with its own cut
         for n in range(1, 5):
             (_, _, w, h), _ = team_bar_rects(cfg, n)[f"{team}_xp"]
             for part, colour, alpha in (("mask", "ffffff", 255), ("track", xp["track_colour"], xp["track_alpha"])):
-                data = slant_texture(team, lean * h / w, colour, alpha)
+                data = slant_texture(team, lean * h / w, colour, alpha, size=bar_texture_size(w, h))
                 digest = hashlib.sha1(data).hexdigest()[:8]
                 out[name("xp", part, team, f"n{n}")] = (f"FCJH_Bar_xp_{part}_{team}_n{n}_{digest}.dds", data)
     # the team level's backdrop (top bar, blue_level / red_level): a hexagon pattern in the team
@@ -594,6 +604,10 @@ def trackers(team, health):
 PET_TIMERS = {"Olaf": "HeroDeathTimeVikingOlafLabel", "Baleog": "HeroDeathTimeVikingBaleogLabel",
               "Erik": "HeroDeathTimeVikingErikLabel", "Pet": "HeroDeathTimePetLabel"}
 PARTY = "$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel"
+VIKING_SLOT = {"Baleog": 0, "Erik": 1, "Olaf": 2}   # which third of the plate each Viking's bar is
+TALENT_ROW = ("$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/"
+              "TalentOverview/HeroTalentsPanelContainer/PlayerFrame{n}/TalentsContainerFrame/"
+              "SelectionUnitStatusPanel/UnitStatusFrame0")
 
 
 def pet_death_labels(team, c):
@@ -609,7 +623,9 @@ def pet_death_labels(team, c):
     lean = c.overlap / c.h
     shift = round(lean * ((ht + hb) / 2 - (2 + hb) / 2)) * (-1 if team == "blue" else 1)
     labels = ""
-    for i, viking in enumerate(("Olaf", "Baleog", "Erik")):
+    # the bars' order on the plate is Baleog, Erik, Olaf (seen in game 2026-09-30: Olaf's
+    # timer had landed on the first slice, Baleog's bar)
+    for viking, i in VIKING_SLOT.items():
         left = round(hl + i * (third + VIKING_GAP)) + shift
         labels += f"""
 		<Frame type="Label" name="FCJH_Death{viking}">
@@ -666,6 +682,8 @@ def heroic_panel(cfg, team_frame, i):
     g = c.team[team]
     party = f"{PARTY}/{team_frame}/HeroOverview{i}/HeroicTalentPanel"
     cell = f"{OVERVIEW}/{team_frame}/HeroOverview{i}"
+    sensor = f"{cell}/HeroStatus/FCJH_HeroicAbil"
+    row = TALENT_ROW.format(n=i - 1 if blue else i + 4)   # PlayerFrame0-4 blue 1-5, 5-9 red 1-5
     pl, il = HEROIC_PANEL[team]
     mask, frame_tex, flip, fill_tex = HEROIC_ART[team]
     coords = '<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>' if flip else ""
@@ -738,16 +756,36 @@ def heroic_panel(cfg, team_frame, i):
 										<Action type="SetProperty" frame="$this" Alpha="0"/>
 {lefts(False)}									</State>
 								</StateGroup>
+								<!-- cooldown: the hidden bar's own count never showed for observers (2026-09-30),
+								     so a second source - our ability sensor in this plate's HeroStatus
+								     (FCJH_HeroicAbil, below) - can trigger the same dim-and-count -->
+								<Frame type="Label" name="FCJH_UltCooldown2">
+{rect(*fr, t9)}{t9}<Text val="{{{sensor}/AbilIcon/CooldownLabel/@Text}}"/>
+{t9}<Style val="PartyFrame_HeroicTalentCooldown"/>
+{t9}<Options val="NoWrapping | ScaleToPreventTruncation"/>
+{t9}<Alpha val="0"/>
+{t9}<Unclipped val="true"/>
+{t9}<AcceptsMouse val="false"/>
+								</Frame>
 								<StateGroup name="FCJH_Cooldown">
 									<DefaultState val="Ready"/>
 									<State name="Cooldown">
 										<When type="Property" frame="{watch('HeroicTalentCooldownLabel')}" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
+									</State>
+									<State name="CooldownSensor">
+										<When type="Property" frame="{sensor}/AbilIcon/CooldownLabel" Visible="true"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
 									</State>
 									<State name="Ready">
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
 									</State>
@@ -762,6 +800,22 @@ def heroic_panel(cfg, team_frame, i):
 									<State name="Yes"><When type="Property" frame="{watch('HeroicTalentChargeFillProgress')}" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="255"/></State>
 									<State name="No"><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="0"/></State>
 								</StateGroup>
+							</Frame>
+							<Frame type="UnitStatusFrame" name="HeroStatus">
+								<!-- the heroic as an invisible ability icon bound to this plate's hero (Ahli's way),
+								     given the heroic from the talent pane's row for this player: a cooldown source -->
+								<Frame type="UnitStatusAbilIcon" name="FCJH_HeroicAbil">
+									<Anchor relative="$parent"/>
+									<AbilityLink val="{{{row}/HeroSelectedTalentTreeFrame/@HeroicAbilLink}}"/>
+									<Alpha val="0"/>
+									<AcceptsMouse val="false"/>
+									<AcceptsMouseTooltip val="false"/>
+									<Frame type="AbilIcon" name="AbilIcon">
+										<Anchor relative="$parent"/>
+										<Frame type="Image" name="IconImage"><Anchor relative="$parent"/></Frame>
+										<Frame type="Label" name="CooldownLabel"><Anchor relative="$parent"/></Frame>
+									</Frame>
+								</Frame>
 							</Frame>"""
 
 
@@ -1500,6 +1554,7 @@ def stat_value(frame, score, team, indent):
             f'{t}\t\t<Texture val="@UI/PauseScreenDimImage"/>\n'
             f'{t}\t\t<ColorAdjustMode val="Fill"/>\n{t}\t\t<AdjustmentColor val="{colour}"/>\n'
             f'{t}\t\t<Visible val="false"/>\n{t}\t\t<Unclipped val="true"/>\n{t}\t\t<AcceptsMouse val="false"/>\n'
+            f'{t}\t\t<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->\n'
             f'{t}\t\t<Animation name="FCJH_ShowLead">\n'
             f'{t}\t\t\t<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>\n'
             f'{t}\t\t\t<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>\n'
@@ -1519,6 +1574,7 @@ def stat_value(frame, score, team, indent):
             f'{t}\t\t<Anchor relative="$parent"/>\n'
             f'{t}\t\t<Text val="{{$parent/Label/@Text}}"/>\n'
             f'{t}\t\t<Style val="FCJH_StatValue_{team.capitalize()}"/>\n'
+            f'{t}\t\t<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->\n'
             f'{t}\t\t<Options val="NoWrapping | ScaleToPreventTruncation"/>\n'
             f'{t}\t\t<AcceptsMouse val="false"/>\n'
             f'{t}\t</Frame>\n' + underline +

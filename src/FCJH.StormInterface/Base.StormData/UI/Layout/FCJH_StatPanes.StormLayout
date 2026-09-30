@@ -101,6 +101,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -115,6 +116,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -145,6 +147,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -168,6 +171,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -182,6 +186,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -212,6 +217,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -227,6 +233,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -283,6 +290,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -297,6 +305,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -327,6 +336,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -350,6 +360,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -364,6 +375,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -394,6 +406,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -409,6 +422,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -465,6 +479,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -479,6 +494,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -509,6 +525,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -532,6 +549,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -546,6 +564,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -576,6 +595,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -591,6 +611,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -647,6 +668,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -661,6 +683,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -691,6 +714,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -714,6 +738,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -728,6 +753,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -758,6 +784,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -773,6 +800,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -829,6 +857,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -843,6 +872,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -873,6 +903,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -896,6 +927,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -910,6 +942,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -940,6 +973,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -955,6 +989,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -1011,6 +1046,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -1025,6 +1061,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -1055,6 +1092,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -1078,6 +1116,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -1092,6 +1131,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -1122,6 +1162,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -1137,6 +1178,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -1193,6 +1235,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -1207,6 +1250,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -1237,6 +1281,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -1260,6 +1305,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -1274,6 +1320,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -1304,6 +1351,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -1319,6 +1367,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -1375,6 +1424,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -1389,6 +1439,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -1419,6 +1470,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -1442,6 +1494,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -1456,6 +1509,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -1486,6 +1540,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -1501,6 +1556,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -1557,6 +1613,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -1571,6 +1628,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -1601,6 +1659,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -1624,6 +1683,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -1638,6 +1698,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -1668,6 +1729,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -1683,6 +1745,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -1739,6 +1802,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -1753,6 +1817,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -1783,6 +1848,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -1806,6 +1872,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -1820,6 +1887,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -1850,6 +1918,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -1865,6 +1934,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -2274,6 +2344,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -2289,6 +2360,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -2319,6 +2391,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -2334,6 +2407,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -2364,6 +2438,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -2379,6 +2454,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -2436,6 +2512,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -2451,6 +2528,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -2481,6 +2559,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -2496,6 +2575,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -2526,6 +2606,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -2541,6 +2622,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -2598,6 +2680,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -2613,6 +2696,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -2643,6 +2727,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -2658,6 +2743,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -2688,6 +2774,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -2703,6 +2790,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -2760,6 +2848,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -2775,6 +2864,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -2805,6 +2895,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -2820,6 +2911,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -2850,6 +2942,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -2865,6 +2958,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -2922,6 +3016,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -2937,6 +3032,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -2967,6 +3063,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -2982,6 +3079,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -3012,6 +3110,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -3027,6 +3126,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -3084,6 +3184,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -3099,6 +3200,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -3129,6 +3231,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -3144,6 +3247,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -3174,6 +3278,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -3189,6 +3294,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -3246,6 +3352,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -3261,6 +3368,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -3291,6 +3399,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -3306,6 +3415,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -3336,6 +3446,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -3351,6 +3462,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -3408,6 +3520,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -3423,6 +3536,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -3453,6 +3567,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -3468,6 +3583,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -3498,6 +3614,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -3513,6 +3630,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -3570,6 +3688,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -3585,6 +3704,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -3615,6 +3735,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -3630,6 +3751,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -3660,6 +3782,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -3675,6 +3798,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -3732,6 +3856,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -3747,6 +3872,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -3777,6 +3903,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -3792,6 +3919,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -3822,6 +3950,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -3837,6 +3966,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -4205,6 +4335,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -4220,6 +4351,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -4250,6 +4382,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -4265,6 +4398,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -4295,6 +4429,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -4309,6 +4444,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -4366,6 +4502,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -4381,6 +4518,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -4411,6 +4549,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -4426,6 +4565,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -4456,6 +4596,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -4470,6 +4611,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -4527,6 +4669,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -4542,6 +4685,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -4572,6 +4716,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -4587,6 +4732,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -4617,6 +4763,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -4631,6 +4778,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -4688,6 +4836,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -4703,6 +4852,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -4733,6 +4883,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -4748,6 +4899,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -4778,6 +4930,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -4792,6 +4945,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -4849,6 +5003,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -4864,6 +5019,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -4894,6 +5050,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -4909,6 +5066,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -4939,6 +5097,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Blue"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -4953,6 +5112,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -5010,6 +5170,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -5025,6 +5186,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -5055,6 +5217,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -5070,6 +5233,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -5100,6 +5264,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -5114,6 +5279,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -5171,6 +5337,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -5186,6 +5353,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -5216,6 +5384,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -5231,6 +5400,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -5261,6 +5431,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -5275,6 +5446,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -5332,6 +5504,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -5347,6 +5520,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -5377,6 +5551,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -5392,6 +5567,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -5422,6 +5598,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -5436,6 +5613,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -5493,6 +5671,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -5508,6 +5687,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -5538,6 +5718,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -5553,6 +5734,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -5583,6 +5765,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -5597,6 +5780,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -5654,6 +5838,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -5669,6 +5854,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -5699,6 +5885,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -5714,6 +5901,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>
@@ -5744,6 +5932,7 @@
 											<Anchor relative="$parent"/>
 											<Text val="{$parent/Label/@Text}"/>
 											<Style val="FCJH_StatValue_Red"/>
+											<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->
 											<Options val="NoWrapping | ScaleToPreventTruncation"/>
 											<AcceptsMouse val="false"/>
 										</Frame>
@@ -5758,6 +5947,7 @@
 											<Visible val="false"/>
 											<Unclipped val="true"/>
 											<AcceptsMouse val="false"/>
+											<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->
 											<Animation name="FCJH_ShowLead">
 												<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>
 												<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>

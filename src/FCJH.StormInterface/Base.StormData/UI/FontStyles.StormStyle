@@ -15,8 +15,9 @@
 	<Style name="FCJH_StatTeam_Blue" template="HeaderExtendedTemplate" height="15" textcolor="55a9f8" vjustify="Middle" hjustify="Left" styleflags="!Shadow|!Glow|!Uppercase"/>
 	<Style name="FCJH_StatTeam_Red" template="HeaderExtendedTemplate" height="15" textcolor="e0668f" vjustify="Middle" hjustify="Left" styleflags="!Shadow|!Glow|!Uppercase"/>
 	<!-- Plate CC text ("STUNNED"): Blizzard's TalentChoiceAlertNameplateLabel, but centred
-	     vertically too, so it sits across the middle of the health bar -->
-	<Style name="FCJH_CCText" template="HeaderExtendedTemplate" height="17" textcolor="ffffff" hjustify="Center" vjustify="Middle" fontflags="Outline" styleflags="!Shadow"/>
+	     vertically too, so it sits across the middle of the health bar. 14, not 17: UNSTOPPABLE
+	     overflowed the shorter bar a heroic leaves (2026-09-30) -->
+	<Style name="FCJH_CCText" template="HeaderExtendedTemplate" height="14" textcolor="ffffff" hjustify="Center" vjustify="Middle" fontflags="Outline" styleflags="!Shadow"/>
 	<!-- Per-Viking / Misha death timer: Blizzard's pet timer, centred both ways in its slice
 	     of the plate (Blizzard's own isn't centred there) -->
 	<Style name="FCJH_PetDeathTimer" template="Storm_TopBar_DeathTimer_Pet" hjustify="Center" vjustify="Middle"/>

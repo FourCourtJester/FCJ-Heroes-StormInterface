@@ -46,9 +46,23 @@
 				<Alpha val="0"/>
 				<AcceptsMouse val="false"/>
 			</Frame>
+			<!-- Replays only: in a live observed game the replay panel never shows at all, and the
+			     tab mustn't either (user, 2026-09-30). The interface has no "is this a replay"
+			     flag, so FCJH_Seen latches the first time the panel is seen, and the tab only
+			     shows after that. -->
+			<Frame type="Frame" name="FCJH_Seen"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+			<StateGroup name="FCJH_ReplaySeen">
+				<DefaultState val="NotYet"/>
+				<State name="Seen">
+					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverPanelMovingContainer/ReplayPanel" Visible="true"/>
+					<Action type="SetProperty" frame="FCJH_Seen" visible="true"/>
+				</State>
+				<State name="NotYet"/>
+			</StateGroup>
 			<StateGroup name="FCJH_Collapsed">
 				<DefaultState val="Open"/>
 				<State name="Collapsed">
+					<When type="Property" frame="FCJH_Seen" visible="true"/>
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverPanelMovingContainer/ReplayPanel" Visible="false"/>
 					<Action type="SetProperty" frame="FCJH_TabBack" Alpha="255"/>
 					<Action type="SetProperty" frame="FCJH_TabLabel" Alpha="255"/>
