@@ -155,12 +155,12 @@ heroic_token = [24, 18]      # w, h px: the heroic token in the plate's bottom c
 
 # Talent pop-ups (tools/gen.py talent_popups): the talent a player just picked, in the talent
 # pane's team-coloured square, in the same spot and motion as the heal pop-ups (both from
-# tools/gen.py popup_frame), drawn over them. Fades out at once if the hero dies. No lock -
-# a pick is a real event, never a flicker. Size: talent_popup_size above.
+# tools/gen.py popup_frame), drawn over them. It always plays out - no lock, no early exit
+# on a death: it's important information for the commentators (user, 2026-09-30).
+# Size: talent_popup_size above.
 [talent_popup]
 hold = 5.1                   # s fully shown (gone at 0.25 + hold + fade = 6.1 s, as the probe)
 fade = 0.75                  # s to fade out at the end
-death_fade = 0.35            # s to fade out when the hero dies
 
 # Heal pop-ups (tools/gen.py heal_popups): a green plus in a green square, in the talent
 # pop-up's spot and motion, when a hero drops to `threshold` percent or less. Once per dip:

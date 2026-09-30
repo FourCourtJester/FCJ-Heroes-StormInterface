@@ -2169,8 +2169,8 @@
 				</Frame>
 		</Frame>
 		<!-- Talent pop-ups (tools/gen.py talent_popups; layout.toml [talent_popup]): the talent
-		     a player just picked pops up on their plate; gone after 6.1 s, or at once if the
-		     hero dies. Drawn over the heal pop-ups. -->
+		     a player just picked pops up on their plate and always plays out (6.1 s), even
+		     if the hero dies. Drawn over the heal pop-ups. -->
 		<Frame type="Frame" name="FCJH_TalentPopups">
 			<Anchor relative="$parent"/>
 			<AcceptsMouse val="false"/>
@@ -2185,14 +2185,6 @@
 					<Frame type="Frame" name="FCJH_Body">
 						<Anchor relative="$parent"/>
 						<AcceptsMouse val="false"/>
-						<Animation name="Leave">
-							<Event event="FCJH_Leave" action="Reset,Play"/>
-							<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
-							<Controller type="Fade" end="Pause">
-								<Key type="Curve" time="0" value="255"/>
-								<Key type="Curve" time="0.35" value="0"/>
-							</Controller>
-						</Animation>
 						<Frame type="Image" name="T1">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
@@ -2487,18 +2479,6 @@
 						</State>
 					</StateGroup>
 				</Frame>
-				<Frame type="Frame" name="FCJH_TalentDeath0">
-					<Anchor relative="$parent"/>
-					<AcceptsMouse val="false"/>
-					<StateGroup name="FCJH_Death">
-						<DefaultState val="Alive"/>
-						<State name="Died">
-							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroDeathTimeLabel" visible="true"/>
-							<Action type="SendEvent" frame="$parent/FCJH_Talent0/FCJH_Body" event="FCJH_Leave"/>
-						</State>
-						<State name="Alive"/>
-					</StateGroup>
-				</Frame>
 				<Frame type="Frame" name="FCJH_Talent1">
 					<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="#FCJH_HERO_POPUP_T"/>
 					<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Mid" offset="#FCJH_HERO_BLUE_POPUP_L"/>
@@ -2509,14 +2489,6 @@
 					<Frame type="Frame" name="FCJH_Body">
 						<Anchor relative="$parent"/>
 						<AcceptsMouse val="false"/>
-						<Animation name="Leave">
-							<Event event="FCJH_Leave" action="Reset,Play"/>
-							<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
-							<Controller type="Fade" end="Pause">
-								<Key type="Curve" time="0" value="255"/>
-								<Key type="Curve" time="0.35" value="0"/>
-							</Controller>
-						</Animation>
 						<Frame type="Image" name="T1">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
@@ -2811,18 +2783,6 @@
 						</State>
 					</StateGroup>
 				</Frame>
-				<Frame type="Frame" name="FCJH_TalentDeath1">
-					<Anchor relative="$parent"/>
-					<AcceptsMouse val="false"/>
-					<StateGroup name="FCJH_Death">
-						<DefaultState val="Alive"/>
-						<State name="Died">
-							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroDeathTimeLabel" visible="true"/>
-							<Action type="SendEvent" frame="$parent/FCJH_Talent1/FCJH_Body" event="FCJH_Leave"/>
-						</State>
-						<State name="Alive"/>
-					</StateGroup>
-				</Frame>
 				<Frame type="Frame" name="FCJH_Talent2">
 					<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="#FCJH_HERO_POPUP_T"/>
 					<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Mid" offset="#FCJH_HERO_BLUE_POPUP_L"/>
@@ -2833,14 +2793,6 @@
 					<Frame type="Frame" name="FCJH_Body">
 						<Anchor relative="$parent"/>
 						<AcceptsMouse val="false"/>
-						<Animation name="Leave">
-							<Event event="FCJH_Leave" action="Reset,Play"/>
-							<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
-							<Controller type="Fade" end="Pause">
-								<Key type="Curve" time="0" value="255"/>
-								<Key type="Curve" time="0.35" value="0"/>
-							</Controller>
-						</Animation>
 						<Frame type="Image" name="T1">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
@@ -3135,18 +3087,6 @@
 						</State>
 					</StateGroup>
 				</Frame>
-				<Frame type="Frame" name="FCJH_TalentDeath2">
-					<Anchor relative="$parent"/>
-					<AcceptsMouse val="false"/>
-					<StateGroup name="FCJH_Death">
-						<DefaultState val="Alive"/>
-						<State name="Died">
-							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroDeathTimeLabel" visible="true"/>
-							<Action type="SendEvent" frame="$parent/FCJH_Talent2/FCJH_Body" event="FCJH_Leave"/>
-						</State>
-						<State name="Alive"/>
-					</StateGroup>
-				</Frame>
 				<Frame type="Frame" name="FCJH_Talent3">
 					<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="#FCJH_HERO_POPUP_T"/>
 					<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Mid" offset="#FCJH_HERO_BLUE_POPUP_L"/>
@@ -3157,14 +3097,6 @@
 					<Frame type="Frame" name="FCJH_Body">
 						<Anchor relative="$parent"/>
 						<AcceptsMouse val="false"/>
-						<Animation name="Leave">
-							<Event event="FCJH_Leave" action="Reset,Play"/>
-							<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
-							<Controller type="Fade" end="Pause">
-								<Key type="Curve" time="0" value="255"/>
-								<Key type="Curve" time="0.35" value="0"/>
-							</Controller>
-						</Animation>
 						<Frame type="Image" name="T1">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
@@ -3459,18 +3391,6 @@
 						</State>
 					</StateGroup>
 				</Frame>
-				<Frame type="Frame" name="FCJH_TalentDeath3">
-					<Anchor relative="$parent"/>
-					<AcceptsMouse val="false"/>
-					<StateGroup name="FCJH_Death">
-						<DefaultState val="Alive"/>
-						<State name="Died">
-							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroDeathTimeLabel" visible="true"/>
-							<Action type="SendEvent" frame="$parent/FCJH_Talent3/FCJH_Body" event="FCJH_Leave"/>
-						</State>
-						<State name="Alive"/>
-					</StateGroup>
-				</Frame>
 				<Frame type="Frame" name="FCJH_Talent4">
 					<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="#FCJH_HERO_POPUP_T"/>
 					<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Mid" offset="#FCJH_HERO_BLUE_POPUP_L"/>
@@ -3481,14 +3401,6 @@
 					<Frame type="Frame" name="FCJH_Body">
 						<Anchor relative="$parent"/>
 						<AcceptsMouse val="false"/>
-						<Animation name="Leave">
-							<Event event="FCJH_Leave" action="Reset,Play"/>
-							<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
-							<Controller type="Fade" end="Pause">
-								<Key type="Curve" time="0" value="255"/>
-								<Key type="Curve" time="0.35" value="0"/>
-							</Controller>
-						</Animation>
 						<Frame type="Image" name="T1">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
@@ -3783,18 +3695,6 @@
 						</State>
 					</StateGroup>
 				</Frame>
-				<Frame type="Frame" name="FCJH_TalentDeath4">
-					<Anchor relative="$parent"/>
-					<AcceptsMouse val="false"/>
-					<StateGroup name="FCJH_Death">
-						<DefaultState val="Alive"/>
-						<State name="Died">
-							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroDeathTimeLabel" visible="true"/>
-							<Action type="SendEvent" frame="$parent/FCJH_Talent4/FCJH_Body" event="FCJH_Leave"/>
-						</State>
-						<State name="Alive"/>
-					</StateGroup>
-				</Frame>
 				<Frame type="Frame" name="FCJH_Talent5">
 					<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="#FCJH_HERO_POPUP_T"/>
 					<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Mid" offset="#FCJH_HERO_RED_POPUP_L"/>
@@ -3805,14 +3705,6 @@
 					<Frame type="Frame" name="FCJH_Body">
 						<Anchor relative="$parent"/>
 						<AcceptsMouse val="false"/>
-						<Animation name="Leave">
-							<Event event="FCJH_Leave" action="Reset,Play"/>
-							<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
-							<Controller type="Fade" end="Pause">
-								<Key type="Curve" time="0" value="255"/>
-								<Key type="Curve" time="0.35" value="0"/>
-							</Controller>
-						</Animation>
 						<Frame type="Image" name="T1">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
@@ -4107,18 +3999,6 @@
 						</State>
 					</StateGroup>
 				</Frame>
-				<Frame type="Frame" name="FCJH_TalentDeath5">
-					<Anchor relative="$parent"/>
-					<AcceptsMouse val="false"/>
-					<StateGroup name="FCJH_Death">
-						<DefaultState val="Alive"/>
-						<State name="Died">
-							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroDeathTimeLabel" visible="true"/>
-							<Action type="SendEvent" frame="$parent/FCJH_Talent5/FCJH_Body" event="FCJH_Leave"/>
-						</State>
-						<State name="Alive"/>
-					</StateGroup>
-				</Frame>
 				<Frame type="Frame" name="FCJH_Talent6">
 					<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="#FCJH_HERO_POPUP_T"/>
 					<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Mid" offset="#FCJH_HERO_RED_POPUP_L"/>
@@ -4129,14 +4009,6 @@
 					<Frame type="Frame" name="FCJH_Body">
 						<Anchor relative="$parent"/>
 						<AcceptsMouse val="false"/>
-						<Animation name="Leave">
-							<Event event="FCJH_Leave" action="Reset,Play"/>
-							<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
-							<Controller type="Fade" end="Pause">
-								<Key type="Curve" time="0" value="255"/>
-								<Key type="Curve" time="0.35" value="0"/>
-							</Controller>
-						</Animation>
 						<Frame type="Image" name="T1">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
@@ -4431,18 +4303,6 @@
 						</State>
 					</StateGroup>
 				</Frame>
-				<Frame type="Frame" name="FCJH_TalentDeath6">
-					<Anchor relative="$parent"/>
-					<AcceptsMouse val="false"/>
-					<StateGroup name="FCJH_Death">
-						<DefaultState val="Alive"/>
-						<State name="Died">
-							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroDeathTimeLabel" visible="true"/>
-							<Action type="SendEvent" frame="$parent/FCJH_Talent6/FCJH_Body" event="FCJH_Leave"/>
-						</State>
-						<State name="Alive"/>
-					</StateGroup>
-				</Frame>
 				<Frame type="Frame" name="FCJH_Talent7">
 					<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="#FCJH_HERO_POPUP_T"/>
 					<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Mid" offset="#FCJH_HERO_RED_POPUP_L"/>
@@ -4453,14 +4313,6 @@
 					<Frame type="Frame" name="FCJH_Body">
 						<Anchor relative="$parent"/>
 						<AcceptsMouse val="false"/>
-						<Animation name="Leave">
-							<Event event="FCJH_Leave" action="Reset,Play"/>
-							<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
-							<Controller type="Fade" end="Pause">
-								<Key type="Curve" time="0" value="255"/>
-								<Key type="Curve" time="0.35" value="0"/>
-							</Controller>
-						</Animation>
 						<Frame type="Image" name="T1">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
@@ -4755,18 +4607,6 @@
 						</State>
 					</StateGroup>
 				</Frame>
-				<Frame type="Frame" name="FCJH_TalentDeath7">
-					<Anchor relative="$parent"/>
-					<AcceptsMouse val="false"/>
-					<StateGroup name="FCJH_Death">
-						<DefaultState val="Alive"/>
-						<State name="Died">
-							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroDeathTimeLabel" visible="true"/>
-							<Action type="SendEvent" frame="$parent/FCJH_Talent7/FCJH_Body" event="FCJH_Leave"/>
-						</State>
-						<State name="Alive"/>
-					</StateGroup>
-				</Frame>
 				<Frame type="Frame" name="FCJH_Talent8">
 					<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="#FCJH_HERO_POPUP_T"/>
 					<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Mid" offset="#FCJH_HERO_RED_POPUP_L"/>
@@ -4777,14 +4617,6 @@
 					<Frame type="Frame" name="FCJH_Body">
 						<Anchor relative="$parent"/>
 						<AcceptsMouse val="false"/>
-						<Animation name="Leave">
-							<Event event="FCJH_Leave" action="Reset,Play"/>
-							<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
-							<Controller type="Fade" end="Pause">
-								<Key type="Curve" time="0" value="255"/>
-								<Key type="Curve" time="0.35" value="0"/>
-							</Controller>
-						</Animation>
 						<Frame type="Image" name="T1">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
@@ -5079,18 +4911,6 @@
 						</State>
 					</StateGroup>
 				</Frame>
-				<Frame type="Frame" name="FCJH_TalentDeath8">
-					<Anchor relative="$parent"/>
-					<AcceptsMouse val="false"/>
-					<StateGroup name="FCJH_Death">
-						<DefaultState val="Alive"/>
-						<State name="Died">
-							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroDeathTimeLabel" visible="true"/>
-							<Action type="SendEvent" frame="$parent/FCJH_Talent8/FCJH_Body" event="FCJH_Leave"/>
-						</State>
-						<State name="Alive"/>
-					</StateGroup>
-				</Frame>
 				<Frame type="Frame" name="FCJH_Talent9">
 					<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="#FCJH_HERO_POPUP_T"/>
 					<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Mid" offset="#FCJH_HERO_RED_POPUP_L"/>
@@ -5101,14 +4921,6 @@
 					<Frame type="Frame" name="FCJH_Body">
 						<Anchor relative="$parent"/>
 						<AcceptsMouse val="false"/>
-						<Animation name="Leave">
-							<Event event="FCJH_Leave" action="Reset,Play"/>
-							<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
-							<Controller type="Fade" end="Pause">
-								<Key type="Curve" time="0" value="255"/>
-								<Key type="Curve" time="0.35" value="0"/>
-							</Controller>
-						</Animation>
 						<Frame type="Image" name="T1">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
@@ -5401,18 +5213,6 @@
 							<When type="AnimationState" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7" operator="NotEqual" TalentTierState="TierSelected"/>
 							<Action type="SetProperty" frame="Shown" visible="false"/>
 						</State>
-					</StateGroup>
-				</Frame>
-				<Frame type="Frame" name="FCJH_TalentDeath9">
-					<Anchor relative="$parent"/>
-					<AcceptsMouse val="false"/>
-					<StateGroup name="FCJH_Death">
-						<DefaultState val="Alive"/>
-						<State name="Died">
-							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroDeathTimeLabel" visible="true"/>
-							<Action type="SendEvent" frame="$parent/FCJH_Talent9/FCJH_Body" event="FCJH_Leave"/>
-						</State>
-						<State name="Alive"/>
 					</StateGroup>
 				</Frame>
 		</Frame>

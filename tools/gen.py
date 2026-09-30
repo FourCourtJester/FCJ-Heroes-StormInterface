@@ -1001,11 +1001,21 @@ def popup_frame(name_, n, spec, content):
     """One pop-up on player n's plate, shared by the heal and talent pop-ups: the spot
     (straddling the plate's top edge, #FCJH_HERO_POPUP_*) and the motion - slide up from the
     plate's middle and fade in, hold `hold` s, fade out over `fade` s, gone. Its content sits
-    in FCJH_Body, which fades out over `death_fade` s on FCJH_Leave (a death) and is restored
-    by the next FCJH_Pop. It leaves on its own, so no state logic has to hide it."""
+    in FCJH_Body; with a `death_fade` in the spec, that fades out over death_fade s on
+    FCJH_Leave (a death) and is restored by the next FCJH_Pop. It leaves on its own, so no
+    state logic has to hide it."""
     team, cell = popup_cell(n)
-    hold, fade, death_fade = spec["hold"], spec["fade"], spec["death_fade"]
+    hold, fade = spec["hold"], spec["fade"]
     end = round(0.25 + hold + fade, 2)
+    leave = "" if "death_fade" not in spec else f"""
+						<Animation name="Leave">
+							<Event event="FCJH_Leave" action="Reset,Play"/>
+							<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
+							<Controller type="Fade" end="Pause">
+								<Key type="Curve" time="0" value="255"/>
+								<Key type="Curve" time="{spec["death_fade"]}" value="0"/>
+							</Controller>
+						</Animation>"""
     return f"""
 				<Frame type="Frame" name="{name_}">
 					<Anchor side="Top"   relative="{cell}" pos="Min" offset="#FCJH_HERO_POPUP_T"/>
@@ -1016,15 +1026,7 @@ def popup_frame(name_, n, spec, content):
 					<AcceptsMouse val="false"/>
 					<Frame type="Frame" name="FCJH_Body">
 						<Anchor relative="$parent"/>
-						<AcceptsMouse val="false"/>
-						<Animation name="Leave">
-							<Event event="FCJH_Leave" action="Reset,Play"/>
-							<Event event="FCJH_Pop" action="Reset,Stop" frame="$parent"/>
-							<Controller type="Fade" end="Pause">
-								<Key type="Curve" time="0" value="255"/>
-								<Key type="Curve" time="{death_fade}" value="0"/>
-							</Controller>
-						</Animation>{content}
+						<AcceptsMouse val="false"/>{leave}{content}
 					</Frame>
 					<Animation name="Pop">
 						<Event event="FCJH_Pop" action="Restart,Play"/>
@@ -1140,7 +1142,8 @@ def talent_popups(cfg):
     player). One watcher per player per tier, latched ("Shown") so a tier pops once and
     re-arms only if it's un-picked (a rewind). The pop-up holds one image per tier, each
     bound to that tier icon's picture; the watcher shows the one that fired.
-    No lock (a pick is a real event, never a flicker); fades at once if the hero dies."""
+    No lock (a pick is a real event, never a flicker) and no early exit on a death: it always
+    plays out - important information for the commentators (user, 2026-09-30)."""
     tp = cfg["talent_popup"]
     out = []
     for n in range(10):
@@ -1180,24 +1183,11 @@ def talent_popups(cfg):
 						</State>
 					</StateGroup>
 				</Frame>""")
-        out.append(f"""
-				<Frame type="Frame" name="FCJH_TalentDeath{n}">
-					<Anchor relative="$parent"/>
-					<AcceptsMouse val="false"/>
-					<StateGroup name="FCJH_Death">
-						<DefaultState val="Alive"/>
-						<State name="Died">
-							<When type="Property" frame="{cell}/HeroDeathTimeLabel" visible="true"/>
-							<Action type="SendEvent" frame="$parent/{pop}/FCJH_Body" event="FCJH_Leave"/>
-						</State>
-						<State name="Alive"/>
-					</StateGroup>
-				</Frame>""")
     end = round(0.25 + tp["hold"] + tp["fade"], 2)
     return f"""
 		<!-- Talent pop-ups (tools/gen.py talent_popups; layout.toml [talent_popup]): the talent
-		     a player just picked pops up on their plate; gone after {end} s, or at once if the
-		     hero dies. Drawn over the heal pop-ups. -->
+		     a player just picked pops up on their plate and always plays out ({end} s), even
+		     if the hero dies. Drawn over the heal pop-ups. -->
 		<Frame type="Frame" name="FCJH_TalentPopups">
 			<Anchor relative="$parent"/>
 			<AcceptsMouse val="false"/>
