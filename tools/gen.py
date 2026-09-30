@@ -22,6 +22,8 @@ import sys
 import tomllib
 from pathlib import Path
 
+import inspect_card
+
 REPO = Path(__file__).resolve().parent.parent
 CONFIG = REPO / "layout.toml"
 SOURCE = REPO / "src" / "FCJH.StormInterface"
@@ -1812,7 +1814,8 @@ def hero_row_layout(cfg):
 
 
 STAT_PANES_FILE = "FCJH_StatPanes.StormLayout"
-GENERATED_LAYOUTS = (HERO_ROW_FILE, STAT_PANES_FILE)
+INSPECT_FILE = "FCJH_Inspect.StormLayout"
+GENERATED_LAYOUTS = (HERO_ROW_FILE, STAT_PANES_FILE, INSPECT_FILE)
 
 # Blizzard's observer stats row (statsoverviewpanel / cleanleaderpanel) carries eight score
 # columns, each a PlayerScoreValueFrame whose ScoreValueFrame0 shows ONE score value - which
@@ -2210,6 +2213,7 @@ def committed_files(cfg, source=SOURCE):
         LAYOUT_REL / CONSTANTS_FILE: constants_layout(cfg),
         LAYOUT_REL / HERO_ROW_FILE: hero_row_layout(cfg),
         LAYOUT_REL / STAT_PANES_FILE: stat_panes_layout(cfg),
+        LAYOUT_REL / INSPECT_FILE: inspect_card.layout(HeroCell(cfg).crop, XML_DECL + "<Desc>\n" + GENERATED),
         LAYOUT_REL / INDEX_FILE: desc_index(layout_order(layout_dir, generated=GENERATED_LAYOUTS)),
     }
     return {rel: text.encode("utf-8") for rel, text in texts.items()} | texture_files(cfg)
