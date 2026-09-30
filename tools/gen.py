@@ -55,7 +55,20 @@ KIND_COLORS = {  # A,R,G,B without the alpha, which comes from [dev] overlay_alp
 
 def load_config(path=CONFIG):
     with open(path, "rb") as f:
-        return tomllib.load(f)
+        return derive(tomllib.load(f))
+
+
+def derive(cfg):
+    """Numbers layout.toml doesn't hold because they follow from others. [hero_row]: the rows
+    are anchored at their INNER ends (blue_right, red_left: beside the minimap) and their
+    bottom edge, so a change of scale grows them outward and upward; their top and blue's
+    left edge are worked out here (screen px, like everything in layout.toml)."""
+    row = cfg["hero_row"]
+    if "bottom" in row:
+        cell, px = HeroCell(cfg), 1 / Units(cfg).scale
+        row["top"] = round(row["bottom"] - cell.h * px, 1)
+        row["blue_left"] = round(row["blue_right"] - (4 * cell.pitch + cell.w) * px, 1)
+    return cfg
 
 
 class Units:
@@ -170,11 +183,6 @@ class HeroCell:
     # Fountain-ready marker: a small square in the plate's top corner on the portrait side,
     # away from the slant (left on blue, right on red). (left, top, right, bottom)
     FOUNTAIN = {"blue": (8, 2, 24, 18), "red": (104, 2, 120, 18)}
-    # Heroic token: the corner opposite the fountain, just above the bars (36), clear of the
-    # slanted edge; a parallelogram leaning with the plate (our mask). Its size comes from
-    # layout.toml ([hero_row] heroic_token); it grows from this fixed corner - bottom-right
-    # on blue, bottom-left on red (x, y).
-    HEROIC_CORNER = {"blue": (111, 34), "red": (17, 34)}
     # The observer's portrait art is wide with the face on the right; Blizzard's observer
     # crops [0.1, 0.45, 0.65, 1.0] into 165 x 60, i.e. the art is 2.75x as wide as tall per
     # unit of crop. Same top/bottom/right here, left worked out for this cell's shape.
@@ -195,12 +203,6 @@ class HeroCell:
         self.cc_band = tuple(s(v) for v in self.CC_BAND)
         self.cc_mid, self.cc_half = s(self.CC_ICON_MID), s(self.CC_ICON_HALF)
         self.fountain = {t: tuple(s(v) for v in r) for t, r in self.FOUNTAIN.items()}
-        tw, th = (Units(cfg)(v) for v in cfg["hero_row"]["heroic_token"])
-        bx, by = (s(v) for v in self.HEROIC_CORNER["blue"])
-        rx, ry = (s(v) for v in self.HEROIC_CORNER["red"])
-        self.heroic = {"blue": (bx - tw, by - th, bx, by), "red": (rx, ry - th, rx + tw, ry)}
-        # the heroic's icon is square: cut top and bottom to the token's shape
-        self.heroic_crop = round(max(0.0, (1 - th / tw) / 2), 3)
         across = self.W / self.PORTRAIT_H * (self.CROP_BOTTOM - self.CROP_TOP) / self.ART_ASPECT
         self.crop = (self.CROP_TOP, round(1 - across, 3), self.CROP_BOTTOM, 1.0)
 
@@ -292,10 +294,6 @@ def constants_layout(cfg):
     size = row["talent_popup_size"]
     const(name("hero", "popup", "size"), u(size))
     const(name("hero", "popup", "t"), -u(size / 2), "the icon straddles the cell's top edge")
-    cell = HeroCell(cfg)
-    for team in ("blue", "red"):
-        for side, v in zip("ltrb", cell.heroic[team]):
-            const(name("hero", team, "heroic", side), v)
     for team in ("blue", "red"):
         # pop-ups sit on the cell box's horizontal centre (user's call, 2026-09-27, after
         # comparing it with the top edge's centre, 19 units toward the lean); offsets from
@@ -558,7 +556,8 @@ def bar_texture_size(w, h):
 
 
 def slant_bars(cfg):
-    """Every slanted texture (bars and plate tokens), by constant name: {name: (file name, dds bytes)}. Names
+    """Every generated texture but the portrait masks (bars, plate hit areas, the top
+    backplate), by constant name: {name: (file name, dds bytes)}. Names
     carry a content hash (textures are cached by path across replay reloads)."""
     rects_ = team_bar_rects(cfg)
     lean = HeroCell(cfg).overlap / HeroCell(cfg).h
@@ -589,8 +588,6 @@ def slant_bars(cfg):
     data = top_backplate_texture(cfg)
     digest = hashlib.sha1(data).hexdigest()[:8]
     out[name("top", "backplate")] = (f"FCJH_TopBackplate_{digest}.dds", data)
-    # plate tokens (the heroic): a white mask to cut an icon to the slant, a dark overlay for
-    # cooldown, and a plain backing for the "?" state
     cell = HeroCell(cfg)
     # the plate's own shape, as the click target's hit-test texture: plates overlap along the
     # slant, and a square click area sent clicks on one plate's corner to its neighbour
@@ -605,13 +602,6 @@ def slant_bars(cfg):
         data = bytes(data)
         digest = hashlib.sha1(data).hexdigest()[:8]
         out[name("plate", "hit", team)] = (f"FCJH_PlateHit_{team}_{digest}.dds", data)
-    for team in ("blue", "red"):
-        l, t, r, b = cell.heroic[team]
-        cut = lean * (b - t) / (r - l)
-        for part, colour, alpha in (("mask", "ffffff", 255), ("dim", "0a0a10", 175), ("back", "2a1c44", 240)):
-            data = slant_texture(team, cut, colour, alpha, size=(128, 96))
-            digest = hashlib.sha1(data).hexdigest()[:8]
-            out[name("token", part, team)] = (f"FCJH_Token_{part}_{team}_{digest}.dds", data)
     return out
 
 

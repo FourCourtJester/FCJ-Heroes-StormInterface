@@ -143,15 +143,15 @@ kind = "ui"
 # Each hero cell is Blizzard's IN-GAME top-bar cell, same art and stacking: neighbours
 # overlap so the slanted frames interlock. The cell's shape lives in tools/gen.py (HeroCell);
 # here it's only scaled and placed. At scale 1 a cell is 115 x 55 px and a row of five is
-# 468 px wide; at 1.25, 144 x 68 and 583; at 1.375, 158 x 76 and 644.
-# 1.375 = the mock's +10% (user, 2026-09-29): the rows grow outward from the minimap, keeping
-# their inner ends (blue ends at 752, red starts at 1167) and their bottom edge (1068).
-scale = 1.375
-top = 993                    # the row's top edge
-blue_left = 108              # cell 1; cells 2-5 follow to the right
+# 468 px wide; at 1.375, 158 x 76 and 644; at 1.5125, 175 x 83 and 707.
+# The rows are placed by their INNER ends (beside the minimap) and their bottom edge, so a new
+# scale grows them outward and upward; tools/gen.py works out their top and blue's left edge.
+# 1.375 = the mock's +10% (user, 2026-09-29); 1.5125 = another +10% (user, 2026-09-30).
+scale = 1.5125
+bottom = 1068                # the rows' bottom edge
+blue_right = 752             # where blue's row ends (cell 5's right)
 red_left = 1167              # cell 6; cells 7-0 follow to the right
-talent_popup_size = 40       # the talent's icon, straddling the cell's top edge
-heroic_token = [24, 18]      # w, h px: the heroic token in the plate's bottom corner (widen to taste)
+talent_popup_size = 44       # the pop-ups' square (talent icon, heal plus), straddling the cell's top edge; 40 at scale 1.375
 
 # Talent pop-ups (tools/gen.py talent_popups): the talent a player just picked, in the talent
 # pane's team-coloured square, in the same spot and motion as the heal pop-ups (both from
