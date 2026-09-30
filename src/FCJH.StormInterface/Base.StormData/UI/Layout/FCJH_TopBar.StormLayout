@@ -9,10 +9,10 @@
 	       - backplate hidden with Alpha 0, NOT parked: the level labels, XP bars, core frames,
 	         and both hero containers all anchor to it - parking it drags them off-screen
 	       - hexagon and clock left as they are, now floating on their own
-	       - team levels moved up to the top edge (blue_level, red_level) on our backdrop, a
-	         team-coloured hexagon pattern fading away from the centre (layout.toml
-	         [team_level]; a placeholder until the OBS package); the bracket and game count
-	         (OBS) sit under them, beside the hexagon
+	       - team levels moved up to the top edge (blue_level, red_level) on our backplate
+	         (FCJH_TopBackplate, one texture: chrome-rimmed wings with the team colours
+	         strongest at their outer ends, and a plate round the hexagon - layout.toml
+	         [top_backplate]); the bracket and game count (OBS) sit under them
 	       - towers / kills counters parked (the icons beside them were backplate art)
 	       - team XP: on each hero row's top edge, the full width of that edge; core health on
 	         top of it at the row's inner end (blue_xp, red_xp, blue_core, red_core: placed by
@@ -30,13 +30,14 @@
 					<Frame type="Frame" name="ObserverTopPanel">
 						<Frame type="Image" name="TopBarBacking"><Alpha val="0"/></Frame>
 
-						<!-- Team levels: on the top edge, on our backdrop -->
-						<Frame type="Image" name="FCJH_BlueLevelBack">
-							<Anchor side="Top" relative="$GameUI" pos="Min" offset="#FCJH_BLUE_LEVEL_T"/>
-							<Anchor side="Left" relative="$GameUI" pos="Min" offset="#FCJH_BLUE_LEVEL_L"/>
-							<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_BLUE_LEVEL_B"/>
-							<Anchor side="Right" relative="$GameUI" pos="Min" offset="#FCJH_BLUE_LEVEL_R"/>
-							<Texture val="#FCJH_LEVEL_BACK_BLUE"/>
+						<!-- Team levels: on the top edge, on our backplate. The texture is drawn 1:1 at
+						     1080p and centred on Blizzard's hexagon, which sits on top of it (600). -->
+						<Frame type="Image" name="FCJH_TopBackplate">
+							<Anchor side="Top" relative="$GameUI" pos="Min" offset="#FCJH_TOP_BACKPLATE_T"/>
+							<Anchor side="Left" relative="$GameUI" pos="Min" offset="#FCJH_TOP_BACKPLATE_L"/>
+							<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_TOP_BACKPLATE_B"/>
+							<Anchor side="Right" relative="$GameUI" pos="Min" offset="#FCJH_TOP_BACKPLATE_R"/>
+							<Texture val="#FCJH_TOP_BACKPLATE"/>
 							<RenderPriority val="490"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
@@ -74,16 +75,6 @@
 							<Anchor side="Right" relative="$GameUI" pos="Min" offset="#FCJH_BLUE_LEVEL_R"/>
 							<Width val="0"/>
 							<Unclipped val="true"/>
-						</Frame>
-						<Frame type="Image" name="FCJH_RedLevelBack">
-							<Anchor side="Top" relative="$GameUI" pos="Min" offset="#FCJH_RED_LEVEL_T"/>
-							<Anchor side="Left" relative="$GameUI" pos="Min" offset="#FCJH_RED_LEVEL_L"/>
-							<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_RED_LEVEL_B"/>
-							<Anchor side="Right" relative="$GameUI" pos="Min" offset="#FCJH_RED_LEVEL_R"/>
-							<Texture val="#FCJH_LEVEL_BACK_RED"/>
-							<RenderPriority val="490"/>
-							<Unclipped val="true"/>
-							<AcceptsMouse val="false"/>
 						</Frame>
 						<!-- EXPERIMENT (2026-09-29): the talent-advantage flame. The observer bar never
 						     had one; Blizzard's player top bar does (PartyFrame TeamLevelInfo), and the

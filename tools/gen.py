@@ -86,6 +86,7 @@ def rects(cfg):
             out[f"hero_{slot}"] = ((round(left + i * cell.pitch * px, 1), row["top"],
                                     round(cell.w * px, 1), round(cell.h * px, 1)), "ui")
     out.update(team_bar_rects(cfg))
+    out["top_backplate"] = (top_backplate_geometry(cfg)["box"], "ui")
     return out
 
 
@@ -394,43 +395,153 @@ def slant_texture(team, cut, colour, alpha=255, size=(512, 32), sub=4):
     return dds_bgra(w, h, b"".join(rows))
 
 
-def hex_fade_texture(team, colour, alpha, hex_px, box_px, size=(256, 128)):
-    """A flat-topped hexagon lattice in one colour, outlines bright and cells faint, fading to
-    nothing away from the screen centre (leftward on blue, rightward on red). box_px is the
-    backdrop's size on screen, hex_px the hexagons' width there; the texture (a power of two)
-    is stretched onto that box, so the lattice is drawn in box coordinates."""
+TOP_BACKPLATE_SIZE = (512, 256)    # px; drawn 1:1 at 1080p, centred on Blizzard's hexagon
+
+
+def top_backplate_geometry(cfg):
+    """The backplate's shapes in screen px: the wing band (a trapezoid along the top edge,
+    its ends climbing with the plates' lean), Blizzard's hexagon, the hexagon padded out,
+    and the texture box's top-left."""
+    bp = cfg["top_backplate"]
+    cx, cy, hw, hh, he = bp["hexagon"]
+    hexagon = [(cx - he, cy - hh), (cx + he, cy - hh), (cx + hw, cy), (cx + he, cy + hh),
+               (cx - he, cy + hh), (cx - hw, cy)]
+    padded = offset_polygon(hexagon, bp["padding"])
+    lean = HeroCell(cfg).overlap / HeroCell(cfg).h
+    rise = lean * cy
+    bx = cfg["element"]["blue_level"]["rect"][0]
+    rx, _, rw, _ = cfg["element"]["red_level"]["rect"]
+    lb, rb = bx - bp["wing_margin"], rx + rw + bp["wing_margin"]
+    wings = [(lb - rise, 0), (rb + rise, 0), (rb, cy), (lb, cy)]
+    w, h = TOP_BACKPLATE_SIZE
+    return {"hexagon": hexagon, "padded": padded, "wings": wings, "centre": cx,
+            "box": (round(cx - w / 2), 0, w, h), "ends": (lb - rise, rb + rise)}
+
+
+def offset_polygon(pts, d):
+    """Grow a convex polygon outward by d px."""
     import math
-    w, h = size
-    sx, sy = box_px[0] / w, box_px[1] / h        # texel -> screen px
-    R = hex_px / 2                              # circumradius, screen px
+    n = len(pts)
+    cx, cy = sum(p[0] for p in pts) / n, sum(p[1] for p in pts) / n
+    lines = []
+    for i in range(n):
+        (x1, y1), (x2, y2) = pts[i], pts[(i + 1) % n]
+        dx, dy = x2 - x1, y2 - y1
+        ln = math.hypot(dx, dy)
+        nx, ny = dy / ln, -dx / ln
+        if nx * (cx - x1) + ny * (cy - y1) > 0:     # point the normal away from the centre
+            nx, ny = -nx, -ny
+        lines.append(((x1 + nx * d, y1 + ny * d), (dx, dy)))
+    out = []
+    for i in range(n):
+        (p, r), (q, s) = lines[i - 1], lines[i]
+        t = ((q[0] - p[0]) * s[1] - (q[1] - p[1]) * s[0]) / (r[0] * s[1] - r[1] * s[0])
+        out.append((p[0] + t * r[0], p[1] + t * r[1]))
+    return out
+
+
+def convex_sdf(pts):
+    """Signed distance (px, negative inside) to a convex polygon, as a function of (x, y):
+    exact along the edges, which is all the anti-aliasing needs."""
+    import math
+    n = len(pts)
+    cx, cy = sum(p[0] for p in pts) / n, sum(p[1] for p in pts) / n
+    edges = []
+    for i in range(n):
+        (x1, y1), (x2, y2) = pts[i], pts[(i + 1) % n]
+        ln = math.hypot(x2 - x1, y2 - y1)
+        nx, ny = (y2 - y1) / ln, -(x2 - x1) / ln
+        if nx * (cx - x1) + ny * (cy - y1) > 0:
+            nx, ny = -nx, -ny
+        edges.append((nx, ny, nx * x1 + ny * y1))
+    return lambda x, y: max(nx * x + ny * y - c for nx, ny, c in edges)
+
+
+def top_backplate_texture(cfg):
+    """The top bar's backplate (layout.toml [top_backplate]), drawn 1:1 at 1080p into a
+    TOP_BACKPLATE_SIZE texture: stock dark, the team colour rising toward each wing's outer
+    end, a hexagon lattice fading the same way, a sheen, the neutral plate round Blizzard's
+    hexagon (only its padding shows; the hexagon is Blizzard's art on top), and a chrome rim
+    round the whole outline. Anti-aliased from signed distances."""
+    import math
+    bp = cfg["top_backplate"]
+    geo = top_backplate_geometry(cfg)
+    x0, y0, w, h = geo["box"]
+    cx = geo["centre"]
+    lx, rx = geo["ends"]
+    sd_wing, sd_hex = convex_sdf(geo["wings"]), convex_sdf(geo["padded"])
+    bottom = max(y for _, y in geo["padded"])
+    rgb = lambda hx: tuple(int(hx[i:i + 2], 16) / 255 for i in (0, 2, 4))
+    mix = lambda a, b, t: tuple(p + (q - p) * t for p, q in zip(a, b))
+    def ramp(stops, t):
+        for (o1, c1), (o2, c2) in zip(stops, stops[1:]):
+            if t <= o2:
+                return mix(c1, c2, (t - o1) / (o2 - o1)) if isinstance(c1, tuple) else c1 + (c2 - c1) * (t - o1) / (o2 - o1)
+        return stops[-1][1]
+    stock = [rgb(c) for c in bp["stock"]]
+    plate = [rgb(c) for c in bp["plate"]]
+    chrome = list(zip((0, .35, .6, 1), (rgb(c) for c in bp["rim"])))
+    team = {"blue": rgb(bp["blue_colour"]), "red": rgb(bp["red_colour"])}
+    line = {k: mix(v, (1, 1, 1), .45) for k, v in team.items()}
+    # colour along each wing: nothing beside the hexagon, full at the outer end
+    fade = [(0, 0.0), (.2, 0.0), (.4, .3), (.65, .75), (1, 1.0)]
+    inner_l, inner_r = cx - bp["hexagon"][2] + 10, cx + bp["hexagon"][2] - 10
+    R = bp["hex_px"] / 2
     r3 = math.sqrt(3)
-    red, green, blue = bytes.fromhex(colour)
-    line = 0.12                                 # outline thickness, fraction of R
+    apothem = R * r3 / 2
+    rim_half = bp["rim_width"] / 2
+    clamp = lambda v: 0.0 if v < 0 else 1.0 if v > 1 else v
     rows = []
     for ty in range(h):
+        y = y0 + ty + 0.5
         row = bytearray()
+        if y > bottom + 3:
+            rows.append(bytes(4 * w))
+            continue
+        vt = clamp(y / bottom)
+        base = mix(*stock, vt)
+        plate_c = mix(*plate, vt)
+        rim_c = ramp(chrome, vt)
+        sheen = bp["sheen"] * clamp(1 - y / (bottom / 2))
         for tx in range(w):
-            x, y = (tx + 0.5) * sx, (ty + 0.5) * sy
-            # nearest hex centre in a flat-topped axial grid
-            q = (2 / 3 * x) / R
-            rr = (-1 / 3 * x + r3 / 3 * y) / R
-            cx, cz = q, rr
-            cy = -cx - cz
-            rx, ry, rz = round(cx), round(cy), round(cz)
-            dx, dy, dz = abs(rx - cx), abs(ry - cy), abs(rz - cz)
-            if dx > dy and dx > dz:
-                rx = -ry - rz
-            elif dy > dz:
-                ry = -rx - rz
-            else:
-                rz = -rx - ry
-            hx, hy = R * 1.5 * rx, R * r3 * (rz + rx / 2)
-            ox, oy = abs(x - hx), abs(y - hy)
-            edge = max(oy / (r3 / 2 * R), (ox + oy / r3) / R)    # 0 centre .. 1 edge
-            cell = 1.0 if edge > 1 - line else 0.28
-            t = tx / (w - 1)
-            fade = (t if team == "blue" else 1 - t) ** 1.6
-            row += bytes((blue, green, red, round(alpha * cell * fade)))
+            x = x0 + tx + 0.5
+            dw, dh = sd_wing(x, y), sd_hex(x, y)
+            du = min(dw, dh)
+            cover = clamp(0.5 - du)
+            rim = clamp(rim_half + 0.5 - abs(du))
+            if cover <= 0 and rim <= 0:
+                row += b"\0\0\0\0"
+                continue
+            blue = x < cx
+            t = clamp((x - inner_l) / (lx - inner_l) if blue else (x - inner_r) / (rx - inner_r))
+            f = ramp(fade, t)
+            side = "blue" if blue else "red"
+            c = mix(base, team[side], bp["colour_alpha"] * f)
+            if f > 0:   # the lattice: flat-topped hexagons, soft 1.5 px outlines, faint cells
+                q, r = (2 / 3 * x) / R, (-1 / 3 * x + r3 / 3 * y) / R
+                s_ = -q - r
+                rq, rr, rs = round(q), round(r), round(s_)
+                dq, dr, ds = abs(rq - q), abs(rr - r), abs(rs - s_)
+                if dq > dr and dq > ds:
+                    rq = -rr - rs
+                elif dr > ds:
+                    rr = -rq - rs
+                hx, hy = R * 1.5 * rq, R * r3 * (rr + rq / 2)
+                ox, oy = abs(x - hx), abs(y - hy)
+                edge = max(oy / apothem, (ox + oy / r3) / R)
+                outline = clamp((0.75 - (1 - edge) * apothem) / 0.75)
+                c = mix(c, team[side], .22 * bp["lattice"] * f)
+                c = mix(c, line[side], bp["lattice"] * f * outline)
+            c = mix(c, (1, 1, 1), sheen)
+            # the hexagon's neutral plate, with a fine light edge
+            pc = clamp(0.5 - dh)
+            if pc > 0:
+                c = mix(c, plate_c, pc)
+                c = mix(c, chrome[0][1], .6 * clamp(1 - abs(dh)))
+            # the chrome rim, over everything, half outside the shape
+            a = cover + rim * (1 - cover)
+            c = mix(c, rim_c, rim / a if a else 0)
+            row += bytes(round(v * 255) for v in (c[2], c[1], c[0], a))
         rows.append(bytes(row))
     return dds_bgra(w, h, b"".join(rows))
 
@@ -472,15 +583,10 @@ def slant_bars(cfg):
                 data = slant_texture(team, lean * h / w, colour, alpha, size=bar_texture_size(w, h))
                 digest = hashlib.sha1(data).hexdigest()[:8]
                 out[name("xp", part, team, f"n{n}")] = (f"FCJH_Bar_xp_{part}_{team}_n{n}_{digest}.dds", data)
-    # the team level's backdrop (top bar, blue_level / red_level): a hexagon pattern in the team
-    # colour, strongest beside the centre hexagon and fading outward - after Blizzard's old
-    # level wings. A placeholder until the OBS graphics package sets the look.
-    level = cfg["team_level"]
-    for team in ("blue", "red"):
-        (_, _, w, h), _ = rects(cfg)[f"{team}_level"]
-        data = hex_fade_texture(team, level[f"{team}_colour"], level["alpha"], level["hex_px"], (w, h))
-        digest = hashlib.sha1(data).hexdigest()[:8]
-        out[name("level", "back", team)] = (f"FCJH_LevelBack_{team}_{digest}.dds", data)
+    # the top bar's backplate behind Blizzard's hexagon (layout.toml [top_backplate])
+    data = top_backplate_texture(cfg)
+    digest = hashlib.sha1(data).hexdigest()[:8]
+    out[name("top", "backplate")] = (f"FCJH_TopBackplate_{digest}.dds", data)
     # plate tokens (the heroic): a white mask to cut an icon to the slant, a dark overlay for
     # cooldown, and a plain backing for the "?" state
     cell = HeroCell(cfg)

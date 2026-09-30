@@ -153,14 +153,29 @@ red_left = 1167              # cell 6; cells 7-0 follow to the right
 talent_popup_size = 40       # the talent's icon, straddling the cell's top edge
 heroic_token = [24, 18]      # w, h px: the heroic token in the plate's bottom corner (widen to taste)
 
-# Team level: Blizzard's level number, moved to the top edge (element.blue_level /
-# red_level), on a hexagon-pattern backdrop in the team colour that fades away from the
-# centre hexagon (after Blizzard's old level wings). Placeholder until the OBS package.
-[team_level]
+# Top bar backplate (tools/gen.py top_backplate_texture): one texture behind Blizzard's
+# hexagon - wings along the top edge out past each team level (element.blue_level /
+# red_level), their ends climbing with the plates' lean, and the hexagon on its own neutral
+# plate. Silver chrome rim; team colour strongest at the wings' outer ends, fading to a
+# stock dark toward the hexagon; a hexagon lattice fading the same way. Variant C of the
+# canvas study (user, 2026-09-30) - the look the rest of the UI will follow.
+[top_backplate]
+# Blizzard's hexagon (TopBarLogoOverlay) as it lands at 1920 x 1080, measured from a
+# screenshot 2026-09-30: centre x, centre y, half-width (to the side points), half-height,
+# half-length of the flat top and bottom edges
+hexagon = [957.5, 63.25, 62.5, 55.75, 33]
+padding = 4                  # the neutral plate round the hexagon
+wing_margin = 6              # the wings run this far past the level plates' outer edges
 blue_colour = "3f8cff"
 red_colour = "ff4a5e"
-alpha = 230
-hex_px = 14                  # the hexagons' width on screen
+colour_alpha = 0.95
+stock = ["221930", "170f20"] # the dark the colour fades to (top, bottom)
+plate = ["3a3350", "15101f"] # the hexagon's plate (top, bottom)
+rim = ["f4f6fb", "aab3cc", "5b637f", "c9d0e2"]   # chrome, top to bottom (stops 0, .35, .6, 1)
+rim_width = 2.5
+sheen = 0.16                 # white across the top half
+hex_px = 14                  # the lattice's hexagons, width on screen
+lattice = 0.6                # the lattice's strength
 
 # Bars stacked on each hero row, placed by tools/gen.py from [hero_row] so they follow it.
 # Both are cut to the plates' slant: their ends continue the row's slanted outer edges.
