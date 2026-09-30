@@ -9,27 +9,27 @@
 
 	<!-- Elements: _L _T _R _B are edges measured from the screen's top-left (anchor
 	     them to $GameUI pos=Min); _W _H are sizes. All in layout units. -->
-	<!-- blue_score: obs, px [416, 8, 68, 50] -->
-	<Constant name="FCJH_BLUE_SCORE_L" val="462"/>
+	<!-- blue_score: obs, px [404, 8, 64, 50] -->
+	<Constant name="FCJH_BLUE_SCORE_L" val="449"/>
 	<Constant name="FCJH_BLUE_SCORE_T" val="9"/>
-	<Constant name="FCJH_BLUE_SCORE_R" val="538"/>
+	<Constant name="FCJH_BLUE_SCORE_R" val="520"/>
 	<Constant name="FCJH_BLUE_SCORE_B" val="64"/>
-	<Constant name="FCJH_BLUE_SCORE_W" val="76"/>
+	<Constant name="FCJH_BLUE_SCORE_W" val="71"/>
 	<Constant name="FCJH_BLUE_SCORE_H" val="56"/>
-	<!-- blue_name: ui, px [490, 8, 240, 50] -->
-	<Constant name="FCJH_BLUE_NAME_L" val="544"/>
+	<!-- blue_name: ui, px [474, 8, 220, 50] -->
+	<Constant name="FCJH_BLUE_NAME_L" val="527"/>
 	<Constant name="FCJH_BLUE_NAME_T" val="9"/>
-	<Constant name="FCJH_BLUE_NAME_R" val="811"/>
+	<Constant name="FCJH_BLUE_NAME_R" val="771"/>
 	<Constant name="FCJH_BLUE_NAME_B" val="64"/>
-	<Constant name="FCJH_BLUE_NAME_W" val="267"/>
+	<Constant name="FCJH_BLUE_NAME_W" val="244"/>
 	<Constant name="FCJH_BLUE_NAME_H" val="56"/>
-	<!-- blue_logo: obs, px [736, 8, 58, 50] -->
-	<Constant name="FCJH_BLUE_LOGO_L" val="818"/>
-	<Constant name="FCJH_BLUE_LOGO_T" val="9"/>
-	<Constant name="FCJH_BLUE_LOGO_R" val="882"/>
-	<Constant name="FCJH_BLUE_LOGO_B" val="64"/>
-	<Constant name="FCJH_BLUE_LOGO_W" val="64"/>
-	<Constant name="FCJH_BLUE_LOGO_H" val="56"/>
+	<!-- blue_logo: obs, px [700, 4, 56, 56] -->
+	<Constant name="FCJH_BLUE_LOGO_L" val="778"/>
+	<Constant name="FCJH_BLUE_LOGO_T" val="4"/>
+	<Constant name="FCJH_BLUE_LOGO_R" val="840"/>
+	<Constant name="FCJH_BLUE_LOGO_B" val="67"/>
+	<Constant name="FCJH_BLUE_LOGO_W" val="62"/>
+	<Constant name="FCJH_BLUE_LOGO_H" val="62"/>
 	<!-- blue_level: ui, px [800, 8, 80, 50] -->
 	<Constant name="FCJH_BLUE_LEVEL_L" val="889"/>
 	<Constant name="FCJH_BLUE_LEVEL_T" val="9"/>
@@ -44,20 +44,20 @@
 	<Constant name="FCJH_BLUE_TALENT_LEAD_B" val="71"/>
 	<Constant name="FCJH_BLUE_TALENT_LEAD_W" val="102"/>
 	<Constant name="FCJH_BLUE_TALENT_LEAD_H" val="71"/>
-	<!-- blue_bans: obs, px [622, 64, 108, 32] -->
-	<Constant name="FCJH_BLUE_BANS_L" val="691"/>
-	<Constant name="FCJH_BLUE_BANS_T" val="71"/>
-	<Constant name="FCJH_BLUE_BANS_R" val="811"/>
-	<Constant name="FCJH_BLUE_BANS_B" val="107"/>
+	<!-- blue_bans: obs, px [586, 66, 108, 32] -->
+	<Constant name="FCJH_BLUE_BANS_L" val="651"/>
+	<Constant name="FCJH_BLUE_BANS_T" val="73"/>
+	<Constant name="FCJH_BLUE_BANS_R" val="771"/>
+	<Constant name="FCJH_BLUE_BANS_B" val="109"/>
 	<Constant name="FCJH_BLUE_BANS_W" val="120"/>
 	<Constant name="FCJH_BLUE_BANS_H" val="36"/>
-	<!-- bracket: obs, px [736, 64, 148, 24] -->
-	<Constant name="FCJH_BRACKET_L" val="818"/>
-	<Constant name="FCJH_BRACKET_T" val="71"/>
-	<Constant name="FCJH_BRACKET_R" val="982"/>
-	<Constant name="FCJH_BRACKET_B" val="98"/>
-	<Constant name="FCJH_BRACKET_W" val="164"/>
-	<Constant name="FCJH_BRACKET_H" val="27"/>
+	<!-- bracket: obs, px [760, 130, 140, 26] -->
+	<Constant name="FCJH_BRACKET_L" val="844"/>
+	<Constant name="FCJH_BRACKET_T" val="144"/>
+	<Constant name="FCJH_BRACKET_R" val="1000"/>
+	<Constant name="FCJH_BRACKET_B" val="173"/>
+	<Constant name="FCJH_BRACKET_W" val="156"/>
+	<Constant name="FCJH_BRACKET_H" val="29"/>
 	<!-- logo_plate: ui, px [892, 0, 136, 125] -->
 	<Constant name="FCJH_LOGO_PLATE_L" val="991"/>
 	<Constant name="FCJH_LOGO_PLATE_T" val="0"/>
@@ -86,41 +86,41 @@
 	<Constant name="FCJH_RED_TALENT_LEAD_B" val="71"/>
 	<Constant name="FCJH_RED_TALENT_LEAD_W" val="102"/>
 	<Constant name="FCJH_RED_TALENT_LEAD_H" val="71"/>
-	<!-- red_logo: obs, px [1126, 8, 58, 50] -->
-	<Constant name="FCJH_RED_LOGO_L" val="1251"/>
-	<Constant name="FCJH_RED_LOGO_T" val="9"/>
-	<Constant name="FCJH_RED_LOGO_R" val="1316"/>
-	<Constant name="FCJH_RED_LOGO_B" val="64"/>
-	<Constant name="FCJH_RED_LOGO_W" val="64"/>
-	<Constant name="FCJH_RED_LOGO_H" val="56"/>
-	<!-- red_name: ui, px [1190, 8, 240, 50] -->
-	<Constant name="FCJH_RED_NAME_L" val="1322"/>
+	<!-- red_logo: obs, px [1164, 4, 56, 56] -->
+	<Constant name="FCJH_RED_LOGO_L" val="1293"/>
+	<Constant name="FCJH_RED_LOGO_T" val="4"/>
+	<Constant name="FCJH_RED_LOGO_R" val="1356"/>
+	<Constant name="FCJH_RED_LOGO_B" val="67"/>
+	<Constant name="FCJH_RED_LOGO_W" val="62"/>
+	<Constant name="FCJH_RED_LOGO_H" val="62"/>
+	<!-- red_name: ui, px [1226, 8, 220, 50] -->
+	<Constant name="FCJH_RED_NAME_L" val="1362"/>
 	<Constant name="FCJH_RED_NAME_T" val="9"/>
-	<Constant name="FCJH_RED_NAME_R" val="1589"/>
+	<Constant name="FCJH_RED_NAME_R" val="1607"/>
 	<Constant name="FCJH_RED_NAME_B" val="64"/>
-	<Constant name="FCJH_RED_NAME_W" val="267"/>
+	<Constant name="FCJH_RED_NAME_W" val="244"/>
 	<Constant name="FCJH_RED_NAME_H" val="56"/>
-	<!-- red_score: obs, px [1436, 8, 68, 50] -->
-	<Constant name="FCJH_RED_SCORE_L" val="1596"/>
+	<!-- red_score: obs, px [1452, 8, 64, 50] -->
+	<Constant name="FCJH_RED_SCORE_L" val="1613"/>
 	<Constant name="FCJH_RED_SCORE_T" val="9"/>
-	<Constant name="FCJH_RED_SCORE_R" val="1671"/>
+	<Constant name="FCJH_RED_SCORE_R" val="1684"/>
 	<Constant name="FCJH_RED_SCORE_B" val="64"/>
-	<Constant name="FCJH_RED_SCORE_W" val="76"/>
+	<Constant name="FCJH_RED_SCORE_W" val="71"/>
 	<Constant name="FCJH_RED_SCORE_H" val="56"/>
-	<!-- red_bans: obs, px [1190, 64, 108, 32] -->
-	<Constant name="FCJH_RED_BANS_L" val="1322"/>
-	<Constant name="FCJH_RED_BANS_T" val="71"/>
-	<Constant name="FCJH_RED_BANS_R" val="1442"/>
-	<Constant name="FCJH_RED_BANS_B" val="107"/>
+	<!-- red_bans: obs, px [1226, 66, 108, 32] -->
+	<Constant name="FCJH_RED_BANS_L" val="1362"/>
+	<Constant name="FCJH_RED_BANS_T" val="73"/>
+	<Constant name="FCJH_RED_BANS_R" val="1482"/>
+	<Constant name="FCJH_RED_BANS_B" val="109"/>
 	<Constant name="FCJH_RED_BANS_W" val="120"/>
 	<Constant name="FCJH_RED_BANS_H" val="36"/>
-	<!-- game_count: obs, px [1036, 64, 148, 24] -->
-	<Constant name="FCJH_GAME_COUNT_L" val="1151"/>
-	<Constant name="FCJH_GAME_COUNT_T" val="71"/>
-	<Constant name="FCJH_GAME_COUNT_R" val="1316"/>
-	<Constant name="FCJH_GAME_COUNT_B" val="98"/>
-	<Constant name="FCJH_GAME_COUNT_W" val="164"/>
-	<Constant name="FCJH_GAME_COUNT_H" val="27"/>
+	<!-- game_count: obs, px [1020, 130, 140, 26] -->
+	<Constant name="FCJH_GAME_COUNT_L" val="1133"/>
+	<Constant name="FCJH_GAME_COUNT_T" val="144"/>
+	<Constant name="FCJH_GAME_COUNT_R" val="1289"/>
+	<Constant name="FCJH_GAME_COUNT_B" val="173"/>
+	<Constant name="FCJH_GAME_COUNT_W" val="156"/>
+	<Constant name="FCJH_GAME_COUNT_H" val="29"/>
 	<!-- replay: ui, px [16, 12, 378, 153] -->
 	<Constant name="FCJH_REPLAY_L" val="18"/>
 	<Constant name="FCJH_REPLAY_T" val="13"/>
