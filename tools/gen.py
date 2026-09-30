@@ -991,25 +991,23 @@ def health_sensor(cfg):
 			</Frame>"""
 
 
-def heal_popups(cfg):
-    """One heal pop-up per plate (layout.toml [heal_popup]), in the talent pop-up's spot and
-    motion, drawn under the talent pop-ups (520 vs their 530). Each plate's watcher:
-      - Died first: the hero's death timer shows -> fade out at once, re-arm
-      - Fire: low (FCJH_LowMark), armed, not locked -> pop; disarm ("Shown"); lock
-      - Rearm: a healthy reading re-arms it
-    The pop-up leaves on its own (its Pop animation), so nothing has to see it recover. The
-    lock (FCJH_Lock) is animation-driven, but only ever READ as a condition on the next health
-    change - never waited on (rounds 6-8 waited on such a flag and never cleared)."""
-    hp = cfg["heal_popup"]
-    hold, fade, death_fade, lock = hp["hold"], hp["fade"], hp["death_fade"], hp["lock"]
+def popup_cell(n):
+    """Player n (0-9, Blizzard's PlayerFrameN order) -> (team key, that player's hero cell)."""
+    team, tn, m = ("BLUE", 1, n + 1) if n < 5 else ("RED", 2, n - 4)
+    return team, f"{OVERVIEW}/Team{tn}HeroOverview/HeroOverview{m}"
+
+
+def popup_frame(name_, n, spec, content):
+    """One pop-up on player n's plate, shared by the heal and talent pop-ups: the spot
+    (straddling the plate's top edge, #FCJH_HERO_POPUP_*) and the motion - slide up from the
+    plate's middle and fade in, hold `hold` s, fade out over `fade` s, gone. Its content sits
+    in FCJH_Body, which fades out over `death_fade` s on FCJH_Leave (a death) and is restored
+    by the next FCJH_Pop. It leaves on its own, so no state logic has to hide it."""
+    team, cell = popup_cell(n)
+    hold, fade, death_fade = spec["hold"], spec["fade"], spec["death_fade"]
     end = round(0.25 + hold + fade, 2)
-    plus = ",".join(str(int(hp["colour"][i:i + 2], 16)) for i in (0, 2, 4))
-    out = []
-    for n in range(10):
-        team, tn, m = ("BLUE", 1, n + 1) if n < 5 else ("RED", 2, n - 4)
-        cell = f"{OVERVIEW}/Team{tn}HeroOverview/HeroOverview{m}"
-        out.append(f"""
-				<Frame type="Frame" name="FCJH_Heal{n}">
+    return f"""
+				<Frame type="Frame" name="{name_}">
 					<Anchor side="Top"   relative="{cell}" pos="Min" offset="#FCJH_HERO_POPUP_T"/>
 					<Anchor side="Left"  relative="{cell}" pos="Mid" offset="#FCJH_HERO_{team}_POPUP_L"/>
 					<Anchor side="Right" relative="{cell}" pos="Mid" offset="#FCJH_HERO_{team}_POPUP_R"/>
@@ -1026,34 +1024,7 @@ def heal_popups(cfg):
 								<Key type="Curve" time="0" value="255"/>
 								<Key type="Curve" time="{death_fade}" value="0"/>
 							</Controller>
-						</Animation>
-						<Frame type="Image" name="FCJH_Back">
-							<Anchor relative="$parent"/>
-							<Texture val="@UI/PauseScreenDimImage"/>
-							<ColorAdjustMode val="Fill"/>
-							<AdjustmentColor val="235,8,24,12"/>
-							<AcceptsMouse val="false"/>
-						</Frame>
-						<Frame type="Image" name="FCJH_Plus">
-							<Anchor side="Top"    relative="$parent" pos="Min" offset="3"/>
-							<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
-							<Anchor side="Bottom" relative="$parent" pos="Max" offset="-3"/>
-							<Anchor side="Right"  relative="$parent" pos="Max" offset="-3"/>
-							<Texture val="@UI/Storm_UI_Play_RandomHero_Button_Icon_Active_Healer"/>
-							<Color val="{plus}"/>
-							<AcceptsMouse val="false"/>
-						</Frame>
-						<!-- 1 unit outside the box: the talent pop-up's square shows ~42 px on its
-						     40 px icon (Blizzard's art sits inside its frame) -->
-						<Frame type="Image" name="FCJH_Border">
-							<Anchor side="Top"    relative="$parent" pos="Min" offset="-1"/>
-							<Anchor side="Left"   relative="$parent" pos="Min" offset="-1"/>
-							<Anchor side="Bottom" relative="$parent" pos="Max" offset="1"/>
-							<Anchor side="Right"  relative="$parent" pos="Max" offset="1"/>
-							<Texture val="{TEXTURE_DIR}\\{HEAL_BORDER}"/>
-							<Unclipped val="true"/>
-							<AcceptsMouse val="false"/>
-						</Frame>
+						</Animation>{content}
 					</Frame>
 					<Animation name="Pop">
 						<Event event="FCJH_Pop" action="Restart,Play"/>
@@ -1072,7 +1043,43 @@ def heal_popups(cfg):
 							<Key type="Curve" time="{end}" value="0"/>
 						</Controller>
 					</Animation>
-				</Frame>
+				</Frame>"""
+
+
+def popup_image(name_, texture, inset, extra=""):
+    """An image filling a pop-up's body, `inset` units in (negative: out)."""
+    return f"""
+						<Frame type="Image" name="{name_}">
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="{inset}"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="{inset}"/>
+							<Anchor side="Bottom" relative="$parent" pos="Max" offset="{-inset}"/>
+							<Anchor side="Right"  relative="$parent" pos="Max" offset="{-inset}"/>
+							<Texture val="{texture}"/>{extra}
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>"""
+
+
+def heal_popups(cfg):
+    """One heal pop-up per plate (layout.toml [heal_popup]), drawn under the talent pop-ups
+    (520 vs 530). Each plate's watcher:
+      - Died first: the hero's death timer shows -> fade out at once, re-arm
+      - Fire: low (FCJH_LowMark), armed, not locked -> pop; disarm; lock
+      - Rearm: a healthy reading re-arms it
+    The lock (FCJH_Lock) is animation-driven, but only ever READ as a condition on the next
+    health change - never waited on (probe rounds 6-8 waited on such a flag and never cleared)."""
+    hp = cfg["heal_popup"]
+    plus = ",".join(str(int(hp["colour"][i:i + 2], 16)) for i in (0, 2, 4))
+    content = (popup_image("FCJH_Back", "@UI/PauseScreenDimImage", 0,
+                           '\n\t\t\t\t\t\t\t<ColorAdjustMode val="Fill"/>\n\t\t\t\t\t\t\t<AdjustmentColor val="235,8,24,12"/>')
+               + popup_image("FCJH_Plus", "@UI/Storm_UI_Play_RandomHero_Button_Icon_Active_Healer", 3,
+                             f'\n\t\t\t\t\t\t\t<Color val="{plus}"/>')
+               # 1 unit outside the box: the talent pop-up's square shows ~42 px on its 40 px icon
+               + popup_image("FCJH_Border", f"{TEXTURE_DIR}\\{HEAL_BORDER}", -1))
+    out = []
+    for n in range(10):
+        _, cell = popup_cell(n)
+        out.append(popup_frame(f"FCJH_Heal{n}", n, hp, content) + f"""
 				<Frame type="Frame" name="FCJH_HealWatch{n}">
 					<Anchor relative="$parent"/>
 					<AcceptsMouse val="false"/>
@@ -1082,7 +1089,7 @@ def heal_popups(cfg):
 						<Event event="FCJH_Lock" action="Reset,Play"/>
 						<Controller type="Visibility" end="Pause" frame="FCJH_Lock">
 							<Key type="Bool" time="0" value="true"/>
-							<Key type="Bool" time="{lock}" value="false"/>
+							<Key type="Bool" time="{hp["lock"]}" value="false"/>
 						</Controller>
 					</Animation>
 					<StateGroup name="FCJH_Heal">
@@ -1107,15 +1114,94 @@ def heal_popups(cfg):
 						<State name="Hold"/>
 					</StateGroup>
 				</Frame>""")
+    end = round(0.25 + hp["hold"] + hp["fade"], 2)
     return f"""
 		<!-- Heal pop-ups (tools/gen.py heal_popups; layout.toml [heal_popup]): a plate whose hero
-		     drops to {hp["threshold"]}% or less pops a green plus, in the talent pop-up's spot
-		     and motion; gone after {end} s, or at once if the hero dies. Once per dip (re-armed
-		     by a healthy reading or a death), and at most once per {lock} s per plate. -->
+		     drops to {hp["threshold"]}% or less pops a green plus; gone after {end} s, or at once
+		     if the hero dies. Once per dip (re-armed by a healthy reading or a death), and at most
+		     once per {hp["lock"]} s per plate. -->
 		<Frame type="Frame" name="FCJH_HealPopups">
 			<Anchor relative="$parent"/>
 			<AcceptsMouse val="false"/>
 			<RenderPriority val="520"/>""" + "".join(out) + """
+		</Frame>"""
+
+
+TALENT_TIERS = 7     # TalentTreeIcon1-7 in Blizzard's top-bar talent row (levels 1 4 7 10 13 16 20)
+
+
+def talent_popups(cfg):
+    """One talent pop-up per plate (layout.toml [talent_popup]): the talent just picked, in
+    the talent pane's team-coloured square, drawn over the heal pop-ups (530 vs 520).
+    The trigger, from the probe rounds (2026-09-27..29): each tier's icon in Blizzard's top-bar
+    talent row (TALENT_ROW, kept alive at Alpha 0) goes to AnimationState TalentTierState
+    "TierSelected" when that tier is picked. Watched from OUTSIDE the tree, by full path
+    (anything placed inside a talent icon never draws; short handles only ever fired for one
+    player). One watcher per player per tier, latched ("Shown") so a tier pops once and
+    re-arms only if it's un-picked (a rewind). The pop-up holds one image per tier, each
+    bound to that tier icon's picture; the watcher shows the one that fired.
+    No lock (a pick is a real event, never a flicker); fades at once if the hero dies."""
+    tp = cfg["talent_popup"]
+    out = []
+    for n in range(10):
+        team, cell = popup_cell(n)
+        row = TALENT_ROW.format(n=n) + "/HeroSelectedTalentTreeFrame"
+        pop = f"FCJH_Talent{n}"
+        images = "".join(
+            popup_image(f"T{k}", f"{{{row}/TalentTreeIcon{k}/IconImage/@Texture}}", 0, '\n\t\t\t\t\t\t\t<Visible val="false"/>')
+            for k in range(1, TALENT_TIERS + 1))
+        # the talent pane's own square, just outside the icon
+        border = popup_image("FCJH_Border", f"@UI/obs_talents_highlight_{team.lower()}", -5)
+        out.append(popup_frame(pop, n, tp, images + border))
+        for k in range(1, TALENT_TIERS + 1):
+            icon = f"{row}/TalentTreeIcon{k}"
+            show = "".join(
+                f'\n\t\t\t\t\t\t\t<Action type="SetProperty" frame="$parent/{pop}/FCJH_Body/T{j}" Visible="{str(j == k).lower()}"/>'
+                for j in range(1, TALENT_TIERS + 1))
+            out.append(f"""
+				<Frame type="Frame" name="FCJH_TalentWatch{n}_{k}">
+					<Anchor relative="$parent"/>
+					<AcceptsMouse val="false"/>
+					<Frame type="Frame" name="Shown"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+					<StateGroup name="FCJH_Pick">
+						<DefaultState val="Waiting"/>
+						<State name="Fire">
+							<When type="AnimationState" frame="{icon}" TalentTierState="TierSelected"/>
+							<When type="Property" frame="Shown" visible="false"/>
+							<Action type="SetProperty" frame="Shown" visible="true"/>{show}
+							<Action type="SendEvent" frame="$parent/{pop}" event="FCJH_Pop"/>
+						</State>
+						<State name="Done">
+							<When type="Property" frame="Shown" visible="true"/>
+						</State>
+						<State name="Waiting">
+							<When type="AnimationState" frame="{icon}" operator="NotEqual" TalentTierState="TierSelected"/>
+							<Action type="SetProperty" frame="Shown" visible="false"/>
+						</State>
+					</StateGroup>
+				</Frame>""")
+        out.append(f"""
+				<Frame type="Frame" name="FCJH_TalentDeath{n}">
+					<Anchor relative="$parent"/>
+					<AcceptsMouse val="false"/>
+					<StateGroup name="FCJH_Death">
+						<DefaultState val="Alive"/>
+						<State name="Died">
+							<When type="Property" frame="{cell}/HeroDeathTimeLabel" visible="true"/>
+							<Action type="SendEvent" frame="$parent/{pop}/FCJH_Body" event="FCJH_Leave"/>
+						</State>
+						<State name="Alive"/>
+					</StateGroup>
+				</Frame>""")
+    end = round(0.25 + tp["hold"] + tp["fade"], 2)
+    return f"""
+		<!-- Talent pop-ups (tools/gen.py talent_popups; layout.toml [talent_popup]): the talent
+		     a player just picked pops up on their plate; gone after {end} s, or at once if the
+		     hero dies. Drawn over the heal pop-ups. -->
+		<Frame type="Frame" name="FCJH_TalentPopups">
+			<Anchor relative="$parent"/>
+			<AcceptsMouse val="false"/>
+			<RenderPriority val="530"/>""" + "".join(out) + """
 		</Frame>"""
 
 
@@ -1574,7 +1660,7 @@ def hero_row_layout(cfg):
 	<!-- Red: the same cell, mirrored -->
 {hero_cell_template("red", HeroCell(cfg), cfg)}
 	<Frame type="GameUI" name="GameUI" file="GameUI">
-{row_packer(cfg)}{heal_popups(cfg)}
+{row_packer(cfg)}{heal_popups(cfg)}{talent_popups(cfg)}
 		<Frame type="Frame" name="UIContainer">
 			<Frame type="Frame" name="FullscreenUpperContainer">
 				<Frame type="Frame" name="ObserverHeroOverviewPanel">
