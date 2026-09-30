@@ -1152,7 +1152,7 @@
 		<!-- Heal pop-ups (tools/gen.py heal_popups; layout.toml [heal_popup]): a plate whose hero
 		     drops to 25% or less pops a green plus, in the talent pop-up's spot
 		     and motion; gone after 3.75 s, or at once if the hero dies. Once per dip (re-armed
-		     by a healthy reading or a death), and at most once per 10.0 s per plate. -->
+		     by a healthy reading or a death), and at most once per 6.0 s per plate. -->
 		<Frame type="Frame" name="FCJH_HealPopups">
 			<Anchor relative="$parent"/>
 			<AcceptsMouse val="false"/>
@@ -1230,7 +1230,7 @@
 						<Event event="FCJH_Lock" action="Reset,Play"/>
 						<Controller type="Visibility" end="Pause" frame="FCJH_Lock">
 							<Key type="Bool" time="0" value="true"/>
-							<Key type="Bool" time="10.0" value="false"/>
+							<Key type="Bool" time="6.0" value="false"/>
 						</Controller>
 					</Animation>
 					<StateGroup name="FCJH_Heal">
@@ -1328,7 +1328,7 @@
 						<Event event="FCJH_Lock" action="Reset,Play"/>
 						<Controller type="Visibility" end="Pause" frame="FCJH_Lock">
 							<Key type="Bool" time="0" value="true"/>
-							<Key type="Bool" time="10.0" value="false"/>
+							<Key type="Bool" time="6.0" value="false"/>
 						</Controller>
 					</Animation>
 					<StateGroup name="FCJH_Heal">
@@ -1426,7 +1426,7 @@
 						<Event event="FCJH_Lock" action="Reset,Play"/>
 						<Controller type="Visibility" end="Pause" frame="FCJH_Lock">
 							<Key type="Bool" time="0" value="true"/>
-							<Key type="Bool" time="10.0" value="false"/>
+							<Key type="Bool" time="6.0" value="false"/>
 						</Controller>
 					</Animation>
 					<StateGroup name="FCJH_Heal">
@@ -1524,7 +1524,7 @@
 						<Event event="FCJH_Lock" action="Reset,Play"/>
 						<Controller type="Visibility" end="Pause" frame="FCJH_Lock">
 							<Key type="Bool" time="0" value="true"/>
-							<Key type="Bool" time="10.0" value="false"/>
+							<Key type="Bool" time="6.0" value="false"/>
 						</Controller>
 					</Animation>
 					<StateGroup name="FCJH_Heal">
@@ -1622,7 +1622,7 @@
 						<Event event="FCJH_Lock" action="Reset,Play"/>
 						<Controller type="Visibility" end="Pause" frame="FCJH_Lock">
 							<Key type="Bool" time="0" value="true"/>
-							<Key type="Bool" time="10.0" value="false"/>
+							<Key type="Bool" time="6.0" value="false"/>
 						</Controller>
 					</Animation>
 					<StateGroup name="FCJH_Heal">
@@ -1720,7 +1720,7 @@
 						<Event event="FCJH_Lock" action="Reset,Play"/>
 						<Controller type="Visibility" end="Pause" frame="FCJH_Lock">
 							<Key type="Bool" time="0" value="true"/>
-							<Key type="Bool" time="10.0" value="false"/>
+							<Key type="Bool" time="6.0" value="false"/>
 						</Controller>
 					</Animation>
 					<StateGroup name="FCJH_Heal">
@@ -1818,7 +1818,7 @@
 						<Event event="FCJH_Lock" action="Reset,Play"/>
 						<Controller type="Visibility" end="Pause" frame="FCJH_Lock">
 							<Key type="Bool" time="0" value="true"/>
-							<Key type="Bool" time="10.0" value="false"/>
+							<Key type="Bool" time="6.0" value="false"/>
 						</Controller>
 					</Animation>
 					<StateGroup name="FCJH_Heal">
@@ -1916,7 +1916,7 @@
 						<Event event="FCJH_Lock" action="Reset,Play"/>
 						<Controller type="Visibility" end="Pause" frame="FCJH_Lock">
 							<Key type="Bool" time="0" value="true"/>
-							<Key type="Bool" time="10.0" value="false"/>
+							<Key type="Bool" time="6.0" value="false"/>
 						</Controller>
 					</Animation>
 					<StateGroup name="FCJH_Heal">
@@ -2014,7 +2014,7 @@
 						<Event event="FCJH_Lock" action="Reset,Play"/>
 						<Controller type="Visibility" end="Pause" frame="FCJH_Lock">
 							<Key type="Bool" time="0" value="true"/>
-							<Key type="Bool" time="10.0" value="false"/>
+							<Key type="Bool" time="6.0" value="false"/>
 						</Controller>
 					</Animation>
 					<StateGroup name="FCJH_Heal">
@@ -2112,7 +2112,7 @@
 						<Event event="FCJH_Lock" action="Reset,Play"/>
 						<Controller type="Visibility" end="Pause" frame="FCJH_Lock">
 							<Key type="Bool" time="0" value="true"/>
-							<Key type="Bool" time="10.0" value="false"/>
+							<Key type="Bool" time="6.0" value="false"/>
 						</Controller>
 					</Animation>
 					<StateGroup name="FCJH_Heal">
