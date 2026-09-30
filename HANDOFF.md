@@ -253,7 +253,7 @@ survive new heroes. Spazzo's per-hero textures are why his files run to 13,000 l
 
 **Inherit bindings; never reconstruct them.** Put new frames *inside* the frame that owns the
 binding — the CC sensor lives inside each cell's `HeroStatus`, so it always matches the
-portrait above it. The mana bar should follow the same pattern.
+portrait above it; the resource bar, heal sensor and heroic tooltip do the same.
 
 **Use Blizzard's CC plate, not a rebuilt one.** A hand-built label rendered nothing; the
 engine's element is self-managing.

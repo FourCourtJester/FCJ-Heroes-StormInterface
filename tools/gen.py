@@ -45,8 +45,8 @@ RED_SLOTS = ["6", "7", "8", "9", "0"]
 # Minimap child (438 x 438) at its top-left. The engine fits each map inside that square.
 MINIMAP_SQUARE = 438
 MINIMAP_PANEL_W = 468
-KILL_ROW_CONTENT = 210
-CC_TEXT_OVERHANG = 20    # layout units the CC text's box reaches past the health bar, each side   # layout units: where a kill row's victim portrait ends
+KILL_ROW_CONTENT = 210   # layout units: where a kill row's victim portrait ends
+CC_TEXT_OVERHANG = 20    # layout units the CC text's box reaches above and below the health bar
 
 KIND_COLORS = {  # A,R,G,B without the alpha, which comes from [dev] overlay_alpha
     "ui": "250,249,245",
