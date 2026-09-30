@@ -770,6 +770,16 @@ def pet_death_labels(team, c):
 HEROIC_PANEL = {"blue": (14, 5), "red": (0, 3)}
 
 
+def heroic_frame_rect(cfg, team):
+    """The heroic's gold frame art (45 x 25, Blizzard's HeroicTalentFrame) centred on the icon,
+    in cell units (left, top, right, bottom)."""
+    k = cfg["hero_row"]["scale"]
+    s = lambda v: round(v * k)
+    l, t, r, b = heroic_icon_rect(cfg, team)
+    cx, cy = (l + r) / 2, (t + b) / 2
+    return round(cx - s(45) / 2), round(cy - s(25) / 2), round(cx + s(45) / 2), round(cy + s(25) / 2)
+
+
 def heroic_icon_rect(cfg, team):
     """The heroic icon's square in cell units (left, top, right, bottom): 38 x 38, at the
     panel's left + its inset, on the cell's bottom edge."""
@@ -818,8 +828,7 @@ def heroic_panel(cfg, team_frame, i):
     # as a meter from a Tracer-only frame in the same talent row (TracerChargeContainer; it only
     # shows for a hero with that ability)
     charge = f"{row}/TracerChargeContainer/TracerPulseBombChargeFrame"
-    fcx, fcy = (img_l + img_r) / 2, (img_t + img_b) / 2
-    fr = (round(fcx - s(45) / 2), round(fcy - s(25) / 2), round(fcx + s(45) / 2), round(fcy + s(25) / 2))
+    fr = heroic_frame_rect(cfg, team)
     rect = lambda l, t, r, b, ind="\t" * 8: (
         f'{ind}<Anchor side="Left"   relative="{cell}" pos="Min" offset="{l}"/>\n'
         f'{ind}<Anchor side="Top"    relative="{cell}" pos="Min" offset="{t}"/>\n'
@@ -870,26 +879,6 @@ def heroic_panel(cfg, team_frame, i):
         image("FCJH_UltReady", "@UI/HUD_TopBar_Team_HeroFrame_Ult_Ready", *fr,
               (f"{t9}{coords}\n" if flip else "") + f"{t9}<Alpha val=\"0\"/>\n") + \
         f"""\
-								<!-- Tracer's Pulse Bomb charge, Blizzard's in-game meter art (partyframe
-								     HeroicTalentChargeFillProgress) filled from their observer bar's value -->
-								<Frame type="ProgressBar" name="FCJH_UltCharge">
-{rect(*fr, t9)}{t9}<Vertical val="true"/>
-{t9}<FillInset val="0.0"/>
-{t9}<MinValue val="{{{charge}/ChargeFillProgress/@MinValue}}"/>
-{t9}<MaxValue val="{{{charge}/ChargeFillProgress/@MaxValue}}"/>
-{t9}<Value val="{{{charge}/ChargeFillProgress/@Value}}"/>
-{t9}<Alpha val="0"/>
-{t9}<Unclipped val="true"/>
-{t9}<AcceptsMouse val="false"/>
-{t9}<Frame type="Frame" name="FillImageContainer">
-{t9}	<Anchor relative="$parent"/>
-{t9}	<Frame type="Image" name="FillImage">
-{t9}		<Anchor relative="$parent/$parent"/>
-{t9}		<TextureCoords top="0" left="0.5" bottom="0" right="1"/>
-{t9}		<Texture val="@UI/{fill_tex}"/>
-{t9}	</Frame>
-{t9}</Frame>
-								</Frame>
 """ + f"""\
 								<Frame type="Label" name="FCJH_UltCooldown">
 {rect(*fr, t9)}{t9}<Text val="{{{watch('HeroicTalentCooldownLabel')}/@Text}}"/>
@@ -922,8 +911,8 @@ def heroic_panel(cfg, team_frame, i):
 								</Frame>
 								<StateGroup name="FCJH_Cooldown">
 									<DefaultState val="Ready"/>
-									<!-- Tracer: never "on cooldown" - her meter shows instead (it read as
-									     permanently greyed out, 2026-09-30) -->
+									<!-- Tracer: never "on cooldown" - her charge meter shows instead
+									     (tracer_meters; it read as permanently greyed out, 2026-09-30) -->
 									<State name="Charge">
 										<When type="Property" frame="{charge}" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
@@ -956,11 +945,6 @@ def heroic_panel(cfg, team_frame, i):
 									<DefaultState val="No"/>
 									<State name="Yes"><When type="Property" frame="{watch('HeroicTalentFrame_Ready')}" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltReady" Alpha="255"/></State>
 									<State name="No"><Action type="SetProperty" frame="$this/FCJH_UltReady" Alpha="0"/></State>
-								</StateGroup>
-								<StateGroup name="FCJH_Charges">
-									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="{charge}" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="0"/></State>
 								</StateGroup>
 							</Frame>
 							<Frame type="UnitStatusFrame" name="HeroStatus">
@@ -1616,6 +1600,62 @@ def hero_cell_template(team, c, cfg):
 OVERVIEW = "$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel"
 
 
+def tracer_meters(cfg):
+    """Tracer's Pulse Bomb charges rather than cooling down. Blizzard's observer bar shows the
+    charge as a meter over her tier-10 talent (the talent row's TracerChargeContainer; it only
+    shows for a hero with that ability). The row is hidden at Alpha 0, so its meter is lifted
+    out with IgnoreParentAlpha (Blizzard's own flag, used on their core bars) and moved over
+    our heroic's gold frame, drawn with the in-game top bar's meter art. Our own ProgressBar
+    fed with the row's values (first try) showed but never filled (2026-09-30)."""
+    out = []
+    for n in range(10):
+        team, cell = popup_cell(n)
+        team = team.lower()
+        l, t, r, b = heroic_frame_rect(cfg, team)
+        fill = HEROIC_ART[team][3]
+        edge = lambda side, rel, pos, v: f'<Anchor side="{side}" relative="{rel}" pos="{pos}" offset="{v}"/>'
+        out.append(f"""
+							<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame{n}">
+								<Frame type="Frame" name="TalentsContainerFrame">
+									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+											<Frame type="Frame" name="TracerChargeContainer">
+												{edge("Left", cell, "Min", l)}
+												{edge("Top", cell, "Min", t)}
+												{edge("Right", cell, "Min", r)}
+												{edge("Bottom", cell, "Min", b)}
+												<IgnoreParentAlpha val="true"/>
+												<Unclipped val="true"/>
+												<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
+													<Frame type="ProgressBar" name="ChargeFillProgress">
+														{edge("Left", "$parent", "Min", 0)}
+														{edge("Top", "$parent", "Min", 0)}
+														{edge("Right", "$parent", "Max", 0)}
+														{edge("Bottom", "$parent", "Max", 0)}
+														<Unclipped val="true"/>
+														<Frame type="Frame" name="FillImageContainer">
+															<Frame type="Image" name="FillImage">
+																<Texture val="@UI/{fill}"/>
+															</Frame>
+														</Frame>
+													</Frame>
+												</Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+							</Frame>""")
+    return ('''
+					<!-- Tracer's charge meters, lifted out of the hidden row (tools/gen.py tracer_meters) -->
+					<Frame type="Frame" name="TalentsOverview">
+						<Alpha val="0"/>
+						<Frame type="HeroTalentsPanel" name="TalentOverview">
+							<Frame type="Frame" name="HeroTalentsPanelContainer">''' + "".join(out) + '''
+							</Frame>
+						</Frame>
+					</Frame>''')
+
+
 def row_packer(cfg):
     """Fewer than five heroes a side (3v3, 1v1...). The engine fills the cells in order and
     hides the rest, and every cell is pinned in place, so a short blue team would sit out at
@@ -1739,7 +1779,7 @@ def hero_row_layout(cfg):
 					<!-- Blizzard's top-bar talent rows are anchored to the cells, so they follow
 					     them down here. Hidden with Alpha 0, not parked: the talent pop-ups watch
 					     their icons, which must stay alive. -->
-					<Frame type="Frame" name="TalentsOverview"><Alpha val="0"/></Frame>
+{tracer_meters(cfg)}
 {chr(10).join(cells)}
 				</Frame>
 			</Frame>
