@@ -163,10 +163,10 @@ class HeroCell:
     # Crowd control text ("STUNNED"...): a band across the bottom of the portrait, just
     # above the health backing (36). Ours, not Blizzard's - their cell shows no CC.
     CC_BAND = (22, 36)
-    # ...and its icon, a square (half-width 9) centred in the portrait above the bars (2..36).
+    # ...and its icon, a square centred in the portrait above the bars (2..36).
     # It sat on the whole cell's middle at first, which put it on top of the CC text rather
     # than in the plate's picture (user, 2026-09-30).
-    CC_ICON_MID, CC_ICON_HALF = 19, 9
+    CC_ICON_MID, CC_ICON_HALF = 19, 10.8     # half-width 9 until 2026-09-30, then +20% (user)
     # Fountain-ready marker: a small square in the plate's top corner on the portrait side,
     # away from the slant (left on blue, right on red). (left, top, right, bottom)
     FOUNTAIN = {"blue": (8, 2, 24, 18), "red": (104, 2, 120, 18)}

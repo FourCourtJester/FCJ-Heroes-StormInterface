@@ -341,10 +341,10 @@
 			     the icon's default picture is @UI/Editor/BorderImage - a thin black box, seen in
 			     game 2026-09-29 (matching the label's text against "" never fired). -->
 			<Frame type="Image" name="FCJH_CCIcon">
-				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="14"/>
-				<Anchor side="Left"   relative="$parent/$parent" pos="Mid" offset="-9"/>
-				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="38"/>
-				<Anchor side="Right"  relative="$parent/$parent" pos="Mid" offset="15"/>
+				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="11"/>
+				<Anchor side="Left"   relative="$parent/$parent" pos="Mid" offset="-12"/>
+				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="41"/>
+				<Anchor side="Right"  relative="$parent/$parent" pos="Mid" offset="18"/>
 				<Texture val="{$parent/FCJH_CC/DebuffIconLeft/@Texture}"/>
 				<Alpha val="0"/>
 				<RenderPriority val="530"/>
@@ -440,10 +440,10 @@
 				</Frame>
 			</Frame>
 			<Frame type="Image" name="FCJH_CloneIcon">
-				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="14"/>
-				<Anchor side="Left"   relative="$parent/$parent" pos="Mid" offset="-9"/>
-				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="38"/>
-				<Anchor side="Right"  relative="$parent/$parent" pos="Mid" offset="15"/>
+				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="11"/>
+				<Anchor side="Left"   relative="$parent/$parent" pos="Mid" offset="-12"/>
+				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="41"/>
+				<Anchor side="Right"  relative="$parent/$parent" pos="Mid" offset="18"/>
 				<Texture val="Assets\Textures\storm_ui_icon_abathur_ultimateevolution.dds"/>
 				<Alpha val="0"/>
 				<RenderPriority val="531"/>
