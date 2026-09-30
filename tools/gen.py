@@ -596,7 +596,8 @@ def slant_bars(cfg):
     # slant, and a square click area sent clicks on one plate's corner to its neighbour
     for team in ("blue", "red"):
         data = bytearray(slant_texture(team, cell.overlap / cell.w, "ffffff", size=(256, 128)))
-        # ...with the heroic icon cut away, so the heroic's tooltip frame under it gets the mouse
+        # ...with the heroic icon cut away: a click there is for the heroic's tooltip
+        # (talent_row_lifts), not a hero select
         l, t, r, b = heroic_icon_rect(cfg, team)
         for ty in range(round(t / cell.h * 128), min(128, round(b / cell.h * 128))):
             for tx in range(round(l / cell.w * 256), round(r / cell.w * 256)):
@@ -912,7 +913,7 @@ def heroic_panel(cfg, team_frame, i):
 								<StateGroup name="FCJH_Cooldown">
 									<DefaultState val="Ready"/>
 									<!-- Tracer: never "on cooldown" - her charge meter shows instead
-									     (tracer_meters; it read as permanently greyed out, 2026-09-30) -->
+									     (talent_row_lifts; it read as permanently greyed out, 2026-09-30) -->
 									<State name="Charge">
 										<When type="Property" frame="{charge}" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
@@ -947,23 +948,7 @@ def heroic_panel(cfg, team_frame, i):
 									<State name="No"><Action type="SetProperty" frame="$this/FCJH_UltReady" Alpha="0"/></State>
 								</StateGroup>
 							</Frame>
-							<Frame type="UnitStatusFrame" name="HeroStatus">
-								<!-- the heroic's tooltip: an ability icon for this plate's hero (inside
-								     HeroStatus, so it reads that hero), given the heroic from the talent
-								     row, drawing nothing, over the heroic icon. It gets the mouse because
-								     the plate's click target is cut away there (FCJH_PLATE_HIT_*): clicking
-								     the heroic shows its tooltip instead of selecting the hero. -->
-								<Frame type="UnitStatusAbilIcon" name="FCJH_HeroicTip">
-{rect(img_l, img_t, img_r, img_b, t9)}{t9}<AbilityLink val="{{{row}/HeroSelectedTalentTreeFrame/@HeroicAbilLink}}"/>
-{t9}<Unclipped val="true"/>
-{t9}<Frame type="AbilIcon" name="AbilIcon">
-{t9}	<Anchor relative="$parent"/>
-{t9}	<!-- Alpha 1, not 0: at 0 nothing showed on hover (2026-09-30) - a fully transparent
-{t9}	     image seems not to count as under the mouse. It sits under our own icon anyway. -->
-{t9}	<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Alpha val="1"/></Frame>
-{t9}</Frame>
-								</Frame>
-							</Frame>"""
+"""
 
 
 def pet_death_bindings(team_frame, i):
@@ -1608,25 +1593,61 @@ def hero_cell_template(team, c, cfg):
 OVERVIEW = "$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel"
 
 
-def tracer_meters(cfg):
-    """Tracer's Pulse Bomb charges rather than cooling down. Blizzard's observer bar shows the
-    charge as a meter over her tier-10 talent (the talent row's TracerChargeContainer; it only
-    shows for a hero with that ability). The row is hidden at Alpha 0, so its meter is lifted
-    out with IgnoreParentAlpha (Blizzard's own flag, used on their core bars) and moved over
-    our heroic's gold frame, drawn with the in-game top bar's meter art. Our own ProgressBar
-    fed with the row's values (first try) showed but never filled (2026-09-30)."""
+def talent_row_lifts(cfg):
+    """Pieces of Blizzard's observer talent row (hidden at Alpha 0) lifted out onto our plates
+    with IgnoreParentAlpha - Blizzard's own flag (their core bars use it), which lets one
+    child of a see-through parent draw. Per player:
+      - Tracer's charge meter: Pulse Bomb charges rather than cooling down; Blizzard shows the
+        charge on the talent row (TracerChargeContainer, only there for a hero with that
+        ability). Moved over our heroic's gold frame. Our own ProgressBar fed the row's values
+        (first try) never filled; the in-game meter art on Blizzard's frame (second) never
+        showed either, so this build carries a DIAGNOSTIC magenta square inside the lifted
+        frame: seen = the lift works and the art was wrong; not seen = the lift doesn't.
+      - the heroic's TOOLTIP: in the default UI it comes from the talent icon of the tier the
+        heroic sits in (level 10, or 4 for heroes like Varian: HeroicTier, as Blizzard's own
+        HeroicAbilityAnchorFrame reads it). That icon is moved over our heroic icon, nearly
+        invisible (Alpha 1); the other candidate is parked. An ability icon of our own there
+        (first try) gave no tooltip at Alpha 0 or 1."""
     out = []
+    park = lambda f: "".join(
+        f'\n\t\t\t\t\t\t\t\t\t\t\t\t<Action type="SetAnchor" frame="$this/{f}" side="{side}" relative="$GameUI" pos="Min" offset="{v}"/>'
+        for side, v in (("Left", 9999), ("Top", 9999), ("Right", 10049), ("Bottom", 10049)))
     for n in range(10):
         team, cell = popup_cell(n)
         team = team.lower()
         l, t, r, b = heroic_frame_rect(cfg, team)
-        fill = HEROIC_ART[team][3]
+        il, it, ir, ib = heroic_icon_rect(cfg, team)
         edge = lambda side, rel, pos, v: f'<Anchor side="{side}" relative="{rel}" pos="{pos}" offset="{v}"/>'
+        onto = lambda f: "".join(
+            f'\n\t\t\t\t\t\t\t\t\t\t\t\t<Action type="SetAnchor" frame="$this/{f}" side="{side}" relative="{cell}" pos="Min" offset="{v}"/>'
+            for side, v in (("Left", il), ("Top", it), ("Right", ir), ("Bottom", ib)))
+        icon = lambda k: f"""
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon{k}">
+													{edge("Left", "$GameUI", "Min", 9999)}
+													{edge("Top", "$GameUI", "Min", 9999)}
+													{edge("Right", "$GameUI", "Min", 10049)}
+													{edge("Bottom", "$GameUI", "Min", 10049)}
+													<Width val="0"/>
+													<Height val="0"/>
+													<IgnoreParentAlpha val="true"/>
+													<Alpha val="1"/>
+													<Unclipped val="true"/>
+												</Frame>"""
         out.append(f"""
 							<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame{n}">
 								<Frame type="Frame" name="TalentsContainerFrame">
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">{icon(2)}{icon(4)}
+												<StateGroup name="FCJH_HeroicTip">
+													<DefaultState val="Tier4"/>
+													<State name="Tier2">
+														<When type="Property" frame="$this" HeroicTier="2"/>{onto("TalentTreeIcon2")}{park("TalentTreeIcon4")}
+													</State>
+													<State name="Tier4">{onto("TalentTreeIcon4")}{park("TalentTreeIcon2")}
+													</State>
+												</StateGroup>
+											</Frame>
 											<Frame type="Frame" name="TracerChargeContainer">
 												{edge("Left", cell, "Min", l)}
 												{edge("Top", cell, "Min", t)}
@@ -1634,6 +1655,14 @@ def tracer_meters(cfg):
 												{edge("Bottom", cell, "Min", b)}
 												<IgnoreParentAlpha val="true"/>
 												<Unclipped val="true"/>
+												<Frame type="Image" name="FCJH_LiftCheck">
+													<Anchor relative="$parent"/>
+													<Texture val="@UI/PauseScreenDimImage"/>
+													<ColorAdjustMode val="Fill"/>
+													<AdjustmentColor val="255,255,0,255"/>
+													<Unclipped val="true"/>
+													<AcceptsMouse val="false"/>
+												</Frame>
 												<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
 													<Frame type="ProgressBar" name="ChargeFillProgress">
 														{edge("Left", "$parent", "Min", 0)}
@@ -1641,11 +1670,6 @@ def tracer_meters(cfg):
 														{edge("Right", "$parent", "Max", 0)}
 														{edge("Bottom", "$parent", "Max", 0)}
 														<Unclipped val="true"/>
-														<Frame type="Frame" name="FillImageContainer">
-															<Frame type="Image" name="FillImage">
-																<Texture val="@UI/{fill}"/>
-															</Frame>
-														</Frame>
 													</Frame>
 												</Frame>
 											</Frame>
@@ -1653,15 +1677,15 @@ def tracer_meters(cfg):
 									</Frame>
 								</Frame>
 							</Frame>""")
-    return ('''
-					<!-- Tracer's charge meters, lifted out of the hidden row (tools/gen.py tracer_meters) -->
+    return ("""
+					<!-- Pieces of the hidden talent row lifted onto our plates (tools/gen.py talent_row_lifts) -->
 					<Frame type="Frame" name="TalentsOverview">
 						<Alpha val="0"/>
 						<Frame type="HeroTalentsPanel" name="TalentOverview">
-							<Frame type="Frame" name="HeroTalentsPanelContainer">''' + "".join(out) + '''
+							<Frame type="Frame" name="HeroTalentsPanelContainer">""" + "".join(out) + """
 							</Frame>
 						</Frame>
-					</Frame>''')
+					</Frame>""")
 
 
 def row_packer(cfg):
@@ -1787,7 +1811,7 @@ def hero_row_layout(cfg):
 					<!-- Blizzard's top-bar talent rows are anchored to the cells, so they follow
 					     them down here. Hidden with Alpha 0, not parked: the talent pop-ups watch
 					     their icons, which must stay alive. -->
-{tracer_meters(cfg)}
+{talent_row_lifts(cfg)}
 {chr(10).join(cells)}
 				</Frame>
 			</Frame>
