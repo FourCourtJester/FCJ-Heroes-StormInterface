@@ -39,22 +39,23 @@ bottom = 1133                # the square's bottom edge; > 1080 hangs off-screen
 #       "demand" on demand, or temporary
 # ---------------------------------------------------------------------------
 
-# Top bar, blue side (outside in: score, name, logo, level). Red mirrors every rect about
-# x 960. OBS pass (user, 2026-09-30: "logos are being eaten up"):
-# - logos are 56 px squares, 8 px clear of the backplate wings' slanted outer ends
-#   (the wings meet the top edge at 762.4 / 1157.7);
-# - name and score shift outward to make room; blue's score stays clear of the replay panel
-#   (x 16-394);
-# - the secondary info leaves the row: bans on a second row under each name, bracket and game
-#   count either side of the clock, below the hexagon.
+# Top bar, blue side (outside in: score, name, logo, level). Red mirrors blue about x 960.
+# OBS pass (user, 2026-09-30):
+# - the top row (score, name, logo) is one band, the height of the level labels' backplate
+#   wings: the top edge to y 63.3 (the hexagon's side points), so their art matches it;
+# - logos are 8 px clear of the wings' slanted outer ends (762.4 / 1157.7 on the top edge);
+#   blue's score stays clear of the replay panel (x 16-394);
+# - the second row: bans under each name; bracket (blue) and game count (red) under the
+#   level labels, as wide as their wing's bottom edge (blue 794-890, red 1024-1126: Blizzard's
+#   hexagon sits 2.75 px left of the screen's centre, so the wings differ).
 [element.blue_score]
-rect = [404, 8, 64, 50]
+rect = [400, 0, 64, 63.3]
 kind = "obs"
 [element.blue_name]
-rect = [474, 8, 220, 50]
+rect = [470, 0, 214, 63.3]
 kind = "ui"                  # the plate is ours; OBS draws the name on it
 [element.blue_logo]
-rect = [700, 4, 56, 56]
+rect = [690, 0, 64, 63.3]
 kind = "obs"
 [element.blue_level]
 rect = [800, 8, 80, 50]
@@ -63,10 +64,10 @@ kind = "ui"
 rect = [794, 0, 92, 64]      # Blizzard's flame, behind the level plate of the team ahead
 kind = "demand"
 [element.blue_bans]
-rect = [586, 66, 108, 32]    # under the name, flush with its inner end
+rect = [576, 67, 108, 32]    # under the name, flush with its inner end
 kind = "obs"
 [element.bracket]
-rect = [760, 130, 140, 26]   # left of the clock, level with it
+rect = [794, 67, 96, 24]     # under blue's wing
 kind = "obs"
 
 # Top bar, centre
@@ -85,19 +86,19 @@ kind = "ui"
 rect = [1034, 0, 92, 64]
 kind = "demand"
 [element.red_logo]
-rect = [1164, 4, 56, 56]
+rect = [1166, 0, 64, 63.3]
 kind = "obs"
 [element.red_name]
-rect = [1226, 8, 220, 50]
+rect = [1236, 0, 214, 63.3]
 kind = "ui"
 [element.red_score]
-rect = [1452, 8, 64, 50]
+rect = [1456, 0, 64, 63.3]
 kind = "obs"
 [element.red_bans]
-rect = [1226, 66, 108, 32]
+rect = [1236, 67, 108, 32]
 kind = "obs"
 [element.game_count]
-rect = [1020, 130, 140, 26]  # right of the clock
+rect = [1024, 67, 102, 24]   # under red's wing
 kind = "obs"
 
 # Around the edges
