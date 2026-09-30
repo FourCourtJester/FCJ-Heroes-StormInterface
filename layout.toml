@@ -171,6 +171,7 @@ fade = 0.75                  # s to fade out at the end
 # and state logic mustn't wait on an animation-driven flag.
 [heal_popup]
 threshold = 25               # percent
+clear_above = 30             # percent: a showing pop-up fades out at once above this (user polish, 2026-09-30)
 hold = 2.75                  # s fully shown (the talent pop-up holds 5.35; user: heal lingered)
 fade = 0.75                  # s to fade out at the end
 death_fade = 0.35            # s to fade out when the hero dies

@@ -958,7 +958,9 @@ def heroic_panel(cfg, team_frame, i):
 {t9}<Unclipped val="true"/>
 {t9}<Frame type="AbilIcon" name="AbilIcon">
 {t9}	<Anchor relative="$parent"/>
-{t9}	<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Alpha val="0"/></Frame>
+{t9}	<!-- Alpha 1, not 0: at 0 nothing showed on hover (2026-09-30) - a fully transparent
+{t9}	     image seems not to count as under the mouse. It sits under our own icon anyway. -->
+{t9}	<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Alpha val="1"/></Frame>
 {t9}</Frame>
 								</Frame>
 							</Frame>"""
@@ -1004,12 +1006,15 @@ def health_sensor(cfg):
     why the pop-up never trusts a single reading (heal_popups).
     Probe history: Blizzard's own low-life elements don't run in observer cells (first try,
     2026-09-26); this label does."""
-    t = cfg["heal_popup"]["threshold"]
-    state = lambda name, text, low: (
+    t, clear = cfg["heal_popup"]["threshold"], cfg["heal_popup"]["clear_above"]
+    b = lambda v: str(v).lower()
+    # a third flag, FCJH_ClearMark, above clear_above: a showing pop-up leaves at once there
+    state = lambda name, text, v: (
         f'\n\t\t\t\t\t<State name="{name}"><When type="Property" frame="$parent/FCJH_HPPercent/StatusLabel" Text="{text}"/>'
-        f'<Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="{str(low).lower()}"/>'
-        f'<Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="{str(not low).lower()}"/></State>')
-    states = "".join(state(f"{'Low' if v <= t else 'Ok'}{v}{tag}", f"{v}{pc}", v <= t)
+        f'<Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="{b(v <= t)}"/>'
+        f'<Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="{b(v > t)}"/>'
+        f'<Action type="SetProperty" frame="$parent/FCJH_ClearMark" visible="{b(v > clear)}"/></State>')
+    states = "".join(state(f"{'Low' if v <= t else 'Ok'}{v}{tag}", f"{v}{pc}", v)
                      for v in range(1, 101) for tag, pc in (("pc", "%"), ("", "")))
     return f"""
 			<!-- Heal pop-ups: the health sensor (tools/gen.py health_sensor) -->
@@ -1030,12 +1035,13 @@ def health_sensor(cfg):
 			</Frame>
 			<Frame type="Frame" name="FCJH_LowMark"><Anchor relative="$parent"/><Visible val="false"/></Frame>
 			<Frame type="Frame" name="FCJH_HealthyMark"><Anchor relative="$parent"/><Visible val="false"/></Frame>
+			<Frame type="Frame" name="FCJH_ClearMark"><Anchor relative="$parent"/><Visible val="false"/></Frame>
 			<Frame type="Frame" name="FCJH_HealthWatch">
 				<Anchor relative="$parent"/>
 				<AcceptsMouse val="false"/>
 				<StateGroup name="FCJH_Health">
 					<DefaultState val="Unknown"/>{states}
-					<State name="Unknown"><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/></State>
+					<State name="Unknown"><Action type="SetProperty" frame="$parent/FCJH_LowMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_HealthyMark" visible="false"/><Action type="SetProperty" frame="$parent/FCJH_ClearMark" visible="false"/></State>
 				</StateGroup>
 			</Frame>"""
 
@@ -1115,6 +1121,7 @@ def heal_popups(cfg):
     """One heal pop-up per plate (layout.toml [heal_popup]), drawn under the talent pop-ups
     (520 vs 530). Each plate's watcher:
       - Died first: the hero's death timer shows -> fade out at once, re-arm
+      - Recovered: above clear_above (FCJH_ClearMark) -> fade out at once, re-arm
       - Fire: low (FCJH_LowMark), armed, not locked -> pop; disarm; lock
       - Rearm: a healthy reading re-arms it
     The lock (FCJH_Lock) is animation-driven, but only ever READ as a condition on the next
@@ -1150,6 +1157,11 @@ def heal_popups(cfg):
 						<DefaultState val="Hold"/>
 						<State name="Died">
 							<When type="Property" frame="{cell}/HeroDeathTimeLabel" visible="true"/>
+							<Action type="SetProperty" frame="FCJH_Armed" visible="true"/>
+							<Action type="SendEvent" frame="$parent/FCJH_Heal{n}/FCJH_Body" event="FCJH_Leave"/>
+						</State>
+						<State name="Recovered">
+							<When type="Property" frame="{cell}/HeroStatus/FCJH_ClearMark" visible="true"/>
 							<Action type="SetProperty" frame="FCJH_Armed" visible="true"/>
 							<Action type="SendEvent" frame="$parent/FCJH_Heal{n}/FCJH_Body" event="FCJH_Leave"/>
 						</State>
