@@ -61,10 +61,14 @@
 		</Frame>
 		<Frame type="Image" name="HeroPortraitBackground" template="FCJH_HeroRow/FCJH_Parked"/>
 		<Frame type="Image" name="TalentsBgImage" template="FCJH_HeroRow/FCJH_Parked"/>
-		<!-- Blizzard's click target (select, centre the camera): the whole plate, above
-		     everything we draw, so no art of ours can take the click; its hit test is the
-		     plate's slanted shape (FCJH_PLATE_HIT_*), not the square -->
+		<!-- Blizzard's click target: the whole plate, above everything we draw, so no art of
+		     ours can take the click; its hit test is the plate's slanted shape
+		     (FCJH_PLATE_HIT_*), not the square. It centres the camera but no longer SELECTS:
+		     a selection brings up the inspect card, which should come from clicking the hero
+		     in the world, not the plate (user, 2026-09-30). -->
 		<Frame type="UnitTargetFrame" name="TargetHeroUnitFrame">
+			<AllowSelection val="false"/>
+			<AllowCameraCentering val="true"/>
 			<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 			<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 			<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
@@ -195,7 +199,7 @@
 						<Frame type="UnitTargetFrame" name="FCJH_Target">
 							<Anchor relative="$parent"/>
 							<AllowTargeting val="false"/>
-							<AllowSelection val="true"/>
+							<AllowSelection val="false"/>   <!-- as the plate's: no inspect from a plate click -->
 							<AllowCameraCentering val="true"/>
 							<AllowSmartCommand val="false"/>
 							<Unclipped val="true"/>
@@ -220,7 +224,7 @@
 						<Frame type="UnitTargetFrame" name="FCJH_Target">
 							<Anchor relative="$parent"/>
 							<AllowTargeting val="false"/>
-							<AllowSelection val="true"/>
+							<AllowSelection val="false"/>   <!-- as the plate's: no inspect from a plate click -->
 							<AllowCameraCentering val="true"/>
 							<AllowSmartCommand val="false"/>
 							<Unclipped val="true"/>
@@ -245,7 +249,7 @@
 						<Frame type="UnitTargetFrame" name="FCJH_Target">
 							<Anchor relative="$parent"/>
 							<AllowTargeting val="false"/>
-							<AllowSelection val="true"/>
+							<AllowSelection val="false"/>   <!-- as the plate's: no inspect from a plate click -->
 							<AllowCameraCentering val="true"/>
 							<AllowSmartCommand val="false"/>
 							<Unclipped val="true"/>
@@ -878,7 +882,7 @@
 						<Frame type="UnitTargetFrame" name="FCJH_Target">
 							<Anchor relative="$parent"/>
 							<AllowTargeting val="false"/>
-							<AllowSelection val="true"/>
+							<AllowSelection val="false"/>   <!-- as the plate's: no inspect from a plate click -->
 							<AllowCameraCentering val="true"/>
 							<AllowSmartCommand val="false"/>
 							<Unclipped val="true"/>
@@ -903,7 +907,7 @@
 						<Frame type="UnitTargetFrame" name="FCJH_Target">
 							<Anchor relative="$parent"/>
 							<AllowTargeting val="false"/>
-							<AllowSelection val="true"/>
+							<AllowSelection val="false"/>   <!-- as the plate's: no inspect from a plate click -->
 							<AllowCameraCentering val="true"/>
 							<AllowSmartCommand val="false"/>
 							<Unclipped val="true"/>
@@ -928,7 +932,7 @@
 						<Frame type="UnitTargetFrame" name="FCJH_Target">
 							<Anchor relative="$parent"/>
 							<AllowTargeting val="false"/>
-							<AllowSelection val="true"/>
+							<AllowSelection val="false"/>   <!-- as the plate's: no inspect from a plate click -->
 							<AllowCameraCentering val="true"/>
 							<AllowSmartCommand val="false"/>
 							<Unclipped val="true"/>
