@@ -686,6 +686,10 @@ def heroic_panel(cfg, team_frame, i):
     row = TALENT_ROW.format(n=i - 1 if blue else i + 4)   # PlayerFrame0-4 blue 1-5, 5-9 red 1-5
     pl, il = HEROIC_PANEL[team]
     mask, frame_tex, flip, fill_tex = HEROIC_ART[team]
+    # the backplate is Blizzard's LEFT art, flipped on red (their _R template); the icon's mask
+    # is the _Right art unflipped. Using _Right AND flipping it (first try) leaned the red
+    # backplate the wrong way under the icon - obvious on Rexxar (2026-09-30)
+    back = "HUD_TopBar_Team_HeroFrame_Ult_Bg"
     coords = '<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>' if flip else ""
     img_l, img_r, img_t, img_b = s(pl + il), s(pl + il + 38), c.h - s(38), c.h
     fcx, fcy = (img_l + img_r) / 2, (img_t + img_b) / 2
@@ -702,8 +706,10 @@ def heroic_panel(cfg, team_frame, i):
         f'\t\t\t\t\t\t\t\t</Frame>\n')
     t9 = "\t" * 9
     # bars: wide (no heroic) and narrow (heroic showing) left edges, in cell units
-    bars = [("HeroStatus", g["health"][0]), ("HeroStatus/FCJH_HealthBacking", g["health_backing"][0]),
-            ("HeroStatus/FCJH_ManaBacking", g["mana_backing"][0]), ("HeroStatus/FCJH_Resource", g["energy"][0])]
+    # Only the bars narrow; their dark backing frames stay full width with the icon drawn over
+    # their left end, as Blizzard's UpdateHealthBarWidths does. Moving the backings too (first
+    # try) exposed their angled ends beside the icon as dark triangles (2026-09-30).
+    bars = [("HeroStatus", g["health"][0]), ("HeroStatus/FCJH_Resource", g["energy"][0])]
     def lefts(narrow):
         out = "".join(
             f'\t\t\t\t\t\t\t\t\t\t<Action type="SetAnchor" frame="{cell}/{f}" side="Left" relative="{cell}" pos="Min" '
@@ -731,7 +737,7 @@ def heroic_panel(cfg, team_frame, i):
 								<RenderPriority val="529"/>
 								<Unclipped val="true"/>
 								<AcceptsMouse val="false"/>
-""" + image("FCJH_UltBg", f"@UI/{mask}", img_l, img_t, img_r, img_b, f"{t9}{coords}\n" if flip else "") + \
+""" + image("FCJH_UltBg", f"@UI/{back}", img_l, img_t, img_r, img_b, f"{t9}{coords}\n" if flip else "") + \
         image("FCJH_UltIcon", f"{{{watch('HeroicTalentImage')}/@Texture}}", img_l, img_t, img_r, img_b,
               f"{t9}<AlphaMaskTexture val=\"@UI/{mask}\"/>\n") + \
         image("FCJH_UltFrame", f"@UI/{frame_tex}", *fr, f"{t9}{coords}\n" if flip else "") + \
