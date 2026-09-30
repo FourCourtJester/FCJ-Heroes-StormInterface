@@ -13,9 +13,13 @@ build 50 lives in git history and as the validator's test fixture
 (`tests/fixtures/build50/`). Everything it taught is in §3 and §6.
 
 **The design is agreed** and lives in a canvas of to-scale wireframes:
-**https://claude.ai/artifact/6MmAcxcKjfAAprCN3oc3ZK** — the stock UI annotated, the
-proposed default view at 1920×1080, and a spec table giving each element's position and
-how sure we are the game allows it. **Every build is checked against it.**
+**https://claude.ai/artifact/6MmAcxcKjfAAprCN3oc3ZK** — the stock UI annotated, then the
+build as it stands: the default view at 1920×1080, the spec table, the plate anatomy, the
+info panes, the inspect card, the top bar and the visual-language agenda for the art pass.
+Those boards are drawn from the build's own numbers by `design/canvas_gen.py` (it imports
+`tools/gen.py`; untracked, like the rest of `design/`): after a layout change, run
+`python design/canvas_gen.py` and publish `design/canvas/project/` to the canvas.
+**Every build is checked against it.**
 
 In one paragraph: the ten hero cells sit along the bottom (blue 1–5 left of the minimap,
 red 6–0 right of it) with portrait, HP, mana and CC; the minimap and its objective widgets
@@ -291,7 +295,8 @@ hidden outright for observers, not faded.
 - the visual pass: the chrome backplate look to the plates, XP/core bars (a mid-height bevel,
   like the player view's core bar; the default UI's core bars: `design/ref_default_core_hp.png`)
   and the info panes (zebra rows, Heroes palette); fountain markers re-angled to the plate
-- wireframes for the nameplates / XP / core HP
+- wireframes for the nameplates / XP / core HP: the canvas now draws the build as it is
+  (2026-09-30); the art pass designs over those boards
 - the OBS package (names, logos, scores, bans, bracket, game count)
 - fight-mode hotkey; our own hotkeys (Blizzard's 1-8 and Ctrl+1/2 are "observe player N")
 - rewinding a replay upsets pop-ups and latches — final polish (the product is for live games)
