@@ -27,7 +27,7 @@
 				</State>
 			</StateGroup>
 		</Frame>
-		<!-- A. The card and the parts already proven: our copy of Blizzard's inspect box -->
+		<!-- The card: our copy of Blizzard's inspect box -->
 		<Frame type="TargetInfoFrame" name="FCJH_Inspect">
 			<Visible val="false"/>
 			<Frame type="Button" name="FCJH_Close">
@@ -104,8 +104,8 @@
 				</Frame>
 
 
-		<!-- B. The experiments, each labelled 1-6 in the header: Blizzard's per-unit widgets in a
-		     selection panel over the card -->
+		<!-- The card's contents, numbered 1-6 below: Blizzard's per-unit widgets in a selection
+		     panel, following the observer's selection -->
 		<Frame type="SelectionUnitStatusPanel" name="FCJH_InspectUnit">
 			<Anchor relative="$parent"/>
 			<AcceptsMouse val="false"/>
@@ -3415,8 +3415,8 @@
 					</Frame>
 
 				<!-- 6. abilities, laid out like Blizzard's ability card: 1-5 on top (talent actives: two of
-				     Auriel's as a test, shown only if she has them), D Q W E R Z below. D Q W E from a
-				     per-hero table (3 heroes for now); R from the talent strip's heroic; Z the mount -->
+				     Auriel's as a test, shown only if she has them), D Q W E R Z below. D Q W E Z per hero
+				     from the game data; R from the talent strip's heroic -->
 					<Frame type="UnitStatusAbilIcon" name="FCJH_Abil1">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="382"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>

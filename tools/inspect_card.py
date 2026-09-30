@@ -41,24 +41,16 @@ TAL_LABEL, TAL = 471, 487
 STATS_LABEL, STATS, STAT_ROW = 551, 569, 24
 M = 14                              # side margin
 
-# Sonya, Johanna, Auriel (the test replay): trait, Q, W, E. From the game data's CardLayouts.
-# If these show, a generated table for every hero comes next. R (heroic) comes from the
-# talent strip's HeroicAbilLink, the way Blizzard's talent rows do it.
-ABILITIES = {
-    "HeroBarbarian": ("BarbarianShotofFury", "BarbarianAncientSpear", "BarbarianSeismicSlam", "BarbarianWhirlwind"),
-    "HeroCrusader": ("CrusaderIronSkin", "CrusaderPunish", "CrusaderCondemn", "CrusaderShieldGlare"),
-    "HeroAuriel": ("AurielBestowHope", "AurielSacredSweep", "AurielRayOfHeaven", "AurielDetainmentStrike"),
-}
-# (hotkey, frame, row, column, fixed AbilityLink). D Q W E come from ABILITIES per hero; R is the
-# talent strip's heroic; Z is the shared mount ability. 1-5 are talent-granted actives: Ahli's
-# method is one icon per candidate ability, shown only if the hero has it. Two of Auriel's as a
-# test; the rest wait for a generated table.
+# The ability card's slots: (hotkey, frame, row, column, fixed AbilityLink). D Q W E Z come per
+# hero from the game data (hero_cards, set by FCJH_Abilities); R is the talent strip's heroic
+# (player_pack); Z falls back to the shared mount. 1-5 are talent-granted actives - Ahli's
+# method, one icon per candidate ability shown only if the hero has it: two of Auriel's so
+# far, as a test; a table for every hero is still to do.
 SLOTS = [("1", "FCJH_Abil1", 0, 0, "AurielAngelicFlight"), ("2", "FCJH_Abil2", 0, 1, "AurielShieldOfHope"),
          ("3", "FCJH_Abil3", 0, 2, ""), ("4", "FCJH_Abil4", 0, 3, ""), ("5", "FCJH_Abil5", 0, 4, ""),
          ("D", "FCJH_AbilD", 1, 0, ""), ("Q", "FCJH_AbilQ", 1, 1, ""), ("W", "FCJH_AbilW", 1, 2, ""),
          ("E", "FCJH_AbilE", 1, 3, ""), ("R", "FCJH_AbilR", 1, 4, ""),   # R's icon comes with the player pack (player_pack)
          ("Z", "FCJH_AbilZ", 1, 5, "Mount")]
-PER_HERO = ["FCJH_AbilD", "FCJH_AbilQ", "FCJH_AbilW", "FCJH_AbilE"]
 
 
 def rect(top, left, bottom, right, rel="$parent", i=4, right_pos="Min"):
@@ -110,7 +102,7 @@ def card():
            f'{T*4}<State name="Hide">\n'
            f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="false"/>\n{T*4}</State>\n'
            f'{T*3}</StateGroup>\n{T*2}</Frame>\n'
-           f'{T*2}<!-- A. The card and the parts already proven: our copy of Blizzard\'s inspect box -->\n'
+           f'{T*2}<!-- The card: our copy of Blizzard\'s inspect box -->\n'
            f'{T*2}<Frame type="TargetInfoFrame" name="FCJH_Inspect">\n'
            f'{T*3}<Visible val="false"/>\n'
            # Round 9: an X in the title band's right end, like the info panes' (tools/gen.py
@@ -352,8 +344,8 @@ def matcher(n):
 
 
 def unit():
-    """The experiments: a selection panel over the same card, holding Blizzard's per-unit
-    widgets. SelectionUnitStatusPanel without a PlayerId follows the observer's selection."""
+    """The card's contents: a selection panel inside it, holding Blizzard's per-unit widgets.
+    A SelectionUnitStatusPanel without a PlayerId follows the observer's selection."""
     t6 = T * 6
     abil = []
     for key, name, row, col, fixed in SLOTS:
@@ -414,8 +406,8 @@ def unit():
                           M + (n - 1) * TAL_STEP + TAL_SIZE, "FCJH_InspectTier", str(lv), 5)
                     for n, lv in enumerate((1, 4, 7, 10, 13, 16, 20), start=1))
     return f'''
-{T*2}<!-- B. The experiments, each labelled 1-6 in the header: Blizzard's per-unit widgets in a
-{T*2}     selection panel over the card -->
+{T*2}<!-- The card's contents, numbered 1-6 below: Blizzard's per-unit widgets in a selection
+{T*2}     panel, following the observer's selection -->
 {T*2}<Frame type="SelectionUnitStatusPanel" name="FCJH_InspectUnit">
 {T*3}<Anchor relative="$parent"/>
 {T*3}<AcceptsMouse val="false"/>
@@ -498,8 +490,8 @@ def unit():
 {T*4}     FCJH_IsPlayerN below. Each pack also brings that player's heroic (R) and name. -->
 {"".join(player_pack(n) for n in range(10))}{tiers}
 {T*4}<!-- 6. abilities, laid out like Blizzard's ability card: 1-5 on top (talent actives: two of
-{T*4}     Auriel's as a test, shown only if she has them), D Q W E R Z below. D Q W E from a
-{T*4}     per-hero table (3 heroes for now); R from the talent strip's heroic; Z the mount -->
+{T*4}     Auriel's as a test, shown only if she has them), D Q W E R Z below. D Q W E Z per hero
+{T*4}     from the game data; R from the talent strip's heroic -->
 {"".join(abil)}{T*4}<StateGroup name="FCJH_Abilities">
 {T*5}<DefaultState val="Other"/>
 {"".join(states)}{T*5}<State name="Other"/>

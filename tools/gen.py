@@ -872,15 +872,6 @@ def heroic_panel(cfg, team_frame, i):
         image("FCJH_UltReady", "@UI/HUD_TopBar_Team_HeroFrame_Ult_Ready", *fr,
               (f"{t9}{coords}\n" if flip else "") + f"{t9}<Alpha val=\"0\"/>\n") + \
         f"""\
-""" + f"""\
-								<Frame type="Label" name="FCJH_UltCooldown">
-{rect(*fr, t9)}{t9}<Text val="{{{watch('HeroicTalentCooldownLabel')}/@Text}}"/>
-{t9}<Style val="PartyFrame_HeroicTalentCooldown"/>
-{t9}<Options val="NoWrapping | ScaleToPreventTruncation"/>
-{t9}<Alpha val="0"/>
-{t9}<Unclipped val="true"/>
-{t9}<AcceptsMouse val="false"/>
-								</Frame>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
 									<State name="Yes">
@@ -891,10 +882,9 @@ def heroic_panel(cfg, team_frame, i):
 										<Action type="SetProperty" frame="$this" Alpha="0"/>
 {lefts(False)}									</State>
 								</StateGroup>
-								<!-- cooldown: the hidden bar's own count never showed for observers (2026-09-30),
-								     so a second source - the observer top bar's own heroic count, in the
-								     talent row for this player - triggers the same dim-and-count -->
-								<Frame type="Label" name="FCJH_UltCooldown2">
+								<!-- cooldown: from Blizzard's observer top bar - its own heroic count, in the talent
+								     row for this player (the in-game bar's count never shows for observers) -->
+								<Frame type="Label" name="FCJH_UltCooldown">
 {rect(*fr, t9)}{t9}<Text val="{{{sensor}/AbilIcon/CooldownLabel/@Text}}"/>
 {t9}<Style val="PartyFrame_HeroicTalentCooldown"/>
 {t9}<Options val="NoWrapping | ScaleToPreventTruncation"/>
@@ -909,27 +899,17 @@ def heroic_panel(cfg, team_frame, i):
 									<State name="Charge">
 										<When type="Property" frame="{charge}" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
 									</State>
 									<State name="Cooldown">
-										<When type="Property" frame="{watch('HeroicTalentCooldownLabel')}" Visible="true"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
-									</State>
-									<State name="CooldownSensor">
 										<When type="Property" frame="{sensor}/AbilIcon/CooldownLabel" Visible="true"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="255"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
 									</State>
 									<State name="Ready">
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
 									</State>

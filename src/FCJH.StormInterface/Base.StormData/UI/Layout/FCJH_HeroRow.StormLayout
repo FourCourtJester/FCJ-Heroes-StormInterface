@@ -6213,18 +6213,6 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
-								<Frame type="Label" name="FCJH_UltCooldown">
-									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="24"/>
-									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="44"/>
-									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="92"/>
-									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="82"/>
-									<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/HeroicTalentPanel/HeroicTalentCooldownLabel/@Text}"/>
-									<Style val="PartyFrame_HeroicTalentCooldown"/>
-									<Options val="NoWrapping | ScaleToPreventTruncation"/>
-									<Alpha val="0"/>
-									<Unclipped val="true"/>
-									<AcceptsMouse val="false"/>
-								</Frame>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
 									<State name="Yes">
@@ -6255,10 +6243,9 @@
 										<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame2" side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="133"/>
 									</State>
 								</StateGroup>
-								<!-- cooldown: the hidden bar's own count never showed for observers (2026-09-30),
-								     so a second source - the observer top bar's own heroic count, in the
-								     talent row for this player - triggers the same dim-and-count -->
-								<Frame type="Label" name="FCJH_UltCooldown2">
+								<!-- cooldown: from Blizzard's observer top bar - its own heroic count, in the talent
+								     row for this player (the in-game bar's count never shows for observers) -->
+								<Frame type="Label" name="FCJH_UltCooldown">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="24"/>
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="44"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="92"/>
@@ -6277,27 +6264,17 @@
 									<State name="Charge">
 										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
 									</State>
 									<State name="Cooldown">
-										<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/HeroicTalentPanel/HeroicTalentCooldownLabel" Visible="true"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
-									</State>
-									<State name="CooldownSensor">
 										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="255"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
 									</State>
 									<State name="Ready">
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
 									</State>
@@ -6399,18 +6376,6 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
-								<Frame type="Label" name="FCJH_UltCooldown">
-									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="24"/>
-									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="44"/>
-									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="92"/>
-									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="82"/>
-									<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/HeroicTalentPanel/HeroicTalentCooldownLabel/@Text}"/>
-									<Style val="PartyFrame_HeroicTalentCooldown"/>
-									<Options val="NoWrapping | ScaleToPreventTruncation"/>
-									<Alpha val="0"/>
-									<Unclipped val="true"/>
-									<AcceptsMouse val="false"/>
-								</Frame>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
 									<State name="Yes">
@@ -6441,10 +6406,9 @@
 										<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame2" side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="133"/>
 									</State>
 								</StateGroup>
-								<!-- cooldown: the hidden bar's own count never showed for observers (2026-09-30),
-								     so a second source - the observer top bar's own heroic count, in the
-								     talent row for this player - triggers the same dim-and-count -->
-								<Frame type="Label" name="FCJH_UltCooldown2">
+								<!-- cooldown: from Blizzard's observer top bar - its own heroic count, in the talent
+								     row for this player (the in-game bar's count never shows for observers) -->
+								<Frame type="Label" name="FCJH_UltCooldown">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="24"/>
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="44"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="92"/>
@@ -6463,27 +6427,17 @@
 									<State name="Charge">
 										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
 									</State>
 									<State name="Cooldown">
-										<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/HeroicTalentPanel/HeroicTalentCooldownLabel" Visible="true"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
-									</State>
-									<State name="CooldownSensor">
 										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="255"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
 									</State>
 									<State name="Ready">
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
 									</State>
@@ -6585,18 +6539,6 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
-								<Frame type="Label" name="FCJH_UltCooldown">
-									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="24"/>
-									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="44"/>
-									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="92"/>
-									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="82"/>
-									<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/HeroicTalentPanel/HeroicTalentCooldownLabel/@Text}"/>
-									<Style val="PartyFrame_HeroicTalentCooldown"/>
-									<Options val="NoWrapping | ScaleToPreventTruncation"/>
-									<Alpha val="0"/>
-									<Unclipped val="true"/>
-									<AcceptsMouse val="false"/>
-								</Frame>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
 									<State name="Yes">
@@ -6627,10 +6569,9 @@
 										<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame2" side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="133"/>
 									</State>
 								</StateGroup>
-								<!-- cooldown: the hidden bar's own count never showed for observers (2026-09-30),
-								     so a second source - the observer top bar's own heroic count, in the
-								     talent row for this player - triggers the same dim-and-count -->
-								<Frame type="Label" name="FCJH_UltCooldown2">
+								<!-- cooldown: from Blizzard's observer top bar - its own heroic count, in the talent
+								     row for this player (the in-game bar's count never shows for observers) -->
+								<Frame type="Label" name="FCJH_UltCooldown">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="24"/>
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="44"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="92"/>
@@ -6649,27 +6590,17 @@
 									<State name="Charge">
 										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
 									</State>
 									<State name="Cooldown">
-										<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/HeroicTalentPanel/HeroicTalentCooldownLabel" Visible="true"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
-									</State>
-									<State name="CooldownSensor">
 										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="255"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
 									</State>
 									<State name="Ready">
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
 									</State>
@@ -6771,18 +6702,6 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
-								<Frame type="Label" name="FCJH_UltCooldown">
-									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="24"/>
-									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="44"/>
-									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="92"/>
-									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="82"/>
-									<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/HeroicTalentPanel/HeroicTalentCooldownLabel/@Text}"/>
-									<Style val="PartyFrame_HeroicTalentCooldown"/>
-									<Options val="NoWrapping | ScaleToPreventTruncation"/>
-									<Alpha val="0"/>
-									<Unclipped val="true"/>
-									<AcceptsMouse val="false"/>
-								</Frame>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
 									<State name="Yes">
@@ -6813,10 +6732,9 @@
 										<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame2" side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="133"/>
 									</State>
 								</StateGroup>
-								<!-- cooldown: the hidden bar's own count never showed for observers (2026-09-30),
-								     so a second source - the observer top bar's own heroic count, in the
-								     talent row for this player - triggers the same dim-and-count -->
-								<Frame type="Label" name="FCJH_UltCooldown2">
+								<!-- cooldown: from Blizzard's observer top bar - its own heroic count, in the talent
+								     row for this player (the in-game bar's count never shows for observers) -->
+								<Frame type="Label" name="FCJH_UltCooldown">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="24"/>
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="44"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="92"/>
@@ -6835,27 +6753,17 @@
 									<State name="Charge">
 										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
 									</State>
 									<State name="Cooldown">
-										<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/HeroicTalentPanel/HeroicTalentCooldownLabel" Visible="true"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
-									</State>
-									<State name="CooldownSensor">
 										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="255"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
 									</State>
 									<State name="Ready">
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
 									</State>
@@ -6957,18 +6865,6 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
-								<Frame type="Label" name="FCJH_UltCooldown">
-									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="24"/>
-									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="44"/>
-									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="92"/>
-									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="82"/>
-									<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/HeroicTalentPanel/HeroicTalentCooldownLabel/@Text}"/>
-									<Style val="PartyFrame_HeroicTalentCooldown"/>
-									<Options val="NoWrapping | ScaleToPreventTruncation"/>
-									<Alpha val="0"/>
-									<Unclipped val="true"/>
-									<AcceptsMouse val="false"/>
-								</Frame>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
 									<State name="Yes">
@@ -6999,10 +6895,9 @@
 										<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame2" side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="133"/>
 									</State>
 								</StateGroup>
-								<!-- cooldown: the hidden bar's own count never showed for observers (2026-09-30),
-								     so a second source - the observer top bar's own heroic count, in the
-								     talent row for this player - triggers the same dim-and-count -->
-								<Frame type="Label" name="FCJH_UltCooldown2">
+								<!-- cooldown: from Blizzard's observer top bar - its own heroic count, in the talent
+								     row for this player (the in-game bar's count never shows for observers) -->
+								<Frame type="Label" name="FCJH_UltCooldown">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="24"/>
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="44"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="92"/>
@@ -7021,27 +6916,17 @@
 									<State name="Charge">
 										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
 									</State>
 									<State name="Cooldown">
-										<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/HeroicTalentPanel/HeroicTalentCooldownLabel" Visible="true"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
-									</State>
-									<State name="CooldownSensor">
 										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="255"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
 									</State>
 									<State name="Ready">
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
 									</State>
@@ -7148,18 +7033,6 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
-								<Frame type="Label" name="FCJH_UltCooldown">
-									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="0"/>
-									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="44"/>
-									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="68"/>
-									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="82"/>
-									<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/HeroicTalentPanel/HeroicTalentCooldownLabel/@Text}"/>
-									<Style val="PartyFrame_HeroicTalentCooldown"/>
-									<Options val="NoWrapping | ScaleToPreventTruncation"/>
-									<Alpha val="0"/>
-									<Unclipped val="true"/>
-									<AcceptsMouse val="false"/>
-								</Frame>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
 									<State name="Yes">
@@ -7190,10 +7063,9 @@
 										<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame2" side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="109"/>
 									</State>
 								</StateGroup>
-								<!-- cooldown: the hidden bar's own count never showed for observers (2026-09-30),
-								     so a second source - the observer top bar's own heroic count, in the
-								     talent row for this player - triggers the same dim-and-count -->
-								<Frame type="Label" name="FCJH_UltCooldown2">
+								<!-- cooldown: from Blizzard's observer top bar - its own heroic count, in the talent
+								     row for this player (the in-game bar's count never shows for observers) -->
+								<Frame type="Label" name="FCJH_UltCooldown">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="0"/>
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="44"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="68"/>
@@ -7212,27 +7084,17 @@
 									<State name="Charge">
 										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
 									</State>
 									<State name="Cooldown">
-										<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/HeroicTalentPanel/HeroicTalentCooldownLabel" Visible="true"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
-									</State>
-									<State name="CooldownSensor">
 										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="255"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
 									</State>
 									<State name="Ready">
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
 									</State>
@@ -7337,18 +7199,6 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
-								<Frame type="Label" name="FCJH_UltCooldown">
-									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="0"/>
-									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="44"/>
-									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="68"/>
-									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="82"/>
-									<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/HeroicTalentPanel/HeroicTalentCooldownLabel/@Text}"/>
-									<Style val="PartyFrame_HeroicTalentCooldown"/>
-									<Options val="NoWrapping | ScaleToPreventTruncation"/>
-									<Alpha val="0"/>
-									<Unclipped val="true"/>
-									<AcceptsMouse val="false"/>
-								</Frame>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
 									<State name="Yes">
@@ -7379,10 +7229,9 @@
 										<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame2" side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="109"/>
 									</State>
 								</StateGroup>
-								<!-- cooldown: the hidden bar's own count never showed for observers (2026-09-30),
-								     so a second source - the observer top bar's own heroic count, in the
-								     talent row for this player - triggers the same dim-and-count -->
-								<Frame type="Label" name="FCJH_UltCooldown2">
+								<!-- cooldown: from Blizzard's observer top bar - its own heroic count, in the talent
+								     row for this player (the in-game bar's count never shows for observers) -->
+								<Frame type="Label" name="FCJH_UltCooldown">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="0"/>
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="44"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="68"/>
@@ -7401,27 +7250,17 @@
 									<State name="Charge">
 										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
 									</State>
 									<State name="Cooldown">
-										<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/HeroicTalentPanel/HeroicTalentCooldownLabel" Visible="true"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
-									</State>
-									<State name="CooldownSensor">
 										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="255"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
 									</State>
 									<State name="Ready">
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
 									</State>
@@ -7526,18 +7365,6 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
-								<Frame type="Label" name="FCJH_UltCooldown">
-									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="0"/>
-									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="44"/>
-									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="68"/>
-									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="82"/>
-									<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/HeroicTalentPanel/HeroicTalentCooldownLabel/@Text}"/>
-									<Style val="PartyFrame_HeroicTalentCooldown"/>
-									<Options val="NoWrapping | ScaleToPreventTruncation"/>
-									<Alpha val="0"/>
-									<Unclipped val="true"/>
-									<AcceptsMouse val="false"/>
-								</Frame>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
 									<State name="Yes">
@@ -7568,10 +7395,9 @@
 										<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame2" side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="109"/>
 									</State>
 								</StateGroup>
-								<!-- cooldown: the hidden bar's own count never showed for observers (2026-09-30),
-								     so a second source - the observer top bar's own heroic count, in the
-								     talent row for this player - triggers the same dim-and-count -->
-								<Frame type="Label" name="FCJH_UltCooldown2">
+								<!-- cooldown: from Blizzard's observer top bar - its own heroic count, in the talent
+								     row for this player (the in-game bar's count never shows for observers) -->
+								<Frame type="Label" name="FCJH_UltCooldown">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="0"/>
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="44"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="68"/>
@@ -7590,27 +7416,17 @@
 									<State name="Charge">
 										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
 									</State>
 									<State name="Cooldown">
-										<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/HeroicTalentPanel/HeroicTalentCooldownLabel" Visible="true"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
-									</State>
-									<State name="CooldownSensor">
 										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="255"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
 									</State>
 									<State name="Ready">
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
 									</State>
@@ -7715,18 +7531,6 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
-								<Frame type="Label" name="FCJH_UltCooldown">
-									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="0"/>
-									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="44"/>
-									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="68"/>
-									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="82"/>
-									<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/HeroicTalentPanel/HeroicTalentCooldownLabel/@Text}"/>
-									<Style val="PartyFrame_HeroicTalentCooldown"/>
-									<Options val="NoWrapping | ScaleToPreventTruncation"/>
-									<Alpha val="0"/>
-									<Unclipped val="true"/>
-									<AcceptsMouse val="false"/>
-								</Frame>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
 									<State name="Yes">
@@ -7757,10 +7561,9 @@
 										<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame2" side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="109"/>
 									</State>
 								</StateGroup>
-								<!-- cooldown: the hidden bar's own count never showed for observers (2026-09-30),
-								     so a second source - the observer top bar's own heroic count, in the
-								     talent row for this player - triggers the same dim-and-count -->
-								<Frame type="Label" name="FCJH_UltCooldown2">
+								<!-- cooldown: from Blizzard's observer top bar - its own heroic count, in the talent
+								     row for this player (the in-game bar's count never shows for observers) -->
+								<Frame type="Label" name="FCJH_UltCooldown">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="0"/>
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="44"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="68"/>
@@ -7779,27 +7582,17 @@
 									<State name="Charge">
 										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
 									</State>
 									<State name="Cooldown">
-										<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/HeroicTalentPanel/HeroicTalentCooldownLabel" Visible="true"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
-									</State>
-									<State name="CooldownSensor">
 										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="255"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
 									</State>
 									<State name="Ready">
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
 									</State>
@@ -7904,18 +7697,6 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
-								<Frame type="Label" name="FCJH_UltCooldown">
-									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="0"/>
-									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="44"/>
-									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="68"/>
-									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="82"/>
-									<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/HeroicTalentPanel/HeroicTalentCooldownLabel/@Text}"/>
-									<Style val="PartyFrame_HeroicTalentCooldown"/>
-									<Options val="NoWrapping | ScaleToPreventTruncation"/>
-									<Alpha val="0"/>
-									<Unclipped val="true"/>
-									<AcceptsMouse val="false"/>
-								</Frame>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
 									<State name="Yes">
@@ -7946,10 +7727,9 @@
 										<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame2" side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="109"/>
 									</State>
 								</StateGroup>
-								<!-- cooldown: the hidden bar's own count never showed for observers (2026-09-30),
-								     so a second source - the observer top bar's own heroic count, in the
-								     talent row for this player - triggers the same dim-and-count -->
-								<Frame type="Label" name="FCJH_UltCooldown2">
+								<!-- cooldown: from Blizzard's observer top bar - its own heroic count, in the talent
+								     row for this player (the in-game bar's count never shows for observers) -->
+								<Frame type="Label" name="FCJH_UltCooldown">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="0"/>
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="44"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="68"/>
@@ -7968,27 +7748,17 @@
 									<State name="Charge">
 										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
 									</State>
 									<State name="Cooldown">
-										<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/HeroicTalentPanel/HeroicTalentCooldownLabel" Visible="true"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
-									</State>
-									<State name="CooldownSensor">
 										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="255"/>
+										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
 									</State>
 									<State name="Ready">
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
 									</State>
