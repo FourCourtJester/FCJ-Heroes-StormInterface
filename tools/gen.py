@@ -1593,12 +1593,11 @@ def talent_row_lifts(cfg):
         onto = lambda f: "".join(
             f'\n\t\t\t\t\t\t\t\t\t\t\t\t<Action type="SetAnchor" frame="$this/{f}" side="{side}" relative="{cell}" pos="Min" offset="{v}"/>'
             for side, v in (("Left", il), ("Top", it), ("Right", ir), ("Bottom", ib)))
+        # placed only at runtime, by FCJH_HeroicTip below (one onto the plate, one parked): a
+        # static parking anchor here drags seven row frames with it on paper (70 validator
+        # warnings), though FCJH_HeroicTip moves both before anything draws
         icon = lambda k: f"""
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon{k}">
-													{edge("Left", "$GameUI", "Min", 9999)}
-													{edge("Top", "$GameUI", "Min", 9999)}
-													{edge("Right", "$GameUI", "Min", 10049)}
-													{edge("Bottom", "$GameUI", "Min", 10049)}
 													<Width val="0"/>
 													<Height val="0"/>
 													<IgnoreParentAlpha val="true"/>
