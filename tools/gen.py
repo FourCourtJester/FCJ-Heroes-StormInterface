@@ -682,8 +682,10 @@ def heroic_panel(cfg, team_frame, i):
     g = c.team[team]
     party = f"{PARTY}/{team_frame}/HeroOverview{i}/HeroicTalentPanel"
     cell = f"{OVERVIEW}/{team_frame}/HeroOverview{i}"
-    sensor = f"{cell}/HeroStatus/FCJH_HeroicAbil"
     row = TALENT_ROW.format(n=i - 1 if blue else i + 4)   # PlayerFrame0-4 blue 1-5, 5-9 red 1-5
+    # Blizzard's observer top bar (its talent row, kept at Alpha 0) counts the heroic down in
+    # its tier-10 slot: seen in the default UI, 2026-09-30 (Chromie "22")
+    sensor = f"{row}/UnitStatusAbil"
     pl, il = HEROIC_PANEL[team]
     mask, frame_tex, flip, fill_tex = HEROIC_ART[team]
     # the backplate is Blizzard's LEFT art, flipped on red (their _R template); the icon's mask
@@ -763,8 +765,8 @@ def heroic_panel(cfg, team_frame, i):
 {lefts(False)}									</State>
 								</StateGroup>
 								<!-- cooldown: the hidden bar's own count never showed for observers (2026-09-30),
-								     so a second source - our ability sensor in this plate's HeroStatus
-								     (FCJH_HeroicAbil, below) - can trigger the same dim-and-count -->
+								     so a second source - the observer top bar's own heroic count, in the
+								     talent row for this player - triggers the same dim-and-count -->
 								<Frame type="Label" name="FCJH_UltCooldown2">
 {rect(*fr, t9)}{t9}<Text val="{{{sensor}/AbilIcon/CooldownLabel/@Text}}"/>
 {t9}<Style val="PartyFrame_HeroicTalentCooldown"/>
@@ -806,22 +808,6 @@ def heroic_panel(cfg, team_frame, i):
 									<State name="Yes"><When type="Property" frame="{watch('HeroicTalentChargeFillProgress')}" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="255"/></State>
 									<State name="No"><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="0"/></State>
 								</StateGroup>
-							</Frame>
-							<Frame type="UnitStatusFrame" name="HeroStatus">
-								<!-- the heroic as an invisible ability icon bound to this plate's hero (Ahli's way),
-								     given the heroic from the talent pane's row for this player: a cooldown source -->
-								<Frame type="UnitStatusAbilIcon" name="FCJH_HeroicAbil">
-									<Anchor relative="$parent"/>
-									<AbilityLink val="{{{row}/HeroSelectedTalentTreeFrame/@HeroicAbilLink}}"/>
-									<Alpha val="0"/>
-									<AcceptsMouse val="false"/>
-									<AcceptsMouseTooltip val="false"/>
-									<Frame type="AbilIcon" name="AbilIcon">
-										<Anchor relative="$parent"/>
-										<Frame type="Image" name="IconImage"><Anchor relative="$parent"/></Frame>
-										<Frame type="Label" name="CooldownLabel"><Anchor relative="$parent"/></Frame>
-									</Frame>
-								</Frame>
 							</Frame>"""
 
 

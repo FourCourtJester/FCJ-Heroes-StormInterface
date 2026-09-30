@@ -1075,14 +1075,14 @@
 									</State>
 								</StateGroup>
 								<!-- cooldown: the hidden bar's own count never showed for observers (2026-09-30),
-								     so a second source - our ability sensor in this plate's HeroStatus
-								     (FCJH_HeroicAbil, below) - can trigger the same dim-and-count -->
+								     so a second source - the observer top bar's own heroic count, in the
+								     talent row for this player - triggers the same dim-and-count -->
 								<Frame type="Label" name="FCJH_UltCooldown2">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="21"/>
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="41"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="83"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="75"/>
-									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel/@Text}"/>
+									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
 									<Style val="PartyFrame_HeroicTalentCooldown"/>
 									<Options val="NoWrapping | ScaleToPreventTruncation"/>
 									<Alpha val="0"/>
@@ -1099,7 +1099,7 @@
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
 									</State>
 									<State name="CooldownSensor">
-										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel" Visible="true"/>
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
@@ -1122,22 +1122,6 @@
 									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/HeroicTalentPanel/HeroicTalentChargeFillProgress" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="255"/></State>
 									<State name="No"><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="0"/></State>
 								</StateGroup>
-							</Frame>
-							<Frame type="UnitStatusFrame" name="HeroStatus">
-								<!-- the heroic as an invisible ability icon bound to this plate's hero (Ahli's way),
-								     given the heroic from the talent pane's row for this player: a cooldown source -->
-								<Frame type="UnitStatusAbilIcon" name="FCJH_HeroicAbil">
-									<Anchor relative="$parent"/>
-									<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/@HeroicAbilLink}"/>
-									<Alpha val="0"/>
-									<AcceptsMouse val="false"/>
-									<AcceptsMouseTooltip val="false"/>
-									<Frame type="AbilIcon" name="AbilIcon">
-										<Anchor relative="$parent"/>
-										<Frame type="Image" name="IconImage"><Anchor relative="$parent"/></Frame>
-										<Frame type="Label" name="CooldownLabel"><Anchor relative="$parent"/></Frame>
-									</Frame>
-								</Frame>
 							</Frame>
 						</Frame>
 						<Frame type="Frame" name="HeroOverview2" template="FCJH_HeroRow/FCJH_HeroCell">
@@ -1290,14 +1274,14 @@
 									</State>
 								</StateGroup>
 								<!-- cooldown: the hidden bar's own count never showed for observers (2026-09-30),
-								     so a second source - our ability sensor in this plate's HeroStatus
-								     (FCJH_HeroicAbil, below) - can trigger the same dim-and-count -->
+								     so a second source - the observer top bar's own heroic count, in the
+								     talent row for this player - triggers the same dim-and-count -->
 								<Frame type="Label" name="FCJH_UltCooldown2">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="21"/>
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="41"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="83"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="75"/>
-									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel/@Text}"/>
+									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
 									<Style val="PartyFrame_HeroicTalentCooldown"/>
 									<Options val="NoWrapping | ScaleToPreventTruncation"/>
 									<Alpha val="0"/>
@@ -1314,7 +1298,7 @@
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
 									</State>
 									<State name="CooldownSensor">
-										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel" Visible="true"/>
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
@@ -1337,22 +1321,6 @@
 									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/HeroicTalentPanel/HeroicTalentChargeFillProgress" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="255"/></State>
 									<State name="No"><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="0"/></State>
 								</StateGroup>
-							</Frame>
-							<Frame type="UnitStatusFrame" name="HeroStatus">
-								<!-- the heroic as an invisible ability icon bound to this plate's hero (Ahli's way),
-								     given the heroic from the talent pane's row for this player: a cooldown source -->
-								<Frame type="UnitStatusAbilIcon" name="FCJH_HeroicAbil">
-									<Anchor relative="$parent"/>
-									<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/@HeroicAbilLink}"/>
-									<Alpha val="0"/>
-									<AcceptsMouse val="false"/>
-									<AcceptsMouseTooltip val="false"/>
-									<Frame type="AbilIcon" name="AbilIcon">
-										<Anchor relative="$parent"/>
-										<Frame type="Image" name="IconImage"><Anchor relative="$parent"/></Frame>
-										<Frame type="Label" name="CooldownLabel"><Anchor relative="$parent"/></Frame>
-									</Frame>
-								</Frame>
 							</Frame>
 						</Frame>
 						<Frame type="Frame" name="HeroOverview3" template="FCJH_HeroRow/FCJH_HeroCell">
@@ -1505,14 +1473,14 @@
 									</State>
 								</StateGroup>
 								<!-- cooldown: the hidden bar's own count never showed for observers (2026-09-30),
-								     so a second source - our ability sensor in this plate's HeroStatus
-								     (FCJH_HeroicAbil, below) - can trigger the same dim-and-count -->
+								     so a second source - the observer top bar's own heroic count, in the
+								     talent row for this player - triggers the same dim-and-count -->
 								<Frame type="Label" name="FCJH_UltCooldown2">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="21"/>
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="41"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="83"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="75"/>
-									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel/@Text}"/>
+									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
 									<Style val="PartyFrame_HeroicTalentCooldown"/>
 									<Options val="NoWrapping | ScaleToPreventTruncation"/>
 									<Alpha val="0"/>
@@ -1529,7 +1497,7 @@
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
 									</State>
 									<State name="CooldownSensor">
-										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel" Visible="true"/>
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
@@ -1552,22 +1520,6 @@
 									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/HeroicTalentPanel/HeroicTalentChargeFillProgress" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="255"/></State>
 									<State name="No"><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="0"/></State>
 								</StateGroup>
-							</Frame>
-							<Frame type="UnitStatusFrame" name="HeroStatus">
-								<!-- the heroic as an invisible ability icon bound to this plate's hero (Ahli's way),
-								     given the heroic from the talent pane's row for this player: a cooldown source -->
-								<Frame type="UnitStatusAbilIcon" name="FCJH_HeroicAbil">
-									<Anchor relative="$parent"/>
-									<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/@HeroicAbilLink}"/>
-									<Alpha val="0"/>
-									<AcceptsMouse val="false"/>
-									<AcceptsMouseTooltip val="false"/>
-									<Frame type="AbilIcon" name="AbilIcon">
-										<Anchor relative="$parent"/>
-										<Frame type="Image" name="IconImage"><Anchor relative="$parent"/></Frame>
-										<Frame type="Label" name="CooldownLabel"><Anchor relative="$parent"/></Frame>
-									</Frame>
-								</Frame>
 							</Frame>
 						</Frame>
 						<Frame type="Frame" name="HeroOverview4" template="FCJH_HeroRow/FCJH_HeroCell">
@@ -1720,14 +1672,14 @@
 									</State>
 								</StateGroup>
 								<!-- cooldown: the hidden bar's own count never showed for observers (2026-09-30),
-								     so a second source - our ability sensor in this plate's HeroStatus
-								     (FCJH_HeroicAbil, below) - can trigger the same dim-and-count -->
+								     so a second source - the observer top bar's own heroic count, in the
+								     talent row for this player - triggers the same dim-and-count -->
 								<Frame type="Label" name="FCJH_UltCooldown2">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="21"/>
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="41"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="83"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="75"/>
-									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel/@Text}"/>
+									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
 									<Style val="PartyFrame_HeroicTalentCooldown"/>
 									<Options val="NoWrapping | ScaleToPreventTruncation"/>
 									<Alpha val="0"/>
@@ -1744,7 +1696,7 @@
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
 									</State>
 									<State name="CooldownSensor">
-										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel" Visible="true"/>
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
@@ -1767,22 +1719,6 @@
 									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/HeroicTalentPanel/HeroicTalentChargeFillProgress" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="255"/></State>
 									<State name="No"><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="0"/></State>
 								</StateGroup>
-							</Frame>
-							<Frame type="UnitStatusFrame" name="HeroStatus">
-								<!-- the heroic as an invisible ability icon bound to this plate's hero (Ahli's way),
-								     given the heroic from the talent pane's row for this player: a cooldown source -->
-								<Frame type="UnitStatusAbilIcon" name="FCJH_HeroicAbil">
-									<Anchor relative="$parent"/>
-									<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/@HeroicAbilLink}"/>
-									<Alpha val="0"/>
-									<AcceptsMouse val="false"/>
-									<AcceptsMouseTooltip val="false"/>
-									<Frame type="AbilIcon" name="AbilIcon">
-										<Anchor relative="$parent"/>
-										<Frame type="Image" name="IconImage"><Anchor relative="$parent"/></Frame>
-										<Frame type="Label" name="CooldownLabel"><Anchor relative="$parent"/></Frame>
-									</Frame>
-								</Frame>
 							</Frame>
 						</Frame>
 						<Frame type="Frame" name="HeroOverview5" template="FCJH_HeroRow/FCJH_HeroCell">
@@ -1935,14 +1871,14 @@
 									</State>
 								</StateGroup>
 								<!-- cooldown: the hidden bar's own count never showed for observers (2026-09-30),
-								     so a second source - our ability sensor in this plate's HeroStatus
-								     (FCJH_HeroicAbil, below) - can trigger the same dim-and-count -->
+								     so a second source - the observer top bar's own heroic count, in the
+								     talent row for this player - triggers the same dim-and-count -->
 								<Frame type="Label" name="FCJH_UltCooldown2">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="21"/>
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="41"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="83"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="75"/>
-									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel/@Text}"/>
+									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
 									<Style val="PartyFrame_HeroicTalentCooldown"/>
 									<Options val="NoWrapping | ScaleToPreventTruncation"/>
 									<Alpha val="0"/>
@@ -1959,7 +1895,7 @@
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
 									</State>
 									<State name="CooldownSensor">
-										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel" Visible="true"/>
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
@@ -1982,22 +1918,6 @@
 									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/HeroicTalentPanel/HeroicTalentChargeFillProgress" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="255"/></State>
 									<State name="No"><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="0"/></State>
 								</StateGroup>
-							</Frame>
-							<Frame type="UnitStatusFrame" name="HeroStatus">
-								<!-- the heroic as an invisible ability icon bound to this plate's hero (Ahli's way),
-								     given the heroic from the talent pane's row for this player: a cooldown source -->
-								<Frame type="UnitStatusAbilIcon" name="FCJH_HeroicAbil">
-									<Anchor relative="$parent"/>
-									<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/@HeroicAbilLink}"/>
-									<Alpha val="0"/>
-									<AcceptsMouse val="false"/>
-									<AcceptsMouseTooltip val="false"/>
-									<Frame type="AbilIcon" name="AbilIcon">
-										<Anchor relative="$parent"/>
-										<Frame type="Image" name="IconImage"><Anchor relative="$parent"/></Frame>
-										<Frame type="Label" name="CooldownLabel"><Anchor relative="$parent"/></Frame>
-									</Frame>
-								</Frame>
 							</Frame>
 						</Frame>
 					</Frame>
@@ -2155,14 +2075,14 @@
 									</State>
 								</StateGroup>
 								<!-- cooldown: the hidden bar's own count never showed for observers (2026-09-30),
-								     so a second source - our ability sensor in this plate's HeroStatus
-								     (FCJH_HeroicAbil, below) - can trigger the same dim-and-count -->
+								     so a second source - the observer top bar's own heroic count, in the
+								     talent row for this player - triggers the same dim-and-count -->
 								<Frame type="Label" name="FCJH_UltCooldown2">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="-1"/>
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="41"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="61"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="75"/>
-									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel/@Text}"/>
+									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
 									<Style val="PartyFrame_HeroicTalentCooldown"/>
 									<Options val="NoWrapping | ScaleToPreventTruncation"/>
 									<Alpha val="0"/>
@@ -2179,7 +2099,7 @@
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
 									</State>
 									<State name="CooldownSensor">
-										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel" Visible="true"/>
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
@@ -2202,22 +2122,6 @@
 									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/HeroicTalentPanel/HeroicTalentChargeFillProgress" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="255"/></State>
 									<State name="No"><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="0"/></State>
 								</StateGroup>
-							</Frame>
-							<Frame type="UnitStatusFrame" name="HeroStatus">
-								<!-- the heroic as an invisible ability icon bound to this plate's hero (Ahli's way),
-								     given the heroic from the talent pane's row for this player: a cooldown source -->
-								<Frame type="UnitStatusAbilIcon" name="FCJH_HeroicAbil">
-									<Anchor relative="$parent"/>
-									<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/@HeroicAbilLink}"/>
-									<Alpha val="0"/>
-									<AcceptsMouse val="false"/>
-									<AcceptsMouseTooltip val="false"/>
-									<Frame type="AbilIcon" name="AbilIcon">
-										<Anchor relative="$parent"/>
-										<Frame type="Image" name="IconImage"><Anchor relative="$parent"/></Frame>
-										<Frame type="Label" name="CooldownLabel"><Anchor relative="$parent"/></Frame>
-									</Frame>
-								</Frame>
 							</Frame>
 						</Frame>
 						<Frame type="Frame" name="HeroOverview2" template="FCJH_HeroRow/FCJH_HeroCellRed">
@@ -2373,14 +2277,14 @@
 									</State>
 								</StateGroup>
 								<!-- cooldown: the hidden bar's own count never showed for observers (2026-09-30),
-								     so a second source - our ability sensor in this plate's HeroStatus
-								     (FCJH_HeroicAbil, below) - can trigger the same dim-and-count -->
+								     so a second source - the observer top bar's own heroic count, in the
+								     talent row for this player - triggers the same dim-and-count -->
 								<Frame type="Label" name="FCJH_UltCooldown2">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="-1"/>
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="41"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="61"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="75"/>
-									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel/@Text}"/>
+									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
 									<Style val="PartyFrame_HeroicTalentCooldown"/>
 									<Options val="NoWrapping | ScaleToPreventTruncation"/>
 									<Alpha val="0"/>
@@ -2397,7 +2301,7 @@
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
 									</State>
 									<State name="CooldownSensor">
-										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel" Visible="true"/>
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
@@ -2420,22 +2324,6 @@
 									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/HeroicTalentPanel/HeroicTalentChargeFillProgress" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="255"/></State>
 									<State name="No"><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="0"/></State>
 								</StateGroup>
-							</Frame>
-							<Frame type="UnitStatusFrame" name="HeroStatus">
-								<!-- the heroic as an invisible ability icon bound to this plate's hero (Ahli's way),
-								     given the heroic from the talent pane's row for this player: a cooldown source -->
-								<Frame type="UnitStatusAbilIcon" name="FCJH_HeroicAbil">
-									<Anchor relative="$parent"/>
-									<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/@HeroicAbilLink}"/>
-									<Alpha val="0"/>
-									<AcceptsMouse val="false"/>
-									<AcceptsMouseTooltip val="false"/>
-									<Frame type="AbilIcon" name="AbilIcon">
-										<Anchor relative="$parent"/>
-										<Frame type="Image" name="IconImage"><Anchor relative="$parent"/></Frame>
-										<Frame type="Label" name="CooldownLabel"><Anchor relative="$parent"/></Frame>
-									</Frame>
-								</Frame>
 							</Frame>
 						</Frame>
 						<Frame type="Frame" name="HeroOverview3" template="FCJH_HeroRow/FCJH_HeroCellRed">
@@ -2591,14 +2479,14 @@
 									</State>
 								</StateGroup>
 								<!-- cooldown: the hidden bar's own count never showed for observers (2026-09-30),
-								     so a second source - our ability sensor in this plate's HeroStatus
-								     (FCJH_HeroicAbil, below) - can trigger the same dim-and-count -->
+								     so a second source - the observer top bar's own heroic count, in the
+								     talent row for this player - triggers the same dim-and-count -->
 								<Frame type="Label" name="FCJH_UltCooldown2">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="-1"/>
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="41"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="61"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="75"/>
-									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel/@Text}"/>
+									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
 									<Style val="PartyFrame_HeroicTalentCooldown"/>
 									<Options val="NoWrapping | ScaleToPreventTruncation"/>
 									<Alpha val="0"/>
@@ -2615,7 +2503,7 @@
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
 									</State>
 									<State name="CooldownSensor">
-										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel" Visible="true"/>
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
@@ -2638,22 +2526,6 @@
 									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/HeroicTalentPanel/HeroicTalentChargeFillProgress" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="255"/></State>
 									<State name="No"><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="0"/></State>
 								</StateGroup>
-							</Frame>
-							<Frame type="UnitStatusFrame" name="HeroStatus">
-								<!-- the heroic as an invisible ability icon bound to this plate's hero (Ahli's way),
-								     given the heroic from the talent pane's row for this player: a cooldown source -->
-								<Frame type="UnitStatusAbilIcon" name="FCJH_HeroicAbil">
-									<Anchor relative="$parent"/>
-									<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/@HeroicAbilLink}"/>
-									<Alpha val="0"/>
-									<AcceptsMouse val="false"/>
-									<AcceptsMouseTooltip val="false"/>
-									<Frame type="AbilIcon" name="AbilIcon">
-										<Anchor relative="$parent"/>
-										<Frame type="Image" name="IconImage"><Anchor relative="$parent"/></Frame>
-										<Frame type="Label" name="CooldownLabel"><Anchor relative="$parent"/></Frame>
-									</Frame>
-								</Frame>
 							</Frame>
 						</Frame>
 						<Frame type="Frame" name="HeroOverview4" template="FCJH_HeroRow/FCJH_HeroCellRed">
@@ -2809,14 +2681,14 @@
 									</State>
 								</StateGroup>
 								<!-- cooldown: the hidden bar's own count never showed for observers (2026-09-30),
-								     so a second source - our ability sensor in this plate's HeroStatus
-								     (FCJH_HeroicAbil, below) - can trigger the same dim-and-count -->
+								     so a second source - the observer top bar's own heroic count, in the
+								     talent row for this player - triggers the same dim-and-count -->
 								<Frame type="Label" name="FCJH_UltCooldown2">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="-1"/>
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="41"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="61"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="75"/>
-									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel/@Text}"/>
+									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
 									<Style val="PartyFrame_HeroicTalentCooldown"/>
 									<Options val="NoWrapping | ScaleToPreventTruncation"/>
 									<Alpha val="0"/>
@@ -2833,7 +2705,7 @@
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
 									</State>
 									<State name="CooldownSensor">
-										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel" Visible="true"/>
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
@@ -2856,22 +2728,6 @@
 									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/HeroicTalentPanel/HeroicTalentChargeFillProgress" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="255"/></State>
 									<State name="No"><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="0"/></State>
 								</StateGroup>
-							</Frame>
-							<Frame type="UnitStatusFrame" name="HeroStatus">
-								<!-- the heroic as an invisible ability icon bound to this plate's hero (Ahli's way),
-								     given the heroic from the talent pane's row for this player: a cooldown source -->
-								<Frame type="UnitStatusAbilIcon" name="FCJH_HeroicAbil">
-									<Anchor relative="$parent"/>
-									<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/@HeroicAbilLink}"/>
-									<Alpha val="0"/>
-									<AcceptsMouse val="false"/>
-									<AcceptsMouseTooltip val="false"/>
-									<Frame type="AbilIcon" name="AbilIcon">
-										<Anchor relative="$parent"/>
-										<Frame type="Image" name="IconImage"><Anchor relative="$parent"/></Frame>
-										<Frame type="Label" name="CooldownLabel"><Anchor relative="$parent"/></Frame>
-									</Frame>
-								</Frame>
 							</Frame>
 						</Frame>
 						<Frame type="Frame" name="HeroOverview5" template="FCJH_HeroRow/FCJH_HeroCellRed">
@@ -3027,14 +2883,14 @@
 									</State>
 								</StateGroup>
 								<!-- cooldown: the hidden bar's own count never showed for observers (2026-09-30),
-								     so a second source - our ability sensor in this plate's HeroStatus
-								     (FCJH_HeroicAbil, below) - can trigger the same dim-and-count -->
+								     so a second source - the observer top bar's own heroic count, in the
+								     talent row for this player - triggers the same dim-and-count -->
 								<Frame type="Label" name="FCJH_UltCooldown2">
 									<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="-1"/>
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="41"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="61"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="75"/>
-									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel/@Text}"/>
+									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
 									<Style val="PartyFrame_HeroicTalentCooldown"/>
 									<Options val="NoWrapping | ScaleToPreventTruncation"/>
 									<Alpha val="0"/>
@@ -3051,7 +2907,7 @@
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
 									</State>
 									<State name="CooldownSensor">
-										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus/FCJH_HeroicAbil/AbilIcon/CooldownLabel" Visible="true"/>
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown2" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
@@ -3074,22 +2930,6 @@
 									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/HeroicTalentPanel/HeroicTalentChargeFillProgress" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="255"/></State>
 									<State name="No"><Action type="SetProperty" frame="$this/FCJH_UltCharge" Alpha="0"/></State>
 								</StateGroup>
-							</Frame>
-							<Frame type="UnitStatusFrame" name="HeroStatus">
-								<!-- the heroic as an invisible ability icon bound to this plate's hero (Ahli's way),
-								     given the heroic from the talent pane's row for this player: a cooldown source -->
-								<Frame type="UnitStatusAbilIcon" name="FCJH_HeroicAbil">
-									<Anchor relative="$parent"/>
-									<AbilityLink val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/@HeroicAbilLink}"/>
-									<Alpha val="0"/>
-									<AcceptsMouse val="false"/>
-									<AcceptsMouseTooltip val="false"/>
-									<Frame type="AbilIcon" name="AbilIcon">
-										<Anchor relative="$parent"/>
-										<Frame type="Image" name="IconImage"><Anchor relative="$parent"/></Frame>
-										<Frame type="Label" name="CooldownLabel"><Anchor relative="$parent"/></Frame>
-									</Frame>
-								</Frame>
 							</Frame>
 						</Frame>
 					</Frame>
