@@ -1597,7 +1597,10 @@ def talent_row_lifts(cfg):
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon{k}">
 													<Width val="0"/>
 													<Height val="0"/>
-													<Alpha val="1"/>
+													<!-- DIAGNOSTIC (2026-09-30): fully shown and on top, to see where it lands and
+													     whether it then gives the tooltip (at Alpha 1 it gave none). Was Alpha 1 -->
+													<Alpha val="255"/>
+													<RenderPriority val="900"/>
 													<Unclipped val="true"/>
 												</Frame>"""
         out.append(f"""
