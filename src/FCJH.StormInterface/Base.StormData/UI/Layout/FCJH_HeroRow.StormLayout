@@ -6287,50 +6287,19 @@
 													<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
 													<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
-													<Width val="0"/>
-													<Height val="0"/>
-													<!-- DIAGNOSTIC (2026-09-30): fully shown, to see where it lands. To be nearly
-													     invisible once its tooltip works -->
+														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 													<Alpha val="255"/>
 													<Unclipped val="true"/>
 												</Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
-													<Width val="0"/>
-													<Height val="0"/>
-													<!-- DIAGNOSTIC (2026-09-30): fully shown, to see where it lands. To be nearly
-													     invisible once its tooltip works -->
-													<Alpha val="255"/>
-													<Unclipped val="true"/>
-												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-													<StateGroup name="FCJH_HeroicTip">
-														<DefaultState val="Tier4"/>
-														<State name="Tier2">
-															<When type="Property" frame="$this" HeroicTier="2"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Left" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Top" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Right" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Bottom" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Left" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Top" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Right" relative="$GameUI" pos="Min" offset="10049"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Bottom" relative="$GameUI" pos="Min" offset="10049"/>
-														</State>
-														<State name="Tier4">
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Left" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Top" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Right" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Bottom" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Left" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Top" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Right" relative="$GameUI" pos="Min" offset="10049"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Bottom" relative="$GameUI" pos="Min" offset="10049"/>
-														</State>
-													</StateGroup>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
@@ -6355,50 +6324,19 @@
 													<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
 													<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
-													<Width val="0"/>
-													<Height val="0"/>
-													<!-- DIAGNOSTIC (2026-09-30): fully shown, to see where it lands. To be nearly
-													     invisible once its tooltip works -->
+														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 													<Alpha val="255"/>
 													<Unclipped val="true"/>
 												</Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
-													<Width val="0"/>
-													<Height val="0"/>
-													<!-- DIAGNOSTIC (2026-09-30): fully shown, to see where it lands. To be nearly
-													     invisible once its tooltip works -->
-													<Alpha val="255"/>
-													<Unclipped val="true"/>
-												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-													<StateGroup name="FCJH_HeroicTip">
-														<DefaultState val="Tier4"/>
-														<State name="Tier2">
-															<When type="Property" frame="$this" HeroicTier="2"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Left" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Top" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Right" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Bottom" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Left" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Top" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Right" relative="$GameUI" pos="Min" offset="10049"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Bottom" relative="$GameUI" pos="Min" offset="10049"/>
-														</State>
-														<State name="Tier4">
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Left" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Top" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Right" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Bottom" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Left" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Top" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Right" relative="$GameUI" pos="Min" offset="10049"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Bottom" relative="$GameUI" pos="Min" offset="10049"/>
-														</State>
-													</StateGroup>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
@@ -6423,50 +6361,19 @@
 													<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
 													<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
-													<Width val="0"/>
-													<Height val="0"/>
-													<!-- DIAGNOSTIC (2026-09-30): fully shown, to see where it lands. To be nearly
-													     invisible once its tooltip works -->
+														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 													<Alpha val="255"/>
 													<Unclipped val="true"/>
 												</Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
-													<Width val="0"/>
-													<Height val="0"/>
-													<!-- DIAGNOSTIC (2026-09-30): fully shown, to see where it lands. To be nearly
-													     invisible once its tooltip works -->
-													<Alpha val="255"/>
-													<Unclipped val="true"/>
-												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-													<StateGroup name="FCJH_HeroicTip">
-														<DefaultState val="Tier4"/>
-														<State name="Tier2">
-															<When type="Property" frame="$this" HeroicTier="2"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Left" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Top" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Right" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Bottom" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Left" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Top" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Right" relative="$GameUI" pos="Min" offset="10049"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Bottom" relative="$GameUI" pos="Min" offset="10049"/>
-														</State>
-														<State name="Tier4">
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Left" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Top" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Right" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Bottom" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Left" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Top" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Right" relative="$GameUI" pos="Min" offset="10049"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Bottom" relative="$GameUI" pos="Min" offset="10049"/>
-														</State>
-													</StateGroup>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
@@ -6491,50 +6398,19 @@
 													<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
 													<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
-													<Width val="0"/>
-													<Height val="0"/>
-													<!-- DIAGNOSTIC (2026-09-30): fully shown, to see where it lands. To be nearly
-													     invisible once its tooltip works -->
+														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 													<Alpha val="255"/>
 													<Unclipped val="true"/>
 												</Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
-													<Width val="0"/>
-													<Height val="0"/>
-													<!-- DIAGNOSTIC (2026-09-30): fully shown, to see where it lands. To be nearly
-													     invisible once its tooltip works -->
-													<Alpha val="255"/>
-													<Unclipped val="true"/>
-												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-													<StateGroup name="FCJH_HeroicTip">
-														<DefaultState val="Tier4"/>
-														<State name="Tier2">
-															<When type="Property" frame="$this" HeroicTier="2"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Left" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Top" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Right" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Bottom" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Left" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Top" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Right" relative="$GameUI" pos="Min" offset="10049"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Bottom" relative="$GameUI" pos="Min" offset="10049"/>
-														</State>
-														<State name="Tier4">
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Left" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Top" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Right" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Bottom" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Left" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Top" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Right" relative="$GameUI" pos="Min" offset="10049"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Bottom" relative="$GameUI" pos="Min" offset="10049"/>
-														</State>
-													</StateGroup>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
@@ -6559,50 +6435,19 @@
 													<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
 													<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
-													<Width val="0"/>
-													<Height val="0"/>
-													<!-- DIAGNOSTIC (2026-09-30): fully shown, to see where it lands. To be nearly
-													     invisible once its tooltip works -->
+														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 													<Alpha val="255"/>
 													<Unclipped val="true"/>
 												</Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
-													<Width val="0"/>
-													<Height val="0"/>
-													<!-- DIAGNOSTIC (2026-09-30): fully shown, to see where it lands. To be nearly
-													     invisible once its tooltip works -->
-													<Alpha val="255"/>
-													<Unclipped val="true"/>
-												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-													<StateGroup name="FCJH_HeroicTip">
-														<DefaultState val="Tier4"/>
-														<State name="Tier2">
-															<When type="Property" frame="$this" HeroicTier="2"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Left" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Top" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Right" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Bottom" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Left" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Top" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Right" relative="$GameUI" pos="Min" offset="10049"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Bottom" relative="$GameUI" pos="Min" offset="10049"/>
-														</State>
-														<State name="Tier4">
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Left" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Top" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Right" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Bottom" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Left" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Top" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Right" relative="$GameUI" pos="Min" offset="10049"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Bottom" relative="$GameUI" pos="Min" offset="10049"/>
-														</State>
-													</StateGroup>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
@@ -6627,50 +6472,19 @@
 													<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
 													<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
-													<Width val="0"/>
-													<Height val="0"/>
-													<!-- DIAGNOSTIC (2026-09-30): fully shown, to see where it lands. To be nearly
-													     invisible once its tooltip works -->
+														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 													<Alpha val="255"/>
 													<Unclipped val="true"/>
 												</Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
-													<Width val="0"/>
-													<Height val="0"/>
-													<!-- DIAGNOSTIC (2026-09-30): fully shown, to see where it lands. To be nearly
-													     invisible once its tooltip works -->
-													<Alpha val="255"/>
-													<Unclipped val="true"/>
-												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-													<StateGroup name="FCJH_HeroicTip">
-														<DefaultState val="Tier4"/>
-														<State name="Tier2">
-															<When type="Property" frame="$this" HeroicTier="2"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Left" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Top" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Right" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Bottom" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Left" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Top" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Right" relative="$GameUI" pos="Min" offset="10049"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Bottom" relative="$GameUI" pos="Min" offset="10049"/>
-														</State>
-														<State name="Tier4">
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Left" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Top" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Right" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Bottom" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Left" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Top" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Right" relative="$GameUI" pos="Min" offset="10049"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Bottom" relative="$GameUI" pos="Min" offset="10049"/>
-														</State>
-													</StateGroup>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
@@ -6695,50 +6509,19 @@
 													<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
 													<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
-													<Width val="0"/>
-													<Height val="0"/>
-													<!-- DIAGNOSTIC (2026-09-30): fully shown, to see where it lands. To be nearly
-													     invisible once its tooltip works -->
+														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 													<Alpha val="255"/>
 													<Unclipped val="true"/>
 												</Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
-													<Width val="0"/>
-													<Height val="0"/>
-													<!-- DIAGNOSTIC (2026-09-30): fully shown, to see where it lands. To be nearly
-													     invisible once its tooltip works -->
-													<Alpha val="255"/>
-													<Unclipped val="true"/>
-												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-													<StateGroup name="FCJH_HeroicTip">
-														<DefaultState val="Tier4"/>
-														<State name="Tier2">
-															<When type="Property" frame="$this" HeroicTier="2"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Left" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Top" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Right" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Bottom" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Left" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Top" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Right" relative="$GameUI" pos="Min" offset="10049"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Bottom" relative="$GameUI" pos="Min" offset="10049"/>
-														</State>
-														<State name="Tier4">
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Left" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Top" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Right" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Bottom" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Left" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Top" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Right" relative="$GameUI" pos="Min" offset="10049"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Bottom" relative="$GameUI" pos="Min" offset="10049"/>
-														</State>
-													</StateGroup>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
@@ -6763,50 +6546,19 @@
 													<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
 													<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
-													<Width val="0"/>
-													<Height val="0"/>
-													<!-- DIAGNOSTIC (2026-09-30): fully shown, to see where it lands. To be nearly
-													     invisible once its tooltip works -->
+														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 													<Alpha val="255"/>
 													<Unclipped val="true"/>
 												</Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
-													<Width val="0"/>
-													<Height val="0"/>
-													<!-- DIAGNOSTIC (2026-09-30): fully shown, to see where it lands. To be nearly
-													     invisible once its tooltip works -->
-													<Alpha val="255"/>
-													<Unclipped val="true"/>
-												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-													<StateGroup name="FCJH_HeroicTip">
-														<DefaultState val="Tier4"/>
-														<State name="Tier2">
-															<When type="Property" frame="$this" HeroicTier="2"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Left" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Top" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Right" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Bottom" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Left" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Top" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Right" relative="$GameUI" pos="Min" offset="10049"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Bottom" relative="$GameUI" pos="Min" offset="10049"/>
-														</State>
-														<State name="Tier4">
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Left" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Top" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Right" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Bottom" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Left" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Top" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Right" relative="$GameUI" pos="Min" offset="10049"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Bottom" relative="$GameUI" pos="Min" offset="10049"/>
-														</State>
-													</StateGroup>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
@@ -6831,50 +6583,19 @@
 													<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
 													<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
-													<Width val="0"/>
-													<Height val="0"/>
-													<!-- DIAGNOSTIC (2026-09-30): fully shown, to see where it lands. To be nearly
-													     invisible once its tooltip works -->
+														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 													<Alpha val="255"/>
 													<Unclipped val="true"/>
 												</Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
-													<Width val="0"/>
-													<Height val="0"/>
-													<!-- DIAGNOSTIC (2026-09-30): fully shown, to see where it lands. To be nearly
-													     invisible once its tooltip works -->
-													<Alpha val="255"/>
-													<Unclipped val="true"/>
-												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-													<StateGroup name="FCJH_HeroicTip">
-														<DefaultState val="Tier4"/>
-														<State name="Tier2">
-															<When type="Property" frame="$this" HeroicTier="2"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Left" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Top" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Right" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Bottom" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Left" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Top" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Right" relative="$GameUI" pos="Min" offset="10049"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Bottom" relative="$GameUI" pos="Min" offset="10049"/>
-														</State>
-														<State name="Tier4">
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Left" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Top" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Right" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Bottom" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Left" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Top" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Right" relative="$GameUI" pos="Min" offset="10049"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Bottom" relative="$GameUI" pos="Min" offset="10049"/>
-														</State>
-													</StateGroup>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
@@ -6899,50 +6620,19 @@
 													<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
 													<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
-													<Width val="0"/>
-													<Height val="0"/>
-													<!-- DIAGNOSTIC (2026-09-30): fully shown, to see where it lands. To be nearly
-													     invisible once its tooltip works -->
+														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 													<Alpha val="255"/>
 													<Unclipped val="true"/>
 												</Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
-													<Width val="0"/>
-													<Height val="0"/>
-													<!-- DIAGNOSTIC (2026-09-30): fully shown, to see where it lands. To be nearly
-													     invisible once its tooltip works -->
-													<Alpha val="255"/>
-													<Unclipped val="true"/>
-												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-													<StateGroup name="FCJH_HeroicTip">
-														<DefaultState val="Tier4"/>
-														<State name="Tier2">
-															<When type="Property" frame="$this" HeroicTier="2"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Left" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Top" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Right" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Bottom" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Left" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Top" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Right" relative="$GameUI" pos="Min" offset="10049"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Bottom" relative="$GameUI" pos="Min" offset="10049"/>
-														</State>
-														<State name="Tier4">
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Left" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Top" relative="$this" pos="Min" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Right" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon4" side="Bottom" relative="$this" pos="Max" offset="0"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Left" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Top" relative="$GameUI" pos="Min" offset="9999"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Right" relative="$GameUI" pos="Min" offset="10049"/>
-													<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Bottom" relative="$GameUI" pos="Min" offset="10049"/>
-														</State>
-													</StateGroup>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>

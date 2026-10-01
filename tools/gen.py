@@ -1747,6 +1747,15 @@ def heroic_tip_panel(cfg):
 													<Unclipped val="true"/>
 												</Frame>"""
         rest = "".join(muted("UnitStatusTalentIcon", f"TalentTreeIcon{j}", 12) for j in (1, 3, 5, 6, 7))
+        # DIAGNOSTIC (2026-09-30): the level-4 icon (picked within minutes; Varian's heroic)
+        # anchored over the heroic in the layout itself, no runtime move (FCJH_HeroicTip's
+        # SetAnchor). Tooltip = static anchoring keeps it, the runtime move lost it; none =
+        # moving an icon off Blizzard's spot loses its tooltip either way
+        static_icon2 = f"""
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">{fill(14)}
+													<Alpha val="255"/>
+													<Unclipped val="true"/>
+												</Frame>"""
         out.append(f"""
 								<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame{n}">
 									<!-- this player's frames fitted to their plate's heroic icon -->
@@ -1759,15 +1768,7 @@ def heroic_tip_panel(cfg):
 										<Batch val="false"/>{d(5, 10)}
 										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">{d(6, 11)}
 											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">{d(7, 12)}
-												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">{fill(13)}{icon(2)}{icon(4)}{rest}
-													<StateGroup name="FCJH_HeroicTip">
-														<DefaultState val="Tier4"/>
-														<State name="Tier2">
-															<When type="Property" frame="$this" HeroicTier="2"/>{onto("TalentTreeIcon2")}{park("TalentTreeIcon4")}
-														</State>
-														<State name="Tier4">{onto("TalentTreeIcon4")}{park("TalentTreeIcon2")}
-														</State>
-													</StateGroup>
+												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">{fill(13)}{static_icon2}{muted("UnitStatusTalentIcon", "TalentTreeIcon4", 12)}{rest}
 												</Frame>{muted("Frame", "TracerChargeContainer", 12)}{muted("UnitStatusAbilIcon", "UnitStatusAbil", 12)}
 											</Frame>
 										</Frame>
