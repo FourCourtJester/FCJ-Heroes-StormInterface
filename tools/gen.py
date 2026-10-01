@@ -1566,9 +1566,9 @@ OVERVIEW = "$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPan
 
 
 def talent_row_lifts(cfg):
-    """Pieces of Blizzard's observer talent row (hidden at Alpha 0) lifted out onto our plates
-    with IgnoreParentAlpha - Blizzard's own flag (their core bars use it), which lets one
-    child of a see-through parent draw. Per player:
+    """Pieces of Blizzard's observer talent row lifted out onto our plates. The row itself is
+    parked off screen at full alpha (see the return); each lifted piece is anchored to a
+    plate, so it draws there. Per player:
       - Tracer's charge meter: Pulse Bomb charges rather than cooling down; Blizzard shows the
         charge on the talent row (TracerChargeContainer, only there for a hero with that
         ability). Moved over our heroic's gold frame. Our own ProgressBar fed the row's values
@@ -1600,7 +1600,6 @@ def talent_row_lifts(cfg):
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon{k}">
 													<Width val="0"/>
 													<Height val="0"/>
-													<IgnoreParentAlpha val="true"/>
 													<Alpha val="1"/>
 													<Unclipped val="true"/>
 												</Frame>"""
@@ -1624,7 +1623,6 @@ def talent_row_lifts(cfg):
 												{edge("Top", cell, "Min", t)}
 												{edge("Right", cell, "Min", r)}
 												{edge("Bottom", cell, "Min", b)}
-												<IgnoreParentAlpha val="true"/>
 												<Unclipped val="true"/>
 												<Frame type="Image" name="FCJH_LiftCheck">
 													<Anchor relative="$parent"/>
@@ -1648,10 +1646,16 @@ def talent_row_lifts(cfg):
 									</Frame>
 								</Frame>
 							</Frame>""")
+    # The row is PARKED off screen at full alpha, not faded: faded (Alpha 0), nothing under it
+    # drew, IgnoreParentAlpha or not - no magenta square, no tooltips (2026-09-30). Parked, the
+    # pieces anchored onto our plates draw there and the rest stays off screen.
     return ("""
 					<!-- Pieces of the hidden talent row lifted onto our plates (tools/gen.py talent_row_lifts) -->
 					<Frame type="Frame" name="TalentsOverview">
-						<Alpha val="0"/>
+						<Anchor side="Left"   relative="$GameUI" pos="Min" offset="9999"/>
+						<Anchor side="Top"    relative="$GameUI" pos="Min" offset="9999"/>
+						<Anchor side="Right"  relative="$GameUI" pos="Min" offset="12999"/>
+						<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="10999"/>
 						<Frame type="HeroTalentsPanel" name="TalentOverview">
 							<Frame type="Frame" name="HeroTalentsPanelContainer">""" + "".join(out) + """
 							</Frame>

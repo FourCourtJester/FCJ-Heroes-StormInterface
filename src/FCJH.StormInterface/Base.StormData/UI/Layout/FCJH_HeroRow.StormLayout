@@ -5307,7 +5307,10 @@
 
 					<!-- Pieces of the hidden talent row lifted onto our plates (tools/gen.py talent_row_lifts) -->
 					<Frame type="Frame" name="TalentsOverview">
-						<Alpha val="0"/>
+						<Anchor side="Left"   relative="$GameUI" pos="Min" offset="9999"/>
+						<Anchor side="Top"    relative="$GameUI" pos="Min" offset="9999"/>
+						<Anchor side="Right"  relative="$GameUI" pos="Min" offset="12999"/>
+						<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="10999"/>
 						<Frame type="HeroTalentsPanel" name="TalentOverview">
 							<Frame type="Frame" name="HeroTalentsPanelContainer">
 							<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame0">
@@ -5318,14 +5321,12 @@
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
 													<Width val="0"/>
 													<Height val="0"/>
-													<IgnoreParentAlpha val="true"/>
 													<Alpha val="1"/>
 													<Unclipped val="true"/>
 												</Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
 													<Width val="0"/>
 													<Height val="0"/>
-													<IgnoreParentAlpha val="true"/>
 													<Alpha val="1"/>
 													<Unclipped val="true"/>
 												</Frame>
@@ -5359,7 +5360,6 @@
 												<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="44"/>
 												<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="92"/>
 												<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="82"/>
-												<IgnoreParentAlpha val="true"/>
 												<Unclipped val="true"/>
 												<Frame type="Image" name="FCJH_LiftCheck">
 													<Anchor relative="$parent"/>
@@ -5391,14 +5391,12 @@
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
 													<Width val="0"/>
 													<Height val="0"/>
-													<IgnoreParentAlpha val="true"/>
 													<Alpha val="1"/>
 													<Unclipped val="true"/>
 												</Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
 													<Width val="0"/>
 													<Height val="0"/>
-													<IgnoreParentAlpha val="true"/>
 													<Alpha val="1"/>
 													<Unclipped val="true"/>
 												</Frame>
@@ -5432,7 +5430,6 @@
 												<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="44"/>
 												<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="92"/>
 												<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="82"/>
-												<IgnoreParentAlpha val="true"/>
 												<Unclipped val="true"/>
 												<Frame type="Image" name="FCJH_LiftCheck">
 													<Anchor relative="$parent"/>
@@ -5464,14 +5461,12 @@
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
 													<Width val="0"/>
 													<Height val="0"/>
-													<IgnoreParentAlpha val="true"/>
 													<Alpha val="1"/>
 													<Unclipped val="true"/>
 												</Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
 													<Width val="0"/>
 													<Height val="0"/>
-													<IgnoreParentAlpha val="true"/>
 													<Alpha val="1"/>
 													<Unclipped val="true"/>
 												</Frame>
@@ -5505,7 +5500,6 @@
 												<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="44"/>
 												<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="92"/>
 												<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="82"/>
-												<IgnoreParentAlpha val="true"/>
 												<Unclipped val="true"/>
 												<Frame type="Image" name="FCJH_LiftCheck">
 													<Anchor relative="$parent"/>
@@ -5537,14 +5531,12 @@
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
 													<Width val="0"/>
 													<Height val="0"/>
-													<IgnoreParentAlpha val="true"/>
 													<Alpha val="1"/>
 													<Unclipped val="true"/>
 												</Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
 													<Width val="0"/>
 													<Height val="0"/>
-													<IgnoreParentAlpha val="true"/>
 													<Alpha val="1"/>
 													<Unclipped val="true"/>
 												</Frame>
@@ -5578,7 +5570,6 @@
 												<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="44"/>
 												<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="92"/>
 												<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="82"/>
-												<IgnoreParentAlpha val="true"/>
 												<Unclipped val="true"/>
 												<Frame type="Image" name="FCJH_LiftCheck">
 													<Anchor relative="$parent"/>
@@ -5610,14 +5601,12 @@
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
 													<Width val="0"/>
 													<Height val="0"/>
-													<IgnoreParentAlpha val="true"/>
 													<Alpha val="1"/>
 													<Unclipped val="true"/>
 												</Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
 													<Width val="0"/>
 													<Height val="0"/>
-													<IgnoreParentAlpha val="true"/>
 													<Alpha val="1"/>
 													<Unclipped val="true"/>
 												</Frame>
@@ -5651,7 +5640,6 @@
 												<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="44"/>
 												<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="92"/>
 												<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="82"/>
-												<IgnoreParentAlpha val="true"/>
 												<Unclipped val="true"/>
 												<Frame type="Image" name="FCJH_LiftCheck">
 													<Anchor relative="$parent"/>
@@ -5683,14 +5671,12 @@
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
 													<Width val="0"/>
 													<Height val="0"/>
-													<IgnoreParentAlpha val="true"/>
 													<Alpha val="1"/>
 													<Unclipped val="true"/>
 												</Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
 													<Width val="0"/>
 													<Height val="0"/>
-													<IgnoreParentAlpha val="true"/>
 													<Alpha val="1"/>
 													<Unclipped val="true"/>
 												</Frame>
@@ -5724,7 +5710,6 @@
 												<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="44"/>
 												<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="68"/>
 												<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="82"/>
-												<IgnoreParentAlpha val="true"/>
 												<Unclipped val="true"/>
 												<Frame type="Image" name="FCJH_LiftCheck">
 													<Anchor relative="$parent"/>
@@ -5756,14 +5741,12 @@
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
 													<Width val="0"/>
 													<Height val="0"/>
-													<IgnoreParentAlpha val="true"/>
 													<Alpha val="1"/>
 													<Unclipped val="true"/>
 												</Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
 													<Width val="0"/>
 													<Height val="0"/>
-													<IgnoreParentAlpha val="true"/>
 													<Alpha val="1"/>
 													<Unclipped val="true"/>
 												</Frame>
@@ -5797,7 +5780,6 @@
 												<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="44"/>
 												<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="68"/>
 												<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="82"/>
-												<IgnoreParentAlpha val="true"/>
 												<Unclipped val="true"/>
 												<Frame type="Image" name="FCJH_LiftCheck">
 													<Anchor relative="$parent"/>
@@ -5829,14 +5811,12 @@
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
 													<Width val="0"/>
 													<Height val="0"/>
-													<IgnoreParentAlpha val="true"/>
 													<Alpha val="1"/>
 													<Unclipped val="true"/>
 												</Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
 													<Width val="0"/>
 													<Height val="0"/>
-													<IgnoreParentAlpha val="true"/>
 													<Alpha val="1"/>
 													<Unclipped val="true"/>
 												</Frame>
@@ -5870,7 +5850,6 @@
 												<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="44"/>
 												<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="68"/>
 												<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="82"/>
-												<IgnoreParentAlpha val="true"/>
 												<Unclipped val="true"/>
 												<Frame type="Image" name="FCJH_LiftCheck">
 													<Anchor relative="$parent"/>
@@ -5902,14 +5881,12 @@
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
 													<Width val="0"/>
 													<Height val="0"/>
-													<IgnoreParentAlpha val="true"/>
 													<Alpha val="1"/>
 													<Unclipped val="true"/>
 												</Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
 													<Width val="0"/>
 													<Height val="0"/>
-													<IgnoreParentAlpha val="true"/>
 													<Alpha val="1"/>
 													<Unclipped val="true"/>
 												</Frame>
@@ -5943,7 +5920,6 @@
 												<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="44"/>
 												<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="68"/>
 												<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="82"/>
-												<IgnoreParentAlpha val="true"/>
 												<Unclipped val="true"/>
 												<Frame type="Image" name="FCJH_LiftCheck">
 													<Anchor relative="$parent"/>
@@ -5975,14 +5951,12 @@
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
 													<Width val="0"/>
 													<Height val="0"/>
-													<IgnoreParentAlpha val="true"/>
 													<Alpha val="1"/>
 													<Unclipped val="true"/>
 												</Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
 													<Width val="0"/>
 													<Height val="0"/>
-													<IgnoreParentAlpha val="true"/>
 													<Alpha val="1"/>
 													<Unclipped val="true"/>
 												</Frame>
@@ -6016,7 +5990,6 @@
 												<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="44"/>
 												<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="68"/>
 												<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="82"/>
-												<IgnoreParentAlpha val="true"/>
 												<Unclipped val="true"/>
 												<Frame type="Image" name="FCJH_LiftCheck">
 													<Anchor relative="$parent"/>
