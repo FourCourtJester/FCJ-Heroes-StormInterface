@@ -1806,6 +1806,79 @@ def heroic_tip_panel(cfg):
 					</Frame>""")
 
 
+def tip_test_strip(cfg):
+    """DIAGNOSTIC (2026-09-30, for the morning): a second copy of our own of the observer talent
+    row, in Blizzard's layout as a strip at y 760 (where its icons were seen to give tooltips),
+    with the three tiers picked in the first minutes each treated one way, per player:
+      level 1 (TalentTreeIcon1): untouched - the control;
+      level 4 (TalentTreeIcon2): moved at runtime (a StateGroup SetAnchor, as FCJH_HeroicTip moved
+        the heroic) to the right end of its own talent frame, still inside it;
+      level 7 (TalentTreeIcon3): anchored in the layout ~60 px above the strip, outside every
+        frame that contains it.
+    Tiers 4-7 (levels 10-20) are muted so nothing sits where level 4 is moved to."""
+    out = []
+    for n in range(10):
+        moved = "".join(
+            f'{NL}{TAB * 14}<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="{side}" relative="$this" pos="{pos}" offset="{v}"/>'
+            for side, pos, v in (("Left", "Max", -44), ("Top", "Min", 0), ("Right", "Max", 0), ("Bottom", "Min", 44)))
+        rest = "".join(muted("UnitStatusTalentIcon", f"TalentTreeIcon{j}", 13) for j in (4, 5, 6, 7))
+        out.append(f"""
+								<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame{n}">
+									<Frame type="Frame" name="TalentsContainerFrame">
+										<Batch val="false"/>
+										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
+														<Width val="0"/>
+														<Height val="0"/>
+														<Unclipped val="true"/>
+													</Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
+														<Anchor side="Left"   relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
+														<Anchor side="Bottom" relative="$parent" pos="Min" offset="-60"/>
+														<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+														<Anchor side="Top"    relative="$this" pos="Max" offset="0"/>
+														<Width val="44"/>
+														<Height val="44"/>
+														<Unclipped val="true"/>
+													</Frame>{rest}
+													<StateGroup name="FCJH_MoveTest">
+														<DefaultState val="Moved"/>
+														<State name="Moved">{moved}
+														</State>
+													</StateGroup>
+												</Frame>{muted("Frame", "TracerChargeContainer", 12)}
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>""")
+    return (f"""
+					<!-- DIAGNOSTIC: a test strip, our own copy of the observer talent row (tools/gen.py tip_test_strip) -->
+					<Frame type="Frame" name="FCJH_TipTest" template="TalentsOverviewPanel/TalentsOverviewTopBarTemplate">
+						<Anchor side="Top"   relative="$GameUI" pos="Min" offset="{round(760 / 0.9)}"/>
+						<Anchor side="Left"  relative="$GameUI" pos="Min" offset="0"/>
+						<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+						<Height val="100"/>
+						<RenderPriority val="700"/>
+						<Animation name="FCJH_KeepRowShown">
+							<Event event="OnShown" action="Play"/>
+							<Controller type="Visibility" end="Loop" frame="TalentOverview">
+								<Key type="Bool" time="0" value="true"/>
+							</Controller>
+							<Controller type="Visibility" end="Loop" frame="TalentOverview/HeroTalentsPanelContainer">
+								<Key type="Bool" time="0" value="true"/>
+							</Controller>
+						</Animation>
+						<Frame type="HeroTalentsPanel" name="TalentOverview">
+							<Visible val="true"/>
+							<Batch val="false"/>
+							<Frame type="Frame" name="HeroTalentsPanelContainer">""" + "".join(out) + """
+							</Frame>
+						</Frame>
+					</Frame>""")
+
+
 def row_packer(cfg):
     """Fewer than five heroes a side (3v3, 1v1...). The engine fills the cells in order and
     hides the rest, and every cell is pinned in place, so a short blue team would sit out at
@@ -1929,7 +2002,7 @@ def hero_row_layout(cfg):
 					<!-- Blizzard's top-bar talent rows are anchored to the cells, so they follow
 					     them down here. Hidden with Alpha 0, not parked: the talent pop-ups watch
 					     their icons, which must stay alive. -->
-{talent_row_lifts(cfg)}{heroic_tip_panel(cfg)}
+{talent_row_lifts(cfg)}{heroic_tip_panel(cfg)}{tip_test_strip(cfg)}
 {chr(10).join(cells)}
 				</Frame>
 			</Frame>

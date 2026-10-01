@@ -6643,6 +6643,419 @@
 							</Frame>
 						</Frame>
 					</Frame>
+					<!-- DIAGNOSTIC: a test strip, our own copy of the observer talent row (tools/gen.py tip_test_strip) -->
+					<Frame type="Frame" name="FCJH_TipTest" template="TalentsOverviewPanel/TalentsOverviewTopBarTemplate">
+						<Anchor side="Top"   relative="$GameUI" pos="Min" offset="844"/>
+						<Anchor side="Left"  relative="$GameUI" pos="Min" offset="0"/>
+						<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+						<Height val="100"/>
+						<RenderPriority val="700"/>
+						<Animation name="FCJH_KeepRowShown">
+							<Event event="OnShown" action="Play"/>
+							<Controller type="Visibility" end="Loop" frame="TalentOverview">
+								<Key type="Bool" time="0" value="true"/>
+							</Controller>
+							<Controller type="Visibility" end="Loop" frame="TalentOverview/HeroTalentsPanelContainer">
+								<Key type="Bool" time="0" value="true"/>
+							</Controller>
+						</Animation>
+						<Frame type="HeroTalentsPanel" name="TalentOverview">
+							<Visible val="true"/>
+							<Batch val="false"/>
+							<Frame type="Frame" name="HeroTalentsPanelContainer">
+								<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame0">
+									<Frame type="Frame" name="TalentsContainerFrame">
+										<Batch val="false"/>
+										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
+														<Width val="0"/>
+														<Height val="0"/>
+														<Unclipped val="true"/>
+													</Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
+														<Anchor side="Left"   relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
+														<Anchor side="Bottom" relative="$parent" pos="Min" offset="-60"/>
+														<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+														<Anchor side="Top"    relative="$this" pos="Max" offset="0"/>
+														<Width val="44"/>
+														<Height val="44"/>
+														<Unclipped val="true"/>
+													</Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<StateGroup name="FCJH_MoveTest">
+														<DefaultState val="Moved"/>
+														<State name="Moved">
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Left" relative="$this" pos="Max" offset="-44"/>
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Top" relative="$this" pos="Min" offset="0"/>
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Right" relative="$this" pos="Max" offset="0"/>
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Bottom" relative="$this" pos="Min" offset="44"/>
+														</State>
+													</StateGroup>
+												</Frame>
+												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+								<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame1">
+									<Frame type="Frame" name="TalentsContainerFrame">
+										<Batch val="false"/>
+										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
+														<Width val="0"/>
+														<Height val="0"/>
+														<Unclipped val="true"/>
+													</Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
+														<Anchor side="Left"   relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
+														<Anchor side="Bottom" relative="$parent" pos="Min" offset="-60"/>
+														<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+														<Anchor side="Top"    relative="$this" pos="Max" offset="0"/>
+														<Width val="44"/>
+														<Height val="44"/>
+														<Unclipped val="true"/>
+													</Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<StateGroup name="FCJH_MoveTest">
+														<DefaultState val="Moved"/>
+														<State name="Moved">
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Left" relative="$this" pos="Max" offset="-44"/>
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Top" relative="$this" pos="Min" offset="0"/>
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Right" relative="$this" pos="Max" offset="0"/>
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Bottom" relative="$this" pos="Min" offset="44"/>
+														</State>
+													</StateGroup>
+												</Frame>
+												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+								<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame2">
+									<Frame type="Frame" name="TalentsContainerFrame">
+										<Batch val="false"/>
+										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
+														<Width val="0"/>
+														<Height val="0"/>
+														<Unclipped val="true"/>
+													</Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
+														<Anchor side="Left"   relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
+														<Anchor side="Bottom" relative="$parent" pos="Min" offset="-60"/>
+														<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+														<Anchor side="Top"    relative="$this" pos="Max" offset="0"/>
+														<Width val="44"/>
+														<Height val="44"/>
+														<Unclipped val="true"/>
+													</Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<StateGroup name="FCJH_MoveTest">
+														<DefaultState val="Moved"/>
+														<State name="Moved">
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Left" relative="$this" pos="Max" offset="-44"/>
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Top" relative="$this" pos="Min" offset="0"/>
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Right" relative="$this" pos="Max" offset="0"/>
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Bottom" relative="$this" pos="Min" offset="44"/>
+														</State>
+													</StateGroup>
+												</Frame>
+												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+								<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame3">
+									<Frame type="Frame" name="TalentsContainerFrame">
+										<Batch val="false"/>
+										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
+														<Width val="0"/>
+														<Height val="0"/>
+														<Unclipped val="true"/>
+													</Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
+														<Anchor side="Left"   relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
+														<Anchor side="Bottom" relative="$parent" pos="Min" offset="-60"/>
+														<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+														<Anchor side="Top"    relative="$this" pos="Max" offset="0"/>
+														<Width val="44"/>
+														<Height val="44"/>
+														<Unclipped val="true"/>
+													</Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<StateGroup name="FCJH_MoveTest">
+														<DefaultState val="Moved"/>
+														<State name="Moved">
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Left" relative="$this" pos="Max" offset="-44"/>
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Top" relative="$this" pos="Min" offset="0"/>
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Right" relative="$this" pos="Max" offset="0"/>
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Bottom" relative="$this" pos="Min" offset="44"/>
+														</State>
+													</StateGroup>
+												</Frame>
+												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+								<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame4">
+									<Frame type="Frame" name="TalentsContainerFrame">
+										<Batch val="false"/>
+										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
+														<Width val="0"/>
+														<Height val="0"/>
+														<Unclipped val="true"/>
+													</Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
+														<Anchor side="Left"   relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
+														<Anchor side="Bottom" relative="$parent" pos="Min" offset="-60"/>
+														<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+														<Anchor side="Top"    relative="$this" pos="Max" offset="0"/>
+														<Width val="44"/>
+														<Height val="44"/>
+														<Unclipped val="true"/>
+													</Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<StateGroup name="FCJH_MoveTest">
+														<DefaultState val="Moved"/>
+														<State name="Moved">
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Left" relative="$this" pos="Max" offset="-44"/>
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Top" relative="$this" pos="Min" offset="0"/>
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Right" relative="$this" pos="Max" offset="0"/>
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Bottom" relative="$this" pos="Min" offset="44"/>
+														</State>
+													</StateGroup>
+												</Frame>
+												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+								<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame5">
+									<Frame type="Frame" name="TalentsContainerFrame">
+										<Batch val="false"/>
+										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
+														<Width val="0"/>
+														<Height val="0"/>
+														<Unclipped val="true"/>
+													</Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
+														<Anchor side="Left"   relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
+														<Anchor side="Bottom" relative="$parent" pos="Min" offset="-60"/>
+														<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+														<Anchor side="Top"    relative="$this" pos="Max" offset="0"/>
+														<Width val="44"/>
+														<Height val="44"/>
+														<Unclipped val="true"/>
+													</Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<StateGroup name="FCJH_MoveTest">
+														<DefaultState val="Moved"/>
+														<State name="Moved">
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Left" relative="$this" pos="Max" offset="-44"/>
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Top" relative="$this" pos="Min" offset="0"/>
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Right" relative="$this" pos="Max" offset="0"/>
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Bottom" relative="$this" pos="Min" offset="44"/>
+														</State>
+													</StateGroup>
+												</Frame>
+												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+								<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame6">
+									<Frame type="Frame" name="TalentsContainerFrame">
+										<Batch val="false"/>
+										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
+														<Width val="0"/>
+														<Height val="0"/>
+														<Unclipped val="true"/>
+													</Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
+														<Anchor side="Left"   relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
+														<Anchor side="Bottom" relative="$parent" pos="Min" offset="-60"/>
+														<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+														<Anchor side="Top"    relative="$this" pos="Max" offset="0"/>
+														<Width val="44"/>
+														<Height val="44"/>
+														<Unclipped val="true"/>
+													</Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<StateGroup name="FCJH_MoveTest">
+														<DefaultState val="Moved"/>
+														<State name="Moved">
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Left" relative="$this" pos="Max" offset="-44"/>
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Top" relative="$this" pos="Min" offset="0"/>
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Right" relative="$this" pos="Max" offset="0"/>
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Bottom" relative="$this" pos="Min" offset="44"/>
+														</State>
+													</StateGroup>
+												</Frame>
+												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+								<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame7">
+									<Frame type="Frame" name="TalentsContainerFrame">
+										<Batch val="false"/>
+										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
+														<Width val="0"/>
+														<Height val="0"/>
+														<Unclipped val="true"/>
+													</Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
+														<Anchor side="Left"   relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
+														<Anchor side="Bottom" relative="$parent" pos="Min" offset="-60"/>
+														<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+														<Anchor side="Top"    relative="$this" pos="Max" offset="0"/>
+														<Width val="44"/>
+														<Height val="44"/>
+														<Unclipped val="true"/>
+													</Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<StateGroup name="FCJH_MoveTest">
+														<DefaultState val="Moved"/>
+														<State name="Moved">
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Left" relative="$this" pos="Max" offset="-44"/>
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Top" relative="$this" pos="Min" offset="0"/>
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Right" relative="$this" pos="Max" offset="0"/>
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Bottom" relative="$this" pos="Min" offset="44"/>
+														</State>
+													</StateGroup>
+												</Frame>
+												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+								<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame8">
+									<Frame type="Frame" name="TalentsContainerFrame">
+										<Batch val="false"/>
+										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
+														<Width val="0"/>
+														<Height val="0"/>
+														<Unclipped val="true"/>
+													</Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
+														<Anchor side="Left"   relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
+														<Anchor side="Bottom" relative="$parent" pos="Min" offset="-60"/>
+														<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+														<Anchor side="Top"    relative="$this" pos="Max" offset="0"/>
+														<Width val="44"/>
+														<Height val="44"/>
+														<Unclipped val="true"/>
+													</Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<StateGroup name="FCJH_MoveTest">
+														<DefaultState val="Moved"/>
+														<State name="Moved">
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Left" relative="$this" pos="Max" offset="-44"/>
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Top" relative="$this" pos="Min" offset="0"/>
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Right" relative="$this" pos="Max" offset="0"/>
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Bottom" relative="$this" pos="Min" offset="44"/>
+														</State>
+													</StateGroup>
+												</Frame>
+												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+								<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame9">
+									<Frame type="Frame" name="TalentsContainerFrame">
+										<Batch val="false"/>
+										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
+														<Width val="0"/>
+														<Height val="0"/>
+														<Unclipped val="true"/>
+													</Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
+														<Anchor side="Left"   relative="$parent/TalentTreeIcon1" pos="Min" offset="0"/>
+														<Anchor side="Bottom" relative="$parent" pos="Min" offset="-60"/>
+														<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+														<Anchor side="Top"    relative="$this" pos="Max" offset="0"/>
+														<Width val="44"/>
+														<Height val="44"/>
+														<Unclipped val="true"/>
+													</Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<StateGroup name="FCJH_MoveTest">
+														<DefaultState val="Moved"/>
+														<State name="Moved">
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Left" relative="$this" pos="Max" offset="-44"/>
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Top" relative="$this" pos="Min" offset="0"/>
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Right" relative="$this" pos="Max" offset="0"/>
+														<Action type="SetAnchor" frame="$this/TalentTreeIcon2" side="Bottom" relative="$this" pos="Min" offset="44"/>
+														</State>
+													</StateGroup>
+												</Frame>
+												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+							</Frame>
+						</Frame>
+					</Frame>
 					<Frame type="Frame" name="Team1HeroOverview">
 						<Frame type="Frame" name="HeroOverview1" template="FCJH_HeroRow/FCJH_HeroCell">
 							<Anchor side="Top"    relative="$GameUI" pos="Min" offset="#FCJH_HERO_1_T"/>
