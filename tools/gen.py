@@ -1633,6 +1633,14 @@ def faded(frame_type, name_, indent):
     return f'{NL}{TAB * indent}<Frame type="{frame_type}" name="{name_}"><Alpha val="0"/></Frame>'
 
 
+def muted(frame_type, name_, indent):
+    """Faded AND deaf to the mouse: a faded talent icon still answered the mouse with its own
+    tooltip ("Parting Gift" over Tracer's heroic, 2026-09-30). Mouse and tooltip off on the
+    icon switch them off for everything inside it."""
+    return (f'{NL}{TAB * indent}<Frame type="{frame_type}" name="{name_}"><Alpha val="0"/>'
+            f'<AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>')
+
+
 def talent_row_lifts(cfg):
     """Tracer's charge meter, lifted out of Blizzard's observer talent row onto our plates.
     Pulse Bomb charges rather than cooling down; Blizzard shows the charge on that row
@@ -1709,7 +1717,7 @@ def heroic_tip_panel(cfg):
         layout gave tooltips, while the same icons lifted out of whole-screen parents (mouse and
         tooltips off, so they wouldn't block the screen) gave none. So the copy covers only the
         plates' strip, and each player's frames are fitted to their plate's heroic icon.
-    The rest of the copy is faded out leaf by leaf."""
+    The rest of the copy is faded out leaf by leaf, and deaf to the mouse (muted)."""
     k = cfg["hero_row"]["scale"]
     strip_top = round((cfg["hero_row"]["top"] - 10) / 0.9)   # layout units: just above the plates
     out = []
@@ -1738,7 +1746,7 @@ def heroic_tip_panel(cfg):
 													<Alpha val="255"/>
 													<Unclipped val="true"/>
 												</Frame>"""
-        rest = "".join(faded("UnitStatusTalentIcon", f"TalentTreeIcon{j}", 12) for j in (1, 3, 5, 6, 7))
+        rest = "".join(muted("UnitStatusTalentIcon", f"TalentTreeIcon{j}", 12) for j in (1, 3, 5, 6, 7))
         out.append(f"""
 								<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame{n}">
 									<!-- this player's frames fitted to their plate's heroic icon -->
@@ -1760,7 +1768,7 @@ def heroic_tip_panel(cfg):
 														<State name="Tier4">{onto("TalentTreeIcon4")}{park("TalentTreeIcon2")}
 														</State>
 													</StateGroup>
-												</Frame>{faded("Frame", "TracerChargeContainer", 12)}{faded("UnitStatusAbilIcon", "UnitStatusAbil", 12)}
+												</Frame>{muted("Frame", "TracerChargeContainer", 12)}{muted("UnitStatusAbilIcon", "UnitStatusAbil", 12)}
 											</Frame>
 										</Frame>
 									</Frame>
