@@ -1671,9 +1671,10 @@ def talent_row_lifts(cfg):
 									</Frame>
 								</Frame>
 							</Frame>""")
-    # The row is PARKED off screen at full alpha, not faded: faded (Alpha 0), nothing under it
-    # drew, IgnoreParentAlpha or not - no magenta square, no tooltips (2026-09-30). Parked, the
-    # pieces anchored onto our plates draw there and the rest stays off screen.
+    # The row is PARKED off screen at full alpha, not faded, and its talent panel is SHOWN:
+    # Blizzard's CleanTalentsPanelTemplate starts hidden (Visible false), so nothing under it
+    # ever drew wherever it was moved - its values still update (our sensors read them). Found
+    # with a ladder of diagnostic squares, 2026-09-30: drawing stopped at TalentOverview.
     return ("""
 					<!-- Pieces of the hidden talent row lifted onto our plates (tools/gen.py talent_row_lifts) -->
 """ + diag_square(0, 5) + """
@@ -1682,7 +1683,8 @@ def talent_row_lifts(cfg):
 						<Anchor side="Top"    relative="$GameUI" pos="Min" offset="9999"/>
 						<Anchor side="Right"  relative="$GameUI" pos="Min" offset="12999"/>
 						<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="10999"/>""" + diag_square(1, 6) + """
-						<Frame type="HeroTalentsPanel" name="TalentOverview">""" + diag_square(2, 7) + """
+						<Frame type="HeroTalentsPanel" name="TalentOverview">
+							<Visible val="true"/>""" + diag_square(2, 7) + """
 							<Frame type="Frame" name="HeroTalentsPanelContainer">""" + diag_square(3, 8) + "".join(out) + """
 							</Frame>
 						</Frame>
