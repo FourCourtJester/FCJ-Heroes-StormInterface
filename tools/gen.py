@@ -1630,7 +1630,8 @@ def talent_row_lifts(cfg):
         d = (lambda i, ind: diag_square(i, ind)) if n == 0 else (lambda i, ind: "")
         out.append(f"""
 							<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame{n}">{d(4, 8)}
-								<Frame type="Frame" name="TalentsContainerFrame">{d(5, 9)}
+								<Frame type="Frame" name="TalentsContainerFrame">
+									<Batch val="false"/>{d(5, 9)}
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">{d(6, 10)}
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">{d(7, 11)}
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">{icon(2)}{icon(4)}
@@ -1682,9 +1683,21 @@ def talent_row_lifts(cfg):
 						<Anchor side="Left"   relative="$GameUI" pos="Min" offset="9999"/>
 						<Anchor side="Top"    relative="$GameUI" pos="Min" offset="9999"/>
 						<Anchor side="Right"  relative="$GameUI" pos="Min" offset="12999"/>
-						<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="10999"/>""" + diag_square(1, 6) + """
+						<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="10999"/>
+						<!-- the game keeps the talent panel hidden: assert it shown every frame (animations
+						     outrank properties; FCJH_Hidden's recipe, turned round) -->
+						<Animation name="FCJH_KeepRowShown">
+							<Event event="OnShown" action="Play"/>
+							<Controller type="Visibility" end="Loop" frame="TalentOverview">
+								<Key type="Bool" time="0" value="true"/>
+							</Controller>
+							<Controller type="Visibility" end="Loop" frame="TalentOverview/HeroTalentsPanelContainer">
+								<Key type="Bool" time="0" value="true"/>
+							</Controller>
+						</Animation>""" + diag_square(1, 6) + """
 						<Frame type="HeroTalentsPanel" name="TalentOverview">
-							<Visible val="true"/>""" + diag_square(2, 7) + """
+							<Visible val="true"/>
+							<Batch val="false"/>  <!-- batched, it drew nothing outside its own (parked) box -->""" + diag_square(2, 7) + """
 							<Frame type="Frame" name="HeroTalentsPanelContainer">""" + diag_square(3, 8) + "".join(out) + """
 							</Frame>
 						</Frame>
