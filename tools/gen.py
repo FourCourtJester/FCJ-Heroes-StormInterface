@@ -1565,40 +1565,13 @@ def hero_cell_template(team, c, cfg):
 OVERVIEW = "$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel"
 
 
-# DIAGNOSTIC (2026-09-30, remove once read): a ladder of coloured squares mid-screen, one
-# child at each level from the panel above the talent row down to PlayerFrame0's UnitStatusFrame0.
-# The last colour that shows is the deepest level that still draws anything. Order, left to right:
-# 0 white (ObserverHeroOverviewPanel, the control), 1 red (TalentsOverview), 2 orange (TalentOverview),
-# 3 yellow (HeroTalentsPanelContainer), 4 green (PlayerFrame0), 5 cyan (TalentsContainerFrame,
-# Batch), 6 blue (SelectionUnitStatusPanel), 7 purple (UnitStatusFrame0).
-DIAG_COLOURS = ["255,255,255,255", "255,255,40,40", "255,255,150,0", "255,255,240,0",
-                "255,40,220,60", "255,0,230,230", "255,40,90,255", "255,170,60,255"]
-
-
-TAB, NL = chr(9), chr(10)
-def diag_square(i, indent):
-    t = TAB * indent
-    x, y, size = round((700 + 40 * i) / 0.9), round(500 / 0.9), 33
-    body = [f'<Frame type="Image" name="FCJH_Diag{i}">',
-            f'{TAB}<Anchor side="Left" relative="$GameUI" pos="Min" offset="{x}"/>',
-            f'{TAB}<Anchor side="Top" relative="$GameUI" pos="Min" offset="{y}"/>',
-            f'{TAB}<Width val="{size}"/>', f'{TAB}<Height val="{size}"/>',
-            f'{TAB}<Texture val="@UI/PauseScreenDimImage"/>', f'{TAB}<ColorAdjustMode val="Fill"/>',
-            f'{TAB}<AdjustmentColor val="{DIAG_COLOURS[i]}"/>', f'{TAB}<Unclipped val="true"/>',
-            f'{TAB}<RenderPriority val="900"/>', f'{TAB}<AcceptsMouse val="false"/>', '</Frame>']
-    return ''.join(NL + t + line for line in body)
-
-
 def talent_row_lifts(cfg):
     """Pieces of Blizzard's observer talent row lifted out onto our plates. The row itself is
     parked off screen at full alpha (see the return); each lifted piece is anchored to a
     plate, so it draws there. Per player:
       - Tracer's charge meter: Pulse Bomb charges rather than cooling down; Blizzard shows the
-        charge on the talent row (TracerChargeContainer, only there for a hero with that
-        ability). Moved over our heroic's gold frame. Our own ProgressBar fed the row's values
-        (first try) never filled; the in-game meter art on Blizzard's frame (second) never
-        showed either, so this build carries a DIAGNOSTIC magenta square inside the lifted
-        frame: seen = the lift works and the art was wrong; not seen = the lift doesn't.
+        charge on the talent row (TracerChargeContainer: there for every hero, its meter only
+        for one with that ability). Moved over our heroic's gold frame, on Blizzard's own art.
       - the heroic's TOOLTIP: in the default UI it comes from the talent icon of the tier the
         heroic sits in (level 10, or 4 for heroes like Varian: HeroicTier, as Blizzard's own
         HeroicAbilityAnchorFrame reads it). That icon is moved over our heroic icon, nearly
@@ -1627,13 +1600,12 @@ def talent_row_lifts(cfg):
 													<Alpha val="1"/>
 													<Unclipped val="true"/>
 												</Frame>"""
-        d = (lambda i, ind: diag_square(i, ind)) if n == 0 else (lambda i, ind: "")
         out.append(f"""
-							<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame{n}">{d(4, 8)}
+							<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame{n}">
 								<Frame type="Frame" name="TalentsContainerFrame">
-									<Batch val="false"/>{d(5, 9)}
-									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">{d(6, 10)}
-										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">{d(7, 11)}
+									<Batch val="false"/>
+									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">{icon(2)}{icon(4)}
 												<StateGroup name="FCJH_HeroicTip">
 													<DefaultState val="Tier4"/>
@@ -1650,14 +1622,6 @@ def talent_row_lifts(cfg):
 												{edge("Right", cell, "Min", r)}
 												{edge("Bottom", cell, "Min", b)}
 												<Unclipped val="true"/>
-												<Frame type="Image" name="FCJH_LiftCheck">
-													<Anchor relative="$parent"/>
-													<Texture val="@UI/PauseScreenDimImage"/>
-													<ColorAdjustMode val="Fill"/>
-													<AdjustmentColor val="255,255,0,255"/>
-													<Unclipped val="true"/>
-													<AcceptsMouse val="false"/>
-												</Frame>
 												<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
 													<Frame type="ProgressBar" name="ChargeFillProgress">
 														{edge("Left", "$parent", "Min", 0)}
@@ -1678,7 +1642,6 @@ def talent_row_lifts(cfg):
     # with a ladder of diagnostic squares, 2026-09-30: drawing stopped at TalentOverview.
     return ("""
 					<!-- Pieces of the hidden talent row lifted onto our plates (tools/gen.py talent_row_lifts) -->
-""" + diag_square(0, 5) + """
 					<Frame type="Frame" name="TalentsOverview">
 						<Anchor side="Left"   relative="$GameUI" pos="Min" offset="9999"/>
 						<Anchor side="Top"    relative="$GameUI" pos="Min" offset="9999"/>
@@ -1694,11 +1657,11 @@ def talent_row_lifts(cfg):
 							<Controller type="Visibility" end="Loop" frame="TalentOverview/HeroTalentsPanelContainer">
 								<Key type="Bool" time="0" value="true"/>
 							</Controller>
-						</Animation>""" + diag_square(1, 6) + """
+						</Animation>
 						<Frame type="HeroTalentsPanel" name="TalentOverview">
 							<Visible val="true"/>
-							<Batch val="false"/>  <!-- batched, it drew nothing outside its own (parked) box -->""" + diag_square(2, 7) + """
-							<Frame type="Frame" name="HeroTalentsPanelContainer">""" + diag_square(3, 8) + "".join(out) + """
+							<Batch val="false"/>  <!-- batched, it may draw nothing outside its own (parked) box -->
+							<Frame type="Frame" name="HeroTalentsPanelContainer">""" + "".join(out) + """
 							</Frame>
 						</Frame>
 					</Frame>""")
