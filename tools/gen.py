@@ -1592,6 +1592,15 @@ def diag_square(i, indent):
     return ''.join(NL + t + line for line in body)
 
 
+def whole_screen(indent):
+    """DIAGNOSTIC (2026-09-30): a frame stretched over the whole screen, not taking the mouse.
+    Every frame above a lifted talent icon gets this, to test whether the mouse only reaches a
+    child that lies inside its parents' boxes (parked, the row's boxes are all off screen)."""
+    t = TAB * indent
+    return "".join(f'{NL}{t}<Anchor side="{side}" relative="$GameUI" pos="{pos}" offset="0"/>'
+                   for side, pos in (("Left", "Min"), ("Top", "Min"), ("Right", "Max"), ("Bottom", "Max"))) + f'{NL}{t}<AcceptsMouse val="false"/>'
+
+
 def talent_row_lifts(cfg):
     """Pieces of Blizzard's observer talent row lifted out onto our plates. The row itself is
     parked off screen at full alpha (see the return); each lifted piece is anchored to a
@@ -1631,13 +1640,16 @@ def talent_row_lifts(cfg):
 													<RenderPriority val="900"/>
 													<Unclipped val="true"/>
 												</Frame>"""
+        # DIAGNOSTIC: with the row's boxes over the whole screen, the row's other pieces would
+        # show; the ones we know of are faded out (leaves only - fading a parent hides its children)
+        hide_rest = "".join(f'{NL}{TAB * 12}<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon{k}"><Alpha val="0"/></Frame>' for k in (1, 3, 5, 6, 7))
         out.append(f"""
-							<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame{n}">{d(4, 8)}
+							<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame{n}">{whole_screen(8)}{d(4, 8)}
 								<Frame type="Frame" name="TalentsContainerFrame">
-									<Batch val="false"/>{d(5, 9)}
-									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">{d(6, 10)}
-										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">{d(7, 11)}
-											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">{icon(2)}{icon(4)}
+									<Batch val="false"/>{whole_screen(9)}{d(5, 9)}
+									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">{whole_screen(10)}{d(6, 10)}
+										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">{whole_screen(11)}{d(7, 11)}
+											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">{whole_screen(12)}{icon(2)}{icon(4)}{hide_rest}
 												<StateGroup name="FCJH_HeroicTip">
 													<DefaultState val="Tier4"/>
 													<State name="Tier2">
@@ -1675,10 +1687,7 @@ def talent_row_lifts(cfg):
 					<!-- Pieces of the hidden talent row lifted onto our plates (tools/gen.py talent_row_lifts) -->
 """ + diag_square(0, 5) + """
 					<Frame type="Frame" name="TalentsOverview">
-						<Anchor side="Left"   relative="$GameUI" pos="Min" offset="9999"/>
-						<Anchor side="Top"    relative="$GameUI" pos="Min" offset="9999"/>
-						<Anchor side="Right"  relative="$GameUI" pos="Min" offset="12999"/>
-						<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="10999"/>
+""" + whole_screen(6) + """  <!-- DIAGNOSTIC: was parked off screen at +9999 -->
 						<!-- the game keeps the talent panel hidden: assert it shown every frame (animations
 						     outrank properties; FCJH_Hidden's recipe, turned round) -->
 						<Animation name="FCJH_KeepRowShown">
@@ -1692,8 +1701,8 @@ def talent_row_lifts(cfg):
 						</Animation>""" + diag_square(1, 6) + """
 						<Frame type="HeroTalentsPanel" name="TalentOverview">
 							<Visible val="true"/>
-							<Batch val="false"/>  <!-- batched, it may draw nothing outside its own (parked) box -->""" + diag_square(2, 7) + """
-							<Frame type="Frame" name="HeroTalentsPanelContainer">""" + diag_square(3, 8) + "".join(out) + """
+							<Batch val="false"/>  <!-- batched, it may draw nothing outside its own (parked) box -->""" + whole_screen(7) + diag_square(2, 7) + """
+							<Frame type="Frame" name="HeroTalentsPanelContainer">""" + whole_screen(8) + diag_square(3, 8) + "".join(out) + """
 							</Frame>
 						</Frame>
 					</Frame>""")
