@@ -5306,6 +5306,19 @@
 					     their icons, which must stay alive. -->
 
 					<!-- Pieces of the hidden talent row lifted onto our plates (tools/gen.py talent_row_lifts) -->
+
+					<Frame type="Image" name="FCJH_Diag0">
+						<Anchor side="Left" relative="$GameUI" pos="Min" offset="778"/>
+						<Anchor side="Top" relative="$GameUI" pos="Min" offset="556"/>
+						<Width val="33"/>
+						<Height val="33"/>
+						<Texture val="@UI/PauseScreenDimImage"/>
+						<ColorAdjustMode val="Fill"/>
+						<AdjustmentColor val="255,255,255,255"/>
+						<Unclipped val="true"/>
+						<RenderPriority val="900"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
 					<Frame type="Frame" name="TalentsOverview">
 						<Anchor side="Left"   relative="$GameUI" pos="Min" offset="9999"/>
 						<Anchor side="Top"    relative="$GameUI" pos="Min" offset="9999"/>
@@ -5322,15 +5335,99 @@
 								<Key type="Bool" time="0" value="true"/>
 							</Controller>
 						</Animation>
+						<Frame type="Image" name="FCJH_Diag1">
+							<Anchor side="Left" relative="$GameUI" pos="Min" offset="822"/>
+							<Anchor side="Top" relative="$GameUI" pos="Min" offset="556"/>
+							<Width val="33"/>
+							<Height val="33"/>
+							<Texture val="@UI/PauseScreenDimImage"/>
+							<ColorAdjustMode val="Fill"/>
+							<AdjustmentColor val="255,255,40,40"/>
+							<Unclipped val="true"/>
+							<RenderPriority val="900"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
 						<Frame type="HeroTalentsPanel" name="TalentOverview">
 							<Visible val="true"/>
 							<Batch val="false"/>  <!-- batched, it may draw nothing outside its own (parked) box -->
+							<Frame type="Image" name="FCJH_Diag2">
+								<Anchor side="Left" relative="$GameUI" pos="Min" offset="867"/>
+								<Anchor side="Top" relative="$GameUI" pos="Min" offset="556"/>
+								<Width val="33"/>
+								<Height val="33"/>
+								<Texture val="@UI/PauseScreenDimImage"/>
+								<ColorAdjustMode val="Fill"/>
+								<AdjustmentColor val="255,255,150,0"/>
+								<Unclipped val="true"/>
+								<RenderPriority val="900"/>
+								<AcceptsMouse val="false"/>
+							</Frame>
 							<Frame type="Frame" name="HeroTalentsPanelContainer">
+								<Frame type="Image" name="FCJH_Diag3">
+									<Anchor side="Left" relative="$GameUI" pos="Min" offset="911"/>
+									<Anchor side="Top" relative="$GameUI" pos="Min" offset="556"/>
+									<Width val="33"/>
+									<Height val="33"/>
+									<Texture val="@UI/PauseScreenDimImage"/>
+									<ColorAdjustMode val="Fill"/>
+									<AdjustmentColor val="255,255,240,0"/>
+									<Unclipped val="true"/>
+									<RenderPriority val="900"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
 							<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame0">
+								<Frame type="Image" name="FCJH_Diag4">
+									<Anchor side="Left" relative="$GameUI" pos="Min" offset="956"/>
+									<Anchor side="Top" relative="$GameUI" pos="Min" offset="556"/>
+									<Width val="33"/>
+									<Height val="33"/>
+									<Texture val="@UI/PauseScreenDimImage"/>
+									<ColorAdjustMode val="Fill"/>
+									<AdjustmentColor val="255,40,220,60"/>
+									<Unclipped val="true"/>
+									<RenderPriority val="900"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
 								<Frame type="Frame" name="TalentsContainerFrame">
 									<Batch val="false"/>
+									<Frame type="Image" name="FCJH_Diag5">
+										<Anchor side="Left" relative="$GameUI" pos="Min" offset="1000"/>
+										<Anchor side="Top" relative="$GameUI" pos="Min" offset="556"/>
+										<Width val="33"/>
+										<Height val="33"/>
+										<Texture val="@UI/PauseScreenDimImage"/>
+										<ColorAdjustMode val="Fill"/>
+										<AdjustmentColor val="255,0,230,230"/>
+										<Unclipped val="true"/>
+										<RenderPriority val="900"/>
+										<AcceptsMouse val="false"/>
+									</Frame>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+										<Frame type="Image" name="FCJH_Diag6">
+											<Anchor side="Left" relative="$GameUI" pos="Min" offset="1044"/>
+											<Anchor side="Top" relative="$GameUI" pos="Min" offset="556"/>
+											<Width val="33"/>
+											<Height val="33"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="255,40,90,255"/>
+											<Unclipped val="true"/>
+											<RenderPriority val="900"/>
+											<AcceptsMouse val="false"/>
+										</Frame>
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+											<Frame type="Image" name="FCJH_Diag7">
+												<Anchor side="Left" relative="$GameUI" pos="Min" offset="1089"/>
+												<Anchor side="Top" relative="$GameUI" pos="Min" offset="556"/>
+												<Width val="33"/>
+												<Height val="33"/>
+												<Texture val="@UI/PauseScreenDimImage"/>
+												<ColorAdjustMode val="Fill"/>
+												<AdjustmentColor val="255,170,60,255"/>
+												<Unclipped val="true"/>
+												<RenderPriority val="900"/>
+												<AcceptsMouse val="false"/>
+											</Frame>
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
 													<Width val="0"/>
