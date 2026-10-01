@@ -1642,7 +1642,15 @@ def talent_row_lifts(cfg):
 												</Frame>"""
         # DIAGNOSTIC: with the row's boxes over the whole screen, the row's other pieces would
         # show; the ones we know of are faded out (leaves only - fading a parent hides its children)
-        hide_rest = "".join(f'{NL}{TAB * 12}<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon{k}"><Alpha val="0"/></Frame>' for k in (1, 3, 5, 6, 7))
+        hide_rest = "".join(f'{NL}{TAB * 12}<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon{k}"><Alpha val="0"/></Frame>' for k in (3, 5, 6, 7))
+        # DIAGNOSTIC: each player's level-1 talent icon in open space under the square ladder,
+        # away from the plates: a tooltip there = something on the plate takes the mouse first
+        ox, oy = round((700 + 44 * n) / 0.9), round(570 / 0.9)
+        hide_rest += (f'{NL}{TAB * 12}<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">'
+                      + "".join(f'{NL}{TAB * 13}<Anchor side="{sd}" relative="$GameUI" pos="Min" offset="{v}"/>'
+                                for sd, v in (("Left", ox), ("Top", oy), ("Right", ox + 44), ("Bottom", oy + 44)))
+                      + f'{NL}{TAB * 13}<Alpha val="255"/>{NL}{TAB * 13}<RenderPriority val="900"/>'
+                      + f'{NL}{TAB * 13}<Unclipped val="true"/>{NL}{TAB * 12}</Frame>')
         out.append(f"""
 							<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame{n}">{whole_screen(8)}{d(4, 8)}
 								<Frame type="Frame" name="TalentsContainerFrame">
