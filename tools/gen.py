@@ -1578,9 +1578,9 @@ DIAG_COLOURS = ["255,255,255,255", "255,255,40,40", "255,255,150,0", "255,255,24
 TAB, NL = chr(9), chr(10)
 
 
-def diag_square(i, indent):
+def diag_square(i, indent, row_y=500):
     t = TAB * indent
-    x, y, size = round((700 + 40 * i) / 0.9), round(500 / 0.9), 33
+    x, y, size = round((700 + 40 * i) / 0.9), round(row_y / 0.9), 33
     body = [f'<Frame type="Image" name="FCJH_Diag{i}">',
             f'{TAB}<Anchor side="Left" relative="$GameUI" pos="Min" offset="{x}"/>',
             f'{TAB}<Anchor side="Top" relative="$GameUI" pos="Min" offset="{y}"/>',
@@ -1603,7 +1603,7 @@ def whole_screen(indent):
             + f'{NL}{t}<AcceptsMouse val="false"/>{NL}{t}<AcceptsMouseTooltip val="false"/>')
 
 
-def talent_chain(cfg, n, inner, d=lambda i, ind: ""):
+def talent_chain(cfg, n, inner, d=lambda i, ind: ""):  # noqa: B008
     """One player's frames in a talent row (Blizzard's top-bar talent row template), each
     stretched over the whole screen (DIAGNOSTIC whole_screen), with `inner` inside its
     UnitStatusFrame0. d: the ladder squares, for player 0 of the observer row."""
@@ -1698,6 +1698,48 @@ def talent_row_lifts(cfg):
 
 
 def heroic_tip_panel(cfg):
+    """DIAGNOSTIC (2026-09-30), in place of heroic_tip_panel_lifted below: our own copy of the
+    observer talent row left in Blizzard's own layout - nothing stretched, nothing lifted, no
+    tooltip flags touched - as a strip across the screen at y 760. Talent tooltips there =
+    our stretching / AcceptsMouseTooltip-off frames were what blocked them; none = this copy
+    gives no tooltips however it's laid out. Squares at y 680 ladder down its player 0."""
+    d = lambda i, ind: diag_square(i, ind, 680)
+    return (f"""
+					<!-- DIAGNOSTIC: our own copy of the observer talent row, Blizzard's layout, mid-screen -->
+					<Frame type="Frame" name="FCJH_HeroicTips" template="TalentsOverviewPanel/TalentsOverviewTopBarTemplate">
+						<Anchor side="Top"   relative="$GameUI" pos="Min" offset="{round(760 / 0.9)}"/>
+						<Anchor side="Left"  relative="$GameUI" pos="Min" offset="0"/>
+						<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+						<Height val="100"/>
+						<RenderPriority val="700"/>
+						<Animation name="FCJH_KeepRowShown">
+							<Event event="OnShown" action="Play"/>
+							<Controller type="Visibility" end="Loop" frame="TalentOverview">
+								<Key type="Bool" time="0" value="true"/>
+							</Controller>
+							<Controller type="Visibility" end="Loop" frame="TalentOverview/HeroTalentsPanelContainer">
+								<Key type="Bool" time="0" value="true"/>
+							</Controller>
+						</Animation>{d(1, 6)}
+						<Frame type="HeroTalentsPanel" name="TalentOverview">
+							<Visible val="true"/>
+							<Batch val="false"/>{d(2, 7)}
+							<Frame type="Frame" name="HeroTalentsPanelContainer">{d(3, 8)}
+								<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame0">{d(4, 8)}
+									<Frame type="Frame" name="TalentsContainerFrame">
+										<Batch val="false"/>{d(5, 9)}
+										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">{d(6, 10)}
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">{d(7, 11)}
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+							</Frame>
+						</Frame>
+					</Frame>""")
+
+
+def heroic_tip_panel_lifted(cfg):
     """The heroic's TOOLTIP, from our OWN copy of Blizzard's observer talent row (the same
     template, TalentsOverviewTopBarTemplate). In the default UI the tooltip comes from the
     talent icon of the tier the heroic sits in (level 10, or 4 for heroes like Varian:
@@ -1728,6 +1770,9 @@ def heroic_tip_panel(cfg):
 													<Unclipped val="true"/>
 												</Frame>"""
         rest = "".join(faded("UnitStatusTalentIcon", f"TalentTreeIcon{k}", 12) for k in (3, 5, 6, 7))
+        # DIAGNOSTIC: a second ladder of squares for this copy, at y 680 (red = its root ...
+        # purple = player 0's UnitStatusFrame0, as the first ladder)
+        d = (lambda i, ind: diag_square(i, ind, 680)) if n == 0 else (lambda i, ind: "")
         out.append(talent_chain(cfg, n, f"""
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">{whole_screen(12)}{icon(2)}{icon(4)}{rest}{test_icon(n, 620)}
 												<StateGroup name="FCJH_HeroicTip">
@@ -1738,16 +1783,26 @@ def heroic_tip_panel(cfg):
 													<State name="Tier4">{onto("TalentTreeIcon4")}{park("TalentTreeIcon2")}
 													</State>
 												</StateGroup>
-											</Frame>{faded("Frame", "TracerChargeContainer", 11)}{faded("UnitStatusAbilIcon", "UnitStatusAbil", 11)}"""))
+											</Frame>{faded("Frame", "TracerChargeContainer", 11)}{faded("UnitStatusAbilIcon", "UnitStatusAbil", 11)}""", d))
     return ("""
 					<!-- Heroic tooltips: our own copy of the observer talent row (tools/gen.py heroic_tip_panel) -->
 					<Frame type="Frame" name="FCJH_HeroicTips" template="TalentsOverviewPanel/TalentsOverviewTopBarTemplate">
 """ + whole_screen(6) + """
 						<RenderPriority val="700"/>
+						<!-- as the game's row: hold its talent panel shown every frame -->
+						<Animation name="FCJH_KeepRowShown">
+							<Event event="OnShown" action="Play"/>
+							<Controller type="Visibility" end="Loop" frame="TalentOverview">
+								<Key type="Bool" time="0" value="true"/>
+							</Controller>
+							<Controller type="Visibility" end="Loop" frame="TalentOverview/HeroTalentsPanelContainer">
+								<Key type="Bool" time="0" value="true"/>
+							</Controller>
+						</Animation>""" + diag_square(1, 6, 680) + """
 						<Frame type="HeroTalentsPanel" name="TalentOverview">
 							<Visible val="true"/>
-							<Batch val="false"/>""" + whole_screen(7) + """
-							<Frame type="Frame" name="HeroTalentsPanelContainer">""" + whole_screen(8) + "".join(out) + """
+							<Batch val="false"/>""" + whole_screen(7) + diag_square(2, 7, 680) + """
+							<Frame type="Frame" name="HeroTalentsPanelContainer">""" + whole_screen(8) + diag_square(3, 8, 680) + "".join(out) + """
 							</Frame>
 						</Frame>
 					</Frame>""")
