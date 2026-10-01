@@ -1565,6 +1565,30 @@ def hero_cell_template(team, c, cfg):
 OVERVIEW = "$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel"
 
 
+# DIAGNOSTIC (2026-09-30, remove once read): a ladder of coloured squares mid-screen, one
+# child at each level from the panel above the talent row down to PlayerFrame0's UnitStatusFrame0.
+# The last colour that shows is the deepest level that still draws anything. Order, left to right:
+# 0 white (ObserverHeroOverviewPanel, the control), 1 red (TalentsOverview), 2 orange (TalentOverview),
+# 3 yellow (HeroTalentsPanelContainer), 4 green (PlayerFrame0), 5 cyan (TalentsContainerFrame,
+# Batch), 6 blue (SelectionUnitStatusPanel), 7 purple (UnitStatusFrame0).
+DIAG_COLOURS = ["255,255,255,255", "255,255,40,40", "255,255,150,0", "255,255,240,0",
+                "255,40,220,60", "255,0,230,230", "255,40,90,255", "255,170,60,255"]
+
+
+TAB, NL = chr(9), chr(10)
+def diag_square(i, indent):
+    t = TAB * indent
+    x, y, size = round((700 + 40 * i) / 0.9), round(500 / 0.9), 33
+    body = [f'<Frame type="Image" name="FCJH_Diag{i}">',
+            f'{TAB}<Anchor side="Left" relative="$GameUI" pos="Min" offset="{x}"/>',
+            f'{TAB}<Anchor side="Top" relative="$GameUI" pos="Min" offset="{y}"/>',
+            f'{TAB}<Width val="{size}"/>', f'{TAB}<Height val="{size}"/>',
+            f'{TAB}<Texture val="@UI/PauseScreenDimImage"/>', f'{TAB}<ColorAdjustMode val="Fill"/>',
+            f'{TAB}<AdjustmentColor val="{DIAG_COLOURS[i]}"/>', f'{TAB}<Unclipped val="true"/>',
+            f'{TAB}<RenderPriority val="900"/>', f'{TAB}<AcceptsMouse val="false"/>', '</Frame>']
+    return ''.join(NL + t + line for line in body)
+
+
 def talent_row_lifts(cfg):
     """Pieces of Blizzard's observer talent row lifted out onto our plates. The row itself is
     parked off screen at full alpha (see the return); each lifted piece is anchored to a
@@ -1603,11 +1627,12 @@ def talent_row_lifts(cfg):
 													<Alpha val="1"/>
 													<Unclipped val="true"/>
 												</Frame>"""
+        d = (lambda i, ind: diag_square(i, ind)) if n == 0 else (lambda i, ind: "")
         out.append(f"""
-							<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame{n}">
-								<Frame type="Frame" name="TalentsContainerFrame">
-									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
-										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+							<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame{n}">{d(4, 8)}
+								<Frame type="Frame" name="TalentsContainerFrame">{d(5, 9)}
+									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">{d(6, 10)}
+										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">{d(7, 11)}
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">{icon(2)}{icon(4)}
 												<StateGroup name="FCJH_HeroicTip">
 													<DefaultState val="Tier4"/>
@@ -1651,13 +1676,14 @@ def talent_row_lifts(cfg):
     # pieces anchored onto our plates draw there and the rest stays off screen.
     return ("""
 					<!-- Pieces of the hidden talent row lifted onto our plates (tools/gen.py talent_row_lifts) -->
+""" + diag_square(0, 5) + """
 					<Frame type="Frame" name="TalentsOverview">
 						<Anchor side="Left"   relative="$GameUI" pos="Min" offset="9999"/>
 						<Anchor side="Top"    relative="$GameUI" pos="Min" offset="9999"/>
 						<Anchor side="Right"  relative="$GameUI" pos="Min" offset="12999"/>
-						<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="10999"/>
-						<Frame type="HeroTalentsPanel" name="TalentOverview">
-							<Frame type="Frame" name="HeroTalentsPanelContainer">""" + "".join(out) + """
+						<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="10999"/>""" + diag_square(1, 6) + """
+						<Frame type="HeroTalentsPanel" name="TalentOverview">""" + diag_square(2, 7) + """
+							<Frame type="Frame" name="HeroTalentsPanelContainer">""" + diag_square(3, 8) + "".join(out) + """
 							</Frame>
 						</Frame>
 					</Frame>""")
