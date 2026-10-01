@@ -5325,7 +5325,8 @@
 						<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
 						<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 						<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-						<AcceptsMouse val="false"/>  <!-- DIAGNOSTIC: was parked off screen at +9999 -->
+						<AcceptsMouse val="false"/>
+						<AcceptsMouseTooltip val="false"/>  <!-- DIAGNOSTIC: was parked off screen at +9999 -->
 						<!-- the game keeps the talent panel hidden: assert it shown every frame (animations
 						     outrank properties; FCJH_Hidden's recipe, turned round) -->
 						<Animation name="FCJH_KeepRowShown">
@@ -5357,6 +5358,7 @@
 							<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 							<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 							<AcceptsMouse val="false"/>
+							<AcceptsMouseTooltip val="false"/>
 							<Frame type="Image" name="FCJH_Diag2">
 								<Anchor side="Left" relative="$GameUI" pos="Min" offset="867"/>
 								<Anchor side="Top" relative="$GameUI" pos="Min" offset="556"/>
@@ -5375,6 +5377,7 @@
 								<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 								<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 								<AcceptsMouse val="false"/>
+								<AcceptsMouseTooltip val="false"/>
 								<Frame type="Image" name="FCJH_Diag3">
 									<Anchor side="Left" relative="$GameUI" pos="Min" offset="911"/>
 									<Anchor side="Top" relative="$GameUI" pos="Min" offset="556"/>
@@ -5393,6 +5396,7 @@
 								<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 								<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 								<AcceptsMouse val="false"/>
+								<AcceptsMouseTooltip val="false"/>
 								<Frame type="Image" name="FCJH_Diag4">
 									<Anchor side="Left" relative="$GameUI" pos="Min" offset="956"/>
 									<Anchor side="Top" relative="$GameUI" pos="Min" offset="556"/>
@@ -5412,6 +5416,7 @@
 									<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 									<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 									<AcceptsMouse val="false"/>
+									<AcceptsMouseTooltip val="false"/>
 									<Frame type="Image" name="FCJH_Diag5">
 										<Anchor side="Left" relative="$GameUI" pos="Min" offset="1000"/>
 										<Anchor side="Top" relative="$GameUI" pos="Min" offset="556"/>
@@ -5430,6 +5435,7 @@
 										<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 										<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 										<AcceptsMouse val="false"/>
+										<AcceptsMouseTooltip val="false"/>
 										<Frame type="Image" name="FCJH_Diag6">
 											<Anchor side="Left" relative="$GameUI" pos="Min" offset="1044"/>
 											<Anchor side="Top" relative="$GameUI" pos="Min" offset="556"/>
@@ -5448,6 +5454,7 @@
 											<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 											<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 											<AcceptsMouse val="false"/>
+											<AcceptsMouseTooltip val="false"/>
 											<Frame type="Image" name="FCJH_Diag7">
 												<Anchor side="Left" relative="$GameUI" pos="Min" offset="1089"/>
 												<Anchor side="Top" relative="$GameUI" pos="Min" offset="556"/>
@@ -5466,6 +5473,7 @@
 												<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 												<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 												<AcceptsMouse val="false"/>
+												<AcceptsMouseTooltip val="false"/>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
 													<Width val="0"/>
 													<Height val="0"/>
@@ -5548,6 +5556,7 @@
 								<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 								<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 								<AcceptsMouse val="false"/>
+								<AcceptsMouseTooltip val="false"/>
 								<Frame type="Frame" name="TalentsContainerFrame">
 									<Batch val="false"/>
 									<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
@@ -5555,24 +5564,28 @@
 									<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 									<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 									<AcceptsMouse val="false"/>
+									<AcceptsMouseTooltip val="false"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
 										<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
 										<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 										<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 										<AcceptsMouse val="false"/>
+										<AcceptsMouseTooltip val="false"/>
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
 											<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
 											<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 											<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 											<AcceptsMouse val="false"/>
+											<AcceptsMouseTooltip val="false"/>
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 												<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
 												<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
 												<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 												<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 												<AcceptsMouse val="false"/>
+												<AcceptsMouseTooltip val="false"/>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
 													<Width val="0"/>
 													<Height val="0"/>
@@ -5655,6 +5668,7 @@
 								<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 								<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 								<AcceptsMouse val="false"/>
+								<AcceptsMouseTooltip val="false"/>
 								<Frame type="Frame" name="TalentsContainerFrame">
 									<Batch val="false"/>
 									<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
@@ -5662,24 +5676,28 @@
 									<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 									<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 									<AcceptsMouse val="false"/>
+									<AcceptsMouseTooltip val="false"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
 										<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
 										<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 										<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 										<AcceptsMouse val="false"/>
+										<AcceptsMouseTooltip val="false"/>
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
 											<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
 											<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 											<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 											<AcceptsMouse val="false"/>
+											<AcceptsMouseTooltip val="false"/>
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 												<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
 												<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
 												<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 												<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 												<AcceptsMouse val="false"/>
+												<AcceptsMouseTooltip val="false"/>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
 													<Width val="0"/>
 													<Height val="0"/>
@@ -5762,6 +5780,7 @@
 								<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 								<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 								<AcceptsMouse val="false"/>
+								<AcceptsMouseTooltip val="false"/>
 								<Frame type="Frame" name="TalentsContainerFrame">
 									<Batch val="false"/>
 									<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
@@ -5769,24 +5788,28 @@
 									<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 									<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 									<AcceptsMouse val="false"/>
+									<AcceptsMouseTooltip val="false"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
 										<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
 										<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 										<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 										<AcceptsMouse val="false"/>
+										<AcceptsMouseTooltip val="false"/>
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
 											<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
 											<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 											<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 											<AcceptsMouse val="false"/>
+											<AcceptsMouseTooltip val="false"/>
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 												<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
 												<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
 												<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 												<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 												<AcceptsMouse val="false"/>
+												<AcceptsMouseTooltip val="false"/>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
 													<Width val="0"/>
 													<Height val="0"/>
@@ -5869,6 +5892,7 @@
 								<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 								<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 								<AcceptsMouse val="false"/>
+								<AcceptsMouseTooltip val="false"/>
 								<Frame type="Frame" name="TalentsContainerFrame">
 									<Batch val="false"/>
 									<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
@@ -5876,24 +5900,28 @@
 									<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 									<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 									<AcceptsMouse val="false"/>
+									<AcceptsMouseTooltip val="false"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
 										<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
 										<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 										<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 										<AcceptsMouse val="false"/>
+										<AcceptsMouseTooltip val="false"/>
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
 											<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
 											<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 											<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 											<AcceptsMouse val="false"/>
+											<AcceptsMouseTooltip val="false"/>
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 												<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
 												<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
 												<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 												<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 												<AcceptsMouse val="false"/>
+												<AcceptsMouseTooltip val="false"/>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
 													<Width val="0"/>
 													<Height val="0"/>
@@ -5976,6 +6004,7 @@
 								<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 								<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 								<AcceptsMouse val="false"/>
+								<AcceptsMouseTooltip val="false"/>
 								<Frame type="Frame" name="TalentsContainerFrame">
 									<Batch val="false"/>
 									<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
@@ -5983,24 +6012,28 @@
 									<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 									<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 									<AcceptsMouse val="false"/>
+									<AcceptsMouseTooltip val="false"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
 										<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
 										<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 										<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 										<AcceptsMouse val="false"/>
+										<AcceptsMouseTooltip val="false"/>
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
 											<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
 											<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 											<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 											<AcceptsMouse val="false"/>
+											<AcceptsMouseTooltip val="false"/>
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 												<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
 												<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
 												<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 												<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 												<AcceptsMouse val="false"/>
+												<AcceptsMouseTooltip val="false"/>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
 													<Width val="0"/>
 													<Height val="0"/>
@@ -6083,6 +6116,7 @@
 								<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 								<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 								<AcceptsMouse val="false"/>
+								<AcceptsMouseTooltip val="false"/>
 								<Frame type="Frame" name="TalentsContainerFrame">
 									<Batch val="false"/>
 									<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
@@ -6090,24 +6124,28 @@
 									<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 									<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 									<AcceptsMouse val="false"/>
+									<AcceptsMouseTooltip val="false"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
 										<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
 										<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 										<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 										<AcceptsMouse val="false"/>
+										<AcceptsMouseTooltip val="false"/>
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
 											<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
 											<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 											<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 											<AcceptsMouse val="false"/>
+											<AcceptsMouseTooltip val="false"/>
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 												<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
 												<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
 												<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 												<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 												<AcceptsMouse val="false"/>
+												<AcceptsMouseTooltip val="false"/>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
 													<Width val="0"/>
 													<Height val="0"/>
@@ -6190,6 +6228,7 @@
 								<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 								<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 								<AcceptsMouse val="false"/>
+								<AcceptsMouseTooltip val="false"/>
 								<Frame type="Frame" name="TalentsContainerFrame">
 									<Batch val="false"/>
 									<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
@@ -6197,24 +6236,28 @@
 									<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 									<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 									<AcceptsMouse val="false"/>
+									<AcceptsMouseTooltip val="false"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
 										<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
 										<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 										<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 										<AcceptsMouse val="false"/>
+										<AcceptsMouseTooltip val="false"/>
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
 											<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
 											<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 											<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 											<AcceptsMouse val="false"/>
+											<AcceptsMouseTooltip val="false"/>
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 												<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
 												<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
 												<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 												<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 												<AcceptsMouse val="false"/>
+												<AcceptsMouseTooltip val="false"/>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
 													<Width val="0"/>
 													<Height val="0"/>
@@ -6297,6 +6340,7 @@
 								<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 								<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 								<AcceptsMouse val="false"/>
+								<AcceptsMouseTooltip val="false"/>
 								<Frame type="Frame" name="TalentsContainerFrame">
 									<Batch val="false"/>
 									<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
@@ -6304,24 +6348,28 @@
 									<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 									<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 									<AcceptsMouse val="false"/>
+									<AcceptsMouseTooltip val="false"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
 										<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
 										<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 										<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 										<AcceptsMouse val="false"/>
+										<AcceptsMouseTooltip val="false"/>
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
 											<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
 											<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 											<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 											<AcceptsMouse val="false"/>
+											<AcceptsMouseTooltip val="false"/>
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 												<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
 												<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
 												<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 												<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 												<AcceptsMouse val="false"/>
+												<AcceptsMouseTooltip val="false"/>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
 													<Width val="0"/>
 													<Height val="0"/>
@@ -6404,6 +6452,7 @@
 								<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 								<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 								<AcceptsMouse val="false"/>
+								<AcceptsMouseTooltip val="false"/>
 								<Frame type="Frame" name="TalentsContainerFrame">
 									<Batch val="false"/>
 									<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
@@ -6411,24 +6460,28 @@
 									<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 									<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 									<AcceptsMouse val="false"/>
+									<AcceptsMouseTooltip val="false"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
 										<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
 										<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 										<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 										<AcceptsMouse val="false"/>
+										<AcceptsMouseTooltip val="false"/>
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
 											<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
 											<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 											<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 											<AcceptsMouse val="false"/>
+											<AcceptsMouseTooltip val="false"/>
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 												<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
 												<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
 												<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 												<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
 												<AcceptsMouse val="false"/>
+												<AcceptsMouseTooltip val="false"/>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
 													<Width val="0"/>
 													<Height val="0"/>

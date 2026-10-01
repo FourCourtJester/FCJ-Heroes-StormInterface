@@ -1597,8 +1597,11 @@ def whole_screen(indent):
     Every frame above a lifted talent icon gets this, to test whether the mouse only reaches a
     child that lies inside its parents' boxes (parked, the row's boxes are all off screen)."""
     t = TAB * indent
-    return "".join(f'{NL}{t}<Anchor side="{side}" relative="$GameUI" pos="{pos}" offset="0"/>'
-                   for side, pos in (("Left", "Min"), ("Top", "Min"), ("Right", "Max"), ("Bottom", "Max"))) + f'{NL}{t}<AcceptsMouse val="false"/>'
+    # tooltips are hit-tested apart from clicks: mouse off alone left these frames catching
+    # every tooltip on screen (2026-09-30)
+    return ("".join(f'{NL}{t}<Anchor side="{side}" relative="$GameUI" pos="{pos}" offset="0"/>'
+                    for side, pos in (("Left", "Min"), ("Top", "Min"), ("Right", "Max"), ("Bottom", "Max")))
+            + f'{NL}{t}<AcceptsMouse val="false"/>{NL}{t}<AcceptsMouseTooltip val="false"/>')
 
 
 def talent_row_lifts(cfg):
