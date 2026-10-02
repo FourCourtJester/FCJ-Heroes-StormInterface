@@ -1705,6 +1705,44 @@ def talent_row_lifts(cfg):
 					</Frame>""")
 
 
+def marker(name_, rel, colour, indent, corner=0):
+    """DIAGNOSTIC (2026-10-02): shows where frame `rel` really is on screen - a see-through
+    box over it, or (corner > 0) a solid square that size on its top-left. Deaf to the mouse.
+    Unlike the ladder squares (which only show that a level draws at all) it sits ON a frame."""
+    t = TAB * indent
+    if corner:
+        sides = (("Left", "Min", 0), ("Top", "Min", 0), ("Right", "Min", corner), ("Bottom", "Min", corner))
+    else:
+        sides = (("Left", "Min", 0), ("Top", "Min", 0), ("Right", "Max", 0), ("Bottom", "Max", 0))
+    return (f'{NL}{t}<Frame type="Image" name="{name_}">'
+            + "".join(f'{NL}{t}{TAB}<Anchor side="{sd}" relative="{rel}" pos="{pos}" offset="{v}"/>' for sd, pos, v in sides)
+            + f'{NL}{t}{TAB}<Texture val="@UI/PauseScreenDimImage"/>{NL}{t}{TAB}<ColorAdjustMode val="Fill"/>'
+            + f'{NL}{t}{TAB}<AdjustmentColor val="{colour}"/>{NL}{t}{TAB}<Unclipped val="true"/>'
+            + f'{NL}{t}{TAB}<RenderPriority val="950"/>'
+            + f'{NL}{t}{TAB}<AcceptsMouse val="false"/>{NL}{t}{TAB}<AcceptsMouseTooltip val="false"/>{NL}{t}</Frame>')
+
+
+def copies_toggle():
+    """DIAGNOSTIC (2026-10-02): Control+Shift+9 hides and shows our two copies of the talent
+    row, to see whether inspect comes back without them (it stopped showing once they were in)."""
+    t = lambda k: NL + TAB * k
+    ctrl = "".join(
+        f'{t(7)}<Controller type="Visibility" end="Pause" frame="$parent/{f}">'
+        f'{t(8)}<Key type="Bool" time="0" value="true"/>'
+        f'{t(8)}<Key type="Bool" time="0.001" value="false"/>'
+        f'{t(7)}</Controller>'
+        for f in ("FCJH_HeroicTips", "FCJH_TipTest"))
+    return (f'{t(5)}<Frame type="ToggleControl" name="FCJH_CopiesToggle">'
+            f'{t(6)}<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>'
+            f'{t(6)}<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>'
+            f'{t(6)}<Width val="1"/>{t(6)}<Height val="1"/>'
+            f'{t(6)}<Shortcut val="Control+Shift+9"/>{t(6)}<Visible val="false"/>{t(6)}<AcceptsMouse val="false"/>'
+            f'{t(6)}<Animation name="FCJH_Hide">'
+            f'{t(7)}<Event event="OnShown" action="DirectionForward,Play"/>'
+            f'{t(7)}<Event event="OnHidden" action="DirectionReverse,Play"/>'
+            f'{ctrl}{t(6)}</Animation>{t(5)}</Frame>')
+
+
 def heroic_tip_panel(cfg):
     """The heroic's TOOLTIP, from our OWN copy of Blizzard's observer talent row (the same
     template, TalentsOverviewTopBarTemplate). In the default UI the tooltip comes from the
@@ -1763,12 +1801,12 @@ def heroic_tip_panel(cfg):
 									<Anchor side="Top"    relative="{cell}" pos="Min" offset="{it}"/>
 									<Anchor side="Right"  relative="{cell}" pos="Min" offset="{ir}"/>
 									<Anchor side="Bottom" relative="{cell}" pos="Min" offset="{ib}"/>
-									<AcceptsMouse val="false"/>{d(4, 9)}
+									<AcceptsMouse val="false"/>{d(4, 9)}{marker("FCJH_PosPlayer", "$parent", "255,40,220,60", 10, 14)}
 									<Frame type="Frame" name="TalentsContainerFrame">
 										<Batch val="false"/>{d(5, 10)}
 										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">{d(6, 11)}
 											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">{d(7, 12)}
-												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">{fill(13)}{static_icon2}{muted("UnitStatusTalentIcon", "TalentTreeIcon4", 12)}{rest}
+												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">{fill(13)}{static_icon2}{muted("UnitStatusTalentIcon", "TalentTreeIcon4", 12)}{rest}{marker("FCJH_PosTree", "$parent", "255,40,90,255", 14, 8)}{marker("FCJH_PosIcon", "$parent/TalentTreeIcon2", "110,255,240,0", 14)}
 												</Frame>{muted("Frame", "TracerChargeContainer", 12)}{muted("UnitStatusAbilIcon", "UnitStatusAbil", 12)}
 											</Frame>
 										</Frame>
@@ -1842,7 +1880,7 @@ def tip_test_strip(cfg):
 														<Width val="44"/>
 														<Height val="44"/>
 														<Unclipped val="true"/>
-													</Frame>{rest}
+													</Frame>{rest}{marker("FCJH_PosMoved", "$parent/TalentTreeIcon2", "130,255,0,255", 13)}
 													<StateGroup name="FCJH_MoveTest">
 														<DefaultState val="Moved"/>
 														<State name="Moved">{moved}
@@ -2002,7 +2040,7 @@ def hero_row_layout(cfg):
 					<!-- Blizzard's top-bar talent rows are anchored to the cells, so they follow
 					     them down here. Hidden with Alpha 0, not parked: the talent pop-ups watch
 					     their icons, which must stay alive. -->
-{talent_row_lifts(cfg)}{heroic_tip_panel(cfg)}{tip_test_strip(cfg)}
+{talent_row_lifts(cfg)}{heroic_tip_panel(cfg)}{tip_test_strip(cfg)}{copies_toggle()}
 {chr(10).join(cells)}
 				</Frame>
 			</Frame>

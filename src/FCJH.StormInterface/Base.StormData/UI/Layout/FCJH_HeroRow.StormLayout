@@ -6241,6 +6241,19 @@
 										<RenderPriority val="900"/>
 										<AcceptsMouse val="false"/>
 									</Frame>
+										<Frame type="Image" name="FCJH_PosPlayer">
+											<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+											<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+											<Anchor side="Right" relative="$parent" pos="Min" offset="14"/>
+											<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="255,40,220,60"/>
+											<Unclipped val="true"/>
+											<RenderPriority val="950"/>
+											<AcceptsMouse val="false"/>
+											<AcceptsMouseTooltip val="false"/>
+										</Frame>
 									<Frame type="Frame" name="TalentsContainerFrame">
 										<Batch val="false"/>
 										<Frame type="Image" name="FCJH_Diag5">
@@ -6300,6 +6313,32 @@
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+														<Frame type="Image" name="FCJH_PosTree">
+															<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Right" relative="$parent" pos="Min" offset="8"/>
+															<Anchor side="Bottom" relative="$parent" pos="Min" offset="8"/>
+															<Texture val="@UI/PauseScreenDimImage"/>
+															<ColorAdjustMode val="Fill"/>
+															<AdjustmentColor val="255,40,90,255"/>
+															<Unclipped val="true"/>
+															<RenderPriority val="950"/>
+															<AcceptsMouse val="false"/>
+															<AcceptsMouseTooltip val="false"/>
+														</Frame>
+														<Frame type="Image" name="FCJH_PosIcon">
+															<Anchor side="Left" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+															<Anchor side="Top" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+															<Anchor side="Right" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+															<Anchor side="Bottom" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+															<Texture val="@UI/PauseScreenDimImage"/>
+															<ColorAdjustMode val="Fill"/>
+															<AdjustmentColor val="110,255,240,0"/>
+															<Unclipped val="true"/>
+															<RenderPriority val="950"/>
+															<AcceptsMouse val="false"/>
+															<AcceptsMouseTooltip val="false"/>
+														</Frame>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
@@ -6314,6 +6353,19 @@
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="86"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="92"/>
 									<AcceptsMouse val="false"/>
+										<Frame type="Image" name="FCJH_PosPlayer">
+											<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+											<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+											<Anchor side="Right" relative="$parent" pos="Min" offset="14"/>
+											<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="255,40,220,60"/>
+											<Unclipped val="true"/>
+											<RenderPriority val="950"/>
+											<AcceptsMouse val="false"/>
+											<AcceptsMouseTooltip val="false"/>
+										</Frame>
 									<Frame type="Frame" name="TalentsContainerFrame">
 										<Batch val="false"/>
 										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
@@ -6337,6 +6389,32 @@
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+														<Frame type="Image" name="FCJH_PosTree">
+															<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Right" relative="$parent" pos="Min" offset="8"/>
+															<Anchor side="Bottom" relative="$parent" pos="Min" offset="8"/>
+															<Texture val="@UI/PauseScreenDimImage"/>
+															<ColorAdjustMode val="Fill"/>
+															<AdjustmentColor val="255,40,90,255"/>
+															<Unclipped val="true"/>
+															<RenderPriority val="950"/>
+															<AcceptsMouse val="false"/>
+															<AcceptsMouseTooltip val="false"/>
+														</Frame>
+														<Frame type="Image" name="FCJH_PosIcon">
+															<Anchor side="Left" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+															<Anchor side="Top" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+															<Anchor side="Right" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+															<Anchor side="Bottom" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+															<Texture val="@UI/PauseScreenDimImage"/>
+															<ColorAdjustMode val="Fill"/>
+															<AdjustmentColor val="110,255,240,0"/>
+															<Unclipped val="true"/>
+															<RenderPriority val="950"/>
+															<AcceptsMouse val="false"/>
+															<AcceptsMouseTooltip val="false"/>
+														</Frame>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
@@ -6351,6 +6429,19 @@
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="86"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="92"/>
 									<AcceptsMouse val="false"/>
+										<Frame type="Image" name="FCJH_PosPlayer">
+											<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+											<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+											<Anchor side="Right" relative="$parent" pos="Min" offset="14"/>
+											<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="255,40,220,60"/>
+											<Unclipped val="true"/>
+											<RenderPriority val="950"/>
+											<AcceptsMouse val="false"/>
+											<AcceptsMouseTooltip val="false"/>
+										</Frame>
 									<Frame type="Frame" name="TalentsContainerFrame">
 										<Batch val="false"/>
 										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
@@ -6374,6 +6465,32 @@
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+														<Frame type="Image" name="FCJH_PosTree">
+															<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Right" relative="$parent" pos="Min" offset="8"/>
+															<Anchor side="Bottom" relative="$parent" pos="Min" offset="8"/>
+															<Texture val="@UI/PauseScreenDimImage"/>
+															<ColorAdjustMode val="Fill"/>
+															<AdjustmentColor val="255,40,90,255"/>
+															<Unclipped val="true"/>
+															<RenderPriority val="950"/>
+															<AcceptsMouse val="false"/>
+															<AcceptsMouseTooltip val="false"/>
+														</Frame>
+														<Frame type="Image" name="FCJH_PosIcon">
+															<Anchor side="Left" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+															<Anchor side="Top" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+															<Anchor side="Right" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+															<Anchor side="Bottom" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+															<Texture val="@UI/PauseScreenDimImage"/>
+															<ColorAdjustMode val="Fill"/>
+															<AdjustmentColor val="110,255,240,0"/>
+															<Unclipped val="true"/>
+															<RenderPriority val="950"/>
+															<AcceptsMouse val="false"/>
+															<AcceptsMouseTooltip val="false"/>
+														</Frame>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
@@ -6388,6 +6505,19 @@
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="86"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="92"/>
 									<AcceptsMouse val="false"/>
+										<Frame type="Image" name="FCJH_PosPlayer">
+											<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+											<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+											<Anchor side="Right" relative="$parent" pos="Min" offset="14"/>
+											<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="255,40,220,60"/>
+											<Unclipped val="true"/>
+											<RenderPriority val="950"/>
+											<AcceptsMouse val="false"/>
+											<AcceptsMouseTooltip val="false"/>
+										</Frame>
 									<Frame type="Frame" name="TalentsContainerFrame">
 										<Batch val="false"/>
 										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
@@ -6411,6 +6541,32 @@
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+														<Frame type="Image" name="FCJH_PosTree">
+															<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Right" relative="$parent" pos="Min" offset="8"/>
+															<Anchor side="Bottom" relative="$parent" pos="Min" offset="8"/>
+															<Texture val="@UI/PauseScreenDimImage"/>
+															<ColorAdjustMode val="Fill"/>
+															<AdjustmentColor val="255,40,90,255"/>
+															<Unclipped val="true"/>
+															<RenderPriority val="950"/>
+															<AcceptsMouse val="false"/>
+															<AcceptsMouseTooltip val="false"/>
+														</Frame>
+														<Frame type="Image" name="FCJH_PosIcon">
+															<Anchor side="Left" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+															<Anchor side="Top" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+															<Anchor side="Right" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+															<Anchor side="Bottom" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+															<Texture val="@UI/PauseScreenDimImage"/>
+															<ColorAdjustMode val="Fill"/>
+															<AdjustmentColor val="110,255,240,0"/>
+															<Unclipped val="true"/>
+															<RenderPriority val="950"/>
+															<AcceptsMouse val="false"/>
+															<AcceptsMouseTooltip val="false"/>
+														</Frame>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
@@ -6425,6 +6581,19 @@
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="86"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="92"/>
 									<AcceptsMouse val="false"/>
+										<Frame type="Image" name="FCJH_PosPlayer">
+											<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+											<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+											<Anchor side="Right" relative="$parent" pos="Min" offset="14"/>
+											<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="255,40,220,60"/>
+											<Unclipped val="true"/>
+											<RenderPriority val="950"/>
+											<AcceptsMouse val="false"/>
+											<AcceptsMouseTooltip val="false"/>
+										</Frame>
 									<Frame type="Frame" name="TalentsContainerFrame">
 										<Batch val="false"/>
 										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
@@ -6448,6 +6617,32 @@
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+														<Frame type="Image" name="FCJH_PosTree">
+															<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Right" relative="$parent" pos="Min" offset="8"/>
+															<Anchor side="Bottom" relative="$parent" pos="Min" offset="8"/>
+															<Texture val="@UI/PauseScreenDimImage"/>
+															<ColorAdjustMode val="Fill"/>
+															<AdjustmentColor val="255,40,90,255"/>
+															<Unclipped val="true"/>
+															<RenderPriority val="950"/>
+															<AcceptsMouse val="false"/>
+															<AcceptsMouseTooltip val="false"/>
+														</Frame>
+														<Frame type="Image" name="FCJH_PosIcon">
+															<Anchor side="Left" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+															<Anchor side="Top" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+															<Anchor side="Right" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+															<Anchor side="Bottom" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+															<Texture val="@UI/PauseScreenDimImage"/>
+															<ColorAdjustMode val="Fill"/>
+															<AdjustmentColor val="110,255,240,0"/>
+															<Unclipped val="true"/>
+															<RenderPriority val="950"/>
+															<AcceptsMouse val="false"/>
+															<AcceptsMouseTooltip val="false"/>
+														</Frame>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
@@ -6462,6 +6657,19 @@
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="62"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="92"/>
 									<AcceptsMouse val="false"/>
+										<Frame type="Image" name="FCJH_PosPlayer">
+											<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+											<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+											<Anchor side="Right" relative="$parent" pos="Min" offset="14"/>
+											<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="255,40,220,60"/>
+											<Unclipped val="true"/>
+											<RenderPriority val="950"/>
+											<AcceptsMouse val="false"/>
+											<AcceptsMouseTooltip val="false"/>
+										</Frame>
 									<Frame type="Frame" name="TalentsContainerFrame">
 										<Batch val="false"/>
 										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
@@ -6485,6 +6693,32 @@
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+														<Frame type="Image" name="FCJH_PosTree">
+															<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Right" relative="$parent" pos="Min" offset="8"/>
+															<Anchor side="Bottom" relative="$parent" pos="Min" offset="8"/>
+															<Texture val="@UI/PauseScreenDimImage"/>
+															<ColorAdjustMode val="Fill"/>
+															<AdjustmentColor val="255,40,90,255"/>
+															<Unclipped val="true"/>
+															<RenderPriority val="950"/>
+															<AcceptsMouse val="false"/>
+															<AcceptsMouseTooltip val="false"/>
+														</Frame>
+														<Frame type="Image" name="FCJH_PosIcon">
+															<Anchor side="Left" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+															<Anchor side="Top" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+															<Anchor side="Right" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+															<Anchor side="Bottom" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+															<Texture val="@UI/PauseScreenDimImage"/>
+															<ColorAdjustMode val="Fill"/>
+															<AdjustmentColor val="110,255,240,0"/>
+															<Unclipped val="true"/>
+															<RenderPriority val="950"/>
+															<AcceptsMouse val="false"/>
+															<AcceptsMouseTooltip val="false"/>
+														</Frame>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
@@ -6499,6 +6733,19 @@
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="62"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="92"/>
 									<AcceptsMouse val="false"/>
+										<Frame type="Image" name="FCJH_PosPlayer">
+											<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+											<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+											<Anchor side="Right" relative="$parent" pos="Min" offset="14"/>
+											<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="255,40,220,60"/>
+											<Unclipped val="true"/>
+											<RenderPriority val="950"/>
+											<AcceptsMouse val="false"/>
+											<AcceptsMouseTooltip val="false"/>
+										</Frame>
 									<Frame type="Frame" name="TalentsContainerFrame">
 										<Batch val="false"/>
 										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
@@ -6522,6 +6769,32 @@
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+														<Frame type="Image" name="FCJH_PosTree">
+															<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Right" relative="$parent" pos="Min" offset="8"/>
+															<Anchor side="Bottom" relative="$parent" pos="Min" offset="8"/>
+															<Texture val="@UI/PauseScreenDimImage"/>
+															<ColorAdjustMode val="Fill"/>
+															<AdjustmentColor val="255,40,90,255"/>
+															<Unclipped val="true"/>
+															<RenderPriority val="950"/>
+															<AcceptsMouse val="false"/>
+															<AcceptsMouseTooltip val="false"/>
+														</Frame>
+														<Frame type="Image" name="FCJH_PosIcon">
+															<Anchor side="Left" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+															<Anchor side="Top" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+															<Anchor side="Right" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+															<Anchor side="Bottom" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+															<Texture val="@UI/PauseScreenDimImage"/>
+															<ColorAdjustMode val="Fill"/>
+															<AdjustmentColor val="110,255,240,0"/>
+															<Unclipped val="true"/>
+															<RenderPriority val="950"/>
+															<AcceptsMouse val="false"/>
+															<AcceptsMouseTooltip val="false"/>
+														</Frame>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
@@ -6536,6 +6809,19 @@
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="62"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="92"/>
 									<AcceptsMouse val="false"/>
+										<Frame type="Image" name="FCJH_PosPlayer">
+											<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+											<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+											<Anchor side="Right" relative="$parent" pos="Min" offset="14"/>
+											<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="255,40,220,60"/>
+											<Unclipped val="true"/>
+											<RenderPriority val="950"/>
+											<AcceptsMouse val="false"/>
+											<AcceptsMouseTooltip val="false"/>
+										</Frame>
 									<Frame type="Frame" name="TalentsContainerFrame">
 										<Batch val="false"/>
 										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
@@ -6559,6 +6845,32 @@
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+														<Frame type="Image" name="FCJH_PosTree">
+															<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Right" relative="$parent" pos="Min" offset="8"/>
+															<Anchor side="Bottom" relative="$parent" pos="Min" offset="8"/>
+															<Texture val="@UI/PauseScreenDimImage"/>
+															<ColorAdjustMode val="Fill"/>
+															<AdjustmentColor val="255,40,90,255"/>
+															<Unclipped val="true"/>
+															<RenderPriority val="950"/>
+															<AcceptsMouse val="false"/>
+															<AcceptsMouseTooltip val="false"/>
+														</Frame>
+														<Frame type="Image" name="FCJH_PosIcon">
+															<Anchor side="Left" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+															<Anchor side="Top" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+															<Anchor side="Right" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+															<Anchor side="Bottom" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+															<Texture val="@UI/PauseScreenDimImage"/>
+															<ColorAdjustMode val="Fill"/>
+															<AdjustmentColor val="110,255,240,0"/>
+															<Unclipped val="true"/>
+															<RenderPriority val="950"/>
+															<AcceptsMouse val="false"/>
+															<AcceptsMouseTooltip val="false"/>
+														</Frame>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
@@ -6573,6 +6885,19 @@
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="62"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="92"/>
 									<AcceptsMouse val="false"/>
+										<Frame type="Image" name="FCJH_PosPlayer">
+											<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+											<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+											<Anchor side="Right" relative="$parent" pos="Min" offset="14"/>
+											<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="255,40,220,60"/>
+											<Unclipped val="true"/>
+											<RenderPriority val="950"/>
+											<AcceptsMouse val="false"/>
+											<AcceptsMouseTooltip val="false"/>
+										</Frame>
 									<Frame type="Frame" name="TalentsContainerFrame">
 										<Batch val="false"/>
 										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
@@ -6596,6 +6921,32 @@
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+														<Frame type="Image" name="FCJH_PosTree">
+															<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Right" relative="$parent" pos="Min" offset="8"/>
+															<Anchor side="Bottom" relative="$parent" pos="Min" offset="8"/>
+															<Texture val="@UI/PauseScreenDimImage"/>
+															<ColorAdjustMode val="Fill"/>
+															<AdjustmentColor val="255,40,90,255"/>
+															<Unclipped val="true"/>
+															<RenderPriority val="950"/>
+															<AcceptsMouse val="false"/>
+															<AcceptsMouseTooltip val="false"/>
+														</Frame>
+														<Frame type="Image" name="FCJH_PosIcon">
+															<Anchor side="Left" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+															<Anchor side="Top" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+															<Anchor side="Right" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+															<Anchor side="Bottom" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+															<Texture val="@UI/PauseScreenDimImage"/>
+															<ColorAdjustMode val="Fill"/>
+															<AdjustmentColor val="110,255,240,0"/>
+															<Unclipped val="true"/>
+															<RenderPriority val="950"/>
+															<AcceptsMouse val="false"/>
+															<AcceptsMouseTooltip val="false"/>
+														</Frame>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
@@ -6610,6 +6961,19 @@
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="62"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="92"/>
 									<AcceptsMouse val="false"/>
+										<Frame type="Image" name="FCJH_PosPlayer">
+											<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+											<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+											<Anchor side="Right" relative="$parent" pos="Min" offset="14"/>
+											<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
+											<Texture val="@UI/PauseScreenDimImage"/>
+											<ColorAdjustMode val="Fill"/>
+											<AdjustmentColor val="255,40,220,60"/>
+											<Unclipped val="true"/>
+											<RenderPriority val="950"/>
+											<AcceptsMouse val="false"/>
+											<AcceptsMouseTooltip val="false"/>
+										</Frame>
 									<Frame type="Frame" name="TalentsContainerFrame">
 										<Batch val="false"/>
 										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
@@ -6633,6 +6997,32 @@
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+														<Frame type="Image" name="FCJH_PosTree">
+															<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Right" relative="$parent" pos="Min" offset="8"/>
+															<Anchor side="Bottom" relative="$parent" pos="Min" offset="8"/>
+															<Texture val="@UI/PauseScreenDimImage"/>
+															<ColorAdjustMode val="Fill"/>
+															<AdjustmentColor val="255,40,90,255"/>
+															<Unclipped val="true"/>
+															<RenderPriority val="950"/>
+															<AcceptsMouse val="false"/>
+															<AcceptsMouseTooltip val="false"/>
+														</Frame>
+														<Frame type="Image" name="FCJH_PosIcon">
+															<Anchor side="Left" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+															<Anchor side="Top" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+															<Anchor side="Right" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+															<Anchor side="Bottom" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+															<Texture val="@UI/PauseScreenDimImage"/>
+															<ColorAdjustMode val="Fill"/>
+															<AdjustmentColor val="110,255,240,0"/>
+															<Unclipped val="true"/>
+															<RenderPriority val="950"/>
+															<AcceptsMouse val="false"/>
+															<AcceptsMouseTooltip val="false"/>
+														</Frame>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
@@ -6687,6 +7077,19 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="Image" name="FCJH_PosMoved">
+														<Anchor side="Left" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+														<Texture val="@UI/PauseScreenDimImage"/>
+														<ColorAdjustMode val="Fill"/>
+														<AdjustmentColor val="130,255,0,255"/>
+														<Unclipped val="true"/>
+														<RenderPriority val="950"/>
+														<AcceptsMouse val="false"/>
+														<AcceptsMouseTooltip val="false"/>
+													</Frame>
 													<StateGroup name="FCJH_MoveTest">
 														<DefaultState val="Moved"/>
 														<State name="Moved">
@@ -6726,6 +7129,19 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="Image" name="FCJH_PosMoved">
+														<Anchor side="Left" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+														<Texture val="@UI/PauseScreenDimImage"/>
+														<ColorAdjustMode val="Fill"/>
+														<AdjustmentColor val="130,255,0,255"/>
+														<Unclipped val="true"/>
+														<RenderPriority val="950"/>
+														<AcceptsMouse val="false"/>
+														<AcceptsMouseTooltip val="false"/>
+													</Frame>
 													<StateGroup name="FCJH_MoveTest">
 														<DefaultState val="Moved"/>
 														<State name="Moved">
@@ -6765,6 +7181,19 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="Image" name="FCJH_PosMoved">
+														<Anchor side="Left" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+														<Texture val="@UI/PauseScreenDimImage"/>
+														<ColorAdjustMode val="Fill"/>
+														<AdjustmentColor val="130,255,0,255"/>
+														<Unclipped val="true"/>
+														<RenderPriority val="950"/>
+														<AcceptsMouse val="false"/>
+														<AcceptsMouseTooltip val="false"/>
+													</Frame>
 													<StateGroup name="FCJH_MoveTest">
 														<DefaultState val="Moved"/>
 														<State name="Moved">
@@ -6804,6 +7233,19 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="Image" name="FCJH_PosMoved">
+														<Anchor side="Left" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+														<Texture val="@UI/PauseScreenDimImage"/>
+														<ColorAdjustMode val="Fill"/>
+														<AdjustmentColor val="130,255,0,255"/>
+														<Unclipped val="true"/>
+														<RenderPriority val="950"/>
+														<AcceptsMouse val="false"/>
+														<AcceptsMouseTooltip val="false"/>
+													</Frame>
 													<StateGroup name="FCJH_MoveTest">
 														<DefaultState val="Moved"/>
 														<State name="Moved">
@@ -6843,6 +7285,19 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="Image" name="FCJH_PosMoved">
+														<Anchor side="Left" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+														<Texture val="@UI/PauseScreenDimImage"/>
+														<ColorAdjustMode val="Fill"/>
+														<AdjustmentColor val="130,255,0,255"/>
+														<Unclipped val="true"/>
+														<RenderPriority val="950"/>
+														<AcceptsMouse val="false"/>
+														<AcceptsMouseTooltip val="false"/>
+													</Frame>
 													<StateGroup name="FCJH_MoveTest">
 														<DefaultState val="Moved"/>
 														<State name="Moved">
@@ -6882,6 +7337,19 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="Image" name="FCJH_PosMoved">
+														<Anchor side="Left" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+														<Texture val="@UI/PauseScreenDimImage"/>
+														<ColorAdjustMode val="Fill"/>
+														<AdjustmentColor val="130,255,0,255"/>
+														<Unclipped val="true"/>
+														<RenderPriority val="950"/>
+														<AcceptsMouse val="false"/>
+														<AcceptsMouseTooltip val="false"/>
+													</Frame>
 													<StateGroup name="FCJH_MoveTest">
 														<DefaultState val="Moved"/>
 														<State name="Moved">
@@ -6921,6 +7389,19 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="Image" name="FCJH_PosMoved">
+														<Anchor side="Left" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+														<Texture val="@UI/PauseScreenDimImage"/>
+														<ColorAdjustMode val="Fill"/>
+														<AdjustmentColor val="130,255,0,255"/>
+														<Unclipped val="true"/>
+														<RenderPriority val="950"/>
+														<AcceptsMouse val="false"/>
+														<AcceptsMouseTooltip val="false"/>
+													</Frame>
 													<StateGroup name="FCJH_MoveTest">
 														<DefaultState val="Moved"/>
 														<State name="Moved">
@@ -6960,6 +7441,19 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="Image" name="FCJH_PosMoved">
+														<Anchor side="Left" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+														<Texture val="@UI/PauseScreenDimImage"/>
+														<ColorAdjustMode val="Fill"/>
+														<AdjustmentColor val="130,255,0,255"/>
+														<Unclipped val="true"/>
+														<RenderPriority val="950"/>
+														<AcceptsMouse val="false"/>
+														<AcceptsMouseTooltip val="false"/>
+													</Frame>
 													<StateGroup name="FCJH_MoveTest">
 														<DefaultState val="Moved"/>
 														<State name="Moved">
@@ -6999,6 +7493,19 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="Image" name="FCJH_PosMoved">
+														<Anchor side="Left" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+														<Texture val="@UI/PauseScreenDimImage"/>
+														<ColorAdjustMode val="Fill"/>
+														<AdjustmentColor val="130,255,0,255"/>
+														<Unclipped val="true"/>
+														<RenderPriority val="950"/>
+														<AcceptsMouse val="false"/>
+														<AcceptsMouseTooltip val="false"/>
+													</Frame>
 													<StateGroup name="FCJH_MoveTest">
 														<DefaultState val="Moved"/>
 														<State name="Moved">
@@ -7038,6 +7545,19 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="Image" name="FCJH_PosMoved">
+														<Anchor side="Left" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$parent/TalentTreeIcon2" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$parent/TalentTreeIcon2" pos="Max" offset="0"/>
+														<Texture val="@UI/PauseScreenDimImage"/>
+														<ColorAdjustMode val="Fill"/>
+														<AdjustmentColor val="130,255,0,255"/>
+														<Unclipped val="true"/>
+														<RenderPriority val="950"/>
+														<AcceptsMouse val="false"/>
+														<AcceptsMouseTooltip val="false"/>
+													</Frame>
 													<StateGroup name="FCJH_MoveTest">
 														<DefaultState val="Moved"/>
 														<State name="Moved">
@@ -7055,6 +7575,27 @@
 								</Frame>
 							</Frame>
 						</Frame>
+					</Frame>
+					<Frame type="ToggleControl" name="FCJH_CopiesToggle">
+						<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+						<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+						<Width val="1"/>
+						<Height val="1"/>
+						<Shortcut val="Control+Shift+9"/>
+						<Visible val="false"/>
+						<AcceptsMouse val="false"/>
+						<Animation name="FCJH_Hide">
+							<Event event="OnShown" action="DirectionForward,Play"/>
+							<Event event="OnHidden" action="DirectionReverse,Play"/>
+							<Controller type="Visibility" end="Pause" frame="$parent/FCJH_HeroicTips">
+								<Key type="Bool" time="0" value="true"/>
+								<Key type="Bool" time="0.001" value="false"/>
+							</Controller>
+							<Controller type="Visibility" end="Pause" frame="$parent/FCJH_TipTest">
+								<Key type="Bool" time="0" value="true"/>
+								<Key type="Bool" time="0.001" value="false"/>
+							</Controller>
+						</Animation>
 					</Frame>
 					<Frame type="Frame" name="Team1HeroOverview">
 						<Frame type="Frame" name="HeroOverview1" template="FCJH_HeroRow/FCJH_HeroCell">
