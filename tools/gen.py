@@ -1745,18 +1745,37 @@ def copies_toggle():
 
 
 def heroic_tip_panel(cfg):
-    """DIAGNOSTIC (2026-10-02), calibration: our own copy of the observer talent row in
-    Blizzard's layout, untouched (the one arrangement whose icons give tooltips), as a row just
-    above the plates. Blizzard anchors each player's talent box (160 x 48 units) to that
-    player's top-bar cell - our plates - so each group should sit over its own plate. A
-    screenshot gives the shift that puts each player's heroic tier icon on our heroic.
-    No keep-shown loop: our copy draws without it (80a3f39), and a talent panel held shown
-    may be what keeps the game's inspector away."""
+    """DIAGNOSTIC (2026-10-02), calibration 2: our own copy of the observer talent row in
+    Blizzard's layout (the one arrangement whose icons give tooltips), each player's talent
+    box shifted so its heroic-tier icon (level 10, TalentTreeIcon4) sits on our heroic.
+    Blizzard anchors each box to the player's top-bar cell (our plates) +82 units (blue) / +15
+    (red); calibration 1 (7011ba9) put the icons ~10 px below the row's top, the first icon
+    ~90 units (blue) / ~30 (red) right of the cell, the level-10 slot 82 / 78 units on. Only
+    the boxes' Left anchors move, statically; their size and contents stay Blizzard's.
+    Markers (children of UnitStatusFrame0, where they draw): yellow over the level-10 slot,
+    magenta over level 4 (Varian's heroic tier)."""
+    row_top = round(1032 / 0.9)          # icons' centre ~10 px under the row's top -> 1042
+    shift = {"blue": -53, "red": -80}    # the boxes' Left offset from their cell (was 82 / 15)
     d = lambda i, ind: diag_square(i, ind, 680)
+    out = []
+    for n in range(10):
+        team, cell = popup_cell(n)
+        dd = d if n == 0 else (lambda i, ind: "")
+        out.append(f"""
+								<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame{n}">
+									<Anchor side="Left" relative="{cell}" pos="Min" offset="{shift[team.lower()]}"/>{dd(4, 9)}
+									<Frame type="Frame" name="TalentsContainerFrame">
+										<Batch val="false"/>{dd(5, 10)}
+										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">{dd(6, 11)}
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">{dd(7, 12)}{marker("FCJH_PosTier4", "$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4", "120,255,240,0", 12)}{marker("FCJH_PosTier2", "$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2", "120,255,0,255", 12)}
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>""")
     return (f"""
-					<!-- DIAGNOSTIC: our own copy of the observer talent row, Blizzard's layout, just above the plates -->
+					<!-- DIAGNOSTIC: our own copy of the observer talent row, Blizzard's layout, groups shifted onto the heroics -->
 					<Frame type="Frame" name="FCJH_HeroicTips" template="TalentsOverviewPanel/TalentsOverviewTopBarTemplate">
-						<Anchor side="Top"   relative="$GameUI" pos="Min" offset="{round(880 / 0.9)}"/>
+						<Anchor side="Top"   relative="$GameUI" pos="Min" offset="{row_top}"/>
 						<Anchor side="Left"  relative="$GameUI" pos="Min" offset="0"/>
 						<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 						<Height val="100"/>
@@ -1764,16 +1783,7 @@ def heroic_tip_panel(cfg):
 						<Frame type="HeroTalentsPanel" name="TalentOverview">
 							<Visible val="true"/>
 							<Batch val="false"/>{d(2, 7)}
-							<Frame type="Frame" name="HeroTalentsPanelContainer">{d(3, 8)}
-								<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame0">{d(4, 9)}
-									<Frame type="Frame" name="TalentsContainerFrame">
-										<Batch val="false"/>{d(5, 10)}
-										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">{d(6, 11)}
-											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">{d(7, 12)}
-											</Frame>
-										</Frame>
-									</Frame>
-								</Frame>
+							<Frame type="Frame" name="HeroTalentsPanelContainer">{d(3, 8)}""" + "".join(out) + """
 							</Frame>
 						</Frame>
 					</Frame>""")
