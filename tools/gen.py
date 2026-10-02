@@ -1744,18 +1744,35 @@ def copies_toggle():
             f'{ctrl}{t(6)}</Animation>{t(5)}</Frame>')
 
 
+def row_toggle():
+    """DIAGNOSTIC (2026-10-02): Control+Shift+8 hides and shows the game's observer talent row
+    (talent_row_lifts; Tracer's meter goes with it), to see whether inspect comes back without
+    it. Inspect stopped at 80a3f39, which changed that row; hiding our copy (Ctrl+Shift+9)
+    didn't bring it back."""
+    return copies_toggle().replace("FCJH_CopiesToggle", "FCJH_RowToggle").replace(
+        "Control+Shift+9", "Control+Shift+8").replace(
+        '<Controller type="Visibility" end="Pause" frame="$parent/FCJH_HeroicTips">', '<Controller type="Visibility" end="Pause" frame="$parent/TalentsOverview">').replace(
+        '<Controller type="Visibility" end="Pause" frame="$parent/FCJH_HeroicTips/TalentOverview">', '<Controller type="Visibility" end="Pause" frame="$parent/TalentsOverview/TalentOverview">')
+
+
 def heroic_tip_panel(cfg):
-    """DIAGNOSTIC (2026-10-02), calibration 2: our own copy of the observer talent row in
+    """DIAGNOSTIC (2026-10-02), calibration 3: our own copy of the observer talent row in
     Blizzard's layout (the one arrangement whose icons give tooltips), each player's talent
     box shifted so its heroic-tier icon (level 10, TalentTreeIcon4) sits on our heroic.
     Blizzard anchors each box to the player's top-bar cell (our plates) +82 units (blue) / +15
     (red); calibration 1 (7011ba9) put the icons ~10 px below the row's top, the first icon
     ~90 units (blue) / ~30 (red) right of the cell, the level-10 slot 82 / 78 units on. Only
     the boxes' Left anchors move, statically; their size and contents stay Blizzard's.
-    Markers (children of UnitStatusFrame0, where they draw): yellow over the level-10 slot,
-    magenta over level 4 (Varian's heroic tier)."""
-    row_top = round(1032 / 0.9)          # icons' centre ~10 px under the row's top -> 1042
-    shift = {"blue": -53, "red": -80}    # the boxes' Left offset from their cell (was 82 / 15)
+    Calibration 2 (c22ae12) gave the first heroic tooltips (Sonya's, user 2026-10-02), its
+    level-10 slot (55 x 33 px) ~9 px right / 8 px low of our heroic on blue, ~5 px right on red.
+    Every other icon (and the copy's charge meter and ability) is now off and deaf to the
+    mouse: they gave talent tooltips all over the plates. The heroic-tier icon is invisible but
+    still answers the mouse. Yellow marker (a child of UnitStatusFrame0, where it draws) over it.
+    Varian-type heroes (heroic at level 4, TalentTreeIcon2) are still to do."""
+    row_top = round(1024.4 / 0.9)        # slot's centre on the heroic's (1042.4 px)
+    shift = {"blue": -63, "red": -86}    # the boxes' Left offset from their cell (natural 82 / 15)
+    icons = ("".join(muted("UnitStatusTalentIcon", f"TalentTreeIcon{k}", 13) for k in (1, 2, 3, 5, 6, 7))
+             + faded("UnitStatusTalentIcon", "TalentTreeIcon4", 13))
     d = lambda i, ind: diag_square(i, ind, 680)
     out = []
     for n in range(10):
@@ -1767,7 +1784,9 @@ def heroic_tip_panel(cfg):
 									<Frame type="Frame" name="TalentsContainerFrame">
 										<Batch val="false"/>{dd(5, 10)}
 										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">{dd(6, 11)}
-											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">{dd(7, 12)}{marker("FCJH_PosTier4", "$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4", "120,255,240,0", 12)}{marker("FCJH_PosTier2", "$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2", "120,255,0,255", 12)}
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">{dd(7, 12)}{marker("FCJH_PosTier4", "$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4", "120,255,240,0", 12)}
+												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">{icons}
+												</Frame>{muted("Frame", "TracerChargeContainer", 12)}{muted("UnitStatusAbilIcon", "UnitStatusAbil", 12)}
 											</Frame>
 										</Frame>
 									</Frame>
@@ -1912,7 +1931,7 @@ def hero_row_layout(cfg):
 					<!-- Blizzard's top-bar talent rows are anchored to the cells, so they follow
 					     them down here. Hidden with Alpha 0, not parked: the talent pop-ups watch
 					     their icons, which must stay alive. -->
-{talent_row_lifts(cfg)}{heroic_tip_panel(cfg)}{copies_toggle()}
+{talent_row_lifts(cfg)}{heroic_tip_panel(cfg)}{copies_toggle()}{row_toggle()}
 {chr(10).join(cells)}
 				</Frame>
 			</Frame>
