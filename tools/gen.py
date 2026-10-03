@@ -1674,8 +1674,8 @@ def talent_row_lifts(cfg):
 #     sits on our heroic. Blizzard anchors each box to the player's top-bar cell (our plates);
 #   - level 10 (TalentTreeIcon4) holds most heroes' heroic; HeroicTier 2 heroes (Varian) pick
 #     it at level 4 (TalentTreeIcon2), so they get a second copy lined up on that icon;
-#   - Tracer's heroic is no talent: a plain frame carries Pulse Bomb's text from the game
-#     strings (the talent tooltip's name/cooldown header isn't there);
+#   - Tracer's heroic is no talent: a plain frame carries Pulse Bomb's tooltip, composed from
+#     the game strings (NON_TALENT_HEROICS, text_tip);
 #   - the row's heroic ABILITY icon (UnitStatusAbil) draws nothing and gives no tooltip;
 #   - the hover area is the icon itself, re-sized to a 44-unit (40 px) square centred on our
 #     heroic (user: most of the slanted icon, corners left out); it stays inside the box.
@@ -1688,6 +1688,34 @@ HEROIC_TIPS = (
     ("FCJH_HeroicTips2", 2, round(1032 / 0.9), {"blue": 3, "red": -28}, 710),
 )
 HEROIC_TIP_SIZE = 44
+# Heroes whose heroic isn't a talent pick (hero unit: its button in the game strings). Their
+# plate's level-10 icon is switched off and a plain frame gives the heroic's tooltip instead,
+# built like the talent tooltips' - name as a header, then the description - from the game's
+# own strings, so it follows patches and languages (FCJH/HeroicTip in our GameStrings; the
+# TextFormatFrame recipe is Ahli's).
+NON_TALENT_HEROICS = {"HeroTracer": "TracerPulseBomb"}
+
+
+def text_tip(t, unit, button, slot, cell):
+    """A tooltip-only frame over `slot`, shown while plate `cell` holds `unit`."""
+    hidden = lambda name_, text: (f'{t(13)}<Frame type="Label" name="{name_}"><Anchor relative="$parent"/>'
+                                  f'<Text val="{text}"/><Alpha val="0"/><AcceptsMouse val="false"/></Frame>')
+    return (f'{t(12)}<Frame type="Frame" name="FCJH_TextTip_{unit}">'
+            + "".join(f'{t(13)}<Anchor side="{sd}" relative="{slot}" pos="{pos}" offset="0"/>'
+                      for sd, pos in (("Left", "Min"), ("Top", "Min"), ("Right", "Max"), ("Bottom", "Max")))
+            + f'{t(13)}<RenderPriority val="950"/>{t(13)}<Visible val="false"/>'
+            f'{t(13)}<AcceptsMouse val="true"/>{t(13)}<AcceptsMouseTooltip val="true"/>'
+            f'{t(13)}<Tooltip val="{{$this/FCJH_TipText/@Text}}"/>'
+            + hidden("FCJH_TipName", f"@Button/Name/{button}") + hidden("FCJH_TipDesc", f"@Button/Tooltip/{button}")
+            + f'{t(13)}<Frame type="TextFormatFrame" name="FCJH_TipText"><Anchor relative="$parent"/>'
+            f'<FormatText val="@FCJH/HeroicTip"/>'
+            f'<Replacement index="0" val="{{$parent/FCJH_TipName/@Text}}"/><ReplacedName index="0" val="name"/>'
+            f'<Replacement index="1" val="{{$parent/FCJH_TipDesc/@Text}}"/><ReplacedName index="1" val="desc"/></Frame>'
+            f'{t(13)}<StateGroup name="FCJH_IsHero">{t(14)}<DefaultState val="No"/>'
+            f'{t(14)}<State name="Yes"><When type="Property" frame="{cell}/HeroStatus" Unit="{unit}"/>'
+            f'<Action type="SetProperty" frame="$this" Visible="true"/></State>'
+            f'{t(14)}<State name="No"><Action type="SetProperty" frame="$this" Visible="false"/></State>'
+            f'{t(13)}</StateGroup>{t(12)}</Frame>')
 
 
 def heroic_tip_panel(cfg):
@@ -1706,8 +1734,9 @@ def heroic_tip_copy(cfg, root, tier_icon, row_top, shift, prio):
     t = lambda k: NL + TAB * k
     tier2_on, other_on = ("false", "true") if tier_icon == 4 else ("true", "false")
     switch = lambda cell: (f'{t(13)}<StateGroup name="FCJH_HeroicTier">{t(14)}<DefaultState val="Other"/>'
-              + (f'{t(14)}<State name="Tracer"><When type="Property" frame="{cell}/HeroStatus" Unit="HeroTracer"/>'
-                 f'<Action type="SetProperty" frame="$this/TalentTreeIcon{tier_icon}" Visible="false"/></State>' if tier_icon == 4 else "")
+              + ("".join(f'{t(14)}<State name="{unit}"><When type="Property" frame="{cell}/HeroStatus" Unit="{unit}"/>'
+                         f'<Action type="SetProperty" frame="$this/TalentTreeIcon{tier_icon}" Visible="false"/></State>'
+                         for unit in NON_TALENT_HEROICS) if tier_icon == 4 else "")
               + f'{t(14)}<State name="Tier2"><When type="Property" frame="$this" HeroicTier="2"/>'
               f'<Action type="SetProperty" frame="$this/TalentTreeIcon{tier_icon}" Visible="{tier2_on}"/></State>'
               f'{t(14)}<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon{tier_icon}" Visible="{other_on}"/></State>'
@@ -1716,19 +1745,8 @@ def heroic_tip_copy(cfg, root, tier_icon, row_top, shift, prio):
     for n in range(10):
         team, cell = popup_cell(n)
         slot = f"$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon{tier_icon}"
-        tracer = ""
-        if tier_icon == 4:
-            tracer = (f'{t(12)}<Frame type="Frame" name="FCJH_TracerTip">'
-                      + "".join(f'{t(13)}<Anchor side="{sd}" relative="{slot}" pos="{pos}" offset="0"/>'
-                                for sd, pos in (("Left", "Min"), ("Top", "Min"), ("Right", "Max"), ("Bottom", "Max")))
-                      + f'{t(13)}<RenderPriority val="950"/>{t(13)}<Visible val="false"/>'
-                      f'{t(13)}<AcceptsMouse val="true"/>{t(13)}<AcceptsMouseTooltip val="true"/>'
-                      f'{t(13)}<Tooltip val="@Button/Tooltip/TracerPulseBomb"/>'
-                      f'{t(13)}<StateGroup name="FCJH_IsTracer">{t(14)}<DefaultState val="No"/>'
-                      f'{t(14)}<State name="Yes"><When type="Property" frame="{cell}/HeroStatus" Unit="HeroTracer"/>'
-                      f'<Action type="SetProperty" frame="$this" Visible="true"/></State>'
-                      f'{t(14)}<State name="No"><Action type="SetProperty" frame="$this" Visible="false"/></State>'
-                      f'{t(13)}</StateGroup>{t(12)}</Frame>')
+        tracer = "".join(text_tip(t, unit, button, slot, cell)
+                         for unit, button in NON_TALENT_HEROICS.items()) if tier_icon == 4 else ""
         out.append(f"""
 								<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame{n}">
 									<Anchor side="Left" relative="{cell}" pos="Min" offset="{shift[team.lower()]}"/>
