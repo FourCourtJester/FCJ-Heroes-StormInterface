@@ -6161,7 +6161,7 @@
 							</Frame>
 						</Frame>
 					</Frame>
-					<!-- DIAGNOSTIC: our own copy of the observer talent row, Blizzard's layout, groups shifted onto the heroics -->
+					<!-- DIAGNOSTIC: our own copy of the observer talent row, Blizzard's layout, groups shifted onto the heroics (level 10 slot) -->
 					<Frame type="Frame" name="FCJH_HeroicTips" template="TalentsOverviewPanel/TalentsOverviewTopBarTemplate">
 						<Anchor side="Top"   relative="$GameUI" pos="Min" offset="1138"/>
 						<Anchor side="Left"  relative="$GameUI" pos="Min" offset="0"/>
@@ -6283,38 +6283,29 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/></Frame>
+													<StateGroup name="FCJH_HeroicTier">
+														<DefaultState val="Other"/>
+														<State name="Tier2"><When type="Property" frame="$this" HeroicTier="2"/><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="false"/></State>
+														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="true"/></State>
+													</StateGroup>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil">
+												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="Frame" name="FCJH_TracerTip">
 													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
 													<Anchor side="Top" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
 													<Anchor side="Right" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
 													<Anchor side="Bottom" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
-													<RenderPriority val="900"/>
-													<Unclipped val="true"/>
+													<RenderPriority val="950"/>
+													<Visible val="false"/>
 													<AcceptsMouse val="true"/>
 													<AcceptsMouseTooltip val="true"/>
-													<Frame type="AbilIcon" name="AbilIcon">
-														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-														<AcceptsMouse val="true"/>
-														<AcceptsMouseTooltip val="true"/>
-													</Frame>
-												</Frame>
-												<Frame type="Image" name="FCJH_PosAbil">
-													<Anchor side="Left" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
-													<Anchor side="Top" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
-													<Anchor side="Right" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
-													<Anchor side="Bottom" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
-													<Texture val="@UI/PauseScreenDimImage"/>
-													<ColorAdjustMode val="Fill"/>
-													<AdjustmentColor val="110,0,255,255"/>
-													<Unclipped val="true"/>
-													<RenderPriority val="950"/>
-													<AcceptsMouse val="false"/>
-													<AcceptsMouseTooltip val="false"/>
+													<Tooltip val="@Button/Tooltip/TracerPulseBomb"/>
+													<StateGroup name="FCJH_IsTracer">
+														<DefaultState val="No"/>
+														<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus" Unit="HeroTracer"/><Action type="SetProperty" frame="$this" Visible="true"/></State>
+														<State name="No"><Action type="SetProperty" frame="$this" Visible="false"/></State>
+													</StateGroup>
 												</Frame>
 											</Frame>
 										</Frame>
@@ -6347,38 +6338,29 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/></Frame>
+													<StateGroup name="FCJH_HeroicTier">
+														<DefaultState val="Other"/>
+														<State name="Tier2"><When type="Property" frame="$this" HeroicTier="2"/><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="false"/></State>
+														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="true"/></State>
+													</StateGroup>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil">
+												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="Frame" name="FCJH_TracerTip">
 													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
 													<Anchor side="Top" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
 													<Anchor side="Right" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
 													<Anchor side="Bottom" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
-													<RenderPriority val="900"/>
-													<Unclipped val="true"/>
+													<RenderPriority val="950"/>
+													<Visible val="false"/>
 													<AcceptsMouse val="true"/>
 													<AcceptsMouseTooltip val="true"/>
-													<Frame type="AbilIcon" name="AbilIcon">
-														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-														<AcceptsMouse val="true"/>
-														<AcceptsMouseTooltip val="true"/>
-													</Frame>
-												</Frame>
-												<Frame type="Image" name="FCJH_PosAbil">
-													<Anchor side="Left" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
-													<Anchor side="Top" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
-													<Anchor side="Right" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
-													<Anchor side="Bottom" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
-													<Texture val="@UI/PauseScreenDimImage"/>
-													<ColorAdjustMode val="Fill"/>
-													<AdjustmentColor val="110,0,255,255"/>
-													<Unclipped val="true"/>
-													<RenderPriority val="950"/>
-													<AcceptsMouse val="false"/>
-													<AcceptsMouseTooltip val="false"/>
+													<Tooltip val="@Button/Tooltip/TracerPulseBomb"/>
+													<StateGroup name="FCJH_IsTracer">
+														<DefaultState val="No"/>
+														<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus" Unit="HeroTracer"/><Action type="SetProperty" frame="$this" Visible="true"/></State>
+														<State name="No"><Action type="SetProperty" frame="$this" Visible="false"/></State>
+													</StateGroup>
 												</Frame>
 											</Frame>
 										</Frame>
@@ -6411,38 +6393,29 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/></Frame>
+													<StateGroup name="FCJH_HeroicTier">
+														<DefaultState val="Other"/>
+														<State name="Tier2"><When type="Property" frame="$this" HeroicTier="2"/><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="false"/></State>
+														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="true"/></State>
+													</StateGroup>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil">
+												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="Frame" name="FCJH_TracerTip">
 													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
 													<Anchor side="Top" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
 													<Anchor side="Right" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
 													<Anchor side="Bottom" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
-													<RenderPriority val="900"/>
-													<Unclipped val="true"/>
+													<RenderPriority val="950"/>
+													<Visible val="false"/>
 													<AcceptsMouse val="true"/>
 													<AcceptsMouseTooltip val="true"/>
-													<Frame type="AbilIcon" name="AbilIcon">
-														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-														<AcceptsMouse val="true"/>
-														<AcceptsMouseTooltip val="true"/>
-													</Frame>
-												</Frame>
-												<Frame type="Image" name="FCJH_PosAbil">
-													<Anchor side="Left" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
-													<Anchor side="Top" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
-													<Anchor side="Right" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
-													<Anchor side="Bottom" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
-													<Texture val="@UI/PauseScreenDimImage"/>
-													<ColorAdjustMode val="Fill"/>
-													<AdjustmentColor val="110,0,255,255"/>
-													<Unclipped val="true"/>
-													<RenderPriority val="950"/>
-													<AcceptsMouse val="false"/>
-													<AcceptsMouseTooltip val="false"/>
+													<Tooltip val="@Button/Tooltip/TracerPulseBomb"/>
+													<StateGroup name="FCJH_IsTracer">
+														<DefaultState val="No"/>
+														<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus" Unit="HeroTracer"/><Action type="SetProperty" frame="$this" Visible="true"/></State>
+														<State name="No"><Action type="SetProperty" frame="$this" Visible="false"/></State>
+													</StateGroup>
 												</Frame>
 											</Frame>
 										</Frame>
@@ -6475,38 +6448,29 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/></Frame>
+													<StateGroup name="FCJH_HeroicTier">
+														<DefaultState val="Other"/>
+														<State name="Tier2"><When type="Property" frame="$this" HeroicTier="2"/><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="false"/></State>
+														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="true"/></State>
+													</StateGroup>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil">
+												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="Frame" name="FCJH_TracerTip">
 													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
 													<Anchor side="Top" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
 													<Anchor side="Right" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
 													<Anchor side="Bottom" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
-													<RenderPriority val="900"/>
-													<Unclipped val="true"/>
+													<RenderPriority val="950"/>
+													<Visible val="false"/>
 													<AcceptsMouse val="true"/>
 													<AcceptsMouseTooltip val="true"/>
-													<Frame type="AbilIcon" name="AbilIcon">
-														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-														<AcceptsMouse val="true"/>
-														<AcceptsMouseTooltip val="true"/>
-													</Frame>
-												</Frame>
-												<Frame type="Image" name="FCJH_PosAbil">
-													<Anchor side="Left" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
-													<Anchor side="Top" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
-													<Anchor side="Right" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
-													<Anchor side="Bottom" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
-													<Texture val="@UI/PauseScreenDimImage"/>
-													<ColorAdjustMode val="Fill"/>
-													<AdjustmentColor val="110,0,255,255"/>
-													<Unclipped val="true"/>
-													<RenderPriority val="950"/>
-													<AcceptsMouse val="false"/>
-													<AcceptsMouseTooltip val="false"/>
+													<Tooltip val="@Button/Tooltip/TracerPulseBomb"/>
+													<StateGroup name="FCJH_IsTracer">
+														<DefaultState val="No"/>
+														<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus" Unit="HeroTracer"/><Action type="SetProperty" frame="$this" Visible="true"/></State>
+														<State name="No"><Action type="SetProperty" frame="$this" Visible="false"/></State>
+													</StateGroup>
 												</Frame>
 											</Frame>
 										</Frame>
@@ -6539,38 +6503,29 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/></Frame>
+													<StateGroup name="FCJH_HeroicTier">
+														<DefaultState val="Other"/>
+														<State name="Tier2"><When type="Property" frame="$this" HeroicTier="2"/><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="false"/></State>
+														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="true"/></State>
+													</StateGroup>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil">
+												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="Frame" name="FCJH_TracerTip">
 													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
 													<Anchor side="Top" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
 													<Anchor side="Right" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
 													<Anchor side="Bottom" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
-													<RenderPriority val="900"/>
-													<Unclipped val="true"/>
+													<RenderPriority val="950"/>
+													<Visible val="false"/>
 													<AcceptsMouse val="true"/>
 													<AcceptsMouseTooltip val="true"/>
-													<Frame type="AbilIcon" name="AbilIcon">
-														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-														<AcceptsMouse val="true"/>
-														<AcceptsMouseTooltip val="true"/>
-													</Frame>
-												</Frame>
-												<Frame type="Image" name="FCJH_PosAbil">
-													<Anchor side="Left" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
-													<Anchor side="Top" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
-													<Anchor side="Right" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
-													<Anchor side="Bottom" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
-													<Texture val="@UI/PauseScreenDimImage"/>
-													<ColorAdjustMode val="Fill"/>
-													<AdjustmentColor val="110,0,255,255"/>
-													<Unclipped val="true"/>
-													<RenderPriority val="950"/>
-													<AcceptsMouse val="false"/>
-													<AcceptsMouseTooltip val="false"/>
+													<Tooltip val="@Button/Tooltip/TracerPulseBomb"/>
+													<StateGroup name="FCJH_IsTracer">
+														<DefaultState val="No"/>
+														<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus" Unit="HeroTracer"/><Action type="SetProperty" frame="$this" Visible="true"/></State>
+														<State name="No"><Action type="SetProperty" frame="$this" Visible="false"/></State>
+													</StateGroup>
 												</Frame>
 											</Frame>
 										</Frame>
@@ -6603,38 +6558,29 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/></Frame>
+													<StateGroup name="FCJH_HeroicTier">
+														<DefaultState val="Other"/>
+														<State name="Tier2"><When type="Property" frame="$this" HeroicTier="2"/><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="false"/></State>
+														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="true"/></State>
+													</StateGroup>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil">
+												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="Frame" name="FCJH_TracerTip">
 													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
 													<Anchor side="Top" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
 													<Anchor side="Right" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
 													<Anchor side="Bottom" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
-													<RenderPriority val="900"/>
-													<Unclipped val="true"/>
+													<RenderPriority val="950"/>
+													<Visible val="false"/>
 													<AcceptsMouse val="true"/>
 													<AcceptsMouseTooltip val="true"/>
-													<Frame type="AbilIcon" name="AbilIcon">
-														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-														<AcceptsMouse val="true"/>
-														<AcceptsMouseTooltip val="true"/>
-													</Frame>
-												</Frame>
-												<Frame type="Image" name="FCJH_PosAbil">
-													<Anchor side="Left" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
-													<Anchor side="Top" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
-													<Anchor side="Right" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
-													<Anchor side="Bottom" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
-													<Texture val="@UI/PauseScreenDimImage"/>
-													<ColorAdjustMode val="Fill"/>
-													<AdjustmentColor val="110,0,255,255"/>
-													<Unclipped val="true"/>
-													<RenderPriority val="950"/>
-													<AcceptsMouse val="false"/>
-													<AcceptsMouseTooltip val="false"/>
+													<Tooltip val="@Button/Tooltip/TracerPulseBomb"/>
+													<StateGroup name="FCJH_IsTracer">
+														<DefaultState val="No"/>
+														<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus" Unit="HeroTracer"/><Action type="SetProperty" frame="$this" Visible="true"/></State>
+														<State name="No"><Action type="SetProperty" frame="$this" Visible="false"/></State>
+													</StateGroup>
 												</Frame>
 											</Frame>
 										</Frame>
@@ -6667,38 +6613,29 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/></Frame>
+													<StateGroup name="FCJH_HeroicTier">
+														<DefaultState val="Other"/>
+														<State name="Tier2"><When type="Property" frame="$this" HeroicTier="2"/><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="false"/></State>
+														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="true"/></State>
+													</StateGroup>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil">
+												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="Frame" name="FCJH_TracerTip">
 													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
 													<Anchor side="Top" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
 													<Anchor side="Right" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
 													<Anchor side="Bottom" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
-													<RenderPriority val="900"/>
-													<Unclipped val="true"/>
+													<RenderPriority val="950"/>
+													<Visible val="false"/>
 													<AcceptsMouse val="true"/>
 													<AcceptsMouseTooltip val="true"/>
-													<Frame type="AbilIcon" name="AbilIcon">
-														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-														<AcceptsMouse val="true"/>
-														<AcceptsMouseTooltip val="true"/>
-													</Frame>
-												</Frame>
-												<Frame type="Image" name="FCJH_PosAbil">
-													<Anchor side="Left" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
-													<Anchor side="Top" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
-													<Anchor side="Right" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
-													<Anchor side="Bottom" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
-													<Texture val="@UI/PauseScreenDimImage"/>
-													<ColorAdjustMode val="Fill"/>
-													<AdjustmentColor val="110,0,255,255"/>
-													<Unclipped val="true"/>
-													<RenderPriority val="950"/>
-													<AcceptsMouse val="false"/>
-													<AcceptsMouseTooltip val="false"/>
+													<Tooltip val="@Button/Tooltip/TracerPulseBomb"/>
+													<StateGroup name="FCJH_IsTracer">
+														<DefaultState val="No"/>
+														<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus" Unit="HeroTracer"/><Action type="SetProperty" frame="$this" Visible="true"/></State>
+														<State name="No"><Action type="SetProperty" frame="$this" Visible="false"/></State>
+													</StateGroup>
 												</Frame>
 											</Frame>
 										</Frame>
@@ -6731,38 +6668,29 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/></Frame>
+													<StateGroup name="FCJH_HeroicTier">
+														<DefaultState val="Other"/>
+														<State name="Tier2"><When type="Property" frame="$this" HeroicTier="2"/><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="false"/></State>
+														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="true"/></State>
+													</StateGroup>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil">
+												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="Frame" name="FCJH_TracerTip">
 													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
 													<Anchor side="Top" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
 													<Anchor side="Right" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
 													<Anchor side="Bottom" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
-													<RenderPriority val="900"/>
-													<Unclipped val="true"/>
+													<RenderPriority val="950"/>
+													<Visible val="false"/>
 													<AcceptsMouse val="true"/>
 													<AcceptsMouseTooltip val="true"/>
-													<Frame type="AbilIcon" name="AbilIcon">
-														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-														<AcceptsMouse val="true"/>
-														<AcceptsMouseTooltip val="true"/>
-													</Frame>
-												</Frame>
-												<Frame type="Image" name="FCJH_PosAbil">
-													<Anchor side="Left" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
-													<Anchor side="Top" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
-													<Anchor side="Right" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
-													<Anchor side="Bottom" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
-													<Texture val="@UI/PauseScreenDimImage"/>
-													<ColorAdjustMode val="Fill"/>
-													<AdjustmentColor val="110,0,255,255"/>
-													<Unclipped val="true"/>
-													<RenderPriority val="950"/>
-													<AcceptsMouse val="false"/>
-													<AcceptsMouseTooltip val="false"/>
+													<Tooltip val="@Button/Tooltip/TracerPulseBomb"/>
+													<StateGroup name="FCJH_IsTracer">
+														<DefaultState val="No"/>
+														<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus" Unit="HeroTracer"/><Action type="SetProperty" frame="$this" Visible="true"/></State>
+														<State name="No"><Action type="SetProperty" frame="$this" Visible="false"/></State>
+													</StateGroup>
 												</Frame>
 											</Frame>
 										</Frame>
@@ -6795,38 +6723,29 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/></Frame>
+													<StateGroup name="FCJH_HeroicTier">
+														<DefaultState val="Other"/>
+														<State name="Tier2"><When type="Property" frame="$this" HeroicTier="2"/><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="false"/></State>
+														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="true"/></State>
+													</StateGroup>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil">
+												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="Frame" name="FCJH_TracerTip">
 													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
 													<Anchor side="Top" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
 													<Anchor side="Right" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
 													<Anchor side="Bottom" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
-													<RenderPriority val="900"/>
-													<Unclipped val="true"/>
+													<RenderPriority val="950"/>
+													<Visible val="false"/>
 													<AcceptsMouse val="true"/>
 													<AcceptsMouseTooltip val="true"/>
-													<Frame type="AbilIcon" name="AbilIcon">
-														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-														<AcceptsMouse val="true"/>
-														<AcceptsMouseTooltip val="true"/>
-													</Frame>
-												</Frame>
-												<Frame type="Image" name="FCJH_PosAbil">
-													<Anchor side="Left" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
-													<Anchor side="Top" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
-													<Anchor side="Right" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
-													<Anchor side="Bottom" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
-													<Texture val="@UI/PauseScreenDimImage"/>
-													<ColorAdjustMode val="Fill"/>
-													<AdjustmentColor val="110,0,255,255"/>
-													<Unclipped val="true"/>
-													<RenderPriority val="950"/>
-													<AcceptsMouse val="false"/>
-													<AcceptsMouseTooltip val="false"/>
+													<Tooltip val="@Button/Tooltip/TracerPulseBomb"/>
+													<StateGroup name="FCJH_IsTracer">
+														<DefaultState val="No"/>
+														<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus" Unit="HeroTracer"/><Action type="SetProperty" frame="$this" Visible="true"/></State>
+														<State name="No"><Action type="SetProperty" frame="$this" Visible="false"/></State>
+													</StateGroup>
 												</Frame>
 											</Frame>
 										</Frame>
@@ -6859,39 +6778,434 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/></Frame>
+													<StateGroup name="FCJH_HeroicTier">
+														<DefaultState val="Other"/>
+														<State name="Tier2"><When type="Property" frame="$this" HeroicTier="2"/><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="false"/></State>
+														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="true"/></State>
+													</StateGroup>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil">
+												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="Frame" name="FCJH_TracerTip">
 													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
 													<Anchor side="Top" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
 													<Anchor side="Right" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
 													<Anchor side="Bottom" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
-													<RenderPriority val="900"/>
-													<Unclipped val="true"/>
+													<RenderPriority val="950"/>
+													<Visible val="false"/>
 													<AcceptsMouse val="true"/>
 													<AcceptsMouseTooltip val="true"/>
-													<Frame type="AbilIcon" name="AbilIcon">
-														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-														<AcceptsMouse val="true"/>
-														<AcceptsMouseTooltip val="true"/>
-													</Frame>
+													<Tooltip val="@Button/Tooltip/TracerPulseBomb"/>
+													<StateGroup name="FCJH_IsTracer">
+														<DefaultState val="No"/>
+														<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus" Unit="HeroTracer"/><Action type="SetProperty" frame="$this" Visible="true"/></State>
+														<State name="No"><Action type="SetProperty" frame="$this" Visible="false"/></State>
+													</StateGroup>
 												</Frame>
-												<Frame type="Image" name="FCJH_PosAbil">
-													<Anchor side="Left" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
-													<Anchor side="Top" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
-													<Anchor side="Right" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
-													<Anchor side="Bottom" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+							</Frame>
+						</Frame>
+					</Frame>
+					<!-- DIAGNOSTIC: our own copy of the observer talent row, Blizzard's layout, groups shifted onto the heroics (level 4 slot) -->
+					<Frame type="Frame" name="FCJH_HeroicTips2" template="TalentsOverviewPanel/TalentsOverviewTopBarTemplate">
+						<Anchor side="Top"   relative="$GameUI" pos="Min" offset="1147"/>
+						<Anchor side="Left"  relative="$GameUI" pos="Min" offset="0"/>
+						<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+						<Height val="100"/>
+						<RenderPriority val="710"/>
+						<Frame type="HeroTalentsPanel" name="TalentOverview">
+							<Visible val="true"/>
+							<Batch val="false"/>
+							<Frame type="Frame" name="HeroTalentsPanelContainer">
+								<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame0">
+									<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="6"/>
+									<Frame type="Frame" name="TalentsContainerFrame">
+										<Batch val="false"/>
+										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+												<Frame type="Image" name="FCJH_PosTier2">
+													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Max" offset="0"/>
 													<Texture val="@UI/PauseScreenDimImage"/>
 													<ColorAdjustMode val="Fill"/>
-													<AdjustmentColor val="110,0,255,255"/>
+													<AdjustmentColor val="120,255,0,255"/>
 													<Unclipped val="true"/>
 													<RenderPriority val="950"/>
 													<AcceptsMouse val="false"/>
 													<AcceptsMouseTooltip val="false"/>
 												</Frame>
+												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2"><Alpha val="0"/></Frame>
+													<StateGroup name="FCJH_HeroicTier">
+														<DefaultState val="Other"/>
+														<State name="Tier2"><When type="Property" frame="$this" HeroicTier="2"/><Action type="SetProperty" frame="$this/TalentTreeIcon2" Visible="true"/></State>
+														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon2" Visible="false"/></State>
+													</StateGroup>
+												</Frame>
+												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+								<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame1">
+									<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="6"/>
+									<Frame type="Frame" name="TalentsContainerFrame">
+										<Batch val="false"/>
+										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+												<Frame type="Image" name="FCJH_PosTier2">
+													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Max" offset="0"/>
+													<Texture val="@UI/PauseScreenDimImage"/>
+													<ColorAdjustMode val="Fill"/>
+													<AdjustmentColor val="120,255,0,255"/>
+													<Unclipped val="true"/>
+													<RenderPriority val="950"/>
+													<AcceptsMouse val="false"/>
+													<AcceptsMouseTooltip val="false"/>
+												</Frame>
+												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2"><Alpha val="0"/></Frame>
+													<StateGroup name="FCJH_HeroicTier">
+														<DefaultState val="Other"/>
+														<State name="Tier2"><When type="Property" frame="$this" HeroicTier="2"/><Action type="SetProperty" frame="$this/TalentTreeIcon2" Visible="true"/></State>
+														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon2" Visible="false"/></State>
+													</StateGroup>
+												</Frame>
+												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+								<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame2">
+									<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="6"/>
+									<Frame type="Frame" name="TalentsContainerFrame">
+										<Batch val="false"/>
+										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+												<Frame type="Image" name="FCJH_PosTier2">
+													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Max" offset="0"/>
+													<Texture val="@UI/PauseScreenDimImage"/>
+													<ColorAdjustMode val="Fill"/>
+													<AdjustmentColor val="120,255,0,255"/>
+													<Unclipped val="true"/>
+													<RenderPriority val="950"/>
+													<AcceptsMouse val="false"/>
+													<AcceptsMouseTooltip val="false"/>
+												</Frame>
+												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2"><Alpha val="0"/></Frame>
+													<StateGroup name="FCJH_HeroicTier">
+														<DefaultState val="Other"/>
+														<State name="Tier2"><When type="Property" frame="$this" HeroicTier="2"/><Action type="SetProperty" frame="$this/TalentTreeIcon2" Visible="true"/></State>
+														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon2" Visible="false"/></State>
+													</StateGroup>
+												</Frame>
+												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+								<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame3">
+									<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="6"/>
+									<Frame type="Frame" name="TalentsContainerFrame">
+										<Batch val="false"/>
+										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+												<Frame type="Image" name="FCJH_PosTier2">
+													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Max" offset="0"/>
+													<Texture val="@UI/PauseScreenDimImage"/>
+													<ColorAdjustMode val="Fill"/>
+													<AdjustmentColor val="120,255,0,255"/>
+													<Unclipped val="true"/>
+													<RenderPriority val="950"/>
+													<AcceptsMouse val="false"/>
+													<AcceptsMouseTooltip val="false"/>
+												</Frame>
+												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2"><Alpha val="0"/></Frame>
+													<StateGroup name="FCJH_HeroicTier">
+														<DefaultState val="Other"/>
+														<State name="Tier2"><When type="Property" frame="$this" HeroicTier="2"/><Action type="SetProperty" frame="$this/TalentTreeIcon2" Visible="true"/></State>
+														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon2" Visible="false"/></State>
+													</StateGroup>
+												</Frame>
+												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+								<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame4">
+									<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="6"/>
+									<Frame type="Frame" name="TalentsContainerFrame">
+										<Batch val="false"/>
+										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+												<Frame type="Image" name="FCJH_PosTier2">
+													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Max" offset="0"/>
+													<Texture val="@UI/PauseScreenDimImage"/>
+													<ColorAdjustMode val="Fill"/>
+													<AdjustmentColor val="120,255,0,255"/>
+													<Unclipped val="true"/>
+													<RenderPriority val="950"/>
+													<AcceptsMouse val="false"/>
+													<AcceptsMouseTooltip val="false"/>
+												</Frame>
+												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2"><Alpha val="0"/></Frame>
+													<StateGroup name="FCJH_HeroicTier">
+														<DefaultState val="Other"/>
+														<State name="Tier2"><When type="Property" frame="$this" HeroicTier="2"/><Action type="SetProperty" frame="$this/TalentTreeIcon2" Visible="true"/></State>
+														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon2" Visible="false"/></State>
+													</StateGroup>
+												</Frame>
+												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+								<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame5">
+									<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="-25"/>
+									<Frame type="Frame" name="TalentsContainerFrame">
+										<Batch val="false"/>
+										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+												<Frame type="Image" name="FCJH_PosTier2">
+													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Max" offset="0"/>
+													<Texture val="@UI/PauseScreenDimImage"/>
+													<ColorAdjustMode val="Fill"/>
+													<AdjustmentColor val="120,255,0,255"/>
+													<Unclipped val="true"/>
+													<RenderPriority val="950"/>
+													<AcceptsMouse val="false"/>
+													<AcceptsMouseTooltip val="false"/>
+												</Frame>
+												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2"><Alpha val="0"/></Frame>
+													<StateGroup name="FCJH_HeroicTier">
+														<DefaultState val="Other"/>
+														<State name="Tier2"><When type="Property" frame="$this" HeroicTier="2"/><Action type="SetProperty" frame="$this/TalentTreeIcon2" Visible="true"/></State>
+														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon2" Visible="false"/></State>
+													</StateGroup>
+												</Frame>
+												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+								<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame6">
+									<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="-25"/>
+									<Frame type="Frame" name="TalentsContainerFrame">
+										<Batch val="false"/>
+										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+												<Frame type="Image" name="FCJH_PosTier2">
+													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Max" offset="0"/>
+													<Texture val="@UI/PauseScreenDimImage"/>
+													<ColorAdjustMode val="Fill"/>
+													<AdjustmentColor val="120,255,0,255"/>
+													<Unclipped val="true"/>
+													<RenderPriority val="950"/>
+													<AcceptsMouse val="false"/>
+													<AcceptsMouseTooltip val="false"/>
+												</Frame>
+												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2"><Alpha val="0"/></Frame>
+													<StateGroup name="FCJH_HeroicTier">
+														<DefaultState val="Other"/>
+														<State name="Tier2"><When type="Property" frame="$this" HeroicTier="2"/><Action type="SetProperty" frame="$this/TalentTreeIcon2" Visible="true"/></State>
+														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon2" Visible="false"/></State>
+													</StateGroup>
+												</Frame>
+												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+								<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame7">
+									<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="-25"/>
+									<Frame type="Frame" name="TalentsContainerFrame">
+										<Batch val="false"/>
+										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+												<Frame type="Image" name="FCJH_PosTier2">
+													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Max" offset="0"/>
+													<Texture val="@UI/PauseScreenDimImage"/>
+													<ColorAdjustMode val="Fill"/>
+													<AdjustmentColor val="120,255,0,255"/>
+													<Unclipped val="true"/>
+													<RenderPriority val="950"/>
+													<AcceptsMouse val="false"/>
+													<AcceptsMouseTooltip val="false"/>
+												</Frame>
+												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2"><Alpha val="0"/></Frame>
+													<StateGroup name="FCJH_HeroicTier">
+														<DefaultState val="Other"/>
+														<State name="Tier2"><When type="Property" frame="$this" HeroicTier="2"/><Action type="SetProperty" frame="$this/TalentTreeIcon2" Visible="true"/></State>
+														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon2" Visible="false"/></State>
+													</StateGroup>
+												</Frame>
+												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+								<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame8">
+									<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="-25"/>
+									<Frame type="Frame" name="TalentsContainerFrame">
+										<Batch val="false"/>
+										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+												<Frame type="Image" name="FCJH_PosTier2">
+													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Max" offset="0"/>
+													<Texture val="@UI/PauseScreenDimImage"/>
+													<ColorAdjustMode val="Fill"/>
+													<AdjustmentColor val="120,255,0,255"/>
+													<Unclipped val="true"/>
+													<RenderPriority val="950"/>
+													<AcceptsMouse val="false"/>
+													<AcceptsMouseTooltip val="false"/>
+												</Frame>
+												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2"><Alpha val="0"/></Frame>
+													<StateGroup name="FCJH_HeroicTier">
+														<DefaultState val="Other"/>
+														<State name="Tier2"><When type="Property" frame="$this" HeroicTier="2"/><Action type="SetProperty" frame="$this/TalentTreeIcon2" Visible="true"/></State>
+														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon2" Visible="false"/></State>
+													</StateGroup>
+												</Frame>
+												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+								<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame9">
+									<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="-25"/>
+									<Frame type="Frame" name="TalentsContainerFrame">
+										<Batch val="false"/>
+										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+												<Frame type="Image" name="FCJH_PosTier2">
+													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon2" pos="Max" offset="0"/>
+													<Texture val="@UI/PauseScreenDimImage"/>
+													<ColorAdjustMode val="Fill"/>
+													<AdjustmentColor val="120,255,0,255"/>
+													<Unclipped val="true"/>
+													<RenderPriority val="950"/>
+													<AcceptsMouse val="false"/>
+													<AcceptsMouseTooltip val="false"/>
+												</Frame>
+												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2"><Alpha val="0"/></Frame>
+													<StateGroup name="FCJH_HeroicTier">
+														<DefaultState val="Other"/>
+														<State name="Tier2"><When type="Property" frame="$this" HeroicTier="2"/><Action type="SetProperty" frame="$this/TalentTreeIcon2" Visible="true"/></State>
+														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon2" Visible="false"/></State>
+													</StateGroup>
+												</Frame>
+												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 											</Frame>
 										</Frame>
 									</Frame>

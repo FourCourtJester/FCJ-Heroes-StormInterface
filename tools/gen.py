@@ -1744,21 +1744,6 @@ def copies_toggle():
             f'{ctrl}{t(6)}</Animation>{t(5)}</Frame>')
 
 
-def heroic_abil(indent):
-    """DIAGNOSTIC (2026-10-02): the talent row's heroic ability icon (UnitStatusAbil) over the
-    level-10 slot, on top, mouse on."""
-    t = TAB * indent
-    on = lambda rel, k: "".join(f'{NL}{t}{TAB * k}<Anchor side="{sd}" relative="{rel}" pos="{pos}" offset="0"/>'
-                                for sd, pos in (("Left", "Min"), ("Top", "Min"), ("Right", "Max"), ("Bottom", "Max")))
-    return (f'{NL}{t}<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil">'
-            + on("$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4", 1)
-            + f'{NL}{t}{TAB}<RenderPriority val="900"/>{NL}{t}{TAB}<Unclipped val="true"/>'
-            + f'{NL}{t}{TAB}<AcceptsMouse val="true"/>{NL}{t}{TAB}<AcceptsMouseTooltip val="true"/>'
-            + f'{NL}{t}{TAB}<Frame type="AbilIcon" name="AbilIcon">' + on("$parent", 2)
-            + f'{NL}{t}{TAB * 2}<AcceptsMouse val="true"/>{NL}{t}{TAB * 2}<AcceptsMouseTooltip val="true"/>'
-            + f'{NL}{t}{TAB}</Frame>{NL}{t}</Frame>')
-
-
 def row_toggle():
     """DIAGNOSTIC (2026-10-02): Control+Shift+8 hides and shows the game's observer talent row
     (talent_row_lifts; Tracer's meter goes with it), to see whether inspect comes back without
@@ -1771,57 +1756,85 @@ def row_toggle():
 
 
 def heroic_tip_panel(cfg):
-    """DIAGNOSTIC (2026-10-02), calibration 4: our own copy of the observer talent row in
+    """DIAGNOSTIC (2026-10-02), calibration 5: our own copies of the observer talent row in
     Blizzard's layout (the one arrangement whose icons give tooltips), each player's talent
-    box shifted so its heroic-tier icon (level 10, TalentTreeIcon4) sits on our heroic.
+    box shifted so the icon of the tier holding the heroic sits on our heroic.
     Blizzard anchors each box to the player's top-bar cell (our plates) +82 units (blue) / +15
-    (red); calibration 1 (7011ba9) put the icons ~10 px below the row's top, the first icon
-    ~90 units (blue) / ~30 (red) right of the cell, the level-10 slot 82 / 78 units on. Only
-    the boxes' Left anchors move, statically; their size and contents stay Blizzard's.
-    Calibration 2 (c22ae12) gave the first heroic tooltips (Sonya's, user 2026-10-02), its
-    level-10 slot (55 x 33 px) ~9 px right / 8 px low of our heroic on blue, ~5 px right on red.
-    Every other icon (and the copy's charge meter and ability) is now off and deaf to the
-    mouse: they gave talent tooltips all over the plates. The heroic-tier icon is invisible but
-    still answers the mouse. Yellow marker (a child of UnitStatusFrame0, where it draws) over it.
-    Calibration 3 (0c9f954): on target (within 1 px), the right tooltip for most, but Tracer and
-    Varian gave their level-10 talent (Tracer's heroic is no talent; Varian's is at level 4).
-    Calibration 4: the row's own heroic ABILITY icon (UnitStatusAbil, AbilityLink =
-    HeroSelectedTalentTreeFrame/@HeroicAbilLink - whatever heroic the hero has) laid over the
-    level-10 slot, above it, shown, with a cyan marker. The level-10 icon stays under it as before."""
-    row_top = round(1024.4 / 0.9)        # slot's centre on the heroic's (1042.4 px)
-    shift = {"blue": -63, "red": -86}    # the boxes' Left offset from their cell (natural 82 / 15)
-    icons = ("".join(muted("UnitStatusTalentIcon", f"TalentTreeIcon{k}", 13) for k in (1, 2, 3, 5, 6, 7))
-             + faded("UnitStatusTalentIcon", "TalentTreeIcon4", 13))
+    (red); only the boxes' Left anchors move, statically; their size and contents stay Blizzard's.
+    Calibration 2 (c22ae12) gave the first heroic tooltips (Sonya's, user 2026-10-02);
+    calibration 3 (0c9f954) put the level-10 slot (55 x 33 px) on our heroic within 1 px, every
+    other icon off and deaf to the mouse (they gave talent tooltips all over the plates). Tracer
+    and Varian gave their level-10 talent: Tracer's heroic is no talent; Varian's is at level 4
+    (HeroicTier 2). Calibration 4 (cdc94b0): the row's heroic ABILITY icon (UnitStatusAbil)
+    draws nothing (Blizzard keeps its image at Alpha 0), gives no tooltip and blocks the mouse.
+    Now:
+      - copy 1 (yellow): the level-10 icon, switched off for HeroicTier 2 heroes;
+      - copy 2 (magenta): the level-4 icon, only for HeroicTier 2 heroes (Varian), its box
+        shifted so that icon sits on the heroic (calibration 2: 62 px left of / 7 px above the
+        level-10 slot on blue, 55 / 7.5 on red);
+      - Tracer: a plain frame over the slot carrying Pulse Bomb's tooltip text from the game
+        strings, shown only while the plate holds Tracer."""
+    return heroic_tip_copy(cfg, "FCJH_HeroicTips", 4, round(1024.4 / 0.9), {"blue": -63, "red": -86}, 700) +         heroic_tip_copy(cfg, "FCJH_HeroicTips2", 2, round(1032 / 0.9), {"blue": 6, "red": -25}, 710)
+
+
+def heroic_tip_copy(cfg, root, tier_icon, row_top, shift, prio):
+    """One copy of the talent row with only icon `tier_icon` answering the mouse (faded): 4 for
+    every hero but HeroicTier 2 ones, 2 only for those."""
+    icons = ("".join(muted("UnitStatusTalentIcon", f"TalentTreeIcon{k}", 13) for k in range(1, 8) if k != tier_icon)
+             + faded("UnitStatusTalentIcon", f"TalentTreeIcon{tier_icon}", 13))
+    t = lambda k: NL + TAB * k
+    tier2_on, other_on = ("false", "true") if tier_icon == 4 else ("true", "false")
+    switch = (f'{t(13)}<StateGroup name="FCJH_HeroicTier">{t(14)}<DefaultState val="Other"/>'
+              f'{t(14)}<State name="Tier2"><When type="Property" frame="$this" HeroicTier="2"/>'
+              f'<Action type="SetProperty" frame="$this/TalentTreeIcon{tier_icon}" Visible="{tier2_on}"/></State>'
+              f'{t(14)}<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon{tier_icon}" Visible="{other_on}"/></State>'
+              f'{t(13)}</StateGroup>')
+    colour = "120,255,240,0" if tier_icon == 4 else "120,255,0,255"
     d = lambda i, ind: diag_square(i, ind, 680)
     out = []
     for n in range(10):
         team, cell = popup_cell(n)
-        dd = d if n == 0 else (lambda i, ind: "")
+        dd = d if n == 0 and tier_icon == 4 else (lambda i, ind: "")
+        slot = f"$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon{tier_icon}"
+        tracer = ""
+        if tier_icon == 4:
+            tracer = (f'{t(12)}<Frame type="Frame" name="FCJH_TracerTip">'
+                      + "".join(f'{t(13)}<Anchor side="{sd}" relative="{slot}" pos="{pos}" offset="0"/>'
+                                for sd, pos in (("Left", "Min"), ("Top", "Min"), ("Right", "Max"), ("Bottom", "Max")))
+                      + f'{t(13)}<RenderPriority val="950"/>{t(13)}<Visible val="false"/>'
+                      f'{t(13)}<AcceptsMouse val="true"/>{t(13)}<AcceptsMouseTooltip val="true"/>'
+                      f'{t(13)}<Tooltip val="@Button/Tooltip/TracerPulseBomb"/>'
+                      f'{t(13)}<StateGroup name="FCJH_IsTracer">{t(14)}<DefaultState val="No"/>'
+                      f'{t(14)}<State name="Yes"><When type="Property" frame="{cell}/HeroStatus" Unit="HeroTracer"/>'
+                      f'<Action type="SetProperty" frame="$this" Visible="true"/></State>'
+                      f'{t(14)}<State name="No"><Action type="SetProperty" frame="$this" Visible="false"/></State>'
+                      f'{t(13)}</StateGroup>{t(12)}</Frame>')
         out.append(f"""
 								<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame{n}">
 									<Anchor side="Left" relative="{cell}" pos="Min" offset="{shift[team.lower()]}"/>{dd(4, 9)}
 									<Frame type="Frame" name="TalentsContainerFrame">
 										<Batch val="false"/>{dd(5, 10)}
 										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">{dd(6, 11)}
-											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">{dd(7, 12)}{marker("FCJH_PosTier4", "$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4", "120,255,240,0", 12)}
-												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">{icons}
-												</Frame>{muted("Frame", "TracerChargeContainer", 12)}{heroic_abil(12)}{marker("FCJH_PosAbil", "$parent/UnitStatusAbil", "110,0,255,255", 12)}
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">{dd(7, 12)}{marker(f"FCJH_PosTier{tier_icon}", slot, colour, 12)}
+												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">{icons}{switch}
+												</Frame>{muted("Frame", "TracerChargeContainer", 12)}{muted("UnitStatusAbilIcon", "UnitStatusAbil", 12)}{tracer}
 											</Frame>
 										</Frame>
 									</Frame>
 								</Frame>""")
+    dd = d if tier_icon == 4 else (lambda i, ind: "")
     return (f"""
-					<!-- DIAGNOSTIC: our own copy of the observer talent row, Blizzard's layout, groups shifted onto the heroics -->
-					<Frame type="Frame" name="FCJH_HeroicTips" template="TalentsOverviewPanel/TalentsOverviewTopBarTemplate">
+					<!-- DIAGNOSTIC: our own copy of the observer talent row, Blizzard's layout, groups shifted onto the heroics (level {10 if tier_icon == 4 else 4} slot) -->
+					<Frame type="Frame" name="{root}" template="TalentsOverviewPanel/TalentsOverviewTopBarTemplate">
 						<Anchor side="Top"   relative="$GameUI" pos="Min" offset="{row_top}"/>
 						<Anchor side="Left"  relative="$GameUI" pos="Min" offset="0"/>
 						<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 						<Height val="100"/>
-						<RenderPriority val="700"/>{d(1, 6)}
+						<RenderPriority val="{prio}"/>{dd(1, 6)}
 						<Frame type="HeroTalentsPanel" name="TalentOverview">
 							<Visible val="true"/>
-							<Batch val="false"/>{d(2, 7)}
-							<Frame type="Frame" name="HeroTalentsPanelContainer">{d(3, 8)}""" + "".join(out) + """
+							<Batch val="false"/>{dd(2, 7)}
+							<Frame type="Frame" name="HeroTalentsPanelContainer">{dd(3, 8)}""" + "".join(out) + """
 							</Frame>
 						</Frame>
 					</Frame>""")
