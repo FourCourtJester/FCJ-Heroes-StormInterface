@@ -6285,6 +6285,7 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/></Frame>
 													<StateGroup name="FCJH_HeroicTier">
 														<DefaultState val="Other"/>
+														<State name="Tracer"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus" Unit="HeroTracer"/><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="false"/></State>
 														<State name="Tier2"><When type="Property" frame="$this" HeroicTier="2"/><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="false"/></State>
 														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="true"/></State>
 													</StateGroup>
@@ -6340,6 +6341,7 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/></Frame>
 													<StateGroup name="FCJH_HeroicTier">
 														<DefaultState val="Other"/>
+														<State name="Tracer"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus" Unit="HeroTracer"/><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="false"/></State>
 														<State name="Tier2"><When type="Property" frame="$this" HeroicTier="2"/><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="false"/></State>
 														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="true"/></State>
 													</StateGroup>
@@ -6395,6 +6397,7 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/></Frame>
 													<StateGroup name="FCJH_HeroicTier">
 														<DefaultState val="Other"/>
+														<State name="Tracer"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus" Unit="HeroTracer"/><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="false"/></State>
 														<State name="Tier2"><When type="Property" frame="$this" HeroicTier="2"/><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="false"/></State>
 														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="true"/></State>
 													</StateGroup>
@@ -6450,6 +6453,7 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/></Frame>
 													<StateGroup name="FCJH_HeroicTier">
 														<DefaultState val="Other"/>
+														<State name="Tracer"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus" Unit="HeroTracer"/><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="false"/></State>
 														<State name="Tier2"><When type="Property" frame="$this" HeroicTier="2"/><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="false"/></State>
 														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="true"/></State>
 													</StateGroup>
@@ -6505,6 +6509,7 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/></Frame>
 													<StateGroup name="FCJH_HeroicTier">
 														<DefaultState val="Other"/>
+														<State name="Tracer"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus" Unit="HeroTracer"/><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="false"/></State>
 														<State name="Tier2"><When type="Property" frame="$this" HeroicTier="2"/><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="false"/></State>
 														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="true"/></State>
 													</StateGroup>
@@ -6560,6 +6565,7 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/></Frame>
 													<StateGroup name="FCJH_HeroicTier">
 														<DefaultState val="Other"/>
+														<State name="Tracer"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus" Unit="HeroTracer"/><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="false"/></State>
 														<State name="Tier2"><When type="Property" frame="$this" HeroicTier="2"/><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="false"/></State>
 														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="true"/></State>
 													</StateGroup>
@@ -6615,6 +6621,7 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/></Frame>
 													<StateGroup name="FCJH_HeroicTier">
 														<DefaultState val="Other"/>
+														<State name="Tracer"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus" Unit="HeroTracer"/><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="false"/></State>
 														<State name="Tier2"><When type="Property" frame="$this" HeroicTier="2"/><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="false"/></State>
 														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="true"/></State>
 													</StateGroup>
@@ -6670,6 +6677,7 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/></Frame>
 													<StateGroup name="FCJH_HeroicTier">
 														<DefaultState val="Other"/>
+														<State name="Tracer"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus" Unit="HeroTracer"/><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="false"/></State>
 														<State name="Tier2"><When type="Property" frame="$this" HeroicTier="2"/><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="false"/></State>
 														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="true"/></State>
 													</StateGroup>
@@ -6725,6 +6733,7 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/></Frame>
 													<StateGroup name="FCJH_HeroicTier">
 														<DefaultState val="Other"/>
+														<State name="Tracer"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus" Unit="HeroTracer"/><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="false"/></State>
 														<State name="Tier2"><When type="Property" frame="$this" HeroicTier="2"/><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="false"/></State>
 														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="true"/></State>
 													</StateGroup>
@@ -6780,6 +6789,7 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/></Frame>
 													<StateGroup name="FCJH_HeroicTier">
 														<DefaultState val="Other"/>
+														<State name="Tracer"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus" Unit="HeroTracer"/><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="false"/></State>
 														<State name="Tier2"><When type="Property" frame="$this" HeroicTier="2"/><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="false"/></State>
 														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="true"/></State>
 													</StateGroup>

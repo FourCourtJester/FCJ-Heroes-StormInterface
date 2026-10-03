@@ -21,11 +21,62 @@
 				<State name="Show">
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/TargetInfoFrame" Visible="true"/>
 					<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="true"/>
+					<Action type="SetProperty" frame="$parent/FCJH_DiagBlizzInspect" Visible="true"/>
 				</State>
 				<State name="Hide">
 					<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="false"/>
+					<Action type="SetProperty" frame="$parent/FCJH_DiagBlizzInspect" Visible="false"/>
 				</State>
 			</StateGroup>
+		</Frame>
+		<!-- DIAGNOSTIC: inspect lamps and force-show (inspect_diagnostics) -->
+		<Frame type="Image" name="FCJH_DiagBlizzInspect">
+			<Anchor side="Left" relative="$GameUI" pos="Min" offset="1111"/>
+			<Anchor side="Top" relative="$GameUI" pos="Min" offset="444"/>
+			<Anchor side="Right" relative="$GameUI" pos="Min" offset="1144"/>
+			<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="477"/>
+			<Texture val="@UI/PauseScreenDimImage"/>
+			<ColorAdjustMode val="Fill"/>
+			<AdjustmentColor val="255,40,220,60"/>
+			<RenderPriority val="950"/>
+			<Visible val="false"/>
+			<AcceptsMouse val="false"/>
+			<AcceptsMouseTooltip val="false"/>
+		</Frame>
+		<Frame type="Image" name="FCJH_DiagOurInspect">
+			<Anchor side="Left" relative="$GameUI" pos="Min" offset="1156"/>
+			<Anchor side="Top" relative="$GameUI" pos="Min" offset="444"/>
+			<Anchor side="Right" relative="$GameUI" pos="Min" offset="1189"/>
+			<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="477"/>
+			<Texture val="@UI/PauseScreenDimImage"/>
+			<ColorAdjustMode val="Fill"/>
+			<AdjustmentColor val="255,0,230,255"/>
+			<RenderPriority val="950"/>
+			<Visible val="false"/>
+			<AcceptsMouse val="false"/>
+			<AcceptsMouseTooltip val="false"/>
+			<StateGroup name="FCJH_Watch">
+				<DefaultState val="Off"/>
+				<State name="On"><When type="Property" frame="$parent/FCJH_Inspect" Visible="true"/><Action type="SetProperty" frame="$this" Visible="true"/></State>
+				<State name="Off"><Action type="SetProperty" frame="$this" Visible="false"/></State>
+			</StateGroup>
+		</Frame>
+		<Frame type="ToggleControl" name="FCJH_ForceInspect">
+			<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+			<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+			<Width val="1"/>
+			<Height val="1"/>
+			<Shortcut val="Control+Shift+7"/>
+			<Visible val="false"/>
+			<AcceptsMouse val="false"/>
+			<Animation name="FCJH_Force">
+				<Event event="OnShown" action="DirectionForward,Play"/>
+				<Event event="OnHidden" action="DirectionReverse,Play"/>
+				<Controller type="Visibility" end="Pause" frame="$parent/FCJH_Inspect">
+					<Key type="Bool" time="0" value="false"/>
+					<Key type="Bool" time="0.001" value="true"/>
+				</Controller>
+			</Animation>
 		</Frame>
 		<!-- The card: our copy of Blizzard's inspect box -->
 		<Frame type="TargetInfoFrame" name="FCJH_Inspect">

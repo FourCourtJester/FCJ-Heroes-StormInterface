@@ -1773,7 +1773,10 @@ def heroic_tip_panel(cfg):
         shifted so that icon sits on the heroic (calibration 2: 62 px left of / 7 px above the
         level-10 slot on blue, 55 / 7.5 on red);
       - Tracer: a plain frame over the slot carrying Pulse Bomb's tooltip text from the game
-        strings, shown only while the plate holds Tracer."""
+        strings, shown only while the plate holds Tracer.
+    Calibration 5 (ce0c352): Varian's level-4 slot gave Taunt (his heroic), everyone else's
+    level-10 slot their heroic; Tracer got Pulse Bomb's text (no header) with Quantum Spike
+    flashing first - the level-10 icon under it - so that icon is now off on Tracer's plate."""
     return heroic_tip_copy(cfg, "FCJH_HeroicTips", 4, round(1024.4 / 0.9), {"blue": -63, "red": -86}, 700) +         heroic_tip_copy(cfg, "FCJH_HeroicTips2", 2, round(1032 / 0.9), {"blue": 6, "red": -25}, 710)
 
 
@@ -1784,8 +1787,10 @@ def heroic_tip_copy(cfg, root, tier_icon, row_top, shift, prio):
              + faded("UnitStatusTalentIcon", f"TalentTreeIcon{tier_icon}", 13))
     t = lambda k: NL + TAB * k
     tier2_on, other_on = ("false", "true") if tier_icon == 4 else ("true", "false")
-    switch = (f'{t(13)}<StateGroup name="FCJH_HeroicTier">{t(14)}<DefaultState val="Other"/>'
-              f'{t(14)}<State name="Tier2"><When type="Property" frame="$this" HeroicTier="2"/>'
+    switch = lambda cell: (f'{t(13)}<StateGroup name="FCJH_HeroicTier">{t(14)}<DefaultState val="Other"/>'
+              + (f'{t(14)}<State name="Tracer"><When type="Property" frame="{cell}/HeroStatus" Unit="HeroTracer"/>'
+                 f'<Action type="SetProperty" frame="$this/TalentTreeIcon{tier_icon}" Visible="false"/></State>' if tier_icon == 4 else "")
+              + f'{t(14)}<State name="Tier2"><When type="Property" frame="$this" HeroicTier="2"/>'
               f'<Action type="SetProperty" frame="$this/TalentTreeIcon{tier_icon}" Visible="{tier2_on}"/></State>'
               f'{t(14)}<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon{tier_icon}" Visible="{other_on}"/></State>'
               f'{t(13)}</StateGroup>')
@@ -1816,7 +1821,7 @@ def heroic_tip_copy(cfg, root, tier_icon, row_top, shift, prio):
 										<Batch val="false"/>{dd(5, 10)}
 										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">{dd(6, 11)}
 											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">{dd(7, 12)}{marker(f"FCJH_PosTier{tier_icon}", slot, colour, 12)}
-												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">{icons}{switch}
+												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">{icons}{switch(cell)}
 												</Frame>{muted("Frame", "TracerChargeContainer", 12)}{muted("UnitStatusAbilIcon", "UnitStatusAbil", 12)}{tracer}
 											</Frame>
 										</Frame>
