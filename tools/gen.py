@@ -1794,7 +1794,7 @@ def heroic_tip_copy(cfg, root, tier_icon, row_top, shift, prio):
               f'<Action type="SetProperty" frame="$this/TalentTreeIcon{tier_icon}" Visible="{tier2_on}"/></State>'
               f'{t(14)}<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon{tier_icon}" Visible="{other_on}"/></State>'
               f'{t(13)}</StateGroup>')
-    colour = "120,255,240,0" if tier_icon == 4 else "120,255,0,255"
+    # (the yellow / magenta slot markers came out 2026-10-02: the user wanted the heroics seen)
     d = lambda i, ind: diag_square(i, ind, 680)
     out = []
     for n in range(10):
@@ -1820,7 +1820,7 @@ def heroic_tip_copy(cfg, root, tier_icon, row_top, shift, prio):
 									<Frame type="Frame" name="TalentsContainerFrame">
 										<Batch val="false"/>{dd(5, 10)}
 										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">{dd(6, 11)}
-											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">{dd(7, 12)}{marker(f"FCJH_PosTier{tier_icon}", slot, colour, 12)}
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">{dd(7, 12)}
 												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">{icons}{switch(cell)}
 												</Frame>{muted("Frame", "TracerChargeContainer", 12)}{muted("UnitStatusAbilIcon", "UnitStatusAbil", 12)}{tracer}
 											</Frame>
