@@ -39,6 +39,7 @@ TAL_SIZE, TAL_STEP = 36, 43        # the talent strip's icons
 # with its icon 5 in from each side, its frame art drawn at 68 and its glows at 60, each button
 # overlapping the next by 5 so the hexagons interlock. Six to a row fit the card (287 of 305).
 CMD_SIZE, CMD_STEP, CMD_INSET, CMD_BORDER, CMD_GLOW = 52, 47, 5, 68, 60
+CMD_CHARGE, CMD_CHARGE_RING = 26, 38   # the charge badge and its cooldown ring (Ahli's)
 ABIL_LABEL, ABIL_ROWS = 366, (390, 442)
 TAL_LABEL, TAL = 505, 521
 STATS_LABEL, STATS, STAT_ROW = 585, 603, 24
@@ -164,7 +165,20 @@ def command_panel():
              + f'{T*5}</Frame>\n{T*5}<Frame type="Frame" name="AttentionEffect">\n'
              + sized("AttentionEffectImage", "Image", CMD_GLOW, 6) + sized("AttentionEffect2Image", "Image", CMD_GLOW, 6)
              + sized("InnerGlowImage", "Image", CMD_GLOW, 6)
-             + f'{T*5}</Frame>\n{T*5}<Frame type="Frame" name="HitTestFrame"><Anchor relative="$parent"/></Frame>\n')
+             + f'{T*5}</Frame>\n{T*5}<Frame type="Frame" name="HitTestFrame"><Anchor relative="$parent"/></Frame>\n'
+             # the text on the button, sized for 120 units: hotkey letters off (Ahli's choice;
+             # they piled onto the icons, 2026-10-03), cooldown count in our heroic-cooldown
+             # style, the charge badge, ring and count at Ahli's sizes
+             + f'{T*5}<Frame type="CommandHotkeyFrame" name="HotkeyFrame"><Frame type="Label" name="HotkeyLabel"><Alpha val="0"/></Frame></Frame>\n'
+             f'{T*5}<Frame type="Label" name="CooldownLabel">'
+             f'<Anchor side="Left" relative="$parent" pos="Min" offset="0"/><Anchor side="Right" relative="$parent" pos="Max" offset="0"/>'
+             f'<Style val="FCJH_HeroicCooldown"/></Frame>\n'
+             f'{T*5}<Frame type="Image" name="ChargeBackground">'
+             f'<Anchor side="Bottom" relative="$parent" pos="Max" offset="3"/><Anchor side="Right" relative="$parent" pos="Max" offset="-2"/>'
+             f'<Width val="{CMD_CHARGE}"/><Height val="{CMD_CHARGE}"/><Unclipped val="true"/></Frame>\n'
+             + sized("ChargeCompleteImage", "Image", CMD_CHARGE, 5) + sized("ChargeCooldown", "ProgressBar", CMD_CHARGE_RING, 5)
+             + f'{T*5}<Frame type="Label" name="ChargeLabel"><Style val="FCJH_InspectCharge"/><Unclipped val="true"/>'
+             f'<RenderPriority val="600"/></Frame>\n')
     buttons = []
     for r, row in enumerate(COMMAND_ROWS):
         for c, k in enumerate(row):
