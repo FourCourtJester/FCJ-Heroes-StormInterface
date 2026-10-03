@@ -30,6 +30,36 @@
 			</StateGroup>
 		</Frame>
 		<!-- DIAGNOSTIC: inspect lamps and force-show (inspect_diagnostics) -->
+		<Frame type="SelectionUnitStatusPanel" name="FCJH_SelSensor">
+			<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+			<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+			<Width val="4"/>
+			<Height val="4"/>
+			<HeroesOnly val="False"/>
+			<AcceptsMouse val="false"/>
+			<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
+		</Frame>
+		<Frame type="Image" name="FCJH_DiagSelection">
+			<Anchor side="Left" relative="$GameUI" pos="Min" offset="1200"/>
+			<Anchor side="Top" relative="$GameUI" pos="Min" offset="444"/>
+			<Anchor side="Right" relative="$GameUI" pos="Min" offset="1233"/>
+			<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="477"/>
+			<Texture val="@UI/PauseScreenDimImage"/>
+			<ColorAdjustMode val="Fill"/>
+			<AdjustmentColor val="255,255,140,0"/>
+			<RenderPriority val="950"/>
+			<Visible val="false"/>
+			<AcceptsMouse val="false"/>
+			<AcceptsMouseTooltip val="false"/>
+			<StateGroup name="FCJH_Watch">
+				<DefaultState val="Off"/>
+				<State name="On"><When type="Property" frame="$parent/FCJH_SelSensor/UnitStatusFrame0" Visible="true"/><Action type="SetProperty" frame="$this" Visible="true"/></State>
+				<State name="Off"><Action type="SetProperty" frame="$this" Visible="false"/></State>
+			</StateGroup>
+		</Frame>
 		<Frame type="Image" name="FCJH_DiagBlizzInspect">
 			<Anchor side="Left" relative="$GameUI" pos="Min" offset="1111"/>
 			<Anchor side="Top" relative="$GameUI" pos="Min" offset="444"/>
