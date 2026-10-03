@@ -1777,11 +1777,13 @@ def heroic_tip_panel(cfg):
     Calibration 5 (ce0c352): Varian's level-4 slot gave Taunt (his heroic), everyone else's
     level-10 slot their heroic; Tracer got Pulse Bomb's text (no header) with Quantum Spike
     flashing first - the level-10 icon under it - so that icon is now off on Tracer's plate."""
-    # Hover areas grown to our heroic icon (51 x 51 px = 57 units), 2026-10-02: the icons keep
-    # their Left anchor and stay centred on their row (Top/Bottom at its Mid), so a wider
-    # level-4 icon (38 -> 57 units) moves its centre ~10 units right: copy 2's shift less 10.
-    return (heroic_tip_copy(cfg, "FCJH_HeroicTips", 4, round(1024.4 / 0.9), {"blue": -63, "red": -86}, 700, (62, 57))
-            + heroic_tip_copy(cfg, "FCJH_HeroicTips2", 2, round(1032 / 0.9), {"blue": -4, "red": -35}, 710, (57, 57)))
+    # Hover areas: a square of 44 units (40 px) centred on our heroic icon (51 px, slanted art),
+    # user 2026-10-02 - most of the icon, the slant's corners left out, and inside the row's
+    # player box (48 units tall). The icons keep their Left anchor and stay centred on their
+    # row (Top/Bottom at its Mid), so a width change moves the centre by half of it; the shifts
+    # make up for that (level 10: 62 -> 44, +9; level 4: 38 -> 44, -3).
+    return (heroic_tip_copy(cfg, "FCJH_HeroicTips", 4, round(1024.4 / 0.9), {"blue": -54, "red": -77}, 700, (44, 44))
+            + heroic_tip_copy(cfg, "FCJH_HeroicTips2", 2, round(1032 / 0.9), {"blue": 3, "red": -28}, 710, (44, 44)))
 
 
 def heroic_tip_copy(cfg, root, tier_icon, row_top, shift, prio, size):
