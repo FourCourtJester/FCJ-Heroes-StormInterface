@@ -34,12 +34,14 @@ FOUNTAIN = (NAME_BAND + 10, NAME_BAND + 32, 226, 260)   # top, bottom, left, rig
 # Buffs then debuffs as one block: the debuff bar follows the buff bar on the same row (as in
 # Blizzard's hero console); once there are 4+ buffs it drops to a second row.
 BUFFS_LABEL, BUFFS, BUFF_ROW = 258, 274, 42
-# Abilities mimic Blizzard's ability card: 1-5 on top, D Q W E R Z under it, at the talent
-# strip's icon size and column spacing so all three rows line up.
-TAL_SIZE, TAL_STEP = 36, 43
-ABIL_LABEL, ABIL_ROWS = 366, (382, 425)
-TAL_LABEL, TAL = 471, 487
-STATS_LABEL, STATS, STAT_ROW = 551, 569, 24
+TAL_SIZE, TAL_STEP = 36, 43        # the talent strip's icons
+# Abilities are Blizzard's command buttons (command_panel), at Ahli's sizes: a 52-unit button
+# with its icon 5 in from each side, its frame art drawn at 68 and its glows at 60, each button
+# overlapping the next by 5 so the hexagons interlock. Six to a row fit the card (287 of 305).
+CMD_SIZE, CMD_STEP, CMD_INSET, CMD_BORDER, CMD_GLOW = 52, 47, 5, 68, 60
+ABIL_LABEL, ABIL_ROWS = 366, (390, 442)
+TAL_LABEL, TAL = 505, 521
+STATS_LABEL, STATS, STAT_ROW = 585, 603, 24
 M = 14                              # side margin
 
 def rect(top, left, bottom, right, rel="$parent", i=4, right_pos="Min"):
@@ -100,7 +102,7 @@ def command_switch():
 def command_anchors(on_card, indent, tag="Action"):
     """The command card's four anchors: on the card's ability rows, or parked off screen.
     tag "Action": as StateGroup actions (the gate); "Anchor": as the frame's own anchors."""
-    top, bottom = ABIL_ROWS[0], ABIL_ROWS[1] + TAL_SIZE
+    top, bottom = ABIL_ROWS[0], ABIL_ROWS[1] + CMD_SIZE
     if on_card:
         sides = (("Top", CARD, "Min", top), ("Left", CARD, "Min", M),
                  ("Bottom", CARD, "Min", bottom), ("Right", CARD, "Max", -M))
@@ -136,12 +138,28 @@ def command_panel():
     it can't cover the card's other tooltips. Blizzard's hero-specific command-card panel and
     control-group panel hang off it, so they go where it goes (parked while the card's shut)."""
     top = ABIL_ROWS[0]
+    sized = lambda name_, ftype, size, i: (f'{T*i}<Frame type="{ftype}" name="{name_}">'
+                                           f'<Width val="{size}"/><Height val="{size}"/><Unclipped val="true"/></Frame>\n')
+    # the button's pieces at its size (Blizzard's are drawn for a 120-unit button): the icon
+    # inset, the frame art and glows sized - Ahli's recipe
+    inset = "".join(f'{T*6}<Anchor side="{s}" relative="$parent" pos="{p}" offset="{v}"/>\n'
+                    for s, p, v in (("Top", "Min", CMD_INSET), ("Left", "Min", CMD_INSET),
+                                    ("Bottom", "Max", -CMD_INSET), ("Right", "Max", -CMD_INSET)))
+    parts = (f'{T*5}<Frame type="Image" name="NormalImage">\n' + inset
+             + f'{T*6}<Unclipped val="true"/>\n{T*5}</Frame>\n'
+             + sized("GameButtonDefaultBorder", "Image", CMD_BORDER, 5)
+             + f'{T*5}<Frame type="Frame" name="ActiveEffect">\n'
+             + sized("ActiveEffectImage", "Image", CMD_GLOW, 6) + sized("ActiveEffect2Image", "Image", CMD_GLOW, 6)
+             + f'{T*5}</Frame>\n{T*5}<Frame type="Frame" name="AttentionEffect">\n'
+             + sized("AttentionEffectImage", "Image", CMD_GLOW, 6) + sized("AttentionEffect2Image", "Image", CMD_GLOW, 6)
+             + sized("InnerGlowImage", "Image", CMD_GLOW, 6)
+             + f'{T*5}</Frame>\n{T*5}<Frame type="Frame" name="HitTestFrame"><Anchor relative="$parent"/></Frame>\n')
     buttons = []
     for r, row in enumerate(COMMAND_ROWS):
         for c, k in enumerate(row):
-            left, y = c * TAL_STEP, ABIL_ROWS[r] - top
+            left, y = c * CMD_STEP, ABIL_ROWS[r] - top
             buttons.append(f'{T*4}<Frame type="CommandButton" name="CommandButton{k}">\n'
-                           + rect(y, left, y + TAL_SIZE, left + TAL_SIZE, i=5) + f'{T*4}</Frame>\n')
+                           + rect(y, left, y + CMD_SIZE, left + CMD_SIZE, i=5) + parts + f'{T*4}</Frame>\n')
     away = "".join(
         f'{T*4}<Frame type="{ftype}" name="{n}">\n'
         f'{T*5}<Anchor side="Top"    relative="$parent" pos="Min" offset="9999"/>\n'

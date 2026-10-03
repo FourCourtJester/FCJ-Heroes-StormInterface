@@ -306,7 +306,14 @@ five segments would duplicate the hero row. If plates read too small, widen them
 - in game: the command card on the inspect card (shows with it, follows the selection,
   tooltips, which button holds which key - `inspect_card.COMMAND_KEYS` is a guess), Tracer's
   tooltip header, the pop-up sizes (talent = pane size, heal 2 px smaller)
-- art pass items from Ahli: Tracer's segmented ammo bar and round Pulse Bomb meter
+- **anchoring pass**: everything we place is anchored to the screen's LEFT edge with fixed
+  offsets (layout.toml is 1080p px), so a window that isn't 16:9 shifts Blizzard's centred
+  pieces against ours - the hexagon left its backplate in a 2558 x 1401 window (2026-10-03;
+  any 16:9 size is fine: the UI scales with height, 1200 units tall). Anchor each element to
+  its nearest edge or the centre (Min / Mid / Max), as Blizzard does
+- art pass items from Ahli: Tracer's segmented ammo bar and round Pulse Bomb meter; his
+  hero plates' intro animation, a smooth slide and fade (user, 2026-10-03: art pass, after
+  the functionality is done)
 
 How the heroic tooltips work: `tools/gen.py`, the comment above `HEROIC_TIPS`.
 

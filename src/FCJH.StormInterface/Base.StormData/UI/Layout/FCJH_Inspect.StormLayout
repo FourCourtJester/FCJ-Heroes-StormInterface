@@ -24,16 +24,16 @@
 				<State name="Show">
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/TargetInfoFrame" Visible="true"/>
 					<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="true"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="382"/>
+					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="390"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="14"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="461"/>
+					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="494"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Max" offset="-14"/>
 				</State>
 				<State name="Hide">
 					<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="false"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Top" relative="$GameUI" pos="Min" offset="9999"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Left" relative="$GameUI" pos="Min" offset="9999"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Bottom" relative="$GameUI" pos="Min" offset="10078"/>
+					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Bottom" relative="$GameUI" pos="Min" offset="10103"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Right" relative="$GameUI" pos="Min" offset="10304"/>
 				</State>
 			</StateGroup>
@@ -202,9 +202,9 @@
 				<AcceptsMouse val="false"/>
 			</Frame>
 			<Frame type="Label" name="FCJH_SectionTalents">
-				<Anchor side="Top"    relative="$parent" pos="Min" offset="471"/>
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="505"/>
 				<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-				<Anchor side="Bottom" relative="$parent" pos="Min" offset="486"/>
+				<Anchor side="Bottom" relative="$parent" pos="Min" offset="520"/>
 				<Anchor side="Right"  relative="$parent" pos="Max" offset="-14"/>
 				<Style val="FCJH_InspectSection"/>
 				<Text val="TALENTS"/>
@@ -212,9 +212,9 @@
 				<AcceptsMouse val="false"/>
 			</Frame>
 			<Frame type="Label" name="FCJH_SectionStats">
-				<Anchor side="Top"    relative="$parent" pos="Min" offset="551"/>
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="585"/>
 				<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-				<Anchor side="Bottom" relative="$parent" pos="Min" offset="566"/>
+				<Anchor side="Bottom" relative="$parent" pos="Min" offset="600"/>
 				<Anchor side="Right"  relative="$parent" pos="Max" offset="-14"/>
 				<Style val="FCJH_InspectSection"/>
 				<Text val="STATS"/>
@@ -236,9 +236,9 @@
 				<Frame type="UnitStatusEnergyBar" name="DeathwingEnergyBar"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/></Frame>
 				<!-- stats: Blizzard's stat rows, from the inspect box's template -->
 				<Frame type="Frame" name="FCJH_Stats" template="TargetInfoPanel/TargetInfoPanelTemplate/HealthAndManaUnitStatusFrame/TargetStatsPanel">
-					<Anchor side="Top"    relative="$parent" pos="Min" offset="569"/>
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="603"/>
 					<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="665"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="699"/>
 					<Anchor side="Right"  relative="$parent" pos="Max" offset="-14"/>
 						<Frame type="TargetInfoStatFrame" name="AttackDamageFrame">
 							<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
@@ -381,9 +381,9 @@
 					<RenderPriority val="670"/>
 					<!-- dark squares under the icons: an empty tier reads as a gap, not a hole -->
 					<Frame type="Image" name="FCJH_TierBack1">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -392,9 +392,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack2">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="57"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -403,9 +403,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack3">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="100"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -414,9 +414,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack4">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="143"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -425,9 +425,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack5">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="186"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -436,9 +436,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack6">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="229"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -447,9 +447,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack7">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="272"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -468,9 +468,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent1">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -494,9 +494,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent2">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="57"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -520,9 +520,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent3">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="100"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -546,9 +546,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent4">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="143"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -572,9 +572,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent5">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="186"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -598,9 +598,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent6">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="229"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -624,9 +624,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent7">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="272"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -667,9 +667,9 @@
 					<RenderPriority val="670"/>
 					<!-- dark squares under the icons: an empty tier reads as a gap, not a hole -->
 					<Frame type="Image" name="FCJH_TierBack1">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -678,9 +678,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack2">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="57"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -689,9 +689,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack3">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="100"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -700,9 +700,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack4">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="143"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -711,9 +711,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack5">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="186"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -722,9 +722,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack6">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="229"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -733,9 +733,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack7">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="272"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -754,9 +754,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent1">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -780,9 +780,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent2">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="57"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -806,9 +806,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent3">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="100"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -832,9 +832,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent4">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="143"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -858,9 +858,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent5">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="186"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -884,9 +884,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent6">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="229"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -910,9 +910,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent7">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="272"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -953,9 +953,9 @@
 					<RenderPriority val="670"/>
 					<!-- dark squares under the icons: an empty tier reads as a gap, not a hole -->
 					<Frame type="Image" name="FCJH_TierBack1">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -964,9 +964,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack2">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="57"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -975,9 +975,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack3">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="100"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -986,9 +986,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack4">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="143"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -997,9 +997,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack5">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="186"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -1008,9 +1008,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack6">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="229"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -1019,9 +1019,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack7">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="272"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -1040,9 +1040,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent1">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -1066,9 +1066,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent2">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="57"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -1092,9 +1092,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent3">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="100"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -1118,9 +1118,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent4">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="143"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -1144,9 +1144,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent5">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="186"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -1170,9 +1170,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent6">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="229"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -1196,9 +1196,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent7">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="272"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -1239,9 +1239,9 @@
 					<RenderPriority val="670"/>
 					<!-- dark squares under the icons: an empty tier reads as a gap, not a hole -->
 					<Frame type="Image" name="FCJH_TierBack1">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -1250,9 +1250,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack2">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="57"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -1261,9 +1261,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack3">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="100"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -1272,9 +1272,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack4">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="143"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -1283,9 +1283,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack5">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="186"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -1294,9 +1294,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack6">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="229"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -1305,9 +1305,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack7">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="272"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -1326,9 +1326,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent1">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -1352,9 +1352,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent2">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="57"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -1378,9 +1378,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent3">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="100"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -1404,9 +1404,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent4">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="143"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -1430,9 +1430,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent5">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="186"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -1456,9 +1456,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent6">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="229"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -1482,9 +1482,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent7">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="272"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -1525,9 +1525,9 @@
 					<RenderPriority val="670"/>
 					<!-- dark squares under the icons: an empty tier reads as a gap, not a hole -->
 					<Frame type="Image" name="FCJH_TierBack1">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -1536,9 +1536,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack2">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="57"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -1547,9 +1547,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack3">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="100"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -1558,9 +1558,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack4">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="143"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -1569,9 +1569,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack5">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="186"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -1580,9 +1580,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack6">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="229"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -1591,9 +1591,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack7">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="272"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -1612,9 +1612,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent1">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -1638,9 +1638,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent2">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="57"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -1664,9 +1664,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent3">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="100"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -1690,9 +1690,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent4">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="143"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -1716,9 +1716,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent5">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="186"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -1742,9 +1742,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent6">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="229"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -1768,9 +1768,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent7">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="272"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -1811,9 +1811,9 @@
 					<RenderPriority val="670"/>
 					<!-- dark squares under the icons: an empty tier reads as a gap, not a hole -->
 					<Frame type="Image" name="FCJH_TierBack1">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -1822,9 +1822,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack2">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="57"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -1833,9 +1833,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack3">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="100"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -1844,9 +1844,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack4">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="143"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -1855,9 +1855,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack5">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="186"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -1866,9 +1866,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack6">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="229"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -1877,9 +1877,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack7">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="272"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -1898,9 +1898,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent1">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -1924,9 +1924,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent2">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="57"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -1950,9 +1950,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent3">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="100"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -1976,9 +1976,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent4">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="143"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -2002,9 +2002,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent5">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="186"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -2028,9 +2028,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent6">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="229"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -2054,9 +2054,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent7">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="272"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -2097,9 +2097,9 @@
 					<RenderPriority val="670"/>
 					<!-- dark squares under the icons: an empty tier reads as a gap, not a hole -->
 					<Frame type="Image" name="FCJH_TierBack1">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -2108,9 +2108,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack2">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="57"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -2119,9 +2119,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack3">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="100"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -2130,9 +2130,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack4">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="143"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -2141,9 +2141,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack5">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="186"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -2152,9 +2152,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack6">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="229"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -2163,9 +2163,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack7">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="272"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -2184,9 +2184,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent1">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -2210,9 +2210,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent2">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="57"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -2236,9 +2236,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent3">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="100"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -2262,9 +2262,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent4">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="143"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -2288,9 +2288,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent5">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="186"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -2314,9 +2314,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent6">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="229"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -2340,9 +2340,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent7">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="272"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -2383,9 +2383,9 @@
 					<RenderPriority val="670"/>
 					<!-- dark squares under the icons: an empty tier reads as a gap, not a hole -->
 					<Frame type="Image" name="FCJH_TierBack1">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -2394,9 +2394,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack2">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="57"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -2405,9 +2405,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack3">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="100"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -2416,9 +2416,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack4">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="143"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -2427,9 +2427,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack5">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="186"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -2438,9 +2438,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack6">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="229"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -2449,9 +2449,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack7">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="272"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -2470,9 +2470,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent1">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -2496,9 +2496,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent2">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="57"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -2522,9 +2522,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent3">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="100"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -2548,9 +2548,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent4">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="143"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -2574,9 +2574,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent5">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="186"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -2600,9 +2600,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent6">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="229"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -2626,9 +2626,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent7">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="272"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -2669,9 +2669,9 @@
 					<RenderPriority val="670"/>
 					<!-- dark squares under the icons: an empty tier reads as a gap, not a hole -->
 					<Frame type="Image" name="FCJH_TierBack1">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -2680,9 +2680,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack2">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="57"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -2691,9 +2691,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack3">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="100"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -2702,9 +2702,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack4">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="143"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -2713,9 +2713,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack5">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="186"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -2724,9 +2724,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack6">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="229"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -2735,9 +2735,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack7">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="272"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -2756,9 +2756,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent1">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -2782,9 +2782,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent2">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="57"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -2808,9 +2808,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent3">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="100"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -2834,9 +2834,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent4">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="143"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -2860,9 +2860,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent5">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="186"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -2886,9 +2886,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent6">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="229"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -2912,9 +2912,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent7">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="272"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -2955,9 +2955,9 @@
 					<RenderPriority val="670"/>
 					<!-- dark squares under the icons: an empty tier reads as a gap, not a hole -->
 					<Frame type="Image" name="FCJH_TierBack1">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -2966,9 +2966,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack2">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="57"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -2977,9 +2977,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack3">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="100"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -2988,9 +2988,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack4">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="143"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -2999,9 +2999,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack5">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="186"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -3010,9 +3010,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack6">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="229"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -3021,9 +3021,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_TierBack7">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="272"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="@UI/PauseScreenDimImage"/>
 						<ColorAdjustMode val="Fill"/>
@@ -3042,9 +3042,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent1">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -3068,9 +3068,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent2">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="57"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon2/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -3094,9 +3094,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent3">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="100"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon3/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -3120,9 +3120,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent4">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="143"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon4/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -3146,9 +3146,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent5">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="186"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon5/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -3172,9 +3172,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent6">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="229"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon6/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -3198,9 +3198,9 @@
 						</StateGroup>
 					</Frame>
 					<Frame type="Image" name="FCJH_Talent7">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="487"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="521"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="272"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="523"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="557"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon7/IconImage/@Texture}"/>
 						<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->
@@ -3235,9 +3235,9 @@
 					</Frame>
 				</Frame>
 					<Frame type="Label" name="FCJH_Tier1">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="525"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="559"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="14"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="539"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="573"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
 						<Style val="FCJH_InspectTier"/>
 						<Text val="1"/>
@@ -3245,9 +3245,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Label" name="FCJH_Tier2">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="525"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="559"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="57"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="539"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="573"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="93"/>
 						<Style val="FCJH_InspectTier"/>
 						<Text val="4"/>
@@ -3255,9 +3255,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Label" name="FCJH_Tier3">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="525"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="559"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="100"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="539"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="573"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="136"/>
 						<Style val="FCJH_InspectTier"/>
 						<Text val="7"/>
@@ -3265,9 +3265,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Label" name="FCJH_Tier4">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="525"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="559"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="143"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="539"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="573"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="179"/>
 						<Style val="FCJH_InspectTier"/>
 						<Text val="10"/>
@@ -3275,9 +3275,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Label" name="FCJH_Tier5">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="525"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="559"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="186"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="539"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="573"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="222"/>
 						<Style val="FCJH_InspectTier"/>
 						<Text val="13"/>
@@ -3285,9 +3285,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Label" name="FCJH_Tier6">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="525"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="559"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="229"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="539"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="573"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="265"/>
 						<Style val="FCJH_InspectTier"/>
 						<Text val="16"/>
@@ -3295,9 +3295,9 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Label" name="FCJH_Tier7">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="525"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="559"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="272"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="539"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="573"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="308"/>
 						<Style val="FCJH_InspectTier"/>
 						<Text val="20"/>
@@ -4589,79 +4589,295 @@
 			<!-- parked; the card's gate moves it onto the card while the card shows -->
 			<Anchor side="Top" relative="$GameUI" pos="Min" offset="9999"/>
 			<Anchor side="Left" relative="$GameUI" pos="Min" offset="9999"/>
-			<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="10078"/>
+			<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="10103"/>
 			<Anchor side="Right" relative="$GameUI" pos="Min" offset="10304"/>
 				<Frame type="CommandButton" name="CommandButton30">
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 					<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="36"/>
-					<Anchor side="Right"  relative="$parent" pos="Min" offset="36"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="52"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="52"/>
+					<Frame type="Image" name="NormalImage">
+						<Anchor side="Top" relative="$parent" pos="Min" offset="5"/>
+						<Anchor side="Left" relative="$parent" pos="Min" offset="5"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-5"/>
+						<Anchor side="Right" relative="$parent" pos="Max" offset="-5"/>
+						<Unclipped val="true"/>
+					</Frame>
+					<Frame type="Image" name="GameButtonDefaultBorder"><Width val="68"/><Height val="68"/><Unclipped val="true"/></Frame>
+					<Frame type="Frame" name="ActiveEffect">
+						<Frame type="Image" name="ActiveEffectImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+						<Frame type="Image" name="ActiveEffect2Image"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+					</Frame>
+					<Frame type="Frame" name="AttentionEffect">
+						<Frame type="Image" name="AttentionEffectImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+						<Frame type="Image" name="AttentionEffect2Image"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+						<Frame type="Image" name="InnerGlowImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+					</Frame>
+					<Frame type="Frame" name="HitTestFrame"><Anchor relative="$parent"/></Frame>
 				</Frame>
 				<Frame type="CommandButton" name="CommandButton31">
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Left"   relative="$parent" pos="Min" offset="43"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="36"/>
-					<Anchor side="Right"  relative="$parent" pos="Min" offset="79"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="47"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="52"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="99"/>
+					<Frame type="Image" name="NormalImage">
+						<Anchor side="Top" relative="$parent" pos="Min" offset="5"/>
+						<Anchor side="Left" relative="$parent" pos="Min" offset="5"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-5"/>
+						<Anchor side="Right" relative="$parent" pos="Max" offset="-5"/>
+						<Unclipped val="true"/>
+					</Frame>
+					<Frame type="Image" name="GameButtonDefaultBorder"><Width val="68"/><Height val="68"/><Unclipped val="true"/></Frame>
+					<Frame type="Frame" name="ActiveEffect">
+						<Frame type="Image" name="ActiveEffectImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+						<Frame type="Image" name="ActiveEffect2Image"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+					</Frame>
+					<Frame type="Frame" name="AttentionEffect">
+						<Frame type="Image" name="AttentionEffectImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+						<Frame type="Image" name="AttentionEffect2Image"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+						<Frame type="Image" name="InnerGlowImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+					</Frame>
+					<Frame type="Frame" name="HitTestFrame"><Anchor relative="$parent"/></Frame>
 				</Frame>
 				<Frame type="CommandButton" name="CommandButton32">
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Left"   relative="$parent" pos="Min" offset="86"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="36"/>
-					<Anchor side="Right"  relative="$parent" pos="Min" offset="122"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="94"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="52"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="146"/>
+					<Frame type="Image" name="NormalImage">
+						<Anchor side="Top" relative="$parent" pos="Min" offset="5"/>
+						<Anchor side="Left" relative="$parent" pos="Min" offset="5"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-5"/>
+						<Anchor side="Right" relative="$parent" pos="Max" offset="-5"/>
+						<Unclipped val="true"/>
+					</Frame>
+					<Frame type="Image" name="GameButtonDefaultBorder"><Width val="68"/><Height val="68"/><Unclipped val="true"/></Frame>
+					<Frame type="Frame" name="ActiveEffect">
+						<Frame type="Image" name="ActiveEffectImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+						<Frame type="Image" name="ActiveEffect2Image"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+					</Frame>
+					<Frame type="Frame" name="AttentionEffect">
+						<Frame type="Image" name="AttentionEffectImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+						<Frame type="Image" name="AttentionEffect2Image"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+						<Frame type="Image" name="InnerGlowImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+					</Frame>
+					<Frame type="Frame" name="HitTestFrame"><Anchor relative="$parent"/></Frame>
 				</Frame>
 				<Frame type="CommandButton" name="CommandButton33">
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Left"   relative="$parent" pos="Min" offset="129"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="36"/>
-					<Anchor side="Right"  relative="$parent" pos="Min" offset="165"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="141"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="52"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="193"/>
+					<Frame type="Image" name="NormalImage">
+						<Anchor side="Top" relative="$parent" pos="Min" offset="5"/>
+						<Anchor side="Left" relative="$parent" pos="Min" offset="5"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-5"/>
+						<Anchor side="Right" relative="$parent" pos="Max" offset="-5"/>
+						<Unclipped val="true"/>
+					</Frame>
+					<Frame type="Image" name="GameButtonDefaultBorder"><Width val="68"/><Height val="68"/><Unclipped val="true"/></Frame>
+					<Frame type="Frame" name="ActiveEffect">
+						<Frame type="Image" name="ActiveEffectImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+						<Frame type="Image" name="ActiveEffect2Image"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+					</Frame>
+					<Frame type="Frame" name="AttentionEffect">
+						<Frame type="Image" name="AttentionEffectImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+						<Frame type="Image" name="AttentionEffect2Image"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+						<Frame type="Image" name="InnerGlowImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+					</Frame>
+					<Frame type="Frame" name="HitTestFrame"><Anchor relative="$parent"/></Frame>
 				</Frame>
 				<Frame type="CommandButton" name="CommandButton34">
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Left"   relative="$parent" pos="Min" offset="172"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="36"/>
-					<Anchor side="Right"  relative="$parent" pos="Min" offset="208"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="188"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="52"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="240"/>
+					<Frame type="Image" name="NormalImage">
+						<Anchor side="Top" relative="$parent" pos="Min" offset="5"/>
+						<Anchor side="Left" relative="$parent" pos="Min" offset="5"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-5"/>
+						<Anchor side="Right" relative="$parent" pos="Max" offset="-5"/>
+						<Unclipped val="true"/>
+					</Frame>
+					<Frame type="Image" name="GameButtonDefaultBorder"><Width val="68"/><Height val="68"/><Unclipped val="true"/></Frame>
+					<Frame type="Frame" name="ActiveEffect">
+						<Frame type="Image" name="ActiveEffectImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+						<Frame type="Image" name="ActiveEffect2Image"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+					</Frame>
+					<Frame type="Frame" name="AttentionEffect">
+						<Frame type="Image" name="AttentionEffectImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+						<Frame type="Image" name="AttentionEffect2Image"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+						<Frame type="Image" name="InnerGlowImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+					</Frame>
+					<Frame type="Frame" name="HitTestFrame"><Anchor relative="$parent"/></Frame>
 				</Frame>
 				<Frame type="CommandButton" name="CommandButton35">
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Left"   relative="$parent" pos="Min" offset="215"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="36"/>
-					<Anchor side="Right"  relative="$parent" pos="Min" offset="251"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="235"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="52"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="287"/>
+					<Frame type="Image" name="NormalImage">
+						<Anchor side="Top" relative="$parent" pos="Min" offset="5"/>
+						<Anchor side="Left" relative="$parent" pos="Min" offset="5"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-5"/>
+						<Anchor side="Right" relative="$parent" pos="Max" offset="-5"/>
+						<Unclipped val="true"/>
+					</Frame>
+					<Frame type="Image" name="GameButtonDefaultBorder"><Width val="68"/><Height val="68"/><Unclipped val="true"/></Frame>
+					<Frame type="Frame" name="ActiveEffect">
+						<Frame type="Image" name="ActiveEffectImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+						<Frame type="Image" name="ActiveEffect2Image"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+					</Frame>
+					<Frame type="Frame" name="AttentionEffect">
+						<Frame type="Image" name="AttentionEffectImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+						<Frame type="Image" name="AttentionEffect2Image"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+						<Frame type="Image" name="InnerGlowImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+					</Frame>
+					<Frame type="Frame" name="HitTestFrame"><Anchor relative="$parent"/></Frame>
 				</Frame>
 				<Frame type="CommandButton" name="CommandButton04">
-					<Anchor side="Top"    relative="$parent" pos="Min" offset="43"/>
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="52"/>
 					<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="79"/>
-					<Anchor side="Right"  relative="$parent" pos="Min" offset="36"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="104"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="52"/>
+					<Frame type="Image" name="NormalImage">
+						<Anchor side="Top" relative="$parent" pos="Min" offset="5"/>
+						<Anchor side="Left" relative="$parent" pos="Min" offset="5"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-5"/>
+						<Anchor side="Right" relative="$parent" pos="Max" offset="-5"/>
+						<Unclipped val="true"/>
+					</Frame>
+					<Frame type="Image" name="GameButtonDefaultBorder"><Width val="68"/><Height val="68"/><Unclipped val="true"/></Frame>
+					<Frame type="Frame" name="ActiveEffect">
+						<Frame type="Image" name="ActiveEffectImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+						<Frame type="Image" name="ActiveEffect2Image"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+					</Frame>
+					<Frame type="Frame" name="AttentionEffect">
+						<Frame type="Image" name="AttentionEffectImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+						<Frame type="Image" name="AttentionEffect2Image"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+						<Frame type="Image" name="InnerGlowImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+					</Frame>
+					<Frame type="Frame" name="HitTestFrame"><Anchor relative="$parent"/></Frame>
 				</Frame>
 				<Frame type="CommandButton" name="CommandButton00">
-					<Anchor side="Top"    relative="$parent" pos="Min" offset="43"/>
-					<Anchor side="Left"   relative="$parent" pos="Min" offset="43"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="79"/>
-					<Anchor side="Right"  relative="$parent" pos="Min" offset="79"/>
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="52"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="47"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="104"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="99"/>
+					<Frame type="Image" name="NormalImage">
+						<Anchor side="Top" relative="$parent" pos="Min" offset="5"/>
+						<Anchor side="Left" relative="$parent" pos="Min" offset="5"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-5"/>
+						<Anchor side="Right" relative="$parent" pos="Max" offset="-5"/>
+						<Unclipped val="true"/>
+					</Frame>
+					<Frame type="Image" name="GameButtonDefaultBorder"><Width val="68"/><Height val="68"/><Unclipped val="true"/></Frame>
+					<Frame type="Frame" name="ActiveEffect">
+						<Frame type="Image" name="ActiveEffectImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+						<Frame type="Image" name="ActiveEffect2Image"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+					</Frame>
+					<Frame type="Frame" name="AttentionEffect">
+						<Frame type="Image" name="AttentionEffectImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+						<Frame type="Image" name="AttentionEffect2Image"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+						<Frame type="Image" name="InnerGlowImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+					</Frame>
+					<Frame type="Frame" name="HitTestFrame"><Anchor relative="$parent"/></Frame>
 				</Frame>
 				<Frame type="CommandButton" name="CommandButton01">
-					<Anchor side="Top"    relative="$parent" pos="Min" offset="43"/>
-					<Anchor side="Left"   relative="$parent" pos="Min" offset="86"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="79"/>
-					<Anchor side="Right"  relative="$parent" pos="Min" offset="122"/>
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="52"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="94"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="104"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="146"/>
+					<Frame type="Image" name="NormalImage">
+						<Anchor side="Top" relative="$parent" pos="Min" offset="5"/>
+						<Anchor side="Left" relative="$parent" pos="Min" offset="5"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-5"/>
+						<Anchor side="Right" relative="$parent" pos="Max" offset="-5"/>
+						<Unclipped val="true"/>
+					</Frame>
+					<Frame type="Image" name="GameButtonDefaultBorder"><Width val="68"/><Height val="68"/><Unclipped val="true"/></Frame>
+					<Frame type="Frame" name="ActiveEffect">
+						<Frame type="Image" name="ActiveEffectImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+						<Frame type="Image" name="ActiveEffect2Image"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+					</Frame>
+					<Frame type="Frame" name="AttentionEffect">
+						<Frame type="Image" name="AttentionEffectImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+						<Frame type="Image" name="AttentionEffect2Image"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+						<Frame type="Image" name="InnerGlowImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+					</Frame>
+					<Frame type="Frame" name="HitTestFrame"><Anchor relative="$parent"/></Frame>
 				</Frame>
 				<Frame type="CommandButton" name="CommandButton02">
-					<Anchor side="Top"    relative="$parent" pos="Min" offset="43"/>
-					<Anchor side="Left"   relative="$parent" pos="Min" offset="129"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="79"/>
-					<Anchor side="Right"  relative="$parent" pos="Min" offset="165"/>
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="52"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="141"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="104"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="193"/>
+					<Frame type="Image" name="NormalImage">
+						<Anchor side="Top" relative="$parent" pos="Min" offset="5"/>
+						<Anchor side="Left" relative="$parent" pos="Min" offset="5"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-5"/>
+						<Anchor side="Right" relative="$parent" pos="Max" offset="-5"/>
+						<Unclipped val="true"/>
+					</Frame>
+					<Frame type="Image" name="GameButtonDefaultBorder"><Width val="68"/><Height val="68"/><Unclipped val="true"/></Frame>
+					<Frame type="Frame" name="ActiveEffect">
+						<Frame type="Image" name="ActiveEffectImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+						<Frame type="Image" name="ActiveEffect2Image"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+					</Frame>
+					<Frame type="Frame" name="AttentionEffect">
+						<Frame type="Image" name="AttentionEffectImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+						<Frame type="Image" name="AttentionEffect2Image"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+						<Frame type="Image" name="InnerGlowImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+					</Frame>
+					<Frame type="Frame" name="HitTestFrame"><Anchor relative="$parent"/></Frame>
 				</Frame>
 				<Frame type="CommandButton" name="CommandButton03">
-					<Anchor side="Top"    relative="$parent" pos="Min" offset="43"/>
-					<Anchor side="Left"   relative="$parent" pos="Min" offset="172"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="79"/>
-					<Anchor side="Right"  relative="$parent" pos="Min" offset="208"/>
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="52"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="188"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="104"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="240"/>
+					<Frame type="Image" name="NormalImage">
+						<Anchor side="Top" relative="$parent" pos="Min" offset="5"/>
+						<Anchor side="Left" relative="$parent" pos="Min" offset="5"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-5"/>
+						<Anchor side="Right" relative="$parent" pos="Max" offset="-5"/>
+						<Unclipped val="true"/>
+					</Frame>
+					<Frame type="Image" name="GameButtonDefaultBorder"><Width val="68"/><Height val="68"/><Unclipped val="true"/></Frame>
+					<Frame type="Frame" name="ActiveEffect">
+						<Frame type="Image" name="ActiveEffectImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+						<Frame type="Image" name="ActiveEffect2Image"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+					</Frame>
+					<Frame type="Frame" name="AttentionEffect">
+						<Frame type="Image" name="AttentionEffectImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+						<Frame type="Image" name="AttentionEffect2Image"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+						<Frame type="Image" name="InnerGlowImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+					</Frame>
+					<Frame type="Frame" name="HitTestFrame"><Anchor relative="$parent"/></Frame>
 				</Frame>
 				<Frame type="CommandButton" name="CommandButton05">
-					<Anchor side="Top"    relative="$parent" pos="Min" offset="43"/>
-					<Anchor side="Left"   relative="$parent" pos="Min" offset="215"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="79"/>
-					<Anchor side="Right"  relative="$parent" pos="Min" offset="251"/>
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="52"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="235"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="104"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="287"/>
+					<Frame type="Image" name="NormalImage">
+						<Anchor side="Top" relative="$parent" pos="Min" offset="5"/>
+						<Anchor side="Left" relative="$parent" pos="Min" offset="5"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-5"/>
+						<Anchor side="Right" relative="$parent" pos="Max" offset="-5"/>
+						<Unclipped val="true"/>
+					</Frame>
+					<Frame type="Image" name="GameButtonDefaultBorder"><Width val="68"/><Height val="68"/><Unclipped val="true"/></Frame>
+					<Frame type="Frame" name="ActiveEffect">
+						<Frame type="Image" name="ActiveEffectImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+						<Frame type="Image" name="ActiveEffect2Image"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+					</Frame>
+					<Frame type="Frame" name="AttentionEffect">
+						<Frame type="Image" name="AttentionEffectImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+						<Frame type="Image" name="AttentionEffect2Image"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+						<Frame type="Image" name="InnerGlowImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
+					</Frame>
+					<Frame type="Frame" name="HitTestFrame"><Anchor relative="$parent"/></Frame>
 				</Frame>
 				<Frame type="CommandButton" name="CommandButton13">
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="9999"/>

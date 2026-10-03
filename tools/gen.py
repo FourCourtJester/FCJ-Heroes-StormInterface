@@ -296,12 +296,14 @@ def constants_layout(cfg):
     size = row["talent_popup_size"]
     const(name("hero", "popup", "size"), u(size))
     const(name("hero", "popup", "t"), -u(size / 2), "the icon straddles the cell's top edge")
-    for team in ("blue", "red"):
-        # pop-ups sit on the cell box's horizontal centre (user's call, 2026-09-27, after
-        # comparing it with the top edge's centre, 19 units toward the lean); offsets from
-        # the cell's middle, kept per team so either side can be nudged on its own
-        const(name("hero", team, "popup", "l"), -u(size / 2))
-        const(name("hero", team, "popup", "r"), u(size / 2))
+    # pop-ups sit on the middle of the plate's TOP EDGE: the slant puts it half an overlap
+    # outward of the cell box's centre (left on blue, right on red). 2026-09-27..10-03 they sat
+    # on the box's centre; at the bigger plates that read as leaning toward the screen's middle
+    # (user, 2026-10-03). Offsets from the cell's middle, per team so either side can be nudged.
+    shift = HeroCell(cfg).overlap / 2
+    for team, sign in (("blue", -1), ("red", 1)):
+        const(name("hero", team, "popup", "l"), round(sign * shift) - u(size / 2))
+        const(name("hero", team, "popup", "r"), round(sign * shift) + u(size / 2))
 
     return XML_DECL + GENERATED + "<Desc>\n" + "\n".join(lines) + "\n</Desc>\n"
 
