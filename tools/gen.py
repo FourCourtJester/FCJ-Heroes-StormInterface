@@ -1777,14 +1777,20 @@ def heroic_tip_panel(cfg):
     Calibration 5 (ce0c352): Varian's level-4 slot gave Taunt (his heroic), everyone else's
     level-10 slot their heroic; Tracer got Pulse Bomb's text (no header) with Quantum Spike
     flashing first - the level-10 icon under it - so that icon is now off on Tracer's plate."""
-    return heroic_tip_copy(cfg, "FCJH_HeroicTips", 4, round(1024.4 / 0.9), {"blue": -63, "red": -86}, 700) +         heroic_tip_copy(cfg, "FCJH_HeroicTips2", 2, round(1032 / 0.9), {"blue": 6, "red": -25}, 710)
+    # Hover areas grown to our heroic icon (51 x 51 px = 57 units), 2026-10-02: the icons keep
+    # their Left anchor and stay centred on their row (Top/Bottom at its Mid), so a wider
+    # level-4 icon (38 -> 57 units) moves its centre ~10 units right: copy 2's shift less 10.
+    return (heroic_tip_copy(cfg, "FCJH_HeroicTips", 4, round(1024.4 / 0.9), {"blue": -63, "red": -86}, 700, (62, 57))
+            + heroic_tip_copy(cfg, "FCJH_HeroicTips2", 2, round(1032 / 0.9), {"blue": -4, "red": -35}, 710, (57, 57)))
 
 
-def heroic_tip_copy(cfg, root, tier_icon, row_top, shift, prio):
-    """One copy of the talent row with only icon `tier_icon` answering the mouse (faded): 4 for
-    every hero but HeroicTier 2 ones, 2 only for those."""
+def heroic_tip_copy(cfg, root, tier_icon, row_top, shift, prio, size):
+    """One copy of the talent row with only icon `tier_icon` answering the mouse (faded, at
+    `size` units): 4 for every hero but HeroicTier 2 ones, 2 only for those."""
+    w, h = size
     icons = ("".join(muted("UnitStatusTalentIcon", f"TalentTreeIcon{k}", 13) for k in range(1, 8) if k != tier_icon)
-             + faded("UnitStatusTalentIcon", f"TalentTreeIcon{tier_icon}", 13))
+             + f'{NL}{TAB * 13}<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon{tier_icon}"><Alpha val="0"/>'
+               f'<Width val="{w}"/><Height val="{h}"/></Frame>')
     t = lambda k: NL + TAB * k
     tier2_on, other_on = ("false", "true") if tier_icon == 4 else ("true", "false")
     switch = lambda cell: (f'{t(13)}<StateGroup name="FCJH_HeroicTier">{t(14)}<DefaultState val="Other"/>'
