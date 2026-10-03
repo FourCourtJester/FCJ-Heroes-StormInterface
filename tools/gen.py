@@ -1087,13 +1087,16 @@ def heal_popups(cfg):
     plus = ",".join(str(int(hp["colour"][i:i + 2], 16)) for i in (0, 2, 4))
     # the plus art carries a wide transparent margin, so it's drawn larger than the box
     box = Units(cfg)(cfg["hero_row"]["talent_popup_size"])
-    plus_inset = round(box * (1 - hp["plus_scale"]) / 2)
-    content = (popup_image("FCJH_Back", "@UI/PauseScreenDimImage", 0,
+    # drawn `shrink` px smaller than the talent pop-up, centred in the same spot: a talent pick
+    # matters more, and a heal pop-up under it then shows as a thin ring (user, 2026-10-02)
+    inset = Units(cfg)(hp["shrink"] / 2)
+    plus_inset = round(box * (1 - hp["plus_scale"]) / 2) + inset
+    content = (popup_image("FCJH_Back", "@UI/PauseScreenDimImage", inset,
                            '\n\t\t\t\t\t\t\t<ColorAdjustMode val="Fill"/>\n\t\t\t\t\t\t\t<AdjustmentColor val="235,8,24,12"/>')
                + popup_image("FCJH_Plus", "@UI/Storm_UI_Play_RandomHero_Button_Icon_Active_Healer", plus_inset,
                              f'\n\t\t\t\t\t\t\t<Color val="{plus}"/>')
                # 1 unit outside the box: the talent pop-up's square shows ~42 px on its 40 px icon
-               + popup_image("FCJH_Border", f"{TEXTURE_DIR}\\{HEAL_BORDER}", -1))
+               + popup_image("FCJH_Border", f"{TEXTURE_DIR}\\{HEAL_BORDER}", inset - 1))
     out = []
     for n in range(10):
         _, cell = popup_cell(n)
