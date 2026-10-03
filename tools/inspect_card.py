@@ -78,22 +78,38 @@ def parked(name, ftype):
 COMMAND_PANEL = "$GameUI/UIContainer/ConsoleUIContainer/CommandPanel"
 
 
+CARD = "$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect"
+
+
 def command_switch():
     """Blizzard's command card (the selected hero's ability buttons, with their own tooltips,
-    talent actives and the right R for every hero - how Ahli's hero card does abilities) shown
-    only while the card is: the game brings the player HUD back whenever it likes, so a looping
-    animation asserts it, one frame per side (hidden frames don't run animations, so only the
-    shown one asserts). Was always hidden with the rest of the HUD (FCJH_Hidden) until
-    2026-10-02."""
-    def side(name, shown):
-        return (f'{T*2}<Frame type="Frame" name="{name}">\n'
-                f'{T*3}<Anchor relative="$parent"/>\n{T*3}<Visible val="{str(not shown).lower()}"/>\n'
-                f'{T*3}<AcceptsMouse val="false"/>\n'
-                f'{T*3}<Animation name="FCJH_Assert">\n{T*4}<Event event="OnShown" action="Play"/>\n'
-                f'{T*4}<Controller type="Visibility" end="Loop" frame="{COMMAND_PANEL}">\n'
-                f'{T*5}<Key type="Bool" time="0" value="{str(shown).lower()}"/>\n'
-                f'{T*4}</Controller>\n{T*3}</Animation>\n{T*2}</Frame>\n')
-    return side("FCJH_CommandOn", True) + side("FCJH_CommandOff", False)
+    talent actives and the right R for every hero - how Ahli's hero card does abilities),
+    held shown by a looping animation (the game brings the player HUD back, or takes it away,
+    whenever it likes). It's never hidden: while the card is closed it's parked off screen
+    (command_anchors, from the card's gate). The first try showed and hid it with two looping
+    animations, one per side, and it never showed (2026-10-03): a stopped loop seems to keep
+    its last value. Was always hidden with the rest of the HUD (FCJH_Hidden) until 2026-10-02."""
+    return (f'{T*2}<Frame type="Frame" name="FCJH_CommandShown">\n'
+            f'{T*3}<Anchor relative="$parent"/>\n{T*3}<AcceptsMouse val="false"/>\n'
+            f'{T*3}<Animation name="FCJH_Assert">\n{T*4}<Event event="OnShown" action="Play"/>\n'
+            f'{T*4}<Controller type="Visibility" end="Loop" frame="{COMMAND_PANEL}">\n'
+            f'{T*5}<Key type="Bool" time="0" value="true"/>\n'
+            f'{T*4}</Controller>\n{T*3}</Animation>\n{T*2}</Frame>\n')
+
+
+def command_anchors(on_card, indent, tag="Action"):
+    """The command card's four anchors: on the card's ability rows, or parked off screen.
+    tag "Action": as StateGroup actions (the gate); "Anchor": as the frame's own anchors."""
+    top, bottom = ABIL_ROWS[0], ABIL_ROWS[1] + TAL_SIZE
+    if on_card:
+        sides = (("Top", CARD, "Min", top), ("Left", CARD, "Min", M),
+                 ("Bottom", CARD, "Min", bottom), ("Right", CARD, "Max", -M))
+    else:
+        sides = (("Top", "$GameUI", "Min", 9999), ("Left", "$GameUI", "Min", 9999),
+                 ("Bottom", "$GameUI", "Min", 9999 + bottom - top), ("Right", "$GameUI", "Min", 9999 + W - 2 * M))
+    target = f' type="SetAnchor" frame="{COMMAND_PANEL}"' if tag == "Action" else ""
+    return "".join(f'{T*indent}<{tag}{target} side="{s}" relative="{rel}" pos="{pos}" offset="{v}"/>\n'
+                   for s, rel, pos, v in sides)
 
 
 # The command card's buttons on the card's two ability rows, in Blizzard's own order (players
@@ -117,8 +133,9 @@ def command_panel():
     """Blizzard's command card laid over the card's ability rows. It lives in the console
     container, as the card now does (one step under it in RenderPriority), so its buttons draw
     over the card's back and take the mouse first. The panel covers only the ability band, so
-    it can't cover the card's other tooltips."""
-    top, bottom = ABIL_ROWS[0], ABIL_ROWS[1] + TAL_SIZE
+    it can't cover the card's other tooltips. Blizzard's hero-specific command-card panel and
+    control-group panel hang off it, so they go where it goes (parked while the card's shut)."""
+    top = ABIL_ROWS[0]
     buttons = []
     for r, row in enumerate(COMMAND_ROWS):
         for c, k in enumerate(row):
@@ -135,11 +152,8 @@ def command_panel():
         for ftype, n in COMMAND_PUT_AWAY)
     return (f'{T*2}<!-- Blizzard\'s command card on the card\'s ability rows (inspect_card.command_panel) -->\n'
             f'{T*2}<Frame type="CommandPanel" name="CommandPanel">\n'
-            f'{T*3}<Anchor side="Top"    relative="$parent/FCJH_Inspect" pos="Min" offset="{top}"/>\n'
-            f'{T*3}<Anchor side="Left"   relative="$parent/FCJH_Inspect" pos="Min" offset="{M}"/>\n'
-            f'{T*3}<Anchor side="Bottom" relative="$parent/FCJH_Inspect" pos="Min" offset="{bottom}"/>\n'
-            f'{T*3}<Anchor side="Right"  relative="$parent/FCJH_Inspect" pos="Max" offset="-{M}"/>\n'
-            + "".join(buttons) + away + f'{T*2}</Frame>\n')
+            f'{T*3}<!-- parked; the card\'s gate moves it onto the card while the card shows -->\n'
+            + command_anchors(False, 3, "Anchor") + "".join(buttons) + away + f'{T*2}</Frame>\n')
 
 
 def card():
@@ -155,12 +169,10 @@ def card():
            f'{T*4}<State name="Show">\n'
            f'{T*5}<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/TargetInfoFrame" Visible="true"/>\n'
            f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="true"/>\n'
-           f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_CommandOff" Visible="false"/>\n'
-           f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_CommandOn" Visible="true"/>\n{T*4}</State>\n'
+           + command_anchors(True, 5) + f'{T*4}</State>\n'
            f'{T*4}<State name="Hide">\n'
            f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="false"/>\n'
-           f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_CommandOn" Visible="false"/>\n'
-           f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_CommandOff" Visible="true"/>\n{T*4}</State>\n'
+           + command_anchors(False, 5) + f'{T*4}</State>\n'
            f'{T*3}</StateGroup>\n{T*2}</Frame>\n' + command_switch() +
            f'{T*2}<!-- The card: our copy of Blizzard\'s inspect box -->\n'
            f'{T*2}<Frame type="TargetInfoFrame" name="FCJH_Inspect">\n'

@@ -24,35 +24,27 @@
 				<State name="Show">
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/TargetInfoFrame" Visible="true"/>
 					<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="true"/>
-					<Action type="SetProperty" frame="$parent/FCJH_CommandOff" Visible="false"/>
-					<Action type="SetProperty" frame="$parent/FCJH_CommandOn" Visible="true"/>
+					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="382"/>
+					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="14"/>
+					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="461"/>
+					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Max" offset="-14"/>
 				</State>
 				<State name="Hide">
 					<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="false"/>
-					<Action type="SetProperty" frame="$parent/FCJH_CommandOn" Visible="false"/>
-					<Action type="SetProperty" frame="$parent/FCJH_CommandOff" Visible="true"/>
+					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Top" relative="$GameUI" pos="Min" offset="9999"/>
+					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Left" relative="$GameUI" pos="Min" offset="9999"/>
+					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Bottom" relative="$GameUI" pos="Min" offset="10078"/>
+					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Right" relative="$GameUI" pos="Min" offset="10304"/>
 				</State>
 			</StateGroup>
 		</Frame>
-		<Frame type="Frame" name="FCJH_CommandOn">
+		<Frame type="Frame" name="FCJH_CommandShown">
 			<Anchor relative="$parent"/>
-			<Visible val="false"/>
 			<AcceptsMouse val="false"/>
 			<Animation name="FCJH_Assert">
 				<Event event="OnShown" action="Play"/>
 				<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel">
 					<Key type="Bool" time="0" value="true"/>
-				</Controller>
-			</Animation>
-		</Frame>
-		<Frame type="Frame" name="FCJH_CommandOff">
-			<Anchor relative="$parent"/>
-			<Visible val="true"/>
-			<AcceptsMouse val="false"/>
-			<Animation name="FCJH_Assert">
-				<Event event="OnShown" action="Play"/>
-				<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel">
-					<Key type="Bool" time="0" value="false"/>
 				</Controller>
 			</Animation>
 		</Frame>
@@ -4594,10 +4586,11 @@
 		</Frame>
 		<!-- Blizzard's command card on the card's ability rows (inspect_card.command_panel) -->
 		<Frame type="CommandPanel" name="CommandPanel">
-			<Anchor side="Top"    relative="$parent/FCJH_Inspect" pos="Min" offset="382"/>
-			<Anchor side="Left"   relative="$parent/FCJH_Inspect" pos="Min" offset="14"/>
-			<Anchor side="Bottom" relative="$parent/FCJH_Inspect" pos="Min" offset="461"/>
-			<Anchor side="Right"  relative="$parent/FCJH_Inspect" pos="Max" offset="-14"/>
+			<!-- parked; the card's gate moves it onto the card while the card shows -->
+			<Anchor side="Top" relative="$GameUI" pos="Min" offset="9999"/>
+			<Anchor side="Left" relative="$GameUI" pos="Min" offset="9999"/>
+			<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="10078"/>
+			<Anchor side="Right" relative="$GameUI" pos="Min" offset="10304"/>
 				<Frame type="CommandButton" name="CommandButton30">
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 					<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
