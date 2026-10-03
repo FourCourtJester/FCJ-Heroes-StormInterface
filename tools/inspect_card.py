@@ -13,7 +13,8 @@ What the rounds established (the file's comments carry the detail):
   - talents are keyed to a PLAYER, a selection only gives a unit: the card carries the ten
     talent-pane rows and shows the one whose plate holds the selected hero (FCJH_IsPlayerN, a
     unit check per hero from the game data)
-  - D Q W E Z per hero from each hero unit's ability card in the game data (hero_cards)
+  - abilities are Blizzard's own command card laid over the card (command_panel, 2026-10-02):
+    native tooltips, talent actives and the right R for every hero - Ahli's method
   - X closes it; its back takes the mouse so a click inside doesn't deselect (round 9)
 """
 from functools import lru_cache
@@ -40,18 +41,6 @@ ABIL_LABEL, ABIL_ROWS = 366, (382, 425)
 TAL_LABEL, TAL = 471, 487
 STATS_LABEL, STATS, STAT_ROW = 551, 569, 24
 M = 14                              # side margin
-
-# The ability card's slots: (hotkey, frame, row, column, fixed AbilityLink). D Q W E Z come per
-# hero from the game data (hero_cards, set by FCJH_Abilities); R is the talent strip's heroic
-# (player_pack); Z falls back to the shared mount. 1-5 are talent-granted actives - Ahli's
-# method, one icon per candidate ability shown only if the hero has it: two of Auriel's so
-# far, as a test; a table for every hero is still to do.
-SLOTS = [("1", "FCJH_Abil1", 0, 0, "AurielAngelicFlight"), ("2", "FCJH_Abil2", 0, 1, "AurielShieldOfHope"),
-         ("3", "FCJH_Abil3", 0, 2, ""), ("4", "FCJH_Abil4", 0, 3, ""), ("5", "FCJH_Abil5", 0, 4, ""),
-         ("D", "FCJH_AbilD", 1, 0, ""), ("Q", "FCJH_AbilQ", 1, 1, ""), ("W", "FCJH_AbilW", 1, 2, ""),
-         ("E", "FCJH_AbilE", 1, 3, ""), ("R", "FCJH_AbilR", 1, 4, ""),   # R's icon comes with the player pack (player_pack)
-         ("Z", "FCJH_AbilZ", 1, 5, "Mount")]
-
 
 def rect(top, left, bottom, right, rel="$parent", i=4, right_pos="Min"):
     t = T * i
@@ -113,6 +102,10 @@ def command_switch():
 # right as in the default UI). Each button shows its own hotkey. The hearth (13), Blizzard's
 # hidden spare (15), the empty-slot art, targeting prompts and tutorial arrows are put away.
 COMMAND_ROWS = (("30", "31", "32", "33", "34", "35"), ("04", "00", "01", "02", "03", "05"))
+# The keys those buttons are expected to show (for the design canvas only - in game each
+# button labels itself). Not yet confirmed in game (2026-10-02).
+COMMAND_KEYS = {"04": "Z", "00": "Q", "01": "W", "02": "E", "03": "R", "05": "D",
+                **{str(30 + i): str(1 + i) for i in range(6)}}
 COMMAND_PUT_AWAY = ([("CommandButton", "CommandButton13"), ("CommandButton", "CommandButton15"),
                      ("Image", "MiddleFill"), ("Image", "CommandTargetImage"), ("Label", "CommandTargetName"),
                      ("Label", "CommandTargetPrompt"), ("Frame", "ButtonEffectAttention"), ("Frame", "HudEffectPhased")]
@@ -286,52 +279,6 @@ def hero_units():
 HEROES = []   # every hero unit id (hero_units): set by layout()
 
 
-SLOT_KEYS = {"Trait": "D", "Ability1": "Q", "Ability2": "W", "Ability3": "E", "Mount": "Z"}
-NOT_CUSTOM_MOUNT = {"Mount", "Dismount", "attack", "stop"}
-
-
-def hero_cards():
-    """{hero unit: {D/Q/W/E/Z: ability id}} from each hero unit's ability card (CUnit
-    CardLayouts index 0, LayoutButtons by Slot). Rules (user, 2026-09-29): D only when the
-    trait is something you press - a trait slot holding a plain Passive button counts as
-    passive, even if a situational button shares it (Chromie's detonate); Z only for a custom
-    mount (most heroes list none: the shared mount lives elsewhere). Per slot: the first
-    command button with no Requirements that isn't a Cancel."""
-    import xml.etree.ElementTree as ET
-    cards = {}
-    for f in list((MODS / "heromods").rglob("*.xml")) + list((MODS / "heroesdata.stormmod").rglob("*.xml")):
-        try:
-            root = ET.parse(f).getroot()
-        except ET.ParseError:
-            continue
-        for u in root.iter("CUnit"):
-            uid = u.get("id") or ""
-            if not uid.startswith("Hero") or uid not in HEROES:
-                continue
-            layout = next((c for c in u.findall("CardLayouts") if c.get("index", "0") == "0"), None)
-            if layout is None:
-                continue
-            card, passive = {}, set()
-            for b in layout.findall("LayoutButtons"):
-                key = SLOT_KEYS.get(b.get("Slot"))
-                if not key:
-                    continue
-                if b.get("Type") == "Passive" and not b.get("Requirements"):
-                    passive.add(key)
-                if b.get("Type") != "AbilCmd" or b.get("Requirements") or "Cancel" in (b.get("Face") or ""):
-                    continue
-                abil = (b.get("AbilCmd") or "").split(",")[0]
-                if not abil or (key == "Z" and abil in NOT_CUSTOM_MOUNT):
-                    continue
-                card.setdefault(key, abil)
-            if "D" in passive:
-                card.pop("D", None)
-            if card:
-                cards[uid] = card
-    return cards
-
-
-CARDS = {}   # {hero unit: {D/Q/W/E/Z: ability}} (hero_cards): set by layout()
 CROP = None   # the plates' portrait crop (top, left, bottom, right): set by layout()
 
 
@@ -340,7 +287,7 @@ def plate(n):
 
 
 def player_pack(n):
-    """Player n's talents (7 icons), heroic (at R) and name, from the talent pane's row n.
+    """Player n's talents (7 icons) and name, from the talent pane's row n.
     Hidden (Alpha 0) unless FCJH_IsPlayer{n} matches."""
     row = ROW.format(n=n)
     tree = f"{row}/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0"
@@ -374,15 +321,6 @@ def player_pack(n):
                 + f'{T*6}<Texture val="{{{plate(n)}/HeroPortraitImage/@Texture}}"/>\n'
                 f'{T*6}<TextureCoords top="{CROP[0]}" left="{CROP[1]}" bottom="{CROP[2]}" right="{CROP[3]}"/>\n'
                 f'{T*6}<RenderPriority val="668"/>\n{T*6}<AcceptsMouse val="false"/>\n{T*5}</Frame>\n')
-    rl, rt = M + 4 * TAL_STEP, ABIL_ROWS[1]
-    heroic = (f'{T*5}<Frame type="UnitStatusAbilIcon" name="FCJH_Heroic">\n'
-              + rect(rt, rl, rt + TAL_SIZE, rl + TAL_SIZE, i=6)
-              + f'{T*6}<AbilityLink val="{{{tree}/HeroSelectedTalentTreeFrame/@HeroicAbilLink}}"/>\n'
-              f'{T*6}<AcceptsMouse val="false"/>\n'
-              f'{T*6}<Frame type="AbilIcon" name="AbilIcon">\n{T*7}<Anchor relative="$parent"/>\n'
-              f'{T*7}<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><AcceptsMouse val="true"/><AcceptsMouseTooltip val="true"/></Frame>\n'
-              f'{T*7}<Frame type="Label" name="CooldownLabel"><Anchor relative="$parent"/><Style val="FCJH_HeroicCooldown"/></Frame>\n'
-              f'{T*6}</Frame>\n{T*5}</Frame>\n')
     name = label("FCJH_PlayerName", NAME_BAND + 24, M, NAME_BAND + 40, 220, "FCJH_InspectSub",
                  f"{{{row}/PlayerNameFrame/PlayerNameLabel/@Text}}", 5)
     return (f'{T*4}<Frame type="Frame" name="FCJH_Player{n}">\n{T*5}<Anchor relative="$parent"/>\n'
@@ -390,7 +328,7 @@ def player_pack(n):
             f'{T*5}<!-- dark squares under the icons: an empty tier reads as a gap, not a hole -->\n'
             + "".join(fill(f"FCJH_TierBack{k}", TAL, M + (k - 1) * TAL_STEP, TAL + TAL_SIZE,
                            M + (k - 1) * TAL_STEP + TAL_SIZE, "200,30,32,48", 665, 5) for k in range(1, 8))
-            + portrait + icons + heroic + name + f'{T*4}</Frame>\n')
+            + portrait + icons + name + f'{T*4}</Frame>\n')
 
 
 # Heroes whose selected unit can differ from the plate's: (selected, on the plate). Guesses
@@ -415,54 +353,6 @@ def matcher(n):
 def unit():
     """The card's contents: a selection panel inside it, holding Blizzard's per-unit widgets.
     A SelectionUnitStatusPanel without a PlayerId follows the observer's selection."""
-    t6 = T * 6
-    abil = []
-    for key, name, row, col, fixed in SLOTS:
-        left, top = M + col * TAL_STEP, ABIL_ROWS[row]
-        link = f'\n{t6}<AbilityLink val="{fixed}"/>' if fixed else ""
-        abil_key = lambda name: f'''{T*5}<StateGroup name="{name}Present">
-{t6}<DefaultState val="Yes"/>
-{t6}<State name="NoIcon"><When type="Property" frame="$parent/{name}" Visible="false"/><Action type="SetProperty" frame="$this" Alpha="0"/></State>
-{t6}<State name="NoAbil"><When type="Property" frame="$parent/{name}/AbilIcon" Visible="false"/><Action type="SetProperty" frame="$this" Alpha="0"/></State>
-{t6}<State name="Yes"><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-{T*5}</StateGroup>
-'''
-        abil.append(f'''{T*5}<Frame type="UnitStatusAbilIcon" name="{name}">
-{rect(top, left, top + TAL_SIZE, left + TAL_SIZE, i=6)}{t6}<Unclipped val="true"/>{link}
-{t6}<Frame type="AbilIcon" name="AbilIcon">
-{t6}\t<Anchor relative="$parent"/>
-{t6}\t<Frame type="Image" name="IconImage"><Anchor relative="$parent"/><Unclipped val="true"/><AcceptsMouse val="true"/><AcceptsMouseTooltip val="true"/></Frame>
-{t6}\t<Frame type="Label" name="CooldownLabel">
-{t6}\t\t<Anchor relative="$parent"/>
-{t6}\t\t<Style val="FCJH_HeroicCooldown"/>
-{t6}\t\t<RenderPriority val="700"/>
-{t6}\t\t<Animation name="FCJH_Dim">
-{t6}\t\t\t<Event event="OnShown" action="DirectionForward,Play"/>
-{t6}\t\t\t<Event event="OnHidden" action="DirectionReverse,Play"/>
-{t6}\t\t\t<Controller type="Color" end="Pause" frame="$parent/IconImage">
-{t6}\t\t\t\t<Key type="Curve" time="0" value="255,255,255" inout="Step"/>
-{t6}\t\t\t\t<Key type="Curve" time="0.01" value="70,70,70" inout="Step"/>
-{t6}\t\t\t</Controller>
-{t6}\t\t</Animation>
-{t6}\t</Frame>
-{t6}\t<Frame type="ProgressBar" name="CooldownBar"><Anchor relative="$parent"/><Alpha val="0"/></Frame>
-{t6}</Frame>
-{T*5}</Frame>
-''' + label(f"{name}Key", top + TAL_SIZE - 14, left + 2, top + TAL_SIZE, left + 16, "FCJH_InspectKey", key, 5,
-                  extra=abil_key(name) if key in "12345" else ""))
-    states = []
-    # round 6: every hero's D Q W E Z from the game data (hero_cards); a slot with nothing in it
-    # hides, icon and key letter both (D: passive traits; Z: the standard mount)
-    for unit_id, card in sorted(CARDS.items()):
-        acts = ""
-        for key in "DQWEZ":
-            frame, link = f"FCJH_Abil{key}", card.get(key)
-            if link:
-                acts += f'{T*7}<Action type="SetProperty" frame="$this/{frame}" AbilityLink="{link}"/>\n'
-            a = 255 if link else 0
-            acts += (f'{T*7}<Action type="SetProperty" frame="$this/{frame}" Alpha="{a}"/>\n'
-                     f'{T*7}<Action type="SetProperty" frame="$this/{frame}Key" Alpha="{a}"/>\n')
-        states.append(f'{T*6}<State name="{unit_id}">\n{T*7}<When type="Property" Unit="{unit_id}"/>\n{acts}{T*6}</State>\n')
     icons = "".join(
         f'{T*6}<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon{n}">\n'
         f'{T*7}<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>\n'
@@ -556,15 +446,9 @@ def unit():
 {T*4}     only gives a unit: rounds 3-4 drew blank, then team-coloured, squares. So the card
 {T*4}     carries all ten of the talent pane's rows (PlayerFrame0-9, the same source the talent
 {T*4}     pop-ups read), and shows the one whose plate holds the selected hero - see
-{T*4}     FCJH_IsPlayerN below. Each pack also brings that player's heroic (R) and name. -->
+{T*4}     FCJH_IsPlayerN below. Each pack also brings that player's name. -->
 {"".join(player_pack(n) for n in range(10))}{tiers}
-{T*4}<!-- 6. abilities, laid out like Blizzard's ability card: 1-5 on top (talent actives: two of
-{T*4}     Auriel's as a test, shown only if she has them), D Q W E R Z below. D Q W E Z per hero
-{T*4}     from the game data; R from the talent strip's heroic -->
-{"".join(abil)}{T*4}<StateGroup name="FCJH_Abilities">
-{T*5}<DefaultState val="Other"/>
-{"".join(states)}{T*5}<State name="Other"/>
-{T*4}</StateGroup>
+{T*4}<!-- 6. abilities: Blizzard's command card, laid over the card (command_panel) -->
 
 {T*4}<!-- which player is selected: player N when the selected unit's hero is the hero on
 {T*4}     plate N (unit checks, one state per hero, heroes from the game data). Mirror matches
@@ -593,8 +477,6 @@ def layout(crop, head):
     global CROP
     CROP = crop
     HEROES[:] = cached_heroes()
-    CARDS.clear()
-    CARDS.update(cached_cards())
     return (head + FILE_HEADER + card() + unit() + "\t\t\t</Frame>\n\t\t</Frame>\n"
             + command_panel() + "\t</Frame>\n\t</Frame>\n\t</Frame>\n</Desc>\n")
 
@@ -602,9 +484,3 @@ def layout(crop, head):
 @lru_cache(maxsize=None)
 def cached_heroes():
     return tuple(hero_units())
-
-
-@lru_cache(maxsize=None)
-def cached_cards():
-    HEROES[:] = cached_heroes()
-    return dict(hero_cards())
