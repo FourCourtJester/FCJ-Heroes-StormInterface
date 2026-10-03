@@ -1565,68 +1565,34 @@ def hero_cell_template(team, c, cfg):
 OVERVIEW = "$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel"
 
 
-# DIAGNOSTIC (2026-09-30; kept until the talent-row lifts are solved and rewritten): a ladder of coloured squares mid-screen, one
-# child at each level from the panel above the talent row down to PlayerFrame0's UnitStatusFrame0.
-# The last colour that shows is the deepest level that still draws anything. Order, left to right:
-# 0 white (ObserverHeroOverviewPanel, the control), 1 red (TalentsOverview), 2 orange (TalentOverview),
-# 3 yellow (HeroTalentsPanelContainer), 4 green (PlayerFrame0), 5 cyan (TalentsContainerFrame,
-# Batch), 6 blue (SelectionUnitStatusPanel), 7 purple (UnitStatusFrame0).
-DIAG_COLOURS = ["255,255,255,255", "255,255,40,40", "255,255,150,0", "255,255,240,0",
-                "255,40,220,60", "255,0,230,230", "255,40,90,255", "255,170,60,255"]
-
-
 TAB, NL = chr(9), chr(10)
 
 
-def diag_square(i, indent, row_y=500):
+def spread(indent):
+    """Stretches the frame it's put in over the whole screen, deaf to the mouse and to
+    tooltips. The game's observer talent row gets it on every frame above the pieces lifted
+    out of it (talent_row_lifts): that's the arrangement the lifted Tracer meter was seen
+    working in (2026-09-30). Mouse off alone isn't enough - tooltips are hit-tested apart from
+    clicks, and with only that these frames caught every tooltip on screen."""
     t = TAB * indent
-    x, y, size = round((700 + 40 * i) / 0.9), round(row_y / 0.9), 33
-    body = [f'<Frame type="Image" name="FCJH_Diag{i}">',
-            f'{TAB}<Anchor side="Left" relative="$GameUI" pos="Min" offset="{x}"/>',
-            f'{TAB}<Anchor side="Top" relative="$GameUI" pos="Min" offset="{y}"/>',
-            f'{TAB}<Width val="{size}"/>', f'{TAB}<Height val="{size}"/>',
-            f'{TAB}<Texture val="@UI/PauseScreenDimImage"/>', f'{TAB}<ColorAdjustMode val="Fill"/>',
-            f'{TAB}<AdjustmentColor val="{DIAG_COLOURS[i]}"/>', f'{TAB}<Unclipped val="true"/>',
-            f'{TAB}<RenderPriority val="900"/>', f'{TAB}<AcceptsMouse val="false"/>', '</Frame>']
-    return ''.join(NL + t + line for line in body)
-
-
-def whole_screen(indent):
-    """DIAGNOSTIC (2026-09-30): a frame stretched over the whole screen, not taking the mouse.
-    Every frame above a lifted talent icon gets this, to test whether the mouse only reaches a
-    child that lies inside its parents' boxes (parked, the row's boxes are all off screen)."""
-    t = TAB * indent
-    # tooltips are hit-tested apart from clicks: mouse off alone left these frames catching
-    # every tooltip on screen (2026-09-30)
     return ("".join(f'{NL}{t}<Anchor side="{side}" relative="$GameUI" pos="{pos}" offset="0"/>'
                     for side, pos in (("Left", "Min"), ("Top", "Min"), ("Right", "Max"), ("Bottom", "Max")))
             + f'{NL}{t}<AcceptsMouse val="false"/>{NL}{t}<AcceptsMouseTooltip val="false"/>')
 
 
-def talent_chain(cfg, n, inner, d=lambda i, ind: ""):  # noqa: B008
-    """One player's frames in a talent row (Blizzard's top-bar talent row template), each
-    stretched over the whole screen (DIAGNOSTIC whole_screen), with `inner` inside its
-    UnitStatusFrame0. d: the ladder squares, for player 0 of the observer row."""
+def talent_chain(n, inner):
+    """Player n's frames in the game's observer talent row, each spread over the screen, with
+    `inner` inside its UnitStatusFrame0."""
     return f"""
-							<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame{n}">{whole_screen(8)}{d(4, 8)}
+							<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame{n}">{spread(8)}
 								<Frame type="Frame" name="TalentsContainerFrame">
-									<Batch val="false"/>{whole_screen(9)}{d(5, 9)}
-									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">{whole_screen(10)}{d(6, 10)}
-										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">{whole_screen(11)}{d(7, 11)}{inner}
+									<Batch val="false"/>{spread(9)}
+									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">{spread(10)}
+										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">{spread(11)}{inner}
 										</Frame>
 									</Frame>
 								</Frame>
 							</Frame>"""
-
-
-def test_icon(n, y, indent=12):
-    """DIAGNOSTIC: player n's level-1 talent icon in open space mid-screen, row y (px)."""
-    ox, oy = round((700 + 44 * n) / 0.9), round(y / 0.9)
-    t = TAB * indent
-    return (f'{NL}{t}<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">'
-            + "".join(f'{NL}{t}{TAB}<Anchor side="{sd}" relative="$GameUI" pos="Min" offset="{v}"/>'
-                      for sd, v in (("Left", ox), ("Top", oy), ("Right", ox + 44), ("Bottom", oy + 44)))
-            + f'{NL}{t}{TAB}<Alpha val="255"/>{NL}{t}{TAB}<RenderPriority val="900"/>{NL}{t}{TAB}<Unclipped val="true"/>{NL}{t}</Frame>')
 
 
 def faded(frame_type, name_, indent):
@@ -1634,7 +1600,7 @@ def faded(frame_type, name_, indent):
 
 
 def muted(frame_type, name_, indent):
-    """Faded AND deaf to the mouse: a faded talent icon still answered the mouse with its own
+    """Faded AND deaf to the mouse: a faded talent icon still answers the mouse with its own
     tooltip ("Parting Gift" over Tracer's heroic, 2026-09-30). Mouse and tooltip off on the
     icon switch them off for everything inside it."""
     return (f'{NL}{TAB * indent}<Frame type="{frame_type}" name="{name_}"><Alpha val="0"/>'
@@ -1646,21 +1612,20 @@ def talent_row_lifts(cfg):
     Pulse Bomb charges rather than cooling down; Blizzard shows the charge on that row
     (TracerChargeContainer: there for every hero, its meter only for one with that ability).
     Moved over our heroic's gold frame, on Blizzard's own art. Seen working 2026-09-30.
-    The row is the game's: it keeps the row's talent panel hidden, so an animation holds it
-    shown (below), and gives no tooltips from it however it's shown - the heroic tooltips come
-    from our own copy of the row instead (heroic_tip_panel)."""
+    The row is the game's, and the game keeps its talent panel hidden: Blizzard's
+    CleanTalentsPanelTemplate starts Visible false, so nothing under it drew wherever it was
+    moved (its values still update - our sensors read them). An animation holds it shown.
+    It gives no tooltips however it's shown; the heroic tooltips come from our own copies of
+    the row (heroic_tip_panel). Everything else in it is faded and deaf to the mouse."""
     out = []
     for n in range(10):
-        d = (lambda i, ind: diag_square(i, ind)) if n == 0 else (lambda i, ind: "")
         team, cell = popup_cell(n)
         l, t, r, b = heroic_frame_rect(cfg, team.lower())
         edge = lambda side, rel, pos, v: f'<Anchor side="{side}" relative="{rel}" pos="{pos}" offset="{v}"/>'
-        # DIAGNOSTIC: with the row's boxes over the whole screen its other pieces would show;
-        # the ones we know of are faded out (leaves only - fading a parent hides its children)
-        rest = "".join(faded("UnitStatusTalentIcon", f"TalentTreeIcon{k}", 12) for k in (2, 3, 4, 5, 6, 7))
-        out.append(talent_chain(cfg, n, f"""
-											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">{whole_screen(12)}{rest}{test_icon(n, 570)}
-											</Frame>
+        icons = "".join(muted("UnitStatusTalentIcon", f"TalentTreeIcon{k}", 12) for k in range(1, 8))
+        out.append(talent_chain(n, f"""
+											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">{spread(12)}{icons}
+											</Frame>{muted("UnitStatusAbilIcon", "UnitStatusAbil", 11)}
 											<Frame type="Frame" name="TracerChargeContainer">
 												{edge("Left", cell, "Min", l)}
 												{edge("Top", cell, "Min", t)}
@@ -1676,15 +1641,10 @@ def talent_row_lifts(cfg):
 														<Unclipped val="true"/>
 													</Frame>
 												</Frame>
-											</Frame>""", d))
-    # Blizzard's CleanTalentsPanelTemplate starts hidden (Visible false) and the game keeps the
-    # observer's copy hidden, so nothing under it drew wherever it was moved - its values still
-    # update (our sensors read them). Found with a ladder of diagnostic squares, 2026-09-30.
+											</Frame>"""))
     return ("""
-					<!-- Pieces of the observer talent row lifted onto our plates (tools/gen.py talent_row_lifts) -->
-""" + diag_square(0, 5) + """
-					<Frame type="Frame" name="TalentsOverview">
-""" + whole_screen(6) + """  <!-- DIAGNOSTIC: was parked off screen at +9999 -->
+					<!-- Tracer's charge meter, lifted out of the observer talent row onto our plates (tools/gen.py talent_row_lifts) -->
+					<Frame type="Frame" name="TalentsOverview">""" + spread(6) + """
 						<!-- the game keeps the talent panel hidden: assert it shown every frame (animations
 						     outrank properties; FCJH_Hidden's recipe, turned round) -->
 						<Animation name="FCJH_KeepRowShown">
@@ -1695,104 +1655,54 @@ def talent_row_lifts(cfg):
 							<Controller type="Visibility" end="Loop" frame="TalentOverview/HeroTalentsPanelContainer">
 								<Key type="Bool" time="0" value="true"/>
 							</Controller>
-						</Animation>""" + diag_square(1, 6) + """
+						</Animation>
 						<Frame type="HeroTalentsPanel" name="TalentOverview">
 							<Visible val="true"/>
-							<Batch val="false"/>  <!-- batched, it may draw nothing outside its own box -->""" + whole_screen(7) + diag_square(2, 7) + """
-							<Frame type="Frame" name="HeroTalentsPanelContainer">""" + whole_screen(8) + diag_square(3, 8) + "".join(out) + """
+							<Batch val="false"/>  <!-- batched, it may draw nothing outside its own box -->""" + spread(7) + """
+							<Frame type="Frame" name="HeroTalentsPanelContainer">""" + spread(8) + "".join(out) + """
 							</Frame>
 						</Frame>
 					</Frame>""")
 
 
-def marker(name_, rel, colour, indent, corner=0):
-    """DIAGNOSTIC (2026-10-02): shows where frame `rel` really is on screen - a see-through
-    box over it, or (corner > 0) a solid square that size on its top-left. Deaf to the mouse.
-    Unlike the ladder squares (which only show that a level draws at all) it sits ON a frame."""
-    t = TAB * indent
-    if corner:
-        sides = (("Left", "Min", 0), ("Top", "Min", 0), ("Right", "Min", corner), ("Bottom", "Min", corner))
-    else:
-        sides = (("Left", "Min", 0), ("Top", "Min", 0), ("Right", "Max", 0), ("Bottom", "Max", 0))
-    return (f'{NL}{t}<Frame type="Image" name="{name_}">'
-            + "".join(f'{NL}{t}{TAB}<Anchor side="{sd}" relative="{rel}" pos="{pos}" offset="{v}"/>' for sd, pos, v in sides)
-            + f'{NL}{t}{TAB}<Texture val="@UI/PauseScreenDimImage"/>{NL}{t}{TAB}<ColorAdjustMode val="Fill"/>'
-            + f'{NL}{t}{TAB}<AdjustmentColor val="{colour}"/>{NL}{t}{TAB}<Unclipped val="true"/>'
-            + f'{NL}{t}{TAB}<RenderPriority val="950"/>'
-            + f'{NL}{t}{TAB}<AcceptsMouse val="false"/>{NL}{t}{TAB}<AcceptsMouseTooltip val="false"/>{NL}{t}</Frame>')
-
-
-def copies_toggle():
-    """DIAGNOSTIC (2026-10-02): Control+Shift+9 hides and shows our copy of the talent row AND
-    its talent panel, to see whether inspect comes back without them (it stopped showing once
-    our copies were in; hiding only the copy's root didn't bring it back)."""
-    t = lambda k: NL + TAB * k
-    ctrl = "".join(
-        f'{t(7)}<Controller type="Visibility" end="Pause" frame="$parent/{f}">'
-        f'{t(8)}<Key type="Bool" time="0" value="true"/>'
-        f'{t(8)}<Key type="Bool" time="0.001" value="false"/>'
-        f'{t(7)}</Controller>'
-        for f in ("FCJH_HeroicTips", "FCJH_HeroicTips/TalentOverview"))
-    return (f'{t(5)}<Frame type="ToggleControl" name="FCJH_CopiesToggle">'
-            f'{t(6)}<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>'
-            f'{t(6)}<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>'
-            f'{t(6)}<Width val="1"/>{t(6)}<Height val="1"/>'
-            f'{t(6)}<Shortcut val="Control+Shift+9"/>{t(6)}<Visible val="false"/>{t(6)}<AcceptsMouse val="false"/>'
-            f'{t(6)}<Animation name="FCJH_Hide">'
-            f'{t(7)}<Event event="OnShown" action="DirectionForward,Play"/>'
-            f'{t(7)}<Event event="OnHidden" action="DirectionReverse,Play"/>'
-            f'{ctrl}{t(6)}</Animation>{t(5)}</Frame>')
-
-
-def row_toggle():
-    """DIAGNOSTIC (2026-10-02): Control+Shift+8 hides and shows the game's observer talent row
-    (talent_row_lifts; Tracer's meter goes with it), to see whether inspect comes back without
-    it. Inspect stopped at 80a3f39, which changed that row; hiding our copy (Ctrl+Shift+9)
-    didn't bring it back."""
-    return copies_toggle().replace("FCJH_CopiesToggle", "FCJH_RowToggle").replace(
-        "Control+Shift+9", "Control+Shift+8").replace(
-        '<Controller type="Visibility" end="Pause" frame="$parent/FCJH_HeroicTips">', '<Controller type="Visibility" end="Pause" frame="$parent/TalentsOverview">').replace(
-        '<Controller type="Visibility" end="Pause" frame="$parent/FCJH_HeroicTips/TalentOverview">', '<Controller type="Visibility" end="Pause" frame="$parent/TalentsOverview/TalentOverview">')
+# Heroic tooltips (heroic_tip_panel). In the default UI a heroic's tooltip is the talent
+# tooltip of the tier it was picked in. Worked out in game, 2026-09-30..10-02:
+#   - the game's own observer talent row never gives tooltips, however it's shown or moved;
+#   - our OWN copy of it (TalentsOverviewTopBarTemplate) does, but only in Blizzard's layout:
+#     an icon moved outside its player's box (HeroTalentsPanelPlayerFrame) gives none. So each
+#     player's box is moved instead - statically, by its Left anchor - until the right icon
+#     sits on our heroic. Blizzard anchors each box to the player's top-bar cell (our plates);
+#   - level 10 (TalentTreeIcon4) holds most heroes' heroic; HeroicTier 2 heroes (Varian) pick
+#     it at level 4 (TalentTreeIcon2), so they get a second copy lined up on that icon;
+#   - Tracer's heroic is no talent: a plain frame carries Pulse Bomb's text from the game
+#     strings (the talent tooltip's name/cooldown header isn't there);
+#   - the row's heroic ABILITY icon (UnitStatusAbil) draws nothing and gives no tooltip;
+#   - the hover area is the icon itself, re-sized to a 44-unit (40 px) square centred on our
+#     heroic (user: most of the slanted icon, corners left out); it stays inside the box.
+# Measured with markers on the icons (calibrations 1-5): level-10 icon 62 x 36 units, level-4
+# 38 x 19. The icons keep their Left anchor and stay centred on their row (Top/Bottom at its
+# Mid), so re-sizing one moves its centre by half the change; the shifts include that.
+HEROIC_TIPS = (
+    # root, icon, row top (units), box Left from the cell (Blizzard: 82 blue / 15 red), priority
+    ("FCJH_HeroicTips", 4, round(1024.4 / 0.9), {"blue": -54, "red": -77}, 700),
+    ("FCJH_HeroicTips2", 2, round(1032 / 0.9), {"blue": 3, "red": -28}, 710),
+)
+HEROIC_TIP_SIZE = 44
 
 
 def heroic_tip_panel(cfg):
-    """DIAGNOSTIC (2026-10-02), calibration 5: our own copies of the observer talent row in
-    Blizzard's layout (the one arrangement whose icons give tooltips), each player's talent
-    box shifted so the icon of the tier holding the heroic sits on our heroic.
-    Blizzard anchors each box to the player's top-bar cell (our plates) +82 units (blue) / +15
-    (red); only the boxes' Left anchors move, statically; their size and contents stay Blizzard's.
-    Calibration 2 (c22ae12) gave the first heroic tooltips (Sonya's, user 2026-10-02);
-    calibration 3 (0c9f954) put the level-10 slot (55 x 33 px) on our heroic within 1 px, every
-    other icon off and deaf to the mouse (they gave talent tooltips all over the plates). Tracer
-    and Varian gave their level-10 talent: Tracer's heroic is no talent; Varian's is at level 4
-    (HeroicTier 2). Calibration 4 (cdc94b0): the row's heroic ABILITY icon (UnitStatusAbil)
-    draws nothing (Blizzard keeps its image at Alpha 0), gives no tooltip and blocks the mouse.
-    Now:
-      - copy 1 (yellow): the level-10 icon, switched off for HeroicTier 2 heroes;
-      - copy 2 (magenta): the level-4 icon, only for HeroicTier 2 heroes (Varian), its box
-        shifted so that icon sits on the heroic (calibration 2: 62 px left of / 7 px above the
-        level-10 slot on blue, 55 / 7.5 on red);
-      - Tracer: a plain frame over the slot carrying Pulse Bomb's tooltip text from the game
-        strings, shown only while the plate holds Tracer.
-    Calibration 5 (ce0c352): Varian's level-4 slot gave Taunt (his heroic), everyone else's
-    level-10 slot their heroic; Tracer got Pulse Bomb's text (no header) with Quantum Spike
-    flashing first - the level-10 icon under it - so that icon is now off on Tracer's plate."""
-    # Hover areas: a square of 44 units (40 px) centred on our heroic icon (51 px, slanted art),
-    # user 2026-10-02 - most of the icon, the slant's corners left out, and inside the row's
-    # player box (48 units tall). The icons keep their Left anchor and stay centred on their
-    # row (Top/Bottom at its Mid), so a width change moves the centre by half of it; the shifts
-    # make up for that (level 10: 62 -> 44, +9; level 4: 38 -> 44, -3).
-    return (heroic_tip_copy(cfg, "FCJH_HeroicTips", 4, round(1024.4 / 0.9), {"blue": -54, "red": -77}, 700, (44, 44))
-            + heroic_tip_copy(cfg, "FCJH_HeroicTips2", 2, round(1032 / 0.9), {"blue": 3, "red": -28}, 710, (44, 44)))
+    """Tooltips on our heroics: two copies of the observer talent row lined up on them."""
+    return "".join(heroic_tip_copy(cfg, *spec) for spec in HEROIC_TIPS)
 
 
-def heroic_tip_copy(cfg, root, tier_icon, row_top, shift, prio, size):
-    """One copy of the talent row with only icon `tier_icon` answering the mouse (faded, at
-    `size` units): 4 for every hero but HeroicTier 2 ones, 2 only for those."""
-    w, h = size
+def heroic_tip_copy(cfg, root, tier_icon, row_top, shift, prio):
+    """One copy of the talent row with only icon `tier_icon` answering the mouse (invisible,
+    re-sized to the hover square): 4 for every hero but HeroicTier 2 ones and Tracer, 2 only
+    for HeroicTier 2 ones. Copy 4 also carries Tracer's tooltip."""
+    s = HEROIC_TIP_SIZE
     icons = ("".join(muted("UnitStatusTalentIcon", f"TalentTreeIcon{k}", 13) for k in range(1, 8) if k != tier_icon)
              + f'{NL}{TAB * 13}<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon{tier_icon}"><Alpha val="0"/>'
-               f'<Width val="{w}"/><Height val="{h}"/></Frame>')
+               f'<Width val="{s}"/><Height val="{s}"/></Frame>')
     t = lambda k: NL + TAB * k
     tier2_on, other_on = ("false", "true") if tier_icon == 4 else ("true", "false")
     switch = lambda cell: (f'{t(13)}<StateGroup name="FCJH_HeroicTier">{t(14)}<DefaultState val="Other"/>'
@@ -1802,12 +1712,9 @@ def heroic_tip_copy(cfg, root, tier_icon, row_top, shift, prio, size):
               f'<Action type="SetProperty" frame="$this/TalentTreeIcon{tier_icon}" Visible="{tier2_on}"/></State>'
               f'{t(14)}<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon{tier_icon}" Visible="{other_on}"/></State>'
               f'{t(13)}</StateGroup>')
-    # (the yellow / magenta slot markers came out 2026-10-02: the user wanted the heroics seen)
-    d = lambda i, ind: diag_square(i, ind, 680)
     out = []
     for n in range(10):
         team, cell = popup_cell(n)
-        dd = d if n == 0 and tier_icon == 4 else (lambda i, ind: "")
         slot = f"$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon{tier_icon}"
         tracer = ""
         if tier_icon == 4:
@@ -1824,30 +1731,30 @@ def heroic_tip_copy(cfg, root, tier_icon, row_top, shift, prio, size):
                       f'{t(13)}</StateGroup>{t(12)}</Frame>')
         out.append(f"""
 								<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame{n}">
-									<Anchor side="Left" relative="{cell}" pos="Min" offset="{shift[team.lower()]}"/>{dd(4, 9)}
+									<Anchor side="Left" relative="{cell}" pos="Min" offset="{shift[team.lower()]}"/>
 									<Frame type="Frame" name="TalentsContainerFrame">
-										<Batch val="false"/>{dd(5, 10)}
-										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">{dd(6, 11)}
-											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">{dd(7, 12)}
+										<Batch val="false"/>
+										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">{icons}{switch(cell)}
 												</Frame>{muted("Frame", "TracerChargeContainer", 12)}{muted("UnitStatusAbilIcon", "UnitStatusAbil", 12)}{tracer}
 											</Frame>
 										</Frame>
 									</Frame>
 								</Frame>""")
-    dd = d if tier_icon == 4 else (lambda i, ind: "")
     return (f"""
-					<!-- DIAGNOSTIC: our own copy of the observer talent row, Blizzard's layout, groups shifted onto the heroics (level {10 if tier_icon == 4 else 4} slot) -->
+					<!-- Heroic tooltips: our own copy of the observer talent row, each player's box moved so the
+					     level-{10 if tier_icon == 4 else 4} icon sits on our heroic (tools/gen.py heroic_tip_panel) -->
 					<Frame type="Frame" name="{root}" template="TalentsOverviewPanel/TalentsOverviewTopBarTemplate">
 						<Anchor side="Top"   relative="$GameUI" pos="Min" offset="{row_top}"/>
 						<Anchor side="Left"  relative="$GameUI" pos="Min" offset="0"/>
 						<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 						<Height val="100"/>
-						<RenderPriority val="{prio}"/>{dd(1, 6)}
+						<RenderPriority val="{prio}"/>
 						<Frame type="HeroTalentsPanel" name="TalentOverview">
 							<Visible val="true"/>
-							<Batch val="false"/>{dd(2, 7)}
-							<Frame type="Frame" name="HeroTalentsPanelContainer">{dd(3, 8)}""" + "".join(out) + """
+							<Batch val="false"/>
+							<Frame type="Frame" name="HeroTalentsPanelContainer">""" + "".join(out) + """
 							</Frame>
 						</Frame>
 					</Frame>""")
@@ -1976,7 +1883,7 @@ def hero_row_layout(cfg):
 					<!-- Blizzard's top-bar talent rows are anchored to the cells, so they follow
 					     them down here. Hidden with Alpha 0, not parked: the talent pop-ups watch
 					     their icons, which must stay alive. -->
-{talent_row_lifts(cfg)}{heroic_tip_panel(cfg)}{copies_toggle()}{row_toggle()}
+{talent_row_lifts(cfg)}{heroic_tip_panel(cfg)}
 {chr(10).join(cells)}
 				</Frame>
 			</Frame>

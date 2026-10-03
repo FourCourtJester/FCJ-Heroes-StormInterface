@@ -43,7 +43,8 @@ drawn by OBS over empty regions the interface leaves (§6).
   (per-Viking ones in each third), Viking bars in thirds, Rexxar's bar full height (Misha's
   hidden), fountain-ready marker, Abathur clone marker, and Blizzard's in-game heroic panel
   (icon, frame, ready glow, cooldown count and dim; Tracer's Pulse Bomb charge instead of a
-  cooldown). Clicking a plate selects the hero and locks the camera, as in the default UI.
+  cooldown), with the heroic's **tooltip** on hover (2026-10-02; Tracer's has no name line yet).
+  Clicking a plate selects the hero and locks the camera, as in the default UI.
 - **Team XP** along each row's top edge and **core HP** above it, cut to the slant; hidden
   until a team's first hero loads; rows pack toward the minimap with fewer than five heroes
   (untested).
@@ -54,7 +55,8 @@ drawn by OBS over empty regions the interface leaves (§6).
 - **Info panes** — talents, KDA/damage, healing, structures/XP: one at a time on
   `Ctrl+Shift+1-4`, each with an X; the leader in each column softly highlighted.
 - **Inspect card** — the selected unit's portrait, name/player/level, fountain, bars, buffs,
-  abilities, talents and stats; shows exactly when the default UI's small inspector would.
+  abilities, talents and stats; shows exactly when the default UI's small inspector would
+  (which is never while a replay is paused).
 - **Kill feed** top-right, **minimap** bottom-centre, **replay controls** top-left with a tab
   when collapsed (replays only). Blizzard's player HUD and talent picker never show.
 
@@ -182,15 +184,29 @@ src/dev/                                     dev-only probes (empty now; packed 
 - **To follow a Blizzard frame's visibility, park it (+ Alpha 0), don't force it hidden** —
   a looping Visibility animation also erases the signal (the inspect card follows the default
   UI's inspector this way).
+- **A paused replay opens no inspector.** Clicking a unit while paused selects nothing new, so
+  the inspect card can't appear; a selection made before pausing stays. Test inspect unpaused
+  (an evening went on a "regression" that was this, 2026-10-02).
 - **Restating a Blizzard StateGroup by name overrides it** (Rexxar's bar, `HeightOverride`).
-- **`IgnoreParentAlpha`** lets one child draw inside a see-through parent — a way to lift one
-  piece out of a panel we keep alive at Alpha 0 (Tracer's meter, the heroic's tooltip icon).
+- **`IgnoreParentAlpha` doesn't reach through an Alpha-0 ancestor several levels up.** To lift
+  a piece out of a Blizzard panel, keep the panel at full alpha and fade its other pieces leaf by
+  leaf. The observer talent row also starts hidden (`CleanTalentsPanelTemplate` Visible false)
+  and the game keeps it so: a looping Visibility animation on an always-shown ancestor plus
+  `Batch false` makes it draw (Tracer's meter, `talent_row_lifts`).
 - **Property conditions take `operator=`** (`LessThan`, `NotEqual`...), but label text still
   compares as text; the heal sensor matches the health percent string by string.
 - **In the observer, selection is what locks the camera to a hero.** Keep Blizzard's click
   behaviour on the plates.
-- Tooltips come from Blizzard's own tooltip-bearing frames (talent icons, its own panels);
-  an ability icon of ours showed none.
+- **Tooltips come from Blizzard's own tooltip-bearing frames**, and only in their own layout:
+  - the game's observer talent row never gives tooltips; our OWN copy of it does
+    (`TalentsOverviewTopBarTemplate`), but an icon moved outside its player's box gives none —
+    move the box (`HeroTalentsPanelPlayerFrame`, by its Left anchor), not the icon;
+  - an icon can be re-sized in place (Width/Height) and still give its tooltip;
+  - a faded icon still answers the mouse: fade AND switch mouse and tooltip off (`muted`);
+  - a frame with mouse off but tooltips on still swallows tooltips under it;
+  - an ability icon (ours, or the row's `UnitStatusAbil`) showed none;
+  - a plain frame can carry text: `<Tooltip val="@Button/Tooltip/..."/>`; Ahli composes
+    headers with a `TextFormatFrame` (`FormatText` + `Replacement`) bound as `{.../@Text}`.
 
 ### Practices
 
@@ -214,6 +230,12 @@ src/dev/                                     dev-only probes (empty now; packed 
   (`MPQEditor.exe e <mpq> * <dest> /fp`).
 - **`references/AhliObs.StormInterface/`, `references/Spazzo/`** — two mature observer
   interfaces, unpacked. Ahli's is MIT. Most techniques here came from reading them.
+- **`references/AhliObs075/`** — Ahli's 0.75, the version the user runs and our visual
+  benchmark ("Heroes-like": polished, familiar; don't drift far from it). It's minified:
+  pretty-print before reading. Worth taking from it: his hero card's abilities are Blizzard's
+  own `CommandPanel` (native tooltips, talent actives 1-5, the right R for every hero);
+  `TextFormatFrame` tooltips; Tracer's segmented ammo bar and round Pulse Bomb meter (Blizzard
+  templates, `_ColoredManaBars` / `_BottomLeft`).
 
 `references/` is gitignored. Key base-UI files, under
 `references/JamiePhan/mods/core.stormmod/base.stormdata/ui/layout/ui/`:
@@ -257,7 +279,8 @@ survive new heroes. Spazzo's per-hero textures are why his files run to 13,000 l
 
 **Inherit bindings; never reconstruct them.** Put new frames *inside* the frame that owns the
 binding — the CC sensor lives inside each cell's `HeroStatus`, so it always matches the
-portrait above it; the resource bar, heal sensor and heroic tooltip do the same.
+portrait above it; the resource bar and heal sensor do the same. (The heroic tooltip can't:
+its talent icons only give tooltips inside Blizzard's own talent-row copy — see §3.)
 
 **Use Blizzard's CC plate, not a rebuilt one.** A hand-built label rendered nothing; the
 engine's element is self-managing.
@@ -277,17 +300,14 @@ five segments would duplicate the hero row. If plates read too small, widen them
 
 ## 7. What's next
 
-**Waiting on an in-game check** (built 2026-09-30):
-- plates at the new scale (1.5125): fit, pop-ups, bars, CC, death timers
-- Tracer's charge meter and the heroic tooltip, both lifted out of the hidden talent row with
-  `IgnoreParentAlpha`; that build carries a magenta test square on Tracer's heroic (it shows =
-  the lift works) — remove it (`FCJH_LiftCheck`, `tools/gen.py talent_row_lifts`) afterwards
-- the inspect card's X, and clicks inside it no longer closing it
+**Next** (2026-10-02, after the heroic-tooltip work was cleaned up):
+- confirm the clean build: heroic tooltips (incl. Varian, Tracer), Tracer's meter, inspect
+- Tracer's heroic tooltip: a name line (a `TextFormatFrame` and our own game string)
+- inspect card abilities from Blizzard's `CommandPanel`, as Ahli does — replaces our per-hero
+  ability table (`hero_cards`), the unfinished talent-actives table and Tracer's empty D/R
+- art pass items from Ahli: Tracer's segmented ammo bar and round Pulse Bomb meter
 
-**If the lift works**, it can replace some mirrors: e.g. Blizzard's own heroic cooldown sweep and
-count (`UnitStatusAbil`, which already follows the moved heroic talent icon) instead of our
-copied label and dim states. Only the talent row can be lifted this way — `PartyFramePanel` is
-hidden outright for observers, not faded.
+How the heroic tooltips work: `tools/gen.py`, the comment above `HEROIC_TIPS`.
 
 **Open:**
 - map objectives: many are pinned to the screen's right edge (Blizzard's minimap sits there);

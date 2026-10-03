@@ -86,60 +86,6 @@ def parked(name, ftype):
             f'{T*4}</Frame>\n')
 
 
-def lamp(name, x, colour, extra=""):
-    """DIAGNOSTIC: a 30 px square at (x, 400) px on screen, hidden until something shows it."""
-    ox, oy = round(x / 0.9), round(400 / 0.9)
-    return (f'{T*2}<Frame type="Image" name="{name}">\n'
-            + "".join(f'{T*3}<Anchor side="{sd}" relative="$GameUI" pos="Min" offset="{v}"/>\n'
-                      for sd, v in (("Left", ox), ("Top", oy), ("Right", ox + 33), ("Bottom", oy + 33)))
-            + f'{T*3}<Texture val="@UI/PauseScreenDimImage"/>\n{T*3}<ColorAdjustMode val="Fill"/>\n'
-            f'{T*3}<AdjustmentColor val="{colour}"/>\n{T*3}<RenderPriority val="950"/>\n{T*3}<Visible val="false"/>\n'
-            f'{T*3}<AcceptsMouse val="false"/>\n{T*3}<AcceptsMouseTooltip val="false"/>\n{extra}{T*2}</Frame>\n')
-
-
-def inspect_diagnostics():
-    """DIAGNOSTIC (2026-10-02): inspect stopped showing at 80a3f39 (a talent-row change) and
-    hiding either talent row doesn't bring it back. Two lamps at (1000 / 1040, 400) px:
-    green while Blizzard's own inspector (the card's on/off switch) is shown, cyan while our
-    card is; Control+Shift+7 forces our card shown, whatever the switch says."""
-    watch = (f'{T*3}<StateGroup name="FCJH_Watch">\n{T*4}<DefaultState val="Off"/>\n'
-             f'{T*4}<State name="On"><When type="Property" frame="$parent/FCJH_Inspect" Visible="true"/>'
-             f'<Action type="SetProperty" frame="$this" Visible="true"/></State>\n'
-             f'{T*4}<State name="Off"><Action type="SetProperty" frame="$this" Visible="false"/></State>\n'
-             f'{T*3}</StateGroup>\n')
-    force = (f'{T*2}<Frame type="ToggleControl" name="FCJH_ForceInspect">\n'
-             f'{T*3}<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>\n'
-             f'{T*3}<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>\n'
-             f'{T*3}<Width val="1"/>\n{T*3}<Height val="1"/>\n'
-             f'{T*3}<Shortcut val="Control+Shift+7"/>\n{T*3}<Visible val="false"/>\n{T*3}<AcceptsMouse val="false"/>\n'
-             f'{T*3}<Animation name="FCJH_Force">\n'
-             f'{T*4}<Event event="OnShown" action="DirectionForward,Play"/>\n'
-             f'{T*4}<Event event="OnHidden" action="DirectionReverse,Play"/>\n'
-             f'{T*4}<Controller type="Visibility" end="Pause" frame="$parent/FCJH_Inspect">\n'
-             f'{T*5}<Key type="Bool" time="0" value="false"/>\n'
-             f'{T*5}<Key type="Bool" time="0.001" value="true"/>\n'
-             f'{T*4}</Controller>\n{T*3}</Animation>\n{T*2}</Frame>\n')
-    # Calibration 7: Blizzard's inspector stops showing partway through a game (worked at 1:03,
-    # dead by 10:00, no jumps; forced, the card draws). A selection panel of our own, outside
-    # the card, as a candidate switch: the orange lamp (1080, 400) shows while its unit frame does.
-    sensor = (f'{T*2}<Frame type="SelectionUnitStatusPanel" name="FCJH_SelSensor">\n'
-              f'{T*3}<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>\n'
-              f'{T*3}<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>\n'
-              f'{T*3}<Width val="4"/>\n{T*3}<Height val="4"/>\n{T*3}<HeroesOnly val="False"/>\n'
-              f'{T*3}<AcceptsMouse val="false"/>\n'
-              f'{T*3}<Frame type="UnitStatusFrame" name="UnitStatusFrame0">\n{T*4}<Anchor relative="$parent"/>\n'
-              f'{T*4}<AcceptsMouse val="false"/>\n{T*3}</Frame>\n{T*2}</Frame>\n')
-    sel_watch = (f'{T*3}<StateGroup name="FCJH_Watch">\n{T*4}<DefaultState val="Off"/>\n'
-                 f'{T*4}<State name="On"><When type="Property" frame="$parent/FCJH_SelSensor/UnitStatusFrame0" Visible="true"/>'
-                 f'<Action type="SetProperty" frame="$this" Visible="true"/></State>\n'
-                 f'{T*4}<State name="Off"><Action type="SetProperty" frame="$this" Visible="false"/></State>\n'
-                 f'{T*3}</StateGroup>\n')
-    return (f'{T*2}<!-- DIAGNOSTIC: inspect lamps and force-show (inspect_diagnostics) -->\n'
-            + sensor + lamp("FCJH_DiagSelection", 1080, "255,255,140,0", sel_watch)
-            + lamp("FCJH_DiagBlizzInspect", 1000, "255,40,220,60")
-            + lamp("FCJH_DiagOurInspect", 1040, "255,0,230,255", watch) + force)
-
-
 def card():
     """Our copy of Blizzard's inspect box, re-laid out tall (portrait, bars, stats)."""
     out = [f'{T*2}<!-- Round 9 (2026-09-30): the card shows exactly when Blizzard\'s own small inspector\n'
@@ -152,12 +98,10 @@ def card():
            f'{T*3}<StateGroup name="FCJH_Gate">\n{T*4}<DefaultState val="Hide"/>\n'
            f'{T*4}<State name="Show">\n'
            f'{T*5}<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/TargetInfoFrame" Visible="true"/>\n'
-           f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="true"/>\n'
-           f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_DiagBlizzInspect" Visible="true"/>\n{T*4}</State>\n'
+           f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="true"/>\n{T*4}</State>\n'
            f'{T*4}<State name="Hide">\n'
-           f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="false"/>\n'
-           f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_DiagBlizzInspect" Visible="false"/>\n{T*4}</State>\n'
-           f'{T*3}</StateGroup>\n{T*2}</Frame>\n' + inspect_diagnostics() +
+           f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="false"/>\n{T*4}</State>\n'
+           f'{T*3}</StateGroup>\n{T*2}</Frame>\n'
            f'{T*2}<!-- The card: our copy of Blizzard\'s inspect box -->\n'
            f'{T*2}<Frame type="TargetInfoFrame" name="FCJH_Inspect">\n'
            f'{T*3}<Visible val="false"/>\n'
