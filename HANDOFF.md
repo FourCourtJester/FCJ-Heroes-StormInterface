@@ -325,9 +325,19 @@ with Blizzard's command card on it.
    pieces against ours - the hexagon left its backplate in a 2558 x 1401 window (2026-10-03;
    any 16:9 size is fine: the UI scales with height, 1200 units tall). Anchor each element to
    its nearest edge or the centre (Min / Mid / Max), as Blizzard does.
-5. Tried and undone: hiding Blizzard's observer talent row plainly (71181f7, undone in
+5. **Study Ahli's other panels** (user watched a broadcast on his UI, 2026-10-03) - not to
+   replace ours, but for implementation tricks and visuals:
+   - his custom inspect (`_BottomLeft`) and his custom panes - talents, XP and the rest
+     (`_LeaderPanelBottom`, his restyle of Blizzard's Tab stats panel, `HeroLeaderPanel`);
+   - **death recap**: a streamer opened one for a hero who'd just died. It's Blizzard's, a tab
+     of the same Tab panel (`HeroLeaderPanel/HeroLeaderPanelContainer/TabControl/
+     DeathRecapContainerFrame/DeathRecapPanel`, base UI `deathrecap.stormlayout`; the button
+     that opens it is wired in `gameui.stormlayout` ~734). Spazzo ships a fix for its
+     alignment (`references/Spazzo/.../RecapAlignmentFix.StormLayout`); Ahli hides its
+     buttons inside his leader panel. Worth a feature of ours: a death recap on demand.
+6. Tried and undone: hiding Blizzard's observer talent row plainly (71181f7, undone in
    d279ecc) - plate clicks stopped following heroes. The row stays held shown and spread.
-6. Art pass, after the functionality: Ahli's Tracer ammo bar (20 segments) and round Pulse
+7. Art pass, after the functionality: Ahli's Tracer ammo bar (20 segments) and round Pulse
    Bomb meter; his hero plates' intro animation (a smooth slide and fade).
 
 How the heroic tooltips work: `tools/gen.py`, the comment above `HEROIC_TIPS`.
