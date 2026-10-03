@@ -21,11 +21,37 @@
 				<State name="Show">
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/TargetInfoFrame" Visible="true"/>
 					<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="true"/>
+					<Action type="SetProperty" frame="$parent/FCJH_CommandOff" Visible="false"/>
+					<Action type="SetProperty" frame="$parent/FCJH_CommandOn" Visible="true"/>
 				</State>
 				<State name="Hide">
 					<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="false"/>
+					<Action type="SetProperty" frame="$parent/FCJH_CommandOn" Visible="false"/>
+					<Action type="SetProperty" frame="$parent/FCJH_CommandOff" Visible="true"/>
 				</State>
 			</StateGroup>
+		</Frame>
+		<Frame type="Frame" name="FCJH_CommandOn">
+			<Anchor relative="$parent"/>
+			<Visible val="false"/>
+			<AcceptsMouse val="false"/>
+			<Animation name="FCJH_Assert">
+				<Event event="OnShown" action="Play"/>
+				<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel">
+					<Key type="Bool" time="0" value="true"/>
+				</Controller>
+			</Animation>
+		</Frame>
+		<Frame type="Frame" name="FCJH_CommandOff">
+			<Anchor relative="$parent"/>
+			<Visible val="true"/>
+			<AcceptsMouse val="false"/>
+			<Animation name="FCJH_Assert">
+				<Event event="OnShown" action="Play"/>
+				<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel">
+					<Key type="Bool" time="0" value="false"/>
+				</Controller>
+			</Animation>
 		</Frame>
 		<!-- The card: our copy of Blizzard's inspect box -->
 		<Frame type="TargetInfoFrame" name="FCJH_Inspect">
@@ -6632,6 +6658,16 @@
 				</StateGroup>
 			</Frame>
 		</Frame>
+			</Frame>
+		</Frame>
+		<Frame type="Frame" name="UIContainer">
+			<Frame type="Frame" name="ConsoleUIContainer">
+				<Frame type="CommandPanel" name="CommandPanel">
+					<Anchor side="Left"   relative="$GameUI/FCJH_Inspect" pos="Max" offset="20"/>
+					<Anchor side="Top"    relative="$GameUI/FCJH_Inspect" pos="Min" offset="366"/>
+					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+				</Frame>
 			</Frame>
 		</Frame>
 	</Frame>
