@@ -56,7 +56,9 @@ drawn by OBS over empty regions the interface leaves (§6).
   `Ctrl+Shift+1-4`, each with an X; the leader in each column softly highlighted.
 - **Inspect card** — the selected unit's portrait, name/player/level, fountain, bars, buffs,
   abilities, talents and stats; shows exactly when the default UI's small inspector would
-  (which is never while a replay is paused).
+  (which is never while a replay is paused). The abilities are Blizzard's own command card
+  laid over the card (talent actives on top; mount, abilities, trait below), so their
+  tooltips, cooldowns and per-hero contents are the game's (2026-10-02, not yet seen in game).
 - **Kill feed** top-right, **minimap** bottom-centre, **replay controls** top-left with a tab
   when collapsed (replays only). Blizzard's player HUD and talent picker never show.
 
@@ -301,10 +303,9 @@ five segments would duplicate the hero row. If plates read too small, widen them
 ## 7. What's next
 
 **Next** (2026-10-02, after the heroic-tooltip work was cleaned up):
-- confirm the clean build: heroic tooltips (incl. Varian, Tracer), Tracer's meter, inspect
-- Tracer's heroic tooltip: a name line (a `TextFormatFrame` and our own game string)
-- inspect card abilities from Blizzard's `CommandPanel`, as Ahli does — replaces our per-hero
-  ability table (`hero_cards`), the unfinished talent-actives table and Tracer's empty D/R
+- in game: the command card on the inspect card (shows with it, follows the selection,
+  tooltips, which button holds which key - `inspect_card.COMMAND_KEYS` is a guess), Tracer's
+  tooltip header, the pop-up sizes (talent = pane size, heal 2 px smaller)
 - art pass items from Ahli: Tracer's segmented ammo bar and round Pulse Bomb meter
 
 How the heroic tooltips work: `tools/gen.py`, the comment above `HEROIC_TIPS`.
