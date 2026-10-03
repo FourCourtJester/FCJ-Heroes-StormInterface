@@ -335,6 +335,16 @@ with Blizzard's command card on it.
      that opens it is wired in `gameui.stormlayout` ~734). Spazzo ships a fix for its
      alignment (`references/Spazzo/.../RecapAlignmentFix.StormLayout`); Ahli hides its
      buttons inside his leader panel. Worth a feature of ours: a death recap on demand.
+   - **quests** (checked 2026-10-03): Ahli's talent pane has two kinds. (a) A column for a
+     hero's BASELINE quests (the trait kind, not a talent pick): two slots, `BaseQuestIcon0/1`
+     (`UnitStatusBaselineQuestIcon`) in a `ParentCenteredFrame`, so one quest sits centred and
+     two sit side by side - straight from Blizzard's own leader panel (`heroleaderpanel`
+     ~920). (b) TALENT quests (a level-1 quest or any other) show on the talent's own icon:
+     a progress bar, a stack count ("12/40") and a done image, switched by the icon's
+     `QuestProgress` property (`QuestInProgress` / `ProgressUntracked` / finished) - so two
+     quest talents are just two icons each with their own bar. Blizzard's talent-row icons
+     carry the same bar and label (`talentsoverviewpanel` ~828), so our talents pane and the
+     inspect card can show quest progress the same way.
 6. Tried and undone: hiding Blizzard's observer talent row plainly (71181f7, undone in
    d279ecc) - plate clicks stopped following heroes. The row stays held shown and spread.
 7. Art pass, after the functionality: Ahli's Tracer ammo bar (20 segments) and round Pulse
