@@ -596,7 +596,7 @@ def slant_bars(cfg):
     for team in ("blue", "red"):
         data = bytearray(slant_texture(team, cell.overlap / cell.w, "ffffff", size=(256, 128)))
         # ...with the heroic icon cut away: a click there is for the heroic's tooltip
-        # (talent_row_lifts), not a hero select
+        # (heroic_tip_panel), not a hero select
         l, t, r, b = heroic_icon_rect(cfg, team)
         for ty in range(round(t / cell.h * 128), min(128, round(b / cell.h * 128))):
             for tx in range(round(l / cell.w * 256), round(r / cell.w * 256)):
@@ -723,6 +723,11 @@ VIKING_FRAMES = ["Olaf", "Baleog", "Erik"]
 TALENT_ROW = ("$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/"
               "TalentOverview/HeroTalentsPanelContainer/PlayerFrame{n}/TalentsContainerFrame/"
               "SelectionUnitStatusPanel/UnitStatusFrame0")
+# Our own copy of that row (heroic_tip_panel, copy 1), always shown: the heroic's cooldown
+# count and Tracer's charge come from it
+OUR_ROW = ("$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/FCJH_HeroicTips/"
+           "TalentOverview/HeroTalentsPanelContainer/PlayerFrame{n}/TalentsContainerFrame/"
+           "SelectionUnitStatusPanel/UnitStatusFrame0")
 
 
 def pet_death_labels(team, c):
@@ -805,9 +810,10 @@ def heroic_panel(cfg, team_frame, i):
     g = c.team[team]
     party = f"{PARTY}/{team_frame}/HeroOverview{i}/HeroicTalentPanel"
     cell = f"{OVERVIEW}/{team_frame}/HeroOverview{i}"
-    row = TALENT_ROW.format(n=i - 1 if blue else i + 4)   # PlayerFrame0-4 blue 1-5, 5-9 red 1-5
-    # Blizzard's observer top bar (its talent row, kept at Alpha 0) counts the heroic down in
-    # its tier-10 slot: seen in the default UI, 2026-09-30 (Chromie "22")
+    row = OUR_ROW.format(n=i - 1 if blue else i + 4)   # PlayerFrame0-4 blue 1-5, 5-9 red 1-5
+    # Blizzard's observer top bar (its talent row) counts the heroic down in its tier-10 slot:
+    # seen in the default UI, 2026-09-30 (Chromie "22"). Read from our own copy of the row,
+    # which is always shown (Blizzard's is kept hidden)
     sensor = f"{row}/UnitStatusAbil"
     pl, il = HEROIC_PANEL[team]
     mask, frame_tex, flip, fill_tex = HEROIC_ART[team]
@@ -895,7 +901,7 @@ def heroic_panel(cfg, team_frame, i):
 								<StateGroup name="FCJH_Cooldown">
 									<DefaultState val="Ready"/>
 									<!-- Tracer: never "on cooldown" - her charge meter shows instead
-									     (talent_row_lifts; it read as permanently greyed out, 2026-09-30) -->
+									     (tracer_meter; it read as permanently greyed out, 2026-09-30) -->
 									<State name="Charge">
 										<When type="Property" frame="{charge}" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
@@ -1571,33 +1577,6 @@ OVERVIEW = "$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPan
 TAB, NL = chr(9), chr(10)
 
 
-def spread(indent):
-    """Stretches the frame it's put in over the whole screen, deaf to the mouse and to
-    tooltips. The game's observer talent row gets it on every frame above the pieces lifted
-    out of it (talent_row_lifts): that's the arrangement the lifted Tracer meter was seen
-    working in (2026-09-30). Mouse off alone isn't enough - tooltips are hit-tested apart from
-    clicks, and with only that these frames caught every tooltip on screen."""
-    t = TAB * indent
-    return ("".join(f'{NL}{t}<Anchor side="{side}" relative="$GameUI" pos="{pos}" offset="0"/>'
-                    for side, pos in (("Left", "Min"), ("Top", "Min"), ("Right", "Max"), ("Bottom", "Max")))
-            + f'{NL}{t}<AcceptsMouse val="false"/>{NL}{t}<AcceptsMouseTooltip val="false"/>')
-
-
-def talent_chain(n, inner):
-    """Player n's frames in the game's observer talent row, each spread over the screen, with
-    `inner` inside its UnitStatusFrame0."""
-    return f"""
-							<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame{n}">{spread(8)}
-								<Frame type="Frame" name="TalentsContainerFrame">
-									<Batch val="false"/>{spread(9)}
-									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">{spread(10)}
-										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">{spread(11)}{inner}
-										</Frame>
-									</Frame>
-								</Frame>
-							</Frame>"""
-
-
 def faded(frame_type, name_, indent):
     return f'{NL}{TAB * indent}<Frame type="{frame_type}" name="{name_}"><Alpha val="0"/></Frame>'
 
@@ -1610,62 +1589,38 @@ def muted(frame_type, name_, indent):
             f'<AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>')
 
 
-def talent_row_lifts(cfg):
-    """Tracer's charge meter, lifted out of Blizzard's observer talent row onto our plates.
-    Pulse Bomb charges rather than cooling down; Blizzard shows the charge on that row
-    (TracerChargeContainer: there for every hero, its meter only for one with that ability).
-    Moved over our heroic's gold frame, on Blizzard's own art. Seen working 2026-09-30.
-    The row is the game's, and the game keeps its talent panel hidden: Blizzard's
-    CleanTalentsPanelTemplate starts Visible false, so nothing under it drew wherever it was
-    moved (its values still update - our sensors read them). An animation holds it shown.
-    It gives no tooltips however it's shown; the heroic tooltips come from our own copies of
-    the row (heroic_tip_panel). Everything else in it is faded and deaf to the mouse."""
-    out = []
-    for n in range(10):
-        team, cell = popup_cell(n)
-        l, t, r, b = heroic_frame_rect(cfg, team.lower())
-        edge = lambda side, rel, pos, v: f'<Anchor side="{side}" relative="{rel}" pos="{pos}" offset="{v}"/>'
-        icons = "".join(muted("UnitStatusTalentIcon", f"TalentTreeIcon{k}", 12) for k in range(1, 8))
-        out.append(talent_chain(n, f"""
-											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">{spread(12)}{icons}
-											</Frame>{muted("UnitStatusAbilIcon", "UnitStatusAbil", 11)}
-											<Frame type="Frame" name="TracerChargeContainer">
-												{edge("Left", cell, "Min", l)}
-												{edge("Top", cell, "Min", t)}
-												{edge("Right", cell, "Min", r)}
-												{edge("Bottom", cell, "Min", b)}
-												<Unclipped val="true"/>
-												<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
-													<Frame type="ProgressBar" name="ChargeFillProgress">
-														{edge("Left", "$parent", "Min", 0)}
-														{edge("Top", "$parent", "Min", 0)}
-														{edge("Right", "$parent", "Max", 0)}
-														{edge("Bottom", "$parent", "Max", 0)}
-														<Unclipped val="true"/>
-													</Frame>
-												</Frame>
-											</Frame>"""))
-    return ("""
-					<!-- Tracer's charge meter, lifted out of the observer talent row onto our plates (tools/gen.py talent_row_lifts) -->
-					<Frame type="Frame" name="TalentsOverview">""" + spread(6) + """
-						<!-- the game keeps the talent panel hidden: assert it shown every frame (animations
-						     outrank properties; FCJH_Hidden's recipe, turned round) -->
-						<Animation name="FCJH_KeepRowShown">
-							<Event event="OnShown" action="Play"/>
-							<Controller type="Visibility" end="Loop" frame="TalentOverview">
-								<Key type="Bool" time="0" value="true"/>
-							</Controller>
-							<Controller type="Visibility" end="Loop" frame="TalentOverview/HeroTalentsPanelContainer">
-								<Key type="Bool" time="0" value="true"/>
-							</Controller>
-						</Animation>
-						<Frame type="HeroTalentsPanel" name="TalentOverview">
-							<Visible val="true"/>
-							<Batch val="false"/>  <!-- batched, it may draw nothing outside its own box -->""" + spread(7) + """
-							<Frame type="Frame" name="HeroTalentsPanelContainer">""" + spread(8) + "".join(out) + """
-							</Frame>
-						</Frame>
-					</Frame>""")
+def observer_row():
+    """Blizzard's observer talent row, kept as a data source only: the talent pop-ups and the
+    inspect card's talents read it (TALENT_ROW, inspect_card.ROW). The game keeps its talent
+    panel hidden, and its values update all the same. Faded and deaf to the mouse, in case the
+    game ever shows it. (2026-09-30..10-02 it was held shown and spread over the screen so a
+    piece lifted out of it - Tracer's meter - could draw; that meter now comes from our own
+    copy of the row, which draws as is: heroic_tip_copy.)"""
+    return """
+					<!-- Blizzard's observer talent row: read by the talent pop-ups and the inspect card, never shown -->
+					<Frame type="Frame" name="TalentsOverview">
+						<Alpha val="0"/>
+						<AcceptsMouse val="false"/>
+						<AcceptsMouseTooltip val="false"/>
+					</Frame>"""
+
+
+def tracer_meter(cfg, team, cell, indent):
+    """Tracer's charge meter, moved over our heroic's gold frame, on Blizzard's own art. Pulse
+    Bomb charges rather than cooling down; the talent row shows the charge
+    (TracerChargeContainer: there for every hero, its meter only for one with that ability)."""
+    l, t, r, b = heroic_frame_rect(cfg, team)
+    i = NL + TAB * indent
+    edge = lambda k, side, rel, pos, v: f'{i}{TAB * k}<Anchor side="{side}" relative="{rel}" pos="{pos}" offset="{v}"/>'
+    return (f'{i}<Frame type="Frame" name="TracerChargeContainer">'
+            + edge(1, "Left", cell, "Min", l) + edge(1, "Top", cell, "Min", t)
+            + edge(1, "Right", cell, "Min", r) + edge(1, "Bottom", cell, "Min", b)
+            + f'{i}{TAB}<Unclipped val="true"/>'
+            f'{i}{TAB}<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">'
+            f'{i}{TAB * 2}<Frame type="ProgressBar" name="ChargeFillProgress">'
+            + edge(3, "Left", "$parent", "Min", 0) + edge(3, "Top", "$parent", "Min", 0)
+            + edge(3, "Right", "$parent", "Max", 0) + edge(3, "Bottom", "$parent", "Max", 0)
+            + f'{i}{TAB * 3}<Unclipped val="true"/>{i}{TAB * 2}</Frame>{i}{TAB}</Frame>{i}</Frame>')
 
 
 # Heroic tooltips (heroic_tip_panel). In the default UI a heroic's tooltip is the talent
@@ -1729,7 +1684,8 @@ def heroic_tip_panel(cfg):
 def heroic_tip_copy(cfg, root, tier_icon, row_top, shift, prio):
     """One copy of the talent row with only icon `tier_icon` answering the mouse (invisible,
     re-sized to the hover square): 4 for every hero but HeroicTier 2 ones and Tracer, 2 only
-    for HeroicTier 2 ones. Copy 4 also carries Tracer's tooltip."""
+    for HeroicTier 2 ones. Copy 4 also carries Tracer's tooltip and her charge meter, and is
+    what the plates read the heroic's cooldown from (OUR_ROW)."""
     s = HEROIC_TIP_SIZE
     icons = ("".join(muted("UnitStatusTalentIcon", f"TalentTreeIcon{k}", 13) for k in range(1, 8) if k != tier_icon)
              + f'{NL}{TAB * 13}<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon{tier_icon}"><Alpha val="0"/>'
@@ -1748,6 +1704,8 @@ def heroic_tip_copy(cfg, root, tier_icon, row_top, shift, prio):
     for n in range(10):
         team, cell = popup_cell(n)
         slot = f"$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon{tier_icon}"
+        meter = (tracer_meter(cfg, team.lower(), cell, 12) if tier_icon == 4
+                 else muted("Frame", "TracerChargeContainer", 12))
         tracer = "".join(text_tip(t, unit, button, slot, cell)
                          for unit, button in NON_TALENT_HEROICS.items()) if tier_icon == 4 else ""
         out.append(f"""
@@ -1758,7 +1716,7 @@ def heroic_tip_copy(cfg, root, tier_icon, row_top, shift, prio):
 										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">{icons}{switch(cell)}
-												</Frame>{muted("Frame", "TracerChargeContainer", 12)}{muted("UnitStatusAbilIcon", "UnitStatusAbil", 12)}{tracer}
+												</Frame>{meter}{muted("UnitStatusAbilIcon", "UnitStatusAbil", 12)}{tracer}
 											</Frame>
 										</Frame>
 									</Frame>
@@ -1901,10 +1859,10 @@ def hero_row_layout(cfg):
 		<Frame type="Frame" name="UIContainer">
 			<Frame type="Frame" name="FullscreenUpperContainer">
 				<Frame type="Frame" name="ObserverHeroOverviewPanel">
-					<!-- Blizzard's top-bar talent rows are anchored to the cells, so they follow
-					     them down here. Hidden with Alpha 0, not parked: the talent pop-ups watch
-					     their icons, which must stay alive. -->
-{talent_row_lifts(cfg)}{heroic_tip_panel(cfg)}
+					<!-- Blizzard's top-bar talent row, and our copies of it: anchored to the cells, so
+					     they follow them down here. Blizzard's is hidden with Alpha 0, not parked:
+					     the talent pop-ups watch its icons, which must stay alive. -->
+{observer_row()}{heroic_tip_panel(cfg)}
 {chr(10).join(cells)}
 				</Frame>
 			</Frame>

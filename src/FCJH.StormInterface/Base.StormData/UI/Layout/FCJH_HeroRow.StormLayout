@@ -5301,697 +5301,15 @@
 		<Frame type="Frame" name="UIContainer">
 			<Frame type="Frame" name="FullscreenUpperContainer">
 				<Frame type="Frame" name="ObserverHeroOverviewPanel">
-					<!-- Blizzard's top-bar talent rows are anchored to the cells, so they follow
-					     them down here. Hidden with Alpha 0, not parked: the talent pop-ups watch
-					     their icons, which must stay alive. -->
+					<!-- Blizzard's top-bar talent row, and our copies of it: anchored to the cells, so
+					     they follow them down here. Blizzard's is hidden with Alpha 0, not parked:
+					     the talent pop-ups watch its icons, which must stay alive. -->
 
-					<!-- Tracer's charge meter, lifted out of the observer talent row onto our plates (tools/gen.py talent_row_lifts) -->
+					<!-- Blizzard's observer talent row: read by the talent pop-ups and the inspect card, never shown -->
 					<Frame type="Frame" name="TalentsOverview">
-						<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-						<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-						<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-						<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
 						<AcceptsMouseTooltip val="false"/>
-						<!-- the game keeps the talent panel hidden: assert it shown every frame (animations
-						     outrank properties; FCJH_Hidden's recipe, turned round) -->
-						<Animation name="FCJH_KeepRowShown">
-							<Event event="OnShown" action="Play"/>
-							<Controller type="Visibility" end="Loop" frame="TalentOverview">
-								<Key type="Bool" time="0" value="true"/>
-							</Controller>
-							<Controller type="Visibility" end="Loop" frame="TalentOverview/HeroTalentsPanelContainer">
-								<Key type="Bool" time="0" value="true"/>
-							</Controller>
-						</Animation>
-						<Frame type="HeroTalentsPanel" name="TalentOverview">
-							<Visible val="true"/>
-							<Batch val="false"/>  <!-- batched, it may draw nothing outside its own box -->
-							<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-							<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-							<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-							<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-							<AcceptsMouse val="false"/>
-							<AcceptsMouseTooltip val="false"/>
-							<Frame type="Frame" name="HeroTalentsPanelContainer">
-								<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-								<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-								<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-								<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-								<AcceptsMouse val="false"/>
-								<AcceptsMouseTooltip val="false"/>
-							<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame0">
-								<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-								<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-								<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-								<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-								<AcceptsMouse val="false"/>
-								<AcceptsMouseTooltip val="false"/>
-								<Frame type="Frame" name="TalentsContainerFrame">
-									<Batch val="false"/>
-									<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-									<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-									<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-									<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-									<AcceptsMouse val="false"/>
-									<AcceptsMouseTooltip val="false"/>
-									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
-										<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-										<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-										<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-										<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-										<AcceptsMouse val="false"/>
-										<AcceptsMouseTooltip val="false"/>
-										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
-											<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-											<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-											<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-											<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-											<AcceptsMouse val="false"/>
-											<AcceptsMouseTooltip val="false"/>
-											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
-												<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-												<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-												<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-												<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-												<AcceptsMouse val="false"/>
-												<AcceptsMouseTooltip val="false"/>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-											</Frame>
-											<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-											<Frame type="Frame" name="TracerChargeContainer">
-												<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="24"/>
-												<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="44"/>
-												<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="92"/>
-												<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="82"/>
-												<Unclipped val="true"/>
-												<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
-													<Frame type="ProgressBar" name="ChargeFillProgress">
-														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-														<Unclipped val="true"/>
-													</Frame>
-												</Frame>
-											</Frame>
-										</Frame>
-									</Frame>
-								</Frame>
-							</Frame>
-							<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame1">
-								<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-								<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-								<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-								<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-								<AcceptsMouse val="false"/>
-								<AcceptsMouseTooltip val="false"/>
-								<Frame type="Frame" name="TalentsContainerFrame">
-									<Batch val="false"/>
-									<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-									<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-									<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-									<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-									<AcceptsMouse val="false"/>
-									<AcceptsMouseTooltip val="false"/>
-									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
-										<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-										<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-										<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-										<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-										<AcceptsMouse val="false"/>
-										<AcceptsMouseTooltip val="false"/>
-										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
-											<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-											<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-											<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-											<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-											<AcceptsMouse val="false"/>
-											<AcceptsMouseTooltip val="false"/>
-											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
-												<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-												<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-												<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-												<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-												<AcceptsMouse val="false"/>
-												<AcceptsMouseTooltip val="false"/>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-											</Frame>
-											<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-											<Frame type="Frame" name="TracerChargeContainer">
-												<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="24"/>
-												<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="44"/>
-												<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="92"/>
-												<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="82"/>
-												<Unclipped val="true"/>
-												<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
-													<Frame type="ProgressBar" name="ChargeFillProgress">
-														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-														<Unclipped val="true"/>
-													</Frame>
-												</Frame>
-											</Frame>
-										</Frame>
-									</Frame>
-								</Frame>
-							</Frame>
-							<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame2">
-								<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-								<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-								<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-								<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-								<AcceptsMouse val="false"/>
-								<AcceptsMouseTooltip val="false"/>
-								<Frame type="Frame" name="TalentsContainerFrame">
-									<Batch val="false"/>
-									<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-									<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-									<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-									<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-									<AcceptsMouse val="false"/>
-									<AcceptsMouseTooltip val="false"/>
-									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
-										<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-										<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-										<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-										<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-										<AcceptsMouse val="false"/>
-										<AcceptsMouseTooltip val="false"/>
-										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
-											<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-											<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-											<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-											<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-											<AcceptsMouse val="false"/>
-											<AcceptsMouseTooltip val="false"/>
-											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
-												<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-												<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-												<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-												<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-												<AcceptsMouse val="false"/>
-												<AcceptsMouseTooltip val="false"/>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-											</Frame>
-											<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-											<Frame type="Frame" name="TracerChargeContainer">
-												<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="24"/>
-												<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="44"/>
-												<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="92"/>
-												<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="82"/>
-												<Unclipped val="true"/>
-												<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
-													<Frame type="ProgressBar" name="ChargeFillProgress">
-														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-														<Unclipped val="true"/>
-													</Frame>
-												</Frame>
-											</Frame>
-										</Frame>
-									</Frame>
-								</Frame>
-							</Frame>
-							<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame3">
-								<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-								<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-								<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-								<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-								<AcceptsMouse val="false"/>
-								<AcceptsMouseTooltip val="false"/>
-								<Frame type="Frame" name="TalentsContainerFrame">
-									<Batch val="false"/>
-									<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-									<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-									<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-									<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-									<AcceptsMouse val="false"/>
-									<AcceptsMouseTooltip val="false"/>
-									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
-										<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-										<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-										<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-										<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-										<AcceptsMouse val="false"/>
-										<AcceptsMouseTooltip val="false"/>
-										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
-											<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-											<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-											<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-											<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-											<AcceptsMouse val="false"/>
-											<AcceptsMouseTooltip val="false"/>
-											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
-												<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-												<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-												<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-												<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-												<AcceptsMouse val="false"/>
-												<AcceptsMouseTooltip val="false"/>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-											</Frame>
-											<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-											<Frame type="Frame" name="TracerChargeContainer">
-												<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="24"/>
-												<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="44"/>
-												<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="92"/>
-												<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="82"/>
-												<Unclipped val="true"/>
-												<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
-													<Frame type="ProgressBar" name="ChargeFillProgress">
-														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-														<Unclipped val="true"/>
-													</Frame>
-												</Frame>
-											</Frame>
-										</Frame>
-									</Frame>
-								</Frame>
-							</Frame>
-							<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame4">
-								<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-								<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-								<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-								<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-								<AcceptsMouse val="false"/>
-								<AcceptsMouseTooltip val="false"/>
-								<Frame type="Frame" name="TalentsContainerFrame">
-									<Batch val="false"/>
-									<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-									<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-									<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-									<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-									<AcceptsMouse val="false"/>
-									<AcceptsMouseTooltip val="false"/>
-									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
-										<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-										<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-										<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-										<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-										<AcceptsMouse val="false"/>
-										<AcceptsMouseTooltip val="false"/>
-										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
-											<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-											<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-											<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-											<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-											<AcceptsMouse val="false"/>
-											<AcceptsMouseTooltip val="false"/>
-											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
-												<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-												<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-												<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-												<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-												<AcceptsMouse val="false"/>
-												<AcceptsMouseTooltip val="false"/>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-											</Frame>
-											<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-											<Frame type="Frame" name="TracerChargeContainer">
-												<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="24"/>
-												<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="44"/>
-												<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="92"/>
-												<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="82"/>
-												<Unclipped val="true"/>
-												<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
-													<Frame type="ProgressBar" name="ChargeFillProgress">
-														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-														<Unclipped val="true"/>
-													</Frame>
-												</Frame>
-											</Frame>
-										</Frame>
-									</Frame>
-								</Frame>
-							</Frame>
-							<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame5">
-								<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-								<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-								<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-								<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-								<AcceptsMouse val="false"/>
-								<AcceptsMouseTooltip val="false"/>
-								<Frame type="Frame" name="TalentsContainerFrame">
-									<Batch val="false"/>
-									<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-									<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-									<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-									<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-									<AcceptsMouse val="false"/>
-									<AcceptsMouseTooltip val="false"/>
-									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
-										<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-										<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-										<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-										<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-										<AcceptsMouse val="false"/>
-										<AcceptsMouseTooltip val="false"/>
-										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
-											<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-											<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-											<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-											<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-											<AcceptsMouse val="false"/>
-											<AcceptsMouseTooltip val="false"/>
-											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
-												<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-												<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-												<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-												<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-												<AcceptsMouse val="false"/>
-												<AcceptsMouseTooltip val="false"/>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-											</Frame>
-											<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-											<Frame type="Frame" name="TracerChargeContainer">
-												<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="0"/>
-												<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="44"/>
-												<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="68"/>
-												<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="82"/>
-												<Unclipped val="true"/>
-												<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
-													<Frame type="ProgressBar" name="ChargeFillProgress">
-														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-														<Unclipped val="true"/>
-													</Frame>
-												</Frame>
-											</Frame>
-										</Frame>
-									</Frame>
-								</Frame>
-							</Frame>
-							<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame6">
-								<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-								<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-								<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-								<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-								<AcceptsMouse val="false"/>
-								<AcceptsMouseTooltip val="false"/>
-								<Frame type="Frame" name="TalentsContainerFrame">
-									<Batch val="false"/>
-									<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-									<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-									<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-									<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-									<AcceptsMouse val="false"/>
-									<AcceptsMouseTooltip val="false"/>
-									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
-										<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-										<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-										<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-										<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-										<AcceptsMouse val="false"/>
-										<AcceptsMouseTooltip val="false"/>
-										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
-											<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-											<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-											<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-											<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-											<AcceptsMouse val="false"/>
-											<AcceptsMouseTooltip val="false"/>
-											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
-												<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-												<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-												<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-												<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-												<AcceptsMouse val="false"/>
-												<AcceptsMouseTooltip val="false"/>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-											</Frame>
-											<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-											<Frame type="Frame" name="TracerChargeContainer">
-												<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="0"/>
-												<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="44"/>
-												<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="68"/>
-												<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="82"/>
-												<Unclipped val="true"/>
-												<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
-													<Frame type="ProgressBar" name="ChargeFillProgress">
-														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-														<Unclipped val="true"/>
-													</Frame>
-												</Frame>
-											</Frame>
-										</Frame>
-									</Frame>
-								</Frame>
-							</Frame>
-							<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame7">
-								<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-								<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-								<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-								<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-								<AcceptsMouse val="false"/>
-								<AcceptsMouseTooltip val="false"/>
-								<Frame type="Frame" name="TalentsContainerFrame">
-									<Batch val="false"/>
-									<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-									<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-									<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-									<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-									<AcceptsMouse val="false"/>
-									<AcceptsMouseTooltip val="false"/>
-									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
-										<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-										<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-										<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-										<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-										<AcceptsMouse val="false"/>
-										<AcceptsMouseTooltip val="false"/>
-										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
-											<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-											<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-											<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-											<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-											<AcceptsMouse val="false"/>
-											<AcceptsMouseTooltip val="false"/>
-											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
-												<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-												<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-												<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-												<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-												<AcceptsMouse val="false"/>
-												<AcceptsMouseTooltip val="false"/>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-											</Frame>
-											<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-											<Frame type="Frame" name="TracerChargeContainer">
-												<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="0"/>
-												<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="44"/>
-												<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="68"/>
-												<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="82"/>
-												<Unclipped val="true"/>
-												<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
-													<Frame type="ProgressBar" name="ChargeFillProgress">
-														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-														<Unclipped val="true"/>
-													</Frame>
-												</Frame>
-											</Frame>
-										</Frame>
-									</Frame>
-								</Frame>
-							</Frame>
-							<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame8">
-								<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-								<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-								<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-								<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-								<AcceptsMouse val="false"/>
-								<AcceptsMouseTooltip val="false"/>
-								<Frame type="Frame" name="TalentsContainerFrame">
-									<Batch val="false"/>
-									<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-									<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-									<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-									<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-									<AcceptsMouse val="false"/>
-									<AcceptsMouseTooltip val="false"/>
-									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
-										<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-										<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-										<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-										<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-										<AcceptsMouse val="false"/>
-										<AcceptsMouseTooltip val="false"/>
-										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
-											<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-											<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-											<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-											<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-											<AcceptsMouse val="false"/>
-											<AcceptsMouseTooltip val="false"/>
-											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
-												<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-												<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-												<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-												<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-												<AcceptsMouse val="false"/>
-												<AcceptsMouseTooltip val="false"/>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-											</Frame>
-											<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-											<Frame type="Frame" name="TracerChargeContainer">
-												<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="0"/>
-												<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="44"/>
-												<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="68"/>
-												<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="82"/>
-												<Unclipped val="true"/>
-												<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
-													<Frame type="ProgressBar" name="ChargeFillProgress">
-														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-														<Unclipped val="true"/>
-													</Frame>
-												</Frame>
-											</Frame>
-										</Frame>
-									</Frame>
-								</Frame>
-							</Frame>
-							<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame9">
-								<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-								<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-								<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-								<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-								<AcceptsMouse val="false"/>
-								<AcceptsMouseTooltip val="false"/>
-								<Frame type="Frame" name="TalentsContainerFrame">
-									<Batch val="false"/>
-									<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-									<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-									<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-									<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-									<AcceptsMouse val="false"/>
-									<AcceptsMouseTooltip val="false"/>
-									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
-										<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-										<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-										<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-										<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-										<AcceptsMouse val="false"/>
-										<AcceptsMouseTooltip val="false"/>
-										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
-											<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-											<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-											<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-											<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-											<AcceptsMouse val="false"/>
-											<AcceptsMouseTooltip val="false"/>
-											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
-												<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
-												<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
-												<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
-												<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
-												<AcceptsMouse val="false"/>
-												<AcceptsMouseTooltip val="false"/>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-											</Frame>
-											<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-											<Frame type="Frame" name="TracerChargeContainer">
-												<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="0"/>
-												<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="44"/>
-												<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="68"/>
-												<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="82"/>
-												<Unclipped val="true"/>
-												<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
-													<Frame type="ProgressBar" name="ChargeFillProgress">
-														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-														<Unclipped val="true"/>
-													</Frame>
-												</Frame>
-											</Frame>
-										</Frame>
-									</Frame>
-								</Frame>
-							</Frame>
-							</Frame>
-						</Frame>
 					</Frame>
 					<!-- Heroic tooltips: our own copy of the observer talent row, each player's box moved so the
 					     level-10 icon sits on our heroic (tools/gen.py heroic_tip_panel) -->
@@ -6026,7 +5344,22 @@
 														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="true"/></State>
 													</StateGroup>
 												</Frame>
-												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="Frame" name="TracerChargeContainer">
+													<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="24"/>
+													<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="44"/>
+													<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="92"/>
+													<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="82"/>
+													<Unclipped val="true"/>
+													<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
+														<Frame type="ProgressBar" name="ChargeFillProgress">
+															<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+															<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+															<Unclipped val="true"/>
+														</Frame>
+													</Frame>
+												</Frame>
 												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="Frame" name="FCJH_TextTip_HeroTracer">
 													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
@@ -6072,7 +5405,22 @@
 														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="true"/></State>
 													</StateGroup>
 												</Frame>
-												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="Frame" name="TracerChargeContainer">
+													<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="24"/>
+													<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="44"/>
+													<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="92"/>
+													<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="82"/>
+													<Unclipped val="true"/>
+													<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
+														<Frame type="ProgressBar" name="ChargeFillProgress">
+															<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+															<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+															<Unclipped val="true"/>
+														</Frame>
+													</Frame>
+												</Frame>
 												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="Frame" name="FCJH_TextTip_HeroTracer">
 													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
@@ -6118,7 +5466,22 @@
 														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="true"/></State>
 													</StateGroup>
 												</Frame>
-												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="Frame" name="TracerChargeContainer">
+													<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="24"/>
+													<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="44"/>
+													<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="92"/>
+													<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="82"/>
+													<Unclipped val="true"/>
+													<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
+														<Frame type="ProgressBar" name="ChargeFillProgress">
+															<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+															<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+															<Unclipped val="true"/>
+														</Frame>
+													</Frame>
+												</Frame>
 												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="Frame" name="FCJH_TextTip_HeroTracer">
 													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
@@ -6164,7 +5527,22 @@
 														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="true"/></State>
 													</StateGroup>
 												</Frame>
-												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="Frame" name="TracerChargeContainer">
+													<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="24"/>
+													<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="44"/>
+													<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="92"/>
+													<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="82"/>
+													<Unclipped val="true"/>
+													<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
+														<Frame type="ProgressBar" name="ChargeFillProgress">
+															<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+															<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+															<Unclipped val="true"/>
+														</Frame>
+													</Frame>
+												</Frame>
 												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="Frame" name="FCJH_TextTip_HeroTracer">
 													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
@@ -6210,7 +5588,22 @@
 														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="true"/></State>
 													</StateGroup>
 												</Frame>
-												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="Frame" name="TracerChargeContainer">
+													<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="24"/>
+													<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="44"/>
+													<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="92"/>
+													<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="82"/>
+													<Unclipped val="true"/>
+													<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
+														<Frame type="ProgressBar" name="ChargeFillProgress">
+															<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+															<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+															<Unclipped val="true"/>
+														</Frame>
+													</Frame>
+												</Frame>
 												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="Frame" name="FCJH_TextTip_HeroTracer">
 													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
@@ -6256,7 +5649,22 @@
 														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="true"/></State>
 													</StateGroup>
 												</Frame>
-												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="Frame" name="TracerChargeContainer">
+													<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="44"/>
+													<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="68"/>
+													<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="82"/>
+													<Unclipped val="true"/>
+													<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
+														<Frame type="ProgressBar" name="ChargeFillProgress">
+															<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+															<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+															<Unclipped val="true"/>
+														</Frame>
+													</Frame>
+												</Frame>
 												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="Frame" name="FCJH_TextTip_HeroTracer">
 													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
@@ -6302,7 +5710,22 @@
 														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="true"/></State>
 													</StateGroup>
 												</Frame>
-												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="Frame" name="TracerChargeContainer">
+													<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="44"/>
+													<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="68"/>
+													<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="82"/>
+													<Unclipped val="true"/>
+													<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
+														<Frame type="ProgressBar" name="ChargeFillProgress">
+															<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+															<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+															<Unclipped val="true"/>
+														</Frame>
+													</Frame>
+												</Frame>
 												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="Frame" name="FCJH_TextTip_HeroTracer">
 													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
@@ -6348,7 +5771,22 @@
 														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="true"/></State>
 													</StateGroup>
 												</Frame>
-												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="Frame" name="TracerChargeContainer">
+													<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="44"/>
+													<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="68"/>
+													<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="82"/>
+													<Unclipped val="true"/>
+													<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
+														<Frame type="ProgressBar" name="ChargeFillProgress">
+															<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+															<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+															<Unclipped val="true"/>
+														</Frame>
+													</Frame>
+												</Frame>
 												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="Frame" name="FCJH_TextTip_HeroTracer">
 													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
@@ -6394,7 +5832,22 @@
 														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="true"/></State>
 													</StateGroup>
 												</Frame>
-												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="Frame" name="TracerChargeContainer">
+													<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="44"/>
+													<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="68"/>
+													<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="82"/>
+													<Unclipped val="true"/>
+													<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
+														<Frame type="ProgressBar" name="ChargeFillProgress">
+															<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+															<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+															<Unclipped val="true"/>
+														</Frame>
+													</Frame>
+												</Frame>
 												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="Frame" name="FCJH_TextTip_HeroTracer">
 													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
@@ -6440,7 +5893,22 @@
 														<State name="Other"><Action type="SetProperty" frame="$this/TalentTreeIcon4" Visible="true"/></State>
 													</StateGroup>
 												</Frame>
-												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="Frame" name="TracerChargeContainer">
+													<Anchor side="Left" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="44"/>
+													<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="68"/>
+													<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="82"/>
+													<Unclipped val="true"/>
+													<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
+														<Frame type="ProgressBar" name="ChargeFillProgress">
+															<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+															<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+															<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+															<Unclipped val="true"/>
+														</Frame>
+													</Frame>
+												</Frame>
 												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 												<Frame type="Frame" name="FCJH_TextTip_HeroTracer">
 													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
@@ -6870,7 +6338,7 @@
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="44"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="92"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="82"/>
-									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
+									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/FCJH_HeroicTips/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
 									<Style val="PartyFrame_HeroicTalentCooldown"/>
 									<Options val="NoWrapping | ScaleToPreventTruncation"/>
 									<Alpha val="0"/>
@@ -6880,15 +6348,15 @@
 								<StateGroup name="FCJH_Cooldown">
 									<DefaultState val="Ready"/>
 									<!-- Tracer: never "on cooldown" - her charge meter shows instead
-									     (talent_row_lifts; it read as permanently greyed out, 2026-09-30) -->
+									     (tracer_meter; it read as permanently greyed out, 2026-09-30) -->
 									<State name="Charge">
-										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/FCJH_HeroicTips/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
 									</State>
 									<State name="Cooldown">
-										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/FCJH_HeroicTips/TalentOverview/HeroTalentsPanelContainer/PlayerFrame0/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
@@ -7033,7 +6501,7 @@
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="44"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="92"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="82"/>
-									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
+									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/FCJH_HeroicTips/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
 									<Style val="PartyFrame_HeroicTalentCooldown"/>
 									<Options val="NoWrapping | ScaleToPreventTruncation"/>
 									<Alpha val="0"/>
@@ -7043,15 +6511,15 @@
 								<StateGroup name="FCJH_Cooldown">
 									<DefaultState val="Ready"/>
 									<!-- Tracer: never "on cooldown" - her charge meter shows instead
-									     (talent_row_lifts; it read as permanently greyed out, 2026-09-30) -->
+									     (tracer_meter; it read as permanently greyed out, 2026-09-30) -->
 									<State name="Charge">
-										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/FCJH_HeroicTips/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
 									</State>
 									<State name="Cooldown">
-										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/FCJH_HeroicTips/TalentOverview/HeroTalentsPanelContainer/PlayerFrame1/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
@@ -7196,7 +6664,7 @@
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="44"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="92"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="82"/>
-									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
+									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/FCJH_HeroicTips/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
 									<Style val="PartyFrame_HeroicTalentCooldown"/>
 									<Options val="NoWrapping | ScaleToPreventTruncation"/>
 									<Alpha val="0"/>
@@ -7206,15 +6674,15 @@
 								<StateGroup name="FCJH_Cooldown">
 									<DefaultState val="Ready"/>
 									<!-- Tracer: never "on cooldown" - her charge meter shows instead
-									     (talent_row_lifts; it read as permanently greyed out, 2026-09-30) -->
+									     (tracer_meter; it read as permanently greyed out, 2026-09-30) -->
 									<State name="Charge">
-										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/FCJH_HeroicTips/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
 									</State>
 									<State name="Cooldown">
-										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/FCJH_HeroicTips/TalentOverview/HeroTalentsPanelContainer/PlayerFrame2/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
@@ -7359,7 +6827,7 @@
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="44"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="92"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="82"/>
-									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
+									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/FCJH_HeroicTips/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
 									<Style val="PartyFrame_HeroicTalentCooldown"/>
 									<Options val="NoWrapping | ScaleToPreventTruncation"/>
 									<Alpha val="0"/>
@@ -7369,15 +6837,15 @@
 								<StateGroup name="FCJH_Cooldown">
 									<DefaultState val="Ready"/>
 									<!-- Tracer: never "on cooldown" - her charge meter shows instead
-									     (talent_row_lifts; it read as permanently greyed out, 2026-09-30) -->
+									     (tracer_meter; it read as permanently greyed out, 2026-09-30) -->
 									<State name="Charge">
-										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/FCJH_HeroicTips/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
 									</State>
 									<State name="Cooldown">
-										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/FCJH_HeroicTips/TalentOverview/HeroTalentsPanelContainer/PlayerFrame3/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
@@ -7522,7 +6990,7 @@
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="44"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="92"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="82"/>
-									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
+									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/FCJH_HeroicTips/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
 									<Style val="PartyFrame_HeroicTalentCooldown"/>
 									<Options val="NoWrapping | ScaleToPreventTruncation"/>
 									<Alpha val="0"/>
@@ -7532,15 +7000,15 @@
 								<StateGroup name="FCJH_Cooldown">
 									<DefaultState val="Ready"/>
 									<!-- Tracer: never "on cooldown" - her charge meter shows instead
-									     (talent_row_lifts; it read as permanently greyed out, 2026-09-30) -->
+									     (tracer_meter; it read as permanently greyed out, 2026-09-30) -->
 									<State name="Charge">
-										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/FCJH_HeroicTips/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
 									</State>
 									<State name="Cooldown">
-										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/FCJH_HeroicTips/TalentOverview/HeroTalentsPanelContainer/PlayerFrame4/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
@@ -7690,7 +7158,7 @@
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="44"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="68"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="82"/>
-									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
+									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/FCJH_HeroicTips/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
 									<Style val="PartyFrame_HeroicTalentCooldown"/>
 									<Options val="NoWrapping | ScaleToPreventTruncation"/>
 									<Alpha val="0"/>
@@ -7700,15 +7168,15 @@
 								<StateGroup name="FCJH_Cooldown">
 									<DefaultState val="Ready"/>
 									<!-- Tracer: never "on cooldown" - her charge meter shows instead
-									     (talent_row_lifts; it read as permanently greyed out, 2026-09-30) -->
+									     (tracer_meter; it read as permanently greyed out, 2026-09-30) -->
 									<State name="Charge">
-										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/FCJH_HeroicTips/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
 									</State>
 									<State name="Cooldown">
-										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/FCJH_HeroicTips/TalentOverview/HeroTalentsPanelContainer/PlayerFrame5/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
@@ -7856,7 +7324,7 @@
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="44"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="68"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="82"/>
-									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
+									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/FCJH_HeroicTips/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
 									<Style val="PartyFrame_HeroicTalentCooldown"/>
 									<Options val="NoWrapping | ScaleToPreventTruncation"/>
 									<Alpha val="0"/>
@@ -7866,15 +7334,15 @@
 								<StateGroup name="FCJH_Cooldown">
 									<DefaultState val="Ready"/>
 									<!-- Tracer: never "on cooldown" - her charge meter shows instead
-									     (talent_row_lifts; it read as permanently greyed out, 2026-09-30) -->
+									     (tracer_meter; it read as permanently greyed out, 2026-09-30) -->
 									<State name="Charge">
-										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/FCJH_HeroicTips/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
 									</State>
 									<State name="Cooldown">
-										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/FCJH_HeroicTips/TalentOverview/HeroTalentsPanelContainer/PlayerFrame6/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
@@ -8022,7 +7490,7 @@
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="44"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="68"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="82"/>
-									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
+									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/FCJH_HeroicTips/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
 									<Style val="PartyFrame_HeroicTalentCooldown"/>
 									<Options val="NoWrapping | ScaleToPreventTruncation"/>
 									<Alpha val="0"/>
@@ -8032,15 +7500,15 @@
 								<StateGroup name="FCJH_Cooldown">
 									<DefaultState val="Ready"/>
 									<!-- Tracer: never "on cooldown" - her charge meter shows instead
-									     (talent_row_lifts; it read as permanently greyed out, 2026-09-30) -->
+									     (tracer_meter; it read as permanently greyed out, 2026-09-30) -->
 									<State name="Charge">
-										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/FCJH_HeroicTips/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
 									</State>
 									<State name="Cooldown">
-										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/FCJH_HeroicTips/TalentOverview/HeroTalentsPanelContainer/PlayerFrame7/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
@@ -8188,7 +7656,7 @@
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="44"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="68"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="82"/>
-									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
+									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/FCJH_HeroicTips/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
 									<Style val="PartyFrame_HeroicTalentCooldown"/>
 									<Options val="NoWrapping | ScaleToPreventTruncation"/>
 									<Alpha val="0"/>
@@ -8198,15 +7666,15 @@
 								<StateGroup name="FCJH_Cooldown">
 									<DefaultState val="Ready"/>
 									<!-- Tracer: never "on cooldown" - her charge meter shows instead
-									     (talent_row_lifts; it read as permanently greyed out, 2026-09-30) -->
+									     (tracer_meter; it read as permanently greyed out, 2026-09-30) -->
 									<State name="Charge">
-										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/FCJH_HeroicTips/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
 									</State>
 									<State name="Cooldown">
-										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/FCJH_HeroicTips/TalentOverview/HeroTalentsPanelContainer/PlayerFrame8/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
@@ -8354,7 +7822,7 @@
 									<Anchor side="Top"    relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="44"/>
 									<Anchor side="Right"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="68"/>
 									<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="82"/>
-									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
+									<Text val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/FCJH_HeroicTips/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel/@Text}"/>
 									<Style val="PartyFrame_HeroicTalentCooldown"/>
 									<Options val="NoWrapping | ScaleToPreventTruncation"/>
 									<Alpha val="0"/>
@@ -8364,15 +7832,15 @@
 								<StateGroup name="FCJH_Cooldown">
 									<DefaultState val="Ready"/>
 									<!-- Tracer: never "on cooldown" - her charge meter shows instead
-									     (talent_row_lifts; it read as permanently greyed out, 2026-09-30) -->
+									     (tracer_meter; it read as permanently greyed out, 2026-09-30) -->
 									<State name="Charge">
-										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/FCJH_HeroicTips/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/TracerChargeContainer/TracerPulseBombChargeFrame" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
 									</State>
 									<State name="Cooldown">
-										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
+										<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/FCJH_HeroicTips/TalentOverview/HeroTalentsPanelContainer/PlayerFrame9/TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/UnitStatusAbil/AbilIcon/CooldownLabel" Visible="true"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
 										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>

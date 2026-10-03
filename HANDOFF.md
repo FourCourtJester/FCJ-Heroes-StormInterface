@@ -194,7 +194,8 @@ src/dev/                                     dev-only probes (empty now; packed 
   a piece out of a Blizzard panel, keep the panel at full alpha and fade its other pieces leaf by
   leaf. The observer talent row also starts hidden (`CleanTalentsPanelTemplate` Visible false)
   and the game keeps it so: a looping Visibility animation on an always-shown ancestor plus
-  `Batch false` makes it draw (Tracer's meter, `talent_row_lifts`).
+  `Batch false` makes it draw. (Used for Tracer's meter until 2026-10-02; simpler: our OWN
+  copy of the row draws as is, so the meter and the heroic cooldown now come from that.)
 - **Property conditions take `operator=`** (`LessThan`, `NotEqual`...), but label text still
   compares as text; the heal sensor matches the health percent string by string.
 - **In the observer, selection is what locks the camera to a hero.** Keep Blizzard's click
@@ -306,6 +307,8 @@ five segments would duplicate the hero row. If plates read too small, widen them
 - in game: the command card on the inspect card (shows with it, follows the selection,
   tooltips, which button holds which key - `inspect_card.COMMAND_KEYS` is a guess), Tracer's
   tooltip header, the pop-up sizes (talent = pane size, heal 2 px smaller)
+- in game: Tracer's meter and the plates' heroic cooldown count, now read from our own copy
+  of the talent row (`OUR_ROW`, `tracer_meter`) - Blizzard's row is plain hidden again
 - art pass items from Ahli: Tracer's segmented ammo bar and round Pulse Bomb meter
 
 How the heroic tooltips work: `tools/gen.py`, the comment above `HEROIC_TIPS`.
