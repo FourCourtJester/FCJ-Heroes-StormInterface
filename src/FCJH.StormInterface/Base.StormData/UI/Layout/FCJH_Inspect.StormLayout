@@ -6,8 +6,11 @@
 	<!-- The inspect card (tools/inspect_card.py; layout.toml element.inspect, 300 x 750 px): the
 	     selected unit's portrait, name, player and level, fountain, health and resource, buffs
 	     and debuffs, abilities, talents and stats. Shown when Blizzard's own small inspector
-	     would be. -->
+	     would be. It lives in Blizzard's console container, beside the command card whose buttons
+     it borrows (as Ahli's hero card does). -->
 	<Frame type="GameUI" name="GameUI" file="GameUI">
+	<Frame type="Frame" name="UIContainer">
+	<Frame type="Frame" name="ConsoleUIContainer">
 		<!-- Round 9 (2026-09-30): the card shows exactly when Blizzard's own small inspector
 		     would. Ours alone (a TargetInfoFrame the game doesn't manage) came up on the first
 		     plate click of a game; the default UI's doesn't (user). Blizzard's is now parked
@@ -81,7 +84,7 @@
 			<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INSPECT_B"/>
 			<Anchor side="Right"  relative="$parent" pos="Min" offset="#FCJH_INSPECT_R"/>
 			<AcceptsMouse val="false"/>
-			<RenderPriority val="650"/>
+			<RenderPriority val="600"/>
 			<Frame type="Frame" name="TargetInfoPanel" template="TargetInfoPanel/TargetInfoPanelTemplate">
 				<Anchor relative="$parent"/>
 				<Visible val="{$this/@Enabled}"/>
@@ -6660,15 +6663,266 @@
 		</Frame>
 			</Frame>
 		</Frame>
-		<Frame type="Frame" name="UIContainer">
-			<Frame type="Frame" name="ConsoleUIContainer">
-				<Frame type="CommandPanel" name="CommandPanel">
-					<Anchor side="Left"   relative="$GameUI/FCJH_Inspect" pos="Max" offset="20"/>
-					<Anchor side="Top"    relative="$GameUI/FCJH_Inspect" pos="Min" offset="366"/>
-					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+		<!-- Blizzard's command card on the card's ability rows (inspect_card.command_panel) -->
+		<Frame type="CommandPanel" name="CommandPanel">
+			<Anchor side="Top"    relative="$parent/FCJH_Inspect" pos="Min" offset="382"/>
+			<Anchor side="Left"   relative="$parent/FCJH_Inspect" pos="Min" offset="14"/>
+			<Anchor side="Bottom" relative="$parent/FCJH_Inspect" pos="Min" offset="461"/>
+			<Anchor side="Right"  relative="$parent/FCJH_Inspect" pos="Max" offset="-14"/>
+				<Frame type="CommandButton" name="CommandButton30">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="36"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="36"/>
 				</Frame>
-			</Frame>
+				<Frame type="CommandButton" name="CommandButton31">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="43"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="36"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="79"/>
+				</Frame>
+				<Frame type="CommandButton" name="CommandButton32">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="86"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="36"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="122"/>
+				</Frame>
+				<Frame type="CommandButton" name="CommandButton33">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="129"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="36"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="165"/>
+				</Frame>
+				<Frame type="CommandButton" name="CommandButton34">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="172"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="36"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="208"/>
+				</Frame>
+				<Frame type="CommandButton" name="CommandButton35">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="215"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="36"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="251"/>
+				</Frame>
+				<Frame type="CommandButton" name="CommandButton04">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="43"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="79"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="36"/>
+				</Frame>
+				<Frame type="CommandButton" name="CommandButton00">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="43"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="43"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="79"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="79"/>
+				</Frame>
+				<Frame type="CommandButton" name="CommandButton01">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="43"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="86"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="79"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="122"/>
+				</Frame>
+				<Frame type="CommandButton" name="CommandButton02">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="43"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="129"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="79"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="165"/>
+				</Frame>
+				<Frame type="CommandButton" name="CommandButton03">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="43"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="172"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="79"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="208"/>
+				</Frame>
+				<Frame type="CommandButton" name="CommandButton05">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="43"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="215"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="79"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="251"/>
+				</Frame>
+				<Frame type="CommandButton" name="CommandButton13">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="10036"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="10036"/>
+					<Alpha val="0"/>
+					<AcceptsMouse val="false"/>
+					<AcceptsMouseTooltip val="false"/>
+				</Frame>
+				<Frame type="CommandButton" name="CommandButton15">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="10036"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="10036"/>
+					<Alpha val="0"/>
+					<AcceptsMouse val="false"/>
+					<AcceptsMouseTooltip val="false"/>
+				</Frame>
+				<Frame type="Image" name="MiddleFill">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="10036"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="10036"/>
+					<Alpha val="0"/>
+					<AcceptsMouse val="false"/>
+					<AcceptsMouseTooltip val="false"/>
+				</Frame>
+				<Frame type="Image" name="CommandTargetImage">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="10036"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="10036"/>
+					<Alpha val="0"/>
+					<AcceptsMouse val="false"/>
+					<AcceptsMouseTooltip val="false"/>
+				</Frame>
+				<Frame type="Label" name="CommandTargetName">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="10036"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="10036"/>
+					<Alpha val="0"/>
+					<AcceptsMouse val="false"/>
+					<AcceptsMouseTooltip val="false"/>
+				</Frame>
+				<Frame type="Label" name="CommandTargetPrompt">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="10036"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="10036"/>
+					<Alpha val="0"/>
+					<AcceptsMouse val="false"/>
+					<AcceptsMouseTooltip val="false"/>
+				</Frame>
+				<Frame type="Frame" name="ButtonEffectAttention">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="10036"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="10036"/>
+					<Alpha val="0"/>
+					<AcceptsMouse val="false"/>
+					<AcceptsMouseTooltip val="false"/>
+				</Frame>
+				<Frame type="Frame" name="HudEffectPhased">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="10036"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="10036"/>
+					<Alpha val="0"/>
+					<AcceptsMouse val="false"/>
+					<AcceptsMouseTooltip val="false"/>
+				</Frame>
+				<Frame type="Image" name="EmptyDynamicButton30">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="10036"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="10036"/>
+					<Alpha val="0"/>
+					<AcceptsMouse val="false"/>
+					<AcceptsMouseTooltip val="false"/>
+				</Frame>
+				<Frame type="Image" name="EmptyDynamicButton31">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="10036"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="10036"/>
+					<Alpha val="0"/>
+					<AcceptsMouse val="false"/>
+					<AcceptsMouseTooltip val="false"/>
+				</Frame>
+				<Frame type="Image" name="EmptyDynamicButton32">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="10036"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="10036"/>
+					<Alpha val="0"/>
+					<AcceptsMouse val="false"/>
+					<AcceptsMouseTooltip val="false"/>
+				</Frame>
+				<Frame type="Image" name="EmptyDynamicButton33">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="10036"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="10036"/>
+					<Alpha val="0"/>
+					<AcceptsMouse val="false"/>
+					<AcceptsMouseTooltip val="false"/>
+				</Frame>
+				<Frame type="Image" name="EmptyDynamicButton34">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="10036"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="10036"/>
+					<Alpha val="0"/>
+					<AcceptsMouse val="false"/>
+					<AcceptsMouseTooltip val="false"/>
+				</Frame>
+				<Frame type="Image" name="EmptyDynamicButton35">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="10036"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="10036"/>
+					<Alpha val="0"/>
+					<AcceptsMouse val="false"/>
+					<AcceptsMouseTooltip val="false"/>
+				</Frame>
+				<Frame type="Frame" name="TutorialArrow00">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="10036"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="10036"/>
+					<Alpha val="0"/>
+					<AcceptsMouse val="false"/>
+					<AcceptsMouseTooltip val="false"/>
+				</Frame>
+				<Frame type="Frame" name="TutorialArrow01">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="10036"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="10036"/>
+					<Alpha val="0"/>
+					<AcceptsMouse val="false"/>
+					<AcceptsMouseTooltip val="false"/>
+				</Frame>
+				<Frame type="Frame" name="TutorialArrow02">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="10036"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="10036"/>
+					<Alpha val="0"/>
+					<AcceptsMouse val="false"/>
+					<AcceptsMouseTooltip val="false"/>
+				</Frame>
+				<Frame type="Frame" name="TutorialArrow03">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="10036"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="10036"/>
+					<Alpha val="0"/>
+					<AcceptsMouse val="false"/>
+					<AcceptsMouseTooltip val="false"/>
+				</Frame>
+				<Frame type="Frame" name="TutorialArrow04">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="10036"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="10036"/>
+					<Alpha val="0"/>
+					<AcceptsMouse val="false"/>
+					<AcceptsMouseTooltip val="false"/>
+				</Frame>
+				<Frame type="Frame" name="TutorialArrow05">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="9999"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="10036"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="10036"/>
+					<Alpha val="0"/>
+					<AcceptsMouse val="false"/>
+					<AcceptsMouseTooltip val="false"/>
+				</Frame>
 		</Frame>
+	</Frame>
+	</Frame>
 	</Frame>
 </Desc>

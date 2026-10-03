@@ -95,9 +95,7 @@ def command_switch():
     only while the card is: the game brings the player HUD back whenever it likes, so a looping
     animation asserts it, one frame per side (hidden frames don't run animations, so only the
     shown one asserts). Was always hidden with the rest of the HUD (FCJH_Hidden) until
-    2026-10-02.
-    TEST (2026-10-02): Blizzard's own layout, beside the card - to see that it shows for an
-    observer, follows the selection, gives tooltips, and which button holds which key."""
+    2026-10-02."""
     def side(name, shown):
         return (f'{T*2}<Frame type="Frame" name="{name}">\n'
                 f'{T*3}<Anchor relative="$parent"/>\n{T*3}<Visible val="{str(not shown).lower()}"/>\n'
@@ -109,15 +107,46 @@ def command_switch():
     return side("FCJH_CommandOn", True) + side("FCJH_CommandOff", False)
 
 
+# The command card's buttons on the card's two ability rows, in Blizzard's own order (players
+# know it): talent actives and other dynamic buttons on top (CommandButton30-35), then the
+# mount, the four abilities and the trait (CommandButton04, 00, 01, 02, 03, 05 - left to
+# right as in the default UI). Each button shows its own hotkey. The hearth (13), Blizzard's
+# hidden spare (15), the empty-slot art, targeting prompts and tutorial arrows are put away.
+COMMAND_ROWS = (("30", "31", "32", "33", "34", "35"), ("04", "00", "01", "02", "03", "05"))
+COMMAND_PUT_AWAY = ([("CommandButton", "CommandButton13"), ("CommandButton", "CommandButton15"),
+                     ("Image", "MiddleFill"), ("Image", "CommandTargetImage"), ("Label", "CommandTargetName"),
+                     ("Label", "CommandTargetPrompt"), ("Frame", "ButtonEffectAttention"), ("Frame", "HudEffectPhased")]
+                    + [("Image", f"EmptyDynamicButton{k}") for k in range(30, 36)]
+                    + [("Frame", f"TutorialArrow0{k}") for k in range(6)])
+
+
 def command_panel():
-    """Where Blizzard's command card sits: TEST - right of the card, level with its abilities."""
-    return (f'{T*2}<Frame type="Frame" name="UIContainer">\n{T*3}<Frame type="Frame" name="ConsoleUIContainer">\n'
-            f'{T*4}<Frame type="CommandPanel" name="CommandPanel">\n'
-            f'{T*5}<Anchor side="Left"   relative="$GameUI/FCJH_Inspect" pos="Max" offset="20"/>\n'
-            f'{T*5}<Anchor side="Top"    relative="$GameUI/FCJH_Inspect" pos="Min" offset="{ABIL_LABEL}"/>\n'
-            f'{T*5}<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>\n'
-            f'{T*5}<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>\n'
-            f'{T*4}</Frame>\n{T*3}</Frame>\n{T*2}</Frame>\n')
+    """Blizzard's command card laid over the card's ability rows. It lives in the console
+    container, as the card now does (one step under it in RenderPriority), so its buttons draw
+    over the card's back and take the mouse first. The panel covers only the ability band, so
+    it can't cover the card's other tooltips."""
+    top, bottom = ABIL_ROWS[0], ABIL_ROWS[1] + TAL_SIZE
+    buttons = []
+    for r, row in enumerate(COMMAND_ROWS):
+        for c, k in enumerate(row):
+            left, y = c * TAL_STEP, ABIL_ROWS[r] - top
+            buttons.append(f'{T*4}<Frame type="CommandButton" name="CommandButton{k}">\n'
+                           + rect(y, left, y + TAL_SIZE, left + TAL_SIZE, i=5) + f'{T*4}</Frame>\n')
+    away = "".join(
+        f'{T*4}<Frame type="{ftype}" name="{n}">\n'
+        f'{T*5}<Anchor side="Top"    relative="$parent" pos="Min" offset="9999"/>\n'
+        f'{T*5}<Anchor side="Left"   relative="$parent" pos="Min" offset="9999"/>\n'
+        f'{T*5}<Anchor side="Bottom" relative="$parent" pos="Min" offset="10036"/>\n'
+        f'{T*5}<Anchor side="Right"  relative="$parent" pos="Min" offset="10036"/>\n'
+        f'{T*5}<Alpha val="0"/>\n{T*5}<AcceptsMouse val="false"/>\n{T*5}<AcceptsMouseTooltip val="false"/>\n{T*4}</Frame>\n'
+        for ftype, n in COMMAND_PUT_AWAY)
+    return (f'{T*2}<!-- Blizzard\'s command card on the card\'s ability rows (inspect_card.command_panel) -->\n'
+            f'{T*2}<Frame type="CommandPanel" name="CommandPanel">\n'
+            f'{T*3}<Anchor side="Top"    relative="$parent/FCJH_Inspect" pos="Min" offset="{top}"/>\n'
+            f'{T*3}<Anchor side="Left"   relative="$parent/FCJH_Inspect" pos="Min" offset="{M}"/>\n'
+            f'{T*3}<Anchor side="Bottom" relative="$parent/FCJH_Inspect" pos="Min" offset="{bottom}"/>\n'
+            f'{T*3}<Anchor side="Right"  relative="$parent/FCJH_Inspect" pos="Max" offset="-{M}"/>\n'
+            + "".join(buttons) + away + f'{T*2}</Frame>\n')
 
 
 def card():
@@ -162,7 +191,9 @@ def card():
            f'{T*3}<Anchor side="Left"   relative="$parent" pos="Min" offset="#FCJH_INSPECT_L"/>\n'
            f'{T*3}<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INSPECT_B"/>\n'
            f'{T*3}<Anchor side="Right"  relative="$parent" pos="Min" offset="#FCJH_INSPECT_R"/>\n'
-           f'{T*3}<AcceptsMouse val="false"/>\n{T*3}<RenderPriority val="650"/>\n']
+           # in the console container, just under its command card (610), whose buttons draw
+           # on the card's ability rows (command_panel)
+           f'{T*3}<AcceptsMouse val="false"/>\n{T*3}<RenderPriority val="600"/>\n']
     chrome = []
     # Round 9: the back takes the mouse, so a click inside the card no longer falls through to
     # the map (which deselects the unit and closes the card, 2026-09-30)
@@ -548,8 +579,11 @@ FILE_HEADER = """
 	<!-- The inspect card (tools/inspect_card.py; layout.toml element.inspect, 300 x 750 px): the
 	     selected unit's portrait, name, player and level, fountain, health and resource, buffs
 	     and debuffs, abilities, talents and stats. Shown when Blizzard's own small inspector
-	     would be. -->
+	     would be. It lives in Blizzard's console container, beside the command card whose buttons
+     it borrows (as Ahli's hero card does). -->
 	<Frame type="GameUI" name="GameUI" file="GameUI">
+	<Frame type="Frame" name="UIContainer">
+	<Frame type="Frame" name="ConsoleUIContainer">
 """
 
 
@@ -562,7 +596,7 @@ def layout(crop, head):
     CARDS.clear()
     CARDS.update(cached_cards())
     return (head + FILE_HEADER + card() + unit() + "\t\t\t</Frame>\n\t\t</Frame>\n"
-            + command_panel() + "\t</Frame>\n</Desc>\n")
+            + command_panel() + "\t</Frame>\n\t</Frame>\n\t</Frame>\n</Desc>\n")
 
 
 @lru_cache(maxsize=None)
