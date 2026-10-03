@@ -318,7 +318,8 @@ with Blizzard's command card on it.
 2. **Inspect card talents: tooltips** - our talent icons are pictures bound to the talent
    row; they give none. Tooltips only come from Blizzard's frames in their own layout (see
    §3), so use what the heroic tooltips taught: a copy of the talent row inside the card.
-3. **Inspect card height** - the user plans to shorten it once the wiring is done.
+3. **Inspect card height and stats** - the user plans to shorten the card once the wiring is
+   done, and to re-order the stats so they're better organized (user, 2026-10-03).
 4. **Anchoring pass**: everything we place is anchored to the screen's LEFT edge with fixed
    offsets (layout.toml is 1080p px), so a window that isn't 16:9 shifts Blizzard's centred
    pieces against ours - the hexagon left its backplate in a 2558 x 1401 window (2026-10-03;
