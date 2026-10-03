@@ -6285,7 +6285,37 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/></Frame>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil">
+													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
+													<RenderPriority val="900"/>
+													<Unclipped val="true"/>
+													<AcceptsMouse val="true"/>
+													<AcceptsMouseTooltip val="true"/>
+													<Frame type="AbilIcon" name="AbilIcon">
+														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+														<AcceptsMouse val="true"/>
+														<AcceptsMouseTooltip val="true"/>
+													</Frame>
+												</Frame>
+												<Frame type="Image" name="FCJH_PosAbil">
+													<Anchor side="Left" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
+													<Texture val="@UI/PauseScreenDimImage"/>
+													<ColorAdjustMode val="Fill"/>
+													<AdjustmentColor val="110,0,255,255"/>
+													<Unclipped val="true"/>
+													<RenderPriority val="950"/>
+													<AcceptsMouse val="false"/>
+													<AcceptsMouseTooltip val="false"/>
+												</Frame>
 											</Frame>
 										</Frame>
 									</Frame>
@@ -6319,7 +6349,37 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/></Frame>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil">
+													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
+													<RenderPriority val="900"/>
+													<Unclipped val="true"/>
+													<AcceptsMouse val="true"/>
+													<AcceptsMouseTooltip val="true"/>
+													<Frame type="AbilIcon" name="AbilIcon">
+														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+														<AcceptsMouse val="true"/>
+														<AcceptsMouseTooltip val="true"/>
+													</Frame>
+												</Frame>
+												<Frame type="Image" name="FCJH_PosAbil">
+													<Anchor side="Left" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
+													<Texture val="@UI/PauseScreenDimImage"/>
+													<ColorAdjustMode val="Fill"/>
+													<AdjustmentColor val="110,0,255,255"/>
+													<Unclipped val="true"/>
+													<RenderPriority val="950"/>
+													<AcceptsMouse val="false"/>
+													<AcceptsMouseTooltip val="false"/>
+												</Frame>
 											</Frame>
 										</Frame>
 									</Frame>
@@ -6353,7 +6413,37 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/></Frame>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil">
+													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
+													<RenderPriority val="900"/>
+													<Unclipped val="true"/>
+													<AcceptsMouse val="true"/>
+													<AcceptsMouseTooltip val="true"/>
+													<Frame type="AbilIcon" name="AbilIcon">
+														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+														<AcceptsMouse val="true"/>
+														<AcceptsMouseTooltip val="true"/>
+													</Frame>
+												</Frame>
+												<Frame type="Image" name="FCJH_PosAbil">
+													<Anchor side="Left" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
+													<Texture val="@UI/PauseScreenDimImage"/>
+													<ColorAdjustMode val="Fill"/>
+													<AdjustmentColor val="110,0,255,255"/>
+													<Unclipped val="true"/>
+													<RenderPriority val="950"/>
+													<AcceptsMouse val="false"/>
+													<AcceptsMouseTooltip val="false"/>
+												</Frame>
 											</Frame>
 										</Frame>
 									</Frame>
@@ -6387,7 +6477,37 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/></Frame>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil">
+													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
+													<RenderPriority val="900"/>
+													<Unclipped val="true"/>
+													<AcceptsMouse val="true"/>
+													<AcceptsMouseTooltip val="true"/>
+													<Frame type="AbilIcon" name="AbilIcon">
+														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+														<AcceptsMouse val="true"/>
+														<AcceptsMouseTooltip val="true"/>
+													</Frame>
+												</Frame>
+												<Frame type="Image" name="FCJH_PosAbil">
+													<Anchor side="Left" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
+													<Texture val="@UI/PauseScreenDimImage"/>
+													<ColorAdjustMode val="Fill"/>
+													<AdjustmentColor val="110,0,255,255"/>
+													<Unclipped val="true"/>
+													<RenderPriority val="950"/>
+													<AcceptsMouse val="false"/>
+													<AcceptsMouseTooltip val="false"/>
+												</Frame>
 											</Frame>
 										</Frame>
 									</Frame>
@@ -6421,7 +6541,37 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/></Frame>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil">
+													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
+													<RenderPriority val="900"/>
+													<Unclipped val="true"/>
+													<AcceptsMouse val="true"/>
+													<AcceptsMouseTooltip val="true"/>
+													<Frame type="AbilIcon" name="AbilIcon">
+														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+														<AcceptsMouse val="true"/>
+														<AcceptsMouseTooltip val="true"/>
+													</Frame>
+												</Frame>
+												<Frame type="Image" name="FCJH_PosAbil">
+													<Anchor side="Left" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
+													<Texture val="@UI/PauseScreenDimImage"/>
+													<ColorAdjustMode val="Fill"/>
+													<AdjustmentColor val="110,0,255,255"/>
+													<Unclipped val="true"/>
+													<RenderPriority val="950"/>
+													<AcceptsMouse val="false"/>
+													<AcceptsMouseTooltip val="false"/>
+												</Frame>
 											</Frame>
 										</Frame>
 									</Frame>
@@ -6455,7 +6605,37 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/></Frame>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil">
+													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
+													<RenderPriority val="900"/>
+													<Unclipped val="true"/>
+													<AcceptsMouse val="true"/>
+													<AcceptsMouseTooltip val="true"/>
+													<Frame type="AbilIcon" name="AbilIcon">
+														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+														<AcceptsMouse val="true"/>
+														<AcceptsMouseTooltip val="true"/>
+													</Frame>
+												</Frame>
+												<Frame type="Image" name="FCJH_PosAbil">
+													<Anchor side="Left" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
+													<Texture val="@UI/PauseScreenDimImage"/>
+													<ColorAdjustMode val="Fill"/>
+													<AdjustmentColor val="110,0,255,255"/>
+													<Unclipped val="true"/>
+													<RenderPriority val="950"/>
+													<AcceptsMouse val="false"/>
+													<AcceptsMouseTooltip val="false"/>
+												</Frame>
 											</Frame>
 										</Frame>
 									</Frame>
@@ -6489,7 +6669,37 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/></Frame>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil">
+													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
+													<RenderPriority val="900"/>
+													<Unclipped val="true"/>
+													<AcceptsMouse val="true"/>
+													<AcceptsMouseTooltip val="true"/>
+													<Frame type="AbilIcon" name="AbilIcon">
+														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+														<AcceptsMouse val="true"/>
+														<AcceptsMouseTooltip val="true"/>
+													</Frame>
+												</Frame>
+												<Frame type="Image" name="FCJH_PosAbil">
+													<Anchor side="Left" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
+													<Texture val="@UI/PauseScreenDimImage"/>
+													<ColorAdjustMode val="Fill"/>
+													<AdjustmentColor val="110,0,255,255"/>
+													<Unclipped val="true"/>
+													<RenderPriority val="950"/>
+													<AcceptsMouse val="false"/>
+													<AcceptsMouseTooltip val="false"/>
+												</Frame>
 											</Frame>
 										</Frame>
 									</Frame>
@@ -6523,7 +6733,37 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/></Frame>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil">
+													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
+													<RenderPriority val="900"/>
+													<Unclipped val="true"/>
+													<AcceptsMouse val="true"/>
+													<AcceptsMouseTooltip val="true"/>
+													<Frame type="AbilIcon" name="AbilIcon">
+														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+														<AcceptsMouse val="true"/>
+														<AcceptsMouseTooltip val="true"/>
+													</Frame>
+												</Frame>
+												<Frame type="Image" name="FCJH_PosAbil">
+													<Anchor side="Left" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
+													<Texture val="@UI/PauseScreenDimImage"/>
+													<ColorAdjustMode val="Fill"/>
+													<AdjustmentColor val="110,0,255,255"/>
+													<Unclipped val="true"/>
+													<RenderPriority val="950"/>
+													<AcceptsMouse val="false"/>
+													<AcceptsMouseTooltip val="false"/>
+												</Frame>
 											</Frame>
 										</Frame>
 									</Frame>
@@ -6557,7 +6797,37 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/></Frame>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil">
+													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
+													<RenderPriority val="900"/>
+													<Unclipped val="true"/>
+													<AcceptsMouse val="true"/>
+													<AcceptsMouseTooltip val="true"/>
+													<Frame type="AbilIcon" name="AbilIcon">
+														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+														<AcceptsMouse val="true"/>
+														<AcceptsMouseTooltip val="true"/>
+													</Frame>
+												</Frame>
+												<Frame type="Image" name="FCJH_PosAbil">
+													<Anchor side="Left" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
+													<Texture val="@UI/PauseScreenDimImage"/>
+													<ColorAdjustMode val="Fill"/>
+													<AdjustmentColor val="110,0,255,255"/>
+													<Unclipped val="true"/>
+													<RenderPriority val="950"/>
+													<AcceptsMouse val="false"/>
+													<AcceptsMouseTooltip val="false"/>
+												</Frame>
 											</Frame>
 										</Frame>
 									</Frame>
@@ -6591,7 +6861,37 @@
 													<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4"><Alpha val="0"/></Frame>
 												</Frame>
 												<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
-												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+												<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil">
+													<Anchor side="Left" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4" pos="Max" offset="0"/>
+													<RenderPriority val="900"/>
+													<Unclipped val="true"/>
+													<AcceptsMouse val="true"/>
+													<AcceptsMouseTooltip val="true"/>
+													<Frame type="AbilIcon" name="AbilIcon">
+														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+														<AcceptsMouse val="true"/>
+														<AcceptsMouseTooltip val="true"/>
+													</Frame>
+												</Frame>
+												<Frame type="Image" name="FCJH_PosAbil">
+													<Anchor side="Left" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$parent/UnitStatusAbil" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$parent/UnitStatusAbil" pos="Max" offset="0"/>
+													<Texture val="@UI/PauseScreenDimImage"/>
+													<ColorAdjustMode val="Fill"/>
+													<AdjustmentColor val="110,0,255,255"/>
+													<Unclipped val="true"/>
+													<RenderPriority val="950"/>
+													<AcceptsMouse val="false"/>
+													<AcceptsMouseTooltip val="false"/>
+												</Frame>
 											</Frame>
 										</Frame>
 									</Frame>

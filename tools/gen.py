@@ -1744,6 +1744,21 @@ def copies_toggle():
             f'{ctrl}{t(6)}</Animation>{t(5)}</Frame>')
 
 
+def heroic_abil(indent):
+    """DIAGNOSTIC (2026-10-02): the talent row's heroic ability icon (UnitStatusAbil) over the
+    level-10 slot, on top, mouse on."""
+    t = TAB * indent
+    on = lambda rel, k: "".join(f'{NL}{t}{TAB * k}<Anchor side="{sd}" relative="{rel}" pos="{pos}" offset="0"/>'
+                                for sd, pos in (("Left", "Min"), ("Top", "Min"), ("Right", "Max"), ("Bottom", "Max")))
+    return (f'{NL}{t}<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil">'
+            + on("$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4", 1)
+            + f'{NL}{t}{TAB}<RenderPriority val="900"/>{NL}{t}{TAB}<Unclipped val="true"/>'
+            + f'{NL}{t}{TAB}<AcceptsMouse val="true"/>{NL}{t}{TAB}<AcceptsMouseTooltip val="true"/>'
+            + f'{NL}{t}{TAB}<Frame type="AbilIcon" name="AbilIcon">' + on("$parent", 2)
+            + f'{NL}{t}{TAB * 2}<AcceptsMouse val="true"/>{NL}{t}{TAB * 2}<AcceptsMouseTooltip val="true"/>'
+            + f'{NL}{t}{TAB}</Frame>{NL}{t}</Frame>')
+
+
 def row_toggle():
     """DIAGNOSTIC (2026-10-02): Control+Shift+8 hides and shows the game's observer talent row
     (talent_row_lifts; Tracer's meter goes with it), to see whether inspect comes back without
@@ -1756,7 +1771,7 @@ def row_toggle():
 
 
 def heroic_tip_panel(cfg):
-    """DIAGNOSTIC (2026-10-02), calibration 3: our own copy of the observer talent row in
+    """DIAGNOSTIC (2026-10-02), calibration 4: our own copy of the observer talent row in
     Blizzard's layout (the one arrangement whose icons give tooltips), each player's talent
     box shifted so its heroic-tier icon (level 10, TalentTreeIcon4) sits on our heroic.
     Blizzard anchors each box to the player's top-bar cell (our plates) +82 units (blue) / +15
@@ -1768,7 +1783,11 @@ def heroic_tip_panel(cfg):
     Every other icon (and the copy's charge meter and ability) is now off and deaf to the
     mouse: they gave talent tooltips all over the plates. The heroic-tier icon is invisible but
     still answers the mouse. Yellow marker (a child of UnitStatusFrame0, where it draws) over it.
-    Varian-type heroes (heroic at level 4, TalentTreeIcon2) are still to do."""
+    Calibration 3 (0c9f954): on target (within 1 px), the right tooltip for most, but Tracer and
+    Varian gave their level-10 talent (Tracer's heroic is no talent; Varian's is at level 4).
+    Calibration 4: the row's own heroic ABILITY icon (UnitStatusAbil, AbilityLink =
+    HeroSelectedTalentTreeFrame/@HeroicAbilLink - whatever heroic the hero has) laid over the
+    level-10 slot, above it, shown, with a cyan marker. The level-10 icon stays under it as before."""
     row_top = round(1024.4 / 0.9)        # slot's centre on the heroic's (1042.4 px)
     shift = {"blue": -63, "red": -86}    # the boxes' Left offset from their cell (natural 82 / 15)
     icons = ("".join(muted("UnitStatusTalentIcon", f"TalentTreeIcon{k}", 13) for k in (1, 2, 3, 5, 6, 7))
@@ -1786,7 +1805,7 @@ def heroic_tip_panel(cfg):
 										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">{dd(6, 11)}
 											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">{dd(7, 12)}{marker("FCJH_PosTier4", "$parent/HeroSelectedTalentTreeFrame/TalentTreeIcon4", "120,255,240,0", 12)}
 												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">{icons}
-												</Frame>{muted("Frame", "TracerChargeContainer", 12)}{muted("UnitStatusAbilIcon", "UnitStatusAbil", 12)}
+												</Frame>{muted("Frame", "TracerChargeContainer", 12)}{heroic_abil(12)}{marker("FCJH_PosAbil", "$parent/UnitStatusAbil", "110,0,255,255", 12)}
 											</Frame>
 										</Frame>
 									</Frame>
