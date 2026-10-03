@@ -26,15 +26,11 @@
 					<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="true"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="390"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="14"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="494"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Max" offset="-14"/>
 				</State>
 				<State name="Hide">
 					<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="false"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Top" relative="$GameUI" pos="Min" offset="9999"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Left" relative="$GameUI" pos="Min" offset="9999"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Bottom" relative="$GameUI" pos="Min" offset="10103"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Right" relative="$GameUI" pos="Min" offset="10304"/>
 				</State>
 			</StateGroup>
 		</Frame>
@@ -4589,13 +4585,17 @@
 			<!-- parked; the card's gate moves it onto the card while the card shows -->
 			<Anchor side="Top" relative="$GameUI" pos="Min" offset="9999"/>
 			<Anchor side="Left" relative="$GameUI" pos="Min" offset="9999"/>
-			<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="10103"/>
-			<Anchor side="Right" relative="$GameUI" pos="Min" offset="10304"/>
+			<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+			<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+			<Width val="305"/>
+			<Height val="104"/>
 				<Frame type="CommandButton" name="CommandButton30">
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 					<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="52"/>
-					<Anchor side="Right"  relative="$parent" pos="Min" offset="52"/>
+					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+					<Width val="52"/>
+					<Height val="52"/>
 					<Frame type="Image" name="NormalImage">
 						<Anchor side="Top" relative="$parent" pos="Min" offset="5"/>
 						<Anchor side="Left" relative="$parent" pos="Min" offset="5"/>
@@ -4618,8 +4618,10 @@
 				<Frame type="CommandButton" name="CommandButton31">
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 					<Anchor side="Left"   relative="$parent" pos="Min" offset="47"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="52"/>
-					<Anchor side="Right"  relative="$parent" pos="Min" offset="99"/>
+					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+					<Width val="52"/>
+					<Height val="52"/>
 					<Frame type="Image" name="NormalImage">
 						<Anchor side="Top" relative="$parent" pos="Min" offset="5"/>
 						<Anchor side="Left" relative="$parent" pos="Min" offset="5"/>
@@ -4642,8 +4644,10 @@
 				<Frame type="CommandButton" name="CommandButton32">
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 					<Anchor side="Left"   relative="$parent" pos="Min" offset="94"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="52"/>
-					<Anchor side="Right"  relative="$parent" pos="Min" offset="146"/>
+					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+					<Width val="52"/>
+					<Height val="52"/>
 					<Frame type="Image" name="NormalImage">
 						<Anchor side="Top" relative="$parent" pos="Min" offset="5"/>
 						<Anchor side="Left" relative="$parent" pos="Min" offset="5"/>
@@ -4666,8 +4670,10 @@
 				<Frame type="CommandButton" name="CommandButton33">
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 					<Anchor side="Left"   relative="$parent" pos="Min" offset="141"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="52"/>
-					<Anchor side="Right"  relative="$parent" pos="Min" offset="193"/>
+					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+					<Width val="52"/>
+					<Height val="52"/>
 					<Frame type="Image" name="NormalImage">
 						<Anchor side="Top" relative="$parent" pos="Min" offset="5"/>
 						<Anchor side="Left" relative="$parent" pos="Min" offset="5"/>
@@ -4690,8 +4696,10 @@
 				<Frame type="CommandButton" name="CommandButton34">
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 					<Anchor side="Left"   relative="$parent" pos="Min" offset="188"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="52"/>
-					<Anchor side="Right"  relative="$parent" pos="Min" offset="240"/>
+					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+					<Width val="52"/>
+					<Height val="52"/>
 					<Frame type="Image" name="NormalImage">
 						<Anchor side="Top" relative="$parent" pos="Min" offset="5"/>
 						<Anchor side="Left" relative="$parent" pos="Min" offset="5"/>
@@ -4714,8 +4722,10 @@
 				<Frame type="CommandButton" name="CommandButton35">
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 					<Anchor side="Left"   relative="$parent" pos="Min" offset="235"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="52"/>
-					<Anchor side="Right"  relative="$parent" pos="Min" offset="287"/>
+					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+					<Width val="52"/>
+					<Height val="52"/>
 					<Frame type="Image" name="NormalImage">
 						<Anchor side="Top" relative="$parent" pos="Min" offset="5"/>
 						<Anchor side="Left" relative="$parent" pos="Min" offset="5"/>
@@ -4738,8 +4748,10 @@
 				<Frame type="CommandButton" name="CommandButton04">
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="52"/>
 					<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="104"/>
-					<Anchor side="Right"  relative="$parent" pos="Min" offset="52"/>
+					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+					<Width val="52"/>
+					<Height val="52"/>
 					<Frame type="Image" name="NormalImage">
 						<Anchor side="Top" relative="$parent" pos="Min" offset="5"/>
 						<Anchor side="Left" relative="$parent" pos="Min" offset="5"/>
@@ -4762,8 +4774,10 @@
 				<Frame type="CommandButton" name="CommandButton00">
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="52"/>
 					<Anchor side="Left"   relative="$parent" pos="Min" offset="47"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="104"/>
-					<Anchor side="Right"  relative="$parent" pos="Min" offset="99"/>
+					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+					<Width val="52"/>
+					<Height val="52"/>
 					<Frame type="Image" name="NormalImage">
 						<Anchor side="Top" relative="$parent" pos="Min" offset="5"/>
 						<Anchor side="Left" relative="$parent" pos="Min" offset="5"/>
@@ -4782,12 +4796,20 @@
 						<Frame type="Image" name="InnerGlowImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
 					</Frame>
 					<Frame type="Frame" name="HitTestFrame"><Anchor relative="$parent"/></Frame>
+					<Frame type="Image" name="IconBackground">
+						<Anchor side="Top" relative="$parent" pos="Min" offset="5"/>
+						<Anchor side="Left" relative="$parent" pos="Min" offset="5"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-5"/>
+						<Anchor side="Right" relative="$parent" pos="Max" offset="-5"/>
+					</Frame>
 				</Frame>
 				<Frame type="CommandButton" name="CommandButton01">
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="52"/>
 					<Anchor side="Left"   relative="$parent" pos="Min" offset="94"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="104"/>
-					<Anchor side="Right"  relative="$parent" pos="Min" offset="146"/>
+					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+					<Width val="52"/>
+					<Height val="52"/>
 					<Frame type="Image" name="NormalImage">
 						<Anchor side="Top" relative="$parent" pos="Min" offset="5"/>
 						<Anchor side="Left" relative="$parent" pos="Min" offset="5"/>
@@ -4806,12 +4828,20 @@
 						<Frame type="Image" name="InnerGlowImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
 					</Frame>
 					<Frame type="Frame" name="HitTestFrame"><Anchor relative="$parent"/></Frame>
+					<Frame type="Image" name="IconBackground">
+						<Anchor side="Top" relative="$parent" pos="Min" offset="5"/>
+						<Anchor side="Left" relative="$parent" pos="Min" offset="5"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-5"/>
+						<Anchor side="Right" relative="$parent" pos="Max" offset="-5"/>
+					</Frame>
 				</Frame>
 				<Frame type="CommandButton" name="CommandButton02">
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="52"/>
 					<Anchor side="Left"   relative="$parent" pos="Min" offset="141"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="104"/>
-					<Anchor side="Right"  relative="$parent" pos="Min" offset="193"/>
+					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+					<Width val="52"/>
+					<Height val="52"/>
 					<Frame type="Image" name="NormalImage">
 						<Anchor side="Top" relative="$parent" pos="Min" offset="5"/>
 						<Anchor side="Left" relative="$parent" pos="Min" offset="5"/>
@@ -4830,12 +4860,20 @@
 						<Frame type="Image" name="InnerGlowImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
 					</Frame>
 					<Frame type="Frame" name="HitTestFrame"><Anchor relative="$parent"/></Frame>
+					<Frame type="Image" name="IconBackground">
+						<Anchor side="Top" relative="$parent" pos="Min" offset="5"/>
+						<Anchor side="Left" relative="$parent" pos="Min" offset="5"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-5"/>
+						<Anchor side="Right" relative="$parent" pos="Max" offset="-5"/>
+					</Frame>
 				</Frame>
 				<Frame type="CommandButton" name="CommandButton03">
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="52"/>
 					<Anchor side="Left"   relative="$parent" pos="Min" offset="188"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="104"/>
-					<Anchor side="Right"  relative="$parent" pos="Min" offset="240"/>
+					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+					<Width val="52"/>
+					<Height val="52"/>
 					<Frame type="Image" name="NormalImage">
 						<Anchor side="Top" relative="$parent" pos="Min" offset="5"/>
 						<Anchor side="Left" relative="$parent" pos="Min" offset="5"/>
@@ -4854,12 +4892,20 @@
 						<Frame type="Image" name="InnerGlowImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
 					</Frame>
 					<Frame type="Frame" name="HitTestFrame"><Anchor relative="$parent"/></Frame>
+					<Frame type="Image" name="IconBackground">
+						<Anchor side="Top" relative="$parent" pos="Min" offset="5"/>
+						<Anchor side="Left" relative="$parent" pos="Min" offset="5"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-5"/>
+						<Anchor side="Right" relative="$parent" pos="Max" offset="-5"/>
+					</Frame>
 				</Frame>
 				<Frame type="CommandButton" name="CommandButton05">
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="52"/>
 					<Anchor side="Left"   relative="$parent" pos="Min" offset="235"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="104"/>
-					<Anchor side="Right"  relative="$parent" pos="Min" offset="287"/>
+					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+					<Width val="52"/>
+					<Height val="52"/>
 					<Frame type="Image" name="NormalImage">
 						<Anchor side="Top" relative="$parent" pos="Min" offset="5"/>
 						<Anchor side="Left" relative="$parent" pos="Min" offset="5"/>
@@ -4878,6 +4924,12 @@
 						<Frame type="Image" name="InnerGlowImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
 					</Frame>
 					<Frame type="Frame" name="HitTestFrame"><Anchor relative="$parent"/></Frame>
+					<Frame type="Image" name="IconBackground">
+						<Anchor side="Top" relative="$parent" pos="Min" offset="5"/>
+						<Anchor side="Left" relative="$parent" pos="Min" offset="5"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-5"/>
+						<Anchor side="Right" relative="$parent" pos="Max" offset="-5"/>
+					</Frame>
 				</Frame>
 				<Frame type="CommandButton" name="CommandButton13">
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="9999"/>

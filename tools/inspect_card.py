@@ -99,16 +99,27 @@ def command_switch():
             f'{T*4}</Controller>\n{T*3}</Animation>\n{T*2}</Frame>\n')
 
 
+def placed(top, left, w, h, indent):
+    """A frame's place by its top-left corner and an explicit size. Blizzard's command card
+    and its buttons carry Width/Height in their templates (1060 x 190; 120 x 120), and those
+    beat opposite-side anchors: anchored on all four sides, the buttons stayed 120 units
+    (2026-10-03). Bottom and Right are tied to the frame itself, undoing the template's."""
+    t = T * indent
+    return (f'{t}<Anchor side="Top"    relative="$parent" pos="Min" offset="{top}"/>\n'
+            f'{t}<Anchor side="Left"   relative="$parent" pos="Min" offset="{left}"/>\n'
+            f'{t}<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>\n'
+            f'{t}<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>\n'
+            f'{t}<Width val="{w}"/>\n{t}<Height val="{h}"/>\n')
+
+
 def command_anchors(on_card, indent, tag="Action"):
-    """The command card's four anchors: on the card's ability rows, or parked off screen.
-    tag "Action": as StateGroup actions (the gate); "Anchor": as the frame's own anchors."""
-    top, bottom = ABIL_ROWS[0], ABIL_ROWS[1] + CMD_SIZE
+    """The command card's top-left corner: on the card's ability rows, or parked off screen
+    (its size is set on the frame - see placed). tag "Action": as StateGroup actions (the
+    gate); "Anchor": as the frame's own anchors."""
     if on_card:
-        sides = (("Top", CARD, "Min", top), ("Left", CARD, "Min", M),
-                 ("Bottom", CARD, "Min", bottom), ("Right", CARD, "Max", -M))
+        sides = (("Top", CARD, "Min", ABIL_ROWS[0]), ("Left", CARD, "Min", M))
     else:
-        sides = (("Top", "$GameUI", "Min", 9999), ("Left", "$GameUI", "Min", 9999),
-                 ("Bottom", "$GameUI", "Min", 9999 + bottom - top), ("Right", "$GameUI", "Min", 9999 + W - 2 * M))
+        sides = (("Top", "$GameUI", "Min", 9999), ("Left", "$GameUI", "Min", 9999))
     target = f' type="SetAnchor" frame="{COMMAND_PANEL}"' if tag == "Action" else ""
     return "".join(f'{T*indent}<{tag}{target} side="{s}" relative="{rel}" pos="{pos}" offset="{v}"/>\n'
                    for s, rel, pos, v in sides)
@@ -159,7 +170,12 @@ def command_panel():
         for c, k in enumerate(row):
             left, y = c * CMD_STEP, ABIL_ROWS[r] - top
             buttons.append(f'{T*4}<Frame type="CommandButton" name="CommandButton{k}">\n'
-                           + rect(y, left, y + CMD_SIZE, left + CMD_SIZE, i=5) + parts + f'{T*4}</Frame>\n')
+                           + placed(y, left, CMD_SIZE, CMD_SIZE, 5) + parts
+                           # the ability buttons' dark hexagon behind the icon (only their
+                           # template has one: not the mount's bookend nor the dynamic buttons)
+                           + (f'{T*5}<Frame type="Image" name="IconBackground">\n' + inset + f'{T*5}</Frame>\n'
+                              if k in ("00", "01", "02", "03", "05") else "")
+                           + f'{T*4}</Frame>\n')
     away = "".join(
         f'{T*4}<Frame type="{ftype}" name="{n}">\n'
         f'{T*5}<Anchor side="Top"    relative="$parent" pos="Min" offset="9999"/>\n'
@@ -171,7 +187,11 @@ def command_panel():
     return (f'{T*2}<!-- Blizzard\'s command card on the card\'s ability rows (inspect_card.command_panel) -->\n'
             f'{T*2}<Frame type="CommandPanel" name="CommandPanel">\n'
             f'{T*3}<!-- parked; the card\'s gate moves it onto the card while the card shows -->\n'
-            + command_anchors(False, 3, "Anchor") + "".join(buttons) + away + f'{T*2}</Frame>\n')
+            + command_anchors(False, 3, "Anchor")
+            + f'{T*3}<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>\n'
+            f'{T*3}<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>\n'
+            f'{T*3}<Width val="{W - 2 * M}"/>\n{T*3}<Height val="{ABIL_ROWS[1] + CMD_SIZE - ABIL_ROWS[0]}"/>\n'
+            + "".join(buttons) + away + f'{T*2}</Frame>\n')
 
 
 def card():
