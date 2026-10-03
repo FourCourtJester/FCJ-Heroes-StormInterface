@@ -132,8 +132,8 @@ def command_anchors(on_card, indent, tag="Action"):
 # right as in the default UI). Each button shows its own hotkey. The hearth (13), Blizzard's
 # hidden spare (15), the empty-slot art, targeting prompts and tutorial arrows are put away.
 COMMAND_ROWS = (("30", "31", "32", "33", "34", "35"), ("04", "00", "01", "02", "03", "05"))
-# The keys those buttons are expected to show (for the design canvas only - in game each
-# button labels itself). Not yet confirmed in game (2026-10-02).
+# The keys those buttons hold (for the design canvas only - in game each button labels
+# itself): seen in game 2026-10-03, Z Q W E R D left to right.
 COMMAND_KEYS = {"04": "Z", "00": "Q", "01": "W", "02": "E", "03": "R", "05": "D",
                 **{str(30 + i): str(1 + i) for i in range(6)}}
 COMMAND_PUT_AWAY = ([("CommandButton", "CommandButton13"), ("CommandButton", "CommandButton15"),

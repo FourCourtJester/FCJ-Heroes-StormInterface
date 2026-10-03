@@ -302,18 +302,32 @@ five segments would duplicate the hero row. If plates read too small, widen them
 
 ## 7. What's next
 
-**Next** (2026-10-02, after the heroic-tooltip work was cleaned up):
-- in game: the command card on the inspect card (shows with it, follows the selection,
-  tooltips, which button holds which key - `inspect_card.COMMAND_KEYS` is a guess), Tracer's
-  tooltip header, the pop-up sizes (talent = pane size, heal 2 px smaller)
-- **anchoring pass**: everything we place is anchored to the screen's LEFT edge with fixed
-  offsets (layout.toml is 1080p px), so a window that isn't 16:9 shifts Blizzard's centred
-  pieces against ours - the hexagon left its backplate in a 2558 x 1401 window (2026-10-03;
-  any 16:9 size is fine: the UI scales with height, 1200 units tall). Anchor each element to
-  its nearest edge or the centre (Min / Mid / Max), as Blizzard does
-- art pass items from Ahli: Tracer's segmented ammo bar and round Pulse Bomb meter; his
-  hero plates' intro animation, a smooth slide and fade (user, 2026-10-03: art pass, after
-  the functionality is done)
+**Next** (end of the 2026-10-02/03 session; start here):
+
+Confirmed in game by then: heroic tooltips on every plate (Varian's level-4 heroic, Tracer's
+Pulse Bomb with its title line), heroic cooldown counts, click-to-follow, Tracer's charge
+meter (Blizzard's art), talent and heal pop-ups (pane-sized; heal 2 px smaller; now on the
+plate's top edge - the user will judge that from viewers' feedback), the inspect card opening
+with Blizzard's command card on it.
+
+1. **Command card on the inspect card** - check the last build (hotkey letters off, cooldown
+   and charge text resized): does each button read cleanly? Then: the talent-actives row (pick
+   an activatable talent), button tooltips, the mount button (Blizzard's bookend art, squeezed
+   to 52 x 52; Ahli widens it to 82), and whether the empty top row should collapse. Keys
+   Blizzard draws, left to right: Z, Q, W, E, R, D (seen 2026-10-03).
+2. **Inspect card talents: tooltips** - our talent icons are pictures bound to the talent
+   row; they give none. Tooltips only come from Blizzard's frames in their own layout (see
+   §3), so use what the heroic tooltips taught: a copy of the talent row inside the card.
+3. **Inspect card height** - the user plans to shorten it once the wiring is done.
+4. **Anchoring pass**: everything we place is anchored to the screen's LEFT edge with fixed
+   offsets (layout.toml is 1080p px), so a window that isn't 16:9 shifts Blizzard's centred
+   pieces against ours - the hexagon left its backplate in a 2558 x 1401 window (2026-10-03;
+   any 16:9 size is fine: the UI scales with height, 1200 units tall). Anchor each element to
+   its nearest edge or the centre (Min / Mid / Max), as Blizzard does.
+5. Tried and undone: hiding Blizzard's observer talent row plainly (71181f7, undone in
+   d279ecc) - plate clicks stopped following heroes. The row stays held shown and spread.
+6. Art pass, after the functionality: Ahli's Tracer ammo bar (20 segments) and round Pulse
+   Bomb meter; his hero plates' intro animation (a smooth slide and fade).
 
 How the heroic tooltips work: `tools/gen.py`, the comment above `HEROIC_TIPS`.
 
