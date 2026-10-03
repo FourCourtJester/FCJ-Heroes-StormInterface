@@ -353,14 +353,6 @@ def matcher(n):
 def unit():
     """The card's contents: a selection panel inside it, holding Blizzard's per-unit widgets.
     A SelectionUnitStatusPanel without a PlayerId follows the observer's selection."""
-    icons = "".join(
-        f'{T*6}<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon{n}">\n'
-        f'{T*7}<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>\n'
-        f'{T*7}<Anchor side="Left"   relative="$parent" pos="Min" offset="{(n - 1) * TAL_STEP}"/>\n'
-        f'{T*7}<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>\n'
-        f'{T*7}<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>\n'
-        f'{T*7}<Width val="{TAL_SIZE}"/>\n{T*7}<Height val="{TAL_SIZE}"/>\n{T*6}</Frame>\n'
-        for n in range(1, 8))
     tiers = "".join(label(f"FCJH_Tier{n}", TAL + TAL_SIZE + 2, M + (n - 1) * TAL_STEP, TAL + TAL_SIZE + 16,
                           M + (n - 1) * TAL_STEP + TAL_SIZE, "FCJH_InspectTier", str(lv), 5)
                     for n, lv in enumerate((1, 4, 7, 10, 13, 16, 20), start=1))
