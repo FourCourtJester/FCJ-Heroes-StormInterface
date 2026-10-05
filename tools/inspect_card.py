@@ -438,6 +438,13 @@ TALENT_TIPS = True
 TIPS = "$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips"
 TIP_ROW = TIPS + "/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame{n}"
 TIP_W = 6 * TAL_STEP + TAL_SIZE        # the talent strip's width: seven icons
+# Blue rows (players 0-4) leave their first icon where Blizzard's blue strip puts it, 133 in
+# and 7 down from the strip's corner, whatever we anchor it to (2026-10-05: our anchors, the
+# $parent chain, a pinned strip and Blizzard's red strip template all left it there). So a
+# blue player's box starts that much up and left, and grows to keep every icon inside it; our
+# icon anchors move by the same, so icon 1 lands on tier 1 whether they hold or not
+BLUE_DRIFT = (7, 133)                   # (down, in)
+drift = lambda n: BLUE_DRIFT if n < 5 else (0, 0)
 
 
 def tip_switch(n):
@@ -446,13 +453,14 @@ def tip_switch(n):
     mouse. The row is moved by its box, never its icons (an icon outside its box gives no
     tooltip, 2026-10-02)."""
     row = TIP_ROW.format(n=n)
+    down, into = drift(n)
     at = lambda rel, top, left: "".join(
         f'<Action type="SetAnchor" frame="{row}" side="{s}" relative="{rel}" pos="Min" offset="{v}"/>'
         for s, v in (("Top", top), ("Left", left)))
     return (f'{T*4}<Frame type="Frame" name="FCJH_TipSel{n}"><Anchor relative="$parent"/>'
             f'<Visible val="false"/><AcceptsMouse val="false"/></Frame>\n'
             f'{T*4}<StateGroup name="FCJH_TipRow{n}">\n{T*5}<DefaultState val="Away"/>\n'
-            f'{T*5}<State name="On"><When type="Property" frame="$this/FCJH_TipSel{n}" Visible="true"/>{at(CARD, TAL, M)}</State>\n'
+            f'{T*5}<State name="On"><When type="Property" frame="$this/FCJH_TipSel{n}" Visible="true"/>{at(CARD, TAL - down, M - into)}</State>\n'
             f'{T*5}<State name="Away">{at("$GameUI", 9999, 9999)}</State>\n{T*4}</StateGroup>\n')
 
 
@@ -470,19 +478,17 @@ def talent_tips():
     # rows right and left blue rows' icons ~133 units in, where Blizzard's blue group sits
     # (2026-10-05)
     icon = lambda k, n: (f'{T*8}<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon{k}">\n'
-                         + placed(0, (k - 1) * TAL_STEP, TAL_SIZE, TAL_SIZE, 9, TIP_ROW.format(n=n))
+                         + placed(drift(n)[0], drift(n)[1] + (k - 1) * TAL_STEP, TAL_SIZE, TAL_SIZE, 9,
+                                  TIP_ROW.format(n=n))
                          + f'{T*9}<Alpha val="0"/>\n{T*8}</Frame>\n')
     rows = "".join(
         f'{T*5}<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame{n}">\n'
-        + placed(9999, 9999, TIP_W, TAL_SIZE, 6, "$GameUI")   # parked until selected (tip_switch)
+        # parked until selected (tip_switch)
+        + placed(9999, 9999, TIP_W + drift(n)[1], TAL_SIZE + drift(n)[0], 6, "$GameUI")
         + f'{T*6}<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame"><Alpha val="0"/>'
         f'<AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>\n'
         f'{T*6}<Frame type="Frame" name="TalentsContainerFrame">\n{T*7}<Batch val="false"/>\n'
-        # blue rows (players 0-4) on Blizzard's red strip, as Blizzard's own red rows are: our
-        # icon anchors held on red rows and not on blue (2026-10-05). Which player a row
-        # shows comes from the row, not the strip
-        f'{T*7}<Frame type="PlayerHeroSelectedTalentTreeFrame" name="SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame"'
-        + (' template="TalentsOverviewPanel/BottomPanelTalentTreeCustomTemplateRed"' if n < 5 else "") + '>\n'
+        f'{T*7}<Frame type="PlayerHeroSelectedTalentTreeFrame" name="SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame">\n'
         + "".join(icon(k, n) for k in range(1, 8))
         + f'{T*7}</Frame>\n{T*6}</Frame>\n{T*5}</Frame>\n'
         for n in range(10))
@@ -637,7 +643,7 @@ def layout(crop, head):
 def diagnostics():
     """DIAGNOSTIC (2026-10-05): blue tooltip rows sit ~2 tiers right. Colour boxes
     (see-through, deaf to the mouse) over each talent-tooltip row's box (green) and its
-    level-1 icon (white)."""
+    seven icons (white and red in turn: tiers 1, 3, 5, 7 white)."""
     def box(name_, rel, colour):
         return (f'{T*2}<Frame type="Image" name="{name_}">\n'
                 + "".join(f'{T*3}<Anchor side="{s}" relative="{rel}" pos="{p}" offset="0"/>\n'
@@ -650,8 +656,10 @@ def diagnostics():
         return ""
     return (f'{T*2}<!-- DIAGNOSTIC (2026-10-05): blue tooltip rows (inspect_card.diagnostics) -->\n'
             + "".join(box(f"FCJH_DiagTipRow{n}", TIP_ROW.format(n=n), "90,40,220,60")
-                      + box(f"FCJH_DiagTipIcon{n}", TIP_ROW.format(n=n) + "/TalentsContainerFrame/SelectionUnitStatusPanel/"
-                            "UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1", "160,255,255,255")
+                      + "".join(box(f"FCJH_DiagTipIcon{n}_{k}", TIP_ROW.format(n=n) + "/TalentsContainerFrame/"
+                                    f"SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon{k}",
+                                    "160,255,255,255" if k % 2 else "160,255,60,60")
+                                for k in range(1, 8))
                       for n in range(10)))
 
 
