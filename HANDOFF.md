@@ -467,6 +467,16 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    left edge in line with theirs. Laid out from the plates' rect and the padding (not its own
    `[element.inspect]` x/y), so it follows any plate resize; this settles the card's
    "line it up with the left edge" item.
+10. **Hotkeys for the inspect card and a death recap** (user, 2026-10-05). Today the card
+    only follows the selection (Blizzard's inspect box) and its X; there's no key. Ahli 0.75
+    (`references/AhliObs075`, hotkeys as `#Hotkey - ...` constants in `_Ahli.StormLayout`)
+    has "Toggle Unit selection UI" Control+Alt+K and "Toggle Unit Stats" Control+C - check
+    which of his panels those switch, and how. He has NO death recap key: the recap is
+    Blizzard's (item 5) and he hides its buttons in his leader panel. So: a key to show/hide
+    the card (a ToggleControl, as our info panes do: `[info_pane] hotkeys`), and a key that
+    opens the death recap for the selected hero, if the recap can be opened without its
+    button. Keys in layout.toml beside the panes' (Control+Shift+1-4 are taken; Ahli's
+    Control+1-8 and Control+C/E clash only if both are loaded).
 
 How the heroic tooltips work: `tools/gen.py`, the comment above `HEROIC_TIPS`.
 
