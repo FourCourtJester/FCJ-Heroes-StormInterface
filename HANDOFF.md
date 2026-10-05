@@ -446,6 +446,12 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
      are firing" (Blackheart's Bay / Towers of Doom style) shows on the side of the team
      firing them - blue's alert left of the minimap, red's right. Neutral alerts (spawn
      timers, "altar spawns in") stay centred.
+   - **where a team's alert sits:** at its core health bar's spot - on top of that team's XP
+     bar, at the row's inner end by the minimap (`[team_core]` in layout.toml). The core bar
+     only shows while the core takes damage, so: core bar hidden -> the alert takes its spot;
+     core bar showing -> the alert stacks just above it. One StateGroup per team on the core
+     frame's Visible, SetAnchor-ing the alert's Bottom to the core's Top or the XP bar's Top
+     (the same `gap`).
    To find out: whether Blizzard's widgets know which team an event belongs to (a team or
    player property, separate blue/red frames, or per-team state groups in the per-map
    layouts) - if they do, anchor each team's frames to its side; if not, look for a sensor
