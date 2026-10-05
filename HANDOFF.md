@@ -456,6 +456,12 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    player property, separate blue/red frames, or per-team state groups in the per-map
    layouts) - if they do, anchor each team's frames to its side; if not, look for a sensor
    (the team's score, a team-owned unit or behaviour) to switch the anchor on.
+9. **Viewport padding** (user, 2026-10-05). One more size pass on our hero plates, to set
+   the screen's base padding: the gap between the plates and the screen's edges becomes the
+   margin for everything. Then the replay box (top-left), the inspect card and the info panes
+   (left column), and the rest of what we place respect that same margin - one number in
+   layout.toml that they're all laid out from, rather than each element's own offsets. Goes
+   with the anchoring pass (item 4) and the card's last item (line it up with the left edge).
 
 How the heroic tooltips work: `tools/gen.py`, the comment above `HEROIC_TIPS`.
 
