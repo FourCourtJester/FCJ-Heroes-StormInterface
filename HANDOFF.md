@@ -475,7 +475,10 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
     Blizzard's (item 5) and he hides its buttons in his leader panel. So: a key to show/hide
     the card (a ToggleControl, as our info panes do: `[info_pane] hotkeys`), and a key that
     opens the death recap for the selected hero, if the recap can be opened without its
-    button. Keys in layout.toml beside the panes' (Control+Shift+1-4 are taken; Ahli's
+    button - OR (user's alternative) clicking a dead hero's plate (its death timer) opens
+    that hero's recap. Either works for the user; the plate click is the nicer one if the
+    recap can be pointed at a given player (the plates already know theirs), and it must not
+    break click-to-follow on a living hero's plate. Keys in layout.toml beside the panes' (Control+Shift+1-4 are taken; Ahli's
     Control+1-8 and Control+C/E clash only if both are loaded).
 
 How the heroic tooltips work: `tools/gen.py`, the comment above `HEROIC_TIPS`.
