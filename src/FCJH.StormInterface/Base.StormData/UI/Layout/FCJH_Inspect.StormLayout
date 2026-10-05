@@ -4514,6 +4514,7 @@
 				<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Max" offset="0"/>
 				<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Max" offset="0"/>
 				<Visible val="true"/>
+				<Alpha val="0"/>
 				<Frame type="Frame" name="TopHexContainer"><Alpha val="0"/></Frame>
 				<Frame type="Image" name="HexImage"><Alpha val="0"/></Frame>
 				<Frame type="Image" name="HexOverlayImage"><Alpha val="0"/></Frame>
@@ -5333,9 +5334,9 @@
 					<Frame type="Frame" name="HitTestFrame"><Anchor relative="$parent"/></Frame>
 					<Frame type="CommandHotkeyFrame" name="HotkeyFrame"><Frame type="Label" name="HotkeyLabel"><Alpha val="0"/></Frame></Frame>
 					<Frame type="Label" name="CooldownLabel"><Anchor side="Left" relative="$parent" pos="Min" offset="0"/><Anchor side="Right" relative="$parent" pos="Max" offset="0"/><Style val="FCJH_HeroicCooldown"/></Frame>
-					<Frame type="Image" name="ChargeBackground"><Anchor side="Bottom" relative="$parent" pos="Max" offset="3"/><Anchor side="Right" relative="$parent" pos="Max" offset="-2"/><Width val="26"/><Height val="26"/><Unclipped val="true"/></Frame>
-					<Frame type="Image" name="ChargeCompleteImage"><Width val="26"/><Height val="26"/><Unclipped val="true"/></Frame>
-					<Frame type="ProgressBar" name="ChargeCooldown"><Width val="38"/><Height val="38"/><Unclipped val="true"/></Frame>
+					<Frame type="Image" name="ChargeBackground"><Anchor side="Bottom" relative="$parent" pos="Max" offset="3"/><Anchor side="Right" relative="$parent" pos="Max" offset="-2"/><Width val="20"/><Height val="20"/><Unclipped val="true"/></Frame>
+					<Frame type="Image" name="ChargeCompleteImage"><Width val="20"/><Height val="20"/><Unclipped val="true"/></Frame>
+					<Frame type="ProgressBar" name="ChargeCooldown"><Width val="30"/><Height val="30"/><Unclipped val="true"/></Frame>
 					<Frame type="Label" name="ChargeLabel"><Style val="FCJH_InspectCharge"/><Unclipped val="true"/><RenderPriority val="600"/></Frame>
 				</Frame>
 				<Frame type="CommandButton" name="CommandButton31">
@@ -5365,9 +5366,9 @@
 					<Frame type="Frame" name="HitTestFrame"><Anchor relative="$parent"/></Frame>
 					<Frame type="CommandHotkeyFrame" name="HotkeyFrame"><Frame type="Label" name="HotkeyLabel"><Alpha val="0"/></Frame></Frame>
 					<Frame type="Label" name="CooldownLabel"><Anchor side="Left" relative="$parent" pos="Min" offset="0"/><Anchor side="Right" relative="$parent" pos="Max" offset="0"/><Style val="FCJH_HeroicCooldown"/></Frame>
-					<Frame type="Image" name="ChargeBackground"><Anchor side="Bottom" relative="$parent" pos="Max" offset="3"/><Anchor side="Right" relative="$parent" pos="Max" offset="-2"/><Width val="26"/><Height val="26"/><Unclipped val="true"/></Frame>
-					<Frame type="Image" name="ChargeCompleteImage"><Width val="26"/><Height val="26"/><Unclipped val="true"/></Frame>
-					<Frame type="ProgressBar" name="ChargeCooldown"><Width val="38"/><Height val="38"/><Unclipped val="true"/></Frame>
+					<Frame type="Image" name="ChargeBackground"><Anchor side="Bottom" relative="$parent" pos="Max" offset="3"/><Anchor side="Right" relative="$parent" pos="Max" offset="-2"/><Width val="20"/><Height val="20"/><Unclipped val="true"/></Frame>
+					<Frame type="Image" name="ChargeCompleteImage"><Width val="20"/><Height val="20"/><Unclipped val="true"/></Frame>
+					<Frame type="ProgressBar" name="ChargeCooldown"><Width val="30"/><Height val="30"/><Unclipped val="true"/></Frame>
 					<Frame type="Label" name="ChargeLabel"><Style val="FCJH_InspectCharge"/><Unclipped val="true"/><RenderPriority val="600"/></Frame>
 				</Frame>
 				<Frame type="CommandButton" name="CommandButton32">
@@ -5397,9 +5398,9 @@
 					<Frame type="Frame" name="HitTestFrame"><Anchor relative="$parent"/></Frame>
 					<Frame type="CommandHotkeyFrame" name="HotkeyFrame"><Frame type="Label" name="HotkeyLabel"><Alpha val="0"/></Frame></Frame>
 					<Frame type="Label" name="CooldownLabel"><Anchor side="Left" relative="$parent" pos="Min" offset="0"/><Anchor side="Right" relative="$parent" pos="Max" offset="0"/><Style val="FCJH_HeroicCooldown"/></Frame>
-					<Frame type="Image" name="ChargeBackground"><Anchor side="Bottom" relative="$parent" pos="Max" offset="3"/><Anchor side="Right" relative="$parent" pos="Max" offset="-2"/><Width val="26"/><Height val="26"/><Unclipped val="true"/></Frame>
-					<Frame type="Image" name="ChargeCompleteImage"><Width val="26"/><Height val="26"/><Unclipped val="true"/></Frame>
-					<Frame type="ProgressBar" name="ChargeCooldown"><Width val="38"/><Height val="38"/><Unclipped val="true"/></Frame>
+					<Frame type="Image" name="ChargeBackground"><Anchor side="Bottom" relative="$parent" pos="Max" offset="3"/><Anchor side="Right" relative="$parent" pos="Max" offset="-2"/><Width val="20"/><Height val="20"/><Unclipped val="true"/></Frame>
+					<Frame type="Image" name="ChargeCompleteImage"><Width val="20"/><Height val="20"/><Unclipped val="true"/></Frame>
+					<Frame type="ProgressBar" name="ChargeCooldown"><Width val="30"/><Height val="30"/><Unclipped val="true"/></Frame>
 					<Frame type="Label" name="ChargeLabel"><Style val="FCJH_InspectCharge"/><Unclipped val="true"/><RenderPriority val="600"/></Frame>
 				</Frame>
 				<Frame type="CommandButton" name="CommandButton33">
@@ -5429,9 +5430,9 @@
 					<Frame type="Frame" name="HitTestFrame"><Anchor relative="$parent"/></Frame>
 					<Frame type="CommandHotkeyFrame" name="HotkeyFrame"><Frame type="Label" name="HotkeyLabel"><Alpha val="0"/></Frame></Frame>
 					<Frame type="Label" name="CooldownLabel"><Anchor side="Left" relative="$parent" pos="Min" offset="0"/><Anchor side="Right" relative="$parent" pos="Max" offset="0"/><Style val="FCJH_HeroicCooldown"/></Frame>
-					<Frame type="Image" name="ChargeBackground"><Anchor side="Bottom" relative="$parent" pos="Max" offset="3"/><Anchor side="Right" relative="$parent" pos="Max" offset="-2"/><Width val="26"/><Height val="26"/><Unclipped val="true"/></Frame>
-					<Frame type="Image" name="ChargeCompleteImage"><Width val="26"/><Height val="26"/><Unclipped val="true"/></Frame>
-					<Frame type="ProgressBar" name="ChargeCooldown"><Width val="38"/><Height val="38"/><Unclipped val="true"/></Frame>
+					<Frame type="Image" name="ChargeBackground"><Anchor side="Bottom" relative="$parent" pos="Max" offset="3"/><Anchor side="Right" relative="$parent" pos="Max" offset="-2"/><Width val="20"/><Height val="20"/><Unclipped val="true"/></Frame>
+					<Frame type="Image" name="ChargeCompleteImage"><Width val="20"/><Height val="20"/><Unclipped val="true"/></Frame>
+					<Frame type="ProgressBar" name="ChargeCooldown"><Width val="30"/><Height val="30"/><Unclipped val="true"/></Frame>
 					<Frame type="Label" name="ChargeLabel"><Style val="FCJH_InspectCharge"/><Unclipped val="true"/><RenderPriority val="600"/></Frame>
 				</Frame>
 				<Frame type="CommandButton" name="CommandButton34">
@@ -5461,9 +5462,9 @@
 					<Frame type="Frame" name="HitTestFrame"><Anchor relative="$parent"/></Frame>
 					<Frame type="CommandHotkeyFrame" name="HotkeyFrame"><Frame type="Label" name="HotkeyLabel"><Alpha val="0"/></Frame></Frame>
 					<Frame type="Label" name="CooldownLabel"><Anchor side="Left" relative="$parent" pos="Min" offset="0"/><Anchor side="Right" relative="$parent" pos="Max" offset="0"/><Style val="FCJH_HeroicCooldown"/></Frame>
-					<Frame type="Image" name="ChargeBackground"><Anchor side="Bottom" relative="$parent" pos="Max" offset="3"/><Anchor side="Right" relative="$parent" pos="Max" offset="-2"/><Width val="26"/><Height val="26"/><Unclipped val="true"/></Frame>
-					<Frame type="Image" name="ChargeCompleteImage"><Width val="26"/><Height val="26"/><Unclipped val="true"/></Frame>
-					<Frame type="ProgressBar" name="ChargeCooldown"><Width val="38"/><Height val="38"/><Unclipped val="true"/></Frame>
+					<Frame type="Image" name="ChargeBackground"><Anchor side="Bottom" relative="$parent" pos="Max" offset="3"/><Anchor side="Right" relative="$parent" pos="Max" offset="-2"/><Width val="20"/><Height val="20"/><Unclipped val="true"/></Frame>
+					<Frame type="Image" name="ChargeCompleteImage"><Width val="20"/><Height val="20"/><Unclipped val="true"/></Frame>
+					<Frame type="ProgressBar" name="ChargeCooldown"><Width val="30"/><Height val="30"/><Unclipped val="true"/></Frame>
 					<Frame type="Label" name="ChargeLabel"><Style val="FCJH_InspectCharge"/><Unclipped val="true"/><RenderPriority val="600"/></Frame>
 				</Frame>
 				<Frame type="CommandButton" name="CommandButton35">
@@ -5493,42 +5494,19 @@
 					<Frame type="Frame" name="HitTestFrame"><Anchor relative="$parent"/></Frame>
 					<Frame type="CommandHotkeyFrame" name="HotkeyFrame"><Frame type="Label" name="HotkeyLabel"><Alpha val="0"/></Frame></Frame>
 					<Frame type="Label" name="CooldownLabel"><Anchor side="Left" relative="$parent" pos="Min" offset="0"/><Anchor side="Right" relative="$parent" pos="Max" offset="0"/><Style val="FCJH_HeroicCooldown"/></Frame>
-					<Frame type="Image" name="ChargeBackground"><Anchor side="Bottom" relative="$parent" pos="Max" offset="3"/><Anchor side="Right" relative="$parent" pos="Max" offset="-2"/><Width val="26"/><Height val="26"/><Unclipped val="true"/></Frame>
-					<Frame type="Image" name="ChargeCompleteImage"><Width val="26"/><Height val="26"/><Unclipped val="true"/></Frame>
-					<Frame type="ProgressBar" name="ChargeCooldown"><Width val="38"/><Height val="38"/><Unclipped val="true"/></Frame>
+					<Frame type="Image" name="ChargeBackground"><Anchor side="Bottom" relative="$parent" pos="Max" offset="3"/><Anchor side="Right" relative="$parent" pos="Max" offset="-2"/><Width val="20"/><Height val="20"/><Unclipped val="true"/></Frame>
+					<Frame type="Image" name="ChargeCompleteImage"><Width val="20"/><Height val="20"/><Unclipped val="true"/></Frame>
+					<Frame type="ProgressBar" name="ChargeCooldown"><Width val="30"/><Height val="30"/><Unclipped val="true"/></Frame>
 					<Frame type="Label" name="ChargeLabel"><Style val="FCJH_InspectCharge"/><Unclipped val="true"/><RenderPriority val="600"/></Frame>
 				</Frame>
 				<Frame type="CommandButton" name="CommandButton04">
-					<Anchor side="Top"    relative="$parent" pos="Min" offset="52"/>
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="60"/>
 					<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-					<Width val="52"/>
-					<Height val="52"/>
-					<Frame type="Image" name="NormalImage">
-						<Anchor side="Top" relative="$parent" pos="Min" offset="5"/>
-						<Anchor side="Left" relative="$parent" pos="Min" offset="5"/>
-						<Anchor side="Bottom" relative="$parent" pos="Max" offset="-5"/>
-						<Anchor side="Right" relative="$parent" pos="Max" offset="-5"/>
-						<Unclipped val="true"/>
-					</Frame>
-					<Frame type="Image" name="GameButtonDefaultBorder"><Width val="68"/><Height val="68"/><Unclipped val="true"/></Frame>
-					<Frame type="Frame" name="ActiveEffect">
-						<Frame type="Image" name="ActiveEffectImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
-						<Frame type="Image" name="ActiveEffect2Image"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
-					</Frame>
-					<Frame type="Frame" name="AttentionEffect">
-						<Frame type="Image" name="AttentionEffectImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
-						<Frame type="Image" name="AttentionEffect2Image"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
-						<Frame type="Image" name="InnerGlowImage"><Width val="60"/><Height val="60"/><Unclipped val="true"/></Frame>
-					</Frame>
-					<Frame type="Frame" name="HitTestFrame"><Anchor relative="$parent"/></Frame>
+					<Width val="56"/>
+					<Height val="36"/>
 					<Frame type="CommandHotkeyFrame" name="HotkeyFrame"><Frame type="Label" name="HotkeyLabel"><Alpha val="0"/></Frame></Frame>
-					<Frame type="Label" name="CooldownLabel"><Anchor side="Left" relative="$parent" pos="Min" offset="0"/><Anchor side="Right" relative="$parent" pos="Max" offset="0"/><Style val="FCJH_HeroicCooldown"/></Frame>
-					<Frame type="Image" name="ChargeBackground"><Anchor side="Bottom" relative="$parent" pos="Max" offset="3"/><Anchor side="Right" relative="$parent" pos="Max" offset="-2"/><Width val="26"/><Height val="26"/><Unclipped val="true"/></Frame>
-					<Frame type="Image" name="ChargeCompleteImage"><Width val="26"/><Height val="26"/><Unclipped val="true"/></Frame>
-					<Frame type="ProgressBar" name="ChargeCooldown"><Width val="38"/><Height val="38"/><Unclipped val="true"/></Frame>
-					<Frame type="Label" name="ChargeLabel"><Style val="FCJH_InspectCharge"/><Unclipped val="true"/><RenderPriority val="600"/></Frame>
 				</Frame>
 				<Frame type="CommandButton" name="CommandButton00">
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="52"/>
@@ -5557,9 +5535,9 @@
 					<Frame type="Frame" name="HitTestFrame"><Anchor relative="$parent"/></Frame>
 					<Frame type="CommandHotkeyFrame" name="HotkeyFrame"><Frame type="Label" name="HotkeyLabel"><Alpha val="0"/></Frame></Frame>
 					<Frame type="Label" name="CooldownLabel"><Anchor side="Left" relative="$parent" pos="Min" offset="0"/><Anchor side="Right" relative="$parent" pos="Max" offset="0"/><Style val="FCJH_HeroicCooldown"/></Frame>
-					<Frame type="Image" name="ChargeBackground"><Anchor side="Bottom" relative="$parent" pos="Max" offset="3"/><Anchor side="Right" relative="$parent" pos="Max" offset="-2"/><Width val="26"/><Height val="26"/><Unclipped val="true"/></Frame>
-					<Frame type="Image" name="ChargeCompleteImage"><Width val="26"/><Height val="26"/><Unclipped val="true"/></Frame>
-					<Frame type="ProgressBar" name="ChargeCooldown"><Width val="38"/><Height val="38"/><Unclipped val="true"/></Frame>
+					<Frame type="Image" name="ChargeBackground"><Anchor side="Bottom" relative="$parent" pos="Max" offset="3"/><Anchor side="Right" relative="$parent" pos="Max" offset="-2"/><Width val="20"/><Height val="20"/><Unclipped val="true"/></Frame>
+					<Frame type="Image" name="ChargeCompleteImage"><Width val="20"/><Height val="20"/><Unclipped val="true"/></Frame>
+					<Frame type="ProgressBar" name="ChargeCooldown"><Width val="30"/><Height val="30"/><Unclipped val="true"/></Frame>
 					<Frame type="Label" name="ChargeLabel"><Style val="FCJH_InspectCharge"/><Unclipped val="true"/><RenderPriority val="600"/></Frame>
 					<Frame type="Image" name="IconBackground">
 						<Anchor side="Top" relative="$parent" pos="Min" offset="5"/>
@@ -5595,9 +5573,9 @@
 					<Frame type="Frame" name="HitTestFrame"><Anchor relative="$parent"/></Frame>
 					<Frame type="CommandHotkeyFrame" name="HotkeyFrame"><Frame type="Label" name="HotkeyLabel"><Alpha val="0"/></Frame></Frame>
 					<Frame type="Label" name="CooldownLabel"><Anchor side="Left" relative="$parent" pos="Min" offset="0"/><Anchor side="Right" relative="$parent" pos="Max" offset="0"/><Style val="FCJH_HeroicCooldown"/></Frame>
-					<Frame type="Image" name="ChargeBackground"><Anchor side="Bottom" relative="$parent" pos="Max" offset="3"/><Anchor side="Right" relative="$parent" pos="Max" offset="-2"/><Width val="26"/><Height val="26"/><Unclipped val="true"/></Frame>
-					<Frame type="Image" name="ChargeCompleteImage"><Width val="26"/><Height val="26"/><Unclipped val="true"/></Frame>
-					<Frame type="ProgressBar" name="ChargeCooldown"><Width val="38"/><Height val="38"/><Unclipped val="true"/></Frame>
+					<Frame type="Image" name="ChargeBackground"><Anchor side="Bottom" relative="$parent" pos="Max" offset="3"/><Anchor side="Right" relative="$parent" pos="Max" offset="-2"/><Width val="20"/><Height val="20"/><Unclipped val="true"/></Frame>
+					<Frame type="Image" name="ChargeCompleteImage"><Width val="20"/><Height val="20"/><Unclipped val="true"/></Frame>
+					<Frame type="ProgressBar" name="ChargeCooldown"><Width val="30"/><Height val="30"/><Unclipped val="true"/></Frame>
 					<Frame type="Label" name="ChargeLabel"><Style val="FCJH_InspectCharge"/><Unclipped val="true"/><RenderPriority val="600"/></Frame>
 					<Frame type="Image" name="IconBackground">
 						<Anchor side="Top" relative="$parent" pos="Min" offset="5"/>
@@ -5633,9 +5611,9 @@
 					<Frame type="Frame" name="HitTestFrame"><Anchor relative="$parent"/></Frame>
 					<Frame type="CommandHotkeyFrame" name="HotkeyFrame"><Frame type="Label" name="HotkeyLabel"><Alpha val="0"/></Frame></Frame>
 					<Frame type="Label" name="CooldownLabel"><Anchor side="Left" relative="$parent" pos="Min" offset="0"/><Anchor side="Right" relative="$parent" pos="Max" offset="0"/><Style val="FCJH_HeroicCooldown"/></Frame>
-					<Frame type="Image" name="ChargeBackground"><Anchor side="Bottom" relative="$parent" pos="Max" offset="3"/><Anchor side="Right" relative="$parent" pos="Max" offset="-2"/><Width val="26"/><Height val="26"/><Unclipped val="true"/></Frame>
-					<Frame type="Image" name="ChargeCompleteImage"><Width val="26"/><Height val="26"/><Unclipped val="true"/></Frame>
-					<Frame type="ProgressBar" name="ChargeCooldown"><Width val="38"/><Height val="38"/><Unclipped val="true"/></Frame>
+					<Frame type="Image" name="ChargeBackground"><Anchor side="Bottom" relative="$parent" pos="Max" offset="3"/><Anchor side="Right" relative="$parent" pos="Max" offset="-2"/><Width val="20"/><Height val="20"/><Unclipped val="true"/></Frame>
+					<Frame type="Image" name="ChargeCompleteImage"><Width val="20"/><Height val="20"/><Unclipped val="true"/></Frame>
+					<Frame type="ProgressBar" name="ChargeCooldown"><Width val="30"/><Height val="30"/><Unclipped val="true"/></Frame>
 					<Frame type="Label" name="ChargeLabel"><Style val="FCJH_InspectCharge"/><Unclipped val="true"/><RenderPriority val="600"/></Frame>
 					<Frame type="Image" name="IconBackground">
 						<Anchor side="Top" relative="$parent" pos="Min" offset="5"/>
@@ -5671,9 +5649,9 @@
 					<Frame type="Frame" name="HitTestFrame"><Anchor relative="$parent"/></Frame>
 					<Frame type="CommandHotkeyFrame" name="HotkeyFrame"><Frame type="Label" name="HotkeyLabel"><Alpha val="0"/></Frame></Frame>
 					<Frame type="Label" name="CooldownLabel"><Anchor side="Left" relative="$parent" pos="Min" offset="0"/><Anchor side="Right" relative="$parent" pos="Max" offset="0"/><Style val="FCJH_HeroicCooldown"/></Frame>
-					<Frame type="Image" name="ChargeBackground"><Anchor side="Bottom" relative="$parent" pos="Max" offset="3"/><Anchor side="Right" relative="$parent" pos="Max" offset="-2"/><Width val="26"/><Height val="26"/><Unclipped val="true"/></Frame>
-					<Frame type="Image" name="ChargeCompleteImage"><Width val="26"/><Height val="26"/><Unclipped val="true"/></Frame>
-					<Frame type="ProgressBar" name="ChargeCooldown"><Width val="38"/><Height val="38"/><Unclipped val="true"/></Frame>
+					<Frame type="Image" name="ChargeBackground"><Anchor side="Bottom" relative="$parent" pos="Max" offset="3"/><Anchor side="Right" relative="$parent" pos="Max" offset="-2"/><Width val="20"/><Height val="20"/><Unclipped val="true"/></Frame>
+					<Frame type="Image" name="ChargeCompleteImage"><Width val="20"/><Height val="20"/><Unclipped val="true"/></Frame>
+					<Frame type="ProgressBar" name="ChargeCooldown"><Width val="30"/><Height val="30"/><Unclipped val="true"/></Frame>
 					<Frame type="Label" name="ChargeLabel"><Style val="FCJH_InspectCharge"/><Unclipped val="true"/><RenderPriority val="600"/></Frame>
 					<Frame type="Image" name="IconBackground">
 						<Anchor side="Top" relative="$parent" pos="Min" offset="5"/>
@@ -5709,9 +5687,9 @@
 					<Frame type="Frame" name="HitTestFrame"><Anchor relative="$parent"/></Frame>
 					<Frame type="CommandHotkeyFrame" name="HotkeyFrame"><Frame type="Label" name="HotkeyLabel"><Alpha val="0"/></Frame></Frame>
 					<Frame type="Label" name="CooldownLabel"><Anchor side="Left" relative="$parent" pos="Min" offset="0"/><Anchor side="Right" relative="$parent" pos="Max" offset="0"/><Style val="FCJH_HeroicCooldown"/></Frame>
-					<Frame type="Image" name="ChargeBackground"><Anchor side="Bottom" relative="$parent" pos="Max" offset="3"/><Anchor side="Right" relative="$parent" pos="Max" offset="-2"/><Width val="26"/><Height val="26"/><Unclipped val="true"/></Frame>
-					<Frame type="Image" name="ChargeCompleteImage"><Width val="26"/><Height val="26"/><Unclipped val="true"/></Frame>
-					<Frame type="ProgressBar" name="ChargeCooldown"><Width val="38"/><Height val="38"/><Unclipped val="true"/></Frame>
+					<Frame type="Image" name="ChargeBackground"><Anchor side="Bottom" relative="$parent" pos="Max" offset="3"/><Anchor side="Right" relative="$parent" pos="Max" offset="-2"/><Width val="20"/><Height val="20"/><Unclipped val="true"/></Frame>
+					<Frame type="Image" name="ChargeCompleteImage"><Width val="20"/><Height val="20"/><Unclipped val="true"/></Frame>
+					<Frame type="ProgressBar" name="ChargeCooldown"><Width val="30"/><Height val="30"/><Unclipped val="true"/></Frame>
 					<Frame type="Label" name="ChargeLabel"><Style val="FCJH_InspectCharge"/><Unclipped val="true"/><RenderPriority val="600"/></Frame>
 					<Frame type="Image" name="IconBackground">
 						<Anchor side="Top" relative="$parent" pos="Min" offset="5"/>

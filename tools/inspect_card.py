@@ -39,7 +39,11 @@ TAL_SIZE, TAL_STEP = 36, 43        # the talent strip's icons
 # with its icon 5 in from each side, its frame art drawn at 68 and its glows at 60, each button
 # overlapping the next by 5 so the hexagons interlock. Six to a row fit the card (287 of 305).
 CMD_SIZE, CMD_STEP, CMD_INSET, CMD_BORDER, CMD_GLOW = 52, 47, 5, 68, 60
-CMD_CHARGE, CMD_CHARGE_RING = 26, 38   # the charge badge and its cooldown ring (Ahli's)
+CMD_CHARGE, CMD_CHARGE_RING = 20, 30   # the charge badge and its ring (Ahli's 26 / 38 read too big, 2026-10-05)
+# The mount (Z) is Blizzard's bookend button, one wide piece (83 x 54) whose art is anchored to
+# its edges; squeezed to 52 x 52 with our 68-unit frame art it read far too big (2026-10-05).
+# It keeps its own proportions, centred in its row, and Blizzard's inner layout.
+MOUNT_W, MOUNT_H = 56, 36
 ABIL_LABEL, ABIL_ROWS = 366, (390, 442)
 TAL_LABEL, TAL = 505, 521
 STATS_LABEL, STATS, STAT_ROW = 585, 603, 24
@@ -183,6 +187,12 @@ def command_panel():
     for r, row in enumerate(COMMAND_ROWS):
         for c, k in enumerate(row):
             left, y = c * CMD_STEP, ABIL_ROWS[r] - top
+            if k == "04":   # the mount: its own shape, only its hotkey letter put away
+                buttons.append(f'{T*4}<Frame type="CommandButton" name="CommandButton{k}">\n'
+                               + placed(y + (CMD_SIZE - MOUNT_H) // 2, left, MOUNT_W, MOUNT_H, 5)
+                               + f'{T*5}<Frame type="CommandHotkeyFrame" name="HotkeyFrame"><Frame type="Label" name="HotkeyLabel"><Alpha val="0"/></Frame></Frame>\n'
+                               + f'{T*4}</Frame>\n')
+                continue
             buttons.append(f'{T*4}<Frame type="CommandButton" name="CommandButton{k}">\n'
                            + placed(y, left, CMD_SIZE, CMD_SIZE, 5) + parts
                            # the ability buttons' dark hexagon behind the icon (only their
@@ -472,6 +482,9 @@ def talent_tips():
             f'{T*4}<Anchor side="Bottom" relative="{CARD}" pos="Max" offset="0"/>\n'
             f'{T*4}<Anchor side="Right"  relative="{CARD}" pos="Max" offset="0"/>\n'
             f'{T*4}<Visible val="true"/>\n'
+            # faded from the root: fading each icon left its picture parts drawing over our
+            # talent pictures (2026-10-05); a faded frame still answers the mouse
+            f'{T*4}<Alpha val="0"/>\n'
             + "".join(f'{T*4}<Frame type="{t}" name="{nm}"><Alpha val="0"/>{"<AcceptsMouse val=\"false\"/>" if t == "Button" else ""}</Frame>\n'
                       for t, nm in (("Frame", "TopHexContainer"), ("Image", "HexImage"), ("Image", "HexOverlayImage"),
                                     ("Frame", "BorderContainer"), ("Button", "CloseButton"), ("Button", "ClearSortButton"),
