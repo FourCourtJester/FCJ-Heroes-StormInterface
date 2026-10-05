@@ -252,7 +252,7 @@ took, all seen in game:
 - **Two Blizzard panels hang off the command card** - `ControlGroupPanel` and the console's
   own `HeroSpecificCommandCardPanel` - and go wherever it goes (parked with it).
 - **Open:** Abathur's Symbiote swaps the card to Symbiote's buttons, some of them in slots we
-  park (gaps); the mount reads as Blizzard draws it.
+  park (gaps) - §7 item 3, card swaps; the mount reads as Blizzard draws it.
 
 ### Practices
 
@@ -346,34 +346,37 @@ five segments would duplicate the hero row. If plates read too small, widen them
 
 ## 7. What's next
 
-**Next** (end of the 2026-10-02/03 session; start here):
+**Next** (end of the 2026-10-05 session; start here):
 
 Confirmed in game by then: heroic tooltips on every plate (Varian's level-4 heroic, Tracer's
-Pulse Bomb with its title line), heroic cooldown counts, click-to-follow, Tracer's charge
-meter (Blizzard's art), talent and heal pop-ups (pane-sized; heal 2 px smaller; now on the
-plate's top edge - the user will judge that from viewers' feedback), the inspect card opening
-with Blizzard's command card on it.
+Pulse Bomb with its title line), heroic cooldown counts, click-to-follow (needs the game's
+camera lock, **L**, on - observers can toggle it; a day of bisecting 2026-10-05 ended there),
+Tracer's charge meter (Blizzard's art), talent and heal pop-ups (pane-sized; heal 2 px
+smaller; on the plate's top edge - the user will judge that from viewers' feedback), the
+inspect card with Blizzard's command card on it (tooltips, cooldowns, Tracer's count centred),
+and the card's talent tooltips on both teams (2026-10-05). How those tooltips finally held:
+Blizzard's WHOLE top-bar talent panel as the root
+(`template="TalentsOverviewPanel/TalentsOverviewTopBarTemplate"`), our overrides on top - as
+the plates' heroic-tooltip copies are built. Assembled from parts (a CleanTalentsPanelTemplate
+whose `HeroTalentsPanelContainer` we re-templated in our own declaration), the rows kept
+Blizzard's icon places and sizes (`inspect_card.talent_tips`).
 
-0. **Plate clicks (2026-10-05): not our bug.** Clicking a plate follows that hero only while
-   the game's camera lock (**L**) is on, and observers can toggle it. A day of bisecting
-   (talent tips off, card off, the Friday build) ended there. Bisect undone, diagnostics gone.
-1. **Command card on the inspect card** - check the last build (hotkey letters off, cooldown
-   and charge text resized): does each button read cleanly? Then: the talent-actives row (pick
-   an activatable talent), button tooltips, the mount button (Blizzard's bookend art, squeezed
-   to 52 x 52; Ahli widens it to 82), and whether the empty top row should collapse. Keys
-   Blizzard draws, left to right: Z, Q, W, E, R, D (seen 2026-10-03).
-2. **Inspect card talents: tooltips** - DONE 2026-10-05, both teams seen lined up on the
-   tiers (`inspect_card.talent_tips`). The recipe that finally held: Blizzard's WHOLE
-   top-bar talent panel as the root (`template="TalentsOverviewPanel/TalentsOverviewTopBarTemplate"`),
-   our overrides on top - as the plates' heroic-tooltip copies are built. Built from parts (a
-   CleanTalentsPanelTemplate whose `HeroTalentsPanelContainer` we gave a row template in our
-   own declaration), the rows kept Blizzard's icon places and sizes: blue bottom-panel rows
-   whatever we tried (anchors, full paths, frame-by-frame, a pinned strip, Blizzard's red strip
-   template), top-bar rows on both teams. Still to check: hover each picked talent; no tooltip
-   from an unpicked tier or another player; nothing answers the mouse with the card shut.
-   Later: those icons carry Blizzard's quest progress bar too (item 5).
-3. **Inspect card height and stats** - the user plans to shorten the card once the wiring is
-   done, and to re-order the stats so they're better organized (user, 2026-10-03).
+1. **Inspect card: re-order and height - START HERE.** Re-order the card's contents (the stats
+   especially) so they're better organized, then shorten the card (user, 2026-10-03; agreed
+   2026-10-05 as the next session's first job). The talent tooltips follow the talent strip
+   (`TAL` in `inspect_card.py`), so they move with it. Still to check on the tooltips: hover
+   each picked talent; no tooltip from an unpicked tier or another player; nothing answers the
+   mouse with the card shut.
+2. **Command card polish** - does each button read cleanly; the talent-actives row (pick an
+   activatable talent); the mount button (Blizzard's bookend art; Ahli widens it to 82);
+   whether the empty top row should collapse. Keys Blizzard draws, left to right: Z, Q, W, E,
+   R, D (seen 2026-10-03).
+3. **Card swaps** - heroes whose command card changes mid-game. Abathur's Symbiote swaps the
+   card to Symbiote's buttons, some in slots we park, so it shows gaps (seen 2026-10-05). The
+   user expects others do the same; candidates to check: D.Va (mech / pilot), the Lost
+   Vikings, Ragnaros (Molten Core), Medivh (Raven Form), Greymane (Worgen), Tychus (Odin),
+   Abathur's Ultimate Evolution clone, vehicles (Dragon Knight, Garden Terror, Triglav). Find
+   which slots each uses, then decide what we park.
 4. **Anchoring pass**: everything we place is anchored to the screen's LEFT edge with fixed
    offsets (layout.toml is 1080p px), so a window that isn't 16:9 shifts Blizzard's centred
    pieces against ours - the hexagon left its backplate in a 2558 x 1401 window (2026-10-03;
