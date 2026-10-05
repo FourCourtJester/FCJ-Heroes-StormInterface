@@ -623,7 +623,64 @@ def layout(crop, head):
     CROP = crop
     HEROES[:] = cached_heroes()
     return (head + FILE_HEADER + card() + unit() + "\t\t\t</Frame>\n\t\t</Frame>\n"
-            + talent_tips() + command_panel() + "\t</Frame>\n\t</Frame>\n\t</Frame>\n" + tracer_charge() + "</Desc>\n")
+            + talent_tips() + command_panel() + diagnostics()
+            + "\t</Frame>\n\t</Frame>\n\t</Frame>\n" + tracer_charge() + "</Desc>\n")
+
+
+CONSOLE = "$GameUI/UIContainer/ConsoleUIContainer"
+OBS = "$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel"
+
+
+def diagnostics():
+    """DIAGNOSTIC (2026-10-05): plate clicks do nothing (card open or shut) since the inspect
+    card's command-card / talent-tooltip work; blue tooltip rows sit ~2 tiers right.
+    Hotkeys, each hiding one suspect group while toggled (press again to restore):
+      Ctrl+Shift+6  Blizzard's hero-specific panels (one covers the bottom-left, 590 x 364)
+      Ctrl+Shift+7  Blizzard's command card and our loop holding it shown
+      Ctrl+Shift+8  our heroic-tooltip talent-row copies over the plates
+      Ctrl+Shift+9  the game's observer talent row (spread over the screen)
+    Colour boxes (see-through, deaf to the mouse) over: the command card (cyan), the
+    control-group panel (yellow), the hero-specific command-card panel (magenta), the
+    bottom-left hero-specific panel (orange), each talent-tooltip row's box (green) and its
+    level-1 icon (white)."""
+    def toggle(key, frames):
+        ctrl = "".join(f'{T*4}<Controller type="Visibility" end="Pause" frame="{f}">\n'
+                       f'{T*5}<Key type="Bool" time="0" value="true"/>\n{T*5}<Key type="Bool" time="0.001" value="false"/>\n'
+                       f'{T*4}</Controller>\n' for f in frames)
+        return (f'{T*2}<Frame type="ToggleControl" name="FCJH_DiagToggle{key}">\n'
+                f'{T*3}<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>\n'
+                f'{T*3}<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>\n'
+                f'{T*3}<Width val="1"/>\n{T*3}<Height val="1"/>\n'
+                f'{T*3}<Shortcut val="Control+Shift+{key}"/>\n{T*3}<Visible val="false"/>\n{T*3}<AcceptsMouse val="false"/>\n'
+                f'{T*3}<Animation name="FCJH_Hide">\n'
+                f'{T*4}<Event event="OnShown" action="DirectionForward,Play"/>\n'
+                f'{T*4}<Event event="OnHidden" action="DirectionReverse,Play"/>\n'
+                + ctrl + f'{T*3}</Animation>\n{T*2}</Frame>\n')
+
+    def box(name_, rel, colour):
+        return (f'{T*2}<Frame type="Image" name="{name_}">\n'
+                + "".join(f'{T*3}<Anchor side="{s}" relative="{rel}" pos="{p}" offset="0"/>\n'
+                          for s, p in (("Top", "Min"), ("Left", "Min"), ("Bottom", "Max"), ("Right", "Max")))
+                + f'{T*3}<Texture val="@UI/PauseScreenDimImage"/>\n{T*3}<ColorAdjustMode val="Fill"/>\n'
+                f'{T*3}<AdjustmentColor val="{colour}"/>\n{T*3}<Unclipped val="true"/>\n{T*3}<RenderPriority val="950"/>\n'
+                f'{T*3}<AcceptsMouse val="false"/>\n{T*3}<AcceptsMouseTooltip val="false"/>\n{T*2}</Frame>\n')
+
+    hero_panels = [f"{CONSOLE}/{p}" for p in ("HeroSpecificBackgroundStatusContainer", "HeroSpecificStatusContainer",
+                                              "FullscreenStatusPanel", "HeroSpecificFullUIModContainer",
+                                              "HeroSpecificCommandCardPanel")]
+    return (f'{T*2}<!-- DIAGNOSTIC (2026-10-05): plate clicks and blue tooltip rows (inspect_card.diagnostics) -->\n'
+            + toggle(6, hero_panels)
+            + toggle(7, [f"{CONSOLE}/FCJH_CommandShown", COMMAND_PANEL])
+            + toggle(8, [f"{OBS}/FCJH_HeroicTips", f"{OBS}/FCJH_HeroicTips2"])
+            + toggle(9, [f"{OBS}/TalentsOverview"])
+            + box("FCJH_DiagCommand", COMMAND_PANEL, "70,0,230,255")
+            + box("FCJH_DiagControlGroups", f"{CONSOLE}/ControlGroupPanel", "70,255,240,0")
+            + box("FCJH_DiagHeroCard", f"{CONSOLE}/HeroSpecificCommandCardPanel", "70,255,0,255")
+            + box("FCJH_DiagHeroBack", f"{CONSOLE}/HeroSpecificBackgroundStatusContainer", "70,255,150,0")
+            + "".join(box(f"FCJH_DiagTipRow{n}", TIP_ROW.format(n=n), "90,40,220,60")
+                      + box(f"FCJH_DiagTipIcon{n}", TIP_ROW.format(n=n) + "/TalentsContainerFrame/SelectionUnitStatusPanel/"
+                            "UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1", "160,255,255,255")
+                      for n in range(10)))
 
 
 def tracer_charge():
@@ -634,6 +691,12 @@ def tracer_charge():
     shows the charge)."""
     k = CMD_SIZE / 56
     w, h, ping = round(34 * k), round(38 * k), round(40 * k)
+    # the count was anchored to the percent label (now off) and sat cut off to the left
+    # (2026-10-05): centred in the meter instead
+    count = ('\t\t\t\t<Frame type="Label" name="ChargesLabel">'
+             + "".join(f'<Anchor side="{s}" relative="$parent/TracerPulseBombBackgroundImage" pos="{p}" offset="0"/>'
+                       for s, p in (("Top", "Min"), ("Left", "Min"), ("Bottom", "Max"), ("Right", "Max")))
+             + '<Style val="FCJH_HeroicCooldown"/><Unclipped val="true"/></Frame>\n')
     return (f'\t<!-- Tracer\'s Pulse Bomb meter on the command card, at our button size (inspect_card.tracer_charge) -->\n'
             f'\t<Frame type="SelectionUnitStatusPanel" name="TracerPulseBombChargeButtonOverrideFrame" file="Tracer">\n'
             f'\t\t<Width val="{CMD_SIZE}"/>\n\t\t<Height val="{CMD_SIZE}"/>\n'
@@ -641,8 +704,9 @@ def tracer_charge():
             f'\t\t\t<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">\n'
             f'\t\t\t\t<Width val="{w}"/>\n\t\t\t\t<Height val="{h}"/>\n'
             f'\t\t\t\t<Frame type="ProgressBar" name="ChargeFillProgress"><Width val="{w}"/><Height val="{h}"/></Frame>\n'
-            f'\t\t\t\t<Frame type="Label" name="ChargePercentLabel"><Visible val="false"/><Text val=""/></Frame>\n'
-            f'\t\t\t\t<Frame type="Image" name="PulseBombReadyPingImage"><Width val="{ping}"/><Height val="{ping}"/><Unclipped val="true"/></Frame>\n'
+            '\t\t\t\t<Frame type="Label" name="ChargePercentLabel"><Visible val="false"/><Text val=""/></Frame>\n'
+            + count
+            + f'\t\t\t\t<Frame type="Image" name="PulseBombReadyPingImage"><Width val="{ping}"/><Height val="{ping}"/><Unclipped val="true"/></Frame>\n'
             f'\t\t\t</Frame>\n\t\t</Frame>\n\t</Frame>\n')
 
 
