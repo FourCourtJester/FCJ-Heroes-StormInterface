@@ -51,14 +51,19 @@ CMD_CHARGE, CMD_CHARGE_RING = 20, 30   # the charge badge and its ring (Ahli's 2
 # its edges; squeezed to 52 x 52 with our 68-unit frame art it read far too big (2026-10-05).
 # It keeps its own proportions, centred in its slot, and Blizzard's inner layout.
 MOUNT_W, MOUNT_H = 56, 36
-# the buttons' frame art reaches (CMD_BORDER - CMD_SIZE) / 2 past them; padding is to the art
+# the buttons' frame art reaches (CMD_BORDER - CMD_SIZE) / 2 past them, but the hexagon you
+# see is about the button: spacing is to the button (user, 2026-10-05: with the art on the
+# margins the row read narrower than the card, and the gap over it too big)
 ART = (CMD_BORDER - CMD_SIZE) // 2
-# The bottom row's six slots spread evenly so the outer buttons' art meets the margins
-# (user, 2026-10-05); the talent actives sit on the row above, each over the gap between two
-# bottom buttons, starting between Q and W (cmd_centre)
-CMD_STEP = (INNER - 2 * ART - CMD_SIZE) / 5
-ABIL_TOP = BUFFS + BUFF_H + PAD + ART
-ABIL_ROWS = (ABIL_TOP, ABIL_TOP + CMD_SIZE)
+# The bottom row's six slots spread evenly so the outer buttons meet the margins; the talent
+# actives sit on the row above, each over the gap between two bottom buttons, starting
+# between Q and W (cmd_centre), nested into the row below as a honeycomb - every neighbour,
+# along the row or across, the same distance apart (user: the gap under the top row as
+# even as the bottom row's)
+CMD_STEP = (INNER - CMD_SIZE) / 5
+CMD_PITCH = round(CMD_STEP * 3 ** 0.5 / 2)
+ABIL_TOP = BUFFS + BUFF_H + PAD
+ABIL_ROWS = (ABIL_TOP, ABIL_TOP + CMD_PITCH)
 TAL_LABEL = ABIL_ROWS[1] + CMD_SIZE + ART + PAD
 TAL = TAL_LABEL + 16
 TAL_SIZE = 36                      # the talent strip's icons, spread across the card
@@ -70,7 +75,7 @@ STATS_GRID = (("AttackDamageFrame", 0, 0), ("AttackSpeedFrame", 1, 0), ("AttackR
 STATS_LABEL = TAL + TAL_SIZE + 16 + PAD    # under the tier numbers (16 tall)
 STATS, STAT_ROW, STAT_COL, STAT_H = STATS_LABEL + 18, 24, INNER // 3, 20   # STAT_H: Blizzard's stat row
 STAT_END = STATS + 2 * STAT_ROW + STAT_H
-H = STAT_END + PAD + EDGE          # the card's height (layout.toml element.inspect: 540 px)
+H = STAT_END + PAD + EDGE          # the card's height (layout.toml element.inspect: 525 px)
 TEAM = {}                          # the border's colours, "a,r,g,b" by team: set by layout()
 
 
@@ -81,7 +86,7 @@ def tal_left(k):
 
 def cmd_centre(row, c):
     """The middle of command slot c on ability row 0 (talent actives) or 1 (Z Q W E R D)."""
-    first = M + ART + CMD_SIZE / 2
+    first = M + CMD_SIZE / 2
     if row == 1:
         return first + c * CMD_STEP
     # over the gaps: Q/W, W/E, E/R, R/D, then Z/Q; a sixth (never seen) over Z
@@ -305,7 +310,10 @@ def blizzard_skin():
                 f'{extra}{u}<RenderPriority val="{prio}"/>\n{u}<AcceptsMouse val="false"/>\n{T*4}</Frame>\n')
     nine = lambda tex: f'{u}<Texture val="@UI/{tex}"/>\n{u}<TextureType val="Nineslice"/>\n'
     tint = lambda colour: f'{u}<Color val="{colour}"/>\n{u}<Alpha val="76"/>\n'
-    return (img("FCJH_SkinBack", 0, 0, nine("Storm_UI_TargetInfoPanel_Background"), 205, to_end=True)
+    # the background at 80%, the game showing through a little as through the replay panel
+    # (user, 2026-10-05); nothing under it (our back is clear, there only for the mouse)
+    return (img("FCJH_SkinBack", 0, 0, nine("Storm_UI_TargetInfoPanel_Background") + f'{u}<Alpha val="204"/>\n',
+                205, to_end=True)
             + img("FCJH_SkinBorder", 0, 0, nine("Storm_UI_TargetInfoPanel_BackgroundBorder"), 207, 3, to_end=True)
             + img("FCJH_SkinTitle", 0, TITLE, tint("564c6d"), 211, 3)
             + img("FCJH_SkinTitleLine", TITLE - 1, TITLE, tint("73668d"), 212)
@@ -360,7 +368,8 @@ def card():
     chrome = []
     # Round 9: the back takes the mouse, so a click inside the card no longer falls through to
     # the map (which deselects the unit and closes the card, 2026-09-30)
-    chrome.append(fill("FCJH_Back", 0, 0, H, 0, "215,11,12,20", 200, 3, "Max")
+    # (clear since Blizzard's background went on: it's only here to take the mouse)
+    chrome.append(fill("FCJH_Back", 0, 0, H, 0, "0,11,12,20", 200, 3, "Max")
                   .replace('<AcceptsMouse val="false"/>', '<AcceptsMouse val="true"/>'))
     # the title band carries the hero's name (unit(): FCJH_HeroName), not a title (user, 2026-10-05)
     chrome.append(blizzard_skin())
@@ -500,10 +509,11 @@ def player_pack(n):
             f'{T*5}<Alpha val="0"/>\n{T*5}<AcceptsMouse val="false"/>\n{T*5}<RenderPriority val="670"/>\n'
             f'{T*5}<!-- an empty tier\'s box under each icon: a line in the band art\'s 73668d round a dark\n'
             f'{T*5}     square (the old plain dark squares vanished on Blizzard\'s background, 2026-10-05) -->\n'
+            # (2 units: 1 is 0.9 px, and the top line rounded away, 2026-10-05)
             + "".join(fill(f"FCJH_TierLine{k}", TAL, tal_left(k), TAL + TAL_SIZE, tal_left(k) + TAL_SIZE,
                            "200,115,102,141", 664, 5)
-                      + fill(f"FCJH_TierBack{k}", TAL + 1, tal_left(k) + 1, TAL + TAL_SIZE - 1,
-                             tal_left(k) + TAL_SIZE - 1, "230,8,8,16", 665, 5) for k in range(1, 8))
+                      + fill(f"FCJH_TierBack{k}", TAL + 2, tal_left(k) + 2, TAL + TAL_SIZE - 2,
+                             tal_left(k) + TAL_SIZE - 2, "230,8,8,16", 665, 5) for k in range(1, 8))
             + portrait + icons + name + border + f'{T*4}</Frame>\n')
 
 
