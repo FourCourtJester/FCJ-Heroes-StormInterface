@@ -2312,6 +2312,14 @@ def layout_order(layout_dir, extra=(), generated=None):
 def committed_files(cfg, source=SOURCE):
     """{path under source: bytes} for every generated file that lives in the repo."""
     layout_dir = source / LAYOUT_REL
+    # the inspect card is laid out to a size of its own (inspect_card W x H, cut to what it
+    # holds); its box in layout.toml must be that size
+    (_, _, iw, ih), _ = rects(cfg)["inspect"]
+    u = Units(cfg)
+    if (round(u(iw)), round(u(ih))) != (inspect_card.W, inspect_card.H):
+        raise SystemExit(f"layout.toml element.inspect is {iw} x {ih} px ({u(iw)} x {u(ih)} units); "
+                         f"tools/inspect_card.py lays the card out at {inspect_card.W} x {inspect_card.H} units "
+                         f"({inspect_card.W / u.scale:g} x {inspect_card.H / u.scale:g} px)")
     texts = {
         LAYOUT_REL / CONSTANTS_FILE: constants_layout(cfg),
         LAYOUT_REL / HERO_ROW_FILE: hero_row_layout(cfg),

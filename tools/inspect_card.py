@@ -22,47 +22,70 @@ from pathlib import Path
 
 T = "\t"
 
-# Pane-local layout, in layout units (the card is 333 x 833: 300 x 750 px)
-W, H = 333, 833
-# Top to bottom, every section GAP below the one before (user, 2026-10-05: normalized padding)
-GAP = 10
+# Pane-local layout, in layout units. One padding, PAD, between every section and the next and
+# between the card's edge and everything on it, measured from inside the edge (user,
+# 2026-10-05: the same whitespace in every direction). The card is cut to fit what it holds
+# (H, at the bottom: one row of buffs, two of abilities, the talents, three rows of stats).
+W = 333                            # 300 px
+BORDER = 2                         # the team-coloured edge
+EDGE = 5                           # the edge: our team line, then Blizzard's border art (inset 3)
+PAD = 10
+M = EDGE + PAD                     # side margin
+INNER = W - 2 * M                  # the width everything is laid across
 TITLE = 30                         # the title band: the hero's name, and the X
 NAME_BAND, NAME_H = 155, 30        # the player's name and the level, under the portrait
 PORTRAIT = (TITLE, NAME_BAND)      # top, bottom: stops at the band (round 3 ran it under the
                                    # band and the art hid the level)
-HP = (NAME_BAND + NAME_H + GAP, NAME_BAND + NAME_H + GAP + 24)
+HP = (NAME_BAND + NAME_H + PAD, NAME_BAND + NAME_H + PAD + 24)
 MANA = (HP[1] + 2, HP[1] + 18)
-# Buffs then debuffs as one block, the fountain first (as a buff of its own, in Blizzard's buff
-# art): the debuff bar follows the buff bar on the same row (as in Blizzard's hero console);
-# once there are 4+ buffs it drops to a second row. Blizzard's buff slot is 58 x 34, each
-# overlapping the last by 19 (BehaviorIconTemplate, #BuffOffset).
+# Buffs then debuffs on one row, the fountain first (as a buff of its own, in Blizzard's buff
+# art). Blizzard's buff slot is 58 x 34, each overlapping the last by 19
+# (BehaviorIconTemplate, #BuffOffset).
 BUFF_W, BUFF_H, BUFF_OVERLAP = 58, 34, 19
-BUFFS, BUFF_ROW = MANA[1] + GAP, 42
-TAL_SIZE, TAL_STEP = 36, 43        # the talent strip's icons
+BUFFS = MANA[1] + PAD
 # Abilities are Blizzard's command buttons (command_panel), at Ahli's sizes: a 52-unit button
-# with its icon 5 in from each side, its frame art drawn at 68 and its glows at 60, each button
-# overlapping the next by 5 so the hexagons interlock. Six to a row fit the card (287 of 305).
-CMD_SIZE, CMD_STEP, CMD_INSET, CMD_BORDER, CMD_GLOW = 52, 47, 5, 68, 60
+# with its icon 5 in from each side, its frame art drawn at 68 and its glows at 60.
+CMD_SIZE, CMD_INSET, CMD_BORDER, CMD_GLOW = 52, 5, 68, 60
 CMD_CHARGE, CMD_CHARGE_RING = 20, 30   # the charge badge and its ring (Ahli's 26 / 38 read too big, 2026-10-05)
 # The mount (Z) is Blizzard's bookend button, one wide piece (83 x 54) whose art is anchored to
 # its edges; squeezed to 52 x 52 with our 68-unit frame art it read far too big (2026-10-05).
-# It keeps its own proportions, centred in its row, and Blizzard's inner layout.
+# It keeps its own proportions, centred in its slot, and Blizzard's inner layout.
 MOUNT_W, MOUNT_H = 56, 36
-# the buttons' frame art reaches (CMD_BORDER - CMD_SIZE) / 2 past them; the gap is to the art
+# the buttons' frame art reaches (CMD_BORDER - CMD_SIZE) / 2 past them; padding is to the art
 ART = (CMD_BORDER - CMD_SIZE) // 2
-ABIL_TOP = BUFFS + BUFF_ROW + BUFF_H + GAP + ART      # under the buffs' second row
+# The bottom row's six slots spread evenly so the outer buttons' art meets the margins
+# (user, 2026-10-05); the talent actives sit on the row above, each over the gap between two
+# bottom buttons, starting between Q and W (cmd_centre)
+CMD_STEP = (INNER - 2 * ART - CMD_SIZE) / 5
+ABIL_TOP = BUFFS + BUFF_H + PAD + ART
 ABIL_ROWS = (ABIL_TOP, ABIL_TOP + CMD_SIZE)
-TAL_LABEL = ABIL_ROWS[1] + CMD_SIZE + ART + GAP
+TAL_LABEL = ABIL_ROWS[1] + CMD_SIZE + ART + PAD
 TAL = TAL_LABEL + 16
+TAL_SIZE = 36                      # the talent strip's icons, spread across the card
+TAL_STEP = (INNER - TAL_SIZE) / 6
 # Stats: three columns, related values sharing a row (user, 2026-10-05) - (frame, column, row)
 STATS_GRID = (("AttackDamageFrame", 0, 0), ("AttackSpeedFrame", 1, 0), ("AttackRangeFrame", 2, 0),
               ("AbilityPowerFrame", 0, 1), ("MoveSpeedFrame", 1, 1),
               ("PhysicalArmorFrame", 0, 2), ("AbilityArmorFrame", 1, 2))
-STATS_LABEL = TAL + TAL_SIZE + 16 + GAP    # under the tier numbers (16 tall)
-STATS, STAT_ROW, STAT_COL = STATS_LABEL + 18, 24, 102
-M = 14                              # side margin
-BORDER = 2                          # the team-coloured edge
-TEAM = {}                           # the border's colours, "a,r,g,b" by team: set by layout()
+STATS_LABEL = TAL + TAL_SIZE + 16 + PAD    # under the tier numbers (16 tall)
+STATS, STAT_ROW, STAT_COL, STAT_H = STATS_LABEL + 18, 24, INNER // 3, 20   # STAT_H: Blizzard's stat row
+STAT_END = STATS + 2 * STAT_ROW + STAT_H
+H = STAT_END + PAD + EDGE          # the card's height (layout.toml element.inspect: 540 px)
+TEAM = {}                          # the border's colours, "a,r,g,b" by team: set by layout()
+
+
+def tal_left(k):
+    """Talent k's (1-7) left edge on the card."""
+    return M + round((k - 1) * TAL_STEP)
+
+
+def cmd_centre(row, c):
+    """The middle of command slot c on ability row 0 (talent actives) or 1 (Z Q W E R D)."""
+    first = M + ART + CMD_SIZE / 2
+    if row == 1:
+        return first + c * CMD_STEP
+    # over the gaps: Q/W, W/E, E/R, R/D, then Z/Q; a sixth (never seen) over Z
+    return first + ((1.5, 2.5, 3.5, 4.5, 0.5, 0)[c]) * CMD_STEP
 
 def rect(top, left, bottom, right, rel="$parent", i=4, right_pos="Min"):
     t = T * i
@@ -215,15 +238,17 @@ def command_panel():
     buttons = []
     for r, row in enumerate(COMMAND_ROWS):
         for c, k in enumerate(row):
-            left, y = c * CMD_STEP, ABIL_ROWS[r] - top
+            # placed by its middle, against the panel (whose left edge is the card's margin)
+            left = lambda w: round(cmd_centre(r, c) - w / 2) - M
+            y = ABIL_ROWS[r] - top
             if k == "04":   # the mount: its own shape, only its hotkey letter put away
                 buttons.append(f'{T*4}<Frame type="CommandButton" name="CommandButton{k}">\n'
-                               + placed(y + (CMD_SIZE - MOUNT_H) // 2, left, MOUNT_W, MOUNT_H, 5)
+                               + placed(y + (CMD_SIZE - MOUNT_H) // 2, left(MOUNT_W), MOUNT_W, MOUNT_H, 5)
                                + f'{T*5}<Frame type="CommandHotkeyFrame" name="HotkeyFrame"><Frame type="Label" name="HotkeyLabel"><Alpha val="0"/></Frame></Frame>\n'
                                + f'{T*4}</Frame>\n')
                 continue
             buttons.append(f'{T*4}<Frame type="CommandButton" name="CommandButton{k}">\n'
-                           + placed(y, left, CMD_SIZE, CMD_SIZE, 5) + parts(k.startswith("3"))
+                           + placed(y, left(CMD_SIZE), CMD_SIZE, CMD_SIZE, 5) + parts(k.startswith("3"))
                            # the ability buttons' dark hexagon behind the icon (only their
                            # template has one: not the mount's bookend nor the dynamic buttons)
                            + (f'{T*5}<Frame type="Image" name="IconBackground">\n' + inset + f'{T*5}</Frame>\n'
@@ -247,59 +272,44 @@ def command_panel():
             + command_anchors(False, 3, "Anchor")
             + f'{T*3}<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>\n'
             f'{T*3}<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>\n'
-            f'{T*3}<Width val="{W - 2 * M}"/>\n{T*3}<Height val="{ABIL_ROWS[1] + CMD_SIZE - ABIL_ROWS[0]}"/>\n'
-            + "".join(buttons) + away + f'{T*2}</Frame>\n')
-
-
-SKIN = "FCJH_Skin"   # Blizzard's inspector art on the card (blizzard_skin)
+            f'{T*3}<Width val="{INNER}"/>\n{T*3}<Height val="{ABIL_ROWS[1] + CMD_SIZE - ABIL_ROWS[0]}"/>\n'
+            + "".join(buttons) + away + f'{T*2}</Frame>\n'
+            # Blizzard's control-group panel (the selection's unit icons, with health bars and
+            # tooltips) hangs off the command card, so it came onto the card with it and stuck
+            # out past its right edge, mostly invisible but answering the mouse (user,
+            # 2026-10-05): parked for good
+            f'{T*2}<Frame type="ControlGroupPanel" name="ControlGroupPanel">\n'
+            + placed(9999, 9999, 500, 120, 3, "$GameUI")
+            + f'{T*3}<Alpha val="0"/>\n{T*3}<AcceptsMouse val="false"/>\n{T*3}<AcceptsMouseTooltip val="false"/>\n'
+            f'{T*2}</Frame>\n')
 
 
 def blizzard_skin():
-    """TRIAL (2026-10-05, the user's background pass: "the pure black needs something to punch
-    it up" - re-use Blizzard's panel art): the default inspector's own layers on the card,
-    over our flat fills (TargetInfoPanelTemplate: a nine-slice background, its top band
-    tinted 564c6d at 76 alpha with a 73668d line under it, and a nine-slice border inset 3).
-    The tint goes on both our bands. Ctrl+Shift+6 hides it, to compare with the flat look
-    (skin_toggle). Just over our back (which stays: it takes the mouse) and under everything
-    drawn on the card; our two flat bands start hidden, the toggle brings them back."""
-    t, u = T * 4, T * 6
+    """The default inspector's own art on the card (the user's background pass, 2026-10-05:
+    "the pure black needs something to punch it up"; chosen over the flat look in game) -
+    TargetInfoPanelTemplate's layers: a nine-slice background, its top band tinted 564c6d at
+    76 alpha with a 73668d line under it (here on both our bands), and a nine-slice border
+    inset 3. All of it just over our back (which stays: it takes the mouse) and under
+    everything drawn on the card, as in Blizzard's panel (border 270, contents 280): the
+    border's middle isn't clear, and drawn over the card (689, the first try) it muted the
+    health bars and the fountain (user, 2026-10-05)."""
+    u = T * 5
     def img(name_, top, bottom, extra, prio, inset=0, to_end=False):
-        """An image across the card from `top` to `bottom` (or the card's end), `inset` in."""
-        return (f'{T*5}<Frame type="Image" name="{name_}">\n'
-                f'{u}<Anchor side="Top"    relative="$parent" pos="Min" offset="{top + inset}"/>\n'
+        """An image across the card from `top` to `bottom` (or the card's end), `inset` in from
+        the card's sides (and its top or bottom when it reaches them)."""
+        return (f'{T*4}<Frame type="Image" name="{name_}">\n'
+                f'{u}<Anchor side="Top"    relative="$parent" pos="Min" offset="{top + (inset if top == 0 else 0)}"/>\n'
                 f'{u}<Anchor side="Left"   relative="$parent" pos="Min" offset="{inset}"/>\n'
                 f'{u}<Anchor side="Bottom" relative="$parent" pos="{"Max" if to_end else "Min"}" offset="{-inset if to_end else bottom}"/>\n'
                 f'{u}<Anchor side="Right"  relative="$parent" pos="Max" offset="{-inset}"/>\n'
-                f'{extra}{u}<RenderPriority val="{prio}"/>\n{u}<AcceptsMouse val="false"/>\n{T*5}</Frame>\n')
+                f'{extra}{u}<RenderPriority val="{prio}"/>\n{u}<AcceptsMouse val="false"/>\n{T*4}</Frame>\n')
     nine = lambda tex: f'{u}<Texture val="@UI/{tex}"/>\n{u}<TextureType val="Nineslice"/>\n'
     tint = lambda colour: f'{u}<Color val="{colour}"/>\n{u}<Alpha val="76"/>\n'
-    return (f'{t}<Frame type="Frame" name="{SKIN}">\n{t}\t<Anchor relative="$parent"/>\n{t}\t<AcceptsMouse val="false"/>\n'
-            + img("FCJH_SkinBack", 0, 0, nine("Storm_UI_TargetInfoPanel_Background"), 205, to_end=True)
-            + img("FCJH_SkinTitle", 0, TITLE, tint("564c6d"), 211)
+    return (img("FCJH_SkinBack", 0, 0, nine("Storm_UI_TargetInfoPanel_Background"), 205, to_end=True)
+            + img("FCJH_SkinBorder", 0, 0, nine("Storm_UI_TargetInfoPanel_BackgroundBorder"), 207, 3, to_end=True)
+            + img("FCJH_SkinTitle", 0, TITLE, tint("564c6d"), 211, 3)
             + img("FCJH_SkinTitleLine", TITLE - 1, TITLE, tint("73668d"), 212)
-            + img("FCJH_SkinName", NAME_BAND, NAME_BAND + NAME_H, tint("564c6d"), 241)
-            + img("FCJH_SkinBorder", 0, 0, nine("Storm_UI_TargetInfoPanel_BackgroundBorder"), 689, 3, to_end=True)
-            + f'{t}</Frame>\n')
-
-
-def skin_toggle():
-    """Ctrl+Shift+6: Blizzard's inspector art off and on (blizzard_skin), to compare."""
-    unit = f"{CARD}/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0"
-    flip = lambda frame, first: (f'{T*4}<Controller type="Visibility" end="Pause" frame="{unit}/{frame}">\n'
-                                 f'{T*5}<Key type="Bool" time="0" value="{first}"/>\n'
-                                 f'{T*5}<Key type="Bool" time="0.001" value="{"false" if first == "true" else "true"}"/>\n'
-                                 f'{T*4}</Controller>\n')
-    return (f'{T*2}<!-- TRIAL: Ctrl+Shift+6 hides Blizzard\'s inspector art on the card (inspect_card.blizzard_skin) -->\n'
-            f'{T*2}<Frame type="ToggleControl" name="FCJH_SkinToggle">\n'
-            f'{T*3}<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>\n'
-            f'{T*3}<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>\n'
-            f'{T*3}<Width val="1"/>\n{T*3}<Height val="1"/>\n'
-            f'{T*3}<Shortcut val="Control+Shift+6"/>\n{T*3}<Visible val="false"/>\n{T*3}<AcceptsMouse val="false"/>\n'
-            f'{T*3}<Animation name="FCJH_Hide">\n'
-            f'{T*4}<Event event="OnShown" action="DirectionForward,Play"/>\n'
-            f'{T*4}<Event event="OnHidden" action="DirectionReverse,Play"/>\n'
-            + flip(SKIN, "true") + flip("FCJH_TitleBand", "false") + flip("FCJH_NameBand", "false")
-            + f'{T*3}</Animation>\n{T*2}</Frame>\n')
+            + img("FCJH_SkinName", NAME_BAND, NAME_BAND + NAME_H, tint("564c6d"), 241, 3))
 
 
 def card():
@@ -353,9 +363,6 @@ def card():
     chrome.append(fill("FCJH_Back", 0, 0, H, 0, "215,11,12,20", 200, 3, "Max")
                   .replace('<AcceptsMouse val="false"/>', '<AcceptsMouse val="true"/>'))
     # the title band carries the hero's name (unit(): FCJH_HeroName), not a title (user, 2026-10-05)
-    hidden = lambda x: x.replace('<AcceptsMouse val="false"/>', '<AcceptsMouse val="false"/>\n\t\t\t\t<Visible val="false"/>', 1)
-    chrome.append(hidden(fill("FCJH_TitleBand", 0, 0, TITLE, 0, "235,24,28,48", 210, 3, "Max")))   # under the skin's tint
-    chrome.append(hidden(fill("FCJH_NameBand", NAME_BAND, 0, NAME_BAND + NAME_H, 0, "235,16,18,32", 240, 3, "Max")))
     chrome.append(blizzard_skin())
     # no buffs or abilities heading (user, 2026-10-05): their pictures say what they are
     for text, top in (("TALENTS", TAL_LABEL), ("STATS", STATS_LABEL)):
@@ -457,7 +464,7 @@ def player_pack(n):
     # tier is picked - an unpicked tier's picture is a plain white square
     icons = "".join(
         f'{T*5}<Frame type="Image" name="FCJH_Talent{k}">\n'
-        + rect(TAL, M + (k - 1) * TAL_STEP, TAL + TAL_SIZE, M + (k - 1) * TAL_STEP + TAL_SIZE, i=6)
+        + rect(TAL, tal_left(k), TAL + TAL_SIZE, tal_left(k) + TAL_SIZE, i=6)
         + f'{T*6}<Texture val="{{{tree}/HeroSelectedTalentTreeFrame/TalentTreeIcon{k}/IconImage/@Texture}}"/>\n'
         f'{T*6}<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->\n'
         f'{T*6}<Alpha val="0"/>\n'
@@ -491,9 +498,12 @@ def player_pack(n):
               + fill("FCJH_EdgeRight", 0, W - BORDER, H, W, edge, 690, 5))
     return (f'{T*4}<Frame type="Frame" name="FCJH_Player{n}">\n{T*5}<Anchor relative="$parent"/>\n'
             f'{T*5}<Alpha val="0"/>\n{T*5}<AcceptsMouse val="false"/>\n{T*5}<RenderPriority val="670"/>\n'
-            f'{T*5}<!-- dark squares under the icons: an empty tier reads as a gap, not a hole -->\n'
-            + "".join(fill(f"FCJH_TierBack{k}", TAL, M + (k - 1) * TAL_STEP, TAL + TAL_SIZE,
-                           M + (k - 1) * TAL_STEP + TAL_SIZE, "200,30,32,48", 665, 5) for k in range(1, 8))
+            f'{T*5}<!-- an empty tier\'s box under each icon: a line in the band art\'s 73668d round a dark\n'
+            f'{T*5}     square (the old plain dark squares vanished on Blizzard\'s background, 2026-10-05) -->\n'
+            + "".join(fill(f"FCJH_TierLine{k}", TAL, tal_left(k), TAL + TAL_SIZE, tal_left(k) + TAL_SIZE,
+                           "200,115,102,141", 664, 5)
+                      + fill(f"FCJH_TierBack{k}", TAL + 1, tal_left(k) + 1, TAL + TAL_SIZE - 1,
+                             tal_left(k) + TAL_SIZE - 1, "230,8,8,16", 665, 5) for k in range(1, 8))
             + portrait + icons + name + border + f'{T*4}</Frame>\n')
 
 
@@ -524,7 +534,7 @@ def matcher(n):
 TALENT_TIPS = True
 TIPS = "$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips"
 TIP_ROW = TIPS + "/FCJH_TalentTipPanel/TalentOverview/HeroTalentsPanelContainer/PlayerFrame{n}"
-TIP_W = 6 * TAL_STEP + TAL_SIZE        # the talent strip's width: seven icons
+TIP_W = INNER                          # the talent strip's width: seven icons, across the card
 
 
 def tip_switch(n):
@@ -554,7 +564,7 @@ def talent_tips():
     the card does (the gate). Just above the card (605), under the command card (610)."""
     # each icon placed against its own player's box, named by its full path
     icon = lambda k, n: (f'{T*10}<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon{k}">\n'
-                         + placed(0, (k - 1) * TAL_STEP, TAL_SIZE, TAL_SIZE, 11, TIP_ROW.format(n=n))
+                         + placed(0, tal_left(k) - M, TAL_SIZE, TAL_SIZE, 11, TIP_ROW.format(n=n))
                          + f'{T*11}<Alpha val="0"/>\n{T*10}</Frame>\n')
     # the row's heroic ability icon and Tracer's meter: faded, deaf to the mouse (as the
     # heroic tooltips' copies have them)
@@ -598,8 +608,8 @@ def talent_tips():
 def unit():
     """The card's contents: a selection panel inside it, holding Blizzard's per-unit widgets.
     A SelectionUnitStatusPanel without a PlayerId follows the observer's selection."""
-    tiers = "".join(label(f"FCJH_Tier{n}", TAL + TAL_SIZE + 2, M + (n - 1) * TAL_STEP, TAL + TAL_SIZE + 16,
-                          M + (n - 1) * TAL_STEP + TAL_SIZE, "FCJH_InspectTier", str(lv), 5)
+    tiers = "".join(label(f"FCJH_Tier{n}", TAL + TAL_SIZE + 2, tal_left(n), TAL + TAL_SIZE + 16,
+                          tal_left(n) + TAL_SIZE, "FCJH_InspectTier", str(lv), 5)
                     for n, lv in enumerate((1, 4, 7, 10, 13, 16, 20), start=1))
     return f'''
 {T*2}<!-- The card's contents, numbered 1-6 below: Blizzard's per-unit widgets in a selection
@@ -620,25 +630,46 @@ def unit():
 
 {T*4}<!-- 2. name (in the title band, user 2026-10-05), player, level -->
 {T*4}<Frame type="UnitStatusName" name="FCJH_HeroName" template="UnitStatus/UnitStatusUnitNameTemplate">
-{rect(0, M, TITLE, W - TITLE - 4, i=5)}{T*5}<UseNameTypeVisibilityRules val="false"/>
+{T*5}<!-- centred on the card, clear of the X: the template's own size (220 x 30) beat the
+{T*5}     anchors and held it off centre (2026-10-05), so the size is given -->
+{placed(0, TITLE, W - 2 * TITLE, TITLE, 5)}{T*5}<UseNameTypeVisibilityRules val="false"/>
 {T*5}<Frame type="Label" name="Label"><Anchor relative="$parent"/><Style val="FCJH_InspectName"/></Frame>
 {T*4}</Frame>
 {T*4}<!-- the player's name comes with the player pack (Blizzard's player-name widget read
 {T*4}     "Player 5" for every hero in round 4) -->
 {T*4}<Frame type="UnitStatusLevel" name="FCJH_Level" template="UnitStatus/UnitStatusLevelTemplate">
-{rect(NAME_BAND, W - M - 60, NAME_BAND + NAME_H, W - M, i=5)}{T*5}<!-- no truncation: "13" read "..." in round 7 -->
+{T*5}<!-- its right edge on the margin, as the player's name's left (the template's 25 x 20 beat
+{T*5}     the anchors before and left it short of the edge, 2026-10-05) -->
+{placed(NAME_BAND, W - M - 60, 60, NAME_H, 5)}{T*5}<!-- no truncation: "13" read "..." in round 7 -->
 {T*5}<Frame type="Label" name="Label"><Anchor relative="$parent"/><Style val="FCJH_InspectLevel"/><Options val="NoWrapping | ScaleToPreventTruncation"/></Frame>
 {T*4}</Frame>
 
-{T*4}<!-- 3. fountain: the plates' sensor; Blizzard's "ready" art as the first buff, in Blizzard's
-{T*4}     own buff slot art (user, 2026-10-05), dimmed while on cooldown -->
+{T*4}<!-- 3. fountain: the first buff, in Blizzard's own buff slot art (user, 2026-10-05): Blizzard's
+{T*4}     "ready" art, dimmed while on cooldown, with the seconds left over it -->
+{T*4}<!-- the plates' sensor, on the slot: Blizzard's fountain behaviour icon, present only while
+{T*4}     the fountain is on cooldown. Its own pictures are off; it lends the slot its countdown
+{T*4}     (the game fills a CooldownLabel in a behaviour icon, as in Blizzard's hero console) -->
 {T*4}<Frame type="UnitStatusBehaviorIcon" name="FCJH_FountainSensor">
-{T*5}<Anchor relative="$parent"/>
-{T*5}<Behavior val="HealingFountainCooldown"/>
-{T*5}<Alpha val="0"/>
+{placed(BUFFS, M, BUFF_W, BUFF_H, 5)}{T*5}<Behavior val="HealingFountainCooldown"/>
+{T*5}<RenderPriority val="680"/>
 {T*5}<AcceptsMouse val="false"/>
 {T*5}<AcceptsMouseTooltip val="false"/>  <!-- its tooltip ("use the fountain...") covered the whole card -->
-{T*5}<Frame type="BehaviorIcon" name="BehaviorIcon" template="BehaviorBar/BehaviorIconTemplate"><Anchor relative="$parent"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+{T*5}<Frame type="BehaviorIcon" name="BehaviorIcon" template="BehaviorBar/BehaviorIconTemplate">
+{T*6}<Anchor relative="$parent"/>
+{T*6}<AcceptsMouse val="false"/>
+{T*6}<AcceptsMouseTooltip val="false"/>
+{"".join(f'{T*6}<Frame type="{ty}" name="{nm}"><Visible val="false"/><Alpha val="0"/></Frame>{chr(10)}'
+         for ty, nm in (("Frame", "ImageMaskContainer"), ("Image", "IconImageBg"), ("Label", "StackLabel"),
+                        ("ProgressBar", "QuestProgressBar"), ("ProgressBar", "CooldownBar"), ("Image", "BGFlashImage")))}{T*6}<Frame type="Label" name="CooldownLabel">
+{T*7}<Anchor side="Top"    relative="$parent" pos="Min" offset="2"/>
+{T*7}<Anchor side="Left"   relative="$parent" pos="Min" offset="9"/>
+{T*7}<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+{T*7}<Anchor side="Right"  relative="$parent" pos="Max" offset="-6"/>
+{T*7}<Style val="FCJH_HeroicCooldown"/>
+{T*7}<Options val="NoWrapping | ScaleToPreventTruncation"/>
+{T*7}<RenderPriority val="700"/>
+{T*6}</Frame>
+{T*5}</Frame>
 {T*4}</Frame>
 {T*4}<Frame type="Frame" name="FCJH_FountainReady">
 {placed(BUFFS, M, BUFF_W, BUFF_H, 5)}{T*5}<RenderPriority val="670"/>
@@ -654,6 +685,9 @@ def unit():
 {T*7}<Width val="45"/>
 {T*7}<Height val="45"/>
 {T*7}<Texture val="@UI/Storm_UI_Ingame_HealingWell_Active"/>
+{T*7}<!-- the middle of the art only: its own frame's edges drew as stray lines in the slanted
+{T*7}     mask (user, 2026-10-05) -->
+{T*7}<TextureCoords top="0.2" left="0.2" bottom="0.8" right="0.8"/>
 {T*7}<RenderPriority val="671"/>
 {T*7}<AcceptsMouse val="false"/>
 {T*6}</Frame>
@@ -676,9 +710,8 @@ def unit():
 {T*5}</StateGroup>
 {T*4}</Frame>
 
-{T*4}<!-- 4. buffs then debuffs, one block: Blizzard's buff bars inside the selection panel (as
-{T*4}     Spazzo does). The debuff bar follows the buffs on the same row; with 4+ buffs it
-{T*4}     drops to a second row (FCJH_BuffSpill below) -->
+{T*4}<!-- 4. buffs then debuffs, one row after the fountain: Blizzard's buff bars inside the
+{T*4}     selection panel (as Spazzo does). One row is all a hero needs (user, 2026-10-05) -->
 {T*4}<Frame type="BehaviorBar" name="FCJH_Buffs" template="BehaviorBar/BuffBehaviorBarTemplate">
 {T*5}<Anchor side="Top"  relative="$parent" pos="Min" offset="{BUFFS}"/>
 {T*5}<Anchor side="Left" relative="$parent/FCJH_FountainReady" pos="Max" offset="-{BUFF_OVERLAP}"/>
@@ -689,15 +722,6 @@ def unit():
 {T*5}<Anchor side="Left" relative="$parent/FCJH_Buffs" pos="Max" offset="0"/>
 {T*5}<RenderPriority val="670"/>
 {T*4}</Frame>
-{T*4}<StateGroup name="FCJH_BuffSpill">
-{T*5}<DefaultState val="OneRow"/>
-{T*5}<State name="TwoRows">
-{T*6}<When type="Property" frame="$this/FCJH_Buffs/BehaviorIcon3" Visible="true"/>
-{T*6}<Action type="SetAnchor" frame="$this/FCJH_Debuffs" side="Top" relative="$parent" pos="Min" offset="{BUFFS + BUFF_ROW}" undo="true"/>
-{T*6}<Action type="SetAnchor" frame="$this/FCJH_Debuffs" side="Left" relative="$parent" pos="Min" offset="{M}" undo="true"/>
-{T*5}</State>
-{T*5}<State name="OneRow"/>
-{T*4}</StateGroup>
 
 {T*4}<!-- 5. talents (round 5). Blizzard's talent strip is keyed to a PLAYER and a selection
 {T*4}     only gives a unit: rounds 3-4 drew blank, then team-coloured, squares. So the card
@@ -738,7 +762,7 @@ def layout(crop, head, team_colours):
                  for team, hex_ in team_colours.items()})
     HEROES[:] = cached_heroes()
     return (head + FILE_HEADER + card() + unit() + "\t\t\t</Frame>\n\t\t</Frame>\n"
-            + (talent_tips() if TALENT_TIPS else "") + command_panel() + skin_toggle()
+            + (talent_tips() if TALENT_TIPS else "") + command_panel()
             + "\t</Frame>\n\t</Frame>\n\t</Frame>\n" + tracer_charge() + "</Desc>\n")
 
 
