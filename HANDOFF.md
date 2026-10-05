@@ -210,6 +210,49 @@ src/dev/                                     dev-only probes (empty now; packed 
   - a plain frame can carry text: `<Tooltip val="@Button/Tooltip/..."/>`; Ahli composes
     headers with a `TextFormatFrame` (`FormatText` + `Replacement`) bound as `{.../@Text}`.
 
+### The inspect card's abilities: Blizzard's command card (2026-10-02..05)
+
+The card's ability rows are Blizzard's own command card (`ConsoleUIContainer/CommandPanel`),
+borrowed as Ahli does for his hero card: real tooltips, cooldowns, charges, talent actives
+and the right R for every hero, with no per-hero tables. Code: `tools/inspect_card.py`
+(`command_switch`, `command_anchors`, `command_panel`, `placed`, `tracer_charge`). What it
+took, all seen in game:
+
+- **Same container, one step under it.** The card lives in `ConsoleUIContainer` at
+  RenderPriority 600, the command card at Blizzard's 610. At 650 in GameUI the card drew over
+  the buttons and its back took their mouse.
+- **Never hide it; park it.** One frame (`FCJH_CommandShown`) holds `CommandPanel` shown with a
+  looping Visibility animation (the game shows and hides the HUD as it likes). The card's gate
+  moves it onto the card when the card opens and off screen (9999) when it shuts. Showing and
+  hiding it with two loops, one per side, never showed it: a stopped loop seems to keep its
+  last value.
+- **Size by Width/Height, not opposite anchors.** Blizzard's templates set 1060 x 190 (panel)
+  and 120 x 120 (buttons), and those beat Left+Right / Top+Bottom anchors: anchored on four
+  sides, the buttons stayed full size. `placed()`: Top/Left anchors, Bottom/Right tied to
+  `$this`, explicit Width/Height (Ahli's way).
+- **Every piece drawn for 120 units needs resizing** (Ahli's numbers): button 52, icon
+  (`NormalImage`) inset 5, frame art (`GameButtonDefaultBorder`) 68 - it has no size of its own
+  and takes its texture's - glows 60, `IconBackground` inset 5 (only the ability buttons
+  00-03 and 05 have one), charge badge 20 and ring 30, the cooldown count in our
+  `FCJH_HeroicCooldown` style, hotkey letters off (they piled onto the icons). Each button's
+  hero-specific panel (`HeroSpecificCommandCardPanel`; `ButtonSpecificOverlayPanel` on the
+  dynamic buttons) is 120 x 120 too and is sized to the button.
+- **Layout, Blizzard's order:** top row the dynamic buttons 30-35 (talent actives); bottom
+  row 04, 00, 01, 02, 03, 05 = Z Q W E R D (seen in game), 47 apart so the hexagons
+  interlock. Put away (parked, faded, mouse off): hearth 13, spare 15, `MiddleFill`, the
+  empty-slot art, targeting prompts, tutorial arrows.
+- **The mount (04) is one wide "bookend" piece** (83 x 54) whose art is anchored to its
+  edges: it gets its own 56 x 36 shape, centred in its row, and only its hotkey letter put
+  away. Squeezed to 52 x 52 with our 68-unit frame art it read far too big.
+- **Tracer's R is her own hero file's meter**, not the button's art: overridden by name in
+  her layout (`file="Tracer"` `TracerPulseBombChargeButtonOverrideFrame`) at the button's
+  size, the "0%" label off and the count centred. The validator loads every hero mod so such
+  overrides are checked.
+- **Two Blizzard panels hang off the command card** - `ControlGroupPanel` and the console's
+  own `HeroSpecificCommandCardPanel` - and go wherever it goes (parked with it).
+- **Open:** Abathur's Symbiote swaps the card to Symbiote's buttons, some of them in slots we
+  park (gaps); the mount reads as Blizzard draws it.
+
 ### Practices
 
 - **Keep the build stamp.** A stale stamp means a cached interface; nothing else on screen is
@@ -310,6 +353,12 @@ meter (Blizzard's art), talent and heal pop-ups (pane-sized; heal 2 px smaller; 
 plate's top edge - the user will judge that from viewers' feedback), the inspect card opening
 with Blizzard's command card on it.
 
+0. **BISECT IN PROGRESS (2026-10-05): plate clicks do nothing**, card open or shut. Switched
+   off to test: `inspect_card.TALENT_TIPS = False`, `inspect_card.INSPECT = False` (the card
+   left out) and a BISECT controller in `FCJH_Hidden` hiding the command card again - neither
+   brought clicks back. Next: the Friday build `fd72a66` as a control (built from a worktree
+   in `builds/wtfd`). Restore all three switches when done; `DIAGNOSTIC` hotkeys
+   Ctrl+Shift+6..9 and colour boxes are in `inspect_card.diagnostics`.
 1. **Command card on the inspect card** - check the last build (hotkey letters off, cooldown
    and charge text resized): does each button read cleanly? Then: the talent-actives row (pick
    an activatable talent), button tooltips, the mount button (Blizzard's bookend art, squeezed
