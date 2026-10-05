@@ -251,6 +251,57 @@ def command_panel():
             + "".join(buttons) + away + f'{T*2}</Frame>\n')
 
 
+SKIN = "FCJH_Skin"   # Blizzard's inspector art on the card (blizzard_skin)
+
+
+def blizzard_skin():
+    """TRIAL (2026-10-05, the user's background pass: "the pure black needs something to punch
+    it up" - re-use Blizzard's panel art): the default inspector's own layers on the card,
+    over our flat fills (TargetInfoPanelTemplate: a nine-slice background, its top band
+    tinted 564c6d at 76 alpha with a 73668d line under it, and a nine-slice border inset 3).
+    The tint goes on both our bands. Ctrl+Shift+6 hides it, to compare with the flat look
+    (skin_toggle). Just over our back (which stays: it takes the mouse) and under everything
+    drawn on the card; our two flat bands start hidden, the toggle brings them back."""
+    t, u = T * 4, T * 6
+    def img(name_, top, bottom, extra, prio, inset=0, to_end=False):
+        """An image across the card from `top` to `bottom` (or the card's end), `inset` in."""
+        return (f'{T*5}<Frame type="Image" name="{name_}">\n'
+                f'{u}<Anchor side="Top"    relative="$parent" pos="Min" offset="{top + inset}"/>\n'
+                f'{u}<Anchor side="Left"   relative="$parent" pos="Min" offset="{inset}"/>\n'
+                f'{u}<Anchor side="Bottom" relative="$parent" pos="{"Max" if to_end else "Min"}" offset="{-inset if to_end else bottom}"/>\n'
+                f'{u}<Anchor side="Right"  relative="$parent" pos="Max" offset="{-inset}"/>\n'
+                f'{extra}{u}<RenderPriority val="{prio}"/>\n{u}<AcceptsMouse val="false"/>\n{T*5}</Frame>\n')
+    nine = lambda tex: f'{u}<Texture val="@UI/{tex}"/>\n{u}<TextureType val="Nineslice"/>\n'
+    tint = lambda colour: f'{u}<Color val="{colour}"/>\n{u}<Alpha val="76"/>\n'
+    return (f'{t}<Frame type="Frame" name="{SKIN}">\n{t}\t<Anchor relative="$parent"/>\n{t}\t<AcceptsMouse val="false"/>\n'
+            + img("FCJH_SkinBack", 0, 0, nine("Storm_UI_TargetInfoPanel_Background"), 205, to_end=True)
+            + img("FCJH_SkinTitle", 0, TITLE, tint("564c6d"), 211)
+            + img("FCJH_SkinTitleLine", TITLE - 1, TITLE, tint("73668d"), 212)
+            + img("FCJH_SkinName", NAME_BAND, NAME_BAND + NAME_H, tint("564c6d"), 241)
+            + img("FCJH_SkinBorder", 0, 0, nine("Storm_UI_TargetInfoPanel_BackgroundBorder"), 689, 3, to_end=True)
+            + f'{t}</Frame>\n')
+
+
+def skin_toggle():
+    """Ctrl+Shift+6: Blizzard's inspector art off and on (blizzard_skin), to compare."""
+    unit = f"{CARD}/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0"
+    flip = lambda frame, first: (f'{T*4}<Controller type="Visibility" end="Pause" frame="{unit}/{frame}">\n'
+                                 f'{T*5}<Key type="Bool" time="0" value="{first}"/>\n'
+                                 f'{T*5}<Key type="Bool" time="0.001" value="{"false" if first == "true" else "true"}"/>\n'
+                                 f'{T*4}</Controller>\n')
+    return (f'{T*2}<!-- TRIAL: Ctrl+Shift+6 hides Blizzard\'s inspector art on the card (inspect_card.blizzard_skin) -->\n'
+            f'{T*2}<Frame type="ToggleControl" name="FCJH_SkinToggle">\n'
+            f'{T*3}<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>\n'
+            f'{T*3}<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>\n'
+            f'{T*3}<Width val="1"/>\n{T*3}<Height val="1"/>\n'
+            f'{T*3}<Shortcut val="Control+Shift+6"/>\n{T*3}<Visible val="false"/>\n{T*3}<AcceptsMouse val="false"/>\n'
+            f'{T*3}<Animation name="FCJH_Hide">\n'
+            f'{T*4}<Event event="OnShown" action="DirectionForward,Play"/>\n'
+            f'{T*4}<Event event="OnHidden" action="DirectionReverse,Play"/>\n'
+            + flip(SKIN, "true") + flip("FCJH_TitleBand", "false") + flip("FCJH_NameBand", "false")
+            + f'{T*3}</Animation>\n{T*2}</Frame>\n')
+
+
 def card():
     """Our copy of Blizzard's inspect box, re-laid out tall (portrait, bars, stats)."""
     out = [f'{T*2}<!-- Round 9 (2026-09-30): the card shows exactly when Blizzard\'s own small inspector\n'
@@ -302,8 +353,10 @@ def card():
     chrome.append(fill("FCJH_Back", 0, 0, H, 0, "215,11,12,20", 200, 3, "Max")
                   .replace('<AcceptsMouse val="false"/>', '<AcceptsMouse val="true"/>'))
     # the title band carries the hero's name (unit(): FCJH_HeroName), not a title (user, 2026-10-05)
-    chrome.append(fill("FCJH_TitleBand", 0, 0, TITLE, 0, "235,24,28,48", 210, 3, "Max"))
-    chrome.append(fill("FCJH_NameBand", NAME_BAND, 0, NAME_BAND + NAME_H, 0, "235,16,18,32", 240, 3, "Max"))
+    hidden = lambda x: x.replace('<AcceptsMouse val="false"/>', '<AcceptsMouse val="false"/>\n\t\t\t\t<Visible val="false"/>', 1)
+    chrome.append(hidden(fill("FCJH_TitleBand", 0, 0, TITLE, 0, "235,24,28,48", 210, 3, "Max")))   # under the skin's tint
+    chrome.append(hidden(fill("FCJH_NameBand", NAME_BAND, 0, NAME_BAND + NAME_H, 0, "235,16,18,32", 240, 3, "Max")))
+    chrome.append(blizzard_skin())
     # no buffs or abilities heading (user, 2026-10-05): their pictures say what they are
     for text, top in (("TALENTS", TAL_LABEL), ("STATS", STATS_LABEL)):
         chrome.append(label(f"FCJH_Section{text.capitalize()}", top, M, top + 15, -M, "FCJH_InspectSection", text, 3, "Max"))
@@ -685,7 +738,7 @@ def layout(crop, head, team_colours):
                  for team, hex_ in team_colours.items()})
     HEROES[:] = cached_heroes()
     return (head + FILE_HEADER + card() + unit() + "\t\t\t</Frame>\n\t\t</Frame>\n"
-            + (talent_tips() if TALENT_TIPS else "") + command_panel()
+            + (talent_tips() if TALENT_TIPS else "") + command_panel() + skin_toggle()
             + "\t</Frame>\n\t</Frame>\n\t</Frame>\n" + tracer_charge() + "</Desc>\n")
 
 
