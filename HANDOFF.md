@@ -431,12 +431,20 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    d279ecc) - plate clicks stopped following heroes. The row stays held shown and spread.
 7. Art pass, after the functionality: Ahli's Tracer ammo bar (20 segments) and round Pulse
    Bomb meter; his hero plates' intro animation (a smooth slide and fade).
+8. **Map objectives - not looked at yet** (user, 2026-10-05). Each map's objective widgets
+   (tribute and curse timers, shrine and altar counts, punisher / immortal / golem health,
+   payloads, the "spawns in" banners, the core shields) are Blizzard's `MapMechanicPanel`
+   (base UI `mapmechanicpanel.stormlayout`) and `ObjectivePanel` (`objectivepanel.stormlayout`),
+   with per-map layouts on top. Many are pinned to the screen's right edge, where Blizzard's
+   minimap sat; ours is bottom-centre, so they may sit wrong or collide with the kill feed or
+   red plates. A per-map pass: load a replay of each map, screenshot each objective's states,
+   and decide where each one lives in our layout (and what Ahli does with them). Seen so far:
+   only "ALTAR SPAWNS IN 0:27" on Towers of Doom (2026-10-05), right side, mid-height.
 
 How the heroic tooltips work: `tools/gen.py`, the comment above `HEROIC_TIPS`.
 
 **Open:**
-- map objectives: many are pinned to the screen's right edge (Blizzard's minimap sits there);
-  a per-map pass in `MapMechanicPanel`
+- map objectives: item 8 above
 - the visual pass: the chrome backplate look to the plates, XP/core bars (a mid-height bevel,
   like the player view's core bar; the default UI's core bars: `design/ref_default_core_hp.png`)
   and the info panes (zebra rows, Heroes palette); fountain markers re-angled to the plate
