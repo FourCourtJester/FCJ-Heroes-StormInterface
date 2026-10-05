@@ -315,9 +315,13 @@ with Blizzard's command card on it.
    an activatable talent), button tooltips, the mount button (Blizzard's bookend art, squeezed
    to 52 x 52; Ahli widens it to 82), and whether the empty top row should collapse. Keys
    Blizzard draws, left to right: Z, Q, W, E, R, D (seen 2026-10-03).
-2. **Inspect card talents: tooltips** - our talent icons are pictures bound to the talent
-   row; they give none. Tooltips only come from Blizzard's frames in their own layout (see
-   §3), so use what the heroic tooltips taught: a copy of the talent row inside the card.
+2. **Inspect card talents: tooltips** - built 2026-10-05, not yet seen in game
+   (`inspect_card.talent_tips`): our own instance of Blizzard's talent panel, as the talents
+   pane uses, with each player's seven icons re-laid invisibly over the card's talent strip;
+   only the selected player's row is on the card (`tip_switch`, raised by the card's player
+   matcher), the whole panel shows only with the card. Check: hover each picked talent; no
+   tooltip from an unpicked tier or another player; nothing answers the mouse with the card
+   shut. Later: those icons carry Blizzard's quest progress bar too (item 5).
 3. **Inspect card height and stats** - the user plans to shorten the card once the wiring is
    done, and to re-order the stats so they're better organized (user, 2026-10-03).
 4. **Anchoring pass**: everything we place is anchored to the screen's LEFT edge with fixed

@@ -100,14 +100,14 @@ def command_switch():
             f'{T*4}</Controller>\n{T*3}</Animation>\n{T*2}</Frame>\n')
 
 
-def placed(top, left, w, h, indent):
+def placed(top, left, w, h, indent, rel="$parent"):
     """A frame's place by its top-left corner and an explicit size. Blizzard's command card
     and its buttons carry Width/Height in their templates (1060 x 190; 120 x 120), and those
     beat opposite-side anchors: anchored on all four sides, the buttons stayed 120 units
     (2026-10-03). Bottom and Right are tied to the frame itself, undoing the template's."""
     t = T * indent
-    return (f'{t}<Anchor side="Top"    relative="$parent" pos="Min" offset="{top}"/>\n'
-            f'{t}<Anchor side="Left"   relative="$parent" pos="Min" offset="{left}"/>\n'
+    return (f'{t}<Anchor side="Top"    relative="{rel}" pos="Min" offset="{top}"/>\n'
+            f'{t}<Anchor side="Left"   relative="{rel}" pos="Min" offset="{left}"/>\n'
             f'{t}<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>\n'
             f'{t}<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>\n'
             f'{t}<Width val="{w}"/>\n{t}<Height val="{h}"/>\n')
@@ -221,9 +221,11 @@ def card():
            f'{T*4}<State name="Show">\n'
            f'{T*5}<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/TargetInfoFrame" Visible="true"/>\n'
            f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="true"/>\n'
+           f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_TalentTips" Visible="true"/>\n'
            + command_anchors(True, 5) + f'{T*4}</State>\n'
            f'{T*4}<State name="Hide">\n'
            f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="false"/>\n'
+           f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_TalentTips" Visible="false"/>\n'
            + command_anchors(False, 5) + f'{T*4}</State>\n'
            f'{T*3}</StateGroup>\n{T*2}</Frame>\n' + command_switch() +
            f'{T*2}<!-- The card: our copy of Blizzard\'s inspect box -->\n'
@@ -364,8 +366,7 @@ def player_pack(n):
         + f'{T*6}<Texture val="{{{tree}/HeroSelectedTalentTreeFrame/TalentTreeIcon{k}/IconImage/@Texture}}"/>\n'
         f'{T*6}<RenderPriority val="668"/>  <!-- over the dark tier squares (665) -->\n'
         f'{T*6}<Alpha val="0"/>\n'
-        f'{T*6}<AcceptsMouse val="true"/>\n{T*6}<AcceptsMouseTooltip val="true"/>  <!-- EXPERIMENT: the talent pane icon\'s own tooltip -->\n'
-        f'{T*6}<Tooltip val="{{{tree}/HeroSelectedTalentTreeFrame/TalentTreeIcon{k}/@Tooltip}}"/>\n'
+        f'{T*6}<AcceptsMouse val="false"/>  <!-- the tooltip comes from talent_tips over it -->\n'
         f'{T*6}<Frame type="Image" name="FCJH_Border">\n'
         f'{T*7}<Anchor side="Top"    relative="$parent" pos="Min" offset="-5"/>\n'
         f'{T*7}<Anchor side="Left"   relative="$parent" pos="Min" offset="-5"/>\n'
@@ -402,16 +403,84 @@ ALSO = [("HeroDVaMech", "HeroDVaPilot"), ("HeroDVaPilot", "HeroDVaMech"), ("Hero
 
 
 def matcher(n):
-    """FCJH_IsPlayer{n}: shows pack n while the selected unit is the hero on plate n."""
+    """FCJH_IsPlayer{n}: shows pack n while the selected unit is the hero on plate n, and
+    raises flag FCJH_TipSel{n}, which brings player n's talent tooltips onto the card."""
     states = "".join(
         f'{T*5}<State name="{sel}{"" if sel == on else "_" + on}">'
         f'<When type="Property" Unit="{sel}"/>'
         f'<When type="Property" frame="{plate(n)}/HeroStatus" Unit="{on}"/>'
-        f'<Action type="SetProperty" frame="$this/FCJH_Player{n}" Alpha="255"/></State>\n'
+        f'<Action type="SetProperty" frame="$this/FCJH_Player{n}" Alpha="255"/>'
+        f'<Action type="SetProperty" frame="$this/FCJH_TipSel{n}" Visible="true"/></State>\n'
         for sel, on in [(u, u) for u in HEROES] + ALSO)
     return (f'{T*4}<StateGroup name="FCJH_IsPlayer{n}">\n{T*5}<DefaultState val="No"/>\n{states}'
-            f'{T*5}<State name="No"><Action type="SetProperty" frame="$this/FCJH_Player{n}" Alpha="0"/></State>\n'
+            f'{T*5}<State name="No"><Action type="SetProperty" frame="$this/FCJH_Player{n}" Alpha="0"/>'
+            f'<Action type="SetProperty" frame="$this/FCJH_TipSel{n}" Visible="false"/></State>\n'
             f'{T*4}</StateGroup>\n')
+
+
+TIPS = "$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips"
+TIP_ROW = TIPS + "/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame{n}"
+TIP_W = 6 * TAL_STEP + TAL_SIZE        # the talent strip's width: seven icons
+
+
+def tip_switch(n):
+    """Player n's tooltip row: on the card's talent strip while flag FCJH_TipSel{n} is up
+    (matcher), parked off screen otherwise - so only the selected player's icons answer the
+    mouse. The row is moved by its box, never its icons (an icon outside its box gives no
+    tooltip, 2026-10-02)."""
+    row = TIP_ROW.format(n=n)
+    at = lambda rel, top, left: "".join(
+        f'<Action type="SetAnchor" frame="{row}" side="{s}" relative="{rel}" pos="Min" offset="{v}"/>'
+        for s, v in (("Top", top), ("Left", left)))
+    return (f'{T*4}<Frame type="Frame" name="FCJH_TipSel{n}"><Anchor relative="$parent"/>'
+            f'<Visible val="false"/><AcceptsMouse val="false"/></Frame>\n'
+            f'{T*4}<StateGroup name="FCJH_TipRow{n}">\n{T*5}<DefaultState val="Away"/>\n'
+            f'{T*5}<State name="On"><When type="Property" frame="$this/FCJH_TipSel{n}" Visible="true"/>{at(CARD, TAL, M)}</State>\n'
+            f'{T*5}<State name="Away">{at("$GameUI", 9999, 9999)}</State>\n{T*4}</StateGroup>\n')
+
+
+def talent_tips():
+    """Tooltips on the card's talents. Our talent icons are pictures bound to the talent row
+    and give none; tooltips only come from Blizzard's talent icons in Blizzard's own panel
+    (the heroic-tooltip work, 2026-10-02). So: our own instance of Blizzard's talent panel,
+    as the talents pane uses (FCJH_InfoPane: a plain holder, mouse off, around a
+    CleanTalentsPanelTemplate; its tooltips work), with every player's seven icons re-laid
+    in a line the size of the card's talent strip, invisible but answering the mouse. Only
+    the selected player's row is on the card (tip_switch); the whole thing shows only while
+    the card does (the gate). Just above the card (605), under the command card (610)."""
+    # each icon placed against its player's box (five levels up), so it stays inside it
+    icon = lambda k: (f'{T*8}<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon{k}">\n'
+                      + placed(0, (k - 1) * TAL_STEP, TAL_SIZE, TAL_SIZE, 9, "$parent/$parent/$parent/$parent/$parent")
+                      + f'{T*9}<Alpha val="0"/>\n{T*8}</Frame>\n')
+    rows = "".join(
+        f'{T*5}<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame{n}">\n'
+        + placed(9999, 9999, TIP_W, TAL_SIZE, 6, "$GameUI")   # parked until selected (tip_switch)
+        + f'{T*6}<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame"><Alpha val="0"/>'
+        f'<AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>\n'
+        f'{T*6}<Frame type="Frame" name="TalentsContainerFrame">\n{T*7}<Batch val="false"/>\n'
+        f'{T*7}<Frame type="PlayerHeroSelectedTalentTreeFrame" name="SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame">\n'
+        + "".join(icon(k) for k in range(1, 8))
+        + f'{T*7}</Frame>\n{T*6}</Frame>\n{T*5}</Frame>\n'
+        for n in range(10))
+    return (f'{T*2}<!-- Tooltips on the card\'s talents (inspect_card.talent_tips) -->\n'
+            f'{T*2}<Frame type="Frame" name="FCJH_TalentTips">\n'
+            f'{T*3}<Anchor relative="$parent"/>\n{T*3}<Visible val="false"/>\n{T*3}<AcceptsMouse val="false"/>\n'
+            f'{T*3}<RenderPriority val="605"/>\n'
+            f'{T*3}<Frame type="HeroTalentsPanel" name="FCJH_TalentTipPanel" template="TalentsOverviewPanel/CleanTalentsPanelTemplate">\n'
+            f'{T*4}<Anchor side="Top"    relative="{CARD}" pos="Min" offset="0"/>\n'
+            f'{T*4}<Anchor side="Left"   relative="{CARD}" pos="Min" offset="0"/>\n'
+            f'{T*4}<Anchor side="Bottom" relative="{CARD}" pos="Max" offset="0"/>\n'
+            f'{T*4}<Anchor side="Right"  relative="{CARD}" pos="Max" offset="0"/>\n'
+            f'{T*4}<Visible val="true"/>\n'
+            + "".join(f'{T*4}<Frame type="{t}" name="{nm}"><Alpha val="0"/>{"<AcceptsMouse val=\"false\"/>" if t == "Button" else ""}</Frame>\n'
+                      for t, nm in (("Frame", "TopHexContainer"), ("Image", "HexImage"), ("Image", "HexOverlayImage"),
+                                    ("Frame", "BorderContainer"), ("Button", "CloseButton"), ("Button", "ClearSortButton"),
+                                    ("Frame", "BlueTeamStats"), ("Frame", "RedTeamStats")))
+            # the clean panel's container brings no player rows; the container template does
+            # (as the talents pane has it)
+            + f'{T*4}<Frame type="Frame" name="HeroTalentsPanelContainer" template="TalentsOverviewPanel/HeroTalentsPanelContainerTemplate">\n'
+            f'{T*5}<Anchor relative="$parent"/>\n'
+            + rows + f'{T*4}</Frame>\n{T*3}</Frame>\n{T*2}</Frame>\n')
 
 
 def unit():
@@ -509,7 +578,7 @@ def unit():
 {T*4}<!-- which player is selected: player N when the selected unit's hero is the hero on
 {T*4}     plate N (unit checks, one state per hero, heroes from the game data). Mirror matches
 {T*4}     (the same hero on both teams) would show both packs - not handled yet. -->
-{"".join(matcher(n) for n in range(10))}{T*3}</Frame>
+{"".join(matcher(n) + tip_switch(n) for n in range(10))}{T*3}</Frame>
 {T*2}</Frame>
 '''
 
@@ -534,7 +603,7 @@ def layout(crop, head):
     CROP = crop
     HEROES[:] = cached_heroes()
     return (head + FILE_HEADER + card() + unit() + "\t\t\t</Frame>\n\t\t</Frame>\n"
-            + command_panel() + "\t</Frame>\n\t</Frame>\n\t</Frame>\n</Desc>\n")
+            + talent_tips() + command_panel() + "\t</Frame>\n\t</Frame>\n\t</Frame>\n</Desc>\n")
 
 
 @lru_cache(maxsize=None)
