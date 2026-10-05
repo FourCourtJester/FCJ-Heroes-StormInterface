@@ -462,15 +462,13 @@ def talent_tips():
     in a line the size of the card's talent strip, invisible but answering the mouse. Only
     the selected player's row is on the card (tip_switch); the whole thing shows only while
     the card does (the gate). Just above the card (605), under the command card (610)."""
-    # the icons' group pinned to its player's box (four levels up), the icons placed inside it.
-    # Placing the icons straight against the box (2026-10-05) worked for red rows; blue rows'
-    # icons stayed about 133 units in - Blizzard's blue group sits right of the player's name
-    icon = lambda k: (f'{T*8}<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon{k}">\n'
-                      + placed(0, (k - 1) * TAL_STEP, TAL_SIZE, TAL_SIZE, 9)
-                      + f'{T*9}<Alpha val="0"/>\n{T*8}</Frame>\n')
-    group = "".join(f'{T*8}<Anchor side="{s}" relative="$parent/$parent/$parent/$parent" pos="{p}" offset="0"/>\n'
-                    for s, p in (("Top", "Min"), ("Left", "Min"), ("Bottom", "Max"), ("Right", "Max")))
-    group += f'{T*8}<Width val="0"/>\n{T*8}<Height val="0"/>\n'
+    # each icon placed against its own player's box, named by its full path. Two tries with
+    # relative paths ($parent x5 from the icon; the icons' group pinned $parent x4) put red
+    # rows right and left blue rows' icons ~133 units in, where Blizzard's blue group sits
+    # (2026-10-05)
+    icon = lambda k, n: (f'{T*8}<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon{k}">\n'
+                         + placed(0, (k - 1) * TAL_STEP, TAL_SIZE, TAL_SIZE, 9, TIP_ROW.format(n=n))
+                         + f'{T*9}<Alpha val="0"/>\n{T*8}</Frame>\n')
     rows = "".join(
         f'{T*5}<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame{n}">\n'
         + placed(9999, 9999, TIP_W, TAL_SIZE, 6, "$GameUI")   # parked until selected (tip_switch)
@@ -478,7 +476,7 @@ def talent_tips():
         f'<AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>\n'
         f'{T*6}<Frame type="Frame" name="TalentsContainerFrame">\n{T*7}<Batch val="false"/>\n'
         f'{T*7}<Frame type="PlayerHeroSelectedTalentTreeFrame" name="SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame">\n'
-        + group + "".join(icon(k) for k in range(1, 8))
+        + "".join(icon(k, n) for k in range(1, 8))
         + f'{T*7}</Frame>\n{T*6}</Frame>\n{T*5}</Frame>\n'
         for n in range(10))
     return (f'{T*2}<!-- Tooltips on the card\'s talents (inspect_card.talent_tips) -->\n'
@@ -625,7 +623,27 @@ def layout(crop, head):
     CROP = crop
     HEROES[:] = cached_heroes()
     return (head + FILE_HEADER + card() + unit() + "\t\t\t</Frame>\n\t\t</Frame>\n"
-            + talent_tips() + command_panel() + "\t</Frame>\n\t</Frame>\n\t</Frame>\n</Desc>\n")
+            + talent_tips() + command_panel() + "\t</Frame>\n\t</Frame>\n\t</Frame>\n" + tracer_charge() + "</Desc>\n")
+
+
+def tracer_charge():
+    """Tracer's Pulse Bomb on her R button: Blizzard draws it from her own hero layout (a
+    68 x 76 meter with a "0%" label) into the button's hero-specific panel, so sizing our
+    button left it oversized (2026-10-05). Overridden in her file at our button's size, as
+    Ahli does at his (56): the meter scaled from his 34 x 38, the percent label off (the fill
+    shows the charge)."""
+    k = CMD_SIZE / 56
+    w, h, ping = round(34 * k), round(38 * k), round(40 * k)
+    return (f'\t<!-- Tracer\'s Pulse Bomb meter on the command card, at our button size (inspect_card.tracer_charge) -->\n'
+            f'\t<Frame type="SelectionUnitStatusPanel" name="TracerPulseBombChargeButtonOverrideFrame" file="Tracer">\n'
+            f'\t\t<Width val="{CMD_SIZE}"/>\n\t\t<Height val="{CMD_SIZE}"/>\n'
+            f'\t\t<Frame type="UnitStatusFrame" name="UnitStatusFrame0">\n'
+            f'\t\t\t<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">\n'
+            f'\t\t\t\t<Width val="{w}"/>\n\t\t\t\t<Height val="{h}"/>\n'
+            f'\t\t\t\t<Frame type="ProgressBar" name="ChargeFillProgress"><Width val="{w}"/><Height val="{h}"/></Frame>\n'
+            f'\t\t\t\t<Frame type="Label" name="ChargePercentLabel"><Visible val="false"/><Text val=""/></Frame>\n'
+            f'\t\t\t\t<Frame type="Image" name="PulseBombReadyPingImage"><Width val="{ping}"/><Height val="{ping}"/><Unclipped val="true"/></Frame>\n'
+            f'\t\t\t</Frame>\n\t\t</Frame>\n\t</Frame>\n')
 
 
 @lru_cache(maxsize=None)

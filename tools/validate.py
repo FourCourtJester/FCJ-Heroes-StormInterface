@@ -544,9 +544,14 @@ def _find_ci(root, rel):
 
 def load_base(cat):
     count = 0
-    for mod in BASE_MODS:
+    # the per-hero mods too (heromods/<hero>.stormmod): their layout files can be overridden
+    # by name (file="Tracer" - Tracer's Pulse Bomb meter, inspect_card.tracer_charge)
+    heroes = sorted(p.relative_to(MODS).as_posix() for p in (MODS / "heromods").glob("*.stormmod"))
+    for mod in BASE_MODS + heroes:
         data = MODS / mod / "base.stormdata"
         index = data / "ui" / "layout" / "descindex.stormlayout"
+        if mod in heroes and not index.is_file():
+            continue   # a hero mod with no UI of its own
         root, err = parse_xml(index, str(index), ours=False)
         if root is None:
             raise SystemExit(f"cannot read base DescIndex {index}: {err}")
