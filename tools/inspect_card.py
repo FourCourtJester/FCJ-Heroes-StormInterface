@@ -477,10 +477,14 @@ def talent_tips():
     # relative paths ($parent x5 from the icon; the icons' group pinned $parent x4) put red
     # rows right and left blue rows' icons ~133 units in, where Blizzard's blue group sits
     # (2026-10-05)
-    icon = lambda k, n: (f'{T*8}<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon{k}">\n'
-                         + placed(drift(n)[0], drift(n)[1] + (k - 1) * TAL_STEP, TAL_SIZE, TAL_SIZE, 9,
+    icon = lambda k, n: (f'{T*10}<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon{k}">\n'
+                         + placed(drift(n)[0], drift(n)[1] + (k - 1) * TAL_STEP, TAL_SIZE, TAL_SIZE, 11,
                                   TIP_ROW.format(n=n))
-                         + f'{T*9}<Alpha val="0"/>\n{T*8}</Frame>\n')
+                         + f'{T*11}<Alpha val="0"/>\n{T*10}</Frame>\n')
+    # the strip reached through each frame in turn, as the heroic tooltips' copies do (their
+    # icon sizes hold on both teams). Named in one go ("SelectionUnitStatusPanel/.../
+    # HeroSelectedTalentTreeFrame"), our icons held on red rows only (2026-10-05)
+    nest = ("SelectionUnitStatusPanel", "SelectionUnitStatusPanel"), ("UnitStatusFrame", "UnitStatusFrame0")
     rows = "".join(
         f'{T*5}<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame{n}">\n'
         # parked until selected (tip_switch)
@@ -488,9 +492,10 @@ def talent_tips():
         + f'{T*6}<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame"><Alpha val="0"/>'
         f'<AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>\n'
         f'{T*6}<Frame type="Frame" name="TalentsContainerFrame">\n{T*7}<Batch val="false"/>\n'
-        f'{T*7}<Frame type="PlayerHeroSelectedTalentTreeFrame" name="SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame">\n'
+        + "".join(f'{T*(7 + i)}<Frame type="{ty}" name="{nm}">\n' for i, (ty, nm) in enumerate(nest))
+        + f'{T*9}<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">\n'
         + "".join(icon(k, n) for k in range(1, 8))
-        + f'{T*7}</Frame>\n{T*6}</Frame>\n{T*5}</Frame>\n'
+        + f'{T*9}</Frame>\n{T*8}</Frame>\n{T*7}</Frame>\n{T*6}</Frame>\n{T*5}</Frame>\n'
         for n in range(10))
     return (f'{T*2}<!-- Tooltips on the card\'s talents (inspect_card.talent_tips) -->\n'
             f'{T*2}<Frame type="Frame" name="FCJH_TalentTips">\n'
