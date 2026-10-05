@@ -361,30 +361,24 @@ the plates' heroic-tooltip copies are built. Assembled from parts (a CleanTalent
 whose `HeroTalentsPanelContainer` we re-templated in our own declaration), the rows kept
 Blizzard's icon places and sizes (`inspect_card.talent_tips`).
 
-1. **Inspect card: re-order and restyle - START HERE.** BUILT 2026-10-05 (e6a16bf, 0efa806,
-   4772f46), not yet seen in game: everything below except the art pass and the final space
-   trim, plus the talent actives' art fix (item 2), plus a TRIAL of the default inspector's
-   own art as the card's background (`blizzard_skin`: nine-slice background and border, the
-   purple top-band tint on our bands; Ctrl+Shift+6 swaps back to the flat look). Most of
-   Blizzard's panel textures aren't among `references/CASCView/Assets/textures`, so they can
-   only be judged in game. The user's list (2026-10-05):
-   - **header:** drop the "INSPECT" title and put the hero name there, if possible; the player
-     name bigger; the level in the same font size as the player name;
-   - **frame:** a border in the selected hero's team colour; padding normalized all round;
-     the same background pass as the other panels (below);
-   - **buffs:** drop the "BUFFS · DEBUFFS" label; the fountain buff joins the buff row as its
-     first buff (it's a separate piece today);
-   - **abilities:** drop the "ABILITIES" label; talent-granted abilities slot into the existing
-     layout's top row (item 2 has their art problem);
-   - **stats:** three columns, related values sharing a row -
-     row 1: attack damage / attack speed / attack range;
-     row 2: spell power / movement speed;
-     row 3: armor / spell armor;
-   - **after the art pass:** remove the excess space, and line the card up with the screen's
-     left edge.
-   The talent tooltips follow the talent strip (`TAL` in `inspect_card.py`), so they move with
-   it. Still to check on the tooltips: hover each picked talent; no tooltip from an unpicked
-   tier or another player; nothing answers the mouse with the card shut.
+1. **Inspect card: DONE bar a last look (2026-10-05, evening QA rounds; 3d11ae9, 7332a10,
+   97fdd7a and the 90% build after).** Seen and approved in game: hero name centred in the
+   title band, player name and level (16, set 2 low in their band), team-coloured edge,
+   Blizzard's inspector art as the background (now permanent, at 90% so the game shows
+   through; its border under the contents - over them it muted the bars), one padding (`PAD`
+   10) everywhere measured inside the edge, the card cut to fit (583 units, 525 px; gen
+   refuses a layout.toml size that disagrees), the fountain as the first buff with its
+   countdown (the sensor's `CooldownLabel`, as Blizzard's console does) and Blizzard's
+   tooltip while it cools down, abilities spread across the card with the talent actives
+   nested over the gaps (Q/W first; rows 0.87 of the button spacing apart, a honeycomb -
+   "looks HOT"), talents spread across with visible empty-tier boxes (outlines pixel-exact:
+   `inspect_card.line`), stats in three related rows.
+   **Still to see:** the thin screen-wide lines and stray health/resource/stat tooltips -
+   Blizzard's own inspect box, held on screen by its drag constraint however it was parked
+   (in screenshots since 10-02). Its contents, and the unused pieces of our card's copy, are
+   now hidden every frame (`FCJH_Hidden`); check the lines are gone, with the card open and
+   shut. Also: the fountain art is a bit stretched (Blizzard's; left as is); line the card up
+   with the screen's left edge (the user's last item for it).
 
    **All panels** (the info panes and the card, user 2026-10-05):
    - the flat black needs punching up: look at the default UI's panel backgrounds and title

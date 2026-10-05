@@ -68,6 +68,25 @@
 					<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/ConsoleUIContainer/TalentPauseNotificationContainer">
 						<Key type="Bool" time="0" value="false"/>
 					</Controller>
+					<!-- Blizzard's inspect box's contents (the box itself is left to the game - our card
+					     follows it, below), and the same unused pieces in our card's copy of it: parked,
+					     they still drew thin screen-wide lines (their bars' ticks), seen through the
+					     card once it went see-through (user, 2026-10-05) -->
+					<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/FullscreenUpperContainer/TargetInfoFrame/TargetInfoPanel">
+						<Key type="Bool" time="0" value="false"/>
+					</Controller>
+					<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/HealthAndManaUnitStatusFrame">
+						<Key type="Bool" time="0" value="false"/>
+					</Controller>
+					<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/TargetPortraitFrame">
+						<Key type="Bool" time="0" value="false"/>
+					</Controller>
+					<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/AdditionalInfoIcon">
+						<Key type="Bool" time="0" value="false"/>
+					</Controller>
+					<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/TargetHeroUnitFrame">
+						<Key type="Bool" time="0" value="false"/>
+					</Controller>
 				</Animation>
 			</Frame>
 		</Frame>

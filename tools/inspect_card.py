@@ -327,9 +327,9 @@ def blizzard_skin():
                 f'{extra}{u}<RenderPriority val="{prio}"/>\n{u}<AcceptsMouse val="false"/>\n{T*4}</Frame>\n')
     nine = lambda tex: f'{u}<Texture val="@UI/{tex}"/>\n{u}<TextureType val="Nineslice"/>\n'
     tint = lambda colour: f'{u}<Color val="{colour}"/>\n{u}<Alpha val="76"/>\n'
-    # the background at 80%, the game showing through a little as through the replay panel
-    # (user, 2026-10-05); nothing under it (our back is clear, there only for the mouse)
-    return (img("FCJH_SkinBack", 0, 0, nine("Storm_UI_TargetInfoPanel_Background") + f'{u}<Alpha val="204"/>\n',
+    # the background at 90%, the game showing through a little as through the replay panel
+    # (user, 2026-10-05: 80% was a touch much); nothing under it (our back is faded, mouse only)
+    return (img("FCJH_SkinBack", 0, 0, nine("Storm_UI_TargetInfoPanel_Background") + f'{u}<Alpha val="230"/>\n',
                 205, to_end=True)
             + img("FCJH_SkinBorder", 0, 0, nine("Storm_UI_TargetInfoPanel_BackgroundBorder"), 207, 3, to_end=True)
             + img("FCJH_SkinTitle", 0, TITLE, tint("564c6d"), 211, 3)
