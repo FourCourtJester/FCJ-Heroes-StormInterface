@@ -176,8 +176,22 @@ def command_panel():
     inset = "".join(f'{T*6}<Anchor side="{s}" relative="$parent" pos="{p}" offset="{v}"/>\n'
                     for s, p, v in (("Top", "Min", CMD_INSET), ("Left", "Min", CMD_INSET),
                                     ("Bottom", "Max", -CMD_INSET), ("Right", "Max", -CMD_INSET)))
-    parts = (f'{T*5}<Frame type="Image" name="NormalImage">\n' + inset
-             + f'{T*6}<Unclipped val="true"/>\n{T*5}</Frame>\n'
+    # The talent actives (dynamic buttons, 30-35) are Blizzard's DynamicButtonTemplate, whose
+    # icon is 67 x 67 by its own Width/Height - that beat our inset (rule: a template's size
+    # beats opposite-side anchors) and the icon, and the cooldown sweep hung on it, drew far
+    # past the button (Sonya, 2026-10-05). So they get the size outright, the ability mask
+    # rather than the inventory one (as Ahli's do), and the sweep laid over the icon as on the
+    # other buttons.
+    icon = CMD_SIZE - 2 * CMD_INSET
+    dynamic = (f'{T*6}<Width val="{icon}"/>\n{T*6}<Height val="{icon}"/>\n'
+               f'{T*6}<ImageMaskTexture val="@UI/HUD_BTN_BG_Ability_AlphaMask"/>\n')
+    sweep = (f'{T*5}<Frame type="ProgressBar" name="CooldownProgress">\n'
+             + "".join(f'{T*6}<Anchor side="{s}" relative="$parent/NormalImage" pos="{p}" offset="0"/>\n'
+                       for s, p in (("Top", "Min"), ("Left", "Min"), ("Bottom", "Max"), ("Right", "Max")))
+             + f'{T*5}</Frame>\n')
+    parts = lambda dyn: (
+        f'{T*5}<Frame type="Image" name="NormalImage">\n' + inset + (dynamic if dyn else "")
+             + f'{T*6}<Unclipped val="true"/>\n{T*5}</Frame>\n' + (sweep if dyn else "")
              + sized("GameButtonDefaultBorder", "Image", CMD_BORDER, 5)
              + f'{T*5}<Frame type="Frame" name="ActiveEffect">\n'
              + sized("ActiveEffectImage", "Image", CMD_GLOW, 6) + sized("ActiveEffect2Image", "Image", CMD_GLOW, 6)
@@ -209,7 +223,7 @@ def command_panel():
                                + f'{T*4}</Frame>\n')
                 continue
             buttons.append(f'{T*4}<Frame type="CommandButton" name="CommandButton{k}">\n'
-                           + placed(y, left, CMD_SIZE, CMD_SIZE, 5) + parts
+                           + placed(y, left, CMD_SIZE, CMD_SIZE, 5) + parts(k.startswith("3"))
                            # the ability buttons' dark hexagon behind the icon (only their
                            # template has one: not the mount's bookend nor the dynamic buttons)
                            + (f'{T*5}<Frame type="Image" name="IconBackground">\n' + inset + f'{T*5}</Frame>\n'
