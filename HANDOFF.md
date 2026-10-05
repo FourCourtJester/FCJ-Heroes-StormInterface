@@ -440,6 +440,16 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    red plates. A per-map pass: load a replay of each map, screenshot each objective's states,
    and decide where each one lives in our layout (and what Ahli does with them). Seen so far:
    only "ALTAR SPAWNS IN 0:27" on Towers of Doom (2026-10-05), right side, mid-height.
+   **The user's direction (2026-10-05):**
+   - **centre them around the minimap** (bottom-centre), not on the right edge;
+   - **even better: a team's objective action spawns on that team's side.** E.g. "cannons
+     are firing" (Blackheart's Bay / Towers of Doom style) shows on the side of the team
+     firing them - blue's alert left of the minimap, red's right. Neutral alerts (spawn
+     timers, "altar spawns in") stay centred.
+   To find out: whether Blizzard's widgets know which team an event belongs to (a team or
+   player property, separate blue/red frames, or per-team state groups in the per-map
+   layouts) - if they do, anchor each team's frames to its side; if not, look for a sensor
+   (the team's score, a team-owned unit or behaviour) to switch the anchor on.
 
 How the heroic tooltips work: `tools/gen.py`, the comment above `HEROIC_TIPS`.
 
