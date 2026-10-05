@@ -361,19 +361,38 @@ the plates' heroic-tooltip copies are built. Assembled from parts (a CleanTalent
 whose `HeroTalentsPanelContainer` we re-templated in our own declaration), the rows kept
 Blizzard's icon places and sizes (`inspect_card.talent_tips`).
 
-1. **Inspect card: re-order and height - START HERE.** Re-order the card's contents (the stats
-   especially) so they're better organized, then shorten the card (user, 2026-10-03; agreed
-   2026-10-05 as the next session's first job). The talent tooltips follow the talent strip
-   (`TAL` in `inspect_card.py`), so they move with it. Still to check on the tooltips: hover
-   each picked talent; no tooltip from an unpicked tier or another player; nothing answers the
-   mouse with the card shut.
+1. **Inspect card: re-order and restyle - START HERE.** The user's list (2026-10-05):
+   - **header:** drop the "INSPECT" title and put the hero name there, if possible; the player
+     name bigger; the level in the same font size as the player name;
+   - **frame:** a border in the selected hero's team colour; padding normalized all round;
+     the same background pass as the other panels (below);
+   - **buffs:** drop the "BUFFS · DEBUFFS" label; the fountain buff joins the buff row as its
+     first buff (it's a separate piece today);
+   - **abilities:** drop the "ABILITIES" label; talent-granted abilities slot into the existing
+     layout's top row (item 2 has their art problem);
+   - **stats:** three columns, related values sharing a row -
+     row 1: attack damage / attack speed / attack range;
+     row 2: spell power / movement speed;
+     row 3: armor / spell armor;
+   - **after the art pass:** remove the excess space, and line the card up with the screen's
+     left edge.
+   The talent tooltips follow the talent strip (`TAL` in `inspect_card.py`), so they move with
+   it. Still to check on the tooltips: hover each picked talent; no tooltip from an unpicked
+   tier or another player; nothing answers the mouse with the card shut.
+
+   **All panels** (the info panes and the card, user 2026-10-05):
+   - the flat black needs punching up: look at the default UI's panel backgrounds and title
+     bars and re-use Blizzard's assets;
+   - the number panels (damage and the other stats) need a colour pass for both teams,
+     combined with that background work, for readability.
 2. **Command card polish** - does each button read cleanly; **talent-granted abilities** (the
    top row, dynamic buttons 30-35): seen 2026-10-05 on Sonya (screenshot `Screenshot2026-10-05
    11_16_54.jpg`), they sit in place but draw oversized art behind them - an orange flame frame
    round the first (a cooldown count, 17) and a large faded portrait behind the second. The
    same kind of leftover 120-unit art the main buttons had before each piece was resized (§3,
    "The inspect card's abilities"): find which parts of a dynamic button draw it (its overlay
-   panel, a talent-active glow or backing) and size them to the button. The mount button
+   panel, a talent-active glow or backing) and size them to the button; they should then sit
+   in the top row like the other buttons (item 1). The mount button
    (Blizzard's bookend art; Ahli widens it to 82);
    whether the empty top row should collapse. Keys Blizzard draws, left to right: Z, Q, W, E,
    R, D (seen 2026-10-03).
