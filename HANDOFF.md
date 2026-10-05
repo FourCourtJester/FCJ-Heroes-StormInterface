@@ -462,6 +462,11 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    (left column), and the rest of what we place respect that same margin - one number in
    layout.toml that they're all laid out from, rather than each element's own offsets. Goes
    with the anchoring pass (item 4) and the card's last item (line it up with the left edge).
+   **Inspect placement** (user, 2026-10-05): the card's BOTTOM-LEFT corner sits on the blue
+   plates' TOP-LEFT corner, that padding above it - the card grows up from the plates, its
+   left edge in line with theirs. Laid out from the plates' rect and the padding (not its own
+   `[element.inspect]` x/y), so it follows any plate resize; this settles the card's
+   "line it up with the left edge" item.
 
 How the heroic tooltips work: `tools/gen.py`, the comment above `HEROIC_TIPS`.
 
