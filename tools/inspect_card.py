@@ -23,17 +23,21 @@ from pathlib import Path
 T = "\t"
 
 # Pane-local layout, in layout units (the card is 333 x 833: 300 x 750 px)
-W = 333
-TITLE = 29
-NAME_BAND = 154                    # the name/level band, under the portrait
+W, H = 333, 833
+# Top to bottom, every section GAP below the one before (user, 2026-10-05: normalized padding)
+GAP = 10
+TITLE = 30                         # the title band: the hero's name, and the X
+NAME_BAND, NAME_H = 155, 30        # the player's name and the level, under the portrait
 PORTRAIT = (TITLE, NAME_BAND)      # top, bottom: stops at the band (round 3 ran it under the
-                                   # band and the art hid the level and fountain)
-HP = (207, 231)
-MANA = (233, 249)
-FOUNTAIN = (NAME_BAND + 10, NAME_BAND + 32, 226, 260)   # top, bottom, left, right: left of the level
-# Buffs then debuffs as one block: the debuff bar follows the buff bar on the same row (as in
-# Blizzard's hero console); once there are 4+ buffs it drops to a second row.
-BUFFS_LABEL, BUFFS, BUFF_ROW = 258, 274, 42
+                                   # band and the art hid the level)
+HP = (NAME_BAND + NAME_H + GAP, NAME_BAND + NAME_H + GAP + 24)
+MANA = (HP[1] + 2, HP[1] + 18)
+# Buffs then debuffs as one block, the fountain first (as a buff of its own, in Blizzard's buff
+# art): the debuff bar follows the buff bar on the same row (as in Blizzard's hero console);
+# once there are 4+ buffs it drops to a second row. Blizzard's buff slot is 58 x 34, each
+# overlapping the last by 19 (BehaviorIconTemplate, #BuffOffset).
+BUFF_W, BUFF_H, BUFF_OVERLAP = 58, 34, 19
+BUFFS, BUFF_ROW = MANA[1] + GAP, 42
 TAL_SIZE, TAL_STEP = 36, 43        # the talent strip's icons
 # Abilities are Blizzard's command buttons (command_panel), at Ahli's sizes: a 52-unit button
 # with its icon 5 in from each side, its frame art drawn at 68 and its glows at 60, each button
@@ -44,10 +48,21 @@ CMD_CHARGE, CMD_CHARGE_RING = 20, 30   # the charge badge and its ring (Ahli's 2
 # its edges; squeezed to 52 x 52 with our 68-unit frame art it read far too big (2026-10-05).
 # It keeps its own proportions, centred in its row, and Blizzard's inner layout.
 MOUNT_W, MOUNT_H = 56, 36
-ABIL_LABEL, ABIL_ROWS = 366, (390, 442)
-TAL_LABEL, TAL = 505, 521
-STATS_LABEL, STATS, STAT_ROW = 585, 603, 24
+# the buttons' frame art reaches (CMD_BORDER - CMD_SIZE) / 2 past them; the gap is to the art
+ART = (CMD_BORDER - CMD_SIZE) // 2
+ABIL_TOP = BUFFS + BUFF_ROW + BUFF_H + GAP + ART      # under the buffs' second row
+ABIL_ROWS = (ABIL_TOP, ABIL_TOP + CMD_SIZE)
+TAL_LABEL = ABIL_ROWS[1] + CMD_SIZE + ART + GAP
+TAL = TAL_LABEL + 16
+# Stats: three columns, related values sharing a row (user, 2026-10-05) - (frame, column, row)
+STATS_GRID = (("AttackDamageFrame", 0, 0), ("AttackSpeedFrame", 1, 0), ("AttackRangeFrame", 2, 0),
+              ("AbilityPowerFrame", 0, 1), ("MoveSpeedFrame", 1, 1),
+              ("PhysicalArmorFrame", 0, 2), ("AbilityArmorFrame", 1, 2))
+STATS_LABEL = TAL + TAL_SIZE + 16 + GAP    # under the tier numbers (16 tall)
+STATS, STAT_ROW, STAT_COL = STATS_LABEL + 18, 24, 102
 M = 14                              # side margin
+BORDER = 2                          # the team-coloured edge
+TEAM = {}                           # the border's colours, "a,r,g,b" by team: set by layout()
 
 def rect(top, left, bottom, right, rel="$parent", i=4, right_pos="Min"):
     t = T * i
@@ -270,22 +285,21 @@ def card():
     chrome = []
     # Round 9: the back takes the mouse, so a click inside the card no longer falls through to
     # the map (which deselects the unit and closes the card, 2026-09-30)
-    chrome.append(fill("FCJH_Back", 0, 0, 833, 0, "215,11,12,20", 200, 3, "Max")
+    chrome.append(fill("FCJH_Back", 0, 0, H, 0, "215,11,12,20", 200, 3, "Max")
                   .replace('<AcceptsMouse val="false"/>', '<AcceptsMouse val="true"/>'))
+    # the title band carries the hero's name (unit(): FCJH_HeroName), not a title (user, 2026-10-05)
     chrome.append(fill("FCJH_TitleBand", 0, 0, TITLE, 0, "235,24,28,48", 210, 3, "Max"))
-    chrome.append(label("FCJH_Title", 0, 0, TITLE, 0, "ObsBar_MatchTimer", "INSPECT", 3, "Max"))
-    chrome.append(fill("FCJH_NameBand", NAME_BAND, 0, 196, 0, "235,16,18,32", 240, 3, "Max"))
-    for text, top in (("BUFFS  ·  DEBUFFS", BUFFS_LABEL), ("ABILITIES", ABIL_LABEL),
-                      ("TALENTS", TAL_LABEL), ("STATS", STATS_LABEL)):
-        chrome.append(label(f"FCJH_Section{text.split()[0].capitalize()}", top, M, top + 15, -M, "FCJH_InspectSection", text, 3, "Max"))
-    stats = [("AttackDamageFrame", 0, 0), ("MoveSpeedFrame", 1, 0), ("AttackSpeedFrame", 0, 1), ("PhysicalArmorFrame", 1, 1),
-             ("AttackRangeFrame", 0, 2), ("AbilityArmorFrame", 1, 2), ("AbilityPowerFrame", 0, 3)]
+    chrome.append(fill("FCJH_NameBand", NAME_BAND, 0, NAME_BAND + NAME_H, 0, "235,16,18,32", 240, 3, "Max"))
+    # no buffs or abilities heading (user, 2026-10-05): their pictures say what they are
+    for text, top in (("TALENTS", TAL_LABEL), ("STATS", STATS_LABEL)):
+        chrome.append(label(f"FCJH_Section{text.capitalize()}", top, M, top + 15, -M, "FCJH_InspectSection", text, 3, "Max"))
     stat_frames = "".join(
         f'{T*6}<Frame type="TargetInfoStatFrame" name="{n}">\n'
         f'{T*7}<Anchor side="Top" relative="$parent" pos="Min" offset="{r * STAT_ROW}"/>\n'
-        f'{T*7}<Anchor side="Left" relative="$parent" pos="Min" offset="{c * 155}"/>\n'
-        f'{T*7}<Anchor side="Right" relative="$this" pos="Min" offset="0"/>\n{T*7}<Width val="150"/>\n{T*6}</Frame>\n'
-        for n, c, r in stats)
+        f'{T*7}<Anchor side="Left" relative="$parent" pos="Min" offset="{c * STAT_COL}"/>\n'
+        f'{T*7}<Anchor side="Right" relative="$this" pos="Min" offset="0"/>\n{T*7}<Width val="{STAT_COL - 4}"/>\n{T*6}</Frame>\n'
+        for n, c, r in STATS_GRID)
+    stat_rows = 1 + max(r for _, _, r in STATS_GRID)
     energy = "".join(f'{T*4}<Frame type="UnitStatusEnergyBar" name="{n}"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/></Frame>\n'
                      for n in ("NormalEnergyBar", "OrangeEnergyBar", "PinkEnergyBar", "YellowEnergyBar", "DeathwingEnergyBar"))
     # Round 7: everything drawn follows the SELECTION. Blizzard's inspect box (TargetInfoFrame)
@@ -306,7 +320,7 @@ def card():
 {T*4}</Frame>
 {energy}{T*4}<!-- stats: Blizzard's stat rows, from the inspect box's template -->
 {T*4}<Frame type="Frame" name="FCJH_Stats" template="TargetInfoPanel/TargetInfoPanelTemplate/HealthAndManaUnitStatusFrame/TargetStatsPanel">
-{rect(STATS, M, STATS + 4 * STAT_ROW, -M, i=5, right_pos="Max")}{stat_frames}{T*5}<!-- the stat tooltips open off the card's right edge, level with the stats (Blizzard's
+{rect(STATS, M, STATS + stat_rows * STAT_ROW, -M, i=5, right_pos="Max")}{stat_frames}{T*5}<!-- the stat tooltips open off the card's right edge, level with the stats (Blizzard's
 {T*5}     hung them under the box - the bottom of our tall card, round 7) -->
 {T*5}<Frame type="Frame" name="TooltipAnchorFrame">
 {T*6}<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
@@ -400,14 +414,20 @@ def player_pack(n):
                 + f'{T*6}<Texture val="{{{plate(n)}/HeroPortraitImage/@Texture}}"/>\n'
                 f'{T*6}<TextureCoords top="{CROP[0]}" left="{CROP[1]}" bottom="{CROP[2]}" right="{CROP[3]}"/>\n'
                 f'{T*6}<RenderPriority val="668"/>\n{T*6}<AcceptsMouse val="false"/>\n{T*5}</Frame>\n')
-    name = label("FCJH_PlayerName", NAME_BAND + 24, M, NAME_BAND + 40, 220, "FCJH_InspectSub",
+    name = label("FCJH_PlayerName", NAME_BAND, M, NAME_BAND + NAME_H, W - M - 70, "FCJH_InspectSub",
                  f"{{{row}/PlayerNameFrame/PlayerNameLabel/@Text}}", 5)
+    # the card's edge in the player's team colour (user, 2026-10-05)
+    edge = TEAM[colour]
+    border = (fill("FCJH_EdgeTop", 0, 0, BORDER, W, edge, 690, 5)
+              + fill("FCJH_EdgeBottom", H - BORDER, 0, H, W, edge, 690, 5)
+              + fill("FCJH_EdgeLeft", 0, 0, H, BORDER, edge, 690, 5)
+              + fill("FCJH_EdgeRight", 0, W - BORDER, H, W, edge, 690, 5))
     return (f'{T*4}<Frame type="Frame" name="FCJH_Player{n}">\n{T*5}<Anchor relative="$parent"/>\n'
             f'{T*5}<Alpha val="0"/>\n{T*5}<AcceptsMouse val="false"/>\n{T*5}<RenderPriority val="670"/>\n'
             f'{T*5}<!-- dark squares under the icons: an empty tier reads as a gap, not a hole -->\n'
             + "".join(fill(f"FCJH_TierBack{k}", TAL, M + (k - 1) * TAL_STEP, TAL + TAL_SIZE,
                            M + (k - 1) * TAL_STEP + TAL_SIZE, "200,30,32,48", 665, 5) for k in range(1, 8))
-            + portrait + icons + name + f'{T*4}</Frame>\n')
+            + portrait + icons + name + border + f'{T*4}</Frame>\n')
 
 
 # Heroes whose selected unit can differ from the plate's: (selected, on the plate). Guesses
@@ -531,20 +551,20 @@ def unit():
 {T*4}<!-- 1. animated model: DROPPED (round 6). The hero cutscene kept the first hero clicked
 {T*4}     (Chromie) over every later selection; the static portrait underneath updates. -->
 
-{T*4}<!-- 2. name, player, level -->
+{T*4}<!-- 2. name (in the title band, user 2026-10-05), player, level -->
 {T*4}<Frame type="UnitStatusName" name="FCJH_HeroName" template="UnitStatus/UnitStatusUnitNameTemplate">
-{rect(NAME_BAND + 3, M, NAME_BAND + 25, 220, i=5)}{T*5}<UseNameTypeVisibilityRules val="false"/>
+{rect(0, M, TITLE, W - TITLE - 4, i=5)}{T*5}<UseNameTypeVisibilityRules val="false"/>
 {T*5}<Frame type="Label" name="Label"><Anchor relative="$parent"/><Style val="FCJH_InspectName"/></Frame>
 {T*4}</Frame>
 {T*4}<!-- the player's name comes with the player pack (Blizzard's player-name widget read
 {T*4}     "Player 5" for every hero in round 4) -->
 {T*4}<Frame type="UnitStatusLevel" name="FCJH_Level" template="UnitStatus/UnitStatusLevelTemplate">
-{rect(NAME_BAND + 6, 266, NAME_BAND + 36, 324, i=5)}{T*5}<!-- no truncation: "13" read "..." in round 7 -->
+{rect(NAME_BAND, W - M - 60, NAME_BAND + NAME_H, W - M, i=5)}{T*5}<!-- no truncation: "13" read "..." in round 7 -->
 {T*5}<Frame type="Label" name="Label"><Anchor relative="$parent"/><Style val="FCJH_InspectLevel"/><Options val="NoWrapping | ScaleToPreventTruncation"/></Frame>
 {T*4}</Frame>
 
-{T*4}<!-- 3. fountain: the plates' sensor; Blizzard's "ready" art in the name band, just left of
-{T*4}     the level (dimmed while on cooldown) -->
+{T*4}<!-- 3. fountain: the plates' sensor; Blizzard's "ready" art as the first buff, in Blizzard's
+{T*4}     own buff slot art (user, 2026-10-05), dimmed while on cooldown -->
 {T*4}<Frame type="UnitStatusBehaviorIcon" name="FCJH_FountainSensor">
 {T*5}<Anchor relative="$parent"/>
 {T*5}<Behavior val="HealingFountainCooldown"/>
@@ -553,10 +573,30 @@ def unit():
 {T*5}<AcceptsMouseTooltip val="false"/>  <!-- its tooltip ("use the fountain...") covered the whole card -->
 {T*5}<Frame type="BehaviorIcon" name="BehaviorIcon" template="BehaviorBar/BehaviorIconTemplate"><Anchor relative="$parent"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 {T*4}</Frame>
-{T*4}<Frame type="Image" name="FCJH_FountainReady">
-{rect(FOUNTAIN[0], FOUNTAIN[2], FOUNTAIN[1], FOUNTAIN[3], i=5)}{T*5}<Texture val="@UI/Storm_UI_Ingame_HealingWell_Active"/>
-{T*5}<RenderPriority val="680"/>
+{T*4}<Frame type="Frame" name="FCJH_FountainReady">
+{placed(BUFFS, M, BUFF_W, BUFF_H, 5)}{T*5}<RenderPriority val="670"/>
 {T*5}<AcceptsMouse val="false"/>
+{T*5}<!-- BehaviorIconTemplate's pieces: the icon in the slanted buff mask, then the slot's frame -->
+{T*5}<Frame type="Frame" name="ImageMaskContainer">
+{placed(-2, 9, 40, 40, 6)}{T*6}<AlphaMaskTexture val="@UI/Storm_UI_InGame_Buff_IconMask"/>
+{T*6}<Frame type="Image" name="IconImage">
+{T*7}<Anchor side="Top"    relative="$parent" pos="Mid" offset="0"/>
+{T*7}<Anchor side="Bottom" relative="$parent" pos="Mid" offset="0"/>
+{T*7}<Anchor side="Left"   relative="$parent" pos="Mid" offset="0"/>
+{T*7}<Anchor side="Right"  relative="$parent" pos="Mid" offset="0"/>
+{T*7}<Width val="45"/>
+{T*7}<Height val="45"/>
+{T*7}<Texture val="@UI/Storm_UI_Ingame_HealingWell_Active"/>
+{T*7}<RenderPriority val="671"/>
+{T*7}<AcceptsMouse val="false"/>
+{T*6}</Frame>
+{T*5}</Frame>
+{T*5}<Frame type="Image" name="IconImageBg">
+{T*6}<Anchor relative="$parent"/>
+{T*6}<Texture val="@UI/Storm_UI_InGame_Buff_Background"/>
+{T*6}<RenderPriority val="672"/>
+{T*6}<AcceptsMouse val="false"/>
+{T*5}</Frame>
 {T*5}<StateGroup name="FCJH_Fountain">
 {T*6}<DefaultState val="Ready"/>
 {T*6}<State name="Cooldown">
@@ -574,7 +614,7 @@ def unit():
 {T*4}     drops to a second row (FCJH_BuffSpill below) -->
 {T*4}<Frame type="BehaviorBar" name="FCJH_Buffs" template="BehaviorBar/BuffBehaviorBarTemplate">
 {T*5}<Anchor side="Top"  relative="$parent" pos="Min" offset="{BUFFS}"/>
-{T*5}<Anchor side="Left" relative="$parent" pos="Min" offset="{M}"/>
+{T*5}<Anchor side="Left" relative="$parent/FCJH_FountainReady" pos="Max" offset="-{BUFF_OVERLAP}"/>
 {T*5}<RenderPriority val="670"/>
 {T*4}</Frame>
 {T*4}<Frame type="BehaviorBar" name="FCJH_Debuffs" template="BehaviorBar/DebuffBehaviorBarTemplate">
@@ -621,11 +661,14 @@ FILE_HEADER = """
 """
 
 
-def layout(crop, head):
+def layout(crop, head, team_colours):
     """The whole layout file. crop: the plates' portrait crop (HeroCell.crop); head: the XML
-    declaration, <Desc> and the generated-file banner."""
+    declaration, <Desc> and the generated-file banner; team_colours: {"blue": "rrggbb",
+    "red": ...}, the border's (the plates' own blue and red)."""
     global CROP
     CROP = crop
+    TEAM.update({team: "255," + ",".join(str(int(hex_[i:i + 2], 16)) for i in (0, 2, 4))
+                 for team, hex_ in team_colours.items()})
     HEROES[:] = cached_heroes()
     return (head + FILE_HEADER + card() + unit() + "\t\t\t</Frame>\n\t\t</Frame>\n"
             + (talent_tips() if TALENT_TIPS else "") + command_panel()

@@ -2316,7 +2316,9 @@ def committed_files(cfg, source=SOURCE):
         LAYOUT_REL / CONSTANTS_FILE: constants_layout(cfg),
         LAYOUT_REL / HERO_ROW_FILE: hero_row_layout(cfg),
         LAYOUT_REL / STAT_PANES_FILE: stat_panes_layout(cfg),
-        LAYOUT_REL / INSPECT_FILE: inspect_card.layout(HeroCell(cfg).crop, XML_DECL + "<Desc>\n" + GENERATED),
+        LAYOUT_REL / INSPECT_FILE: inspect_card.layout(
+            HeroCell(cfg).crop, XML_DECL + "<Desc>\n" + GENERATED,
+            {t: cfg["top_backplate"][f"{t}_colour"] for t in ("blue", "red")}),   # the card's team edge
         LAYOUT_REL / INDEX_FILE: desc_index(layout_order(layout_dir, generated=GENERATED_LAYOUTS)),
     }
     return {rel: text.encode("utf-8") for rel, text in texts.items()} | texture_files(cfg)
