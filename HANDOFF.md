@@ -367,8 +367,14 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    (`TAL` in `inspect_card.py`), so they move with it. Still to check on the tooltips: hover
    each picked talent; no tooltip from an unpicked tier or another player; nothing answers the
    mouse with the card shut.
-2. **Command card polish** - does each button read cleanly; the talent-actives row (pick an
-   activatable talent); the mount button (Blizzard's bookend art; Ahli widens it to 82);
+2. **Command card polish** - does each button read cleanly; **talent-granted abilities** (the
+   top row, dynamic buttons 30-35): seen 2026-10-05 on Sonya (screenshot `Screenshot2026-10-05
+   11_16_54.jpg`), they sit in place but draw oversized art behind them - an orange flame frame
+   round the first (a cooldown count, 17) and a large faded portrait behind the second. The
+   same kind of leftover 120-unit art the main buttons had before each piece was resized (§3,
+   "The inspect card's abilities"): find which parts of a dynamic button draw it (its overlay
+   panel, a talent-active glow or backing) and size them to the button. The mount button
+   (Blizzard's bookend art; Ahli widens it to 82);
    whether the empty top row should collapse. Keys Blizzard draws, left to right: Z, Q, W, E,
    R, D (seen 2026-10-03).
 3. **Card swaps** - heroes whose command card changes mid-game. Abathur's Symbiote swaps the
