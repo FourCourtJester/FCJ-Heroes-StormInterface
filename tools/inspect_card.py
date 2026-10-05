@@ -432,12 +432,9 @@ def matcher(n):
             f'{T*4}</StateGroup>\n')
 
 
-# BISECT (2026-10-05): plate clicks went dead after the talent tooltips came in; False builds
-# the card without them (panel, row switches, gate actions, diagnostic boxes). That didn't
-# bring clicks back, so INSPECT = False leaves the whole card out (and FCJH_Hidden hides
-# Blizzard's command card again, as before the card used it)
-TALENT_TIPS = False
-INSPECT = False
+# the card's talent tooltips; False builds the card without them (panel, row switches, gate
+# actions, diagnostic boxes)
+TALENT_TIPS = True
 TIPS = "$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips"
 TIP_ROW = TIPS + "/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame{n}"
 TIP_W = 6 * TAL_STEP + TAL_SIZE        # the talent strip's width: seven icons
@@ -628,43 +625,15 @@ def layout(crop, head):
     global CROP
     CROP = crop
     HEROES[:] = cached_heroes()
-    if not INSPECT:
-        return head + "\t<!-- BISECT (2026-10-05): the inspect card switched off (inspect_card.INSPECT) -->\n</Desc>\n"
     return (head + FILE_HEADER + card() + unit() + "\t\t\t</Frame>\n\t\t</Frame>\n"
             + (talent_tips() if TALENT_TIPS else "") + command_panel() + diagnostics()
             + "\t</Frame>\n\t</Frame>\n\t</Frame>\n" + tracer_charge() + "</Desc>\n")
 
 
-CONSOLE = "$GameUI/UIContainer/ConsoleUIContainer"
-OBS = "$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel"
-
-
 def diagnostics():
-    """DIAGNOSTIC (2026-10-05): plate clicks do nothing (card open or shut) since the inspect
-    card's command-card / talent-tooltip work; blue tooltip rows sit ~2 tiers right.
-    Hotkeys, each hiding one suspect group while toggled (press again to restore):
-      Ctrl+Shift+6  Blizzard's hero-specific panels (one covers the bottom-left, 590 x 364)
-      Ctrl+Shift+7  Blizzard's command card and our loop holding it shown
-      Ctrl+Shift+8  our heroic-tooltip talent-row copies over the plates
-      Ctrl+Shift+9  the game's observer talent row (spread over the screen)
-    Colour boxes (see-through, deaf to the mouse) over: the command card (cyan), the
-    control-group panel (yellow), the hero-specific command-card panel (magenta), the
-    bottom-left hero-specific panel (orange), each talent-tooltip row's box (green) and its
+    """DIAGNOSTIC (2026-10-05): blue tooltip rows sit ~2 tiers right. Colour boxes
+    (see-through, deaf to the mouse) over each talent-tooltip row's box (green) and its
     level-1 icon (white)."""
-    def toggle(key, frames):
-        ctrl = "".join(f'{T*4}<Controller type="Visibility" end="Pause" frame="{f}">\n'
-                       f'{T*5}<Key type="Bool" time="0" value="true"/>\n{T*5}<Key type="Bool" time="0.001" value="false"/>\n'
-                       f'{T*4}</Controller>\n' for f in frames)
-        return (f'{T*2}<Frame type="ToggleControl" name="FCJH_DiagToggle{key}">\n'
-                f'{T*3}<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>\n'
-                f'{T*3}<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>\n'
-                f'{T*3}<Width val="1"/>\n{T*3}<Height val="1"/>\n'
-                f'{T*3}<Shortcut val="Control+Shift+{key}"/>\n{T*3}<Visible val="false"/>\n{T*3}<AcceptsMouse val="false"/>\n'
-                f'{T*3}<Animation name="FCJH_Hide">\n'
-                f'{T*4}<Event event="OnShown" action="DirectionForward,Play"/>\n'
-                f'{T*4}<Event event="OnHidden" action="DirectionReverse,Play"/>\n'
-                + ctrl + f'{T*3}</Animation>\n{T*2}</Frame>\n')
-
     def box(name_, rel, colour):
         return (f'{T*2}<Frame type="Image" name="{name_}">\n'
                 + "".join(f'{T*3}<Anchor side="{s}" relative="{rel}" pos="{p}" offset="0"/>\n'
@@ -673,22 +642,13 @@ def diagnostics():
                 f'{T*3}<AdjustmentColor val="{colour}"/>\n{T*3}<Unclipped val="true"/>\n{T*3}<RenderPriority val="950"/>\n'
                 f'{T*3}<AcceptsMouse val="false"/>\n{T*3}<AcceptsMouseTooltip val="false"/>\n{T*2}</Frame>\n')
 
-    hero_panels = [f"{CONSOLE}/{p}" for p in ("HeroSpecificBackgroundStatusContainer", "HeroSpecificStatusContainer",
-                                              "FullscreenStatusPanel", "HeroSpecificFullUIModContainer",
-                                              "HeroSpecificCommandCardPanel")]
-    return (f'{T*2}<!-- DIAGNOSTIC (2026-10-05): plate clicks and blue tooltip rows (inspect_card.diagnostics) -->\n'
-            + toggle(6, hero_panels)
-            + toggle(7, [f"{CONSOLE}/FCJH_CommandShown", COMMAND_PANEL])
-            + toggle(8, [f"{OBS}/FCJH_HeroicTips", f"{OBS}/FCJH_HeroicTips2"])
-            + toggle(9, [f"{OBS}/TalentsOverview"])
-            + box("FCJH_DiagCommand", COMMAND_PANEL, "70,0,230,255")
-            + box("FCJH_DiagControlGroups", f"{CONSOLE}/ControlGroupPanel", "70,255,240,0")
-            + box("FCJH_DiagHeroCard", f"{CONSOLE}/HeroSpecificCommandCardPanel", "70,255,0,255")
-            + box("FCJH_DiagHeroBack", f"{CONSOLE}/HeroSpecificBackgroundStatusContainer", "70,255,150,0")
+    if not TALENT_TIPS:
+        return ""
+    return (f'{T*2}<!-- DIAGNOSTIC (2026-10-05): blue tooltip rows (inspect_card.diagnostics) -->\n'
             + "".join(box(f"FCJH_DiagTipRow{n}", TIP_ROW.format(n=n), "90,40,220,60")
                       + box(f"FCJH_DiagTipIcon{n}", TIP_ROW.format(n=n) + "/TalentsContainerFrame/SelectionUnitStatusPanel/"
                             "UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1", "160,255,255,255")
-                      for n in range(10) if TALENT_TIPS))
+                      for n in range(10)))
 
 
 def tracer_charge():

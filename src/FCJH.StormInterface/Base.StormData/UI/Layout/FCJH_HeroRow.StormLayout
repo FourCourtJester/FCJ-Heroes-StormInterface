@@ -73,21 +73,6 @@
 			<Height val="0"/>
 			<HitTestTexture val="#FCJH_PLATE_HIT_BLUE"/>
 			<RenderPriority val="600"/>
-			<!-- DIAGNOSTIC (2026-10-05): dead plate clicks since the game went to 2398x1349 - a
-			     magenta fill exactly over the click target (gone = the target is hidden) -->
-			<Frame type="Image" name="FCJH_DiagClick">
-				<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-				<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-				<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-				<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
-				<Texture val="@UI/PauseScreenDimImage"/>
-				<ColorAdjustMode val="Fill"/>
-				<AdjustmentColor val="110,255,0,255"/>
-				<Unclipped val="true"/>
-				<RenderPriority val="950"/>
-				<AcceptsMouse val="false"/>
-				<AcceptsMouseTooltip val="false"/>
-			</Frame>
 		</Frame>
 		<Frame type="Label" name="HeroDeathTimeLabel">
 			<Anchor side="Top"    relative="$parent" pos="Min" offset="2"/>
@@ -781,7 +766,7 @@
 			<RenderPriority val="401"/>
 			<AcceptsMouse val="false"/>
 		</Frame>
-		<Frame type="UnitTargetFrame" name="TargetHeroUnitFrame"><HitTestTexture val="_Assets\Textures\FCJH_White.dds"/></Frame>
+		<Frame type="UnitTargetFrame" name="TargetHeroUnitFrame"><HitTestTexture val="#FCJH_PLATE_HIT_RED"/></Frame>
 		<Frame type="Label" name="FCJH_DeathBaleog">
 			<Anchor side="Top"    relative="$parent" pos="Min" offset="2"/>
 			<Anchor side="Left"   relative="$parent" pos="Min" offset="26"/>

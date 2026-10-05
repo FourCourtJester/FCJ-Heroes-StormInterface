@@ -353,12 +353,10 @@ meter (Blizzard's art), talent and heal pop-ups (pane-sized; heal 2 px smaller; 
 plate's top edge - the user will judge that from viewers' feedback), the inspect card opening
 with Blizzard's command card on it.
 
-0. **BISECT IN PROGRESS (2026-10-05): plate clicks do nothing**, card open or shut. Switched
-   off to test: `inspect_card.TALENT_TIPS = False`, `inspect_card.INSPECT = False` (the card
-   left out) and a BISECT controller in `FCJH_Hidden` hiding the command card again - neither
-   brought clicks back. Next: the Friday build `fd72a66` as a control (built from a worktree
-   in `builds/wtfd`). Restore all three switches when done; `DIAGNOSTIC` hotkeys
-   Ctrl+Shift+6..9 and colour boxes are in `inspect_card.diagnostics`.
+0. **Plate clicks (2026-10-05): not our bug.** Clicking a plate follows that hero only while
+   the game's camera lock (**L**) is on, and observers can toggle it. A day of bisecting
+   (talent tips off, card off, the Friday build) ended there. Bisect undone; the only
+   diagnostic left is the tooltip-row boxes in `inspect_card.diagnostics` (item 2).
 1. **Command card on the inspect card** - check the last build (hotkey letters off, cooldown
    and charge text resized): does each button read cleanly? Then: the talent-actives row (pick
    an activatable talent), button tooltips, the mount button (Blizzard's bookend art, squeezed
