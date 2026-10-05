@@ -246,8 +246,9 @@ took, all seen in game:
   away. Squeezed to 52 x 52 with our 68-unit frame art it read far too big.
 - **Tracer's R is her own hero file's meter**, not the button's art: overridden by name in
   her layout (`file="Tracer"` `TracerPulseBombChargeButtonOverrideFrame`) at the button's
-  size, the "0%" label off and the count centred. The validator loads every hero mod so such
-  overrides are checked.
+  size, the "0%" label off and the count centred (ChargesLabel anchored on all four sides to
+  her meter's background, our cooldown style - seen 2026-10-05, matching her other buttons).
+  The validator loads every hero mod so such overrides are checked.
 - **Two Blizzard panels hang off the command card** - `ControlGroupPanel` and the console's
   own `HeroSpecificCommandCardPanel` - and go wherever it goes (parked with it).
 - **Open:** Abathur's Symbiote swaps the card to Symbiote's buttons, some of them in slots we
