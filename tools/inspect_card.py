@@ -433,8 +433,11 @@ def matcher(n):
 
 
 # BISECT (2026-10-05): plate clicks went dead after the talent tooltips came in; False builds
-# the card without them (panel, row switches, gate actions, diagnostic boxes)
+# the card without them (panel, row switches, gate actions, diagnostic boxes). That didn't
+# bring clicks back, so INSPECT = False leaves the whole card out (and FCJH_Hidden hides
+# Blizzard's command card again, as before the card used it)
 TALENT_TIPS = False
+INSPECT = False
 TIPS = "$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips"
 TIP_ROW = TIPS + "/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame{n}"
 TIP_W = 6 * TAL_STEP + TAL_SIZE        # the talent strip's width: seven icons
@@ -625,6 +628,8 @@ def layout(crop, head):
     global CROP
     CROP = crop
     HEROES[:] = cached_heroes()
+    if not INSPECT:
+        return head + "\t<!-- BISECT (2026-10-05): the inspect card switched off (inspect_card.INSPECT) -->\n</Desc>\n"
     return (head + FILE_HEADER + card() + unit() + "\t\t\t</Frame>\n\t\t</Frame>\n"
             + (talent_tips() if TALENT_TIPS else "") + command_panel() + diagnostics()
             + "\t</Frame>\n\t</Frame>\n\t</Frame>\n" + tracer_charge() + "</Desc>\n")

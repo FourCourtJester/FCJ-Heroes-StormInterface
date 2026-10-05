@@ -27,6 +27,11 @@
 					<Event event="OnShown" action="Play"/>
 					<!-- (the command card - CommandPanel - is shown and hidden with the inspect card
 					     instead: FCJH_Inspect, inspect_card.command_switch) -->
+					<!-- BISECT (2026-10-05): inspect card off (inspect_card.INSPECT), so the command
+					     card is hidden here again, as before the card used it. Remove with the bisect -->
+					<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel">
+						<Key type="Bool" time="0" value="false"/>
+					</Controller>
 					<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/ConsoleUIContainer/HeroConsolePanel">
 						<Key type="Bool" time="0" value="false"/>
 					</Controller>
