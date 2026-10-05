@@ -235,11 +235,11 @@ def card():
            f'{T*4}<State name="Show">\n'
            f'{T*5}<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/TargetInfoFrame" Visible="true"/>\n'
            f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="true"/>\n'
-           f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_TalentTips" Visible="true"/>\n'
+           + (f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_TalentTips" Visible="true"/>\n' if TALENT_TIPS else "")
            + command_anchors(True, 5) + f'{T*4}</State>\n'
            f'{T*4}<State name="Hide">\n'
            f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="false"/>\n'
-           f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_TalentTips" Visible="false"/>\n'
+           + (f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_TalentTips" Visible="false"/>\n' if TALENT_TIPS else "")
            + command_anchors(False, 5) + f'{T*4}</State>\n'
            f'{T*3}</StateGroup>\n{T*2}</Frame>\n' + command_switch() +
            f'{T*2}<!-- The card: our copy of Blizzard\'s inspect box -->\n'
@@ -419,19 +419,22 @@ ALSO = [("HeroDVaMech", "HeroDVaPilot"), ("HeroDVaPilot", "HeroDVaMech"), ("Hero
 def matcher(n):
     """FCJH_IsPlayer{n}: shows pack n while the selected unit is the hero on plate n, and
     raises flag FCJH_TipSel{n}, which brings player n's talent tooltips onto the card."""
+    flag = lambda on: (f'<Action type="SetProperty" frame="$this/FCJH_TipSel{n}" Visible="{on}"/>'
+                       if TALENT_TIPS else "")
     states = "".join(
         f'{T*5}<State name="{sel}{"" if sel == on else "_" + on}">'
         f'<When type="Property" Unit="{sel}"/>'
         f'<When type="Property" frame="{plate(n)}/HeroStatus" Unit="{on}"/>'
-        f'<Action type="SetProperty" frame="$this/FCJH_Player{n}" Alpha="255"/>'
-        f'<Action type="SetProperty" frame="$this/FCJH_TipSel{n}" Visible="true"/></State>\n'
+        f'<Action type="SetProperty" frame="$this/FCJH_Player{n}" Alpha="255"/>{flag("true")}</State>\n'
         for sel, on in [(u, u) for u in HEROES] + ALSO)
     return (f'{T*4}<StateGroup name="FCJH_IsPlayer{n}">\n{T*5}<DefaultState val="No"/>\n{states}'
-            f'{T*5}<State name="No"><Action type="SetProperty" frame="$this/FCJH_Player{n}" Alpha="0"/>'
-            f'<Action type="SetProperty" frame="$this/FCJH_TipSel{n}" Visible="false"/></State>\n'
+            f'{T*5}<State name="No"><Action type="SetProperty" frame="$this/FCJH_Player{n}" Alpha="0"/>{flag("false")}</State>\n'
             f'{T*4}</StateGroup>\n')
 
 
+# BISECT (2026-10-05): plate clicks went dead after the talent tooltips came in; False builds
+# the card without them (panel, row switches, gate actions, diagnostic boxes)
+TALENT_TIPS = False
 TIPS = "$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips"
 TIP_ROW = TIPS + "/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame{n}"
 TIP_W = 6 * TAL_STEP + TAL_SIZE        # the talent strip's width: seven icons
@@ -598,7 +601,7 @@ def unit():
 {T*4}<!-- which player is selected: player N when the selected unit's hero is the hero on
 {T*4}     plate N (unit checks, one state per hero, heroes from the game data). Mirror matches
 {T*4}     (the same hero on both teams) would show both packs - not handled yet. -->
-{"".join(matcher(n) + tip_switch(n) for n in range(10))}{T*3}</Frame>
+{"".join(matcher(n) + (tip_switch(n) if TALENT_TIPS else "") for n in range(10))}{T*3}</Frame>
 {T*2}</Frame>
 '''
 
@@ -623,7 +626,7 @@ def layout(crop, head):
     CROP = crop
     HEROES[:] = cached_heroes()
     return (head + FILE_HEADER + card() + unit() + "\t\t\t</Frame>\n\t\t</Frame>\n"
-            + talent_tips() + command_panel() + diagnostics()
+            + (talent_tips() if TALENT_TIPS else "") + command_panel() + diagnostics()
             + "\t</Frame>\n\t</Frame>\n\t</Frame>\n" + tracer_charge() + "</Desc>\n")
 
 
@@ -680,7 +683,7 @@ def diagnostics():
             + "".join(box(f"FCJH_DiagTipRow{n}", TIP_ROW.format(n=n), "90,40,220,60")
                       + box(f"FCJH_DiagTipIcon{n}", TIP_ROW.format(n=n) + "/TalentsContainerFrame/SelectionUnitStatusPanel/"
                             "UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon1", "160,255,255,255")
-                      for n in range(10)))
+                      for n in range(10) if TALENT_TIPS))
 
 
 def tracer_charge():
