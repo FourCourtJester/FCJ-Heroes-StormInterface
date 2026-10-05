@@ -361,7 +361,13 @@ the plates' heroic-tooltip copies are built. Assembled from parts (a CleanTalent
 whose `HeroTalentsPanelContainer` we re-templated in our own declaration), the rows kept
 Blizzard's icon places and sizes (`inspect_card.talent_tips`).
 
-1. **Inspect card: re-order and restyle - START HERE.** The user's list (2026-10-05):
+1. **Inspect card: re-order and restyle - START HERE.** BUILT 2026-10-05 (e6a16bf, 0efa806,
+   4772f46), not yet seen in game: everything below except the art pass and the final space
+   trim, plus the talent actives' art fix (item 2), plus a TRIAL of the default inspector's
+   own art as the card's background (`blizzard_skin`: nine-slice background and border, the
+   purple top-band tint on our bands; Ctrl+Shift+6 swaps back to the flat look). Most of
+   Blizzard's panel textures aren't among `references/CASCView/Assets/textures`, so they can
+   only be judged in game. The user's list (2026-10-05):
    - **header:** drop the "INSPECT" title and put the hero name there, if possible; the player
      name bigger; the level in the same font size as the player name;
    - **frame:** a border in the selected hero's team colour; padding normalized all round;
