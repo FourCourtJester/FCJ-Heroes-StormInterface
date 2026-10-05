@@ -199,6 +199,10 @@ def command_panel():
                            # template has one: not the mount's bookend nor the dynamic buttons)
                            + (f'{T*5}<Frame type="Image" name="IconBackground">\n' + inset + f'{T*5}</Frame>\n'
                               if k in ("00", "01", "02", "03", "05") else "")
+                           # each button's hero-specific panel (Tracer's Pulse Bomb dial lives in
+                           # R's) is Blizzard's 120 x 120 - it read oversized (2026-10-05)
+                           + sized("ButtonSpecificOverlayPanel" if k.startswith("3") else "HeroSpecificCommandCardPanel",
+                                   "HeroSpecificContainerPanel", CMD_SIZE, 5)
                            + f'{T*4}</Frame>\n')
     away = "".join(
         f'{T*4}<Frame type="{ftype}" name="{n}">\n'
@@ -458,10 +462,15 @@ def talent_tips():
     in a line the size of the card's talent strip, invisible but answering the mouse. Only
     the selected player's row is on the card (tip_switch); the whole thing shows only while
     the card does (the gate). Just above the card (605), under the command card (610)."""
-    # each icon placed against its player's box (five levels up), so it stays inside it
+    # the icons' group pinned to its player's box (four levels up), the icons placed inside it.
+    # Placing the icons straight against the box (2026-10-05) worked for red rows; blue rows'
+    # icons stayed about 133 units in - Blizzard's blue group sits right of the player's name
     icon = lambda k: (f'{T*8}<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon{k}">\n'
-                      + placed(0, (k - 1) * TAL_STEP, TAL_SIZE, TAL_SIZE, 9, "$parent/$parent/$parent/$parent/$parent")
+                      + placed(0, (k - 1) * TAL_STEP, TAL_SIZE, TAL_SIZE, 9)
                       + f'{T*9}<Alpha val="0"/>\n{T*8}</Frame>\n')
+    group = "".join(f'{T*8}<Anchor side="{s}" relative="$parent/$parent/$parent/$parent" pos="{p}" offset="0"/>\n'
+                    for s, p in (("Top", "Min"), ("Left", "Min"), ("Bottom", "Max"), ("Right", "Max")))
+    group += f'{T*8}<Width val="0"/>\n{T*8}<Height val="0"/>\n'
     rows = "".join(
         f'{T*5}<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame{n}">\n'
         + placed(9999, 9999, TIP_W, TAL_SIZE, 6, "$GameUI")   # parked until selected (tip_switch)
@@ -469,7 +478,7 @@ def talent_tips():
         f'<AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>\n'
         f'{T*6}<Frame type="Frame" name="TalentsContainerFrame">\n{T*7}<Batch val="false"/>\n'
         f'{T*7}<Frame type="PlayerHeroSelectedTalentTreeFrame" name="SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame">\n'
-        + "".join(icon(k) for k in range(1, 8))
+        + group + "".join(icon(k) for k in range(1, 8))
         + f'{T*7}</Frame>\n{T*6}</Frame>\n{T*5}</Frame>\n'
         for n in range(10))
     return (f'{T*2}<!-- Tooltips on the card\'s talents (inspect_card.talent_tips) -->\n'
