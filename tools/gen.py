@@ -1515,6 +1515,21 @@ def hero_cell_template(team, c, cfg):
 			<Height val="0"/>
 			<HitTestTexture val="#FCJH_PLATE_HIT_BLUE"/>
 			<RenderPriority val="600"/>
+			<!-- DIAGNOSTIC (2026-10-05): dead plate clicks since the game went to 2398x1349 - a
+			     magenta fill exactly over the click target (gone = the target is hidden) -->
+			<Frame type="Image" name="FCJH_DiagClick">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+				<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
+				<Texture val="@UI/PauseScreenDimImage"/>
+				<ColorAdjustMode val="Fill"/>
+				<AdjustmentColor val="110,255,0,255"/>
+				<Unclipped val="true"/>
+				<RenderPriority val="950"/>
+				<AcceptsMouse val="false"/>
+				<AcceptsMouseTooltip val="false"/>
+			</Frame>
 		</Frame>
 		<Frame type="Label" name="HeroDeathTimeLabel">
 			<Anchor side="Top"    relative="$parent" pos="Min" offset="2"/>
@@ -1557,8 +1572,10 @@ def hero_cell_template(team, c, cfg):
 			<AcceptsMouse val="false"/>
 		</Frame>"""
     if not blue:
-        common = """
-		<Frame type="UnitTargetFrame" name="TargetHeroUnitFrame"><HitTestTexture val="#FCJH_PLATE_HIT_RED"/></Frame>"""
+        # DIAGNOSTIC (2026-10-05): red plates click on a plain square (no slanted hit test)
+        # while blue keep theirs - is the hit-test texture what died at 2398x1349?
+        common = f"""
+		<Frame type="UnitTargetFrame" name="TargetHeroUnitFrame"><HitTestTexture val="{WHITE}"/></Frame>"""
     return (f"\t{header}"
             + art("FCJH_FrameBg", "HUD_TopBar_Team_HeroFrame", 400)
             + art("FCJH_TeamBg", f"HUD_TopBar_Team_HeroFrame_BG_{'Blue' if blue else 'Red'}", 401)
