@@ -3298,7 +3298,7 @@
 				<Frame type="Frame" name="FCJH_TipSel0"><Anchor relative="$parent"/><Visible val="false"/><AcceptsMouse val="false"/></Frame>
 				<StateGroup name="FCJH_TipRow0">
 					<DefaultState val="Away"/>
-					<State name="On"><When type="Property" frame="$this/FCJH_TipSel0" Visible="true"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame0" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="514"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame0" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="-119"/></State>
+					<State name="On"><When type="Property" frame="$this/FCJH_TipSel0" Visible="true"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame0" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="521"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame0" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="14"/></State>
 					<State name="Away"><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame0" side="Top" relative="$GameUI" pos="Min" offset="9999"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame0" side="Left" relative="$GameUI" pos="Min" offset="9999"/></State>
 				</StateGroup>
 				<StateGroup name="FCJH_IsPlayer1">
@@ -3431,7 +3431,7 @@
 				<Frame type="Frame" name="FCJH_TipSel1"><Anchor relative="$parent"/><Visible val="false"/><AcceptsMouse val="false"/></Frame>
 				<StateGroup name="FCJH_TipRow1">
 					<DefaultState val="Away"/>
-					<State name="On"><When type="Property" frame="$this/FCJH_TipSel1" Visible="true"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame1" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="514"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame1" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="-119"/></State>
+					<State name="On"><When type="Property" frame="$this/FCJH_TipSel1" Visible="true"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame1" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="521"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame1" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="14"/></State>
 					<State name="Away"><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame1" side="Top" relative="$GameUI" pos="Min" offset="9999"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame1" side="Left" relative="$GameUI" pos="Min" offset="9999"/></State>
 				</StateGroup>
 				<StateGroup name="FCJH_IsPlayer2">
@@ -3564,7 +3564,7 @@
 				<Frame type="Frame" name="FCJH_TipSel2"><Anchor relative="$parent"/><Visible val="false"/><AcceptsMouse val="false"/></Frame>
 				<StateGroup name="FCJH_TipRow2">
 					<DefaultState val="Away"/>
-					<State name="On"><When type="Property" frame="$this/FCJH_TipSel2" Visible="true"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame2" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="514"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame2" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="-119"/></State>
+					<State name="On"><When type="Property" frame="$this/FCJH_TipSel2" Visible="true"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame2" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="521"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame2" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="14"/></State>
 					<State name="Away"><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame2" side="Top" relative="$GameUI" pos="Min" offset="9999"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame2" side="Left" relative="$GameUI" pos="Min" offset="9999"/></State>
 				</StateGroup>
 				<StateGroup name="FCJH_IsPlayer3">
@@ -3697,7 +3697,7 @@
 				<Frame type="Frame" name="FCJH_TipSel3"><Anchor relative="$parent"/><Visible val="false"/><AcceptsMouse val="false"/></Frame>
 				<StateGroup name="FCJH_TipRow3">
 					<DefaultState val="Away"/>
-					<State name="On"><When type="Property" frame="$this/FCJH_TipSel3" Visible="true"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame3" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="514"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame3" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="-119"/></State>
+					<State name="On"><When type="Property" frame="$this/FCJH_TipSel3" Visible="true"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame3" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="521"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame3" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="14"/></State>
 					<State name="Away"><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame3" side="Top" relative="$GameUI" pos="Min" offset="9999"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame3" side="Left" relative="$GameUI" pos="Min" offset="9999"/></State>
 				</StateGroup>
 				<StateGroup name="FCJH_IsPlayer4">
@@ -3830,7 +3830,7 @@
 				<Frame type="Frame" name="FCJH_TipSel4"><Anchor relative="$parent"/><Visible val="false"/><AcceptsMouse val="false"/></Frame>
 				<StateGroup name="FCJH_TipRow4">
 					<DefaultState val="Away"/>
-					<State name="On"><When type="Property" frame="$this/FCJH_TipSel4" Visible="true"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame4" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="514"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame4" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="-119"/></State>
+					<State name="On"><When type="Property" frame="$this/FCJH_TipSel4" Visible="true"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame4" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="521"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame4" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="14"/></State>
 					<State name="Away"><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame4" side="Top" relative="$GameUI" pos="Min" offset="9999"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame4" side="Left" relative="$GameUI" pos="Min" offset="9999"/></State>
 				</StateGroup>
 				<StateGroup name="FCJH_IsPlayer5">
@@ -4523,24 +4523,23 @@
 				<Frame type="Button" name="ClearSortButton"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
 				<Frame type="Frame" name="BlueTeamStats"><Alpha val="0"/></Frame>
 				<Frame type="Frame" name="RedTeamStats"><Alpha val="0"/></Frame>
-				<Frame type="Frame" name="HeroTalentsPanelContainer" template="TalentsOverviewPanel/HeroTalentsPanelContainerTemplate">
+				<Frame type="Frame" name="HeroTalentsPanelContainer" template="TalentsOverviewPanel/HeroTalentsPanelTopContainerTemplate">
 					<Anchor relative="$parent"/>
 					<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame0">
 						<Anchor side="Top"    relative="$GameUI" pos="Min" offset="9999"/>
 						<Anchor side="Left"   relative="$GameUI" pos="Min" offset="9999"/>
 						<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 						<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-						<Width val="427"/>
-						<Height val="43"/>
-						<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+						<Width val="294"/>
+						<Height val="36"/>
 						<Frame type="Frame" name="TalentsContainerFrame">
 							<Batch val="false"/>
 							<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 								<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 									<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 										<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
-											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame0" pos="Min" offset="7"/>
-											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame0" pos="Min" offset="133"/>
+											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame0" pos="Min" offset="0"/>
+											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame0" pos="Min" offset="0"/>
 											<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 											<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 											<Width val="36"/>
@@ -4548,8 +4547,8 @@
 											<Alpha val="0"/>
 										</Frame>
 										<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
-											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame0" pos="Min" offset="7"/>
-											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame0" pos="Min" offset="176"/>
+											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame0" pos="Min" offset="0"/>
+											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame0" pos="Min" offset="43"/>
 											<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 											<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 											<Width val="36"/>
@@ -4557,8 +4556,8 @@
 											<Alpha val="0"/>
 										</Frame>
 										<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
-											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame0" pos="Min" offset="7"/>
-											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame0" pos="Min" offset="219"/>
+											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame0" pos="Min" offset="0"/>
+											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame0" pos="Min" offset="86"/>
 											<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 											<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 											<Width val="36"/>
@@ -4566,8 +4565,8 @@
 											<Alpha val="0"/>
 										</Frame>
 										<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
-											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame0" pos="Min" offset="7"/>
-											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame0" pos="Min" offset="262"/>
+											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame0" pos="Min" offset="0"/>
+											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame0" pos="Min" offset="129"/>
 											<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 											<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 											<Width val="36"/>
@@ -4575,8 +4574,8 @@
 											<Alpha val="0"/>
 										</Frame>
 										<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5">
-											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame0" pos="Min" offset="7"/>
-											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame0" pos="Min" offset="305"/>
+											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame0" pos="Min" offset="0"/>
+											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame0" pos="Min" offset="172"/>
 											<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 											<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 											<Width val="36"/>
@@ -4584,8 +4583,8 @@
 											<Alpha val="0"/>
 										</Frame>
 										<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6">
-											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame0" pos="Min" offset="7"/>
-											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame0" pos="Min" offset="348"/>
+											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame0" pos="Min" offset="0"/>
+											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame0" pos="Min" offset="215"/>
 											<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 											<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 											<Width val="36"/>
@@ -4593,8 +4592,8 @@
 											<Alpha val="0"/>
 										</Frame>
 										<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7">
-											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame0" pos="Min" offset="7"/>
-											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame0" pos="Min" offset="391"/>
+											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame0" pos="Min" offset="0"/>
+											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame0" pos="Min" offset="258"/>
 											<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 											<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 											<Width val="36"/>
@@ -4602,6 +4601,8 @@
 											<Alpha val="0"/>
 										</Frame>
 									</Frame>
+									<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+									<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -4611,17 +4612,16 @@
 						<Anchor side="Left"   relative="$GameUI" pos="Min" offset="9999"/>
 						<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 						<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-						<Width val="427"/>
-						<Height val="43"/>
-						<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+						<Width val="294"/>
+						<Height val="36"/>
 						<Frame type="Frame" name="TalentsContainerFrame">
 							<Batch val="false"/>
 							<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 								<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 									<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 										<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
-											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame1" pos="Min" offset="7"/>
-											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame1" pos="Min" offset="133"/>
+											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame1" pos="Min" offset="0"/>
+											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame1" pos="Min" offset="0"/>
 											<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 											<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 											<Width val="36"/>
@@ -4629,8 +4629,8 @@
 											<Alpha val="0"/>
 										</Frame>
 										<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
-											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame1" pos="Min" offset="7"/>
-											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame1" pos="Min" offset="176"/>
+											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame1" pos="Min" offset="0"/>
+											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame1" pos="Min" offset="43"/>
 											<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 											<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 											<Width val="36"/>
@@ -4638,8 +4638,8 @@
 											<Alpha val="0"/>
 										</Frame>
 										<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
-											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame1" pos="Min" offset="7"/>
-											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame1" pos="Min" offset="219"/>
+											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame1" pos="Min" offset="0"/>
+											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame1" pos="Min" offset="86"/>
 											<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 											<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 											<Width val="36"/>
@@ -4647,8 +4647,8 @@
 											<Alpha val="0"/>
 										</Frame>
 										<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
-											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame1" pos="Min" offset="7"/>
-											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame1" pos="Min" offset="262"/>
+											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame1" pos="Min" offset="0"/>
+											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame1" pos="Min" offset="129"/>
 											<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 											<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 											<Width val="36"/>
@@ -4656,8 +4656,8 @@
 											<Alpha val="0"/>
 										</Frame>
 										<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5">
-											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame1" pos="Min" offset="7"/>
-											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame1" pos="Min" offset="305"/>
+											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame1" pos="Min" offset="0"/>
+											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame1" pos="Min" offset="172"/>
 											<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 											<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 											<Width val="36"/>
@@ -4665,8 +4665,8 @@
 											<Alpha val="0"/>
 										</Frame>
 										<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6">
-											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame1" pos="Min" offset="7"/>
-											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame1" pos="Min" offset="348"/>
+											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame1" pos="Min" offset="0"/>
+											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame1" pos="Min" offset="215"/>
 											<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 											<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 											<Width val="36"/>
@@ -4674,8 +4674,8 @@
 											<Alpha val="0"/>
 										</Frame>
 										<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7">
-											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame1" pos="Min" offset="7"/>
-											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame1" pos="Min" offset="391"/>
+											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame1" pos="Min" offset="0"/>
+											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame1" pos="Min" offset="258"/>
 											<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 											<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 											<Width val="36"/>
@@ -4683,6 +4683,8 @@
 											<Alpha val="0"/>
 										</Frame>
 									</Frame>
+									<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+									<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -4692,17 +4694,16 @@
 						<Anchor side="Left"   relative="$GameUI" pos="Min" offset="9999"/>
 						<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 						<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-						<Width val="427"/>
-						<Height val="43"/>
-						<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+						<Width val="294"/>
+						<Height val="36"/>
 						<Frame type="Frame" name="TalentsContainerFrame">
 							<Batch val="false"/>
 							<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 								<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 									<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 										<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
-											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame2" pos="Min" offset="7"/>
-											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame2" pos="Min" offset="133"/>
+											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame2" pos="Min" offset="0"/>
+											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame2" pos="Min" offset="0"/>
 											<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 											<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 											<Width val="36"/>
@@ -4710,8 +4711,8 @@
 											<Alpha val="0"/>
 										</Frame>
 										<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
-											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame2" pos="Min" offset="7"/>
-											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame2" pos="Min" offset="176"/>
+											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame2" pos="Min" offset="0"/>
+											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame2" pos="Min" offset="43"/>
 											<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 											<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 											<Width val="36"/>
@@ -4719,8 +4720,8 @@
 											<Alpha val="0"/>
 										</Frame>
 										<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
-											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame2" pos="Min" offset="7"/>
-											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame2" pos="Min" offset="219"/>
+											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame2" pos="Min" offset="0"/>
+											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame2" pos="Min" offset="86"/>
 											<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 											<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 											<Width val="36"/>
@@ -4728,8 +4729,8 @@
 											<Alpha val="0"/>
 										</Frame>
 										<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
-											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame2" pos="Min" offset="7"/>
-											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame2" pos="Min" offset="262"/>
+											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame2" pos="Min" offset="0"/>
+											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame2" pos="Min" offset="129"/>
 											<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 											<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 											<Width val="36"/>
@@ -4737,8 +4738,8 @@
 											<Alpha val="0"/>
 										</Frame>
 										<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5">
-											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame2" pos="Min" offset="7"/>
-											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame2" pos="Min" offset="305"/>
+											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame2" pos="Min" offset="0"/>
+											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame2" pos="Min" offset="172"/>
 											<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 											<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 											<Width val="36"/>
@@ -4746,8 +4747,8 @@
 											<Alpha val="0"/>
 										</Frame>
 										<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6">
-											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame2" pos="Min" offset="7"/>
-											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame2" pos="Min" offset="348"/>
+											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame2" pos="Min" offset="0"/>
+											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame2" pos="Min" offset="215"/>
 											<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 											<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 											<Width val="36"/>
@@ -4755,8 +4756,8 @@
 											<Alpha val="0"/>
 										</Frame>
 										<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7">
-											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame2" pos="Min" offset="7"/>
-											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame2" pos="Min" offset="391"/>
+											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame2" pos="Min" offset="0"/>
+											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame2" pos="Min" offset="258"/>
 											<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 											<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 											<Width val="36"/>
@@ -4764,6 +4765,8 @@
 											<Alpha val="0"/>
 										</Frame>
 									</Frame>
+									<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+									<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -4773,17 +4776,16 @@
 						<Anchor side="Left"   relative="$GameUI" pos="Min" offset="9999"/>
 						<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 						<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-						<Width val="427"/>
-						<Height val="43"/>
-						<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+						<Width val="294"/>
+						<Height val="36"/>
 						<Frame type="Frame" name="TalentsContainerFrame">
 							<Batch val="false"/>
 							<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 								<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 									<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 										<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
-											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame3" pos="Min" offset="7"/>
-											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame3" pos="Min" offset="133"/>
+											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame3" pos="Min" offset="0"/>
+											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame3" pos="Min" offset="0"/>
 											<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 											<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 											<Width val="36"/>
@@ -4791,8 +4793,8 @@
 											<Alpha val="0"/>
 										</Frame>
 										<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
-											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame3" pos="Min" offset="7"/>
-											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame3" pos="Min" offset="176"/>
+											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame3" pos="Min" offset="0"/>
+											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame3" pos="Min" offset="43"/>
 											<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 											<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 											<Width val="36"/>
@@ -4800,8 +4802,8 @@
 											<Alpha val="0"/>
 										</Frame>
 										<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
-											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame3" pos="Min" offset="7"/>
-											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame3" pos="Min" offset="219"/>
+											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame3" pos="Min" offset="0"/>
+											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame3" pos="Min" offset="86"/>
 											<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 											<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 											<Width val="36"/>
@@ -4809,8 +4811,8 @@
 											<Alpha val="0"/>
 										</Frame>
 										<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
-											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame3" pos="Min" offset="7"/>
-											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame3" pos="Min" offset="262"/>
+											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame3" pos="Min" offset="0"/>
+											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame3" pos="Min" offset="129"/>
 											<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 											<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 											<Width val="36"/>
@@ -4818,8 +4820,8 @@
 											<Alpha val="0"/>
 										</Frame>
 										<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5">
-											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame3" pos="Min" offset="7"/>
-											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame3" pos="Min" offset="305"/>
+											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame3" pos="Min" offset="0"/>
+											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame3" pos="Min" offset="172"/>
 											<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 											<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 											<Width val="36"/>
@@ -4827,8 +4829,8 @@
 											<Alpha val="0"/>
 										</Frame>
 										<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6">
-											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame3" pos="Min" offset="7"/>
-											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame3" pos="Min" offset="348"/>
+											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame3" pos="Min" offset="0"/>
+											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame3" pos="Min" offset="215"/>
 											<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 											<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 											<Width val="36"/>
@@ -4836,8 +4838,8 @@
 											<Alpha val="0"/>
 										</Frame>
 										<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7">
-											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame3" pos="Min" offset="7"/>
-											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame3" pos="Min" offset="391"/>
+											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame3" pos="Min" offset="0"/>
+											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame3" pos="Min" offset="258"/>
 											<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 											<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 											<Width val="36"/>
@@ -4845,6 +4847,8 @@
 											<Alpha val="0"/>
 										</Frame>
 									</Frame>
+									<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+									<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -4854,17 +4858,16 @@
 						<Anchor side="Left"   relative="$GameUI" pos="Min" offset="9999"/>
 						<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 						<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-						<Width val="427"/>
-						<Height val="43"/>
-						<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+						<Width val="294"/>
+						<Height val="36"/>
 						<Frame type="Frame" name="TalentsContainerFrame">
 							<Batch val="false"/>
 							<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 								<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 									<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 										<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
-											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame4" pos="Min" offset="7"/>
-											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame4" pos="Min" offset="133"/>
+											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame4" pos="Min" offset="0"/>
+											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame4" pos="Min" offset="0"/>
 											<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 											<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 											<Width val="36"/>
@@ -4872,8 +4875,8 @@
 											<Alpha val="0"/>
 										</Frame>
 										<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
-											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame4" pos="Min" offset="7"/>
-											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame4" pos="Min" offset="176"/>
+											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame4" pos="Min" offset="0"/>
+											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame4" pos="Min" offset="43"/>
 											<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 											<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 											<Width val="36"/>
@@ -4881,8 +4884,8 @@
 											<Alpha val="0"/>
 										</Frame>
 										<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
-											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame4" pos="Min" offset="7"/>
-											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame4" pos="Min" offset="219"/>
+											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame4" pos="Min" offset="0"/>
+											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame4" pos="Min" offset="86"/>
 											<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 											<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 											<Width val="36"/>
@@ -4890,8 +4893,8 @@
 											<Alpha val="0"/>
 										</Frame>
 										<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
-											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame4" pos="Min" offset="7"/>
-											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame4" pos="Min" offset="262"/>
+											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame4" pos="Min" offset="0"/>
+											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame4" pos="Min" offset="129"/>
 											<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 											<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 											<Width val="36"/>
@@ -4899,8 +4902,8 @@
 											<Alpha val="0"/>
 										</Frame>
 										<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5">
-											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame4" pos="Min" offset="7"/>
-											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame4" pos="Min" offset="305"/>
+											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame4" pos="Min" offset="0"/>
+											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame4" pos="Min" offset="172"/>
 											<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 											<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 											<Width val="36"/>
@@ -4908,8 +4911,8 @@
 											<Alpha val="0"/>
 										</Frame>
 										<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6">
-											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame4" pos="Min" offset="7"/>
-											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame4" pos="Min" offset="348"/>
+											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame4" pos="Min" offset="0"/>
+											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame4" pos="Min" offset="215"/>
 											<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 											<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 											<Width val="36"/>
@@ -4917,8 +4920,8 @@
 											<Alpha val="0"/>
 										</Frame>
 										<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7">
-											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame4" pos="Min" offset="7"/>
-											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame4" pos="Min" offset="391"/>
+											<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame4" pos="Min" offset="0"/>
+											<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame4" pos="Min" offset="258"/>
 											<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 											<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 											<Width val="36"/>
@@ -4926,6 +4929,8 @@
 											<Alpha val="0"/>
 										</Frame>
 									</Frame>
+									<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+									<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -4937,7 +4942,6 @@
 						<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 						<Width val="294"/>
 						<Height val="36"/>
-						<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 						<Frame type="Frame" name="TalentsContainerFrame">
 							<Batch val="false"/>
 							<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
@@ -5007,6 +5011,8 @@
 											<Alpha val="0"/>
 										</Frame>
 									</Frame>
+									<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+									<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -5018,7 +5024,6 @@
 						<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 						<Width val="294"/>
 						<Height val="36"/>
-						<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 						<Frame type="Frame" name="TalentsContainerFrame">
 							<Batch val="false"/>
 							<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
@@ -5088,6 +5093,8 @@
 											<Alpha val="0"/>
 										</Frame>
 									</Frame>
+									<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+									<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -5099,7 +5106,6 @@
 						<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 						<Width val="294"/>
 						<Height val="36"/>
-						<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 						<Frame type="Frame" name="TalentsContainerFrame">
 							<Batch val="false"/>
 							<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
@@ -5169,6 +5175,8 @@
 											<Alpha val="0"/>
 										</Frame>
 									</Frame>
+									<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+									<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -5180,7 +5188,6 @@
 						<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 						<Width val="294"/>
 						<Height val="36"/>
-						<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 						<Frame type="Frame" name="TalentsContainerFrame">
 							<Batch val="false"/>
 							<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
@@ -5250,6 +5257,8 @@
 											<Alpha val="0"/>
 										</Frame>
 									</Frame>
+									<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+									<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
@@ -5261,7 +5270,6 @@
 						<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 						<Width val="294"/>
 						<Height val="36"/>
-						<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 						<Frame type="Frame" name="TalentsContainerFrame">
 							<Batch val="false"/>
 							<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
@@ -5331,6 +5339,8 @@
 											<Alpha val="0"/>
 										</Frame>
 									</Frame>
+									<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
+									<Frame type="Frame" name="TracerChargeContainer"><Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>
 								</Frame>
 							</Frame>
 						</Frame>
