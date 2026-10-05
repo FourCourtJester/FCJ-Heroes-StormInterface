@@ -433,7 +433,7 @@ def matcher(n):
 
 
 # the card's talent tooltips; False builds the card without them (panel, row switches, gate
-# actions, diagnostic boxes)
+# actions)
 TALENT_TIPS = True
 TIPS = "$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips"
 TIP_ROW = TIPS + "/FCJH_TalentTipPanel/TalentOverview/HeroTalentsPanelContainer/PlayerFrame{n}"
@@ -628,31 +628,8 @@ def layout(crop, head):
     CROP = crop
     HEROES[:] = cached_heroes()
     return (head + FILE_HEADER + card() + unit() + "\t\t\t</Frame>\n\t\t</Frame>\n"
-            + (talent_tips() if TALENT_TIPS else "") + command_panel() + diagnostics()
+            + (talent_tips() if TALENT_TIPS else "") + command_panel()
             + "\t</Frame>\n\t</Frame>\n\t</Frame>\n" + tracer_charge() + "</Desc>\n")
-
-
-def diagnostics():
-    """DIAGNOSTIC (2026-10-05): blue tooltip rows sit ~2 tiers right. Colour boxes
-    (see-through, deaf to the mouse) over each talent-tooltip row's box (green) and its
-    seven icons (white and red in turn: tiers 1, 3, 5, 7 white)."""
-    def box(name_, rel, colour):
-        return (f'{T*2}<Frame type="Image" name="{name_}">\n'
-                + "".join(f'{T*3}<Anchor side="{s}" relative="{rel}" pos="{p}" offset="0"/>\n'
-                          for s, p in (("Top", "Min"), ("Left", "Min"), ("Bottom", "Max"), ("Right", "Max")))
-                + f'{T*3}<Texture val="@UI/PauseScreenDimImage"/>\n{T*3}<ColorAdjustMode val="Fill"/>\n'
-                f'{T*3}<AdjustmentColor val="{colour}"/>\n{T*3}<Unclipped val="true"/>\n{T*3}<RenderPriority val="950"/>\n'
-                f'{T*3}<AcceptsMouse val="false"/>\n{T*3}<AcceptsMouseTooltip val="false"/>\n{T*2}</Frame>\n')
-
-    if not TALENT_TIPS:
-        return ""
-    return (f'{T*2}<!-- DIAGNOSTIC (2026-10-05): blue tooltip rows (inspect_card.diagnostics) -->\n'
-            + "".join(box(f"FCJH_DiagTipRow{n}", TIP_ROW.format(n=n), "90,40,220,60")
-                      + "".join(box(f"FCJH_DiagTipIcon{n}_{k}", TIP_ROW.format(n=n) + "/TalentsContainerFrame/"
-                                    f"SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame/TalentTreeIcon{k}",
-                                    "160,255,255,255" if k % 2 else "160,255,60,60")
-                                for k in range(1, 8))
-                      for n in range(10)))
 
 
 def tracer_charge():

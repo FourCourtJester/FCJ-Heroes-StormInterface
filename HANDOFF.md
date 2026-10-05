@@ -355,20 +355,22 @@ with Blizzard's command card on it.
 
 0. **Plate clicks (2026-10-05): not our bug.** Clicking a plate follows that hero only while
    the game's camera lock (**L**) is on, and observers can toggle it. A day of bisecting
-   (talent tips off, card off, the Friday build) ended there. Bisect undone; the only
-   diagnostic left is the tooltip-row boxes in `inspect_card.diagnostics` (item 2).
+   (talent tips off, card off, the Friday build) ended there. Bisect undone, diagnostics gone.
 1. **Command card on the inspect card** - check the last build (hotkey letters off, cooldown
    and charge text resized): does each button read cleanly? Then: the talent-actives row (pick
    an activatable talent), button tooltips, the mount button (Blizzard's bookend art, squeezed
    to 52 x 52; Ahli widens it to 82), and whether the empty top row should collapse. Keys
    Blizzard draws, left to right: Z, Q, W, E, R, D (seen 2026-10-03).
-2. **Inspect card talents: tooltips** - built 2026-10-05, not yet seen in game
-   (`inspect_card.talent_tips`): our own instance of Blizzard's talent panel, as the talents
-   pane uses, with each player's seven icons re-laid invisibly over the card's talent strip;
-   only the selected player's row is on the card (`tip_switch`, raised by the card's player
-   matcher), the whole panel shows only with the card. Check: hover each picked talent; no
-   tooltip from an unpicked tier or another player; nothing answers the mouse with the card
-   shut. Later: those icons carry Blizzard's quest progress bar too (item 5).
+2. **Inspect card talents: tooltips** - DONE 2026-10-05, both teams seen lined up on the
+   tiers (`inspect_card.talent_tips`). The recipe that finally held: Blizzard's WHOLE
+   top-bar talent panel as the root (`template="TalentsOverviewPanel/TalentsOverviewTopBarTemplate"`),
+   our overrides on top - as the plates' heroic-tooltip copies are built. Built from parts (a
+   CleanTalentsPanelTemplate whose `HeroTalentsPanelContainer` we gave a row template in our
+   own declaration), the rows kept Blizzard's icon places and sizes: blue bottom-panel rows
+   whatever we tried (anchors, full paths, frame-by-frame, a pinned strip, Blizzard's red strip
+   template), top-bar rows on both teams. Still to check: hover each picked talent; no tooltip
+   from an unpicked tier or another player; nothing answers the mouse with the card shut.
+   Later: those icons carry Blizzard's quest progress bar too (item 5).
 3. **Inspect card height and stats** - the user plans to shorten the card once the wiring is
    done, and to re-order the stats so they're better organized (user, 2026-10-03).
 4. **Anchoring pass**: everything we place is anchored to the screen's LEFT edge with fixed
