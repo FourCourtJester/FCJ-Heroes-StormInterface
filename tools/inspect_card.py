@@ -478,7 +478,11 @@ def talent_tips():
         + f'{T*6}<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame"><Alpha val="0"/>'
         f'<AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/></Frame>\n'
         f'{T*6}<Frame type="Frame" name="TalentsContainerFrame">\n{T*7}<Batch val="false"/>\n'
-        f'{T*7}<Frame type="PlayerHeroSelectedTalentTreeFrame" name="SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame">\n'
+        # blue rows (players 0-4) on Blizzard's red strip, as Blizzard's own red rows are: our
+        # icon anchors held on red rows and not on blue (2026-10-05). Which player a row
+        # shows comes from the row, not the strip
+        f'{T*7}<Frame type="PlayerHeroSelectedTalentTreeFrame" name="SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame"'
+        + (' template="TalentsOverviewPanel/BottomPanelTalentTreeCustomTemplateRed"' if n < 5 else "") + '>\n'
         + "".join(icon(k, n) for k in range(1, 8))
         + f'{T*7}</Frame>\n{T*6}</Frame>\n{T*5}</Frame>\n'
         for n in range(10))
