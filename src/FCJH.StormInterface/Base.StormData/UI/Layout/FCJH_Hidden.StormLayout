@@ -87,6 +87,20 @@
 					<Alpha val="0"/>
 					<AcceptsMouse val="false"/>
 					<Draggable val="false"/>
+					<!-- ...but the box itself didn't stay parked: it's held inside the screen (its
+					     DragConstraintFrame), and sat mid-screen unseen, its bars' segment ticks
+					     showing as thin lines and its health, resource and stat tooltips answering
+					     the mouse (user, 2026-10-05; in screenshots since 2026-10-02). Its contents
+					     are parked instead - a child isn't held by its parent's drag constraint. -->
+					<Frame type="Frame" name="TargetInfoPanel">
+						<Anchor side="Top"    relative="$GameUI" pos="Min" offset="9999"/>
+						<Anchor side="Left"   relative="$GameUI" pos="Min" offset="9999"/>
+						<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="10116"/>
+						<Anchor side="Right"  relative="$GameUI" pos="Min" offset="10225"/>
+						<Alpha val="0"/>
+						<AcceptsMouse val="false"/>
+						<AcceptsMouseTooltip val="false"/>
+					</Frame>
 				</Frame>
 			</Frame>
 		</Frame>

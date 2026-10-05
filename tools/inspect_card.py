@@ -34,6 +34,7 @@ M = EDGE + PAD                     # side margin
 INNER = W - 2 * M                  # the width everything is laid across
 TITLE = 30                         # the title band: the hero's name, and the X
 NAME_BAND, NAME_H = 155, 30        # the player's name and the level, under the portrait
+NAME_DROP = 2                      # their text set this much low: centred, it read high (2026-10-05)
 PORTRAIT = (TITLE, NAME_BAND)      # top, bottom: stops at the band (round 3 ran it under the
                                    # band and the art hid the level)
 HP = (NAME_BAND + NAME_H + PAD, NAME_BAND + NAME_H + PAD + 24)
@@ -77,6 +78,22 @@ STATS, STAT_ROW, STAT_COL, STAT_H = STATS_LABEL + 18, 24, INNER // 3, 20   # STA
 STAT_END = STATS + 2 * STAT_ROW + STAT_H
 H = STAT_END + PAD + EDGE          # the card's height (layout.toml element.inspect: 525 px)
 TEAM = {}                          # the border's colours, "a,r,g,b" by team: set by layout()
+
+
+ORIGIN = (0, 0)   # the card's top-left on screen, in layout units: set by layout()
+PX = 0.9          # screen pixels per layout unit: set by layout()
+
+
+def line(at, axis, way, want=2):
+    """How many units in from the card-relative edge `at` (axis 0: across, 1: down; way 1: the
+    box runs on past it, -1: it ends there) a line `want` screen pixels thick ends. Units
+    aren't whole pixels, so a fixed thickness rounds to different widths along the card."""
+    px = lambda u: int(u * PX + 0.5)
+    e = ORIGIN[axis] + at
+    for w in (2, 1, 3, 4):
+        if abs(px(e + way * w) - px(e)) == want:
+            return w
+    return 2
 
 
 def tal_left(k):
@@ -368,9 +385,10 @@ def card():
     chrome = []
     # Round 9: the back takes the mouse, so a click inside the card no longer falls through to
     # the map (which deselects the unit and closes the card, 2026-09-30)
-    # (clear since Blizzard's background went on: it's only here to take the mouse)
-    chrome.append(fill("FCJH_Back", 0, 0, H, 0, "0,11,12,20", 200, 3, "Max")
-                  .replace('<AcceptsMouse val="false"/>', '<AcceptsMouse val="true"/>'))
+    # (faded since Blizzard's background went on: it's only here for the mouse - a faded frame
+    # still takes it. A clear fill colour didn't do: the card stayed opaque, 2026-10-05)
+    chrome.append(fill("FCJH_Back", 0, 0, H, 0, "255,11,12,20", 200, 3, "Max")
+                  .replace('<AcceptsMouse val="false"/>', '<AcceptsMouse val="true"/>\n\t\t\t\t<Alpha val="0"/>'))
     # the title band carries the hero's name (unit(): FCJH_HeroName), not a title (user, 2026-10-05)
     chrome.append(blizzard_skin())
     # no buffs or abilities heading (user, 2026-10-05): their pictures say what they are
@@ -497,7 +515,7 @@ def player_pack(n):
                 + f'{T*6}<Texture val="{{{plate(n)}/HeroPortraitImage/@Texture}}"/>\n'
                 f'{T*6}<TextureCoords top="{CROP[0]}" left="{CROP[1]}" bottom="{CROP[2]}" right="{CROP[3]}"/>\n'
                 f'{T*6}<RenderPriority val="668"/>\n{T*6}<AcceptsMouse val="false"/>\n{T*5}</Frame>\n')
-    name = label("FCJH_PlayerName", NAME_BAND, M, NAME_BAND + NAME_H, W - M - 70, "FCJH_InspectSub",
+    name = label("FCJH_PlayerName", NAME_BAND + NAME_DROP, M, NAME_BAND + NAME_H + NAME_DROP, W - M - 70, "FCJH_InspectSub",
                  f"{{{row}/PlayerNameFrame/PlayerNameLabel/@Text}}", 5)
     # the card's edge in the player's team colour (user, 2026-10-05)
     edge = TEAM[colour]
@@ -512,8 +530,10 @@ def player_pack(n):
             # (2 units: 1 is 0.9 px, and the top line rounded away, 2026-10-05)
             + "".join(fill(f"FCJH_TierLine{k}", TAL, tal_left(k), TAL + TAL_SIZE, tal_left(k) + TAL_SIZE,
                            "200,115,102,141", 664, 5)
-                      + fill(f"FCJH_TierBack{k}", TAL + 2, tal_left(k) + 2, TAL + TAL_SIZE - 2,
-                             tal_left(k) + TAL_SIZE - 2, "230,8,8,16", 665, 5) for k in range(1, 8))
+                      + fill(f"FCJH_TierBack{k}", TAL + line(TAL, 1, 1), tal_left(k) + line(tal_left(k), 0, 1),
+                             TAL + TAL_SIZE - line(TAL + TAL_SIZE, 1, -1),
+                             tal_left(k) + TAL_SIZE - line(tal_left(k) + TAL_SIZE, 0, -1), "230,8,8,16", 665, 5)
+                      for k in range(1, 8))
             + portrait + icons + name + border + f'{T*4}</Frame>\n')
 
 
@@ -650,7 +670,7 @@ def unit():
 {T*4}<Frame type="UnitStatusLevel" name="FCJH_Level" template="UnitStatus/UnitStatusLevelTemplate">
 {T*5}<!-- its right edge on the margin, as the player's name's left (the template's 25 x 20 beat
 {T*5}     the anchors before and left it short of the edge, 2026-10-05) -->
-{placed(NAME_BAND, W - M - 60, 60, NAME_H, 5)}{T*5}<!-- no truncation: "13" read "..." in round 7 -->
+{placed(NAME_BAND + NAME_DROP, W - M - 60, 60, NAME_H, 5)}{T*5}<!-- no truncation: "13" read "..." in round 7 -->
 {T*5}<Frame type="Label" name="Label"><Anchor relative="$parent"/><Style val="FCJH_InspectLevel"/><Options val="NoWrapping | ScaleToPreventTruncation"/></Frame>
 {T*4}</Frame>
 
@@ -663,11 +683,11 @@ def unit():
 {placed(BUFFS, M, BUFF_W, BUFF_H, 5)}{T*5}<Behavior val="HealingFountainCooldown"/>
 {T*5}<RenderPriority val="680"/>
 {T*5}<AcceptsMouse val="false"/>
-{T*5}<AcceptsMouseTooltip val="false"/>  <!-- its tooltip ("use the fountain...") covered the whole card -->
+{T*5}<!-- its tooltip, Blizzard's own, while the fountain cools down (off while the sensor
+{T*5}     covered the whole card) -->
 {T*5}<Frame type="BehaviorIcon" name="BehaviorIcon" template="BehaviorBar/BehaviorIconTemplate">
 {T*6}<Anchor relative="$parent"/>
 {T*6}<AcceptsMouse val="false"/>
-{T*6}<AcceptsMouseTooltip val="false"/>
 {"".join(f'{T*6}<Frame type="{ty}" name="{nm}"><Visible val="false"/><Alpha val="0"/></Frame>{chr(10)}'
          for ty, nm in (("Frame", "ImageMaskContainer"), ("Image", "IconImageBg"), ("Label", "StackLabel"),
                         ("ProgressBar", "QuestProgressBar"), ("ProgressBar", "CooldownBar"), ("Image", "BGFlashImage")))}{T*6}<Frame type="Label" name="CooldownLabel">
@@ -751,7 +771,7 @@ def unit():
 
 
 FILE_HEADER = """
-	<!-- The inspect card (tools/inspect_card.py; layout.toml element.inspect, 300 x 750 px): the
+	<!-- The inspect card (tools/inspect_card.py; layout.toml element.inspect, 300 x 525 px): the
 	     selected unit's portrait, name, player and level, fountain, health and resource, buffs
 	     and debuffs, abilities, talents and stats. Shown when Blizzard's own small inspector
 	     would be. It lives in Blizzard's console container, beside the command card whose buttons
@@ -762,12 +782,12 @@ FILE_HEADER = """
 """
 
 
-def layout(crop, head, team_colours):
+def layout(crop, head, team_colours, origin=(0, 0), px=0.9):
     """The whole layout file. crop: the plates' portrait crop (HeroCell.crop); head: the XML
     declaration, <Desc> and the generated-file banner; team_colours: {"blue": "rrggbb",
     "red": ...}, the border's (the plates' own blue and red)."""
-    global CROP
-    CROP = crop
+    global CROP, ORIGIN, PX
+    CROP, ORIGIN, PX = crop, origin, px
     TEAM.update({team: "255," + ",".join(str(int(hex_[i:i + 2], 16)) for i in (0, 2, 4))
                  for team, hex_ in team_colours.items()})
     HEROES[:] = cached_heroes()

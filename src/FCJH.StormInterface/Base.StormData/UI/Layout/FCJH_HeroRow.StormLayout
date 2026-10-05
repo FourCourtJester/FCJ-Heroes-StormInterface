@@ -5391,6 +5391,16 @@
 												<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="92"/>
 												<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="82"/>
 												<Unclipped val="true"/>
+												<StateGroup name="FCJH_WithHeroic">
+													<DefaultState val="Shown"/>
+													<State name="Gone">
+														<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/HeroicTalentPanel" Visible="false"/>
+														<Action type="SetProperty" frame="$this" Alpha="0"/>
+													</State>
+													<State name="Shown">
+														<Action type="SetProperty" frame="$this" Alpha="255"/>
+													</State>
+												</StateGroup>
 												<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
 													<Frame type="ProgressBar" name="ChargeFillProgress">
 														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
@@ -5456,6 +5466,16 @@
 												<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="92"/>
 												<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" pos="Min" offset="82"/>
 												<Unclipped val="true"/>
+												<StateGroup name="FCJH_WithHeroic">
+													<DefaultState val="Shown"/>
+													<State name="Gone">
+														<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/HeroicTalentPanel" Visible="false"/>
+														<Action type="SetProperty" frame="$this" Alpha="0"/>
+													</State>
+													<State name="Shown">
+														<Action type="SetProperty" frame="$this" Alpha="255"/>
+													</State>
+												</StateGroup>
 												<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
 													<Frame type="ProgressBar" name="ChargeFillProgress">
 														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
@@ -5521,6 +5541,16 @@
 												<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="92"/>
 												<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="82"/>
 												<Unclipped val="true"/>
+												<StateGroup name="FCJH_WithHeroic">
+													<DefaultState val="Shown"/>
+													<State name="Gone">
+														<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/HeroicTalentPanel" Visible="false"/>
+														<Action type="SetProperty" frame="$this" Alpha="0"/>
+													</State>
+													<State name="Shown">
+														<Action type="SetProperty" frame="$this" Alpha="255"/>
+													</State>
+												</StateGroup>
 												<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
 													<Frame type="ProgressBar" name="ChargeFillProgress">
 														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
@@ -5586,6 +5616,16 @@
 												<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="92"/>
 												<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="82"/>
 												<Unclipped val="true"/>
+												<StateGroup name="FCJH_WithHeroic">
+													<DefaultState val="Shown"/>
+													<State name="Gone">
+														<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/HeroicTalentPanel" Visible="false"/>
+														<Action type="SetProperty" frame="$this" Alpha="0"/>
+													</State>
+													<State name="Shown">
+														<Action type="SetProperty" frame="$this" Alpha="255"/>
+													</State>
+												</StateGroup>
 												<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
 													<Frame type="ProgressBar" name="ChargeFillProgress">
 														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
@@ -5651,6 +5691,16 @@
 												<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="92"/>
 												<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" pos="Min" offset="82"/>
 												<Unclipped val="true"/>
+												<StateGroup name="FCJH_WithHeroic">
+													<DefaultState val="Shown"/>
+													<State name="Gone">
+														<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/HeroicTalentPanel" Visible="false"/>
+														<Action type="SetProperty" frame="$this" Alpha="0"/>
+													</State>
+													<State name="Shown">
+														<Action type="SetProperty" frame="$this" Alpha="255"/>
+													</State>
+												</StateGroup>
 												<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
 													<Frame type="ProgressBar" name="ChargeFillProgress">
 														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
@@ -5716,6 +5766,16 @@
 												<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="68"/>
 												<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" pos="Min" offset="82"/>
 												<Unclipped val="true"/>
+												<StateGroup name="FCJH_WithHeroic">
+													<DefaultState val="Shown"/>
+													<State name="Gone">
+														<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/HeroicTalentPanel" Visible="false"/>
+														<Action type="SetProperty" frame="$this" Alpha="0"/>
+													</State>
+													<State name="Shown">
+														<Action type="SetProperty" frame="$this" Alpha="255"/>
+													</State>
+												</StateGroup>
 												<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
 													<Frame type="ProgressBar" name="ChargeFillProgress">
 														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
@@ -5781,6 +5841,16 @@
 												<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="68"/>
 												<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="82"/>
 												<Unclipped val="true"/>
+												<StateGroup name="FCJH_WithHeroic">
+													<DefaultState val="Shown"/>
+													<State name="Gone">
+														<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/HeroicTalentPanel" Visible="false"/>
+														<Action type="SetProperty" frame="$this" Alpha="0"/>
+													</State>
+													<State name="Shown">
+														<Action type="SetProperty" frame="$this" Alpha="255"/>
+													</State>
+												</StateGroup>
 												<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
 													<Frame type="ProgressBar" name="ChargeFillProgress">
 														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
@@ -5846,6 +5916,16 @@
 												<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="68"/>
 												<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" pos="Min" offset="82"/>
 												<Unclipped val="true"/>
+												<StateGroup name="FCJH_WithHeroic">
+													<DefaultState val="Shown"/>
+													<State name="Gone">
+														<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/HeroicTalentPanel" Visible="false"/>
+														<Action type="SetProperty" frame="$this" Alpha="0"/>
+													</State>
+													<State name="Shown">
+														<Action type="SetProperty" frame="$this" Alpha="255"/>
+													</State>
+												</StateGroup>
 												<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
 													<Frame type="ProgressBar" name="ChargeFillProgress">
 														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
@@ -5911,6 +5991,16 @@
 												<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="68"/>
 												<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="82"/>
 												<Unclipped val="true"/>
+												<StateGroup name="FCJH_WithHeroic">
+													<DefaultState val="Shown"/>
+													<State name="Gone">
+														<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/HeroicTalentPanel" Visible="false"/>
+														<Action type="SetProperty" frame="$this" Alpha="0"/>
+													</State>
+													<State name="Shown">
+														<Action type="SetProperty" frame="$this" Alpha="255"/>
+													</State>
+												</StateGroup>
 												<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
 													<Frame type="ProgressBar" name="ChargeFillProgress">
 														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
@@ -5976,6 +6066,16 @@
 												<Anchor side="Right" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="68"/>
 												<Anchor side="Bottom" relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" pos="Min" offset="82"/>
 												<Unclipped val="true"/>
+												<StateGroup name="FCJH_WithHeroic">
+													<DefaultState val="Shown"/>
+													<State name="Gone">
+														<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/HeroicTalentPanel" Visible="false"/>
+														<Action type="SetProperty" frame="$this" Alpha="0"/>
+													</State>
+													<State name="Shown">
+														<Action type="SetProperty" frame="$this" Alpha="255"/>
+													</State>
+												</StateGroup>
 												<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
 													<Frame type="ProgressBar" name="ChargeFillProgress">
 														<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>

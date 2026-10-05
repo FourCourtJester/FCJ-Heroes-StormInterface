@@ -1626,6 +1626,10 @@ def talent_row_lifts(cfg):
     for n in range(10):
         team, cell = popup_cell(n)
         l, t, r, b = heroic_frame_rect(cfg, team.lower())
+        # the in-game top bar's heroic panel for this player, which our plate's heroic follows
+        # (heroic_panel): the meter goes with it - it stayed on while Tracer was dead and her
+        # heroic and bars were gone (user, 2026-10-05)
+        party = f"{PARTY}/{cell.rsplit('/', 2)[1]}/{cell.rsplit('/', 1)[1]}/HeroicTalentPanel"
         edge = lambda side, rel, pos, v: f'<Anchor side="{side}" relative="{rel}" pos="{pos}" offset="{v}"/>'
         icons = "".join(muted("UnitStatusTalentIcon", f"TalentTreeIcon{k}", 12) for k in range(1, 8))
         out.append(talent_chain(n, f"""
@@ -1637,6 +1641,16 @@ def talent_row_lifts(cfg):
 												{edge("Right", cell, "Min", r)}
 												{edge("Bottom", cell, "Min", b)}
 												<Unclipped val="true"/>
+												<StateGroup name="FCJH_WithHeroic">
+													<DefaultState val="Shown"/>
+													<State name="Gone">
+														<When type="Property" frame="{party}" Visible="false"/>
+														<Action type="SetProperty" frame="$this" Alpha="0"/>
+													</State>
+													<State name="Shown">
+														<Action type="SetProperty" frame="$this" Alpha="255"/>
+													</State>
+												</StateGroup>
 												<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
 													<Frame type="ProgressBar" name="ChargeFillProgress">
 														{edge("Left", "$parent", "Min", 0)}
@@ -2326,7 +2340,8 @@ def committed_files(cfg, source=SOURCE):
         LAYOUT_REL / STAT_PANES_FILE: stat_panes_layout(cfg),
         LAYOUT_REL / INSPECT_FILE: inspect_card.layout(
             HeroCell(cfg).crop, XML_DECL + "<Desc>\n" + GENERATED,
-            {t: cfg["top_backplate"][f"{t}_colour"] for t in ("blue", "red")}),   # the card's team edge
+            {t: cfg["top_backplate"][f"{t}_colour"] for t in ("blue", "red")},   # the card's team edge
+            (u(rects(cfg)["inspect"][0][0]), u(rects(cfg)["inspect"][0][1])), 1 / u.scale),   # its place, for pixel-exact lines
         LAYOUT_REL / INDEX_FILE: desc_index(layout_order(layout_dir, generated=GENERATED_LAYOUTS)),
     }
     return {rel: text.encode("utf-8") for rel, text in texts.items()} | texture_files(cfg)
