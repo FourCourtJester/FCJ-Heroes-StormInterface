@@ -436,7 +436,7 @@ def matcher(n):
 # actions, diagnostic boxes)
 TALENT_TIPS = True
 TIPS = "$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips"
-TIP_ROW = TIPS + "/FCJH_TalentTipPanel/HeroTalentsPanelContainer/PlayerFrame{n}"
+TIP_ROW = TIPS + "/FCJH_TalentTipPanel/TalentOverview/HeroTalentsPanelContainer/PlayerFrame{n}"
 TIP_W = 6 * TAL_STEP + TAL_SIZE        # the talent strip's width: seven icons
 
 
@@ -490,27 +490,22 @@ def talent_tips():
             f'{T*2}<Frame type="Frame" name="FCJH_TalentTips">\n'
             f'{T*3}<Anchor relative="$parent"/>\n{T*3}<Visible val="false"/>\n{T*3}<AcceptsMouse val="false"/>\n'
             f'{T*3}<RenderPriority val="605"/>\n'
-            f'{T*3}<Frame type="HeroTalentsPanel" name="FCJH_TalentTipPanel" template="TalentsOverviewPanel/CleanTalentsPanelTemplate">\n'
+            # Blizzard's whole top-bar talent panel as the root, our changes on top - exactly as
+            # the heroic tooltips' copies are built, where icons both re-size and move. Built
+            # here from its parts instead (a clean panel, its row container given a row
+            # template in our own declaration), the rows kept Blizzard's icon places and sizes:
+            # blue bottom-panel rows whatever we tried, top-bar rows on both teams (2026-10-05)
+            f'{T*3}<Frame type="Frame" name="FCJH_TalentTipPanel" template="TalentsOverviewPanel/TalentsOverviewTopBarTemplate">\n'
             f'{T*4}<Anchor side="Top"    relative="{CARD}" pos="Min" offset="0"/>\n'
             f'{T*4}<Anchor side="Left"   relative="{CARD}" pos="Min" offset="0"/>\n'
             f'{T*4}<Anchor side="Bottom" relative="{CARD}" pos="Max" offset="0"/>\n'
             f'{T*4}<Anchor side="Right"  relative="{CARD}" pos="Max" offset="0"/>\n'
-            f'{T*4}<Visible val="true"/>\n'
             # faded from the root: fading each icon left its picture parts drawing over our
             # talent pictures (2026-10-05); a faded frame still answers the mouse
             f'{T*4}<Alpha val="0"/>\n'
-            + "".join(f'{T*4}<Frame type="{t}" name="{nm}"><Alpha val="0"/>{"<AcceptsMouse val=\"false\"/>" if t == "Button" else ""}</Frame>\n'
-                      for t, nm in (("Frame", "TopHexContainer"), ("Image", "HexImage"), ("Image", "HexOverlayImage"),
-                                    ("Frame", "BorderContainer"), ("Button", "CloseButton"), ("Button", "ClearSortButton"),
-                                    ("Frame", "BlueTeamStats"), ("Frame", "RedTeamStats")))
-            # the player rows: Blizzard's top-bar ones (TalentsOverviewTopBarTemplate's, as the
-            # heroic tooltips use: there our icon sizes hold on both teams). The bottom-panel
-            # rows (the talents pane's) kept every blue icon at Blizzard's size and spacing,
-            # whatever we set - anchors, a pinned strip, full paths, frame-by-frame overrides,
-            # Blizzard's red strip template - while red rows took ours (2026-10-05)
-            + f'{T*4}<Frame type="Frame" name="HeroTalentsPanelContainer" template="TalentsOverviewPanel/HeroTalentsPanelTopContainerTemplate">\n'
-            f'{T*5}<Anchor relative="$parent"/>\n'
-            + rows + f'{T*4}</Frame>\n{T*3}</Frame>\n{T*2}</Frame>\n')
+            f'{T*4}<Frame type="HeroTalentsPanel" name="TalentOverview">\n{T*5}<Visible val="true"/>\n{T*5}<Batch val="false"/>\n'
+            f'{T*5}<Frame type="Frame" name="HeroTalentsPanelContainer">\n'
+            + rows + f'{T*5}</Frame>\n{T*4}</Frame>\n{T*3}</Frame>\n{T*2}</Frame>\n')
 
 
 def unit():
