@@ -175,7 +175,8 @@ def plate(team, x0, y0, z, st, uid):
         f'width="{round((box(r)[2] - box(r)[0]) * frac, 1)}" height="{round(box(r)[3] - box(r)[1], 1)}" fill="{fill}"{extra}></rect>')
     heroic = st.get("heroic")
     dead = st.get("dead")
-    narrow = (NARROW if heroic else 0)
+    narrow = NARROW                         # health: narrow all game (the fountain, then the heroic)
+    rnarrow = NARROW if heroic else 0       # resource: while the heroic shows
     out = [f'<clipPath id="c{uid}"><polygon points="{pts(plate_poly(team, x0, y0, w, h, ov))}"></polygon></clipPath>',
            f'<g clip-path="url(#c{uid})">',
            f'<rect x="{round(x0, 1)}" y="{round(y0, 1)}" width="{round(w, 1)}" height="{round(h, 1)}" fill="{"#2a2a33" if dead else c["portrait"]}"></rect>',
@@ -195,7 +196,7 @@ def plate(team, x0, y0, z, st, uid):
     else:
         out.append(rect((hl + narrow, ht, hr, hb), HP[team], 0 if dead else st.get("hp", 1.0)))
     if not st.get("rexxar"):
-        out.append(rect((el + narrow, et, er, eb), ENERGY[st.get("energy", "mana")], 0 if dead else st.get("mp", 1.0)))
+        out.append(rect((el + rnarrow, et, er, eb), ENERGY[st.get("energy", "mana")], 0 if dead else st.get("mp", 1.0)))
     mid_x = x0 + w / 2 + CELL.death_shift * k             # the death timer's and CC icon's centre
     if st.get("cc") or st.get("clone"):
         half = CELL.cc_half * k
@@ -206,21 +207,38 @@ def plate(team, x0, y0, z, st, uid):
         size = FONTS["FCJH_CCText"][0] * z
         out.append(text(x0 + (hl + narrow + hr) / 2 * k, y0 + (ht + hb) / 2 * k, "CLONE" if st.get("clone") else st["cc"], size,
                         extra=f' letter-spacing="{round(0.4 * z, 1)}" textLength="{round(min((hr - hl - narrow) * k, size * 0.66 * len(st.get("cc", "CLONE"))), 1)}" lengthAdjust="spacingAndGlyphs"'))
-    if st.get("fountain") and not dead:
-        f = slanted(team, *box(CELL.fountain[team]))
-        cx, cy = sum(p[0] for p in f) / 4, sum(p[1] for p in f) / 4
-        a, t = 2.4 * k, 11 * k
-        out.append(f'<polygon points="{pts(f)}" fill="rgba(60,80,230,.85)" stroke="#9EB6FF" stroke-width="{round(1.2 * k, 1)}"></polygon>'
-                   f'<rect x="{round(cx - a / 2, 1)}" y="{round(cy - t / 2, 1)}" width="{round(a, 1)}" height="{round(t, 1)}" fill="#ffffff"></rect>'
-                   f'<rect x="{round(cx - t / 2, 1)}" y="{round(cy - a / 2, 1)}" width="{round(t, 1)}" height="{round(a, 1)}" fill="#ffffff"></rect>')
     if heroic and not dead:
         out.append(heroic_panel(team, box, k, z, heroic))
+    if not dead:   # the fountain: st["fountain"] "cd<seconds>" for on cooldown
+        f = (CELL.fountain_up if heroic else CELL.fountain_bar)[team]
+        out.append(fountain_slot(team, box(f), k, z, st.get("fountain", "ready")))
     if dead:
         out.append(text(mid_x, y0 + CELL.death_mid * k, dead, 28 * k, "#FF3A4E"))
     out.append('</g>')
     poly = pts(plate_poly(team, x0, y0, w, h, ov))
     out.append(f'<polygon points="{poly}" fill="none" stroke="#050608" stroke-width="{round(2.4 * z, 1)}"></polygon>')
     out.append(f'<polygon points="{poly}" fill="none" stroke="{c["line"]}" stroke-opacity=".55" stroke-width="{round(1 * z, 1)}"></polygon>')
+    return "".join(out)
+
+
+def fountain_slot(team, r, k, z, state):
+    """The fountain (gen.HeroCell.fountain_*): Blizzard's fountain token, leaning with the
+    plate. state: "ready", or "cd<seconds>" (dimmed and greyed, the count on top)."""
+    l, t, rr, b = r
+    shape = pts(slanted(team, l, t, rr, b))
+    dim = state.startswith("cd")
+    cx, cy = (l + rr) / 2, (t + b) / 2
+    a, s = 2.6 * k, 13 * k
+    out = [f'<polygon points="{shape}" fill="#0a1424"></polygon>',
+           f'<g opacity="{0.35 if dim else 1}">'
+           f'<polygon points="{shape}" fill="#2F7BFF"></polygon>'
+           f'<rect x="{round(cx - a / 2, 1)}" y="{round(cy - s / 2, 1)}" width="{round(a, 1)}" height="{round(s, 1)}" fill="#ffffff"></rect>'
+           f'<rect x="{round(cx - s / 2, 1)}" y="{round(cy - a / 2, 1)}" width="{round(s, 1)}" height="{round(a, 1)}" fill="#ffffff"></rect></g>',
+           f'<polygon points="{shape}" fill="none" stroke="#C9D6EE" stroke-width="{round(1.2 * z, 1)}"></polygon>']
+    if not dim:
+        out.append(f'<polygon points="{shape}" fill="none" stroke="#9FE0FF" stroke-opacity=".5" stroke-width="{round(3.5 * z, 1)}"></polygon>')
+    else:
+        out.append(text(cx, cy, state[2:], 15 * k))
     return "".join(out)
 
 
@@ -286,17 +304,17 @@ def slab(team, r, frac, fill, from_inner):
 
 BLUE_STATES = [   # stand-ins: blue at level 12 (heroics out), red at 9 (none yet)
     {"label": "1", "dead": "14", "heroic": "ready"},
-    {"label": "2", "hp": 0.83, "mp": 0.4, "fountain": True, "heroic": "ready"},
+    {"label": "2", "hp": 0.83, "mp": 0.4, "heroic": "ready"},
     {"label": "3", "hp": 0.18, "mp": 0.9, "heroic": "cd37"},
-    {"label": "4", "hp": 0.69, "mp": 0.3, "energy": "fury", "fountain": True, "heroic": "charge"},
+    {"label": "4", "hp": 0.69, "mp": 0.3, "energy": "fury", "heroic": "charge"},
     {"label": "5", "hp": 0.52, "mp": 0.6, "cc": "STUNNED", "heroic": "ready"},
 ]
 RED_STATES = [
     {"label": "6", "hp": 0.91, "mp": 0.5},
-    {"label": "7", "hp": 0.27, "mp": 0.2, "fountain": True},
+    {"label": "7", "hp": 0.27, "mp": 0.2},
     {"label": "8", "vikings": (1.0, 0.45, 0.8), "mp": 0.7},
     {"label": "9", "hp": 0.43, "mp": 0.8, "cc": "ROOTED"},
-    {"label": "0", "hp": 1.0, "rexxar": True, "fountain": True},
+    {"label": "0", "hp": 1.0, "rexxar": True},
 ]
 
 
@@ -618,10 +636,10 @@ def plate_board():
                     f"Every number below is the build's (tools/gen.py HeroCell), in px at 1080p; units in brackets. Build {STAMP}.", 1600))
     # --- blue, heroic out, CC; red, no heroic, dead
     for row_i, (team, st, uid, title) in enumerate((
-            ("blue", {"label": "PORTRAIT", "hp": 0.62, "mp": 0.45, "fountain": True, "cc": "STUNNED", "heroic": "ready"}, "zb",
-             "Blue · heroic out (bars narrowed), fountain ready, stunned"),
-            ("red", {"label": "PORTRAIT", "hp": 0.8, "mp": 0.6, "fountain": True}, "zr",
-             "Red · mirrored, before the heroic (bars full width)"))):
+            ("blue", {"label": "PORTRAIT", "hp": 0.62, "mp": 0.45, "cc": "STUNNED", "heroic": "ready"}, "zb",
+             "Blue · heroic out (fountain moved north), stunned"),
+            ("red", {"label": "PORTRAIT", "hp": 0.8, "mp": 0.6}, "zr",
+             "Red · mirrored, before the heroic (resource row full width)"))):
         x0, y0 = (150, 330) if row_i == 0 else (150, 900)
         b.append(heading(x0 - 90, y0 - 150, title, w=900))
         if team == "blue":
@@ -632,7 +650,7 @@ def plate_board():
             svg.append(f'<clipPath id="nrclip"><rect x="0" y="0" width="1100" height="2000"></rect></clipPath><g opacity=".3" clip-path="url(#nrclip)">{nb}</g>')
         svg.append(plate(team, x0, y0, z, st, uid))
         g = CELL.team[team]
-        narrow = NARROW if st.get("heroic") else 0
+        narrow, rnarrow = NARROW, (NARROW if st.get("heroic") else 0)
         svg.append(dim_h(x0, x0 + w, y0 + h + 36, f"{px_(CELL.w)} px ({CELL.w})"))
         svg.append(dim_v(x0 - 40, y0, y0 + h, f"{px_(CELL.h)} ({CELL.h})", side=-1))
         ovx = x0 + w - CELL.overlap * k if team == "blue" else x0
@@ -648,12 +666,12 @@ def plate_board():
         svg.append(callout(cx + size / 2, y0 - size / 4, right, y0 - 60,
                            f"Pop-up · {ROW['talent_popup_size']} px, box centre, straddling the top edge"))
         svg.append(callout(x0 + (hl + narrow + 20) * k, y0 + (ht + hb) / 2 * k, right, y0 + 150,
-                           f"Health · {px_((hr - hl - narrow))} × {px_(hb - ht)} ({hr - hl - narrow} × {hb - ht})" + (" · narrowed" if narrow else "")))
-        svg.append(callout(x0 + (el + narrow + 30) * k, y0 + (et + eb) / 2 * k, right, y0 + 190,
-                           f"Resource · {px_(er - el - narrow)} × {px_(eb - et)} ({er - el - narrow} × {eb - et})"))
-        fl, ft, fr, fb = CELL.fountain[team]
-        svg.append(callout(x0 + (fl + fr) / 2 * k, y0 + fb * k, right, y0 + 20,
-                           f"Fountain ready · {px_(fr - fl)} × {px_(fb - ft)} ({fr - fl} × {fb - ft}), portrait side"))
+                           f"Health · {px_((hr - hl - narrow))} × {px_(hb - ht)} ({hr - hl - narrow} × {hb - ht}) · narrow all game"))
+        svg.append(callout(x0 + (el + rnarrow + 30) * k, y0 + (et + eb) / 2 * k, right, y0 + 190,
+                           f"Resource · {px_(er - el - rnarrow)} × {px_(eb - et)} ({er - el - rnarrow} × {eb - et})" + (" · narrowed" if rnarrow else "")))
+        fl, ft, fr, fb = (CELL.fountain_up if st.get("heroic") else CELL.fountain_bar)[team]
+        svg.append(callout(x0 + (fl + fr) / 2 * k, y0 + ft * k, right, y0 + 20,
+                           f"Fountain · {px_(fr - fl)} × {px_(fb - ft)} ({fr - fl} × {fb - ft})" + (", north of the heroic" if st.get("heroic") else ", on the health bar's start")))
         if st.get("cc"):
             svg.append(callout(x0 + w / 2 + (CELL.death_shift + CELL.cc_half) * k, y0 + CELL.cc_mid * k, right, y0 + 60,
                                f"CC icon · {px_(2 * CELL.cc_half)} px ({2 * CELL.cc_half}) square, centred in the portrait"))
@@ -667,12 +685,12 @@ def plate_board():
             svg.append(callout(x0 + il * k, y0 + (it + 6) * k, right, y0 + 230,
                                f"Heroic · icon {px_(ir - il)} px ({ir - il}) square, gold frame {px_(fr2 - fl2)} × {px_(fb2 - ft2)}"))
             svg.append(callout(x0 + (hl + narrow) * k, y0 + hb * k, right, y0 + 270,
-                               f"Bars narrow {px_(NARROW)} px ({NARROW}) from the left while the heroic shows"))
+                               f"Resource narrows {px_(NARROW)} px ({NARROW}) from the left while the heroic shows"))
         else:
             svg.append(callout(x0 + w / 2 + CELL.death_shift * k, y0 + CELL.death_mid * k, right, y0 + 100,
                                f"Death timer · centred {px_(CELL.death_shift)} px right of the middle"))
             svg.append(callout(x0 + (hl + 2) * k, y0 + hb * k, right, y0 + 230,
-                               "No heroic yet: full-width bars. Red's heroic is on the LEFT too"))
+                               "No heroic yet: full-width resource row. Red's heroic is on the LEFT too"))
     # --- pop-up storyboard (2x)
     tp, hp = CFG["talent_popup"], CFG["heal_popup"]
     zz, sy = 2, 1520
@@ -719,7 +737,27 @@ def plate_board():
         fx = 60 + i * 440
         svg.append(plate("blue", fx, cy_, zz, st, f"sp{i}"))
         b.append(f'<div class="s" style="position: absolute; left: {fx}px; top: {cy_ + 190}px; width: 340px; font-size: 15px; color: #C9CAD6;">{caption}</div>\n')
-    H = 2780
+    # --- the fountain on the health bar (2x)
+    fy = 3020
+    bl, bt, br, bb = CELL.fountain_bar["blue"]
+    b.append(heading(48, fy - 210, "Fountain · on the health bar",
+                     f"Blizzard's fountain token, the inspect card's tech: bright when ready; dimmed and greyed with the seconds left on cooldown, as the heroic. "
+                     f"Oversized on the health bar's heroic end, its bottom on the health bar's bottom, leaning with the plate against its slanted edge: "
+                     f"{px_(br - bl)} × {px_(bb - bt)} px ({br - bl} × {bb - bt}). The health bar starts after it (narrowed by the heroic's {px_(NARROW)} px, "
+                     "so it never changes length); the resource row is untouched until the heroic comes. Then the heroic takes this spot and the fountain "
+                     "moves north, above it, still against the plate's edge. "
+                     "Gone with the bars on a death.", 1600))
+    cols = [("No heroic · ready", {}), ("No heroic · on cooldown", {"fountain": "cd42"}),
+            ("Heroic out · moved north, ready", {"heroic": "ready"}),
+            ("Heroic out · on cooldown", {"fountain": "cd17", "heroic": "cd37"})]
+    for row_i, team in enumerate(("blue", "red")):
+        ry = fy + row_i * 300
+        for i, (caption, extra) in enumerate(cols):
+            fx = 60 + i * 400
+            svg.append(plate(team, fx, ry, zz, {"label": "HERO", "hp": 0.7, "mp": 0.5, **extra}, f"fp{team}{i}"))
+            b.append(f'<div class="s" style="position: absolute; left: {fx}px; top: {ry + 190}px; width: 340px; font-size: 15px; color: #C9CAD6;">'
+                     f'{team.capitalize()} · {caption}</div>\n')
+    H = fy + 300 + 240
     b.insert(1, f'<svg width="{W_}" height="{H}" viewBox="0 0 {W_} {H}" style="position: absolute; left: 0; top: 0;" aria-label="Hero plate anatomy, pop-up storyboard, heroic states, special plates">{"".join(svg)}</svg>\n')
     return page("Hero plate anatomy", W_, H, "".join(b)), (W_, H)
 
@@ -936,8 +974,7 @@ def visual_board():
           ("A type ramp", "Three sizes, not ten (label, value, headline), and whether Blizzard's own labels get resized to match."),
           ("Density", "Stats rows spread to fill (fixed box) or pack tight (box per pane)? The inspect card's spare bottom: fill it or shorten the card?"),
           ("Blizzard skins", "Kill feed, replay panel, inspect bars: keep Blizzard's, or reskin in chrome?"),
-          ("Fountain markers", "Resize and re-angle them to sit with the plate's slant."),
-          ("Numbers", "Thousands separators (13,660) or short form (13.7k)?")]
+                    ("Numbers", "Thousands separators (13,660) or short form (13.7k)?")]
     b.append('<div style="display: flex; flex-direction: column; gap: 10px;"><div class="t" style="font-size: 20px; color: #F2C94C;">To decide together</div>'
              '<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 40px;">')
     for i, (t, d) in enumerate(qs):
@@ -970,7 +1007,7 @@ def spec_board():
         ("CC icon + text", f"Icon {px_(2 * CELL.cc_half)} px in the portrait; text on the health bar", "game", "Text fits the bar's width (UNSTOPPABLE fits)"),
         ("Death timers", "Plate centre", "game", "Per-Viking timers too; Misha's removed"),
         ("Special plates", "Vikings, Rexxar, Abathur", "game", "Vikings in thirds (Baleog, Erik, Olaf); Rexxar full-height bar; Abathur's clone icon + CLONE"),
-        ("Fountain ready", "Top corner, portrait side", "game", "Resize and re-angle in the visual pass"),
+        ("Fountain", "On the health bar's start; north of the heroic while it shows", "built", "Bright when ready, dimmed with its count on cooldown"),
         ("Talent pop-ups", f"{ROW['talent_popup_size']} px, straddling the top edge", "game", f"Hold {tp['hold']} s, fade {tp['fade']} s; always play out; drawn over heal. Seen at 40 px"),
         ("Heal pop-up", f"Same spot and motion; at {hp['threshold']}% or less", "game", f"Hold {hp['hold']} s; clears above {hp['clear_above']}%; fades at once on death; {hp['lock']:g} s lock per plate"),
         ("Team XP", f"{xs('blue_xp')}, y {f1(R['blue_xp'][1])}, on the plates' top edge", "game", "Cut to the slant; hidden before the game starts. Moves with the plates"),
