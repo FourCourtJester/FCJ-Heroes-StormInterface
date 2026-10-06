@@ -502,10 +502,13 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
     still on the plates) - name, the team's name on the band, bars, buffs, stats. No portrait
     (Blizzard's unit picture is 112 x 49, too small to blow up: user's call), fountain,
     abilities (command card parked) or talents.
-    - **hero or not:** the gate (`card()`): ten Hero states, one per player matcher's flag
-      (FCJH_TipSelN), tried before a plain Unit state - so a hero unit the matchers don't know
-      (Abathur's clone, unguessed Vikings / D.Va units...) gets the short card. `shape()` moves
-      the card's top and the rows, both ways.
+    - **hero or not:** `hero_check` - the selected unit against the hero units (game data
+      plus ALSO's forms), FCJH_IsHero, read by the gate (`card()`); `shape()` moves the card's
+      top and the rows, both ways. The first try keyed it to the plates' matchers and some
+      heroes got the short card at a match's start for a while (user, 2026-10-05). If a hero
+      still shows blank (no portrait or talents) early on, the plates' matchers are slow too.
+    - **edge widths:** each side as many units as make 2 px there (`line`); the right side was
+      a flat 2 units, 1.8 px, rounded to 1 (user, 2026-10-05).
     - **edge:** every unit's edge is now the team sensor's (`unit_team`): blue, red, or
       `[element.inspect] neutral_colour` (a lighter purple, user) for neither team - it replaced
       the player packs' own edge. What mercenaries and bosses read is still to be seen.

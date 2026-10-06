@@ -418,7 +418,14 @@ def shape(hero):
          shown(f"{UNIT}/FCJH_FountainReady", hero),
          shown(f"{UNIT}/FCJH_SectionTalents", hero),
          shown(f"{UNIT}/FCJH_UnitTeam", not hero)]
-        + [shown(f"{UNIT}/FCJH_Tier{k}", hero) for k in range(1, 8)]))
+        + [shown(f"{UNIT}/FCJH_Tier{k}", hero) for k in range(1, 8)]
+        + [at(f"{UNIT}/FCJH_UnitEdge/FCJH_Side{side}/FCJH_EdgeTop", "Bottom", f"{UNIT}/FCJH_UnitEdge/FCJH_Side{side}",
+              "Min", edge_top(hero)) for side, _, _, _ in SIDES]))
+
+
+def edge_top(hero):
+    """The card's top edge, in units: 2 screen pixels where that card's top falls."""
+    return line(0 if hero else H - H_SHORT, 1, 1)
 
 
 def card():
@@ -430,17 +437,15 @@ def card():
            f'{T*2}     plate click of a game; the default UI\'s doesn\'t (user). Blizzard\'s is now parked\n'
            f'{T*2}     off screen rather than forced hidden (FCJH_Hidden), so its visibility is still the\n'
            f'{T*2}     game\'s, and this watcher copies it onto the card. -->\n'
-           f'{T*2}<!-- Hero or not (2026-10-05): a hero is a unit some plate holds - one of the ten player\n'
-           f'{T*2}     matchers has raised its flag (FCJH_TipSelN; states are tried in order, so the ten\n'
-           f'{T*2}     Hero states read as "any of them"). A hero gets the tall card with Blizzard\'s\n'
-           f'{T*2}     command card on it; anything else the short card (shape), command card away. -->\n'
+           f'{T*2}<!-- Hero or not (2026-10-05): the selected unit is a hero unit (FCJH_IsHero, hero_check).\n'
+           f'{T*2}     A hero gets the tall card with Blizzard\'s command card on it; anything else the\n'
+           f'{T*2}     short card (shape), command card away. -->\n'
            f'{T*2}<Frame type="Frame" name="FCJH_InspectGate">\n'
            f'{T*3}<Anchor relative="$parent"/>\n{T*3}<AcceptsMouse val="false"/>\n'
            f'{T*3}<StateGroup name="FCJH_Gate">\n{T*4}<DefaultState val="Hide"/>\n'
-           + "".join(f'{T*4}<State name="Hero{n}">\n{T*5}<When type="Property" frame="{TARGET_INFO}" Visible="true"/>\n'
-                     f'{T*5}<When type="Property" frame="{UNIT}/FCJH_TipSel{n}" Visible="true"/>\n'
-                     + shown + command_anchors(True, 5) + shape(True) + f'{T*4}</State>\n'
-                     for n in range(10))
+           + f'{T*4}<State name="Hero">\n{T*5}<When type="Property" frame="{TARGET_INFO}" Visible="true"/>\n'
+           f'{T*5}<When type="Property" frame="{UNIT}/{IS_HERO}" Visible="true"/>\n'
+           + shown + command_anchors(True, 5) + shape(True) + f'{T*4}</State>\n'
            + f'{T*4}<State name="Unit">\n{T*5}<When type="Property" frame="{TARGET_INFO}" Visible="true"/>\n'
            + shown + command_anchors(False, 5) + shape(False) + f'{T*4}</State>\n'
            f'{T*4}<State name="Hide">\n'
@@ -748,6 +753,25 @@ def team_sense():
             f'{T*4}</Frame>\n')
 
 
+IS_HERO = "FCJH_IsHero"
+
+
+def hero_check():
+    """FCJH_IsHero: shown while the selected unit is a hero unit (the game data's heroes and
+    ALSO's forms). The first try asked whether any plate's matcher had matched it - at a match's
+    start some heroes got the short card for a while (user, 2026-10-05), so the card's size
+    asks only the unit; which PLAYER it is (the portrait, talents, name) is still the plates'."""
+    units = sorted(set(HEROES) | {sel for sel, _ in ALSO})
+    return (f'{T*4}<!-- hero or not, by the selected unit alone (inspect_card.hero_check): the gate reads it -->\n'
+            f'{T*4}<Frame type="Frame" name="{IS_HERO}"><Anchor relative="$parent"/><Visible val="false"/>'
+            f'<AcceptsMouse val="false"/></Frame>\n'
+            f'{T*4}<StateGroup name="FCJH_HeroCheck">\n{T*5}<DefaultState val="No"/>\n'
+            + "".join(f'{T*5}<State name="{u}"><When type="Property" Unit="{u}"/>'
+                      f'<Action type="SetProperty" frame="$this/{IS_HERO}" Visible="true"/></State>\n' for u in units)
+            + f'{T*5}<State name="No"><Action type="SetProperty" frame="$this/{IS_HERO}" Visible="false"/></State>\n'
+            f'{T*4}</StateGroup>\n')
+
+
 SIDES = (("Blue", "blue", "TeamOrder", "BLUE TEAM"), ("Red", "red", "TeamChaos", "RED TEAM"),
          ("Neutral", "neutral", None, "NEUTRAL"))
 
@@ -757,15 +781,17 @@ def unit_team():
     the lighter purple for anything of neither team (a mercenary camp, a boss; user,
     2026-10-05) - and, on the short card only (the gate's shape), the team's name on the band
     where a hero's player name goes. The edge runs to the card's end, either size; on a hero
-    it's the player pack's own edge colour."""
+    it's the player pack's own edge colour. Each side is as many units as make 2 screen pixels
+    there (line(); a flat 2 units is 1.8 px and the right side rounded to 1, user 2026-10-05);
+    the top's depends on the card's size, so the gate sets it (edge_top)."""
     edge = lambda side, colour: (
         f'{T*5}<Frame type="Frame" name="FCJH_Side{side}">\n{T*6}<Anchor relative="$parent"/>\n'
         f'{T*6}<Alpha val="0"/>\n{T*6}<AcceptsMouse val="false"/>\n'
-        + fill("FCJH_EdgeTop", 0, 0, BORDER, 0, colour, 690, 6, "Max")
-        + fill("FCJH_EdgeBottom", -BORDER, 0, 0, 0, colour, 690, 6, "Max", "Max").replace(
+        + fill("FCJH_EdgeTop", 0, 0, edge_top(True), 0, colour, 690, 6, "Max")
+        + fill("FCJH_EdgeBottom", -line(H, 1, -1), 0, 0, 0, colour, 690, 6, "Max", "Max").replace(
             '<Anchor side="Top"    relative="$parent" pos="Min"', '<Anchor side="Top"    relative="$parent" pos="Max"')
-        + fill("FCJH_EdgeLeft", 0, 0, 0, BORDER, colour, 690, 6, "Min", "Max")
-        + fill("FCJH_EdgeRight", 0, -BORDER, 0, 0, colour, 690, 6, "Max", "Max").replace(
+        + fill("FCJH_EdgeLeft", 0, 0, 0, line(0, 0, 1), colour, 690, 6, "Min", "Max")
+        + fill("FCJH_EdgeRight", 0, -line(W, 0, -1), 0, 0, colour, 690, 6, "Max", "Max").replace(
             '<Anchor side="Left"   relative="$parent" pos="Min"', '<Anchor side="Left"   relative="$parent" pos="Max"')
         + f'{T*5}</Frame>\n')
     band = NAME_BAND - SHIFT
@@ -811,7 +837,7 @@ def unit():
 {T*4}<!-- 1. animated model: DROPPED (round 6). The hero cutscene kept the first hero clicked
 {T*4}     (Chromie) over every later selection; the static portrait underneath updates. -->
 
-{team_sense()}{unit_team()}
+{team_sense()}{unit_team()}{hero_check()}
 {T*4}<!-- 2. name (in the title band, user 2026-10-05), player, level -->
 {T*4}<Frame type="UnitStatusName" name="FCJH_HeroName" template="UnitStatus/UnitStatusUnitNameTemplate">
 {T*5}<!-- centred on the card: the template's own size (220 x 30) beat the

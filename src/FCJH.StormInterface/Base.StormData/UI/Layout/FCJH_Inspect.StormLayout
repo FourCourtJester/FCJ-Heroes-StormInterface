@@ -16,18 +16,17 @@
 		     plate click of a game; the default UI's doesn't (user). Blizzard's is now parked
 		     off screen rather than forced hidden (FCJH_Hidden), so its visibility is still the
 		     game's, and this watcher copies it onto the card. -->
-		<!-- Hero or not (2026-10-05): a hero is a unit some plate holds - one of the ten player
-		     matchers has raised its flag (FCJH_TipSelN; states are tried in order, so the ten
-		     Hero states read as "any of them"). A hero gets the tall card with Blizzard's
-		     command card on it; anything else the short card (shape), command card away. -->
+		<!-- Hero or not (2026-10-05): the selected unit is a hero unit (FCJH_IsHero, hero_check).
+		     A hero gets the tall card with Blizzard's command card on it; anything else the
+		     short card (shape), command card away. -->
 		<Frame type="Frame" name="FCJH_InspectGate">
 			<Anchor relative="$parent"/>
 			<AcceptsMouse val="false"/>
 			<StateGroup name="FCJH_Gate">
 				<DefaultState val="Hide"/>
-				<State name="Hero0">
+				<State name="Hero">
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/TargetInfoFrame" Visible="true"/>
-					<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_TipSel0" Visible="true"/>
+					<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_IsHero" Visible="true"/>
 					<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="true"/>
 					<Action type="SetProperty" frame="$parent/FCJH_TalentTips" Visible="true"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="291"/>
@@ -53,267 +52,9 @@
 					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier5" Visible="true"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier6" Visible="true"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier7" Visible="true"/>
-				</State>
-				<State name="Hero1">
-					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/TargetInfoFrame" Visible="true"/>
-					<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_TipSel1" Visible="true"/>
-					<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="true"/>
-					<Action type="SetProperty" frame="$parent/FCJH_TalentTips" Visible="true"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="291"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="15"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="#FCJH_INSPECT_T"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SkinName" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="155"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SkinName" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="185"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Level" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="157"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/HealthBar" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="195"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Buffs" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="247"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Buffs" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_FountainReady" pos="Max" offset="-19"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SectionStats" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="482"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SectionStats" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="497"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Stats" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="500"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Stats" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="572"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_FountainReady" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SectionTalents" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_UnitTeam" Visible="false"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier1" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier2" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier3" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier4" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier5" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier6" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier7" Visible="true"/>
-				</State>
-				<State name="Hero2">
-					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/TargetInfoFrame" Visible="true"/>
-					<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_TipSel2" Visible="true"/>
-					<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="true"/>
-					<Action type="SetProperty" frame="$parent/FCJH_TalentTips" Visible="true"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="291"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="15"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="#FCJH_INSPECT_T"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SkinName" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="155"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SkinName" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="185"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Level" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="157"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/HealthBar" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="195"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Buffs" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="247"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Buffs" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_FountainReady" pos="Max" offset="-19"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SectionStats" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="482"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SectionStats" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="497"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Stats" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="500"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Stats" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="572"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_FountainReady" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SectionTalents" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_UnitTeam" Visible="false"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier1" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier2" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier3" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier4" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier5" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier6" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier7" Visible="true"/>
-				</State>
-				<State name="Hero3">
-					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/TargetInfoFrame" Visible="true"/>
-					<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_TipSel3" Visible="true"/>
-					<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="true"/>
-					<Action type="SetProperty" frame="$parent/FCJH_TalentTips" Visible="true"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="291"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="15"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="#FCJH_INSPECT_T"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SkinName" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="155"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SkinName" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="185"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Level" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="157"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/HealthBar" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="195"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Buffs" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="247"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Buffs" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_FountainReady" pos="Max" offset="-19"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SectionStats" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="482"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SectionStats" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="497"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Stats" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="500"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Stats" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="572"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_FountainReady" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SectionTalents" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_UnitTeam" Visible="false"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier1" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier2" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier3" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier4" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier5" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier6" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier7" Visible="true"/>
-				</State>
-				<State name="Hero4">
-					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/TargetInfoFrame" Visible="true"/>
-					<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_TipSel4" Visible="true"/>
-					<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="true"/>
-					<Action type="SetProperty" frame="$parent/FCJH_TalentTips" Visible="true"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="291"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="15"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="#FCJH_INSPECT_T"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SkinName" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="155"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SkinName" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="185"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Level" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="157"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/HealthBar" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="195"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Buffs" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="247"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Buffs" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_FountainReady" pos="Max" offset="-19"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SectionStats" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="482"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SectionStats" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="497"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Stats" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="500"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Stats" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="572"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_FountainReady" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SectionTalents" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_UnitTeam" Visible="false"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier1" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier2" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier3" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier4" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier5" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier6" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier7" Visible="true"/>
-				</State>
-				<State name="Hero5">
-					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/TargetInfoFrame" Visible="true"/>
-					<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_TipSel5" Visible="true"/>
-					<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="true"/>
-					<Action type="SetProperty" frame="$parent/FCJH_TalentTips" Visible="true"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="291"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="15"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="#FCJH_INSPECT_T"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SkinName" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="155"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SkinName" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="185"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Level" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="157"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/HealthBar" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="195"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Buffs" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="247"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Buffs" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_FountainReady" pos="Max" offset="-19"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SectionStats" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="482"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SectionStats" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="497"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Stats" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="500"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Stats" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="572"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_FountainReady" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SectionTalents" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_UnitTeam" Visible="false"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier1" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier2" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier3" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier4" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier5" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier6" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier7" Visible="true"/>
-				</State>
-				<State name="Hero6">
-					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/TargetInfoFrame" Visible="true"/>
-					<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_TipSel6" Visible="true"/>
-					<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="true"/>
-					<Action type="SetProperty" frame="$parent/FCJH_TalentTips" Visible="true"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="291"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="15"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="#FCJH_INSPECT_T"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SkinName" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="155"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SkinName" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="185"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Level" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="157"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/HealthBar" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="195"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Buffs" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="247"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Buffs" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_FountainReady" pos="Max" offset="-19"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SectionStats" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="482"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SectionStats" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="497"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Stats" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="500"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Stats" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="572"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_FountainReady" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SectionTalents" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_UnitTeam" Visible="false"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier1" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier2" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier3" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier4" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier5" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier6" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier7" Visible="true"/>
-				</State>
-				<State name="Hero7">
-					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/TargetInfoFrame" Visible="true"/>
-					<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_TipSel7" Visible="true"/>
-					<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="true"/>
-					<Action type="SetProperty" frame="$parent/FCJH_TalentTips" Visible="true"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="291"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="15"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="#FCJH_INSPECT_T"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SkinName" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="155"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SkinName" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="185"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Level" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="157"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/HealthBar" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="195"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Buffs" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="247"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Buffs" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_FountainReady" pos="Max" offset="-19"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SectionStats" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="482"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SectionStats" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="497"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Stats" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="500"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Stats" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="572"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_FountainReady" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SectionTalents" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_UnitTeam" Visible="false"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier1" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier2" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier3" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier4" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier5" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier6" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier7" Visible="true"/>
-				</State>
-				<State name="Hero8">
-					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/TargetInfoFrame" Visible="true"/>
-					<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_TipSel8" Visible="true"/>
-					<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="true"/>
-					<Action type="SetProperty" frame="$parent/FCJH_TalentTips" Visible="true"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="291"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="15"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="#FCJH_INSPECT_T"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SkinName" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="155"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SkinName" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="185"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Level" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="157"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/HealthBar" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="195"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Buffs" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="247"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Buffs" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_FountainReady" pos="Max" offset="-19"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SectionStats" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="482"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SectionStats" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="497"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Stats" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="500"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Stats" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="572"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_FountainReady" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SectionTalents" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_UnitTeam" Visible="false"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier1" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier2" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier3" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier4" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier5" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier6" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier7" Visible="true"/>
-				</State>
-				<State name="Hero9">
-					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/TargetInfoFrame" Visible="true"/>
-					<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_TipSel9" Visible="true"/>
-					<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="true"/>
-					<Action type="SetProperty" frame="$parent/FCJH_TalentTips" Visible="true"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="291"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="15"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="#FCJH_INSPECT_T"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SkinName" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="155"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SkinName" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="185"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Level" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="157"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/HealthBar" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="195"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Buffs" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="247"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Buffs" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_FountainReady" pos="Max" offset="-19"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SectionStats" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="482"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SectionStats" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="497"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Stats" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="500"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Stats" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="572"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_FountainReady" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SectionTalents" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_UnitTeam" Visible="false"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier1" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier2" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier3" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier4" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier5" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier6" Visible="true"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier7" Visible="true"/>
+					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_UnitEdge/FCJH_SideBlue/FCJH_EdgeTop" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_UnitEdge/FCJH_SideBlue" pos="Min" offset="2"/>
+					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_UnitEdge/FCJH_SideRed/FCJH_EdgeTop" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_UnitEdge/FCJH_SideRed" pos="Min" offset="2"/>
+					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_UnitEdge/FCJH_SideNeutral/FCJH_EdgeTop" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_UnitEdge/FCJH_SideNeutral" pos="Min" offset="2"/>
 				</State>
 				<State name="Unit">
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/TargetInfoFrame" Visible="true"/>
@@ -342,6 +83,9 @@
 					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier5" Visible="false"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier6" Visible="false"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Tier7" Visible="false"/>
+					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_UnitEdge/FCJH_SideBlue/FCJH_EdgeTop" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_UnitEdge/FCJH_SideBlue" pos="Min" offset="3"/>
+					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_UnitEdge/FCJH_SideRed/FCJH_EdgeTop" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_UnitEdge/FCJH_SideRed" pos="Min" offset="3"/>
+					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_UnitEdge/FCJH_SideNeutral/FCJH_EdgeTop" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_UnitEdge/FCJH_SideNeutral" pos="Min" offset="3"/>
 				</State>
 				<State name="Hide">
 					<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="false"/>
@@ -641,7 +385,7 @@
 						</Frame>
 						<Frame type="Image" name="FCJH_EdgeRight">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-							<Anchor side="Left"   relative="$parent" pos="Max" offset="-2"/>
+							<Anchor side="Left"   relative="$parent" pos="Max" offset="-3"/>
 							<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 							<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
 							<Texture val="@UI/PauseScreenDimImage"/>
@@ -690,7 +434,7 @@
 						</Frame>
 						<Frame type="Image" name="FCJH_EdgeRight">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-							<Anchor side="Left"   relative="$parent" pos="Max" offset="-2"/>
+							<Anchor side="Left"   relative="$parent" pos="Max" offset="-3"/>
 							<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 							<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
 							<Texture val="@UI/PauseScreenDimImage"/>
@@ -739,7 +483,7 @@
 						</Frame>
 						<Frame type="Image" name="FCJH_EdgeRight">
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-							<Anchor side="Left"   relative="$parent" pos="Max" offset="-2"/>
+							<Anchor side="Left"   relative="$parent" pos="Max" offset="-3"/>
 							<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 							<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
 							<Texture val="@UI/PauseScreenDimImage"/>
@@ -794,6 +538,130 @@
 					<State name="Blue"><When type="Property" frame="$this/FCJH_TeamSense" CurrentRelation="TeamOrder"/><Action type="SetProperty" frame="$this/FCJH_UnitEdge/FCJH_SideBlue" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_UnitTeam/FCJH_TeamBlue" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_UnitEdge/FCJH_SideRed" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_UnitTeam/FCJH_TeamRed" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_UnitEdge/FCJH_SideNeutral" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_UnitTeam/FCJH_TeamNeutral" Alpha="0"/></State>
 					<State name="Red"><When type="Property" frame="$this/FCJH_TeamSense" CurrentRelation="TeamChaos"/><Action type="SetProperty" frame="$this/FCJH_UnitEdge/FCJH_SideBlue" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_UnitTeam/FCJH_TeamBlue" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_UnitEdge/FCJH_SideRed" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_UnitTeam/FCJH_TeamRed" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_UnitEdge/FCJH_SideNeutral" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_UnitTeam/FCJH_TeamNeutral" Alpha="0"/></State>
 					<State name="Neutral"><Action type="SetProperty" frame="$this/FCJH_UnitEdge/FCJH_SideBlue" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_UnitTeam/FCJH_TeamBlue" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_UnitEdge/FCJH_SideRed" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_UnitTeam/FCJH_TeamRed" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_UnitEdge/FCJH_SideNeutral" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_UnitTeam/FCJH_TeamNeutral" Alpha="255"/></State>
+				</StateGroup>
+				<!-- hero or not, by the selected unit alone (inspect_card.hero_check): the gate reads it -->
+				<Frame type="Frame" name="FCJH_IsHero"><Anchor relative="$parent"/><Visible val="false"/><AcceptsMouse val="false"/></Frame>
+				<StateGroup name="FCJH_HeroCheck">
+					<DefaultState val="No"/>
+					<State name="HeroAI"><When type="Property" Unit="HeroAI"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroAbathur"><When type="Property" Unit="HeroAbathur"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroAbathurSymbiote"><When type="Property" Unit="HeroAbathurSymbiote"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroAlarak"><When type="Property" Unit="HeroAlarak"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroAlexstrasza"><When type="Property" Unit="HeroAlexstrasza"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroAmazon"><When type="Property" Unit="HeroAmazon"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroAna"><When type="Property" Unit="HeroAna"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroAnduin"><When type="Property" Unit="HeroAnduin"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroAnubarak"><When type="Property" Unit="HeroAnubarak"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroArtanis"><When type="Property" Unit="HeroArtanis"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroArthas"><When type="Property" Unit="HeroArthas"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroAuriel"><When type="Property" Unit="HeroAuriel"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroAzmodan"><When type="Property" Unit="HeroAzmodan"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroBaleog"><When type="Property" Unit="HeroBaleog"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroBarbarian"><When type="Property" Unit="HeroBarbarian"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroButcher"><When type="Property" Unit="HeroButcher"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroChen"><When type="Property" Unit="HeroChen"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroCho"><When type="Property" Unit="HeroCho"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroChoGallBundleProduct"><When type="Property" Unit="HeroChoGallBundleProduct"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroChromie"><When type="Property" Unit="HeroChromie"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroClassicEvent"><When type="Property" Unit="HeroClassicEvent"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroCraftWarsEvent"><When type="Property" Unit="HeroCraftWarsEvent"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroCrusader"><When type="Property" Unit="HeroCrusader"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroCyberpunk"><When type="Property" Unit="HeroCyberpunk"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroDVaMech"><When type="Property" Unit="HeroDVaMech"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroDVaPilot"><When type="Property" Unit="HeroDVaPilot"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroDarkNexusEvent"><When type="Property" Unit="HeroDarkNexusEvent"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroDeathwing"><When type="Property" Unit="HeroDeathwing"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroDeathwingWorldBreaker"><When type="Property" Unit="HeroDeathwingWorldBreaker"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroDeckard"><When type="Property" Unit="HeroDeckard"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroDehaka"><When type="Property" Unit="HeroDehaka"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroDemonHunter"><When type="Property" Unit="HeroDemonHunter"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroDiablo"><When type="Property" Unit="HeroDiablo"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroDryad"><When type="Property" Unit="HeroDryad"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroErik"><When type="Property" Unit="HeroErik"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroEvergreenEvent"><When type="Property" Unit="HeroEvergreenEvent"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroFaerieDragon"><When type="Property" Unit="HeroFaerieDragon"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroFallOfKingsCrest"><When type="Property" Unit="HeroFallOfKingsCrest"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroFalstad"><When type="Property" Unit="HeroFalstad"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroFenix"><When type="Property" Unit="HeroFenix"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroFirebat"><When type="Property" Unit="HeroFirebat"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroGall"><When type="Property" Unit="HeroGall"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroGarrosh"><When type="Property" Unit="HeroGarrosh"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroGenji"><When type="Property" Unit="HeroGenji"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroGreymane"><When type="Property" Unit="HeroGreymane"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroGreymaneWorgen"><When type="Property" Unit="HeroGreymaneWorgen"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroGuldan"><When type="Property" Unit="HeroGuldan"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroHanzo"><When type="Property" Unit="HeroHanzo"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroHogger"><When type="Property" Unit="HeroHogger"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroIllidan"><When type="Property" Unit="HeroIllidan"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroImperius"><When type="Property" Unit="HeroImperius"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroInvisibleHero"><When type="Property" Unit="HeroInvisibleHero"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroJaina"><When type="Property" Unit="HeroJaina"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroJunkrat"><When type="Property" Unit="HeroJunkrat"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroKaelthas"><When type="Property" Unit="HeroKaelthas"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroKelThuzad"><When type="Property" Unit="HeroKelThuzad"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroKerrigan"><When type="Property" Unit="HeroKerrigan"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroL90ETC"><When type="Property" Unit="HeroL90ETC"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroLeoric"><When type="Property" Unit="HeroLeoric"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroLiLi"><When type="Property" Unit="HeroLiLi"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroLostVikingsController"><When type="Property" Unit="HeroLostVikingsController"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroLucio"><When type="Property" Unit="HeroLucio"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroMaiev"><When type="Property" Unit="HeroMaiev"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroMalGanis"><When type="Property" Unit="HeroMalGanis"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroMalfurion"><When type="Property" Unit="HeroMalfurion"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroMalthael"><When type="Property" Unit="HeroMalthael"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroMechaEvent"><When type="Property" Unit="HeroMechaEvent"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroMedic"><When type="Property" Unit="HeroMedic"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroMedivh"><When type="Property" Unit="HeroMedivh"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroMeiOW"><When type="Property" Unit="HeroMeiOW"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroMephisto"><When type="Property" Unit="HeroMephisto"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroMobsterEvent"><When type="Property" Unit="HeroMobsterEvent"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroMonk"><When type="Property" Unit="HeroMonk"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroMuradin"><When type="Property" Unit="HeroMuradin"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroMurky"><When type="Property" Unit="HeroMurky"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroNecromancer"><When type="Property" Unit="HeroNecromancer"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroNexusHunter"><When type="Property" Unit="HeroNexusHunter"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroNova"><When type="Property" Unit="HeroNova"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroOlaf"><When type="Property" Unit="HeroOlaf"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroOrphea"><When type="Property" Unit="HeroOrphea"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroOverwatchCosplayEvent"><When type="Property" Unit="HeroOverwatchCosplayEvent"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroProbius"><When type="Property" Unit="HeroProbius"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroRagnaros"><When type="Property" Unit="HeroRagnaros"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroRandom"><When type="Property" Unit="HeroRandom"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroRaynor"><When type="Property" Unit="HeroRaynor"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroRehgar"><When type="Property" Unit="HeroRehgar"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroResistance"><When type="Property" Unit="HeroResistance"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroRexxar"><When type="Property" Unit="HeroRexxar"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroSamuro"><When type="Property" Unit="HeroSamuro"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroSgtHammer"><When type="Property" Unit="HeroSgtHammer"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroStitches"><When type="Property" Unit="HeroStitches"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroStukov"><When type="Property" Unit="HeroStukov"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroSylvanas"><When type="Property" Unit="HeroSylvanas"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroTassadar"><When type="Property" Unit="HeroTassadar"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroTestHero"><When type="Property" Unit="HeroTestHero"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroThrall"><When type="Property" Unit="HeroThrall"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroTinker"><When type="Property" Unit="HeroTinker"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroToy2019Event"><When type="Property" Unit="HeroToy2019Event"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroToyEvent"><When type="Property" Unit="HeroToyEvent"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroTracer"><When type="Property" Unit="HeroTracer"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroTychus"><When type="Property" Unit="HeroTychus"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroTyrael"><When type="Property" Unit="HeroTyrael"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroTyrande"><When type="Property" Unit="HeroTyrande"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroUther"><When type="Property" Unit="HeroUther"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroValeera"><When type="Property" Unit="HeroValeera"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroValeeraStealthed"><When type="Property" Unit="HeroValeeraStealthed"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroVarian"><When type="Property" Unit="HeroVarian"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroWarchromeWastes"><When type="Property" Unit="HeroWarchromeWastes"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroWhitemane"><When type="Property" Unit="HeroWhitemane"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroWitchDoctor"><When type="Property" Unit="HeroWitchDoctor"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroWizard"><When type="Property" Unit="HeroWizard"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroXalatath"><When type="Property" Unit="HeroXalatath"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroYrel"><When type="Property" Unit="HeroYrel"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroZagara"><When type="Property" Unit="HeroZagara"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroZarya"><When type="Property" Unit="HeroZarya"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroZeratul"><When type="Property" Unit="HeroZeratul"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="HeroZuljin"><When type="Property" Unit="HeroZuljin"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="Hero_Empty"><When type="Property" Unit="Hero_Empty"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
+					<State name="No"><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="false"/></State>
 				</StateGroup>
 
 				<!-- 2. name (in the title band, user 2026-10-05), player, level -->
