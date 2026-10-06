@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+	<!-- Map alerts moved onto the plates ([map_alerts] in layout.toml).
+
+	     How a map's alerts work: each map ships a panel template in its own layout file,
+	     loaded only on that map, and the map's script builds it inside GameUI's
+	     MapMechanicPanel and finds each alert by NAME to show it and set its text. So an
+	     interface may move and restyle a template's alerts here (file="<the map's file>"), but
+	     never rename or drop one: the script's lookup would fail.
+
+	     Towers of Doom (FieldofSlaughter/MainFoSPanel): its alerts hang off the screen's right
+	     edge in a chain - the altar countdown 80 below the minimap's top, and each of the
+	     others (enemy and ally capture, Raven, Necro, towers, waygate) stacked off the one
+	     before. -->
+	<Frame type="Frame" name="MainFoSPanel" file="FieldofSlaughter">
+		<!-- The altar countdown on red's row, at its inner end where the core bar lives: its art
+		     ends flush with the core bar's right edge, on the XP bar; while red's core bar shows
+		     (Blizzard shows it while the core takes damage) it steps up onto that (user,
+		     2026-10-06). -->
+		<Frame type="Frame" name="AltarSpawnNotificationFrame">
+			<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_RED_B"/>
+			<Anchor side="Right"  relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_RED_R"/>
+			<StateGroup name="FCJH_OverCore">
+				<DefaultState val="OnXP"/>
+				<State name="OnCore">
+					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2CoreUnitStatus" Visible="true"/>
+					<Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_RED_B_CORE"/>
+				</State>
+				<State name="OnXP">
+					<Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_RED_B"/>
+				</State>
+			</StateGroup>
+		</Frame>
+		<!-- ...and the rest of the chain keeps its place: the next alert takes the altar's old
+		     anchor, 80 below the minimap's top -->
+		<Frame type="Frame" name="EnemyCaptureNotificationFrame">
+			<Anchor side="Bottom" relative="$parent/MinimapProxyFrame" pos="Min" offset="80"/>
+		</Frame>
+	</Frame>
+</Desc>

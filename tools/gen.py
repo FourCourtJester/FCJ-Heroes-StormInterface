@@ -72,12 +72,18 @@ def derive(cfg):
         row["scale"] = fit_hero_scale(cfg, pad)
     if "bottom" in row:
         place_hero_rows(cfg)
-    # an element with `above = "<rect>"`: its bottom sits `padding` above that rect's top
+    # an element with `above = "<rect>"`: its bottom sits `padding` above that rect's top; with
+    # `flush = "right"` its right edge meets that rect's too. An `art_inset` (art drawn inside
+    # the frame) is allowed for, so the ART lands there.
     for el in cfg.get("element", {}).values():
         if "above" in el:
             x, _, w, h = el["rect"]
-            (_, top, _, _), _ = team_bar_rects(cfg)[el["above"]] if el["above"] in ("blue_xp", "red_xp")                 else rects(cfg)[el["above"]]
-            el["rect"] = [x, round(top - pad - h, 1), w, h]
+            (tx, top, tw, _), _ = team_bar_rects(cfg)[el["above"]] if el["above"] in ("blue_xp", "red_xp") \
+                else rects(cfg)[el["above"]]
+            inset = el.get("art_inset", 0)
+            if el.get("flush") == "right":
+                x = round(tx + tw - w + inset, 1)
+            el["rect"] = [x, round(top - pad - h + inset, 1), w, h]
     return cfg
 
 
@@ -301,6 +307,20 @@ def constants_layout(cfg):
     const(name("blue", "core", "frame", "r"), u(bx + bw) + 34)
     const(name("red", "core", "frame", "t"), u(ry) - 18)
     const(name("red", "core", "frame", "l"), u(rx) - 28)
+
+    # Map alerts on the plates (FCJH_MapAlerts): Towers of Doom's altar countdown sits at the
+    # red row's inner end, on the XP bar where the core bar lives, and steps up onto the core
+    # bar while that shows. Blizzard's notification art sits 10 units inside its frame's right
+    # edge (MapMechanicPanel NotificationFrameTemplate BackgroundImage), so the frame's right
+    # edge goes 10 past the core bar's and the art ends flush with it.
+    lines.append("")
+    lines.append("\t<!-- Map alerts on the plates ([map_alerts]) -->")
+    gap = cfg["map_alerts"]["gap"]
+    (rcx, rcy, rcw, _), _ = rects(cfg)["red_core"]
+    (_, rxy, _, _), _ = team_bar_rects(cfg)["red_xp"]
+    const(name("map", "alert", "red", "r"), u(rcx + rcw) + 10)
+    const(name("map", "alert", "red", "b"), u(rxy - gap), "on the XP bar")
+    const(name("map", "alert", "red", "b", "core"), u(rcy - gap), "on the core bar, while it shows")
 
     lines.append("")
     lines.append("\t<!-- Team XP and core health: tracks and fills cut to the plates' slant (solid colour;")

@@ -121,18 +121,18 @@
 	<Constant name="FCJH_GAME_COUNT_B" val="101"/>
 	<Constant name="FCJH_GAME_COUNT_W" val="113"/>
 	<Constant name="FCJH_GAME_COUNT_H" val="27"/>
-	<!-- replay: ui, px [14, 14, 378, 153] -->
-	<Constant name="FCJH_REPLAY_L" val="16"/>
-	<Constant name="FCJH_REPLAY_T" val="16"/>
-	<Constant name="FCJH_REPLAY_R" val="436"/>
-	<Constant name="FCJH_REPLAY_B" val="186"/>
+	<!-- replay: ui, px [1525.8, 798.5, 378, 153] -->
+	<Constant name="FCJH_REPLAY_L" val="1695"/>
+	<Constant name="FCJH_REPLAY_T" val="887"/>
+	<Constant name="FCJH_REPLAY_R" val="2115"/>
+	<Constant name="FCJH_REPLAY_B" val="1057"/>
 	<Constant name="FCJH_REPLAY_W" val="420"/>
 	<Constant name="FCJH_REPLAY_H" val="170"/>
-	<!-- replay_collapsed: demand, px [20, 20, 200, 24] -->
-	<Constant name="FCJH_REPLAY_COLLAPSED_L" val="22"/>
-	<Constant name="FCJH_REPLAY_COLLAPSED_T" val="22"/>
-	<Constant name="FCJH_REPLAY_COLLAPSED_R" val="244"/>
-	<Constant name="FCJH_REPLAY_COLLAPSED_B" val="49"/>
+	<!-- replay_collapsed: demand, px [1697.8, 921.5, 200, 24] -->
+	<Constant name="FCJH_REPLAY_COLLAPSED_L" val="1886"/>
+	<Constant name="FCJH_REPLAY_COLLAPSED_T" val="1024"/>
+	<Constant name="FCJH_REPLAY_COLLAPSED_R" val="2109"/>
+	<Constant name="FCJH_REPLAY_COLLAPSED_B" val="1051"/>
 	<Constant name="FCJH_REPLAY_COLLAPSED_W" val="222"/>
 	<Constant name="FCJH_REPLAY_COLLAPSED_H" val="27"/>
 	<!-- kill_feed: ui, px [0, 104.4, 540, 300] -->
@@ -294,6 +294,11 @@
 	<Constant name="FCJH_BLUE_CORE_FRAME_R" val="817"/>
 	<Constant name="FCJH_RED_CORE_FRAME_T" val="1027"/>
 	<Constant name="FCJH_RED_CORE_FRAME_L" val="1321"/>
+
+	<!-- Map alerts on the plates ([map_alerts]) -->
+	<Constant name="FCJH_MAP_ALERT_RED_R" val="1596"/>
+	<Constant name="FCJH_MAP_ALERT_RED_B" val="1068"/>  <!-- on the XP bar -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_CORE" val="1040"/>  <!-- on the core bar, while it shows -->
 
 	<!-- Team XP and core health: tracks and fills cut to the plates' slant (solid colour;
 	     Blizzard's obs_bar_xp_* art is a thin glowing line drawn for a 156 x 17 box) -->

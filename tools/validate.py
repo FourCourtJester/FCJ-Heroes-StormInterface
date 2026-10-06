@@ -544,14 +544,17 @@ def _find_ci(root, rel):
 
 def load_base(cat):
     count = 0
-    # the per-hero mods too (heromods/<hero>.stormmod): their layout files can be overridden
-    # by name (file="Tracer" - Tracer's Pulse Bomb meter, inspect_card.tracer_charge)
-    heroes = sorted(p.relative_to(MODS).as_posix() for p in (MODS / "heromods").glob("*.stormmod"))
-    for mod in BASE_MODS + heroes:
+    # the per-hero and per-map mods too (heromods/<hero>.stormmod, heroesmapmods/
+    # battlegroundmapmods/<map>.stormmod): their layout files can be overridden by name
+    # (file="Tracer" - Tracer's Pulse Bomb meter, inspect_card.tracer_charge; file=
+    # "FieldofSlaughter" - Towers of Doom's alerts, FCJH_MapAlerts)
+    extra = sorted(p.relative_to(MODS).as_posix() for p in (MODS / "heromods").glob("*.stormmod")) + \
+        sorted(p.relative_to(MODS).as_posix() for p in (MODS / "heroesmapmods" / "battlegroundmapmods").glob("*.stormmod"))
+    for mod in BASE_MODS + extra:
         data = MODS / mod / "base.stormdata"
         index = data / "ui" / "layout" / "descindex.stormlayout"
-        if mod in heroes and not index.is_file():
-            continue   # a hero mod with no UI of its own
+        if mod in extra and not index.is_file():
+            continue   # a hero or map mod with no UI of its own
         root, err = parse_xml(index, str(index), ours=False)
         if root is None:
             raise SystemExit(f"cannot read base DescIndex {index}: {err}")
