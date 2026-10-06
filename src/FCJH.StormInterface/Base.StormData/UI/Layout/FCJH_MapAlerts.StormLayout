@@ -77,15 +77,16 @@
 		<!-- ===== Observer alerts (2026-10-06, an experiment): the two events a broadcast wants,
 		     which Blizzard only tells each team's players - built from Blizzard's own alerts
 		     (same art and animation), team names for text, on the team's side. Ours show in
-		     every view, so Blizzard's originals are parked (below).
-		     CANNONS - approximated: on this map only cannon shots (the altars, the Horseman
-		     camp) can hurt a core, so a team's core bar coming up means the other team's
-		     cannons are landing. Shows at the first hit, a moment after the capture. Slot one,
-		     by the map (the warnings there come before the altars activate).
-		     TOWNS - exact: on every change of hands the script sends the OBSERVER panel (our
-		     plates' ObserverHeroOverviewPanel) "BroadcastToD<blue>v<red>", the towns each team
-		     holds - Blizzard's own UI never uses it. Blue's count up: blue took a town; down:
-		     red did. Slot two, one above (a town can fall during the altar countdown). ===== -->
+		     every view, so Blizzard's originals are parked (above).
+		     CANNONS - a cannonball's launch puts a behaviour on the firing team's core while it
+		     flies (the cannon sensors, end of file): shown at launch, every volley, the right
+		     team. (A first try watched the core bars come up: Blizzard shows both at the first
+		     hit and keeps them up - both alerts once, then never again; user, 2026-10-06.)
+		     Slot one, by the map (the warnings there come before the altars activate).
+		     TOWNS - on every change of hands the script sends the OBSERVER panel (our plates'
+		     ObserverHeroOverviewPanel) "BroadcastToD<blue>v<red>", the towns each team holds -
+		     Blizzard's own UI never uses it. Blue's count up: blue took a town; down: red did.
+		     Slot two, one above (a town can fall during the altar countdown). ===== -->
 		<Frame type="Frame" name="FCJH_BlueCannons" template="FieldofSlaughter/MainFoSPanel/RavenNotificationFrame">
 			<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_B"/>
 			<Anchor side="Right"  relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_R"/>
@@ -163,7 +164,7 @@
 		<StateGroup name="FCJH_BlueFiring">
 			<DefaultState val="Quiet"/>
 			<State name="Firing">
-				<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2CoreUnitStatus" Visible="true"/>
+				<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1CoreUnitStatus/FCJH_CannonSensor" Visible="true"/>
 				<Action type="SendEvent" frame="$this/FCJH_BlueCannons" event="Show"/>
 			</State>
 			<State name="Quiet"/>
@@ -171,7 +172,7 @@
 		<StateGroup name="FCJH_RedFiring">
 			<DefaultState val="Quiet"/>
 			<State name="Firing">
-				<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1CoreUnitStatus" Visible="true"/>
+				<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2CoreUnitStatus/FCJH_CannonSensor" Visible="true"/>
 				<Action type="SendEvent" frame="$this/FCJH_RedCannons" event="Show"/>
 			</State>
 			<State name="Quiet"/>
@@ -385,4 +386,40 @@
 			<Unclipped val="true"/>
 		</Frame>
 	</Frame>
+	<!-- ===== Cannon sensors (the observer alerts, above): a cannonball's launch puts a behaviour
+	     on the units that fire it - the firing team's towns and CORE (Towers of Doom effectdata
+	     MapEvent*CannonballApplyIncomingBehavior, WhichUnit Source) - for as long as it flies.
+	     One on each core's frame: present = that team is firing. Only Towers of Doom applies
+	     them; on other maps they never show. ===== -->
+	<Frame type="GameUI" name="GameUI" file="GameUI">
+		<Frame type="Frame" name="UIContainer">
+			<Frame type="Frame" name="FullscreenUpperContainer">
+				<Frame type="Frame" name="ObserverHeroOverviewPanel">
+					<Frame type="Frame" name="ObserverTopPanel">
+						<Frame type="UnitStatusFrame" name="Team1CoreUnitStatus">
+							<Frame type="UnitStatusBehaviorIcon" name="FCJH_CannonSensor">
+								<Anchor relative="$parent"/>
+								<Behavior val="MapEventRavenLordCannonballIncomingMonitor"/>
+								<Alpha val="0"/>
+								<AcceptsMouse val="false"/>
+								<AcceptsMouseTooltip val="false"/>
+								<Frame type="BehaviorIcon" name="BehaviorIcon" template="BehaviorBar/BehaviorIconTemplate"><Anchor relative="$parent"/><AcceptsMouse val="false"/></Frame>
+							</Frame>
+						</Frame>
+						<Frame type="UnitStatusFrame" name="Team2CoreUnitStatus">
+							<Frame type="UnitStatusBehaviorIcon" name="FCJH_CannonSensor">
+								<Anchor relative="$parent"/>
+								<Behavior val="MapEventNecromancerCannonballIncomingMonitor"/>
+								<Alpha val="0"/>
+								<AcceptsMouse val="false"/>
+								<AcceptsMouseTooltip val="false"/>
+								<Frame type="BehaviorIcon" name="BehaviorIcon" template="BehaviorBar/BehaviorIconTemplate"><Anchor relative="$parent"/><AcceptsMouse val="false"/></Frame>
+							</Frame>
+						</Frame>
+					</Frame>
+				</Frame>
+			</Frame>
+		</Frame>
+	</Frame>
+	<!-- ===== end cannon sensors ===== -->
 </Desc>
