@@ -497,20 +497,18 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
     selection only. Found while testing: holding Ctrl brought up Blizzard's quick talent picker
     (game hotkey QuickHeroTalentTreeSelection = Control), seen as faint rings behind the talents
     pane; now parked and see-through in FCJH_Hidden as well as hide-looped - awaiting QA.
-11. **A non-hero inspect card** (user, 2026-10-05) - for minions, mercenaries, bosses, map
-    objectives' units and buildings. The inspect card shows for any selected unit (it follows
-    Blizzard's inspect box), but everything on it after the bars is hero-shaped: a non-hero
-    gets no portrait, player, talents or abilities - empty space. Pieces to build it from:
-    - **hero or not:** a hero is a unit some plate holds - none of the ten player packs
-      matching (`matcher`) means not a hero; one flag from that switches the card's layout;
-    - **team:** the team sensor (`inspect_card.team_sense`, `CurrentRelation` TeamOrder /
-      TeamChaos - proved on mirror matches 2026-10-05) colours the edge blue or red; anything
-      else (a mercenary camp, a neutral boss) reads neither - a neutral colour. Show its readout
-      again to learn what mercs and bosses report;
-    - **contents:** Blizzard's inspect box already does non-heroes - its unit portrait
-      (`TargetPortraitFrame`, the masked unit picture), name, health/shields and stats
-      (armour, damage) - so a short card: name, unit portrait, bars, stats, buffs (a captured
-      camp's, a boss's), no talents or abilities, cut to fit like the hero card.
+11. **A non-hero inspect card - built 2026-10-05, awaiting QA.** For minions, mercenaries,
+    bosses, buildings: a SHORT card (`inspect_card` SHIFT / H_SHORT: 267 units, 240 px, bottom
+    still on the plates) - name, the team's name on the band, bars, buffs, stats. No portrait
+    (Blizzard's unit picture is 112 x 49, too small to blow up: user's call), fountain,
+    abilities (command card parked) or talents.
+    - **hero or not:** the gate (`card()`): ten Hero states, one per player matcher's flag
+      (FCJH_TipSelN), tried before a plain Unit state - so a hero unit the matchers don't know
+      (Abathur's clone, unguessed Vikings / D.Va units...) gets the short card. `shape()` moves
+      the card's top and the rows, both ways.
+    - **edge:** every unit's edge is now the team sensor's (`unit_team`): blue, red, or
+      `[element.inspect] neutral_colour` (a lighter purple, user) for neither team - it replaced
+      the player packs' own edge. What mercenaries and bosses read is still to be seen.
 
 How the heroic tooltips work: `tools/gen.py`, the comment above `HEROIC_TIPS`.
 

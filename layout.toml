@@ -129,6 +129,9 @@ rect = [20, 0, 300, 525]     # the inspect card (selected hero): tall and skinny
                              # cut to what it holds (tools/inspect_card.py H: 583 units)
 above = "blue_xp"            # its bottom sits [screen] padding above blue's row (its y is worked out)
 kind = "demand"
+neutral_colour = "b4a5e6"    # the card's edge for a unit of neither team (a mercenary camp, a
+                             # boss): a lighter purple (user, 2026-10-05); blue and red are the plates'.
+                             # Anything not a hero gets a short card (tools/inspect_card.py H_SHORT)
 
 [info_pane]
 title_height = 26            # the title band across the top of the pane

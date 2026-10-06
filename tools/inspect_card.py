@@ -77,7 +77,16 @@ STATS_LABEL = TAL + TAL_SIZE + 16 + PAD    # under the tier numbers (16 tall)
 STATS, STAT_ROW, STAT_COL, STAT_H = STATS_LABEL + 18, 24, INNER // 3, 20   # STAT_H: Blizzard's stat row
 STAT_END = STATS + 2 * STAT_ROW + STAT_H
 H = STAT_END + PAD + EDGE          # the card's height (layout.toml element.inspect: 525 px)
-TEAM = {}                          # the border's colours, "a,r,g,b" by team: set by layout()
+# The short card, for anything not a hero (minions, mercenaries, bosses, buildings; user,
+# 2026-10-05): no portrait (Blizzard's unit picture is 112 x 49, too small to blow up - the
+# user's call), fountain, abilities or talents. Name, team band, bars, buffs, stats: what's
+# below the portrait moves up by its height, the stats up under the buffs, and the card's top
+# comes down to fit (its bottom stays on the plates). Switched by the gate (card()).
+SHIFT = PORTRAIT[1] - PORTRAIT[0]
+STATS_LABEL_SHORT = BUFFS - SHIFT + BUFF_H + PAD
+STATS_SHORT = STATS_LABEL_SHORT + 18
+H_SHORT = STATS_SHORT + 2 * STAT_ROW + STAT_H + PAD + EDGE
+TEAM = {}                          # the border's colours, "a,r,g,b" by team (and "neutral"): set by layout()
 
 
 ORIGIN = (0, 0)   # the card's top-left on screen, in layout units: set by layout()
@@ -109,11 +118,11 @@ def cmd_centre(row, c):
     # over the gaps: Q/W, W/E, E/R, R/D, then Z/Q; a sixth (never seen) over Z
     return first + ((1.5, 2.5, 3.5, 4.5, 0.5, 0)[c]) * CMD_STEP
 
-def rect(top, left, bottom, right, rel="$parent", i=4, right_pos="Min"):
+def rect(top, left, bottom, right, rel="$parent", i=4, right_pos="Min", bottom_pos="Min"):
     t = T * i
     return (f'{t}<Anchor side="Top"    relative="{rel}" pos="Min" offset="{top}"/>\n'
             f'{t}<Anchor side="Left"   relative="{rel}" pos="Min" offset="{left}"/>\n'
-            f'{t}<Anchor side="Bottom" relative="{rel}" pos="Min" offset="{bottom}"/>\n'
+            f'{t}<Anchor side="Bottom" relative="{rel}" pos="{bottom_pos}" offset="{bottom}"/>\n'
             f'{t}<Anchor side="Right"  relative="{rel}" pos="{right_pos}" offset="{right}"/>\n')
 
 
@@ -124,9 +133,9 @@ def label(name, top, left, bottom, right, style, text, i=4, right_pos="Min", ext
             f'{t}\t<Options val="NoWrapping | ScaleToPreventTruncation"/>\n{t}\t<AcceptsMouse val="false"/>\n{extra}{t}</Frame>\n')
 
 
-def fill(name, top, left, bottom, right, colour, prio, i=4, right_pos="Min"):
+def fill(name, top, left, bottom, right, colour, prio, i=4, right_pos="Min", bottom_pos="Min"):
     t = T * i
-    return (f'{t}<Frame type="Image" name="{name}">\n' + rect(top, left, bottom, right, i=i + 1, right_pos=right_pos) +
+    return (f'{t}<Frame type="Image" name="{name}">\n' + rect(top, left, bottom, right, i=i + 1, right_pos=right_pos, bottom_pos=bottom_pos) +
             f'{t}\t<Texture val="@UI/PauseScreenDimImage"/>\n{t}\t<ColorAdjustMode val="Fill"/>\n'
             f'{t}\t<AdjustmentColor val="{colour}"/>\n{t}\t<RenderPriority val="{prio}"/>\n{t}\t<AcceptsMouse val="false"/>\n{t}</Frame>\n')
 
@@ -377,21 +386,63 @@ def pane_skin(title_h, indent=1):
             + f'{t}</Frame>\n')
 
 
+TARGET_INFO = "$GameUI/UIContainer/FullscreenUpperContainer/TargetInfoFrame"
+UNIT = CARD + "/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0"
+CONSOLE = "$GameUI/UIContainer/ConsoleUIContainer"
+
+
+def shape(hero):
+    """The gate's actions for the tall (hero) card or the short one (SHIFT, H_SHORT). Every
+    anchor given both ways, the hero's as the frames declare them."""
+    d = 0 if hero else SHIFT
+    at = lambda frame, side, rel, pos, v: (f'{T*5}<Action type="SetAnchor" frame="{frame}" side="{side}" '
+                                           f'relative="{rel}" pos="{pos}" offset="{v}"/>\n')
+    shown = lambda frame, on: f'{T*5}<Action type="SetProperty" frame="{frame}" Visible="{"true" if on else "false"}"/>\n'
+    stats_label, stats = (STATS_LABEL, STATS) if hero else (STATS_LABEL_SHORT, STATS_SHORT)
+    stat_rows = 1 + max(r for _, _, r in STATS_GRID)
+    return ("".join(
+        # the card's bottom stays on the plates: its top comes down by the difference
+        [at(CARD, "Top", CONSOLE, "Min", "#FCJH_INSPECT_T" if hero else round(ORIGIN[1]) + H - H_SHORT),
+         at(f"{UNIT}/FCJH_SkinName", "Top", UNIT, "Min", NAME_BAND - d),
+         at(f"{UNIT}/FCJH_SkinName", "Bottom", UNIT, "Min", NAME_BAND + NAME_H - d),
+         at(f"{UNIT}/FCJH_Level", "Top", UNIT, "Min", NAME_BAND + NAME_DROP - d),
+         at(f"{UNIT}/HealthBar", "Top", UNIT, "Min", HP[0] - d),
+         at(f"{UNIT}/FCJH_Buffs", "Top", UNIT, "Min", BUFFS - d),
+         # no fountain: the buffs start the row
+         at(f"{UNIT}/FCJH_Buffs", "Left", f"{UNIT}/FCJH_FountainReady", "Max", -BUFF_OVERLAP) if hero
+         else at(f"{UNIT}/FCJH_Buffs", "Left", UNIT, "Min", M),
+         at(f"{UNIT}/FCJH_SectionStats", "Top", UNIT, "Min", stats_label),
+         at(f"{UNIT}/FCJH_SectionStats", "Bottom", UNIT, "Min", stats_label + 15),
+         at(f"{UNIT}/FCJH_Stats", "Top", UNIT, "Min", stats),
+         at(f"{UNIT}/FCJH_Stats", "Bottom", UNIT, "Min", stats + stat_rows * STAT_ROW),
+         shown(f"{UNIT}/FCJH_FountainReady", hero),
+         shown(f"{UNIT}/FCJH_SectionTalents", hero),
+         shown(f"{UNIT}/FCJH_UnitTeam", not hero)]
+        + [shown(f"{UNIT}/FCJH_Tier{k}", hero) for k in range(1, 8)]))
+
+
 def card():
     """Our copy of Blizzard's inspect box, re-laid out tall (portrait, bars, stats)."""
+    shown = (f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="true"/>\n'
+             + (f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_TalentTips" Visible="true"/>\n' if TALENT_TIPS else ""))
     out = [f'{T*2}<!-- Round 9 (2026-09-30): the card shows exactly when Blizzard\'s own small inspector\n'
            f'{T*2}     would. Ours alone (a TargetInfoFrame the game doesn\'t manage) came up on the first\n'
            f'{T*2}     plate click of a game; the default UI\'s doesn\'t (user). Blizzard\'s is now parked\n'
            f'{T*2}     off screen rather than forced hidden (FCJH_Hidden), so its visibility is still the\n'
            f'{T*2}     game\'s, and this watcher copies it onto the card. -->\n'
+           f'{T*2}<!-- Hero or not (2026-10-05): a hero is a unit some plate holds - one of the ten player\n'
+           f'{T*2}     matchers has raised its flag (FCJH_TipSelN; states are tried in order, so the ten\n'
+           f'{T*2}     Hero states read as "any of them"). A hero gets the tall card with Blizzard\'s\n'
+           f'{T*2}     command card on it; anything else the short card (shape), command card away. -->\n'
            f'{T*2}<Frame type="Frame" name="FCJH_InspectGate">\n'
            f'{T*3}<Anchor relative="$parent"/>\n{T*3}<AcceptsMouse val="false"/>\n'
            f'{T*3}<StateGroup name="FCJH_Gate">\n{T*4}<DefaultState val="Hide"/>\n'
-           f'{T*4}<State name="Show">\n'
-           f'{T*5}<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/TargetInfoFrame" Visible="true"/>\n'
-           f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="true"/>\n'
-           + (f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_TalentTips" Visible="true"/>\n' if TALENT_TIPS else "")
-           + command_anchors(True, 5) + f'{T*4}</State>\n'
+           + "".join(f'{T*4}<State name="Hero{n}">\n{T*5}<When type="Property" frame="{TARGET_INFO}" Visible="true"/>\n'
+                     f'{T*5}<When type="Property" frame="{UNIT}/FCJH_TipSel{n}" Visible="true"/>\n'
+                     + shown + command_anchors(True, 5) + shape(True) + f'{T*4}</State>\n'
+                     for n in range(10))
+           + f'{T*4}<State name="Unit">\n{T*5}<When type="Property" frame="{TARGET_INFO}" Visible="true"/>\n'
+           + shown + command_anchors(False, 5) + shape(False) + f'{T*4}</State>\n'
            f'{T*4}<State name="Hide">\n'
            f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="false"/>\n'
            + (f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_TalentTips" Visible="false"/>\n' if TALENT_TIPS else "")
@@ -414,7 +465,7 @@ def card():
     # the map (which deselects the unit and closes the card, 2026-09-30)
     # (faded since Blizzard's background went on: it's only here for the mouse - a faded frame
     # still takes it. A clear fill colour didn't do: the card stayed opaque, 2026-10-05)
-    chrome.append(fill("FCJH_Back", 0, 0, H, 0, "255,11,12,20", 200, 3, "Max")
+    chrome.append(fill("FCJH_Back", 0, 0, 0, 0, "255,11,12,20", 200, 3, "Max", "Max")   # to the card's end, either size
                   .replace('<AcceptsMouse val="false"/>', '<AcceptsMouse val="true"/>\n\t\t\t\t<Alpha val="0"/>'))
     # the title band carries the hero's name (unit(): FCJH_HeroName), not a title (user, 2026-10-05)
     chrome.append(blizzard_skin())
@@ -563,12 +614,7 @@ def player_pack(n):
                 + f'{T*6}<State name="Hero">{swap(False)}</State>\n{T*5}</StateGroup>\n')
     name = label("FCJH_PlayerName", NAME_BAND + NAME_DROP, M, NAME_BAND + NAME_H + NAME_DROP, W - M - 70, "FCJH_InspectSub",
                  f"{{{row}/PlayerNameFrame/PlayerNameLabel/@Text}}", 5)
-    # the card's edge in the player's team colour (user, 2026-10-05)
-    edge = TEAM[colour]
-    border = (fill("FCJH_EdgeTop", 0, 0, BORDER, W, edge, 690, 5)
-              + fill("FCJH_EdgeBottom", H - BORDER, 0, H, W, edge, 690, 5)
-              + fill("FCJH_EdgeLeft", 0, 0, H, BORDER, edge, 690, 5)
-              + fill("FCJH_EdgeRight", 0, W - BORDER, H, W, edge, 690, 5))
+    # (the card's edge in the team colour is the unit's now, every unit: unit_team)
     return (f'{T*4}<Frame type="Frame" name="FCJH_Player{n}">\n{T*5}<Anchor relative="$parent"/>\n'
             f'{T*5}<Alpha val="0"/>\n{T*5}<AcceptsMouse val="false"/>\n{T*5}<RenderPriority val="670"/>\n'
             f'{T*5}<!-- an empty tier\'s box under each icon: a line in the band art\'s 73668d round a dark\n'
@@ -580,7 +626,7 @@ def player_pack(n):
                              TAL + TAL_SIZE - line(TAL + TAL_SIZE, 1, -1),
                              tal_left(k) + TAL_SIZE - line(tal_left(k) + TAL_SIZE, 0, -1), "230,8,8,16", 665, 5)
                       for k in range(1, 8))
-            + portrait + icons + name + border + f'{T*4}</Frame>\n')
+            + portrait + icons + name + f'{T*4}</Frame>\n')
 
 
 # Heroes whose selected unit can differ from the plate's: (selected, on the plate). Guesses
@@ -702,6 +748,46 @@ def team_sense():
             f'{T*4}</Frame>\n')
 
 
+SIDES = (("Blue", "blue", "TeamOrder", "BLUE TEAM"), ("Red", "red", "TeamChaos", "RED TEAM"),
+         ("Neutral", "neutral", None, "NEUTRAL"))
+
+
+def unit_team():
+    """The card's edge in the selected unit's team colour, from the team sensor - blue, red, or
+    the lighter purple for anything of neither team (a mercenary camp, a boss; user,
+    2026-10-05) - and, on the short card only (the gate's shape), the team's name on the band
+    where a hero's player name goes. The edge runs to the card's end, either size; on a hero
+    it's the player pack's own edge colour."""
+    edge = lambda side, colour: (
+        f'{T*5}<Frame type="Frame" name="FCJH_Side{side}">\n{T*6}<Anchor relative="$parent"/>\n'
+        f'{T*6}<Alpha val="0"/>\n{T*6}<AcceptsMouse val="false"/>\n'
+        + fill("FCJH_EdgeTop", 0, 0, BORDER, 0, colour, 690, 6, "Max")
+        + fill("FCJH_EdgeBottom", -BORDER, 0, 0, 0, colour, 690, 6, "Max", "Max").replace(
+            '<Anchor side="Top"    relative="$parent" pos="Min"', '<Anchor side="Top"    relative="$parent" pos="Max"')
+        + fill("FCJH_EdgeLeft", 0, 0, 0, BORDER, colour, 690, 6, "Min", "Max")
+        + fill("FCJH_EdgeRight", 0, -BORDER, 0, 0, colour, 690, 6, "Max", "Max").replace(
+            '<Anchor side="Left"   relative="$parent" pos="Min"', '<Anchor side="Left"   relative="$parent" pos="Max"')
+        + f'{T*5}</Frame>\n')
+    band = NAME_BAND - SHIFT
+    names = "".join(label(f"FCJH_Team{side}", band + NAME_DROP, M, band + NAME_H + NAME_DROP, -M, "FCJH_InspectSub",
+                          text, 5, "Max", f'{T*6}<Alpha val="0"/>\n')
+                    for side, _, _, text in SIDES)
+    to = lambda pick: "".join(f'<Action type="SetProperty" frame="$this/{kind}{side}" Alpha="{255 if side == pick else 0}"/>'
+                              for side, _, _, _ in SIDES for kind in ("FCJH_UnitEdge/FCJH_Side", "FCJH_UnitTeam/FCJH_Team"))
+    states = "".join(f'{T*5}<State name="{side}">'
+                     + (f'<When type="Property" frame="$this/{TEAM_SENSE}" CurrentRelation="{rel}"/>' if rel else "")
+                     + to(side) + '</State>\n' for side, _, rel, _ in SIDES)
+    return (f'{T*4}<!-- the unit\'s team: the card\'s edge, and its name on the short card (inspect_card.unit_team) -->\n'
+            f'{T*4}<Frame type="Frame" name="FCJH_UnitEdge">\n{T*5}<Anchor relative="$parent"/>\n'
+            f'{T*5}<RenderPriority val="685"/>\n{T*5}<AcceptsMouse val="false"/>\n'
+            + "".join(edge(side, TEAM[team]) for side, team, _, _ in SIDES)
+            + f'{T*4}</Frame>\n'
+            f'{T*4}<Frame type="Frame" name="FCJH_UnitTeam">\n{T*5}<Anchor relative="$parent"/>\n'
+            f'{T*5}<Visible val="false"/>\n{T*5}<RenderPriority val="680"/>\n{T*5}<AcceptsMouse val="false"/>\n'
+            + names + f'{T*4}</Frame>\n'
+            f'{T*4}<StateGroup name="FCJH_Team">\n{T*5}<DefaultState val="Neutral"/>\n' + states + f'{T*4}</StateGroup>\n')
+
+
 def unit():
     """The card's contents: a selection panel inside it, holding Blizzard's per-unit widgets.
     A SelectionUnitStatusPanel without a PlayerId follows the observer's selection."""
@@ -725,7 +811,7 @@ def unit():
 {T*4}<!-- 1. animated model: DROPPED (round 6). The hero cutscene kept the first hero clicked
 {T*4}     (Chromie) over every later selection; the static portrait underneath updates. -->
 
-{team_sense()}
+{team_sense()}{unit_team()}
 {T*4}<!-- 2. name (in the title band, user 2026-10-05), player, level -->
 {T*4}<Frame type="UnitStatusName" name="FCJH_HeroName" template="UnitStatus/UnitStatusUnitNameTemplate">
 {T*5}<!-- centred on the card: the template's own size (220 x 30) beat the
@@ -858,7 +944,8 @@ FILE_HEADER = """
 def layout(crop, head, team_colours, origin=(0, 0), px=0.9):
     """The whole layout file. crop: the plates' portrait crop (HeroCell.crop); head: the XML
     declaration, <Desc> and the generated-file banner; team_colours: {"blue": "rrggbb",
-    "red": ...}, the border's (the plates' own blue and red)."""
+    "red": ..., "neutral": ...}, the border's (the plates' own blue and red; neutral, for
+    anything of neither team, from layout.toml element.inspect)."""
     global CROP, ORIGIN, PX
     CROP, ORIGIN, PX = crop, origin, px
     TEAM.update({team: "255," + ",".join(str(int(hex_[i:i + 2], 16)) for i in (0, 2, 4))

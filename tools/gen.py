@@ -2390,7 +2390,8 @@ def committed_files(cfg, source=SOURCE):
         LAYOUT_REL / STAT_PANES_FILE: stat_panes_layout(cfg),
         LAYOUT_REL / INSPECT_FILE: inspect_card.layout(
             HeroCell(cfg).crop, XML_DECL + "<Desc>\n" + GENERATED,
-            {t: cfg["top_backplate"][f"{t}_colour"] for t in ("blue", "red")},   # the card's team edge
+            {t: cfg["top_backplate"][f"{t}_colour"] for t in ("blue", "red")}
+            | {"neutral": cfg["element"]["inspect"]["neutral_colour"]},   # the card's team edge
             (u(rects(cfg)["inspect"][0][0]), u(rects(cfg)["inspect"][0][1])), 1 / u.scale),   # its place, for pixel-exact lines
         LAYOUT_REL / INDEX_FILE: desc_index(layout_order(layout_dir, generated=GENERATED_LAYOUTS)),
     }
