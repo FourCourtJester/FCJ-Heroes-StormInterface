@@ -91,11 +91,20 @@
 				</State>
 			</StateGroup>
 		</Frame>
-		<!-- The town-capture alerts ("The Enemy captured <town>", sent to each team's players)
-		     stay on the right edge: the enemy-capture alert takes the altar's old anchor, 80 below
-		     the minimap's top, and the ally one stacks on it. -->
+		<!-- The town-capture alerts ("Allies / The Enemy captured <town>"): viewer-relative - the
+		     ally one to the capturing team's players, the enemy one to the others, and nothing in
+		     either names the team (the script adds only the town's direction). Seen only in a
+		     player view (1-8; user, 2026-10-06), and one at a time: both centred just above the
+		     minimap, in the one spot. -->
 		<Frame type="Frame" name="EnemyCaptureNotificationFrame">
-			<Anchor side="Bottom" relative="$parent/MinimapProxyFrame" pos="Min" offset="80"/>
+			<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_MID_B"/>
+			<Anchor side="Right"  relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_MID_R"/>
+			<Unclipped val="true"/>
+		</Frame>
+		<Frame type="Frame" name="AllyCaptureNotificationFrame">
+			<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_MID_B"/>
+			<Anchor side="Right"  relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_MID_R"/>
+			<Unclipped val="true"/>
 		</Frame>
 		<!-- The towns' shot counts (each team's towns plus the core shots), flanking the minimap's
 		     middle on the screen's bottom edge (MapMechanicPanel TeamCollectionFrameTemplate). Their

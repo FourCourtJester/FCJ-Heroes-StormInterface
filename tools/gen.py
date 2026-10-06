@@ -326,6 +326,11 @@ def constants_layout(cfg):
         const(name("map", "alert", team, "r"), right)
         const(name("map", "alert", team, "b"), u(xy - gap), "on the XP bar")
         const(name("map", "alert", team, "b", "core"), u(cy - gap), "on the core bar, while it shows")
+    # ...and centred just above the minimap's square, for alerts with no team to place them by
+    # (an alert's art spans its right edge - REACH to - TAIL, so its middle is half that in)
+    (_, mmy, _, _), _ = rects(cfg)["minimap"]
+    const(name("map", "alert", "mid", "r"), u(mmx + mmw / 2) + (MAP_ALERT_REACH + MAP_ALERT_TAIL) // 2)
+    const(name("map", "alert", "mid", "b"), u(mmy - gap))
 
     lines.append("")
     lines.append("\t<!-- Team XP and core health: tracks and fills cut to the plates' slant (solid colour;")
