@@ -370,9 +370,9 @@ five segments would duplicate the hero row. If plates read too small, widen them
 
 **Next** (end of the 2026-10-05 session; start here):
 
-Waiting on a look in game: the short inspect card without its resource slot, and that a
-player's view (1-8) doesn't bring Blizzard's talent picker up on its own now that it's left
-to the game (2026-09-29 it did). Done this session: panes in Blizzard's talent
+Waiting on a look in game: the short inspect card without its resource slot. (Blizzard's
+talent picker, left to the game: seen 2026-10-06 never coming up on its own in a player's
+view, only on held Ctrl.) Done this session: panes in Blizzard's talent
 grid and the inspect skin, hotkeys settled (our panes on Ctrl+1-4; the inspect and death
 recap keys tried and dropped), the short card for non-heroes (camp mercenaries purple,
 captured ones their team's), hero forms and empty ability slots (item 3). Open items, the
