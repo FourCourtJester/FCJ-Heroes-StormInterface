@@ -516,19 +516,20 @@ def player_pack(n):
         f'{T*6}</StateGroup>\n{T*5}</Frame>\n'
         for k in range(1, 8))
     # the portrait: this player's plate picture, with the plate's crop (layout 2.6:1, near the card's)
-    pic = lambda name_, coords, alpha: (
+    pic = lambda name_, coords, alpha, top=PORTRAIT[0], bottom=PORTRAIT[1]: (
         f'{T*5}<Frame type="Image" name="{name_}">\n'
-        + rect(PORTRAIT[0], 2, PORTRAIT[1], -2, i=6, right_pos="Max")
+        + rect(top, 2, bottom, -2, i=6, right_pos="Max")
         + f'{T*6}<Texture val="{{{plate(n)}/HeroPortraitImage/@Texture}}"/>\n'
         f'{T*6}<TextureCoords top="{coords[0]}" left="{coords[1]}" bottom="{coords[2]}" right="{coords[3]}"/>\n'
         f'{T*6}<RenderPriority val="668"/>\n{T*6}<Alpha val="{alpha}"/>\n{T*6}<AcceptsMouse val="false"/>\n{T*5}</Frame>\n')
-    # the Vikings' three in one picture: the plates' crop (the art's right part) cut Baleog off
-    # (user, 2026-10-05) - for them, the whole art's height, as wide as the portrait's shape
-    # allows, centred
-    side = round((1 - (W - 4) / (PORTRAIT[1] - PORTRAIT[0]) / PORTRAIT_ART) / 2, 3)
+    # the Vikings' three in one picture: the plates' crop (the art's right part) cut Baleog off,
+    # and the art's full height (2% off each side) still cut Olaf (user, 2026-10-05) - for them,
+    # the whole art, as tall as the card's width allows, centred in the portrait's band
+    wide_h = round((W - 4) / PORTRAIT_ART)
+    wide_top = PORTRAIT[0] + (PORTRAIT[1] - PORTRAIT[0] - wide_h) // 2
     swap = lambda wide: (f'<Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="{255 if wide else 0}"/>'
                          f'<Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="{0 if wide else 255}"/>')
-    portrait = (pic("FCJH_Portrait", CROP, 255) + pic("FCJH_PortraitWide", (0, side, 1, 1 - side), 0)
+    portrait = (pic("FCJH_Portrait", CROP, 255) + pic("FCJH_PortraitWide", (0, 0, 1, 1), 0, wide_top, wide_top + wide_h)
                 + f'{T*5}<StateGroup name="FCJH_PortraitCrop">\n{T*6}<DefaultState val="Hero"/>\n'
                 + "".join(f'{T*6}<State name="{u}"><When type="Property" frame="{plate(n)}/HeroStatus" Unit="{u}"/>{swap(True)}</State>\n'
                           for u in WIDE_PORTRAITS)
