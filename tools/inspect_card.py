@@ -562,8 +562,8 @@ def matcher(n):
         for sel, on in [(u, u) for u in HEROES] + ALSO)
     # Mirror matches (the same hero on both teams, 2026-10-05): the hero check alone matched
     # both players and the red one drew over the blue. So first: a unit of the other team never
-    # shows this pack (the team sensor, FCJH_TeamSense). States are tried in order; if the
-    # sensor reads neither team, this never applies and the hero check decides as before.
+    # shows this pack (the team sensor, FCJH_TeamSense; seen right on two Blazes). States are
+    # tried in order; were the sensor to read neither team, the hero check decides alone.
     other = "TeamChaos" if n < 5 else "TeamOrder"
     wrong = (f'{T*5}<State name="OtherTeam"><When type="Property" frame="$this/{TEAM_SENSE}" CurrentRelation="{other}"/>'
              f'<Action type="SetProperty" frame="$this/FCJH_Player{n}" Alpha="0"/>{flag("false")}</State>\n')
@@ -652,28 +652,14 @@ TEAM_SENSE = "FCJH_TeamSense"
 
 
 def team_sense():
-    """The selected unit's team: a UnitStatusColor reads the unit's relation to the viewer -
-    for an observer TeamOrder (blue) or TeamChaos (red), as Blizzard's minimap team colours
-    read it (gameui TeamColoringTemplate). The ally/enemy/owner animation events never came
-    for an observer (2026-10-05). DIAGNOSTIC squares in the title band's left end show what it
-    reads: blue TeamOrder, red TeamChaos, cyan Ally, orange Enemy, white Owner."""
-    rels = (("TeamOrder", "255,92,188,236"), ("TeamChaos", "255,231,92,121"), ("Ally", "255,80,240,240"),
-            ("Enemy", "255,255,160,40"), ("Owner", "255,255,255,255"))
-    squares = "".join(
-        f'{T*4}<Frame type="Image" name="FCJH_Diag{r}">\n' + placed(8, M + i * 18, 14, 14, 5)
-        + f'{T*5}<Texture val="@UI/PauseScreenDimImage"/>\n{T*5}<ColorAdjustMode val="Fill"/>\n'
-        f'{T*5}<AdjustmentColor val="{colour}"/>\n{T*5}<RenderPriority val="700"/>\n'
-        f'{T*5}<Alpha val="40"/>\n{T*5}<AcceptsMouse val="false"/>\n{T*4}</Frame>\n'
-        for i, (r, colour) in enumerate(rels))
-    lit = lambda on: "".join(f'<Action type="SetProperty" frame="$parent/FCJH_Diag{r}" Alpha="{255 if r == on else 40}"/>'
-                             for r, _ in rels)
-    states = "".join(f'{T*6}<State name="{r}"><When type="Property" frame="$this" CurrentRelation="{r}"/>{lit(r)}</State>\n'
-                     for r, _ in rels)
-    return (f'{T*4}<!-- the selected unit\'s team (inspect_card.team_sense), and DIAGNOSTIC squares showing it -->\n'
+    """The selected unit's team, for mirror matches (matcher): a UnitStatusColor reads the
+    unit's relation to the viewer - for an observer TeamOrder (blue) or TeamChaos (red), as
+    Blizzard's minimap team colours read it (gameui TeamColoringTemplate). Seen right on two
+    Blazes, 2026-10-05. The ally/enemy/owner animation events never come for an observer."""
+    return (f'{T*4}<!-- the selected unit\'s team (inspect_card.team_sense): the player matchers read it -->\n'
             f'{T*4}<Frame type="UnitStatusColor" name="{TEAM_SENSE}">\n{T*5}<Anchor relative="$parent"/>\n'
             f'{T*5}<ColorStyle val="MinimapTeams"/>\n{T*5}<AcceptsMouse val="false"/>\n{T*5}<AcceptsMouseTooltip val="false"/>\n'
-            f'{T*5}<StateGroup name="FCJH_Relation">\n{T*6}<DefaultState val="None"/>\n{states}'
-            f'{T*6}<State name="None">{lit("")}</State>\n{T*5}</StateGroup>\n{T*4}</Frame>\n' + squares)
+            f'{T*4}</Frame>\n')
 
 
 def unit():
@@ -809,8 +795,8 @@ def unit():
 {T*4}<!-- 6. abilities: Blizzard's command card, laid over the card (command_panel) -->
 
 {T*4}<!-- which player is selected: player N when the selected unit's hero is the hero on
-{T*4}     plate N (unit checks, one state per hero, heroes from the game data). Mirror matches
-{T*4}     (the same hero on both teams) would show both packs - not handled yet. -->
+{T*4}     plate N (unit checks, one state per hero, heroes from the game data). In a mirror
+{T*4}     match (the same hero on both teams) the team sensor picks the player (FCJH_TeamSense). -->
 {"".join(matcher(n) + (tip_switch(n) if TALENT_TIPS else "") for n in range(10))}{T*3}</Frame>
 {T*2}</Frame>
 '''

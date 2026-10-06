@@ -274,91 +274,12 @@
 				<!-- 1. animated model: DROPPED (round 6). The hero cutscene kept the first hero clicked
 				     (Chromie) over every later selection; the static portrait underneath updates. -->
 
-				<!-- the selected unit's team (inspect_card.team_sense), and DIAGNOSTIC squares showing it -->
+				<!-- the selected unit's team (inspect_card.team_sense): the player matchers read it -->
 				<Frame type="UnitStatusColor" name="FCJH_TeamSense">
 					<Anchor relative="$parent"/>
 					<ColorStyle val="MinimapTeams"/>
 					<AcceptsMouse val="false"/>
 					<AcceptsMouseTooltip val="false"/>
-					<StateGroup name="FCJH_Relation">
-						<DefaultState val="None"/>
-						<State name="TeamOrder"><When type="Property" frame="$this" CurrentRelation="TeamOrder"/><Action type="SetProperty" frame="$parent/FCJH_DiagTeamOrder" Alpha="255"/><Action type="SetProperty" frame="$parent/FCJH_DiagTeamChaos" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagAlly" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagEnemy" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagOwner" Alpha="40"/></State>
-						<State name="TeamChaos"><When type="Property" frame="$this" CurrentRelation="TeamChaos"/><Action type="SetProperty" frame="$parent/FCJH_DiagTeamOrder" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagTeamChaos" Alpha="255"/><Action type="SetProperty" frame="$parent/FCJH_DiagAlly" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagEnemy" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagOwner" Alpha="40"/></State>
-						<State name="Ally"><When type="Property" frame="$this" CurrentRelation="Ally"/><Action type="SetProperty" frame="$parent/FCJH_DiagTeamOrder" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagTeamChaos" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagAlly" Alpha="255"/><Action type="SetProperty" frame="$parent/FCJH_DiagEnemy" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagOwner" Alpha="40"/></State>
-						<State name="Enemy"><When type="Property" frame="$this" CurrentRelation="Enemy"/><Action type="SetProperty" frame="$parent/FCJH_DiagTeamOrder" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagTeamChaos" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagAlly" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagEnemy" Alpha="255"/><Action type="SetProperty" frame="$parent/FCJH_DiagOwner" Alpha="40"/></State>
-						<State name="Owner"><When type="Property" frame="$this" CurrentRelation="Owner"/><Action type="SetProperty" frame="$parent/FCJH_DiagTeamOrder" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagTeamChaos" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagAlly" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagEnemy" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagOwner" Alpha="255"/></State>
-						<State name="None"><Action type="SetProperty" frame="$parent/FCJH_DiagTeamOrder" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagTeamChaos" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagAlly" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagEnemy" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagOwner" Alpha="40"/></State>
-					</StateGroup>
-				</Frame>
-				<Frame type="Image" name="FCJH_DiagTeamOrder">
-					<Anchor side="Top"    relative="$parent" pos="Min" offset="8"/>
-					<Anchor side="Left"   relative="$parent" pos="Min" offset="15"/>
-					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-					<Width val="14"/>
-					<Height val="14"/>
-					<Texture val="@UI/PauseScreenDimImage"/>
-					<ColorAdjustMode val="Fill"/>
-					<AdjustmentColor val="255,92,188,236"/>
-					<RenderPriority val="700"/>
-					<Alpha val="40"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
-				<Frame type="Image" name="FCJH_DiagTeamChaos">
-					<Anchor side="Top"    relative="$parent" pos="Min" offset="8"/>
-					<Anchor side="Left"   relative="$parent" pos="Min" offset="33"/>
-					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-					<Width val="14"/>
-					<Height val="14"/>
-					<Texture val="@UI/PauseScreenDimImage"/>
-					<ColorAdjustMode val="Fill"/>
-					<AdjustmentColor val="255,231,92,121"/>
-					<RenderPriority val="700"/>
-					<Alpha val="40"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
-				<Frame type="Image" name="FCJH_DiagAlly">
-					<Anchor side="Top"    relative="$parent" pos="Min" offset="8"/>
-					<Anchor side="Left"   relative="$parent" pos="Min" offset="51"/>
-					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-					<Width val="14"/>
-					<Height val="14"/>
-					<Texture val="@UI/PauseScreenDimImage"/>
-					<ColorAdjustMode val="Fill"/>
-					<AdjustmentColor val="255,80,240,240"/>
-					<RenderPriority val="700"/>
-					<Alpha val="40"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
-				<Frame type="Image" name="FCJH_DiagEnemy">
-					<Anchor side="Top"    relative="$parent" pos="Min" offset="8"/>
-					<Anchor side="Left"   relative="$parent" pos="Min" offset="69"/>
-					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-					<Width val="14"/>
-					<Height val="14"/>
-					<Texture val="@UI/PauseScreenDimImage"/>
-					<ColorAdjustMode val="Fill"/>
-					<AdjustmentColor val="255,255,160,40"/>
-					<RenderPriority val="700"/>
-					<Alpha val="40"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
-				<Frame type="Image" name="FCJH_DiagOwner">
-					<Anchor side="Top"    relative="$parent" pos="Min" offset="8"/>
-					<Anchor side="Left"   relative="$parent" pos="Min" offset="87"/>
-					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-					<Width val="14"/>
-					<Height val="14"/>
-					<Texture val="@UI/PauseScreenDimImage"/>
-					<ColorAdjustMode val="Fill"/>
-					<AdjustmentColor val="255,255,255,255"/>
-					<RenderPriority val="700"/>
-					<Alpha val="40"/>
-					<AcceptsMouse val="false"/>
 				</Frame>
 
 				<!-- 2. name (in the title band, user 2026-10-05), player, level -->
@@ -4714,8 +4635,8 @@
 				<!-- 6. abilities: Blizzard's command card, laid over the card (command_panel) -->
 
 				<!-- which player is selected: player N when the selected unit's hero is the hero on
-				     plate N (unit checks, one state per hero, heroes from the game data). Mirror matches
-				     (the same hero on both teams) would show both packs - not handled yet. -->
+				     plate N (unit checks, one state per hero, heroes from the game data). In a mirror
+				     match (the same hero on both teams) the team sensor picks the player (FCJH_TeamSense). -->
 				<StateGroup name="FCJH_IsPlayer0">
 					<DefaultState val="No"/>
 					<State name="OtherTeam"><When type="Property" frame="$this/FCJH_TeamSense" CurrentRelation="TeamChaos"/><Action type="SetProperty" frame="$this/FCJH_Player0" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_TipSel0" Visible="false"/></State>
