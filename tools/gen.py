@@ -328,6 +328,7 @@ def constants_layout(cfg):
         const(name("map", "alert", team, "b"), u(xy - gap), "on the XP bar")
         const(name("map", "alert", team, "b", "core"), u(cy - gap), "on the core bar, while it shows")
         const(name("map", "alert", team, "b", "2"), u(cy - gap) - MAP_ALERT_STEP, "a second alert, one up")
+        const(name("map", "alert", team, "b", "3"), u(cy - gap) - 2 * MAP_ALERT_STEP, "a third, two up")
     # ...and centred just above the minimap's square, for alerts with no team to place them by
     # (an alert's art spans its right edge - REACH to - TAIL, so its middle is half that in)
     (_, mmy, _, _), _ = rects(cfg)["minimap"]

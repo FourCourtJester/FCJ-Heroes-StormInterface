@@ -128,11 +128,21 @@
 		     Blizzard's own UI never uses it. Blue's count up: blue took a town; down: red did.
 		     It comes with the new town's spawn, about a second after the old one falls (the
 		     capture's other announcements - pings, sounds - aren't anything a layout can catch).
-		     Slot two, one above the map's (a town can fall during the altar countdown). ===== -->
+		     In the stack on its side: the lowest free slot, above whichever of Blizzard's alerts
+		     by the map are showing. ===== -->
 		<Frame type="Frame" name="FCJH_BlueTown" template="FieldofSlaughter/MainFoSPanel/AllyCaptureNotificationFrame">
-			<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_B_2"/>
+			<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_B"/>
 			<Anchor side="Right"  relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_R"/>
 			<Unclipped val="true"/>
+			<!-- the stack on this side: the lowest free slot, growing upward - above whichever
+			     of Blizzard's alerts by the map are showing (user, 2026-10-06) -->
+			<StateGroup name="FCJH_Stack">
+				<DefaultState val="Bottom"/>
+				<State name="OverTunnels"><When type="Property" frame="$parent/WaygateNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_B_2"/></State>
+				<State name="OverCannons"><When type="Property" frame="$parent/RavenNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_B_2"/></State>
+				<State name="OnCore"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1CoreUnitStatus" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_B_CORE"/></State>
+				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_B"/></State>
+			</StateGroup>
 			<Frame type="Label" name="NotificationLabel"><Text val="Blue team captured"/></Frame>
 			<Frame type="Label" name="NotificationTargetLabel"><Text val="a town"/></Frame>
 			<!-- gone after 5 s, as Blizzard's (its script waits 5 s, then hides it) -->
@@ -144,9 +154,20 @@
 			</Animation>
 		</Frame>
 		<Frame type="Frame" name="FCJH_RedTown" template="FieldofSlaughter/MainFoSPanel/EnemyCaptureNotificationFrame">
-			<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_RED_B_2"/>
+			<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_RED_B"/>
 			<Anchor side="Right"  relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_RED_R"/>
 			<Unclipped val="true"/>
+			<!-- the stack on this side: the lowest free slot, growing upward - above whichever
+			     of Blizzard's alerts by the map are showing (user, 2026-10-06) -->
+			<StateGroup name="FCJH_Stack">
+				<DefaultState val="Bottom"/>
+				<State name="OverAltarTowers"><When type="Property" frame="$parent/AltarSpawnNotificationFrame" Visible="true"/><When type="Property" frame="$parent/TowersNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_RED_B_3"/></State>
+				<State name="OverTowers"><When type="Property" frame="$parent/TowersNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_RED_B_3"/></State>
+				<State name="OverAltar"><When type="Property" frame="$parent/AltarSpawnNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_RED_B_2"/></State>
+				<State name="OverCannons"><When type="Property" frame="$parent/NecroNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_RED_B_2"/></State>
+				<State name="OnCore"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2CoreUnitStatus" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_RED_B_CORE"/></State>
+				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_RED_B"/></State>
+			</StateGroup>
 			<Frame type="Label" name="NotificationLabel"><Text val="Red team captured"/></Frame>
 			<Frame type="Label" name="NotificationTargetLabel"><Text val="a town"/></Frame>
 			<!-- gone after 5 s, as Blizzard's (its script waits 5 s, then hides it) -->
