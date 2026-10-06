@@ -63,8 +63,9 @@ drawn by OBS over empty regions the interface leaves (§6).
   empty slots await the final pass (§7 items 3, 14).
 - **Kill feed** — Blizzard's own, top-left. **Minimap** bottom-centre, **replay controls**
   top-left with a tab when collapsed (replays only). Blizzard's player HUD never shows; its
-  talent picker is left to the game (a player's view shows it while Ctrl is held, steady, as
-  in Ahli's and Spazzo's UIs - §3).
+  talent picker is left to the game: held Ctrl shows it, steady, only in a player's view
+  (1-8 keys), not when following from a plate click - as in Ahli's and Spazzo's UIs (§3;
+  confirmed 2026-10-06).
 
 Not yet: map objectives (pinned to the right edge on many maps — a per-map pass), the OBS
 graphics package, the fight-mode hotkey, and the visual pass that takes the chrome look of
@@ -220,7 +221,9 @@ UnitStatusFrame0/HeroTalentTreeSelectionPanel`, the frame Ahli moves above his h
 the engine re-asserts it every frame: a Visibility loop, Fade loops on it and on its parent,
 parking it (it came back on screen at the top-left), stopping its Show animation, parking or
 fading its parts, and emptying its template each lost, and fighting it made it FLICKER. Ahli
-0.75 and Spazzo leave it be and it sits steady while Ctrl is down. So do we now (FCJH_Hidden).
+0.75 and Spazzo leave it be and it sits steady while Ctrl is down. So do we now (FCJH_Hidden;
+seen steady 2026-10-06, and only in a player's view from the 1-8 keys - following a hero
+from a plate click never shows it).
 The diagnostic that settled it: marker squares stuck inside the frame (IgnoreParentAlpha) plus
 latches on each suspect's Visible - a quick flick needs latches, not screenshots.
 
