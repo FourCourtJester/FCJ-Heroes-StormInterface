@@ -39,5 +39,17 @@
 		<Frame type="Frame" name="EnemyCaptureNotificationFrame">
 			<Anchor side="Bottom" relative="$parent/MinimapProxyFrame" pos="Min" offset="80"/>
 		</Frame>
+		<!-- The towns' shot counts (each team's towns plus the core shots), flanking the minimap's
+		     middle on the screen's bottom edge (MapMechanicPanel TeamCollectionFrameTemplate). Their
+		     panel filled the 600-unit right-edge strip, which held Blizzard's minimap; ours is
+		     bottom-centre, so the strip clipped them and they never showed (user, 2026-10-06).
+		     The panel now spans the screen, unclipped. -->
+		<Frame type="Frame" name="PotentialPointsPanel">
+			<Anchor side="Top"    relative="$GameUI" pos="Min" offset="0"/>
+			<Anchor side="Left"   relative="$GameUI" pos="Min" offset="0"/>
+			<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+			<Anchor side="Right"  relative="$GameUI" pos="Max" offset="0"/>
+			<Unclipped val="true"/>
+		</Frame>
 	</Frame>
 </Desc>
