@@ -369,6 +369,13 @@ worked out from the cell's shape. The user wants that look (their screenshots ar
 is the old fight-mode cluster. Pooled team HP is dropped: layouts have no arithmetic, and
 five segments would duplicate the hero row. If plates read too small, widen them.
 
+**Art is sized for 1440p and scaled down at 1080p** (user, 2026-10-06), not the other way
+round. Every generated texture is its frame's size on a 2560 x 1440 screen (`gen.py
+ART_HEIGHT`; sizes needn't be powers of two), so it's 1:1 there and drawn at 75% at 1080p.
+Layout numbers stay 1080p px, the resolution we test at; any 16:9 screen gets the same layout
+(1200 units tall). Not yet looked at in 1440p: the inspect card's edge lines are worked out to
+land on whole pixels at 1080p (`inspect_card.line`), so at 1440p they may come out 2-3 px.
+
 ---
 
 ## 7. What's next

@@ -126,7 +126,7 @@
 			<Height val="0"/>
 			<TextureCoords top="0.1" left="0.543" bottom="0.65" right="1.0"/>
 			<ImageMaskTexture val="_Assets\Textures\FCJH_White.dds"/>
-			<AlphaMaskTexture val="_Assets\Textures\FCJH_Portrait_blue_409bbae7.dds"/>
+			<AlphaMaskTexture val="_Assets\Textures\FCJH_Portrait_blue_14993741.dds"/>
 			<RenderPriority val="500"/>
 		</Frame>
 		<!-- The same portrait mirrored, shown over it while Abathur has a clone
@@ -141,7 +141,7 @@
 			<Texture val="{$parent/HeroPortraitImage/@Texture}"/>
 			<TextureCoords top="0.1" left="1.0" bottom="0.65" right="0.543"/>
 			<ImageMaskTexture val="_Assets\Textures\FCJH_White.dds"/>
-			<AlphaMaskTexture val="_Assets\Textures\FCJH_Portrait_blue_409bbae7.dds"/>
+			<AlphaMaskTexture val="_Assets\Textures\FCJH_Portrait_blue_14993741.dds"/>
 			<Alpha val="0"/>
 			<RenderPriority val="501"/>
 			<AcceptsMouse val="false"/>
@@ -865,7 +865,7 @@
 			<Height val="0"/>
 			<TextureCoords top="0.1" left="0.543" bottom="0.65" right="1.0"/>
 			<ImageMaskTexture val="_Assets\Textures\FCJH_White.dds"/>
-			<AlphaMaskTexture val="_Assets\Textures\FCJH_Portrait_red_61268ab3.dds"/>
+			<AlphaMaskTexture val="_Assets\Textures\FCJH_Portrait_red_8010de6f.dds"/>
 			<RenderPriority val="500"/>
 		</Frame>
 		<!-- The same portrait mirrored, shown over it while Abathur has a clone
@@ -880,7 +880,7 @@
 			<Texture val="{$parent/HeroPortraitImage/@Texture}"/>
 			<TextureCoords top="0.1" left="1.0" bottom="0.65" right="0.543"/>
 			<ImageMaskTexture val="_Assets\Textures\FCJH_White.dds"/>
-			<AlphaMaskTexture val="_Assets\Textures\FCJH_Portrait_red_61268ab3.dds"/>
+			<AlphaMaskTexture val="_Assets\Textures\FCJH_Portrait_red_8010de6f.dds"/>
 			<Alpha val="0"/>
 			<RenderPriority val="501"/>
 			<AcceptsMouse val="false"/>
@@ -1109,9 +1109,9 @@
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame" side="Left" relative="$GameUI/FCJH_BlueRow" pos="Min" offset="603"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame" side="Right" relative="$GameUI/FCJH_BlueRow" pos="Min" offset="759"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame" Alpha="255"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_BlueXPTrack" Texture="_Assets\Textures\FCJH_Bar_xp_track_blue_n1_e37b55bc.dds"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame/FCJH_XPMask" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_blue_n1_3ed8465a.dds"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame/XPBar" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_blue_n1_3ed8465a.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_BlueXPTrack" Texture="_Assets\Textures\FCJH_Bar_xp_track_blue_n1_918d34d8.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame/FCJH_XPMask" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_blue_n1_f25633a8.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame/XPBar" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_blue_n1_f25633a8.dds"/>
 				</State>
 				<State name="Heroes2">
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" Visible="true"/>
@@ -1126,9 +1126,9 @@
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame" side="Left" relative="$GameUI/FCJH_BlueRow" pos="Min" offset="451"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame" side="Right" relative="$GameUI/FCJH_BlueRow" pos="Min" offset="759"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame" Alpha="255"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_BlueXPTrack" Texture="_Assets\Textures\FCJH_Bar_xp_track_blue_n2_aa7721e3.dds"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame/FCJH_XPMask" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_blue_n2_4d17cdb1.dds"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame/XPBar" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_blue_n2_4d17cdb1.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_BlueXPTrack" Texture="_Assets\Textures\FCJH_Bar_xp_track_blue_n2_0bd85557.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame/FCJH_XPMask" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_blue_n2_0ed5a183.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame/XPBar" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_blue_n2_0ed5a183.dds"/>
 				</State>
 				<State name="Heroes3">
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" Visible="true"/>
@@ -1145,9 +1145,9 @@
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame" side="Left" relative="$GameUI/FCJH_BlueRow" pos="Min" offset="299"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame" side="Right" relative="$GameUI/FCJH_BlueRow" pos="Min" offset="759"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame" Alpha="255"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_BlueXPTrack" Texture="_Assets\Textures\FCJH_Bar_xp_track_blue_n3_e89c4bc3.dds"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame/FCJH_XPMask" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_blue_n3_e5c7c335.dds"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame/XPBar" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_blue_n3_e5c7c335.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_BlueXPTrack" Texture="_Assets\Textures\FCJH_Bar_xp_track_blue_n3_c4a925de.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame/FCJH_XPMask" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_blue_n3_a953824f.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame/XPBar" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_blue_n3_a953824f.dds"/>
 				</State>
 				<State name="Heroes4">
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" Visible="true"/>
@@ -1166,9 +1166,9 @@
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame" side="Left" relative="$GameUI/FCJH_BlueRow" pos="Min" offset="147"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame" side="Right" relative="$GameUI/FCJH_BlueRow" pos="Min" offset="759"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame" Alpha="255"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_BlueXPTrack" Texture="_Assets\Textures\FCJH_Bar_xp_track_blue_n4_dc7dc285.dds"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame/FCJH_XPMask" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_blue_n4_a5b50249.dds"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame/XPBar" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_blue_n4_a5b50249.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_BlueXPTrack" Texture="_Assets\Textures\FCJH_Bar_xp_track_blue_n4_b115ef66.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame/FCJH_XPMask" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_blue_n4_bc693d48.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame/XPBar" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_blue_n4_bc693d48.dds"/>
 				</State>
 				<State name="Heroes5">
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" Visible="true"/>
@@ -1188,9 +1188,9 @@
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame" side="Left" relative="$GameUI/FCJH_BlueRow" pos="Min" offset="-5"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame" side="Right" relative="$GameUI/FCJH_BlueRow" pos="Min" offset="759"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame" Alpha="255"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_BlueXPTrack" Texture="_Assets\Textures\FCJH_Bar_xp_track_blue_f1f54b36.dds"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame/FCJH_XPMask" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_blue_3dc012b6.dds"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame/XPBar" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_blue_3dc012b6.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_BlueXPTrack" Texture="_Assets\Textures\FCJH_Bar_xp_track_blue_b085bdb1.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame/FCJH_XPMask" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_blue_c1bc86f0.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame/XPBar" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_blue_c1bc86f0.dds"/>
 				</State>
 			</StateGroup>
 			<StateGroup name="FCJH_RedCount">
@@ -1209,9 +1209,9 @@
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame" side="Left" relative="$GameUI/FCJH_RedRow" pos="Min" offset="47"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame" side="Right" relative="$GameUI/FCJH_RedRow" pos="Min" offset="204"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame" Alpha="255"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_RedXPTrack" Texture="_Assets\Textures\FCJH_Bar_xp_track_red_n1_5c1b0e3d.dds"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame/FCJH_XPMask" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_red_n1_680cf5f6.dds"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame/XPBar" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_red_n1_680cf5f6.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_RedXPTrack" Texture="_Assets\Textures\FCJH_Bar_xp_track_red_n1_4bb90024.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame/FCJH_XPMask" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_red_n1_a965a4d8.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame/XPBar" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_red_n1_a965a4d8.dds"/>
 				</State>
 				<State name="Heroes2">
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" Visible="true"/>
@@ -1222,9 +1222,9 @@
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame" side="Left" relative="$GameUI/FCJH_RedRow" pos="Min" offset="47"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame" side="Right" relative="$GameUI/FCJH_RedRow" pos="Min" offset="356"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame" Alpha="255"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_RedXPTrack" Texture="_Assets\Textures\FCJH_Bar_xp_track_red_n2_4204e08a.dds"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame/FCJH_XPMask" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_red_n2_c628f46c.dds"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame/XPBar" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_red_n2_c628f46c.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_RedXPTrack" Texture="_Assets\Textures\FCJH_Bar_xp_track_red_n2_61cfcd48.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame/FCJH_XPMask" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_red_n2_c8af80a2.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame/XPBar" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_red_n2_c8af80a2.dds"/>
 				</State>
 				<State name="Heroes3">
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" Visible="true"/>
@@ -1235,9 +1235,9 @@
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame" side="Left" relative="$GameUI/FCJH_RedRow" pos="Min" offset="47"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame" side="Right" relative="$GameUI/FCJH_RedRow" pos="Min" offset="508"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame" Alpha="255"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_RedXPTrack" Texture="_Assets\Textures\FCJH_Bar_xp_track_red_n3_08a28af1.dds"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame/FCJH_XPMask" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_red_n3_5176e887.dds"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame/XPBar" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_red_n3_5176e887.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_RedXPTrack" Texture="_Assets\Textures\FCJH_Bar_xp_track_red_n3_262cb864.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame/FCJH_XPMask" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_red_n3_7541a855.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame/XPBar" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_red_n3_7541a855.dds"/>
 				</State>
 				<State name="Heroes4">
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" Visible="true"/>
@@ -1248,9 +1248,9 @@
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame" side="Left" relative="$GameUI/FCJH_RedRow" pos="Min" offset="47"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame" side="Right" relative="$GameUI/FCJH_RedRow" pos="Min" offset="660"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame" Alpha="255"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_RedXPTrack" Texture="_Assets\Textures\FCJH_Bar_xp_track_red_n4_734619d4.dds"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame/FCJH_XPMask" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_red_n4_32cf4dc0.dds"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame/XPBar" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_red_n4_32cf4dc0.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_RedXPTrack" Texture="_Assets\Textures\FCJH_Bar_xp_track_red_n4_2cc745e0.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame/FCJH_XPMask" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_red_n4_e548d4f1.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame/XPBar" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_red_n4_e548d4f1.dds"/>
 				</State>
 				<State name="Heroes5">
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" Visible="true"/>
@@ -1260,9 +1260,9 @@
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame" side="Left" relative="$GameUI/FCJH_RedRow" pos="Min" offset="47"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame" side="Right" relative="$GameUI/FCJH_RedRow" pos="Min" offset="812"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame" Alpha="255"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_RedXPTrack" Texture="_Assets\Textures\FCJH_Bar_xp_track_red_4e626674.dds"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame/FCJH_XPMask" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_red_e520b54d.dds"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame/XPBar" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_red_e520b54d.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_RedXPTrack" Texture="_Assets\Textures\FCJH_Bar_xp_track_red_b44f49ba.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame/FCJH_XPMask" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_red_5bcdb1d1.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame/XPBar" AlphaMaskTexture="_Assets\Textures\FCJH_Bar_xp_mask_red_5bcdb1d1.dds"/>
 				</State>
 			</StateGroup>
 		</Frame>

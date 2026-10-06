@@ -18,6 +18,7 @@ Layout units: the game lays its UI out on a grid ui_reference_height units tall,
 import argparse
 import functools
 import hashlib
+import math
 import sys
 import tomllib
 from pathlib import Path
@@ -521,15 +522,24 @@ TEXTURE_DIR = "_Assets\\Textures"
 WHITE = TEXTURE_DIR + "\\FCJH_White.dds"
 
 
-def portrait_mask_file(team):
+def plate_art_sizes(cfg):
+    """The plate's textures at their size on a 1440p screen (ART_HEIGHT), texels: the
+    portrait's frame and the whole cell."""
+    c, px, k = HeroCell(cfg), 1 / Units(cfg).scale, art_scale(cfg)
+    texels = lambda units: math.ceil(units * px * k)
+    return {"portrait": (texels(c.w), texels(c.portrait_bottom - c.portrait_top)),
+            "cell": (texels(c.w), texels(c.h))}
+
+
+def portrait_mask_file(team, size):
     # Heroes caches a texture by its path across replay reloads (layouts reload, textures
     # don't), so every version of a mask gets its own name: a hash of its content.
-    digest = hashlib.sha1(portrait_mask(team)).hexdigest()[:8]
+    digest = hashlib.sha1(portrait_mask(team, size)).hexdigest()[:8]
     return f"FCJH_Portrait_{team}_{digest}.dds"
 
 
 @functools.cache
-def portrait_mask(team, size=(256, 128), sub=4):
+def portrait_mask(team, size, sub=4):
     """The portrait cut to the in-game cell's parallelogram, as an alpha mask.
 
     Blizzard's own ImageMaskTexture follows the portrait's TextureCoords, so cropping the
@@ -589,7 +599,20 @@ def slant_texture(team, cut, colour, alpha=255, size=(512, 32), sub=4):
     return dds_bgra(w, h, b"".join(rows))
 
 
-TOP_BACKPLATE_SIZE = (512, 256)    # px; drawn 1:1 at 1080p, centred on Blizzard's hexagon
+# Our generated art is drawn for 2560 x 1440 and scaled down at 1080p, not the other way round
+# (user, 2026-10-06): each texture is its frame's size on a 1440p screen, so it's 1:1 there and
+# drawn at 75% at 1080p - a gentle shrink that filters cleanly (the core bar's 512-wide texture
+# on a 213 px bar, under half, stepped: 2026-09-30). Sizes needn't be powers of two (Blizzard's
+# and Ahli's often aren't). Layout numbers stay 1080p px, the resolution we test at.
+ART_HEIGHT = 1440
+
+
+def art_scale(cfg):
+    """Texels per layout.toml px: the art's resolution over the one layout.toml is written for."""
+    return ART_HEIGHT / cfg["screen"]["height"]
+
+
+TOP_BACKPLATE_SIZE = (512, 256)    # px at 1080p (its frame); centred on Blizzard's hexagon
 
 
 def top_backplate_geometry(cfg):
@@ -652,15 +675,18 @@ def convex_sdf(pts):
 
 
 def top_backplate_texture(cfg):
-    """The top bar's backplate (layout.toml [top_backplate]), drawn 1:1 at 1080p into a
-    TOP_BACKPLATE_SIZE texture: stock dark, the team colour rising toward each wing's outer
+    """The top bar's backplate (layout.toml [top_backplate]), its TOP_BACKPLATE_SIZE frame drawn
+    at ART_HEIGHT's resolution: stock dark, the team colour rising toward each wing's outer
     end, a hexagon lattice fading the same way, a sheen, the neutral plate round Blizzard's
     hexagon (only its padding shows; the hexagon is Blizzard's art on top), and a chrome rim
-    round the whole outline. Anti-aliased from signed distances."""
+    round the whole outline. Anti-aliased from signed distances (in 1080p px, so `k` turns
+    them into texels for the edges' half-texel ramps)."""
     import math
     bp = cfg["top_backplate"]
     geo = top_backplate_geometry(cfg)
-    x0, y0, w, h = geo["box"]
+    x0, y0, bw, bh = geo["box"]
+    k = art_scale(cfg)
+    w, h = round(bw * k), round(bh * k)
     cx = geo["centre"]
     lx, rx = geo["ends"]
     sd_wing, sd_hex = convex_sdf(geo["wings"]), convex_sdf(geo["padded"])
@@ -687,7 +713,7 @@ def top_backplate_texture(cfg):
     clamp = lambda v: 0.0 if v < 0 else 1.0 if v > 1 else v
     rows = []
     for ty in range(h):
-        y = y0 + ty + 0.5
+        y = y0 + (ty + 0.5) / k
         row = bytearray()
         if y > bottom + 3:
             rows.append(bytes(4 * w))
@@ -698,11 +724,11 @@ def top_backplate_texture(cfg):
         rim_c = ramp(chrome, vt)
         sheen = bp["sheen"] * clamp(1 - y / (bottom / 2))
         for tx in range(w):
-            x = x0 + tx + 0.5
+            x = x0 + (tx + 0.5) / k
             dw, dh = sd_wing(x, y), sd_hex(x, y)
             du = min(dw, dh)
-            cover = clamp(0.5 - du)
-            rim = clamp(rim_half + 0.5 - abs(du))
+            cover = clamp(0.5 - du * k)
+            rim = clamp((rim_half - abs(du)) * k + 0.5)
             if cover <= 0 and rim <= 0:
                 row += b"\0\0\0\0"
                 continue
@@ -728,7 +754,7 @@ def top_backplate_texture(cfg):
                 c = mix(c, line[side], bp["lattice"] * f * outline)
             c = mix(c, (1, 1, 1), sheen)
             # the hexagon's neutral plate, with a fine light edge
-            pc = clamp(0.5 - dh)
+            pc = clamp(0.5 - dh * k)
             if pc > 0:
                 c = mix(c, plate_c, pc)
                 c = mix(c, chrome[0][1], .6 * clamp(1 - abs(dh)))
@@ -740,13 +766,14 @@ def top_backplate_texture(cfg):
     return dds_bgra(w, h, b"".join(rows))
 
 
-def bar_texture_size(w, h):
-    """A slanted bar texture close to its size on screen (w x h px), in powers of two. Our
-    DDS files carry no mipmaps, so a texture drawn much smaller than it is gets sampled
-    coarsely and its slanted edge steps: the core bar (213 x 24 px) from a 512 x 32
-    texture read "ragged" in game (2026-09-30)."""
-    p2 = lambda v: 1 << max(4, (round(v) - 1).bit_length())
-    return p2(w), p2(h)
+def bar_texture_size(cfg, w, h):
+    """A slanted bar texture at its size on a 1440p screen (w x h: layout.toml px; ART_HEIGHT).
+    Our DDS files carry no mipmaps, so a texture drawn much smaller than it is gets sampled
+    coarsely and its slanted edge steps: the core bar (213 x 24 px) from a 512 x 32 texture
+    (powers of two, rounded up) read "ragged" in game (2026-09-30). 1440p's size is drawn at
+    75% at 1080p, which doesn't."""
+    k = art_scale(cfg)
+    return math.ceil(w * k), math.ceil(h * k)
 
 
 def slant_bars(cfg):
@@ -765,7 +792,7 @@ def slant_bars(cfg):
         for bar, spec, fill in (("xp", xp, xp["colour"]), ("core", core, core[f"{team}_colour"])):
             (_, _, w, h), _ = rects_[f"{team}_{bar}"]
             cut = lean * h / w
-            size = bar_texture_size(w, h)
+            size = bar_texture_size(cfg, w, h)
             for part, data in (("fill", slant_texture(team, 0, fill, size=(32, 32))),
                                ("track", slant_texture(team, cut, spec["track_colour"], spec["track_alpha"], size=size)),
                                ("mask", slant_texture(team, cut, "ffffff", size=size))):
@@ -775,7 +802,7 @@ def slant_bars(cfg):
         for n in range(1, 5):
             (_, _, w, h), _ = team_bar_rects(cfg, n)[f"{team}_xp"]
             for part, colour, alpha in (("mask", "ffffff", 255), ("track", xp["track_colour"], xp["track_alpha"])):
-                data = slant_texture(team, lean * h / w, colour, alpha, size=bar_texture_size(w, h))
+                data = slant_texture(team, lean * h / w, colour, alpha, size=bar_texture_size(cfg, w, h))
                 digest = hashlib.sha1(data).hexdigest()[:8]
                 out[name("xp", part, team, f"n{n}")] = (f"FCJH_Bar_xp_{part}_{team}_n{n}_{digest}.dds", data)
     # the top bar's backplate behind Blizzard's hexagon (layout.toml [top_backplate])
@@ -786,13 +813,14 @@ def slant_bars(cfg):
     # the plate's own shape, as the click target's hit-test texture: plates overlap along the
     # slant, and a square click area sent clicks on one plate's corner to its neighbour
     for team in ("blue", "red"):
-        data = bytearray(slant_texture(team, cell.overlap / cell.w, "ffffff", size=(256, 128)))
+        tw, th = plate_art_sizes(cfg)["cell"]
+        data = bytearray(slant_texture(team, cell.overlap / cell.w, "ffffff", size=(tw, th)))
         # ...with the heroic icon cut away: a click there is for the heroic's tooltip
         # (talent_row_lifts), not a hero select
         l, t, r, b = heroic_icon_rect(cfg, team)
-        for ty in range(round(t / cell.h * 128), min(128, round(b / cell.h * 128))):
-            for tx in range(round(l / cell.w * 256), round(r / cell.w * 256)):
-                data[128 + (ty * 256 + tx) * 4 + 3] = 0
+        for ty in range(round(t / cell.h * th), min(th, round(b / cell.h * th))):
+            for tx in range(round(l / cell.w * tw), round(r / cell.w * tw)):
+                data[128 + (ty * tw + tx) * 4 + 3] = 0
         data = bytes(data)
         digest = hashlib.sha1(data).hexdigest()[:8]
         out[name("plate", "hit", team)] = (f"FCJH_PlateHit_{team}_{digest}.dds", data)
@@ -818,7 +846,8 @@ def square_border(colour, size=64, edge=4):
 
 
 def texture_files(cfg):
-    out = {TEXTURE_REL / portrait_mask_file(team): portrait_mask(team) for team in ("blue", "red")}
+    size = plate_art_sizes(cfg)["portrait"]
+    out = {TEXTURE_REL / portrait_mask_file(team, size): portrait_mask(team, size) for team in ("blue", "red")}
     # an opaque mask: replaces a Blizzard mask we don't want (there's no "none")
     out[TEXTURE_REL / "FCJH_White.dds"] = dds_bgra(4, 4, b"\xff" * 64)
     out[TEXTURE_REL / HEAL_BORDER] = square_border(cfg["heal_popup"]["colour"])
@@ -1860,7 +1889,7 @@ def hero_cell_template(team, c, cfg):
 			<Height val="0"/>
 			<TextureCoords top="{c.crop[0]}" left="{c.crop[1]}" bottom="{c.crop[2]}" right="{c.crop[3]}"/>
 			<ImageMaskTexture val="{WHITE}"/>
-			<AlphaMaskTexture val="{TEXTURE_DIR}\\{portrait_mask_file(team)}"/>
+			<AlphaMaskTexture val="{TEXTURE_DIR}\\{portrait_mask_file(team, plate_art_sizes(cfg)["portrait"])}"/>
 			<RenderPriority val="500"/>
 		</Frame>
 		<!-- The same portrait mirrored, shown over it while Abathur has a clone
@@ -1875,7 +1904,7 @@ def hero_cell_template(team, c, cfg):
 			<Texture val="{{$parent/HeroPortraitImage/@Texture}}"/>
 			<TextureCoords top="{c.crop[0]}" left="{c.crop[3]}" bottom="{c.crop[2]}" right="{c.crop[1]}"/>
 			<ImageMaskTexture val="{WHITE}"/>
-			<AlphaMaskTexture val="{TEXTURE_DIR}\\{portrait_mask_file(team)}"/>
+			<AlphaMaskTexture val="{TEXTURE_DIR}\\{portrait_mask_file(team, plate_art_sizes(cfg)["portrait"])}"/>
 			<Alpha val="0"/>
 			<RenderPriority val="501"/>
 			<AcceptsMouse val="false"/>

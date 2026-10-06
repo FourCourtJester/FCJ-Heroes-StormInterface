@@ -846,7 +846,7 @@ def topbar_board():
     b = [header("Top bar · as built",
                 f"Our backplate (variant C: silver chrome rim; team colour strongest at the wings' outer ends, fading to a stock dark toward the hexagon; "
                 f"a hexagon lattice fading the same way). It becomes the basis of the rest of the UI in the visual pass. One {gen.TOP_BACKPLATE_SIZE[0]} × "
-                f"{gen.TOP_BACKPLATE_SIZE[1]} texture drawn 1:1 at x {R['top_backplate'][0]}, from layout.toml [top_backplate]. Build {STAMP}.", 1820)]
+                f"{gen.TOP_BACKPLATE_SIZE[1]} px frame at x {R['top_backplate'][0]} (its texture drawn for 1440p, shown at 75% here), from layout.toml [top_backplate]. Build {STAMP}.", 1820)]
     # 1:1 strip
     b.append(heading(48, 150, "1:1 · the top of the screen"))
     b.append('<div style="position: absolute; left: 0; top: 200px; width: 1920px; height: 200px; overflow: hidden; background: #0b0c14;">'
