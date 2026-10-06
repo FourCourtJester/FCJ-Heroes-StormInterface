@@ -408,10 +408,10 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
      Deathwing's World Breaker - `inspect_card.FORMS`, paired with their hero every way
      (which unit the plate shows meanwhile is unknown). To QA: each form shows the tall card
      with its player's portrait and talents, and its own buttons.
-   - **Open: empty slots.** Abathur's E, Deathwing in flight (no D or Z): the row keeps a hole
-     where the button would be. Options: leave it (Blizzard's own bar has the slot), draw an
-     empty slot's frame there, or close the row up per hero (the data says which slots each
-     card fills). User's call.
+   - **Empty slots - built 2026-10-05, awaiting QA:** Blizzard's empty-slot frame
+     (EmptyDynamicButtonImageTemplate, 80 alpha) under Q W E R at the buttons' frame-art size
+     (`command_panel` empties): a button covers its own; Abathur's missing E shows the empty
+     frame, the row unchanged (user's pick). No Z or D just isn't there (the row's ends).
    - Not in FORMS: D.Va and the Vikings (already in ALSO); Tychus's Odin (no morph or unit
      card of its own found - likely the same unit); Abathur's clone (likely a copy of the
      cloned hero's unit, so it would match that hero's player - unchecked); Samuro's images

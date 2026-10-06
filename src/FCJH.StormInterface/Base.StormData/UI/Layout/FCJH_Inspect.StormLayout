@@ -6956,6 +6956,42 @@
 			<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 			<Width val="303"/>
 			<Height val="95"/>
+				<Frame type="Image" name="FCJH_EmptySlot00" template="CommandPanel/EmptyDynamicButtonImageTemplate">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="35"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="42"/>
+					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+					<Width val="68"/>
+					<Height val="68"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_EmptySlot01" template="CommandPanel/EmptyDynamicButtonImageTemplate">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="35"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="92"/>
+					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+					<Width val="68"/>
+					<Height val="68"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_EmptySlot02" template="CommandPanel/EmptyDynamicButtonImageTemplate">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="35"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="143"/>
+					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+					<Width val="68"/>
+					<Height val="68"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_EmptySlot03" template="CommandPanel/EmptyDynamicButtonImageTemplate">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="35"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="193"/>
+					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+					<Width val="68"/>
+					<Height val="68"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
 				<Frame type="CommandButton" name="CommandButton30">
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 					<Anchor side="Left"   relative="$parent" pos="Min" offset="75"/>

@@ -293,6 +293,15 @@ def command_panel():
                            + sized("ButtonSpecificOverlayPanel" if k.startswith("3") else "HeroSpecificCommandCardPanel",
                                    "HeroSpecificContainerPanel", CMD_SIZE, 5)
                            + f'{T*4}</Frame>\n')
+    # An empty slot's frame under Q W E R (Blizzard's, as on its talent-active row: drawn at the
+    # size of the button's frame art, at 80 alpha). A button covers its own; a hero without that
+    # ability - Abathur has no E - shows the empty frame, not a hole (user, 2026-10-05). Z and
+    # D, at the row's ends, just aren't there when a hero hasn't one.
+    empties = "".join(
+        f'{T*4}<Frame type="Image" name="FCJH_EmptySlot{k}" template="CommandPanel/EmptyDynamicButtonImageTemplate">\n'
+        + placed(ABIL_ROWS[1] - top - ART, round(cmd_centre(1, c) - CMD_SIZE / 2) - M - ART, CMD_BORDER, CMD_BORDER, 5)
+        + f'{T*5}<AcceptsMouse val="false"/>\n{T*4}</Frame>\n'
+        for c, k in enumerate(COMMAND_ROWS[1]) if k in ("00", "01", "02", "03"))
     away = "".join(
         f'{T*4}<Frame type="{ftype}" name="{n}">\n'
         f'{T*5}<Anchor side="Top"    relative="$parent" pos="Min" offset="9999"/>\n'
@@ -308,7 +317,7 @@ def command_panel():
             + f'{T*3}<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>\n'
             f'{T*3}<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>\n'
             f'{T*3}<Width val="{INNER}"/>\n{T*3}<Height val="{ABIL_ROWS[1] + CMD_SIZE - ABIL_ROWS[0]}"/>\n'
-            + "".join(buttons) + away + f'{T*2}</Frame>\n'
+            + empties + "".join(buttons) + away + f'{T*2}</Frame>\n'
             # Blizzard's control-group panel (the selection's unit icons, with health bars and
             # tooltips) hangs off the command card, so it came onto the card with it and stuck
             # out past its right edge, mostly invisible but answering the mouse (user,
