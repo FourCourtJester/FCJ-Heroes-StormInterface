@@ -468,8 +468,12 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    (top bar, minimap and kill feed exempt). Kill feed: back to Blizzard's own, top-left
    (FCJH_KillFeed removed; user: moved right, Blizzard's rows grow rightward so multi-kills
    ran off the screen, and they can't be right-aligned); seen in game: no clash with the
-   replay box, and it sits ~20 px from the side on its own. Open: the minimap still hangs
-   off the bottom like Blizzard's.
+   replay box, and it sits ~20 px from the side on its own. The user's verdict
+   (2026-10-05): the plates stay this size, so maps may be no wider than Towers of Doom
+   (fine in game, ~380 px drawn). Blizzard's 394 px square caps every map at about that
+   anyway, inside the plates' 415 px gap. Open, map by map (with item 8): HEIGHT. The
+   square is centred at y ~936 and hangs off the bottom, so a tall map may cross the bottom
+   padding or the screen's edge.
 10. **Hotkeys for the inspect card and a death recap** (user, 2026-10-05). Today the card
     only follows the selection (Blizzard's inspect box) and its X; there's no key. Ahli 0.75
     (`references/AhliObs075`, hotkeys as `#Hotkey - ...` constants in `_Ahli.StormLayout`)
