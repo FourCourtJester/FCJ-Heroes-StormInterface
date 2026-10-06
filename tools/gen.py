@@ -760,7 +760,7 @@ TALENT_ROW = ("$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverview
 
 
 def pet_death_labels(team, c):
-    """EXPERIMENT (2026-09-29): per-unit death timers - placement (the cell template). Our
+    """Per-unit death timers (2026-09-29) - placement (the cell template). Our
     observer cells only have one death timer, which took the whole plate when one Viking
     died. Blizzard's in-game top bar (the hidden party frame) has one per Viking and one for
     Misha; hero_row_layout binds each of ours to its cell there (pet_death_bindings)."""
@@ -1420,7 +1420,7 @@ def hero_cell_template(team, c, cfg):
 					</State>
 				</StateGroup>
 			</Frame>
-			<!-- EXPERIMENT (2026-09-27): Abathur's clone (Ultimate Evolution). Blizzard puts
+			<!-- Abathur's clone (Ultimate Evolution; 2026-09-27). Blizzard puts
 			     AbathurUltimateEvolutionVehicleCasterBehavior on Abathur when the clone spawns
 			     (UltimateEvolutionCastSet, WhichUnit Source) and removes it when the clone ends;
 			     an interrupted cast doesn't reach it. Same sensor trick as the fountain. While it's
@@ -1571,7 +1571,7 @@ def hero_cell_template(team, c, cfg):
 			<AlphaMaskTexture val="{TEXTURE_DIR}\\{portrait_mask_file(team)}"/>
 			<RenderPriority val="500"/>
 		</Frame>
-		<!-- EXPERIMENT: the same portrait mirrored, shown over it while Abathur has a clone
+		<!-- The same portrait mirrored, shown over it while Abathur has a clone
 		     (HeroStatus's FCJH_Clone state). The mask spans the frame, so the cut stays put. -->
 		<Frame type="Image" name="FCJH_ClonePortrait">
 			<Anchor side="Top"    relative="$parent" pos="Min" offset="{c.portrait_top}"/>
@@ -2434,8 +2434,7 @@ def write(cfg, source=SOURCE):
 # ------------------------------------------------------------------ dev-only files
 
 def dev_layout(cfg, stamp):
-    """The build stamp, as an override of GameUI. (The wireframe overlay and the art board,
-    dev aids with hotkeys of their own, were removed 2026-10-05: user.)"""
+    """The build stamp, as an override of GameUI."""
     dev = cfg.get("dev", {})
     u = Units(cfg)
     sx, sy = dev.get("build_stamp", [16, 16])

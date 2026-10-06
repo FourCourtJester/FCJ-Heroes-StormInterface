@@ -16,13 +16,13 @@ height = 1080
 ui_reference_height = 1200   # the game's layout grid height; fixed by the engine
 # The viewport's padding: nothing comes closer to a screen edge than this, except the top bar
 # (centred on the top edge) and Blizzard's minimap square. The hero rows grow to meet it
-# ([hero_row] scale = "fit"); tools/gen.py refuses a build that breaks it. 20 px is an
-# experiment (user, 2026-10-05).
+# ([hero_row] scale = "fit"); tools/gen.py refuses a build that breaks it. 20 px, and the
+# plates at the size it gives them (user, 2026-10-05).
 padding = 20
 
 # Dev builds only. Release builds leave all of this out.
 [dev]
-build_stamp = [1600, 20]     # x, y of the build stamp (top right, above the kill feed)
+build_stamp = [1600, 20]     # x, y of the build stamp (top right)
 
 # ---------------------------------------------------------------------------
 # Minimap. Blizzard's minimap is a fixed square (438 layout units = 394 px); the engine
@@ -115,7 +115,7 @@ kind = "demand"
 [element.kill_feed]
 rect = [0, 104.4, 540, 300]  # Blizzard's, in its own place, not moved (user, 2026-10-05): top-left,
                              # under the party frame's top (150 - 34 units); rows grow right and
-                             # down. Here only for the wireframe and the canvas.
+                             # down. Here only for the padding check and the canvas.
 kind = "ui"
 [element.info_pane]
 rect = [20, 196, 494, 576]   # sized to the talents table: 23-unit margins either side of its

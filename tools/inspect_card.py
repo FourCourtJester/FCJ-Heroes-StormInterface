@@ -1,8 +1,9 @@
 """The inspect card (layout.toml element.inspect): the tall card for the SELECTED unit -
 portrait, name, player and level, fountain, health and resource, buffs and debuffs, the ability
-card (1-5 talent actives, D Q W E R Z), the talent strip and stats. Written by tools/gen.py
-into FCJH_Inspect.StormLayout (inspect_card.layout); ported from the dev probe's scratch script
-(nine rounds, 2026-09-26..30) with its output unchanged.
+card (1-5 talent actives, D Q W E R Z), the talent strip and stats - or, for anything not a
+hero, the short card (name, team, health, buffs, stats). Written by tools/gen.py into
+FCJH_Inspect.StormLayout (inspect_card.layout); begun as the dev probe's scratch script (nine
+rounds, 2026-09-26..30).
 
 What the rounds established (the file's comments carry the detail):
   - it shows exactly when Blizzard's own small inspector would (FCJH_InspectGate): Blizzard's
@@ -15,7 +16,10 @@ What the rounds established (the file's comments carry the detail):
     unit check per hero from the game data)
   - abilities are Blizzard's own command card laid over the card (command_panel, 2026-10-02):
     native tooltips, talent actives and the right R for every hero - Ahli's method
-  - X closes it; its back takes the mouse so a click inside doesn't deselect (round 9)
+  - clicking off the unit closes it, as Blizzard's; its back takes the mouse so a click
+    inside doesn't deselect (round 9)
+  - hero or not is the selected unit's own type (hero_check); its team, the team sensor
+    (team_sense), which colours the edge (unit_team)
 """
 from functools import lru_cache
 from pathlib import Path
@@ -27,7 +31,8 @@ T = "\t"
 # 2026-10-05: the same whitespace in every direction). The card is cut to fit what it holds
 # (H, at the bottom: one row of buffs, two of abilities, the talents, three rows of stats).
 W = 333                            # 300 px
-BORDER = 2                         # the team-coloured edge
+BORDER = 2                         # the team-coloured edge, for the design canvas (in game each side
+                                   # is sized to 2 screen pixels: unit_team)
 EDGE = 5                           # the edge: our team line, then Blizzard's border art (inset 3)
 PAD = 10
 M = EDGE + PAD                     # side margin
@@ -442,9 +447,10 @@ def edge_top(hero):
 
 
 def card():
-    """Our copy of Blizzard's inspect box, re-laid out tall (portrait, bars, stats)."""
+    """Our copy of Blizzard's inspect box, re-laid out (tall for a hero, short for anything
+    else), and its gate."""
     shown = (f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="true"/>\n'
-             + (f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_TalentTips" Visible="true"/>\n' if TALENT_TIPS else ""))
+             + f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_TalentTips" Visible="true"/>\n')
     out = [f'{T*2}<!-- Round 9 (2026-09-30): the card shows exactly when Blizzard\'s own small inspector\n'
            f'{T*2}     would. Ours alone (a TargetInfoFrame the game doesn\'t manage) came up on the first\n'
            f'{T*2}     plate click of a game; the default UI\'s doesn\'t (user). Blizzard\'s is now parked\n'
@@ -463,7 +469,7 @@ def card():
            + shown + command_anchors(False, 5) + shape(False) + f'{T*4}</State>\n'
            f'{T*4}<State name="Hide">\n'
            f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="false"/>\n'
-           + (f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_TalentTips" Visible="false"/>\n' if TALENT_TIPS else "")
+           + f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_TalentTips" Visible="false"/>\n'
            + command_anchors(False, 5) + f'{T*4}</State>\n'
            f'{T*3}</StateGroup>\n{T*2}</Frame>\n' + command_switch() +
            f'{T*2}<!-- The card: our copy of Blizzard\'s inspect box -->\n'
@@ -576,7 +582,6 @@ CROP = None   # the plates' portrait crop (top, left, bottom, right): set by lay
 # heroes whose plate picture holds several (the Vikings): shown whole on the card; the units a
 # Vikings plate can hold (ALSO's guesses)
 WIDE_PORTRAITS = ("HeroLostVikingsController", "HeroOlaf", "HeroBaleog", "HeroErik")
-PORTRAIT_ART = 2.75   # the heroes' portrait art, width over height (tools/gen.py HeroCell.ART_ASPECT)
 
 
 def plate(n):
@@ -668,8 +673,7 @@ ALSO += [pair for form, hero in FORMS.items() for pair in ((form, form), (form, 
 def matcher(n):
     """FCJH_IsPlayer{n}: shows pack n while the selected unit is the hero on plate n, and
     raises flag FCJH_TipSel{n}, which brings player n's talent tooltips onto the card."""
-    flag = lambda on: (f'<Action type="SetProperty" frame="$this/FCJH_TipSel{n}" Visible="{on}"/>'
-                       if TALENT_TIPS else "")
+    flag = lambda on: f'<Action type="SetProperty" frame="$this/FCJH_TipSel{n}" Visible="{on}"/>'
     states = "".join(
         f'{T*5}<State name="{sel}{"" if sel == on else "_" + on}">'
         f'<When type="Property" Unit="{sel}"/>'
@@ -688,9 +692,6 @@ def matcher(n):
             f'{T*4}</StateGroup>\n')
 
 
-# the card's talent tooltips; False builds the card without them (panel, row switches, gate
-# actions)
-TALENT_TIPS = True
 TIPS = "$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips"
 TIP_ROW = TIPS + "/FCJH_TalentTipPanel/TalentOverview/HeroTalentsPanelContainer/PlayerFrame{n}"
 TIP_W = INNER                          # the talent strip's width: seven icons, across the card
@@ -805,8 +806,7 @@ def unit_team():
     """The card's edge in the selected unit's team colour, from the team sensor - blue, red, or
     the lighter purple for anything of neither team (a mercenary camp, a boss; user,
     2026-10-05) - and, on the short card only (the gate's shape), the team's name on the band
-    where a hero's player name goes. The edge runs to the card's end, either size; on a hero
-    it's the player pack's own edge colour. Each side is as many units as make 2 screen pixels
+    where a hero's player name goes. The edge runs to the card's end, either size. Each side is as many units as make 2 screen pixels
     there (line(); a flat 2 units is 1.8 px and the right side rounded to 1, user 2026-10-05);
     the top's depends on the card's size, so the gate sets it (edge_top)."""
     edge = lambda side, colour: (
@@ -974,7 +974,7 @@ def unit():
 {T*4}<!-- which player is selected: player N when the selected unit's hero is the hero on
 {T*4}     plate N (unit checks, one state per hero, heroes from the game data). In a mirror
 {T*4}     match (the same hero on both teams) the team sensor picks the player (FCJH_TeamSense). -->
-{"".join(matcher(n) + (tip_switch(n) if TALENT_TIPS else "") for n in range(10))}{T*3}</Frame>
+{"".join(matcher(n) + tip_switch(n) for n in range(10))}{T*3}</Frame>
 {T*2}</Frame>
 '''
 
@@ -1003,7 +1003,7 @@ def layout(crop, head, team_colours, origin=(0, 0), px=0.9):
                  for team, hex_ in team_colours.items()})
     HEROES[:] = cached_heroes()
     return (head + FILE_HEADER + card() + unit() + "\t\t\t</Frame>\n\t\t</Frame>\n"
-            + (talent_tips() if TALENT_TIPS else "") + command_panel()
+            + talent_tips() + command_panel()
             + "\t</Frame>\n\t</Frame>\n\t</Frame>\n" + tracer_charge() + "</Desc>\n")
 
 

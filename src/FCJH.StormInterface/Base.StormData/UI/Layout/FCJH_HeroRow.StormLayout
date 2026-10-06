@@ -129,7 +129,7 @@
 			<AlphaMaskTexture val="_Assets\Textures\FCJH_Portrait_blue_409bbae7.dds"/>
 			<RenderPriority val="500"/>
 		</Frame>
-		<!-- EXPERIMENT: the same portrait mirrored, shown over it while Abathur has a clone
+		<!-- The same portrait mirrored, shown over it while Abathur has a clone
 		     (HeroStatus's FCJH_Clone state). The mask spans the frame, so the cut stays put. -->
 		<Frame type="Image" name="FCJH_ClonePortrait">
 			<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
@@ -420,7 +420,7 @@
 					</State>
 				</StateGroup>
 			</Frame>
-			<!-- EXPERIMENT (2026-09-27): Abathur's clone (Ultimate Evolution). Blizzard puts
+			<!-- Abathur's clone (Ultimate Evolution; 2026-09-27). Blizzard puts
 			     AbathurUltimateEvolutionVehicleCasterBehavior on Abathur when the clone spawns
 			     (UltimateEvolutionCastSet, WhichUnit Source) and removes it when the clone ends;
 			     an interrupted cast doesn't reach it. Same sensor trick as the fountain. While it's
@@ -812,7 +812,7 @@
 			<AlphaMaskTexture val="_Assets\Textures\FCJH_Portrait_red_61268ab3.dds"/>
 			<RenderPriority val="500"/>
 		</Frame>
-		<!-- EXPERIMENT: the same portrait mirrored, shown over it while Abathur has a clone
+		<!-- The same portrait mirrored, shown over it while Abathur has a clone
 		     (HeroStatus's FCJH_Clone state). The mask spans the frame, so the cut stays put. -->
 		<Frame type="Image" name="FCJH_ClonePortrait">
 			<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>

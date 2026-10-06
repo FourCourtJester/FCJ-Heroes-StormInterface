@@ -25,7 +25,7 @@ In one paragraph: the ten hero cells sit along the bottom (blue 1–5 left of th
 red 6–0 right of it) with portrait, HP, mana and CC; the minimap and its objective widgets
 at bottom-centre; team core HP above the cells; a two-line top bar of series score, team
 name, logo and level either side of Blizzard's hexagon, with bans, bracket and game count
-beneath; the kill feed top-right; replay controls top-left, collapsible; info panes
+beneath; Blizzard's own kill feed top-left; replay controls top-left, collapsible; info panes
 (talents, KDA/damage, healing, siege) at middle-left on hotkeys; talent pop-ups on the
 cells, and a green-plus pop-up on any hero below 25% health (drawn under the talent
 pop-up). **Fight mode is not a separate layout** — it is one hotkey that hides a list of
@@ -34,33 +34,36 @@ elements (so far: the info pane and the health markers). The top bar and minimap
 **Branding is negative space**: names, logos, scores, bans, bracket and game count are
 drawn by OBS over empty regions the interface leaves (§6).
 
-**Status, 2026-09-30: Phase 2 (building the default view) is well along.** Phases 0
+**Status, 2026-10-05: Phase 2 (building the default view) is well along.** Phases 0
 (toolchain) and 1 (probing the unknowns) are done. Built, and confirmed in game unless noted:
 
-- **Hero row** — Blizzard's *in-game* top-bar cells, slanted and interlocking, scaled
-  (`[hero_row] scale`, 1.5125 since 2026-09-30 — that size not yet seen in game): portrait,
-  health, resource bar in Blizzard's per-hero colours, CC text and icon, death timers
-  (per-Viking ones in each third), Viking bars in thirds, Rexxar's bar full height (Misha's
-  hidden), fountain-ready marker, Abathur clone marker, and Blizzard's in-game heroic panel
-  (icon, frame, ready glow, cooldown count and dim; Tracer's Pulse Bomb charge instead of a
-  cooldown), with the heroic's **tooltip** on hover (2026-10-02; Tracer's has no name line yet).
-  Clicking a plate selects the hero and locks the camera, as in the default UI.
+- **Hero row** — Blizzard's *in-game* top-bar cells, slanted and interlocking, scaled to fit
+  the screen's 20 px padding (`[hero_row] scale = "fit"`, 1.5561): portrait, health,
+  resource bar in Blizzard's per-hero colours, CC text and icon, death timers (per-Viking
+  ones in each third), Viking bars in thirds, Rexxar's bar full height (Misha's hidden),
+  fountain-ready marker, Abathur clone marker, and Blizzard's in-game heroic panel (icon,
+  frame, ready glow, cooldown count and dim; Tracer's Pulse Bomb charge instead of a
+  cooldown), with the heroic's **tooltip** on hover. Clicking a plate selects the hero and
+  follows it (with the game's camera lock, **L**, on).
 - **Team XP** along each row's top edge and **core HP** above it, cut to the slant; hidden
   until a team's first hero loads; rows pack toward the minimap with fewer than five heroes
-  (untested).
+  (untested: §7 item 14).
 - **Top bar** — Blizzard's hexagon and clock on our generated chrome backplate (`[top_backplate]`),
   team levels, Blizzard's talent-advantage flame when a team is a tier ahead.
 - **Pop-ups** on the plates — the talent just picked, and a green plus when a hero drops to
   25% (once per dip, gone after ~4 s or at death or above 30%).
-- **Info panes** — talents, KDA/damage, healing, structures/XP: one at a time on
-  `Ctrl+1-4` (Blizzard's own panes lose Ctrl+1/2), each with an X; the leader in each column softly highlighted.
-- **Inspect card** — the selected unit's portrait, name/player/level, fountain, bars, buffs,
-  abilities, talents and stats; shows exactly when the default UI's small inspector would
-  (which is never while a replay is paused). The abilities are Blizzard's own command card
-  laid over the card (talent actives on top; mount, abilities, trait below), so their
-  tooltips, cooldowns and per-hero contents are the game's (2026-10-02, not yet seen in game).
-- **Kill feed** top-right, **minimap** bottom-centre, **replay controls** top-left with a tab
-  when collapsed (replays only). Blizzard's player HUD and talent picker never show.
+- **Info panes** — talents (in Blizzard's observer talent grid), KDA/damage, healing,
+  structures/XP: one at a time on `Ctrl+1-4` (Blizzard's own panes lose Ctrl+1/2), each
+  with an X, in the inspect card's skin; the leader in each column softly highlighted.
+- **Inspect card** — for a hero: portrait, name/player/level, fountain, bars, buffs,
+  Blizzard's own command card (tooltips, cooldowns, charges; empty Q W E R slots framed),
+  talents (with tooltips) and stats. For anything else, a short card: name, team, health,
+  buffs, stats. Edge in the unit's team colour (purple for neither team). Shows exactly when
+  the default UI's small inspector would (never while a replay is paused). Hero forms and
+  empty slots await the final pass (§7 items 3, 14).
+- **Kill feed** — Blizzard's own, top-left. **Minimap** bottom-centre, **replay controls**
+  top-left with a tab when collapsed (replays only). Blizzard's player HUD and talent picker
+  never show (holding Ctrl's quick picker: parked 2026-10-05, awaiting a check).
 
 Not yet: map objectives (pinned to the right edge on many maps — a per-map pass), the OBS
 graphics package, the fight-mode hotkey, and the visual pass that takes the chrome look of
@@ -348,6 +351,15 @@ five segments would duplicate the hero row. If plates read too small, widen them
 
 **Next** (end of the 2026-10-05 session; start here):
 
+Waiting on a look in game: holding Ctrl (Blizzard's quick talent picker, now parked) and the
+short inspect card without its resource slot. Done this session: panes in Blizzard's talent
+grid and the inspect skin, hotkeys settled (our panes on Ctrl+1-4; the inspect and death
+recap keys tried and dropped), the short card for non-heroes (camp mercenaries purple,
+captured ones their team's), hero forms and empty ability slots (item 3). Open items, the
+user's pick of order: map objectives and the minimap per map (8), camp timers (13),
+anchoring (4), the art pass (7, 12). Item 14 collects what waits on replays with particular
+heroes and maps.
+
 Confirmed in game by then: heroic tooltips on every plate (Varian's level-4 heroic, Tracer's
 Pulse Bomb with its title line), heroic cooldown counts, click-to-follow (needs the game's
 camera lock, **L**, on - observers can toggle it; a day of bisecting 2026-10-05 ended there),
@@ -542,7 +554,7 @@ How the heroic tooltips work: `tools/gen.py`, the comment above `HEROIC_TIPS`.
 - wireframes for the nameplates / XP / core HP: the canvas now draws the build as it is
   (2026-09-30); the art pass designs over those boards
 - the OBS package (names, logos, scores, bans, bracket, game count)
-- fight-mode hotkey; our own hotkeys (Blizzard's 1-8 and Ctrl+1/2 are "observe player N")
+- fight-mode hotkey (our panes hold Ctrl+1-4; the game's Ctrl+1-8 are also "observe player N")
 - rewinding a replay upsets pop-ups and latches — final polish (the product is for live games)
 - rows with fewer than five heroes (needs a 3v3 or 1v1 replay)
 

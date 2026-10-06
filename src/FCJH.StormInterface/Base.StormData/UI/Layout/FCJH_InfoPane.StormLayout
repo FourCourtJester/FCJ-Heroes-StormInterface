@@ -781,8 +781,8 @@
 					</Frame>
 				</Frame>
 			</Frame>
-			<!-- Chrome: title band and a frame line, over the rows (they're drawn on top, so they
-			     never hide a talent; they let the mouse through to the tooltips). -->
+			<!-- Chrome: the title, over the rows, letting the mouse through to the tooltips (the
+			     title band and frame are the skin's, under the rows). -->
 			<Frame type="Frame" name="FCJH_InfoPaneChrome">
 				<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
 				<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_L"/>

@@ -699,7 +699,7 @@ def plate_board():
                      "Ready: Blizzard's glow. On cooldown: the icon dims and greys with the count from the observer bar's own heroic (one source). "
                      "Tracer: no cooldown, her Pulse Bomb charge meter instead. Hover: the talent icon's own tooltip.", 1600))
     states = [("Before the heroic · bars full width", None), ("Ready · Blizzard's glow", "ready"),
-              ("On cooldown · dim, grey, count", "cd37"), ("Tracer · charge meter (untested)", "charge")]
+              ("On cooldown · dim, grey, count", "cd37"), ("Tracer · charge meter", "charge")]
     for i, (caption, st) in enumerate(states):
         fx = 60 + i * 400
         stt = {"label": "HERO", "hp": 0.8, "mp": 0.6}
@@ -761,10 +761,10 @@ def inspect_board():
         ("Name, player, level", "game", "The hero's name in the title band; the player's name and the level, one size, in the band under the portrait. "
                                         "Blizzard's widgets; the player name from the talent pane's row. Card edge in the player's team colour."),
         ("Health, resource", "game", "Blizzard's inspect-box bars, placed. Regen on the right."),
-        ("Fountain, buffs, debuffs", "game", f"One block, no heading: the fountain first, in Blizzard's buff slot art (dim on cooldown), with its countdown, then buffs, then "
-                                             f"debuffs, all on one row."),
-        ("Abilities", "built", f"Blizzard's ability card: 1-5 (talent actives) over D Q W E R Z, spread across the card, talent actives over the gaps (Q/W first), cooldowns dim. "
-                               "D Q W E Z per hero from the game data; R is the heroic. 1-5: Auriel's two only, a table for every hero still to do."),
+        ("Fountain, buffs, debuffs", "game", "One block, no heading: the fountain first, in Blizzard's buff slot art (dim on cooldown), with its countdown, then buffs, then "
+                                             "debuffs, all on one row."),
+        ("Abilities", "game", "Blizzard's own command card laid on the card: talent actives (1-5) over Z Q W E R D, honeycombed; tooltips, cooldowns and charges "
+                              "are the game's. An empty Q W E R slot shows Blizzard's empty frame."),
         ("Talents", "game", "Blizzard's talent strip for the selected player; an icon and its team square show once its tier is picked. Tier levels underneath."),
         ("Stats", "game", f"Blizzard's seven stats in three columns, related values sharing a row: attack damage / speed / range; "
                           f"spell power / move speed; armor / spell armor. Rows {u(ic.STAT_ROW)} px apart; tooltips open off the card's right edge."),
@@ -966,23 +966,23 @@ def spec_board():
         ("Hero plates × 10", f"{px_(CELL.w)} × {px_(CELL.h)} (scale {ROW['scale']:g}), blue x {f1(ROW['blue_left'])}–{f1(blue_r)}, red x {ROW['red_left']}–{f1(red_r)}, y {f1(ROW['top'])}–{ROW['bottom']}", "built",
          "Blizzard's in-game cell art, portrait masked to the slant, click selects the hero and clamps the camera. Seen at 1.375; this +10% not yet"),
         ("Health + resource", "Each plate; narrowed while the heroic shows", "game", "Blizzard's fill art. Resource colour per hero"),
-        ("Heroic panel", "Bottom-left of every plate, both teams", "game", "Blizzard's panel mirrored: icon, gold frame, ready glow, cooldown dim + count. Tooltip (lifted talent icon) and Tracer's charge meter: built, not seen"),
+        ("Heroic panel", "Bottom-left of every plate, both teams", "game", "Blizzard's panel mirrored: icon, gold frame, ready glow, cooldown dim + count, tooltip (the talent icon's own), Tracer's charge meter"),
         ("CC icon + text", f"Icon {px_(2 * CELL.cc_half)} px in the portrait; text on the health bar", "game", "Text fits the bar's width (UNSTOPPABLE fits)"),
         ("Death timers", "Plate centre", "game", "Per-Viking timers too; Misha's removed"),
         ("Special plates", "Vikings, Rexxar, Abathur", "game", "Vikings in thirds (Baleog, Erik, Olaf); Rexxar full-height bar; Abathur's clone icon + CLONE"),
         ("Fountain ready", "Top corner, portrait side", "game", "Resize and re-angle in the visual pass"),
         ("Talent pop-ups", f"{ROW['talent_popup_size']} px, straddling the top edge", "game", f"Hold {tp['hold']} s, fade {tp['fade']} s; always play out; drawn over heal. Seen at 40 px"),
         ("Heal pop-up", f"Same spot and motion; at {hp['threshold']}% or less", "game", f"Hold {hp['hold']} s; clears above {hp['clear_above']}%; fades at once on death; {hp['lock']:g} s lock per plate"),
-        ("Team XP", f"{xs('blue_xp')}, y {f1(R['blue_xp'][1])}, on the plates' top edge", "game", "Cut to the slant; hidden before the game starts. Moves with the plates (+10% not yet seen)"),
+        ("Team XP", f"{xs('blue_xp')}, y {f1(R['blue_xp'][1])}, on the plates' top edge", "game", "Cut to the slant; hidden before the game starts. Moves with the plates"),
         ("Core HP", f"{xs('blue_core')}, y {f1(R['blue_core'][1])}, on XP at the inner end", "built", "Blizzard's bar and size, our slanted track and mask. Check in Towers of Doom; restyle from the reference"),
         ("Top bar backplate", f"{gen.TOP_BACKPLATE_SIZE[0]} × {gen.TOP_BACKPLATE_SIZE[1]} texture at x {R['top_backplate'][0]}", "game", "Variant C, chrome. The look the rest of the UI follows"),
         ("Team levels + flame", f"{xs('blue_level')} at x {R['blue_level'][0]} / {R['red_level'][0]}", "game", "Blizzard's numbers; the talent-lead flame works"),
         ("Hexagon, clock", "Blizzard's places", "game", "Towers and kills removed"),
         ("Names, logos, scores, bans, bracket", "Top bar", "obs", "Left empty for OBS; no name plate drawn yet"),
-        ("Kill feed", f"Top-right, portraits end at x {R['kill_feed'][0] + R['kill_feed'][2]}", "built", "Rows right-aligned, killer first"),
+        ("Kill feed", "Blizzard's own, top-left", "game", "Not moved: its rows grow rightward, so multi-kills ran off a right-hand feed"),
         ("Replay controls", f"{R['replay'][0]}, {R['replay'][1]} · {xs('replay')}", "game", "Ctrl+Shift+O collapses to a tab"),
         ("Info panes", f"{PANE_X}, {PANE_Y} · {PANE_W} × {PANE_H}", "game", "Ctrl+1-4: talents, KDA + hero dmg, healing, structures + XP. One at a time"),
-        ("Inspect card", f"{R['inspect'][0]}, {R['inspect'][1]} · {xs('inspect')}", "game", "Follows Blizzard's inspector: shows on selecting a unit, not on plate clicks; X; clicks inside stay"),
+        ("Inspect card", f"{R['inspect'][0]}, {R['inspect'][1]} · {xs('inspect')}", "game", "Follows Blizzard's inspector: shows on selecting a unit, not on plate clicks; clicks inside stay. Anything not a hero gets a short card"),
         ("Blizzard's small inspector", "Parked off screen", "game", "Never shows; its visibility drives our card"),
         ("Minimap", f"Bottom-centre, {xs('minimap')}", "game", "The engine fits each map in its square"),
         ("Map objectives", "Over the minimap", "unk", "Per map; not started"),
