@@ -61,6 +61,12 @@
 					<Controller type="Fade" end="Loop" frame="$GameUI/UIContainer/ConsoleUIContainer/FloatingCombatUnitSelectionPanel/UnitStatusFrame0/HeroTalentTreeSelectionPanel">
 						<Key type="Curve" time="0" value="0"/>
 					</Controller>
+					<!-- TRIAL (2026-10-06): the picker's parent faded too - a parent's alpha multiplies
+					     into its children, whatever the engine sets on the picker. The parent also holds
+					     the followed player's own floating damage numbers, which go with it. -->
+					<Controller type="Fade" end="Loop" frame="$GameUI/UIContainer/ConsoleUIContainer/FloatingCombatUnitSelectionPanel">
+						<Key type="Curve" time="0" value="0"/>
+					</Controller>
 					<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/ConsoleUIContainer/HeroTalentTreeSelectionToggleButton">
 						<Key type="Bool" time="0" value="false"/>
 					</Controller>
