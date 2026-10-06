@@ -642,6 +642,18 @@ def player_pack(n):
 # until seen in game - D.Va's mech vs pilot, each Viking vs the Vikings' controller.
 ALSO = [("HeroDVaMech", "HeroDVaPilot"), ("HeroDVaPilot", "HeroDVaMech"), ("HeroDVaMech", "HeroDVaMech")] + [
     (v, p) for v in ("HeroOlaf", "HeroBaleog", "HeroErik") for p in (v, "HeroLostVikingsController")]
+# Forms that are a unit type of their own (form: hero), from the game data (2026-10-05): the
+# morphs (CAbilMorph: Medivh's Raven, Deathwing's Dragonflight, Alexstrasza's Dragonqueen),
+# Ragnaros's Molten Core (a unit of its own he steers), and the forms with a CHero entry of
+# their own. Unknown, they'd get the short card and no player. Which unit the PLATE shows
+# meanwhile isn't known, so every pairing is allowed. (An observer's command card follows
+# the selected unit, so each shows its own buttons; Abathur's Symbiote is his to steer, and
+# selecting Abathur shows Abathur's card.)
+FORMS = {"HeroMedivhRaven": "HeroMedivh", "DeathwingDragonflightUnit": "HeroDeathwing",
+         "HeroDeathwingWorldBreaker": "HeroDeathwing", "HeroAlexstraszaDragon": "HeroAlexstrasza",
+         "RagnarosBigRag": "HeroRagnaros", "HeroGreymaneWorgen": "HeroGreymane",
+         "HeroValeeraStealthed": "HeroValeera"}
+ALSO += [pair for form, hero in FORMS.items() for pair in ((form, form), (form, hero), (hero, form))]
 
 
 def matcher(n):
@@ -654,7 +666,7 @@ def matcher(n):
         f'<When type="Property" Unit="{sel}"/>'
         f'<When type="Property" frame="{plate(n)}/HeroStatus" Unit="{on}"/>'
         f'<Action type="SetProperty" frame="$this/FCJH_Player{n}" Alpha="255"/>{flag("true")}</State>\n'
-        for sel, on in [(u, u) for u in HEROES] + ALSO)
+        for sel, on in dict.fromkeys([(u, u) for u in HEROES] + ALSO))   # once each (forms with a CHero entry too)
     # Mirror matches (the same hero on both teams, 2026-10-05): the hero check alone matched
     # both players and the red one drew over the blue. So first: a unit of the other team never
     # shows this pack (the team sensor, FCJH_TeamSense; seen right on two Blazes). States are

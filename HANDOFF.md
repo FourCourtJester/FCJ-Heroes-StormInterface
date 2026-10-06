@@ -392,12 +392,30 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    oversized art behind them (flame frame, faded portrait; `Screenshot2026-10-05 11_16_54.jpg`)
    went with the honeycomb's per-piece sizing. The mount button and the top row's layout were
    settled by the honeycomb too.
-3. **Card swaps** - heroes whose command card changes mid-game. Abathur's Symbiote swaps the
-   card to Symbiote's buttons, some in slots we park, so it shows gaps (seen 2026-10-05). The
-   user expects others do the same; candidates to check: D.Va (mech / pilot), the Lost
-   Vikings, Ragnaros (Molten Core), Medivh (Raven Form), Greymane (Worgen), Tychus (Odin),
-   Abathur's Ultimate Evolution clone, vehicles (Dragon Knight, Garden Terror, Triglav). Find
-   which slots each uses, then decide what we park.
+3. **Card swaps - researched 2026-10-05; forms built, awaiting QA.** What the data says:
+   - **There's no swap to follow for an observer.** Blizzard has no per-hero command card
+     layout; one CommandPanel shows the card of the unit it follows, and each form is a unit
+     with its own card (`CardLayouts` in the unit data, buttons placed by named Slot:
+     Ability1-3 = Q W E (00-02), Heroic = R (03), Mount = Z (04), Trait = D (05), Hearth = 13,
+     talent actives 30-35; the slot-to-button map is the engine's). An observer's card follows
+     the SELECTED unit: selecting Abathur shows Abathur's card even mid-Symbiote (the
+     Symbiote is a unit of its own, `AbathurSymbiote`, the player steers). The "gap" in the
+     user's Abathur screenshot (09:45:55) is his own card: Abathur has NO E (Ability3).
+   - **Forms built:** units of their own that our hero check and player matchers didn't
+     know - Medivh's Raven (`HeroMedivhRaven`), Deathwing's Dragonflight
+     (`DeathwingDragonflightUnit`), Alexstrasza's Dragonqueen (`HeroAlexstraszaDragon`),
+     Ragnaros's Molten Core (`RagnarosBigRag`), plus Greymane's Worgen, Valeera stealthed and
+     Deathwing's World Breaker - `inspect_card.FORMS`, paired with their hero every way
+     (which unit the plate shows meanwhile is unknown). To QA: each form shows the tall card
+     with its player's portrait and talents, and its own buttons.
+   - **Open: empty slots.** Abathur's E, Deathwing in flight (no D or Z): the row keeps a hole
+     where the button would be. Options: leave it (Blizzard's own bar has the slot), draw an
+     empty slot's frame there, or close the row up per hero (the data says which slots each
+     card fills). User's call.
+   - Not in FORMS: D.Va and the Vikings (already in ALSO); Tychus's Odin (no morph or unit
+     card of its own found - likely the same unit); Abathur's clone (likely a copy of the
+     cloned hero's unit, so it would match that hero's player - unchecked); Samuro's images
+     and Jaina's elemental (summons: the short card).
 4. **Anchoring pass**: everything we place is anchored to the screen's LEFT edge with fixed
    offsets (layout.toml is 1080p px), so a window that isn't 16:9 shifts Blizzard's centred
    pieces against ours - the hexagon left its backplate in a 2558 x 1401 window (2026-10-03;
@@ -511,7 +529,8 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
       a flat 2 units, 1.8 px, rounded to 1 (user, 2026-10-05).
     - **edge:** every unit's edge is now the team sensor's (`unit_team`): blue, red, or
       `[element.inspect] neutral_colour` (a lighter purple, user) for neither team - it replaced
-      the player packs' own edge. What mercenaries and bosses read is still to be seen.
+      the player packs' own edge. Seen 2026-10-05: camp mercenaries purple, a captured
+      camp's red or blue as they march down the lane (user).
 
 How the heroic tooltips work: `tools/gen.py`, the comment above `HEROIC_TIPS`.
 
