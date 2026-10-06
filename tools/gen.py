@@ -229,13 +229,6 @@ class HeroCell:
     # It sat on the whole cell's middle at first, which put it on top of the CC text rather
     # than in the plate's picture (user, 2026-09-30).
     CC_ICON_MID, CC_ICON_HALF = 19, 10.8     # half-width 9 until 2026-09-30, then +20% (user)
-    # The fountain (user, 2026-10-06, drawn on the canvas first): oversized on the health bar's
-    # heroic end, its bottom on the bar's bottom (46) - the resource row untouched - leaning with
-    # the plate, ~2 in from its slanted edge. The heroic takes that spot when it comes, so the
-    # fountain moves north, 1.3 above the heroic's gold frame, still against the edge. Health
-    # starts after it: narrowed by NARROW all game. (left, top, right, bottom)
-    FOUNTAIN_BAR = {"blue": (14.8, 25.7, 39.2, 46), "red": (9, 25.7, 33.4, 46)}
-    FOUNTAIN_UP = {"blue": (5.8, 7.7, 30.2, 28.3), "red": (18, 7.7, 42.4, 28.3)}
     # The observer's portrait art is wide with the face on the right; Blizzard's observer
     # crops [0.1, 0.45, 0.65, 1.0] into 165 x 60, i.e. the art is 2.75x as wide as tall per
     # unit of crop. Same top/bottom/right here, left worked out for this cell's shape.
@@ -255,8 +248,6 @@ class HeroCell:
         self.death_mid = round((2 + self.h - 1) / 2)
         self.cc_band = tuple(s(v) for v in self.CC_BAND)
         self.cc_mid, self.cc_half = s(self.CC_ICON_MID), s(self.CC_ICON_HALF)
-        self.fountain_bar = {t: tuple(s(v) for v in r) for t, r in self.FOUNTAIN_BAR.items()}
-        self.fountain_up = {t: tuple(s(v) for v in r) for t, r in self.FOUNTAIN_UP.items()}
         across = self.W / self.PORTRAIT_H * (self.CROP_BOTTOM - self.CROP_TOP) / self.ART_ASPECT
         self.crop = (self.CROP_TOP, round(1 - across, 3), self.CROP_BOTTOM, 1.0)
 
@@ -856,6 +847,57 @@ def heroic_icon_rect(cfg, team):
 # While it shows, Blizzard narrows the bars from the left (right edge fixed): health 97 -> 69,
 # energy 95 -> 67 (UpdateHealthBarWidths). The backing frames follow the bars by the same 28.
 NARROW = 28
+
+# The fountain on the plate (user, 2026-10-06, drawn on the canvas first): the inspect card's
+# fountain - Blizzard's buff slot (58 x 34, the icon in its slanted mask), bright when ready,
+# dimmed with its countdown on cooldown. Blizzard's slot leans / (as the red plates); blue's is
+# mirrored. Blizzard's fountain token (first try) is drawn near-upright: it leaned with neither
+# plate (user's screenshot, 2026-10-06 13:01).
+#   - on the bar: its bottom on the health bar's bottom (the resource row untouched), its
+#     slanted side against the plate's edge; the health bar starts under its far side, so no gap;
+#   - north: the heroic takes that spot when it comes, so the fountain stands right on the
+#     heroic's gold frame, still against the plate's edge.
+SLOT_W, SLOT_H = 58, 34          # Blizzard's buff slot (inspect_card BUFF_W, BUFF_H)
+SLOT_ART = (4, 3, 50, 28)        # the slot art's visible part in it: inset x, y, width, height
+SLOT_LEAN = 0.45                 # ...and its slant, across per down (measured in game, 2026-10-05)
+SLOT_MASK = (9, -2, 40, 40)      # the icon's mask square in the slot (inspect_card): left, top, w, h
+FOUNTAIN_H = 20.6                # the slot art's visible height on the plate, native cell units
+EDGE_INSET = 2                   # its slanted side, in from the plate's edge (cell units)
+
+
+def fountain_geometry(cfg, team):
+    """The plate fountain in cell units: its slot box on the bar and north of the heroic
+    (left, top, right, bottom), the art's scale (cell units per slot unit), and where the
+    health bar starts."""
+    c = HeroCell(cfg)
+    k = cfg["hero_row"]["scale"]
+    hv = FOUNTAIN_H * k                       # visible height, cell units
+    f = hv / SLOT_ART[3]                      # cell units per slot unit
+    ax, ay, aw, _ = (v * f for v in SLOT_ART)
+    cut = SLOT_LEAN * hv
+    edge = (lambda y: c.overlap * y / c.h) if team == "blue" else (lambda y: c.overlap * (1 - y / c.h))
+
+    def place(bottom):
+        top = bottom - hv
+        # blue's slot leans \ like its plate: its left side runs (l, top) -> (l + cut, bottom);
+        # red's leans /: (l + cut, top) -> (l, bottom). Whichever corner is nearer the edge rules.
+        if team == "blue":
+            left = max(edge(top), edge(bottom) - cut) + EDGE_INSET
+        else:
+            left = max(edge(top) - cut, edge(bottom)) + EDGE_INSET
+        box = (round(left - ax), round(top - ay), round(left - ax + SLOT_W * f), round(top - ay + SLOT_H * f))
+        return box, left, top
+
+    hl, ht, hr, hb = c.team[team]["health"]
+    bar, left, top = place(hb)
+    # the art's far side where it crosses the health bar's top: the bar starts 1 under it
+    if team == "blue":
+        far = left + aw - cut + cut * (ht - top) / hv
+    else:
+        far = left + aw - cut * (ht - top) / hv
+    _, frame_top, _, _ = heroic_frame_rect(cfg, team)
+    up, _, _ = place(frame_top)               # standing on the gold frame
+    return {"bar": bar, "up": up, "scale": f, "health_left": round(far) - 1}
 HEROIC_ART = {"blue": ("HUD_TopBar_Team_HeroFrame_Ult_Bg", "HUD_TopBar_Team_HeroFrame_Ult", False,
                        "HUD_TopBar_Team_HeroFrame_Ult_ProgressFill"),
               "red": ("HUD_TopBar_Team_HeroFrame_Ult_Bg_Right", "HUD_TopBar_Team_HeroFrame_Ult_Enemy", True,
@@ -920,7 +962,7 @@ def heroic_panel(cfg, team_frame, i):
                f'{t10}<Action type="SetProperty" frame="{cell}/HeroStatus/FCJH_Resource" Texture="@UI/HUD_TopBar_Team_HeroFrame_ManaFill{n}{r}"/>\n')
         # the fountain: on the health bar's start, or north of the heroic while it shows
         out += "".join(f'{t10}<Action type="SetAnchor" frame="{cell}/HeroStatus/FCJH_Fountain" side="{side}" relative="{cell}" pos="Min" offset="{v}"/>\n'
-                       for side, v in zip(("Left", "Top", "Right", "Bottom"), (c.fountain_up if narrow else c.fountain_bar)[team]))
+                       for side, v in zip(("Left", "Top", "Right", "Bottom"), fountain_geometry(cfg, team)["up" if narrow else "bar"]))
         return out
     watch = lambda frame_: f'{party}/{frame_}'
     return f"""
@@ -1325,10 +1367,12 @@ def hero_cell_template(team, c, cfg):
 				<ColorStyle val="StandardEnergy" index="0"/>
 				<Unclipped val="true"/>
 			</Frame>"""
-    # the health bar, narrow all game: the fountain sits at its start, then the heroic does
-    # (user, 2026-10-06) - Blizzard's short bar art, its end drawn for an icon beside it
-    hl, ht, hr, hbt = g["health"]
-    health_rect = (hl + round(NARROW * cfg["hero_row"]["scale"]), ht, hr, hbt)
+    # the health bar, short all game: it starts under the fountain's far side (the fountain sits
+    # at its start, then the heroic does; user, 2026-10-06) - Blizzard's short bar art, its end
+    # drawn for an icon beside it
+    fg = fountain_geometry(cfg, team)
+    _, ht, hr, hbt = g["health"]
+    health_rect = (fg["health_left"], ht, hr, hbt)
     health = f"""
 		<Frame type="UnitStatusFrame" name="HeroStatus">{_anchors(health_rect, "$parent", chr(9) * 3)}
 			<Width val="0"/>
@@ -1413,39 +1457,75 @@ def hero_cell_template(team, c, cfg):
 				<DefaultState val="Normal"/>{colour_states}
 				<State name="Normal"><Action type="SetProperty" frame="FCJH_Resource" ColorStyle="StandardEnergy"/></State>
 			</StateGroup>"""
-    fl, ft, fr, fb = c.fountain_bar[team]
+    fl, ft, fr, fb = fg["bar"]
     fountain_anchors = f"""
 				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="{ft}"/>
 				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="{fl}"/>
 				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="{fb}"/>
 				<Anchor side="Right"  relative="$parent/$parent" pos="Min" offset="{fr}"/>"""
+    f = fg["scale"]
+    u = lambda v: round(v * f)
+    mx, my, mw, mh = SLOT_MASK
+    # the icon's mask: Blizzard's buff mask leans / (red); blue's is the heroic icon's own mask,
+    # which leans \ like blue's plates (a mask can't be mirrored the way an image can)
+    mask = "@UI/HUD_TopBar_Team_HeroFrame_Ult_Bg" if blue else "@UI/Storm_UI_InGame_Buff_IconMask"
+    # the slot's frame art, mirrored on blue
+    slot_coords = '<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>' if blue else \
+        '<TextureCoords top="0.0" left="0.0" bottom="1.0" right="1.0"/>'
+    # the countdown's box in the slot (inspect_card: 2 down, 9 in on the slant's side, 6 on the other)
+    near, far = (6, 9) if blue else (9, 6)
     # the behaviour icon's own pictures, off (as on the inspect card)
     hidden = "".join(f'{chr(9) * 5}<Frame type="{ty}" name="{nm}"><Visible val="false"/><Alpha val="0"/></Frame>\n'
                      for ty, nm in (("Frame", "ImageMaskContainer"), ("Image", "IconImageBg"), ("Label", "StackLabel"),
                                     ("ProgressBar", "QuestProgressBar"), ("ProgressBar", "CooldownBar"), ("Image", "BGFlashImage")))
     if blue:
         health += f"""
-			<!-- Fountain (user, 2026-10-06; the inspect card's tech): Blizzard's "fountain ready"
-			     token on the health bar's start - bright when ready; dimmed and greyed, with the
-			     seconds left, on cooldown (as our heroic does). The heroic takes this spot when it
-			     comes: heroic_panel moves the fountain north, above it. Blizzard's token is
-			     slanted, leaning / like the red plates: blue shows it mirrored. -->
-			<Frame type="Image" name="FCJH_Fountain">{fountain_anchors}
-				<Texture val="@UI/Storm_UI_Ingame_HealingWell_Active"/>
-				<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>
+			<!-- Fountain (user, 2026-10-06): the inspect card's - Blizzard's buff slot with the
+			     fountain's art in its slanted mask; bright when ready, dimmed on cooldown with the
+			     seconds left. On the health bar's start, against the plate's edge; heroic_panel
+			     moves it north onto the heroic's gold frame while that shows (fountain_geometry). -->
+			<Frame type="Frame" name="FCJH_Fountain">{fountain_anchors}
 				<RenderPriority val="525"/>
 				<Unclipped val="true"/>
 				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="ImageMaskContainer">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="{u(my)}"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="{u(mx)}"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="{u(my + mh)}"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="{u(mx + mw)}"/>
+					<AlphaMaskTexture val="{mask}"/>
+					<Unclipped val="true"/>
+					<Frame type="Image" name="IconImage">
+						<Anchor side="Top"    relative="$parent" pos="Mid" offset="0"/>
+						<Anchor side="Bottom" relative="$parent" pos="Mid" offset="0"/>
+						<Anchor side="Left"   relative="$parent" pos="Mid" offset="0"/>
+						<Anchor side="Right"  relative="$parent" pos="Mid" offset="0"/>
+						<Width val="{u(45)}"/>
+						<Height val="{u(45)}"/>
+						<Texture val="@UI/Storm_UI_Ingame_HealingWell_Active"/>
+						<!-- the middle of the art only, as on the inspect card -->
+						<TextureCoords top="0.2" left="0.2" bottom="0.8" right="0.8"/>
+						<RenderPriority val="526"/>
+						<Unclipped val="true"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
+				</Frame>
+				<Frame type="Image" name="IconImageBg">
+					<Anchor relative="$parent"/>
+					<Texture val="@UI/Storm_UI_InGame_Buff_Background"/>
+					{slot_coords}
+					<RenderPriority val="527"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
 				<StateGroup name="FCJH_Fountain">
 					<DefaultState val="Ready"/>
 					<State name="Cooldown">
 						<When type="Property" frame="$parent/FCJH_FountainSensor" Visible="true"/>
-						<Action type="SetProperty" frame="$this" Alpha="80"/>
-						<Action type="SetProperty" frame="$this" Desaturated="true"/>
+						<Action type="SetProperty" frame="$this" Alpha="60"/>
 					</State>
 					<State name="Ready">
 						<Action type="SetProperty" frame="$this" Alpha="255"/>
-						<Action type="SetProperty" frame="$this" Desaturated="false"/>
 					</State>
 				</StateGroup>
 			</Frame>
@@ -1464,8 +1544,11 @@ def hero_cell_template(team, c, cfg):
 					<AcceptsMouse val="false"/>
 					<AcceptsMouseTooltip val="false"/>
 {hidden}					<Frame type="Label" name="CooldownLabel">
-						<Anchor relative="$parent"/>
-						<Style val="PartyFrame_HeroicTalentCooldown"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="{u(2)}"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="{u(near)}"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="-{u(far)}"/>
+						<Style val="FCJH_HeroicCooldown"/>
 						<Options val="NoWrapping | ScaleToPreventTruncation"/>
 						<RenderPriority val="531"/>
 						<Unclipped val="true"/>
@@ -1564,8 +1647,17 @@ def hero_cell_template(team, c, cfg):
 			</StateGroup>"""
     else:
         health += f"""
-			<Frame type="Image" name="FCJH_Fountain">{fountain_anchors}
-				<TextureCoords top="0.0" left="0.0" bottom="1.0" right="1.0"/>
+			<Frame type="Frame" name="FCJH_Fountain">{fountain_anchors}
+				<Frame type="Frame" name="ImageMaskContainer"><AlphaMaskTexture val="{mask}"/></Frame>
+				<Frame type="Image" name="IconImageBg">{slot_coords}</Frame>
+			</Frame>
+			<Frame type="UnitStatusBehaviorIcon" name="FCJH_FountainSensor">
+				<Frame type="BehaviorIcon" name="BehaviorIcon">
+					<Frame type="Label" name="CooldownLabel">
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="{u(near)}"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="-{u(far)}"/>
+					</Frame>
+				</Frame>
 			</Frame>"""
     if blue:
         health += health_sensor(cfg)

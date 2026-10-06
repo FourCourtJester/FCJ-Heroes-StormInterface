@@ -32,6 +32,7 @@ ROW = CFG["hero_row"]
 S = lambda v: round(v * ROW["scale"])          # Blizzard's native cell units -> this build's
 NARROW = S(gen.NARROW)                         # the bars narrow this much while the heroic shows
 LEAN = CELL.overlap / CELL.h                   # the plates' slant, across per down
+FG = {t: gen.fountain_geometry(CFG, t) for t in ("blue", "red")}   # the plate fountain
 STAMP = subprocess.run(["git", "-C", str(REPO), "log", "-1", "--format=%h %cs", "--", "tools", "layout.toml", "src"],   # the last commit that changed the build
                        capture_output=True, text=True).stdout.strip()
 
@@ -175,7 +176,7 @@ def plate(team, x0, y0, z, st, uid):
         f'width="{round((box(r)[2] - box(r)[0]) * frac, 1)}" height="{round(box(r)[3] - box(r)[1], 1)}" fill="{fill}"{extra}></rect>')
     heroic = st.get("heroic")
     dead = st.get("dead")
-    narrow = NARROW                         # health: narrow all game (the fountain, then the heroic)
+    narrow = FG[team]["health_left"] - CELL.team[team]["health"][0]   # health: starts under the fountain, all game
     rnarrow = NARROW if heroic else 0       # resource: while the heroic shows
     out = [f'<clipPath id="c{uid}"><polygon points="{pts(plate_poly(team, x0, y0, w, h, ov))}"></polygon></clipPath>',
            f'<g clip-path="url(#c{uid})">',
@@ -210,8 +211,7 @@ def plate(team, x0, y0, z, st, uid):
     if heroic and not dead:
         out.append(heroic_panel(team, box, k, z, heroic))
     if not dead:   # the fountain: st["fountain"] "cd<seconds>" for on cooldown
-        f = (CELL.fountain_up if heroic else CELL.fountain_bar)[team]
-        out.append(fountain_slot(team, box(f), k, z, st.get("fountain", "ready")))
+        out.append(fountain_slot(team, box(FG[team]["up" if heroic else "bar"]), k, z, st.get("fountain", "ready")))
     if dead:
         out.append(text(mid_x, y0 + CELL.death_mid * k, dead, 28 * k, "#FF3A4E"))
     out.append('</g>')
@@ -224,8 +224,13 @@ def plate(team, x0, y0, z, st, uid):
 def fountain_slot(team, r, k, z, state):
     """The fountain (gen.HeroCell.fountain_*): Blizzard's fountain token, leaning with the
     plate. state: "ready", or "cd<seconds>" (dimmed and greyed, the count on top)."""
-    l, t, rr, b = r
-    shape = pts(slanted(team, l, t, rr, b))
+    f = FG[team]["scale"] * k                 # px per slot unit
+    ax, ay, aw, ah = gen.SLOT_ART
+    l, t = r[0] + ax * f, r[1] + ay * f      # the slot art's visible part
+    rr, b = l + aw * f, t + ah * f
+    cut = gen.SLOT_LEAN * (b - t)
+    shape = pts([(l, t), (rr - cut, t), (rr, b), (l + cut, b)] if team == "blue" else
+                [(l + cut, t), (rr, t), (rr - cut, b), (l, b)])
     dim = state.startswith("cd")
     cx, cy = (l + rr) / 2, (t + b) / 2
     a, s = 2.6 * k, 13 * k
@@ -650,7 +655,7 @@ def plate_board():
             svg.append(f'<clipPath id="nrclip"><rect x="0" y="0" width="1100" height="2000"></rect></clipPath><g opacity=".3" clip-path="url(#nrclip)">{nb}</g>')
         svg.append(plate(team, x0, y0, z, st, uid))
         g = CELL.team[team]
-        narrow, rnarrow = NARROW, (NARROW if st.get("heroic") else 0)
+        narrow, rnarrow = FG[team]["health_left"] - CELL.team[team]["health"][0], (NARROW if st.get("heroic") else 0)
         svg.append(dim_h(x0, x0 + w, y0 + h + 36, f"{px_(CELL.w)} px ({CELL.w})"))
         svg.append(dim_v(x0 - 40, y0, y0 + h, f"{px_(CELL.h)} ({CELL.h})", side=-1))
         ovx = x0 + w - CELL.overlap * k if team == "blue" else x0
@@ -669,7 +674,7 @@ def plate_board():
                            f"Health · {px_((hr - hl - narrow))} × {px_(hb - ht)} ({hr - hl - narrow} × {hb - ht}) · narrow all game"))
         svg.append(callout(x0 + (el + rnarrow + 30) * k, y0 + (et + eb) / 2 * k, right, y0 + 190,
                            f"Resource · {px_(er - el - rnarrow)} × {px_(eb - et)} ({er - el - rnarrow} × {eb - et})" + (" · narrowed" if rnarrow else "")))
-        fl, ft, fr, fb = (CELL.fountain_up if st.get("heroic") else CELL.fountain_bar)[team]
+        fl, ft, fr, fb = FG[team]["up" if st.get("heroic") else "bar"]
         svg.append(callout(x0 + (fl + fr) / 2 * k, y0 + ft * k, right, y0 + 20,
                            f"Fountain · {px_(fr - fl)} × {px_(fb - ft)} ({fr - fl} × {fb - ft})" + (", north of the heroic" if st.get("heroic") else ", on the health bar's start")))
         if st.get("cc"):
@@ -739,14 +744,13 @@ def plate_board():
         b.append(f'<div class="s" style="position: absolute; left: {fx}px; top: {cy_ + 190}px; width: 340px; font-size: 15px; color: #C9CAD6;">{caption}</div>\n')
     # --- the fountain on the health bar (2x)
     fy = 3020
-    bl, bt, br, bb = CELL.fountain_bar["blue"]
+    bl, bt, br, bb = FG["blue"]["bar"]
     b.append(heading(48, fy - 210, "Fountain · on the health bar",
-                     f"Blizzard's fountain token, the inspect card's tech: bright when ready; dimmed and greyed with the seconds left on cooldown, as the heroic. "
-                     f"Oversized on the health bar's heroic end, its bottom on the health bar's bottom, leaning with the plate against its slanted edge: "
-                     f"{px_(br - bl)} × {px_(bb - bt)} px ({br - bl} × {bb - bt}). The health bar starts after it (narrowed by the heroic's {px_(NARROW)} px, "
-                     "so it never changes length); the resource row is untouched until the heroic comes. Then the heroic takes this spot and the fountain "
-                     "moves north, above it, still against the plate's edge. "
-                     "Gone with the bars on a death.", 1600))
+                     "The inspect card's fountain: Blizzard's buff slot (it leans / as on red; mirrored on blue), bright when ready, dimmed with the seconds left on cooldown. "
+                     f"Slot box {px_(br - bl)} × {px_(bb - bt)} px ({br - bl} × {bb - bt}). On the health bar's heroic end, the art's bottom on the health bar's bottom, "
+                     "its slanted side against the plate's edge; the health bar starts under its far side (no gap) and keeps that length all game. "
+                     "The resource row is untouched until the heroic comes. Then the heroic takes this spot and the fountain stands right on the heroic's "
+                     "gold frame, still against the plate's edge. Gone with the bars on a death.", 1600))
     cols = [("No heroic · ready", {}), ("No heroic · on cooldown", {"fountain": "cd42"}),
             ("Heroic out · moved north, ready", {"heroic": "ready"}),
             ("Heroic out · on cooldown", {"fountain": "cd17", "heroic": "cd37"})]
