@@ -373,11 +373,20 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    mirror matches (a team sensor, `team_sense`), and no stray lines or tooltips (Blizzard's
    inspect box contents hidden every frame, `FCJH_Hidden`). Left: placement (item 9).
 
-   **All panels** (the info panes and the card, user 2026-10-05):
-   - the flat black needs punching up: look at the default UI's panel backgrounds and title
-     bars and re-use Blizzard's assets;
-   - the number panels (damage and the other stats) need a colour pass for both teams,
-     combined with that background work, for readability.
+   **All panels - DONE 2026-10-05 (through d716d10), seen in game:**
+   - every pane wears the inspect card's look (Blizzard's inspector art, background 10%
+     darker): one template, `FCJH_Constants/FCJH_PaneSkin` from `inspect_card.pane_skin`, at
+     priority 400 under the rows. Blizzard's own pane backdrop (`obs_talents_bg`, one picture
+     with the hexes and the blue-to-red blend) was tried, turned top to bottom, and scrapped.
+   - the talents pane has Blizzard's row grid (`obs_talents_top`, 1130 x 60: blue's 565 on
+     the left, red's mirrored) behind its rows, 2 above the first row as Blizzard hangs it;
+     portraits and talents fitted into its boxes (heroic tiers 4 and 7 at 46). The pane's box
+     didn't change.
+   - **Later: the numbers panes (KDA, healing, structures) need a better visual** - fine for
+     now (user). Their colour pass for both teams goes with it. Blizzard's stats grid art
+     (`obs_stats_top`: a portrait box and five column cells per row, blue left, red right)
+     and the leader underlines (`obs_stats_leader_blue/red`) are candidates; the dev art board
+     (Ctrl+Shift+B, `[dev] art_board`, DIAGNOSTIC) shows them at native size - kept for that.
 2. **Command card polish** - does each button read cleanly; **talent-granted abilities** (the
    top row, dynamic buttons 30-35): seen 2026-10-05 on Sonya (screenshot `Screenshot2026-10-05
    11_16_54.jpg`), they sit in place but draw oversized art behind them - an orange flame frame
