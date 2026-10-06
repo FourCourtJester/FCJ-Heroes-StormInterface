@@ -8,21 +8,20 @@
 	     interface may move and restyle a template's alerts here (file="<the map's file>"), but
 	     never rename or drop one: the script's lookup would fail.
 
-	     Towers of Doom (FieldofSlaughter/MainFoSPanel): its alerts hang off the screen's right
-	     edge in a chain - the altar countdown 80 below the minimap's top, and each of the
-	     others (enemy and ally capture, Raven, Necro, towers, waygate) stacked off the one
-	     before. -->
+	     Towers of Doom (FieldofSlaughter/MainFoSPanel): a 600-unit strip on the screen's right
+	     edge, which clips what it holds - so whatever we move out of it is Unclipped. Its
+	     alerts hang off the right edge in a chain, each stacked off the one before. The three
+	     every observer gets (the script sends them to all) sit either side of the map at the
+	     rows' inner ends, where the core bars live (user, 2026-10-06): the altar countdown
+	     and, above it, the towers upgrading on red's side; the tunnels opening on blue's.
+	     Each sits on its row's XP bar and steps up onto the core bar while that shows
+	     (Blizzard shows a core bar while the core takes damage). An alert's art is a fixed
+	     width, so each is placed by its frame's right edge (tools/gen.py MAP_ALERT_REACH):
+	     red's start just right of the map's square, blue's end just left of it. -->
 	<Frame type="Frame" name="MainFoSPanel" file="FieldofSlaughter">
-		<!-- The altar countdown on red's row, at its inner end where the core bar lives: its art
-		     starts just right of the map's square (placed by the frame's right edge: the art is
-		     a fixed width - tools/gen.py COUNTDOWN_ALERT_W), on the XP bar; while red's core bar
-		     shows (Blizzard shows it while the core takes damage) it steps up onto that (user,
-		     2026-10-06). -->
 		<Frame type="Frame" name="AltarSpawnNotificationFrame">
 			<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_RED_B"/>
 			<Anchor side="Right"  relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_RED_R"/>
-			<!-- the panel is a 600-unit strip on the screen's right edge and clips its children:
-			     only the alert's right end showed (user, 2026-10-06) -->
 			<Unclipped val="true"/>
 			<StateGroup name="FCJH_OverCore">
 				<DefaultState val="OnXP"/>
@@ -35,16 +34,38 @@
 				</State>
 			</StateGroup>
 		</Frame>
-		<!-- ...and the rest of the chain keeps its place: the next alert takes the altar's old
-		     anchor, 80 below the minimap's top -->
+		<!-- above the altar countdown, Blizzard's own step between its alerts (30) -->
+		<Frame type="Frame" name="TowersNotificationFrame">
+			<Anchor side="Bottom" relative="$parent/AltarSpawnNotificationFrame" pos="Min" offset="30"/>
+			<Anchor side="Right"  relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_RED_R"/>
+			<Unclipped val="true"/>
+		</Frame>
+		<Frame type="Frame" name="WaygateNotificationFrame">
+			<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_B"/>
+			<Anchor side="Right"  relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_R"/>
+			<Unclipped val="true"/>
+			<StateGroup name="FCJH_OverCore">
+				<DefaultState val="OnXP"/>
+				<State name="OnCore">
+					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1CoreUnitStatus" Visible="true"/>
+					<Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_B_CORE"/>
+				</State>
+				<State name="OnXP">
+					<Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_B"/>
+				</State>
+			</StateGroup>
+		</Frame>
+		<!-- The rest of the chain (capture alerts - sent to each team's players, so likely never
+		     an observer's - Raven, Necro) keeps its place: the enemy-capture alert takes the
+		     altar's old anchor, 80 below the minimap's top. -->
 		<Frame type="Frame" name="EnemyCaptureNotificationFrame">
 			<Anchor side="Bottom" relative="$parent/MinimapProxyFrame" pos="Min" offset="80"/>
 		</Frame>
 		<!-- The towns' shot counts (each team's towns plus the core shots), flanking the minimap's
 		     middle on the screen's bottom edge (MapMechanicPanel TeamCollectionFrameTemplate). Their
-		     panel filled the 600-unit right-edge strip, which held Blizzard's minimap; ours is
-		     bottom-centre, so the strip clipped them and they never showed (user, 2026-10-06).
-		     The panel now spans the screen, unclipped. -->
+		     panel filled the right-edge strip, which held Blizzard's minimap; ours is bottom-centre,
+		     so the strip clipped them and they never showed (user, 2026-10-06). The panel now
+		     spans the screen, unclipped. -->
 		<Frame type="Frame" name="PotentialPointsPanel">
 			<Anchor side="Top"    relative="$GameUI" pos="Min" offset="0"/>
 			<Anchor side="Left"   relative="$GameUI" pos="Min" offset="0"/>

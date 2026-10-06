@@ -50,7 +50,10 @@ MINIMAP_PANEL_W = 468
 # +43 +43 +41 +19), so a pentakill's fifth ends at 356. The kill feed is Blizzard's, in its
 # own place (user, 2026-10-05: moving it right left multi-kills running off the screen).
 KILL_ROW_SINGLE = 210    # layout units: where a single kill's victim portrait ends
-COUNTDOWN_ALERT_W = 388  # units: a map countdown alert's art (FCJH_MapAlerts; constants_layout)
+# A map alert's art, from its frame's right edge: it reaches 500 units left and stops 12 short
+# (Towers of Doom's three, every kind the same width; measured in game, 2026-10-06 - the
+# templates' arithmetic gave 388 for a countdown, which put it into the map). FCJH_MapAlerts.
+MAP_ALERT_REACH, MAP_ALERT_TAIL = 500, 12
 CC_TEXT_OVERHANG = 20   # layout units the CC text's box reaches above and below the health bar
 
 
@@ -309,23 +312,20 @@ def constants_layout(cfg):
     const(name("red", "core", "frame", "t"), u(ry) - 18)
     const(name("red", "core", "frame", "l"), u(rx) - 28)
 
-    # Map alerts on the plates (FCJH_MapAlerts): Towers of Doom's altar countdown sits at the
-    # red row's inner end, on the XP bar where the core bar lives, and steps up onto the core
-    # bar while that shows. Its art starts `gap` right of the minimap's square (user,
-    # 2026-10-06: flush with the core bar's right edge, it grew left into the map). A countdown
-    # alert's art is a fixed width (MapMechanicPanel NotificationFrameCountdownTemplate: its
-    # text pinned 250 left of the icon's middle, the art 70 further, the icon's middle 68 in
-    # from the art's right end - 388 units), ending 10 units inside the frame's right edge,
-    # with a bracket 3 units past its left end. The frame is placed by its right edge.
+    # Map alerts on the plates (FCJH_MapAlerts), either side of the map at the rows' inner
+    # ends, on the XP bar where the core bar lives, stepping up onto the core bar while that
+    # shows: red's start `gap` right of the minimap's square, blue's end `gap` left of it (user,
+    # 2026-10-06). Placed by the frame's right edge (MAP_ALERT_REACH, MAP_ALERT_TAIL).
     lines.append("")
     lines.append("\t<!-- Map alerts on the plates ([map_alerts]) -->")
     gap = cfg["map_alerts"]["gap"]
     (mmx, _, mmw, _), _ = rects(cfg)["minimap"]
-    (_, rcy, _, _), _ = rects(cfg)["red_core"]
-    (_, rxy, _, _), _ = team_bar_rects(cfg)["red_xp"]
-    const(name("map", "alert", "red", "r"), u(mmx + mmw + gap) + 3 + COUNTDOWN_ALERT_W + 10)
-    const(name("map", "alert", "red", "b"), u(rxy - gap), "on the XP bar")
-    const(name("map", "alert", "red", "b", "core"), u(rcy - gap), "on the core bar, while it shows")
+    for team, right in (("red", u(mmx + mmw + gap) + MAP_ALERT_REACH), ("blue", u(mmx - gap) + MAP_ALERT_TAIL)):
+        (_, cy, _, _), _ = rects(cfg)[f"{team}_core"]
+        (_, xy, _, _), _ = team_bar_rects(cfg)[f"{team}_xp"]
+        const(name("map", "alert", team, "r"), right)
+        const(name("map", "alert", team, "b"), u(xy - gap), "on the XP bar")
+        const(name("map", "alert", team, "b", "core"), u(cy - gap), "on the core bar, while it shows")
 
     lines.append("")
     lines.append("\t<!-- Team XP and core health: tracks and fills cut to the plates' slant (solid colour;")
