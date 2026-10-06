@@ -56,6 +56,11 @@
 					<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/ConsoleUIContainer/FloatingCombatUnitSelectionPanel/UnitStatusFrame0/HeroTalentTreeSelectionPanel">
 						<Key type="Bool" time="0" value="false"/>
 					</Controller>
+					<!-- ...and see-through, every frame: holding Ctrl in a player's view still showed it
+					     whole, in its own place (user, 2026-10-06) - see the picker's override below -->
+					<Controller type="Fade" end="Loop" frame="$GameUI/UIContainer/ConsoleUIContainer/FloatingCombatUnitSelectionPanel/UnitStatusFrame0/HeroTalentTreeSelectionPanel">
+						<Key type="Curve" time="0" value="0"/>
+					</Controller>
 					<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/ConsoleUIContainer/HeroTalentTreeSelectionToggleButton">
 						<Key type="Bool" time="0" value="false"/>
 					</Controller>
@@ -126,7 +131,12 @@
 		<!-- Blizzard's talent picker, the one a player opens by holding Ctrl (game hotkey
 		     QuickHeroTalentTreeSelection = Control; Ctrl+1-5 pick from it). Holding Ctrl in a
 		     replay still brought it up, as faint rings behind the talents pane (user, 2026-10-05),
-		     past the hide-loop above. Parked off screen and see-through as well, mouse off. -->
+		     past the hide-loop above; parked and see-through, it still flicked up in a player's
+		     view (1 to lock to Auriel, then Ctrl; user, 2026-10-06). Its own Show animation fades
+		     it in (alpha 0 -> 255, animations outrank properties) a frame before the hide-loop
+		     catches it, so that animation is stopped - Ahli 0.75's override, without his
+		     replacement. Its toggle button and talent-available indicator go the same way:
+		     parked and see-through, not only hide-looped. -->
 		<Frame type="Frame" name="UIContainer">
 			<Frame type="Frame" name="ConsoleUIContainer">
 				<Frame type="SelectionUnitStatusPanel" name="FloatingCombatUnitSelectionPanel">
@@ -137,8 +147,28 @@
 							<Alpha val="0"/>
 							<AcceptsMouse val="false"/>
 							<AcceptsMouseTooltip val="false"/>
+							<Animation name="Show">
+								<Event event="Toggle" action="Stop"/>
+								<Event event="Hide" action="Stop"/>
+								<Event event="Begin" action="Stop"/>
+								<Event event="End" action="Stop"/>
+							</Animation>
 						</Frame>
 					</Frame>
+				</Frame>
+				<Frame type="HeroTalentTreeSelectionToggleButton" name="HeroTalentTreeSelectionToggleButton">
+					<Anchor side="Top"    relative="$GameUI" pos="Min" offset="9999"/>
+					<Anchor side="Left"   relative="$GameUI" pos="Min" offset="9999"/>
+					<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="10099"/>
+					<Anchor side="Right"  relative="$GameUI" pos="Min" offset="10099"/>
+					<Alpha val="0"/>
+					<AcceptsMouse val="false"/>
+					<AcceptsMouseTooltip val="false"/>
+				</Frame>
+				<Frame type="Frame" name="HeroTalentTreeSelectionIndicatorContainer">
+					<Alpha val="0"/>
+					<AcceptsMouse val="false"/>
+					<AcceptsMouseTooltip val="false"/>
 				</Frame>
 			</Frame>
 		</Frame>
