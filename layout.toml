@@ -139,12 +139,6 @@ team_height = 24             # each team's band (name + team totals) above its f
 # opening one closes whichever is open. Ctrl+1-4 (user, 2026-10-05): Blizzard's own panes on
 # Ctrl+1 / Ctrl+2 have their keys taken away (FCJH_Hidden), as Ahli does.
 hotkeys = { talents = "Control+1", kda = "Control+2", healing = "Control+3", structures = "Control+4" }
-
-[keys]
-# Plain letters are the heroes' own keys (D is every trait, I opens social), so Control.
-inspect = "Control+I"        # the inspect card off and on (on to start); Ahli's Ctrl+C toggle
-death_recap = "Control+D"    # presses Blizzard's death recap button, which is only there while
-                             # the followed hero is dead (FCJH_Hidden; a test, 2026-10-05)
 [element.centre_banners]
 rect = [640, 196, 640, 78]   # Blizzard's; untouched, may shift on y
 kind = "ui"

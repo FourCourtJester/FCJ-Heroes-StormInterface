@@ -123,6 +123,25 @@
 				</Frame>
 			</Frame>
 		</Frame>
+		<!-- Blizzard's talent picker, the one a player opens by holding Ctrl (game hotkey
+		     QuickHeroTalentTreeSelection = Control; Ctrl+1-5 pick from it). Holding Ctrl in a
+		     replay still brought it up, as faint rings behind the talents pane (user, 2026-10-05),
+		     past the hide-loop above. Parked off screen and see-through as well, mouse off. -->
+		<Frame type="Frame" name="UIContainer">
+			<Frame type="Frame" name="ConsoleUIContainer">
+				<Frame type="SelectionUnitStatusPanel" name="FloatingCombatUnitSelectionPanel">
+					<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+						<Frame type="HeroTalentTreeSelectionPanel" name="HeroTalentTreeSelectionPanel">
+							<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="10959"/>
+							<Anchor side="Left"   relative="$GameUI" pos="Min" offset="9999"/>
+							<Alpha val="0"/>
+							<AcceptsMouse val="false"/>
+							<AcceptsMouseTooltip val="false"/>
+						</Frame>
+					</Frame>
+				</Frame>
+			</Frame>
+		</Frame>
 		<!-- Blizzard's observer panes keep their own keys otherwise: Ctrl+1 talents, Ctrl+2 stats
 		     (bottompanel.stormlayout). Ours are on Ctrl+1-4 now (layout.toml [info_pane] hotkeys),
 		     so theirs lose the keys - Ahli 0.75's way, an empty Shortcut (user, 2026-10-05). -->
@@ -132,19 +151,6 @@
 					<Frame type="ObserverBottomPanel" name="BottomPanel">
 						<Frame type="ToggleControl" name="ToggleTalentOverview"><Shortcut val=""/></Frame>
 						<Frame type="ToggleControl" name="ToggleStatsOverview"><Shortcut val=""/></Frame>
-					</Frame>
-				</Frame>
-			</Frame>
-		</Frame>
-		<!-- Not hidden: a key for Blizzard's death recap button, the toast that comes up under a
-		     dead hero ("click for more details"; gameui HeroDeathStunFrame, shown by its DeadState).
-		     A Shortcut presses a button as a click would. Neither Ahli (hides it) nor Spazzo binds
-		     it. A test (user, 2026-10-05): whether the toast shows for an observer at all. -->
-		<Frame type="Frame" name="UIContainer">
-			<Frame type="Frame" name="ConsoleUIContainer">
-				<Frame type="UnitStatusFrame" name="HeroDeathStunFrame">
-					<Frame type="Button" name="DeathRecapButton">
-						<Shortcut val="#FCJH_KEY_DEATH_RECAP"/>
 					</Frame>
 				</Frame>
 			</Frame>

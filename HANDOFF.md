@@ -489,18 +489,14 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    anyway, inside the plates' 415 px gap. Open, map by map (with item 8): HEIGHT. The
    square is centred at y ~936 and hangs off the bottom, so a tall map may cross the bottom
    padding or the screen's edge.
-10. **Hotkeys for the inspect card and a death recap - built 2026-10-05, awaiting QA.**
-    The user's keys (layout.toml `[keys]`; plain I / D are hero keys, so Control):
-    - **Ctrl+I: the inspect card off and on** (on to start). `FCJH_InspectOff`, a
-      ToggleControl beside the card's gate (inspect_card.card); the gate's Show state also
-      wants it hidden. Ahli's equivalent is his Ctrl+C "Toggle Unit Stats" (a ToggleControl
-      plus a StateGroup on its Property visible, `_BottomLeft`); his Ctrl+Alt+K isn't wanted.
-    - **Ctrl+D: the death recap** - a Shortcut on Blizzard's own toast button,
-      `ConsoleUIContainer/HeroDeathStunFrame/DeathRecapButton` (FCJH_Hidden); it's only there
-      while the followed hero is dead (its DeadState). Neither Ahli (hides it) nor Spazzo binds
-      it. A test: the user hasn't found a way to bring up a recap as an observer, and the toast
-      may never show for one. If it doesn't, drop the key (user: "we can move past it").
-      The plate-click idea is out: a layout can't send a click to another button.
+10. **Hotkeys for the inspect card and a death recap - DROPPED (user, 2026-10-05).** Built
+    and tried: Ctrl+I switched the card off and on (a ToggleControl the card's gate also
+    watched, as Ahli's Ctrl+C) - the user didn't like it; Ctrl+D as a Shortcut on Blizzard's
+    death recap toast (`ConsoleUIContainer/HeroDeathStunFrame/DeathRecapButton`) did nothing -
+    the toast likely never shows for an observer. Both removed outright; the card follows the
+    selection only. Found while testing: holding Ctrl brought up Blizzard's quick talent picker
+    (game hotkey QuickHeroTalentTreeSelection = Control), seen as faint rings behind the talents
+    pane; now parked and see-through in FCJH_Hidden as well as hide-looped - awaiting QA.
 11. **A non-hero inspect card** (user, 2026-10-05) - for minions, mercenaries, bosses, map
     objectives' units and buildings. The inspect card shows for any selected unit (it follows
     Blizzard's inspect box), but everything on it after the bars is hero-shaped: a non-hero
