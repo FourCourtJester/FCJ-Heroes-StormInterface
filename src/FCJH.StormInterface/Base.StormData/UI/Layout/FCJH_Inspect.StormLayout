@@ -274,6 +274,95 @@
 				<!-- 1. animated model: DROPPED (round 6). The hero cutscene kept the first hero clicked
 				     (Chromie) over every later selection; the static portrait underneath updates. -->
 
+				<!-- DIAGNOSTIC: which unit-relation event the selection gets (inspect_card.diag_team) -->
+				<Frame type="Image" name="FCJH_DiagAlly">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="8"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="15"/>
+					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+					<Width val="14"/>
+					<Height val="14"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="255,92,188,236"/>
+					<RenderPriority val="700"/>
+					<Alpha val="40"/>
+					<AcceptsMouse val="false"/>
+					<Animation name="FCJH_On">
+						<Event event="UnitStatusAlly" action="Reset,Play" frame="$parent"/>
+						<Controller type="Fade" end="Pause">
+							<Key type="Curve" time="0" value="255" inout="Linear"/>
+							<Key type="Curve" time="0.01" value="255" inout="Linear"/>
+						</Controller>
+					</Animation>
+					<Animation name="FCJH_Off">
+						<Event event="UnitStatusEnemy" action="Reset,Play" frame="$parent"/>
+						<Event event="UnitStatusOwner" action="Reset,Play" frame="$parent"/>
+						<Controller type="Fade" end="Pause">
+							<Key type="Curve" time="0" value="40" inout="Linear"/>
+							<Key type="Curve" time="0.01" value="40" inout="Linear"/>
+						</Controller>
+					</Animation>
+				</Frame>
+				<Frame type="Image" name="FCJH_DiagEnemy">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="8"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="33"/>
+					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+					<Width val="14"/>
+					<Height val="14"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="255,231,92,121"/>
+					<RenderPriority val="700"/>
+					<Alpha val="40"/>
+					<AcceptsMouse val="false"/>
+					<Animation name="FCJH_On">
+						<Event event="UnitStatusEnemy" action="Reset,Play" frame="$parent"/>
+						<Controller type="Fade" end="Pause">
+							<Key type="Curve" time="0" value="255" inout="Linear"/>
+							<Key type="Curve" time="0.01" value="255" inout="Linear"/>
+						</Controller>
+					</Animation>
+					<Animation name="FCJH_Off">
+						<Event event="UnitStatusAlly" action="Reset,Play" frame="$parent"/>
+						<Event event="UnitStatusOwner" action="Reset,Play" frame="$parent"/>
+						<Controller type="Fade" end="Pause">
+							<Key type="Curve" time="0" value="40" inout="Linear"/>
+							<Key type="Curve" time="0.01" value="40" inout="Linear"/>
+						</Controller>
+					</Animation>
+				</Frame>
+				<Frame type="Image" name="FCJH_DiagOwner">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="8"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="51"/>
+					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+					<Width val="14"/>
+					<Height val="14"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="255,255,255,255"/>
+					<RenderPriority val="700"/>
+					<Alpha val="40"/>
+					<AcceptsMouse val="false"/>
+					<Animation name="FCJH_On">
+						<Event event="UnitStatusOwner" action="Reset,Play" frame="$parent"/>
+						<Controller type="Fade" end="Pause">
+							<Key type="Curve" time="0" value="255" inout="Linear"/>
+							<Key type="Curve" time="0.01" value="255" inout="Linear"/>
+						</Controller>
+					</Animation>
+					<Animation name="FCJH_Off">
+						<Event event="UnitStatusAlly" action="Reset,Play" frame="$parent"/>
+						<Event event="UnitStatusEnemy" action="Reset,Play" frame="$parent"/>
+						<Controller type="Fade" end="Pause">
+							<Key type="Curve" time="0" value="40" inout="Linear"/>
+							<Key type="Curve" time="0.01" value="40" inout="Linear"/>
+						</Controller>
+					</Animation>
+				</Frame>
+
 				<!-- 2. name (in the title band, user 2026-10-05), player, level -->
 				<Frame type="UnitStatusName" name="FCJH_HeroName" template="UnitStatus/UnitStatusUnitNameTemplate">
 					<!-- centred on the card: the template's own size (220 x 30) beat the
@@ -586,12 +675,12 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_PortraitWide">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="32"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="30"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="2"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="152"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="155"/>
 						<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroPortraitImage/@Texture}"/>
-						<TextureCoords top="0" left="0" bottom="1" right="1"/>
+						<TextureCoords top="0.1" left="0.452" bottom="0.65" right="0.909"/>
 						<RenderPriority val="668"/>
 						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
@@ -1000,12 +1089,12 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_PortraitWide">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="32"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="30"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="2"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="152"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="155"/>
 						<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroPortraitImage/@Texture}"/>
-						<TextureCoords top="0" left="0" bottom="1" right="1"/>
+						<TextureCoords top="0.1" left="0.452" bottom="0.65" right="0.909"/>
 						<RenderPriority val="668"/>
 						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
@@ -1414,12 +1503,12 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_PortraitWide">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="32"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="30"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="2"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="152"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="155"/>
 						<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroPortraitImage/@Texture}"/>
-						<TextureCoords top="0" left="0" bottom="1" right="1"/>
+						<TextureCoords top="0.1" left="0.452" bottom="0.65" right="0.909"/>
 						<RenderPriority val="668"/>
 						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
@@ -1828,12 +1917,12 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_PortraitWide">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="32"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="30"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="2"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="152"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="155"/>
 						<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroPortraitImage/@Texture}"/>
-						<TextureCoords top="0" left="0" bottom="1" right="1"/>
+						<TextureCoords top="0.1" left="0.452" bottom="0.65" right="0.909"/>
 						<RenderPriority val="668"/>
 						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
@@ -2242,12 +2331,12 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_PortraitWide">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="32"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="30"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="2"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="152"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="155"/>
 						<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroPortraitImage/@Texture}"/>
-						<TextureCoords top="0" left="0" bottom="1" right="1"/>
+						<TextureCoords top="0.1" left="0.452" bottom="0.65" right="0.909"/>
 						<RenderPriority val="668"/>
 						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
@@ -2656,12 +2745,12 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_PortraitWide">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="32"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="30"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="2"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="152"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="155"/>
 						<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroPortraitImage/@Texture}"/>
-						<TextureCoords top="0" left="0" bottom="1" right="1"/>
+						<TextureCoords top="0.1" left="0.452" bottom="0.65" right="0.909"/>
 						<RenderPriority val="668"/>
 						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
@@ -3070,12 +3159,12 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_PortraitWide">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="32"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="30"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="2"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="152"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="155"/>
 						<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroPortraitImage/@Texture}"/>
-						<TextureCoords top="0" left="0" bottom="1" right="1"/>
+						<TextureCoords top="0.1" left="0.452" bottom="0.65" right="0.909"/>
 						<RenderPriority val="668"/>
 						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
@@ -3484,12 +3573,12 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_PortraitWide">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="32"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="30"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="2"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="152"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="155"/>
 						<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroPortraitImage/@Texture}"/>
-						<TextureCoords top="0" left="0" bottom="1" right="1"/>
+						<TextureCoords top="0.1" left="0.452" bottom="0.65" right="0.909"/>
 						<RenderPriority val="668"/>
 						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
@@ -3898,12 +3987,12 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_PortraitWide">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="32"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="30"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="2"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="152"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="155"/>
 						<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroPortraitImage/@Texture}"/>
-						<TextureCoords top="0" left="0" bottom="1" right="1"/>
+						<TextureCoords top="0.1" left="0.452" bottom="0.65" right="0.909"/>
 						<RenderPriority val="668"/>
 						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
@@ -4312,12 +4401,12 @@
 						<AcceptsMouse val="false"/>
 					</Frame>
 					<Frame type="Image" name="FCJH_PortraitWide">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="32"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="30"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="2"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="152"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="155"/>
 						<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroPortraitImage/@Texture}"/>
-						<TextureCoords top="0" left="0" bottom="1" right="1"/>
+						<TextureCoords top="0.1" left="0.452" bottom="0.65" right="0.909"/>
 						<RenderPriority val="668"/>
 						<Alpha val="0"/>
 						<AcceptsMouse val="false"/>
