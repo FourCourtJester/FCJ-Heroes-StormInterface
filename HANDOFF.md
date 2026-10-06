@@ -318,6 +318,11 @@ Keep a current-patch replay; an AI-vs-AI custom lobby you observe produces one.
 **Screenshots** land in `Documents/Heroes of the Storm/Screenshots/` and can be read directly.
 Ask for one rather than a description.
 
+**Crosshairs in screenshots are the game's, not ours**: thin lines right across the screen,
+one horizontal and one vertical, meeting where the mouse was (the cursor itself isn't
+captured). It's Heroes' own mouse-tracking aid (user, 2026-10-06). Don't hunt for them in
+our layouts.
+
 ---
 
 ## 6. Design decisions worth not relitigating
