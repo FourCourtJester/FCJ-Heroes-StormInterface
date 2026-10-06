@@ -176,7 +176,9 @@ def plate(team, x0, y0, z, st, uid):
         f'width="{round((box(r)[2] - box(r)[0]) * frac, 1)}" height="{round(box(r)[3] - box(r)[1], 1)}" fill="{fill}"{extra}></rect>')
     heroic = st.get("heroic")
     dead = st.get("dead")
-    narrow = FG[team]["health_left"] - CELL.team[team]["health"][0]   # health: starts under the fountain, all game
+    # health: from under the fountain's far side, or clear of the heroic while it shows
+    narrow = (max(FG[team]["health_left"] - CELL.team[team]["health"][0], NARROW) if heroic else
+              FG[team]["health_left"] - CELL.team[team]["health"][0])
     rnarrow = NARROW if heroic else 0       # resource: while the heroic shows
     out = [f'<clipPath id="c{uid}"><polygon points="{pts(plate_poly(team, x0, y0, w, h, ov))}"></polygon></clipPath>',
            f'<g clip-path="url(#c{uid})">',
@@ -655,7 +657,8 @@ def plate_board():
             svg.append(f'<clipPath id="nrclip"><rect x="0" y="0" width="1100" height="2000"></rect></clipPath><g opacity=".3" clip-path="url(#nrclip)">{nb}</g>')
         svg.append(plate(team, x0, y0, z, st, uid))
         g = CELL.team[team]
-        narrow, rnarrow = FG[team]["health_left"] - CELL.team[team]["health"][0], (NARROW if st.get("heroic") else 0)
+        fl0 = FG[team]["health_left"] - CELL.team[team]["health"][0]
+        narrow, rnarrow = (max(fl0, NARROW), NARROW) if st.get("heroic") else (fl0, 0)
         svg.append(dim_h(x0, x0 + w, y0 + h + 36, f"{px_(CELL.w)} px ({CELL.w})"))
         svg.append(dim_v(x0 - 40, y0, y0 + h, f"{px_(CELL.h)} ({CELL.h})", side=-1))
         ovx = x0 + w - CELL.overlap * k if team == "blue" else x0
@@ -671,7 +674,7 @@ def plate_board():
         svg.append(callout(cx + size / 2, y0 - size / 4, right, y0 - 60,
                            f"Pop-up · {ROW['talent_popup_size']} px, box centre, straddling the top edge"))
         svg.append(callout(x0 + (hl + narrow + 20) * k, y0 + (ht + hb) / 2 * k, right, y0 + 150,
-                           f"Health · {px_((hr - hl - narrow))} × {px_(hb - ht)} ({hr - hl - narrow} × {hb - ht}) · narrow all game"))
+                           f"Health · {px_((hr - hl - narrow))} × {px_(hb - ht)} ({hr - hl - narrow} × {hb - ht}) · from under the fountain, or clear of the heroic"))
         svg.append(callout(x0 + (el + rnarrow + 30) * k, y0 + (et + eb) / 2 * k, right, y0 + 190,
                            f"Resource · {px_(er - el - rnarrow)} × {px_(eb - et)} ({er - el - rnarrow} × {eb - et})" + (" · narrowed" if rnarrow else "")))
         fl, ft, fr, fb = FG[team]["up" if st.get("heroic") else "bar"]
@@ -748,8 +751,8 @@ def plate_board():
     b.append(heading(48, fy - 210, "Fountain · on the health bar",
                      "The inspect card's fountain: Blizzard's buff slot (it leans / as on red; mirrored on blue), bright when ready, dimmed with the seconds left on cooldown. "
                      f"Slot box {px_(br - bl)} × {px_(bb - bt)} px ({br - bl} × {bb - bt}). On the health bar's heroic end, the art's bottom on the health bar's bottom, "
-                     "its slanted side against the plate's edge; the health bar starts under its far side (no gap) and keeps that length all game. "
-                     "The resource row is untouched until the heroic comes. Then the heroic takes this spot and the fountain stands right on the heroic's "
+                     "its slanted side against the plate's edge; the health bar starts under its far side (no gap). "
+                     "The resource row is untouched until the heroic comes. Then the heroic takes this spot, the bars clear it, and the fountain stands right on the heroic's "
                      "gold frame, still against the plate's edge. Gone with the bars on a death.", 1600))
     cols = [("No heroic · ready", {}), ("No heroic · on cooldown", {"fountain": "cd42"}),
             ("Heroic out · moved north, ready", {"heroic": "ready"}),

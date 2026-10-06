@@ -861,7 +861,8 @@ SLOT_W, SLOT_H = 58, 34          # Blizzard's buff slot (inspect_card BUFF_W, BU
 SLOT_ART = (4, 3, 50, 28)        # the slot art's visible part in it: inset x, y, width, height
 SLOT_LEAN = 0.45                 # ...and its slant, across per down (measured in game, 2026-10-05)
 SLOT_MASK = (9, -2, 40, 40)      # the icon's mask square in the slot (inspect_card): left, top, w, h
-FOUNTAIN_H = 20.6                # the slot art's visible height on the plate, native cell units
+FOUNTAIN_H = 14                  # the slot art's visible height on the plate, native cell units (20.6, the
+                                 # heroic's size, was too big: user, 2026-10-06)
 EDGE_INSET = 2                   # its slanted side, in from the plate's edge (cell units)
 
 
@@ -947,8 +948,8 @@ def heroic_panel(cfg, team_frame, i):
         f'\t\t\t\t\t\t\t\t\t<Unclipped val="true"/>\n\t\t\t\t\t\t\t\t\t<AcceptsMouse val="false"/>\n'
         f'\t\t\t\t\t\t\t\t</Frame>\n')
     t9 = "\t" * 9
-    # The resource row narrows while the heroic shows; the health bar is narrow all game (the
-    # fountain sits at its start until then: hero_cell_template). Only the bars narrow; their
+    # While the heroic shows, the resource row narrows and the health bar clears the heroic (until
+    # then it starts under the fountain: hero_cell_template). Only the bars narrow; their
     # dark backing frames stay full width with the icon drawn over their left end, as
     # Blizzard's UpdateHealthBarWidths does. Moving the backings too (first try) exposed their
     # angled ends beside the icon as dark triangles (2026-09-30).
@@ -961,8 +962,21 @@ def heroic_panel(cfg, team_frame, i):
                f'offset="{g["energy"][0] + (s(NARROW) if narrow else 0)}"/>\n'
                f'{t10}<Action type="SetProperty" frame="{cell}/HeroStatus/FCJH_Resource" Texture="@UI/HUD_TopBar_Team_HeroFrame_ManaFill{n}{r}"/>\n')
         # the fountain: on the health bar's start, or north of the heroic while it shows
+        fg = fountain_geometry(cfg, team)
         out += "".join(f'{t10}<Action type="SetAnchor" frame="{cell}/HeroStatus/FCJH_Fountain" side="{side}" relative="{cell}" pos="Min" offset="{v}"/>\n'
-                       for side, v in zip(("Left", "Top", "Right", "Bottom"), fountain_geometry(cfg, team)["up" if narrow else "bar"]))
+                       for side, v in zip(("Left", "Top", "Right", "Bottom"), fg["up" if narrow else "bar"]))
+        # the health bar: from under the fountain's far side, or clear of the heroic while it
+        # shows (the fountain is smaller than the heroic: the bar's last health would hide
+        # under the heroic's icon) - and the Vikings' three bars with it
+        hl = max(fg["health_left"], g["health"][0] + s(NARROW)) if narrow else fg["health_left"]
+        out += f'{t10}<Action type="SetAnchor" frame="{cell}/HeroStatus" side="Left" relative="{cell}" pos="Min" offset="{hl}"/>\n'
+        hr = g["health"][2]
+        third = (hr - hl - 2 * VIKING_GAP) / 3
+        for v in range(3):
+            left = hl + VIKING_SLOT[VIKING_FRAMES[v]] * (third + VIKING_GAP)
+            f = f"{cell}/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame{v}"
+            out += (f'{t10}<Action type="SetAnchor" frame="{f}" side="Left" relative="{cell}" pos="Min" offset="{round(left)}"/>\n'
+                    f'{t10}<Action type="SetAnchor" frame="{f}" side="Right" relative="{cell}" pos="Min" offset="{round(left + third)}"/>\n')
         return out
     watch = lambda frame_: f'{party}/{frame_}'
     return f"""
@@ -1367,8 +1381,8 @@ def hero_cell_template(team, c, cfg):
 				<ColorStyle val="StandardEnergy" index="0"/>
 				<Unclipped val="true"/>
 			</Frame>"""
-    # the health bar, short all game: it starts under the fountain's far side (the fountain sits
-    # at its start, then the heroic does; user, 2026-10-06) - Blizzard's short bar art, its end
+    # the health bar starts under the fountain's far side (the fountain sits at its start, then
+    # the heroic does - heroic_panel; user, 2026-10-06) - Blizzard's short bar art, its end
     # drawn for an icon beside it
     fg = fountain_geometry(cfg, team)
     _, ht, hr, hbt = g["health"]
