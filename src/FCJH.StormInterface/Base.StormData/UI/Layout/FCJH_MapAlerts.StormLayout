@@ -10,10 +10,11 @@
 
 	     Towers of Doom (FieldofSlaughter/MainFoSPanel): a 600-unit strip on the screen's right
 	     edge, which clips what it holds - so whatever we move out of it is Unclipped. Its
-	     alerts hang off the right edge in a chain, each stacked off the one before. The three
-	     every observer gets (the script sends them to all) sit either side of the map at the
+	     alerts hang off the right edge in a chain, each stacked off the one before. The ones
+	     a broadcast needs sit either side of the map at the
 	     rows' inner ends, where the core bars live (user, 2026-10-06): the altar countdown
-	     and, above it, the towers upgrading on red's side; the tunnels opening on blue's.
+	     and, above it, the towers upgrading on red's side; the tunnels opening on blue's; and
+	     the "cannons are firing" pair, each on its capturing team's side.
 	     Each sits on its row's XP bar and steps up onto the core bar while that shows
 	     (Blizzard shows a core bar while the core takes damage). An alert's art is a fixed
 	     width, so each is placed by its frame's right edge (tools/gen.py MAP_ALERT_REACH):
@@ -55,9 +56,44 @@
 				</State>
 			</StateGroup>
 		</Frame>
-		<!-- The rest of the chain (capture alerts - sent to each team's players, so likely never
-		     an observer's - Raven, Necro) keeps its place: the enemy-capture alert takes the
-		     altar's old anchor, 80 below the minimap's top. -->
+		<!-- "Cannons are firing!" after an altar capture. The script shows RAVEN's alert when blue
+		     captures and NECRO's when red does - only the text is per viewer ("Your" to the
+		     capturing team's players, "Enemy" to the others; a player view (1-8) shows them,
+		     user 2026-10-06). So the frame names the team: Raven on blue's side, Necro on red's,
+		     in the slots by the map (the warnings there come before the altars activate). -->
+		<Frame type="Frame" name="RavenNotificationFrame">
+			<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_B"/>
+			<Anchor side="Right"  relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_R"/>
+			<Unclipped val="true"/>
+			<StateGroup name="FCJH_OverCore">
+				<DefaultState val="OnXP"/>
+				<State name="OnCore">
+					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1CoreUnitStatus" Visible="true"/>
+					<Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_B_CORE"/>
+				</State>
+				<State name="OnXP">
+					<Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_B"/>
+				</State>
+			</StateGroup>
+		</Frame>
+		<Frame type="Frame" name="NecroNotificationFrame">
+			<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_RED_B"/>
+			<Anchor side="Right"  relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_RED_R"/>
+			<Unclipped val="true"/>
+			<StateGroup name="FCJH_OverCore">
+				<DefaultState val="OnXP"/>
+				<State name="OnCore">
+					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2CoreUnitStatus" Visible="true"/>
+					<Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_RED_B_CORE"/>
+				</State>
+				<State name="OnXP">
+					<Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_RED_B"/>
+				</State>
+			</StateGroup>
+		</Frame>
+		<!-- The town-capture alerts ("The Enemy captured <town>", sent to each team's players)
+		     stay on the right edge: the enemy-capture alert takes the altar's old anchor, 80 below
+		     the minimap's top, and the ally one stacks on it. -->
 		<Frame type="Frame" name="EnemyCaptureNotificationFrame">
 			<Anchor side="Bottom" relative="$parent/MinimapProxyFrame" pos="Min" offset="80"/>
 		</Frame>
