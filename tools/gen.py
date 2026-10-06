@@ -868,7 +868,9 @@ MASK_INSET = 2                   # ...pulled in on every side on the plate: at f
                                  # showed a pixel past the slot's frame (user, 2026-10-06 13:12)
 FOUNTAIN_H = 14                  # the slot art's visible height on the plate, native cell units
                                  # (20.6, the heroic's size, was too big: user, 2026-10-06)
-EDGE_INSET = 2                   # its slanted side, in from the plate's edge (cell units)
+EDGE_INSET = {"blue": 2,         # its slanted side, in from the plate's edge (cell units): red's
+              "red": 4.5}       # edge art sits ~2 px further in (it rode the border: user, 13:23)
+FOUNTAIN_BACKDROP = "42,24,70"   # dark purple behind the art: bare, it was easy to lose (user)
 
 
 def fountain_rect(cfg, team):
@@ -885,12 +887,12 @@ def fountain_rect(cfg, team):
         # the outer end is the plate's left: its edge runs (0, 0) -> (overlap, h); the slot leans
         # \ like it, its left side (l, top) -> (l + cut, bottom). The nearer corner rules.
         edge = lambda y: c.overlap * y / c.h
-        left = max(edge(top), edge(bottom) - cut) + EDGE_INSET
+        left = max(edge(top), edge(bottom) - cut) + EDGE_INSET[team]
     else:
         # the right: its edge runs (w, 0) -> (w - overlap, h); the slot leans /, its right
         # side (r, top) -> (r - cut, bottom)
         edge = lambda y: c.w - c.overlap * y / c.h
-        left = min(edge(top), edge(bottom) + cut) - EDGE_INSET - aw
+        left = min(edge(top), edge(bottom) + cut) - EDGE_INSET[team] - aw
     return (round(left - ax), round(top - ay), round(left - ax + SLOT_W * f), round(top - ay + SLOT_H * f)), f
 
 
@@ -1497,6 +1499,16 @@ def hero_cell_template(team, c, cfg):
 					<Anchor side="Right"  relative="$parent" pos="Min" offset="{u(mx + mw)}"/>
 					<AlphaMaskTexture val="{mask}"/>
 					<Unclipped val="true"/>
+					<!-- a dark purple backdrop, in the same mask; it keeps its colour on cooldown -->
+					<Frame type="Image" name="FCJH_Backdrop">
+						<Anchor relative="$parent"/>
+						<Texture val="{WHITE}"/>
+						<Color val="{FOUNTAIN_BACKDROP}"/>
+						<IgnoreParentAlpha val="true"/>
+						<RenderPriority val="525"/>
+						<Unclipped val="true"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
 					<!-- exactly the mask's box: drawn bigger (45 in 40, as on the inspect card), the
 					     overhang went unmasked - a thin purple line (user, 2026-10-06 13:16) -->
 					<Frame type="Image" name="IconImage">

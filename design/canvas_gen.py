@@ -238,7 +238,7 @@ def fountain_slot(team, r, k, z, state):
     dim = state.startswith("cd")
     cx, cy = (l + rr) / 2, (t + b) / 2
     a, s = 2.6 * k, 13 * k
-    out = [f'<polygon points="{shape}" fill="#0a1424"></polygon>',
+    out = [f'<polygon points="{shape}" fill="rgb({gen.FOUNTAIN_BACKDROP})"></polygon>',
            f'<g opacity="{0.35 if dim else 1}">'
            f'<polygon points="{shape}" fill="#2F7BFF"></polygon>'
            f'<rect x="{round(cx - a / 2, 1)}" y="{round(cy - s / 2, 1)}" width="{round(a, 1)}" height="{round(s, 1)}" fill="#ffffff"></rect>'
