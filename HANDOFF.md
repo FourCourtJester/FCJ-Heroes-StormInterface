@@ -521,12 +521,18 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    (Cursed Hollow, Blackheart's Bay, Haunted Mines, Garden, Dragon Shire) live in core
    `MapMechanicPanelTemplate` instead. Per-team alerts (Towers' ally/enemy capture) are sent
    to each team's PLAYERS: an observer may see neither, and can't tell the team from them.
-   **Built 2026-10-06, awaiting QA** (`FCJH_MapAlerts.StormLayout`): Towers' altar
-   countdown on red's row at the core bar's place, its art flush with the core bar's right
-   edge, stepping up onto the core bar while that shows (`[map_alerts] gap`); the rest of its
-   right-edge chain (capture, Raven, Necro, towers, waygate) kept in place by giving the
-   enemy-capture alert the altar's old anchor. The replay box moved to red's row too (its
-   corner on the row's top-right, `flush = "right"`), so that chain sits just above it.
+   **Towers of Doom: DONE (user, 2026-10-06; player views still to check)** -
+   `FCJH_MapAlerts.StormLayout`. The three alerts an observer gets, either side of the map
+   at the rows' inner ends, on the XP bar, stepping up onto the core bar while it shows:
+   altar countdown and (above it) towers upgrading on red's side, tunnels opening on blue's -
+   kept balanced rather than pairing the two that fire together (user). Alert art is 500
+   units from the frame's right edge (measured; gen.py MAP_ALERT_REACH). The towns' shot
+   counts now show at the minimap's bottom corners (their panel was clipped by the map's
+   right-edge strip). Rest of the chain (capture, Raven, Necro) left on the right edge.
+   **Lesson for every map:** a map panel that's a right-edge strip clips anything we move
+   out of it, and anything placed against the minimap (ours is bottom-centre): Unclipped.
+   **Player views (1-8) to check:** capture alerts (sent to each team's players), red's
+   "LeftTeamRed" flip of the shot counts, our three alerts holding their places.
 9. **Viewport padding** (user, 2026-10-05). One more size pass on our hero plates, to set
    the screen's base padding: the gap between the plates and the screen's edges becomes the
    margin for everything. Then the replay box (top-left), the inspect card and the info panes
