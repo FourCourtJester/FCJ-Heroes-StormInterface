@@ -460,6 +460,12 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    left edge in line with theirs. Laid out from the plates' rect and the padding (not its own
    `[element.inspect]` x/y), so it follows any plate resize; this settles the card's
    "line it up with the left edge" item.
+   **Built 2026-10-05, 20 px experiment, awaiting in-game QA:** `[screen] padding = 20`;
+   `[hero_row] scale = "fit"` (gen.py fit_hero_scale: 1.5561, XP bars 21 px from the sides,
+   bottom at 1060); replay, panes and inspect at x 20 (replay and its collapsed tab at y 20);
+   inspect's y from `above = "blue_xp"`; kill feed fits a pentakill (KILL_ROW_FIVE) inside
+   x 1900; gen.py check_padding refuses anything closer (top bar and minimap exempt). Open:
+   the minimap still hangs off the bottom like Blizzard's.
 10. **Hotkeys for the inspect card and a death recap** (user, 2026-10-05). Today the card
     only follows the selection (Blizzard's inspect box) and its X; there's no key. Ahli 0.75
     (`references/AhliObs075`, hotkeys as `#Hotkey - ...` constants in `_Ahli.StormLayout`)

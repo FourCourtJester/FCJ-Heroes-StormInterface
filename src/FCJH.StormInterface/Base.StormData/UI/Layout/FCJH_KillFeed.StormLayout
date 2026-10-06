@@ -5,9 +5,10 @@
 	     Blizzard's KillLogPanel (gameui.stormlayout) holds the kill rows; the engine adds
 	     them, each 600 units wide and anchored to the panel's top-left, sliding down as new
 	     ones arrive. A row draws its portraits at the LEFT of those 600 units (killer from 27,
-	     victim ending at 210), so we place the panel's left edge 210 short of kill_feed's
-	     right: a kill's portraits then end on that edge, and the rest of the row (Blizzard's
-	     streak art) hangs off-screen. Rows still read killer -> victim, left to right. -->
+	     victim ending at 210, each further victim to the right: a pentakill's fifth ends at
+	     356), so we place the panel's left edge 356 short of kill_feed's right: a pentakill's
+	     portraits end on that edge, inside the screen's padding (tools/gen.py KILL_ROW_FIVE).
+	     Rows still read killer -> victim, left to right. -->
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<Frame type="Frame" name="UIContainer">
 			<Frame type="ConsolePanel" name="ConsolePanel">

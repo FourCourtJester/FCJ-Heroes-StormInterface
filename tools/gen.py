@@ -45,7 +45,11 @@ RED_SLOTS = ["6", "7", "8", "9", "0"]
 # Minimap child (438 x 438) at its top-left. The engine fits each map inside that square.
 MINIMAP_SQUARE = 438
 MINIMAP_PANEL_W = 468
-KILL_ROW_CONTENT = 210   # layout units: where a kill row's victim portrait ends
+# A kill row's portraits, from the row's left (killlog.stormlayout Item): one victim ends at
+# 210; each further victim adds a portrait to the right (TgtPortrait1-4 at +43 +43 +41 +19),
+# so a pentakill's fifth ends at 356.
+KILL_ROW_SINGLE = 210    # layout units: where a single kill's victim portrait ends
+KILL_ROW_FIVE = 356      # layout units: where a pentakill's fifth victim ends
 CC_TEXT_OVERHANG = 20    # layout units the CC text's box reaches above and below the health bar
 
 KIND_COLORS = {  # A,R,G,B without the alpha, which comes from [dev] overlay_alpha
@@ -66,11 +70,48 @@ def derive(cfg):
     bottom edge, so a change of scale grows them outward and upward; their top and blue's
     left edge are worked out here (screen px, like everything in layout.toml)."""
     row = cfg["hero_row"]
+    pad = cfg["screen"].get("padding")
+    if pad is not None:
+        row.setdefault("bottom", cfg["screen"]["height"] - pad)
+    if row.get("scale") == "fit":
+        row["scale"] = fit_hero_scale(cfg, pad)
     if "bottom" in row:
-        cell, px = HeroCell(cfg), 1 / Units(cfg).scale
-        row["top"] = round(row["bottom"] - cell.h * px, 1)
-        row["blue_left"] = round(row["blue_right"] - (4 * cell.pitch + cell.w) * px, 1)
+        place_hero_rows(cfg)
+    # an element with `above = "<rect>"`: its bottom sits `padding` above that rect's top
+    for el in cfg.get("element", {}).values():
+        if "above" in el:
+            x, _, w, h = el["rect"]
+            (_, top, _, _), _ = team_bar_rects(cfg)[el["above"]] if el["above"] in ("blue_xp", "red_xp")                 else rects(cfg)[el["above"]]
+            el["rect"] = [x, round(top - pad - h, 1), w, h]
     return cfg
+
+
+def place_hero_rows(cfg):
+    row = cfg["hero_row"]
+    cell, px = HeroCell(cfg), 1 / Units(cfg).scale
+    row["top"] = round(row["bottom"] - cell.h * px, 1)
+    row["blue_left"] = round(row["blue_right"] - (4 * cell.pitch + cell.w) * px, 1)
+
+
+def row_reach(cfg):
+    """How close the hero rows come to the screen's sides, px: the XP bars along their top
+    edges reach furthest out (the plates lean outward going up)."""
+    bars = team_bar_rects(cfg)
+    (bx, _, _, _), _ = bars["blue_xp"]
+    (rx, _, rw, _), _ = bars["red_xp"]
+    return min(bx, cfg["screen"]["width"] - (rx + rw))
+
+
+def fit_hero_scale(cfg, pad):
+    """[hero_row] scale = "fit": the largest scale (to 0.0001) whose rows, grown outward from
+    their inner ends, stay `padding` clear of the screen's sides."""
+    row = cfg["hero_row"]
+    lo, hi = 1.0, 3.0
+    for _ in range(40):
+        row["scale"] = mid = (lo + hi) / 2
+        place_hero_rows(cfg)
+        lo, hi = (mid, hi) if row_reach(cfg) >= pad else (lo, mid)
+    return round(lo - 0.00005, 4)
 
 
 class Units:
@@ -273,12 +314,13 @@ def constants_layout(cfg):
         const(const_name, f"{TEXTURE_DIR}\\{file}")
 
     # Blizzard's kill rows are 600 wide, drawn from their left: killer at 27, victim ending at
-    # 210 (killlog.stormlayout Item: SrcPortrait / TgtPortrait0, their images inset 27).
-    # Place the rows so that content ends on kill_feed's right edge.
+    # 210, more victims further right (KILL_ROW_FIVE). Place the rows so a pentakill's end on
+    # kill_feed's right edge, inside the screen's padding (until 2026-10-05 a single kill
+    # ended there, and a pentakill ran ~130 px off the screen).
     (kx, _, kw, _), _ = rects(cfg)["kill_feed"]
     lines.append("")
-    lines.append("\t<!-- Kill feed rows' left edge: a single kill's portraits end on kill_feed's right -->")
-    const(name("kill", "feed", "row", "l"), u(kx + kw) - KILL_ROW_CONTENT)
+    lines.append("\t<!-- Kill feed rows' left edge: a pentakill's portraits end on kill_feed's right -->")
+    const(name("kill", "feed", "row", "l"), u(kx + kw) - KILL_ROW_FIVE)
 
     pane = cfg["info_pane"]
     lines.append("")
@@ -2323,6 +2365,25 @@ def layout_order(layout_dir, extra=(), generated=None):
     return [CONSTANTS_FILE] + sorted(names) + list(extra)
 
 
+# Exempt from [screen] padding: the top bar, centred on the top edge, and Blizzard's minimap,
+# whose square hangs off the bottom by design ([minimap] bottom).
+PADDING_EXEMPT = {"blue_score", "blue_name", "blue_logo", "blue_level", "blue_talent_lead", "blue_bans",
+                  "bracket", "logo_plate", "clock", "red_level", "red_talent_lead", "red_logo", "red_name",
+                  "red_score", "red_bans", "game_count", "top_backplate", "minimap"}
+
+
+def check_padding(cfg):
+    """Nothing closer to a screen edge than [screen] padding (user, 2026-10-05)."""
+    pad = cfg["screen"].get("padding")
+    if pad is None:
+        return
+    sw, sh = cfg["screen"]["width"], cfg["screen"]["height"]
+    close = [f"{stem} {x, y, w, h}" for stem, ((x, y, w, h), _) in rects(cfg).items()
+             if stem not in PADDING_EXEMPT and min(x, y, sw - x - w, sh - y - h) < pad - 0.05]
+    if close:
+        raise SystemExit(f"closer to the screen's edge than [screen] padding = {pad} px: " + "; ".join(close))
+
+
 def committed_files(cfg, source=SOURCE):
     """{path under source: bytes} for every generated file that lives in the repo."""
     layout_dir = source / LAYOUT_REL
@@ -2334,6 +2395,7 @@ def committed_files(cfg, source=SOURCE):
         raise SystemExit(f"layout.toml element.inspect is {iw} x {ih} px ({u(iw)} x {u(ih)} units); "
                          f"tools/inspect_card.py lays the card out at {inspect_card.W} x {inspect_card.H} units "
                          f"({inspect_card.W / u.scale:g} x {inspect_card.H / u.scale:g} px)")
+    check_padding(cfg)
     texts = {
         LAYOUT_REL / CONSTANTS_FILE: constants_layout(cfg),
         LAYOUT_REL / HERO_ROW_FILE: hero_row_layout(cfg),
