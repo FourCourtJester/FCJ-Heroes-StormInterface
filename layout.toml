@@ -49,7 +49,7 @@ bottom = 1133                # the square's bottom edge; > 1080 hangs off-screen
 # - the top row (score, name, logo) is one band, the height of the level labels' backplate
 #   wings: the top edge to y 63.3 (the hexagon's side points), so their art matches it;
 # - logos are 8 px clear of the wings' slanted outer ends (762.4 / 1157.7 on the top edge);
-#   blue's score stays clear of the replay panel (x 20-398);
+#   blue's score stays clear of the replay panel (x 14-392, its art 20-386);
 # - the second row: bans under each name; bracket (blue) and game count (red) under the
 #   level labels, as wide as their wing's bottom edge (blue 794-890, red 1024-1126: Blizzard's
 #   hexagon sits 2.75 px left of the screen's centre, so the wings differ).
@@ -108,16 +108,18 @@ kind = "obs"
 
 # Around the edges
 [element.replay]
-rect = [20, 20, 378, 153]    # Blizzard's ReplayPanel, native 420 x 170 units - only moved here
+rect = [14, 14, 378, 153]    # Blizzard's ReplayPanel, native 420 x 170 units - only moved here
                              # (user: nothing else about it changes)
+art_inset = 6                # its glass art's outer line sits 6 px inside the frame on every side
+                             # (measured in game, 2026-10-05): the box you see is 20, 20 - 386, 161
 kind = "ui"
 [element.replay_collapsed]
 rect = [20, 20, 200, 24]     # hidden state: a slim tab where the panel's top was
 kind = "demand"
 [element.kill_feed]
-rect = [1360, 96, 540, 300]  # right edge 1900: where a single kill's portraits end (rows right-aligned);
-                             # a multi-kill's extra victims run on past it, off the screen for a
-                             # pentakill - Blizzard's rows can't be right-aligned (tools/gen.py)
+rect = [0, 104.4, 540, 300]  # Blizzard's, in its own place, not moved (user, 2026-10-05): top-left,
+                             # under the party frame's top (150 - 34 units); rows grow right and
+                             # down. Here only for the wireframe and the canvas.
 kind = "ui"
 [element.info_pane]
 rect = [20, 196, 494, 576]   # sized to the talents table: 23-unit margins either side of its

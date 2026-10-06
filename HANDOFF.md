@@ -462,11 +462,13 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    "line it up with the left edge" item.
    **Built 2026-10-05, 20 px experiment, awaiting in-game QA:** `[screen] padding = 20`;
    `[hero_row] scale = "fit"` (gen.py fit_hero_scale: 1.5561, XP bars 21 px from the sides,
-   bottom at 1060); replay, panes and inspect at x 20 (replay and its collapsed tab at y 20);
-   inspect's y from `above = "blue_xp"`; kill feed: a single kill ends at x 1900
-   (fitting a pentakill left single kills 131 px short - user: put it back; a multi-kill's
-   extra victims still run off the screen, Blizzard's rows can't be right-aligned); gen.py check_padding refuses anything closer (top bar and minimap exempt). Open:
-   the minimap still hangs off the bottom like Blizzard's.
+   bottom at 1060); panes and inspect at x 20; the replay's frame at 14, 14 so its glass art
+   (6 px inside the frame, `art_inset`) lands on 20 - seen in game; its collapsed tab at 20,
+   20; inspect's y from `above = "blue_xp"`; gen.py check_padding refuses anything closer
+   (top bar, minimap and kill feed exempt). Kill feed: back to Blizzard's own, top-left
+   (FCJH_KillFeed removed; user: moved right, Blizzard's rows grow rightward so multi-kills
+   ran off the screen, and they can't be right-aligned). Open: it shares the top-left with
+   the replay box; the minimap still hangs off the bottom like Blizzard's.
 10. **Hotkeys for the inspect card and a death recap** (user, 2026-10-05). Today the card
     only follows the selection (Blizzard's inspect box) and its X; there's no key. Ahli 0.75
     (`references/AhliObs075`, hotkeys as `#Hotkey - ...` constants in `_Ahli.StormLayout`)

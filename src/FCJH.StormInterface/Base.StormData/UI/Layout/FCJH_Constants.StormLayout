@@ -121,11 +121,11 @@
 	<Constant name="FCJH_GAME_COUNT_B" val="101"/>
 	<Constant name="FCJH_GAME_COUNT_W" val="113"/>
 	<Constant name="FCJH_GAME_COUNT_H" val="27"/>
-	<!-- replay: ui, px [20, 20, 378, 153] -->
-	<Constant name="FCJH_REPLAY_L" val="22"/>
-	<Constant name="FCJH_REPLAY_T" val="22"/>
-	<Constant name="FCJH_REPLAY_R" val="442"/>
-	<Constant name="FCJH_REPLAY_B" val="192"/>
+	<!-- replay: ui, px [14, 14, 378, 153] -->
+	<Constant name="FCJH_REPLAY_L" val="16"/>
+	<Constant name="FCJH_REPLAY_T" val="16"/>
+	<Constant name="FCJH_REPLAY_R" val="436"/>
+	<Constant name="FCJH_REPLAY_B" val="186"/>
 	<Constant name="FCJH_REPLAY_W" val="420"/>
 	<Constant name="FCJH_REPLAY_H" val="170"/>
 	<!-- replay_collapsed: demand, px [20, 20, 200, 24] -->
@@ -135,11 +135,11 @@
 	<Constant name="FCJH_REPLAY_COLLAPSED_B" val="49"/>
 	<Constant name="FCJH_REPLAY_COLLAPSED_W" val="222"/>
 	<Constant name="FCJH_REPLAY_COLLAPSED_H" val="27"/>
-	<!-- kill_feed: ui, px [1360, 96, 540, 300] -->
-	<Constant name="FCJH_KILL_FEED_L" val="1511"/>
-	<Constant name="FCJH_KILL_FEED_T" val="107"/>
-	<Constant name="FCJH_KILL_FEED_R" val="2111"/>
-	<Constant name="FCJH_KILL_FEED_B" val="440"/>
+	<!-- kill_feed: ui, px [0, 104.4, 540, 300] -->
+	<Constant name="FCJH_KILL_FEED_L" val="0"/>
+	<Constant name="FCJH_KILL_FEED_T" val="116"/>
+	<Constant name="FCJH_KILL_FEED_R" val="600"/>
+	<Constant name="FCJH_KILL_FEED_B" val="449"/>
 	<Constant name="FCJH_KILL_FEED_W" val="600"/>
 	<Constant name="FCJH_KILL_FEED_H" val="333"/>
 	<!-- info_pane: demand, px [20, 196, 494, 576] -->
@@ -328,9 +328,6 @@
 	<Constant name="FCJH_TOP_BACKPLATE" val="_Assets\Textures\FCJH_TopBackplate_fae8320a.dds"/>
 	<Constant name="FCJH_PLATE_HIT_BLUE" val="_Assets\Textures\FCJH_PlateHit_blue_08069ee7.dds"/>
 	<Constant name="FCJH_PLATE_HIT_RED" val="_Assets\Textures\FCJH_PlateHit_red_01024578.dds"/>
-
-	<!-- Kill feed rows' left edge: a single kill's portraits end on kill_feed's right -->
-	<Constant name="FCJH_KILL_FEED_ROW_L" val="1901"/>
 
 	<!-- Info pane chrome -->
 	<Constant name="FCJH_INFO_PANE_TITLE_H" val="29"/>

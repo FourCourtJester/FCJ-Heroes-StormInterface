@@ -45,11 +45,11 @@ RED_SLOTS = ["6", "7", "8", "9", "0"]
 # Minimap child (438 x 438) at its top-left. The engine fits each map inside that square.
 MINIMAP_SQUARE = 438
 MINIMAP_PANEL_W = 468
-# A kill row's portraits, from the row's left (killlog.stormlayout Item): one victim ends at
-# 210; each further victim adds a portrait to the right (TgtPortrait1-4 at +43 +43 +41 +19),
-# so a pentakill's fifth ends at 356.
+# A kill row's portraits, from the row's left (killlog.stormlayout Item): killer from 27, one
+# victim ending at 210; each further victim adds a portrait to the right (TgtPortrait1-4 at
+# +43 +43 +41 +19), so a pentakill's fifth ends at 356. The kill feed is Blizzard's, in its
+# own place (user, 2026-10-05: moving it right left multi-kills running off the screen).
 KILL_ROW_SINGLE = 210    # layout units: where a single kill's victim portrait ends
-KILL_ROW_FIVE = 356      # layout units: where a pentakill's fifth victim ends
 CC_TEXT_OVERHANG = 20    # layout units the CC text's box reaches above and below the health bar
 
 KIND_COLORS = {  # A,R,G,B without the alpha, which comes from [dev] overlay_alpha
@@ -312,17 +312,6 @@ def constants_layout(cfg):
     lines.append("\t     Blizzard's obs_bar_xp_* art is a thin glowing line drawn for a 156 x 17 box) -->")
     for const_name, (file, _) in slant_bars(cfg).items():
         const(const_name, f"{TEXTURE_DIR}\\{file}")
-
-    # Blizzard's kill rows are 600 wide, drawn from their left: killer at 27, victim ending at
-    # 210, more victims further right (KILL_ROW_FIVE). Place the rows so a single kill ends on
-    # kill_feed's right edge; a multi-kill's extra victims run on past it (a pentakill ~131 px,
-    # off the screen). Blizzard's rows grow rightward from their left and the engine places
-    # them, so they can't be right-aligned by victim count; fitting a pentakill left single
-    # kills 131 px short of the edge (tried 2026-10-05, user: put it back).
-    (kx, _, kw, _), _ = rects(cfg)["kill_feed"]
-    lines.append("")
-    lines.append("\t<!-- Kill feed rows' left edge: a single kill's portraits end on kill_feed's right -->")
-    const(name("kill", "feed", "row", "l"), u(kx + kw) - KILL_ROW_SINGLE)
 
     pane = cfg["info_pane"]
     lines.append("")
@@ -2367,11 +2356,12 @@ def layout_order(layout_dir, extra=(), generated=None):
     return [CONSTANTS_FILE] + sorted(names) + list(extra)
 
 
-# Exempt from [screen] padding: the top bar, centred on the top edge, and Blizzard's minimap,
-# whose square hangs off the bottom by design ([minimap] bottom).
+# Exempt from [screen] padding: the top bar, centred on the top edge; Blizzard's minimap,
+# whose square hangs off the bottom by design ([minimap] bottom); and Blizzard's kill feed,
+# left where Blizzard puts it.
 PADDING_EXEMPT = {"blue_score", "blue_name", "blue_logo", "blue_level", "blue_talent_lead", "blue_bans",
                   "bracket", "logo_plate", "clock", "red_level", "red_talent_lead", "red_logo", "red_name",
-                  "red_score", "red_bans", "game_count", "top_backplate", "minimap"}
+                  "red_score", "red_bans", "game_count", "top_backplate", "minimap", "kill_feed"}
 
 
 def check_padding(cfg):
@@ -2380,8 +2370,11 @@ def check_padding(cfg):
     if pad is None:
         return
     sw, sh = cfg["screen"]["width"], cfg["screen"]["height"]
+    # an element's `art_inset`: its art draws that far inside its frame - the padding is
+    # measured to the art, which is what's seen
+    inset = lambda stem: cfg.get("element", {}).get(stem, {}).get("art_inset", 0)
     close = [f"{stem} {x, y, w, h}" for stem, ((x, y, w, h), _) in rects(cfg).items()
-             if stem not in PADDING_EXEMPT and min(x, y, sw - x - w, sh - y - h) < pad - 0.05]
+             if stem not in PADDING_EXEMPT and min(x, y, sw - x - w, sh - y - h) + inset(stem) < pad - 0.05]
     if close:
         raise SystemExit(f"closer to the screen's edge than [screen] padding = {pad} px: " + "; ".join(close))
 
