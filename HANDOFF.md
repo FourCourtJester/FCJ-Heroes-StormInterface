@@ -449,6 +449,18 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    player property, separate blue/red frames, or per-team state groups in the per-map
    layouts) - if they do, anchor each team's frames to its side; if not, look for a sensor
    (the team's score, a team-owned unit or behaviour) to switch the anchor on.
+   **Minimap per map** (2026-10-05, saved for this pass): the engine CENTRES each map in the
+   minimap square (Towers of Doom draws y ~810-1062, centred on 936), so a map taller than
+   ~248 px crosses the bottom padding. A position per map looks doable: each map's mod ships
+   its own layouts, loaded only on that map (file="GameUI" frames: Alterac Pass, Battlefield
+   of Eternity, Braxis Holdout, Hanamura, Towers of Doom, Warhead Junction; templates of their
+   own: Garden, Shrines, Sky Temple, Tomb, Volskaya). An interface can add to a map's file
+   (Ahli 0.75 does: `file="Hanamura"` payload bars). So: a tiny frame inside each map's
+   layout that, on load, `SetAnchor`s MinimapPanel (`<Action type="SetAnchor" frame=...
+   side= relative= pos= offset=/>`); one number per map in layout.toml. Blackheart's Bay,
+   Cursed Hollow, Dragon Shire and Haunted Mines ship no UI - they share the default. Test
+   first: move it on Braxis only, check Cursed Hollow stays put (proves the file add is
+   harmless elsewhere and that a map frame can move the minimap).
 9. **Viewport padding** (user, 2026-10-05). One more size pass on our hero plates, to set
    the screen's base padding: the gap between the plates and the screen's edges becomes the
    margin for everything. Then the replay box (top-left), the inspect card and the info panes
