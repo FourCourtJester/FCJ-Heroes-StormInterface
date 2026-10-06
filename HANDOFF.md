@@ -498,10 +498,10 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
     (game hotkey QuickHeroTalentTreeSelection = Control), seen as faint rings behind the talents
     pane; now parked and see-through in FCJH_Hidden as well as hide-looped - awaiting QA.
 11. **A non-hero inspect card - built 2026-10-05, awaiting QA.** For minions, mercenaries,
-    bosses, buildings: a SHORT card (`inspect_card` SHIFT / H_SHORT: 267 units, 240 px, bottom
-    still on the plates) - name, the team's name on the band, bars, buffs, stats. No portrait
+    bosses, buildings: a SHORT card (`inspect_card` SHIFT / H_SHORT: 249 units, 224 px, bottom
+    still on the plates) - name, the team's name on the band, health, buffs, stats. No portrait
     (Blizzard's unit picture is 112 x 49, too small to blow up: user's call), fountain,
-    abilities (command card parked) or talents.
+    abilities (command card parked), talents or resource bar (none of them have one, user).
     - **hero or not:** `hero_check` - the selected unit against the hero units (game data
       plus ALSO's forms), FCJH_IsHero, read by the gate (`card()`); `shape()` moves the card's
       top and the rows, both ways. The first try keyed it to the plates' matchers and some

@@ -83,7 +83,11 @@ H = STAT_END + PAD + EDGE          # the card's height (layout.toml element.insp
 # below the portrait moves up by its height, the stats up under the buffs, and the card's top
 # comes down to fit (its bottom stays on the plates). Switched by the gate (card()).
 SHIFT = PORTRAIT[1] - PORTRAIT[0]
-STATS_LABEL_SHORT = BUFFS - SHIFT + BUFF_H + PAD
+# ...and no resource bar's slot either: the buffs come up under the health bar (user,
+# 2026-10-05: minions, towers and the like have no resource). A non-hero that had one would
+# draw it over the buffs' top.
+BUFFS_SHORT = BUFFS - SHIFT - (MANA[1] - HP[1])
+STATS_LABEL_SHORT = BUFFS_SHORT + BUFF_H + PAD
 STATS_SHORT = STATS_LABEL_SHORT + 18
 H_SHORT = STATS_SHORT + 2 * STAT_ROW + STAT_H + PAD + EDGE
 TEAM = {}                          # the border's colours, "a,r,g,b" by team (and "neutral"): set by layout()
@@ -407,7 +411,7 @@ def shape(hero):
          at(f"{UNIT}/FCJH_SkinName", "Bottom", UNIT, "Min", NAME_BAND + NAME_H - d),
          at(f"{UNIT}/FCJH_Level", "Top", UNIT, "Min", NAME_BAND + NAME_DROP - d),
          at(f"{UNIT}/HealthBar", "Top", UNIT, "Min", HP[0] - d),
-         at(f"{UNIT}/FCJH_Buffs", "Top", UNIT, "Min", BUFFS - d),
+         at(f"{UNIT}/FCJH_Buffs", "Top", UNIT, "Min", BUFFS if hero else BUFFS_SHORT),
          # no fountain: the buffs start the row
          at(f"{UNIT}/FCJH_Buffs", "Left", f"{UNIT}/FCJH_FountainReady", "Max", -BUFF_OVERLAP) if hero
          else at(f"{UNIT}/FCJH_Buffs", "Left", UNIT, "Min", M),
