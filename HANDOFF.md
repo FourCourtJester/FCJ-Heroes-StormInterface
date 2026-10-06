@@ -361,24 +361,17 @@ the plates' heroic-tooltip copies are built. Assembled from parts (a CleanTalent
 whose `HeroTalentsPanelContainer` we re-templated in our own declaration), the rows kept
 Blizzard's icon places and sizes (`inspect_card.talent_tips`).
 
-1. **Inspect card: DONE bar a last look (2026-10-05, evening QA rounds; 3d11ae9, 7332a10,
-   97fdd7a and the 90% build after).** Seen and approved in game: hero name centred in the
-   title band, player name and level (16, set 2 low in their band), team-coloured edge,
-   Blizzard's inspector art as the background (now permanent, at 90% so the game shows
-   through; its border under the contents - over them it muted the bars), one padding (`PAD`
-   10) everywhere measured inside the edge, the card cut to fit (583 units, 525 px; gen
-   refuses a layout.toml size that disagrees), the fountain as the first buff with its
-   countdown (the sensor's `CooldownLabel`, as Blizzard's console does) and Blizzard's
-   tooltip while it cools down, abilities spread across the card with the talent actives
-   nested over the gaps (Q/W first; rows 0.87 of the button spacing apart, a honeycomb -
-   "looks HOT"), talents spread across with visible empty-tier boxes (outlines pixel-exact:
-   `inspect_card.line`), stats in three related rows.
-   **Still to see:** the thin screen-wide lines and stray health/resource/stat tooltips -
-   Blizzard's own inspect box, held on screen by its drag constraint however it was parked
-   (in screenshots since 10-02). Its contents, and the unused pieces of our card's copy, are
-   now hidden every frame (`FCJH_Hidden`); check the lines are gone, with the card open and
-   shut. Also: the fountain art is a bit stretched (Blizzard's; left as is); line the card up
-   with the screen's left edge (the user's last item for it).
+1. **Inspect card: DONE (2026-10-05, evening QA rounds through f1496c6).** Seen and approved
+   in game: hero name centred in the title band, player name and level (16, set 2 low in their
+   band), team-coloured edge, Blizzard's inspector art as the background (permanent, 90%; its
+   border under the contents), one padding (`PAD` 10) everywhere inside the edge, the card cut
+   to fit (583 units, 525 px; gen refuses a layout.toml size that disagrees), the fountain as
+   the first buff with its countdown and tooltips ("Healing Fountain Available" while ready),
+   abilities spread across the card with the talent actives nested over the gaps (a honeycomb),
+   talents spread across with pixel-exact empty-tier boxes (`inspect_card.line`), stats in
+   three related rows, the Vikings' portrait on its own crop, no X (clicking off closes it),
+   mirror matches (a team sensor, `team_sense`), and no stray lines or tooltips (Blizzard's
+   inspect box contents hidden every frame, `FCJH_Hidden`). Left: placement (item 9).
 
    **All panels** (the info panes and the card, user 2026-10-05):
    - the flat black needs punching up: look at the default UI's panel backgrounds and title
@@ -480,6 +473,20 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
     recap can be pointed at a given player (the plates already know theirs), and it must not
     break click-to-follow on a living hero's plate. Keys in layout.toml beside the panes' (Control+Shift+1-4 are taken; Ahli's
     Control+1-8 and Control+C/E clash only if both are loaded).
+11. **A non-hero inspect card** (user, 2026-10-05) - for minions, mercenaries, bosses, map
+    objectives' units and buildings. The inspect card shows for any selected unit (it follows
+    Blizzard's inspect box), but everything on it after the bars is hero-shaped: a non-hero
+    gets no portrait, player, talents or abilities - empty space. Pieces to build it from:
+    - **hero or not:** a hero is a unit some plate holds - none of the ten player packs
+      matching (`matcher`) means not a hero; one flag from that switches the card's layout;
+    - **team:** the team sensor (`inspect_card.team_sense`, `CurrentRelation` TeamOrder /
+      TeamChaos - proved on mirror matches 2026-10-05) colours the edge blue or red; anything
+      else (a mercenary camp, a neutral boss) reads neither - a neutral colour. Show its readout
+      again to learn what mercs and bosses report;
+    - **contents:** Blizzard's inspect box already does non-heroes - its unit portrait
+      (`TargetPortraitFrame`, the masked unit picture), name, health/shields and stats
+      (armour, damage) - so a short card: name, unit portrait, bars, stats, buffs (a captured
+      camp's, a boss's), no talents or abilities, cut to fit like the hero card.
 
 How the heroic tooltips work: `tools/gen.py`, the comment above `HEROIC_TIPS`.
 
