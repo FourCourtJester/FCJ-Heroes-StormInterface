@@ -528,7 +528,16 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    alert for blue's capture and NECRO's for red's - only the Your/Enemy text is per viewer -
    so Raven sits on blue's side, Necro on red's. The town-capture pair (Allies / The Enemy
    captured <town>) is viewer-relative and names no team, player views only: both centred
-   just above the minimap. Alert art is 500 units from the frame's right edge (measured;
+   just above the minimap, but parked since: OUR observer town alerts stand in for them in
+   every view - "Blue / Red team captured a town", Blizzard's own alert art, on the capturing
+   team's side one slot up, from the observer-only "BroadcastToD<blue>v<red>" events the
+   script sends our plates' ObserverHeroOverviewPanel (blue's count up = blue took it).
+   Works (user, 2026-10-06), ~1 s late: the event comes with the new town's spawn.
+   **No free-view cannon alert is possible:** nothing an observer's UI receives marks an
+   altar capture (sounds, minimap tint, a voice line); the core bars come up once, at the
+   first hit, and stay; the launch behaviour rides the cannonball, not a core. Raven/Necro
+   (players-only) stay on the team's side for player views.
+   Alert art is 500 units from the frame's right edge (measured;
    gen.py MAP_ALERT_REACH). The towns' shot counts show at the minimap's bottom corners (their
    panel was clipped by the map's right-edge strip).
    **Lessons for every map:** (1) a map panel that's a right-edge strip clips anything we move
