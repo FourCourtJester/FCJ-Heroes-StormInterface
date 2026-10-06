@@ -314,13 +314,15 @@ def constants_layout(cfg):
         const(const_name, f"{TEXTURE_DIR}\\{file}")
 
     # Blizzard's kill rows are 600 wide, drawn from their left: killer at 27, victim ending at
-    # 210, more victims further right (KILL_ROW_FIVE). Place the rows so a pentakill's end on
-    # kill_feed's right edge, inside the screen's padding (until 2026-10-05 a single kill
-    # ended there, and a pentakill ran ~130 px off the screen).
+    # 210, more victims further right (KILL_ROW_FIVE). Place the rows so a single kill ends on
+    # kill_feed's right edge; a multi-kill's extra victims run on past it (a pentakill ~131 px,
+    # off the screen). Blizzard's rows grow rightward from their left and the engine places
+    # them, so they can't be right-aligned by victim count; fitting a pentakill left single
+    # kills 131 px short of the edge (tried 2026-10-05, user: put it back).
     (kx, _, kw, _), _ = rects(cfg)["kill_feed"]
     lines.append("")
-    lines.append("\t<!-- Kill feed rows' left edge: a pentakill's portraits end on kill_feed's right -->")
-    const(name("kill", "feed", "row", "l"), u(kx + kw) - KILL_ROW_FIVE)
+    lines.append("\t<!-- Kill feed rows' left edge: a single kill's portraits end on kill_feed's right -->")
+    const(name("kill", "feed", "row", "l"), u(kx + kw) - KILL_ROW_SINGLE)
 
     pane = cfg["info_pane"]
     lines.append("")

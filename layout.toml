@@ -115,8 +115,9 @@ kind = "ui"
 rect = [20, 20, 200, 24]     # hidden state: a slim tab where the panel's top was
 kind = "demand"
 [element.kill_feed]
-rect = [1360, 96, 540, 300]  # right edge 1900: where a pentakill's portraits end (tools/gen.py KILL_ROW_FIVE);
-                             # a single kill ends ~131 px short of it
+rect = [1360, 96, 540, 300]  # right edge 1900: where a single kill's portraits end (rows right-aligned);
+                             # a multi-kill's extra victims run on past it, off the screen for a
+                             # pentakill - Blizzard's rows can't be right-aligned (tools/gen.py)
 kind = "ui"
 [element.info_pane]
 rect = [20, 196, 494, 576]   # sized to the talents table: 23-unit margins either side of its
