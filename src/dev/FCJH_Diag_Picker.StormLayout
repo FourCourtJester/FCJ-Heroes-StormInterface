@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+	<!-- DIAGNOSTIC (dev builds only; remove when solved): what flicks up while Ctrl is held in a
+	     player's view (1 to lock to a hero, then hold Ctrl; user, 2026-10-06).
+	     LATCHES, top-centre: one square per suspect frame, shown the moment that frame is
+	     visible and left on. Control+Shift+Z clears them.
+	     MARKERS: magenta stuck inside Blizzard's talent picker, cyan inside its tabs/choices
+	     part (TalentTreePanel), drawn whatever their alpha - where they flash is where that
+	     frame is. No markers in a flick = a picker our overrides don't reach. -->
+	<Frame type="GameUI" name="GameUI" file="GameUI">
+		<Frame type="Frame" name="FCJH_DiagLatches">
+			<Anchor side="Top"  relative="$parent" pos="Min" offset="160"/>
+			<Anchor side="Left" relative="$parent" pos="Mid" offset="-640"/>
+			<Width val="686"/>
+			<Height val="45"/>
+			<RenderPriority val="999"/>
+			<AcceptsMouse val="false"/>
+			<Frame type="Image" name="FCJH_Seen0">
+				<Anchor side="Top"  relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+				<Width val="90"/>
+				<Height val="45"/>
+				<Texture val="@UI/PauseScreenDimImage"/>
+				<ColorAdjustMode val="Fill"/>
+				<AdjustmentColor val="255,255,0,255"/>
+				<Visible val="false"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Label" name="FCJH_DiagText">
+					<Anchor relative="$parent"/>
+					<Style val="ObsBar_MatchTimer"/>
+					<Text val="PANEL"/>
+					<IgnoreParentAlpha val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+			</Frame>
+			<Frame type="Image" name="FCJH_Seen1">
+				<Anchor side="Top"  relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Left" relative="$parent" pos="Min" offset="98"/>
+				<Width val="90"/>
+				<Height val="45"/>
+				<Texture val="@UI/PauseScreenDimImage"/>
+				<ColorAdjustMode val="Fill"/>
+				<AdjustmentColor val="255,0,255,255"/>
+				<Visible val="false"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Label" name="FCJH_DiagText">
+					<Anchor relative="$parent"/>
+					<Style val="ObsBar_MatchTimer"/>
+					<Text val="TREE"/>
+					<IgnoreParentAlpha val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+			</Frame>
+			<Frame type="Image" name="FCJH_Seen2">
+				<Anchor side="Top"  relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Left" relative="$parent" pos="Min" offset="196"/>
+				<Width val="90"/>
+				<Height val="45"/>
+				<Texture val="@UI/PauseScreenDimImage"/>
+				<ColorAdjustMode val="Fill"/>
+				<AdjustmentColor val="255,255,160,0"/>
+				<Visible val="false"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Label" name="FCJH_DiagText">
+					<Anchor relative="$parent"/>
+					<Style val="ObsBar_MatchTimer"/>
+					<Text val="TOGGLE"/>
+					<IgnoreParentAlpha val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+			</Frame>
+			<Frame type="Image" name="FCJH_Seen3">
+				<Anchor side="Top"  relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Left" relative="$parent" pos="Min" offset="294"/>
+				<Width val="90"/>
+				<Height val="45"/>
+				<Texture val="@UI/PauseScreenDimImage"/>
+				<ColorAdjustMode val="Fill"/>
+				<AdjustmentColor val="255,0,220,0"/>
+				<Visible val="false"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Label" name="FCJH_DiagText">
+					<Anchor relative="$parent"/>
+					<Style val="ObsBar_MatchTimer"/>
+					<Text val="INDIC"/>
+					<IgnoreParentAlpha val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+			</Frame>
+			<Frame type="Image" name="FCJH_Seen4">
+				<Anchor side="Top"  relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Left" relative="$parent" pos="Min" offset="392"/>
+				<Width val="90"/>
+				<Height val="45"/>
+				<Texture val="@UI/PauseScreenDimImage"/>
+				<ColorAdjustMode val="Fill"/>
+				<AdjustmentColor val="255,0,120,255"/>
+				<Visible val="false"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Label" name="FCJH_DiagText">
+					<Anchor relative="$parent"/>
+					<Style val="ObsBar_MatchTimer"/>
+					<Text val="INDCONT"/>
+					<IgnoreParentAlpha val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+			</Frame>
+			<Frame type="Image" name="FCJH_Seen5">
+				<Anchor side="Top"  relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Left" relative="$parent" pos="Min" offset="490"/>
+				<Width val="90"/>
+				<Height val="45"/>
+				<Texture val="@UI/PauseScreenDimImage"/>
+				<ColorAdjustMode val="Fill"/>
+				<AdjustmentColor val="255,255,255,0"/>
+				<Visible val="false"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Label" name="FCJH_DiagText">
+					<Anchor relative="$parent"/>
+					<Style val="ObsBar_MatchTimer"/>
+					<Text val="PAUSE"/>
+					<IgnoreParentAlpha val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+			</Frame>
+			<Frame type="Image" name="FCJH_Seen6">
+				<Anchor side="Top"  relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Left" relative="$parent" pos="Min" offset="588"/>
+				<Width val="90"/>
+				<Height val="45"/>
+				<Texture val="@UI/PauseScreenDimImage"/>
+				<ColorAdjustMode val="Fill"/>
+				<AdjustmentColor val="255,255,60,60"/>
+				<Visible val="false"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Label" name="FCJH_DiagText">
+					<Anchor relative="$parent"/>
+					<Style val="ObsBar_MatchTimer"/>
+					<Text val="PORTRAIT"/>
+					<IgnoreParentAlpha val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+			</Frame>
+			<StateGroup name="FCJH_Watch0">
+				<DefaultState val="Idle"/>
+				<State name="Seen"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/FloatingCombatUnitSelectionPanel/UnitStatusFrame0/HeroTalentTreeSelectionPanel" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_Seen0" Visible="true"/></State>
+				<State name="Idle"/>
+			</StateGroup>
+			<StateGroup name="FCJH_Watch1">
+				<DefaultState val="Idle"/>
+				<State name="Seen"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/FloatingCombatUnitSelectionPanel/UnitStatusFrame0/HeroTalentTreeSelectionPanel/TalentTreePanel" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_Seen1" Visible="true"/></State>
+				<State name="Idle"/>
+			</StateGroup>
+			<StateGroup name="FCJH_Watch2">
+				<DefaultState val="Idle"/>
+				<State name="Seen"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/HeroTalentTreeSelectionToggleButton" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_Seen2" Visible="true"/></State>
+				<State name="Idle"/>
+			</StateGroup>
+			<StateGroup name="FCJH_Watch3">
+				<DefaultState val="Idle"/>
+				<State name="Seen"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/HeroTalentTreeSelectionIndicator" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_Seen3" Visible="true"/></State>
+				<State name="Idle"/>
+			</StateGroup>
+			<StateGroup name="FCJH_Watch4">
+				<DefaultState val="Idle"/>
+				<State name="Seen"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/HeroTalentTreeSelectionIndicatorContainer" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_Seen4" Visible="true"/></State>
+				<State name="Idle"/>
+			</StateGroup>
+			<StateGroup name="FCJH_Watch5">
+				<DefaultState val="Idle"/>
+				<State name="Seen"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/TalentPauseNotificationContainer" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_Seen5" Visible="true"/></State>
+				<State name="Idle"/>
+			</StateGroup>
+			<StateGroup name="FCJH_Watch6">
+				<DefaultState val="Idle"/>
+				<State name="Seen"><When type="Property" frame="$ConsolePortraitPanelContainer/PortraitPanel" Visible="true"/><Action type="SetProperty" frame="$this/FCJH_Seen6" Visible="true"/></State>
+				<State name="Idle"/>
+			</StateGroup>
+			<Frame type="ToggleControl" name="FCJH_DiagReset">
+				<Anchor side="Top"  relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+				<Width val="1"/>
+				<Height val="1"/>
+				<Shortcut val="Control+Shift+Z"/>
+				<Visible val="false"/>
+				<AcceptsMouse val="false"/>
+				<Animation name="FCJH_Clear">
+					<Event event="OnShown" action="Reset,Play"/>
+					<Event event="OnHidden" action="Reset,Play"/>
+					<Controller type="Visibility" end="Stop" frame="$parent/FCJH_Seen0"><Key type="Bool" time="0" value="false"/></Controller>
+					<Controller type="Visibility" end="Stop" frame="$parent/FCJH_Seen1"><Key type="Bool" time="0" value="false"/></Controller>
+					<Controller type="Visibility" end="Stop" frame="$parent/FCJH_Seen2"><Key type="Bool" time="0" value="false"/></Controller>
+					<Controller type="Visibility" end="Stop" frame="$parent/FCJH_Seen3"><Key type="Bool" time="0" value="false"/></Controller>
+					<Controller type="Visibility" end="Stop" frame="$parent/FCJH_Seen4"><Key type="Bool" time="0" value="false"/></Controller>
+					<Controller type="Visibility" end="Stop" frame="$parent/FCJH_Seen5"><Key type="Bool" time="0" value="false"/></Controller>
+					<Controller type="Visibility" end="Stop" frame="$parent/FCJH_Seen6"><Key type="Bool" time="0" value="false"/></Controller>
+				</Animation>
+			</Frame>
+		</Frame>
+		<Frame type="Frame" name="UIContainer">
+			<Frame type="Frame" name="ConsoleUIContainer">
+				<Frame type="SelectionUnitStatusPanel" name="FloatingCombatUnitSelectionPanel">
+					<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+						<Frame type="HeroTalentTreeSelectionPanel" name="HeroTalentTreeSelectionPanel">
+							<Frame type="Image" name="FCJH_DiagPanelMark">
+								<Anchor side="Top"  relative="$parent" pos="Min" offset="0"/>
+								<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+								<Width val="120"/>
+								<Height val="120"/>
+								<Texture val="@UI/PauseScreenDimImage"/>
+								<ColorAdjustMode val="Fill"/>
+								<AdjustmentColor val="255,255,0,255"/>
+								<IgnoreParentAlpha val="true"/>
+								<Unclipped val="true"/>
+								<RenderPriority val="999"/>
+								<AcceptsMouse val="false"/>
+								<Frame type="Label" name="FCJH_DiagText">
+									<Anchor relative="$parent"/>
+									<Style val="ObsBar_MatchTimer"/>
+									<Text val="PANEL"/>
+									<IgnoreParentAlpha val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
+							</Frame>
+							<Frame type="HeroTalentTreePanel" name="TalentTreePanel">
+								<Frame type="Image" name="FCJH_DiagTreeMark">
+									<Anchor side="Top"  relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+									<Width val="120"/>
+									<Height val="120"/>
+									<Texture val="@UI/PauseScreenDimImage"/>
+									<ColorAdjustMode val="Fill"/>
+									<AdjustmentColor val="255,0,255,255"/>
+									<IgnoreParentAlpha val="true"/>
+									<Unclipped val="true"/>
+									<RenderPriority val="999"/>
+									<AcceptsMouse val="false"/>
+									<Frame type="Label" name="FCJH_DiagText">
+										<Anchor relative="$parent"/>
+										<Style val="ObsBar_MatchTimer"/>
+										<Text val="TREE"/>
+										<IgnoreParentAlpha val="true"/>
+										<AcceptsMouse val="false"/>
+									</Frame>
+								</Frame>
+							</Frame>
+						</Frame>
+					</Frame>
+				</Frame>
+			</Frame>
+		</Frame>
+	</Frame>
+</Desc>
