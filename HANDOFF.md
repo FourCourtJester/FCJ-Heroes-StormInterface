@@ -521,18 +521,21 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    (Cursed Hollow, Blackheart's Bay, Haunted Mines, Garden, Dragon Shire) live in core
    `MapMechanicPanelTemplate` instead. Per-team alerts (Towers' ally/enemy capture) are sent
    to each team's PLAYERS: an observer may see neither, and can't tell the team from them.
-   **Towers of Doom: DONE (user, 2026-10-06; player views still to check)** -
-   `FCJH_MapAlerts.StormLayout`. The three alerts an observer gets, either side of the map
-   at the rows' inner ends, on the XP bar, stepping up onto the core bar while it shows:
-   altar countdown and (above it) towers upgrading on red's side, tunnels opening on blue's -
-   kept balanced rather than pairing the two that fire together (user). Alert art is 500
-   units from the frame's right edge (measured; gen.py MAP_ALERT_REACH). The towns' shot
-   counts now show at the minimap's bottom corners (their panel was clipped by the map's
-   right-edge strip). Rest of the chain (capture, Raven, Necro) left on the right edge.
-   **Lesson for every map:** a map panel that's a right-edge strip clips anything we move
-   out of it, and anything placed against the minimap (ours is bottom-centre): Unclipped.
-   **Player views (1-8) to check:** capture alerts (sent to each team's players), red's
-   "LeftTeamRed" flip of the shot counts, our three alerts holding their places.
+   **Towers of Doom: DONE, player views too (user, 2026-10-06)** - `FCJH_MapAlerts.StormLayout`.
+   Either side of the map at the rows' inner ends, on the XP bar, stepping up onto the core
+   bar while it shows: altar countdown and (above it) towers upgrading on red's side, tunnels
+   opening on blue's (kept balanced, user). "Cannons are firing": the script shows RAVEN's
+   alert for blue's capture and NECRO's for red's - only the Your/Enemy text is per viewer -
+   so Raven sits on blue's side, Necro on red's. The town-capture pair (Allies / The Enemy
+   captured <town>) is viewer-relative and names no team, player views only: both centred
+   just above the minimap. Alert art is 500 units from the frame's right edge (measured;
+   gen.py MAP_ALERT_REACH). The towns' shot counts show at the minimap's bottom corners (their
+   panel was clipped by the map's right-edge strip).
+   **Lessons for every map:** (1) a map panel that's a right-edge strip clips anything we move
+   out of it, and anything placed against the minimap (ours is bottom-centre): Unclipped. (2)
+   Read the script for who each alert is sent to - an alert can look viewer-relative ("Your
+   cannons") and still be one frame per TEAM (Raven/Necro). (3) A player view (1-8) shows
+   alerts sent to that player's team; the free observer view doesn't.
 9. **Viewport padding** (user, 2026-10-05). One more size pass on our hero plates, to set
    the screen's base padding: the gap between the plates and the screen's edges becomes the
    margin for everything. Then the replay box (top-left), the inspect card and the info panes
