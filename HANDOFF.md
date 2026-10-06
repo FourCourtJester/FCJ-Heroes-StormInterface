@@ -387,7 +387,7 @@ tooltip hover after its move, the end of blue's narrowed bars (Blizzard's short-
 shaped for a heroic on the left), and whether the inspect card's fountain shows the same thin
 unmasked line the plate's did (its icon is drawn 45 in a 40 mask box). Open items, the
 user's pick of order: map objectives and the minimap per map (8; Towers of Doom done),
-anchoring (4), the art pass (7, 12). Camp timers (13) dropped. Item 14 collects what waits on replays with particular
+the art pass (7, 12). Anchoring (4) built 2026-10-06, to test in a non-16:9 window. Camp timers (13) dropped. Item 14 collects what waits on replays with particular
 heroes and maps.
 
 Confirmed in game by then: heroic tooltips on every plate (Varian's level-4 heroic, Tracer's
@@ -458,11 +458,27 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
      card of its own found - likely the same unit); Abathur's clone (likely a copy of the
      cloned hero's unit, so it would match that hero's player - unchecked); Samuro's images
      and Jaina's elemental (summons: the short card).
-4. **Anchoring pass**: everything we place is anchored to the screen's LEFT edge with fixed
-   offsets (layout.toml is 1080p px), so a window that isn't 16:9 shifts Blizzard's centred
-   pieces against ours - the hexagon left its backplate in a 2558 x 1401 window (2026-10-03;
-   any 16:9 size is fine: the UI scales with height, 1200 units tall). Anchor each element to
-   its nearest edge or the centre (Min / Mid / Max), as Blizzard does.
+4. **Anchoring pass - BUILT 2026-10-06, awaiting a non-16:9 test.** Until then everything we
+   placed was anchored to the screen's top-left with 1080p offsets, so a window that isn't
+   16:9 shifted Blizzard's centred pieces against ours (the hexagon left its backplate in a
+   2558 x 1401 window, 2026-10-03). The game is always 1200 units tall; the width follows the
+   window. Now, as Ahli and Spazzo do (and the user's previous UI: top-middle and
+   bottom-middle), big pieces anchor to the screen and what sits on them to the piece
+   (`gen.py ANCHORS`; the constants are offsets from each rect's anchor):
+   - **top-centre**: our backplate (Blizzard's hexagon is centred); the team levels hang off
+     the backplate, the advantage flames off the levels;
+   - **bottom-centre**: the minimap and two bare row frames (`FCJH_BlueRow` / `FCJH_RedRow`,
+     each spanning its five cells). Off the rows: the cells, XP and core bars, the row packer,
+     the map alerts, the heroic tooltip rows' top, and the inspect card (in line with blue's
+     row, user);
+   - **left edge**: the info panes, [screen] padding in (user: they line up with the card at
+     1080p); **right edge, middle**: the replay box and its tab; top right: the dev stamp.
+   At 16:9 nothing moved (gen's `check_anchoring`, and every anchor in the XML resolved before
+   and after: none off by a unit). Wider, the centred pieces stay together round the middle,
+   the panes and replay box keep to their edges. Narrower than 16:9 isn't supported (the rows
+   are sized to fill 16:9; they'd run off a 16:10 screen). To check in a non-16:9 window: the
+   hexagon on its backplate, the rows round the minimap, the card on blue's row, plate clicks
+   and heroic tooltips still working. The user expects to iterate on how it feels.
 5. **Study Ahli's other panels** (user watched a broadcast on his UI, 2026-10-03) - not to
    replace ours, but for implementation tricks and visuals:
    - his custom inspect (`_BottomLeft`) and his custom panes - talents, XP and the rest

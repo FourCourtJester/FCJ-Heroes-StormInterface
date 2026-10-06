@@ -34,9 +34,9 @@
 						     1080p and centred on Blizzard's hexagon, which sits on top of it (600). -->
 						<Frame type="Image" name="FCJH_TopBackplate">
 							<Anchor side="Top" relative="$GameUI" pos="Min" offset="#FCJH_TOP_BACKPLATE_T"/>
-							<Anchor side="Left" relative="$GameUI" pos="Min" offset="#FCJH_TOP_BACKPLATE_L"/>
+							<Anchor side="Left" relative="$GameUI" pos="Mid" offset="#FCJH_TOP_BACKPLATE_L"/>
 							<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_TOP_BACKPLATE_B"/>
-							<Anchor side="Right" relative="$GameUI" pos="Min" offset="#FCJH_TOP_BACKPLATE_R"/>
+							<Anchor side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_TOP_BACKPLATE_R"/>
 							<Texture val="#FCJH_TOP_BACKPLATE"/>
 							<RenderPriority val="490"/>
 							<Unclipped val="true"/>
@@ -69,10 +69,10 @@
 						</Frame>
 						<Frame type="Label" name="Team1LevelLabel">
 							<RenderPriority val="500"/>
-							<Anchor side="Top" relative="$GameUI" pos="Min" offset="#FCJH_BLUE_LEVEL_T"/>
-							<Anchor side="Left" relative="$GameUI" pos="Min" offset="#FCJH_BLUE_LEVEL_L"/>
-							<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_BLUE_LEVEL_B"/>
-							<Anchor side="Right" relative="$GameUI" pos="Min" offset="#FCJH_BLUE_LEVEL_R"/>
+							<Anchor side="Top" relative="$parent/FCJH_TopBackplate" pos="Min" offset="#FCJH_BLUE_LEVEL_T"/>
+							<Anchor side="Left" relative="$parent/FCJH_TopBackplate" pos="Min" offset="#FCJH_BLUE_LEVEL_L"/>
+							<Anchor side="Bottom" relative="$parent/FCJH_TopBackplate" pos="Min" offset="#FCJH_BLUE_LEVEL_B"/>
+							<Anchor side="Right" relative="$parent/FCJH_TopBackplate" pos="Min" offset="#FCJH_BLUE_LEVEL_R"/>
 							<Width val="0"/>
 							<Unclipped val="true"/>
 						</Frame>
@@ -103,10 +103,10 @@
 						</Frame>
 						<Frame type="Label" name="Team2LevelLabel">
 							<RenderPriority val="500"/>
-							<Anchor side="Top" relative="$GameUI" pos="Min" offset="#FCJH_RED_LEVEL_T"/>
-							<Anchor side="Left" relative="$GameUI" pos="Min" offset="#FCJH_RED_LEVEL_L"/>
-							<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_RED_LEVEL_B"/>
-							<Anchor side="Right" relative="$GameUI" pos="Min" offset="#FCJH_RED_LEVEL_R"/>
+							<Anchor side="Top" relative="$parent/FCJH_TopBackplate" pos="Min" offset="#FCJH_RED_LEVEL_T"/>
+							<Anchor side="Left" relative="$parent/FCJH_TopBackplate" pos="Min" offset="#FCJH_RED_LEVEL_L"/>
+							<Anchor side="Bottom" relative="$parent/FCJH_TopBackplate" pos="Min" offset="#FCJH_RED_LEVEL_B"/>
+							<Anchor side="Right" relative="$parent/FCJH_TopBackplate" pos="Min" offset="#FCJH_RED_LEVEL_R"/>
 							<Width val="0"/>
 							<Unclipped val="true"/>
 						</Frame>
@@ -115,30 +115,30 @@
 						<Frame type="Image" name="Team1XPUnitStatusFrameBgImage"><Alpha val="0"/></Frame>
 						<Frame type="Image" name="Team2XPUnitStatusFrameBgImage"><Alpha val="0"/></Frame>
 						<Frame type="Image" name="FCJH_BlueXPTrack">
-							<Anchor side="Top"    relative="$GameUI" pos="Min" offset="#FCJH_BLUE_XP_T"/>
-							<Anchor side="Left"   relative="$GameUI" pos="Min" offset="#FCJH_BLUE_XP_L"/>
-							<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_BLUE_XP_B"/>
-							<Anchor side="Right"  relative="$GameUI" pos="Min" offset="#FCJH_BLUE_XP_R"/>
+							<Anchor side="Top"    relative="$GameUI/FCJH_BlueRow" pos="Min" offset="#FCJH_BLUE_XP_T"/>
+							<Anchor side="Left"   relative="$GameUI/FCJH_BlueRow" pos="Min" offset="#FCJH_BLUE_XP_L"/>
+							<Anchor side="Bottom" relative="$GameUI/FCJH_BlueRow" pos="Min" offset="#FCJH_BLUE_XP_B"/>
+							<Anchor side="Right"  relative="$GameUI/FCJH_BlueRow" pos="Min" offset="#FCJH_BLUE_XP_R"/>
 							<Texture val="#FCJH_XP_TRACK_BLUE"/>
 							<RenderPriority val="100"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
 						</Frame>
 						<Frame type="Image" name="FCJH_RedXPTrack">
-							<Anchor side="Top"    relative="$GameUI" pos="Min" offset="#FCJH_RED_XP_T"/>
-							<Anchor side="Left"   relative="$GameUI" pos="Min" offset="#FCJH_RED_XP_L"/>
-							<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_RED_XP_B"/>
-							<Anchor side="Right"  relative="$GameUI" pos="Min" offset="#FCJH_RED_XP_R"/>
+							<Anchor side="Top"    relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_RED_XP_T"/>
+							<Anchor side="Left"   relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_RED_XP_L"/>
+							<Anchor side="Bottom" relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_RED_XP_B"/>
+							<Anchor side="Right"  relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_RED_XP_R"/>
 							<Texture val="#FCJH_XP_TRACK_RED"/>
 							<RenderPriority val="100"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
 						</Frame>
 						<Frame type="TeamVeterancyUnitStatusFrame" name="Team1XPUnitStatusFrame">
-							<Anchor side="Top"    relative="$GameUI" pos="Min" offset="#FCJH_BLUE_XP_T"/>
-							<Anchor side="Left"   relative="$GameUI" pos="Min" offset="#FCJH_BLUE_XP_L"/>
-							<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_BLUE_XP_B"/>
-							<Anchor side="Right"  relative="$GameUI" pos="Min" offset="#FCJH_BLUE_XP_R"/>
+							<Anchor side="Top"    relative="$GameUI/FCJH_BlueRow" pos="Min" offset="#FCJH_BLUE_XP_T"/>
+							<Anchor side="Left"   relative="$GameUI/FCJH_BlueRow" pos="Min" offset="#FCJH_BLUE_XP_L"/>
+							<Anchor side="Bottom" relative="$GameUI/FCJH_BlueRow" pos="Min" offset="#FCJH_BLUE_XP_B"/>
+							<Anchor side="Right"  relative="$GameUI/FCJH_BlueRow" pos="Min" offset="#FCJH_BLUE_XP_R"/>
 							<Width val="0"/>
 							<Height val="0"/>
 							<Unclipped val="true"/>
@@ -156,10 +156,10 @@
 							</Frame>
 						</Frame>
 						<Frame type="TeamVeterancyUnitStatusFrame" name="Team2XPUnitStatusFrame">
-							<Anchor side="Top"    relative="$GameUI" pos="Min" offset="#FCJH_RED_XP_T"/>
-							<Anchor side="Left"   relative="$GameUI" pos="Min" offset="#FCJH_RED_XP_L"/>
-							<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_RED_XP_B"/>
-							<Anchor side="Right"  relative="$GameUI" pos="Min" offset="#FCJH_RED_XP_R"/>
+							<Anchor side="Top"    relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_RED_XP_T"/>
+							<Anchor side="Left"   relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_RED_XP_L"/>
+							<Anchor side="Bottom" relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_RED_XP_B"/>
+							<Anchor side="Right"  relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_RED_XP_R"/>
 							<Width val="0"/>
 							<Height val="0"/>
 							<Unclipped val="true"/>
@@ -183,8 +183,8 @@
 						     fill swapped for plain team colour (untiled, untinted), all cut to the
 						     slant by FCJH_CoreMask. -->
 						<Frame type="UnitStatusFrame" name="Team1CoreUnitStatus">
-							<Anchor side="Top"   relative="$GameUI" pos="Min" offset="#FCJH_BLUE_CORE_FRAME_T"/>
-							<Anchor side="Right" relative="$GameUI" pos="Min" offset="#FCJH_BLUE_CORE_FRAME_R"/>
+							<Anchor side="Top"   relative="$GameUI/FCJH_BlueRow" pos="Min" offset="#FCJH_BLUE_CORE_FRAME_T"/>
+							<Anchor side="Right" relative="$GameUI/FCJH_BlueRow" pos="Min" offset="#FCJH_BLUE_CORE_FRAME_R"/>
 							<Unclipped val="true"/>
 							<Frame type="UnitStatusElement" name="HealthBarBackingBlue">
 								<Frame type="Image" name="Image"><Alpha val="0"/></Frame>
@@ -210,8 +210,8 @@
 							</Frame>
 						</Frame>
 						<Frame type="UnitStatusFrame" name="Team2CoreUnitStatus">
-							<Anchor side="Top"  relative="$GameUI" pos="Min" offset="#FCJH_RED_CORE_FRAME_T"/>
-							<Anchor side="Left" relative="$GameUI" pos="Min" offset="#FCJH_RED_CORE_FRAME_L"/>
+							<Anchor side="Top"  relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_RED_CORE_FRAME_T"/>
+							<Anchor side="Left" relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_RED_CORE_FRAME_L"/>
 							<Unclipped val="true"/>
 							<Frame type="UnitStatusElement" name="HealthBarBackingRed">
 								<Frame type="Image" name="ImageUnmirrored"><Alpha val="0"/></Frame>

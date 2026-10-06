@@ -3,6 +3,9 @@
 # Units are SCREEN PIXELS at the locked 1920 x 1080, straight off the agreed wireframe
 # (https://claude.ai/artifact/6MmAcxcKjfAAprCN3oc3ZK). tools/gen.py converts them to
 # layout units (the game lays out on a 1200-tall grid, so 1 unit = 0.9 px at 1080p).
+# Every rect is anchored to the top-centre, bottom-centre or an edge of the screen, or to the
+# piece it sits on (tools/gen.py ANCHORS), so a window that isn't 16:9 keeps it in place
+# relative to that point; the numbers here are where things land at 1920 x 1080.
 #
 # Change a number, run `python tools/pack.py --wait`, leave and reopen the replay.
 

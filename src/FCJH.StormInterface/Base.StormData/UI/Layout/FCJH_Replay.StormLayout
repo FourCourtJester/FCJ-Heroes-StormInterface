@@ -16,8 +16,8 @@
 			<Frame type="Frame" name="FullscreenUpperContainer">
 				<Frame type="MovingFrame" name="ObserverPanelMovingContainer">
 					<Frame type="ReplayPanel" name="ReplayPanel">
-						<Anchor side="Top"   relative="$GameUI" pos="Min" offset="#FCJH_REPLAY_T"/>
-						<Anchor side="Left"  relative="$GameUI" pos="Min" offset="#FCJH_REPLAY_L"/>
+						<Anchor side="Top"   relative="$GameUI" pos="Mid" offset="#FCJH_REPLAY_T"/>
+						<Anchor side="Left"  relative="$GameUI" pos="Max" offset="#FCJH_REPLAY_L"/>
 						<Anchor side="Right" relative="$this"   pos="Min" offset="0"/>
 						<Unclipped val="true"/>
 					</Frame>
@@ -26,10 +26,10 @@
 		</Frame>
 
 		<Frame type="Frame" name="FCJH_ReplayTab">
-			<Anchor side="Top"    relative="$parent" pos="Min" offset="#FCJH_REPLAY_COLLAPSED_T"/>
-			<Anchor side="Left"   relative="$parent" pos="Min" offset="#FCJH_REPLAY_COLLAPSED_L"/>
-			<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_REPLAY_COLLAPSED_B"/>
-			<Anchor side="Right"  relative="$parent" pos="Min" offset="#FCJH_REPLAY_COLLAPSED_R"/>
+			<Anchor side="Top"    relative="$parent" pos="Mid" offset="#FCJH_REPLAY_COLLAPSED_T"/>
+			<Anchor side="Left"   relative="$parent" pos="Max" offset="#FCJH_REPLAY_COLLAPSED_L"/>
+			<Anchor side="Bottom" relative="$parent" pos="Mid" offset="#FCJH_REPLAY_COLLAPSED_B"/>
+			<Anchor side="Right"  relative="$parent" pos="Max" offset="#FCJH_REPLAY_COLLAPSED_R"/>
 			<AcceptsMouse val="false"/>
 			<Frame type="Image" name="FCJH_TabBack">
 				<Anchor relative="$parent"/>
