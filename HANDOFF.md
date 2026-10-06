@@ -41,9 +41,14 @@ drawn by OBS over empty regions the interface leaves (§6).
   the screen's 20 px padding (`[hero_row] scale = "fit"`, 1.5561): portrait, health,
   resource bar in Blizzard's per-hero colours, CC text and icon, death timers (per-Viking
   ones in each third), Viking bars in thirds, Rexxar's bar full height (Misha's hidden),
-  fountain-ready marker, Abathur clone marker, and Blizzard's in-game heroic panel (icon,
-  frame, ready glow, cooldown count and dim; Tracer's Pulse Bomb charge instead of a
-  cooldown), with the heroic's **tooltip** on hover. Clicking a plate selects the hero and
+  the **fountain** (the inspect card's: Blizzard's buff slot leaning with the plate, dark
+  purple backdrop, bright when ready, dimmed with its countdown on cooldown; on the health
+  bar's black outline at the plate's OUTER end - blue left, red right; `fountain_rect`),
+  Abathur clone marker, and Blizzard's in-game heroic panel at the plate's INNER end (blue
+  bottom right - the mirror of Blizzard's red - red bottom left; bars narrow from its side;
+  icon, frame, ready glow, cooldown count and dim; Tracer's Pulse Bomb charge instead of a
+  cooldown), with the heroic's **tooltip** on hover. Settled with the user 2026-10-06 over
+  seven rounds of screenshots (the canvas plate board draws it from gen.py). Clicking a plate selects the hero and
   follows it (with the game's camera lock, **L**, on).
 - **Team XP** along each row's top edge and **core HP** above it, cut to the slant; hidden
   until a team's first hero loads; rows pack toward the minimap with fewer than five heroes
@@ -375,7 +380,12 @@ talent picker, left to the game: seen 2026-10-06 never coming up on its own in a
 view, only on held Ctrl.) Done this session: panes in Blizzard's talent
 grid and the inspect skin, hotkeys settled (our panes on Ctrl+1-4; the inspect and death
 recap keys tried and dropped), the short card for non-heroes (camp mercenaries purple,
-captured ones their team's), hero forms and empty ability slots (item 3). Open items, the
+captured ones their team's), hero forms and empty ability slots (item 3), Towers of Doom's
+alerts (item 8), and (2026-10-06) the plate fountain on the health bar's outline at the outer
+end with blue's heroic mirrored to the inner end (§1). Unchecked from that: blue's heroic
+tooltip hover after its move, the end of blue's narrowed bars (Blizzard's short-bar art is
+shaped for a heroic on the left), and whether the inspect card's fountain shows the same thin
+unmasked line the plate's did (its icon is drawn 45 in a 40 mask box). Open items, the
 user's pick of order: map objectives and the minimap per map (8; Towers of Doom done),
 anchoring (4), the art pass (7, 12). Camp timers (13) dropped. Item 14 collects what waits on replays with particular
 heroes and maps.
@@ -609,7 +619,7 @@ How the heroic tooltips work: `tools/gen.py`, the comment above `HEROIC_TIPS`.
 - map objectives: item 8 above
 - the visual pass: the chrome backplate look to the plates, XP/core bars (a mid-height bevel,
   like the player view's core bar; the default UI's core bars: `design/ref_default_core_hp.png`)
-  and the info panes (zebra rows, Heroes palette); fountain markers re-angled to the plate
+  and the info panes (zebra rows, Heroes palette)
 - wireframes for the nameplates / XP / core HP: the canvas now draws the build as it is
   (2026-09-30); the art pass designs over those boards
 - the OBS package (names, logos, scores, bans, bracket, game count)
