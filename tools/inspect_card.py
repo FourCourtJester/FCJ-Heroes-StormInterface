@@ -346,7 +346,7 @@ def blizzard_skin():
             + img("FCJH_SkinName", NAME_BAND, NAME_BAND + NAME_H, tint(SKIN_BAND), 241, SKIN_INSET))
 
 
-def pane_skin(title_h, indent=1):
+def pane_skin(title_h, indent=1, name_="FCJH_PaneSkin", shade=True, anchors=""):
     """The card's look as a template (FCJH_PaneSkin) for every info pane: once Blizzard's own
     pane backdrops were tried and scrapped, the panes take the card's style (user, 2026-10-05).
     The same layers as blizzard_skin - background, border, title band and its line - filling
@@ -363,10 +363,14 @@ def pane_skin(title_h, indent=1):
                 f'{extra}{u}<RenderPriority val="{prio}"/>\n{u}<AcceptsMouse val="false"/>\n{t}\t</Frame>\n')
     nine = lambda tex: f'{u}<Texture val="@UI/{tex}"/>\n{u}<TextureType val="Nineslice"/>\n'
     tint = lambda colour: f'{u}<Color val="{colour}"/>\n{u}<Alpha val="76"/>\n'
+    # DIAGNOSTIC (2026-10-05): on the panes the background didn't draw (the border and title
+    # band did). `shade` and `anchors` (a frame of its own instead of a template) let each
+    # pane try one combination (gen.py PANE_SKIN_DIAG)
+    shade_xml = f'{u}<Color val="{SKIN_SHADE}"/>\n' if shade else ""
     return (f'{t}<!-- the info panes\' look: the inspect card\'s (tools/inspect_card.py pane_skin) -->\n'
-            f'{t}<Frame type="Frame" name="FCJH_PaneSkin">\n{t}\t<AcceptsMouse val="false"/>\n'
+            f'{t}<Frame type="Frame" name="{name_}">\n{anchors}{t}\t<AcceptsMouse val="false"/>\n'
             + img("FCJH_SkinBack", ("$parent", "Max", 0),
-                  nine(SKIN_BACK) + f'{u}<Alpha val="{SKIN_ALPHA}"/>\n{u}<Color val="{SKIN_SHADE}"/>\n', 400, 0)
+                  nine(SKIN_BACK) + f'{u}<Alpha val="{SKIN_ALPHA}"/>\n' + shade_xml, 400, 0)
             + img("FCJH_SkinBorder", ("$parent", "Max", -SKIN_INSET), nine(SKIN_BORDER), 405, SKIN_INSET)
             + img("FCJH_SkinTitle", ("$parent", "Min", f"#{title_h}"), tint(SKIN_BAND), 410, SKIN_INSET)
             + img("FCJH_SkinTitleLine", ("$parent/FCJH_SkinTitle", "Max", 0), tint(SKIN_LINE), 412, 0,
