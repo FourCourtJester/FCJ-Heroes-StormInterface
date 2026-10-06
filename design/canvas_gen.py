@@ -226,8 +226,9 @@ def plate(team, x0, y0, z, st, uid):
 
 
 def fountain_slot(team, r, k, z, state):
-    """The fountain (gen.HeroCell.fountain_*): Blizzard's fountain token, leaning with the
-    plate. state: "ready", or "cd<seconds>" (dimmed and greyed, the count on top)."""
+    """The plate fountain (gen.fountain_rect): Blizzard's buff slot, leaning with the plate,
+    on its dark purple backdrop. state: "ready", or "cd<seconds>" (the art dimmed, the frame
+    still lit, the count on top)."""
     f = FG[team][1] * k                       # px per slot unit
     ax, ay, aw, ah = gen.SLOT_ART
     l, t = r[0] + ax * f, r[1] + ay * f      # the slot art's visible part
@@ -247,7 +248,7 @@ def fountain_slot(team, r, k, z, state):
     if not dim:
         out.append(f'<polygon points="{shape}" fill="none" stroke="#9FE0FF" stroke-opacity=".5" stroke-width="{round(3.5 * z, 1)}"></polygon>')
     else:
-        out.append(text(cx, cy, state[2:], 15 * k))
+        out.append(text(cx, cy, state[2:], 14 * k))      # FCJH_FountainCooldown
     return "".join(out)
 
 

@@ -847,6 +847,8 @@ def heroic_icon_rect(cfg, team):
     h = HeroCell(cfg).h
     pl, il = HEROIC_PANEL[team]
     return s(pl + il), h - s(38), s(pl + il + 38), h
+
+
 # While it shows, Blizzard narrows the bars from the left (right edge fixed): health 97 -> 69,
 # energy 95 -> 67 (UpdateHealthBarWidths). Ours narrow from the heroic's side: blue's from the
 # right, red's from the left.
@@ -854,12 +856,17 @@ NARROW = 28
 # The heroic's icon (and its mask) pulled in on every side, cell units: at Blizzard's size the art
 # showed past the gold frame's top-left corner (Tracer's Pulse Bomb: user, 2026-10-06 13:25)
 ULT_ICON_INSET = 2
+HEROIC_ART = {"blue": ("HUD_TopBar_Team_HeroFrame_Ult_Bg", "HUD_TopBar_Team_HeroFrame_Ult", False,
+                       "HUD_TopBar_Team_HeroFrame_Ult_ProgressFill"),
+              "red": ("HUD_TopBar_Team_HeroFrame_Ult_Bg_Right", "HUD_TopBar_Team_HeroFrame_Ult_Enemy", True,
+                      "HUD_TopBar_Team_HeroFrame_Ult_ProgressFill_Right")}
 
 # The fountain on the plate (user, 2026-10-06, drawn on the canvas first): the inspect card's
-# fountain - Blizzard's buff slot (58 x 34, the icon in its slanted mask), bright when ready,
-# dimmed with its countdown on cooldown. Blizzard's slot leans / (as the red plates); blue's is
-# mirrored. It stands on the health bar's top edge at the plate's OUTER end (blue left, red
-# right), its slanted side against the plate's edge - the heroics are at the inner ends.
+# fountain - Blizzard's buff slot (58 x 34, the icon in its slanted mask) on a dark purple
+# backdrop, bright when ready; on cooldown the art dims under its countdown, the frame stays lit.
+# Blizzard's slot leans / (as the red plates); blue's is mirrored. It stands on the health bar's
+# black outline at the plate's OUTER end (blue left, red right), its slanted side against the
+# plate's edge - the heroics are at the inner ends.
 # (Tried and dropped, 2026-10-06: Blizzard's fountain token - drawn near-upright, it leaned with
 # neither plate; on the bar's heroic end, moving north onto the heroic when it came - the two
 # slants never quite met.)
@@ -901,17 +908,11 @@ def fountain_rect(cfg, team):
     return (round(left - ax), round(top - ay), round(left - ax + SLOT_W * f), round(top - ay + SLOT_H * f)), f
 
 
-HEROIC_ART = {"blue": ("HUD_TopBar_Team_HeroFrame_Ult_Bg", "HUD_TopBar_Team_HeroFrame_Ult", False,
-                       "HUD_TopBar_Team_HeroFrame_Ult_ProgressFill"),
-              "red": ("HUD_TopBar_Team_HeroFrame_Ult_Bg_Right", "HUD_TopBar_Team_HeroFrame_Ult_Enemy", True,
-                      "HUD_TopBar_Team_HeroFrame_Ult_ProgressFill_Right")}
-
-
 def heroic_panel(cfg, team_frame, i):
     """Per cell: Blizzard's own heroic panel, mirrored from the hidden in-game top bar's cell
     (the engine keeps that bar current for observers - the per-Viking timers proved it):
     its icon ("?" until picked), gold frame, ready glow, cooldown count and charge fill, and
-    the dim-and-grey on cooldown. While it shows, the bars narrow as Blizzard's do.
+    the dim-and-grey on cooldown. While it shows, the bars narrow from its side.
     Replaces the talent-row heroic token probe (user, 2026-09-29: "that layout is what I
     want" - design/ref_ingame_topbar_*.png)."""
     blue = team_frame == "Team1HeroOverview"
@@ -1382,9 +1383,8 @@ def hero_cell_template(team, c, cfg):
 				<ColorStyle val="StandardEnergy" index="0"/>
 				<Unclipped val="true"/>
 			</Frame>"""
-    health_rect = g["health"]
     health = f"""
-		<Frame type="UnitStatusFrame" name="HeroStatus">{_anchors(health_rect, "$parent", chr(9) * 3)}
+		<Frame type="UnitStatusFrame" name="HeroStatus">{_anchors(g["health"], "$parent", chr(9) * 3)}
 			<Width val="0"/>
 			<Height val="0"/>
 			<RenderPriority val="510"/>
@@ -1392,7 +1392,7 @@ def hero_cell_template(team, c, cfg):
 			<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">
 				<Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm{suffix}"/>
 				<Tiled val="true"/>
-			</Frame>{trackers(team, health_rect)}{health_backing}{mana_backing}{energy}"""
+			</Frame>{trackers(team, g["health"])}{health_backing}{mana_backing}{energy}"""
     if blue:  # red inherits these unchanged
         cc_top, cc_bottom = c.cc_band
         health += f"""
