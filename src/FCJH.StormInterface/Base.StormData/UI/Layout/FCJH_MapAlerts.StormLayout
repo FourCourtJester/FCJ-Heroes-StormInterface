@@ -20,6 +20,9 @@
 		<Frame type="Frame" name="AltarSpawnNotificationFrame">
 			<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_RED_B"/>
 			<Anchor side="Right"  relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_RED_R"/>
+			<!-- the panel is a 600-unit strip on the screen's right edge and clips its children:
+			     only the alert's right end showed (user, 2026-10-06) -->
+			<Unclipped val="true"/>
 			<StateGroup name="FCJH_OverCore">
 				<DefaultState val="OnXP"/>
 				<State name="OnCore">
