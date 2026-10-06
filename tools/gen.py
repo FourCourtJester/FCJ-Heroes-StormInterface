@@ -6,7 +6,7 @@ Committed output (written into src/, reviewed like any other file):
   DescIndex.StormLayout        every layout in the folder, constants first
 
 Dev-only output (staged at pack time, never committed, never shipped):
-  FCJH_Dev.StormLayout         build stamp + in-game wireframe overlay
+  FCJH_Dev.StormLayout         build stamp
 
 Layout units: the game lays its UI out on a grid ui_reference_height units tall, so at
 1080p one unit is 0.9 px. layout.toml holds screen pixels; everything here converts.
@@ -52,11 +52,6 @@ MINIMAP_PANEL_W = 468
 KILL_ROW_SINGLE = 210    # layout units: where a single kill's victim portrait ends
 CC_TEXT_OVERHANG = 20    # layout units the CC text's box reaches above and below the health bar
 
-KIND_COLORS = {  # A,R,G,B without the alpha, which comes from [dev] overlay_alpha
-    "ui": "250,249,245",
-    "obs": "242,166,90",
-    "demand": "111,211,211",
-}
 
 
 def load_config(path=CONFIG):
@@ -2437,63 +2432,9 @@ def write(cfg, source=SOURCE):
 
 # ------------------------------------------------------------------ dev-only files
 
-def art_board(hotkey, textures):
-    """DIAGNOSTIC (2026-10-05): Blizzard textures we can't open outside the game, each at its
-    native size on a grey board (so transparency shows), outlined in magenta with its name
-    above, stacked down the screen. Hidden until its hotkey; a screenshot gives each one's
-    size and look. Remove once the panes' art pass is settled."""
-    def line(n, top, left, bottom, right, ind):
-        t = "\t" * ind
-        return [f'{t}<Frame type="Image" name="{n}">',
-                f'{t}\t<Anchor side="Top" relative="$parent/{top[0]}" pos="{top[1]}" offset="{top[2]}"/>',
-                f'{t}\t<Anchor side="Left" relative="$parent/{left[0]}" pos="{left[1]}" offset="{left[2]}"/>',
-                f'{t}\t<Anchor side="Bottom" relative="$parent/{bottom[0]}" pos="{bottom[1]}" offset="{bottom[2]}"/>',
-                f'{t}\t<Anchor side="Right" relative="$parent/{right[0]}" pos="{right[1]}" offset="{right[2]}"/>',
-                f'{t}\t<Texture val="@UI/PauseScreenDimImage"/>', f'{t}\t<ColorAdjustMode val="Fill"/>',
-                f'{t}\t<AdjustmentColor val="255,255,0,255"/>', f'{t}\t<RenderPriority val="960"/>',
-                f'{t}\t<AcceptsMouse val="false"/>', f'{t}</Frame>']
-    out = ['\t\t<Frame type="Frame" name="FCJH_DevArtBoard">', '\t\t\t<Anchor relative="$parent"/>',
-           '\t\t\t<Alpha val="0"/>', '\t\t\t<AcceptsMouse val="false"/>',
-           '\t\t\t<Frame type="Image" name="Board">', '\t\t\t\t<Anchor relative="$parent"/>',
-           '\t\t\t\t<Texture val="@UI/PauseScreenDimImage"/>', '\t\t\t\t<ColorAdjustMode val="Fill"/>',
-           '\t\t\t\t<AdjustmentColor val="255,70,70,78"/>', '\t\t\t\t<RenderPriority val="940"/>',
-           '\t\t\t\t<AcceptsMouse val="false"/>', '\t\t\t</Frame>']
-    prev = None
-    for i, tex in enumerate(textures):
-        name, img = f"Name{i}", f"Art{i}"
-        top = (f'relative="$parent/{prev}" pos="Max" offset="24"' if prev else 'relative="$parent" pos="Min" offset="16"')
-        out += [f'\t\t\t<Frame type="Label" name="{name}">', f'\t\t\t\t<Anchor side="Top" {top}/>',
-                '\t\t\t\t<Anchor side="Left" relative="$parent" pos="Min" offset="24"/>',
-                '\t\t\t\t<Style val="WaitingForPlayersDialogChat"/>', f'\t\t\t\t<Text val="{tex}"/>',
-                '\t\t\t\t<Options val="NoWrapping"/>', '\t\t\t\t<RenderPriority val="960"/>',
-                '\t\t\t\t<AcceptsMouse val="false"/>', '\t\t\t</Frame>',
-                f'\t\t\t<Frame type="Image" name="{img}">',
-                f'\t\t\t\t<Anchor side="Top" relative="$parent/{name}" pos="Max" offset="6"/>',
-                '\t\t\t\t<Anchor side="Left" relative="$parent" pos="Min" offset="24"/>',
-                f'\t\t\t\t<Texture val="@UI/{tex}"/>', '\t\t\t\t<RenderPriority val="950"/>',
-                '\t\t\t\t<AcceptsMouse val="false"/>', '\t\t\t</Frame>']
-        out += line(f"{img}_T", (img, "Min", -2), (img, "Min", -2), (img, "Min", 0), (img, "Max", 2), 3)
-        out += line(f"{img}_B", (img, "Max", 0), (img, "Min", -2), (img, "Max", 2), (img, "Max", 2), 3)
-        out += line(f"{img}_L", (img, "Min", 0), (img, "Min", -2), (img, "Max", 0), (img, "Min", 0), 3)
-        out += line(f"{img}_R", (img, "Min", 0), (img, "Max", 0), (img, "Max", 0), (img, "Max", 2), 3)
-        prev = img
-    out += ['\t\t</Frame>',
-            '\t\t<Frame type="ToggleControl" name="FCJH_DevArtBoardToggle">',
-            '\t\t\t<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>',
-            '\t\t\t<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>',
-            '\t\t\t<Width val="1"/>', '\t\t\t<Height val="1"/>', '\t\t\t<Visible val="false"/>',
-            f'\t\t\t<Shortcut val="{hotkey}"/>', '\t\t\t<AcceptsMouse val="false"/>',
-            '\t\t\t<Animation name="FCJH_DevArtBoardFade">',
-            '\t\t\t\t<Event event="OnShown" action="DirectionForward,Play"/>',
-            '\t\t\t\t<Event event="OnHidden" action="DirectionReverse,Play"/>',
-            '\t\t\t\t<Controller type="Fade" end="Pause" frame="$parent/FCJH_DevArtBoard">',
-            '\t\t\t\t\t<Key type="Curve" time="0" value="0"/>', '\t\t\t\t\t<Key type="Curve" time="0.15" value="255"/>',
-            '\t\t\t\t</Controller>', '\t\t\t</Animation>', '\t\t</Frame>']
-    return out
-
-
 def dev_layout(cfg, stamp):
-    """Build stamp and wireframe overlay, as an override of GameUI."""
+    """The build stamp, as an override of GameUI. (The wireframe overlay and the art board,
+    dev aids with hotkeys of their own, were removed 2026-10-05: user.)"""
     dev = cfg.get("dev", {})
     u = Units(cfg)
     sx, sy = dev.get("build_stamp", [16, 16])
@@ -2508,67 +2449,6 @@ def dev_layout(cfg, stamp):
         '\t\t\t<AcceptsMouse val="false"/>',
         '\t\t</Frame>',
     ]
-    if dev.get("wireframe_overlay"):
-        alpha = dev.get("overlay_alpha", 200)
-        line = max(1, u(dev.get("overlay_line", 2)))
-        parts += [
-            '\t\t<Frame type="Frame" name="FCJH_DevWireframe">',
-            '\t\t\t<Anchor relative="$parent"/>',
-            '\t\t\t<AcceptsMouse val="false"/>',
-        ]
-        for stem, ((x, y, w, h), kind) in rects(cfg).items():
-            # Four thin edges hugging the inside of the box, so the game shows through.
-            # Literal units rather than constants: an edge is a box edge plus the line
-            # width, and a #Constant can't take arithmetic.
-            t, l, b, r = u(y), u(x), u(y + h), u(x + w)
-            edges = {
-                "Top": (t, l, t + line, r),
-                "Bottom": (b - line, l, b, r),
-                "Left": (t, l, b, l + line),
-                "Right": (t, r - line, b, r),
-            }
-            parts.append(f'\t\t\t<Frame type="Frame" name="FCJH_Wire_{stem}">')
-            parts.append('\t\t\t\t<Anchor relative="$parent"/>')
-            for edge, (et, el, eb, er) in edges.items():
-                parts += [
-                    f'\t\t\t\t<Frame type="Image" name="{edge}">',
-                    f'\t\t\t\t\t<Anchor side="Top" relative="$parent" pos="Min" offset="{et}"/>',
-                    f'\t\t\t\t\t<Anchor side="Left" relative="$parent" pos="Min" offset="{el}"/>',
-                    f'\t\t\t\t\t<Anchor side="Bottom" relative="$parent" pos="Min" offset="{eb}"/>',
-                    f'\t\t\t\t\t<Anchor side="Right" relative="$parent" pos="Min" offset="{er}"/>',
-                    '\t\t\t\t\t<Texture val="@UI/PauseScreenDimImage"/>',
-                    '\t\t\t\t\t<ColorAdjustMode val="Fill"/>',
-                    f'\t\t\t\t\t<AdjustmentColor val="{alpha},{KIND_COLORS[kind]}"/>',
-                    '\t\t\t\t\t<AcceptsMouse val="false"/>',
-                    '\t\t\t\t</Frame>',
-                ]
-            parts.append('\t\t\t</Frame>')
-        parts.append('\t\t</Frame>')
-        hotkey = dev.get("overlay_hotkey")
-        if hotkey:
-            # A ToggleControl flips its own visibility on its Shortcut; its animation fades
-            # the overlay in when shown and out when hidden. Ahli's pattern for his panels,
-            # and the mechanism fight mode's hide-list will use.
-            parts += [
-                '\t\t<Frame type="ToggleControl" name="FCJH_DevWireframeToggle">',
-                '\t\t\t<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>',
-                '\t\t\t<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>',
-                '\t\t\t<Width val="1"/>',
-                '\t\t\t<Height val="1"/>',
-                f'\t\t\t<Shortcut val="{hotkey}"/>',
-                '\t\t\t<AcceptsMouse val="false"/>',
-                '\t\t\t<Animation name="FCJH_DevWireframeFade">',
-                '\t\t\t\t<Event event="OnShown" action="DirectionForward,Play"/>',
-                '\t\t\t\t<Event event="OnHidden" action="DirectionReverse,Play"/>',
-                '\t\t\t\t<Controller type="Fade" end="Pause" frame="$parent/FCJH_DevWireframe">',
-                '\t\t\t\t\t<Key type="Curve" time="0" value="0"/>',
-                '\t\t\t\t\t<Key type="Curve" time="0.15" value="255"/>',
-                '\t\t\t\t</Controller>',
-                '\t\t\t</Animation>',
-                '\t\t</Frame>',
-            ]
-    if dev.get("art_board_hotkey"):
-        parts += art_board(dev["art_board_hotkey"], dev.get("art_board", []))
     body = "\n".join(parts)
     return (XML_DECL + "<!-- Dev build only: staged by tools/pack.py, never committed or shipped. -->\n"
             "<Desc>\n"

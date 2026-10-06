@@ -23,14 +23,6 @@ padding = 20
 # Dev builds only. Release builds leave all of this out.
 [dev]
 build_stamp = [1600, 20]     # x, y of the build stamp (top right, above the kill feed)
-wireframe_overlay = true     # outline every element's wireframe box in game, to build against
-overlay_alpha = 200          # 0-255
-overlay_line = 2             # outline thickness
-overlay_hotkey = "Control+Shift+W"   # shows / hides the overlay
-# DIAGNOSTIC art board (tools/gen.py art_board): Blizzard textures at native size, outlined,
-# for the panes' art pass (2026-10-05). Remove when that's settled.
-art_board_hotkey = "Control+Shift+B"
-art_board = ["obs_talents_bg", "obs_talents_top", "obs_stats_top", "obs_stats_leader_blue", "obs_stats_leader_red"]
 
 # ---------------------------------------------------------------------------
 # Minimap. Blizzard's minimap is a fixed square (438 layout units = 394 px); the engine
@@ -144,8 +136,9 @@ border = 2                   # the frame line around it
 header_height = 22           # the stats panes' column headings, under the title
 team_height = 24             # each team's band (name + team totals) above its five rows
 # Each pane has its own hotkey and starts hidden; they share the one info_pane box, and
-# opening one closes whichever is open.
-hotkeys = { talents = "Control+Shift+1", kda = "Control+Shift+2", healing = "Control+Shift+3", structures = "Control+Shift+4" }
+# opening one closes whichever is open. Ctrl+1-4 (user, 2026-10-05): Blizzard's own panes on
+# Ctrl+1 / Ctrl+2 have their keys taken away (FCJH_Hidden), as Ahli does.
+hotkeys = { talents = "Control+1", kda = "Control+2", healing = "Control+3", structures = "Control+4" }
 [element.centre_banners]
 rect = [640, 196, 640, 78]   # Blizzard's; untouched, may shift on y
 kind = "ui"

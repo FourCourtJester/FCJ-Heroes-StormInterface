@@ -123,5 +123,18 @@
 				</Frame>
 			</Frame>
 		</Frame>
+		<!-- Blizzard's observer panes keep their own keys otherwise: Ctrl+1 talents, Ctrl+2 stats
+		     (bottompanel.stormlayout). Ours are on Ctrl+1-4 now (layout.toml [info_pane] hotkeys),
+		     so theirs lose the keys - Ahli 0.75's way, an empty Shortcut (user, 2026-10-05). -->
+		<Frame type="Frame" name="UIContainer">
+			<Frame type="Frame" name="FullscreenUpperContainer">
+				<Frame type="Frame" name="ObserverHeroOverviewPanel">
+					<Frame type="ObserverBottomPanel" name="BottomPanel">
+						<Frame type="ToggleControl" name="ToggleTalentOverview"><Shortcut val=""/></Frame>
+						<Frame type="ToggleControl" name="ToggleStatsOverview"><Shortcut val=""/></Frame>
+					</Frame>
+				</Frame>
+			</Frame>
+		</Frame>
 	</Frame>
 </Desc>

@@ -53,7 +53,7 @@ drawn by OBS over empty regions the interface leaves (§6).
 - **Pop-ups** on the plates — the talent just picked, and a green plus when a hero drops to
   25% (once per dip, gone after ~4 s or at death or above 30%).
 - **Info panes** — talents, KDA/damage, healing, structures/XP: one at a time on
-  `Ctrl+Shift+1-4`, each with an X; the leader in each column softly highlighted.
+  `Ctrl+1-4` (Blizzard's own panes lose Ctrl+1/2), each with an X; the leader in each column softly highlighted.
 - **Inspect card** — the selected unit's portrait, name/player/level, fountain, bars, buffs,
   abilities, talents and stats; shows exactly when the default UI's small inspector would
   (which is never while a replay is paused). The abilities are Blizzard's own command card
@@ -78,7 +78,7 @@ One command: **generate → stage → validate → pack → deploy.**
 
 1. **generate** — `tools/gen.py` rewrites the committed generated layouts from `layout.toml`
 2. **stage** — `src/FCJH.StormInterface/` is copied to `build/<profile>/`. A dev build adds
-   the build stamp and the wireframe overlay there, and only there
+   the build stamp there, and only there (the wireframe overlay was removed 2026-10-05)
 3. **validate** — `tools/validate.py` on the staged tree; an error stops the build
 4. **pack** — an uncompressed MPQ v1 archive, read back and compared file by file
 5. **deploy** — `Documents/Heroes of the Storm/Interfaces/FCJH.StormInterface`
@@ -385,8 +385,8 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    - **Later: the numbers panes (KDA, healing, structures) need a better visual** - fine for
      now (user). Their colour pass for both teams goes with it. Blizzard's stats grid art
      (`obs_stats_top`: a portrait box and five column cells per row, blue left, red right)
-     and the leader underlines (`obs_stats_leader_blue/red`) are candidates; the dev art board
-     (Ctrl+Shift+B, `[dev] art_board`, DIAGNOSTIC) shows them at native size - kept for that.
+     and the leader underlines (`obs_stats_leader_blue/red`) are candidates (seen on a dev art board
+     at native size, since removed: obs_stats_top is 1130 wide like the talents grid).
 2. **Command card polish - DONE (2026-10-05).** Talent-granted abilities seen clean in the
    honeycomb on Sonya (level 16) and Chromie (a talent-granted ability, user): the morning's
    oversized art behind them (flame frame, faded portrait; `Screenshot2026-10-05 11_16_54.jpg`)
@@ -500,7 +500,7 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
     button - OR (user's alternative) clicking a dead hero's plate (its death timer) opens
     that hero's recap. Either works for the user; the plate click is the nicer one if the
     recap can be pointed at a given player (the plates already know theirs), and it must not
-    break click-to-follow on a living hero's plate. Keys in layout.toml beside the panes' (Control+Shift+1-4 are taken; Ahli's
+    break click-to-follow on a living hero's plate. Keys in layout.toml beside the panes' (Control+1-4 are taken; Ahli's
     Control+1-8 and Control+C/E clash only if both are loaded).
 11. **A non-hero inspect card** (user, 2026-10-05) - for minions, mercenaries, bosses, map
     objectives' units and buildings. The inspect card shows for any selected unit (it follows

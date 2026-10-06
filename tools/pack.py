@@ -3,7 +3,7 @@ Build the interface: generate, stage, validate, pack, deploy.
 
   1. generate  tools/gen.py rewrites the committed generated layouts from layout.toml
   2. stage     src/FCJH.StormInterface is copied to build/<profile>/; a dev build adds
-               the build stamp, the in-game wireframe overlay and src/dev/ layouts
+               the build stamp and src/dev/ layouts
                (experiments and probes) there, and only there
   3. validate  tools/validate.py on the staged tree; an error stops the build
   4. pack      the staged tree becomes an MPQ v1 archive, read back and checked
