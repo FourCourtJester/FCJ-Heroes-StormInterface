@@ -544,6 +544,12 @@ commits around it).
 12. **Ahli's death animation on the nameplate** (user, 2026-10-05: "a nice touch", not to
     copy) - his plate does something when its hero dies. For the art pass (item 7): study
     what it does, then design our own.
+13. **Camp timer displays** (user, 2026-10-05, for later) - the mercenary camps' respawn
+    timers. Blizzard's own were seen in a 2026-10-05 screenshot (22:12:18): "1:08 / -ELITE- /
+    Boss Camp / Player 4" in a stack at the screen's left, mid-height (camp labels in the
+    world, or pinned to the screen's edge when the camp is off screen?). To look at: what
+    Blizzard shows and where, what Ahli does with them, and whether ours should look and sit
+    differently. Goes with the map objectives pass (item 8).
 
 ## 8. Original brief
 
