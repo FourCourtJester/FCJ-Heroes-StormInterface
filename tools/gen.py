@@ -822,8 +822,11 @@ def pet_death_labels(team, c):
 
 # Blizzard's in-game heroic panel (partyframe HeroOverviewTemplate / _R HeroicTalentPanel),
 # native units: (panel left, icon left inside it) per team; panel 48 x 38, icon 38 x 38,
-# gold frame 45 x 25 centred on the icon. Both teams keep it on the plate's LEFT.
-HEROIC_PANEL = {"blue": (14, 5), "red": (0, 3)}
+# gold frame 45 x 25 centred on the icon. Blizzard keeps it on the plate's LEFT for both teams;
+# ours sit at the rows' inner ends, by the minimap (user, 2026-10-06): red's is Blizzard's (its
+# bottom left), blue's the mirror of it (bottom right; Blizzard's was 14, 5) - blue keeps its own
+# art, which leans with its plate in either corner.
+HEROIC_PANEL = {"blue": (128 - 48, 48 - 3 - 38), "red": (0, 3)}
 
 
 def heroic_frame_rect(cfg, team):
@@ -845,64 +848,52 @@ def heroic_icon_rect(cfg, team):
     pl, il = HEROIC_PANEL[team]
     return s(pl + il), h - s(38), s(pl + il + 38), h
 # While it shows, Blizzard narrows the bars from the left (right edge fixed): health 97 -> 69,
-# energy 95 -> 67 (UpdateHealthBarWidths). The backing frames follow the bars by the same 28.
+# energy 95 -> 67 (UpdateHealthBarWidths). Ours narrow from the heroic's side: blue's from the
+# right, red's from the left.
 NARROW = 28
 
 # The fountain on the plate (user, 2026-10-06, drawn on the canvas first): the inspect card's
 # fountain - Blizzard's buff slot (58 x 34, the icon in its slanted mask), bright when ready,
 # dimmed with its countdown on cooldown. Blizzard's slot leans / (as the red plates); blue's is
-# mirrored. Blizzard's fountain token (first try) is drawn near-upright: it leaned with neither
-# plate (user's screenshot, 2026-10-06 13:01).
-#   - on the bar: its bottom on the health bar's bottom (the resource row untouched), its
-#     slanted side against the plate's edge; the health bar starts under its far side, so no gap;
-#   - north: the heroic takes that spot when it comes, so the fountain stands right on the
-#     heroic's gold frame, still against the plate's edge.
+# mirrored. It stands on the health bar's top edge at the plate's OUTER end (blue left, red
+# right), its slanted side against the plate's edge - the heroics are at the inner ends.
+# (Tried and dropped, 2026-10-06: Blizzard's fountain token - drawn near-upright, it leaned with
+# neither plate; on the bar's heroic end, moving north onto the heroic when it came - the two
+# slants never quite met.)
 SLOT_W, SLOT_H = 58, 34          # Blizzard's buff slot (inspect_card BUFF_W, BUFF_H)
 SLOT_ART = (4, 3, 50, 28)        # the slot art's visible part in it: inset x, y, width, height
 SLOT_LEAN = 0.45                 # ...and its slant, across per down (measured in game, 2026-10-05)
 SLOT_MASK = (9, -2, 40, 40)      # the icon's mask square in the slot (inspect_card): left, top, w, h
 MASK_INSET = 2                   # ...pulled in on every side on the plate: at full size the icon
                                  # showed a pixel past the slot's frame (user, 2026-10-06 13:12)
-FOUNTAIN_H = 14                  # the slot art's visible height on the plate, native cell units (20.6, the
-                                 # heroic's size, was too big: user, 2026-10-06)
+FOUNTAIN_H = 14                  # the slot art's visible height on the plate, native cell units
+                                 # (20.6, the heroic's size, was too big: user, 2026-10-06)
 EDGE_INSET = 2                   # its slanted side, in from the plate's edge (cell units)
-HEROIC_ART_TOP = 2               # the gold frame's art starts this far below its box (cell units;
-                                 # standing on the box left a ~2 px gap: user, 2026-10-06 13:12)
 
 
-def fountain_geometry(cfg, team):
-    """The plate fountain in cell units: its slot box on the bar and north of the heroic
-    (left, top, right, bottom), the art's scale (cell units per slot unit), and where the
-    health bar starts."""
+def fountain_rect(cfg, team):
+    """The plate fountain's slot box in cell units (left, top, right, bottom), and the art's
+    scale (cell units per slot unit)."""
     c = HeroCell(cfg)
-    k = cfg["hero_row"]["scale"]
-    hv = FOUNTAIN_H * k                       # visible height, cell units
-    f = hv / SLOT_ART[3]                      # cell units per slot unit
+    hv = FOUNTAIN_H * cfg["hero_row"]["scale"]   # visible height, cell units
+    f = hv / SLOT_ART[3]                         # cell units per slot unit
     ax, ay, aw, _ = (v * f for v in SLOT_ART)
     cut = SLOT_LEAN * hv
-    edge = (lambda y: c.overlap * y / c.h) if team == "blue" else (lambda y: c.overlap * (1 - y / c.h))
-
-    def place(bottom):
-        top = bottom - hv
-        # blue's slot leans \ like its plate: its left side runs (l, top) -> (l + cut, bottom);
-        # red's leans /: (l + cut, top) -> (l, bottom). Whichever corner is nearer the edge rules.
-        if team == "blue":
-            left = max(edge(top), edge(bottom) - cut) + EDGE_INSET
-        else:
-            left = max(edge(top) - cut, edge(bottom)) + EDGE_INSET
-        box = (round(left - ax), round(top - ay), round(left - ax + SLOT_W * f), round(top - ay + SLOT_H * f))
-        return box, left, top
-
-    hl, ht, hr, hb = c.team[team]["health"]
-    bar, left, top = place(hb)
-    # the art's far side where it crosses the health bar's top: the bar starts 1 under it
+    bottom = c.team[team]["health"][1]           # on the health bar's top edge
+    top = bottom - hv
     if team == "blue":
-        far = left + aw - cut + cut * (ht - top) / hv
+        # the outer end is the plate's left: its edge runs (0, 0) -> (overlap, h); the slot leans
+        # \ like it, its left side (l, top) -> (l + cut, bottom). The nearer corner rules.
+        edge = lambda y: c.overlap * y / c.h
+        left = max(edge(top), edge(bottom) - cut) + EDGE_INSET
     else:
-        far = left + aw - cut * (ht - top) / hv
-    _, frame_top, _, _ = heroic_frame_rect(cfg, team)
-    up, _, _ = place(frame_top + HEROIC_ART_TOP)   # standing on the gold frame's art
-    return {"bar": bar, "up": up, "scale": f, "health_left": round(far) - 1}
+        # the right: its edge runs (w, 0) -> (w - overlap, h); the slot leans /, its right
+        # side (r, top) -> (r - cut, bottom)
+        edge = lambda y: c.w - c.overlap * y / c.h
+        left = min(edge(top), edge(bottom) + cut) - EDGE_INSET - aw
+    return (round(left - ax), round(top - ay), round(left - ax + SLOT_W * f), round(top - ay + SLOT_H * f)), f
+
+
 HEROIC_ART = {"blue": ("HUD_TopBar_Team_HeroFrame_Ult_Bg", "HUD_TopBar_Team_HeroFrame_Ult", False,
                        "HUD_TopBar_Team_HeroFrame_Ult_ProgressFill"),
               "red": ("HUD_TopBar_Team_HeroFrame_Ult_Bg_Right", "HUD_TopBar_Team_HeroFrame_Ult_Enemy", True,
@@ -952,29 +943,27 @@ def heroic_panel(cfg, team_frame, i):
         f'\t\t\t\t\t\t\t\t\t<Unclipped val="true"/>\n\t\t\t\t\t\t\t\t\t<AcceptsMouse val="false"/>\n'
         f'\t\t\t\t\t\t\t\t</Frame>\n')
     t9 = "\t" * 9
-    # While the heroic shows, the resource row narrows and the health bar clears the heroic (until
-    # then it starts under the fountain: hero_cell_template). Only the bars narrow; their
-    # dark backing frames stay full width with the icon drawn over their left end, as
-    # Blizzard's UpdateHealthBarWidths does. Moving the backings too (first try) exposed their
-    # angled ends beside the icon as dark triangles (2026-09-30).
+    # bars: wide (no heroic) and narrow (heroic showing), shortened from the heroic's side (blue
+    # right, red left). Only the bars narrow; their dark backing frames stay full width with the
+    # icon drawn over their end, as Blizzard's UpdateHealthBarWidths does. Moving the backings
+    # too (first try) exposed their angled ends beside the icon as dark triangles (2026-09-30).
     t10 = "\t" * 10
+    side = "Right" if blue else "Left"
+    cut_ = -s(NARROW) if blue else s(NARROW)
     def lefts(narrow):
-        # ...and Blizzard's own art for the short bar (its end is drawn for the icon beside it):
-        # *_Narrow, as UpdateHealthBarWidths does
-        n, r = ("_Narrow" if narrow else ""), ("" if blue else "_Right")
-        out = (f'{t10}<Action type="SetAnchor" frame="{cell}/HeroStatus/FCJH_Resource" side="Left" relative="{cell}" pos="Min" '
-               f'offset="{g["energy"][0] + (s(NARROW) if narrow else 0)}"/>\n'
-               f'{t10}<Action type="SetProperty" frame="{cell}/HeroStatus/FCJH_Resource" Texture="@UI/HUD_TopBar_Team_HeroFrame_ManaFill{n}{r}"/>\n')
-        # the fountain: on the health bar's start, or north of the heroic while it shows
-        fg = fountain_geometry(cfg, team)
-        out += "".join(f'{t10}<Action type="SetAnchor" frame="{cell}/HeroStatus/FCJH_Fountain" side="{side}" relative="{cell}" pos="Min" offset="{v}"/>\n'
-                       for side, v in zip(("Left", "Top", "Right", "Bottom"), fg["up" if narrow else "bar"]))
-        # the health bar: from under the fountain's far side, or clear of the heroic while it
-        # shows (the fountain is smaller than the heroic: the bar's last health would hide
-        # under the heroic's icon) - and the Vikings' three bars with it
-        hl = max(fg["health_left"], g["health"][0] + s(NARROW)) if narrow else fg["health_left"]
-        out += f'{t10}<Action type="SetAnchor" frame="{cell}/HeroStatus" side="Left" relative="{cell}" pos="Min" offset="{hl}"/>\n'
-        hr = g["health"][2]
+        hl, _, hr, _ = g["health"]
+        el, _, er, _ = g["energy"]
+        edge = lambda l, r: (r if blue else l) + (cut_ if narrow else 0)
+        out = "".join(f'{t10}<Action type="SetAnchor" frame="{cell}/{f}" side="{side}" relative="{cell}" pos="Min" offset="{edge(l, r)}"/>\n'
+                      for f, l, r in (("HeroStatus", hl, hr), ("HeroStatus/FCJH_Resource", el, er)))
+        # ...and Blizzard's own art for the short bars (its ends are drawn for the icon beside
+        # them): *_Narrow while the heroic shows, as UpdateHealthBarWidths does
+        n, r_ = ("_Narrow" if narrow else ""), ("" if blue else "_Right")
+        out += (f'{t10}<Action type="SetProperty" frame="{cell}/HeroStatus/HealthBar" Texture="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm{n}{r_}"/>\n'
+                f'{t10}<Action type="SetProperty" frame="{cell}/HeroStatus/FCJH_Resource" Texture="@UI/HUD_TopBar_Team_HeroFrame_ManaFill{n}{r_}"/>\n')
+        # the Vikings' three bars share the narrowed width (trackers: tools/gen.py trackers)
+        if narrow:
+            hl, hr = (hl, hr + cut_) if blue else (hl + cut_, hr)
         third = (hr - hl - 2 * VIKING_GAP) / 3
         for v in range(3):
             left = hl + VIKING_SLOT[VIKING_FRAMES[v]] * (third + VIKING_GAP)
@@ -1385,12 +1374,7 @@ def hero_cell_template(team, c, cfg):
 				<ColorStyle val="StandardEnergy" index="0"/>
 				<Unclipped val="true"/>
 			</Frame>"""
-    # the health bar starts under the fountain's far side (the fountain sits at its start, then
-    # the heroic does - heroic_panel; user, 2026-10-06) - Blizzard's short bar art, its end
-    # drawn for an icon beside it
-    fg = fountain_geometry(cfg, team)
-    _, ht, hr, hbt = g["health"]
-    health_rect = (fg["health_left"], ht, hr, hbt)
+    health_rect = g["health"]
     health = f"""
 		<Frame type="UnitStatusFrame" name="HeroStatus">{_anchors(health_rect, "$parent", chr(9) * 3)}
 			<Width val="0"/>
@@ -1398,7 +1382,7 @@ def hero_cell_template(team, c, cfg):
 			<RenderPriority val="510"/>
 			<Frame type="Frame" name="ImageMaskFrame"><AlphaMaskSiblings val="false"/></Frame>
 			<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">
-				<Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm_Narrow{suffix}"/>
+				<Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm{suffix}"/>
 				<Tiled val="true"/>
 			</Frame>{trackers(team, health_rect)}{health_backing}{mana_backing}{energy}"""
     if blue:  # red inherits these unchanged
@@ -1475,13 +1459,12 @@ def hero_cell_template(team, c, cfg):
 				<DefaultState val="Normal"/>{colour_states}
 				<State name="Normal"><Action type="SetProperty" frame="FCJH_Resource" ColorStyle="StandardEnergy"/></State>
 			</StateGroup>"""
-    fl, ft, fr, fb = fg["bar"]
+    (fl, ft, fr, fb), f = fountain_rect(cfg, team)
     fountain_anchors = f"""
 				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="{ft}"/>
 				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="{fl}"/>
 				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="{fb}"/>
 				<Anchor side="Right"  relative="$parent/$parent" pos="Min" offset="{fr}"/>"""
-    f = fg["scale"]
     u = lambda v: round(v * f)
     mx, my, mw, mh = SLOT_MASK
     mx, my, mw, mh = mx + MASK_INSET, my + MASK_INSET, mw - 2 * MASK_INSET, mh - 2 * MASK_INSET
@@ -1501,8 +1484,8 @@ def hero_cell_template(team, c, cfg):
         health += f"""
 			<!-- Fountain (user, 2026-10-06): the inspect card's - Blizzard's buff slot with the
 			     fountain's art in its slanted mask; bright when ready, dimmed on cooldown with the
-			     seconds left. On the health bar's start, against the plate's edge; heroic_panel
-			     moves it north onto the heroic's gold frame while that shows (fountain_geometry). -->
+			     seconds left. On the health bar's top edge at the plate's outer end, against its
+			     edge (fountain_rect). -->
 			<Frame type="Frame" name="FCJH_Fountain">{fountain_anchors}
 				<RenderPriority val="525"/>
 				<Unclipped val="true"/>
@@ -1514,13 +1497,10 @@ def hero_cell_template(team, c, cfg):
 					<Anchor side="Right"  relative="$parent" pos="Min" offset="{u(mx + mw)}"/>
 					<AlphaMaskTexture val="{mask}"/>
 					<Unclipped val="true"/>
+					<!-- exactly the mask's box: drawn bigger (45 in 40, as on the inspect card), the
+					     overhang went unmasked - a thin purple line (user, 2026-10-06 13:16) -->
 					<Frame type="Image" name="IconImage">
-						<Anchor side="Top"    relative="$parent" pos="Mid" offset="0"/>
-						<Anchor side="Bottom" relative="$parent" pos="Mid" offset="0"/>
-						<Anchor side="Left"   relative="$parent" pos="Mid" offset="0"/>
-						<Anchor side="Right"  relative="$parent" pos="Mid" offset="0"/>
-						<Width val="{u(45)}"/>
-						<Height val="{u(45)}"/>
+						<Anchor relative="$parent"/>
 						<Texture val="@UI/Storm_UI_Ingame_HealingWell_Active"/>
 						<!-- the middle of the art only, as on the inspect card -->
 						<TextureCoords top="0.2" left="0.2" bottom="0.8" right="0.8"/>
@@ -1897,9 +1877,10 @@ def talent_row_lifts(cfg):
 # 38 x 19. The icons keep their Left anchor and stay centred on their row (Top/Bottom at its
 # Mid), so re-sizing one moves its centre by half the change; the shifts include that.
 HEROIC_TIPS = (
-    # root, icon, row top (units), box Left from the cell (Blizzard: 82 blue / 15 red), priority
-    ("FCJH_HeroicTips", 4, round(1024.4 / 0.9), {"blue": -54, "red": -77}, 700),
-    ("FCJH_HeroicTips2", 2, round(1032 / 0.9), {"blue": 3, "red": -28}, 710),
+    # root, icon, row top (units), box Left from the cell (Blizzard: 82 blue / 15 red), priority.
+    # Blue's moved with its heroic to the plate's bottom right (2026-10-06): +105, the icon's move.
+    ("FCJH_HeroicTips", 4, round(1024.4 / 0.9), {"blue": -54 + 105, "red": -77}, 700),
+    ("FCJH_HeroicTips2", 2, round(1032 / 0.9), {"blue": 3 + 105, "red": -28}, 710),
 )
 HEROIC_TIP_SIZE = 44
 # Heroes whose heroic isn't a talent pick (hero unit: its button in the game strings). Their
