@@ -560,7 +560,14 @@ def matcher(n):
         f'<When type="Property" frame="{plate(n)}/HeroStatus" Unit="{on}"/>'
         f'<Action type="SetProperty" frame="$this/FCJH_Player{n}" Alpha="255"/>{flag("true")}</State>\n'
         for sel, on in [(u, u) for u in HEROES] + ALSO)
-    return (f'{T*4}<StateGroup name="FCJH_IsPlayer{n}">\n{T*5}<DefaultState val="No"/>\n{states}'
+    # Mirror matches (the same hero on both teams, 2026-10-05): the hero check alone matched
+    # both players and the red one drew over the blue. So first: a unit of the other team never
+    # shows this pack (the team sensor, FCJH_TeamSense). States are tried in order; if the
+    # sensor reads neither team, this never applies and the hero check decides as before.
+    other = "TeamChaos" if n < 5 else "TeamOrder"
+    wrong = (f'{T*5}<State name="OtherTeam"><When type="Property" frame="$this/{TEAM_SENSE}" CurrentRelation="{other}"/>'
+             f'<Action type="SetProperty" frame="$this/FCJH_Player{n}" Alpha="0"/>{flag("false")}</State>\n')
+    return (f'{T*4}<StateGroup name="FCJH_IsPlayer{n}">\n{T*5}<DefaultState val="No"/>\n{wrong}{states}'
             f'{T*5}<State name="No"><Action type="SetProperty" frame="$this/FCJH_Player{n}" Alpha="0"/>{flag("false")}</State>\n'
             f'{T*4}</StateGroup>\n')
 
@@ -641,30 +648,32 @@ def talent_tips():
             + rows + f'{T*5}</Frame>\n{T*4}</Frame>\n{T*3}</Frame>\n{T*2}</Frame>\n')
 
 
-def diag_team():
-    """DIAGNOSTIC (2026-10-05, mirror matches): three squares in the title band's left end, lit
-    by the unit-relation event the selection's status frame gets - blue: UnitStatusAlly, red:
-    UnitStatusEnemy, white: UnitStatusOwner (Blizzard colours health bars by them). If blue and
-    red follow the teams, they tell the card which player of a mirrored hero is selected."""
-    events = (("Ally", "255,92,188,236"), ("Enemy", "255,231,92,121"), ("Owner", "255,255,255,255"))
-    out = [f'{T*4}<!-- DIAGNOSTIC: which unit-relation event the selection gets (inspect_card.diag_team) -->\n']
-    for i, (ev, colour) in enumerate(events):
-        others = [e for e, _ in events if e != ev]
-        out.append(
-            f'{T*4}<Frame type="Image" name="FCJH_Diag{ev}">\n'
-            + placed(8, M + i * 18, 14, 14, 5)
-            + f'{T*5}<Texture val="@UI/PauseScreenDimImage"/>\n{T*5}<ColorAdjustMode val="Fill"/>\n'
-            f'{T*5}<AdjustmentColor val="{colour}"/>\n{T*5}<RenderPriority val="700"/>\n'
-            f'{T*5}<Alpha val="40"/>\n{T*5}<AcceptsMouse val="false"/>\n'
-            f'{T*5}<Animation name="FCJH_On">\n{T*6}<Event event="UnitStatus{ev}" action="Reset,Play" frame="$parent"/>\n'
-            f'{T*6}<Controller type="Fade" end="Pause">\n{T*7}<Key type="Curve" time="0" value="255" inout="Linear"/>\n'
-            f'{T*7}<Key type="Curve" time="0.01" value="255" inout="Linear"/>\n{T*6}</Controller>\n{T*5}</Animation>\n'
-            f'{T*5}<Animation name="FCJH_Off">\n'
-            + "".join(f'{T*6}<Event event="UnitStatus{o}" action="Reset,Play" frame="$parent"/>\n' for o in others)
-            + f'{T*6}<Controller type="Fade" end="Pause">\n{T*7}<Key type="Curve" time="0" value="40" inout="Linear"/>\n'
-            f'{T*7}<Key type="Curve" time="0.01" value="40" inout="Linear"/>\n{T*6}</Controller>\n{T*5}</Animation>\n'
-            f'{T*4}</Frame>\n')
-    return "".join(out)
+TEAM_SENSE = "FCJH_TeamSense"
+
+
+def team_sense():
+    """The selected unit's team: a UnitStatusColor reads the unit's relation to the viewer -
+    for an observer TeamOrder (blue) or TeamChaos (red), as Blizzard's minimap team colours
+    read it (gameui TeamColoringTemplate). The ally/enemy/owner animation events never came
+    for an observer (2026-10-05). DIAGNOSTIC squares in the title band's left end show what it
+    reads: blue TeamOrder, red TeamChaos, cyan Ally, orange Enemy, white Owner."""
+    rels = (("TeamOrder", "255,92,188,236"), ("TeamChaos", "255,231,92,121"), ("Ally", "255,80,240,240"),
+            ("Enemy", "255,255,160,40"), ("Owner", "255,255,255,255"))
+    squares = "".join(
+        f'{T*4}<Frame type="Image" name="FCJH_Diag{r}">\n' + placed(8, M + i * 18, 14, 14, 5)
+        + f'{T*5}<Texture val="@UI/PauseScreenDimImage"/>\n{T*5}<ColorAdjustMode val="Fill"/>\n'
+        f'{T*5}<AdjustmentColor val="{colour}"/>\n{T*5}<RenderPriority val="700"/>\n'
+        f'{T*5}<Alpha val="40"/>\n{T*5}<AcceptsMouse val="false"/>\n{T*4}</Frame>\n'
+        for i, (r, colour) in enumerate(rels))
+    lit = lambda on: "".join(f'<Action type="SetProperty" frame="$parent/FCJH_Diag{r}" Alpha="{255 if r == on else 40}"/>'
+                             for r, _ in rels)
+    states = "".join(f'{T*6}<State name="{r}"><When type="Property" frame="$this" CurrentRelation="{r}"/>{lit(r)}</State>\n'
+                     for r, _ in rels)
+    return (f'{T*4}<!-- the selected unit\'s team (inspect_card.team_sense), and DIAGNOSTIC squares showing it -->\n'
+            f'{T*4}<Frame type="UnitStatusColor" name="{TEAM_SENSE}">\n{T*5}<Anchor relative="$parent"/>\n'
+            f'{T*5}<ColorStyle val="MinimapTeams"/>\n{T*5}<AcceptsMouse val="false"/>\n{T*5}<AcceptsMouseTooltip val="false"/>\n'
+            f'{T*5}<StateGroup name="FCJH_Relation">\n{T*6}<DefaultState val="None"/>\n{states}'
+            f'{T*6}<State name="None">{lit("")}</State>\n{T*5}</StateGroup>\n{T*4}</Frame>\n' + squares)
 
 
 def unit():
@@ -690,7 +699,7 @@ def unit():
 {T*4}<!-- 1. animated model: DROPPED (round 6). The hero cutscene kept the first hero clicked
 {T*4}     (Chromie) over every later selection; the static portrait underneath updates. -->
 
-{diag_team()}
+{team_sense()}
 {T*4}<!-- 2. name (in the title band, user 2026-10-05), player, level -->
 {T*4}<Frame type="UnitStatusName" name="FCJH_HeroName" template="UnitStatus/UnitStatusUnitNameTemplate">
 {T*5}<!-- centred on the card: the template's own size (220 x 30) beat the

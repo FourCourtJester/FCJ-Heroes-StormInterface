@@ -274,8 +274,23 @@
 				<!-- 1. animated model: DROPPED (round 6). The hero cutscene kept the first hero clicked
 				     (Chromie) over every later selection; the static portrait underneath updates. -->
 
-				<!-- DIAGNOSTIC: which unit-relation event the selection gets (inspect_card.diag_team) -->
-				<Frame type="Image" name="FCJH_DiagAlly">
+				<!-- the selected unit's team (inspect_card.team_sense), and DIAGNOSTIC squares showing it -->
+				<Frame type="UnitStatusColor" name="FCJH_TeamSense">
+					<Anchor relative="$parent"/>
+					<ColorStyle val="MinimapTeams"/>
+					<AcceptsMouse val="false"/>
+					<AcceptsMouseTooltip val="false"/>
+					<StateGroup name="FCJH_Relation">
+						<DefaultState val="None"/>
+						<State name="TeamOrder"><When type="Property" frame="$this" CurrentRelation="TeamOrder"/><Action type="SetProperty" frame="$parent/FCJH_DiagTeamOrder" Alpha="255"/><Action type="SetProperty" frame="$parent/FCJH_DiagTeamChaos" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagAlly" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagEnemy" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagOwner" Alpha="40"/></State>
+						<State name="TeamChaos"><When type="Property" frame="$this" CurrentRelation="TeamChaos"/><Action type="SetProperty" frame="$parent/FCJH_DiagTeamOrder" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagTeamChaos" Alpha="255"/><Action type="SetProperty" frame="$parent/FCJH_DiagAlly" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagEnemy" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagOwner" Alpha="40"/></State>
+						<State name="Ally"><When type="Property" frame="$this" CurrentRelation="Ally"/><Action type="SetProperty" frame="$parent/FCJH_DiagTeamOrder" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagTeamChaos" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagAlly" Alpha="255"/><Action type="SetProperty" frame="$parent/FCJH_DiagEnemy" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagOwner" Alpha="40"/></State>
+						<State name="Enemy"><When type="Property" frame="$this" CurrentRelation="Enemy"/><Action type="SetProperty" frame="$parent/FCJH_DiagTeamOrder" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagTeamChaos" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagAlly" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagEnemy" Alpha="255"/><Action type="SetProperty" frame="$parent/FCJH_DiagOwner" Alpha="40"/></State>
+						<State name="Owner"><When type="Property" frame="$this" CurrentRelation="Owner"/><Action type="SetProperty" frame="$parent/FCJH_DiagTeamOrder" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagTeamChaos" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagAlly" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagEnemy" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagOwner" Alpha="255"/></State>
+						<State name="None"><Action type="SetProperty" frame="$parent/FCJH_DiagTeamOrder" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagTeamChaos" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagAlly" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagEnemy" Alpha="40"/><Action type="SetProperty" frame="$parent/FCJH_DiagOwner" Alpha="40"/></State>
+					</StateGroup>
+				</Frame>
+				<Frame type="Image" name="FCJH_DiagTeamOrder">
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="8"/>
 					<Anchor side="Left"   relative="$parent" pos="Min" offset="15"/>
 					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
@@ -288,23 +303,8 @@
 					<RenderPriority val="700"/>
 					<Alpha val="40"/>
 					<AcceptsMouse val="false"/>
-					<Animation name="FCJH_On">
-						<Event event="UnitStatusAlly" action="Reset,Play" frame="$parent"/>
-						<Controller type="Fade" end="Pause">
-							<Key type="Curve" time="0" value="255" inout="Linear"/>
-							<Key type="Curve" time="0.01" value="255" inout="Linear"/>
-						</Controller>
-					</Animation>
-					<Animation name="FCJH_Off">
-						<Event event="UnitStatusEnemy" action="Reset,Play" frame="$parent"/>
-						<Event event="UnitStatusOwner" action="Reset,Play" frame="$parent"/>
-						<Controller type="Fade" end="Pause">
-							<Key type="Curve" time="0" value="40" inout="Linear"/>
-							<Key type="Curve" time="0.01" value="40" inout="Linear"/>
-						</Controller>
-					</Animation>
 				</Frame>
-				<Frame type="Image" name="FCJH_DiagEnemy">
+				<Frame type="Image" name="FCJH_DiagTeamChaos">
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="8"/>
 					<Anchor side="Left"   relative="$parent" pos="Min" offset="33"/>
 					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
@@ -317,25 +317,38 @@
 					<RenderPriority val="700"/>
 					<Alpha val="40"/>
 					<AcceptsMouse val="false"/>
-					<Animation name="FCJH_On">
-						<Event event="UnitStatusEnemy" action="Reset,Play" frame="$parent"/>
-						<Controller type="Fade" end="Pause">
-							<Key type="Curve" time="0" value="255" inout="Linear"/>
-							<Key type="Curve" time="0.01" value="255" inout="Linear"/>
-						</Controller>
-					</Animation>
-					<Animation name="FCJH_Off">
-						<Event event="UnitStatusAlly" action="Reset,Play" frame="$parent"/>
-						<Event event="UnitStatusOwner" action="Reset,Play" frame="$parent"/>
-						<Controller type="Fade" end="Pause">
-							<Key type="Curve" time="0" value="40" inout="Linear"/>
-							<Key type="Curve" time="0.01" value="40" inout="Linear"/>
-						</Controller>
-					</Animation>
+				</Frame>
+				<Frame type="Image" name="FCJH_DiagAlly">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="8"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="51"/>
+					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+					<Width val="14"/>
+					<Height val="14"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="255,80,240,240"/>
+					<RenderPriority val="700"/>
+					<Alpha val="40"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_DiagEnemy">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="8"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="69"/>
+					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+					<Width val="14"/>
+					<Height val="14"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="255,255,160,40"/>
+					<RenderPriority val="700"/>
+					<Alpha val="40"/>
+					<AcceptsMouse val="false"/>
 				</Frame>
 				<Frame type="Image" name="FCJH_DiagOwner">
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="8"/>
-					<Anchor side="Left"   relative="$parent" pos="Min" offset="51"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="87"/>
 					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 					<Width val="14"/>
@@ -346,21 +359,6 @@
 					<RenderPriority val="700"/>
 					<Alpha val="40"/>
 					<AcceptsMouse val="false"/>
-					<Animation name="FCJH_On">
-						<Event event="UnitStatusOwner" action="Reset,Play" frame="$parent"/>
-						<Controller type="Fade" end="Pause">
-							<Key type="Curve" time="0" value="255" inout="Linear"/>
-							<Key type="Curve" time="0.01" value="255" inout="Linear"/>
-						</Controller>
-					</Animation>
-					<Animation name="FCJH_Off">
-						<Event event="UnitStatusAlly" action="Reset,Play" frame="$parent"/>
-						<Event event="UnitStatusEnemy" action="Reset,Play" frame="$parent"/>
-						<Controller type="Fade" end="Pause">
-							<Key type="Curve" time="0" value="40" inout="Linear"/>
-							<Key type="Curve" time="0.01" value="40" inout="Linear"/>
-						</Controller>
-					</Animation>
 				</Frame>
 
 				<!-- 2. name (in the title band, user 2026-10-05), player, level -->
@@ -4720,6 +4718,7 @@
 				     (the same hero on both teams) would show both packs - not handled yet. -->
 				<StateGroup name="FCJH_IsPlayer0">
 					<DefaultState val="No"/>
+					<State name="OtherTeam"><When type="Property" frame="$this/FCJH_TeamSense" CurrentRelation="TeamChaos"/><Action type="SetProperty" frame="$this/FCJH_Player0" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_TipSel0" Visible="false"/></State>
 					<State name="HeroAI"><When type="Property" Unit="HeroAI"/><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus" Unit="HeroAI"/><Action type="SetProperty" frame="$this/FCJH_Player0" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_TipSel0" Visible="true"/></State>
 					<State name="HeroAbathur"><When type="Property" Unit="HeroAbathur"/><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus" Unit="HeroAbathur"/><Action type="SetProperty" frame="$this/FCJH_Player0" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_TipSel0" Visible="true"/></State>
 					<State name="HeroAbathurSymbiote"><When type="Property" Unit="HeroAbathurSymbiote"/><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus" Unit="HeroAbathurSymbiote"/><Action type="SetProperty" frame="$this/FCJH_Player0" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_TipSel0" Visible="true"/></State>
@@ -4853,6 +4852,7 @@
 				</StateGroup>
 				<StateGroup name="FCJH_IsPlayer1">
 					<DefaultState val="No"/>
+					<State name="OtherTeam"><When type="Property" frame="$this/FCJH_TeamSense" CurrentRelation="TeamChaos"/><Action type="SetProperty" frame="$this/FCJH_Player1" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_TipSel1" Visible="false"/></State>
 					<State name="HeroAI"><When type="Property" Unit="HeroAI"/><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus" Unit="HeroAI"/><Action type="SetProperty" frame="$this/FCJH_Player1" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_TipSel1" Visible="true"/></State>
 					<State name="HeroAbathur"><When type="Property" Unit="HeroAbathur"/><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus" Unit="HeroAbathur"/><Action type="SetProperty" frame="$this/FCJH_Player1" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_TipSel1" Visible="true"/></State>
 					<State name="HeroAbathurSymbiote"><When type="Property" Unit="HeroAbathurSymbiote"/><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus" Unit="HeroAbathurSymbiote"/><Action type="SetProperty" frame="$this/FCJH_Player1" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_TipSel1" Visible="true"/></State>
@@ -4986,6 +4986,7 @@
 				</StateGroup>
 				<StateGroup name="FCJH_IsPlayer2">
 					<DefaultState val="No"/>
+					<State name="OtherTeam"><When type="Property" frame="$this/FCJH_TeamSense" CurrentRelation="TeamChaos"/><Action type="SetProperty" frame="$this/FCJH_Player2" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_TipSel2" Visible="false"/></State>
 					<State name="HeroAI"><When type="Property" Unit="HeroAI"/><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus" Unit="HeroAI"/><Action type="SetProperty" frame="$this/FCJH_Player2" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_TipSel2" Visible="true"/></State>
 					<State name="HeroAbathur"><When type="Property" Unit="HeroAbathur"/><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus" Unit="HeroAbathur"/><Action type="SetProperty" frame="$this/FCJH_Player2" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_TipSel2" Visible="true"/></State>
 					<State name="HeroAbathurSymbiote"><When type="Property" Unit="HeroAbathurSymbiote"/><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus" Unit="HeroAbathurSymbiote"/><Action type="SetProperty" frame="$this/FCJH_Player2" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_TipSel2" Visible="true"/></State>
@@ -5119,6 +5120,7 @@
 				</StateGroup>
 				<StateGroup name="FCJH_IsPlayer3">
 					<DefaultState val="No"/>
+					<State name="OtherTeam"><When type="Property" frame="$this/FCJH_TeamSense" CurrentRelation="TeamChaos"/><Action type="SetProperty" frame="$this/FCJH_Player3" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_TipSel3" Visible="false"/></State>
 					<State name="HeroAI"><When type="Property" Unit="HeroAI"/><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus" Unit="HeroAI"/><Action type="SetProperty" frame="$this/FCJH_Player3" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_TipSel3" Visible="true"/></State>
 					<State name="HeroAbathur"><When type="Property" Unit="HeroAbathur"/><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus" Unit="HeroAbathur"/><Action type="SetProperty" frame="$this/FCJH_Player3" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_TipSel3" Visible="true"/></State>
 					<State name="HeroAbathurSymbiote"><When type="Property" Unit="HeroAbathurSymbiote"/><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus" Unit="HeroAbathurSymbiote"/><Action type="SetProperty" frame="$this/FCJH_Player3" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_TipSel3" Visible="true"/></State>
@@ -5252,6 +5254,7 @@
 				</StateGroup>
 				<StateGroup name="FCJH_IsPlayer4">
 					<DefaultState val="No"/>
+					<State name="OtherTeam"><When type="Property" frame="$this/FCJH_TeamSense" CurrentRelation="TeamChaos"/><Action type="SetProperty" frame="$this/FCJH_Player4" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_TipSel4" Visible="false"/></State>
 					<State name="HeroAI"><When type="Property" Unit="HeroAI"/><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus" Unit="HeroAI"/><Action type="SetProperty" frame="$this/FCJH_Player4" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_TipSel4" Visible="true"/></State>
 					<State name="HeroAbathur"><When type="Property" Unit="HeroAbathur"/><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus" Unit="HeroAbathur"/><Action type="SetProperty" frame="$this/FCJH_Player4" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_TipSel4" Visible="true"/></State>
 					<State name="HeroAbathurSymbiote"><When type="Property" Unit="HeroAbathurSymbiote"/><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus" Unit="HeroAbathurSymbiote"/><Action type="SetProperty" frame="$this/FCJH_Player4" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_TipSel4" Visible="true"/></State>
@@ -5385,6 +5388,7 @@
 				</StateGroup>
 				<StateGroup name="FCJH_IsPlayer5">
 					<DefaultState val="No"/>
+					<State name="OtherTeam"><When type="Property" frame="$this/FCJH_TeamSense" CurrentRelation="TeamOrder"/><Action type="SetProperty" frame="$this/FCJH_Player5" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_TipSel5" Visible="false"/></State>
 					<State name="HeroAI"><When type="Property" Unit="HeroAI"/><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus" Unit="HeroAI"/><Action type="SetProperty" frame="$this/FCJH_Player5" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_TipSel5" Visible="true"/></State>
 					<State name="HeroAbathur"><When type="Property" Unit="HeroAbathur"/><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus" Unit="HeroAbathur"/><Action type="SetProperty" frame="$this/FCJH_Player5" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_TipSel5" Visible="true"/></State>
 					<State name="HeroAbathurSymbiote"><When type="Property" Unit="HeroAbathurSymbiote"/><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus" Unit="HeroAbathurSymbiote"/><Action type="SetProperty" frame="$this/FCJH_Player5" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_TipSel5" Visible="true"/></State>
@@ -5518,6 +5522,7 @@
 				</StateGroup>
 				<StateGroup name="FCJH_IsPlayer6">
 					<DefaultState val="No"/>
+					<State name="OtherTeam"><When type="Property" frame="$this/FCJH_TeamSense" CurrentRelation="TeamOrder"/><Action type="SetProperty" frame="$this/FCJH_Player6" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_TipSel6" Visible="false"/></State>
 					<State name="HeroAI"><When type="Property" Unit="HeroAI"/><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus" Unit="HeroAI"/><Action type="SetProperty" frame="$this/FCJH_Player6" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_TipSel6" Visible="true"/></State>
 					<State name="HeroAbathur"><When type="Property" Unit="HeroAbathur"/><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus" Unit="HeroAbathur"/><Action type="SetProperty" frame="$this/FCJH_Player6" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_TipSel6" Visible="true"/></State>
 					<State name="HeroAbathurSymbiote"><When type="Property" Unit="HeroAbathurSymbiote"/><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus" Unit="HeroAbathurSymbiote"/><Action type="SetProperty" frame="$this/FCJH_Player6" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_TipSel6" Visible="true"/></State>
@@ -5651,6 +5656,7 @@
 				</StateGroup>
 				<StateGroup name="FCJH_IsPlayer7">
 					<DefaultState val="No"/>
+					<State name="OtherTeam"><When type="Property" frame="$this/FCJH_TeamSense" CurrentRelation="TeamOrder"/><Action type="SetProperty" frame="$this/FCJH_Player7" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_TipSel7" Visible="false"/></State>
 					<State name="HeroAI"><When type="Property" Unit="HeroAI"/><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus" Unit="HeroAI"/><Action type="SetProperty" frame="$this/FCJH_Player7" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_TipSel7" Visible="true"/></State>
 					<State name="HeroAbathur"><When type="Property" Unit="HeroAbathur"/><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus" Unit="HeroAbathur"/><Action type="SetProperty" frame="$this/FCJH_Player7" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_TipSel7" Visible="true"/></State>
 					<State name="HeroAbathurSymbiote"><When type="Property" Unit="HeroAbathurSymbiote"/><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus" Unit="HeroAbathurSymbiote"/><Action type="SetProperty" frame="$this/FCJH_Player7" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_TipSel7" Visible="true"/></State>
@@ -5784,6 +5790,7 @@
 				</StateGroup>
 				<StateGroup name="FCJH_IsPlayer8">
 					<DefaultState val="No"/>
+					<State name="OtherTeam"><When type="Property" frame="$this/FCJH_TeamSense" CurrentRelation="TeamOrder"/><Action type="SetProperty" frame="$this/FCJH_Player8" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_TipSel8" Visible="false"/></State>
 					<State name="HeroAI"><When type="Property" Unit="HeroAI"/><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus" Unit="HeroAI"/><Action type="SetProperty" frame="$this/FCJH_Player8" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_TipSel8" Visible="true"/></State>
 					<State name="HeroAbathur"><When type="Property" Unit="HeroAbathur"/><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus" Unit="HeroAbathur"/><Action type="SetProperty" frame="$this/FCJH_Player8" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_TipSel8" Visible="true"/></State>
 					<State name="HeroAbathurSymbiote"><When type="Property" Unit="HeroAbathurSymbiote"/><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus" Unit="HeroAbathurSymbiote"/><Action type="SetProperty" frame="$this/FCJH_Player8" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_TipSel8" Visible="true"/></State>
@@ -5917,6 +5924,7 @@
 				</StateGroup>
 				<StateGroup name="FCJH_IsPlayer9">
 					<DefaultState val="No"/>
+					<State name="OtherTeam"><When type="Property" frame="$this/FCJH_TeamSense" CurrentRelation="TeamOrder"/><Action type="SetProperty" frame="$this/FCJH_Player9" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_TipSel9" Visible="false"/></State>
 					<State name="HeroAI"><When type="Property" Unit="HeroAI"/><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus" Unit="HeroAI"/><Action type="SetProperty" frame="$this/FCJH_Player9" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_TipSel9" Visible="true"/></State>
 					<State name="HeroAbathur"><When type="Property" Unit="HeroAbathur"/><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus" Unit="HeroAbathur"/><Action type="SetProperty" frame="$this/FCJH_Player9" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_TipSel9" Visible="true"/></State>
 					<State name="HeroAbathurSymbiote"><When type="Property" Unit="HeroAbathurSymbiote"/><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus" Unit="HeroAbathurSymbiote"/><Action type="SetProperty" frame="$this/FCJH_Player9" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_TipSel9" Visible="true"/></State>
