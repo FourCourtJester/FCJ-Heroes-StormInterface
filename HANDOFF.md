@@ -62,8 +62,9 @@ drawn by OBS over empty regions the interface leaves (§6).
   the default UI's small inspector would (never while a replay is paused). Hero forms and
   empty slots await the final pass (§7 items 3, 14).
 - **Kill feed** — Blizzard's own, top-left. **Minimap** bottom-centre, **replay controls**
-  top-left with a tab when collapsed (replays only). Blizzard's player HUD and talent picker
-  never show (holding Ctrl's quick picker: parked 2026-10-05, awaiting a check).
+  top-left with a tab when collapsed (replays only). Blizzard's player HUD never shows; its
+  talent picker is left to the game (a player's view shows it while Ctrl is held, steady, as
+  in Ahli's and Spazzo's UIs - §3).
 
 Not yet: map objectives (pinned to the right edge on many maps — a per-map pass), the OBS
 graphics package, the fight-mode hotkey, and the visual pass that takes the chrome look of
@@ -213,6 +214,16 @@ src/dev/                                     dev-only probes (empty now; packed 
   - a plain frame can carry text: `<Tooltip val="@Button/Tooltip/..."/>`; Ahli composes
     headers with a `TextFormatFrame` (`FormatText` + `Replacement`) bound as `{.../@Text}`.
 
+**Blizzard's talent picker can't be hidden while Ctrl is held** (2026-10-06, a morning of
+tries). In a player's view (1-8) held Ctrl opens it (`FloatingCombatUnitSelectionPanel/
+UnitStatusFrame0/HeroTalentTreeSelectionPanel`, the frame Ahli moves above his hero card) and
+the engine re-asserts it every frame: a Visibility loop, Fade loops on it and on its parent,
+parking it (it came back on screen at the top-left), stopping its Show animation, parking or
+fading its parts, and emptying its template each lost, and fighting it made it FLICKER. Ahli
+0.75 and Spazzo leave it be and it sits steady while Ctrl is down. So do we now (FCJH_Hidden).
+The diagnostic that settled it: marker squares stuck inside the frame (IgnoreParentAlpha) plus
+latches on each suspect's Visible - a quick flick needs latches, not screenshots.
+
 ### The inspect card's abilities: Blizzard's command card (2026-10-02..05)
 
 The card's ability rows are Blizzard's own command card (`ConsoleUIContainer/CommandPanel`),
@@ -356,8 +367,9 @@ five segments would duplicate the hero row. If plates read too small, widen them
 
 **Next** (end of the 2026-10-05 session; start here):
 
-Waiting on a look in game: holding Ctrl (Blizzard's quick talent picker, now parked) and the
-short inspect card without its resource slot. Done this session: panes in Blizzard's talent
+Waiting on a look in game: the short inspect card without its resource slot, and that a
+player's view (1-8) doesn't bring Blizzard's talent picker up on its own now that it's left
+to the game (2026-09-29 it did). Done this session: panes in Blizzard's talent
 grid and the inspect skin, hotkeys settled (our panes on Ctrl+1-4; the inspect and death
 recap keys tried and dropped), the short card for non-heroes (camp mercenaries purple,
 captured ones their team's), hero forms and empty ability slots (item 3). Open items, the
@@ -529,9 +541,9 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
     watched, as Ahli's Ctrl+C) - the user didn't like it; Ctrl+D as a Shortcut on Blizzard's
     death recap toast (`ConsoleUIContainer/HeroDeathStunFrame/DeathRecapButton`) did nothing -
     the toast likely never shows for an observer. Both removed outright; the card follows the
-    selection only. Found while testing: holding Ctrl brought up Blizzard's quick talent picker
-    (game hotkey QuickHeroTalentTreeSelection = Control), seen as faint rings behind the talents
-    pane; now parked and see-through in FCJH_Hidden as well as hide-looped - awaiting QA.
+    selection only. Found while testing: holding Ctrl in a player's view brings up Blizzard's
+    talent picker (game hotkey QuickHeroTalentTreeSelection = Control) - left to the game, see
+    §3 "Blizzard's talent picker".
 11. **A non-hero inspect card - built 2026-10-05, awaiting QA.** For minions, mercenaries,
     bosses, buildings: a SHORT card (`inspect_card` SHIFT / H_SHORT: 249 units, 224 px, bottom
     still on the plates) - name, the team's name on the band, health, buffs, stats. No portrait
