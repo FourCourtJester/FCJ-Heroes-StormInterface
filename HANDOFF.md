@@ -489,19 +489,18 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    anyway, inside the plates' 415 px gap. Open, map by map (with item 8): HEIGHT. The
    square is centred at y ~936 and hangs off the bottom, so a tall map may cross the bottom
    padding or the screen's edge.
-10. **Hotkeys for the inspect card and a death recap** (user, 2026-10-05). Today the card
-    only follows the selection (Blizzard's inspect box) and its X; there's no key. Ahli 0.75
-    (`references/AhliObs075`, hotkeys as `#Hotkey - ...` constants in `_Ahli.StormLayout`)
-    has "Toggle Unit selection UI" Control+Alt+K and "Toggle Unit Stats" Control+C - check
-    which of his panels those switch, and how. He has NO death recap key: the recap is
-    Blizzard's (item 5) and he hides its buttons in his leader panel. So: a key to show/hide
-    the card (a ToggleControl, as our info panes do: `[info_pane] hotkeys`), and a key that
-    opens the death recap for the selected hero, if the recap can be opened without its
-    button - OR (user's alternative) clicking a dead hero's plate (its death timer) opens
-    that hero's recap. Either works for the user; the plate click is the nicer one if the
-    recap can be pointed at a given player (the plates already know theirs), and it must not
-    break click-to-follow on a living hero's plate. Keys in layout.toml beside the panes' (Control+1-4 are taken; Ahli's
-    Control+1-8 and Control+C/E clash only if both are loaded).
+10. **Hotkeys for the inspect card and a death recap - built 2026-10-05, awaiting QA.**
+    The user's keys (layout.toml `[keys]`; plain I / D are hero keys, so Control):
+    - **Ctrl+I: the inspect card off and on** (on to start). `FCJH_InspectOff`, a
+      ToggleControl beside the card's gate (inspect_card.card); the gate's Show state also
+      wants it hidden. Ahli's equivalent is his Ctrl+C "Toggle Unit Stats" (a ToggleControl
+      plus a StateGroup on its Property visible, `_BottomLeft`); his Ctrl+Alt+K isn't wanted.
+    - **Ctrl+D: the death recap** - a Shortcut on Blizzard's own toast button,
+      `ConsoleUIContainer/HeroDeathStunFrame/DeathRecapButton` (FCJH_Hidden); it's only there
+      while the followed hero is dead (its DeadState). Neither Ahli (hides it) nor Spazzo binds
+      it. A test: the user hasn't found a way to bring up a recap as an observer, and the toast
+      may never show for one. If it doesn't, drop the key (user: "we can move past it").
+      The plate-click idea is out: a layout can't send a click to another button.
 11. **A non-hero inspect card** (user, 2026-10-05) - for minions, mercenaries, bosses, map
     objectives' units and buildings. The inspect card shows for any selected unit (it follows
     Blizzard's inspect box), but everything on it after the bars is hero-shaped: a non-hero
@@ -545,6 +544,9 @@ health percent label instead. The round-by-round notes are in git history (`a018
 commits around it).
 
 ---
+12. **Ahli's death animation on the nameplate** (user, 2026-10-05: "a nice touch", not to
+    copy) - his plate does something when its hero dies. For the art pass (item 7): study
+    what it does, then design our own.
 
 ## 8. Original brief
 

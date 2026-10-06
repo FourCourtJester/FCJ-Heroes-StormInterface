@@ -16,6 +16,17 @@
 		     plate click of a game; the default UI's doesn't (user). Blizzard's is now parked
 		     off screen rather than forced hidden (FCJH_Hidden), so its visibility is still the
 		     game's, and this watcher copies it onto the card. -->
+		<!-- The card's off switch (layout.toml [keys] inspect; Ahli's Ctrl+C toggle): shown, the
+		     card stays shut whatever is selected. Starts hidden, so the card starts on. -->
+		<Frame type="ToggleControl" name="FCJH_InspectOff">
+			<Anchor side="Top"  relative="$parent" pos="Min" offset="0"/>
+			<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+			<Width val="1"/>
+			<Height val="1"/>
+			<Shortcut val="#FCJH_KEY_INSPECT"/>
+			<Visible val="false"/>
+			<AcceptsMouse val="false"/>
+		</Frame>
 		<Frame type="Frame" name="FCJH_InspectGate">
 			<Anchor relative="$parent"/>
 			<AcceptsMouse val="false"/>
@@ -23,6 +34,7 @@
 				<DefaultState val="Hide"/>
 				<State name="Show">
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/TargetInfoFrame" Visible="true"/>
+					<When type="Property" frame="$parent/FCJH_InspectOff" Visible="false"/>
 					<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="true"/>
 					<Action type="SetProperty" frame="$parent/FCJH_TalentTips" Visible="true"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="291"/>

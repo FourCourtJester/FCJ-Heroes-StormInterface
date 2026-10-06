@@ -317,6 +317,10 @@ def constants_layout(cfg):
     const(name("info", "pane", "header", "h"), u(pane["header_height"]))
     for key, shortcut in pane["hotkeys"].items():
         const(name("info", "pane", "key", key), shortcut)
+    lines.append("")
+    lines.append("\t<!-- Other keys: the inspect card's off switch, the death recap -->")
+    for key, shortcut in cfg["keys"].items():
+        const(name("key", key), shortcut)
 
     row = cfg["hero_row"]
     lines.append("")

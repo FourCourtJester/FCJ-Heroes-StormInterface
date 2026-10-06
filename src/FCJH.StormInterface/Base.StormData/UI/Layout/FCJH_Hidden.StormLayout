@@ -136,5 +136,18 @@
 				</Frame>
 			</Frame>
 		</Frame>
+		<!-- Not hidden: a key for Blizzard's death recap button, the toast that comes up under a
+		     dead hero ("click for more details"; gameui HeroDeathStunFrame, shown by its DeadState).
+		     A Shortcut presses a button as a click would. Neither Ahli (hides it) nor Spazzo binds
+		     it. A test (user, 2026-10-05): whether the toast shows for an observer at all. -->
+		<Frame type="Frame" name="UIContainer">
+			<Frame type="Frame" name="ConsoleUIContainer">
+				<Frame type="UnitStatusFrame" name="HeroDeathStunFrame">
+					<Frame type="Button" name="DeathRecapButton">
+						<Shortcut val="#FCJH_KEY_DEATH_RECAP"/>
+					</Frame>
+				</Frame>
+			</Frame>
+		</Frame>
 	</Frame>
 </Desc>
