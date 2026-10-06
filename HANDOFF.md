@@ -467,8 +467,9 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    20; inspect's y from `above = "blue_xp"`; gen.py check_padding refuses anything closer
    (top bar, minimap and kill feed exempt). Kill feed: back to Blizzard's own, top-left
    (FCJH_KillFeed removed; user: moved right, Blizzard's rows grow rightward so multi-kills
-   ran off the screen, and they can't be right-aligned). Open: it shares the top-left with
-   the replay box; the minimap still hangs off the bottom like Blizzard's.
+   ran off the screen, and they can't be right-aligned); seen in game: no clash with the
+   replay box, and it sits ~20 px from the side on its own. Open: the minimap still hangs
+   off the bottom like Blizzard's.
 10. **Hotkeys for the inspect card and a death recap** (user, 2026-10-05). Today the card
     only follows the selection (Blizzard's inspect box) and its X; there's no key. Ahli 0.75
     (`references/AhliObs075`, hotkeys as `#Hotkey - ...` constants in `_Ahli.StormLayout`)
