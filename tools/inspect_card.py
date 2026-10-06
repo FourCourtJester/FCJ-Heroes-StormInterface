@@ -32,7 +32,7 @@ EDGE = 5                           # the edge: our team line, then Blizzard's bo
 PAD = 10
 M = EDGE + PAD                     # side margin
 INNER = W - 2 * M                  # the width everything is laid across
-TITLE = 30                         # the title band: the hero's name, and the X
+TITLE = 30                         # the title band: the hero's name
 NAME_BAND, NAME_H = 155, 30        # the player's name and the level, under the portrait
 NAME_DROP = 2                      # their text set this much low: centred, it read high (2026-10-05)
 PORTRAIT = (TITLE, NAME_BAND)      # top, bottom: stops at the band (round 3 ran it under the
@@ -360,21 +360,8 @@ def card():
            f'{T*2}<!-- The card: our copy of Blizzard\'s inspect box -->\n'
            f'{T*2}<Frame type="TargetInfoFrame" name="FCJH_Inspect">\n'
            f'{T*3}<Visible val="false"/>\n'
-           # Round 9: an X in the title band's right end, like the info panes' (tools/gen.py
-           # close_button). It hides the card directly (end="Stop": not held), so the card
-           # stays closed until Blizzard's inspector next hides and shows again (click off,
-           # then select a unit).
-           f'{T*3}<Frame type="Button" name="FCJH_Close">\n'
-           f'{T*4}<Anchor side="Top"   relative="$parent" pos="Min" offset="0"/>\n'
-           f'{T*4}<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>\n'
-           f'{T*4}<Width val="{TITLE}"/>\n{T*4}<Height val="{TITLE}"/>\n'
-           f'{T*4}<RenderPriority val="700"/>\n{T*4}<AcceptsMouse val="true"/>\n'
-           f'{T*4}<Frame type="Label" name="FCJH_X">\n{T*5}<Anchor relative="$parent"/>\n'
-           f'{T*5}<Style val="ObsBar_MatchTimer"/>\n{T*5}<Text val="X"/>\n{T*5}<AcceptsMouse val="false"/>\n{T*4}</Frame>\n'
-           f'{T*4}<Animation name="FCJH_Close">\n{T*5}<Event event="OnClick" action="Reset,Play"/>\n'
-           f'{T*5}<Controller type="Visibility" end="Stop" frame="$parent">\n'
-           f'{T*6}<Key type="Bool" time="0" value="false"/>\n{T*5}</Controller>\n{T*4}</Animation>\n'
-           f'{T*3}</Frame>\n'
+           # no X (round 9 had one; dropped 2026-10-05): clicking off the unit closes the card, as
+           # it does Blizzard's - the X is for the panes you summon (tools/gen.py close_button)
            f'{T*3}<Anchor side="Top"    relative="$parent" pos="Min" offset="#FCJH_INSPECT_T"/>\n'
            f'{T*3}<Anchor side="Left"   relative="$parent" pos="Min" offset="#FCJH_INSPECT_L"/>\n'
            f'{T*3}<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INSPECT_B"/>\n'
@@ -679,7 +666,7 @@ def unit():
 
 {T*4}<!-- 2. name (in the title band, user 2026-10-05), player, level -->
 {T*4}<Frame type="UnitStatusName" name="FCJH_HeroName" template="UnitStatus/UnitStatusUnitNameTemplate">
-{T*5}<!-- centred on the card, clear of the X: the template's own size (220 x 30) beat the
+{T*5}<!-- centred on the card: the template's own size (220 x 30) beat the
 {T*5}     anchors and held it off centre (2026-10-05), so the size is given -->
 {placed(0, TITLE, W - 2 * TITLE, TITLE, 5)}{T*5}<UseNameTypeVisibilityRules val="false"/>
 {T*5}<Frame type="Label" name="Label"><Anchor relative="$parent"/><Style val="FCJH_InspectName"/></Frame>

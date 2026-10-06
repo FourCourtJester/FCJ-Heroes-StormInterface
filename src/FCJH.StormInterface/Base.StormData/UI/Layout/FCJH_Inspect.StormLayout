@@ -49,26 +49,6 @@
 		<!-- The card: our copy of Blizzard's inspect box -->
 		<Frame type="TargetInfoFrame" name="FCJH_Inspect">
 			<Visible val="false"/>
-			<Frame type="Button" name="FCJH_Close">
-				<Anchor side="Top"   relative="$parent" pos="Min" offset="0"/>
-				<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-				<Width val="30"/>
-				<Height val="30"/>
-				<RenderPriority val="700"/>
-				<AcceptsMouse val="true"/>
-				<Frame type="Label" name="FCJH_X">
-					<Anchor relative="$parent"/>
-					<Style val="ObsBar_MatchTimer"/>
-					<Text val="X"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
-				<Animation name="FCJH_Close">
-					<Event event="OnClick" action="Reset,Play"/>
-					<Controller type="Visibility" end="Stop" frame="$parent">
-						<Key type="Bool" time="0" value="false"/>
-					</Controller>
-				</Animation>
-			</Frame>
 			<Anchor side="Top"    relative="$parent" pos="Min" offset="#FCJH_INSPECT_T"/>
 			<Anchor side="Left"   relative="$parent" pos="Min" offset="#FCJH_INSPECT_L"/>
 			<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INSPECT_B"/>
@@ -296,7 +276,7 @@
 
 				<!-- 2. name (in the title band, user 2026-10-05), player, level -->
 				<Frame type="UnitStatusName" name="FCJH_HeroName" template="UnitStatus/UnitStatusUnitNameTemplate">
-					<!-- centred on the card, clear of the X: the template's own size (220 x 30) beat the
+					<!-- centred on the card: the template's own size (220 x 30) beat the
 					     anchors and held it off centre (2026-10-05), so the size is given -->
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 					<Anchor side="Left"   relative="$parent" pos="Min" offset="30"/>
