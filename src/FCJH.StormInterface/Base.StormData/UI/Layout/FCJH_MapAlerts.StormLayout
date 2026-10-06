@@ -78,6 +78,15 @@
 					<Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_B"/>
 				</State>
 			</StateGroup>
+			<!-- gone 5 s after it shows, whoever the script's own hide reaches: switching from a
+			     player view to the everyone view inside those 5 s left it up for good - the hide
+			     goes to the team's players only (user, 2026-10-06) -->
+			<Animation name="FCJH_Timer">
+				<Event event="Show" action="Restart,Play"/>
+				<Controller type="Event" end="Stop">
+					<Key type="Event" time="5" event="Hide"/>
+				</Controller>
+			</Animation>
 		</Frame>
 		<Frame type="Frame" name="NecroNotificationFrame">
 			<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_RED_B"/>
@@ -93,6 +102,15 @@
 					<Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_RED_B"/>
 				</State>
 			</StateGroup>
+			<!-- gone 5 s after it shows, whoever the script's own hide reaches: switching from a
+			     player view to the everyone view inside those 5 s left it up for good - the hide
+			     goes to the team's players only (user, 2026-10-06) -->
+			<Animation name="FCJH_Timer">
+				<Event event="Show" action="Restart,Play"/>
+				<Controller type="Event" end="Stop">
+					<Key type="Event" time="5" event="Hide"/>
+				</Controller>
+			</Animation>
 		</Frame>
 		<!-- Blizzard's town-capture pair ("Allies / The Enemy captured <town>"), viewer-relative and
 		     players-only: parked above the screen - ours (below) stand in for them in every view. -->
