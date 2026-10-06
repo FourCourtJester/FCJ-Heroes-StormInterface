@@ -153,6 +153,33 @@
 								<Event event="Begin" action="Stop"/>
 								<Event event="End" action="Stop"/>
 							</Animation>
+							<!-- ...and still it flicked up whole (2026-10-06): held Ctrl shows the picker
+							     itself, past all of the above. Its parts are ours to place, though: the
+							     tabs, choices and tier row (TalentTreePanel), its border and title,
+							     parked and see-through inside it -->
+							<Frame type="HeroTalentTreePanel" name="TalentTreePanel">
+								<Anchor side="Top"    relative="$GameUI" pos="Min" offset="9999"/>
+								<Anchor side="Left"   relative="$GameUI" pos="Min" offset="9999"/>
+								<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="10099"/>
+								<Anchor side="Right"  relative="$GameUI" pos="Min" offset="10099"/>
+								<Alpha val="0"/>
+								<AcceptsMouse val="false"/>
+								<AcceptsMouseTooltip val="false"/>
+							</Frame>
+							<Frame type="Image" name="BorderImage">
+								<Anchor side="Top"    relative="$GameUI" pos="Min" offset="9999"/>
+								<Anchor side="Left"   relative="$GameUI" pos="Min" offset="9999"/>
+								<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="10099"/>
+								<Anchor side="Right"  relative="$GameUI" pos="Min" offset="10099"/>
+								<Alpha val="0"/>
+							</Frame>
+							<Frame type="Label" name="TitleLabel">
+								<Anchor side="Top"    relative="$GameUI" pos="Min" offset="9999"/>
+								<Anchor side="Left"   relative="$GameUI" pos="Min" offset="9999"/>
+								<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="10099"/>
+								<Anchor side="Right"  relative="$GameUI" pos="Min" offset="10099"/>
+								<Alpha val="0"/>
+							</Frame>
 						</Frame>
 					</Frame>
 				</Frame>
