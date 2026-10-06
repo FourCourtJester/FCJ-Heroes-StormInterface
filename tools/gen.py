@@ -342,8 +342,6 @@ def constants_layout(cfg):
     # talents pane (FCJH_InfoPane) and the stats panes use it as FCJH_Constants/FCJH_PaneSkin
     lines.append("")
     lines.append(inspect_card.pane_skin(name("info", "pane", "title", "h")).rstrip("\n"))
-    lines.append(inspect_card.pane_skin(name("info", "pane", "title", "h"), name_="FCJH_PaneSkinPlain",
-                                        shade=False).rstrip("\n"))
     return XML_DECL + GENERATED + "<Desc>\n" + "\n".join(lines) + "\n</Desc>\n"
 
 
@@ -2245,22 +2243,6 @@ def stat_value(frame, score, team, indent):
             f'{t}</Frame>\n')
 
 
-# DIAGNOSTIC (2026-10-05): the panes' skin background didn't draw (its border and title band
-# did; the card's identical background does). Each pane tries one combination - template or a
-# frame of its own, shaded (Color) or not - so one look at the four panes says which it is.
-# The talents pane (FCJH_InfoPane, by hand) has its own frame, shaded.
-PANE_SKIN_DIAG = {"kda": ("template", True), "healing": ("template", False), "structures": ("own", False)}
-
-
-def pane_skin_frame(key, indent=3):
-    how, shade = PANE_SKIN_DIAG[key]
-    t = "\t" * indent
-    if how == "template":
-        tmpl = "FCJH_PaneSkin" if shade else "FCJH_PaneSkinPlain"
-        return f'{t}<Frame type="Frame" name="FCJH_Skin" template="FCJH_Constants/{tmpl}">\n' + PANE(indent + 1) + f'{t}</Frame>\n'
-    return inspect_card.pane_skin("FCJH_INFO_PANE_TITLE_H", indent, "FCJH_Skin", shade, PANE(indent + 1))
-
-
 def stat_pane(key, title, columns, geometry):
     container = f"Pane_{key.capitalize()}"
     placed = place_columns(columns, geometry["columns"])
@@ -2315,7 +2297,9 @@ def stat_pane(key, title, columns, geometry):
 			<Anchor relative="$parent"/>
 			<Visible val="false"/>
 			<AcceptsMouse val="false"/>
-''' + pane_skin_frame(key) + f'''			<Frame type="HeroLeaderPanel" name="FCJH_Stats" template="StatsOverviewPanel/StatsOverviewPanelTemplate/StatsOverviewBottomPanel">
+			<Frame type="Frame" name="FCJH_Skin" template="FCJH_Constants/FCJH_PaneSkin">
+''' + PANE(4) + f'''			</Frame>
+			<Frame type="HeroLeaderPanel" name="FCJH_Stats" template="StatsOverviewPanel/StatsOverviewPanelTemplate/StatsOverviewBottomPanel">
 {PANE(4)}				<Width val="0"/>
 				<Height val="0"/>
 				<Visible val="true"/>

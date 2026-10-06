@@ -2198,7 +2198,7 @@
 			<Anchor relative="$parent"/>
 			<Visible val="false"/>
 			<AcceptsMouse val="false"/>
-			<Frame type="Frame" name="FCJH_Skin" template="FCJH_Constants/FCJH_PaneSkinPlain">
+			<Frame type="Frame" name="FCJH_Skin" template="FCJH_Constants/FCJH_PaneSkin">
 				<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
 				<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_L"/>
 				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_B"/>
@@ -4129,54 +4129,11 @@
 			<Anchor relative="$parent"/>
 			<Visible val="false"/>
 			<AcceptsMouse val="false"/>
-			<!-- the info panes' look: the inspect card's (tools/inspect_card.py pane_skin) -->
-			<Frame type="Frame" name="FCJH_Skin">
+			<Frame type="Frame" name="FCJH_Skin" template="FCJH_Constants/FCJH_PaneSkin">
 				<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
 				<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_L"/>
 				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_B"/>
 				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
-				<AcceptsMouse val="false"/>
-				<Frame type="Image" name="FCJH_SkinBack">
-					<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-					<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
-					<Texture val="@UI/Storm_UI_TargetInfoPanel_Background"/>
-					<TextureType val="Nineslice"/>
-					<Alpha val="230"/>
-					<RenderPriority val="400"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
-				<Frame type="Image" name="FCJH_SkinBorder">
-					<Anchor side="Top"    relative="$parent" pos="Min" offset="3"/>
-					<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
-					<Anchor side="Bottom" relative="$parent" pos="Max" offset="-3"/>
-					<Anchor side="Right"  relative="$parent" pos="Max" offset="-3"/>
-					<Texture val="@UI/Storm_UI_TargetInfoPanel_BackgroundBorder"/>
-					<TextureType val="Nineslice"/>
-					<RenderPriority val="405"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
-				<Frame type="Image" name="FCJH_SkinTitle">
-					<Anchor side="Top"    relative="$parent" pos="Min" offset="3"/>
-					<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
-					<Anchor side="Right"  relative="$parent" pos="Max" offset="-3"/>
-					<Color val="564c6d"/>
-					<Alpha val="76"/>
-					<RenderPriority val="410"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
-				<Frame type="Image" name="FCJH_SkinTitleLine">
-					<Anchor side="Top"    relative="$parent/FCJH_SkinTitle" pos="Max" offset="-1"/>
-					<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Bottom" relative="$parent/FCJH_SkinTitle" pos="Max" offset="0"/>
-					<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
-					<Color val="73668d"/>
-					<Alpha val="76"/>
-					<RenderPriority val="412"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
 			</Frame>
 			<Frame type="HeroLeaderPanel" name="FCJH_Stats" template="StatsOverviewPanel/StatsOverviewPanelTemplate/StatsOverviewBottomPanel">
 				<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
