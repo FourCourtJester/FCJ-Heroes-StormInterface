@@ -2439,6 +2439,61 @@ def write(cfg, source=SOURCE):
 
 # ------------------------------------------------------------------ dev-only files
 
+def art_board(hotkey, textures):
+    """DIAGNOSTIC (2026-10-05): Blizzard textures we can't open outside the game, each at its
+    native size on a grey board (so transparency shows), outlined in magenta with its name
+    above, stacked down the screen. Hidden until its hotkey; a screenshot gives each one's
+    size and look. Remove once the panes' art pass is settled."""
+    def line(n, top, left, bottom, right, ind):
+        t = "\t" * ind
+        return [f'{t}<Frame type="Image" name="{n}">',
+                f'{t}\t<Anchor side="Top" relative="$parent/{top[0]}" pos="{top[1]}" offset="{top[2]}"/>',
+                f'{t}\t<Anchor side="Left" relative="$parent/{left[0]}" pos="{left[1]}" offset="{left[2]}"/>',
+                f'{t}\t<Anchor side="Bottom" relative="$parent/{bottom[0]}" pos="{bottom[1]}" offset="{bottom[2]}"/>',
+                f'{t}\t<Anchor side="Right" relative="$parent/{right[0]}" pos="{right[1]}" offset="{right[2]}"/>',
+                f'{t}\t<Texture val="@UI/PauseScreenDimImage"/>', f'{t}\t<ColorAdjustMode val="Fill"/>',
+                f'{t}\t<AdjustmentColor val="255,255,0,255"/>', f'{t}\t<RenderPriority val="960"/>',
+                f'{t}\t<AcceptsMouse val="false"/>', f'{t}</Frame>']
+    out = ['\t\t<Frame type="Frame" name="FCJH_DevArtBoard">', '\t\t\t<Anchor relative="$parent"/>',
+           '\t\t\t<Alpha val="0"/>', '\t\t\t<AcceptsMouse val="false"/>',
+           '\t\t\t<Frame type="Image" name="Board">', '\t\t\t\t<Anchor relative="$parent"/>',
+           '\t\t\t\t<Texture val="@UI/PauseScreenDimImage"/>', '\t\t\t\t<ColorAdjustMode val="Fill"/>',
+           '\t\t\t\t<AdjustmentColor val="255,70,70,78"/>', '\t\t\t\t<RenderPriority val="940"/>',
+           '\t\t\t\t<AcceptsMouse val="false"/>', '\t\t\t</Frame>']
+    prev = None
+    for i, tex in enumerate(textures):
+        name, img = f"Name{i}", f"Art{i}"
+        top = (f'relative="$parent/{prev}" pos="Max" offset="24"' if prev else 'relative="$parent" pos="Min" offset="16"')
+        out += [f'\t\t\t<Frame type="Label" name="{name}">', f'\t\t\t\t<Anchor side="Top" {top}/>',
+                '\t\t\t\t<Anchor side="Left" relative="$parent" pos="Min" offset="24"/>',
+                '\t\t\t\t<Style val="WaitingForPlayersDialogChat"/>', f'\t\t\t\t<Text val="{tex}"/>',
+                '\t\t\t\t<Options val="NoWrapping"/>', '\t\t\t\t<RenderPriority val="960"/>',
+                '\t\t\t\t<AcceptsMouse val="false"/>', '\t\t\t</Frame>',
+                f'\t\t\t<Frame type="Image" name="{img}">',
+                f'\t\t\t\t<Anchor side="Top" relative="$parent/{name}" pos="Max" offset="6"/>',
+                '\t\t\t\t<Anchor side="Left" relative="$parent" pos="Min" offset="24"/>',
+                f'\t\t\t\t<Texture val="@UI/{tex}"/>', '\t\t\t\t<RenderPriority val="950"/>',
+                '\t\t\t\t<AcceptsMouse val="false"/>', '\t\t\t</Frame>']
+        out += line(f"{img}_T", (img, "Min", -2), (img, "Min", -2), (img, "Min", 0), (img, "Max", 2), 3)
+        out += line(f"{img}_B", (img, "Max", 0), (img, "Min", -2), (img, "Max", 2), (img, "Max", 2), 3)
+        out += line(f"{img}_L", (img, "Min", 0), (img, "Min", -2), (img, "Max", 0), (img, "Min", 0), 3)
+        out += line(f"{img}_R", (img, "Min", 0), (img, "Max", 0), (img, "Max", 0), (img, "Max", 2), 3)
+        prev = img
+    out += ['\t\t</Frame>',
+            '\t\t<Frame type="ToggleControl" name="FCJH_DevArtBoardToggle">',
+            '\t\t\t<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>',
+            '\t\t\t<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>',
+            '\t\t\t<Width val="1"/>', '\t\t\t<Height val="1"/>', '\t\t\t<Visible val="false"/>',
+            f'\t\t\t<Shortcut val="{hotkey}"/>', '\t\t\t<AcceptsMouse val="false"/>',
+            '\t\t\t<Animation name="FCJH_DevArtBoardFade">',
+            '\t\t\t\t<Event event="OnShown" action="DirectionForward,Play"/>',
+            '\t\t\t\t<Event event="OnHidden" action="DirectionReverse,Play"/>',
+            '\t\t\t\t<Controller type="Fade" end="Pause" frame="$parent/FCJH_DevArtBoard">',
+            '\t\t\t\t\t<Key type="Curve" time="0" value="0"/>', '\t\t\t\t\t<Key type="Curve" time="0.15" value="255"/>',
+            '\t\t\t\t</Controller>', '\t\t\t</Animation>', '\t\t</Frame>']
+    return out
+
+
 def dev_layout(cfg, stamp):
     """Build stamp and wireframe overlay, as an override of GameUI."""
     dev = cfg.get("dev", {})
@@ -2514,6 +2569,8 @@ def dev_layout(cfg, stamp):
                 '\t\t\t</Animation>',
                 '\t\t</Frame>',
             ]
+    if dev.get("art_board_hotkey"):
+        parts += art_board(dev["art_board_hotkey"], dev.get("art_board", []))
     body = "\n".join(parts)
     return (XML_DECL + "<!-- Dev build only: staged by tools/pack.py, never committed or shipped. -->\n"
             "<Desc>\n"

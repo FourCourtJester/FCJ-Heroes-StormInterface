@@ -16,16 +16,28 @@
 			<Anchor relative="$parent"/>
 			<Visible val="false"/>
 			<AcceptsMouse val="false"/>
-			<Frame type="Image" name="FCJH_InfoPaneBack">
+			<!-- The backdrop: Blizzard's observer talents pane art (obs_talents_bg), which runs
+			     blue to red left to right across the bottom pane - turned a quarter so it runs
+			     blue to red top to bottom, as our rows do (user, 2026-10-05; first pass). The
+			     image is the pane's height wide and its width tall, centred, then rotated. -->
+			<Frame type="Frame" name="FCJH_InfoPaneArea">
 				<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
 				<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_L"/>
 				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_B"/>
 				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
-				<Texture val="@UI/PauseScreenDimImage"/>
-				<ColorAdjustMode val="Fill"/>
-				<AdjustmentColor val="215,11,12,20"/>
-				<RenderPriority val="400"/>
 				<AcceptsMouse val="false"/>
+				<Frame type="Image" name="FCJH_InfoPaneBack">
+					<Anchor side="Top"    relative="$parent" pos="Mid" offset="0"/>
+					<Anchor side="Bottom" relative="$parent" pos="Mid" offset="0"/>
+					<Anchor side="Left"   relative="$parent" pos="Mid" offset="0"/>
+					<Anchor side="Right"  relative="$parent" pos="Mid" offset="0"/>
+					<Width val="#FCJH_INFO_PANE_H"/>
+					<Height val="#FCJH_INFO_PANE_W"/>
+					<Texture val="@UI/obs_talents_bg"/>
+					<Rotation val="90"/>
+					<RenderPriority val="400"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
 			</Frame>
 			<Frame type="HeroTalentsPanel" name="FCJH_TalentPanel" template="TalentsOverviewPanel/CleanTalentsPanelTemplate">
 				<Anchor side="Top"    relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
