@@ -338,6 +338,10 @@ def constants_layout(cfg):
         const(name("hero", team, "popup", "l"), round(sign * shift) - u(size / 2))
         const(name("hero", team, "popup", "r"), round(sign * shift) + u(size / 2))
 
+    # the info panes' look, a template here because this file loads first (DescIndex): the
+    # talents pane (FCJH_InfoPane) and the stats panes use it as FCJH_Constants/FCJH_PaneSkin
+    lines.append("")
+    lines.append(inspect_card.pane_skin(name("info", "pane", "title", "h")).rstrip("\n"))
     return XML_DECL + GENERATED + "<Desc>\n" + "\n".join(lines) + "\n</Desc>\n"
 
 
@@ -2039,7 +2043,7 @@ def box(top, left, bottom, right, relative="$parent"):
 
 PANE = box(("Min", "#FCJH_INFO_PANE_T"), ("Min", "#FCJH_INFO_PANE_L"),
            ("Min", "#FCJH_INFO_PANE_B"), ("Min", "#FCJH_INFO_PANE_R"))
-PANE_BACK, PANE_BAND, PANE_LINE = "215,11,12,20", "235,24,28,48", "130,106,122,170"
+
 
 
 def pane_toggle(key, container):
@@ -2130,18 +2134,12 @@ def close_button(container, indent=3):
 
 
 def pane_chrome(title, placed, geometry, indent=3):
-    """Title band, headings, team bands and frame line - over the rows, mouse passes through."""
+    """Title, headings and team bands - over the rows, mouse passes through. The title band
+    and the frame are the pane's skin, under the rows (FCJH_PaneSkin, since 2026-10-05)."""
     t = "\t" * indent
     band = box(("Min", "0"), ("Min", "0"), ("Min", "#FCJH_INFO_PANE_TITLE_H"), ("Max", "0"))
-    lines = [
-        ("FCJH_BorderTop", box(("Min", "0"), ("Min", "0"), ("Min", "#FCJH_INFO_PANE_BORDER"), ("Max", "0"))),
-        ("FCJH_BorderBottom", box(("Max", "#FCJH_INFO_PANE_BORDER_NEG"), ("Min", "0"), ("Max", "0"), ("Max", "0"))),
-        ("FCJH_BorderLeft", box(("Min", "0"), ("Min", "0"), ("Max", "0"), ("Min", "#FCJH_INFO_PANE_BORDER"))),
-        ("FCJH_BorderRight", box(("Min", "0"), ("Max", "#FCJH_INFO_PANE_BORDER_NEG"), ("Max", "0"), ("Max", "0"))),
-    ]
     out = f'{t}<Frame type="Frame" name="FCJH_Chrome">\n' + PANE(indent + 1) + \
         f'{t}\t<RenderPriority val="600"/>\n{t}\t<AcceptsMouse val="false"/>\n'
-    out += fill_image("FCJH_TitleBand", band, PANE_BAND, 600, indent + 1)
     out += (f'{t}\t<Frame type="Label" name="FCJH_Title">\n' + band(indent + 2) +
             f'{t}\t\t<Style val="ObsBar_MatchTimer"/>\n{t}\t\t<Text val="{title}"/>\n'
             f'{t}\t\t<RenderPriority val="610"/>\n{t}\t\t<AcceptsMouse val="false"/>\n{t}\t</Frame>\n')
@@ -2157,8 +2155,6 @@ def pane_chrome(title, placed, geometry, indent=3):
     for (name, team_id, colour, title_style, value_style), top in zip(TEAMS, geometry["team_tops"]):
         out += team_header(team_id, colour, title_style, value_style, name, top,
                            geometry["team_h"], placed, indent + 1)
-    for n, anchors in lines:
-        out += fill_image(n, anchors, PANE_LINE, 620, indent + 1)
     return out + f'{t}</Frame>\n'
 
 
@@ -2301,7 +2297,9 @@ def stat_pane(key, title, columns, geometry):
 			<Anchor relative="$parent"/>
 			<Visible val="false"/>
 			<AcceptsMouse val="false"/>
-''' + fill_image("FCJH_Back", PANE, PANE_BACK, 400, 3) + f'''			<Frame type="HeroLeaderPanel" name="FCJH_Stats" template="StatsOverviewPanel/StatsOverviewPanelTemplate/StatsOverviewBottomPanel">
+			<Frame type="Frame" name="FCJH_Skin" template="FCJH_Constants/FCJH_PaneSkin">
+''' + PANE(4) + f'''			</Frame>
+			<Frame type="HeroLeaderPanel" name="FCJH_Stats" template="StatsOverviewPanel/StatsOverviewPanelTemplate/StatsOverviewBottomPanel">
 {PANE(4)}				<Width val="0"/>
 				<Height val="0"/>
 				<Visible val="true"/>

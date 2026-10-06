@@ -306,6 +306,14 @@ def command_panel():
             f'{T*2}</Frame>\n')
 
 
+# The card's skin (blizzard_skin), and the info panes' (pane_skin): Blizzard's inspector art
+SKIN_BACK, SKIN_BORDER = "Storm_UI_TargetInfoPanel_Background", "Storm_UI_TargetInfoPanel_BackgroundBorder"
+SKIN_ALPHA = 230        # 90%: the game shows through a little (user, 2026-10-05)
+SKIN_SHADE = "e6e6e6"   # the background 10% darker (user, 2026-10-05, for every pane)
+SKIN_BAND, SKIN_LINE = "564c6d", "73668d"   # the title band's tint, and its line
+SKIN_INSET = 3          # the border, and the bands, this far in from the edge
+
+
 def blizzard_skin():
     """The default inspector's own art on the card (the user's background pass, 2026-10-05:
     "the pure black needs something to punch it up"; chosen over the flat look in game) -
@@ -328,13 +336,42 @@ def blizzard_skin():
     nine = lambda tex: f'{u}<Texture val="@UI/{tex}"/>\n{u}<TextureType val="Nineslice"/>\n'
     tint = lambda colour: f'{u}<Color val="{colour}"/>\n{u}<Alpha val="76"/>\n'
     # the background at 90%, the game showing through a little as through the replay panel
-    # (user, 2026-10-05: 80% was a touch much); nothing under it (our back is faded, mouse only)
-    return (img("FCJH_SkinBack", 0, 0, nine("Storm_UI_TargetInfoPanel_Background") + f'{u}<Alpha val="230"/>\n',
+    # (user, 2026-10-05: 80% was a touch much), shaded 10% darker (SKIN_SHADE); nothing under
+    # it (our back is faded, mouse only)
+    return (img("FCJH_SkinBack", 0, 0, nine(SKIN_BACK) + f'{u}<Alpha val="{SKIN_ALPHA}"/>\n{u}<Color val="{SKIN_SHADE}"/>\n',
                 205, to_end=True)
-            + img("FCJH_SkinBorder", 0, 0, nine("Storm_UI_TargetInfoPanel_BackgroundBorder"), 207, 3, to_end=True)
-            + img("FCJH_SkinTitle", 0, TITLE, tint("564c6d"), 211, 3)
-            + img("FCJH_SkinTitleLine", TITLE - 1, TITLE, tint("73668d"), 212)
-            + img("FCJH_SkinName", NAME_BAND, NAME_BAND + NAME_H, tint("564c6d"), 241, 3))
+            + img("FCJH_SkinBorder", 0, 0, nine(SKIN_BORDER), 207, SKIN_INSET, to_end=True)
+            + img("FCJH_SkinTitle", 0, TITLE, tint(SKIN_BAND), 211, SKIN_INSET)
+            + img("FCJH_SkinTitleLine", TITLE - 1, TITLE, tint(SKIN_LINE), 212)
+            + img("FCJH_SkinName", NAME_BAND, NAME_BAND + NAME_H, tint(SKIN_BAND), 241, SKIN_INSET))
+
+
+def pane_skin(title_h, indent=1):
+    """The card's look as a template (FCJH_PaneSkin) for every info pane: once Blizzard's own
+    pane backdrops were tried and scrapped, the panes take the card's style (user, 2026-10-05).
+    The same layers as blizzard_skin - background, border, title band and its line - filling
+    the frame that uses it, the title band `title_h` (a constant name) tall. Under the panes'
+    rows (500) and their title label (610)."""
+    t = "\t" * indent
+    u = t + "\t\t"
+    def img(name_, bottom, extra, prio, inset, top_rel="$parent", top_pos="Min", top_off=None):
+        return (f'{t}\t<Frame type="Image" name="{name_}">\n'
+                f'{u}<Anchor side="Top"    relative="{top_rel}" pos="{top_pos}" offset="{inset if top_off is None else top_off}"/>\n'
+                f'{u}<Anchor side="Left"   relative="$parent" pos="Min" offset="{inset}"/>\n'
+                f'{u}<Anchor side="Bottom" relative="{bottom[0]}" pos="{bottom[1]}" offset="{bottom[2]}"/>\n'
+                f'{u}<Anchor side="Right"  relative="$parent" pos="Max" offset="{-inset}"/>\n'
+                f'{extra}{u}<RenderPriority val="{prio}"/>\n{u}<AcceptsMouse val="false"/>\n{t}\t</Frame>\n')
+    nine = lambda tex: f'{u}<Texture val="@UI/{tex}"/>\n{u}<TextureType val="Nineslice"/>\n'
+    tint = lambda colour: f'{u}<Color val="{colour}"/>\n{u}<Alpha val="76"/>\n'
+    return (f'{t}<!-- the info panes\' look: the inspect card\'s (tools/inspect_card.py pane_skin) -->\n'
+            f'{t}<Frame type="Frame" name="FCJH_PaneSkin">\n{t}\t<AcceptsMouse val="false"/>\n'
+            + img("FCJH_SkinBack", ("$parent", "Max", 0),
+                  nine(SKIN_BACK) + f'{u}<Alpha val="{SKIN_ALPHA}"/>\n{u}<Color val="{SKIN_SHADE}"/>\n', 400, 0)
+            + img("FCJH_SkinBorder", ("$parent", "Max", -SKIN_INSET), nine(SKIN_BORDER), 405, SKIN_INSET)
+            + img("FCJH_SkinTitle", ("$parent", "Min", f"#{title_h}"), tint(SKIN_BAND), 410, SKIN_INSET)
+            + img("FCJH_SkinTitleLine", ("$parent/FCJH_SkinTitle", "Max", 0), tint(SKIN_LINE), 412, 0,
+                  "$parent/FCJH_SkinTitle", "Max", -1)
+            + f'{t}</Frame>\n')
 
 
 def card():

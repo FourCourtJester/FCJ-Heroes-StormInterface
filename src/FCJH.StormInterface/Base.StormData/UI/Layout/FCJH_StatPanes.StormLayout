@@ -16,16 +16,11 @@
 			<Anchor relative="$parent"/>
 			<Visible val="false"/>
 			<AcceptsMouse val="false"/>
-			<Frame type="Image" name="FCJH_Back">
+			<Frame type="Frame" name="FCJH_Skin" template="FCJH_Constants/FCJH_PaneSkin">
 				<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
 				<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_L"/>
 				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_B"/>
 				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
-				<Texture val="@UI/PauseScreenDimImage"/>
-				<ColorAdjustMode val="Fill"/>
-				<AdjustmentColor val="215,11,12,20"/>
-				<RenderPriority val="400"/>
-				<AcceptsMouse val="false"/>
 			</Frame>
 			<Frame type="HeroLeaderPanel" name="FCJH_Stats" template="StatsOverviewPanel/StatsOverviewPanelTemplate/StatsOverviewBottomPanel">
 				<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
@@ -1960,17 +1955,6 @@
 				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
 				<RenderPriority val="600"/>
 				<AcceptsMouse val="false"/>
-				<Frame type="Image" name="FCJH_TitleBand">
-					<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
-					<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-					<Texture val="@UI/PauseScreenDimImage"/>
-					<ColorAdjustMode val="Fill"/>
-					<AdjustmentColor val="235,24,28,48"/>
-					<RenderPriority val="600"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
 				<Frame type="Label" name="FCJH_Title">
 					<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
 					<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
@@ -2187,50 +2171,6 @@
 						<Options val="NoWrapping | ScaleToPreventTruncation"/>
 					</Frame>
 				</Frame>
-				<Frame type="Image" name="FCJH_BorderTop">
-					<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
-					<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-					<Texture val="@UI/PauseScreenDimImage"/>
-					<ColorAdjustMode val="Fill"/>
-					<AdjustmentColor val="130,106,122,170"/>
-					<RenderPriority val="620"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
-				<Frame type="Image" name="FCJH_BorderBottom">
-					<Anchor side="Top" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-					<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-					<Texture val="@UI/PauseScreenDimImage"/>
-					<ColorAdjustMode val="Fill"/>
-					<AdjustmentColor val="130,106,122,170"/>
-					<RenderPriority val="620"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
-				<Frame type="Image" name="FCJH_BorderLeft">
-					<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-					<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
-					<Texture val="@UI/PauseScreenDimImage"/>
-					<ColorAdjustMode val="Fill"/>
-					<AdjustmentColor val="130,106,122,170"/>
-					<RenderPriority val="620"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
-				<Frame type="Image" name="FCJH_BorderRight">
-					<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Left" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
-					<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-					<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-					<Texture val="@UI/PauseScreenDimImage"/>
-					<ColorAdjustMode val="Fill"/>
-					<AdjustmentColor val="130,106,122,170"/>
-					<RenderPriority val="620"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
 			</Frame>
 			<Frame type="Button" name="FCJH_Close">
 				<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
@@ -2258,16 +2198,11 @@
 			<Anchor relative="$parent"/>
 			<Visible val="false"/>
 			<AcceptsMouse val="false"/>
-			<Frame type="Image" name="FCJH_Back">
+			<Frame type="Frame" name="FCJH_Skin" template="FCJH_Constants/FCJH_PaneSkin">
 				<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
 				<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_L"/>
 				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_B"/>
 				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
-				<Texture val="@UI/PauseScreenDimImage"/>
-				<ColorAdjustMode val="Fill"/>
-				<AdjustmentColor val="215,11,12,20"/>
-				<RenderPriority val="400"/>
-				<AcceptsMouse val="false"/>
 			</Frame>
 			<Frame type="HeroLeaderPanel" name="FCJH_Stats" template="StatsOverviewPanel/StatsOverviewPanelTemplate/StatsOverviewBottomPanel">
 				<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
@@ -3992,17 +3927,6 @@
 				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
 				<RenderPriority val="600"/>
 				<AcceptsMouse val="false"/>
-				<Frame type="Image" name="FCJH_TitleBand">
-					<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
-					<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-					<Texture val="@UI/PauseScreenDimImage"/>
-					<ColorAdjustMode val="Fill"/>
-					<AdjustmentColor val="235,24,28,48"/>
-					<RenderPriority val="600"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
 				<Frame type="Label" name="FCJH_Title">
 					<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
 					<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
@@ -4178,50 +4102,6 @@
 						<Options val="NoWrapping | ScaleToPreventTruncation"/>
 					</Frame>
 				</Frame>
-				<Frame type="Image" name="FCJH_BorderTop">
-					<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
-					<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-					<Texture val="@UI/PauseScreenDimImage"/>
-					<ColorAdjustMode val="Fill"/>
-					<AdjustmentColor val="130,106,122,170"/>
-					<RenderPriority val="620"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
-				<Frame type="Image" name="FCJH_BorderBottom">
-					<Anchor side="Top" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-					<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-					<Texture val="@UI/PauseScreenDimImage"/>
-					<ColorAdjustMode val="Fill"/>
-					<AdjustmentColor val="130,106,122,170"/>
-					<RenderPriority val="620"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
-				<Frame type="Image" name="FCJH_BorderLeft">
-					<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-					<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
-					<Texture val="@UI/PauseScreenDimImage"/>
-					<ColorAdjustMode val="Fill"/>
-					<AdjustmentColor val="130,106,122,170"/>
-					<RenderPriority val="620"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
-				<Frame type="Image" name="FCJH_BorderRight">
-					<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Left" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
-					<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-					<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-					<Texture val="@UI/PauseScreenDimImage"/>
-					<ColorAdjustMode val="Fill"/>
-					<AdjustmentColor val="130,106,122,170"/>
-					<RenderPriority val="620"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
 			</Frame>
 			<Frame type="Button" name="FCJH_Close">
 				<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
@@ -4249,16 +4129,11 @@
 			<Anchor relative="$parent"/>
 			<Visible val="false"/>
 			<AcceptsMouse val="false"/>
-			<Frame type="Image" name="FCJH_Back">
+			<Frame type="Frame" name="FCJH_Skin" template="FCJH_Constants/FCJH_PaneSkin">
 				<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
 				<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_L"/>
 				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_B"/>
 				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
-				<Texture val="@UI/PauseScreenDimImage"/>
-				<ColorAdjustMode val="Fill"/>
-				<AdjustmentColor val="215,11,12,20"/>
-				<RenderPriority val="400"/>
-				<AcceptsMouse val="false"/>
 			</Frame>
 			<Frame type="HeroLeaderPanel" name="FCJH_Stats" template="StatsOverviewPanel/StatsOverviewPanelTemplate/StatsOverviewBottomPanel">
 				<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
@@ -5973,17 +5848,6 @@
 				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
 				<RenderPriority val="600"/>
 				<AcceptsMouse val="false"/>
-				<Frame type="Image" name="FCJH_TitleBand">
-					<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
-					<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-					<Texture val="@UI/PauseScreenDimImage"/>
-					<ColorAdjustMode val="Fill"/>
-					<AdjustmentColor val="235,24,28,48"/>
-					<RenderPriority val="600"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
 				<Frame type="Label" name="FCJH_Title">
 					<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
 					<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
@@ -6158,50 +6022,6 @@
 						<Style val="FCJH_StatTotal_Red"/>
 						<Options val="NoWrapping | ScaleToPreventTruncation"/>
 					</Frame>
-				</Frame>
-				<Frame type="Image" name="FCJH_BorderTop">
-					<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
-					<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-					<Texture val="@UI/PauseScreenDimImage"/>
-					<ColorAdjustMode val="Fill"/>
-					<AdjustmentColor val="130,106,122,170"/>
-					<RenderPriority val="620"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
-				<Frame type="Image" name="FCJH_BorderBottom">
-					<Anchor side="Top" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-					<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-					<Texture val="@UI/PauseScreenDimImage"/>
-					<ColorAdjustMode val="Fill"/>
-					<AdjustmentColor val="130,106,122,170"/>
-					<RenderPriority val="620"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
-				<Frame type="Image" name="FCJH_BorderLeft">
-					<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-					<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
-					<Texture val="@UI/PauseScreenDimImage"/>
-					<ColorAdjustMode val="Fill"/>
-					<AdjustmentColor val="130,106,122,170"/>
-					<RenderPriority val="620"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
-				<Frame type="Image" name="FCJH_BorderRight">
-					<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Left" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
-					<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-					<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-					<Texture val="@UI/PauseScreenDimImage"/>
-					<ColorAdjustMode val="Fill"/>
-					<AdjustmentColor val="130,106,122,170"/>
-					<RenderPriority val="620"/>
-					<AcceptsMouse val="false"/>
 				</Frame>
 			</Frame>
 			<Frame type="Button" name="FCJH_Close">

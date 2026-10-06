@@ -6,8 +6,8 @@
 	     CleanTalentsPanelTemplate, which the engine fills - portraits, picks, tooltips - with
 	     none of the bottom panel's clipping. Rows from Blizzard's own row template: blue 0-4
 	     stacked over red 5-9, red un-mirrored so every row reads portrait-first.
-	     Blizzard's decorations (hex art, borders, buttons, team stats) are hidden; ours are a
-	     dark backdrop under the rows, and a title band plus frame line over them.
+	     Blizzard's decorations (hex art, borders, buttons, team stats) are hidden; the look is
+	     the inspect card's, shared by every pane (FCJH_PaneSkin, 2026-10-05), under the rows.
 	     (Promoted from the dev probe of the same design, 2026-09-26.)
 	     Shown by its hotkey (layout.toml [info_pane]); starts hidden, and only one info
 	     pane shows at a time - the hotkeys for all four live in FCJH_StatPanes. -->
@@ -16,26 +16,43 @@
 			<Anchor relative="$parent"/>
 			<Visible val="false"/>
 			<AcceptsMouse val="false"/>
-			<!-- The backdrop: Blizzard's observer talents pane art (obs_talents_bg), which runs
-			     blue to red left to right across the bottom pane - turned a quarter so it runs
-			     blue to red top to bottom, as our rows do (user, 2026-10-05; first pass). The
-			     image is the pane's height wide and its width tall, centred, then rotated. -->
 			<Frame type="Frame" name="FCJH_InfoPaneArea">
 				<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
 				<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_L"/>
 				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_B"/>
 				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
 				<AcceptsMouse val="false"/>
-				<Frame type="Image" name="FCJH_InfoPaneBack">
-					<Anchor side="Top"    relative="$parent" pos="Mid" offset="0"/>
-					<Anchor side="Bottom" relative="$parent" pos="Mid" offset="0"/>
-					<Anchor side="Left"   relative="$parent" pos="Mid" offset="0"/>
-					<Anchor side="Right"  relative="$parent" pos="Mid" offset="0"/>
-					<Width val="#FCJH_INFO_PANE_H"/>
-					<Height val="#FCJH_INFO_PANE_W"/>
-					<Texture val="@UI/obs_talents_bg"/>
-					<Rotation val="90"/>
-					<RenderPriority val="400"/>
+				<!-- the look: the inspect card's (tools/inspect_card.py pane_skin), as every pane -->
+				<Frame type="Frame" name="FCJH_Skin" template="FCJH_Constants/FCJH_PaneSkin">
+					<Anchor relative="$parent"/>
+				</Frame>
+				<!-- MOCKUP (user, 2026-10-05): Blizzard's observer talent grid (obs_talents_top)
+				     behind the rows. Blizzard tiles it once per 60-unit row (TextureCoords 0-5 over
+				     300, WrapUV); its width spans both teams - blue's 565-unit row on the left half,
+				     red's mirrored on the right. Our rows all read portrait-first at blue's places,
+				     so blue rows take the left half and red rows the right half flipped, each cut to
+				     our 549 units (0.5 x 549 / 565 = 0.4858). Blizzard's own backdrop (obs_talents_bg)
+				     was tried and scrapped (user). -->
+				<Frame type="Image" name="FCJH_GridBlue">
+					<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
+					<Anchor side="Left"  relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+					<Height val="300"/>
+					<Texture val="@UI/obs_talents_top"/>
+					<TextureCoords top="0.0" left="0.0" bottom="5.0" right="0.4858"/>
+					<WrapUV val="True"/>
+					<RenderPriority val="450"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_GridRed">
+					<Anchor side="Top"   relative="$parent/FCJH_GridBlue" pos="Max" offset="0"/>
+					<Anchor side="Left"  relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+					<Height val="300"/>
+					<Texture val="@UI/obs_talents_top"/>
+					<TextureCoords top="0.0" left="1.0" bottom="5.0" right="0.5142"/>
+					<WrapUV val="True"/>
+					<RenderPriority val="450"/>
 					<AcceptsMouse val="false"/>
 				</Frame>
 			</Frame>
@@ -346,17 +363,6 @@
 				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
 				<RenderPriority val="600"/>
 				<AcceptsMouse val="false"/>
-				<Frame type="Image" name="FCJH_TitleBand">
-					<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
-					<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-					<Texture val="@UI/PauseScreenDimImage"/>
-					<ColorAdjustMode val="Fill"/>
-					<AdjustmentColor val="235,24,28,48"/>
-					<RenderPriority val="600"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
 				<Frame type="Label" name="FCJH_Title">
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 					<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
@@ -366,62 +372,6 @@
 					<Text val="TALENTS"/>
 					<RenderPriority val="610"/>
 					<AcceptsMouse val="false"/>
-				</Frame>
-				<Frame type="Image" name="FCJH_BorderTop">
-					<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
-					<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-					<Texture val="@UI/PauseScreenDimImage"/>
-					<ColorAdjustMode val="Fill"/>
-					<AdjustmentColor val="130,106,122,170"/>
-					<RenderPriority val="620"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
-				<Frame type="Image" name="FCJH_BorderBottom">
-					<Anchor side="Top" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-					<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-					<Texture val="@UI/PauseScreenDimImage"/>
-					<ColorAdjustMode val="Fill"/>
-					<AdjustmentColor val="130,106,122,170"/>
-					<RenderPriority val="620"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
-				<Frame type="Image" name="FCJH_BorderLeft">
-					<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-					<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
-					<Texture val="@UI/PauseScreenDimImage"/>
-					<ColorAdjustMode val="Fill"/>
-					<AdjustmentColor val="130,106,122,170"/>
-					<RenderPriority val="620"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
-				<Frame type="Image" name="FCJH_BorderRight">
-					<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Left" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
-					<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-					<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-					<Texture val="@UI/PauseScreenDimImage"/>
-					<ColorAdjustMode val="Fill"/>
-					<AdjustmentColor val="130,106,122,170"/>
-					<RenderPriority val="620"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
-				<Frame type="Image" name="FCJH_TitleRule">
-					<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
-					<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-					<Texture val="@UI/PauseScreenDimImage"/>
-					<ColorAdjustMode val="Fill"/>
-					<AdjustmentColor val="130,106,122,170"/>
-					<RenderPriority val="620"/>
-					<AcceptsMouse val="false"/>
-					<Height val="#FCJH_INFO_PANE_BORDER"/>
 				</Frame>
 			</Frame>
 			<!-- close: the X in the corner (tools/gen.py close_button) -->
