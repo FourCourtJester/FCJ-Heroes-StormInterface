@@ -530,9 +530,17 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    captured <town>) is viewer-relative and names no team, player views only: both centred
    just above the minimap, but parked since: OUR observer town alerts stand in for them in
    every view - "Blue / Red team captured a town", Blizzard's own alert art, on the capturing
-   team's side one slot up, from the observer-only "BroadcastToD<blue>v<red>" events the
-   script sends our plates' ObserverHeroOverviewPanel (blue's count up = blue took it).
-   Works (user, 2026-10-06), ~1 s late: the event comes with the new town's spawn.
+   team's side, from the observer-only "BroadcastToD<blue>v<red>" events the script sends
+   our plates' ObserverHeroOverviewPanel (blue's count up = blue took it). Works (user,
+   2026-10-06), ~1 s late: the event comes with the new town's spawn.
+   **The stack** (user, 2026-10-06: "if all alerts fall to the sides of the minimap, and they
+   grow/jump as to not be on top of each other, then we're set"): each side is a column
+   growing up from the bottom slot (XP bar, or core bar while it shows), 147 units a slot
+   (gen.py MAP_ALERT_STEP, constants `_B`, `_B_CORE`, `_B_2`, `_B_3`). Blizzard's alerts keep
+   fixed slots; ours (the town alerts) take the lowest free one via a StateGroup on which of
+   Blizzard's are Visible - blue: over tunnels or Raven -> 2; red: over altar or Necro -> 2,
+   over towers upgrading -> 3. It makes room for what's up; it isn't an arrival-order queue
+   (an alert arriving under ours bumps ours up). Template for other maps' observer alerts.
    **No free-view cannon alert is possible:** nothing an observer's UI receives marks an
    altar capture (sounds, minimap tint, a voice line); the core bars come up once, at the
    first hit, and stay; the launch behaviour rides the cannonball, not a core. Raven/Necro
