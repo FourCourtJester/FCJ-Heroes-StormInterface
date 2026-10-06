@@ -569,6 +569,22 @@ commits around it).
     world, or pinned to the screen's edge when the camp is off screen?). To look at: what
     Blizzard shows and where, what Ahli does with them, and whether ours should look and sit
     differently. Goes with the map objectives pass (item 8).
+14. **Final pass: every map, every hero** (user, 2026-10-05). The last QA round, with replays
+    that cover every map and every hero; the checks that need a particular hero or map collect
+    here until then (no replay with them yet):
+    - **forms** (item 3): Medivh's Raven, Deathwing in Dragonflight and as World Breaker,
+      Alexstrasza's Dragonqueen, Ragnaros in Molten Core, Greymane's Worgen, Valeera
+      stealthed - each gets the TALL card with its player's portrait, talents and name, and
+      its own buttons. If one gets the short card or no player, look at which unit the plate
+      shows meanwhile (`inspect_card.FORMS`);
+    - **empty slots** (item 3): Abathur shows Blizzard's empty frame where E would be; on any
+      hero, no faint outline peeking round Q W E R (else resize `command_panel`'s empties);
+      Deathwing in flight with no Z or D reads fine;
+    - **Abathur's clone** (Ultimate Evolution) and **Samuro's images**: which card and player
+      they get;
+    - **the D.Va and Viking guesses** in `inspect_card.ALSO`;
+    - **rows with fewer than five heroes** (a 3v3 or 1v1 replay);
+    - **every map**: the map objectives, the minimap per map, camp timers (items 8, 13).
 
 ## 8. Original brief
 
