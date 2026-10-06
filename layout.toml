@@ -31,10 +31,32 @@ build_stamp = [1600, 20]     # x, y of the build stamp (top right)
 # Minimap. Blizzard's minimap is a fixed square (438 layout units = 394 px); the engine
 # fits each map's shape inside it, centred. Wide maps draw short, tall maps draw tall.
 # Like Blizzard, we let the square hang below the screen edge so wide maps sit low.
+# Each battleground moves it so the map, as drawn, sits with its bottom on the [screen] padding
+# line, level with the plates' bottom (tools/maps.py works out each map's drawn size from the
+# game files). `bottom` is for maps that don't move it (the ARAM maps).
 # ---------------------------------------------------------------------------
 [minimap]
 centre_x = 960               # the square's horizontal centre
 bottom = 1133                # the square's bottom edge; > 1080 hangs off-screen
+
+# px per map, added to where tools/maps.py puts it: + lowers that map, - raises it. For fine
+# tuning in game; 0 = its drawn bottom on the padding line.
+[minimap.nudge]
+alterac_pass = 0
+battlefield_of_eternity = 0
+blackhearts_bay = 0
+braxis_holdout = 0
+cursed_hollow = 0
+dragon_shire = 0
+garden_of_terror = 0
+hanamura_temple = 0
+haunted_mines = 0
+infernal_shrines = 0
+sky_temple = 0
+tomb_of_the_spider_queen = 0
+towers_of_doom = 0
+volskaya_foundry = 0
+warhead_junction = 0
 
 # ---------------------------------------------------------------------------
 # Elements: rect = [x, y, width, height].
@@ -245,13 +267,15 @@ colour = "9a6cff"            # the fill, both teams (hex RGB)
 track_colour = "0b0c14"      # the empty part
 track_alpha = 220
 
+# A team's map alerts: stacked on its side of the minimap, on its plates' inner end (tools/maps.py).
+[map_alerts]
+gap = 4                      # px between a map alert on the plates and the bar it sits on (the
+                             # XP bar, or the core bar while that shows), and between its art and
+                             # the minimap's square
+
 # Core health: on top of the XP bar, at the row's inner end (toward the minimap). Its size
 # is Blizzard's (237 x 27 units = 213 x 24 px, 39% of the XP bar), fixed; Blizzard shows it
 # only when a core is taking damage.
-[map_alerts]
-gap = 4                      # px between a map alert on the plates and the bar it sits on (red's
-                             # XP bar, or its core bar while that shows): FCJH_MapAlerts
-
 [team_core]
 gap = 1                      # between core and XP
 blue_colour = "3f8cff"

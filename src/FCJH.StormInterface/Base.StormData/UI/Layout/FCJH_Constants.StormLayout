@@ -304,6 +304,22 @@
 	<Constant name="FCJH_MINIMAP_PANEL_L" val="-219"/>
 	<Constant name="FCJH_MINIMAP_PANEL_R" val="249"/>
 	<Constant name="FCJH_MINIMAP_PANEL_BOTTOM" val="59"/>
+	<!-- _BOTTOM_<MAP>: MinimapPanel's bottom on that map, from the screen's bottom -->
+	<Constant name="FCJH_MINIMAP_BOTTOM_ALTERAC_PASS" val="46"/>  <!-- Alterac Pass: 272 px tall -->
+	<Constant name="FCJH_MINIMAP_BOTTOM_BATTLEFIELD_OF_ETERNITY" val="67"/>  <!-- Battlefield of Eternity: 233 px tall -->
+	<Constant name="FCJH_MINIMAP_BOTTOM_BLACKHEARTS_BAY" val="51"/>  <!-- Blackheart's Bay: 263 px tall -->
+	<Constant name="FCJH_MINIMAP_BOTTOM_BRAXIS_HOLDOUT" val="72"/>  <!-- Braxis Holdout: 224 px tall -->
+	<Constant name="FCJH_MINIMAP_BOTTOM_CURSED_HOLLOW" val="46"/>  <!-- Cursed Hollow: 272 px tall -->
+	<Constant name="FCJH_MINIMAP_BOTTOM_DRAGON_SHIRE" val="60"/>  <!-- Dragon Shire: 247 px tall -->
+	<Constant name="FCJH_MINIMAP_BOTTOM_GARDEN_OF_TERROR" val="67"/>  <!-- Garden of Terror: 234 px tall -->
+	<Constant name="FCJH_MINIMAP_BOTTOM_HANAMURA_TEMPLE" val="69"/>  <!-- Hanamura Temple: 231 px tall -->
+	<Constant name="FCJH_MINIMAP_BOTTOM_HAUNTED_MINES" val="-14"/>  <!-- Haunted Mines: 380 px tall -->
+	<Constant name="FCJH_MINIMAP_BOTTOM_INFERNAL_SHRINES" val="58"/>  <!-- Infernal Shrines: 250 px tall -->
+	<Constant name="FCJH_MINIMAP_BOTTOM_SKY_TEMPLE" val="31"/>  <!-- Sky Temple: 299 px tall -->
+	<Constant name="FCJH_MINIMAP_BOTTOM_TOMB_OF_THE_SPIDER_QUEEN" val="68"/>  <!-- Tomb of the Spider Queen: 232 px tall -->
+	<Constant name="FCJH_MINIMAP_BOTTOM_TOWERS_OF_DOOM" val="52"/>  <!-- Towers of Doom: 260 px tall -->
+	<Constant name="FCJH_MINIMAP_BOTTOM_VOLSKAYA_FOUNDRY" val="50"/>  <!-- Volskaya Foundry: 264 px tall -->
+	<Constant name="FCJH_MINIMAP_BOTTOM_WARHEAD_JUNCTION" val="18"/>  <!-- Warhead Junction: 322 px tall -->
 
 	<!-- Core frames, placed so their health bars land on blue_core / red_core: from their row's top-left -->
 	<Constant name="FCJH_BLUE_CORE_FRAME_T" val="-56"/>
@@ -313,17 +329,19 @@
 
 	<!-- Map alerts on the plates ([map_alerts]): from their row's top-left -->
 	<Constant name="FCJH_MAP_ALERT_RED_R" val="491"/>
+	<Constant name="FCJH_MAP_ALERT_RED_R_ICON" val="403"/>
 	<Constant name="FCJH_MAP_ALERT_RED_B" val="-15"/>  <!-- on the XP bar -->
 	<Constant name="FCJH_MAP_ALERT_RED_B_CORE" val="-43"/>  <!-- on the core bar, while it shows -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_2" val="-190"/>  <!-- a second alert, one up -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_3" val="-337"/>  <!-- a third, two up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_2" val="-190"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_3" val="-337"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_4" val="-484"/>  <!-- alert 4 in the stack, 3 up -->
 	<Constant name="FCJH_MAP_ALERT_BLUE_R" val="829"/>
+	<Constant name="FCJH_MAP_ALERT_BLUE_R_ICON" val="817"/>
 	<Constant name="FCJH_MAP_ALERT_BLUE_B" val="-15"/>  <!-- on the XP bar -->
 	<Constant name="FCJH_MAP_ALERT_BLUE_B_CORE" val="-43"/>  <!-- on the core bar, while it shows -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_2" val="-190"/>  <!-- a second alert, one up -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_3" val="-337"/>  <!-- a third, two up -->
-	<Constant name="FCJH_MAP_ALERT_MID_R" val="256"/>
-	<Constant name="FCJH_MAP_ALERT_MID_B" val="-311"/>
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_2" val="-190"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_3" val="-337"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_4" val="-484"/>  <!-- alert 4 in the stack, 3 up -->
 
 	<!-- Team XP and core health: tracks and fills cut to the plates' slant (solid colour;
 	     Blizzard's obs_bar_xp_* art is a thin glowing line drawn for a 156 x 17 box) -->

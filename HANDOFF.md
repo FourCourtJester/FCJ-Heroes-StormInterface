@@ -66,14 +66,15 @@ drawn by OBS over empty regions the interface leaves (§6).
   buffs, stats. Edge in the unit's team colour (purple for neither team). Shows exactly when
   the default UI's small inspector would (never while a replay is paused). Hero forms and
   empty slots await the final pass (§7 items 3, 14).
-- **Kill feed** — Blizzard's own, top-left. **Minimap** bottom-centre, **replay controls**
+- **Kill feed** — Blizzard's own, top-left. **Minimap** bottom-centre, placed per map with
+  each map's objective panel round it and a team's alerts stacked on its side (§7 item 8;
+  Towers of Doom seen, the rest a first pass). **Replay controls**
   top-left with a tab when collapsed (replays only). Blizzard's player HUD never shows; its
   talent picker is left to the game: held Ctrl shows it, steady, only in a player's view
   (1-8 keys), not when following from a plate click - as in Ahli's and Spazzo's UIs (§3;
   confirmed 2026-10-06).
 
-Not yet: map objectives (pinned to the right edge on many maps — a per-map pass), the OBS
-graphics package, the fight-mode hotkey, and the visual pass that takes the chrome look of
+Not yet: the OBS graphics package, the fight-mode hotkey, and the visual pass that takes the chrome look of
 the top bar to the plates, bars and panes. §7 has the open list.
 
 ---
@@ -143,6 +144,7 @@ the game. Describe effects, not diffs; verify with screenshots.
 layout.toml                                  every placement number and look setting, in PIXELS
 tools/gen.py                                 turns it into layouts and textures
 tools/inspect_card.py                        the inspect card (reads hero data from JamiePhan)
+tools/maps.py                                each battleground: minimap place, panel, team alerts
 src/FCJH.StormInterface/                     the archive's file tree, one to one
   Base.StormData/UI/Layout/
     DescIndex.StormLayout                    GENERATED — every layout, constants first
@@ -150,6 +152,7 @@ src/FCJH.StormInterface/                     the archive's file tree, one to one
     FCJH_HeroRow.StormLayout                 GENERATED — cells, heroic panels, pop-ups, row packer
     FCJH_StatPanes.StormLayout               GENERATED — the three stat info panes
     FCJH_Inspect.StormLayout                 GENERATED — the inspect card
+    FCJH_Maps.StormLayout                    GENERATED — each map's minimap place, panel, team alerts
     FCJH_*.StormLayout                       hand-written, one per concern (top bar, hidden
                                              HUD, talents pane, kill feed, minimap, replay)
   _Assets/Textures/FCJH_*.dds                GENERATED — slanted bars, masks, the top backplate
@@ -393,9 +396,10 @@ end with blue's heroic mirrored to the inner end (§1). Unchecked from that: blu
 tooltip hover after its move, the end of blue's narrowed bars (Blizzard's short-bar art is
 shaped for a heroic on the left), and whether the inspect card's fountain shows the same thin
 unmasked line the plate's did (its icon is drawn 45 in a 40 mask box). Open items, the
-user's pick of order: map objectives and the minimap per map (8; Towers of Doom done),
-the art pass (7, 12). Anchoring (4) built 2026-10-06, to test in a non-16:9 window. Camp timers (13) dropped. Item 14 collects what waits on replays with particular
-heroes and maps.
+user's pick of order: the art pass (7, 12). Anchoring (4) built 2026-10-06, to test in a
+non-16:9 window. Every map's minimap, panel and team alerts (8) built 2026-10-06, a first
+pass to fine-tune with test maps (user). Camp timers (13) dropped. Item 14 collects what
+waits on replays with particular heroes and maps.
 
 Confirmed in game by then: heroic tooltips on every plate (Varian's level-4 heroic, Tracer's
 Pulse Bomb with its title line), heroic cooldown counts, click-to-follow (needs the game's
@@ -510,82 +514,69 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    d279ecc) - plate clicks stopped following heroes. The row stays held shown and spread.
 7. Art pass, after the functionality: Ahli's Tracer ammo bar (20 segments) and round Pulse
    Bomb meter; his hero plates' intro animation (a smooth slide and fade).
-8. **Map objectives - not looked at yet** (user, 2026-10-05). Each map's objective widgets
-   (tribute and curse timers, shrine and altar counts, punisher / immortal / golem health,
-   payloads, the "spawns in" banners, the core shields) are Blizzard's `MapMechanicPanel`
-   (base UI `mapmechanicpanel.stormlayout`) and `ObjectivePanel` (`objectivepanel.stormlayout`),
-   with per-map layouts on top. Many are pinned to the screen's right edge, where Blizzard's
-   minimap sat; ours is bottom-centre, so they may sit wrong or collide with the kill feed or
-   red plates. A per-map pass: load a replay of each map, screenshot each objective's states,
-   and decide where each one lives in our layout (and what Ahli does with them). Seen so far:
-   only "ALTAR SPAWNS IN 0:27" on Towers of Doom (2026-10-05), right side, mid-height.
-   **The user's direction (2026-10-05):**
-   - **centre them around the minimap** (bottom-centre), not on the right edge;
-   - **even better: a team's objective action spawns on that team's side.** E.g. "cannons
-     are firing" (Blackheart's Bay / Towers of Doom style) shows on the side of the team
-     firing them - blue's alert left of the minimap, red's right. Neutral alerts (spawn
-     timers, "altar spawns in") stay centred.
-   - **where a team's alert sits:** at its core health bar's spot - on top of that team's XP
-     bar, at the row's inner end by the minimap (`[team_core]` in layout.toml). The core bar
-     only shows while the core takes damage, so: core bar hidden -> the alert takes its spot;
-     core bar showing -> the alert stacks just above it. One StateGroup per team on the core
-     frame's Visible, SetAnchor-ing the alert's Bottom to the core's Top or the XP bar's Top
-     (the same `gap`).
-   To find out: whether Blizzard's widgets know which team an event belongs to (a team or
-   player property, separate blue/red frames, or per-team state groups in the per-map
-   layouts) - if they do, anchor each team's frames to its side; if not, look for a sensor
-   (the team's score, a team-owned unit or behaviour) to switch the anchor on.
-   **Minimap per map** (2026-10-05, saved for this pass): the engine CENTRES each map in the
-   minimap square (Towers of Doom draws y ~810-1062, centred on 936), so a map taller than
-   ~248 px crosses the bottom padding. A position per map looks doable: each map's mod ships
-   its own layouts, loaded only on that map (file="GameUI" frames: Alterac Pass, Battlefield
-   of Eternity, Braxis Holdout, Hanamura, Towers of Doom, Warhead Junction; templates of their
-   own: Garden, Shrines, Sky Temple, Tomb, Volskaya). An interface can add to a map's file
-   (Ahli 0.75 does: `file="Hanamura"` payload bars). So: a tiny frame inside each map's
-   layout that, on load, `SetAnchor`s MinimapPanel (`<Action type="SetAnchor" frame=...
-   side= relative= pos= offset=/>`); one number per map in layout.toml. Blackheart's Bay,
-   Cursed Hollow, Dragon Shire and Haunted Mines ship no UI - they share the default. Test
-   first: move it on Braxis only, check Cursed Hollow stays put (proves the file add is
-   harmless elsewhere and that a map frame can move the minimap).
-   **How the map alerts work** (from the files, 2026-10-06): each map's panel is a template
-   in its own layout file (Towers of Doom: `FieldofSlaughter/MainFoSPanel`); its script
-   builds it inside GameUI's `MapMechanicPanel` and finds each alert by NAME - so we may move
-   and restyle alerts (`file="<map's file>"`), never rename or drop one. Older maps' panels
-   (Cursed Hollow, Blackheart's Bay, Haunted Mines, Garden, Dragon Shire) live in core
-   `MapMechanicPanelTemplate` instead. Per-team alerts (Towers' ally/enemy capture) are sent
-   to each team's PLAYERS: an observer may see neither, and can't tell the team from them.
-   **Towers of Doom: DONE, player views too (user, 2026-10-06)** - `FCJH_MapAlerts.StormLayout`.
-   Either side of the map at the rows' inner ends, on the XP bar, stepping up onto the core
-   bar while it shows: altar countdown and (above it) towers upgrading on red's side, tunnels
-   opening on blue's (kept balanced, user). "Cannons are firing": the script shows RAVEN's
-   alert for blue's capture and NECRO's for red's - only the Your/Enemy text is per viewer -
-   so Raven sits on blue's side, Necro on red's. The town-capture pair (Allies / The Enemy
-   captured <town>) is viewer-relative and names no team, player views only: both centred
-   just above the minimap, but parked since: OUR observer town alerts stand in for them in
-   every view - "Blue / Red team captured a town", Blizzard's own alert art, on the capturing
-   team's side, from the observer-only "BroadcastToD<blue>v<red>" events the script sends
-   our plates' ObserverHeroOverviewPanel (blue's count up = blue took it). Works (user,
-   2026-10-06), ~1 s late: the event comes with the new town's spawn.
-   **The stack** (user, 2026-10-06: "if all alerts fall to the sides of the minimap, and they
-   grow/jump as to not be on top of each other, then we're set"): each side is a column
-   growing up from the bottom slot (XP bar, or core bar while it shows), 147 units a slot
-   (gen.py MAP_ALERT_STEP, constants `_B`, `_B_CORE`, `_B_2`, `_B_3`). Blizzard's alerts keep
-   fixed slots; ours (the town alerts) take the lowest free one via a StateGroup on which of
-   Blizzard's are Visible - blue: over tunnels or Raven -> 2; red: over altar or Necro -> 2,
-   over towers upgrading -> 3. It makes room for what's up; it isn't an arrival-order queue
-   (an alert arriving under ours bumps ours up). Template for other maps' observer alerts.
-   **No free-view cannon alert is possible:** nothing an observer's UI receives marks an
-   altar capture (sounds, minimap tint, a voice line); the core bars come up once, at the
-   first hit, and stay; the launch behaviour rides the cannonball, not a core. Raven/Necro
-   (players-only) stay on the team's side for player views.
-   Alert art is 500 units from the frame's right edge (measured;
-   gen.py MAP_ALERT_REACH). The towns' shot counts show at the minimap's bottom corners (their
-   panel was clipped by the map's right-edge strip).
-   **Lessons for every map:** (1) a map panel that's a right-edge strip clips anything we move
-   out of it, and anything placed against the minimap (ours is bottom-centre): Unclipped. (2)
-   Read the script for who each alert is sent to - an alert can look viewer-relative ("Your
-   cannons") and still be one frame per TEAM (Raven/Necro). (3) A player view (1-8) shows
-   alerts sent to that player's team; the free observer view doesn't.
+8. **Map objectives and the minimap per map - BUILT 2026-10-06, a first pass; the user will
+   fine-tune with test maps that cover every map.** All of it is `tools/maps.py`, written by gen
+   into `FCJH_Maps.StormLayout` (it replaced the hand-written `FCJH_MapAlerts`; its docstring
+   says how a map's UI works). **The user's direction (2026-10-05/06):** centre the objectives
+   round the minimap, not on the right edge; a team's alert goes on that team's side (blue left
+   of the map, red right), neutral ones stay centred; a team's alert sits at its core bar's spot
+   (on the XP bar at the row's inner end, stepping up onto the core bar while that shows); "if
+   all alerts fall to the sides of the minimap, and they grow/jump as to not be on top of each
+   other, then we're set".
+   **How a map's UI works** (game files): each map's panel is a template built at runtime in
+   GameUI's `MapMechanicPanel` - the newer maps' in their own layout file, created by the map's
+   script; the older five's (Cursed Hollow, Blackheart's Bay, Haunted Mines, Garden, Dragon
+   Shire) in core `MapMechanicPanelTemplate`, on every map, hidden at load and shown by the
+   map's script. Scripts find parts by NAME: move and restyle (`file="<map's file>"`), never
+   rename or drop. A map's layout file loads only on that map. Blizzard moves its own minimap
+   per map that way too (a `MinimapPanel` override in the file: Braxis -35, Battlefield +75,
+   Hanamura +80, Warhead 0 and the map 30 right in its panel; 35 elsewhere).
+   **The three parts:**
+   - **The minimap per map:** each map draws with its bottom on the padding line (1060 at
+     1080p, level with the plates' bottom). How tall a map draws: the opaque part of its
+     `CustomMiniMap` texture, read from the map archives in Battle.net's cache (the
+     battlegrounds aren't in the game's storage; our `mpq.py` reads them), fitted 380 px wide
+     (Towers of Doom, measured: ~380 x 252, y 810-1062; the model gives 260 tall). Tall maps
+     rise (Haunted Mines 380 px tall, top at 680); wide ones sink (Braxis 224 px). Moved by a
+     frame inside the map's panel (`FCJH_MinimapPlace`: SetAnchor when its panel shows); the
+     older five by one StateGroup on the minimap keyed to which core panel shows (a "Loading"
+     state holds still while all five show at load). `[minimap.nudge]` in layout.toml, px per
+     map, for fine-tuning. The ARAM maps (no panel) keep `[minimap] bottom`.
+   - **Each map's panel on our minimap:** every part Blizzard placed from the screen's
+     bottom-right corner (where its minimap was) is restated from our minimap's corner, at the
+     same distance as it stood from Blizzard's minimap on that map (`maps.on_minimap`). So the
+     timers, counters, health bars and neutral banners sit round our minimap as they sat round
+     Blizzard's, follow it per map, and the right-edge strips (Alterac, Volskaya, Garden's
+     terror bar) stop clipping minimap-placed parts (Volskaya's capture hex). Towers of Doom's
+     strip stays put (all it holds that matters is ours; its town health is drawn from the top).
+   - **Team alerts:** a generic stack per side (`maps.stack_states`): an alert's slot is how
+     many alerts before it in its side's column are showing; the bottom slot is the XP bar, or
+     the core bar while that shows; 147 units a slot. Towers of Doom (now through it: Raven no
+     longer lands on the tunnels) and Hanamura's "attacking" pair (one frame per team, to
+     everyone - `AttackingCoreFrame_Order` blue, `_Chaos` red; placed by its icon box, art
+     412 units, unmeasured). Other maps' alerts are neutral (timers, "spawns in") or blue-left /
+     red-right halves of one HUD - checked in the files; none is per team.
+   **To check in game, map by map** (with item 14's test maps): the map's bottom on the padding
+   line (nudge it if not), and when it moves (at load, or when its panel first shows - Sky
+   Temple's and Tomb's start hidden); the panel's timers and counters above the map, not over the
+   plates or the alert stacks; Volskaya's capture hex showing; Warhead's map centred; Hanamura's
+   "attacking" alert on the attacking team's side, its art clear of the map; Blackheart's Bay
+   placed at all (its panel is shown by its own script - unchecked). Then ARAM keeps the default.
+   **Towers of Doom, as approved (2026-10-06):** altar countdown and towers upgrading on red's
+   side, tunnels on blue's (kept balanced, user). "Cannons are firing": the script shows RAVEN's
+   alert for blue's capture and NECRO's for red's (only the Your/Enemy text is per viewer), to
+   each team's players only - player views show them, hidden 5 s later by our timer. The
+   town-capture pair (Allies / The Enemy captured <town>) is viewer-relative, players-only:
+   parked; OUR town alerts stand in, in every view - "Blue / Red team captured a town", from the
+   observer-only "BroadcastToD<blue>v<red>" events the script sends our plates'
+   ObserverHeroOverviewPanel (blue's count up = blue took it; ~1 s late, with the new town's
+   spawn). **No free-view cannon alert is possible:** nothing an observer's UI receives marks an
+   altar capture. The towns' shot counts show at the minimap's bottom corners.
+   **Lessons for every map:** (1) a right-edge strip clips anything moved out of it: Unclipped,
+   or move the strip. (2) Read the script for who each alert is sent to - one can look
+   viewer-relative ("Your cannons") and be one frame per TEAM. (3) A player view (1-8) shows
+   alerts sent to that player's team; the free observer view doesn't. (4) An alert's art can
+   hang off a child, not its frame (Hanamura's icon box): move the child.
 9. **Viewport padding** (user, 2026-10-05). One more size pass on our hero plates, to set
    the screen's base padding: the gap between the plates and the screen's edges becomes the
    margin for everything. Then the replay box (top-left), the inspect card and the info panes
@@ -639,7 +630,7 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
 How the heroic tooltips work: `tools/gen.py`, the comment above `HEROIC_TIPS`.
 
 **Open:**
-- map objectives: item 8 above
+- map objectives and the minimap per map: item 8 above, built - fine-tuning in game
 - the visual pass: the chrome backplate look to the plates, XP/core bars (a mid-height bevel,
   like the player view's core bar; the default UI's core bars: `design/ref_default_core_hp.png`)
   and the info panes (zebra rows, Heroes palette)

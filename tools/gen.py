@@ -24,6 +24,7 @@ import tomllib
 from pathlib import Path
 
 import inspect_card
+import maps
 
 REPO = Path(__file__).resolve().parent.parent
 CONFIG = REPO / "layout.toml"
@@ -51,11 +52,6 @@ MINIMAP_PANEL_W = 468
 # +43 +43 +41 +19), so a pentakill's fifth ends at 356. The kill feed is Blizzard's, in its
 # own place (user, 2026-10-05: moving it right left multi-kills running off the screen).
 KILL_ROW_SINGLE = 210    # layout units: where a single kill's victim portrait ends
-# A map alert's art, from its frame's right edge: it reaches 500 units left and stops 12 short
-# (Towers of Doom's three, every kind the same width; measured in game, 2026-10-06 - the
-# templates' arithmetic gave 388 for a countdown, which put it into the map). FCJH_MapAlerts.
-MAP_ALERT_REACH, MAP_ALERT_TAIL = 500, 12
-MAP_ALERT_STEP = 147    # units between two stacked alerts' bottoms (Blizzard's 30-unit gap; measured)
 CC_TEXT_OVERHANG = 20   # layout units the CC text's box reaches above and below the health bar
 
 
@@ -424,6 +420,18 @@ def constants_layout(cfg):
     const(name("minimap", "panel", "l"), left)
     const(name("minimap", "panel", "r"), left + MINIMAP_PANEL_W)
     const(name("minimap", "panel", "bottom"), u(mm["bottom"]) - cfg["screen"]["ui_reference_height"])
+    # ...and per map (tools/maps.py): the map as drawn in the square, its bottom on the padding
+    # line (the plates' bottom), nudged by [minimap.nudge]
+    nudge = mm.get("nudge", {})
+    unknown = set(nudge) - set(maps.MAPS)
+    if unknown:
+        raise SystemExit(f"layout.toml [minimap.nudge]: no such map {sorted(unknown)} - the maps are {list(maps.MAPS)}")
+    line = cfg["screen"]["height"] - cfg["screen"]["padding"]
+    lines.append("\t<!-- _BOTTOM_<MAP>: MinimapPanel's bottom on that map, from the screen's bottom -->")
+    for key, m in maps.MAPS.items():
+        drawn = maps.drawn_height(key)
+        const(name("minimap", "bottom", key), u(line + nudge.get(key, 0) - drawn / 2) + MINIMAP_SQUARE // 2
+              - cfg["screen"]["ui_reference_height"], f"{m.title}: {round(drawn)} px tall")
 
     # Blizzard's core frame (stormobserverpanel Team1/2CoreUnitStatus) holds its health bar
     # 18 units down, 34 in from the right (blue) / 28 in from the left (red); place the frame
@@ -436,30 +444,27 @@ def constants_layout(cfg):
     const(name("red", "core", "frame", "t"), red["t"] - 18)
     const(name("red", "core", "frame", "l"), red["l"] - 28)
 
-    # Map alerts on the plates (FCJH_MapAlerts), either side of the map at the rows' inner
-    # ends, on the XP bar where the core bar lives, stepping up onto the core bar while that
-    # shows: red's start `gap` right of the minimap's square, blue's end `gap` left of it (user,
-    # 2026-10-06). Placed by the frame's right edge (MAP_ALERT_REACH, MAP_ALERT_TAIL).
+    # A team's map alerts (FCJH_Maps, tools/maps.py), stacked either side of the map at the
+    # rows' inner ends: on the XP bar where the core bar lives, stepping up onto the core bar
+    # while that shows, one slot up per alert below. Red's art starts `gap` right of the
+    # minimap's square, blue's ends `gap` left of it (user, 2026-10-06): placed by the edge
+    # the art hangs off (maps.ALERT_ART).
     lines.append("")
     lines.append("\t<!-- Map alerts on the plates ([map_alerts]): from their row's top-left -->")
     gap = cfg["map_alerts"]["gap"]
     (mmx, _, mmw, _), _ = rects(cfg)["minimap"]
-    for team, right in (("red", u(mmx + mmw + gap) + MAP_ALERT_REACH), ("blue", u(mmx - gap) + MAP_ALERT_TAIL)):
+    for team in ("red", "blue"):
         (_, cy, _, _), _ = rects(cfg)[f"{team}_core"]
         (_, xy, _, _), _ = team_bar_rects(cfg)[f"{team}_xp"]
         ox, oy = anchor_origin(cfg, f"hero_{(BLUE_SLOTS if team == 'blue' else RED_SLOTS)[0]}")   # the row's top-left
-        const(name("map", "alert", team, "r"), right - ox)
+        for kind, (reach, tail) in maps.ALERT_ART.items():
+            right = u(mmx + mmw + gap) + reach if team == "red" else u(mmx - gap) + tail
+            const(name("map", "alert", team, "r", *([kind] if kind else [])), right - ox)
         const(name("map", "alert", team, "b"), u(xy - gap) - oy, "on the XP bar")
         const(name("map", "alert", team, "b", "core"), u(cy - gap) - oy, "on the core bar, while it shows")
-        const(name("map", "alert", team, "b", "2"), u(cy - gap) - MAP_ALERT_STEP - oy, "a second alert, one up")
-        const(name("map", "alert", team, "b", "3"), u(cy - gap) - 2 * MAP_ALERT_STEP - oy, "a third, two up")
-    # ...and centred just above the minimap's square, for alerts with no team to place them by
-    # (an alert's art spans its right edge - REACH to - TAIL, so its middle is half that in):
-    # from the screen's bottom-centre, as the minimap
-    (_, mmy, _, _), _ = rects(cfg)["minimap"]
-    ox, oy = anchor_origin(cfg, "minimap")
-    const(name("map", "alert", "mid", "r"), u(mmx + mmw / 2) + (MAP_ALERT_REACH + MAP_ALERT_TAIL) // 2 - ox)
-    const(name("map", "alert", "mid", "b"), u(mmy - gap) - oy)
+        for n in range(1, maps.max_stack()):
+            const(name("map", "alert", team, "b", n + 1), u(cy - gap) - n * maps.ALERT_STEP - oy,
+                  f"alert {n + 1} in the stack, {n} up")
 
     lines.append("")
     lines.append("\t<!-- Team XP and core health: tracks and fills cut to the plates' slant (solid colour;")
@@ -2294,7 +2299,8 @@ def hero_row_layout(cfg):
 
 STAT_PANES_FILE = "FCJH_StatPanes.StormLayout"
 INSPECT_FILE = "FCJH_Inspect.StormLayout"
-GENERATED_LAYOUTS = (HERO_ROW_FILE, STAT_PANES_FILE, INSPECT_FILE)
+MAPS_FILE = "FCJH_Maps.StormLayout"
+GENERATED_LAYOUTS = (HERO_ROW_FILE, STAT_PANES_FILE, INSPECT_FILE, MAPS_FILE)
 
 # Blizzard's observer stats row (statsoverviewpanel / cleanleaderpanel) carries eight score
 # columns, each a PlayerScoreValueFrame whose ScoreValueFrame0 shows ONE score value - which
@@ -2725,6 +2731,7 @@ def committed_files(cfg, source=SOURCE):
             | {"neutral": cfg["element"]["inspect"]["neutral_colour"]},   # the card's team edge
             (u(rects(cfg)["inspect"][0][0]), u(rects(cfg)["inspect"][0][1])), 1 / u.scale,   # its place, for pixel-exact lines
             (ROW_FRAME["blue"], anchor_edges(cfg, "inspect")["t"])),   # what it stands on, and its top from there
+        LAYOUT_REL / MAPS_FILE: maps.layout(XML_DECL + "<Desc>\n" + GENERATED, ROW_FRAME),
         LAYOUT_REL / INDEX_FILE: desc_index(layout_order(layout_dir, generated=GENERATED_LAYOUTS)),
     }
     return {rel: text.encode("utf-8") for rel, text in texts.items()} | texture_files(cfg)

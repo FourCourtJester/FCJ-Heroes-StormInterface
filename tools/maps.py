@@ -1,0 +1,482 @@
+"""Each battleground's own UI on our screen (user, 2026-10-05/06): where the minimap sits on that
+map, the map's objective panel pinned to our minimap the way Blizzard pins it to theirs, and the
+alerts that belong to a team stacked beside the minimap on that team's side. Written by
+tools/gen.py into FCJH_Maps.StormLayout (maps.layout). Its numbers are constants: the minimap's
+place per map FCJH_MINIMAP_BOTTOM_<MAP> ([minimap] in layout.toml), the stacks' FCJH_MAP_ALERT_*
+([map_alerts]); gen.py constants_layout works both out from what's here.
+
+How a map's UI works (from the game files, 2026-10-06):
+  - each map's panel is a template built at runtime inside GameUI's MapMechanicPanel. The newer
+    maps keep it in the map's own layout file, created by the map's script; the older five
+    (Cursed Hollow, Blackheart's Bay, Haunted Mines, Garden of Terror, Dragon Shire) use panels
+    in Blizzard's core MapMechanicPanelTemplate, there on every map, hidden at load and shown
+    by the map's script. The script finds every part by NAME: we may move and restyle a part
+    (file="<the map's file>"), never rename or drop one.
+  - the panels are drawn for Blizzard's minimap in the screen's bottom-right corner: most are
+    pinned to that corner, some are strips down the right edge (which clip what they hold), a
+    few parts are placed from the minimap itself. Ours is bottom-centre. So each panel is
+    restated from our minimap's bottom-right corner, as it stood from Blizzard's on that map
+    (on_minimap) - everything in it keeps its place round the minimap.
+  - a map's layout file is loaded only on that map, so a frame added inside its panel exists
+    only there: that is how a map moves the minimap (placer). Blizzard moves its own minimap
+    per map the same way (a MinimapPanel override in the map's file, which may load after
+    ours - the placer's SetAnchors win either way).
+"""
+from dataclasses import dataclass, field
+from itertools import combinations
+
+T = "\t"
+
+SCREEN_H = 1200          # layout units: the game's screen is always this tall
+SCREEN_W = 2134          # ...and this wide at 16:9, rounded up: only for the left edge of
+                         # Hanamura's screen-sized panels, which nothing in them is placed from
+CONSOLE = "$GameUI/UIContainer/ConsoleUIContainer"
+MINIMAP = CONSOLE + "/MinimapPanel"
+MECHANICS = CONSOLE + "/MapMechanicPanel"
+OBSERVER_TOP = "$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel"
+CORE_BAR = {"blue": OBSERVER_TOP + "/Team1CoreUnitStatus", "red": OBSERVER_TOP + "/Team2CoreUnitStatus"}
+
+# How wide a map draws in the minimap square, px at 1080p. The engine fits the opaque part of a
+# map's CustomMiniMap texture into the square, centred: Towers of Doom draws ~380 x 252 px, at
+# y 810-1062 (measured in game, 2026-10-05) - its art 436 x 298 texels, so ~380 x 260.
+DRAWN_PX = 380
+
+# An alert's art, from the edge it's placed by (units): how far it reaches back across, and
+# how far short of that edge it stops. "": Blizzard's NotificationFrameTemplate alert, placed
+# by its frame's right edge - reaches 500 units left and stops 12 short (Towers of Doom's three
+# kinds, all the same width; measured in game, 2026-10-06 - the templates' arithmetic gave 388).
+# "ICON": an alert placed by its icon box instead (Hanamura's: background 300 left of a 112-unit
+# icon box, from the template; unmeasured).
+ALERT_ART = {"": (500, 12), "ICON": (412, 0)}
+ALERT_STEP = 147          # units between two stacked alerts' bottoms (Blizzard's 30-unit gap; measured)
+
+
+@dataclass
+class Alert:
+    """One of a team's alerts, in its stack beside the minimap. `place`: the child that carries
+    the alert's position too, when its art hangs off that rather than the frame (Hanamura's icon
+    box); `kind`: its art (ALERT_ART); `template`: for alerts of our own (FCJH_ prefix);
+    `extra`: XML inside the frame, after its stack."""
+    name: str
+    kind: str = ""
+    place: str = None                 # "Name:Type"
+    template: str = None
+    extra: str = ""
+    note: str = ""
+
+
+@dataclass
+class Map:
+    title: str
+    art: tuple                        # texels: the opaque part of its CustomMiniMap texture
+    file: str = None                  # its own layout file, if it has one
+    core: str = None                  # its panel in Blizzard's MapMechanicPanelTemplate, if that
+    minimap: tuple = (35, 0)          # Blizzard's MinimapPanel on this map: bottom, right (units
+                                      # from the screen's, + down/right). 35, 0 unless its file says
+    panels: dict = field(default_factory=dict)   # "Path/In/File:Type" -> Blizzard's anchors on the
+                                      # screen: ((side, pos, offset), ...)
+    place: tuple = ()                 # panels that move the minimap when they show
+    fix: str = ""                     # extra SetAnchors when this map's minimap is placed
+    team: dict = field(default_factory=dict)     # {"blue": [Alert...], "red": [...]}: panel -> column
+    extra: str = ""                   # map-specific XML in its file's panel (see TOWERS_EXTRA)
+    notes: str = ""
+
+
+# ------------------------------------------------------------------ Towers of Doom's own alerts
+
+TOWN_SPLITS = 7          # the towns each side holds: 0v6 .. 6v0
+
+def town_alert(team, template, text):
+    return Alert(f"FCJH_{team.capitalize()}Town", template=template, extra=(
+        f'{T*3}<Frame type="Label" name="NotificationLabel"><Text val="{text}"/></Frame>\n'
+        f'{T*3}<Frame type="Label" name="NotificationTargetLabel"><Text val="a town"/></Frame>\n'
+        f'{T*3}<!-- gone after 5 s, as Blizzard\'s (its script waits 5 s, then hides it) -->\n'
+        + timer(3)),
+        note="ours, which team took a town (towers_extra)")
+
+
+def timer(indent, seconds=5):
+    t = T * indent
+    return (f'{t}<Animation name="FCJH_Timer">\n'
+            f'{t}\t<Event event="Show" action="Restart,Play"/>\n'
+            f'{t}\t<Controller type="Event" end="Stop">\n'
+            f'{t}\t\t<Key type="Event" time="{seconds}" event="Hide"/>\n'
+            f'{t}\t</Controller>\n'
+            f'{t}</Animation>\n')
+
+
+CANNON_NOTE = ("gone 5 s after it shows, whoever the script's own hide reaches: switching from a\n"
+               "player view to the everyone view inside those 5 s left it up for good - the hide\n"
+               "goes to the team's players only (user, 2026-10-06)")
+
+
+def cannons(name):
+    return Alert(name, extra=f"{T*3}<!-- {CANNON_NOTE.replace(chr(10), chr(10) + T*3 + '     ')} -->\n" + timer(3),
+                 note="Blizzard's, players-only (\"Your/Enemy cannons are firing\")")
+
+
+def towers_extra():
+    """Towers of Doom: Blizzard's town-capture pair parked; ours, from the observer-only town
+    counts, stand in (their frames are in the stacks); the towns' shot counts over the screen."""
+    t = T * 2
+    out = [
+        f'{t}<!-- Blizzard\'s town-capture pair ("Allies / The Enemy captured <town>"), viewer-relative and\n'
+        f'{t}     players-only: parked above the screen - ours stand in for them in every view. -->\n',
+        f'{t}<Frame type="Frame" name="EnemyCaptureNotificationFrame">\n'
+        f'{t}\t<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="-9999"/>\n{t}</Frame>\n',
+        f'{t}<Frame type="Frame" name="AllyCaptureNotificationFrame">\n'
+        f'{t}\t<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="-9999"/>\n{t}</Frame>\n',
+        f'{t}<!-- Which team took a town (user, 2026-10-06). Blizzard\'s town-capture alerts go only to\n'
+        f'{t}     each team\'s players and name no team, so ours stand in (FCJH_BlueTown / FCJH_RedTown,\n'
+        f'{t}     in the stacks above), on the capturing team\'s side, in every view. On every change\n'
+        f'{t}     of hands the script sends the OBSERVER panel (our plates\' ObserverHeroOverviewPanel)\n'
+        f'{t}     "BroadcastToD<blue>v<red>", the towns each team holds - Blizzard\'s own UI never uses\n'
+        f'{t}     it. New<n>: the split just sent; Cur<n>: the one before, copied 0.1 s later. Blue\'s\n'
+        f'{t}     count up: blue took a town; down: red did. It comes with the new town\'s spawn,\n'
+        f'{t}     about a second after the old one falls. -->\n',
+        f'{t}<Frame type="Frame" name="FCJH_TownWatch">\n'
+        f'{t}\t<Anchor relative="$parent"/>\n'
+        f'{t}\t<AcceptsMouse val="false"/>\n',
+    ]
+    start = TOWN_SPLITS // 2        # 3v3 at the start
+    for kind in ("New", "Cur"):
+        for n in range(TOWN_SPLITS):
+            out.append(f'{t}\t<Frame type="Frame" name="FCJH_{kind}{n}"><Anchor relative="$parent"/>'
+                       f'<Visible val="{"true" if n == start else "false"}"/><AcceptsMouse val="false"/></Frame>\n')
+    flags = lambda kind, k: "".join(
+        f'{t}\t\t<Controller type="Visibility" end="Pause" frame="FCJH_{kind}{n}"><Key type="Bool" time="0" '
+        f'value="{"true" if n == k else "false"}"/></Controller>\n' for n in range(TOWN_SPLITS))
+    for k in range(TOWN_SPLITS):
+        out.append(f'{t}\t<Animation name="FCJH_Split{k}">\n'
+                   f'{t}\t\t<Event event="BroadcastToD{k}v{TOWN_SPLITS - 1 - k}" action="Restart,Play" '
+                   f'frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel"/>\n'
+                   + flags("New", k)
+                   + f'{t}\t\t<Controller type="Event" end="Stop">\n'
+                   f'{t}\t\t\t<Key type="Event" time="0.1" event="FCJH_Sync{k}"/>\n'
+                   f'{t}\t\t</Controller>\n'
+                   f'{t}\t</Animation>\n'
+                   f'{t}\t<Animation name="FCJH_Sync{k}">\n'
+                   f'{t}\t\t<Event event="FCJH_Sync{k}" action="Restart,Play"/>\n'
+                   + flags("Cur", k)
+                   + f'{t}\t</Animation>\n')
+    out.append(f'{t}\t<StateGroup name="FCJH_WhoTook">\n{t}\t\t<DefaultState val="Same"/>\n')
+    for k in range(1, TOWN_SPLITS):
+        out.append(f'{t}\t\t<State name="Blue{k}"><When type="Property" frame="$this/FCJH_Cur{k - 1}" Visible="true"/>'
+                   f'<When type="Property" frame="$this/FCJH_New{k}" Visible="true"/>'
+                   f'<Action type="SendEvent" frame="$parent/FCJH_BlueTown" event="Show"/></State>\n')
+    for k in range(TOWN_SPLITS - 1):
+        out.append(f'{t}\t\t<State name="Red{k}"><When type="Property" frame="$this/FCJH_Cur{k + 1}" Visible="true"/>'
+                   f'<When type="Property" frame="$this/FCJH_New{k}" Visible="true"/>'
+                   f'<Action type="SendEvent" frame="$parent/FCJH_RedTown" event="Show"/></State>\n')
+    out.append(f'{t}\t\t<State name="Same"/>\n{t}\t</StateGroup>\n{t}</Frame>\n')
+    out.append(
+        f'{t}<!-- The towns\' shot counts (each team\'s towns plus the core shots), flanking the minimap\'s\n'
+        f'{t}     middle on the screen\'s bottom edge (MapMechanicPanel TeamCollectionFrameTemplate). Their\n'
+        f'{t}     panel filled the right-edge strip, which clipped them (user, 2026-10-06): it now\n'
+        f'{t}     spans the screen, unclipped. -->\n'
+        f'{t}<Frame type="Frame" name="PotentialPointsPanel">\n'
+        f'{t}\t<Anchor side="Top"    relative="$GameUI" pos="Min" offset="0"/>\n'
+        f'{t}\t<Anchor side="Left"   relative="$GameUI" pos="Min" offset="0"/>\n'
+        f'{t}\t<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>\n'
+        f'{t}\t<Anchor side="Right"  relative="$GameUI" pos="Max" offset="0"/>\n'
+        f'{t}\t<Unclipped val="true"/>\n'
+        f'{t}</Frame>\n')
+    return "".join(out)
+
+
+# ------------------------------------------------------------------ the maps
+
+BOTTOM_RIGHT = (("Bottom", "Max", 0), ("Right", "Max", 0))     # pinned to the screen's corner
+STRIP = (("Top", "Min", 0), ("Bottom", "Max", 0), ("Right", "Max", 0))   # down the right edge
+SCREEN = (("Top", "Min", 0), ("Bottom", "Max", 0), ("Left", "Min", 0), ("Right", "Max", 0))
+
+# Art: each map's CustomMiniMap, the opaque part, read from the map archives in Battle.net's
+# cache (2026-10-06; the battlegrounds aren't in the game's own storage).
+MAPS = {
+    "alterac_pass": Map(
+        "Alterac Pass", (441, 316), file="AlteracMechanics",
+        panels={"AlteracMechanicsPanel": (("Top", "Min", -25), ("Bottom", "Max", -25), ("Right", "Max", 0))},
+        place=("AlteracMechanicsPanel",),
+        notes="a strip down the right edge; the cage fight bar and its two event banners at its middle"),
+    "battlefield_of_eternity": Map(
+        "Battlefield of Eternity", (438, 269), file="BossDuel", minimap=(75, 0),
+        panels={"BossDuelPanel": BOTTOM_RIGHT}, place=("BossDuelPanel",)),
+    "blackhearts_bay": Map("Blackheart's Bay", (452, 313), core="BlackheartsBayPanel"),
+    "braxis_holdout": Map(
+        "Braxis Holdout", (447, 264), file="HoldOut", minimap=(-35, 0),
+        panels={"HoldOutPanel": BOTTOM_RIGHT}, place=("HoldOutPanel",)),
+    "cursed_hollow": Map("Cursed Hollow", (436, 312), core="RavenCourtPanel"),
+    "dragon_shire": Map("Dragon Shire", (434, 282), core="DragonShirePanel"),
+    "garden_of_terror": Map(
+        "Garden of Terror", (438, 270), core="GardenOfTerrorPanel", file="GardenMapMechanic",
+        panels={"GardenTerrorHealthFrame": (("Top", "Min", 220), ("Bottom", "Max", 220), ("Right", "Max", 0))},
+        notes="its night warning and seed frames are placed from the minimap already"),
+    "hanamura_temple": Map(
+        "Hanamura Temple", (473, 287), file="HanamuraRework", minimap=(80, 0),
+        # three screen-sized panels, their parts placed from the screen's right edge
+        panels={"HanamuraReworkPayloadWarningTimerPanel": SCREEN,
+                "HanamuraReworkActivePaylaodStatusPanel": SCREEN,
+                "HanamuraReworkVictoryShotsStatusPanel": SCREEN,
+                # ...and the payload's picture from the right edge of the panel they're in
+                **{f"HanamuraReworkActivePaylaodStatusPanel/{n}:Image": (("Right", "Max", -204),)
+                   for n in ("ActivePayloadImageAnchor", "ActivePayloadImageOrder",
+                             "ActivePayloadImageChaos", "ActivePayloadImageNeutral")}},
+        place=("HanamuraReworkPayloadWarningTimerPanel", "HanamuraReworkActivePaylaodStatusPanel",
+               "HanamuraReworkVictoryShotsStatusPanel"),
+        # "Attacking the core": one frame per team, shown to everyone, by the attacking team
+        # (the map script, libmhmu: lv_attackingStructureFrame[team]) - Order is blue. Placed
+        # by its icon box (its art hangs off that, not off the frame).
+        team={"HanamuraReworkVictoryShotsStatusPanel": {
+            "blue": [Alert("AttackingCoreFrame_Order", kind="ICON", place="NotificationIconAnchor:Image",
+                           note="blue's payload on a fort")],
+            "red": [Alert("AttackingCoreFrame_Chaos", kind="ICON", place="NotificationIconAnchor:Image",
+                          note="red's payload on a fort")]}}),
+    "haunted_mines": Map("Haunted Mines", (433, 437), core="HauntedMinesPanel"),
+    "infernal_shrines": Map(
+        "Infernal Shrines", (458, 301), file="Shrines",
+        panels={"ShrinesPanel": BOTTOM_RIGHT}, place=("ShrinesPanel",)),
+    "sky_temple": Map(
+        "Sky Temple", (437, 344), file="CapturePoints",
+        panels={"CapturePointsPanel": BOTTOM_RIGHT}, place=("CapturePointsPanel",)),
+    "tomb_of_the_spider_queen": Map(
+        "Tomb of the Spider Queen", (430, 262), file="SoulCage",
+        panels={"CryptPanel": BOTTOM_RIGHT}, place=("CryptPanel",)),
+    "towers_of_doom": Map(
+        "Towers of Doom", (436, 298), file="FieldofSlaughter",
+        place=("MainFoSPanel",),
+        # Its strip stays on the right edge: everything a broadcast needs from it is ours now
+        # (below), and what's left (town health, at the top) is drawn from the screen's top.
+        # "Cannons are firing": the script shows RAVEN's alert when blue captures an altar and
+        # NECRO's when red does (only the Your/Enemy text is per viewer), to each team's
+        # players only - a player view (1-8) shows them, the free observer view never does,
+        # and nothing an observer's UI receives marks a capture (user, 2026-10-06). The towns
+        # are ours, from the observer's own town counts (towers_extra).
+        team={"MainFoSPanel": {
+            "blue": [Alert("WaygateNotificationFrame", note="the tunnels opening"),
+                     cannons("RavenNotificationFrame"),
+                     town_alert("blue", "FieldofSlaughter/MainFoSPanel/AllyCaptureNotificationFrame",
+                                "Blue team captured")],
+            "red": [Alert("AltarSpawnNotificationFrame", note="the altar countdown"),
+                    Alert("TowersNotificationFrame", note="the towers upgrading"),
+                    cannons("NecroNotificationFrame"),
+                    town_alert("red", "FieldofSlaughter/MainFoSPanel/EnemyCaptureNotificationFrame",
+                               "Red team captured")]}},
+        extra="towers"),
+    "volskaya_foundry": Map(
+        "Volskaya Foundry", (452, 314), file="VolskayaMapMechanic",
+        panels={"VolskayaCapturePointPanel": STRIP}, place=("VolskayaCapturePointPanel",),
+        notes="the capture point's hex is placed from the minimap; its strip clipped it"),
+    "warhead_junction": Map(
+        "Warhead Junction", (460, 390), file="SCMap2", minimap=(0, 0), place=("SC2Panel",),
+        # its file nudges the map 30 units right in the minimap panel: back to the square's place
+        fix=f'<Action type="SetAnchor" frame="{MINIMAP}/Minimap" side="Left" relative="{MINIMAP}" pos="Min" offset="0"/>',
+        notes="its panel is placed from the minimap already"),
+}
+EXTRAS = {"towers": towers_extra}
+
+
+def drawn_height(key):
+    """How tall a map draws in the minimap square, px at 1080p (DRAWN_PX wide, or tall if it's
+    taller than wide)."""
+    w, h = MAPS[key].art
+    return h * min(DRAWN_PX / w, DRAWN_PX / h)
+
+
+def max_stack():
+    """The tallest stack any map builds on one side."""
+    return max(len(col) for m in MAPS.values() for cols in m.team.values() for col in cols.values())
+
+
+def on_minimap(side, pos, offset, m):
+    """A side Blizzard anchored to the screen (`pos` of it, `offset` units), as the same
+    distance from our minimap's bottom-right corner: Blizzard's minimap's bottom is m.minimap[0]
+    below the screen's, its right m.minimap[1] right of the screen's. -> (pos, offset) of
+    MINIMAP."""
+    down, right = m.minimap
+    if side in ("Left", "Right"):
+        return "Max", offset - right - {"Min": SCREEN_W, "Mid": SCREEN_W // 2, "Max": 0}[pos]
+    return "Max", offset - down - {"Min": SCREEN_H, "Mid": SCREEN_H // 2, "Max": 0}[pos]
+
+
+def const(key):
+    return f"#FCJH_MINIMAP_BOTTOM_{key.upper()}"
+
+
+def place_actions(key, indent):
+    """The SetAnchors that put the minimap where this map wants it."""
+    t = T * indent
+    out = (f'{t}<Action type="SetAnchor" frame="{MINIMAP}" side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_L"/>\n'
+           f'{t}<Action type="SetAnchor" frame="{MINIMAP}" side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_R"/>\n'
+           f'{t}<Action type="SetAnchor" frame="{MINIMAP}" side="Bottom" relative="$GameUI" pos="Max" offset="{const(key)}"/>\n')
+    return out + (f"{t}{MAPS[key].fix}\n" if MAPS[key].fix else "")
+
+
+def placer(key, indent):
+    """A frame inside one of the map's panels: when the panel shows, the minimap takes this
+    map's place. The panel exists only on this map."""
+    t = T * indent
+    return (f'{t}<!-- the minimap\'s place on {MAPS[key].title}, once this panel shows -->\n'
+            f'{t}<Frame type="Frame" name="FCJH_MinimapPlace">\n'
+            f'{t}\t<Anchor relative="$parent"/>\n'
+            f'{t}\t<AcceptsMouse val="false"/>\n'
+            f'{t}\t<StateGroup name="FCJH_Place">\n'
+            f'{t}\t\t<DefaultState val="Waiting"/>\n'
+            f'{t}\t\t<State name="Placed">\n'
+            f'{t}\t\t\t<When type="Property" frame="$parent" Visible="true"/>\n'
+            + place_actions(key, indent + 3) +
+            f'{t}\t\t</State>\n'
+            f'{t}\t\t<State name="Waiting"/>\n'
+            f'{t}\t</StateGroup>\n'
+            f'{t}</Frame>\n')
+
+
+def anchor_lines(sides, m, indent):
+    t = T * indent
+    out = ""
+    for side, pos, offset in sides:
+        p, off = on_minimap(side, pos, offset, m)
+        out += f'{t}<Anchor side="{side}"{" " * (6 - len(side))} relative="{MINIMAP}" pos="{p}" offset="{off}"/>\n'
+    return out
+
+
+def short(name):
+    for cut in ("NotificationFrame", "FCJH_"):
+        name = name.replace(cut, "")
+    return name.replace("Frame", "")
+
+
+def stack_states(team, column, i, targets, row, indent):
+    """Alert i of its side's column: on the bottom slot - the XP bar, or the core bar while that
+    shows - or one slot up for each alert before it in the column that's showing. The states
+    go from most alerts showing to fewest; the first whose alerts all show wins."""
+    t = T * indent
+    key = f"#FCJH_MAP_ALERT_{team.upper()}_B"
+    act = lambda c: "".join(f'<Action type="SetAnchor" frame="{target}" side="Bottom" relative="{row}" '
+                            f'pos="Min" offset="{c}"/>' for target in targets)
+    out = f'{t}<StateGroup name="FCJH_Stack">\n{t}\t<DefaultState val="Bottom"/>\n'
+    before = column[:i]
+    for n in range(len(before), 0, -1):
+        for over in combinations(before, n):
+            when = "".join(f'<When type="Property" frame="$parent/{a.name}" Visible="true"/>' for a in over)
+            out += f'{t}\t<State name="Over{"".join(short(a.name) for a in over)}">{when}{act(f"{key}_{n + 1}")}</State>\n'
+    out += (f'{t}\t<State name="OnCore"><When type="Property" frame="{CORE_BAR[team]}" Visible="true"/>'
+            f'{act(f"{key}_CORE")}</State>\n'
+            f'{t}\t<State name="Bottom">{act(key)}</State>\n'
+            f'{t}</StateGroup>\n')
+    return out
+
+
+def alert_frame(team, column, i, row):
+    a = column[i]
+    t = T * 2
+    right = f"#FCJH_MAP_ALERT_{team.upper()}_R" + (f"_{a.kind}" if a.kind else "")
+    spot = (f'\t<Anchor side="Bottom" relative="{row}" pos="Min" offset="#FCJH_MAP_ALERT_{team.upper()}_B"/>\n'
+            f'\t<Anchor side="Right"  relative="{row}" pos="Min" offset="{right}"/>\n'
+            f'\t<Unclipped val="true"/>\n')
+    out = f'{t}<!-- {team}, {"the bottom slot" if i == 0 else f"over {i} before it"}: {a.note} -->\n' if a.note else ""
+    out += f'{t}<Frame type="Frame" name="{a.name}"' + (f' template="{a.template}"' if a.template else "") + ">\n"
+    out += "".join(f"{t}{line}\n" for line in spot.splitlines())
+    targets = ["$this"]
+    if a.place:
+        child, ctype = a.place.split(":")
+        targets.append(f"$this/{child}")
+        out += f'{t}\t<Frame type="{ctype}" name="{child}">\n'
+        out += "".join(f"{t}\t{line}\n" for line in spot.splitlines())
+        out += f'{t}\t</Frame>\n'
+    out += stack_states(team, column, i, targets, row, 3)
+    return out + a.extra + f"{t}</Frame>\n"
+
+
+class Node:
+    """A frame override, and the frames under it, written once however many entries touch it."""
+
+    def __init__(self, name, type_="Frame"):
+        self.name, self.type, self.body, self.children = name, type_, "", {}
+
+    def at(self, path):
+        node = self
+        for seg in path.split("/"):
+            name, _, type_ = seg.partition(":")
+            node = node.children.setdefault(name, Node(name, type_ or "Frame"))
+        return node
+
+    def xml(self, indent, file=None):
+        t = T * indent
+        out = f'{t}<Frame type="{self.type}" name="{self.name}"' + (f' file="{file}"' if file else "") + ">\n"
+        out += self.body
+        for c in self.children.values():
+            out += c.xml(indent + 1)
+        return out + f"{t}</Frame>\n"
+
+
+def map_file(key, row_frame):
+    """Everything this map's own layout file gets: its panels on our minimap, the minimap's
+    place, its team alerts."""
+    m = MAPS[key]
+    root = Node(None)
+    for path, sides in m.panels.items():
+        root.at(path).body += anchor_lines(sides, m, len(path.split("/")) + 1)
+    for path in m.place:
+        root.at(path).body += placer(key, len(path.split("/")) + 1)
+    for panel, cols in m.team.items():
+        node = root.at(panel)
+        for team in ("blue", "red"):
+            for i in range(len(cols.get(team, []))):
+                node.body += alert_frame(team, cols[team], i, row_frame[team])
+    if m.extra:
+        root.at(m.place[0]).body += EXTRAS[m.extra]()
+    return "".join(c.xml(1, file=m.file) for c in root.children.values())
+
+
+def core_panels():
+    """The older maps' panels in Blizzard's core MapMechanicPanel, on our minimap, and the
+    minimap's place on each - from one StateGroup on the minimap: those panels exist on every
+    map, the map's script shows its own."""
+    core = {k: m for k, m in MAPS.items() if m.core}
+    t = T * 5
+    panels = "".join(f'{T*5}<Frame type="Frame" name="{m.core}">\n'
+                     f'{T*6}<!-- {m.title} -->\n' + anchor_lines(BOTTOM_RIGHT, m, 6)
+                     + f'{T*5}</Frame>\n' for m in core.values())
+    loading = "".join(f'<When type="Property" frame="{MECHANICS}/{m.core}" Visible="true"/>' for m in core.values())
+    states = "".join(f'{t}\t<State name="{k}">\n'
+                     f'{t}\t\t<When type="Property" frame="{MECHANICS}/{m.core}" Visible="true"/>\n'
+                     + place_actions(k, 7) + f'{t}\t</State>\n' for k, m in core.items())
+    return (f'{T*4}<Frame type="MinimapPanel" name="MinimapPanel">\n'
+            f'{t}<!-- The older maps\' places. Their panels are all shown while the UI loads (the\n'
+            f'{t}     template\'s default) until the script hides them: "Loading" holds still through\n'
+            f'{t}     that. "Default" moves nothing - on the other maps their own panels place it,\n'
+            f'{t}     or it stays where FCJH_Minimap puts it ([minimap] bottom). -->\n'
+            f'{t}<StateGroup name="FCJH_MapPlace">\n'
+            f'{t}\t<DefaultState val="Default"/>\n'
+            f'{t}\t<State name="Loading">{loading}</State>\n'
+            + states +
+            f'{t}\t<State name="Default"/>\n'
+            f'{t}</StateGroup>\n'
+            f'{T*4}</Frame>\n'
+            f'{T*4}<Frame type="Frame" name="MapMechanicPanel">\n' + panels + f'{T*4}</Frame>\n')
+
+
+def layout(header, row_frame):
+    """FCJH_Maps.StormLayout. row_frame: {"blue": ..., "red": ...}, the rows' bare frames the
+    stacks stand on (gen.py ROW_FRAME)."""
+    return header + f'''
+	<!-- Each battleground's own UI on our screen (tools/maps.py, which says how a map's UI works).
+
+	     Per map: the minimap's place - the map drawn with its bottom on the screen's padding
+	     line, as the plates ([minimap] nudge to adjust one); the map's objective panel moved
+	     with the minimap, so it sits round ours as it sat round Blizzard's; and the alerts that
+	     belong to a team in a stack on that team's side of the map, on its plates' inner end
+	     (user, 2026-10-05/06): on the XP bar, or the core bar while that shows (Blizzard shows
+	     it while the core takes damage), one slot up for each alert below it that's showing.
+	     Neutral alerts stay in their panel, above the map.
+
+	     The older five maps' panels are Blizzard's core ones, here first; then each newer map's
+	     own file. -->
+	<Frame type="GameUI" name="GameUI" file="GameUI">
+		<Frame type="Frame" name="UIContainer">
+			<Frame type="Frame" name="ConsoleUIContainer">
+{core_panels()}			</Frame>
+		</Frame>
+	</Frame>
+''' + "".join(f"\t<!-- ===== {MAPS[k].title}{(': ' + MAPS[k].notes) if MAPS[k].notes else ''} ===== -->\n"
+              + map_file(k, row_frame) for k in MAPS if MAPS[k].file) + "</Desc>\n"

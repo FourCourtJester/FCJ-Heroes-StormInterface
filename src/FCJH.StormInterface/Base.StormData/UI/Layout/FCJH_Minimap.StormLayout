@@ -4,15 +4,18 @@
 
 	     Blizzard's MinimapPanel (minimappanel.stormlayout) is 468 x 438 units, its square
 	     Minimap child (438 x 438) at the top-left. The engine fits each map's shape inside
-	     that square, centred, so no per-map sizing is needed here: wide maps draw short,
-	     tall maps draw tall. Like Blizzard (who hang it 35 units below the edge), we let the
-	     square hang off the bottom of the screen so wide maps sit low.
+	     that square, centred: wide maps draw short, tall maps draw tall. Like Blizzard (who
+	     hang it 35 units below the edge), we let the square hang off the bottom of the screen
+	     so wide maps sit low.
 
 	     Base anchors are Right + Bottom with a fixed Width; we replace Right and add Left, so
 	     both horizontal edges are ours and the width stays 468. Numbers: layout.toml [minimap].
 
-	     Map objective widgets are NOT part of this panel - they live in MapMechanicPanel,
-	     filled per battleground by each map's own mod. -->
+	     This is its place before a map moves it, and on maps that don't (the ARAM maps): each
+	     battleground moves it up or down so the map as drawn sits on the padding line, from
+	     inside its own panel (FCJH_Maps, tools/maps.py). The map objective widgets aren't part
+	     of this panel either: they live in MapMechanicPanel, and FCJH_Maps pins each map's
+	     panel to this one. -->
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<Frame type="Frame" name="UIContainer">
 			<Frame type="Frame" name="ConsoleUIContainer">
