@@ -1567,7 +1567,7 @@ def hero_cell_template(team, c, cfg):
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="{u(near)}"/>
 						<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 						<Anchor side="Right"  relative="$parent" pos="Max" offset="-{u(far)}"/>
-						<Style val="FCJH_HeroicCooldown"/>
+						<Style val="FCJH_FountainCooldown"/>
 						<Options val="NoWrapping | ScaleToPreventTruncation"/>
 						<RenderPriority val="531"/>
 						<Unclipped val="true"/>

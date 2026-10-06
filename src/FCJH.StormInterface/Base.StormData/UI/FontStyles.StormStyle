@@ -24,6 +24,8 @@
 	<!-- Plate heroic token: the "?" before the pick, and the cooldown seconds over the icon -->
 	<Style name="FCJH_HeroicMark" template="HeaderExtendedTemplate" height="18" textcolor="e7c8ff" hjustify="Center" vjustify="Middle" fontflags="Outline" styleflags="!Shadow"/>
 	<Style name="FCJH_HeroicCooldown" template="HeaderExtendedTemplate" height="15" textcolor="ffffff" hjustify="Center" vjustify="Middle" fontflags="Outline" styleflags="!Shadow"/>
+	<!-- Plate fountain's countdown: one smaller (user, 2026-10-06) -->
+	<Style name="FCJH_FountainCooldown" template="FCJH_HeroicCooldown" height="14"/>
 	<!-- Inspect card -->
 	<Style name="FCJH_InspectSection" template="HeaderExtendedTemplate" height="12" textcolor="8fa3c8" hjustify="Left" vjustify="Middle" styleflags="!Shadow|!Glow|!Uppercase"/>
 	<Style name="FCJH_InspectName" template="HeaderExtendedTemplate" height="20" textcolor="ffffff" hjustify="Center" vjustify="Middle" fontflags="Outline" styleflags="!Shadow"/>
