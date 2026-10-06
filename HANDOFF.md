@@ -387,7 +387,11 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
      (`obs_stats_top`: a portrait box and five column cells per row, blue left, red right)
      and the leader underlines (`obs_stats_leader_blue/red`) are candidates; the dev art board
      (Ctrl+Shift+B, `[dev] art_board`, DIAGNOSTIC) shows them at native size - kept for that.
-2. **Command card polish** - does each button read cleanly; **talent-granted abilities** (the
+2. **Command card polish** - **likely resolved (2026-10-05, 22:12 screenshot):** Sonya at 16
+   on today's card shows her talent-granted button clean in the honeycomb, no flame frame or
+   portrait behind it. Not yet seen: a talent active ON COOLDOWN (the morning's flame frame
+   came with a count, 17) or two at once - glance at those when they come up; if clean, close
+   this. The note as it was: does each button read cleanly; **talent-granted abilities** (the
    top row, dynamic buttons 30-35): seen 2026-10-05 on Sonya (screenshot `Screenshot2026-10-05
    11_16_54.jpg`), they sit in place but draw oversized art behind them - an orange flame frame
    round the first (a cooldown count, 17) and a large faded portrait behind the second. The
