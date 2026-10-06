@@ -514,6 +514,19 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    Cursed Hollow, Dragon Shire and Haunted Mines ship no UI - they share the default. Test
    first: move it on Braxis only, check Cursed Hollow stays put (proves the file add is
    harmless elsewhere and that a map frame can move the minimap).
+   **How the map alerts work** (from the files, 2026-10-06): each map's panel is a template
+   in its own layout file (Towers of Doom: `FieldofSlaughter/MainFoSPanel`); its script
+   builds it inside GameUI's `MapMechanicPanel` and finds each alert by NAME - so we may move
+   and restyle alerts (`file="<map's file>"`), never rename or drop one. Older maps' panels
+   (Cursed Hollow, Blackheart's Bay, Haunted Mines, Garden, Dragon Shire) live in core
+   `MapMechanicPanelTemplate` instead. Per-team alerts (Towers' ally/enemy capture) are sent
+   to each team's PLAYERS: an observer may see neither, and can't tell the team from them.
+   **Built 2026-10-06, awaiting QA** (`FCJH_MapAlerts.StormLayout`): Towers' altar
+   countdown on red's row at the core bar's place, its art flush with the core bar's right
+   edge, stepping up onto the core bar while that shows (`[map_alerts] gap`); the rest of its
+   right-edge chain (capture, Raven, Necro, towers, waygate) kept in place by giving the
+   enemy-capture alert the altar's old anchor. The replay box moved to red's row too (its
+   corner on the row's top-right, `flush = "right"`), so that chain sits just above it.
 9. **Viewport padding** (user, 2026-10-05). One more size pass on our hero plates, to set
    the screen's base padding: the gap between the plates and the screen's edges becomes the
    margin for everything. Then the replay box (top-left), the inspect card and the info panes
