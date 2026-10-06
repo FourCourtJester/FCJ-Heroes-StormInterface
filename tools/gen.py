@@ -861,9 +861,13 @@ SLOT_W, SLOT_H = 58, 34          # Blizzard's buff slot (inspect_card BUFF_W, BU
 SLOT_ART = (4, 3, 50, 28)        # the slot art's visible part in it: inset x, y, width, height
 SLOT_LEAN = 0.45                 # ...and its slant, across per down (measured in game, 2026-10-05)
 SLOT_MASK = (9, -2, 40, 40)      # the icon's mask square in the slot (inspect_card): left, top, w, h
+MASK_INSET = 2                   # ...pulled in on every side on the plate: at full size the icon
+                                 # showed a pixel past the slot's frame (user, 2026-10-06 13:12)
 FOUNTAIN_H = 14                  # the slot art's visible height on the plate, native cell units (20.6, the
                                  # heroic's size, was too big: user, 2026-10-06)
 EDGE_INSET = 2                   # its slanted side, in from the plate's edge (cell units)
+HEROIC_ART_TOP = 2               # the gold frame's art starts this far below its box (cell units;
+                                 # standing on the box left a ~2 px gap: user, 2026-10-06 13:12)
 
 
 def fountain_geometry(cfg, team):
@@ -897,7 +901,7 @@ def fountain_geometry(cfg, team):
     else:
         far = left + aw - cut * (ht - top) / hv
     _, frame_top, _, _ = heroic_frame_rect(cfg, team)
-    up, _, _ = place(frame_top)               # standing on the gold frame
+    up, _, _ = place(frame_top + HEROIC_ART_TOP)   # standing on the gold frame's art
     return {"bar": bar, "up": up, "scale": f, "health_left": round(far) - 1}
 HEROIC_ART = {"blue": ("HUD_TopBar_Team_HeroFrame_Ult_Bg", "HUD_TopBar_Team_HeroFrame_Ult", False,
                        "HUD_TopBar_Team_HeroFrame_Ult_ProgressFill"),
@@ -1480,6 +1484,7 @@ def hero_cell_template(team, c, cfg):
     f = fg["scale"]
     u = lambda v: round(v * f)
     mx, my, mw, mh = SLOT_MASK
+    mx, my, mw, mh = mx + MASK_INSET, my + MASK_INSET, mw - 2 * MASK_INSET, mh - 2 * MASK_INSET
     # the icon's mask: Blizzard's buff mask leans / (red); blue's is the heroic icon's own mask,
     # which leans \ like blue's plates (a mask can't be mirrored the way an image can)
     mask = "@UI/HUD_TopBar_Team_HeroFrame_Ult_Bg" if blue else "@UI/Storm_UI_InGame_Buff_IconMask"
