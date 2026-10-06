@@ -433,12 +433,14 @@
 				</Frame>
 				<StateGroup name="FCJH_Fountain">
 					<DefaultState val="Ready"/>
+					<!-- on cooldown only the art dims: the slot's frame stays lit, or it read as a
+					     number on a dulled-out icon (user, 2026-10-06) -->
 					<State name="Cooldown">
 						<When type="Property" frame="$parent/FCJH_FountainSensor" Visible="true"/>
-						<Action type="SetProperty" frame="$this" Alpha="60"/>
+						<Action type="SetProperty" frame="$this/ImageMaskContainer/IconImage" Alpha="60"/>
 					</State>
 					<State name="Ready">
-						<Action type="SetProperty" frame="$this" Alpha="255"/>
+						<Action type="SetProperty" frame="$this/ImageMaskContainer/IconImage" Alpha="255"/>
 					</State>
 				</StateGroup>
 			</Frame>
