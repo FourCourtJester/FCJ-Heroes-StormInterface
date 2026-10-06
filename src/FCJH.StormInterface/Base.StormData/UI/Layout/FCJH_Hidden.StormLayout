@@ -213,4 +213,22 @@
 			</Frame>
 		</Frame>
 	</Frame>
+	<!-- The held-Ctrl picker in a player's view is a copy of the picker TEMPLATE, not GameUI's
+	     picker above: the diagnostic's markers rode GameUI's (parked or not, it sat empty at the
+	     top-left) while a marker-less picker showed in the default place (user, 2026-10-06).
+	     So the template's parts are made see-through and deaf to the mouse: every copy of it,
+	     GameUI's included, is empty. -->
+	<Frame type="HeroTalentTreeSelectionPanel" name="HeroTalentTreeSelectionPanelTemplate" file="HeroTalentTreeSelectionPanel">
+		<Frame type="HeroTalentTreePanel" name="TalentTreePanel">
+			<Alpha val="0"/>
+			<AcceptsMouse val="false"/>
+			<AcceptsMouseTooltip val="false"/>
+		</Frame>
+		<Frame type="Image" name="BorderImage">
+			<Alpha val="0"/>
+		</Frame>
+		<Frame type="Label" name="TitleLabel">
+			<Alpha val="0"/>
+		</Frame>
+	</Frame>
 </Desc>

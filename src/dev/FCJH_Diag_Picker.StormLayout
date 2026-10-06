@@ -250,4 +250,28 @@
 			</Frame>
 		</Frame>
 	</Frame>
+	<!-- the picker TEMPLATE: a yellow marker in every copy made from it (2026-10-06: the visible
+	     held-Ctrl picker carried neither GameUI marker) -->
+	<Frame type="HeroTalentTreeSelectionPanel" name="HeroTalentTreeSelectionPanelTemplate" file="HeroTalentTreeSelectionPanel">
+		<Frame type="Image" name="FCJH_DiagTemplateMark">
+			<Anchor side="Top"  relative="$parent" pos="Min" offset="0"/>
+			<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+			<Width val="120"/>
+			<Height val="120"/>
+			<Texture val="@UI/PauseScreenDimImage"/>
+			<ColorAdjustMode val="Fill"/>
+			<AdjustmentColor val="255,255,230,0"/>
+			<IgnoreParentAlpha val="true"/>
+			<Unclipped val="true"/>
+			<RenderPriority val="999"/>
+			<AcceptsMouse val="false"/>
+			<Frame type="Label" name="FCJH_DiagText">
+				<Anchor relative="$parent"/>
+				<Style val="ObsBar_MatchTimer"/>
+				<Text val="TEMPLATE"/>
+				<IgnoreParentAlpha val="true"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
+		</Frame>
+	</Frame>
 </Desc>
