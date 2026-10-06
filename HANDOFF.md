@@ -376,8 +376,8 @@ view, only on held Ctrl.) Done this session: panes in Blizzard's talent
 grid and the inspect skin, hotkeys settled (our panes on Ctrl+1-4; the inspect and death
 recap keys tried and dropped), the short card for non-heroes (camp mercenaries purple,
 captured ones their team's), hero forms and empty ability slots (item 3). Open items, the
-user's pick of order: map objectives and the minimap per map (8), camp timers (13),
-anchoring (4), the art pass (7, 12). Item 14 collects what waits on replays with particular
+user's pick of order: map objectives and the minimap per map (8; Towers of Doom done),
+anchoring (4), the art pass (7, 12). Camp timers (13) dropped. Item 14 collects what waits on replays with particular
 heroes and maps.
 
 Confirmed in game by then: heroic tooltips on every plate (Varian's level-4 heroic, Tracer's
@@ -634,12 +634,9 @@ commits around it).
 12. **Ahli's death animation on the nameplate** (user, 2026-10-05: "a nice touch", not to
     copy) - his plate does something when its hero dies. For the art pass (item 7): study
     what it does, then design our own.
-13. **Camp timer displays** (user, 2026-10-05, for later) - the mercenary camps' respawn
-    timers. Blizzard's own were seen in a 2026-10-05 screenshot (22:12:18): "1:08 / -ELITE- /
-    Boss Camp / Player 4" in a stack at the screen's left, mid-height (camp labels in the
-    world, or pinned to the screen's edge when the camp is off screen?). To look at: what
-    Blizzard shows and where, what Ahli does with them, and whether ours should look and sit
-    differently. Goes with the map objectives pass (item 8).
+13. **Camp timer displays: DROPPED** (user, 2026-10-06: no clear place for them on our
+    screen). Blizzard's own stay as they are - seen 2026-10-05 as "1:08 / -ELITE- / Boss Camp
+    / Player 4" in a stack at the screen's left, mid-height.
 14. **Final pass: every map, every hero** (user, 2026-10-05). The last QA round, with replays
     that cover every map and every hero; the checks that need a particular hero or map collect
     here until then (no replay with them yet):
@@ -655,7 +652,7 @@ commits around it).
       they get;
     - **the D.Va and Viking guesses** in `inspect_card.ALSO`;
     - **rows with fewer than five heroes** (a 3v3 or 1v1 replay);
-    - **every map**: the map objectives, the minimap per map, camp timers (items 8, 13).
+    - **every map**: the map objectives, the minimap per map (item 8).
 
 ## 8. Original brief
 
