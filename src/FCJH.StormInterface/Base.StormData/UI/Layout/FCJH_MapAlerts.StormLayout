@@ -56,12 +56,37 @@
 				</State>
 			</StateGroup>
 		</Frame>
-		<!-- "Cannons are firing!" after an altar capture. The script shows RAVEN's alert when blue
-		     captures and NECRO's when red does - only the text is per viewer ("Your" to the
-		     capturing team's players, "Enemy" to the others; a player view (1-8) shows them,
-		     user 2026-10-06). So the frame names the team: Raven on blue's side, Necro on red's,
-		     in the slots by the map (the warnings there come before the altars activate). -->
+		<!-- Blizzard's own team alerts, parked above the screen: ours (the observer alerts below)
+		     stand in for them in every view. "Cannons are firing!" is Raven's alert for blue's
+		     capture and Necro's for red's (only the Your/Enemy text is per viewer); the
+		     town-capture pair ("Allies / The Enemy captured <town>") is viewer-relative. All
+		     four are sent to each team's players only, so a player view (1-8) showed them and the
+		     free observer view never did (user, 2026-10-06). -->
 		<Frame type="Frame" name="RavenNotificationFrame">
+			<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="-9999"/>
+		</Frame>
+		<Frame type="Frame" name="NecroNotificationFrame">
+			<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="-9999"/>
+		</Frame>
+		<Frame type="Frame" name="EnemyCaptureNotificationFrame">
+			<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="-9999"/>
+		</Frame>
+		<Frame type="Frame" name="AllyCaptureNotificationFrame">
+			<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="-9999"/>
+		</Frame>
+		<!-- ===== Observer alerts (2026-10-06, an experiment): the two events a broadcast wants,
+		     which Blizzard only tells each team's players - built from Blizzard's own alerts
+		     (same art and animation), team names for text, on the team's side. Ours show in
+		     every view, so Blizzard's originals are parked (below).
+		     CANNONS - approximated: on this map only cannon shots (the altars, the Horseman
+		     camp) can hurt a core, so a team's core bar coming up means the other team's
+		     cannons are landing. Shows at the first hit, a moment after the capture. Slot one,
+		     by the map (the warnings there come before the altars activate).
+		     TOWNS - exact: on every change of hands the script sends the OBSERVER panel (our
+		     plates' ObserverHeroOverviewPanel) "BroadcastToD<blue>v<red>", the towns each team
+		     holds - Blizzard's own UI never uses it. Blue's count up: blue took a town; down:
+		     red did. Slot two, one above (a town can fall during the altar countdown). ===== -->
+		<Frame type="Frame" name="FCJH_BlueCannons" template="FieldofSlaughter/MainFoSPanel/RavenNotificationFrame">
 			<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_B"/>
 			<Anchor side="Right"  relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_R"/>
 			<Unclipped val="true"/>
@@ -75,8 +100,16 @@
 					<Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_B"/>
 				</State>
 			</StateGroup>
+			<Frame type="Label" name="NotificationLabel"><Text val="Blue Cannons Are Firing!"/></Frame>
+			<!-- gone after 5 s, as Blizzard's (its script waits 5 s, then hides it) -->
+			<Animation name="FCJH_Timer">
+				<Event event="Show" action="Restart,Play"/>
+				<Controller type="Event" end="Stop">
+					<Key type="Event" time="5" event="Hide"/>
+				</Controller>
+			</Animation>
 		</Frame>
-		<Frame type="Frame" name="NecroNotificationFrame">
+		<Frame type="Frame" name="FCJH_RedCannons" template="FieldofSlaughter/MainFoSPanel/NecroNotificationFrame">
 			<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_RED_B"/>
 			<Anchor side="Right"  relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_RED_R"/>
 			<Unclipped val="true"/>
@@ -90,22 +123,255 @@
 					<Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_RED_B"/>
 				</State>
 			</StateGroup>
+			<Frame type="Label" name="NotificationLabel"><Text val="Red Cannons Are Firing!"/><Style val="Storm_MapMechanic_MechanicTimerCentered_Red"/></Frame>
+			<!-- gone after 5 s, as Blizzard's (its script waits 5 s, then hides it) -->
+			<Animation name="FCJH_Timer">
+				<Event event="Show" action="Restart,Play"/>
+				<Controller type="Event" end="Stop">
+					<Key type="Event" time="5" event="Hide"/>
+				</Controller>
+			</Animation>
 		</Frame>
-		<!-- The town-capture alerts ("Allies / The Enemy captured <town>"): viewer-relative - the
-		     ally one to the capturing team's players, the enemy one to the others, and nothing in
-		     either names the team (the script adds only the town's direction). Seen only in a
-		     player view (1-8; user, 2026-10-06), and one at a time: both centred just above the
-		     minimap, in the one spot. -->
-		<Frame type="Frame" name="EnemyCaptureNotificationFrame">
-			<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_MID_B"/>
-			<Anchor side="Right"  relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_MID_R"/>
+		<Frame type="Frame" name="FCJH_BlueTown" template="FieldofSlaughter/MainFoSPanel/AllyCaptureNotificationFrame">
+			<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_B_2"/>
+			<Anchor side="Right"  relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_R"/>
 			<Unclipped val="true"/>
+			<Frame type="Label" name="NotificationLabel"><Text val="Blue team captured"/></Frame>
+			<Frame type="Label" name="NotificationTargetLabel"><Text val="a town"/></Frame>
+			<!-- gone after 5 s, as Blizzard's (its script waits 5 s, then hides it) -->
+			<Animation name="FCJH_Timer">
+				<Event event="Show" action="Restart,Play"/>
+				<Controller type="Event" end="Stop">
+					<Key type="Event" time="5" event="Hide"/>
+				</Controller>
+			</Animation>
 		</Frame>
-		<Frame type="Frame" name="AllyCaptureNotificationFrame">
-			<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_MID_B"/>
-			<Anchor side="Right"  relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_MID_R"/>
+		<Frame type="Frame" name="FCJH_RedTown" template="FieldofSlaughter/MainFoSPanel/EnemyCaptureNotificationFrame">
+			<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_RED_B_2"/>
+			<Anchor side="Right"  relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_RED_R"/>
 			<Unclipped val="true"/>
+			<Frame type="Label" name="NotificationLabel"><Text val="Red team captured"/></Frame>
+			<Frame type="Label" name="NotificationTargetLabel"><Text val="a town"/></Frame>
+			<!-- gone after 5 s, as Blizzard's (its script waits 5 s, then hides it) -->
+			<Animation name="FCJH_Timer">
+				<Event event="Show" action="Restart,Play"/>
+				<Controller type="Event" end="Stop">
+					<Key type="Event" time="5" event="Hide"/>
+				</Controller>
+			</Animation>
 		</Frame>
+		<StateGroup name="FCJH_BlueFiring">
+			<DefaultState val="Quiet"/>
+			<State name="Firing">
+				<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2CoreUnitStatus" Visible="true"/>
+				<Action type="SendEvent" frame="$this/FCJH_BlueCannons" event="Show"/>
+			</State>
+			<State name="Quiet"/>
+		</StateGroup>
+		<StateGroup name="FCJH_RedFiring">
+			<DefaultState val="Quiet"/>
+			<State name="Firing">
+				<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1CoreUnitStatus" Visible="true"/>
+				<Action type="SendEvent" frame="$this/FCJH_RedCannons" event="Show"/>
+			</State>
+			<State name="Quiet"/>
+		</StateGroup>
+		<Frame type="Frame" name="FCJH_TownWatch">
+			<Anchor relative="$parent"/>
+			<AcceptsMouse val="false"/>
+			<Frame type="Frame" name="FCJH_New0"><Anchor relative="$parent"/><Visible val="false"/><AcceptsMouse val="false"/></Frame>
+			<Frame type="Frame" name="FCJH_New1"><Anchor relative="$parent"/><Visible val="false"/><AcceptsMouse val="false"/></Frame>
+			<Frame type="Frame" name="FCJH_New2"><Anchor relative="$parent"/><Visible val="false"/><AcceptsMouse val="false"/></Frame>
+			<Frame type="Frame" name="FCJH_New3"><Anchor relative="$parent"/><Visible val="true"/><AcceptsMouse val="false"/></Frame>
+			<Frame type="Frame" name="FCJH_New4"><Anchor relative="$parent"/><Visible val="false"/><AcceptsMouse val="false"/></Frame>
+			<Frame type="Frame" name="FCJH_New5"><Anchor relative="$parent"/><Visible val="false"/><AcceptsMouse val="false"/></Frame>
+			<Frame type="Frame" name="FCJH_New6"><Anchor relative="$parent"/><Visible val="false"/><AcceptsMouse val="false"/></Frame>
+			<Frame type="Frame" name="FCJH_Cur0"><Anchor relative="$parent"/><Visible val="false"/><AcceptsMouse val="false"/></Frame>
+			<Frame type="Frame" name="FCJH_Cur1"><Anchor relative="$parent"/><Visible val="false"/><AcceptsMouse val="false"/></Frame>
+			<Frame type="Frame" name="FCJH_Cur2"><Anchor relative="$parent"/><Visible val="false"/><AcceptsMouse val="false"/></Frame>
+			<Frame type="Frame" name="FCJH_Cur3"><Anchor relative="$parent"/><Visible val="true"/><AcceptsMouse val="false"/></Frame>
+			<Frame type="Frame" name="FCJH_Cur4"><Anchor relative="$parent"/><Visible val="false"/><AcceptsMouse val="false"/></Frame>
+			<Frame type="Frame" name="FCJH_Cur5"><Anchor relative="$parent"/><Visible val="false"/><AcceptsMouse val="false"/></Frame>
+			<Frame type="Frame" name="FCJH_Cur6"><Anchor relative="$parent"/><Visible val="false"/><AcceptsMouse val="false"/></Frame>
+			<Animation name="FCJH_Split0">
+				<Event event="BroadcastToD0v6" action="Restart,Play" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel"/>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New0"><Key type="Bool" time="0" value="true"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New1"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New2"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New3"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New4"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New5"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New6"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Event" end="Stop">
+					<Key type="Event" time="0.1" event="FCJH_Sync0"/>
+				</Controller>
+			</Animation>
+			<Animation name="FCJH_Sync0">
+				<Event event="FCJH_Sync0" action="Restart,Play"/>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur0"><Key type="Bool" time="0" value="true"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur1"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur2"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur3"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur4"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur5"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur6"><Key type="Bool" time="0" value="false"/></Controller>
+			</Animation>
+			<Animation name="FCJH_Split1">
+				<Event event="BroadcastToD1v5" action="Restart,Play" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel"/>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New0"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New1"><Key type="Bool" time="0" value="true"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New2"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New3"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New4"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New5"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New6"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Event" end="Stop">
+					<Key type="Event" time="0.1" event="FCJH_Sync1"/>
+				</Controller>
+			</Animation>
+			<Animation name="FCJH_Sync1">
+				<Event event="FCJH_Sync1" action="Restart,Play"/>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur0"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur1"><Key type="Bool" time="0" value="true"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur2"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur3"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur4"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur5"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur6"><Key type="Bool" time="0" value="false"/></Controller>
+			</Animation>
+			<Animation name="FCJH_Split2">
+				<Event event="BroadcastToD2v4" action="Restart,Play" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel"/>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New0"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New1"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New2"><Key type="Bool" time="0" value="true"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New3"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New4"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New5"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New6"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Event" end="Stop">
+					<Key type="Event" time="0.1" event="FCJH_Sync2"/>
+				</Controller>
+			</Animation>
+			<Animation name="FCJH_Sync2">
+				<Event event="FCJH_Sync2" action="Restart,Play"/>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur0"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur1"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur2"><Key type="Bool" time="0" value="true"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur3"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur4"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur5"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur6"><Key type="Bool" time="0" value="false"/></Controller>
+			</Animation>
+			<Animation name="FCJH_Split3">
+				<Event event="BroadcastToD3v3" action="Restart,Play" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel"/>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New0"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New1"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New2"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New3"><Key type="Bool" time="0" value="true"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New4"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New5"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New6"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Event" end="Stop">
+					<Key type="Event" time="0.1" event="FCJH_Sync3"/>
+				</Controller>
+			</Animation>
+			<Animation name="FCJH_Sync3">
+				<Event event="FCJH_Sync3" action="Restart,Play"/>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur0"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur1"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur2"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur3"><Key type="Bool" time="0" value="true"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur4"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur5"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur6"><Key type="Bool" time="0" value="false"/></Controller>
+			</Animation>
+			<Animation name="FCJH_Split4">
+				<Event event="BroadcastToD4v2" action="Restart,Play" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel"/>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New0"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New1"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New2"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New3"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New4"><Key type="Bool" time="0" value="true"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New5"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New6"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Event" end="Stop">
+					<Key type="Event" time="0.1" event="FCJH_Sync4"/>
+				</Controller>
+			</Animation>
+			<Animation name="FCJH_Sync4">
+				<Event event="FCJH_Sync4" action="Restart,Play"/>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur0"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur1"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur2"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur3"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur4"><Key type="Bool" time="0" value="true"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur5"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur6"><Key type="Bool" time="0" value="false"/></Controller>
+			</Animation>
+			<Animation name="FCJH_Split5">
+				<Event event="BroadcastToD5v1" action="Restart,Play" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel"/>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New0"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New1"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New2"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New3"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New4"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New5"><Key type="Bool" time="0" value="true"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New6"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Event" end="Stop">
+					<Key type="Event" time="0.1" event="FCJH_Sync5"/>
+				</Controller>
+			</Animation>
+			<Animation name="FCJH_Sync5">
+				<Event event="FCJH_Sync5" action="Restart,Play"/>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur0"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur1"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur2"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur3"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur4"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur5"><Key type="Bool" time="0" value="true"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur6"><Key type="Bool" time="0" value="false"/></Controller>
+			</Animation>
+			<Animation name="FCJH_Split6">
+				<Event event="BroadcastToD6v0" action="Restart,Play" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel"/>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New0"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New1"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New2"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New3"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New4"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New5"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_New6"><Key type="Bool" time="0" value="true"/></Controller>
+				<Controller type="Event" end="Stop">
+					<Key type="Event" time="0.1" event="FCJH_Sync6"/>
+				</Controller>
+			</Animation>
+			<Animation name="FCJH_Sync6">
+				<Event event="FCJH_Sync6" action="Restart,Play"/>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur0"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur1"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur2"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur3"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur4"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur5"><Key type="Bool" time="0" value="false"/></Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Cur6"><Key type="Bool" time="0" value="true"/></Controller>
+			</Animation>
+			<StateGroup name="FCJH_WhoTook">
+				<DefaultState val="Same"/>
+				<State name="Blue1"><When type="Property" frame="$this/FCJH_Cur0" Visible="true"/><When type="Property" frame="$this/FCJH_New1" Visible="true"/><Action type="SendEvent" frame="$parent/FCJH_BlueTown" event="Show"/></State>
+				<State name="Blue2"><When type="Property" frame="$this/FCJH_Cur1" Visible="true"/><When type="Property" frame="$this/FCJH_New2" Visible="true"/><Action type="SendEvent" frame="$parent/FCJH_BlueTown" event="Show"/></State>
+				<State name="Blue3"><When type="Property" frame="$this/FCJH_Cur2" Visible="true"/><When type="Property" frame="$this/FCJH_New3" Visible="true"/><Action type="SendEvent" frame="$parent/FCJH_BlueTown" event="Show"/></State>
+				<State name="Blue4"><When type="Property" frame="$this/FCJH_Cur3" Visible="true"/><When type="Property" frame="$this/FCJH_New4" Visible="true"/><Action type="SendEvent" frame="$parent/FCJH_BlueTown" event="Show"/></State>
+				<State name="Blue5"><When type="Property" frame="$this/FCJH_Cur4" Visible="true"/><When type="Property" frame="$this/FCJH_New5" Visible="true"/><Action type="SendEvent" frame="$parent/FCJH_BlueTown" event="Show"/></State>
+				<State name="Blue6"><When type="Property" frame="$this/FCJH_Cur5" Visible="true"/><When type="Property" frame="$this/FCJH_New6" Visible="true"/><Action type="SendEvent" frame="$parent/FCJH_BlueTown" event="Show"/></State>
+				<State name="Red0"><When type="Property" frame="$this/FCJH_Cur1" Visible="true"/><When type="Property" frame="$this/FCJH_New0" Visible="true"/><Action type="SendEvent" frame="$parent/FCJH_RedTown" event="Show"/></State>
+				<State name="Red1"><When type="Property" frame="$this/FCJH_Cur2" Visible="true"/><When type="Property" frame="$this/FCJH_New1" Visible="true"/><Action type="SendEvent" frame="$parent/FCJH_RedTown" event="Show"/></State>
+				<State name="Red2"><When type="Property" frame="$this/FCJH_Cur3" Visible="true"/><When type="Property" frame="$this/FCJH_New2" Visible="true"/><Action type="SendEvent" frame="$parent/FCJH_RedTown" event="Show"/></State>
+				<State name="Red3"><When type="Property" frame="$this/FCJH_Cur4" Visible="true"/><When type="Property" frame="$this/FCJH_New3" Visible="true"/><Action type="SendEvent" frame="$parent/FCJH_RedTown" event="Show"/></State>
+				<State name="Red4"><When type="Property" frame="$this/FCJH_Cur5" Visible="true"/><When type="Property" frame="$this/FCJH_New4" Visible="true"/><Action type="SendEvent" frame="$parent/FCJH_RedTown" event="Show"/></State>
+				<State name="Red5"><When type="Property" frame="$this/FCJH_Cur6" Visible="true"/><When type="Property" frame="$this/FCJH_New5" Visible="true"/><Action type="SendEvent" frame="$parent/FCJH_RedTown" event="Show"/></State>
+				<State name="Same"/>
+			</StateGroup>
+		</Frame>
+		<!-- ===== end observer alerts ===== -->
 		<!-- The towns' shot counts (each team's towns plus the core shots), flanking the minimap's
 		     middle on the screen's bottom edge (MapMechanicPanel TeamCollectionFrameTemplate). Their
 		     panel filled the right-edge strip, which held Blizzard's minimap; ours is bottom-centre,

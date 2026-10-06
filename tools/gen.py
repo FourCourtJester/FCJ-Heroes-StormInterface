@@ -54,6 +54,7 @@ KILL_ROW_SINGLE = 210    # layout units: where a single kill's victim portrait e
 # (Towers of Doom's three, every kind the same width; measured in game, 2026-10-06 - the
 # templates' arithmetic gave 388 for a countdown, which put it into the map). FCJH_MapAlerts.
 MAP_ALERT_REACH, MAP_ALERT_TAIL = 500, 12
+MAP_ALERT_STEP = 147    # units between two stacked alerts' bottoms (Blizzard's 30-unit gap; measured)
 CC_TEXT_OVERHANG = 20   # layout units the CC text's box reaches above and below the health bar
 
 
@@ -326,6 +327,7 @@ def constants_layout(cfg):
         const(name("map", "alert", team, "r"), right)
         const(name("map", "alert", team, "b"), u(xy - gap), "on the XP bar")
         const(name("map", "alert", team, "b", "core"), u(cy - gap), "on the core bar, while it shows")
+        const(name("map", "alert", team, "b", "2"), u(cy - gap) - MAP_ALERT_STEP, "a second alert, one up")
     # ...and centred just above the minimap's square, for alerts with no team to place them by
     # (an alert's art spans its right edge - REACH to - TAIL, so its middle is half that in)
     (_, mmy, _, _), _ = rects(cfg)["minimap"]
