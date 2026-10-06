@@ -851,6 +851,9 @@ def heroic_icon_rect(cfg, team):
 # energy 95 -> 67 (UpdateHealthBarWidths). Ours narrow from the heroic's side: blue's from the
 # right, red's from the left.
 NARROW = 28
+# The heroic's icon (and its mask) pulled in on every side, cell units: at Blizzard's size the art
+# showed past the gold frame's top-left corner (Tracer's Pulse Bomb: user, 2026-10-06 13:25)
+ULT_ICON_INSET = 2
 
 # The fountain on the plate (user, 2026-10-06, drawn on the canvas first): the inspect card's
 # fountain - Blizzard's buff slot (58 x 34, the icon in its slanted mask), bright when ready,
@@ -881,7 +884,9 @@ def fountain_rect(cfg, team):
     f = hv / SLOT_ART[3]                         # cell units per slot unit
     ax, ay, aw, _ = (v * f for v in SLOT_ART)
     cut = SLOT_LEAN * hv
-    bottom = c.team[team]["health"][1]           # on the health bar's top edge
+    # on the health bar's black outline: the backing's top, 1 up (on the bar itself it sat over
+    # the outline, 3-4 px low: user, 2026-10-06 13:25)
+    bottom = c.team[team]["health_backing"][1] - 1
     top = bottom - hv
     if team == "blue":
         # the outer end is the plate's left: its edge runs (0, 0) -> (overlap, h); the slot leans
@@ -982,7 +987,8 @@ def heroic_panel(cfg, team_frame, i):
 								<Unclipped val="true"/>
 								<AcceptsMouse val="false"/>
 """ + image("FCJH_UltBg", f"@UI/{back}", img_l, img_t, img_r, img_b, f"{t9}{coords}\n" if flip else "") + \
-        image("FCJH_UltIcon", f"{{{watch('HeroicTalentImage')}/@Texture}}", img_l, img_t, img_r, img_b,
+        image("FCJH_UltIcon", f"{{{watch('HeroicTalentImage')}/@Texture}}", img_l + ULT_ICON_INSET, img_t + ULT_ICON_INSET,
+              img_r - ULT_ICON_INSET, img_b - ULT_ICON_INSET,
               f"{t9}<AlphaMaskTexture val=\"@UI/{mask}\"/>\n") + \
         image("FCJH_UltFrame", f"@UI/{frame_tex}", *fr, f"{t9}{coords}\n" if flip else "") + \
         image("FCJH_UltReady", "@UI/HUD_TopBar_Team_HeroFrame_Ult_Ready", *fr,
