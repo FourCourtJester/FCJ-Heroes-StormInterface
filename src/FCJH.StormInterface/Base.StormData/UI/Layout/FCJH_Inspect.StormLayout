@@ -368,6 +368,9 @@
 					<Height val="34"/>
 					<RenderPriority val="670"/>
 					<AcceptsMouse val="false"/>
+					<!-- ready: Blizzard's hero console tooltip for it -->
+					<Tooltip val="@UI/HealingFountainDescription"/>
+					<TooltipAnchorPosition val="TopRight"/>
 					<!-- BehaviorIconTemplate's pieces: the icon in the slanted buff mask, then the slot's frame -->
 					<Frame type="Frame" name="ImageMaskContainer">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
@@ -403,9 +406,11 @@
 						<State name="Cooldown">
 							<When type="Property" frame="$parent/FCJH_FountainSensor" Visible="true"/>
 							<Action type="SetProperty" frame="$this" Alpha="60"/>
+							<Action type="SetProperty" frame="$this" AcceptsMouseTooltip="false"/>
 						</State>
 						<State name="Ready">
 							<Action type="SetProperty" frame="$this" Alpha="255"/>
+							<Action type="SetProperty" frame="$this" AcceptsMouseTooltip="true"/>
 						</State>
 					</StateGroup>
 				</Frame>
@@ -597,8 +602,28 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroPortraitImage/@Texture}"/>
 						<TextureCoords top="0.1" left="0.543" bottom="0.65" right="1.0"/>
 						<RenderPriority val="668"/>
+						<Alpha val="255"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
+					<Frame type="Image" name="FCJH_PortraitWide">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="30"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="2"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="155"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
+						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroPortraitImage/@Texture}"/>
+						<TextureCoords top="0" left="0.021" bottom="1" right="0.979"/>
+						<RenderPriority val="668"/>
+						<Alpha val="0"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
+					<StateGroup name="FCJH_PortraitCrop">
+						<DefaultState val="Hero"/>
+						<State name="HeroLostVikingsController"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus" Unit="HeroLostVikingsController"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="HeroOlaf"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus" Unit="HeroOlaf"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="HeroBaleog"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus" Unit="HeroBaleog"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="HeroErik"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus" Unit="HeroErik"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="Hero"><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="255"/></State>
+					</StateGroup>
 					<Frame type="Image" name="FCJH_Talent1">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="420"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="15"/>
@@ -991,8 +1016,28 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroPortraitImage/@Texture}"/>
 						<TextureCoords top="0.1" left="0.543" bottom="0.65" right="1.0"/>
 						<RenderPriority val="668"/>
+						<Alpha val="255"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
+					<Frame type="Image" name="FCJH_PortraitWide">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="30"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="2"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="155"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
+						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroPortraitImage/@Texture}"/>
+						<TextureCoords top="0" left="0.021" bottom="1" right="0.979"/>
+						<RenderPriority val="668"/>
+						<Alpha val="0"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
+					<StateGroup name="FCJH_PortraitCrop">
+						<DefaultState val="Hero"/>
+						<State name="HeroLostVikingsController"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus" Unit="HeroLostVikingsController"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="HeroOlaf"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus" Unit="HeroOlaf"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="HeroBaleog"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus" Unit="HeroBaleog"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="HeroErik"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus" Unit="HeroErik"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="Hero"><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="255"/></State>
+					</StateGroup>
 					<Frame type="Image" name="FCJH_Talent1">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="420"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="15"/>
@@ -1385,8 +1430,28 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroPortraitImage/@Texture}"/>
 						<TextureCoords top="0.1" left="0.543" bottom="0.65" right="1.0"/>
 						<RenderPriority val="668"/>
+						<Alpha val="255"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
+					<Frame type="Image" name="FCJH_PortraitWide">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="30"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="2"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="155"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
+						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroPortraitImage/@Texture}"/>
+						<TextureCoords top="0" left="0.021" bottom="1" right="0.979"/>
+						<RenderPriority val="668"/>
+						<Alpha val="0"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
+					<StateGroup name="FCJH_PortraitCrop">
+						<DefaultState val="Hero"/>
+						<State name="HeroLostVikingsController"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus" Unit="HeroLostVikingsController"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="HeroOlaf"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus" Unit="HeroOlaf"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="HeroBaleog"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus" Unit="HeroBaleog"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="HeroErik"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus" Unit="HeroErik"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="Hero"><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="255"/></State>
+					</StateGroup>
 					<Frame type="Image" name="FCJH_Talent1">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="420"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="15"/>
@@ -1779,8 +1844,28 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroPortraitImage/@Texture}"/>
 						<TextureCoords top="0.1" left="0.543" bottom="0.65" right="1.0"/>
 						<RenderPriority val="668"/>
+						<Alpha val="255"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
+					<Frame type="Image" name="FCJH_PortraitWide">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="30"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="2"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="155"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
+						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroPortraitImage/@Texture}"/>
+						<TextureCoords top="0" left="0.021" bottom="1" right="0.979"/>
+						<RenderPriority val="668"/>
+						<Alpha val="0"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
+					<StateGroup name="FCJH_PortraitCrop">
+						<DefaultState val="Hero"/>
+						<State name="HeroLostVikingsController"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus" Unit="HeroLostVikingsController"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="HeroOlaf"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus" Unit="HeroOlaf"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="HeroBaleog"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus" Unit="HeroBaleog"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="HeroErik"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus" Unit="HeroErik"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="Hero"><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="255"/></State>
+					</StateGroup>
 					<Frame type="Image" name="FCJH_Talent1">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="420"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="15"/>
@@ -2173,8 +2258,28 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroPortraitImage/@Texture}"/>
 						<TextureCoords top="0.1" left="0.543" bottom="0.65" right="1.0"/>
 						<RenderPriority val="668"/>
+						<Alpha val="255"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
+					<Frame type="Image" name="FCJH_PortraitWide">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="30"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="2"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="155"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
+						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroPortraitImage/@Texture}"/>
+						<TextureCoords top="0" left="0.021" bottom="1" right="0.979"/>
+						<RenderPriority val="668"/>
+						<Alpha val="0"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
+					<StateGroup name="FCJH_PortraitCrop">
+						<DefaultState val="Hero"/>
+						<State name="HeroLostVikingsController"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus" Unit="HeroLostVikingsController"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="HeroOlaf"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus" Unit="HeroOlaf"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="HeroBaleog"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus" Unit="HeroBaleog"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="HeroErik"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus" Unit="HeroErik"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="Hero"><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="255"/></State>
+					</StateGroup>
 					<Frame type="Image" name="FCJH_Talent1">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="420"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="15"/>
@@ -2567,8 +2672,28 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroPortraitImage/@Texture}"/>
 						<TextureCoords top="0.1" left="0.543" bottom="0.65" right="1.0"/>
 						<RenderPriority val="668"/>
+						<Alpha val="255"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
+					<Frame type="Image" name="FCJH_PortraitWide">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="30"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="2"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="155"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
+						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroPortraitImage/@Texture}"/>
+						<TextureCoords top="0" left="0.021" bottom="1" right="0.979"/>
+						<RenderPriority val="668"/>
+						<Alpha val="0"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
+					<StateGroup name="FCJH_PortraitCrop">
+						<DefaultState val="Hero"/>
+						<State name="HeroLostVikingsController"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus" Unit="HeroLostVikingsController"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="HeroOlaf"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus" Unit="HeroOlaf"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="HeroBaleog"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus" Unit="HeroBaleog"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="HeroErik"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus" Unit="HeroErik"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="Hero"><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="255"/></State>
+					</StateGroup>
 					<Frame type="Image" name="FCJH_Talent1">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="420"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="15"/>
@@ -2961,8 +3086,28 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroPortraitImage/@Texture}"/>
 						<TextureCoords top="0.1" left="0.543" bottom="0.65" right="1.0"/>
 						<RenderPriority val="668"/>
+						<Alpha val="255"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
+					<Frame type="Image" name="FCJH_PortraitWide">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="30"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="2"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="155"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
+						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroPortraitImage/@Texture}"/>
+						<TextureCoords top="0" left="0.021" bottom="1" right="0.979"/>
+						<RenderPriority val="668"/>
+						<Alpha val="0"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
+					<StateGroup name="FCJH_PortraitCrop">
+						<DefaultState val="Hero"/>
+						<State name="HeroLostVikingsController"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus" Unit="HeroLostVikingsController"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="HeroOlaf"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus" Unit="HeroOlaf"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="HeroBaleog"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus" Unit="HeroBaleog"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="HeroErik"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus" Unit="HeroErik"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="Hero"><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="255"/></State>
+					</StateGroup>
 					<Frame type="Image" name="FCJH_Talent1">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="420"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="15"/>
@@ -3355,8 +3500,28 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroPortraitImage/@Texture}"/>
 						<TextureCoords top="0.1" left="0.543" bottom="0.65" right="1.0"/>
 						<RenderPriority val="668"/>
+						<Alpha val="255"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
+					<Frame type="Image" name="FCJH_PortraitWide">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="30"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="2"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="155"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
+						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroPortraitImage/@Texture}"/>
+						<TextureCoords top="0" left="0.021" bottom="1" right="0.979"/>
+						<RenderPriority val="668"/>
+						<Alpha val="0"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
+					<StateGroup name="FCJH_PortraitCrop">
+						<DefaultState val="Hero"/>
+						<State name="HeroLostVikingsController"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus" Unit="HeroLostVikingsController"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="HeroOlaf"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus" Unit="HeroOlaf"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="HeroBaleog"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus" Unit="HeroBaleog"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="HeroErik"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus" Unit="HeroErik"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="Hero"><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="255"/></State>
+					</StateGroup>
 					<Frame type="Image" name="FCJH_Talent1">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="420"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="15"/>
@@ -3749,8 +3914,28 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroPortraitImage/@Texture}"/>
 						<TextureCoords top="0.1" left="0.543" bottom="0.65" right="1.0"/>
 						<RenderPriority val="668"/>
+						<Alpha val="255"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
+					<Frame type="Image" name="FCJH_PortraitWide">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="30"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="2"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="155"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
+						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroPortraitImage/@Texture}"/>
+						<TextureCoords top="0" left="0.021" bottom="1" right="0.979"/>
+						<RenderPriority val="668"/>
+						<Alpha val="0"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
+					<StateGroup name="FCJH_PortraitCrop">
+						<DefaultState val="Hero"/>
+						<State name="HeroLostVikingsController"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus" Unit="HeroLostVikingsController"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="HeroOlaf"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus" Unit="HeroOlaf"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="HeroBaleog"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus" Unit="HeroBaleog"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="HeroErik"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus" Unit="HeroErik"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="Hero"><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="255"/></State>
+					</StateGroup>
 					<Frame type="Image" name="FCJH_Talent1">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="420"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="15"/>
@@ -4143,8 +4328,28 @@
 						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroPortraitImage/@Texture}"/>
 						<TextureCoords top="0.1" left="0.543" bottom="0.65" right="1.0"/>
 						<RenderPriority val="668"/>
+						<Alpha val="255"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
+					<Frame type="Image" name="FCJH_PortraitWide">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="30"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="2"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="155"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="-2"/>
+						<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroPortraitImage/@Texture}"/>
+						<TextureCoords top="0" left="0.021" bottom="1" right="0.979"/>
+						<RenderPriority val="668"/>
+						<Alpha val="0"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
+					<StateGroup name="FCJH_PortraitCrop">
+						<DefaultState val="Hero"/>
+						<State name="HeroLostVikingsController"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus" Unit="HeroLostVikingsController"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="HeroOlaf"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus" Unit="HeroOlaf"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="HeroBaleog"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus" Unit="HeroBaleog"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="HeroErik"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus" Unit="HeroErik"/><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="0"/></State>
+						<State name="Hero"><Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="255"/></State>
+					</StateGroup>
 					<Frame type="Image" name="FCJH_Talent1">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="420"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="15"/>

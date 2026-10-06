@@ -477,6 +477,12 @@ HEROES = []   # every hero unit id (hero_units): set by layout()
 CROP = None   # the plates' portrait crop (top, left, bottom, right): set by layout()
 
 
+# heroes whose plate picture holds several (the Vikings): shown whole on the card; the units a
+# Vikings plate can hold (ALSO's guesses)
+WIDE_PORTRAITS = ("HeroLostVikingsController", "HeroOlaf", "HeroBaleog", "HeroErik")
+PORTRAIT_ART = 2.75   # the heroes' portrait art, width over height (tools/gen.py HeroCell.ART_ASPECT)
+
+
 def plate(n):
     return PLATE.format(t=1, m=n + 1) if n < 5 else PLATE.format(t=2, m=n - 4)
 
@@ -510,11 +516,23 @@ def player_pack(n):
         f'{T*6}</StateGroup>\n{T*5}</Frame>\n'
         for k in range(1, 8))
     # the portrait: this player's plate picture, with the plate's crop (layout 2.6:1, near the card's)
-    portrait = (f'{T*5}<Frame type="Image" name="FCJH_Portrait">\n'
-                + rect(PORTRAIT[0], 2, PORTRAIT[1], -2, i=6, right_pos="Max")
-                + f'{T*6}<Texture val="{{{plate(n)}/HeroPortraitImage/@Texture}}"/>\n'
-                f'{T*6}<TextureCoords top="{CROP[0]}" left="{CROP[1]}" bottom="{CROP[2]}" right="{CROP[3]}"/>\n'
-                f'{T*6}<RenderPriority val="668"/>\n{T*6}<AcceptsMouse val="false"/>\n{T*5}</Frame>\n')
+    pic = lambda name_, coords, alpha: (
+        f'{T*5}<Frame type="Image" name="{name_}">\n'
+        + rect(PORTRAIT[0], 2, PORTRAIT[1], -2, i=6, right_pos="Max")
+        + f'{T*6}<Texture val="{{{plate(n)}/HeroPortraitImage/@Texture}}"/>\n'
+        f'{T*6}<TextureCoords top="{coords[0]}" left="{coords[1]}" bottom="{coords[2]}" right="{coords[3]}"/>\n'
+        f'{T*6}<RenderPriority val="668"/>\n{T*6}<Alpha val="{alpha}"/>\n{T*6}<AcceptsMouse val="false"/>\n{T*5}</Frame>\n')
+    # the Vikings' three in one picture: the plates' crop (the art's right part) cut Baleog off
+    # (user, 2026-10-05) - for them, the whole art's height, as wide as the portrait's shape
+    # allows, centred
+    side = round((1 - (W - 4) / (PORTRAIT[1] - PORTRAIT[0]) / PORTRAIT_ART) / 2, 3)
+    swap = lambda wide: (f'<Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="{255 if wide else 0}"/>'
+                         f'<Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="{0 if wide else 255}"/>')
+    portrait = (pic("FCJH_Portrait", CROP, 255) + pic("FCJH_PortraitWide", (0, side, 1, 1 - side), 0)
+                + f'{T*5}<StateGroup name="FCJH_PortraitCrop">\n{T*6}<DefaultState val="Hero"/>\n'
+                + "".join(f'{T*6}<State name="{u}"><When type="Property" frame="{plate(n)}/HeroStatus" Unit="{u}"/>{swap(True)}</State>\n'
+                          for u in WIDE_PORTRAITS)
+                + f'{T*6}<State name="Hero">{swap(False)}</State>\n{T*5}</StateGroup>\n')
     name = label("FCJH_PlayerName", NAME_BAND + NAME_DROP, M, NAME_BAND + NAME_H + NAME_DROP, W - M - 70, "FCJH_InspectSub",
                  f"{{{row}/PlayerNameFrame/PlayerNameLabel/@Text}}", 5)
     # the card's edge in the player's team colour (user, 2026-10-05)
@@ -704,6 +722,9 @@ def unit():
 {T*4}<Frame type="Frame" name="FCJH_FountainReady">
 {placed(BUFFS, M, BUFF_W, BUFF_H, 5)}{T*5}<RenderPriority val="670"/>
 {T*5}<AcceptsMouse val="false"/>
+{T*5}<!-- ready: Blizzard's hero console tooltip for it -->
+{T*5}<Tooltip val="@UI/HealingFountainDescription"/>
+{T*5}<TooltipAnchorPosition val="TopRight"/>
 {T*5}<!-- BehaviorIconTemplate's pieces: the icon in the slanted buff mask, then the slot's frame -->
 {T*5}<Frame type="Frame" name="ImageMaskContainer">
 {placed(-2, 9, 40, 40, 6)}{T*6}<AlphaMaskTexture val="@UI/Storm_UI_InGame_Buff_IconMask"/>
@@ -733,9 +754,11 @@ def unit():
 {T*6}<State name="Cooldown">
 {T*7}<When type="Property" frame="$parent/FCJH_FountainSensor" Visible="true"/>
 {T*7}<Action type="SetProperty" frame="$this" Alpha="60"/>
+{T*7}<Action type="SetProperty" frame="$this" AcceptsMouseTooltip="false"/>
 {T*6}</State>
 {T*6}<State name="Ready">
 {T*7}<Action type="SetProperty" frame="$this" Alpha="255"/>
+{T*7}<Action type="SetProperty" frame="$this" AcceptsMouseTooltip="true"/>
 {T*6}</State>
 {T*5}</StateGroup>
 {T*4}</Frame>
