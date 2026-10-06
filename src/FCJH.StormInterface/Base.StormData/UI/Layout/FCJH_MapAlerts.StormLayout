@@ -14,8 +14,9 @@
 	     before. -->
 	<Frame type="Frame" name="MainFoSPanel" file="FieldofSlaughter">
 		<!-- The altar countdown on red's row, at its inner end where the core bar lives: its art
-		     ends flush with the core bar's right edge, on the XP bar; while red's core bar shows
-		     (Blizzard shows it while the core takes damage) it steps up onto that (user,
+		     starts just right of the map's square (placed by the frame's right edge: the art is
+		     a fixed width - tools/gen.py COUNTDOWN_ALERT_W), on the XP bar; while red's core bar
+		     shows (Blizzard shows it while the core takes damage) it steps up onto that (user,
 		     2026-10-06). -->
 		<Frame type="Frame" name="AltarSpawnNotificationFrame">
 			<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_MAP_ALERT_RED_B"/>

@@ -50,7 +50,8 @@ MINIMAP_PANEL_W = 468
 # +43 +43 +41 +19), so a pentakill's fifth ends at 356. The kill feed is Blizzard's, in its
 # own place (user, 2026-10-05: moving it right left multi-kills running off the screen).
 KILL_ROW_SINGLE = 210    # layout units: where a single kill's victim portrait ends
-CC_TEXT_OVERHANG = 20    # layout units the CC text's box reaches above and below the health bar
+COUNTDOWN_ALERT_W = 388  # units: a map countdown alert's art (FCJH_MapAlerts; constants_layout)
+CC_TEXT_OVERHANG = 20   # layout units the CC text's box reaches above and below the health bar
 
 
 
@@ -310,15 +311,19 @@ def constants_layout(cfg):
 
     # Map alerts on the plates (FCJH_MapAlerts): Towers of Doom's altar countdown sits at the
     # red row's inner end, on the XP bar where the core bar lives, and steps up onto the core
-    # bar while that shows. Blizzard's notification art sits 10 units inside its frame's right
-    # edge (MapMechanicPanel NotificationFrameTemplate BackgroundImage), so the frame's right
-    # edge goes 10 past the core bar's and the art ends flush with it.
+    # bar while that shows. Its art starts `gap` right of the minimap's square (user,
+    # 2026-10-06: flush with the core bar's right edge, it grew left into the map). A countdown
+    # alert's art is a fixed width (MapMechanicPanel NotificationFrameCountdownTemplate: its
+    # text pinned 250 left of the icon's middle, the art 70 further, the icon's middle 68 in
+    # from the art's right end - 388 units), ending 10 units inside the frame's right edge,
+    # with a bracket 3 units past its left end. The frame is placed by its right edge.
     lines.append("")
     lines.append("\t<!-- Map alerts on the plates ([map_alerts]) -->")
     gap = cfg["map_alerts"]["gap"]
-    (rcx, rcy, rcw, _), _ = rects(cfg)["red_core"]
+    (mmx, _, mmw, _), _ = rects(cfg)["minimap"]
+    (_, rcy, _, _), _ = rects(cfg)["red_core"]
     (_, rxy, _, _), _ = team_bar_rects(cfg)["red_xp"]
-    const(name("map", "alert", "red", "r"), u(rcx + rcw) + 10)
+    const(name("map", "alert", "red", "r"), u(mmx + mmw + gap) + 3 + COUNTDOWN_ALERT_W + 10)
     const(name("map", "alert", "red", "b"), u(rxy - gap), "on the XP bar")
     const(name("map", "alert", "red", "b", "core"), u(rcy - gap), "on the core bar, while it shows")
 
