@@ -396,8 +396,8 @@ end with blue's heroic mirrored to the inner end (§1). Unchecked from that: blu
 tooltip hover after its move, the end of blue's narrowed bars (Blizzard's short-bar art is
 shaped for a heroic on the left), and whether the inspect card's fountain shows the same thin
 unmasked line the plate's did (its icon is drawn 45 in a 40 mask box). Open items, the
-user's pick of order: the art pass (7, 12). Anchoring (4) built 2026-10-06, to test in a
-non-16:9 window. Every map's minimap, panel and team alerts (8) built 2026-10-06, a first
+user's pick of order: the art pass (7, 12). Anchoring (4) built 2026-10-06; its non-16:9
+test waits for the final pass (14). Every map's minimap, panel and team alerts (8) built 2026-10-06, a first
 pass to fine-tune with test maps (user). Camp timers (13) dropped. Item 14 collects what
 waits on replays with particular heroes and maps.
 
@@ -469,7 +469,8 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
      card of its own found - likely the same unit); Abathur's clone (likely a copy of the
      cloned hero's unit, so it would match that hero's player - unchecked); Samuro's images
      and Jaina's elemental (summons: the short card).
-4. **Anchoring pass - BUILT 2026-10-06, awaiting a non-16:9 test.** Until then everything we
+4. **Anchoring pass - BUILT 2026-10-06; the non-16:9 test is in the final pass (14) - the user
+   stays at 1080p until then.** Until then everything we
    placed was anchored to the screen's top-left with 1080p offsets, so a window that isn't
    16:9 shifted Blizzard's centred pieces against ours (the hexagon left its backplate in a
    2558 x 1401 window, 2026-10-03). The game is always 1200 units tall; the width follows the
@@ -677,6 +678,10 @@ commits around it).
     - **the D.Va and Viking guesses** in `inspect_card.ALSO`;
     - **rows with fewer than five heroes** (a 3v3 or 1v1 replay);
     - **every map**: the map objectives, the minimap per map (item 8).
+    - **a non-16:9 window** (item 4), last: the user stays at 1080p until then. The game's
+      resolution is in `Documents/Heroes of the Storm/Variables.txt` (`width`, `height`,
+      `windowwidth`, `windowheight`, `displaymode`; 1920 x 1080, displaymode 0 at 2026-10-06) -
+      Claude puts it back to 1080p afterwards, with the game closed.
 
 ## 8. Original brief
 
