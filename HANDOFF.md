@@ -398,9 +398,10 @@ shaped for a heroic on the left), and whether the inspect card's fountain shows 
 unmasked line the plate's did (its icon is drawn 45 in a 40 mask box). Open items, the
 user's pick of order: the art pass (7, 12). Anchoring (4) built 2026-10-06; its non-16:9
 test waits for the final pass (14). Every map's minimap, panel and team alerts (8) built 2026-10-06, a first
-pass to fine-tune with test maps (user): Towers of Doom and Cursed Hollow passed; the user
-re-checks Towers of Doom after the alert lift, then Braxis, Haunted Mines, Hanamura and on -
-each map's neutral banners move to red's column as it's QA'd. Camp timers (13) dropped. Item 14 collects what
+pass to fine-tune with test maps (user): Towers of Doom and Cursed Hollow DONE (2026-10-06);
+next Braxis, Haunted Mines, Hanamura and on - each map's neutral banners move to red's column
+as it's QA'd. Later, not now (user): the older maps' minimap jitter and the curse's countdown
+(item 8). Camp timers (13) dropped. Item 14 collects what
 waits on replays with particular heroes and maps.
 
 Confirmed in game by then: heroic tooltips on every plate (Varian's level-4 heroic, Tracer's
@@ -532,8 +533,14 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    middle (it sits too high, worse on tall maps) - neutral alerts go in RED's column, right of
    the map, as Towers of Doom's do; red shares the space. The minimap is exempt from the 20 px
    padding rule: a map's team counters may sit on its bottom edge. Every map alert sits
-   `[map_alerts] lift` (7 px) higher than its bar, clear of the talent/health pop-ups off the
-   plates.
+   `[map_alerts] lift` (10 px) higher than its bar, clear of the talent/health pop-ups off the
+   plates. **Every banner's art lands in the same place on every map** (Blizzard's banners are
+   one art; landing alike is what reads as one, user): across, red's starts where red's row
+   does and blue's ends where blue's does (`[hero_row] red_left` / `blue_right`, the plates'
+   distance from the map); up, on the shared slots. A banner whose parts hang below its art
+   gets edited, not raised (the tribute's countdown, below). `[map_alerts.nudge]`, px per map,
+   moves one map's alerts if its art doesn't land (that map gets its own
+   `FCJH_MAP_ALERT_<MAP>_*` constants; all 0 so far).
    **How a map's UI works** (game files): each map's panel is a template built at runtime in
    GameUI's `MapMechanicPanel` - the newer maps' in their own layout file, created by the map's
    script; the older five's (Cursed Hollow, Blackheart's Bay, Haunted Mines, Garden, Dragon
@@ -577,8 +584,8 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    plates or the alert stacks; Volskaya's capture hex showing; Warhead's map centred; Hanamura's
    "attacking" alert on the attacking team's side, its art clear of the map; Blackheart's Bay
    placed at all (its panel is shown by its own script - unchecked). Then ARAM keeps the default.
-   **Done:** Towers of Doom (2026-10-06: minimap on the padding line, alerts placed right);
-   Cursed Hollow (2026-10-06, below).
+   **Done:** Towers of Doom (2026-10-06: minimap on the padding line, alerts placed right;
+   re-checked after the lift and inner-edge change); Cursed Hollow (2026-10-06, below).
    **Towers of Doom, as approved (2026-10-06):** altar countdown and towers upgrading on red's
    side, tunnels on blue's (kept balanced, user). "Cannons are firing": the script shows RAVEN's
    alert for blue's capture and NECRO's for red's (only the Your/Enemy text is per viewer), to
@@ -597,7 +604,18 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    LITERAL words (`Text="@Param/Value/..."` never matches). Red's is laid out from its left end
    (our `FCJH_CurseText` label, Blizzard's art had dead space there); blue's keeps Blizzard's
    layout from the right. **Red's curse seen and approved; blue's not seen yet** (no replay with
-   it - item 14).
+   it - item 14). The tribute's countdown hung under its hexagon onto the XP bar: it's now in
+   the bar after the words, as Towers' "Altars activate in: 0:24" (`maps.tribute_count`) -
+   our words per language ("Tribute Spawns In:", `TRIBUTE_SPAWNS_IN`, found by matching
+   Blizzard's literal words), from the bar's left end like the red curse's, the count one space
+   after them (`TRIBUTE_COUNT_SPACE` -1 units: the labels pad ~8 px, measured), Blizzard's count
+   hidden; "Collect the Tribute" stays Blizzard's (no count then - the script hides it).
+   **Still to do, later (user, 2026-10-06):** the curse's countdown the same way as the
+   tribute's; and **map jitter** - on the older five maps the minimap moves only when the
+   script first shows the map's panel (Cursed Hollow: when the first tribute countdown
+   starts, ~2:30), the only per-map signal found so far; until then it sits at `[minimap]
+   bottom`. A lead: each map's `loadingscreens/<map>_loading.stormlayout` frame, if it
+   outlives the load screen.
    **Lessons for every map:** (1) a right-edge strip clips anything moved out of it: Unclipped,
    or move the strip. (2) Read the script for who each alert is sent to - one can look
    viewer-relative ("Your cannons") and be one frame per TEAM. (3) A player view (1-8) shows
@@ -707,7 +725,8 @@ commits around it).
       10: Cataclysm, the level-10 ability, or both;
     - **the D.Va and Viking guesses** in `inspect_card.ALSO`;
     - **rows with fewer than five heroes** (a 3v3 or 1v1 replay);
-    - **every map**: the map objectives, the minimap per map (item 8);
+    - **every map**: the map objectives, the minimap per map (item 8); **map jitter** on the
+      older five maps (item 8, Cursed Hollow's "still to do");
     - **Cursed Hollow, blue cursed** (item 8): the banner on blue's side, left of the map,
       ending at the map's edge, its text and timer inside the art - not yet seen (user,
       2026-10-06: red's looks great);

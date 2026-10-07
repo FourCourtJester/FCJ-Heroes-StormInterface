@@ -289,10 +289,31 @@ track_alpha = 220
 # A team's map alerts: stacked on its side of the minimap, on its plates' inner end (tools/maps.py).
 [map_alerts]
 gap = 4                      # px between a map alert on the plates and the bar it sits on (the
-                             # XP bar, or the core bar while that shows), and between its art and
-                             # the minimap's square
-lift = 7                     # px every map alert sits higher than that, clear of the talent/health
+                             # XP bar, or the core bar while that shows). Across, its art starts
+                             # (red) or ends (blue) where its team's row does: [hero_row] red_left,
+                             # blue_right
+lift = 10                    # px every map alert sits higher than that, clear of the talent/health
                              # pop-ups that rise off the plates (user, 2026-10-06: 4-10 px)
+
+# px per map: that map's alerts, all of them, moved from where every map puts them; + lowers,
+# - raises. Every banner's art lands in the same place on every map (user, 2026-10-06), so
+# these are for a map whose art doesn't.
+[map_alerts.nudge]
+alterac_pass = 0
+battlefield_of_eternity = 0
+blackhearts_bay = 0
+braxis_holdout = 0
+cursed_hollow = 0
+dragon_shire = 0
+garden_of_terror = 0
+hanamura_temple = 0
+haunted_mines = 0
+infernal_shrines = 0
+sky_temple = 0
+tomb_of_the_spider_queen = 0
+towers_of_doom = 0
+volskaya_foundry = 0
+warhead_junction = 0
 
 # Core health: on top of the XP bar, at the row's inner end (toward the minimap). Its size
 # is Blizzard's (237 x 27 units = 213 x 24 px, 39% of the XP bar), fixed; Blizzard shows it

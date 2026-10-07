@@ -233,13 +233,18 @@ ANCHORS = {
 PLATES_AT = ("$GameUI", *BOTTOM_CENTRE)
 
 
-def map_table(cfg, key):
-    """layout.toml [minimap.<key>]: px per map (tools/maps.py's keys), checked."""
-    table = cfg["minimap"].get(key, {})
+def map_table(cfg, key, section="minimap"):
+    """layout.toml [<section>.<key>]: px per map (tools/maps.py's keys), checked."""
+    table = cfg[section].get(key, {})
     unknown = set(table) - set(maps.MAPS)
     if unknown:
-        raise SystemExit(f"layout.toml [minimap.{key}]: no such map {sorted(unknown)} - the maps are {list(maps.MAPS)}")
+        raise SystemExit(f"layout.toml [{section}.{key}]: no such map {sorted(unknown)} - the maps are {list(maps.MAPS)}")
     return table
+
+
+def alert_nudges(cfg):
+    """layout.toml [map_alerts.nudge]: the maps whose alerts move, px (+ lowers)."""
+    return {k: v for k, v in map_table(cfg, "nudge", "map_alerts").items() if v}
 
 
 def screen_units(cfg):
@@ -443,26 +448,31 @@ def constants_layout(cfg):
 
     # A team's map alerts (FCJH_Maps, tools/maps.py), stacked either side of the map at the
     # rows' inner ends: on the XP bar where the core bar lives, stepping up onto the core bar
-    # while that shows, one slot up per alert below. Red's art starts `gap` right of the
-    # minimap's square, blue's ends `gap` left of it (user, 2026-10-06): placed by the edge
-    # the art hangs off (maps.ALERT_ART).
+    # while that shows, one slot up per alert below. Red's art starts where red's row does,
+    # blue's ends where blue's row does ([hero_row] red_left / blue_right: the same distance
+    # from the minimap as the plates, user 2026-10-06): placed by the edge the art hangs off
+    # (maps.ALERT_ART).
     lines.append("")
     lines.append("\t<!-- Map alerts on the plates ([map_alerts]): from the screen's bottom-centre, as the plates -->")
     gap = cfg["map_alerts"]["gap"]
     lift = u(cfg["map_alerts"]["lift"])   # all of them, clear of the plates' pop-ups
-    (mmx, _, mmw, _), _ = rects(cfg)["minimap"]
+    row = cfg["hero_row"]
     for team in ("red", "blue"):
         (_, cy, _, _), _ = rects(cfg)[f"{team}_core"]
         (_, xy, _, _), _ = team_bar_rects(cfg)[f"{team}_xp"]
         ox, oy = anchor_origin(cfg, f"{team}_xp")   # the plates' point
         for kind, (reach, tail) in maps.ALERT_ART.items():
-            right = u(mmx + mmw + gap) + reach if team == "red" else u(mmx - gap) + tail
+            right = u(row["red_left"]) + reach if team == "red" else u(row["blue_right"]) + tail
             const(name("map", "alert", team, "r", *([kind] if kind else [])), right - ox)
-        const(name("map", "alert", team, "b"), u(xy - gap) - lift - oy, "on the XP bar")
-        const(name("map", "alert", team, "b", "core"), u(cy - gap) - lift - oy, "on the core bar, while it shows")
-        for n in range(1, maps.max_stack()):
-            const(name("map", "alert", team, "b", n + 1), u(cy - gap) - lift - n * maps.ALERT_STEP - oy,
-                  f"alert {n + 1} in the stack, {n} up")
+        # the shared slots, and a map's own where [map_alerts.nudge] moves its alerts (+ lowers)
+        for key, down in (("", 0), *((k, u(v)) for k, v in alert_nudges(cfg).items())):
+            at = [key] if key else []
+            const(name("map", "alert", *at, team, "b"), u(xy - gap) - lift + down - oy, "on the XP bar")
+            const(name("map", "alert", *at, team, "b", "core"), u(cy - gap) - lift + down - oy,
+                  "on the core bar, while it shows")
+            for n in range(1, maps.max_stack()):
+                const(name("map", "alert", *at, team, "b", n + 1), u(cy - gap) - lift + down - n * maps.ALERT_STEP - oy,
+                      f"alert {n + 1} in the stack, {n} up")
 
     lines.append("")
     lines.append("\t<!-- Team XP and core health: tracks and fills cut to the plates' slant (solid colour;")
@@ -2765,7 +2775,8 @@ def committed_files(cfg, source=SOURCE):
             (u(rects(cfg)["inspect"][0][0]), u(rects(cfg)["inspect"][0][1])), 1 / u.scale,   # its place, for pixel-exact lines
             (*PLATES_AT, anchor_edges(cfg, "inspect")["t"])),   # where it's anchored, and its top from there
         LAYOUT_REL / MAPS_FILE: maps.layout(XML_DECL + "<Desc>\n" + GENERATED, PLATES_AT,
-                                            {k: u(v) for k, v in map_table(cfg, "panel_nudge").items()}),
+                                            {k: u(v) for k, v in map_table(cfg, "panel_nudge").items()},
+                                            set(alert_nudges(cfg))),
         LAYOUT_REL / INDEX_FILE: desc_index(layout_order(layout_dir, generated=GENERATED_LAYOUTS)),
     }
     return {rel: text.encode("utf-8") for rel, text in texts.items()} | texture_files(cfg)

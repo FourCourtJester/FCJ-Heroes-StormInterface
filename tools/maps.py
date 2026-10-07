@@ -208,6 +208,30 @@ def box_sides(box, up=0):
 
 TRIBUTE_BOX = (-486, 20, -5, 133)   # the tribute banner's art from its frame's top-right (measured)
 CURSE_UP = 30                       # the curse's raven head stands this much higher
+TRIBUTE_COUNT_SPACE = -1   # units between the tribute's words' box and its count's: one space.
+                           # Words in Blizzard's banner style are 6 px apart; the labels' own
+                           # padding made 7 units read as 14 px, -2 as 5 (measured 2026-10-06)
+TRIBUTE_WORDS_START = 35   # the tribute's words start this far into the bar, as the red curse's
+# "Tribute Spawning", in every language the game ships (heroesdata gamestrings,
+# Param/Value/lib_UIUI_EA41E137) -> ours to go before the count, worded as Towers of Doom's
+# "Altar Spawns In" is in that language (Param/Value/lib_MTOD_F838B570), with Blizzard's word
+# for the tribute, and a colon where that language's "Altars activate in:" has one (the count
+# that shows in game, lib_MTOD_191414BF; user, 2026-10-06). French words Towers' without a
+# preposition, so its text stays.
+TRIBUTE_SPAWNS_IN = {
+    "Tribute Spawning": "Tribute Spawns In:",
+    "Tribut erscheint": "Tribut erscheint in",
+    "Aparición de tributo": "El tributo aparecerá en",
+    "Engendrando tributo": "El tributo emergerá en:",
+    "Apparition du tribut": "Apparition du tribut",
+    "Tributo in preparazione": "Tributo generato fra:",
+    "공물 생성 중": "공물 생성:",
+    "Pojawia się danina": "Danina pojawi się za:",
+    "Tributo aparecendo": "O tributo surge em:",
+    "Появление дара": "Дар появится через",
+    "贡品即将刷新": "贡品即将刷新：",
+    "貢品出現": "貢品即將出現：",
+}
 # What the curse banner says to an observer when BLUE is cursed, in every language the game
 # ships (heroesdata gamestrings, Param/Value/lib_UIUI_51946936). It's one banner for either
 # team and the text is all that tells them apart: the game-string reference didn't match in a
@@ -232,6 +256,66 @@ CURSE_TEXT = (f'{T*7}<Frame type="Label" name="FCJH_CurseText">\n'
               f'{T*8}<Options val="NoWrapping"/>\n'
               f'{T*8}<Alpha val="0"/>\n'
               f'{T*7}</Frame>\n')
+
+
+def tribute_count():
+    """The tribute's countdown in its bar, after the words, as Towers of Doom's altar countdown
+    (Blizzard's NotificationFrameCountdownTemplate: words then count, in the words' style; user,
+    2026-10-06) - Blizzard's hung under the hexagon, onto the XP bar. Ours reads Blizzard's
+    (hidden) and shows while the script shows it: the spawn countdown, not "Collect the Tribute"
+    (uilib.galaxy hides the count then). While it counts, our words in the game's language
+    ("Tribute Spawns In", TRIBUTE_SPAWNS_IN) replace Blizzard's. They flow as text: the words
+    from the bar's left end, as the red curse's, the count one space after them, middle to
+    middle (user, 2026-10-06). "Collect the Tribute" stays Blizzard's (user: good); in a
+    language not listed, Blizzard's words and count stand."""
+    tribute = RAVEN + "/TributeSpawnFrame"
+    info, count, words = f"{tribute}/TributeInfoLabel", f"{tribute}/FCJH_TributeCount", f"{tribute}/FCJH_TributeWords"
+    timer = f"{tribute}/TributeTimerLabel"
+    alpha = lambda frame, a: f'<Action type="SetProperty" frame="{frame}" Alpha="{a}"/>'
+    counting = f'<When type="Property" frame="{timer}" Visible="true"/>'
+    t = T * 8
+    label = lambda name_, anchors, text, more="": (
+        f'{T*7}<Frame type="Label" name="{name_}">\n'
+        + "".join(f'{t}<Anchor side="{sd}"{" " * (6 - len(sd))} relative="{rel}" pos="{pos}" offset="{off}"/>\n'
+                  for sd, rel, pos, off in anchors)
+        + f'{t}<Text val="{text}"/>\n{t}<Style val="{{$parent/TributeInfoLabel/@Style}}"/>\n'
+        f'{t}<Options val="NoWrapping"/>\n{t}<Unclipped val="true"/>\n{t}<Alpha val="0"/>\n'
+        + more + f'{T*7}</Frame>\n')
+    states = "".join(f'{t}\t<State name="In{i}">{counting}<When type="Property" frame="{info}" Text="{theirs}"/>'
+                     f'<Action type="SetProperty" frame="{words}" Text="{ours}"/>'
+                     + alpha(words, 255) + alpha(count, 255) + alpha(info, 0) + alpha(timer, 0) + "</State>\n"
+                     for i, (theirs, ours) in enumerate(TRIBUTE_SPAWNS_IN.items()))
+    group = (f'{t}<StateGroup name="FCJH_TributeWords">\n{t}\t<DefaultState val="Words"/>\n' + states
+             + f'{t}\t<State name="Counting">{counting}' + alpha(words, 0) + alpha(count, 0)
+             + alpha(info, 255) + alpha(timer, 255) + "</State>\n"
+             f'{t}\t<State name="Words">' + alpha(words, 0) + alpha(count, 0) + alpha(info, 255) + "</State>\n"
+             f'{t}</StateGroup>\n')
+    return (label("FCJH_TributeWords", (("Top", "$parent/TributeInfoLabel", "Min", 0),
+                                        ("Bottom", "$parent/TributeInfoLabel", "Max", 0),
+                                        ("Left", "$parent/BackgroundImage", "Min", TRIBUTE_WORDS_START)), "", group)
+            + label("FCJH_TributeCount", (("Top", "$parent/FCJH_TributeWords", "Min", 0),
+                                          ("Bottom", "$parent/FCJH_TributeWords", "Max", 0),
+                                          ("Left", "$parent/FCJH_TributeWords", "Max", TRIBUTE_COUNT_SPACE)),
+                    "{$parent/TributeTimerLabel/@Text}"))
+
+
+def unclipped(parts, depth=7):
+    """Blizzard's parts of a box alert, let draw past its box: the box is cut to the art as
+    measured off a screenshot, and the tribute's point came out clipped (user, 2026-10-06), as
+    would the curse's glow, which grows to 160%. parts: ((type, name, (child parts)[, xml]), ...),
+    xml: more inside that part."""
+    return "".join(f'{T*depth}<Frame type="{kind}" name="{name}">\n{T*(depth+1)}<Unclipped val="true"/>\n'
+                   + "".join(f"{T*(depth+1)}{line}\n" for line in (more[0] if more else "").splitlines())
+                   + unclipped(kids, depth + 1) + f'{T*depth}</Frame>\n' for kind, name, kids, *more in parts)
+
+
+TRIBUTE_PARTS = (("Image", "BackgroundImage", ()), ("Image", "TimerImage", ()),
+                 ("Label", "TributeInfoLabel", ()),
+                 ("Label", "TributeTimerLabel", (), '<Alpha val="0"/>'))
+CURSE_PARTS = (("Image", "BackgroundImage", ()), ("Image", "TimerImage", ()),
+               ("Label", "CurseInfoLabel", ()), ("Label", "CurseTimerLabel", ()),
+               ("Frame", "AttentionEffect", (("Image", "AttentionEffectImage", ()),
+                                             ("Image", "AttentionEffect2Image", ()))))
 
 
 def cursed_side():
@@ -304,7 +388,8 @@ MAPS = {
             "blue": [Alert("CurseFrame", kind="BANNER", box=TRIBUTE_BOX, spot_only=True,
                            note="the curse, when it's on blue")],
             "red": [Alert("TributeSpawnFrame", kind="BANNER", box=TRIBUTE_BOX,
-                          followers=(("CurseFrame", CURSE_UP, CURSE_TEXT),), extra=cursed_side(),
+                          followers=(("CurseFrame", CURSE_UP, CURSE_TEXT + unclipped(CURSE_PARTS)),),
+                          extra=cursed_side() + tribute_count() + unclipped(TRIBUTE_PARTS),
                           note="the tribute spawning, then waiting to be collected (neutral); the curse on red")]}},
         notes="the tribute counts sit at the minimap's bottom corners"),
     "dragon_shire": Map("Dragon Shire", (434, 282), core="DragonShirePanel"),
@@ -446,12 +531,19 @@ def short(name):
     return name.replace("Frame", "")
 
 
-def stack_states(team, column, i, targets, at, indent):
+def alert_tag(key, nudged):
+    """The stacks' constants for a map: its own set (FCJH_MAP_ALERT_<MAP>_...) when its alerts
+    are nudged ([map_alerts.nudge] in layout.toml), else the shared one."""
+    return f"{key.upper()}_" if key in nudged else ""
+
+
+def stack_states(team, column, i, targets, at, indent, tag=""):
     """Alert i of its side's column: on the bottom slot - the XP bar, or the core bar while that
     shows - or one slot up for each alert before it in the column that's showing. The states
-    go from most alerts showing to fewest; the first whose alerts all show wins."""
+    go from most alerts showing to fewest; the first whose alerts all show wins. tag:
+    alert_tag."""
     t = T * indent
-    key = f"#FCJH_MAP_ALERT_{team.upper()}_B"
+    key = f"#FCJH_MAP_ALERT_{tag}{team.upper()}_B"
     act = lambda c: "".join(f'<Action type="SetAnchor" frame="{target}" side="Bottom" relative="{at[0]}" '
                             f'pos="{at[2]}" offset="{c}"/>' for target in targets)
     out = f'{t}<StateGroup name="FCJH_Stack">\n{t}\t<DefaultState val="Bottom"/>\n'
@@ -471,11 +563,11 @@ def spot_name(a):
     return f"FCJH_{a.name}Spot"
 
 
-def alert_frame(team, column, i, at, indent=2):
+def alert_frame(team, column, i, at, indent=2, tag=""):
     a = column[i]
     t = T * indent
     right = f"#FCJH_MAP_ALERT_{team.upper()}_R" + (f"_{a.kind}" if a.kind else "")
-    spot = (f'\t<Anchor side="Bottom" relative="{at[0]}" pos="{at[2]}" offset="#FCJH_MAP_ALERT_{team.upper()}_B"/>\n'
+    spot = (f'\t<Anchor side="Bottom" relative="{at[0]}" pos="{at[2]}" offset="#FCJH_MAP_ALERT_{tag}{team.upper()}_B"/>\n'
             f'\t<Anchor side="Right"  relative="{at[0]}" pos="{at[1]}" offset="{right}"/>\n'
             f'\t<Unclipped val="true"/>\n')
     out = f'{t}<!-- {team}, {"the bottom slot" if i == 0 else f"over {i} before it"}: {a.note} -->\n' if a.note else ""
@@ -491,7 +583,7 @@ def alert_frame(team, column, i, at, indent=2):
         out += (f'{t}<Frame type="Frame" name="{spot_name(a)}">\n'
                 + "".join(f"{t}{line}\n" for line in spot.splitlines())
                 + f'{t}\t<Width val="{r - l}"/>\n{t}\t<Height val="{b - tp}"/>\n{t}\t<AcceptsMouse val="false"/>\n'
-                + stack_states(team, column, i, ["$this"], at, indent + 1) + f'{t}</Frame>\n')
+                + stack_states(team, column, i, ["$this"], at, indent + 1, tag) + f'{t}</Frame>\n')
         if a.spot_only:
             return out
         out += frame(a.name, 0) + a.extra + f"{t}</Frame>\n"
@@ -508,7 +600,7 @@ def alert_frame(team, column, i, at, indent=2):
         out += f'{t}\t<Frame type="{ctype}" name="{child}">\n'
         out += "".join(f"{t}\t{line}\n" for line in spot.splitlines())
         out += f'{t}\t</Frame>\n'
-    out += stack_states(team, column, i, targets, at, indent + 1)
+    out += stack_states(team, column, i, targets, at, indent + 1, tag)
     return out + a.extra + f"{t}</Frame>\n"
 
 
@@ -534,7 +626,7 @@ class Node:
         return out + f"{t}</Frame>\n"
 
 
-def map_file(key, at, down):
+def map_file(key, at, down, nudged):
     """Everything this map's own layout file gets: its panels on our minimap, the minimap's
     place, its team alerts."""
     m = MAPS[key]
@@ -549,20 +641,20 @@ def map_file(key, at, down):
         node = root.at(panel)
         for team in ("blue", "red"):
             for i in range(len(cols.get(team, []))):
-                node.body += alert_frame(team, cols[team], i, at)
+                node.body += alert_frame(team, cols[team], i, at, tag=alert_tag(key, nudged))
     if m.extra:
         root.at(m.place[0]).body += EXTRAS[m.extra]()
     return "".join(c.xml(1, file=m.file) for c in root.children.values())
 
 
-def core_alerts(m, at):
+def core_alerts(m, at, tag):
     """The alerts in an older map's core panel (its `team` entry for that panel)."""
     cols = m.team.get(m.core, {})
-    return "".join(alert_frame(team, cols[team], i, at, 6)
+    return "".join(alert_frame(team, cols[team], i, at, 6, tag)
                    for team in ("blue", "red") for i in range(len(cols.get(team, []))))
 
 
-def core_panels(down, at):
+def core_panels(down, at, nudged):
     """The older maps' panels in Blizzard's core MapMechanicPanel, on our minimap, with their
     alerts, and the minimap's place on each - from one StateGroup on the minimap: those panels
     exist on every map, the map's script shows its own."""
@@ -570,7 +662,7 @@ def core_panels(down, at):
     t = T * 5
     panels = "".join(f'{T*5}<Frame type="Frame" name="{m.core}">\n'
                      f'{T*6}<!-- {m.title} -->\n' + anchor_lines(BOTTOM_RIGHT, m, 6, down.get(k, 0))
-                     + core_alerts(m, at) + f'{T*5}</Frame>\n' for k, m in core.items())
+                     + core_alerts(m, at, alert_tag(k, nudged)) + f'{T*5}</Frame>\n' for k, m in core.items())
     loading = "".join(f'<When type="Property" frame="{MECHANICS}/{m.core}" Visible="true"/>' for m in core.values())
     states = "".join(f'{t}\t<State name="{k}">\n'
                      f'{t}\t\t<When type="Property" frame="{MECHANICS}/{m.core}" Visible="true"/>\n'
@@ -590,10 +682,11 @@ def core_panels(down, at):
             f'{T*4}<Frame type="Frame" name="MapMechanicPanel">\n' + panels + f'{T*4}</Frame>\n')
 
 
-def layout(header, at, down):
+def layout(header, at, down, nudged=()):
     """FCJH_Maps.StormLayout. at: (frame, across pos, down pos), where the plates are anchored -
     the stacks' constants run from there, as the plates' do (gen.py PLATES_AT). down: {map key:
-    units}, how much lower each map's panel goes (layout.toml [minimap.panel_nudge])."""
+    units}, how much lower each map's panel goes (layout.toml [minimap.panel_nudge]). nudged: the
+    maps whose alerts have their own constants ([map_alerts.nudge], alert_tag)."""
     return header + f'''
 	<!-- Each battleground's own UI on our screen (tools/maps.py, which says how a map's UI works).
 
@@ -610,8 +703,8 @@ def layout(header, at, down):
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<Frame type="Frame" name="UIContainer">
 			<Frame type="Frame" name="ConsoleUIContainer">
-{core_panels(down, at)}			</Frame>
+{core_panels(down, at, nudged)}			</Frame>
 		</Frame>
 	</Frame>
 ''' + "".join(f"\t<!-- ===== {MAPS[k].title}{(': ' + MAPS[k].notes) if MAPS[k].notes else ''} ===== -->\n"
-              + map_file(k, at, down) for k in MAPS if MAPS[k].file) + "</Desc>\n"
+              + map_file(k, at, down, nudged) for k in MAPS if MAPS[k].file) + "</Desc>\n"
