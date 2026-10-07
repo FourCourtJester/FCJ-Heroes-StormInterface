@@ -398,7 +398,9 @@ shaped for a heroic on the left), and whether the inspect card's fountain shows 
 unmasked line the plate's did (its icon is drawn 45 in a 40 mask box). Open items, the
 user's pick of order: the art pass (7, 12). Anchoring (4) built 2026-10-06; its non-16:9
 test waits for the final pass (14). Every map's minimap, panel and team alerts (8) built 2026-10-06, a first
-pass to fine-tune with test maps (user). Camp timers (13) dropped. Item 14 collects what
+pass to fine-tune with test maps (user): Towers of Doom and Cursed Hollow passed; the user
+re-checks Towers of Doom after the alert lift, then Braxis, Haunted Mines, Hanamura and on -
+each map's neutral banners move to red's column as it's QA'd. Camp timers (13) dropped. Item 14 collects what
 waits on replays with particular heroes and maps.
 
 Confirmed in game by then: heroic tooltips on every plate (Varian's level-4 heroic, Tracer's
@@ -526,7 +528,12 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    of the map, red right), neutral ones stay centred; a team's alert sits at its core bar's spot
    (on the XP bar at the row's inner end, stepping up onto the core bar while that shows); "if
    all alerts fall to the sides of the minimap, and they grow/jump as to not be on top of each
-   other, then we're set".
+   other, then we're set". **Later (2026-10-06, Cursed Hollow):** no neutral banner at the top
+   middle (it sits too high, worse on tall maps) - neutral alerts go in RED's column, right of
+   the map, as Towers of Doom's do; red shares the space. The minimap is exempt from the 20 px
+   padding rule: a map's team counters may sit on its bottom edge. Every map alert sits
+   `[map_alerts] lift` (7 px) higher than its bar, clear of the talent/health pop-ups off the
+   plates.
    **How a map's UI works** (game files): each map's panel is a template built at runtime in
    GameUI's `MapMechanicPanel` - the newer maps' in their own layout file, created by the map's
    script; the older five's (Cursed Hollow, Blackheart's Bay, Haunted Mines, Garden, Dragon
@@ -545,7 +552,8 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
      frame inside the map's panel (`FCJH_MinimapPlace`: SetAnchor when its panel shows); the
      older five by one StateGroup on the minimap keyed to which core panel shows (a "Loading"
      state holds still while all five show at load). `[minimap.nudge]` in layout.toml, px per
-     map, for fine-tuning. The ARAM maps (no panel) keep `[minimap] bottom`.
+     map, for fine-tuning; `[minimap.panel_nudge]` moves only the panel's parts (both px, +
+     lowers). The ARAM maps (no panel) keep `[minimap] bottom`.
    - **Each map's panel on our minimap:** every part Blizzard placed from the screen's
      bottom-right corner (where its minimap was) is restated from our minimap's corner, at the
      same distance as it stood from Blizzard's minimap on that map (`maps.on_minimap`). So the
@@ -559,14 +567,18 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
      longer lands on the tunnels) and Hanamura's "attacking" pair (one frame per team, to
      everyone - `AttackingCoreFrame_Order` blue, `_Chaos` red; placed by its icon box, art
      412 units, unmeasured). Other maps' alerts are neutral (timers, "spawns in") or blue-left /
-     red-right halves of one HUD - checked in the files; none is per team.
+     red-right halves of one HUD - checked in the files; none is per team. An alert whose art
+     hangs off its frame's top-right (`maps.Alert box=`) is placed by our own spot frame
+     (`FCJH_<name>Spot`): the spot takes the stack slot, the frame becomes the art's box on it
+     (children draw only inside their parent's box). `followers` ride along on the same spot.
    **To check in game, map by map** (with item 14's test maps): the map's bottom on the padding
    line (nudge it if not), and when it moves (at load, or when its panel first shows - Sky
    Temple's and Tomb's start hidden); the panel's timers and counters above the map, not over the
    plates or the alert stacks; Volskaya's capture hex showing; Warhead's map centred; Hanamura's
    "attacking" alert on the attacking team's side, its art clear of the map; Blackheart's Bay
    placed at all (its panel is shown by its own script - unchecked). Then ARAM keeps the default.
-   **Done:** Towers of Doom (2026-10-06: minimap on the padding line, alerts placed right).
+   **Done:** Towers of Doom (2026-10-06: minimap on the padding line, alerts placed right);
+   Cursed Hollow (2026-10-06, below).
    **Towers of Doom, as approved (2026-10-06):** altar countdown and towers upgrading on red's
    side, tunnels on blue's (kept balanced, user). "Cannons are firing": the script shows RAVEN's
    alert for blue's capture and NECRO's for red's (only the Your/Enemy text is per viewer), to
@@ -577,6 +589,15 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    ObserverHeroOverviewPanel (blue's count up = blue took it; ~1 s late, with the new town's
    spawn). **No free-view cannon alert is possible:** nothing an observer's UI receives marks an
    altar capture. The towns' shot counts show at the minimap's bottom corners.
+   **Cursed Hollow, as approved (2026-10-06):** minimap nudged 20 px down, its panel 25 px up
+   (`panel_nudge`), so the tribute counters sit on the map's bottom corners. Tribute spawning /
+   collect the tribute (neutral, one frame) in red's column. The curse (one `CurseFrame` for
+   either team, timer parts anchored to the tribute frame's) goes on the cursed team's side:
+   which team, from its text - `maps.cursed_side`, one state per language, matched on the
+   LITERAL words (`Text="@Param/Value/..."` never matches). Red's is laid out from its left end
+   (our `FCJH_CurseText` label, Blizzard's art had dead space there); blue's keeps Blizzard's
+   layout from the right. **Red's curse seen and approved; blue's not seen yet** (no replay with
+   it - item 14).
    **Lessons for every map:** (1) a right-edge strip clips anything moved out of it: Unclipped,
    or move the strip. (2) Read the script for who each alert is sent to - one can look
    viewer-relative ("Your cannons") and be one frame per TEAM. (3) A player view (1-8) shows
@@ -686,7 +707,10 @@ commits around it).
       10: Cataclysm, the level-10 ability, or both;
     - **the D.Va and Viking guesses** in `inspect_card.ALSO`;
     - **rows with fewer than five heroes** (a 3v3 or 1v1 replay);
-    - **every map**: the map objectives, the minimap per map (item 8).
+    - **every map**: the map objectives, the minimap per map (item 8);
+    - **Cursed Hollow, blue cursed** (item 8): the banner on blue's side, left of the map,
+      ending at the map's edge, its text and timer inside the art - not yet seen (user,
+      2026-10-06: red's looks great);
     - **a non-16:9 window** (item 4), last: the user stays at 1080p until then. The game's
       resolution is in `Documents/Heroes of the Storm/Variables.txt` (`width`, `height`,
       `windowwidth`, `windowheight`, `displaymode`; 1920 x 1080, displaymode 0 at 2026-10-06) -

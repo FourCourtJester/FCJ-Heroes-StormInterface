@@ -233,6 +233,15 @@ ANCHORS = {
 PLATES_AT = ("$GameUI", *BOTTOM_CENTRE)
 
 
+def map_table(cfg, key):
+    """layout.toml [minimap.<key>]: px per map (tools/maps.py's keys), checked."""
+    table = cfg["minimap"].get(key, {})
+    unknown = set(table) - set(maps.MAPS)
+    if unknown:
+        raise SystemExit(f"layout.toml [minimap.{key}]: no such map {sorted(unknown)} - the maps are {list(maps.MAPS)}")
+    return table
+
+
 def screen_units(cfg):
     """The screen's size in layout units at layout.toml's resolution (2133.3 x 1200 at 16:9)."""
     u = Units(cfg)
@@ -413,10 +422,7 @@ def constants_layout(cfg):
     const(name("minimap", "panel", "bottom"), u(mm["bottom"]) - cfg["screen"]["ui_reference_height"])
     # ...and per map (tools/maps.py): the map as drawn in the square, its bottom on the padding
     # line (the plates' bottom), nudged by [minimap.nudge]
-    nudge = mm.get("nudge", {})
-    unknown = set(nudge) - set(maps.MAPS)
-    if unknown:
-        raise SystemExit(f"layout.toml [minimap.nudge]: no such map {sorted(unknown)} - the maps are {list(maps.MAPS)}")
+    nudge = map_table(cfg, "nudge")
     line = cfg["screen"]["height"] - cfg["screen"]["padding"]
     lines.append("\t<!-- _BOTTOM_<MAP>: MinimapPanel's bottom on that map, from the screen's bottom -->")
     for key, m in maps.MAPS.items():
@@ -443,6 +449,7 @@ def constants_layout(cfg):
     lines.append("")
     lines.append("\t<!-- Map alerts on the plates ([map_alerts]): from the screen's bottom-centre, as the plates -->")
     gap = cfg["map_alerts"]["gap"]
+    lift = u(cfg["map_alerts"]["lift"])   # all of them, clear of the plates' pop-ups
     (mmx, _, mmw, _), _ = rects(cfg)["minimap"]
     for team in ("red", "blue"):
         (_, cy, _, _), _ = rects(cfg)[f"{team}_core"]
@@ -451,10 +458,10 @@ def constants_layout(cfg):
         for kind, (reach, tail) in maps.ALERT_ART.items():
             right = u(mmx + mmw + gap) + reach if team == "red" else u(mmx - gap) + tail
             const(name("map", "alert", team, "r", *([kind] if kind else [])), right - ox)
-        const(name("map", "alert", team, "b"), u(xy - gap) - oy, "on the XP bar")
-        const(name("map", "alert", team, "b", "core"), u(cy - gap) - oy, "on the core bar, while it shows")
+        const(name("map", "alert", team, "b"), u(xy - gap) - lift - oy, "on the XP bar")
+        const(name("map", "alert", team, "b", "core"), u(cy - gap) - lift - oy, "on the core bar, while it shows")
         for n in range(1, maps.max_stack()):
-            const(name("map", "alert", team, "b", n + 1), u(cy - gap) - n * maps.ALERT_STEP - oy,
+            const(name("map", "alert", team, "b", n + 1), u(cy - gap) - lift - n * maps.ALERT_STEP - oy,
                   f"alert {n + 1} in the stack, {n} up")
 
     lines.append("")
@@ -1134,6 +1141,13 @@ def heroic_panel(cfg, team_frame, i):
                     f'{t10}<Action type="SetAnchor" frame="{f}" side="Right" relative="{cell}" pos="Min" offset="{round(left + third)}"/>\n')
         return out
     watch = lambda frame_: f'{party}/{frame_}'
+    # the cooldown states: which count shows (every state sets them all), and the icon dimmed
+    # and greyed while one does, as Blizzard's
+    t10_ = "\t" * 10
+    counts = lambda shown: "".join(f'{t10_}<Action type="SetProperty" frame="$this/{label}" Alpha="{255 if label == shown else 0}"/>\n'
+                                   for label in ("FCJH_UltCooldown", *map(kit_sensor, KIT_HEROIC_COOLDOWNS)))
+    dim = lambda on: (f'{t10_}<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="{80 if on else 255}"/>\n'
+                      f'{t10_}<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="{"true" if on else "false"}"/>\n')
     return f"""
 							<!-- the heroic, Blizzard's in-game panel mirrored (tools/gen.py heroic_panel) -->
 							<Frame type="Frame" name="FCJH_HeroicPanel">
@@ -1168,28 +1182,35 @@ def heroic_panel(cfg, team_frame, i):
 {t9}<Alpha val="0"/>
 {t9}<Unclipped val="true"/>
 {t9}<AcceptsMouse val="false"/>
-								</Frame>
+								</Frame>""" + "".join(f"""
+								<!-- ...or a kit heroic's own count (KIT_HEROIC_COOLDOWNS) -->
+								<Frame type="Label" name="{kit_sensor(abil)}">
+{rect(*fr, t9)}{t9}<Text val="{{{row}/{kit_sensor(abil)}/AbilIcon/CooldownLabel/@Text}}"/>
+{t9}<Style val="PartyFrame_HeroicTalentCooldown"/>
+{t9}<Options val="NoWrapping | ScaleToPreventTruncation"/>
+{t9}<Alpha val="0"/>
+{t9}<Unclipped val="true"/>
+{t9}<AcceptsMouse val="false"/>
+								</Frame>""" for abil in KIT_HEROIC_COOLDOWNS) + f"""
 								<StateGroup name="FCJH_Cooldown">
 									<DefaultState val="Ready"/>
 									<!-- Tracer: never "on cooldown" - her charge meter shows instead
 									     (talent_row_lifts; it read as permanently greyed out, 2026-09-30) -->
 									<State name="Charge">
 										<When type="Property" frame="{charge}" Visible="true"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
-									</State>
+{counts(None)}{dim(False)}									</State>
+""" + "".join(f"""
+									<State name="{abil}">
+										<When type="Property" frame="{row}/{kit_sensor(abil)}/AbilIcon/CooldownLabel" Visible="true"/>
+{counts(kit_sensor(abil))}{dim(True)}									</State>""" + "".join(f"""
+									<State name="{unit}Ready">
+										<When type="Property" frame="{cell}/HeroStatus" Unit="{unit}"/>
+{counts(None)}{dim(False)}									</State>""" for unit in units) for abil, units in KIT_HEROIC_COOLDOWNS.items()) + f"""
 									<State name="Cooldown">
 										<When type="Property" frame="{sensor}/AbilIcon/CooldownLabel" Visible="true"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="255"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="80"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="true"/>
-									</State>
+{counts("FCJH_UltCooldown")}{dim(True)}									</State>
 									<State name="Ready">
-										<Action type="SetProperty" frame="$this/FCJH_UltCooldown" Alpha="0"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Alpha="255"/>
-										<Action type="SetProperty" frame="$this/FCJH_UltIcon" Desaturated="false"/>
-									</State>
+{counts(None)}{dim(False)}									</State>
 								</StateGroup>
 								<StateGroup name="FCJH_ReadyGlow">
 									<DefaultState val="No"/>
@@ -1981,9 +2002,21 @@ def talent_row_lifts(cfg):
         party = f"{PARTY}/{cell.rsplit('/', 2)[1]}/{cell.rsplit('/', 1)[1]}/HeroicTalentPanel"
         edge = lambda side, rel, pos, v: f'<Anchor side="{side}" relative="{rel}" pos="{pos}" offset="{v}"/>'
         icons = "".join(muted("UnitStatusTalentIcon", f"TalentTreeIcon{k}", 12) for k in range(1, 8))
+        # the kit heroics' cooldowns (KIT_HEROIC_COOLDOWNS), read by heroic_panel: Ahli's whole
+        # AbilIcon (icon, bar, count), as seen counting. The count starts hidden: for a hero
+        # without the ability the engine never shows it
+        kit = "".join(f'{NL}{TAB * 11}<Frame type="UnitStatusAbilIcon" name="{kit_sensor(abil)}">'
+                      f'<Anchor relative="$parent"/><AbilityLink val="{abil}"/>'
+                      f'<Alpha val="0"/><AcceptsMouse val="false"/><AcceptsMouseTooltip val="false"/>'
+                      f'<Frame type="AbilIcon" name="AbilIcon"><Anchor relative="$parent"/>'
+                      f'<Frame type="Image" name="IconImage"><Anchor relative="$parent"/></Frame>'
+                      f'<Frame type="ProgressBar" name="CooldownBar"><Anchor relative="$parent/IconImage"/><Visible val="false"/></Frame>'
+                      f'<Frame type="Label" name="CooldownLabel"><Anchor relative="$parent"/>'
+                      f'<Style val="PartyFrame_HeroicTalentCooldown"/><Visible val="false"/></Frame></Frame></Frame>'
+                      for abil in KIT_HEROIC_COOLDOWNS)
         out.append(talent_chain(n, f"""
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">{spread(12)}{icons}
-											</Frame>{muted("UnitStatusAbilIcon", "UnitStatusAbil", 11)}
+											</Frame>{muted("UnitStatusAbilIcon", "UnitStatusAbil", 11)}{kit}
 											<Frame type="Frame" name="TracerChargeContainer">
 												{edge("Left", cell, "Min", l)}
 												{edge("Top", cell, "Min", t)}
@@ -2063,7 +2096,24 @@ HEROIC_TIP_SIZE = 44
 # built like the talent tooltips' - name as a header, then the description - from the game's
 # own strings, so it follows patches and languages (FCJH/HeroicTip in our GameStrings; the
 # TextFormatFrame recipe is Ahli's).
-NON_TALENT_HEROICS = {"HeroTracer": "TracerPulseBomb"}
+NON_TALENT_HEROICS = {"HeroTracer": "TracerPulseBomb",
+                      # Deathwing's Cataclysm, in both his units (Dragonflight is a morph to its own);
+                      # his level-10 picks are plain talents, which gave the wrong tooltip here
+                      "HeroDeathwing": "DeathwingCataclysm", "DeathwingDragonflightUnit": "DeathwingCataclysm"}
+# Kit heroics that cool down (Tracer's charges instead: talent_row_lifts). The observer row's
+# heroic slot (UnitStatusAbil) follows the heroic TALENT picked (HeroicAbilLink), so for these
+# it counts nothing: Deathwing's plate showed Cataclysm, which starts the game on a 270 s
+# cooldown, as ready (user, 2026-10-06). Each gets its own ability icon in that row, linked to
+# the ability by name (Ahli's _ActivateableTalentCD recipe); the heroic reads its count - seen
+# counting, and hidden when ready, in game 2026-10-06. That slot shows an empty count for these
+# heroes all game, so their heroic ignores it (else it sat greyed with no number). Ability ->
+# its hero's units.
+KIT_HEROIC_COOLDOWNS = {"DeathwingCataclysm": ("HeroDeathwing", "DeathwingDragonflightUnit")}
+
+
+def kit_sensor(abil):
+    """The name of kit heroic `abil`'s ability icon in the observer talent row."""
+    return f"FCJH_Kit_{abil}"
 
 
 def text_tip(t, unit, button, slot, cell):
@@ -2714,7 +2764,8 @@ def committed_files(cfg, source=SOURCE):
             | {"neutral": cfg["element"]["inspect"]["neutral_colour"]},   # the card's team edge
             (u(rects(cfg)["inspect"][0][0]), u(rects(cfg)["inspect"][0][1])), 1 / u.scale,   # its place, for pixel-exact lines
             (*PLATES_AT, anchor_edges(cfg, "inspect")["t"])),   # where it's anchored, and its top from there
-        LAYOUT_REL / MAPS_FILE: maps.layout(XML_DECL + "<Desc>\n" + GENERATED, PLATES_AT),
+        LAYOUT_REL / MAPS_FILE: maps.layout(XML_DECL + "<Desc>\n" + GENERATED, PLATES_AT,
+                                            {k: u(v) for k, v in map_table(cfg, "panel_nudge").items()}),
         LAYOUT_REL / INDEX_FILE: desc_index(layout_order(layout_dir, generated=GENERATED_LAYOUTS)),
     }
     return {rel: text.encode("utf-8") for rel, text in texts.items()} | texture_files(cfg)

@@ -46,7 +46,26 @@ alterac_pass = 0
 battlefield_of_eternity = 0
 blackhearts_bay = 0
 braxis_holdout = 0
-cursed_hollow = 0
+cursed_hollow = 20           # the tribute counts resting on the screen's bottom edge (user, 2026-10-06)
+dragon_shire = 0
+garden_of_terror = 0
+hanamura_temple = 0
+haunted_mines = 0
+infernal_shrines = 0
+sky_temple = 0
+tomb_of_the_spider_queen = 0
+towers_of_doom = 0
+volskaya_foundry = 0
+warhead_junction = 0
+
+# px per map: that map's objective panel (its counters, timers and banners), moved with the
+# minimap as it sat round Blizzard's; + lowers it, - raises it.
+[minimap.panel_nudge]
+alterac_pass = 0
+battlefield_of_eternity = 0
+blackhearts_bay = 0
+braxis_holdout = 0
+cursed_hollow = -25          # the tribute counts' ravens ran off the bottom (user, 2026-10-06)
 dragon_shire = 0
 garden_of_terror = 0
 hanamura_temple = 0
@@ -272,6 +291,8 @@ track_alpha = 220
 gap = 4                      # px between a map alert on the plates and the bar it sits on (the
                              # XP bar, or the core bar while that shows), and between its art and
                              # the minimap's square
+lift = 7                     # px every map alert sits higher than that, clear of the talent/health
+                             # pop-ups that rise off the plates (user, 2026-10-06: 4-10 px)
 
 # Core health: on top of the XP bar, at the row's inner end (toward the minimap). Its size
 # is Blizzard's (237 x 27 units = 213 x 24 px, 39% of the XP bar), fixed; Blizzard shows it

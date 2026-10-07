@@ -47,7 +47,10 @@ DRAWN_PX = 380
 # kinds, all the same width; measured in game, 2026-10-06 - the templates' arithmetic gave 388).
 # "ICON": an alert placed by its icon box instead (Hanamura's: background 300 left of a 112-unit
 # icon box, from the template; unmeasured).
-ALERT_ART = {"": (500, 12), "ICON": (412, 0)}
+# "BANNER": the older maps' centre banners (Cursed Hollow's tribute: a bar left of a hexagon
+# icon, its count under it), placed by a spot of ours the size of the art (Alert.box); 481 wide
+# (measured in game, 2026-10-06).
+ALERT_ART = {"": (500, 12), "ICON": (412, 0), "BANNER": (481, 0)}
 ALERT_STEP = 147          # units between two stacked alerts' bottoms (Blizzard's 30-unit gap; measured)
 
 
@@ -55,11 +58,21 @@ ALERT_STEP = 147          # units between two stacked alerts' bottoms (Blizzard'
 class Alert:
     """One of a team's alerts, in its stack beside the minimap. `place`: the child that carries
     the alert's position too, when its art hangs off that rather than the frame (Hanamura's icon
-    box); `kind`: its art (ALERT_ART); `template`: for alerts of our own (FCJH_ prefix);
-    `extra`: XML inside the frame, after its stack."""
+    box); `box`: for a frame whose art hangs off its TOP-right corner (it fills its panel, the
+    art pinned near the top): the art's edges from that corner, units (left, top, right,
+    bottom) - a spot of ours that size takes the slot and the frame hangs off it; `kind`: its
+    art (ALERT_ART); `template`: for alerts of our own (FCJH_ prefix); `extra`: XML inside the
+    frame, after its stack.
+    Neutral alerts (no team's) go in red's column: red shares its side with them (user,
+    2026-10-06 - centred above the map they sat too high, worse on a tall map)."""
     name: str
     kind: str = ""
     place: str = None                 # "Name:Type"
+    box: tuple = None                 # (left, top, right, bottom) from the frame's top-right
+    followers: tuple = ()             # with a box: (frame, up, xml) - frames whose art hangs off
+                                      # this one's, their box reaching `up` units higher; xml inside
+    spot_only: bool = False           # with a box: only the spot - another alert's frame moves
+                                      # onto it (Cursed Hollow's curse on blue: cursed_side)
     template: str = None
     extra: str = ""
     note: str = ""
@@ -184,6 +197,81 @@ def towers_extra():
     return "".join(out)
 
 
+# ------------------------------------------------------------------ Cursed Hollow's curse
+
+def box_sides(box, up=0):
+    """A box alert's frame from its spot: the art's box, its top-right corner where the art
+    wants it (its box reaching `up` higher). -> ((side, pos, offset), ...)"""
+    l, tp, r, b = box
+    return (("Top", "Min", -tp - up), ("Left", "Min", 0), ("Bottom", "Max", 0), ("Right", "Max", -r))
+
+
+TRIBUTE_BOX = (-486, 20, -5, 133)   # the tribute banner's art from its frame's top-right (measured)
+CURSE_UP = 30                       # the curse's raven head stands this much higher
+# What the curse banner says to an observer when BLUE is cursed, in every language the game
+# ships (heroesdata gamestrings, Param/Value/lib_UIUI_51946936). It's one banner for either
+# team and the text is all that tells them apart: the game-string reference didn't match in a
+# condition, the words did (2026-10-06).
+BLUE_CURSED = ("Blue Team Cursed", "Das blaue Team wurde verflucht", "Equipe Azul Amaldiçoada",
+               "Equipo azul maldito", "Niebiescy są przeklęci", "Squadra blu maledetta",
+               "Équipe bleue maudite", "Синяя команда проклята", "蓝队已被诅咒", "藍隊遭到詛咒",
+               "파랑팀에 저주 내림")
+
+
+RAVEN = MECHANICS + "/RavenCourtPanel"
+CURSE = RAVEN + "/CurseFrame"
+CURSE_SPARE = 200     # red's curse box reaches this much further right: its hexagon follows the
+                      # text, and a long translation pushes it past the tribute's box
+# The curse's words on red's side: ours, the same text and style as Blizzard's label, but
+# placed from the bar's LEFT end - Blizzard's is placed from the hexagon (cursed_side).
+CURSE_TEXT = (f'{T*7}<Frame type="Label" name="FCJH_CurseText">\n'
+              f'{T*8}<Anchor side="Bottom" relative="$parent/BackgroundImage" pos="Max" offset="-10"/>\n'
+              f'{T*8}<Anchor side="Left"   relative="$parent/BackgroundImage" pos="Min" offset="35"/>\n'
+              f'{T*8}<Text val="{{$parent/CurseInfoLabel/@Text}}"/>\n'
+              f'{T*8}<Style val="{{$parent/CurseInfoLabel/@Style}}"/>\n'
+              f'{T*8}<Options val="NoWrapping"/>\n'
+              f'{T*8}<Alpha val="0"/>\n'
+              f'{T*7}</Frame>\n')
+
+
+def cursed_side():
+    """The curse banner on the cursed team's side (user, 2026-10-06). It hangs off the tribute
+    banner's frame, which the script hides while a curse is on: when the banner says blue,
+    both frames move onto blue's spot; otherwise they stay on red's (red's side holds the
+    tribute banner, the neutral one).
+    Blizzard sizes the banner to its words, the hexagon at its right end. That suits blue's
+    side - the hexagon at the minimap, the bar growing outward - but on red's a short text
+    left the bar's start far from the minimap (user). So on red the banner is laid out from
+    its left end: the bar starts at the spot's left, our copy of the words after it, the
+    hexagon after them, its count under it."""
+    t = T * 7
+    act = lambda frame, sd, rel, pos, off: (f'<Action type="SetAnchor" frame="{frame}" side="{sd}" relative="{rel}" '
+                                            f'pos="{pos}" offset="{off}"/>')
+    def place(spot, red):
+        out = "".join(act(frame, sd, f"{RAVEN}/{spot}", pos, off + (CURSE_SPARE if red and frame == CURSE and sd == "Right" else 0))
+                      for frame, up in ((f"{RAVEN}/TributeSpawnFrame", 0), (CURSE, CURSE_UP))
+                      for sd, pos, off in box_sides(TRIBUTE_BOX, up))
+        tribute = f"{RAVEN}/TributeSpawnFrame"
+        if red:
+            out += (act(f"{CURSE}/BackgroundImage", "Left", CURSE, "Min", 0)
+                    + act(f"{CURSE}/TimerImage", "Right", f"{CURSE}/FCJH_CurseText", "Max", 115)
+                    + act(f"{CURSE}/CurseTimerLabel", "Left", f"{CURSE}/TimerImage", "Min", 20)
+                    + act(f"{CURSE}/CurseTimerLabel", "Right", f"{CURSE}/TimerImage", "Max", -20))
+        else:      # Blizzard's own layout
+            out += (act(f"{CURSE}/BackgroundImage", "Left", f"{CURSE}/CurseInfoLabel", "Min", -35)
+                    + act(f"{CURSE}/TimerImage", "Right", f"{tribute}/TimerImage", "Max", 0)
+                    + act(f"{CURSE}/CurseTimerLabel", "Left", f"{tribute}/TributeTimerLabel", "Min", 0)
+                    + act(f"{CURSE}/CurseTimerLabel", "Right", f"{tribute}/TributeTimerLabel", "Max", 0))
+        return out + (f'<Action type="SetProperty" frame="{CURSE}/CurseInfoLabel" Alpha="{0 if red else 255}"/>'
+                      f'<Action type="SetProperty" frame="{CURSE}/FCJH_CurseText" Alpha="{255 if red else 0}"/>')
+    out = f'{t}<StateGroup name="FCJH_CursedSide">\n{t}\t<DefaultState val="Red"/>\n'
+    for n, text in enumerate(BLUE_CURSED):
+        out += (f'{t}\t<State name="Blue{n}"><When type="Property" frame="{CURSE}" Visible="true"/>'
+                f'<When type="Property" frame="{CURSE}/CurseInfoLabel" Text="{text}"/>'
+                f'{place("FCJH_CurseFrameSpot", False)}</State>\n')
+    return out + f'{t}\t<State name="Red">{place("FCJH_TributeSpawnFrameSpot", True)}</State>\n{t}</StateGroup>\n'
+
+
 # ------------------------------------------------------------------ the maps
 
 BOTTOM_RIGHT = (("Bottom", "Max", 0), ("Right", "Max", 0))     # pinned to the screen's corner
@@ -205,7 +293,20 @@ MAPS = {
     "braxis_holdout": Map(
         "Braxis Holdout", (447, 264), file="HoldOut", minimap=(-35, 0),
         panels={"HoldOutPanel": BOTTOM_RIGHT}, place=("HoldOutPanel",)),
-    "cursed_hollow": Map("Cursed Hollow", (436, 312), core="RavenCourtPanel"),
+    "cursed_hollow": Map(
+        "Cursed Hollow", (436, 312), core="RavenCourtPanel",
+        # "Tribute spawning" / "Collect the tribute": one neutral banner, on red's side. Its art:
+        # the hexagon pinned 20 in from the frame's top-right, the bar 481 wide ending 15 past it,
+        # the count under the hexagon (measured in game, 2026-10-06). The curse banner hangs off
+        # the same hexagon (CurseFrame/TimerImage) and goes to the cursed team's side
+        # (cursed_side): red's is the tribute's spot, blue's a spot of its own.
+        team={"RavenCourtPanel": {
+            "blue": [Alert("CurseFrame", kind="BANNER", box=TRIBUTE_BOX, spot_only=True,
+                           note="the curse, when it's on blue")],
+            "red": [Alert("TributeSpawnFrame", kind="BANNER", box=TRIBUTE_BOX,
+                          followers=(("CurseFrame", CURSE_UP, CURSE_TEXT),), extra=cursed_side(),
+                          note="the tribute spawning, then waiting to be collected (neutral); the curse on red")]}},
+        notes="the tribute counts sit at the minimap's bottom corners"),
     "dragon_shire": Map("Dragon Shire", (434, 282), core="DragonShirePanel"),
     "garden_of_terror": Map(
         "Garden of Terror", (438, 270), core="GardenOfTerrorPanel", file="GardenMapMechanic",
@@ -287,15 +388,15 @@ def max_stack():
     return max(len(col) for m in MAPS.values() for cols in m.team.values() for col in cols.values())
 
 
-def on_minimap(side, pos, offset, m):
+def on_minimap(side, pos, offset, m, down=0):
     """A side Blizzard anchored to the screen (`pos` of it, `offset` units), as the same
     distance from our minimap's bottom-right corner: Blizzard's minimap's bottom is m.minimap[0]
-    below the screen's, its right m.minimap[1] right of the screen's. -> (pos, offset) of
-    MINIMAP."""
-    down, right = m.minimap
+    below the screen's, its right m.minimap[1] right of the screen's. `down`: units more,
+    downwards (layout.toml [minimap.panel_nudge]). -> (pos, offset) of MINIMAP."""
+    right = m.minimap[1]
     if side in ("Left", "Right"):
         return "Max", offset - right - {"Min": SCREEN_W, "Mid": SCREEN_W // 2, "Max": 0}[pos]
-    return "Max", offset - down - {"Min": SCREEN_H, "Mid": SCREEN_H // 2, "Max": 0}[pos]
+    return "Max", offset - m.minimap[0] + down - {"Min": SCREEN_H, "Mid": SCREEN_H // 2, "Max": 0}[pos]
 
 
 def const(key):
@@ -330,11 +431,11 @@ def placer(key, indent):
             f'{t}</Frame>\n')
 
 
-def anchor_lines(sides, m, indent):
+def anchor_lines(sides, m, indent, down=0):
     t = T * indent
     out = ""
     for side, pos, offset in sides:
-        p, off = on_minimap(side, pos, offset, m)
+        p, off = on_minimap(side, pos, offset, m, down)
         out += f'{t}<Anchor side="{side}"{" " * (6 - len(side))} relative="{MINIMAP}" pos="{p}" offset="{off}"/>\n'
     return out
 
@@ -366,14 +467,38 @@ def stack_states(team, column, i, targets, at, indent):
     return out
 
 
-def alert_frame(team, column, i, at):
+def spot_name(a):
+    return f"FCJH_{a.name}Spot"
+
+
+def alert_frame(team, column, i, at, indent=2):
     a = column[i]
-    t = T * 2
+    t = T * indent
     right = f"#FCJH_MAP_ALERT_{team.upper()}_R" + (f"_{a.kind}" if a.kind else "")
     spot = (f'\t<Anchor side="Bottom" relative="{at[0]}" pos="{at[2]}" offset="#FCJH_MAP_ALERT_{team.upper()}_B"/>\n'
             f'\t<Anchor side="Right"  relative="{at[0]}" pos="{at[1]}" offset="{right}"/>\n'
             f'\t<Unclipped val="true"/>\n')
     out = f'{t}<!-- {team}, {"the bottom slot" if i == 0 else f"over {i} before it"}: {a.note} -->\n' if a.note else ""
+    if a.box:
+        # the spot takes the slot. The frame becomes the art's box with its top-right corner
+        # where the art wants it - its parts draw only inside it (the panel was its box)
+        l, tp, r, b = a.box
+        frame = lambda name_, up: (
+            f'{t}<Frame type="Frame" name="{name_}">\n'
+            + "".join(f'{t}\t<Anchor side="{sd}"{" " * (6 - len(sd))} relative="$parent/{spot_name(a)}" '
+                      f'pos="{pos}" offset="{off}"/>\n' for sd, pos, off in box_sides(a.box, up))
+            + f'{t}\t<Unclipped val="true"/>\n')
+        out += (f'{t}<Frame type="Frame" name="{spot_name(a)}">\n'
+                + "".join(f"{t}{line}\n" for line in spot.splitlines())
+                + f'{t}\t<Width val="{r - l}"/>\n{t}\t<Height val="{b - tp}"/>\n{t}\t<AcceptsMouse val="false"/>\n'
+                + stack_states(team, column, i, ["$this"], at, indent + 1) + f'{t}</Frame>\n')
+        if a.spot_only:
+            return out
+        out += frame(a.name, 0) + a.extra + f"{t}</Frame>\n"
+        # frames whose art hangs off this one's (their own box reaching `up` higher)
+        for name_, up, xml in a.followers:
+            out += frame(name_, up) + xml + f"{t}</Frame>\n"
+        return out
     out += f'{t}<Frame type="Frame" name="{a.name}"' + (f' template="{a.template}"' if a.template else "") + ">\n"
     out += "".join(f"{t}{line}\n" for line in spot.splitlines())
     targets = ["$this"]
@@ -383,7 +508,7 @@ def alert_frame(team, column, i, at):
         out += f'{t}\t<Frame type="{ctype}" name="{child}">\n'
         out += "".join(f"{t}\t{line}\n" for line in spot.splitlines())
         out += f'{t}\t</Frame>\n'
-    out += stack_states(team, column, i, targets, at, 3)
+    out += stack_states(team, column, i, targets, at, indent + 1)
     return out + a.extra + f"{t}</Frame>\n"
 
 
@@ -409,16 +534,18 @@ class Node:
         return out + f"{t}</Frame>\n"
 
 
-def map_file(key, at):
+def map_file(key, at, down):
     """Everything this map's own layout file gets: its panels on our minimap, the minimap's
     place, its team alerts."""
     m = MAPS[key]
     root = Node(None)
     for path, sides in m.panels.items():
-        root.at(path).body += anchor_lines(sides, m, len(path.split("/")) + 1)
+        root.at(path).body += anchor_lines(sides, m, len(path.split("/")) + 1, down.get(key, 0))
     for path in m.place:
         root.at(path).body += placer(key, len(path.split("/")) + 1)
     for panel, cols in m.team.items():
+        if panel == m.core:
+            continue                  # in the core panel: core_panels
         node = root.at(panel)
         for team in ("blue", "red"):
             for i in range(len(cols.get(team, []))):
@@ -428,15 +555,22 @@ def map_file(key, at):
     return "".join(c.xml(1, file=m.file) for c in root.children.values())
 
 
-def core_panels():
-    """The older maps' panels in Blizzard's core MapMechanicPanel, on our minimap, and the
-    minimap's place on each - from one StateGroup on the minimap: those panels exist on every
-    map, the map's script shows its own."""
+def core_alerts(m, at):
+    """The alerts in an older map's core panel (its `team` entry for that panel)."""
+    cols = m.team.get(m.core, {})
+    return "".join(alert_frame(team, cols[team], i, at, 6)
+                   for team in ("blue", "red") for i in range(len(cols.get(team, []))))
+
+
+def core_panels(down, at):
+    """The older maps' panels in Blizzard's core MapMechanicPanel, on our minimap, with their
+    alerts, and the minimap's place on each - from one StateGroup on the minimap: those panels
+    exist on every map, the map's script shows its own."""
     core = {k: m for k, m in MAPS.items() if m.core}
     t = T * 5
     panels = "".join(f'{T*5}<Frame type="Frame" name="{m.core}">\n'
-                     f'{T*6}<!-- {m.title} -->\n' + anchor_lines(BOTTOM_RIGHT, m, 6)
-                     + f'{T*5}</Frame>\n' for m in core.values())
+                     f'{T*6}<!-- {m.title} -->\n' + anchor_lines(BOTTOM_RIGHT, m, 6, down.get(k, 0))
+                     + core_alerts(m, at) + f'{T*5}</Frame>\n' for k, m in core.items())
     loading = "".join(f'<When type="Property" frame="{MECHANICS}/{m.core}" Visible="true"/>' for m in core.values())
     states = "".join(f'{t}\t<State name="{k}">\n'
                      f'{t}\t\t<When type="Property" frame="{MECHANICS}/{m.core}" Visible="true"/>\n'
@@ -456,9 +590,10 @@ def core_panels():
             f'{T*4}<Frame type="Frame" name="MapMechanicPanel">\n' + panels + f'{T*4}</Frame>\n')
 
 
-def layout(header, at):
+def layout(header, at, down):
     """FCJH_Maps.StormLayout. at: (frame, across pos, down pos), where the plates are anchored -
-    the stacks' constants run from there, as the plates' do (gen.py PLATES_AT)."""
+    the stacks' constants run from there, as the plates' do (gen.py PLATES_AT). down: {map key:
+    units}, how much lower each map's panel goes (layout.toml [minimap.panel_nudge])."""
     return header + f'''
 	<!-- Each battleground's own UI on our screen (tools/maps.py, which says how a map's UI works).
 
@@ -468,15 +603,15 @@ def layout(header, at):
 	     belong to a team in a stack on that team's side of the map, on its plates' inner end
 	     (user, 2026-10-05/06): on the XP bar, or the core bar while that shows (Blizzard shows
 	     it while the core takes damage), one slot up for each alert below it that's showing.
-	     Neutral alerts stay in their panel, above the map.
+	     Neutral alerts join red's stack: red shares its side with them (user, 2026-10-06).
 
 	     The older five maps' panels are Blizzard's core ones, here first; then each newer map's
 	     own file. -->
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<Frame type="Frame" name="UIContainer">
 			<Frame type="Frame" name="ConsoleUIContainer">
-{core_panels()}			</Frame>
+{core_panels(down, at)}			</Frame>
 		</Frame>
 	</Frame>
 ''' + "".join(f"\t<!-- ===== {MAPS[k].title}{(': ' + MAPS[k].notes) if MAPS[k].notes else ''} ===== -->\n"
-              + map_file(k, at) for k in MAPS if MAPS[k].file) + "</Desc>\n"
+              + map_file(k, at, down) for k in MAPS if MAPS[k].file) + "</Desc>\n"
