@@ -233,34 +233,34 @@
 		</Frame>
 		<!-- blue, the bottom slot: blue's payload on a fort -->
 		<Frame type="Frame" name="AttackingCoreFrame_Order">
-			<Anchor side="Bottom" relative="$GameUI/FCJH_BlueRow" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_B"/>
-			<Anchor side="Right"  relative="$GameUI/FCJH_BlueRow" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_R_ICON"/>
+			<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B"/>
+			<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_BLUE_R_ICON"/>
 			<Unclipped val="true"/>
 			<Frame type="Image" name="NotificationIconAnchor">
-				<Anchor side="Bottom" relative="$GameUI/FCJH_BlueRow" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_B"/>
-				<Anchor side="Right"  relative="$GameUI/FCJH_BlueRow" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_R_ICON"/>
+				<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B"/>
+				<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_BLUE_R_ICON"/>
 				<Unclipped val="true"/>
 			</Frame>
 			<StateGroup name="FCJH_Stack">
 				<DefaultState val="Bottom"/>
-				<State name="OnCore"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1CoreUnitStatus" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI/FCJH_BlueRow" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_B_CORE"/><Action type="SetAnchor" frame="$this/NotificationIconAnchor" side="Bottom" relative="$GameUI/FCJH_BlueRow" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_B_CORE"/></State>
-				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI/FCJH_BlueRow" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_B"/><Action type="SetAnchor" frame="$this/NotificationIconAnchor" side="Bottom" relative="$GameUI/FCJH_BlueRow" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_B"/></State>
+				<State name="OnCore"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1CoreUnitStatus" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_CORE"/><Action type="SetAnchor" frame="$this/NotificationIconAnchor" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_CORE"/></State>
+				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B"/><Action type="SetAnchor" frame="$this/NotificationIconAnchor" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B"/></State>
 			</StateGroup>
 		</Frame>
 		<!-- red, the bottom slot: red's payload on a fort -->
 		<Frame type="Frame" name="AttackingCoreFrame_Chaos">
-			<Anchor side="Bottom" relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_MAP_ALERT_RED_B"/>
-			<Anchor side="Right"  relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_MAP_ALERT_RED_R_ICON"/>
+			<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B"/>
+			<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_ICON"/>
 			<Unclipped val="true"/>
 			<Frame type="Image" name="NotificationIconAnchor">
-				<Anchor side="Bottom" relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_MAP_ALERT_RED_B"/>
-				<Anchor side="Right"  relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_MAP_ALERT_RED_R_ICON"/>
+				<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B"/>
+				<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_ICON"/>
 				<Unclipped val="true"/>
 			</Frame>
 			<StateGroup name="FCJH_Stack">
 				<DefaultState val="Bottom"/>
-				<State name="OnCore"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2CoreUnitStatus" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_MAP_ALERT_RED_B_CORE"/><Action type="SetAnchor" frame="$this/NotificationIconAnchor" side="Bottom" relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_MAP_ALERT_RED_B_CORE"/></State>
-				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_MAP_ALERT_RED_B"/><Action type="SetAnchor" frame="$this/NotificationIconAnchor" side="Bottom" relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_MAP_ALERT_RED_B"/></State>
+				<State name="OnCore"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2CoreUnitStatus" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_CORE"/><Action type="SetAnchor" frame="$this/NotificationIconAnchor" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_CORE"/></State>
+				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B"/><Action type="SetAnchor" frame="$this/NotificationIconAnchor" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B"/></State>
 			</StateGroup>
 		</Frame>
 	</Frame>
@@ -343,25 +343,25 @@
 		</Frame>
 		<!-- blue, the bottom slot: the tunnels opening -->
 		<Frame type="Frame" name="WaygateNotificationFrame">
-			<Anchor side="Bottom" relative="$GameUI/FCJH_BlueRow" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_B"/>
-			<Anchor side="Right"  relative="$GameUI/FCJH_BlueRow" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_R"/>
+			<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B"/>
+			<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_BLUE_R"/>
 			<Unclipped val="true"/>
 			<StateGroup name="FCJH_Stack">
 				<DefaultState val="Bottom"/>
-				<State name="OnCore"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1CoreUnitStatus" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI/FCJH_BlueRow" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_B_CORE"/></State>
-				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI/FCJH_BlueRow" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_B"/></State>
+				<State name="OnCore"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1CoreUnitStatus" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_CORE"/></State>
+				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B"/></State>
 			</StateGroup>
 		</Frame>
 		<!-- blue, over 1 before it: Blizzard's, players-only ("Your/Enemy cannons are firing") -->
 		<Frame type="Frame" name="RavenNotificationFrame">
-			<Anchor side="Bottom" relative="$GameUI/FCJH_BlueRow" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_B"/>
-			<Anchor side="Right"  relative="$GameUI/FCJH_BlueRow" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_R"/>
+			<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B"/>
+			<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_BLUE_R"/>
 			<Unclipped val="true"/>
 			<StateGroup name="FCJH_Stack">
 				<DefaultState val="Bottom"/>
-				<State name="OverWaygate"><When type="Property" frame="$parent/WaygateNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI/FCJH_BlueRow" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_B_2"/></State>
-				<State name="OnCore"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1CoreUnitStatus" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI/FCJH_BlueRow" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_B_CORE"/></State>
-				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI/FCJH_BlueRow" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_B"/></State>
+				<State name="OverWaygate"><When type="Property" frame="$parent/WaygateNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_2"/></State>
+				<State name="OnCore"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1CoreUnitStatus" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_CORE"/></State>
+				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B"/></State>
 			</StateGroup>
 			<!-- gone 5 s after it shows, whoever the script's own hide reaches: switching from a
 			     player view to the everyone view inside those 5 s left it up for good - the hide
@@ -375,16 +375,16 @@
 		</Frame>
 		<!-- blue, over 2 before it: ours, which team took a town (towers_extra) -->
 		<Frame type="Frame" name="FCJH_BlueTown" template="FieldofSlaughter/MainFoSPanel/AllyCaptureNotificationFrame">
-			<Anchor side="Bottom" relative="$GameUI/FCJH_BlueRow" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_B"/>
-			<Anchor side="Right"  relative="$GameUI/FCJH_BlueRow" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_R"/>
+			<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B"/>
+			<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_BLUE_R"/>
 			<Unclipped val="true"/>
 			<StateGroup name="FCJH_Stack">
 				<DefaultState val="Bottom"/>
-				<State name="OverWaygateRaven"><When type="Property" frame="$parent/WaygateNotificationFrame" Visible="true"/><When type="Property" frame="$parent/RavenNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI/FCJH_BlueRow" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_B_3"/></State>
-				<State name="OverWaygate"><When type="Property" frame="$parent/WaygateNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI/FCJH_BlueRow" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_B_2"/></State>
-				<State name="OverRaven"><When type="Property" frame="$parent/RavenNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI/FCJH_BlueRow" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_B_2"/></State>
-				<State name="OnCore"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1CoreUnitStatus" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI/FCJH_BlueRow" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_B_CORE"/></State>
-				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI/FCJH_BlueRow" pos="Min" offset="#FCJH_MAP_ALERT_BLUE_B"/></State>
+				<State name="OverWaygateRaven"><When type="Property" frame="$parent/WaygateNotificationFrame" Visible="true"/><When type="Property" frame="$parent/RavenNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_3"/></State>
+				<State name="OverWaygate"><When type="Property" frame="$parent/WaygateNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_2"/></State>
+				<State name="OverRaven"><When type="Property" frame="$parent/RavenNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_2"/></State>
+				<State name="OnCore"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1CoreUnitStatus" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_CORE"/></State>
+				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B"/></State>
 			</StateGroup>
 			<Frame type="Label" name="NotificationLabel"><Text val="Blue team captured"/></Frame>
 			<Frame type="Label" name="NotificationTargetLabel"><Text val="a town"/></Frame>
@@ -398,39 +398,39 @@
 		</Frame>
 		<!-- red, the bottom slot: the altar countdown -->
 		<Frame type="Frame" name="AltarSpawnNotificationFrame">
-			<Anchor side="Bottom" relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_MAP_ALERT_RED_B"/>
-			<Anchor side="Right"  relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_MAP_ALERT_RED_R"/>
+			<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B"/>
+			<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R"/>
 			<Unclipped val="true"/>
 			<StateGroup name="FCJH_Stack">
 				<DefaultState val="Bottom"/>
-				<State name="OnCore"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2CoreUnitStatus" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_MAP_ALERT_RED_B_CORE"/></State>
-				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_MAP_ALERT_RED_B"/></State>
+				<State name="OnCore"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2CoreUnitStatus" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_CORE"/></State>
+				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B"/></State>
 			</StateGroup>
 		</Frame>
 		<!-- red, over 1 before it: the towers upgrading -->
 		<Frame type="Frame" name="TowersNotificationFrame">
-			<Anchor side="Bottom" relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_MAP_ALERT_RED_B"/>
-			<Anchor side="Right"  relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_MAP_ALERT_RED_R"/>
+			<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B"/>
+			<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R"/>
 			<Unclipped val="true"/>
 			<StateGroup name="FCJH_Stack">
 				<DefaultState val="Bottom"/>
-				<State name="OverAltarSpawn"><When type="Property" frame="$parent/AltarSpawnNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_MAP_ALERT_RED_B_2"/></State>
-				<State name="OnCore"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2CoreUnitStatus" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_MAP_ALERT_RED_B_CORE"/></State>
-				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_MAP_ALERT_RED_B"/></State>
+				<State name="OverAltarSpawn"><When type="Property" frame="$parent/AltarSpawnNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_2"/></State>
+				<State name="OnCore"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2CoreUnitStatus" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_CORE"/></State>
+				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B"/></State>
 			</StateGroup>
 		</Frame>
 		<!-- red, over 2 before it: Blizzard's, players-only ("Your/Enemy cannons are firing") -->
 		<Frame type="Frame" name="NecroNotificationFrame">
-			<Anchor side="Bottom" relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_MAP_ALERT_RED_B"/>
-			<Anchor side="Right"  relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_MAP_ALERT_RED_R"/>
+			<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B"/>
+			<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R"/>
 			<Unclipped val="true"/>
 			<StateGroup name="FCJH_Stack">
 				<DefaultState val="Bottom"/>
-				<State name="OverAltarSpawnTowers"><When type="Property" frame="$parent/AltarSpawnNotificationFrame" Visible="true"/><When type="Property" frame="$parent/TowersNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_MAP_ALERT_RED_B_3"/></State>
-				<State name="OverAltarSpawn"><When type="Property" frame="$parent/AltarSpawnNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_MAP_ALERT_RED_B_2"/></State>
-				<State name="OverTowers"><When type="Property" frame="$parent/TowersNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_MAP_ALERT_RED_B_2"/></State>
-				<State name="OnCore"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2CoreUnitStatus" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_MAP_ALERT_RED_B_CORE"/></State>
-				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_MAP_ALERT_RED_B"/></State>
+				<State name="OverAltarSpawnTowers"><When type="Property" frame="$parent/AltarSpawnNotificationFrame" Visible="true"/><When type="Property" frame="$parent/TowersNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_3"/></State>
+				<State name="OverAltarSpawn"><When type="Property" frame="$parent/AltarSpawnNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_2"/></State>
+				<State name="OverTowers"><When type="Property" frame="$parent/TowersNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_2"/></State>
+				<State name="OnCore"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2CoreUnitStatus" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_CORE"/></State>
+				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B"/></State>
 			</StateGroup>
 			<!-- gone 5 s after it shows, whoever the script's own hide reaches: switching from a
 			     player view to the everyone view inside those 5 s left it up for good - the hide
@@ -444,20 +444,20 @@
 		</Frame>
 		<!-- red, over 3 before it: ours, which team took a town (towers_extra) -->
 		<Frame type="Frame" name="FCJH_RedTown" template="FieldofSlaughter/MainFoSPanel/EnemyCaptureNotificationFrame">
-			<Anchor side="Bottom" relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_MAP_ALERT_RED_B"/>
-			<Anchor side="Right"  relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_MAP_ALERT_RED_R"/>
+			<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B"/>
+			<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R"/>
 			<Unclipped val="true"/>
 			<StateGroup name="FCJH_Stack">
 				<DefaultState val="Bottom"/>
-				<State name="OverAltarSpawnTowersNecro"><When type="Property" frame="$parent/AltarSpawnNotificationFrame" Visible="true"/><When type="Property" frame="$parent/TowersNotificationFrame" Visible="true"/><When type="Property" frame="$parent/NecroNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_MAP_ALERT_RED_B_4"/></State>
-				<State name="OverAltarSpawnTowers"><When type="Property" frame="$parent/AltarSpawnNotificationFrame" Visible="true"/><When type="Property" frame="$parent/TowersNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_MAP_ALERT_RED_B_3"/></State>
-				<State name="OverAltarSpawnNecro"><When type="Property" frame="$parent/AltarSpawnNotificationFrame" Visible="true"/><When type="Property" frame="$parent/NecroNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_MAP_ALERT_RED_B_3"/></State>
-				<State name="OverTowersNecro"><When type="Property" frame="$parent/TowersNotificationFrame" Visible="true"/><When type="Property" frame="$parent/NecroNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_MAP_ALERT_RED_B_3"/></State>
-				<State name="OverAltarSpawn"><When type="Property" frame="$parent/AltarSpawnNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_MAP_ALERT_RED_B_2"/></State>
-				<State name="OverTowers"><When type="Property" frame="$parent/TowersNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_MAP_ALERT_RED_B_2"/></State>
-				<State name="OverNecro"><When type="Property" frame="$parent/NecroNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_MAP_ALERT_RED_B_2"/></State>
-				<State name="OnCore"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2CoreUnitStatus" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_MAP_ALERT_RED_B_CORE"/></State>
-				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI/FCJH_RedRow" pos="Min" offset="#FCJH_MAP_ALERT_RED_B"/></State>
+				<State name="OverAltarSpawnTowersNecro"><When type="Property" frame="$parent/AltarSpawnNotificationFrame" Visible="true"/><When type="Property" frame="$parent/TowersNotificationFrame" Visible="true"/><When type="Property" frame="$parent/NecroNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_4"/></State>
+				<State name="OverAltarSpawnTowers"><When type="Property" frame="$parent/AltarSpawnNotificationFrame" Visible="true"/><When type="Property" frame="$parent/TowersNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_3"/></State>
+				<State name="OverAltarSpawnNecro"><When type="Property" frame="$parent/AltarSpawnNotificationFrame" Visible="true"/><When type="Property" frame="$parent/NecroNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_3"/></State>
+				<State name="OverTowersNecro"><When type="Property" frame="$parent/TowersNotificationFrame" Visible="true"/><When type="Property" frame="$parent/NecroNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_3"/></State>
+				<State name="OverAltarSpawn"><When type="Property" frame="$parent/AltarSpawnNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_2"/></State>
+				<State name="OverTowers"><When type="Property" frame="$parent/TowersNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_2"/></State>
+				<State name="OverNecro"><When type="Property" frame="$parent/NecroNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_2"/></State>
+				<State name="OnCore"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2CoreUnitStatus" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_CORE"/></State>
+				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B"/></State>
 			</StateGroup>
 			<Frame type="Label" name="NotificationLabel"><Text val="Red team captured"/></Frame>
 			<Frame type="Label" name="NotificationTargetLabel"><Text val="a town"/></Frame>

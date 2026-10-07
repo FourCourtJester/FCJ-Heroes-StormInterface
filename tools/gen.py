@@ -197,7 +197,15 @@ def team_bar_rects(cfg, n=5):
 # rows are sized to fill a 16:9 screen).
 #
 # ANCHORS: stem -> (across, down) as pos values ("Min" / "Mid" / "Max") of the screen, or the
-# stem of the piece it's anchored to (its constants then run from that piece's top-left).
+# stem of the piece it's anchored to (its constants then run from that piece's top-left, and
+# its hand-written file anchors it to that piece's frame - a sibling, as the top bar's levels
+# are on the backplate).
+#
+# Only a sibling: everything on the rows hung off a bare frame per row at the screen's root
+# (FCJH_BlueRow / FCJH_RedRow) until the cells, inside Blizzard's observer panel, came out
+# twice their height and 40 px high while the frame sat right (user, 2026-10-06). Anchored
+# straight to the screen's bottom-centre they landed. So what's on the rows takes the rows'
+# own point, BOTTOM_CENTRE, and still moves with them.
 TOP_CENTRE, BOTTOM_CENTRE, TOP_LEFT = ("Mid", "Min"), ("Mid", "Max"), ("Min", "Min")
 ANCHORS = {
     # the top bar sits on Blizzard's hexagon, centred on the top edge; the team levels on our
@@ -206,36 +214,23 @@ ANCHORS = {
                                "blue_bans", "bracket", "red_score", "red_name", "red_logo", "red_bans",
                                "game_count", "centre_banners")},
     **{s: "top_backplate" for s in ("blue_level", "red_level", "blue_talent_lead", "red_talent_lead")},
-    # the rows sit either side of the minimap, bottom-centre; everything on a row hangs off it
-    "blue_row": BOTTOM_CENTRE, "red_row": BOTTOM_CENTRE, "minimap": BOTTOM_CENTRE, "map_objectives": BOTTOM_CENTRE,
-    **{f"hero_{s}": "blue_row" for s in BLUE_SLOTS}, **{f"hero_{s}": "red_row" for s in RED_SLOTS},
-    "blue_xp": "blue_row", "blue_core": "blue_row", "red_xp": "red_row", "red_core": "red_row",
+    # the rows sit either side of the minimap, bottom-centre, and so does all that's on them:
+    # the cells, the XP and core bars (and the map alerts, the heroic tips and the row packer,
+    # from these constants' point)
+    "minimap": BOTTOM_CENTRE, "map_objectives": BOTTOM_CENTRE,
+    **{f"hero_{s}": BOTTOM_CENTRE for s in BLUE_SLOTS + RED_SLOTS},
+    **{s: BOTTOM_CENTRE for s in ("blue_xp", "blue_core", "red_xp", "red_core")},
     # the inspect card stands on blue's row, its left edge in line with the row's (user, 2026-10-06)
-    "inspect": "blue_row",
+    "inspect": BOTTOM_CENTRE,
     # the left column keeps to the left edge, [screen] padding in (user, 2026-10-06); at 16:9
     # it lines up with the card. The kill feed is Blizzard's, where Blizzard puts it.
     "info_pane": TOP_LEFT, "kill_feed": TOP_LEFT,
     # the replay box: the right edge's middle
     "replay": ("Max", "Mid"), "replay_collapsed": ("Max", "Mid"),
 }
-# The frames the row-anchored pieces hang off: a bare frame per row (FCJH_BlueRow / FCJH_RedRow,
-# hero_row_layout) spanning its five cells.
-ROW_FRAME = {"blue": "$GameUI/FCJH_BlueRow", "red": "$GameUI/FCJH_RedRow"}
-
-
-def row_rects(cfg):
-    """Each row's box, px: its five cells' bounding box."""
-    out = {}
-    all_rects = rects(cfg)
-    for team, slots in (("blue", BLUE_SLOTS), ("red", RED_SLOTS)):
-        (x, y, _, h), _ = all_rects[f"hero_{slots[0]}"]
-        (lx, _, lw, _), _ = all_rects[f"hero_{slots[-1]}"]
-        out[f"{team}_row"] = ((x, y, round(lx + lw - x, 1), h), "ui")
-    return out
-
-
-def anchored_rects(cfg):
-    return rects(cfg) | row_rects(cfg)
+# Where the plates are anchored, for what's placed on them outside gen.py's own rects (the
+# map alerts, the inspect card): (frame, across pos, down pos)
+PLATES_AT = ("$GameUI", *BOTTOM_CENTRE)
 
 
 def screen_units(cfg):
@@ -253,7 +248,7 @@ def anchor_origin(cfg, stem):
     ref = ANCHORS[stem]
     if isinstance(ref, str):
         u = Units(cfg)
-        (x, y, _, _), _ = anchored_rects(cfg)[ref]
+        (x, y, _, _), _ = rects(cfg)[ref]
         return u(x), u(y)
     sw, sh = screen_units(cfg)
     return round(sw * POS[ref[0]]), round(sh * POS[ref[1]])
@@ -262,23 +257,19 @@ def anchor_origin(cfg, stem):
 def anchor_edges(cfg, stem):
     """stem's edges as offsets from its anchor_origin: {"l", "t", "r", "b"}, layout units."""
     u = Units(cfg)
-    (x, y, w, h), _ = anchored_rects(cfg)[stem]
+    (x, y, w, h), _ = rects(cfg)[stem]
     ox, oy = anchor_origin(cfg, stem)
     return {"l": u(x) - ox, "t": u(y) - oy, "r": u(x + w) - ox, "b": u(y + h) - oy}
 
 
 def anchor_xml(cfg, stem, indent, sides="tlbr"):
-    """stem's own Anchor lines: to its screen point, or to its piece's frame."""
+    """stem's own Anchor lines, to its screen point."""
     ref = ANCHORS[stem]
     if isinstance(ref, str):
-        if not ref.endswith("_row"):
-            raise SystemExit(f"{stem}: anchored to {ref}, which has no frame in gen.py to anchor to")
-        rel, (across, down) = ROW_FRAME[ref[:-4]], ("Min", "Min")
-    else:
-        rel, (across, down) = "$GameUI", ref
-    names = {"t": ("Top", down), "l": ("Left", across), "b": ("Bottom", down), "r": ("Right", across)}
+        raise SystemExit(f"{stem}: anchored to {ref}, a piece - its own file anchors it to that piece's frame")
+    names = {"t": ("Top", ref[1]), "l": ("Left", ref[0]), "b": ("Bottom", ref[1]), "r": ("Right", ref[0])}
     return "".join(f'{NL}{TAB * indent}<Anchor side="{names[s][0]}"{" " * (6 - len(names[s][0]))} '
-                   f'relative="{rel}" pos="{names[s][1]}" offset="#{name(stem, s)}"/>' for s in sides)
+                   f'relative="$GameUI" pos="{names[s][1]}" offset="#{name(stem, s)}"/>' for s in sides)
 
 
 def check_anchoring(cfg):
@@ -287,7 +278,7 @@ def check_anchoring(cfg):
     1066.7 units at 16:9, isn't whole)."""
     u = Units(cfg)
     sw, sh = screen_units(cfg)
-    missing = sorted(set(anchored_rects(cfg)) - set(ANCHORS))
+    missing = sorted(set(rects(cfg)) - set(ANCHORS))
     if missing:
         raise SystemExit("no anchor for: " + ", ".join(missing) + " (gen.py ANCHORS)")
 
@@ -302,7 +293,7 @@ def check_anchoring(cfg):
         return ox + e["l"], oy + e["t"], ox + e["r"], oy + e["b"]
 
     off = []
-    for stem, ((x, y, w, h), _) in anchored_rects(cfg).items():
+    for stem, ((x, y, w, h), _) in rects(cfg).items():
         want = (u(x), u(y), u(x + w), u(y + h))
         got = resolved(stem)
         if max(abs(a - b) for a, b in zip(want, got)) >= 1:
@@ -400,10 +391,10 @@ def constants_layout(cfg):
 
     lines.append("")
     lines.append("\t<!-- Elements: _L _T _R _B are edges as offsets from the rect's anchor (tools/gen.py ANCHORS):")
-    lines.append("\t     a point on the screen (anchor them to $GameUI at those pos values), or a row's top-left")
-    lines.append("\t     (anchor them to $GameUI/FCJH_BlueRow or FCJH_RedRow, pos=Min); _W _H are sizes. All in")
+    lines.append("\t     a point on the screen (anchor them to $GameUI at those pos values), or a piece's top-left")
+    lines.append("\t     (anchor them to its frame, pos=Min); _W _H are sizes. All in")
     lines.append("\t     layout units. -->")
-    for stem, ((x, y, w, h), kind) in anchored_rects(cfg).items():
+    for stem, ((x, y, w, h), kind) in rects(cfg).items():
         ref = ANCHORS[stem]
         where = f"from {ref}'s top-left" if isinstance(ref, str) else f"from the screen's {ref[0]} / {ref[1]}"
         lines.append(f"\t<!-- {stem}: {kind}, px [{x}, {y}, {w}, {h}], {where} -->")
@@ -437,7 +428,7 @@ def constants_layout(cfg):
     # 18 units down, 34 in from the right (blue) / 28 in from the left (red); place the frame
     # so the BAR lands on the [element.*_core] rect.
     lines.append("")
-    lines.append("\t<!-- Core frames, placed so their health bars land on blue_core / red_core: from their row's top-left -->")
+    lines.append("\t<!-- Core frames, placed so their health bars land on blue_core / red_core: from the screen's bottom-centre -->")
     blue, red = anchor_edges(cfg, "blue_core"), anchor_edges(cfg, "red_core")
     const(name("blue", "core", "frame", "t"), blue["t"] - 18)
     const(name("blue", "core", "frame", "r"), blue["r"] + 34)
@@ -450,13 +441,13 @@ def constants_layout(cfg):
     # minimap's square, blue's ends `gap` left of it (user, 2026-10-06): placed by the edge
     # the art hangs off (maps.ALERT_ART).
     lines.append("")
-    lines.append("\t<!-- Map alerts on the plates ([map_alerts]): from their row's top-left -->")
+    lines.append("\t<!-- Map alerts on the plates ([map_alerts]): from the screen's bottom-centre, as the plates -->")
     gap = cfg["map_alerts"]["gap"]
     (mmx, _, mmw, _), _ = rects(cfg)["minimap"]
     for team in ("red", "blue"):
         (_, cy, _, _), _ = rects(cfg)[f"{team}_core"]
         (_, xy, _, _), _ = team_bar_rects(cfg)[f"{team}_xp"]
-        ox, oy = anchor_origin(cfg, f"hero_{(BLUE_SLOTS if team == 'blue' else RED_SLOTS)[0]}")   # the row's top-left
+        ox, oy = anchor_origin(cfg, f"{team}_xp")   # the plates' point
         for kind, (reach, tail) in maps.ALERT_ART.items():
             right = u(mmx + mmw + gap) + reach if team == "red" else u(mmx - gap) + tail
             const(name("map", "alert", team, "r", *([kind] if kind else [])), right - ox)
@@ -2139,14 +2130,14 @@ def heroic_tip_copy(cfg, root, tier_icon, row_top, shift, prio):
 										</Frame>
 									</Frame>
 								</Frame>""")
-    # the row runs the screen's width, its top on the rows' (both rows share a top); its boxes
-    # follow the cells
+    # the row runs the screen's width, its top on the rows' (both rows share a top), from the
+    # cells' point; its boxes follow the cells
     top = row_top - anchor_origin(cfg, "hero_1")[1]
     return (f"""
 					<!-- Heroic tooltips: our own copy of the observer talent row, each player's box moved so the
 					     level-{10 if tier_icon == 4 else 4} icon sits on our heroic (tools/gen.py heroic_tip_panel) -->
 					<Frame type="Frame" name="{root}" template="TalentsOverviewPanel/TalentsOverviewTopBarTemplate">
-						<Anchor side="Top"   relative="{ROW_FRAME['blue']}" pos="Min" offset="{top}"/>
+						<Anchor side="Top"   relative="$GameUI" pos="{ANCHORS['hero_1'][1]}" offset="{top}"/>
 						<Anchor side="Left"  relative="$GameUI" pos="Min" offset="0"/>
 						<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
 						<Height val="100"/>
@@ -2175,10 +2166,10 @@ def row_packer(cfg):
     top_panel = f"{OVERVIEW}/ObserverTopPanel"
 
     def state(team, n):
-        # from the row's left edge, as the cells and bars are anchored
-        left = anchor_origin(cfg, f"hero_{(BLUE_SLOTS if team == 'blue' else RED_SLOTS)[0]}")[0]
+        # from the cells' and bars' point, as they're anchored
+        left = anchor_origin(cfg, f"{team}_xp")[0]
         anchor = lambda frame, side, px: (f'\t\t\t\t<Action type="SetAnchor" frame="{frame}" side="{side}" '
-                                          f'relative="{ROW_FRAME[team]}" pos="Min" offset="{u(px) - left}"/>\n')
+                                          f'relative="$GameUI" pos="{ANCHORS[f"{team}_xp"][0]}" offset="{u(px) - left}"/>\n')
         tn = "Team1" if team == "blue" else "Team2"
         cell = lambda i: f"{OVERVIEW}/{tn}HeroOverview/HeroOverview{i}"
         Team = team.capitalize()
@@ -2272,14 +2263,6 @@ def hero_row_layout(cfg):
 	<!-- Red: the same cell, mirrored -->
 {hero_cell_template("red", HeroCell(cfg), cfg)}
 	<Frame type="GameUI" name="GameUI" file="GameUI">
-		<!-- The rows' anchors (tools/gen.py ANCHORS): a bare frame per row, spanning its five cells,
-		     pinned to the screen's bottom-centre. The cells, the XP and core bars, the map alerts
-		     and the inspect card hang off these, so on a window that isn't 16:9 they all stay
-		     together round the minimap. -->{"".join(f"""
-		<Frame type="Frame" name="{ROW_FRAME[team].rsplit('/', 1)[1]}">{anchor_xml(cfg, f"{team}_row", 3)}
-			<AcceptsMouse val="false"/>
-			<AcceptsMouseTooltip val="false"/>
-		</Frame>""" for team in ("blue", "red"))}
 {row_packer(cfg)}{heal_popups(cfg)}{talent_popups(cfg)}
 		<Frame type="Frame" name="UIContainer">
 			<Frame type="Frame" name="FullscreenUpperContainer">
@@ -2730,8 +2713,8 @@ def committed_files(cfg, source=SOURCE):
             {t: cfg["top_backplate"][f"{t}_colour"] for t in ("blue", "red")}
             | {"neutral": cfg["element"]["inspect"]["neutral_colour"]},   # the card's team edge
             (u(rects(cfg)["inspect"][0][0]), u(rects(cfg)["inspect"][0][1])), 1 / u.scale,   # its place, for pixel-exact lines
-            (ROW_FRAME["blue"], anchor_edges(cfg, "inspect")["t"])),   # what it stands on, and its top from there
-        LAYOUT_REL / MAPS_FILE: maps.layout(XML_DECL + "<Desc>\n" + GENERATED, ROW_FRAME),
+            (*PLATES_AT, anchor_edges(cfg, "inspect")["t"])),   # where it's anchored, and its top from there
+        LAYOUT_REL / MAPS_FILE: maps.layout(XML_DECL + "<Desc>\n" + GENERATED, PLATES_AT),
         LAYOUT_REL / INDEX_FILE: desc_index(layout_order(layout_dir, generated=GENERATED_LAYOUTS)),
     }
     return {rel: text.encode("utf-8") for rel, text in texts.items()} | texture_files(cfg)

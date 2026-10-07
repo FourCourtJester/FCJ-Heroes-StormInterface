@@ -479,10 +479,13 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    (`gen.py ANCHORS`; the constants are offsets from each rect's anchor):
    - **top-centre**: our backplate (Blizzard's hexagon is centred); the team levels hang off
      the backplate, the advantage flames off the levels;
-   - **bottom-centre**: the minimap and two bare row frames (`FCJH_BlueRow` / `FCJH_RedRow`,
-     each spanning its five cells). Off the rows: the cells, XP and core bars, the row packer,
-     the map alerts, the heroic tooltip rows' top, and the inspect card (in line with blue's
-     row, user);
+   - **bottom-centre**: the minimap and everything on the plates: the cells, XP and core
+     bars, the row packer, the map alerts, the heroic tooltip rows' top, and the inspect card
+     (in line with blue's row, user). They share the screen point (`gen.py PLATES_AT`), so
+     they still move together. The first pass hung them off two bare row frames at the
+     screen's root (`FCJH_BlueRow` / `FCJH_RedRow`). The frames sat right, but the cells
+     inside Blizzard's observer panel came out twice their height and 40 px high. Anchor to
+     the screen or a sibling, never to one of our frames in another branch (memory rule 22);
    - **left edge**: the info panes, [screen] padding in (user: they line up with the card at
      1080p); **right edge, middle**: the replay box and its tab; top right: the dev stamp.
    At 16:9 nothing moved (gen's `check_anchoring`, and every anchor in the XML resolved before

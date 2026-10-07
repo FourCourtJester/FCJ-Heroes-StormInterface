@@ -345,14 +345,14 @@ def short(name):
     return name.replace("Frame", "")
 
 
-def stack_states(team, column, i, targets, row, indent):
+def stack_states(team, column, i, targets, at, indent):
     """Alert i of its side's column: on the bottom slot - the XP bar, or the core bar while that
     shows - or one slot up for each alert before it in the column that's showing. The states
     go from most alerts showing to fewest; the first whose alerts all show wins."""
     t = T * indent
     key = f"#FCJH_MAP_ALERT_{team.upper()}_B"
-    act = lambda c: "".join(f'<Action type="SetAnchor" frame="{target}" side="Bottom" relative="{row}" '
-                            f'pos="Min" offset="{c}"/>' for target in targets)
+    act = lambda c: "".join(f'<Action type="SetAnchor" frame="{target}" side="Bottom" relative="{at[0]}" '
+                            f'pos="{at[2]}" offset="{c}"/>' for target in targets)
     out = f'{t}<StateGroup name="FCJH_Stack">\n{t}\t<DefaultState val="Bottom"/>\n'
     before = column[:i]
     for n in range(len(before), 0, -1):
@@ -366,12 +366,12 @@ def stack_states(team, column, i, targets, row, indent):
     return out
 
 
-def alert_frame(team, column, i, row):
+def alert_frame(team, column, i, at):
     a = column[i]
     t = T * 2
     right = f"#FCJH_MAP_ALERT_{team.upper()}_R" + (f"_{a.kind}" if a.kind else "")
-    spot = (f'\t<Anchor side="Bottom" relative="{row}" pos="Min" offset="#FCJH_MAP_ALERT_{team.upper()}_B"/>\n'
-            f'\t<Anchor side="Right"  relative="{row}" pos="Min" offset="{right}"/>\n'
+    spot = (f'\t<Anchor side="Bottom" relative="{at[0]}" pos="{at[2]}" offset="#FCJH_MAP_ALERT_{team.upper()}_B"/>\n'
+            f'\t<Anchor side="Right"  relative="{at[0]}" pos="{at[1]}" offset="{right}"/>\n'
             f'\t<Unclipped val="true"/>\n')
     out = f'{t}<!-- {team}, {"the bottom slot" if i == 0 else f"over {i} before it"}: {a.note} -->\n' if a.note else ""
     out += f'{t}<Frame type="Frame" name="{a.name}"' + (f' template="{a.template}"' if a.template else "") + ">\n"
@@ -383,7 +383,7 @@ def alert_frame(team, column, i, row):
         out += f'{t}\t<Frame type="{ctype}" name="{child}">\n'
         out += "".join(f"{t}\t{line}\n" for line in spot.splitlines())
         out += f'{t}\t</Frame>\n'
-    out += stack_states(team, column, i, targets, row, 3)
+    out += stack_states(team, column, i, targets, at, 3)
     return out + a.extra + f"{t}</Frame>\n"
 
 
@@ -409,7 +409,7 @@ class Node:
         return out + f"{t}</Frame>\n"
 
 
-def map_file(key, row_frame):
+def map_file(key, at):
     """Everything this map's own layout file gets: its panels on our minimap, the minimap's
     place, its team alerts."""
     m = MAPS[key]
@@ -422,7 +422,7 @@ def map_file(key, row_frame):
         node = root.at(panel)
         for team in ("blue", "red"):
             for i in range(len(cols.get(team, []))):
-                node.body += alert_frame(team, cols[team], i, row_frame[team])
+                node.body += alert_frame(team, cols[team], i, at)
     if m.extra:
         root.at(m.place[0]).body += EXTRAS[m.extra]()
     return "".join(c.xml(1, file=m.file) for c in root.children.values())
@@ -456,9 +456,9 @@ def core_panels():
             f'{T*4}<Frame type="Frame" name="MapMechanicPanel">\n' + panels + f'{T*4}</Frame>\n')
 
 
-def layout(header, row_frame):
-    """FCJH_Maps.StormLayout. row_frame: {"blue": ..., "red": ...}, the rows' bare frames the
-    stacks stand on (gen.py ROW_FRAME)."""
+def layout(header, at):
+    """FCJH_Maps.StormLayout. at: (frame, across pos, down pos), where the plates are anchored -
+    the stacks' constants run from there, as the plates' do (gen.py PLATES_AT)."""
     return header + f'''
 	<!-- Each battleground's own UI on our screen (tools/maps.py, which says how a map's UI works).
 
@@ -479,4 +479,4 @@ def layout(header, row_frame):
 		</Frame>
 	</Frame>
 ''' + "".join(f"\t<!-- ===== {MAPS[k].title}{(': ' + MAPS[k].notes) if MAPS[k].notes else ''} ===== -->\n"
-              + map_file(k, row_frame) for k in MAPS if MAPS[k].file) + "</Desc>\n"
+              + map_file(k, at) for k in MAPS if MAPS[k].file) + "</Desc>\n"

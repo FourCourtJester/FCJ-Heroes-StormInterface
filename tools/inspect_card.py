@@ -100,7 +100,7 @@ TEAM = {}                          # the border's colours, "a,r,g,b" by team (an
 
 ORIGIN = (0, 0)   # the card's top-left on screen, in layout units: set by layout()
 PX = 0.9          # screen pixels per layout unit: set by layout()
-HOLDER = ("$parent", 0)   # the frame the card is anchored to, and the card's top from it: set by layout()
+HOLDER = ("$parent", "Min", "Min", 0)   # what the card is anchored to (frame, across pos, down pos), and its top from there: set by layout()
 
 
 def line(at, axis, way, want=2):
@@ -420,7 +420,7 @@ def shape(hero):
     stat_rows = 1 + max(r for _, _, r in STATS_GRID)
     return ("".join(
         # the card's bottom stays on the plates: its top comes down by the difference
-        [at(CARD, "Top", HOLDER[0], "Min", "#FCJH_INSPECT_T" if hero else HOLDER[1] + H - H_SHORT),
+        [at(CARD, "Top", HOLDER[0], HOLDER[2], "#FCJH_INSPECT_T" if hero else HOLDER[3] + H - H_SHORT),
          at(f"{UNIT}/FCJH_SkinName", "Top", UNIT, "Min", NAME_BAND - d),
          at(f"{UNIT}/FCJH_SkinName", "Bottom", UNIT, "Min", NAME_BAND + NAME_H - d),
          at(f"{UNIT}/FCJH_Level", "Top", UNIT, "Min", NAME_BAND + NAME_DROP - d),
@@ -477,11 +477,11 @@ def card():
            f'{T*3}<Visible val="false"/>\n'
            # no X (round 9 had one; dropped 2026-10-05): clicking off the unit closes the card, as
            # it does Blizzard's - the X is for the panes you summon (tools/gen.py close_button)
-           # standing on blue's row, its left edge in line with the row's (gen.py ANCHORS)
-           f'{T*3}<Anchor side="Top"    relative="{HOLDER[0]}" pos="Min" offset="#FCJH_INSPECT_T"/>\n'
-           f'{T*3}<Anchor side="Left"   relative="{HOLDER[0]}" pos="Min" offset="#FCJH_INSPECT_L"/>\n'
-           f'{T*3}<Anchor side="Bottom" relative="{HOLDER[0]}" pos="Min" offset="#FCJH_INSPECT_B"/>\n'
-           f'{T*3}<Anchor side="Right"  relative="{HOLDER[0]}" pos="Min" offset="#FCJH_INSPECT_R"/>\n'
+           # standing on blue's row, its left edge in line with the row's, anchored where the row is (gen.py ANCHORS)
+           f'{T*3}<Anchor side="Top"    relative="{HOLDER[0]}" pos="{HOLDER[2]}" offset="#FCJH_INSPECT_T"/>\n'
+           f'{T*3}<Anchor side="Left"   relative="{HOLDER[0]}" pos="{HOLDER[1]}" offset="#FCJH_INSPECT_L"/>\n'
+           f'{T*3}<Anchor side="Bottom" relative="{HOLDER[0]}" pos="{HOLDER[2]}" offset="#FCJH_INSPECT_B"/>\n'
+           f'{T*3}<Anchor side="Right"  relative="{HOLDER[0]}" pos="{HOLDER[1]}" offset="#FCJH_INSPECT_R"/>\n'
            # in the console container, just under its command card (610), whose buttons draw
            # on the card's ability rows (command_panel)
            f'{T*3}<AcceptsMouse val="false"/>\n{T*3}<RenderPriority val="600"/>\n']
@@ -993,13 +993,13 @@ FILE_HEADER = """
 """
 
 
-def layout(crop, head, team_colours, origin=(0, 0), px=0.9, holder=("$parent", 0)):
+def layout(crop, head, team_colours, origin=(0, 0), px=0.9, holder=("$parent", "Min", "Min", 0)):
     """The whole layout file. crop: the plates' portrait crop (HeroCell.crop); head: the XML
     declaration, <Desc> and the generated-file banner; team_colours: {"blue": "rrggbb",
     "red": ..., "neutral": ...}, the border's (the plates' own blue and red; neutral, for
-    anything of neither team, from layout.toml element.inspect); holder: the frame the card is
-    anchored to (its #FCJH_INSPECT_* constants run from that frame's top-left) and the card's
-    top from there, in units."""
+    anything of neither team, from layout.toml element.inspect); holder: what the card is
+    anchored to - a frame, and the pos values across and down that its #FCJH_INSPECT_*
+    constants run from - and the card's top from there, in units."""
     global CROP, ORIGIN, PX, HOLDER
     CROP, ORIGIN, PX, HOLDER = crop, origin, px, holder
     TEAM.update({team: "255," + ",".join(str(int(hex_[i:i + 2], 16)) for i in (0, 2, 4))

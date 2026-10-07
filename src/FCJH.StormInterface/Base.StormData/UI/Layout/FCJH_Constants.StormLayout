@@ -8,8 +8,8 @@
 	<Constant name="FCJH_VERSION" val="0.1.0"/>
 
 	<!-- Elements: _L _T _R _B are edges as offsets from the rect's anchor (tools/gen.py ANCHORS):
-	     a point on the screen (anchor them to $GameUI at those pos values), or a row's top-left
-	     (anchor them to $GameUI/FCJH_BlueRow or FCJH_RedRow, pos=Min); _W _H are sizes. All in
+	     a point on the screen (anchor them to $GameUI at those pos values), or a piece's top-left
+	     (anchor them to its frame, pos=Min); _W _H are sizes. All in
 	     layout units. -->
 	<!-- blue_score: obs, px [400, 0, 64, 63.3], from the screen's Mid / Min -->
 	<Constant name="FCJH_BLUE_SCORE_L" val="-623"/>
@@ -151,11 +151,11 @@
 	<Constant name="FCJH_INFO_PANE_B" val="858"/>
 	<Constant name="FCJH_INFO_PANE_W" val="549"/>
 	<Constant name="FCJH_INFO_PANE_H" val="640"/>
-	<!-- inspect: demand, px [20, 420.5, 300, 525], from blue_row's top-left -->
-	<Constant name="FCJH_INSPECT_L" val="-7"/>
-	<Constant name="FCJH_INSPECT_T" val="-616"/>
-	<Constant name="FCJH_INSPECT_R" val="327"/>
-	<Constant name="FCJH_INSPECT_B" val="-32"/>
+	<!-- inspect: demand, px [20, 420.5, 300, 525], from the screen's Mid / Max -->
+	<Constant name="FCJH_INSPECT_L" val="-1045"/>
+	<Constant name="FCJH_INSPECT_T" val="-733"/>
+	<Constant name="FCJH_INSPECT_R" val="-711"/>
+	<Constant name="FCJH_INSPECT_B" val="-149"/>
 	<Constant name="FCJH_INSPECT_W" val="333"/>
 	<Constant name="FCJH_INSPECT_H" val="583"/>
 	<!-- centre_banners: ui, px [640, 196, 640, 78], from the screen's Mid / Min -->
@@ -179,102 +179,102 @@
 	<Constant name="FCJH_MINIMAP_B" val="-13"/>
 	<Constant name="FCJH_MINIMAP_W" val="433"/>
 	<Constant name="FCJH_MINIMAP_H" val="293"/>
-	<!-- hero_1: ui, px [25.7, 974.5, 179.1, 85.5], from blue_row's top-left -->
-	<Constant name="FCJH_HERO_1_L" val="0"/>
-	<Constant name="FCJH_HERO_1_T" val="0"/>
-	<Constant name="FCJH_HERO_1_R" val="199"/>
-	<Constant name="FCJH_HERO_1_B" val="95"/>
+	<!-- hero_1: ui, px [25.7, 974.5, 179.1, 85.5], from the screen's Mid / Max -->
+	<Constant name="FCJH_HERO_1_L" val="-1038"/>
+	<Constant name="FCJH_HERO_1_T" val="-117"/>
+	<Constant name="FCJH_HERO_1_R" val="-839"/>
+	<Constant name="FCJH_HERO_1_B" val="-22"/>
 	<Constant name="FCJH_HERO_1_W" val="199"/>
 	<Constant name="FCJH_HERO_1_H" val="95"/>
-	<!-- hero_2: ui, px [162.5, 974.5, 179.1, 85.5], from blue_row's top-left -->
-	<Constant name="FCJH_HERO_2_L" val="152"/>
-	<Constant name="FCJH_HERO_2_T" val="0"/>
-	<Constant name="FCJH_HERO_2_R" val="351"/>
-	<Constant name="FCJH_HERO_2_B" val="95"/>
+	<!-- hero_2: ui, px [162.5, 974.5, 179.1, 85.5], from the screen's Mid / Max -->
+	<Constant name="FCJH_HERO_2_L" val="-886"/>
+	<Constant name="FCJH_HERO_2_T" val="-117"/>
+	<Constant name="FCJH_HERO_2_R" val="-687"/>
+	<Constant name="FCJH_HERO_2_B" val="-22"/>
 	<Constant name="FCJH_HERO_2_W" val="199"/>
 	<Constant name="FCJH_HERO_2_H" val="95"/>
-	<!-- hero_3: ui, px [299.3, 974.5, 179.1, 85.5], from blue_row's top-left -->
-	<Constant name="FCJH_HERO_3_L" val="304"/>
-	<Constant name="FCJH_HERO_3_T" val="0"/>
-	<Constant name="FCJH_HERO_3_R" val="503"/>
-	<Constant name="FCJH_HERO_3_B" val="95"/>
+	<!-- hero_3: ui, px [299.3, 974.5, 179.1, 85.5], from the screen's Mid / Max -->
+	<Constant name="FCJH_HERO_3_L" val="-734"/>
+	<Constant name="FCJH_HERO_3_T" val="-117"/>
+	<Constant name="FCJH_HERO_3_R" val="-535"/>
+	<Constant name="FCJH_HERO_3_B" val="-22"/>
 	<Constant name="FCJH_HERO_3_W" val="199"/>
 	<Constant name="FCJH_HERO_3_H" val="95"/>
-	<!-- hero_4: ui, px [436.1, 974.5, 179.1, 85.5], from blue_row's top-left -->
-	<Constant name="FCJH_HERO_4_L" val="456"/>
-	<Constant name="FCJH_HERO_4_T" val="0"/>
-	<Constant name="FCJH_HERO_4_R" val="655"/>
-	<Constant name="FCJH_HERO_4_B" val="95"/>
+	<!-- hero_4: ui, px [436.1, 974.5, 179.1, 85.5], from the screen's Mid / Max -->
+	<Constant name="FCJH_HERO_4_L" val="-582"/>
+	<Constant name="FCJH_HERO_4_T" val="-117"/>
+	<Constant name="FCJH_HERO_4_R" val="-383"/>
+	<Constant name="FCJH_HERO_4_B" val="-22"/>
 	<Constant name="FCJH_HERO_4_W" val="199"/>
 	<Constant name="FCJH_HERO_4_H" val="95"/>
-	<!-- hero_5: ui, px [572.9, 974.5, 179.1, 85.5], from blue_row's top-left -->
-	<Constant name="FCJH_HERO_5_L" val="608"/>
-	<Constant name="FCJH_HERO_5_T" val="0"/>
-	<Constant name="FCJH_HERO_5_R" val="807"/>
-	<Constant name="FCJH_HERO_5_B" val="95"/>
+	<!-- hero_5: ui, px [572.9, 974.5, 179.1, 85.5], from the screen's Mid / Max -->
+	<Constant name="FCJH_HERO_5_L" val="-430"/>
+	<Constant name="FCJH_HERO_5_T" val="-117"/>
+	<Constant name="FCJH_HERO_5_R" val="-231"/>
+	<Constant name="FCJH_HERO_5_B" val="-22"/>
 	<Constant name="FCJH_HERO_5_W" val="199"/>
 	<Constant name="FCJH_HERO_5_H" val="95"/>
-	<!-- hero_6: ui, px [1167.0, 974.5, 179.1, 85.5], from red_row's top-left -->
-	<Constant name="FCJH_HERO_6_L" val="0"/>
-	<Constant name="FCJH_HERO_6_T" val="0"/>
-	<Constant name="FCJH_HERO_6_R" val="199"/>
-	<Constant name="FCJH_HERO_6_B" val="95"/>
+	<!-- hero_6: ui, px [1167.0, 974.5, 179.1, 85.5], from the screen's Mid / Max -->
+	<Constant name="FCJH_HERO_6_L" val="230"/>
+	<Constant name="FCJH_HERO_6_T" val="-117"/>
+	<Constant name="FCJH_HERO_6_R" val="429"/>
+	<Constant name="FCJH_HERO_6_B" val="-22"/>
 	<Constant name="FCJH_HERO_6_W" val="199"/>
 	<Constant name="FCJH_HERO_6_H" val="95"/>
-	<!-- hero_7: ui, px [1303.8, 974.5, 179.1, 85.5], from red_row's top-left -->
-	<Constant name="FCJH_HERO_7_L" val="152"/>
-	<Constant name="FCJH_HERO_7_T" val="0"/>
-	<Constant name="FCJH_HERO_7_R" val="351"/>
-	<Constant name="FCJH_HERO_7_B" val="95"/>
+	<!-- hero_7: ui, px [1303.8, 974.5, 179.1, 85.5], from the screen's Mid / Max -->
+	<Constant name="FCJH_HERO_7_L" val="382"/>
+	<Constant name="FCJH_HERO_7_T" val="-117"/>
+	<Constant name="FCJH_HERO_7_R" val="581"/>
+	<Constant name="FCJH_HERO_7_B" val="-22"/>
 	<Constant name="FCJH_HERO_7_W" val="199"/>
 	<Constant name="FCJH_HERO_7_H" val="95"/>
-	<!-- hero_8: ui, px [1440.6, 974.5, 179.1, 85.5], from red_row's top-left -->
-	<Constant name="FCJH_HERO_8_L" val="304"/>
-	<Constant name="FCJH_HERO_8_T" val="0"/>
-	<Constant name="FCJH_HERO_8_R" val="503"/>
-	<Constant name="FCJH_HERO_8_B" val="95"/>
+	<!-- hero_8: ui, px [1440.6, 974.5, 179.1, 85.5], from the screen's Mid / Max -->
+	<Constant name="FCJH_HERO_8_L" val="534"/>
+	<Constant name="FCJH_HERO_8_T" val="-117"/>
+	<Constant name="FCJH_HERO_8_R" val="733"/>
+	<Constant name="FCJH_HERO_8_B" val="-22"/>
 	<Constant name="FCJH_HERO_8_W" val="199"/>
 	<Constant name="FCJH_HERO_8_H" val="95"/>
-	<!-- hero_9: ui, px [1577.4, 974.5, 179.1, 85.5], from red_row's top-left -->
-	<Constant name="FCJH_HERO_9_L" val="456"/>
-	<Constant name="FCJH_HERO_9_T" val="0"/>
-	<Constant name="FCJH_HERO_9_R" val="655"/>
-	<Constant name="FCJH_HERO_9_B" val="95"/>
+	<!-- hero_9: ui, px [1577.4, 974.5, 179.1, 85.5], from the screen's Mid / Max -->
+	<Constant name="FCJH_HERO_9_L" val="686"/>
+	<Constant name="FCJH_HERO_9_T" val="-117"/>
+	<Constant name="FCJH_HERO_9_R" val="885"/>
+	<Constant name="FCJH_HERO_9_B" val="-22"/>
 	<Constant name="FCJH_HERO_9_W" val="199"/>
 	<Constant name="FCJH_HERO_9_H" val="95"/>
-	<!-- hero_0: ui, px [1714.2, 974.5, 179.1, 85.5], from red_row's top-left -->
-	<Constant name="FCJH_HERO_0_L" val="608"/>
-	<Constant name="FCJH_HERO_0_T" val="0"/>
-	<Constant name="FCJH_HERO_0_R" val="807"/>
-	<Constant name="FCJH_HERO_0_B" val="95"/>
+	<!-- hero_0: ui, px [1714.2, 974.5, 179.1, 85.5], from the screen's Mid / Max -->
+	<Constant name="FCJH_HERO_0_L" val="838"/>
+	<Constant name="FCJH_HERO_0_T" val="-117"/>
+	<Constant name="FCJH_HERO_0_R" val="1037"/>
+	<Constant name="FCJH_HERO_0_B" val="-22"/>
 	<Constant name="FCJH_HERO_0_W" val="199"/>
 	<Constant name="FCJH_HERO_0_H" val="95"/>
-	<!-- blue_xp: ui, px [21.2, 965.5, 688.0, 8], from blue_row's top-left -->
-	<Constant name="FCJH_BLUE_XP_L" val="-5"/>
-	<Constant name="FCJH_BLUE_XP_T" val="-10"/>
-	<Constant name="FCJH_BLUE_XP_R" val="759"/>
-	<Constant name="FCJH_BLUE_XP_B" val="-1"/>
+	<!-- blue_xp: ui, px [21.2, 965.5, 688.0, 8], from the screen's Mid / Max -->
+	<Constant name="FCJH_BLUE_XP_L" val="-1043"/>
+	<Constant name="FCJH_BLUE_XP_T" val="-127"/>
+	<Constant name="FCJH_BLUE_XP_R" val="-279"/>
+	<Constant name="FCJH_BLUE_XP_B" val="-118"/>
 	<Constant name="FCJH_BLUE_XP_W" val="764"/>
 	<Constant name="FCJH_BLUE_XP_H" val="9"/>
-	<!-- red_xp: ui, px [1209.8, 965.5, 688.0, 8], from red_row's top-left -->
-	<Constant name="FCJH_RED_XP_L" val="47"/>
-	<Constant name="FCJH_RED_XP_T" val="-10"/>
-	<Constant name="FCJH_RED_XP_R" val="812"/>
-	<Constant name="FCJH_RED_XP_B" val="-1"/>
+	<!-- red_xp: ui, px [1209.8, 965.5, 688.0, 8], from the screen's Mid / Max -->
+	<Constant name="FCJH_RED_XP_L" val="277"/>
+	<Constant name="FCJH_RED_XP_T" val="-127"/>
+	<Constant name="FCJH_RED_XP_R" val="1042"/>
+	<Constant name="FCJH_RED_XP_B" val="-118"/>
 	<Constant name="FCJH_RED_XP_W" val="764"/>
 	<Constant name="FCJH_RED_XP_H" val="9"/>
-	<!-- blue_core: ui, px [491.5, 940.2, 213.3, 24.3], from blue_row's top-left -->
-	<Constant name="FCJH_BLUE_CORE_L" val="517"/>
-	<Constant name="FCJH_BLUE_CORE_T" val="-38"/>
-	<Constant name="FCJH_BLUE_CORE_R" val="754"/>
-	<Constant name="FCJH_BLUE_CORE_B" val="-11"/>
+	<!-- blue_core: ui, px [491.5, 940.2, 213.3, 24.3], from the screen's Mid / Max -->
+	<Constant name="FCJH_BLUE_CORE_L" val="-521"/>
+	<Constant name="FCJH_BLUE_CORE_T" val="-155"/>
+	<Constant name="FCJH_BLUE_CORE_R" val="-284"/>
+	<Constant name="FCJH_BLUE_CORE_B" val="-128"/>
 	<Constant name="FCJH_BLUE_CORE_W" val="237"/>
 	<Constant name="FCJH_BLUE_CORE_H" val="27"/>
-	<!-- red_core: ui, px [1214.2, 940.2, 213.3, 24.3], from red_row's top-left -->
-	<Constant name="FCJH_RED_CORE_L" val="52"/>
-	<Constant name="FCJH_RED_CORE_T" val="-38"/>
-	<Constant name="FCJH_RED_CORE_R" val="289"/>
-	<Constant name="FCJH_RED_CORE_B" val="-11"/>
+	<!-- red_core: ui, px [1214.2, 940.2, 213.3, 24.3], from the screen's Mid / Max -->
+	<Constant name="FCJH_RED_CORE_L" val="282"/>
+	<Constant name="FCJH_RED_CORE_T" val="-155"/>
+	<Constant name="FCJH_RED_CORE_R" val="519"/>
+	<Constant name="FCJH_RED_CORE_B" val="-128"/>
 	<Constant name="FCJH_RED_CORE_W" val="237"/>
 	<Constant name="FCJH_RED_CORE_H" val="27"/>
 	<!-- top_backplate: ui, px [701, 0, 512, 256], from the screen's Mid / Min -->
@@ -284,20 +284,6 @@
 	<Constant name="FCJH_TOP_BACKPLATE_B" val="284"/>
 	<Constant name="FCJH_TOP_BACKPLATE_W" val="569"/>
 	<Constant name="FCJH_TOP_BACKPLATE_H" val="284"/>
-	<!-- blue_row: ui, px [25.7, 974.5, 726.3, 85.5], from the screen's Mid / Max -->
-	<Constant name="FCJH_BLUE_ROW_L" val="-1038"/>
-	<Constant name="FCJH_BLUE_ROW_T" val="-117"/>
-	<Constant name="FCJH_BLUE_ROW_R" val="-231"/>
-	<Constant name="FCJH_BLUE_ROW_B" val="-22"/>
-	<Constant name="FCJH_BLUE_ROW_W" val="807"/>
-	<Constant name="FCJH_BLUE_ROW_H" val="95"/>
-	<!-- red_row: ui, px [1167.0, 974.5, 726.3, 85.5], from the screen's Mid / Max -->
-	<Constant name="FCJH_RED_ROW_L" val="230"/>
-	<Constant name="FCJH_RED_ROW_T" val="-117"/>
-	<Constant name="FCJH_RED_ROW_R" val="1037"/>
-	<Constant name="FCJH_RED_ROW_B" val="-22"/>
-	<Constant name="FCJH_RED_ROW_W" val="807"/>
-	<Constant name="FCJH_RED_ROW_H" val="95"/>
 
 	<!-- MinimapPanel edges: the square centred on centre_x, its bottom edge at `bottom`.
 	     _L _R from the screen's middle; _BOTTOM from its bottom (positive hangs off-screen). -->
@@ -321,27 +307,27 @@
 	<Constant name="FCJH_MINIMAP_BOTTOM_VOLSKAYA_FOUNDRY" val="50"/>  <!-- Volskaya Foundry: 264 px tall -->
 	<Constant name="FCJH_MINIMAP_BOTTOM_WARHEAD_JUNCTION" val="18"/>  <!-- Warhead Junction: 322 px tall -->
 
-	<!-- Core frames, placed so their health bars land on blue_core / red_core: from their row's top-left -->
-	<Constant name="FCJH_BLUE_CORE_FRAME_T" val="-56"/>
-	<Constant name="FCJH_BLUE_CORE_FRAME_R" val="788"/>
-	<Constant name="FCJH_RED_CORE_FRAME_T" val="-56"/>
-	<Constant name="FCJH_RED_CORE_FRAME_L" val="24"/>
+	<!-- Core frames, placed so their health bars land on blue_core / red_core: from the screen's bottom-centre -->
+	<Constant name="FCJH_BLUE_CORE_FRAME_T" val="-173"/>
+	<Constant name="FCJH_BLUE_CORE_FRAME_R" val="-250"/>
+	<Constant name="FCJH_RED_CORE_FRAME_T" val="-173"/>
+	<Constant name="FCJH_RED_CORE_FRAME_L" val="254"/>
 
-	<!-- Map alerts on the plates ([map_alerts]): from their row's top-left -->
-	<Constant name="FCJH_MAP_ALERT_RED_R" val="491"/>
-	<Constant name="FCJH_MAP_ALERT_RED_R_ICON" val="403"/>
-	<Constant name="FCJH_MAP_ALERT_RED_B" val="-15"/>  <!-- on the XP bar -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_CORE" val="-43"/>  <!-- on the core bar, while it shows -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_2" val="-190"/>  <!-- alert 2 in the stack, 1 up -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_3" val="-337"/>  <!-- alert 3 in the stack, 2 up -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_4" val="-484"/>  <!-- alert 4 in the stack, 3 up -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_R" val="829"/>
-	<Constant name="FCJH_MAP_ALERT_BLUE_R_ICON" val="817"/>
-	<Constant name="FCJH_MAP_ALERT_BLUE_B" val="-15"/>  <!-- on the XP bar -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_CORE" val="-43"/>  <!-- on the core bar, while it shows -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_2" val="-190"/>  <!-- alert 2 in the stack, 1 up -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_3" val="-337"/>  <!-- alert 3 in the stack, 2 up -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_4" val="-484"/>  <!-- alert 4 in the stack, 3 up -->
+	<!-- Map alerts on the plates ([map_alerts]): from the screen's bottom-centre, as the plates -->
+	<Constant name="FCJH_MAP_ALERT_RED_R" val="721"/>
+	<Constant name="FCJH_MAP_ALERT_RED_R_ICON" val="633"/>
+	<Constant name="FCJH_MAP_ALERT_RED_B" val="-132"/>  <!-- on the XP bar -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_CORE" val="-160"/>  <!-- on the core bar, while it shows -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_2" val="-307"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_3" val="-454"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_4" val="-601"/>  <!-- alert 4 in the stack, 3 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_R" val="-209"/>
+	<Constant name="FCJH_MAP_ALERT_BLUE_R_ICON" val="-221"/>
+	<Constant name="FCJH_MAP_ALERT_BLUE_B" val="-132"/>  <!-- on the XP bar -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_CORE" val="-160"/>  <!-- on the core bar, while it shows -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_2" val="-307"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_3" val="-454"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_4" val="-601"/>  <!-- alert 4 in the stack, 3 up -->
 
 	<!-- Team XP and core health: tracks and fills cut to the plates' slant (solid colour;
 	     Blizzard's obs_bar_xp_* art is a thin glowing line drawn for a 156 x 17 box) -->
