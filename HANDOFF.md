@@ -400,8 +400,7 @@ user's pick of order: the art pass (7, 12). Anchoring (4) built 2026-10-06; its 
 test waits for the final pass (14). Every map's minimap, panel and team alerts (8) built 2026-10-06, a first
 pass to fine-tune with test maps (user): Towers of Doom and Cursed Hollow DONE (2026-10-06);
 next Braxis, Haunted Mines, Hanamura and on - each map's neutral banners move to red's column
-as it's QA'd. Later, not now (user): the older maps' minimap jitter and the curse's countdown
-(item 8). Camp timers (13) dropped. Item 14 collects what
+as it's QA'd. Later, not now (user): the older maps' minimap jitter (item 8). Camp timers (13) dropped. Item 14 collects what
 waits on replays with particular heroes and maps.
 
 Confirmed in game by then: heroic tooltips on every plate (Varian's level-4 heroic, Tracer's
@@ -610,8 +609,13 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    Blizzard's literal words), from the bar's left end like the red curse's, the count one space
    after them (`TRIBUTE_COUNT_SPACE` -1 units: the labels pad ~8 px, measured), Blizzard's count
    hidden; "Collect the Tribute" stays Blizzard's (no count then - the script hides it).
-   **Still to do, later (user, 2026-10-06):** the curse's countdown the same way as the
-   tribute's; and **map jitter** - on the older five maps the minimap moves only when the
+   The curse's countdown the same way (approved 2026-10-06): Blizzard's in the raven head
+   hidden, ours after the words (`CURSE_COUNT`; red's flows right from our words, the hexagon
+   after it; blue's sits where Blizzard ends the words, they end before it), with a colon
+   where that language's Towers "Altars activate in:" has one (`CURSE_COLONS`, its own label;
+   Chinese takes "："; blue's "Equipo azul maldito" is both Spanishes', left without). Blue's
+   count, like blue's curse, not yet seen (item 14).
+   **Still to do, later (user, 2026-10-06):** **map jitter** - on the older five maps the minimap moves only when the
    script first shows the map's panel (Cursed Hollow: when the first tribute countdown
    starts, ~2:30), the only per-map signal found so far; until then it sits at `[minimap]
    bottom`. A lead: each map's `loadingscreens/<map>_loading.stormlayout` frame, if it

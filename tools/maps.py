@@ -208,7 +208,7 @@ def box_sides(box, up=0):
 
 TRIBUTE_BOX = (-486, 20, -5, 133)   # the tribute banner's art from its frame's top-right (measured)
 CURSE_UP = 30                       # the curse's raven head stands this much higher
-TRIBUTE_COUNT_SPACE = -1   # units between the tribute's words' box and its count's: one space.
+COUNT_SPACE = -1           # units between a banner's words' box and its count's: one space.
                            # Words in Blizzard's banner style are 6 px apart; the labels' own
                            # padding made 7 units read as 14 px, -2 as 5 (measured 2026-10-06)
 TRIBUTE_WORDS_START = 35   # the tribute's words start this far into the bar, as the red curse's
@@ -256,6 +256,71 @@ CURSE_TEXT = (f'{T*7}<Frame type="Label" name="FCJH_CurseText">\n'
               f'{T*8}<Options val="NoWrapping"/>\n'
               f'{T*8}<Alpha val="0"/>\n'
               f'{T*7}</Frame>\n')
+# The curse's countdown in its bar after the words, as the tribute's (user, 2026-10-06), one
+# space after them; Blizzard's (in the raven head) hidden. Two of ours, one per side's layout
+# (cursed_side): red's after our words, flowing right; blue's where Blizzard ends the words
+# (the bar's right end -130), Blizzard's words ending one space before it.
+CURSE_WORDS_END = -130
+CURSE_COUNT = "".join(
+    f'{T*7}<Frame type="Label" name="{name_}">\n'
+    + "".join(f'{T*8}<Anchor side="{sd}"{" " * (6 - len(sd))} relative="{rel}" pos="{pos}" offset="{off}"/>\n'
+              for sd, rel, pos, off in anchors)
+    + f'{T*8}<Text val="{{$parent/CurseTimerLabel/@Text}}"/>\n'
+    f'{T*8}<Style val="{{$parent/CurseInfoLabel/@Style}}"/>\n'
+    f'{T*8}<Options val="NoWrapping"/>\n{T*8}<Unclipped val="true"/>\n{T*8}<Alpha val="0"/>\n'
+    f'{T*7}</Frame>\n'
+    for name_, anchors in (
+        ("FCJH_CurseCount", (("Top", "$parent/FCJH_CurseText", "Min", 0), ("Bottom", "$parent/FCJH_CurseText", "Max", 0),
+                             ("Left", "$parent/FCJH_CurseText", "Max", COUNT_SPACE))),
+        ("FCJH_CurseCountBlue", (("Top", "$parent/CurseInfoLabel", "Min", 0), ("Bottom", "$parent/CurseInfoLabel", "Max", 0),
+                                 ("Right", "$parent/BackgroundImage", "Max", CURSE_WORDS_END)))))
+
+
+# The curse's words -> the colon before its count, where that language's Towers of Doom
+# "Altars activate in:" has one (lib_MTOD_191414BF; user, 2026-10-06), from the curse's blue
+# and red words in every language (lib_UIUI_51946936 / 9C28BA95). "Equipo azul maldito" is
+# both Spanishes' blue, and only Mexico's takes a colon: left without.
+CURSE_COLONS = {
+    "Blue Team Cursed": ":", "Red Team Cursed": ":",
+    "El equipo rojo está maldito": ":",
+    "Squadra blu maledetta": ":", "Squadra rossa maledetta": ":",
+    "파랑팀에 저주 내림": ":", "빨강팀에 저주 내림": ":",
+    "Niebiescy są przeklęci": ":", "Czerwoni są przeklęci": ":",
+    "Equipe Azul Amaldiçoada": ":", "Equipe Vermelha amaldiçoada": ":",
+    "蓝队已被诅咒": "：", "红队被诅咒": "：", "藍隊遭到詛咒": "：", "紅隊遭到詛咒": "：",
+}
+COLON_SPACE = -5      # units between the words' box and the colon's: touching, as a letter
+
+
+def curse_colon():
+    """The colon between the curse's words and its count, in its own label (the words are
+    Blizzard's, or bound to them): one per side's layout, shown with that side's words
+    (cursed_side). In a language with a colon the count follows the colon, else the words."""
+    count, blue_count = f"{CURSE}/FCJH_CurseCount", f"{CURSE}/FCJH_CurseCountBlue"
+    act = lambda frame, sd, rel, pos, off: (f'<Action type="SetAnchor" frame="{frame}" side="{sd}" relative="{rel}" '
+                                            f'pos="{pos}" offset="{off}"/>')
+    text = lambda c: (f'<Action type="SetProperty" frame="{CURSE}/FCJH_CurseColon" Text="{c}"/>'
+                      f'<Action type="SetProperty" frame="{CURSE}/FCJH_CurseColonBlue" Text="{c}"/>')
+    t = T * 8
+    states = "".join(f'{t}\t<State name="Colon{i}"><When type="Property" frame="{CURSE}/CurseInfoLabel" Text="{words}"/>'
+                     + text(c) + act(count, "Left", f"{CURSE}/FCJH_CurseColon", "Max", COUNT_SPACE)
+                     + act(f"{CURSE}/CurseInfoLabel", "Right", f"{CURSE}/FCJH_CurseColonBlue", "Min", -COLON_SPACE)
+                     + "</State>\n" for i, (words, c) in enumerate(CURSE_COLONS.items()))
+    group = (f'{t}<StateGroup name="FCJH_CurseColon">\n{t}\t<DefaultState val="None"/>\n' + states
+             + f'{t}\t<State name="None">' + text("") + act(count, "Left", f"{CURSE}/FCJH_CurseText", "Max", COUNT_SPACE)
+             + act(f"{CURSE}/CurseInfoLabel", "Right", blue_count, "Min", -COUNT_SPACE) + "</State>\n"
+             f'{t}</StateGroup>\n')
+    label = lambda name_, words, sd, rel, pos, off, more="": (
+        f'{T*7}<Frame type="Label" name="{name_}">\n'
+        f'{t}<Anchor side="Top"    relative="{words}" pos="Min" offset="0"/>\n'
+        f'{t}<Anchor side="Bottom" relative="{words}" pos="Max" offset="0"/>\n'
+        f'{t}<Anchor side="{sd}"{" " * (6 - len(sd))} relative="{rel}" pos="{pos}" offset="{off}"/>\n'
+        f'{t}<Text val=""/>\n{t}<Style val="{{$parent/CurseInfoLabel/@Style}}"/>\n'
+        f'{t}<Options val="NoWrapping"/>\n{t}<Unclipped val="true"/>\n{t}<Alpha val="0"/>\n'
+        + more + f'{T*7}</Frame>\n')
+    return (label("FCJH_CurseColon", "$parent/FCJH_CurseText", "Left", "$parent/FCJH_CurseText", "Max", COLON_SPACE, group)
+            + label("FCJH_CurseColonBlue", "$parent/CurseInfoLabel", "Right", "$parent/FCJH_CurseCountBlue", "Min",
+                    -COUNT_SPACE))
 
 
 def tribute_count():
@@ -295,7 +360,7 @@ def tribute_count():
                                         ("Left", "$parent/BackgroundImage", "Min", TRIBUTE_WORDS_START)), "", group)
             + label("FCJH_TributeCount", (("Top", "$parent/FCJH_TributeWords", "Min", 0),
                                           ("Bottom", "$parent/FCJH_TributeWords", "Max", 0),
-                                          ("Left", "$parent/FCJH_TributeWords", "Max", TRIBUTE_COUNT_SPACE)),
+                                          ("Left", "$parent/FCJH_TributeWords", "Max", COUNT_SPACE)),
                     "{$parent/TributeTimerLabel/@Text}"))
 
 
@@ -313,7 +378,9 @@ TRIBUTE_PARTS = (("Image", "BackgroundImage", ()), ("Image", "TimerImage", ()),
                  ("Label", "TributeInfoLabel", ()),
                  ("Label", "TributeTimerLabel", (), '<Alpha val="0"/>'))
 CURSE_PARTS = (("Image", "BackgroundImage", ()), ("Image", "TimerImage", ()),
-               ("Label", "CurseInfoLabel", ()), ("Label", "CurseTimerLabel", ()),
+               ("Label", "CurseInfoLabel", (),
+                f'<Anchor side="Right" relative="$parent/FCJH_CurseCountBlue" pos="Min" offset="{-COUNT_SPACE}"/>'),
+               ("Label", "CurseTimerLabel", (), '<Alpha val="0"/>'),
                ("Frame", "AttentionEffect", (("Image", "AttentionEffectImage", ()),
                                              ("Image", "AttentionEffect2Image", ()))))
 
@@ -327,7 +394,7 @@ def cursed_side():
     side - the hexagon at the minimap, the bar growing outward - but on red's a short text
     left the bar's start far from the minimap (user). So on red the banner is laid out from
     its left end: the bar starts at the spot's left, our copy of the words after it, the
-    hexagon after them, its count under it."""
+    count after them (CURSE_COUNT), the hexagon after that."""
     t = T * 7
     act = lambda frame, sd, rel, pos, off: (f'<Action type="SetAnchor" frame="{frame}" side="{sd}" relative="{rel}" '
                                             f'pos="{pos}" offset="{off}"/>')
@@ -338,16 +405,14 @@ def cursed_side():
         tribute = f"{RAVEN}/TributeSpawnFrame"
         if red:
             out += (act(f"{CURSE}/BackgroundImage", "Left", CURSE, "Min", 0)
-                    + act(f"{CURSE}/TimerImage", "Right", f"{CURSE}/FCJH_CurseText", "Max", 115)
-                    + act(f"{CURSE}/CurseTimerLabel", "Left", f"{CURSE}/TimerImage", "Min", 20)
-                    + act(f"{CURSE}/CurseTimerLabel", "Right", f"{CURSE}/TimerImage", "Max", -20))
-        else:      # Blizzard's own layout
+                    + act(f"{CURSE}/TimerImage", "Right", f"{CURSE}/FCJH_CurseCount", "Max", 115))
+        else:      # Blizzard's own layout, the count before the hexagon
             out += (act(f"{CURSE}/BackgroundImage", "Left", f"{CURSE}/CurseInfoLabel", "Min", -35)
-                    + act(f"{CURSE}/TimerImage", "Right", f"{tribute}/TimerImage", "Max", 0)
-                    + act(f"{CURSE}/CurseTimerLabel", "Left", f"{tribute}/TributeTimerLabel", "Min", 0)
-                    + act(f"{CURSE}/CurseTimerLabel", "Right", f"{tribute}/TributeTimerLabel", "Max", 0))
-        return out + (f'<Action type="SetProperty" frame="{CURSE}/CurseInfoLabel" Alpha="{0 if red else 255}"/>'
-                      f'<Action type="SetProperty" frame="{CURSE}/FCJH_CurseText" Alpha="{255 if red else 0}"/>')
+                    + act(f"{CURSE}/TimerImage", "Right", f"{tribute}/TimerImage", "Max", 0))
+        shown = lambda frame, on: f'<Action type="SetProperty" frame="{CURSE}/{frame}" Alpha="{255 if on else 0}"/>'
+        return (out + shown("CurseInfoLabel", not red) + shown("FCJH_CurseCountBlue", not red)
+                + shown("FCJH_CurseColonBlue", not red) + shown("FCJH_CurseText", red)
+                + shown("FCJH_CurseCount", red) + shown("FCJH_CurseColon", red))
     out = f'{t}<StateGroup name="FCJH_CursedSide">\n{t}\t<DefaultState val="Red"/>\n'
     for n, text in enumerate(BLUE_CURSED):
         out += (f'{t}\t<State name="Blue{n}"><When type="Property" frame="{CURSE}" Visible="true"/>'
@@ -388,7 +453,7 @@ MAPS = {
             "blue": [Alert("CurseFrame", kind="BANNER", box=TRIBUTE_BOX, spot_only=True,
                            note="the curse, when it's on blue")],
             "red": [Alert("TributeSpawnFrame", kind="BANNER", box=TRIBUTE_BOX,
-                          followers=(("CurseFrame", CURSE_UP, CURSE_TEXT + unclipped(CURSE_PARTS)),),
+                          followers=(("CurseFrame", CURSE_UP, CURSE_TEXT + CURSE_COUNT + curse_colon() + unclipped(CURSE_PARTS)),),
                           extra=cursed_side() + tribute_count() + unclipped(TRIBUTE_PARTS),
                           note="the tribute spawning, then waiting to be collected (neutral); the curse on red")]}},
         notes="the tribute counts sit at the minimap's bottom corners"),
