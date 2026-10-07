@@ -68,7 +68,7 @@ drawn by OBS over empty regions the interface leaves (§6).
   empty slots await the final pass (§7 items 3, 14).
 - **Kill feed** — Blizzard's own, top-left. **Minimap** bottom-centre, placed per map with
   each map's objective panel round it and a team's alerts stacked on its side (§7 item 8;
-  Towers of Doom seen, the rest a first pass). **Replay controls**
+  Towers of Doom passed QA on the per-map system 2026-10-06, the rest a first pass). **Replay controls**
   top-left with a tab when collapsed (replays only). Blizzard's player HUD never shows; its
   talent picker is left to the game: held Ctrl shows it, steady, only in a player's view
   (1-8 keys), not when following from a plate click - as in Ahli's and Spazzo's UIs (§3;
@@ -566,6 +566,7 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    plates or the alert stacks; Volskaya's capture hex showing; Warhead's map centred; Hanamura's
    "attacking" alert on the attacking team's side, its art clear of the map; Blackheart's Bay
    placed at all (its panel is shown by its own script - unchecked). Then ARAM keeps the default.
+   **Done:** Towers of Doom (2026-10-06: minimap on the padding line, alerts placed right).
    **Towers of Doom, as approved (2026-10-06):** altar countdown and towers upgrading on red's
    side, tunnels on blue's (kept balanced, user). "Cannons are firing": the script shows RAVEN's
    alert for blue's capture and NECRO's for red's (only the Your/Enemy text is per viewer), to
