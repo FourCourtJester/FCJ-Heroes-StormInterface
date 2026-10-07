@@ -679,6 +679,11 @@ commits around it).
       Deathwing in flight with no Z or D reads fine;
     - **Abathur's clone** (Ultimate Evolution) and **Samuro's images**: which card and player
       they get;
+    - **Deathwing's heroic after level 10 - ask other players (user, 2026-10-06).** His plate's
+      heroic is Cataclysm, his kit heroic, counted by our own reader (`gen.py
+      KIT_HEROIC_COOLDOWNS`). At 10 he picks an active talent, pressed on 1, which Blizzard's
+      observer slot then follows. Ask casters and players which they want on the plate after
+      10: Cataclysm, the level-10 ability, or both;
     - **the D.Va and Viking guesses** in `inspect_card.ALSO`;
     - **rows with fewer than five heroes** (a 3v3 or 1v1 replay);
     - **every map**: the map objectives, the minimap per map (item 8).
