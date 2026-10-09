@@ -648,6 +648,18 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    (`[minimap.panel_nudge]`; gen refuses a `[minimap.nudge]` for them). **Haunted Mines** (380 px)
    hangs ~54 px off the bottom there - decide at its QA. To check: that the placer runs while its panel is
    hidden (if not, the newer maps still jump when their panel shows).
+   **Braxis Holdout (in QA, 2026-10-09):** the zerg wave banner at the standard place (art
+   measured, `HOLDOUT_BOX`); the panel above the map 4 lower (`[minimap.panel_nudge]`). The
+   beacon dishes (Blizzard pinned them under its own minimap, off our screen) are re-anchored
+   from the screen, not moved with their frame (moving `RadarDishModeFrame` hid them - a frame
+   draws only inside its box): at 90% (Width/Height), beside Leoric's and Nova's plates
+   (`maps.BEACON_*`, `FCJH_MAP_BEACON_*`; the arrows are in Blizzard's dish art - Top points
+   up, Bottom down). The electric line between them (`HoldOutLink1-4`, its own frames) is
+   stretched from dish to dish under them (its ends fade, ~17% each), along the map's bottom
+   edge, and under the MINIMAP: Braxis's placer sets the whole `MapMechanicPanel` to
+   renderPriority 511, under the minimap's default (`Map.fix`; only on Braxis, where the
+   placer exists). Line approved by eye (user: "this is the way"); its last 2 px down and the
+   rest of Braxis still to check: the minimap from 0:00, nothing else under the map.
    **Lessons for every map:** (1) a right-edge strip clips anything moved out of it: Unclipped,
    or move the strip. (2) Read the script for who each alert is sent to - one can look
    viewer-relative ("Your cannons") and be one frame per TEAM. (3) A player view (1-8) shows
@@ -763,9 +775,12 @@ commits around it).
       ending at the map's edge, its text and timer inside the art - not yet seen (user,
       2026-10-06: red's looks great);
     - **resource tooltip names** (inspect card) - REVERTED to 2026-10-06's (user, 2026-10-09)
-      after three tries. Today's card: Sonya Fury, Auriel Stored Energy, but Gazlowe, Zarya and
-      Morales "Rage" (the engine's fallback), and the tooltip doesn't change on a swap between
-      cards with the card left open (everything else on the card does). Blizzard's default UI
+      after three tries. **The lookup is right; only the refresh is wrong (user, 2026-10-09,
+      on the reverted card):** every hero's name is correct the first time the card opens
+      (Morales, Zarya, Gazlowe included); swap to another hero with the card left open and the
+      tooltip keeps the first hero's name (everything else on the card follows the swap). The
+      "Rage" seen earlier was a swap from Hogger. Confirmed on a second map (user). So the fix
+      is a refresh on swap, nothing else. Blizzard's default UI
       names them right (user checked: Scrap, Energy) - it rebuilds its card per target. Facts:
       the bars' tooltip comes from Blizzard's TooltipStates, set only when the regen line comes
       or goes; the names live on the unit ACTORS (VitalNames Energy). Tried and failed: (1) a

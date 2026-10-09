@@ -306,6 +306,15 @@
 	<Constant name="FCJH_MINIMAP_BOTTOM_TOWERS_OF_DOOM" val="52"/>  <!-- Towers of Doom: 260 px tall -->
 	<Constant name="FCJH_MINIMAP_BOTTOM_VOLSKAYA_FOUNDRY" val="50"/>  <!-- Volskaya Foundry: 264 px tall -->
 	<Constant name="FCJH_MINIMAP_BOTTOM_WARHEAD_JUNCTION" val="18"/>  <!-- Warhead Junction: 322 px tall -->
+	<!-- _DRAWN_L _R: the drawn map's sides from the screen's middle; _DRAWN_B: the padding line -->
+	<Constant name="FCJH_MINIMAP_DRAWN_L" val="-211"/>
+	<Constant name="FCJH_MINIMAP_DRAWN_R" val="211"/>
+	<Constant name="FCJH_MINIMAP_DRAWN_B" val="-22"/>
+	<Constant name="FCJH_MAP_BEACON_W" val="99"/>  <!-- Braxis's beacon dishes, scaled -->
+	<Constant name="FCJH_MAP_BEACON_H" val="117"/>
+	<Constant name="FCJH_MAP_BEACON_B" val="6"/>  <!-- ...their rings' bottom a drop under the padding line -->
+	<Constant name="FCJH_MAP_BEACON_L" val="-226"/>  <!-- ...the left one's image: its ring a pad in from blue's inner plate -->
+	<Constant name="FCJH_MAP_BEACON_R" val="225"/>  <!-- ...the right one's: its ring a pad in from red's -->
 
 	<!-- Core frames, placed so their health bars land on blue_core / red_core: from the screen's bottom-centre -->
 	<Constant name="FCJH_BLUE_CORE_FRAME_T" val="-173"/>

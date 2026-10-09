@@ -433,6 +433,22 @@ def constants_layout(cfg):
         drawn = maps.drawn_height(key)
         const(name("minimap", "bottom", key), u(line + nudge.get(key, 0) - drawn / 2) + MINIMAP_SQUARE // 2
               - cfg["screen"]["ui_reference_height"], f"{m.title}: {round(drawn)} px tall")
+    # the drawn map's sides (every map draws maps.DRAWN_PX wide, centred) and the padding line,
+    # for parts placed on the map's corners (Braxis's beacon dishes)
+    lines.append("\t<!-- _DRAWN_L _R: the drawn map's sides from the screen's middle; _DRAWN_B: the padding line -->")
+    const(name("minimap", "drawn", "l"), -u(maps.DRAWN_PX / 2))
+    const(name("minimap", "drawn", "r"), u(maps.DRAWN_PX / 2))
+    const(name("minimap", "drawn", "b"), -u(cfg["screen"]["padding"]))
+    k = maps.BEACON_SCALE
+    const(name("map", "beacon", "w"), round(u(maps.BEACON_W_PX) * k), "Braxis's beacon dishes, scaled")
+    const(name("map", "beacon", "h"), round(u(maps.BEACON_H_PX) * k))
+    const(name("map", "beacon", "b"), -u(cfg["screen"]["padding"] - maps.BEACON_MARGIN_PX * k - maps.BEACON_DROP_PX),
+          "...their rings' bottom a drop under the padding line")
+    side = maps.BEACON_SIDE_PX * k - maps.BEACON_PAD_PX     # the image's edge past the ring, less the pad
+    const(name("map", "beacon", "l"), u(cfg["hero_row"]["blue_right"] - side - mm["centre_x"]),
+          "...the left one's image: its ring a pad in from blue's inner plate")
+    const(name("map", "beacon", "r"), u(cfg["hero_row"]["red_left"] + side - mm["centre_x"]),
+          "...the right one's: its ring a pad in from red's")
 
     # Blizzard's core frame (stormobserverpanel Team1/2CoreUnitStatus) holds its health bar
     # 18 units down, 34 in from the right (blue) / 28 in from the left (red); place the frame
