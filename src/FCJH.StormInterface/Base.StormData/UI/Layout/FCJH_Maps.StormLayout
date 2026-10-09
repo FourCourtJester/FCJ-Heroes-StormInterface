@@ -18,9 +18,8 @@
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<Frame type="Frame" name="UIContainer">
 			<Frame type="Frame" name="ConsoleUIContainer">
-				<!-- The older four don't move the minimap: it stays where FCJH_Minimap puts it
-				     ([minimap] bottom), as on the ARAM maps - Haunted Mines does, by Blizzard's map id
-				     (tools/maps.py id_placers) -->
+				<!-- Older maps sharing FCJH_Minimap's place ([minimap] bottom), as the ARAM maps: Blackheart's Bay, Cursed Hollow, Dragon Shire, Garden of Terror.
+				     Placed by Blizzard's map id (tools/maps.py id_placers): Haunted Mines -->
 				<Frame type="Frame" name="MapMechanicPanel">
 					<Frame type="Frame" name="BlackheartsBayPanel">
 						<!-- Blackheart's Bay -->

@@ -239,13 +239,13 @@ def minimap_bottoms(cfg):
     by [minimap.nudge] (only maps that move it) - or, for a map in [minimap.launch_centre], its
     drawn map's centre on that y}."""
     nudge, centre = map_table(cfg, "nudge"), map_table(cfg, "launch_centre")
-    moves = lambda k: maps.MAPS[k].place or maps.MAPS[k].map_id
+    moves = lambda k: maps.MAPS[k].place or maps.MAPS[k].own_place
     fixed = sorted(k for k, v in nudge.items() if v and not moves(k))
     fixed += sorted(k for k in centre if not moves(k))
     if fixed:
         raise SystemExit(f"layout.toml [minimap.nudge]/[minimap.launch_centre]: {fixed} never move the "
-                         f"minimap (no panel or map id of their own; maps.core_panels) - tune "
-                         f"[minimap.panel_nudge] instead")
+                         f"minimap (they share [minimap] bottom; maps.core_panels) - give them own_place "
+                         f"in tools/maps.py, or tune [minimap.panel_nudge] instead")
     u = Units(cfg)
     line = cfg["screen"]["height"] - cfg["screen"]["padding"]
     top = cfg["screen"]["ui_reference_height"]

@@ -38,17 +38,18 @@ build_stamp = [1600, 20]     # x, y of the build stamp (top right)
 [minimap]
 centre_x = 960               # the square's horizontal centre
 bottom = 1141                # the square's bottom edge; > 1080 hangs off-screen. The place of every map
-                             # that doesn't move it: the older four (Cursed Hollow, Blackheart's
-                             # Bay, Dragon Shire, Garden; Haunted Mines moves by Blizzard's map id,
-                             # tools/maps.py id_placers) and the ARAM maps. 1141 is
+                             # that doesn't move it: the older maps without own_place in
+                             # tools/maps.py (Cursed Hollow, Blackheart's Bay, Dragon Shire, Garden;
+                             # Haunted Mines has it - placed by Blizzard's map id) and the ARAM maps. 1141 is
                              # Cursed Hollow's approved place (2026-10-06: its map's bottom on the
                              # screen's edge); the others' bottoms land at 1061-1076, Haunted
                              # Mines' (380 px tall) 54 px off the bottom (user, 2026-10-09: no
                              # jitter - decide at its QA). Was 1133.
 
 # px per map, added to where tools/maps.py puts it: + lowers that map, - raises it. For fine
-# tuning in game; 0 = its drawn bottom on the padding line. The older five don't move (see
-# [minimap] bottom): theirs must stay 0 - tune their objective pieces ([minimap.panel_nudge]).
+# tuning in game; 0 = its drawn bottom on the padding line. An older map without own_place in
+# tools/maps.py doesn't move (see [minimap] bottom): its must stay 0 - tune its objective pieces
+# ([minimap.panel_nudge]). Given own_place, it moves here from the start, by its map id.
 [minimap.nudge]
 alterac_pass = 0
 battlefield_of_eternity = 0
@@ -68,7 +69,7 @@ warhead_junction = 0
 
 # px: a map that opens on part of its map - the drawn map's centre at this y, in place of its
 # [minimap.nudge] place. 1080 = the screen's bottom edge: only the top half shows. Only maps
-# that move the minimap (a panel or map id of their own).
+# that move the minimap (a panel placer, or own_place in tools/maps.py).
 [minimap.launch_centre]
 haunted_mines = 1080         # two-state view, the first: the top half at launch (user, 2026-10-09: a test)
 

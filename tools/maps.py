@@ -126,8 +126,8 @@ class Map:
     panels: dict = field(default_factory=dict)   # "Path/In/File:Type" -> Blizzard's anchors on the
                                       # screen: ((side, pos, offset), ...)
     place: tuple = ()                 # its panels: the first, existing, places the minimap (core_panels)
-    map_id: str = ""                  # an older map with its own minimap place: Blizzard's map
-                                      # id, read from the start - id_placers
+    own_place: bool = False           # an older map with its own minimap place, by its map id
+                                      # (MAP_IDS, id_placers); without, it shares [minimap] bottom
     fix: str = ""                     # extra SetAnchors when this map's minimap is placed
     team: dict = field(default_factory=dict)     # {"blue": [Alert...], "red": [...]}: panel -> column
     extra: str = ""                   # map-specific XML in its file's panel (see TOWERS_EXTRA)
@@ -691,11 +691,11 @@ MAPS = {
     "haunted_mines": Map(
         "Haunted Mines", (433, 437), core="HauntedMinesPanel",
         # Its minimap holds the surface and the mines stacked: square, so at the older five's
-        # shared place the mines hung off the screen. It moves once, when the mines warning
-        # first shows - right before the mines matter (user, 2026-10-09: nothing tells this map
-        # apart before; its panel is Blizzard's core one, on every map) - and stays: from the
-        # warning on, one of its three modes is always shown.
-        map_id="HauntedMines",
+        # shared place the mines hung off the screen. Its own place from the start, by its map
+        # id (id_placers): opening on the surface, the top half ([minimap.launch_centre]). It
+        # used to move when the mines warning first showed (its panel is Blizzard's core one, on
+        # every map; user, 2026-10-09: the map jumped).
+        own_place=True,
         # "Mines will open in", then the golems' health in its place: one neutral banner, on
         # red's side. The skull counts (SkullModeFrame) stay on the panel, pinned to the
         # screen's bottom as Blizzard's: [minimap.panel_nudge] puts them on the padding line.
@@ -746,6 +746,32 @@ MAPS = {
         notes="its panel is placed from the minimap already"),
 }
 EXTRAS = {"towers": towers_extra, "skulls": skulls_extra}
+
+# Blizzard's map id per map: the script variable libCore_gv_mAPMapStringID, which a layout can
+# read from the match's start, on any map (id_placers, on_map; user, 2026-10-09). Where each is
+# from: GAME read on screen in game; SCRIPT tested by Blizzard's own scripts (Jamie Phan
+# gamelib.galaxy / uilib.galaxy - the battlegrounds' own scripts aren't in it); SPAZZO tested in
+# Spazzo's interface (CustomPanelSpazzo) only - read one on screen before relying on it.
+MAP_IDS = {
+    "alterac_pass": "AlteracPass",                    # SPAZZO
+    "battlefield_of_eternity": "BattlefieldOfEternity",  # SCRIPT
+    "blackhearts_bay": "BlackheartsBay",              # SPAZZO
+    "braxis_holdout": "BraxisHoldout",                # GAME (2026-10-09)
+    "cursed_hollow": "CursedHollow",                  # SPAZZO (CursedHollowSandbox: the sandbox's)
+    "dragon_shire": "DragonShire",                    # SCRIPT
+    "garden_of_terror": "HauntedWoods",               # SPAZZO
+    "hanamura_temple": "Hanamura",                    # SPAZZO
+    "haunted_mines": "HauntedMines",                  # GAME (2026-10-09)
+    "infernal_shrines": "Shrines",                    # SCRIPT
+    "sky_temple": "ControlPoints",                    # SCRIPT
+    "tomb_of_the_spider_queen": "Crypts",             # SCRIPT
+    "towers_of_doom": "TowersOfDoom",                 # SCRIPT
+    "volskaya_foundry": "Volskaya",                   # SCRIPT
+    "warhead_junction": "Warhead Junction",           # SCRIPT - with the space
+}
+assert set(MAP_IDS) == set(MAPS), f"MAP_IDS: every map needs its id - {set(MAPS) ^ set(MAP_IDS)}"
+# own_place is for the older maps: a newer one's panel placer moves it already (placer)
+assert not [k for k, m in MAPS.items() if m.own_place and m.place], "own_place: a map with a placer of its own"
 
 
 def drawn_height(key):
@@ -984,19 +1010,21 @@ def core_panels(down, at, bottoms):
     older five's at their first objective (Cursed Hollow's ~2:30), and newer maps whose script
     hides the panel while idle (Braxis). A newer map's panel exists only on that map, so its
     placer moves the minimap as soon as the panel exists. The older five's panels exist on
-    every map, so nothing tells them apart: they don't move, sharing FCJH_Minimap's place
-    ([minimap] bottom), and their objective pieces are tuned per map ([minimap.panel_nudge]).
-    Except Haunted Mines, which can't fit there: Blizzard's map id tells it apart from the start
-    (id_placers; it used to move at its first objective)."""
+    every map, so a panel can't tell them apart - Blizzard's map id can, from the start
+    (id_placers). One with own_place moves to its own place by it (Haunted Mines); the rest
+    share FCJH_Minimap's place ([minimap] bottom). Either way each panel hangs off the
+    minimap, tuned per map ([minimap.panel_nudge])."""
     core = {k: m for k, m in MAPS.items() if m.core}
     t = T * 5
     panels = "".join(f'{T*5}<Frame type="Frame" name="{m.core}">\n'
                      f'{T*6}<!-- {m.title} -->\n' + anchor_lines(BOTTOM_RIGHT, m, 6, down.get(k, 0))
                      + core_alerts(m, at) + (EXTRAS[m.extra]() if m.extra else "")
                      + f'{T*5}</Frame>\n' for k, m in core.items())
-    return (f'{T*4}<!-- The older four don\'t move the minimap: it stays where FCJH_Minimap puts it\n'
-            f'{T*4}     ([minimap] bottom), as on the ARAM maps - Haunted Mines does, by Blizzard\'s map id\n'
-            f'{T*4}     (tools/maps.py id_placers) -->\n'
+    own = [m.title for m in core.values() if m.own_place]
+    shared = [m.title for m in core.values() if not m.own_place]
+    return (f'{T*4}<!-- Older maps sharing FCJH_Minimap\'s place ([minimap] bottom), as the ARAM maps: '
+            f'{", ".join(shared) or "none"}.\n'
+            f'{T*4}     Placed by Blizzard\'s map id (tools/maps.py id_placers): {", ".join(own) or "none"} -->\n'
             f'{T*4}<Frame type="Frame" name="MapMechanicPanel">\n' + panels + f'{T*4}</Frame>\n')
 
 
@@ -1021,7 +1049,15 @@ def placer(key, indent):
             f'{t}</Frame>\n')
 
 
-MAP_ID = "libCore_gv_mAPMapStringID"   # Blizzard's script variable naming the map ("HauntedMines")
+MAP_ID = "libCore_gv_mAPMapStringID"   # Blizzard's script variable naming the map (MAP_IDS)
+MAP_ID_READER = "$GameUI/FCJH_MapId"   # ours, reading it (id_placers)
+
+
+def on_map(key, reader=MAP_ID_READER):
+    """A state's condition: we're on this map. Holds from the match's start and never changes -
+    a group in a state on it never leaves it (leaving undoes its actions). Put such a group in
+    a frame that's always shown: in a hidden one (Haunted Mines' core panel) it never ran."""
+    return f'<When type="Property" frame="{reader}" StringValue="{MAP_IDS[key]}"/>'
 
 
 def id_placers():
@@ -1039,13 +1075,13 @@ def id_placers():
            f'{t}\t<Argument name="GalaxyVar" val="{MAP_ID}"/>\n'
            f'{t}</Frame>\n')
     for key, m in MAPS.items():
-        if m.map_id:
-            out += (f'{t}<Frame type="Frame" name="FCJH_MinimapPlace{m.map_id}">\n'
+        if m.own_place:
+            out += (f'{t}<Frame type="Frame" name="FCJH_MinimapPlace{MAP_IDS[key].replace(" ", "")}">\n'
                     f'{t}\t<AcceptsMouse val="false"/>\n'
                     f'{t}\t<StateGroup name="FCJH_Place">\n'
                     f'{t}\t\t<DefaultState val="Other"/>\n'
                     f'{t}\t\t<State name="Placed">\n'
-                    f'{t}\t\t\t<When type="Property" frame="$parent/FCJH_MapId" StringValue="{m.map_id}"/>\n'
+                    f'{t}\t\t\t{on_map(key, "$parent/FCJH_MapId")}\n'
                     + place_actions(key, 5) +
                     f'{t}\t\t</State>\n'
                     f'{t}\t\t<State name="Other"/>\n'
