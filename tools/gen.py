@@ -233,6 +233,27 @@ ANCHORS = {
 PLATES_AT = ("$GameUI", *BOTTOM_CENTRE)
 
 
+def minimap_bottoms(cfg):
+    """MinimapPanel's bottom, units from the screen's (+ hangs off it): {None: the shared place
+    ([minimap] bottom), map key: that map's - its drawn map's bottom on the padding line, nudged
+    by [minimap.nudge] (only maps that move it) - or, for a map in [minimap.launch_centre], its
+    drawn map's centre on that y}."""
+    nudge, centre = map_table(cfg, "nudge"), map_table(cfg, "launch_centre")
+    moves = lambda k: maps.MAPS[k].place or maps.MAPS[k].map_id
+    fixed = sorted(k for k, v in nudge.items() if v and not moves(k))
+    fixed += sorted(k for k in centre if not moves(k))
+    if fixed:
+        raise SystemExit(f"layout.toml [minimap.nudge]/[minimap.launch_centre]: {fixed} never move the "
+                         f"minimap (no panel or map id of their own; maps.core_panels) - tune "
+                         f"[minimap.panel_nudge] instead")
+    u = Units(cfg)
+    line = cfg["screen"]["height"] - cfg["screen"]["padding"]
+    top = cfg["screen"]["ui_reference_height"]
+    middle = lambda k: centre[k] if k in centre else line + nudge.get(k, 0) - maps.drawn_height(k) / 2
+    return {None: u(cfg["minimap"]["bottom"]) - top} | {
+        key: u(middle(key)) + MINIMAP_SQUARE // 2 - top for key in maps.MAPS}
+
+
 def map_table(cfg, key, section="minimap"):
     """layout.toml [<section>.<key>]: px per map (tools/maps.py's keys), checked."""
     table = cfg[section].get(key, {})
@@ -419,20 +440,13 @@ def constants_layout(cfg):
     lines.append("\t     _L _R from the screen's middle; _BOTTOM from its bottom (positive hangs off-screen). -->")
     const(name("minimap", "panel", "l"), left)
     const(name("minimap", "panel", "r"), left + MINIMAP_PANEL_W)
-    const(name("minimap", "panel", "bottom"), u(mm["bottom"]) - cfg["screen"]["ui_reference_height"])
+    const(name("minimap", "panel", "bottom"), minimap_bottoms(cfg)[None])
     # ...and per map (tools/maps.py): the map as drawn in the square, its bottom on the padding
     # line (the plates' bottom), nudged by [minimap.nudge]
-    nudge = map_table(cfg, "nudge")
-    fixed = sorted(k for k, v in nudge.items() if v and not maps.MAPS[k].place)
-    if fixed:
-        raise SystemExit(f"layout.toml [minimap.nudge]: {fixed} never move the minimap (no panel of "
-                         f"their own; maps.core_panels) - tune [minimap.panel_nudge] instead")
-    line = cfg["screen"]["height"] - cfg["screen"]["padding"]
     lines.append("\t<!-- _BOTTOM_<MAP>: MinimapPanel's bottom on that map, from the screen's bottom -->")
     for key, m in maps.MAPS.items():
-        drawn = maps.drawn_height(key)
-        const(name("minimap", "bottom", key), u(line + nudge.get(key, 0) - drawn / 2) + MINIMAP_SQUARE // 2
-              - cfg["screen"]["ui_reference_height"], f"{m.title}: {round(drawn)} px tall")
+        const(name("minimap", "bottom", key), minimap_bottoms(cfg)[key],
+              f"{m.title}: {round(maps.drawn_height(key))} px tall")
     # the drawn map's sides (every map draws maps.DRAWN_PX wide, centred) and the padding line,
     # for parts placed on the map's corners (Braxis's beacon dishes)
     lines.append("\t<!-- _DRAWN_L _R: the drawn map's sides from the screen's middle; _DRAWN_B: the padding line -->")
@@ -2792,7 +2806,8 @@ def committed_files(cfg, source=SOURCE):
             (u(rects(cfg)["inspect"][0][0]), u(rects(cfg)["inspect"][0][1])), 1 / u.scale,   # its place, for pixel-exact lines
             (*PLATES_AT, anchor_edges(cfg, "inspect")["t"])),   # where it's anchored, and its top from there
         LAYOUT_REL / MAPS_FILE: maps.layout(XML_DECL + "<Desc>\n" + GENERATED, PLATES_AT,
-                                            {k: u(v) for k, v in map_table(cfg, "panel_nudge").items()}),
+                                            {k: u(v) for k, v in map_table(cfg, "panel_nudge").items()},
+                                            minimap_bottoms(cfg)),
         LAYOUT_REL / INDEX_FILE: desc_index(layout_order(layout_dir, generated=GENERATED_LAYOUTS)),
     }
     return {rel: text.encode("utf-8") for rel, text in texts.items()} | texture_files(cfg)

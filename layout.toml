@@ -38,9 +38,9 @@ build_stamp = [1600, 20]     # x, y of the build stamp (top right)
 [minimap]
 centre_x = 960               # the square's horizontal centre
 bottom = 1141                # the square's bottom edge; > 1080 hangs off-screen. The place of every map
-                             # that doesn't move it: the older five (Cursed Hollow, Blackheart's
-                             # Bay, Dragon Shire, Garden, Haunted Mines - nothing on screen tells
-                             # them apart; tools/maps.py core_panels) and the ARAM maps. 1141 is
+                             # that doesn't move it: the older four (Cursed Hollow, Blackheart's
+                             # Bay, Dragon Shire, Garden; Haunted Mines moves by Blizzard's map id,
+                             # tools/maps.py id_placers) and the ARAM maps. 1141 is
                              # Cursed Hollow's approved place (2026-10-06: its map's bottom on the
                              # screen's edge); the others' bottoms land at 1061-1076, Haunted
                              # Mines' (380 px tall) 54 px off the bottom (user, 2026-10-09: no
@@ -58,13 +58,19 @@ cursed_hollow = 0            # was 20 (its map's bottom on the screen's edge): [
 dragon_shire = 0
 garden_of_terror = 0
 hanamura_temple = 0
-haunted_mines = 0
+haunted_mines = 34           # its whole map on the line (unused while it's in [minimap.launch_centre]): its texture's opaque box is taller than the map - drawn, the mines' bottom was 34 above the line (2026-10-09)
 infernal_shrines = 0
 sky_temple = 0
 tomb_of_the_spider_queen = 0
 towers_of_doom = 0
 volskaya_foundry = 0
 warhead_junction = 0
+
+# px: a map that opens on part of its map - the drawn map's centre at this y, in place of its
+# [minimap.nudge] place. 1080 = the screen's bottom edge: only the top half shows. Only maps
+# that move the minimap (a panel or map id of their own).
+[minimap.launch_centre]
+haunted_mines = 1080         # two-state view, the first: the top half at launch (user, 2026-10-09: a test)
 
 # px per map: that map's objective panel (its counters, timers and banners), moved with the
 # minimap as it sat round Blizzard's; + lowers it, - raises it.
@@ -77,7 +83,8 @@ cursed_hollow = -25          # the tribute counts' ravens ran off the bottom (us
 dragon_shire = 0
 garden_of_terror = 0
 hanamura_temple = 0
-haunted_mines = 0
+haunted_mines = -11          # the skull counts' skulls on the padding line, once the minimap has moved
+                             # (user, 2026-10-09: they ran off the bottom; measured 8 px short, then the map's 34)
 infernal_shrines = 0
 sky_temple = 0
 tomb_of_the_spider_queen = 0

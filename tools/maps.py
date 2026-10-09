@@ -71,7 +71,7 @@ class Art:
 # icon box, from the template). "BANNER" and "HOLDOUT": the older maps' centre banners, placed
 # by a spot of ours the size of the art (Alert.box) - set with their boxes, below.
 ALERT_ART = {
-    "": Art(500, 12, bar_up=20, below=14, height=117),
+    "": Art(499, 12, bar_up=20, below=14, height=117),   # reach 500 put its tip 1 px past red's plates
     "ICON": Art(412, 0, measured=False, note="Hanamura's attacking alerts: all of it"),
 }
 STACK_GAP = 8             # units between two stacked banners: Blizzard's 30, less 22 (20 px - user, 2026-10-09: too much dead space)
@@ -126,6 +126,8 @@ class Map:
     panels: dict = field(default_factory=dict)   # "Path/In/File:Type" -> Blizzard's anchors on the
                                       # screen: ((side, pos, offset), ...)
     place: tuple = ()                 # its panels: the first, existing, places the minimap (core_panels)
+    map_id: str = ""                  # an older map with its own minimap place: Blizzard's map
+                                      # id, read from the start - id_placers
     fix: str = ""                     # extra SetAnchors when this map's minimap is placed
     team: dict = field(default_factory=dict)     # {"blue": [Alert...], "red": [...]}: panel -> column
     extra: str = ""                   # map-specific XML in its file's panel (see TOWERS_EXTRA)
@@ -243,7 +245,9 @@ def box_sides(box, up=0):
     return (("Top", "Min", -tp - up), ("Left", "Min", 0), ("Bottom", "Max", 0), ("Right", "Max", -r))
 
 
-TRIBUTE_BOX = (-486, 20, -5, 133)   # the tribute banner's art from its frame's top-right (measured)
+TRIBUTE_BOX = (-489, 20, -5, 133)   # the tribute banner's art from its frame's top-right (measured;
+                                    # its bar's tip 3 px short of red's plates at -486: 1164 against
+                                    # Towers' 1168, Braxis's 1166 - each read at its own tip, 2026-10-09)
 CURSE_UP = 30                       # the curse's raven head stands this much higher
 COUNT_SPACE = -1           # units between a banner's words' box and its count's: one space.
                            # Words in Blizzard's banner style are 6 px apart; the labels' own
@@ -283,7 +287,8 @@ BLUE_CURSED = ("Blue Team Cursed", "Das blaue Team wurde verflucht", "Equipe Azu
 # and ending 9 past it (holdout.stormlayout); measured in game (2026-10-09, off a 1401-tall
 # screenshot): 481 wide like the tribute's, its bar's bottom 148 below the frame's top - the
 # art's lowest part (its radar dish doesn't hang below the bar).
-HOLDOUT_BOX = (-(11 + 481), 20, -11, 148)
+HOLDOUT_BOX = (-(11 + 482), 20, -11, 150)   # read again at 1080p (2026-10-09), by the bar itself:
+                                            # its tip 1 px short of red's plates, its bottom 2 px low
 ALERT_ART["HOLDOUT"] = Art(HOLDOUT_BOX[2] - HOLDOUT_BOX[0], 0, height=HOLDOUT_BOX[3] - HOLDOUT_BOX[1])
 # The tribute's box reaches down to its beak: its bar's bottom is 24 above that (at 1080p its bar
 # 930, its box 952; 2026-10-09). Its height takes in the curse that replaces it, whose raven
@@ -514,6 +519,100 @@ def cursed_side():
     return out + f'{t}\t<State name="Red">{place("FCJH_TributeSpawnFrameSpot", True)}</State>\n{t}</StateGroup>\n'
 
 
+# ------------------------------------------------------------------ Haunted Mines' banner
+
+# "Mines will open in: 0:23" (core MapMechanicPanel, HauntedMinesPanel/MineTimerModeFrame): its
+# hexagon (CenterpieceImageMine) pinned 20 in from the frame's top-right, the bar ending 15
+# past it and starting 50 before its words - Blizzard sizes it to them, growing left. Measured
+# at 1080p (2026-10-09): the bar 385 px wide in English (428 units), its bottom 86 under the
+# hexagon's top as placed (the frame's 27 + 50 = 77 put the bar's bottom edge 8 px under the
+# tribute's and Towers', user - read by the bar's lower bracket: 937 against 929). On red's side
+# it's laid out from its left end, as red's curse is (cursed_side): the bar from the spot's
+# left, our copy of the words 50 in, the count one space after them, the hexagon after that -
+# so in every language the bar starts at red's plates.
+MINES_BOX = (-433, 0, -5, 86)
+MINES_WORDS_START = 50
+MINES_TIP_IN = 3          # the bar art's left tip is 3 px inside its frame: the frame starts that
+                          # much left of the spot, for the tip to sit on red's plates' edge (1167) as
+                          # Towers' and Braxis's do (measured at its tip 2026-10-09: 1170; a first
+                          # read along one row for every bar said 1177)
+MINES_HEX_AFTER = 115     # the hexagon's right from the count's: 5 + its width, as the curse's
+                          # (measured: 106 px from the count's last letter to its right edge)
+ALERT_ART["MINES"] = Art(MINES_BOX[2] - MINES_BOX[0], 0, height=MINES_BOX[3] - MINES_BOX[1] + 6)
+MINES_TEXT = "".join(
+    f'{T*7}<Frame type="Label" name="{name_}">\n'
+    + "".join(f'{T*8}<Anchor side="{sd}"{" " * (6 - len(sd))} relative="{rel}" pos="{pos}" offset="{off}"/>\n'
+              for sd, rel, pos, off in anchors)
+    + f'{T*8}<Text val="{{$parent/{theirs}/@Text}}"/>\n{T*8}<Style val="{{$parent/{theirs}/@Style}}"/>\n'
+    f'{T*8}<Options val="NoWrapping"/>\n{T*8}<Unclipped val="true"/>\n{T*7}</Frame>\n'
+    for name_, theirs, anchors in (
+        ("FCJH_MinesText", "MineOpenLabel", (("Top", "$parent/MineOpenLabel", "Min", 0),
+                                             ("Bottom", "$parent/MineOpenLabel", "Max", 0),
+                                             ("Left", "$parent/BackgroundImage", "Min", MINES_WORDS_START))),
+        ("FCJH_MinesCount", "MineOpenTimer", (("Top", "$parent/FCJH_MinesText", "Min", 0),
+                                              ("Bottom", "$parent/FCJH_MinesText", "Max", 0),
+                                              ("Left", "$parent/FCJH_MinesText", "Max", COUNT_SPACE)))))
+MINES_PARTS = (("Image", "BackgroundImage", (), f'<Anchor side="Left" relative="$parent" pos="Min" offset="{-MINES_TIP_IN}"/>'),
+               ("Image", "CenterpieceImageMine", (),
+                f'<Anchor side="Right" relative="$parent/FCJH_MinesCount" pos="Max" offset="{MINES_HEX_AFTER}"/>'),
+               ("Label", "MineOpenLabel", (), '<Alpha val="0"/>'),
+               ("Label", "MineOpenTimer", (), '<Alpha val="0"/>'))
+# The golems' health (GolemModeFrame, shown instead of the mines banner once one is summoned):
+# Blizzard pins its bar's bottom-right to the mines bar's and its hexagon (GolemHud) to the
+# frame's top-right. Ours from the spot's left too: its bar (481 units, its texture's own width,
+# as the tribute's) from the spot's left, the hexagon 15 in from its right end, as Blizzard's.
+GOLEM_BAR = 481
+_HEALTH = (("UnitStatusShieldedHealthBar", "HealthBar", ()),
+           ("UnitStatusHealthLabel", "HealthLabel", (("Label", "StatusLabel", ()),)))
+GOLEM_PARTS = (("Image", "BackgroundImage", (), f'<Anchor side="Right" relative="$parent" pos="Min" offset="{GOLEM_BAR}"/>'),
+               ("Image", "GolemHud", (), '<Anchor side="Right" relative="$parent/BackgroundImage" pos="Max" offset="-15"/>'),
+               ("Image", "HealthBarBgTop", ()), ("Image", "HealthBarBgBottom", ()),
+               ("UnitStatusFrame", "AllyGolemHealthBar", _HEALTH), ("UnitStatusFrame", "EnemyGolemHealthBar", _HEALTH),
+               ("Label", "AllySkullCounter", ()), ("Label", "EnemySkullCounter", ()),
+               ("Label", "AllyGolemLabel", ()), ("Label", "EnemyGolemLabel", ()))
+
+
+# The skull counts (HauntedMinesPanel/SkullModeFrame), shown while the mines are open. Their
+# team-coloured line (the TeamHighlight backgrounds, everything else pinned to them) crossed the
+# mines' map: lowered SKULL_LINE_DOWN, to just under the map's bottom (at 1080p the line 1048,
+# the map's bottom 1060; user, 2026-10-09), the skulls and counts kept where they were.
+# The skulls still needed ("55 Needed", SkullsRemainingLabel) sat between them on the line:
+# moved to the top of the map, on a plaque of Blizzard's bar art - its pointed ends make the
+# elongated hexagon (user) - sized for the longest language ("Необходимо: 100").
+SKULL_LINE_DOWN = 16       # units (14 px)
+SKULL_PLAQUE_W = 200
+SKULL_PLAQUE_B = -356      # its bottom from the screen's: 4 px over the map's top once the minimap
+                           # has moved (at 1080p the map's top 764: 760 px). The art's own height,
+                           # as the mines bar's: a Height of 50 drew it 30 px tall, its slices off
+                           # (user, 2026-10-09); placed from the minimap's top it sat 22 px low
+
+
+def skulls_extra():
+    t = T * 6
+    line = lambda name_, kind, sd, off, rel="$parent", pos="Max": (
+        f'{t}\t<Frame type="{kind}" name="{name_}"><Anchor side="{sd}" relative="{rel}" pos="{pos}" offset="{off}"/></Frame>\n')
+    mid = lambda sd, off: f'<Anchor side="{sd}" relative="$GameUI" pos="Mid" offset="{off}"/>'
+    return (f'{t}<!-- the skull counts\' line under the mines\' map; the skulls needed above it (maps.skulls_extra) -->\n'
+            f'{t}<Frame type="Frame" name="SkullModeFrame">\n'
+            + line("Team1Background", "Image", "Bottom", SKULL_LINE_DOWN)
+            + line("Team2Background", "Image", "Bottom", SKULL_LINE_DOWN)
+            + "".join(line(f"Team{n}Skull", "Image", "Bottom", 10 - SKULL_LINE_DOWN, f"$parent/Team{n}Background")
+                      + line(f"Team{n}SkullCounter", "Label", "Bottom", -10 - SKULL_LINE_DOWN, f"$parent/Team{n}Background")
+                      for n in (1, 2))
+            + f'{t}\t<Frame type="Image" name="FCJH_SkullsPlaque">\n'
+            f'{t}\t\t<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="{SKULL_PLAQUE_B}"/>\n'
+            f'{t}\t\t{mid("Left", -SKULL_PLAQUE_W // 2)}\n{t}\t\t{mid("Right", SKULL_PLAQUE_W // 2)}\n'
+            f'{t}\t\t<Texture val="@UI/HUD_MapMechanic_BG_CenterBar"/>\n{t}\t\t<TextureType val="Nineslice"/>\n'
+            f'{t}\t\t<RenderPriority val="500"/>\n{t}\t\t<Unclipped val="true"/>\n{t}\t</Frame>\n'
+            # its words centred on it, as Blizzard's bar words sit (Mid +5)
+            f'{t}\t<Frame type="Label" name="SkullsRemainingLabel">\n'
+            f'{t}\t\t<Anchor side="Top"    relative="$parent/FCJH_SkullsPlaque" pos="Mid" offset="5"/>\n'
+            f'{t}\t\t<Anchor side="Bottom" relative="$parent/FCJH_SkullsPlaque" pos="Mid" offset="5"/>\n'
+            f'{t}\t\t{mid("Left", 0)}\n{t}\t\t{mid("Right", 0)}\n'
+            f'{t}\t\t<Unclipped val="true"/>\n{t}\t</Frame>\n'
+            f'{t}</Frame>\n')
+
+
 # ------------------------------------------------------------------ the maps
 
 BOTTOM_RIGHT = (("Bottom", "Max", 0), ("Right", "Max", 0))     # pinned to the screen's corner
@@ -589,7 +688,23 @@ MAPS = {
                            note="blue's payload on a fort")],
             "red": [Alert("AttackingCoreFrame_Chaos", kind="ICON", place="NotificationIconAnchor:Image",
                           note="red's payload on a fort")]}}),
-    "haunted_mines": Map("Haunted Mines", (433, 437), core="HauntedMinesPanel"),
+    "haunted_mines": Map(
+        "Haunted Mines", (433, 437), core="HauntedMinesPanel",
+        # Its minimap holds the surface and the mines stacked: square, so at the older five's
+        # shared place the mines hung off the screen. It moves once, when the mines warning
+        # first shows - right before the mines matter (user, 2026-10-09: nothing tells this map
+        # apart before; its panel is Blizzard's core one, on every map) - and stays: from the
+        # warning on, one of its three modes is always shown.
+        map_id="HauntedMines",
+        # "Mines will open in", then the golems' health in its place: one neutral banner, on
+        # red's side. The skull counts (SkullModeFrame) stay on the panel, pinned to the
+        # screen's bottom as Blizzard's: [minimap.panel_nudge] puts them on the padding line.
+        team={"HauntedMinesPanel": {
+            "red": [Alert("MineTimerModeFrame", kind="MINES", box=MINES_BOX,
+                          followers=(("GolemModeFrame", 0, unclipped(GOLEM_PARTS)),),
+                          extra=MINES_TEXT + unclipped(MINES_PARTS),
+                          note="the mines opening, then the golems (neutral)")]}},
+        extra="skulls"),
     "infernal_shrines": Map(
         "Infernal Shrines", (458, 301), file="Shrines",
         panels={"ShrinesPanel": BOTTOM_RIGHT}, place=("ShrinesPanel",)),
@@ -630,7 +745,7 @@ MAPS = {
         fix=f'<Action type="SetAnchor" frame="{MINIMAP}/Minimap" side="Left" relative="{MINIMAP}" pos="Min" offset="0"/>',
         notes="its panel is placed from the minimap already"),
 }
-EXTRAS = {"towers": towers_extra}
+EXTRAS = {"towers": towers_extra, "skulls": skulls_extra}
 
 
 def drawn_height(key):
@@ -714,6 +829,37 @@ def spot_name(a):
     return f"FCJH_{a.name}Spot"
 
 
+# Blizzard's banner intro, on every banner we place by its art (user, 2026-10-09: Towers of Doom's
+# are the newest banners - every map's alike, each keeping its own effects). Towers' alerts are
+# Blizzard's NotificationFrameTemplate, which has it ("Intro", core mapmechanicpanel); the older
+# maps' banners have none. As the template's: shown, the banner fades in over 0.2 s sliding 50 in
+# from the right, its bar growing out of the hexagon (its left end 350 in, out by 0.3 s). Its text
+# fades with the frame - the template's own label fades would fight our labels' states.
+# Started when the banner SHOWS (OnShown) - its own, or its panel's, when the script shows the
+# panel with the banner already up (Haunted Mines). Towers' scripts send the template a "Show"
+# event; the older maps' never do (the first try waited for it: nothing played, user 2026-10-09).
+# So no hide: the template's plays backwards on "Hide", holding the frame up meanwhile - on
+# OnHidden that would show it again. Standard banners only - the bar
+# and hexagon art; nothing of a map's own (user, 2026-10-09: the golems' double health bar, Braxis's
+# beacons and zerg HUD keep only their placement). NOT_BANNERS: followers that aren't one.
+NOT_BANNERS = ("GolemModeFrame",)
+
+
+def intro(indent):
+    t = T * indent
+    curve = lambda *keys: "".join(f'{t}\t\t<Key type="Curve" time="{k}" value="{v}"/>\n' for k, v in keys)
+    slide = lambda sd, frame="": (f'{t}\t<Controller type="Anchor" end="Pause" side="{sd}" relative="true"'
+                                  + (f' frame="{frame}"' if frame else "") + ">\n")
+    return (f'{t}<Animation name="FCJH_Intro">\n'
+            f'{t}\t<Event event="OnShown" action="Restart,Play"/>\n'
+            f'{t}\t<Event event="OnShown" action="Restart,Play" frame="$parent"/>\n'
+            f'{t}\t<Controller type="Fade" end="Pause">\n' + curve((0, 0), (".2", 255), (".4", 255)) + f'{t}\t</Controller>\n'
+            + "".join(slide(sd) + curve((0, 50), (".1", 0), (".4", 0)) + f'{t}\t</Controller>\n' for sd in ("Left", "Right"))
+            + slide("Left", "BackgroundImage") + curve((0, 350), (".1", 350), (".3", 0), (".4", 0))
+            + f'{t}\t</Controller>\n'
+            + f'{t}</Animation>\n')
+
+
 def alert_frame(team, column, i, at, indent=2):
     a = column[i]
     t = T * indent
@@ -737,10 +883,10 @@ def alert_frame(team, column, i, at, indent=2):
                 + stack_states(team, column, i, ["$this"], at, indent + 1, a.kind) + f'{t}</Frame>\n')
         if a.spot_only:
             return out
-        out += frame(a.name, 0) + a.extra + f"{t}</Frame>\n"
+        out += frame(a.name, 0) + intro(indent + 1) + a.extra + f"{t}</Frame>\n"
         # frames whose art hangs off this one's (their own box reaching `up` higher)
         for name_, up, xml in a.followers:
-            out += frame(name_, up) + xml + f"{t}</Frame>\n"
+            out += frame(name_, up) + ("" if name_ in NOT_BANNERS else intro(indent + 1)) + xml + f"{t}</Frame>\n"
         return out
     out += f'{t}<Frame type="Frame" name="{a.name}"' + (f' template="{a.template}"' if a.template else "") + ">\n"
     out += "".join(f"{t}{line}\n" for line in spot.splitlines())
@@ -831,7 +977,7 @@ def core_alerts(m, at):
                    for team in ("blue", "red") for i in range(len(cols.get(team, []))))
 
 
-def core_panels(down, at):
+def core_panels(down, at, bottoms):
     """The older maps' panels in Blizzard's core MapMechanicPanel, on our minimap, with their
     alerts.
     No jitter (user, 2026-10-09): a map moved the minimap when its panel first SHOWED - the
@@ -839,14 +985,18 @@ def core_panels(down, at):
     hides the panel while idle (Braxis). A newer map's panel exists only on that map, so its
     placer moves the minimap as soon as the panel exists. The older five's panels exist on
     every map, so nothing tells them apart: they don't move, sharing FCJH_Minimap's place
-    ([minimap] bottom), and their objective pieces are tuned per map ([minimap.panel_nudge])."""
+    ([minimap] bottom), and their objective pieces are tuned per map ([minimap.panel_nudge]).
+    Except Haunted Mines, which can't fit there: Blizzard's map id tells it apart from the start
+    (id_placers; it used to move at its first objective)."""
     core = {k: m for k, m in MAPS.items() if m.core}
     t = T * 5
     panels = "".join(f'{T*5}<Frame type="Frame" name="{m.core}">\n'
                      f'{T*6}<!-- {m.title} -->\n' + anchor_lines(BOTTOM_RIGHT, m, 6, down.get(k, 0))
-                     + core_alerts(m, at) + f'{T*5}</Frame>\n' for k, m in core.items())
-    return (f'{T*4}<!-- The older five don\'t move the minimap: it stays where FCJH_Minimap puts it\n'
-            f'{T*4}     ([minimap] bottom), as on the ARAM maps (tools/maps.py core_panels) -->\n'
+                     + core_alerts(m, at) + (EXTRAS[m.extra]() if m.extra else "")
+                     + f'{T*5}</Frame>\n' for k, m in core.items())
+    return (f'{T*4}<!-- The older four don\'t move the minimap: it stays where FCJH_Minimap puts it\n'
+            f'{T*4}     ([minimap] bottom), as on the ARAM maps - Haunted Mines does, by Blizzard\'s map id\n'
+            f'{T*4}     (tools/maps.py id_placers) -->\n'
             f'{T*4}<Frame type="Frame" name="MapMechanicPanel">\n' + panels + f'{T*4}</Frame>\n')
 
 
@@ -871,10 +1021,107 @@ def placer(key, indent):
             f'{t}</Frame>\n')
 
 
-def layout(header, at, down):
+MAP_ID = "libCore_gv_mAPMapStringID"   # Blizzard's script variable naming the map ("HauntedMines")
+
+
+def id_placers():
+    """The older maps' own minimap places from the match's start. Their panels exist on every
+    map, so a panel can't tell its map apart - Blizzard's map id can: a DataRefFrame reads the
+    script variable (Spazzo's way, CustomPanelSpazzo), and each map's one state matches its id.
+    Read on screen 2026-10-09: "HauntedMines" on Haunted Mines, "BraxisHoldout" on Braxis.
+    Straight in GameUI, never hidden: inside Haunted Mines' panel - hidden from the start - the
+    same reader never placed the minimap, while the diagnostic's here read the id (user,
+    2026-10-09). The id never changes, so a group never leaves its state (leaving undoes its
+    actions). "Other", with no condition, is the fallback when nothing matches - the DefaultState."""
+    t = T * 2
+    out = (f'{t}<!-- the older maps\' own minimap places, from the start: Blizzard\'s map id (tools/maps.py id_placers) -->\n'
+           f'{t}<Frame type="DataRefFrame" name="FCJH_MapId">\n'
+           f'{t}\t<Argument name="GalaxyVar" val="{MAP_ID}"/>\n'
+           f'{t}</Frame>\n')
+    for key, m in MAPS.items():
+        if m.map_id:
+            out += (f'{t}<Frame type="Frame" name="FCJH_MinimapPlace{m.map_id}">\n'
+                    f'{t}\t<AcceptsMouse val="false"/>\n'
+                    f'{t}\t<StateGroup name="FCJH_Place">\n'
+                    f'{t}\t\t<DefaultState val="Other"/>\n'
+                    f'{t}\t\t<State name="Placed">\n'
+                    f'{t}\t\t\t<When type="Property" frame="$parent/FCJH_MapId" StringValue="{m.map_id}"/>\n'
+                    + place_actions(key, 5) +
+                    f'{t}\t\t</State>\n'
+                    f'{t}\t\t<State name="Other"/>\n'
+                    f'{t}\t</StateGroup>\n'
+                    f'{t}</Frame>\n')
+    return out
+
+
+# DIAGNOSTIC (2026-10-09): what an older map's UI shows from the match's start, read on screen -
+# the user watches it change, looking for anything that tells Haunted Mines apart before its
+# first objective; now the map id (id_placers). Remove once settled.
+# Each "shown" line reads hidden unless its state is on (leaving a state undoes its text); each
+# text line is bound to Blizzard's label.
+DIAG_SHOWN = [m.core for m in MAPS.values() if m.core] + [
+    f"HauntedMinesPanel/{f}" for f in ("MineTimerModeFrame", "SkullModeFrame", "GolemModeFrame")]
+DIAG_TEXT = [f"HauntedMinesPanel/{f}" for f in (
+    "MineTimerModeFrame/MineOpenTimer", "MineTimerModeFrame/MineOpenLabel", "SkullModeFrame/Team1SkullCounter",
+    "SkullModeFrame/Team2SkullCounter", "SkullModeFrame/SkullsRemainingLabel", "GolemModeFrame/AllySkullCounter")]
+
+
+def diag():
+    t = T * 2
+    row = lambda n, body: (
+        f'{t}<Frame type="Label" name="FCJH_Diag{n}">\n'
+        f'{t}\t<Anchor side="Top"  relative="$GameUI" pos="Min" offset="{300 + 26 * n}"/>\n'
+        f'{t}\t<Anchor side="Left" relative="$GameUI" pos="Min" offset="25"/>\n'
+        f'{t}\t<Width val="560"/>\n{t}\t<Height val="26"/>\n'
+        f'{t}\t<Style val="WaitingForPlayersDialogChat"/>\n{t}\t<Options val="NoWrapping"/>\n'
+        f'{t}\t<Unclipped val="true"/>\n{t}\t<AcceptsMouse val="false"/>\n'
+        + body + f'{t}</Frame>\n')
+    out, n = "", 0
+    for path in DIAG_SHOWN:
+        out += row(n, f'{t}\t<Text val="{path}: hidden"/>\n'
+                   f'{t}\t<StateGroup name="FCJH_Diag"><DefaultState val="Off"/>'
+                   f'<State name="On"><When type="Property" frame="{MECHANICS}/{path}" Visible="true"/>'
+                   f'<Action type="SetProperty" frame="$this" Text="{path}: SHOWN"/></State>'
+                   f'<State name="Off"/></StateGroup>\n')
+        n += 1
+    for path in DIAG_TEXT:
+        out += row(n, f'{t}\t<Text val="{path.split("/")[-1]}:"/>\n')
+        out += (f'{t}<Frame type="Label" name="FCJH_DiagValue{n}">\n'
+                f'{t}\t<Anchor side="Top"  relative="$parent/FCJH_Diag{n}" pos="Min" offset="0"/>\n'
+                f'{t}\t<Anchor side="Left" relative="$parent/FCJH_Diag{n}" pos="Min" offset="300"/>\n'
+                f'{t}\t<Width val="400"/>\n{t}\t<Height val="26"/>\n'
+                f'{t}\t<Style val="WaitingForPlayersDialogChat"/>\n{t}\t<Options val="NoWrapping"/>\n'
+        f'{t}\t<Unclipped val="true"/>\n{t}\t<AcceptsMouse val="false"/>\n'
+                f'{t}\t<Text val="{{{MECHANICS}/{path}/@Text}}"/>\n{t}</Frame>\n')
+        n += 1
+    # the map's id, Blizzard's script variable read the way Spazzo does (CustomPanelSpazzo:
+    # DataRefFrame GalaxyVar libCore_gv_mAPMapStringID, his states test its StringValue)
+    out += (f'{t}<Frame type="DataRefFrame" name="FCJH_DiagMapId">\n'
+            f'{t}\t<Argument name="GalaxyVar" val="libCore_gv_mAPMapStringID"/>\n{t}</Frame>\n')
+    out += row(n, f'{t}\t<Text val="map id:"/>\n')
+    out += (f'{t}<Frame type="Label" name="FCJH_DiagValue{n}">\n'
+            f'{t}\t<Anchor side="Top"  relative="$parent/FCJH_Diag{n}" pos="Min" offset="0"/>\n'
+            f'{t}\t<Anchor side="Left" relative="$parent/FCJH_Diag{n}" pos="Min" offset="300"/>\n'
+            f'{t}\t<Width val="400"/>\n{t}\t<Height val="26"/>\n'
+            f'{t}\t<Style val="WaitingForPlayersDialogChat"/>\n{t}\t<Options val="NoWrapping"/>\n'
+            f'{t}\t<Unclipped val="true"/>\n{t}\t<AcceptsMouse val="false"/>\n'
+            f'{t}\t<Text val="{{$parent/FCJH_DiagMapId/@StringValue}}"/>\n{t}</Frame>\n')
+    n += 1
+    out += row(n, f'{t}\t<Text val="map id test HauntedMines: no"/>\n'
+               f'{t}\t<StateGroup name="FCJH_Diag"><DefaultState val="No"/>'
+               f'<State name="Yes"><When type="Property" frame="$parent/FCJH_DiagMapId" StringValue="HauntedMines"/>'
+               f'<Action type="SetProperty" frame="$this" Text="map id test HauntedMines: YES"/></State>'
+               f'<State name="No"/></StateGroup>\n')
+    # inside the file's one GameUI override: a second one in the same file drew nothing
+    return f'{t}<!-- DIAGNOSTIC (maps.diag): older maps\' UI from the start -->\n' + out
+
+
+def layout(header, at, down, bottoms):
     """FCJH_Maps.StormLayout. at: (frame, across pos, down pos), where the plates are anchored -
     the stacks' constants run from there, as the plates' do (gen.py PLATES_AT). down: {map key:
-    units}, how much lower each map's panel goes (layout.toml [minimap.panel_nudge])."""
+    units}, how much lower each map's panel goes (layout.toml [minimap.panel_nudge]). bottoms:
+    the minimap's bottom, units from the screen's: {None: the shared place, map key: its own}
+    (gen.py minimap_bottoms)."""
     return header + f'''
 	<!-- Each battleground's own UI on our screen (tools/maps.py, which says how a map's UI works).
 
@@ -891,8 +1138,8 @@ def layout(header, at, down):
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<Frame type="Frame" name="UIContainer">
 			<Frame type="Frame" name="ConsoleUIContainer">
-{core_panels(down, at)}			</Frame>
+{core_panels(down, at, bottoms)}			</Frame>
 		</Frame>
-	</Frame>
+{id_placers()}{diag()}	</Frame>
 ''' + "".join(f"\t<!-- ===== {MAPS[k].title}{(': ' + MAPS[k].notes) if MAPS[k].notes else ''} ===== -->\n"
               + map_file(k, at, down) for k in MAPS if MAPS[k].file) + "</Desc>\n"
