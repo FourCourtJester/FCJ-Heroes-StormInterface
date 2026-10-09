@@ -519,7 +519,10 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
 6. Tried and undone: hiding Blizzard's observer talent row plainly (71181f7, undone in
    d279ecc) - plate clicks stopped following heroes. The row stays held shown and spread.
 7. Art pass, after the functionality: Ahli's Tracer ammo bar (20 segments) and round Pulse
-   Bomb meter; his hero plates' intro animation (a smooth slide and fade).
+   Bomb meter; his hero plates' intro animation (a smooth slide and fade). And the death
+   timers' end (user, 2026-10-09): in a player's view, Blizzard's own death timer flashes as
+   it comes to an end - find how (the player HUD's layout: its animation or StateGroup on the
+   respawn countdown) and give our plates' death timers the same for the observer.
 8. **Map objectives and the minimap per map - BUILT 2026-10-06, a first pass; the user will
    fine-tune with test maps that cover every map.** All of it is `tools/maps.py`, written by gen
    into `FCJH_Maps.StormLayout` (it replaced the hand-written `FCJH_MapAlerts`; its docstring
@@ -533,13 +536,29 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    the map, as Towers of Doom's do; red shares the space. The minimap is exempt from the 20 px
    padding rule: a map's team counters may sit on its bottom edge. Every map alert sits
    `[map_alerts] lift` (10 px) higher than its bar, clear of the talent/health pop-ups off the
-   plates. **Every banner's art lands in the same place on every map** (Blizzard's banners are
+   plates (superseded by the standard below). **Every banner's art lands in the same place on every map** (Blizzard's banners are
    one art; landing alike is what reads as one, user): across, red's starts where red's row
    does and blue's ends where blue's does (`[hero_row] red_left` / `blue_right`, the plates'
    distance from the map); up, on the shared slots. A banner whose parts hang below its art
-   gets edited, not raised (the tribute's countdown, below). `[map_alerts.nudge]`, px per map,
-   moves one map's alerts if its art doesn't land (that map gets its own
-   `FCJH_MAP_ALERT_<MAP>_*` constants; all 0 so far).
+   gets edited, not raised (the tribute's countdown, below).
+   **The banner standard (user, 2026-10-09)** - `maps.ALERT_ART`, one `Art` per Blizzard banner
+   layout (not per map: the NotificationFrameTemplate is Towers', Alterac's and Hanamura's; the
+   centre banners are the older maps' and Braxis's): every banner is placed by its BAR, one
+   Blizzard bar art. Every bar's bottom sits in ONE place on every map, `[map_alerts]
+   above_core` (10 px, user) over the core bar's top - never moving, core bar shown or not (the core
+   bar is taller than any pop-up), and ignoring what hangs under the bar: the banners draw over
+   the plates' pop-ups (user). Stacked banners are one step apart: the tallest art that can
+   stack (one sharing a column, any map) plus `STACK_GAP` (`step`: Towers' 117 + 8 = 125 units;
+   user, twice: Blizzard's 30-unit gap left too much dead space, and sizing for the tribute's
+   143, alone in its column, spread Towers' pair further). The
+   first banner to show keeps its slot (user). Growth runs outward from the plates' inner edge;
+   a banner Blizzard lays out from its hexagon end gets re-laid from its inner end, as the red
+   curse. Blue's banners are MIRRORED (user): Blizzard draws one banner for both sides, its
+   hexagon at the right end - blue's inner end, over blue's core bar - so blue's take
+   Blizzard's own NotificationFrameLeftTemplate anchors (`maps.MIRROR`): hexagon outward. The
+   blue curse (centre banner, Blizzard's layout) needs the same - unseen yet. Each layout's bar is measured once off a 1080p screenshot (`bar_up`: its bar's bottom
+   over the edge its frame is placed by - Towers 20, the tribute 24, Braxis 0); gen prints the
+   unmeasured (Hanamura's ICON art). No per-map banner nudge exists.
    **How a map's UI works** (game files): each map's panel is a template built at runtime in
    GameUI's `MapMechanicPanel` - the newer maps' in their own layout file, created by the map's
    script; the older five's (Cursed Hollow, Blackheart's Bay, Haunted Mines, Garden, Dragon
@@ -583,8 +602,10 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    plates or the alert stacks; Volskaya's capture hex showing; Warhead's map centred; Hanamura's
    "attacking" alert on the attacking team's side, its art clear of the map; Blackheart's Bay
    placed at all (its panel is shown by its own script - unchecked). Then ARAM keeps the default.
-   **Done:** Towers of Doom (2026-10-06: minimap on the padding line, alerts placed right;
-   re-checked after the lift and inner-edge change); Cursed Hollow (2026-10-06, below).
+   **Done:** Towers of Doom (2026-10-06; DONE again 2026-10-09 on the banner standard: bars on
+   the fixed place with and without the core bar, blue's mirrored, the stack's spacing - user:
+   "not likely to adjust them again"); Cursed Hollow (2026-10-06, below; its minimap and counters
+   seen right after the no-jitter change).
    **Towers of Doom, as approved (2026-10-06):** altar countdown and towers upgrading on red's
    side, tunnels on blue's (kept balanced, user). "Cannons are firing": the script shows RAVEN's
    alert for blue's capture and NECRO's for red's (only the Your/Enemy text is per viewer), to
@@ -618,8 +639,15 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    **Still to do, later (user, 2026-10-06):** **map jitter** - on the older five maps the minimap moves only when the
    script first shows the map's panel (Cursed Hollow: when the first tribute countdown
    starts, ~2:30), the only per-map signal found so far; until then it sits at `[minimap]
-   bottom`. A lead: each map's `loadingscreens/<map>_loading.stormlayout` frame, if it
-   outlives the load screen.
+   bottom`. **Built 2026-10-09 (user: remove all jitter), to verify:** a newer map places the minimap
+   as soon as its panel exists (a placer inside it with one unconditional state, `maps.placer`;
+   the panel exists only on that map, shown or hidden), not when it first shows (Braxis's script hides its panel
+   while idle, so it jittered too). The older five's panels exist on every map, so they don't
+   move: they share `[minimap] bottom` (1141 = Cursed Hollow's approved place; Blackheart's,
+   Dragon Shire and Garden land 1061-1076) and are tuned by their objective pieces
+   (`[minimap.panel_nudge]`; gen refuses a `[minimap.nudge]` for them). **Haunted Mines** (380 px)
+   hangs ~54 px off the bottom there - decide at its QA. To check: that the placer runs while its panel is
+   hidden (if not, the newer maps still jump when their panel shows).
    **Lessons for every map:** (1) a right-edge strip clips anything moved out of it: Unclipped,
    or move the strip. (2) Read the script for who each alert is sent to - one can look
    viewer-relative ("Your cannons") and be one frame per TEAM. (3) A player view (1-8) shows
@@ -734,9 +762,27 @@ commits around it).
     - **Cursed Hollow, blue cursed** (item 8): the banner on blue's side, left of the map,
       ending at the map's edge, its text and timer inside the art - not yet seen (user,
       2026-10-06: red's looks great);
+    - **resource tooltip names** (inspect card) - REVERTED to 2026-10-06's (user, 2026-10-09)
+      after three tries. Today's card: Sonya Fury, Auriel Stored Energy, but Gazlowe, Zarya and
+      Morales "Rage" (the engine's fallback), and the tooltip doesn't change on a swap between
+      cards with the card left open (everything else on the card does). Blizzard's default UI
+      names them right (user checked: Scrap, Energy) - it rebuilds its card per target. Facts:
+      the bars' tooltip comes from Blizzard's TooltipStates, set only when the regen line comes
+      or goes; the names live on the unit ACTORS (VitalNames Energy). Tried and failed: (1) a
+      per-unit StateGroup on UnitStatusFrame0 setting a label the format frames read - everyone
+      Mana; (2) the format frames reading the game's TargetInfoFrame @UnitVitalName - right on
+      the first card, stale on a swap; (3) (1) plus per-hero states on each bar re-applying the
+      Tooltip on a swap - still not working (the A/B/C diagnostic lines were never read back).
+      Next time: start from a diagnostic and read it before building anything;
+    - **a live custom game with observers**: the game binds Ctrl+1-8 to "Observe Player 9-16"
+      (gamehotkeys.txt) - check our panes' Ctrl+1-4 still win with observer slots filled. Also
+      O / Ctrl+O lock the camera to the commentator's / a referee's (their tooltips still
+      marked "???"; a lobby slot can be made Referee) - worth a try for casters;
     - **a non-16:9 window** (item 4), last: the user stays at 1080p until then. The game's
       resolution is in `Documents/Heroes of the Storm/Variables.txt` (`width`, `height`,
-      `windowwidth`, `windowheight`, `displaymode`; 1920 x 1080, displaymode 0 at 2026-10-06) -
+      `windowwidth`, `windowheight`, `displaymode`, `windowstate`; 1920 x 1080, displaymode 0 at
+      2026-10-06; `windowstate=1` is maximised - on 2026-10-09 a maximised window on a bigger
+      monitor ran the game at 2558 x 1401 unnoticed: check screenshots' size) -
       Claude puts it back to 1080p afterwards, with the game closed.
 
 ## 8. Original brief

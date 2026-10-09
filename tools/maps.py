@@ -17,10 +17,11 @@ How a map's UI works (from the game files, 2026-10-06):
     few parts are placed from the minimap itself. Ours is bottom-centre. So each panel is
     restated from our minimap's bottom-right corner, as it stood from Blizzard's on that map
     (on_minimap) - everything in it keeps its place round the minimap.
-  - a map's layout file is loaded only on that map, so a frame added inside its panel exists
-    only there: that is how a map moves the minimap (placer). Blizzard moves its own minimap
-    per map the same way (a MinimapPanel override in the map's file, which may load after
-    ours - the placer's SetAnchors win either way).
+  - a map's layout file is loaded only on that map, so its panel exists only there - shown or
+    hidden by its script: that is how a map moves the minimap, as soon as the panel exists
+    (placer; waiting for the panel to SHOW made the minimap jump, user 2026-10-09). Blizzard moves its own
+    minimap per map with a MinimapPanel override in the map's file, which may load after ours -
+    the SetAnchors win either way.
 """
 from dataclasses import dataclass, field
 from itertools import combinations
@@ -33,25 +34,61 @@ SCREEN_W = 2134          # ...and this wide at 16:9, rounded up: only for the le
 CONSOLE = "$GameUI/UIContainer/ConsoleUIContainer"
 MINIMAP = CONSOLE + "/MinimapPanel"
 MECHANICS = CONSOLE + "/MapMechanicPanel"
-OBSERVER_TOP = "$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel"
-CORE_BAR = {"blue": OBSERVER_TOP + "/Team1CoreUnitStatus", "red": OBSERVER_TOP + "/Team2CoreUnitStatus"}
 
 # How wide a map draws in the minimap square, px at 1080p. The engine fits the opaque part of a
 # map's CustomMiniMap texture into the square, centred: Towers of Doom draws ~380 x 252 px, at
 # y 810-1062 (measured in game, 2026-10-05) - its art 436 x 298 texels, so ~380 x 260.
 DRAWN_PX = 380
 
-# An alert's art, from the edge it's placed by (units): how far it reaches back across, and
-# how far short of that edge it stops. "": Blizzard's NotificationFrameTemplate alert, placed
-# by its frame's right edge - reaches 500 units left and stops 12 short (Towers of Doom's three
-# kinds, all the same width; measured in game, 2026-10-06 - the templates' arithmetic gave 388).
-# "ICON": an alert placed by its icon box instead (Hanamura's: background 300 left of a 112-unit
-# icon box, from the template; unmeasured).
-# "BANNER": the older maps' centre banners (Cursed Hollow's tribute: a bar left of a hexagon
-# icon, its count under it), placed by a spot of ours the size of the art (Alert.box); 481 wide
-# (measured in game, 2026-10-06).
-ALERT_ART = {"": (500, 12), "ICON": (412, 0), "BANNER": (481, 0)}
-ALERT_STEP = 147          # units between two stacked alerts' bottoms (Blizzard's 30-unit gap; measured)
+@dataclass
+class Art:
+    """A banner's art, as the banner standard places it (user, 2026-10-09): every banner on every
+    map lands alike - Blizzard's banners are one bar art - so each is placed by its BAR. Units.
+    reach / tail: across, from the edge the frame is placed by - how far the art reaches back
+    (red's bar starts there: at red's plates' inner edge) and how far short of it the art stops
+    (blue's bar ends at blue's inner edge). bar_up: the bar's bottom above the edge the frame is
+    placed by (0 when placed by the bar's bottom). Every bar's bottom sits in ONE place on every
+    map, [map_alerts] above_core px over the core bar's top, never moving (user, 2026-10-09):
+    what hangs under a bar (below: the tribute's hexagon and beak) is ignored - the banners
+    draw over the plates' pop-ups. height: from the art's lowest part to its top; the tallest
+    sets the stack's step (step). measured: off a 1080p screenshot - the build lists any that
+    aren't (gen.py)."""
+    reach: int
+    tail: int = 0
+    bar_up: int = 0
+    below: int = 0            # not placement: the bar's place ignores what hangs under it
+    height: int = None
+    measured: bool = True
+    note: str = ""
+
+
+# "": Blizzard's NotificationFrameTemplate alert (Towers of Doom's three kinds), placed by its
+# frame's right edge: reaches 500 units left, stops 12 short (measured 2026-10-06; the
+# templates' arithmetic gave 388); 117 tall (Blizzard's stacked step, 147, less its 30-unit
+# gap). Its bar's bottom sits 20 above its frame's, its hexagon hanging 14 under the bar
+# (measured 2026-10-09 at 1080p: the bar 18 px above the tribute's baseline when placed level).
+# "ICON": placed by its icon box (Hanamura's attacking pair: a background 300 left of a 112-unit
+# icon box, from the template). "BANNER" and "HOLDOUT": the older maps' centre banners, placed
+# by a spot of ours the size of the art (Alert.box) - set with their boxes, below.
+ALERT_ART = {
+    "": Art(500, 12, bar_up=20, below=14, height=117),
+    "ICON": Art(412, 0, measured=False, note="Hanamura's attacking alerts: all of it"),
+}
+STACK_GAP = 8             # units between two stacked banners: Blizzard's 30, less 22 (20 px - user, 2026-10-09: too much dead space)
+
+
+def step():
+    """Units between two stacked banners' bars: the tallest art that can stack - one in a column
+    with others, on any map - and the gap. A banner alone in its column never stacks (the
+    tribute, with the curse's raven head: sizing the step for it spread Towers' pair too far,
+    user 2026-10-09)."""
+    stacking = {a.kind for m in MAPS.values() for cols in m.team.values() for col in cols.values()
+                if len(col) > 1 for a in col}
+    return max(ALERT_ART[k].height for k in stacking) + STACK_GAP
+
+
+def unmeasured():
+    return {k or "(Towers-style)": a.note for k, a in ALERT_ART.items() if not a.measured}
 
 
 @dataclass
@@ -61,7 +98,7 @@ class Alert:
     box); `box`: for a frame whose art hangs off its TOP-right corner (it fills its panel, the
     art pinned near the top): the art's edges from that corner, units (left, top, right,
     bottom) - a spot of ours that size takes the slot and the frame hangs off it; `kind`: its
-    art (ALERT_ART); `template`: for alerts of our own (FCJH_ prefix); `extra`: XML inside the
+    art (ALERT_ART, the banner standard); `template`: for alerts of our own (FCJH_ prefix); `extra`: XML inside the
     frame, after its stack.
     Neutral alerts (no team's) go in red's column: red shares its side with them (user,
     2026-10-06 - centred above the map they sat too high, worse on a tall map)."""
@@ -88,7 +125,7 @@ class Map:
                                       # from the screen's, + down/right). 35, 0 unless its file says
     panels: dict = field(default_factory=dict)   # "Path/In/File:Type" -> Blizzard's anchors on the
                                       # screen: ((side, pos, offset), ...)
-    place: tuple = ()                 # panels that move the minimap when they show
+    place: tuple = ()                 # its panels: the first, existing, places the minimap (core_panels)
     fix: str = ""                     # extra SetAnchors when this map's minimap is placed
     team: dict = field(default_factory=dict)     # {"blue": [Alert...], "red": [...]}: panel -> column
     extra: str = ""                   # map-specific XML in its file's panel (see TOWERS_EXTRA)
@@ -240,6 +277,30 @@ BLUE_CURSED = ("Blue Team Cursed", "Das blaue Team wurde verflucht", "Equipe Azu
                "Equipo azul maldito", "Niebiescy są przeklęci", "Squadra blu maledetta",
                "Équipe bleue maudite", "Синяя команда проклята", "蓝队已被诅咒", "藍隊遭到詛咒",
                "파랑팀에 저주 내림")
+
+
+# Braxis Holdout's zerg warning ("Beacons activate in"): the bar 324 left of its radar-dish image
+# and ending 9 past it (holdout.stormlayout); measured in game (2026-10-09, off a 1401-tall
+# screenshot): 481 wide like the tribute's, its bar's bottom 148 below the frame's top - the
+# art's lowest part (its radar dish doesn't hang below the bar).
+HOLDOUT_BOX = (-(11 + 481), 20, -11, 148)
+ALERT_ART["HOLDOUT"] = Art(HOLDOUT_BOX[2] - HOLDOUT_BOX[0], 0, height=HOLDOUT_BOX[3] - HOLDOUT_BOX[1])
+# The tribute's box reaches down to its beak: its bar's bottom is 24 above that (at 1080p its bar
+# 930, its box 952; 2026-10-09). Its height takes in the curse that replaces it, whose raven
+# head stands CURSE_UP higher.
+ALERT_ART["BANNER"] = Art(TRIBUTE_BOX[2] - TRIBUTE_BOX[0], 0, bar_up=24, below=24,
+                          height=TRIBUTE_BOX[3] - TRIBUTE_BOX[1] + CURSE_UP)
+# DIAGNOSTIC (2026-10-09): magenta boxes on Braxis's two beacon icons' layout boxes (shown even
+# while the script hides the icons) - the icons went missing after BEACONS_UP. Remove once solved.
+DIAG = {"braxis_holdout": {"HoldOutPanel/RadarDishModeFrame": "".join(
+    f'<Frame type="Image" name="FCJH_Diag{n}"><Anchor side="Top" relative="$parent/{n}" pos="Min" offset="0"/>'
+    f'<Anchor side="Bottom" relative="$parent/{n}" pos="Max" offset="0"/><Anchor side="Left" relative="$parent/{n}" pos="Min" offset="0"/>'
+    f'<Anchor side="Right" relative="$parent/{n}" pos="Max" offset="0"/><Texture val="_Assets\\Textures\\FCJH_White.dds"/>'
+    f'<Color val="255,0,255"/><Alpha val="160"/><RenderPriority val="900"/><Unclipped val="true"/></Frame>'
+    for n in ("HoldOutBeaconTopOff", "HoldOutBeaconBottomOff"))}}
+BEACONS_UP = 55      # units Braxis's beacon icons rise from Blizzard's place (see braxis_holdout)
+HOLDOUT_PARTS = (("Image", "BackgroundImage", ()), ("Image", "TimerImage", ()),
+                 ("Label", "HoldOutWarningInfoLabel", ()), ("Label", "HoldOutWarningTimerLabel", ()))
 
 
 RAVEN = MECHANICS + "/RavenCourtPanel"
@@ -441,7 +502,19 @@ MAPS = {
     "blackhearts_bay": Map("Blackheart's Bay", (452, 313), core="BlackheartsBayPanel"),
     "braxis_holdout": Map(
         "Braxis Holdout", (447, 264), file="HoldOut", minimap=(-35, 0),
-        panels={"HoldOutPanel": BOTTOM_RIGHT}, place=("HoldOutPanel",)),
+        # The beacons' status icons (RadarDishModeFrame: Blizzard pins them 10 above the panel's
+        # bottom) fell off the screen's bottom edge under our map: raised to straddle the map's
+        # bottom edge, as Cursed Hollow's tribute counts sit on its corners (user, 2026-10-09;
+        # measured off a 1401-tall screenshot - a first pass).
+        panels={"HoldOutPanel": BOTTOM_RIGHT, "HoldOutPanel/RadarDishModeFrame": (("Bottom", "Max", -BEACONS_UP),)},
+        place=("HoldOutPanel",),
+        # The zerg wave warning: one neutral banner, on red's side, its countdown already in the
+        # bar between the words and the hexagon (holdout.stormlayout). Shown in ZergWarning mode
+        # (libscho.galaxy MMHOUISetMode). Its art as the tribute's: the hexagon 20 in from the
+        # frame's top-right, the bar 324 left of it and 9 past it.
+        team={"HoldOutPanel": {
+            "red": [Alert("HoldOutWarningFrame", kind="HOLDOUT", box=HOLDOUT_BOX,
+                          extra=unclipped(HOLDOUT_PARTS, 3), note="the zerg wave warning (neutral)")]}}),
     "cursed_hollow": Map(
         "Cursed Hollow", (436, 312), core="RavenCourtPanel",
         # "Tribute spawning" / "Collect the tribute": one neutral banner, on red's side. Its art:
@@ -562,25 +635,6 @@ def place_actions(key, indent):
     return out + (f"{t}{MAPS[key].fix}\n" if MAPS[key].fix else "")
 
 
-def placer(key, indent):
-    """A frame inside one of the map's panels: when the panel shows, the minimap takes this
-    map's place. The panel exists only on this map."""
-    t = T * indent
-    return (f'{t}<!-- the minimap\'s place on {MAPS[key].title}, once this panel shows -->\n'
-            f'{t}<Frame type="Frame" name="FCJH_MinimapPlace">\n'
-            f'{t}\t<Anchor relative="$parent"/>\n'
-            f'{t}\t<AcceptsMouse val="false"/>\n'
-            f'{t}\t<StateGroup name="FCJH_Place">\n'
-            f'{t}\t\t<DefaultState val="Waiting"/>\n'
-            f'{t}\t\t<State name="Placed">\n'
-            f'{t}\t\t\t<When type="Property" frame="$parent" Visible="true"/>\n'
-            + place_actions(key, indent + 3) +
-            f'{t}\t\t</State>\n'
-            f'{t}\t\t<State name="Waiting"/>\n'
-            f'{t}\t</StateGroup>\n'
-            f'{t}</Frame>\n')
-
-
 def anchor_lines(sides, m, indent, down=0):
     t = T * indent
     out = ""
@@ -596,19 +650,19 @@ def short(name):
     return name.replace("Frame", "")
 
 
-def alert_tag(key, nudged):
-    """The stacks' constants for a map: its own set (FCJH_MAP_ALERT_<MAP>_...) when its alerts
-    are nudged ([map_alerts.nudge] in layout.toml), else the shared one."""
-    return f"{key.upper()}_" if key in nudged else ""
+def bottoms(team, kind):
+    """The stacks' constants for one art (gen.py writes them): FCJH_MAP_ALERT_<TEAM>_B_<KIND>,
+    then _2, _3... - where that art's frame goes for its bar to land on the slot."""
+    return f"#FCJH_MAP_ALERT_{team.upper()}_B" + (f"_{kind}" if kind else "")
 
 
-def stack_states(team, column, i, targets, at, indent, tag=""):
-    """Alert i of its side's column: on the bottom slot - the XP bar, or the core bar while that
-    shows - or one slot up for each alert before it in the column that's showing. The states
-    go from most alerts showing to fewest; the first whose alerts all show wins. tag:
-    alert_tag."""
+def stack_states(team, column, i, targets, at, indent, kind=""):
+    """Alert i of its side's column: on the bottom slot - one place, its bar over the core bar's
+    top (user, 2026-10-09: it no longer steps up while the core bar shows) - or one slot up for
+    each alert before it in the column that's showing. The states go from most alerts showing
+    to fewest; the first whose alerts all show wins: the first to show keeps its slot."""
     t = T * indent
-    key = f"#FCJH_MAP_ALERT_{tag}{team.upper()}_B"
+    key = bottoms(team, kind)
     act = lambda c: "".join(f'<Action type="SetAnchor" frame="{target}" side="Bottom" relative="{at[0]}" '
                             f'pos="{at[2]}" offset="{c}"/>' for target in targets)
     out = f'{t}<StateGroup name="FCJH_Stack">\n{t}\t<DefaultState val="Bottom"/>\n'
@@ -617,9 +671,7 @@ def stack_states(team, column, i, targets, at, indent, tag=""):
         for over in combinations(before, n):
             when = "".join(f'<When type="Property" frame="$parent/{a.name}" Visible="true"/>' for a in over)
             out += f'{t}\t<State name="Over{"".join(short(a.name) for a in over)}">{when}{act(f"{key}_{n + 1}")}</State>\n'
-    out += (f'{t}\t<State name="OnCore"><When type="Property" frame="{CORE_BAR[team]}" Visible="true"/>'
-            f'{act(f"{key}_CORE")}</State>\n'
-            f'{t}\t<State name="Bottom">{act(key)}</State>\n'
+    out += (f'{t}\t<State name="Bottom">{act(key)}</State>\n'
             f'{t}</StateGroup>\n')
     return out
 
@@ -628,11 +680,11 @@ def spot_name(a):
     return f"FCJH_{a.name}Spot"
 
 
-def alert_frame(team, column, i, at, indent=2, tag=""):
+def alert_frame(team, column, i, at, indent=2):
     a = column[i]
     t = T * indent
     right = f"#FCJH_MAP_ALERT_{team.upper()}_R" + (f"_{a.kind}" if a.kind else "")
-    spot = (f'\t<Anchor side="Bottom" relative="{at[0]}" pos="{at[2]}" offset="#FCJH_MAP_ALERT_{tag}{team.upper()}_B"/>\n'
+    spot = (f'\t<Anchor side="Bottom" relative="{at[0]}" pos="{at[2]}" offset="{bottoms(team, a.kind)}"/>\n'
             f'\t<Anchor side="Right"  relative="{at[0]}" pos="{at[1]}" offset="{right}"/>\n'
             f'\t<Unclipped val="true"/>\n')
     out = f'{t}<!-- {team}, {"the bottom slot" if i == 0 else f"over {i} before it"}: {a.note} -->\n' if a.note else ""
@@ -648,7 +700,7 @@ def alert_frame(team, column, i, at, indent=2, tag=""):
         out += (f'{t}<Frame type="Frame" name="{spot_name(a)}">\n'
                 + "".join(f"{t}{line}\n" for line in spot.splitlines())
                 + f'{t}\t<Width val="{r - l}"/>\n{t}\t<Height val="{b - tp}"/>\n{t}\t<AcceptsMouse val="false"/>\n'
-                + stack_states(team, column, i, ["$this"], at, indent + 1, tag) + f'{t}</Frame>\n')
+                + stack_states(team, column, i, ["$this"], at, indent + 1, a.kind) + f'{t}</Frame>\n')
         if a.spot_only:
             return out
         out += frame(a.name, 0) + a.extra + f"{t}</Frame>\n"
@@ -665,8 +717,32 @@ def alert_frame(team, column, i, at, indent=2, tag=""):
         out += f'{t}\t<Frame type="{ctype}" name="{child}">\n'
         out += "".join(f"{t}\t{line}\n" for line in spot.splitlines())
         out += f'{t}\t</Frame>\n'
-    out += stack_states(team, column, i, targets, at, indent + 1, tag)
+    out += stack_states(team, column, i, targets, at, indent + 1, a.kind)
+    if team == "blue" and a.kind == "":
+        out += "".join(f"{t}\t{line}\n" for line in MIRROR)
     return out + a.extra + f"{t}</Frame>\n"
+
+
+# Blue's banners mirrored (user, 2026-10-09): Blizzard draws a NotificationFrameTemplate banner
+# the same for either side, its hexagon at the right end - on blue's side that's the inner end,
+# over blue's core bar. Blizzard's own mirror, NotificationFrameLeftTemplate (core
+# mapmechanicpanel), puts the icon at the left end and keeps the bar's right end on the frame's:
+# its anchors, laid over the frame. Across and up, nothing else moves: the bar still ends at
+# blue's inner edge, at the same height.
+MIRROR = (
+    '<!-- mirrored for blue: the hexagon at the outer end (NotificationFrameLeftTemplate) -->',
+    '<Frame type="Frame" name="NotificationIconAnchor">',
+    '\t<Anchor side="Left"  relative="$parent/BackgroundImage" pos="Min" offset="16"/>',
+    '\t<Anchor side="Right" relative="$this" pos="Min" offset="0"/>',
+    '</Frame>',
+    '<Frame type="Label" name="NotificationLabel">',
+    '\t<Anchor side="Right" relative="$parent/BackgroundImage" pos="Max" offset="-25"/>',
+    '</Frame>',
+    '<Frame type="Image" name="BackgroundImage">',
+    '\t<Anchor side="Right" relative="$parent" pos="Max" offset="-10"/>',
+    '\t<Anchor side="Left"  relative="$parent/NotificationLabel" pos="Min" offset="-129"/>',
+    '</Frame>',
+)
 
 
 class Node:
@@ -691,67 +767,80 @@ class Node:
         return out + f"{t}</Frame>\n"
 
 
-def map_file(key, at, down, nudged):
+def map_file(key, at, down):
     """Everything this map's own layout file gets: its panels on our minimap, the minimap's
-    place, its team alerts."""
+    place (placer, in its first panel), its team alerts."""
     m = MAPS[key]
     root = Node(None)
     for path, sides in m.panels.items():
         root.at(path).body += anchor_lines(sides, m, len(path.split("/")) + 1, down.get(key, 0))
-    for path in m.place:
-        root.at(path).body += placer(key, len(path.split("/")) + 1)
+    for path, xml in DIAG.get(key, {}).items():
+        root.at(path).body += T * (len(path.split("/")) + 1) + xml + "\n"
+    if m.place:
+        root.at(m.place[0]).body += placer(key, len(m.place[0].split("/")) + 1)
     for panel, cols in m.team.items():
         if panel == m.core:
             continue                  # in the core panel: core_panels
         node = root.at(panel)
         for team in ("blue", "red"):
             for i in range(len(cols.get(team, []))):
-                node.body += alert_frame(team, cols[team], i, at, tag=alert_tag(key, nudged))
+                node.body += alert_frame(team, cols[team], i, at)
     if m.extra:
         root.at(m.place[0]).body += EXTRAS[m.extra]()
     return "".join(c.xml(1, file=m.file) for c in root.children.values())
 
 
-def core_alerts(m, at, tag):
+def core_alerts(m, at):
     """The alerts in an older map's core panel (its `team` entry for that panel)."""
     cols = m.team.get(m.core, {})
-    return "".join(alert_frame(team, cols[team], i, at, 6, tag)
+    return "".join(alert_frame(team, cols[team], i, at, 6)
                    for team in ("blue", "red") for i in range(len(cols.get(team, []))))
 
 
-def core_panels(down, at, nudged):
+def core_panels(down, at):
     """The older maps' panels in Blizzard's core MapMechanicPanel, on our minimap, with their
-    alerts, and the minimap's place on each - from one StateGroup on the minimap: those panels
-    exist on every map, the map's script shows its own."""
+    alerts.
+    No jitter (user, 2026-10-09): a map moved the minimap when its panel first SHOWED - the
+    older five's at their first objective (Cursed Hollow's ~2:30), and newer maps whose script
+    hides the panel while idle (Braxis). A newer map's panel exists only on that map, so its
+    placer moves the minimap as soon as the panel exists. The older five's panels exist on
+    every map, so nothing tells them apart: they don't move, sharing FCJH_Minimap's place
+    ([minimap] bottom), and their objective pieces are tuned per map ([minimap.panel_nudge])."""
     core = {k: m for k, m in MAPS.items() if m.core}
     t = T * 5
     panels = "".join(f'{T*5}<Frame type="Frame" name="{m.core}">\n'
                      f'{T*6}<!-- {m.title} -->\n' + anchor_lines(BOTTOM_RIGHT, m, 6, down.get(k, 0))
-                     + core_alerts(m, at, alert_tag(k, nudged)) + f'{T*5}</Frame>\n' for k, m in core.items())
-    loading = "".join(f'<When type="Property" frame="{MECHANICS}/{m.core}" Visible="true"/>' for m in core.values())
-    states = "".join(f'{t}\t<State name="{k}">\n'
-                     f'{t}\t\t<When type="Property" frame="{MECHANICS}/{m.core}" Visible="true"/>\n'
-                     + place_actions(k, 7) + f'{t}\t</State>\n' for k, m in core.items())
-    return (f'{T*4}<Frame type="MinimapPanel" name="MinimapPanel">\n'
-            f'{t}<!-- The older maps\' places. Their panels are all shown while the UI loads (the\n'
-            f'{t}     template\'s default) until the script hides them: "Loading" holds still through\n'
-            f'{t}     that. "Default" moves nothing - on the other maps their own panels place it,\n'
-            f'{t}     or it stays where FCJH_Minimap puts it ([minimap] bottom). -->\n'
-            f'{t}<StateGroup name="FCJH_MapPlace">\n'
-            f'{t}\t<DefaultState val="Default"/>\n'
-            f'{t}\t<State name="Loading">{loading}</State>\n'
-            + states +
-            f'{t}\t<State name="Default"/>\n'
-            f'{t}</StateGroup>\n'
-            f'{T*4}</Frame>\n'
+                     + core_alerts(m, at) + f'{T*5}</Frame>\n' for k, m in core.items())
+    return (f'{T*4}<!-- The older five don\'t move the minimap: it stays where FCJH_Minimap puts it\n'
+            f'{T*4}     ([minimap] bottom), as on the ARAM maps (tools/maps.py core_panels) -->\n'
             f'{T*4}<Frame type="Frame" name="MapMechanicPanel">\n' + panels + f'{T*4}</Frame>\n')
 
 
-def layout(header, at, down, nudged=()):
+def placer(key, indent):
+    """A frame inside the map's panel - which exists only on this map - that moves the minimap
+    to this map's place as soon as the script builds the panel, shown or hidden: one state, no
+    condition (a state group runs on a hidden frame too). It used to wait for the panel to
+    SHOW, and the minimap jumped when it did (Braxis hides its panel while idle; user,
+    2026-10-09). A condition on the panel from the minimap can't be written instead: the panel
+    doesn't exist until the script makes it (validate.py refuses it)."""
+    t = T * indent
+    return (f'{t}<!-- the minimap\'s place on {MAPS[key].title}, from the moment this panel exists -->\n'
+            f'{t}<Frame type="Frame" name="FCJH_MinimapPlace">\n'
+            f'{t}\t<Anchor relative="$parent"/>\n'
+            f'{t}\t<AcceptsMouse val="false"/>\n'
+            f'{t}\t<StateGroup name="FCJH_Place">\n'
+            f'{t}\t\t<DefaultState val="Placed"/>\n'
+            f'{t}\t\t<State name="Placed">\n'
+            + place_actions(key, indent + 3) +
+            f'{t}\t\t</State>\n'
+            f'{t}\t</StateGroup>\n'
+            f'{t}</Frame>\n')
+
+
+def layout(header, at, down):
     """FCJH_Maps.StormLayout. at: (frame, across pos, down pos), where the plates are anchored -
     the stacks' constants run from there, as the plates' do (gen.py PLATES_AT). down: {map key:
-    units}, how much lower each map's panel goes (layout.toml [minimap.panel_nudge]). nudged: the
-    maps whose alerts have their own constants ([map_alerts.nudge], alert_tag)."""
+    units}, how much lower each map's panel goes (layout.toml [minimap.panel_nudge])."""
     return header + f'''
 	<!-- Each battleground's own UI on our screen (tools/maps.py, which says how a map's UI works).
 
@@ -768,8 +857,8 @@ def layout(header, at, down, nudged=()):
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<Frame type="Frame" name="UIContainer">
 			<Frame type="Frame" name="ConsoleUIContainer">
-{core_panels(down, at, nudged)}			</Frame>
+{core_panels(down, at)}			</Frame>
 		</Frame>
 	</Frame>
 ''' + "".join(f"\t<!-- ===== {MAPS[k].title}{(': ' + MAPS[k].notes) if MAPS[k].notes else ''} ===== -->\n"
-              + map_file(k, at, down, nudged) for k in MAPS if MAPS[k].file) + "</Desc>\n"
+              + map_file(k, at, down) for k in MAPS if MAPS[k].file) + "</Desc>\n"

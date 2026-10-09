@@ -289,13 +289,13 @@
 	     _L _R from the screen's middle; _BOTTOM from its bottom (positive hangs off-screen). -->
 	<Constant name="FCJH_MINIMAP_PANEL_L" val="-219"/>
 	<Constant name="FCJH_MINIMAP_PANEL_R" val="249"/>
-	<Constant name="FCJH_MINIMAP_PANEL_BOTTOM" val="59"/>
+	<Constant name="FCJH_MINIMAP_PANEL_BOTTOM" val="68"/>
 	<!-- _BOTTOM_<MAP>: MinimapPanel's bottom on that map, from the screen's bottom -->
 	<Constant name="FCJH_MINIMAP_BOTTOM_ALTERAC_PASS" val="46"/>  <!-- Alterac Pass: 272 px tall -->
 	<Constant name="FCJH_MINIMAP_BOTTOM_BATTLEFIELD_OF_ETERNITY" val="67"/>  <!-- Battlefield of Eternity: 233 px tall -->
 	<Constant name="FCJH_MINIMAP_BOTTOM_BLACKHEARTS_BAY" val="51"/>  <!-- Blackheart's Bay: 263 px tall -->
 	<Constant name="FCJH_MINIMAP_BOTTOM_BRAXIS_HOLDOUT" val="72"/>  <!-- Braxis Holdout: 224 px tall -->
-	<Constant name="FCJH_MINIMAP_BOTTOM_CURSED_HOLLOW" val="68"/>  <!-- Cursed Hollow: 272 px tall -->
+	<Constant name="FCJH_MINIMAP_BOTTOM_CURSED_HOLLOW" val="46"/>  <!-- Cursed Hollow: 272 px tall -->
 	<Constant name="FCJH_MINIMAP_BOTTOM_DRAGON_SHIRE" val="60"/>  <!-- Dragon Shire: 247 px tall -->
 	<Constant name="FCJH_MINIMAP_BOTTOM_GARDEN_OF_TERROR" val="67"/>  <!-- Garden of Terror: 234 px tall -->
 	<Constant name="FCJH_MINIMAP_BOTTOM_HANAMURA_TEMPLE" val="69"/>  <!-- Hanamura Temple: 231 px tall -->
@@ -315,21 +315,45 @@
 
 	<!-- Map alerts on the plates ([map_alerts]): from the screen's bottom-centre, as the plates -->
 	<Constant name="FCJH_MAP_ALERT_RED_R" val="730"/>
+	<Constant name="FCJH_MAP_ALERT_RED_B" val="-146"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_2" val="-271"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_3" val="-396"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_4" val="-521"/>  <!-- alert 4 in the stack, 3 up -->
 	<Constant name="FCJH_MAP_ALERT_RED_R_ICON" val="642"/>
+	<Constant name="FCJH_MAP_ALERT_RED_B_ICON" val="-166"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_ICON_2" val="-291"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_ICON_3" val="-416"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_ICON_4" val="-541"/>  <!-- alert 4 in the stack, 3 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_R_HOLDOUT" val="711"/>
+	<Constant name="FCJH_MAP_ALERT_RED_B_HOLDOUT" val="-166"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_HOLDOUT_2" val="-291"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_HOLDOUT_3" val="-416"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_HOLDOUT_4" val="-541"/>  <!-- alert 4 in the stack, 3 up -->
 	<Constant name="FCJH_MAP_ALERT_RED_R_BANNER" val="711"/>
-	<Constant name="FCJH_MAP_ALERT_RED_B" val="-143"/>  <!-- on the XP bar -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_CORE" val="-171"/>  <!-- on the core bar, while it shows -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_2" val="-318"/>  <!-- alert 2 in the stack, 1 up -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_3" val="-465"/>  <!-- alert 3 in the stack, 2 up -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_4" val="-612"/>  <!-- alert 4 in the stack, 3 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_BANNER" val="-142"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_BANNER_2" val="-267"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_BANNER_3" val="-392"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_BANNER_4" val="-517"/>  <!-- alert 4 in the stack, 3 up -->
 	<Constant name="FCJH_MAP_ALERT_BLUE_R" val="-219"/>
+	<Constant name="FCJH_MAP_ALERT_BLUE_B" val="-146"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_2" val="-271"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_3" val="-396"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_4" val="-521"/>  <!-- alert 4 in the stack, 3 up -->
 	<Constant name="FCJH_MAP_ALERT_BLUE_R_ICON" val="-231"/>
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_ICON" val="-166"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_ICON_2" val="-291"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_ICON_3" val="-416"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_ICON_4" val="-541"/>  <!-- alert 4 in the stack, 3 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_R_HOLDOUT" val="-231"/>
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_HOLDOUT" val="-166"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_HOLDOUT_2" val="-291"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_HOLDOUT_3" val="-416"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_HOLDOUT_4" val="-541"/>  <!-- alert 4 in the stack, 3 up -->
 	<Constant name="FCJH_MAP_ALERT_BLUE_R_BANNER" val="-231"/>
-	<Constant name="FCJH_MAP_ALERT_BLUE_B" val="-143"/>  <!-- on the XP bar -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_CORE" val="-171"/>  <!-- on the core bar, while it shows -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_2" val="-318"/>  <!-- alert 2 in the stack, 1 up -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_3" val="-465"/>  <!-- alert 3 in the stack, 2 up -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_4" val="-612"/>  <!-- alert 4 in the stack, 3 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_BANNER" val="-142"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_BANNER_2" val="-267"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_BANNER_3" val="-392"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_BANNER_4" val="-517"/>  <!-- alert 4 in the stack, 3 up -->
 
 	<!-- Team XP and core health: tracks and fills cut to the plates' slant (solid colour;
 	     Blizzard's obs_bar_xp_* art is a thin glowing line drawn for a 156 x 17 box) -->

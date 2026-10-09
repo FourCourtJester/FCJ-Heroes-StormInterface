@@ -18,47 +18,8 @@
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<Frame type="Frame" name="UIContainer">
 			<Frame type="Frame" name="ConsoleUIContainer">
-				<Frame type="MinimapPanel" name="MinimapPanel">
-					<!-- The older maps' places. Their panels are all shown while the UI loads (the
-					     template's default) until the script hides them: "Loading" holds still through
-					     that. "Default" moves nothing - on the other maps their own panels place it,
-					     or it stays where FCJH_Minimap puts it ([minimap] bottom). -->
-					<StateGroup name="FCJH_MapPlace">
-						<DefaultState val="Default"/>
-						<State name="Loading"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel" Visible="true"/><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/RavenCourtPanel" Visible="true"/><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/DragonShirePanel" Visible="true"/><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/GardenOfTerrorPanel" Visible="true"/><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/HauntedMinesPanel" Visible="true"/></State>
-						<State name="blackhearts_bay">
-							<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel" Visible="true"/>
-							<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_L"/>
-							<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_R"/>
-							<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MINIMAP_BOTTOM_BLACKHEARTS_BAY"/>
-						</State>
-						<State name="cursed_hollow">
-							<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/RavenCourtPanel" Visible="true"/>
-							<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_L"/>
-							<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_R"/>
-							<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MINIMAP_BOTTOM_CURSED_HOLLOW"/>
-						</State>
-						<State name="dragon_shire">
-							<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/DragonShirePanel" Visible="true"/>
-							<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_L"/>
-							<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_R"/>
-							<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MINIMAP_BOTTOM_DRAGON_SHIRE"/>
-						</State>
-						<State name="garden_of_terror">
-							<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/GardenOfTerrorPanel" Visible="true"/>
-							<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_L"/>
-							<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_R"/>
-							<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MINIMAP_BOTTOM_GARDEN_OF_TERROR"/>
-						</State>
-						<State name="haunted_mines">
-							<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/HauntedMinesPanel" Visible="true"/>
-							<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_L"/>
-							<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_R"/>
-							<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MINIMAP_BOTTOM_HAUNTED_MINES"/>
-						</State>
-						<State name="Default"/>
-					</StateGroup>
-				</Frame>
+				<!-- The older five don't move the minimap: it stays where FCJH_Minimap puts it
+				     ([minimap] bottom), as on the ARAM maps (tools/maps.py core_panels) -->
 				<Frame type="Frame" name="MapMechanicPanel">
 					<Frame type="Frame" name="BlackheartsBayPanel">
 						<!-- Blackheart's Bay -->
@@ -71,7 +32,7 @@
 						<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="0"/>
 						<!-- blue, the bottom slot: the curse, when it's on blue -->
 						<Frame type="Frame" name="FCJH_CurseFrameSpot">
-							<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B"/>
+							<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_BANNER"/>
 							<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_BLUE_R_BANNER"/>
 							<Unclipped val="true"/>
 							<Width val="481"/>
@@ -79,13 +40,12 @@
 							<AcceptsMouse val="false"/>
 							<StateGroup name="FCJH_Stack">
 								<DefaultState val="Bottom"/>
-								<State name="OnCore"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1CoreUnitStatus" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_CORE"/></State>
-								<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B"/></State>
+								<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_BANNER"/></State>
 							</StateGroup>
 						</Frame>
 						<!-- red, the bottom slot: the tribute spawning, then waiting to be collected (neutral); the curse on red -->
 						<Frame type="Frame" name="FCJH_TributeSpawnFrameSpot">
-							<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B"/>
+							<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_BANNER"/>
 							<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_BANNER"/>
 							<Unclipped val="true"/>
 							<Width val="481"/>
@@ -93,8 +53,7 @@
 							<AcceptsMouse val="false"/>
 							<StateGroup name="FCJH_Stack">
 								<DefaultState val="Bottom"/>
-								<State name="OnCore"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2CoreUnitStatus" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_CORE"/></State>
-								<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B"/></State>
+								<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_BANNER"/></State>
 							</StateGroup>
 						</Frame>
 						<Frame type="Frame" name="TributeSpawnFrame">
@@ -291,19 +250,17 @@
 		<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-1260"/>
 		<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-60"/>
 		<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="0"/>
-		<!-- the minimap's place on Alterac Pass, once this panel shows -->
+		<!-- the minimap's place on Alterac Pass, from the moment this panel exists -->
 		<Frame type="Frame" name="FCJH_MinimapPlace">
 			<Anchor relative="$parent"/>
 			<AcceptsMouse val="false"/>
 			<StateGroup name="FCJH_Place">
-				<DefaultState val="Waiting"/>
+				<DefaultState val="Placed"/>
 				<State name="Placed">
-					<When type="Property" frame="$parent" Visible="true"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_L"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_R"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MINIMAP_BOTTOM_ALTERAC_PASS"/>
 				</State>
-				<State name="Waiting"/>
 			</StateGroup>
 		</Frame>
 	</Frame>
@@ -311,19 +268,17 @@
 	<Frame type="Frame" name="BossDuelPanel" file="BossDuel">
 		<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-75"/>
 		<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="0"/>
-		<!-- the minimap's place on Battlefield of Eternity, once this panel shows -->
+		<!-- the minimap's place on Battlefield of Eternity, from the moment this panel exists -->
 		<Frame type="Frame" name="FCJH_MinimapPlace">
 			<Anchor relative="$parent"/>
 			<AcceptsMouse val="false"/>
 			<StateGroup name="FCJH_Place">
-				<DefaultState val="Waiting"/>
+				<DefaultState val="Placed"/>
 				<State name="Placed">
-					<When type="Property" frame="$parent" Visible="true"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_L"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_R"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MINIMAP_BOTTOM_BATTLEFIELD_OF_ETERNITY"/>
 				</State>
-				<State name="Waiting"/>
 			</StateGroup>
 		</Frame>
 	</Frame>
@@ -331,20 +286,54 @@
 	<Frame type="Frame" name="HoldOutPanel" file="HoldOut">
 		<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="35"/>
 		<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="0"/>
-		<!-- the minimap's place on Braxis Holdout, once this panel shows -->
+		<!-- the minimap's place on Braxis Holdout, from the moment this panel exists -->
 		<Frame type="Frame" name="FCJH_MinimapPlace">
 			<Anchor relative="$parent"/>
 			<AcceptsMouse val="false"/>
 			<StateGroup name="FCJH_Place">
-				<DefaultState val="Waiting"/>
+				<DefaultState val="Placed"/>
 				<State name="Placed">
-					<When type="Property" frame="$parent" Visible="true"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_L"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_R"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MINIMAP_BOTTOM_BRAXIS_HOLDOUT"/>
 				</State>
-				<State name="Waiting"/>
 			</StateGroup>
+		</Frame>
+		<!-- red, the bottom slot: the zerg wave warning (neutral) -->
+		<Frame type="Frame" name="FCJH_HoldOutWarningFrameSpot">
+			<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_HOLDOUT"/>
+			<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_HOLDOUT"/>
+			<Unclipped val="true"/>
+			<Width val="481"/>
+			<Height val="128"/>
+			<AcceptsMouse val="false"/>
+			<StateGroup name="FCJH_Stack">
+				<DefaultState val="Bottom"/>
+				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_HOLDOUT"/></State>
+			</StateGroup>
+		</Frame>
+		<Frame type="Frame" name="HoldOutWarningFrame">
+			<Anchor side="Top"    relative="$parent/FCJH_HoldOutWarningFrameSpot" pos="Min" offset="-20"/>
+			<Anchor side="Left"   relative="$parent/FCJH_HoldOutWarningFrameSpot" pos="Min" offset="0"/>
+			<Anchor side="Bottom" relative="$parent/FCJH_HoldOutWarningFrameSpot" pos="Max" offset="0"/>
+			<Anchor side="Right"  relative="$parent/FCJH_HoldOutWarningFrameSpot" pos="Max" offset="11"/>
+			<Unclipped val="true"/>
+			<Frame type="Image" name="BackgroundImage">
+				<Unclipped val="true"/>
+			</Frame>
+			<Frame type="Image" name="TimerImage">
+				<Unclipped val="true"/>
+			</Frame>
+			<Frame type="Label" name="HoldOutWarningInfoLabel">
+				<Unclipped val="true"/>
+			</Frame>
+			<Frame type="Label" name="HoldOutWarningTimerLabel">
+				<Unclipped val="true"/>
+			</Frame>
+		</Frame>
+		<Frame type="Frame" name="RadarDishModeFrame">
+			<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-20"/>
+			<Frame type="Image" name="FCJH_DiagHoldOutBeaconTopOff"><Anchor side="Top" relative="$parent/HoldOutBeaconTopOff" pos="Min" offset="0"/><Anchor side="Bottom" relative="$parent/HoldOutBeaconTopOff" pos="Max" offset="0"/><Anchor side="Left" relative="$parent/HoldOutBeaconTopOff" pos="Min" offset="0"/><Anchor side="Right" relative="$parent/HoldOutBeaconTopOff" pos="Max" offset="0"/><Texture val="_Assets\Textures\FCJH_White.dds"/><Color val="255,0,255"/><Alpha val="160"/><RenderPriority val="900"/><Unclipped val="true"/></Frame><Frame type="Image" name="FCJH_DiagHoldOutBeaconBottomOff"><Anchor side="Top" relative="$parent/HoldOutBeaconBottomOff" pos="Min" offset="0"/><Anchor side="Bottom" relative="$parent/HoldOutBeaconBottomOff" pos="Max" offset="0"/><Anchor side="Left" relative="$parent/HoldOutBeaconBottomOff" pos="Min" offset="0"/><Anchor side="Right" relative="$parent/HoldOutBeaconBottomOff" pos="Max" offset="0"/><Texture val="_Assets\Textures\FCJH_White.dds"/><Color val="255,0,255"/><Alpha val="160"/><RenderPriority val="900"/><Unclipped val="true"/></Frame>
 		</Frame>
 	</Frame>
 	<!-- ===== Garden of Terror: its night warning and seed frames are placed from the minimap already ===== -->
@@ -359,19 +348,17 @@
 		<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-80"/>
 		<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-2134"/>
 		<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="0"/>
-		<!-- the minimap's place on Hanamura Temple, once this panel shows -->
+		<!-- the minimap's place on Hanamura Temple, from the moment this panel exists -->
 		<Frame type="Frame" name="FCJH_MinimapPlace">
 			<Anchor relative="$parent"/>
 			<AcceptsMouse val="false"/>
 			<StateGroup name="FCJH_Place">
-				<DefaultState val="Waiting"/>
+				<DefaultState val="Placed"/>
 				<State name="Placed">
-					<When type="Property" frame="$parent" Visible="true"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_L"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_R"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MINIMAP_BOTTOM_HANAMURA_TEMPLE"/>
 				</State>
-				<State name="Waiting"/>
 			</StateGroup>
 		</Frame>
 	</Frame>
@@ -380,21 +367,6 @@
 		<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-80"/>
 		<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-2134"/>
 		<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="0"/>
-		<!-- the minimap's place on Hanamura Temple, once this panel shows -->
-		<Frame type="Frame" name="FCJH_MinimapPlace">
-			<Anchor relative="$parent"/>
-			<AcceptsMouse val="false"/>
-			<StateGroup name="FCJH_Place">
-				<DefaultState val="Waiting"/>
-				<State name="Placed">
-					<When type="Property" frame="$parent" Visible="true"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_L"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_R"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MINIMAP_BOTTOM_HANAMURA_TEMPLE"/>
-				</State>
-				<State name="Waiting"/>
-			</StateGroup>
-		</Frame>
 		<Frame type="Image" name="ActivePayloadImageAnchor">
 			<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-204"/>
 		</Frame>
@@ -413,51 +385,34 @@
 		<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-80"/>
 		<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-2134"/>
 		<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="0"/>
-		<!-- the minimap's place on Hanamura Temple, once this panel shows -->
-		<Frame type="Frame" name="FCJH_MinimapPlace">
-			<Anchor relative="$parent"/>
-			<AcceptsMouse val="false"/>
-			<StateGroup name="FCJH_Place">
-				<DefaultState val="Waiting"/>
-				<State name="Placed">
-					<When type="Property" frame="$parent" Visible="true"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_L"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_R"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MINIMAP_BOTTOM_HANAMURA_TEMPLE"/>
-				</State>
-				<State name="Waiting"/>
-			</StateGroup>
-		</Frame>
 		<!-- blue, the bottom slot: blue's payload on a fort -->
 		<Frame type="Frame" name="AttackingCoreFrame_Order">
-			<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B"/>
+			<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_ICON"/>
 			<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_BLUE_R_ICON"/>
 			<Unclipped val="true"/>
 			<Frame type="Image" name="NotificationIconAnchor">
-				<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B"/>
+				<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_ICON"/>
 				<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_BLUE_R_ICON"/>
 				<Unclipped val="true"/>
 			</Frame>
 			<StateGroup name="FCJH_Stack">
 				<DefaultState val="Bottom"/>
-				<State name="OnCore"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1CoreUnitStatus" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_CORE"/><Action type="SetAnchor" frame="$this/NotificationIconAnchor" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_CORE"/></State>
-				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B"/><Action type="SetAnchor" frame="$this/NotificationIconAnchor" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B"/></State>
+				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_ICON"/><Action type="SetAnchor" frame="$this/NotificationIconAnchor" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_ICON"/></State>
 			</StateGroup>
 		</Frame>
 		<!-- red, the bottom slot: red's payload on a fort -->
 		<Frame type="Frame" name="AttackingCoreFrame_Chaos">
-			<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B"/>
+			<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_ICON"/>
 			<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_ICON"/>
 			<Unclipped val="true"/>
 			<Frame type="Image" name="NotificationIconAnchor">
-				<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B"/>
+				<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_ICON"/>
 				<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_ICON"/>
 				<Unclipped val="true"/>
 			</Frame>
 			<StateGroup name="FCJH_Stack">
 				<DefaultState val="Bottom"/>
-				<State name="OnCore"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2CoreUnitStatus" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_CORE"/><Action type="SetAnchor" frame="$this/NotificationIconAnchor" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_CORE"/></State>
-				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B"/><Action type="SetAnchor" frame="$this/NotificationIconAnchor" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B"/></State>
+				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_ICON"/><Action type="SetAnchor" frame="$this/NotificationIconAnchor" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_ICON"/></State>
 			</StateGroup>
 		</Frame>
 	</Frame>
@@ -465,19 +420,17 @@
 	<Frame type="Frame" name="ShrinesPanel" file="Shrines">
 		<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-35"/>
 		<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="0"/>
-		<!-- the minimap's place on Infernal Shrines, once this panel shows -->
+		<!-- the minimap's place on Infernal Shrines, from the moment this panel exists -->
 		<Frame type="Frame" name="FCJH_MinimapPlace">
 			<Anchor relative="$parent"/>
 			<AcceptsMouse val="false"/>
 			<StateGroup name="FCJH_Place">
-				<DefaultState val="Waiting"/>
+				<DefaultState val="Placed"/>
 				<State name="Placed">
-					<When type="Property" frame="$parent" Visible="true"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_L"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_R"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MINIMAP_BOTTOM_INFERNAL_SHRINES"/>
 				</State>
-				<State name="Waiting"/>
 			</StateGroup>
 		</Frame>
 	</Frame>
@@ -485,19 +438,17 @@
 	<Frame type="Frame" name="CapturePointsPanel" file="CapturePoints">
 		<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-35"/>
 		<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="0"/>
-		<!-- the minimap's place on Sky Temple, once this panel shows -->
+		<!-- the minimap's place on Sky Temple, from the moment this panel exists -->
 		<Frame type="Frame" name="FCJH_MinimapPlace">
 			<Anchor relative="$parent"/>
 			<AcceptsMouse val="false"/>
 			<StateGroup name="FCJH_Place">
-				<DefaultState val="Waiting"/>
+				<DefaultState val="Placed"/>
 				<State name="Placed">
-					<When type="Property" frame="$parent" Visible="true"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_L"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_R"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MINIMAP_BOTTOM_SKY_TEMPLE"/>
 				</State>
-				<State name="Waiting"/>
 			</StateGroup>
 		</Frame>
 	</Frame>
@@ -505,37 +456,33 @@
 	<Frame type="Frame" name="CryptPanel" file="SoulCage">
 		<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-35"/>
 		<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="0"/>
-		<!-- the minimap's place on Tomb of the Spider Queen, once this panel shows -->
+		<!-- the minimap's place on Tomb of the Spider Queen, from the moment this panel exists -->
 		<Frame type="Frame" name="FCJH_MinimapPlace">
 			<Anchor relative="$parent"/>
 			<AcceptsMouse val="false"/>
 			<StateGroup name="FCJH_Place">
-				<DefaultState val="Waiting"/>
+				<DefaultState val="Placed"/>
 				<State name="Placed">
-					<When type="Property" frame="$parent" Visible="true"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_L"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_R"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MINIMAP_BOTTOM_TOMB_OF_THE_SPIDER_QUEEN"/>
 				</State>
-				<State name="Waiting"/>
 			</StateGroup>
 		</Frame>
 	</Frame>
 	<!-- ===== Towers of Doom ===== -->
 	<Frame type="Frame" name="MainFoSPanel" file="FieldofSlaughter">
-		<!-- the minimap's place on Towers of Doom, once this panel shows -->
+		<!-- the minimap's place on Towers of Doom, from the moment this panel exists -->
 		<Frame type="Frame" name="FCJH_MinimapPlace">
 			<Anchor relative="$parent"/>
 			<AcceptsMouse val="false"/>
 			<StateGroup name="FCJH_Place">
-				<DefaultState val="Waiting"/>
+				<DefaultState val="Placed"/>
 				<State name="Placed">
-					<When type="Property" frame="$parent" Visible="true"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_L"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_R"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MINIMAP_BOTTOM_TOWERS_OF_DOOM"/>
 				</State>
-				<State name="Waiting"/>
 			</StateGroup>
 		</Frame>
 		<!-- blue, the bottom slot: the tunnels opening -->
@@ -545,9 +492,20 @@
 			<Unclipped val="true"/>
 			<StateGroup name="FCJH_Stack">
 				<DefaultState val="Bottom"/>
-				<State name="OnCore"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1CoreUnitStatus" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_CORE"/></State>
 				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B"/></State>
 			</StateGroup>
+			<!-- mirrored for blue: the hexagon at the outer end (NotificationFrameLeftTemplate) -->
+			<Frame type="Frame" name="NotificationIconAnchor">
+				<Anchor side="Left"  relative="$parent/BackgroundImage" pos="Min" offset="16"/>
+				<Anchor side="Right" relative="$this" pos="Min" offset="0"/>
+			</Frame>
+			<Frame type="Label" name="NotificationLabel">
+				<Anchor side="Right" relative="$parent/BackgroundImage" pos="Max" offset="-25"/>
+			</Frame>
+			<Frame type="Image" name="BackgroundImage">
+				<Anchor side="Right" relative="$parent" pos="Max" offset="-10"/>
+				<Anchor side="Left"  relative="$parent/NotificationLabel" pos="Min" offset="-129"/>
+			</Frame>
 		</Frame>
 		<!-- blue, over 1 before it: Blizzard's, players-only ("Your/Enemy cannons are firing") -->
 		<Frame type="Frame" name="RavenNotificationFrame">
@@ -557,9 +515,20 @@
 			<StateGroup name="FCJH_Stack">
 				<DefaultState val="Bottom"/>
 				<State name="OverWaygate"><When type="Property" frame="$parent/WaygateNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_2"/></State>
-				<State name="OnCore"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1CoreUnitStatus" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_CORE"/></State>
 				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B"/></State>
 			</StateGroup>
+			<!-- mirrored for blue: the hexagon at the outer end (NotificationFrameLeftTemplate) -->
+			<Frame type="Frame" name="NotificationIconAnchor">
+				<Anchor side="Left"  relative="$parent/BackgroundImage" pos="Min" offset="16"/>
+				<Anchor side="Right" relative="$this" pos="Min" offset="0"/>
+			</Frame>
+			<Frame type="Label" name="NotificationLabel">
+				<Anchor side="Right" relative="$parent/BackgroundImage" pos="Max" offset="-25"/>
+			</Frame>
+			<Frame type="Image" name="BackgroundImage">
+				<Anchor side="Right" relative="$parent" pos="Max" offset="-10"/>
+				<Anchor side="Left"  relative="$parent/NotificationLabel" pos="Min" offset="-129"/>
+			</Frame>
 			<!-- gone 5 s after it shows, whoever the script's own hide reaches: switching from a
 			     player view to the everyone view inside those 5 s left it up for good - the hide
 			     goes to the team's players only (user, 2026-10-06) -->
@@ -580,9 +549,20 @@
 				<State name="OverWaygateRaven"><When type="Property" frame="$parent/WaygateNotificationFrame" Visible="true"/><When type="Property" frame="$parent/RavenNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_3"/></State>
 				<State name="OverWaygate"><When type="Property" frame="$parent/WaygateNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_2"/></State>
 				<State name="OverRaven"><When type="Property" frame="$parent/RavenNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_2"/></State>
-				<State name="OnCore"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1CoreUnitStatus" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_CORE"/></State>
 				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B"/></State>
 			</StateGroup>
+			<!-- mirrored for blue: the hexagon at the outer end (NotificationFrameLeftTemplate) -->
+			<Frame type="Frame" name="NotificationIconAnchor">
+				<Anchor side="Left"  relative="$parent/BackgroundImage" pos="Min" offset="16"/>
+				<Anchor side="Right" relative="$this" pos="Min" offset="0"/>
+			</Frame>
+			<Frame type="Label" name="NotificationLabel">
+				<Anchor side="Right" relative="$parent/BackgroundImage" pos="Max" offset="-25"/>
+			</Frame>
+			<Frame type="Image" name="BackgroundImage">
+				<Anchor side="Right" relative="$parent" pos="Max" offset="-10"/>
+				<Anchor side="Left"  relative="$parent/NotificationLabel" pos="Min" offset="-129"/>
+			</Frame>
 			<Frame type="Label" name="NotificationLabel"><Text val="Blue team captured"/></Frame>
 			<Frame type="Label" name="NotificationTargetLabel"><Text val="a town"/></Frame>
 			<!-- gone after 5 s, as Blizzard's (its script waits 5 s, then hides it) -->
@@ -600,7 +580,6 @@
 			<Unclipped val="true"/>
 			<StateGroup name="FCJH_Stack">
 				<DefaultState val="Bottom"/>
-				<State name="OnCore"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2CoreUnitStatus" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_CORE"/></State>
 				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B"/></State>
 			</StateGroup>
 		</Frame>
@@ -612,7 +591,6 @@
 			<StateGroup name="FCJH_Stack">
 				<DefaultState val="Bottom"/>
 				<State name="OverAltarSpawn"><When type="Property" frame="$parent/AltarSpawnNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_2"/></State>
-				<State name="OnCore"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2CoreUnitStatus" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_CORE"/></State>
 				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B"/></State>
 			</StateGroup>
 		</Frame>
@@ -626,7 +604,6 @@
 				<State name="OverAltarSpawnTowers"><When type="Property" frame="$parent/AltarSpawnNotificationFrame" Visible="true"/><When type="Property" frame="$parent/TowersNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_3"/></State>
 				<State name="OverAltarSpawn"><When type="Property" frame="$parent/AltarSpawnNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_2"/></State>
 				<State name="OverTowers"><When type="Property" frame="$parent/TowersNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_2"/></State>
-				<State name="OnCore"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2CoreUnitStatus" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_CORE"/></State>
 				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B"/></State>
 			</StateGroup>
 			<!-- gone 5 s after it shows, whoever the script's own hide reaches: switching from a
@@ -653,7 +630,6 @@
 				<State name="OverAltarSpawn"><When type="Property" frame="$parent/AltarSpawnNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_2"/></State>
 				<State name="OverTowers"><When type="Property" frame="$parent/TowersNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_2"/></State>
 				<State name="OverNecro"><When type="Property" frame="$parent/NecroNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_2"/></State>
-				<State name="OnCore"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2CoreUnitStatus" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_CORE"/></State>
 				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B"/></State>
 			</StateGroup>
 			<Frame type="Label" name="NotificationLabel"><Text val="Red team captured"/></Frame>
@@ -894,38 +870,34 @@
 		<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-1235"/>
 		<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-35"/>
 		<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="0"/>
-		<!-- the minimap's place on Volskaya Foundry, once this panel shows -->
+		<!-- the minimap's place on Volskaya Foundry, from the moment this panel exists -->
 		<Frame type="Frame" name="FCJH_MinimapPlace">
 			<Anchor relative="$parent"/>
 			<AcceptsMouse val="false"/>
 			<StateGroup name="FCJH_Place">
-				<DefaultState val="Waiting"/>
+				<DefaultState val="Placed"/>
 				<State name="Placed">
-					<When type="Property" frame="$parent" Visible="true"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_L"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_R"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MINIMAP_BOTTOM_VOLSKAYA_FOUNDRY"/>
 				</State>
-				<State name="Waiting"/>
 			</StateGroup>
 		</Frame>
 	</Frame>
 	<!-- ===== Warhead Junction: its panel is placed from the minimap already ===== -->
 	<Frame type="Frame" name="SC2Panel" file="SCMap2">
-		<!-- the minimap's place on Warhead Junction, once this panel shows -->
+		<!-- the minimap's place on Warhead Junction, from the moment this panel exists -->
 		<Frame type="Frame" name="FCJH_MinimapPlace">
 			<Anchor relative="$parent"/>
 			<AcceptsMouse val="false"/>
 			<StateGroup name="FCJH_Place">
-				<DefaultState val="Waiting"/>
+				<DefaultState val="Placed"/>
 				<State name="Placed">
-					<When type="Property" frame="$parent" Visible="true"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_L"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_R"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MINIMAP_BOTTOM_WARHEAD_JUNCTION"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel/Minimap" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Min" offset="0"/>
 				</State>
-				<State name="Waiting"/>
 			</StateGroup>
 		</Frame>
 	</Frame>

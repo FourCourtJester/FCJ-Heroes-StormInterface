@@ -242,11 +242,6 @@ def map_table(cfg, key, section="minimap"):
     return table
 
 
-def alert_nudges(cfg):
-    """layout.toml [map_alerts.nudge]: the maps whose alerts move, px (+ lowers)."""
-    return {k: v for k, v in map_table(cfg, "nudge", "map_alerts").items() if v}
-
-
 def screen_units(cfg):
     """The screen's size in layout units at layout.toml's resolution (2133.3 x 1200 at 16:9)."""
     u = Units(cfg)
@@ -428,6 +423,10 @@ def constants_layout(cfg):
     # ...and per map (tools/maps.py): the map as drawn in the square, its bottom on the padding
     # line (the plates' bottom), nudged by [minimap.nudge]
     nudge = map_table(cfg, "nudge")
+    fixed = sorted(k for k, v in nudge.items() if v and not maps.MAPS[k].place)
+    if fixed:
+        raise SystemExit(f"layout.toml [minimap.nudge]: {fixed} never move the minimap (no panel of "
+                         f"their own; maps.core_panels) - tune [minimap.panel_nudge] instead")
     line = cfg["screen"]["height"] - cfg["screen"]["padding"]
     lines.append("\t<!-- _BOTTOM_<MAP>: MinimapPanel's bottom on that map, from the screen's bottom -->")
     for key, m in maps.MAPS.items():
@@ -451,28 +450,30 @@ def constants_layout(cfg):
     # while that shows, one slot up per alert below. Red's art starts where red's row does,
     # blue's ends where blue's row does ([hero_row] red_left / blue_right: the same distance
     # from the minimap as the plates, user 2026-10-06): placed by the edge the art hangs off
-    # (maps.ALERT_ART).
+    # (maps.ALERT_ART). The banner standard (user, 2026-10-09): every banner is placed by its
+    # BAR, its bottom in one place on every map, [map_alerts] above_core px over the core bar's
+    # top - never moving, whether the core bar shows or not, and ignoring what hangs under the
+    # bar (the banners draw over the pop-ups) - and stacks one step apart, the tallest banner's
+    # height and the gap (maps.step). Per art, its frame's place for its bar to land there.
     lines.append("")
     lines.append("\t<!-- Map alerts on the plates ([map_alerts]): from the screen's bottom-centre, as the plates -->")
-    gap = cfg["map_alerts"]["gap"]
-    lift = u(cfg["map_alerts"]["lift"])   # all of them, clear of the plates' pop-ups
+    above = cfg["map_alerts"]["above_core"]
     row = cfg["hero_row"]
     for team in ("red", "blue"):
         (_, cy, _, _), _ = rects(cfg)[f"{team}_core"]
-        (_, xy, _, _), _ = team_bar_rects(cfg)[f"{team}_xp"]
         ox, oy = anchor_origin(cfg, f"{team}_xp")   # the plates' point
-        for kind, (reach, tail) in maps.ALERT_ART.items():
-            right = u(row["red_left"]) + reach if team == "red" else u(row["blue_right"]) + tail
-            const(name("map", "alert", team, "r", *([kind] if kind else [])), right - ox)
-        # the shared slots, and a map's own where [map_alerts.nudge] moves its alerts (+ lowers)
-        for key, down in (("", 0), *((k, u(v)) for k, v in alert_nudges(cfg).items())):
-            at = [key] if key else []
-            const(name("map", "alert", *at, team, "b"), u(xy - gap) - lift + down - oy, "on the XP bar")
-            const(name("map", "alert", *at, team, "b", "core"), u(cy - gap) - lift + down - oy,
-                  "on the core bar, while it shows")
+        bar = u(cy - above)                          # every banner's bar's bottom
+        for kind, art in maps.ALERT_ART.items():
+            k = [kind] if kind else []
+            right = u(row["red_left"]) + art.reach if team == "red" else u(row["blue_right"]) + art.tail
+            const(name("map", "alert", team, "r", *k), right - ox)
+            # where this art's frame goes for its bar to land there: lower by bar_up
+            const(name("map", "alert", team, "b", *k), bar + art.bar_up - oy, "the bottom slot")
             for n in range(1, maps.max_stack()):
-                const(name("map", "alert", *at, team, "b", n + 1), u(cy - gap) - lift + down - n * maps.ALERT_STEP - oy,
+                const(name("map", "alert", team, "b", *k, n + 1), bar + art.bar_up - n * maps.step() - oy,
                       f"alert {n + 1} in the stack, {n} up")
+    for kind, what in maps.unmeasured().items():
+        print(f"gen: banner art not measured yet - {kind}: {what} (tools/maps.py ALERT_ART)", file=sys.stderr)
 
     lines.append("")
     lines.append("\t<!-- Team XP and core health: tracks and fills cut to the plates' slant (solid colour;")
@@ -2775,8 +2776,7 @@ def committed_files(cfg, source=SOURCE):
             (u(rects(cfg)["inspect"][0][0]), u(rects(cfg)["inspect"][0][1])), 1 / u.scale,   # its place, for pixel-exact lines
             (*PLATES_AT, anchor_edges(cfg, "inspect")["t"])),   # where it's anchored, and its top from there
         LAYOUT_REL / MAPS_FILE: maps.layout(XML_DECL + "<Desc>\n" + GENERATED, PLATES_AT,
-                                            {k: u(v) for k, v in map_table(cfg, "panel_nudge").items()},
-                                            set(alert_nudges(cfg))),
+                                            {k: u(v) for k, v in map_table(cfg, "panel_nudge").items()}),
         LAYOUT_REL / INDEX_FILE: desc_index(layout_order(layout_dir, generated=GENERATED_LAYOUTS)),
     }
     return {rel: text.encode("utf-8") for rel, text in texts.items()} | texture_files(cfg)

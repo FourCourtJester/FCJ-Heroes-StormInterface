@@ -37,16 +37,24 @@ build_stamp = [1600, 20]     # x, y of the build stamp (top right)
 # ---------------------------------------------------------------------------
 [minimap]
 centre_x = 960               # the square's horizontal centre
-bottom = 1133                # the square's bottom edge; > 1080 hangs off-screen
+bottom = 1141                # the square's bottom edge; > 1080 hangs off-screen. The place of every map
+                             # that doesn't move it: the older five (Cursed Hollow, Blackheart's
+                             # Bay, Dragon Shire, Garden, Haunted Mines - nothing on screen tells
+                             # them apart; tools/maps.py core_panels) and the ARAM maps. 1141 is
+                             # Cursed Hollow's approved place (2026-10-06: its map's bottom on the
+                             # screen's edge); the others' bottoms land at 1061-1076, Haunted
+                             # Mines' (380 px tall) 54 px off the bottom (user, 2026-10-09: no
+                             # jitter - decide at its QA). Was 1133.
 
 # px per map, added to where tools/maps.py puts it: + lowers that map, - raises it. For fine
-# tuning in game; 0 = its drawn bottom on the padding line.
+# tuning in game; 0 = its drawn bottom on the padding line. The older five don't move (see
+# [minimap] bottom): theirs must stay 0 - tune their objective pieces ([minimap.panel_nudge]).
 [minimap.nudge]
 alterac_pass = 0
 battlefield_of_eternity = 0
 blackhearts_bay = 0
 braxis_holdout = 0
-cursed_hollow = 20           # the tribute counts resting on the screen's bottom edge (user, 2026-10-06)
+cursed_hollow = 0            # was 20 (its map's bottom on the screen's edge): [minimap] bottom now
 dragon_shire = 0
 garden_of_terror = 0
 hanamura_temple = 0
@@ -288,32 +296,12 @@ track_alpha = 220
 
 # A team's map alerts: stacked on its side of the minimap, on its plates' inner end (tools/maps.py).
 [map_alerts]
-gap = 4                      # px between a map alert on the plates and the bar it sits on (the
-                             # XP bar, or the core bar while that shows). Across, its art starts
+above_core = 10              # px from the core bar's top up to every banner's bar's bottom: one place
+                             # on every map, whether the core bar shows or not (user, 2026-10-09:
+                             # the core bar is taller than any pop-up; what hangs under a bar is
+                             # ignored - the banners draw over the pop-ups). Across, the art starts
                              # (red) or ends (blue) where its team's row does: [hero_row] red_left,
                              # blue_right
-lift = 10                    # px every map alert sits higher than that, clear of the talent/health
-                             # pop-ups that rise off the plates (user, 2026-10-06: 4-10 px)
-
-# px per map: that map's alerts, all of them, moved from where every map puts them; + lowers,
-# - raises. Every banner's art lands in the same place on every map (user, 2026-10-06), so
-# these are for a map whose art doesn't.
-[map_alerts.nudge]
-alterac_pass = 0
-battlefield_of_eternity = 0
-blackhearts_bay = 0
-braxis_holdout = 0
-cursed_hollow = 0
-dragon_shire = 0
-garden_of_terror = 0
-hanamura_temple = 0
-haunted_mines = 0
-infernal_shrines = 0
-sky_temple = 0
-tomb_of_the_spider_queen = 0
-towers_of_doom = 0
-volskaya_foundry = 0
-warhead_junction = 0
 
 # Core health: on top of the XP bar, at the row's inner end (toward the minimap). Its size
 # is Blizzard's (237 x 27 units = 213 x 24 px, 39% of the XP bar), fixed; Blizzard shows it
