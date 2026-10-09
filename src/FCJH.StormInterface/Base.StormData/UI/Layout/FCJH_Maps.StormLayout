@@ -460,6 +460,7 @@
 			<Argument name="GalaxyVar" val="libCore_gv_mAPMapStringID"/>
 		</Frame>
 		<Frame type="Frame" name="FCJH_MinimapPlaceHauntedMines">
+			<Anchor relative="$parent"/>
 			<AcceptsMouse val="false"/>
 			<StateGroup name="FCJH_Place">
 				<DefaultState val="Other"/>
@@ -467,9 +468,44 @@
 					<When type="Property" frame="$parent/FCJH_MapId" StringValue="HauntedMines"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_L"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_R"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MINIMAP_BOTTOM_HAUNTED_MINES"/>
+					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MINIMAP_LAUNCH_HAUNTED_MINES"/>
 				</State>
 				<State name="Other"/>
+			</StateGroup>
+			<!-- Haunted Mines: the whole map once SkullModeFrame first shows, gliding up (maps.glide) -->
+			<Frame type="Frame" name="FCJH_Opened">
+				<Anchor relative="$parent"/>
+				<Visible val="false"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
+			<Animation name="FCJH_Glide">
+				<Event event="FCJH_Open" action="Play"/>
+				<Controller type="Anchor" end="Pause" side="Bottom" relative="true" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel">
+					<Key type="Curve" time="0.0" value="138"/>
+					<Key type="Curve" time="0.1" value="133"/>
+					<Key type="Curve" time="0.2" value="119"/>
+					<Key type="Curve" time="0.3" value="98"/>
+					<Key type="Curve" time="0.4" value="74"/>
+					<Key type="Curve" time="0.5" value="46"/>
+					<Key type="Curve" time="0.6" value="19"/>
+					<Key type="Curve" time="0.7" value="-5"/>
+					<Key type="Curve" time="0.8" value="-26"/>
+					<Key type="Curve" time="0.9" value="-40"/>
+					<Key type="Curve" time="1.0" value="-45"/>
+				</Controller>
+				<Controller type="Visibility" end="Pause" frame="FCJH_Opened">
+					<Key type="Bool" time="0" value="true"/>
+				</Controller>
+			</Animation>
+			<StateGroup name="FCJH_Open">
+				<DefaultState val="Shut"/>
+				<State name="Open">
+					<When type="Property" frame="$parent/FCJH_MapId" StringValue="HauntedMines"/>
+					<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/HauntedMinesPanel/SkullModeFrame" Visible="true"/>
+					<When type="Property" frame="$this/FCJH_Opened" Visible="false"/>
+					<Action type="SendEvent" frame="$this" event="FCJH_Open"/>
+				</State>
+				<State name="Shut"/>
 			</StateGroup>
 		</Frame>
 		<!-- DIAGNOSTIC (maps.diag): older maps' UI from the start -->

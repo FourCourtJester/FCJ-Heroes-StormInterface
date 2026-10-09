@@ -236,22 +236,34 @@ PLATES_AT = ("$GameUI", *BOTTOM_CENTRE)
 def minimap_bottoms(cfg):
     """MinimapPanel's bottom, units from the screen's (+ hangs off it): {None: the shared place
     ([minimap] bottom), map key: that map's - its drawn map's bottom on the padding line, nudged
-    by [minimap.nudge] (only maps that move it) - or, for a map in [minimap.launch_centre], its
-    drawn map's centre on that y}."""
-    nudge, centre = map_table(cfg, "nudge"), map_table(cfg, "launch_centre")
+    by [minimap.nudge] (only maps that move it)}."""
+    nudge = map_table(cfg, "nudge")
     moves = lambda k: maps.MAPS[k].place or maps.MAPS[k].own_place
     fixed = sorted(k for k, v in nudge.items() if v and not moves(k))
-    fixed += sorted(k for k in centre if not moves(k))
     if fixed:
-        raise SystemExit(f"layout.toml [minimap.nudge]/[minimap.launch_centre]: {fixed} never move the "
-                         f"minimap (they share [minimap] bottom; maps.core_panels) - give them own_place "
-                         f"in tools/maps.py, or tune [minimap.panel_nudge] instead")
-    u = Units(cfg)
+        raise SystemExit(f"layout.toml [minimap.nudge]: {fixed} never move the minimap (they share "
+                         f"[minimap] bottom; maps.core_panels) - give them own_place in tools/maps.py, "
+                         f"or tune [minimap.panel_nudge] instead")
     line = cfg["screen"]["height"] - cfg["screen"]["padding"]
-    top = cfg["screen"]["ui_reference_height"]
-    middle = lambda k: centre[k] if k in centre else line + nudge.get(k, 0) - maps.drawn_height(k) / 2
-    return {None: u(cfg["minimap"]["bottom"]) - top} | {
-        key: u(middle(key)) + MINIMAP_SQUARE // 2 - top for key in maps.MAPS}
+    return {None: Units(cfg)(cfg["minimap"]["bottom"]) - cfg["screen"]["ui_reference_height"]} | {
+        key: square_bottom(cfg, line + nudge.get(key, 0) - maps.drawn_height(key) / 2) for key in maps.MAPS}
+
+
+def square_bottom(cfg, middle):
+    """MinimapPanel's bottom, units from the screen's, for the drawn map's middle at y `middle` px."""
+    return Units(cfg)(middle) + MINIMAP_SQUARE // 2 - cfg["screen"]["ui_reference_height"]
+
+
+def minimap_launch(cfg):
+    """A map that opens on part of its map (maps.py launch_cut): MinimapPanel's bottom at load,
+    that part's bottom on the padding line, nudged by [minimap.launch_nudge]. {map key: units}"""
+    nudge = map_table(cfg, "launch_nudge")
+    stray = sorted(k for k in nudge if maps.MAPS[k].launch_cut is None)
+    if stray:
+        raise SystemExit(f"layout.toml [minimap.launch_nudge]: {stray} open on their whole map (no launch_cut in tools/maps.py)")
+    line = cfg["screen"]["height"] - cfg["screen"]["padding"]
+    return {k: square_bottom(cfg, line + nudge.get(k, 0) - m.launch_cut)
+            for k, m in maps.MAPS.items() if m.launch_cut is not None}
 
 
 def map_table(cfg, key, section="minimap"):
@@ -447,6 +459,9 @@ def constants_layout(cfg):
     for key, m in maps.MAPS.items():
         const(name("minimap", "bottom", key), minimap_bottoms(cfg)[key],
               f"{m.title}: {round(maps.drawn_height(key))} px tall")
+    # ...and at load, for a map that opens on part of its map (maps.py launch_cut)
+    for key, bottom in minimap_launch(cfg).items():
+        const(name("minimap", "launch", key), bottom, f"{maps.MAPS[key].title}: at load")
     # the drawn map's sides (every map draws maps.DRAWN_PX wide, centred) and the padding line,
     # for parts placed on the map's corners (Braxis's beacon dishes)
     lines.append("\t<!-- _DRAWN_L _R: the drawn map's sides from the screen's middle; _DRAWN_B: the padding line -->")
@@ -2807,7 +2822,9 @@ def committed_files(cfg, source=SOURCE):
             (*PLATES_AT, anchor_edges(cfg, "inspect")["t"])),   # where it's anchored, and its top from there
         LAYOUT_REL / MAPS_FILE: maps.layout(XML_DECL + "<Desc>\n" + GENERATED, PLATES_AT,
                                             {k: u(v) for k, v in map_table(cfg, "panel_nudge").items()},
-                                            minimap_bottoms(cfg)),
+                                            minimap_bottoms(cfg),
+                                            {k: (v - minimap_bottoms(cfg)[None], minimap_bottoms(cfg)[k] - minimap_bottoms(cfg)[None])
+                                             for k, v in minimap_launch(cfg).items()}),
         LAYOUT_REL / INDEX_FILE: desc_index(layout_order(layout_dir, generated=GENERATED_LAYOUTS)),
     }
     return {rel: text.encode("utf-8") for rel, text in texts.items()} | texture_files(cfg)

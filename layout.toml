@@ -59,7 +59,7 @@ cursed_hollow = 0            # was 20 (its map's bottom on the screen's edge): [
 dragon_shire = 0
 garden_of_terror = 0
 hanamura_temple = 0
-haunted_mines = 34           # its whole map on the line (unused while it's in [minimap.launch_centre]): its texture's opaque box is taller than the map - drawn, the mines' bottom was 34 above the line (2026-10-09)
+haunted_mines = 34           # its whole map on the line (where it glides to when the mines open): its texture's opaque box is taller than the map - drawn, the mines' bottom was 34 above the line (2026-10-09)
 infernal_shrines = 0
 sky_temple = 0
 tomb_of_the_spider_queen = 0
@@ -67,11 +67,11 @@ towers_of_doom = 0
 volskaya_foundry = 0
 warhead_junction = 0
 
-# px: a map that opens on part of its map - the drawn map's centre at this y, in place of its
-# [minimap.nudge] place. 1080 = the screen's bottom edge: only the top half shows. Only maps
-# that move the minimap (a panel placer, or own_place in tools/maps.py).
-[minimap.launch_centre]
-haunted_mines = 1080         # two-state view, the first: the top half at launch (user, 2026-10-09: a test)
+# px per map that opens on part of its map (launch_cut in tools/maps.py): at load that part's
+# bottom sits on the padding line, + lowers it. When the map opens in full it glides up to its
+# [minimap.nudge] place and stays there.
+[minimap.launch_nudge]
+haunted_mines = 0            # the surface only, its bottom on the line; the mines below the screen (user, 2026-10-09)
 
 # px per map: that map's objective panel (its counters, timers and banners), moved with the
 # minimap as it sat round Blizzard's; + lowers it, - raises it.

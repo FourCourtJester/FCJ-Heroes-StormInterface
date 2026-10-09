@@ -128,6 +128,11 @@ class Map:
     place: tuple = ()                 # its panels: the first, existing, places the minimap (core_panels)
     own_place: bool = False           # an older map with its own minimap place, by its map id
                                       # (MAP_IDS, id_placers); without, it shares [minimap] bottom
+    launch_cut: int = None            # own_place, opening on its top part only: that part's bottom,
+                                      # px at 1080p below the drawn map's middle (measured) - on the
+                                      # padding line at load ([minimap.launch_nudge])
+    opens: str = None                 # ...until this (under MapMechanicPanel) first shows: then the
+                                      # minimap glides to its place, for good (id_placers)
     fix: str = ""                     # extra SetAnchors when this map's minimap is placed
     team: dict = field(default_factory=dict)     # {"blue": [Alert...], "red": [...]}: panel -> column
     extra: str = ""                   # map-specific XML in its file's panel (see TOWERS_EXTRA)
@@ -692,10 +697,12 @@ MAPS = {
         "Haunted Mines", (433, 437), core="HauntedMinesPanel",
         # Its minimap holds the surface and the mines stacked: square, so at the older five's
         # shared place the mines hung off the screen. Its own place from the start, by its map
-        # id (id_placers): opening on the surface, the top half ([minimap.launch_centre]). It
-        # used to move when the mines warning first showed (its panel is Blizzard's core one, on
-        # every map; user, 2026-10-09: the map jumped).
-        own_place=True,
+        # id (id_placers). Two views (user, 2026-10-09): at load only the surface, its bottom on
+        # the padding line, the mines below the screen; when the mines first open (the script
+        # shows the skull counts: libmhtm SetMode Skulls), it glides up to the whole map, and
+        # stays. The surface's bottom is 8 px above the drawn map's middle, the mines' top 35
+        # below (measured at 1080p, 2026-10-09).
+        own_place=True, launch_cut=-8, opens="HauntedMinesPanel/SkullModeFrame",
         # "Mines will open in", then the golems' health in its place: one neutral banner, on
         # red's side. The skull counts (SkullModeFrame) stay on the panel, pinned to the
         # screen's bottom as Blizzard's: [minimap.panel_nudge] puts them on the padding line.
@@ -772,6 +779,9 @@ MAP_IDS = {
 assert set(MAP_IDS) == set(MAPS), f"MAP_IDS: every map needs its id - {set(MAPS) ^ set(MAP_IDS)}"
 # own_place is for the older maps: a newer one's panel placer moves it already (placer)
 assert not [k for k, m in MAPS.items() if m.own_place and m.place], "own_place: a map with a placer of its own"
+# a map opening on part of its map is placed by its id, and needs what opens it
+assert not [k for k, m in MAPS.items() if (m.launch_cut is not None) != bool(m.own_place and m.opens)], \
+    "launch_cut: with own_place and opens, and only then"
 
 
 def drawn_height(key):
@@ -802,11 +812,13 @@ def const(key):
 
 
 def place_actions(key, indent):
-    """The SetAnchors that put the minimap where this map wants it."""
+    """The SetAnchors that put the minimap where this map wants it - at load, for a map that
+    opens on part of its map (launch_cut)."""
     t = T * indent
+    bottom = f"#FCJH_MINIMAP_LAUNCH_{key.upper()}" if MAPS[key].launch_cut is not None else const(key)
     out = (f'{t}<Action type="SetAnchor" frame="{MINIMAP}" side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_L"/>\n'
            f'{t}<Action type="SetAnchor" frame="{MINIMAP}" side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_R"/>\n'
-           f'{t}<Action type="SetAnchor" frame="{MINIMAP}" side="Bottom" relative="$GameUI" pos="Max" offset="{const(key)}"/>\n')
+           f'{t}<Action type="SetAnchor" frame="{MINIMAP}" side="Bottom" relative="$GameUI" pos="Max" offset="{bottom}"/>\n')
     return out + (f"{t}{MAPS[key].fix}\n" if MAPS[key].fix else "")
 
 
@@ -1060,7 +1072,52 @@ def on_map(key, reader=MAP_ID_READER):
     return f'<When type="Property" frame="{reader}" StringValue="{MAP_IDS[key]}"/>'
 
 
-def id_placers():
+GLIDE_S = 1.0         # seconds the minimap takes to glide to its place (opens)
+GLIDE_STEPS = 10      # keys along it, eased in and out
+
+
+def glide(key, ends, indent):
+    """A map that opens on part of its map (launch_cut): when its `opens` frame first shows,
+    the minimap glides up to its place, and stays for the rest of the game (user, 2026-10-09).
+    ends: (from, to), the minimap's bottom in units from FCJH_Minimap's own anchor ([minimap]
+    bottom) - a relative Anchor controller counts from the anchor in the layout, NOT from where
+    a state's SetAnchor put it: counted from the launch place, the map went 125 px too high
+    (user, 2026-10-09: the first keys ran 0 -> -183, and it stopped at the shared place - 183). The script shows the frame while the panel is up, every time the objective
+    comes round (Haunted Mines' skull counts, at each mines opening): "Open" sends the glide
+    while it shows, unless FCJH_Opened is up - the glide puts that up, for good, so the next
+    time nothing plays. Its first key is the launch place, so it starts where the map sits;
+    end="Pause" holds its last key."""
+    t = T * indent
+    ease = lambda f: f * f * (3 - 2 * f)
+    keys = "".join(f'{t}\t\t<Key type="Curve" time="{round(GLIDE_S * n / GLIDE_STEPS, 2)}" '
+                   f'value="{round(ends[0] + (ends[1] - ends[0]) * ease(n / GLIDE_STEPS))}"/>\n'
+                   for n in range(GLIDE_STEPS + 1))
+    return (f'{t}<!-- {MAPS[key].title}: the whole map once {MAPS[key].opens.split("/")[-1]} first shows, gliding up (maps.glide) -->\n'
+            f'{t}<Frame type="Frame" name="FCJH_Opened">\n'
+            f'{t}\t<Anchor relative="$parent"/>\n{t}\t<Visible val="false"/>\n{t}\t<AcceptsMouse val="false"/>\n'
+            f'{t}</Frame>\n'
+            f'{t}<Animation name="FCJH_Glide">\n'
+            f'{t}\t<Event event="FCJH_Open" action="Play"/>\n'
+            f'{t}\t<Controller type="Anchor" end="Pause" side="Bottom" relative="true" frame="{MINIMAP}">\n'
+            + keys +
+            f'{t}\t</Controller>\n'
+            f'{t}\t<Controller type="Visibility" end="Pause" frame="FCJH_Opened">\n'
+            f'{t}\t\t<Key type="Bool" time="0" value="true"/>\n'
+            f'{t}\t</Controller>\n'
+            f'{t}</Animation>\n'
+            f'{t}<StateGroup name="FCJH_Open">\n'
+            f'{t}\t<DefaultState val="Shut"/>\n'
+            f'{t}\t<State name="Open">\n'
+            f'{t}\t\t{on_map(key, "$parent/FCJH_MapId")}\n'
+            f'{t}\t\t<When type="Property" frame="{MECHANICS}/{MAPS[key].opens}" Visible="true"/>\n'
+            f'{t}\t\t<When type="Property" frame="$this/FCJH_Opened" Visible="false"/>\n'
+            f'{t}\t\t<Action type="SendEvent" frame="$this" event="FCJH_Open"/>\n'
+            f'{t}\t</State>\n'
+            f'{t}\t<State name="Shut"/>\n'
+            f'{t}</StateGroup>\n')
+
+
+def id_placers(glides):
     """The older maps' own minimap places from the match's start. Their panels exist on every
     map, so a panel can't tell its map apart - Blizzard's map id can: a DataRefFrame reads the
     script variable (Spazzo's way, CustomPanelSpazzo), and each map's one state matches its id.
@@ -1077,6 +1134,7 @@ def id_placers():
     for key, m in MAPS.items():
         if m.own_place:
             out += (f'{t}<Frame type="Frame" name="FCJH_MinimapPlace{MAP_IDS[key].replace(" ", "")}">\n'
+                    + (f'{t}\t<Anchor relative="$parent"/>\n' if m.opens else "") +   # the glide's frame, as FCJH_TownWatch
                     f'{t}\t<AcceptsMouse val="false"/>\n'
                     f'{t}\t<StateGroup name="FCJH_Place">\n'
                     f'{t}\t\t<DefaultState val="Other"/>\n'
@@ -1086,6 +1144,7 @@ def id_placers():
                     f'{t}\t\t</State>\n'
                     f'{t}\t\t<State name="Other"/>\n'
                     f'{t}\t</StateGroup>\n'
+                    + (glide(key, glides[key], 3) if m.opens else "") +
                     f'{t}</Frame>\n')
     return out
 
@@ -1152,12 +1211,13 @@ def diag():
     return f'{t}<!-- DIAGNOSTIC (maps.diag): older maps\' UI from the start -->\n' + out
 
 
-def layout(header, at, down, bottoms):
+def layout(header, at, down, bottoms, glides):
     """FCJH_Maps.StormLayout. at: (frame, across pos, down pos), where the plates are anchored -
     the stacks' constants run from there, as the plates' do (gen.py PLATES_AT). down: {map key:
     units}, how much lower each map's panel goes (layout.toml [minimap.panel_nudge]). bottoms:
     the minimap's bottom, units from the screen's: {None: the shared place, map key: its own}
-    (gen.py minimap_bottoms)."""
+    (gen.py minimap_bottoms). glides: {map key: (from, to)}, the minimap's bottom at load and in
+    full, units from the shared place, for a map that opens on part of its map (launch_cut; glide)."""
     return header + f'''
 	<!-- Each battleground's own UI on our screen (tools/maps.py, which says how a map's UI works).
 
@@ -1176,6 +1236,6 @@ def layout(header, at, down, bottoms):
 			<Frame type="Frame" name="ConsoleUIContainer">
 {core_panels(down, at, bottoms)}			</Frame>
 		</Frame>
-{id_placers()}{diag()}	</Frame>
+{id_placers(glides)}{diag()}	</Frame>
 ''' + "".join(f"\t<!-- ===== {MAPS[k].title}{(': ' + MAPS[k].notes) if MAPS[k].notes else ''} ===== -->\n"
               + map_file(k, at, down) for k in MAPS if MAPS[k].file) + "</Desc>\n"
