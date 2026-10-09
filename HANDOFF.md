@@ -426,6 +426,21 @@ Braxis Holdout, Haunted Mines - adjusting each map's minimap and panels with it,
    itself (an inspected hero dying?) while Blizzard's parked one still reads visible.
    Likely fix: move the empty slots onto the card (they hide with it; the command card
    draws over the card, so the buttons still cover them), hero-only via `shape()`.
+   **Later, a simplification (user, 2026-10-09):** treat this and the resource tooltip
+   refresh (item 14) as one problem.
+   - **One controller.** Blizzard's hidden inspector is the single source of truth (round 9),
+     and everything of ours derives from it.
+   - **No second opinions:**
+     - our card is a TargetInfoFrame, so the game can show or hide it by itself;
+     - the gate copies state onto pieces (by SetProperty and SetAnchor) instead of having
+       them follow it.
+   - **One missing input: a swap signal.** The inspector stays visible across a hero swap, so
+     nothing reruns the tooltip states. A swap state is needed, closed -> open, like Blizzard's
+     per-target rebuild.
+   - **Prove the swap signal with a diagnostic first.** Does a label's text change alone rerun
+     a group? That is memory rule 26, unverified.
+   - **Keep the command card and its tooltips.** They are the commentators' only live ability
+     data (user).
 7. **Parked:** the resource tooltip refresh; blue's curse mirror (unseen).
 
 **Earlier next** (end of the 2026-10-05 session):
