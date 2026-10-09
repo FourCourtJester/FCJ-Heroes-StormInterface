@@ -415,8 +415,18 @@ Braxis Holdout, Haunted Mines - adjusting each map's minimap and panels with it,
    (`launch_cut`/`opens`, `on_map`).
 5. **Once the map pass settles:** remove the diagnostic (`maps.diag`, `DIAG_*`,
    `FCJH_DiagMapId`) in one clean rewrite. Until then it reads each map's id - useful for 3-4.
-6. **Parked:** the resource tooltip refresh; blue's curse mirror (unseen); a damage meter
-   (idea only - a DataRefFrame can read `Score`).
+6. **Inspect card, intermittent (user, 2026-10-09):** on hero inspects only, now and then the
+   ability BORDERS keep showing after the card hides. Not pinned down yet: next time, a
+   screenshot of it. Lead (unconfirmed): the only border-like art that can show without a
+   unit is ours, the empty-slot frames under Q W E R (`FCJH_EmptySlot*`,
+   `inspect_card.command_panel`). They live in Blizzard's command card, not on the card, and a
+   button with no unit is Cleared (alpha 0) but our frames aren't. So if the card hides while
+   the gate (`FCJH_Gate`) is still "Hero", the command card stays on screen and only those
+   frames show. Suspects for the gate missing it: the engine hiding our TargetInfoFrame
+   itself (an inspected hero dying?) while Blizzard's parked one still reads visible.
+   Likely fix: move the empty slots onto the card (they hide with it; the command card
+   draws over the card, so the buttons still cover them), hero-only via `shape()`.
+7. **Parked:** the resource tooltip refresh; blue's curse mirror (unseen).
 
 **Earlier next** (end of the 2026-10-05 session):
 
