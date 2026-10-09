@@ -881,9 +881,23 @@ def spot_name(a):
 # and hexagon art; nothing of a map's own (user, 2026-10-09: the golems' double health bar, Braxis's
 # beacons and zerg HUD keep only their placement). NOT_BANNERS: followers that aren't one.
 NOT_BANNERS = ("GolemModeFrame",)
+# Banners whose sides a state moves - the curse, between red's layout and blue's (cursed_side):
+# the fade only. A relative Anchor controller counts from the LAYOUT anchor, not a state's
+# SetAnchor, and end="Pause" holds it (Haunted Mines' glide, 2026-10-09): the slide would
+# have pinned the curse to red's spot and Blizzard's bar layout after its first intro. The
+# tribute too: cursed_side moves it with the curse, whose hexagon on blue hangs off the tribute's.
+FADE_ONLY = ("CurseFrame", "TributeSpawnFrame")
 
 
-def intro(indent):
+def intro(indent, slide=True):
+    if not slide:
+        t = T * indent
+        return (f'{t}<Animation name="FCJH_Intro">\n'
+                f'{t}\t<Event event="OnShown" action="Restart,Play"/>\n'
+                f'{t}\t<Event event="OnShown" action="Restart,Play" frame="$parent"/>\n'
+                f'{t}\t<Controller type="Fade" end="Pause">\n'
+                + "".join(f'{t}\t\t<Key type="Curve" time="{k}" value="{v}"/>\n' for k, v in ((0, 0), (".2", 255), (".4", 255)))
+                + f'{t}\t</Controller>\n{t}</Animation>\n')
     t = T * indent
     curve = lambda *keys: "".join(f'{t}\t\t<Key type="Curve" time="{k}" value="{v}"/>\n' for k, v in keys)
     slide = lambda sd, frame="": (f'{t}\t<Controller type="Anchor" end="Pause" side="{sd}" relative="true"'
@@ -921,10 +935,11 @@ def alert_frame(team, column, i, at, indent=2):
                 + stack_states(team, column, i, ["$this"], at, indent + 1, a.kind) + f'{t}</Frame>\n')
         if a.spot_only:
             return out
-        out += frame(a.name, 0) + intro(indent + 1) + a.extra + f"{t}</Frame>\n"
+        out += frame(a.name, 0) + intro(indent + 1, a.name not in FADE_ONLY) + a.extra + f"{t}</Frame>\n"
         # frames whose art hangs off this one's (their own box reaching `up` higher)
         for name_, up, xml in a.followers:
-            out += frame(name_, up) + ("" if name_ in NOT_BANNERS else intro(indent + 1)) + xml + f"{t}</Frame>\n"
+            out += (frame(name_, up) + ("" if name_ in NOT_BANNERS else intro(indent + 1, name_ not in FADE_ONLY))
+                    + xml + f"{t}</Frame>\n")
         return out
     out += f'{t}<Frame type="Frame" name="{a.name}"' + (f' template="{a.template}"' if a.template else "") + ">\n"
     out += "".join(f"{t}{line}\n" for line in spot.splitlines())

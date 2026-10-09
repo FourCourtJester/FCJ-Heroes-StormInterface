@@ -70,22 +70,6 @@
 									<Key type="Curve" time=".2" value="255"/>
 									<Key type="Curve" time=".4" value="255"/>
 								</Controller>
-								<Controller type="Anchor" end="Pause" side="Left" relative="true">
-									<Key type="Curve" time="0" value="50"/>
-									<Key type="Curve" time=".1" value="0"/>
-									<Key type="Curve" time=".4" value="0"/>
-								</Controller>
-								<Controller type="Anchor" end="Pause" side="Right" relative="true">
-									<Key type="Curve" time="0" value="50"/>
-									<Key type="Curve" time=".1" value="0"/>
-									<Key type="Curve" time=".4" value="0"/>
-								</Controller>
-								<Controller type="Anchor" end="Pause" side="Left" relative="true" frame="BackgroundImage">
-									<Key type="Curve" time="0" value="350"/>
-									<Key type="Curve" time=".1" value="350"/>
-									<Key type="Curve" time=".3" value="0"/>
-									<Key type="Curve" time=".4" value="0"/>
-								</Controller>
 							</Animation>
 							<StateGroup name="FCJH_CursedSide">
 								<DefaultState val="Red"/>
@@ -166,22 +150,6 @@
 									<Key type="Curve" time="0" value="0"/>
 									<Key type="Curve" time=".2" value="255"/>
 									<Key type="Curve" time=".4" value="255"/>
-								</Controller>
-								<Controller type="Anchor" end="Pause" side="Left" relative="true">
-									<Key type="Curve" time="0" value="50"/>
-									<Key type="Curve" time=".1" value="0"/>
-									<Key type="Curve" time=".4" value="0"/>
-								</Controller>
-								<Controller type="Anchor" end="Pause" side="Right" relative="true">
-									<Key type="Curve" time="0" value="50"/>
-									<Key type="Curve" time=".1" value="0"/>
-									<Key type="Curve" time=".4" value="0"/>
-								</Controller>
-								<Controller type="Anchor" end="Pause" side="Left" relative="true" frame="BackgroundImage">
-									<Key type="Curve" time="0" value="350"/>
-									<Key type="Curve" time=".1" value="350"/>
-									<Key type="Curve" time=".3" value="0"/>
-									<Key type="Curve" time=".4" value="0"/>
 								</Controller>
 							</Animation>
 							<Frame type="Label" name="FCJH_CurseText">

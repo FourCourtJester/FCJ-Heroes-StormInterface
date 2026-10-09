@@ -68,7 +68,8 @@ drawn by OBS over empty regions the interface leaves (§6).
   empty slots await the final pass (§7 items 3, 14).
 - **Kill feed** — Blizzard's own, top-left. **Minimap** bottom-centre, placed per map with
   each map's objective panel round it and a team's alerts stacked on its side (§7 item 8;
-  Towers of Doom passed QA on the per-map system 2026-10-06, the rest a first pass). **Replay controls**
+  Towers of Doom passed QA on the per-map system 2026-10-06, the rest a first pass; since
+  2026-10-09 every map can be told apart from load by Blizzard's map id - §7 "Next"). **Replay controls**
   top-left with a tab when collapsed (replays only). Blizzard's player HUD never shows; its
   talent picker is left to the game: held Ctrl shows it, steady, only in a player's view
   (1-8 keys), not when following from a plate click - as in Ahli's and Spazzo's UIs (§3;
@@ -383,7 +384,41 @@ land on whole pixels at 1080p (`inspect_card.line`), so at 1440p they may come o
 
 ## 7. What's next
 
-**Next** (end of the 2026-10-05 session; start here):
+**Next (2026-10-09; start here).** Map-specific tech is established (item 8, "Map-specific
+tech"). The plan (user): go over the four working maps - Towers of Doom, Cursed Hollow,
+Braxis Holdout, Haunted Mines - adjusting each map's minimap and panels with it, before new maps.
+
+1. **Look in game at what's built but unseen** (build 2026-10-09 evening):
+   - Haunted Mines: the corrected glide - no jump as it starts, the mines' bottom stopping on the
+     padding line, the skull counts riding along, the "Needed" plaque just above the map;
+     at the SECOND mines opening the map stays put.
+   - Cursed Hollow: the tribute and curse banners now FADE in without sliding - check both
+     land on their spots every time, the curse on red's side and (if a replay has one) on blue's.
+2. **Banners stay put - check on each map in the pass:** every bar's bottom on the one place
+   (`[map_alerts] above_core`), the tip on the plates' inner edge, with and without the core
+   bar, and the intros (tribute, curse, zerg, mines) not shifting them. By the code they can't
+   move with the minimap: all 90 banner anchors and stack moves are to the screen (checked
+   2026-10-09). Any banner whose sides a STATE moves must stay fade-only (`maps.FADE_ONLY`).
+3. **The four working maps, map by map (map-id tech):**
+   - **Haunted Mines** - finish: the launch cut (`[minimap.launch_nudge]`), the glide, the plaque,
+     `[minimap.panel_nudge]` (-11, tuned before the two views).
+   - **Cursed Hollow** - give it `own_place=True`: off the shared place, its own. Its approved
+     look had the map's bottom on the screen's edge: `[minimap.nudge] cursed_hollow = 20` keeps
+     that. Its id is SPAZZO-only: read it on the diagnostic first.
+   - **Braxis Holdout** - its panel placer stays; check the minimap from 0:00, the electric
+     line's last 2 px, nothing else under the map.
+   - **Towers of Doom** - done; a look that nothing changed.
+4. **Then the other older maps** - Blackheart's Bay, Dragon Shire, Garden of Terror: read each
+   id on the diagnostic, `own_place=True`, tune nudge/panel_nudge. Then the newer maps' QA
+   (Alterac, Battlefield, Hanamura - its ICON art unmeasured -, Shrines, Sky Temple, Tomb,
+   Volskaya, Warhead). Any map could get a two-view or other per-map behaviour the same way
+   (`launch_cut`/`opens`, `on_map`).
+5. **Once the map pass settles:** remove the diagnostic (`maps.diag`, `DIAG_*`,
+   `FCJH_DiagMapId`) in one clean rewrite. Until then it reads each map's id - useful for 3-4.
+6. **Parked:** the resource tooltip refresh; blue's curse mirror (unseen); a damage meter
+   (idea only - a DataRefFrame can read `Score`).
+
+**Earlier next** (end of the 2026-10-05 session):
 
 Waiting on a look in game: the short inspect card without its resource slot. (Blizzard's
 talent picker, left to the game: seen 2026-10-06 never coming up on its own in a player's
@@ -573,12 +608,12 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
      `CustomMiniMap` texture, read from the map archives in Battle.net's cache (the
      battlegrounds aren't in the game's storage; our `mpq.py` reads them), fitted 380 px wide
      (Towers of Doom, measured: ~380 x 252, y 810-1062; the model gives 260 tall). Tall maps
-     rise (Haunted Mines 380 px tall, top at 680); wide ones sink (Braxis 224 px). Moved by a
-     frame inside the map's panel (`FCJH_MinimapPlace`: SetAnchor when its panel shows); the
-     older five by one StateGroup on the minimap keyed to which core panel shows (a "Loading"
-     state holds still while all five show at load). `[minimap.nudge]` in layout.toml, px per
-     map, for fine-tuning; `[minimap.panel_nudge]` moves only the panel's parts (both px, +
-     lowers). The ARAM maps (no panel) keep `[minimap] bottom`.
+     rise (Haunted Mines 380 px tall, top at 680); wide ones sink (Braxis 224 px). Moved from
+     load, no jitter (2026-10-09): a newer map by a placer inside its own panel
+     (`maps.placer`); an older map by **Blizzard's map id** (`maps.id_placers`, below) once it has
+     `own_place=True` - until then it shares `[minimap] bottom`. `[minimap.nudge]` in
+     layout.toml, px per map, for fine-tuning; `[minimap.panel_nudge]` moves only the panel's
+     parts (both px, + lowers). The ARAM maps (no panel) keep `[minimap] bottom`.
    - **Each map's panel on our minimap:** every part Blizzard placed from the screen's
      bottom-right corner (where its minimap was) is restated from our minimap's corner, at the
      same distance as it stood from Blizzard's minimap on that map (`maps.on_minimap`). So the
@@ -636,18 +671,37 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    where that language's Towers "Altars activate in:" has one (`CURSE_COLONS`, its own label;
    Chinese takes "："; blue's "Equipo azul maldito" is both Spanishes', left without). Blue's
    count, like blue's curse, not yet seen (item 14).
-   **Still to do, later (user, 2026-10-06):** **map jitter** - on the older five maps the minimap moves only when the
-   script first shows the map's panel (Cursed Hollow: when the first tribute countdown
-   starts, ~2:30), the only per-map signal found so far; until then it sits at `[minimap]
-   bottom`. **Built 2026-10-09 (user: remove all jitter), to verify:** a newer map places the minimap
-   as soon as its panel exists (a placer inside it with one unconditional state, `maps.placer`;
-   the panel exists only on that map, shown or hidden), not when it first shows (Braxis's script hides its panel
-   while idle, so it jittered too). The older five's panels exist on every map, so they don't
-   move: they share `[minimap] bottom` (1141 = Cursed Hollow's approved place; Blackheart's,
-   Dragon Shire and Garden land 1061-1076) and are tuned by their objective pieces
-   (`[minimap.panel_nudge]`; gen refuses a `[minimap.nudge]` for them). **Haunted Mines** (380 px)
-   hangs ~54 px off the bottom there - decide at its QA. To check: that the placer runs while its panel is
-   hidden (if not, the newer maps still jump when their panel shows).
+   **Map-specific tech - SOLVED 2026-10-09 (the breakthrough).** The older five's panels are
+   Blizzard's core ones, on every map, hidden at load - no panel tells them apart, and the
+   first one shows at the first objective (the old jitter). **Blizzard's map id does, from
+   load:** a `DataRefFrame` reading the script variable `libCore_gv_mAPMapStringID` (Spazzo's
+   way), tested with `<When type="Property" frame="..." StringValue="HauntedMines"/>`. Read on
+   screen: `HauntedMines`, `BraxisHoldout`. In code:
+   - `maps.MAP_IDS` - every map's id and where it's from (read in GAME, Blizzard's SCRIPT, or
+     SPAZZO only - read a SPAZZO one with the diagnostic's "map id" row before relying on it).
+     Odd ones: Garden `HauntedWoods`, Tomb `Crypts`, Sky Temple `ControlPoints`, Warhead
+     `Warhead Junction` (a space).
+   - `maps.id_placers` - the reader and each map's state group, at GameUI level: **always
+     shown** (the same inside HM's hidden core panel never fired). DefaultState on the
+     unconditioned state (memory rule 27).
+   - `maps.on_map(key)` - the condition, for any other per-map state.
+   - **Converting an older map is one line:** `own_place=True` on its entry; its
+     `[minimap.nudge]` then applies (gen refuses one without). Converted: Haunted Mines.
+   - Can't: a map-only layout file of our own (ours load everywhere); Galaxy scripts (not
+     an interface component, and replays re-simulate them). Newer maps keep their panel
+     placers (proven); the map id would work for them too.
+   **Haunted Mines - two views (built 2026-10-09; first half seen working):** at load only the
+   surface (`launch_cut` -8: the surface's bottom 8 px above the drawn map's middle, the mines'
+   top 35 below - measured), its bottom on the padding line (`[minimap.launch_nudge]`), the
+   mines under the screen. When the mines first open (the script shows `SkullModeFrame`) the
+   minimap glides up over 1 s (`maps.glide`, eased) to the whole map on the line
+   (`[minimap.nudge]` 34), and stays: the glide raises `FCJH_Opened`, which stops later openings
+   replaying it. The skull counts ride with the minimap; the "Needed" plaque is fixed to the
+   screen for the whole-map view. **A relative Anchor controller counts from the frame's LAYOUT
+   anchor, not from a state's SetAnchor** - the first glide stopped 125 px high (memory rule
+   28); its keys now run launch-minus-shared to place-minus-shared. The same rule made the
+   tribute's and the curse's intros fade-only (`maps.FADE_ONLY`): `cursed_side` moves their
+   sides, and a paused slide would have held them on red's spot.
    **Braxis Holdout (in QA, 2026-10-09):** the zerg wave banner at the standard place (art
    measured, `HOLDOUT_BOX`); the panel above the map 4 lower (`[minimap.panel_nudge]`). The
    beacon dishes (Blizzard pinned them under its own minimap, off our screen) are re-anchored
@@ -769,8 +823,8 @@ commits around it).
       10: Cataclysm, the level-10 ability, or both;
     - **the D.Va and Viking guesses** in `inspect_card.ALSO`;
     - **rows with fewer than five heroes** (a 3v3 or 1v1 replay);
-    - **every map**: the map objectives, the minimap per map (item 8); **map jitter** on the
-      older five maps (item 8, Cursed Hollow's "still to do");
+    - **every map**: the map objectives, the minimap per map (item 8; the jitter is solved -
+      map id, 2026-10-09), and each SPAZZO-only map id read on the diagnostic;
     - **Cursed Hollow, blue cursed** (item 8): the banner on blue's side, left of the map,
       ending at the map's edge, its text and timer inside the art - not yet seen (user,
       2026-10-06: red's looks great);
