@@ -389,9 +389,8 @@ tech"). The plan (user): go over the four working maps - Towers of Doom, Cursed 
 Braxis Holdout, Haunted Mines - adjusting each map's minimap and panels with it, before new maps.
 
 1. **Look in game at what's built but unseen** (build 2026-10-09 evening):
-   - Haunted Mines: the corrected glide - no jump as it starts, the mines' bottom stopping on the
-     padding line, the skull counts riding along, the "Needed" plaque just above the map;
-     at the SECOND mines opening the map stays put.
+   - Haunted Mines: the glide WORKS (user, 2026-10-09). Still to see: the map stays put at the
+     SECOND mines opening; the "Needed" plaque just above the map.
    - Cursed Hollow: the tribute and curse banners now FADE in without sliding - check both
      land on their spots every time, the curse on red's side and (if a replay has one) on blue's.
 2. **Banners stay put - check on each map in the pass:** every bar's bottom on the one place
@@ -715,7 +714,7 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    - Can't: a map-only layout file of our own (ours load everywhere); Galaxy scripts (not
      an interface component, and replays re-simulate them). Newer maps keep their panel
      placers (proven); the map id would work for them too.
-   **Haunted Mines - two views (built 2026-10-09; first half seen working):** at load only the
+   **Haunted Mines - two views (2026-10-09; the launch view and the glide seen working - user: "Glide worked great"):** at load only the
    surface (`launch_cut` -8: the surface's bottom 8 px above the drawn map's middle, the mines'
    top 35 below - measured), its bottom on the padding line (`[minimap.launch_nudge]`), the
    mines under the screen. When the mines first open (the script shows `SkullModeFrame`) the
