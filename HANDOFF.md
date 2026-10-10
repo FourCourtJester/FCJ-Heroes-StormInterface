@@ -408,9 +408,9 @@ Braxis Holdout, Haunted Mines - adjusting each map's minimap and panels with it,
      correct, the tribute and curse fading in. It's the BASELINE (user): `[minimap] bottom` is
      its place, so it keeps no `own_place`; the other older maps get their own. Changing
      `[minimap] bottom` moves Cursed Hollow and the ARAM maps.
-   - **Braxis Holdout** - its panel placer stays; check the minimap from 0:00, the electric
-     line's last 2 px, nothing else under the map.
-   - **Towers of Doom** - done; a look that nothing changed.
+   - **Braxis Holdout - DONE (user, 2026-10-09).** Its panel placer stays.
+   - **Towers of Doom - DONE (user, 2026-10-09).**
+   **The four working maps are done.**
 4. **Then the other older maps** - Blackheart's Bay, Dragon Shire, Garden of Terror: read each
    id on the diagnostic, `own_place=True`, tune nudge/panel_nudge. Then the newer maps' QA
    (Alterac, Battlefield, Hanamura - its ICON art unmeasured -, Shrines, Sky Temple, Tomb,
@@ -730,7 +730,7 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    28); its keys now run launch-minus-shared to place-minus-shared. The same rule made the
    tribute's and the curse's intros fade-only (`maps.FADE_ONLY`): `cursed_side` moves their
    sides, and a paused slide would have held them on red's spot.
-   **Braxis Holdout (in QA, 2026-10-09):** the zerg wave banner at the standard place (art
+   **Braxis Holdout (DONE 2026-10-09):** the zerg wave banner at the standard place (art
    measured, `HOLDOUT_BOX`); the panel above the map 4 lower (`[minimap.panel_nudge]`). The
    beacon dishes (Blizzard pinned them under its own minimap, off our screen) are re-anchored
    from the screen, not moved with their frame (moving `RadarDishModeFrame` hid them - a frame
