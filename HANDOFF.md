@@ -409,15 +409,20 @@ Braxis Holdout, Haunted Mines - adjusting each map's minimap and panels with it,
      its place, so it keeps no `own_place`; the other older maps get their own. Changing
      `[minimap] bottom` moves Cursed Hollow and the ARAM maps.
    - **Braxis Holdout - in progress.** Id read in game (`BraxisHoldout`); its zerg banner
-     slides in (correct: only the tribute and curse are fade-only). **Compacting, planned
-     (user, 2026-10-09):** the % labels into the hexagons above them (team-glow style, as the
-     skull counts, over the zerg heads); the beacon dishes onto the hexagons' outer diagonal
-     edges; everything down ~20 px - "BEACON PROGRESS" is then the lowest piece (~y 825, the
-     map's top ~843): tuck it between the hexagons, or ~12-15 px is the most. The electric
-     line (shown while one team holds both): removed, or repurposed - "shoot it into the
-     hexagons when charging" (user); e.g. still dish to dish, but under the hexagons and bar,
-     so only the beams from each dish into its hexagon show. Its map's visual bottom ~1047
-     at 1080p: ~18 px of room above the floor.
+     slides in (correct: only the tribute and curse are fade-only). **Compacting, first build
+     (2026-10-09; maps.py BEACON_ICONS / ZERG_WORDS), to look at in game:**
+     - the % labels inside their hexagons, their letters' middle 19 px under the centre;
+     - the dishes against each hexagon's lower outer edge (rings tangent, 2 px off), anchored
+       to the hexagons (BossDuelLeftFrame/BossHudLeft, /BossHudRight), so they follow the HUD;
+     - the electric line repurposed: the script shows blue's pair (Link1-2) while BLUE holds
+       both beacons and red's (3-4) while red does - so each team's beam runs from its dish
+       into its own hexagon, over it (RadarDishModeFrame raised to 600), turned 29.3 deg by
+       Rotation. Unknowns to check: the turn's direction and pivot, the texture's height (61
+       assumed);
+     - "BEACON PROGRESS" and the wave's "Enemy Zerg" above the bar, on Blizzard's "Allied
+       Zerg" row; the whole HUD 20 px lower (`[minimap.panel_nudge] braxis_holdout = 24`);
+     - the mechanics panel no longer goes under the minimap (that was for the old line).
+     Its map's visual bottom ~1047 at 1080p: ~18 px of room above the floor.
    - **THE FLOOR, every map (user, 2026-10-09):** no map's visual bottom edge (its art's
      outline, not the texture box or unit icons) may sit lower than Cursed Hollow's: y ~1065
      at 1080p (`[minimap] floor`). Haunted Mines is within it.

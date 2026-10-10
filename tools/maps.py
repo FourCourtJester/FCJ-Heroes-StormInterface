@@ -23,6 +23,7 @@ How a map's UI works (from the game files, 2026-10-06):
     minimap per map with a MinimapPanel override in the map's file, which may load after ours -
     the SetAnchors win either way.
 """
+import math
 from dataclasses import dataclass, field
 from itertools import combinations
 
@@ -300,47 +301,81 @@ ALERT_ART["HOLDOUT"] = Art(HOLDOUT_BOX[2] - HOLDOUT_BOX[0], 0, height=HOLDOUT_BO
 # head stands CURSE_UP higher.
 ALERT_ART["BANNER"] = Art(TRIBUTE_BOX[2] - TRIBUTE_BOX[0], 0, bar_up=24, below=24,
                           height=TRIBUTE_BOX[3] - TRIBUTE_BOX[1] + CURSE_UP)
-# Braxis's two beacon dishes (RadarDishModeFrame, which fills the panel; ~100 px square, which
-# team holds each beacon): one on each of the map's bottom corners, inside the map, the bottom of
-# each dish's RING on the plates' bottom edge, the padding line (user, 2026-10-09; the image
-# reaches BEACON_MARGIN_PX past its ring, measured) - as Cursed Hollow's tribute counts sit on
-# its corners.
-# Blizzard pinned them under its own minimap, off our screen's bottom. Placed from the screen
-# (FCJH_MINIMAP_DRAWN_*: every map draws DRAWN_PX wide, centred), not their frame: moving the
-# frame hid them (a frame draws only inside its box). The top lane's three (Off / Order /
-# Chaos) carry the left dish's place; the bottom lane's are anchored to the top lane's Off
-# icon's bottom, and take the right corner.
-BEACON_W_PX, BEACON_H_PX = 99, 117   # a dish image at Blizzard's size (ring 72 across)
+# Braxis's zerg HUD, compacted (user, 2026-10-09). Observers see BossDuelLeftFrame: blue's
+# hexagon BossHudLeft on the left, red's BossHudRight on the right, the progress bars between.
+# Each hexagon at 1080p (screenshot 2026-10-09 21:38): 99 x 76 px, pointed at its sides, its
+# bottom corners 24 px in from its points; its image's box matches the art to ~2 px (worked out
+# from holdout.stormlayout), so the image's Mid is the hexagon's centre. Everything below is
+# placed from that centre, in px.
+HEX_W_PX, HEX_H_PX, HEX_CORNER_IN_PX = 99, 76, 24
+HEX = {"Top": "$parent/$parent/BossDuelLeftFrame/BossHudLeft",       # from RadarDishModeFrame's parts
+       "Bottom": "$parent/$parent/BossDuelLeftFrame/BossHudRight"}
+# The two beacon dishes (which team holds each beacon; Top = the top lane's, on the left): each
+# against its hexagon's lower outer edge, its ring that edge's tangent (user, 2026-10-09). They
+# used to sit on the map's bottom corners; anchored to the hexagons, they follow the HUD.
+BEACON_W_PX, BEACON_H_PX = 99, 117   # a dish image at Blizzard's size (ring 72 across, centred across it)
 BEACON_MARGIN_PX = 22   # ...its transparent space under its ring
-BEACON_SIDE_PX = 13.5   # ...and beside it
-BEACON_SCALE = 0.9      # drawn at 90% (user, 2026-10-09); the margins above scale with it
-BEACON_PAD_PX = 17      # each ring this far in from its team's inner plate - Leoric's, Nova's (user,
-                        # 2026-10-09: on the corners they covered the map; then 6 more inward, 5 more...)
-BEACON_DROP_PX = 6      # ...and the rings' bottom this far under the padding line
-BEACON_LINE_DROP_PX = 12  # the line between them this far under Blizzard's place on the dishes: along
-                          # the map's bottom edge, not through it (user, 2026-10-09: 10, then 2 more)
+BEACON_SCALE = 0.9      # drawn at 90% (user, 2026-10-09); the ring and margin scale with it
+BEACON_GAP_PX = 2       # each ring this far off its hexagon's edge
+_RING = 72 * BEACON_SCALE / 2
+_EDGE = (HEX_CORNER_IN_PX, HEX_H_PX / 2)               # the left hexagon's lower outer edge, point to corner
+_OUT = (-_EDGE[1] / math.hypot(*_EDGE), _EDGE[0] / math.hypot(*_EDGE))   # ...facing out (left, down)
+BEACON_AT_PX = tuple(round(e / 2 + o * (_RING + BEACON_GAP_PX) + (-HEX_W_PX / 2 if i == 0 else 0), 1)
+                     for i, (e, o) in enumerate(zip(_EDGE, _OUT)))   # the left ring's centre (-66.6, 37.4); the right's mirrors it
+_DISH_SIDE = round((abs(BEACON_AT_PX[0]) + BEACON_W_PX * BEACON_SCALE / 2) / 0.9)   # its image's outer side
+_DISH_BOTTOM = round((BEACON_AT_PX[1] + _RING + BEACON_MARGIN_PX * BEACON_SCALE) / 0.9)
+# The electric line (HoldOutLink1-4; the script shows 1-2, blue's, while blue holds both beacons
+# and 3-4, red's, while red does - libscho MMHO lightning links): a beam from each team's dish
+# into its own hexagon while its zerg charge (user, 2026-10-09: "shoot it into the hexagons").
+# Drawn over the hexagon (RadarDishModeFrame raised over the BossDuel frames, its siblings) and
+# under the dish, from the ring's centre to the hexagon's; its mask fades both ends. Turned with
+# Rotation (degrees clockwise: Blizzard turns a down arrow left with 90, standardtemplates),
+# about its middle. Its height is the texture's own, ~61 units: Blizzard's line starts 35 down
+# a dish whose ring's centre is 65.6 down, so it's centred on the ring.
+BEAM_H = 61
+BEAM_LEN_PX = math.hypot(*BEACON_AT_PX)
+BEAM_TURN = round(math.degrees(math.atan2(BEACON_AT_PX[1], -BEACON_AT_PX[0])), 1)   # 29.3: the left beam turns back by it
+DISHES_OVER = 600       # RadarDishModeFrame's RenderPriority: over the BossDuel frames (512)
 _SIZE = (f'<Width val="#FCJH_MAP_BEACON_W"/><Height val="#FCJH_MAP_BEACON_H"/>'
          f'<Unclipped val="true"/></Frame>')
-BEACON_ICONS = "".join(
-    f'<Frame type="Image" name="HoldOutBeaconTop{s}"><Anchor side="Bottom" relative="$GameUI" pos="Max" '
-    f'offset="#FCJH_MAP_BEACON_B"/><Anchor side="Left" relative="$GameUI" pos="Mid" '
-    f'offset="#FCJH_MAP_BEACON_L"/>{_SIZE}' for s in ("Off", "Order", "Chaos")) + "".join(
-    f'<Frame type="Image" name="HoldOutBeaconBottom{s}"><Anchor side="Right" relative="$GameUI" pos="Mid" '
-    f'offset="#FCJH_MAP_BEACON_R"/>{_SIZE}' for s in ("Off", "Order", "Chaos")) + "".join(
-    # the electric line between the dishes, when one team holds both (four images, shown by the
-    # script; the user calls it its own element, 2026-10-09): Blizzard's start 32 inside the
-    # left dish, 35 down it, and run their texture's width - made for dishes 32 units apart.
-    # Ours are beside the plates: stretched across, its ends fade (its mask spans the frame,
-    # ~17% each end - measured in game), so it runs from the left dish's outer edge to the
-    # right's, UNDER them (Blizzard's 101, over the dishes' 100): the fades hide behind the
-    # rings and the line meets their edges. The 35 scales with the dishes.
-    f'<Frame type="Image" name="HoldOutLink{n}"><Anchor side="Top" relative="$parent/HoldOutBeaconTopOff" '
-    f'pos="Min" offset="{round(35 * BEACON_SCALE + BEACON_LINE_DROP_PX / 0.9)}"/><Anchor side="Left" '
-    f'relative="$parent/HoldOutBeaconTopOff" pos="Min" offset="0"/><Anchor side="Right" '
-    f'relative="$parent/HoldOutBeaconBottomOff" pos="Max" offset="0"/><RenderPriority val="99"/>'
-    f'<Unclipped val="true"/></Frame>' for n in range(1, 5))
+
+
+def _beam(n):
+    """HoldOutLink<n>'s box (before it turns), from its hexagon's centre: blue's 1-2, red's 3-4."""
+    side = -1 if n <= 2 else 1
+    cx, cy = side * abs(BEACON_AT_PX[0]) / 2 / 0.9, BEACON_AT_PX[1] / 2 / 0.9
+    half = BEAM_LEN_PX / 2 / 0.9
+    hexagon = HEX["Top" if n <= 2 else "Bottom"]
+    edge = lambda s, v: f'<Anchor side="{s}" relative="{hexagon}" pos="Mid" offset="{round(v)}"/>'
+    return (f'<Frame type="Image" name="HoldOutLink{n}">' + edge("Left", cx - half) + edge("Right", cx + half)
+            + edge("Top", cy - BEAM_H / 2) + edge("Bottom", cy + BEAM_H / 2)
+            + f'<Rotation val="{side * BEAM_TURN}"/><RenderPriority val="99"/><Unclipped val="true"/></Frame>')
+
+
+BEACON_ICONS = f'<RenderPriority val="{DISHES_OVER}"/>' + "".join(
+    f'<Frame type="Image" name="HoldOutBeaconTop{s}"><Anchor side="Bottom" relative="{HEX["Top"]}" pos="Mid" '
+    f'offset="{_DISH_BOTTOM}"/><Anchor side="Left" relative="{HEX["Top"]}" pos="Mid" '
+    f'offset="{-_DISH_SIDE}"/>{_SIZE}' for s in ("Off", "Order", "Chaos")) + "".join(
+    # the bottom lane's keep Blizzard's bottom, on the top lane's Off
+    f'<Frame type="Image" name="HoldOutBeaconBottom{s}"><Anchor side="Right" relative="{HEX["Bottom"]}" pos="Mid" '
+    f'offset="{_DISH_SIDE}"/>{_SIZE}' for s in ("Off", "Order", "Chaos")) + "".join(_beam(n) for n in range(1, 5))
+# The words on the HUD, in both BossDuel frames (the Right one is team 2's players'):
+#   - each % (LeftBossHealthLabel; the right one keeps Blizzard's bottom, on the left's) inside its
+#     hexagon, over the egg's foot: its letters' middle PCT_DOWN_PX under the centre (they sat
+#     58 px under it, under the hexagon). Its letters' middle is ~6 px above its box's bottom.
+#   - "BEACON PROGRESS" and the wave's "Enemy Zerg" ABOVE the bar, on the row Blizzard gives
+#     "Allied Zerg": under it they'd sit on the map once the HUD came down (user, 2026-10-09).
+PCT_DOWN_PX, PCT_LETTERS_UP_PX = 19, 6
+ZERG_WORDS = (f'<Frame type="Label" name="LeftBossHealthLabel"><Anchor side="Bottom" relative="$parent/BossHudLeft" '
+              f'pos="Mid" offset="{round((PCT_DOWN_PX + PCT_LETTERS_UP_PX) / 0.9)}"/></Frame>'
+              '<Frame type="Label" name="BeaconProgressLabel"><Anchor side="Top" relative="$parent/BackgroundImage" '
+              'pos="Min" offset="-15"/></Frame>'
+              '<Frame type="Label" name="EnemyZergLabel"><Anchor side="Bottom" relative="$parent/AlliedZergLabel" '
+              'pos="Max" offset="0"/></Frame>')
 # Raw XML per map, inside one of its panels' parts: {map key: {path: xml}} (map_file).
-PARTS = {"braxis_holdout": {"HoldOutPanel/RadarDishModeFrame": BEACON_ICONS}}
+PARTS = {"braxis_holdout": {"HoldOutPanel/RadarDishModeFrame": BEACON_ICONS,
+                            "HoldOutPanel/BossDuelLeftFrame": ZERG_WORDS,
+                            "HoldOutPanel/BossDuelRightFrame": ZERG_WORDS}}
 HOLDOUT_PARTS = (("Image", "BackgroundImage", ()), ("Image", "TimerImage", ()),
                  ("Label", "HoldOutWarningInfoLabel", ()), ("Label", "HoldOutWarningTimerLabel", ()))
 
@@ -666,14 +701,12 @@ MAPS = {
     "blackhearts_bay": Map("Blackheart's Bay", (452, 313), core="BlackheartsBayPanel"),
     "braxis_holdout": Map(
         "Braxis Holdout", (447, 264), file="HoldOut", minimap=(-35, 0),
-        # its beacon icons raised onto the map's bottom edge: PARTS (BEACON_ICONS)
+        # its zerg HUD compacted: the dishes and their beams on the hexagons, the words in and
+        # above them (PARTS: BEACON_ICONS, ZERG_WORDS); the whole HUD down by [minimap.panel_nudge].
+        # Nothing of it touches the map any more: the mechanics panel no longer goes under the
+        # minimap (it did for the line along the map's bottom edge).
         panels={"HoldOutPanel": BOTTOM_RIGHT},
         place=("HoldOutPanel",),
-        # The beacons' electric line under the minimap (user, 2026-10-09): it can't leave its
-        # panel, so the whole mechanics panel goes under - below MinimapPanel's default 512 (it
-        # drew over, declared after it). On Braxis only: the placer exists only here. Nothing
-        # else in it touches the map's art; the dishes sit beside it.
-        fix=f'<Action type="SetProperty" frame="{MECHANICS}" renderPriority="511"/>',
         # The zerg wave warning: one neutral banner, on red's side, its countdown already in the
         # bar between the words and the hexagon (holdout.stormlayout). Shown in ZergWarning mode
         # (libscho.galaxy MMHOUISetMode). Its art as the tribute's: the hexagon 20 in from the
