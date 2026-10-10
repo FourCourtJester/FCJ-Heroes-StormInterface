@@ -408,8 +408,19 @@ Braxis Holdout, Haunted Mines - adjusting each map's minimap and panels with it,
      correct, the tribute and curse fading in. It's the BASELINE (user): `[minimap] bottom` is
      its place, so it keeps no `own_place`; the other older maps get their own. Changing
      `[minimap] bottom` moves Cursed Hollow and the ARAM maps.
-   - **Braxis Holdout** - its panel placer stays; check the minimap from 0:00, the electric
-     line's last 2 px, nothing else under the map.
+   - **Braxis Holdout - in progress.** Id read in game (`BraxisHoldout`); its zerg banner
+     slides in (correct: only the tribute and curse are fade-only). **Compacting, planned
+     (user, 2026-10-09):** the % labels into the hexagons above them (team-glow style, as the
+     skull counts, over the zerg heads); the beacon dishes onto the hexagons' outer diagonal
+     edges; everything down ~20 px - "BEACON PROGRESS" is then the lowest piece (~y 825, the
+     map's top ~843): tuck it between the hexagons, or ~12-15 px is the most. The electric
+     line (shown while one team holds both): removed, or repurposed - "shoot it into the
+     hexagons when charging" (user); e.g. still dish to dish, but under the hexagons and bar,
+     so only the beams from each dish into its hexagon show. Its map's visual bottom ~1047
+     at 1080p: ~18 px of room above the floor.
+   - **THE FLOOR, every map (user, 2026-10-09):** no map's visual bottom edge (its art's
+     outline, not the texture box or unit icons) may sit lower than Cursed Hollow's: y ~1065
+     at 1080p (`[minimap] floor`). Haunted Mines is within it.
    - **Towers of Doom** - done; a look that nothing changed.
 4. **Then the other older maps** - Blackheart's Bay, Dragon Shire, Garden of Terror: read each
    id on the diagnostic, `own_place=True`, tune nudge/panel_nudge. Then the newer maps' QA

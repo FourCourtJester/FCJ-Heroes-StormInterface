@@ -47,6 +47,12 @@ bottom = 1141                # the square's bottom edge; > 1080 hangs off-screen
                              # screen's edge); the others' bottoms land at 1061-1076, Haunted
                              # Mines' (380 px tall) 54 px off the bottom (user, 2026-10-09: no
                              # jitter - decide at its QA). Was 1133.
+floor = 1065                 # THE FLOOR, every map (user, 2026-10-09): no map's VISUAL bottom edge -
+                             # the map art's outline, not its texture box nor the unit icons hanging
+                             # off it - may sit lower than Cursed Hollow's, the baseline: measured at
+                             # 1080p, its interior to 1063, its outline ~1065. Check it when tuning a
+                             # map ([minimap.nudge]); the build doesn't (each map's art ends short of
+                             # its texture box by its own amount: Cursed Hollow's by ~15 px).
 
 # px per map, added to where tools/maps.py puts it: + lowers that map, - raises it. For fine
 # tuning in game; 0 = its drawn bottom on the padding line. An older map without own_place in
