@@ -471,6 +471,9 @@ Braxis Holdout, Haunted Mines - adjusting each map's minimap and panels with it,
    - **Keep the command card and its tooltips.** They are the commentators' only live ability
      data (user).
 7. **Parked:** the resource tooltip refresh; blue's curse mirror (unseen).
+8. **Later: extract the toolchain into its own repo** for open-sourcing (user, 2026-10-09) -
+   the plan, inventory and open questions in [docs/extraction-plan.md](docs/extraction-plan.md).
+   After the map pass and Phase 2.
 
 **Earlier next** (end of the 2026-10-05 session):
 
