@@ -408,27 +408,26 @@ Braxis Holdout, Haunted Mines - adjusting each map's minimap and panels with it,
      correct, the tribute and curse fading in. It's the BASELINE (user): `[minimap] bottom` is
      its place, so it keeps no `own_place`; the other older maps get their own. Changing
      `[minimap] bottom` moves Cursed Hollow and the ARAM maps.
-   - **Braxis Holdout - in progress.** Id read in game (`BraxisHoldout`); its zerg banner
-     slides in (correct: only the tribute and curse are fade-only). **Compacting, first build
-     (2026-10-09; maps.py BEACON_ICONS / ZERG_WORDS), to look at in game:**
-     - the % labels inside their hexagons, their letters' middle 19 px under the centre;
-     - the dishes against each hexagon's lower outer edge (rings tangent, 2 px off), anchored
-       to the hexagons (BossDuelLeftFrame/BossHudLeft, /BossHudRight), so they follow the HUD;
-     - the electric line hidden (Alpha 0; user: the beam "won't be useful"). It's the signal
-       now: the script shows blue's pair (Link1-2) while BLUE holds both beacons and red's (3-4)
-       while red does, and a state on it shows "on air" rings in that team's colour over both
-       dishes (FCJH_OnAirBlue/Red): a bold breathing ring and a wave rolling out
-       (Storm_UI_GenFX_RingGlow, tinted). To check: the ring's size on the dish (84 units
-       assumed), the wave's reach and pace;
+   - **Braxis Holdout - DONE (user, 2026-10-09):** id `BraxisHoldout`; its zerg banner slides
+     in (only the tribute and curse are fade-only). Its zerg HUD compacted (maps.py
+     BEACON_ICONS / ZERG_WORDS / ON_AIR):
+     - the %s centred in their hexagons;
+     - the dishes against each hexagon's lower outer edge, 4 px down, anchored to the hexagons
+       (BossDuelLeftFrame/BossHudLeft, /BossHudRight), so they follow the HUD;
+     - the electric line hidden (Alpha 0), kept as the signal: the script shows blue's pair
+       (Link1-2) while BLUE holds both beacons, red's (3-4) while red does. A state on it shows
+       "on air" rings in that team's colour over both dishes (FCJH_OnAirBlue/Red): a breathing
+       ring on the dish's border and a wave rolling out from it (Storm_UI_GenFX_RingGlow,
+       tinted). Tried first and dropped: the line along the map's bottom edge, then a beam from
+       each dish into its hexagon (Rotation works: degrees clockwise, about the middle);
      - "BEACON PROGRESS" and the wave's "Enemy Zerg" above the bar, on Blizzard's "Allied
-       Zerg" row; the whole HUD 20 px lower (`[minimap.panel_nudge] braxis_holdout = 24`);
-     - the mechanics panel no longer goes under the minimap (that was for the old line);
-     - its map 18 px down onto the floor (`[minimap.nudge] braxis_holdout = 18`).
-     Its map's visual bottom ~1047 at 1080p: ~18 px of room above the floor.
+       Zerg" row; the HUD 20 px lower (`[minimap.panel_nudge] braxis_holdout = 24`);
+     - its map 18 px down onto the floor (`[minimap.nudge] braxis_holdout = 18`); the mechanics
+       panel no longer goes under the minimap.
    - **THE FLOOR, every map (user, 2026-10-09):** no map's visual bottom edge (its art's
      outline, not the texture box or unit icons) may sit lower than Cursed Hollow's: y ~1065
-     at 1080p (`[minimap] floor`). Haunted Mines is within it.
-   - **Towers of Doom** - done; a look that nothing changed.
+     at 1080p (`[minimap] floor`). Haunted Mines is within it; Braxis sits on it.
+   - **Towers of Doom - NEXT:** a look in game that nothing changed, then its own pass (the floor, its panels).
 4. **Then the other older maps** - Blackheart's Bay, Dragon Shire, Garden of Terror: read each
    id on the diagnostic, `own_place=True`, tune nudge/panel_nudge. Then the newer maps' QA
    (Alterac, Battlefield, Hanamura - its ICON art unmeasured -, Shrines, Sky Temple, Tomb,
