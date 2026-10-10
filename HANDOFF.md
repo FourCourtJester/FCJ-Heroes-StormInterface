@@ -402,7 +402,7 @@ Braxis Holdout, Haunted Mines - adjusting each map's minimap and panels with it,
    bar, and the intros (tribute, curse, zerg, mines) not shifting them. By the code they can't
    move with the minimap: all 90 banner anchors and stack moves are to the screen (checked
    2026-10-09). Any banner whose sides a STATE moves must stay fade-only (`maps.FADE_ONLY`).
-3. **The four working maps, map by map (map-id tech):**
+3. **The four working maps, map by map (map-id tech) - ALL DONE (2026-10-09):**
    - **Haunted Mines** - DONE (above).
    - **Cursed Hollow - DONE (user, 2026-10-09):** id read in game (`CursedHollow`), banners
      correct, the tribute and curse fading in. It's the BASELINE (user): `[minimap] bottom` is
@@ -427,7 +427,9 @@ Braxis Holdout, Haunted Mines - adjusting each map's minimap and panels with it,
    - **THE FLOOR, every map (user, 2026-10-09):** no map's visual bottom edge (its art's
      outline, not the texture box or unit icons) may sit lower than Cursed Hollow's: y ~1065
      at 1080p (`[minimap] floor`). Haunted Mines is within it; Braxis sits on it.
-   - **Towers of Doom - NEXT:** a look in game that nothing changed, then its own pass (the floor, its panels).
+   - **Towers of Doom - DONE (user, 2026-10-09):** id `TowersOfDoom` read in game; nothing to
+     adjust. Its map's visual bottom ~1066, on the floor; the blue/red line between the bell
+     markers sits just under it, on the screen's minimum edge (user: fine as is).
 4. **Then the other older maps** - Blackheart's Bay, Dragon Shire, Garden of Terror: read each
    id on the diagnostic, `own_place=True`, tune nudge/panel_nudge. Then the newer maps' QA
    (Alterac, Battlefield, Hanamura - its ICON art unmeasured -, Shrines, Sky Temple, Tomb,

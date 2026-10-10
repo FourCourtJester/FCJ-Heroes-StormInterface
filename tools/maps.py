@@ -870,7 +870,7 @@ MAP_IDS = {
     "infernal_shrines": "Shrines",                    # SCRIPT
     "sky_temple": "ControlPoints",                    # SCRIPT
     "tomb_of_the_spider_queen": "Crypts",             # SCRIPT
-    "towers_of_doom": "TowersOfDoom",                 # SCRIPT
+    "towers_of_doom": "TowersOfDoom",                 # GAME (2026-10-09)
     "volskaya_foundry": "Volskaya",                   # SCRIPT
     "warhead_junction": "Warhead Junction",           # SCRIPT - with the space
 }
