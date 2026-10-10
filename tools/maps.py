@@ -23,6 +23,7 @@ How a map's UI works (from the game files, 2026-10-06):
     minimap per map with a MinimapPanel override in the map's file, which may load after ours -
     the SetAnchors win either way.
 """
+import hashlib
 import math
 from dataclasses import dataclass, field
 from itertools import combinations
@@ -731,6 +732,39 @@ KNIGHT_COPIES = (
     f'{T*8}<Texture val="@UI/HUD_MapMechanic_DragonShire_DragonHUD"/>\n'
     f'{T*8}<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>\n'
     f'{T*8}<Unclipped val="true"/>\n{T*8}<Alpha val="0"/>\n{T*7}</Frame>\n')
+# Blue's health bar mirrored. Its fill is a parallelogram leaning \ at both ends (Blizzard's art)
+# and a status bar won't flip it - TextureCoords on it did nothing (2026-10-09; Blizzard ships a
+# second texture where it needs a bar mirrored, and the dragon's has none). So blue's is widened
+# by the lean at each end and masked to the / parallelogram red's would make flipped: the mask
+# spans the bar's frame, and the bar drains by cropping (a flat end), so the cut ends hold.
+# Measured at 1080p (2026-10-09): the fill's ends lean ~6 px over its 10 px height.
+KNIGHT_LEAN = 7            # units
+KNIGHT_BAR_H = 11          # units: Blizzard's HealthBar Height
+TEXTURES = "_Assets\\Textures"   # gen.TEXTURE_DIR
+WHITE = TEXTURES + "\\FCJH_White.dds"   # gen.WHITE: an opaque mask, for red's
+
+
+def knight_mask(sub=4):
+    """The / parallelogram over blue's widened bar (width 360 + 2 leans), as alpha:
+    -> (width, height, BGRA rows). Texels at the art's 1440p scale, as gen's (1.2 per unit)."""
+    width = 360 + 2 * KNIGHT_LEAN
+    w, h = math.ceil(width * 1.2), math.ceil(KNIGHT_BAR_H * 1.2)
+    rows = bytearray()
+    for ty in range(h):
+        for tx in range(w):
+            cover = 0.0
+            for s in range(sub):
+                down = (ty + (s + 0.5) / sub) / h
+                left = (2 - down) * KNIGHT_LEAN / width * w      # 2 leans in at the top, 1 at the bottom
+                right = (width - (1 + down) * KNIGHT_LEAN) / width * w
+                cover += max(0.0, min(tx + 1, right) - max(tx, left))
+            rows += bytes((255, 255, 255, round(255 * cover / sub)))
+    return w, h, bytes(rows)
+
+
+KNIGHT_MASK = knight_mask()
+KNIGHT_MASK_FILE = f"FCJH_KnightMask_{hashlib.sha1(KNIGHT_MASK[2]).hexdigest()[:8]}.dds"
+KNIGHT_MASK_PATH = TEXTURES + "\\" + KNIGHT_MASK_FILE
 
 
 def knight_side():
@@ -750,11 +784,11 @@ def knight_side():
                 + prop("/DragonHud", Alpha=0 if blue else 255) + prop("/FCJH_KnightHead", Alpha=255 if blue else 0)
                 + prop("/HealthBarBG", Alpha=0 if blue else 255) + prop("/FCJH_KnightBarBG", Alpha=255 if blue else 0)
                 + act("/DragonHealthBar/HealthBar", "Top", bg, "Min", 5)
-                # the bar 8 in from the backing's outer end, as red's (its 360 to the inner end)
-                + act("/DragonHealthBar/HealthBar", "Left", bg, *(("Max", -8 - 360) if blue else ("Min", 8)))
-                # the backing and the bar flipped too: their slanted ends had red's angles (user,
-                # 2026-10-09). Blizzard's mirrored portrait: TextureCoords top,left,bottom,right
-                + prop("/DragonHealthBar/HealthBar", TextureCoords="0,1,1,0" if blue else "0,0,1,1")
+                # the bar 8 in from the backing's outer end, as red's (its 360 to the inner end);
+                # blue's widened and cut to the mirrored lean (KNIGHT_MASK)
+                + act("/DragonHealthBar/HealthBar", "Left", bg, *(("Max", -8 - 360 - KNIGHT_LEAN) if blue else ("Min", 8)))
+                + prop("/DragonHealthBar/HealthBar", Width=360 + 2 * KNIGHT_LEAN if blue else 360,
+                       AlphaMaskTexture=KNIGHT_MASK_PATH if blue else WHITE)
                 # "DRAGON KNIGHT": from the backing's inner end, 15 in
                 + act("/DragonInfoLabel", "Bottom", bg, "Min", 2)
                 + act("/DragonInfoLabel", "Left", bg, "Min", 15) + act("/DragonInfoLabel", "Right", bg, "Max", -15)
@@ -763,7 +797,7 @@ def knight_side():
         # blue's from its right (Blizzard never sets Expansion from a state; it takes - 2026-10-09)
         out += prop("/DragonHealthBar/HealthBar", Expansion="Right" if blue else "Left")
         if blue:     # the % from the health bar's outer end, then the timer after it
-            out += (act("/DragonHealthBar/HealthLabel", "Right", bar, "Min", 3 + 58)
+            out += (act("/DragonHealthBar/HealthLabel", "Right", bar, "Min", KNIGHT_LEAN + 3 + 58)
                     + prop("/DragonHealthBar/HealthLabel/StatusLabel", Style=small("Right"))
                     + act("/DragonTimer", "Left", pct, "Max", -DRAGON_TIMER_GAP)
                     + act("/DragonTimer", "Right", pct, "Max", DRAGON_TIMER_W - DRAGON_TIMER_GAP)

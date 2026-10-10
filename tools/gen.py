@@ -905,6 +905,8 @@ def texture_files(cfg):
     out[TEXTURE_REL / HEAL_BORDER] = square_border(cfg["heal_popup"]["colour"])
     for file, data in slant_bars(cfg).values():
         out[TEXTURE_REL / file] = data
+    # blue's Dragon Knight health bar, cut to the mirrored lean (maps.knight_mask)
+    out[TEXTURE_REL / maps.KNIGHT_MASK_FILE] = dds_bgra(*maps.KNIGHT_MASK)
     return out
 
 
