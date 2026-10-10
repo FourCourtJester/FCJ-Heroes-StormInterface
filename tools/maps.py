@@ -689,9 +689,9 @@ SHRINE_PARTS = (("Image", "BackgroundImage", (), f'<Anchor side="Left" relative=
 # texture's own width (481, as the golems'; measured 432 px), its bottom still on the countdown's.
 # Its timer (how long the knight lasts) hung under the dragon's head, below the bar - up beside
 # the % instead, on the "DRAGON KNIGHT" row, in that row's small style (user, 2026-10-09).
-DRAGON_TIMER_GAP, DRAGON_TIMER_W = -2, 80  # its right this far from the %'s box's left (the %'s
+DRAGON_TIMER_GAP, DRAGON_TIMER_W = -8, 80  # its right this far from the %'s box's left (the %'s
                                            # figures start there: at 8 its last digit ran ~2 px into
-                                           # the %; user, 2026-10-09: padding before the %); its width
+                                           # the %; -2 left ~7 px, user: 5 px more); its width
 _ROW = "$parent/DragonInfoLabel"
 _PCT_BOX = "$parent/DragonHealthBar/HealthLabel"
 DRAGON_TIMER = "\n".join((
