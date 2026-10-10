@@ -739,6 +739,9 @@ KNIGHT_COPIES = (
 # spans the bar's frame, and the bar drains by cropping (a flat end), so the cut ends hold.
 # Measured at 1080p (2026-10-09): the fill's ends lean ~6 px over its 10 px height.
 KNIGHT_LEAN = 7            # units
+KNIGHT_OUTER_TRIM = 4      # units more off the outer (left) end: cut at the lean alone it sat 2-3 px
+                           # past the backing's slanted edge (user, 2026-10-09: "a bit more trim");
+                           # the inner end was right
 KNIGHT_BAR_H = 11          # units: Blizzard's HealthBar Height
 TEXTURES = "_Assets\\Textures"   # gen.TEXTURE_DIR
 WHITE = TEXTURES + "\\FCJH_White.dds"   # gen.WHITE: an opaque mask, for red's
@@ -755,7 +758,7 @@ def knight_mask(sub=4):
             cover = 0.0
             for s in range(sub):
                 down = (ty + (s + 0.5) / sub) / h
-                left = (2 - down) * KNIGHT_LEAN / width * w      # 2 leans in at the top, 1 at the bottom
+                left = ((2 - down) * KNIGHT_LEAN + KNIGHT_OUTER_TRIM) / width * w   # 2 leans in at the top, 1 at the bottom
                 right = (width - (1 + down) * KNIGHT_LEAN) / width * w
                 cover += max(0.0, min(tx + 1, right) - max(tx, left))
             rows += bytes((255, 255, 255, round(255 * cover / sub)))
