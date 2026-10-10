@@ -430,14 +430,13 @@ Braxis Holdout, Haunted Mines - adjusting each map's minimap and panels with it,
    - **Towers of Doom - DONE (user, 2026-10-09):** id `TowersOfDoom` read in game; nothing to
      adjust. Its map's visual bottom ~1066, on the floor; the blue/red line between the bell
      markers sits just under it, on the screen's minimum edge (user: fine as is).
-4. **Dragon Shire - in progress (2026-10-09):** id `DragonShire` read in game; its map's bottom
-   ~1060, inside the floor, at the shared place (no own_place yet - nothing to move). Built,
-   to look at: the shrines' countdown as the neutral banner on red's side (maps.py SHRINE_*,
-   laid out from its left end as the mines'), the Dragon Knight replacing it from the same spot
-   (DRAGON_PARTS), its timer moved up beside the % (DRAGON_TIMER). The countdown banner: good
-   (user). The shrine markers (moon, star) raised onto the padding line
-   (`[minimap.panel_nudge] dragon_shire = -33`; -41 was a bit high); the stars clear the map's
-   flanks. To look at: the markers at -33, the knight's timer with a gap before the %.
+4. **Dragon Shire - DONE (user, 2026-10-09):** id `DragonShire` read in game; its map's bottom
+   ~1060, inside the floor, at the shared place (no own_place - nothing to move).
+   - The shrines' countdown is the neutral banner on red's side (maps.py SHRINE_*, laid out
+     from its left end as the mines'); the Dragon Knight replaces it from the same spot
+     (DRAGON_PARTS), its timer up on the name's row, ~12 px before the % (DRAGON_TIMER).
+   - The shrine markers (moon, star) up from off the screen, their team line level with Towers'
+     at ~1070 (`[minimap.panel_nudge] dragon_shire = -29`); the stars clear the map's flanks.
    **Then the other older maps** - Blackheart's Bay, Garden of Terror: read each
    id on the diagnostic, `own_place=True`, tune nudge/panel_nudge. Then the newer maps' QA
    (Alterac, Battlefield, Hanamura - its ICON art unmeasured -, Shrines, Sky Temple, Tomb,
