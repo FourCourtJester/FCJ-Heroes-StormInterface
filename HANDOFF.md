@@ -853,6 +853,17 @@ commits around it).
 14. **Final pass: every map, every hero** (user, 2026-10-05). The last QA round, with replays
     that cover every map and every hero; the checks that need a particular hero or map collect
     here until then (no replay with them yet):
+    - **Heroes seen in game - the tracker (user, 2026-10-09: "make sure you're tracking who
+      we've seen"). Update it after every replay.** From the user's own messages across the
+      session logs (a floor: heroes on screen but never named aren't counted). 90 heroes;
+      25 seen:
+      - **Seen (25):** Abathur, Anub'arak, Auriel, Blaze, Chromie, Deathwing, Diablo, Gazlowe, Hogger, Jaina, Johanna, Leoric, Li Li, Lt. Morales, Lúcio, Maiev, Nova, Rexxar, Sonya, The Lost Vikings, Tracer, Valeera, Varian, Xul, Zarya. (Hogger: the Rage tooltip swap; Lucio, Anub'arak and
+        Jaina: the hotkey-order replay.)
+      - **Next roster (Dragon Shire, 2026-10-09), chosen for the checks above:** blue Medivh
+        (Raven form), Alexstrasza (Dragonqueen), Ragnaros (Molten Core), Greymane (Worgen),
+        Samuro (images); red D.Va (mech/pilot, `ALSO`), Tychus (Odin), Chen (Brew), Murky (egg,
+        short respawns), Zeratul (stealth, like Valeera's). Inspect each form while it's up.
+      - **Not seen yet (55):** Alarak, Ana, Anduin, Artanis, Arthas, Azmodan, Brightwing, Cassia, Cho'gall, Deckard, Dehaka, E.T.C., Falstad, Fenix, Gall, Garrosh, Genji, Gul'dan, Hanzo, Illidan, Imperius, Junkrat, Kael'thas, Kel'Thuzad, Kerrigan, Kharazim, Li-Ming, Lunara, Mal'Ganis, Malfurion, Malthael, Mei, Mephisto, Muradin, Nazeebo, Orphea, Probius, Qhira, Raynor, Rehgar, Sgt. Hammer, Stitches, Stukov, Sylvanas, Tassadar, The Butcher, Thrall, Tyrael, Tyrande, Uther, Valla, Whitemane, Yrel, Zagara, Zul'jin.
     - **forms** (item 3): Medivh's Raven, Deathwing in Dragonflight and as World Breaker,
       Alexstrasza's Dragonqueen, Ragnaros in Molten Core, Greymane's Worgen, Valeera
       stealthed - each gets the TALL card with its player's portrait, talents and name, and
