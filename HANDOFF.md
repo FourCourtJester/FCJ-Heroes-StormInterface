@@ -430,13 +430,20 @@ Braxis Holdout, Haunted Mines - adjusting each map's minimap and panels with it,
    - **Towers of Doom - DONE (user, 2026-10-09):** id `TowersOfDoom` read in game; nothing to
      adjust. Its map's visual bottom ~1066, on the floor; the blue/red line between the bell
      markers sits just under it, on the screen's minimum edge (user: fine as is).
-4. **Then the other older maps** - Blackheart's Bay, Dragon Shire, Garden of Terror: read each
+4. **Dragon Shire - in progress (2026-10-09):** id `DragonShire` read in game; its map's bottom
+   ~1060, inside the floor, at the shared place (no own_place yet - nothing to move). Built,
+   to look at: the shrines' countdown as the neutral banner on red's side (maps.py SHRINE_*,
+   laid out from its left end as the mines'), the Dragon Knight replacing it from the same spot
+   (DRAGON_PARTS), its timer moved up beside the % (DRAGON_TIMER); the shrine markers (moon,
+   star) raised 41 px onto the padding line (`[minimap.panel_nudge] dragon_shire = -41`) -
+   watch whether the inner ones (the stars) now overlap the map's lower flanks.
+   **Then the other older maps** - Blackheart's Bay, Garden of Terror: read each
    id on the diagnostic, `own_place=True`, tune nudge/panel_nudge. Then the newer maps' QA
    (Alterac, Battlefield, Hanamura - its ICON art unmeasured -, Shrines, Sky Temple, Tomb,
    Volskaya, Warhead). Any map could get a two-view or other per-map behaviour the same way
    (`launch_cut`/`opens`, `on_map`).
-5. **Once the map pass settles:** remove the diagnostic (`maps.diag`, `DIAG_*`,
-   `FCJH_DiagMapId`) in one clean rewrite. Until then it reads each map's id - useful for 3-4.
+5. **The diagnostic - trimmed to the map id (user, 2026-10-09);** remove `maps.diag` and
+   `FCJH_DiagMapId` once every map's id is confirmed in game (MAP_IDS' GAME sources).
 6. **Inspect card, intermittent (user, 2026-10-09):** on hero inspects only, now and then the
    ability BORDERS keep showing after the card hides. Not pinned down yet: next time, a
    screenshot of it. Lead (unconfirmed): the only border-like art that can show without a

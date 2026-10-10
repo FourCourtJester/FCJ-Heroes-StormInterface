@@ -246,8 +246,152 @@
 					</Frame>
 					<Frame type="Frame" name="DragonShirePanel">
 						<!-- Dragon Shire -->
-						<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-35"/>
+						<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-81"/>
 						<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="0"/>
+						<!-- red, the bottom slot: the shrines' countdown, then the Dragon Knight (neutral) -->
+						<Frame type="Frame" name="FCJH_ShrineTimerModeFrameSpot">
+							<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_SHRINE"/>
+							<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_SHRINE"/>
+							<Unclipped val="true"/>
+							<Width val="432"/>
+							<Height val="113"/>
+							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_Stack">
+								<DefaultState val="Bottom"/>
+								<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_SHRINE"/></State>
+							</StateGroup>
+						</Frame>
+						<Frame type="Frame" name="ShrineTimerModeFrame">
+							<Anchor side="Top"    relative="$parent/FCJH_ShrineTimerModeFrameSpot" pos="Min" offset="0"/>
+							<Anchor side="Left"   relative="$parent/FCJH_ShrineTimerModeFrameSpot" pos="Min" offset="0"/>
+							<Anchor side="Bottom" relative="$parent/FCJH_ShrineTimerModeFrameSpot" pos="Max" offset="0"/>
+							<Anchor side="Right"  relative="$parent/FCJH_ShrineTimerModeFrameSpot" pos="Max" offset="0"/>
+							<Unclipped val="true"/>
+							<Animation name="FCJH_Intro">
+								<Event event="OnShown" action="Restart,Play"/>
+								<Event event="OnShown" action="Restart,Play" frame="$parent"/>
+								<Controller type="Fade" end="Pause">
+									<Key type="Curve" time="0" value="0"/>
+									<Key type="Curve" time=".2" value="255"/>
+									<Key type="Curve" time=".4" value="255"/>
+								</Controller>
+								<Controller type="Anchor" end="Pause" side="Left" relative="true">
+									<Key type="Curve" time="0" value="50"/>
+									<Key type="Curve" time=".1" value="0"/>
+									<Key type="Curve" time=".4" value="0"/>
+								</Controller>
+								<Controller type="Anchor" end="Pause" side="Right" relative="true">
+									<Key type="Curve" time="0" value="50"/>
+									<Key type="Curve" time=".1" value="0"/>
+									<Key type="Curve" time=".4" value="0"/>
+								</Controller>
+								<Controller type="Anchor" end="Pause" side="Left" relative="true" frame="BackgroundImage">
+									<Key type="Curve" time="0" value="350"/>
+									<Key type="Curve" time=".1" value="350"/>
+									<Key type="Curve" time=".3" value="0"/>
+									<Key type="Curve" time=".4" value="0"/>
+								</Controller>
+							</Animation>
+							<Frame type="Label" name="FCJH_ShrineText">
+								<Anchor side="Top"    relative="$parent/ShrineActivateLabel" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$parent/ShrineActivateLabel" pos="Max" offset="0"/>
+								<Anchor side="Left"   relative="$parent/BackgroundImage" pos="Min" offset="35"/>
+								<Text val="{$parent/ShrineActivateLabel/@Text}"/>
+								<Style val="{$parent/ShrineActivateLabel/@Style}"/>
+								<Options val="NoWrapping"/>
+								<Unclipped val="true"/>
+							</Frame>
+							<Frame type="Label" name="FCJH_ShrineCount">
+								<Anchor side="Top"    relative="$parent/FCJH_ShrineText" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$parent/FCJH_ShrineText" pos="Max" offset="0"/>
+								<Anchor side="Left"   relative="$parent/FCJH_ShrineText" pos="Max" offset="-1"/>
+								<Text val="{$parent/ShrineActivateTimer/@Text}"/>
+								<Style val="{$parent/ShrineActivateTimer/@Style}"/>
+								<Options val="NoWrapping"/>
+								<Unclipped val="true"/>
+							</Frame>
+							<Frame type="Image" name="BackgroundImage">
+								<Unclipped val="true"/>
+								<Anchor side="Left" relative="$parent" pos="Min" offset="-3"/>
+							</Frame>
+							<Frame type="Image" name="CenterpieceImage">
+								<Unclipped val="true"/>
+								<Anchor side="Right" relative="$parent/FCJH_ShrineCount" pos="Max" offset="121"/>
+							</Frame>
+							<Frame type="Label" name="ShrineActivateLabel">
+								<Unclipped val="true"/>
+								<Alpha val="0"/>
+							</Frame>
+							<Frame type="Label" name="ShrineActivateTimer">
+								<Unclipped val="true"/>
+								<Alpha val="0"/>
+							</Frame>
+						</Frame>
+						<Frame type="Frame" name="DragonModeFrame">
+							<Anchor side="Top"    relative="$parent/FCJH_ShrineTimerModeFrameSpot" pos="Min" offset="0"/>
+							<Anchor side="Left"   relative="$parent/FCJH_ShrineTimerModeFrameSpot" pos="Min" offset="0"/>
+							<Anchor side="Bottom" relative="$parent/FCJH_ShrineTimerModeFrameSpot" pos="Max" offset="0"/>
+							<Anchor side="Right"  relative="$parent/FCJH_ShrineTimerModeFrameSpot" pos="Max" offset="0"/>
+							<Unclipped val="true"/>
+							<Animation name="FCJH_Intro">
+								<Event event="OnShown" action="Restart,Play"/>
+								<Event event="OnShown" action="Restart,Play" frame="$parent"/>
+								<Controller type="Fade" end="Pause">
+									<Key type="Curve" time="0" value="0"/>
+									<Key type="Curve" time=".2" value="255"/>
+									<Key type="Curve" time=".4" value="255"/>
+								</Controller>
+								<Controller type="Anchor" end="Pause" side="Left" relative="true">
+									<Key type="Curve" time="0" value="50"/>
+									<Key type="Curve" time=".1" value="0"/>
+									<Key type="Curve" time=".4" value="0"/>
+								</Controller>
+								<Controller type="Anchor" end="Pause" side="Right" relative="true">
+									<Key type="Curve" time="0" value="50"/>
+									<Key type="Curve" time=".1" value="0"/>
+									<Key type="Curve" time=".4" value="0"/>
+								</Controller>
+								<Controller type="Anchor" end="Pause" side="Left" relative="true" frame="BackgroundImage">
+									<Key type="Curve" time="0" value="350"/>
+									<Key type="Curve" time=".1" value="350"/>
+									<Key type="Curve" time=".3" value="0"/>
+									<Key type="Curve" time=".4" value="0"/>
+								</Controller>
+							</Animation>
+							<Frame type="Image" name="BackgroundImage">
+								<Unclipped val="true"/>
+								<Anchor side="Right" relative="$parent" pos="Min" offset="481"/>
+							</Frame>
+							<Frame type="Image" name="HealthBarBG">
+								<Unclipped val="true"/>
+							</Frame>
+							<Frame type="Image" name="DragonHud">
+								<Unclipped val="true"/>
+							</Frame>
+							<Frame type="Label" name="DragonTimer">
+								<Unclipped val="true"/>
+								<Anchor side="Top"    relative="$parent/DragonInfoLabel" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$parent/DragonInfoLabel" pos="Max" offset="0"/>
+								<Anchor side="Right"  relative="$parent/DragonHealthBar/HealthLabel" pos="Min" offset="8"/>
+								<Anchor side="Left"   relative="$parent/DragonHealthBar/HealthLabel" pos="Min" offset="-72"/>
+								<Style val="Storm_MapMechanic_MechanicCounterSmallRight_Blue"/>
+							</Frame>
+							<Frame type="Label" name="DragonInfoLabel">
+								<Unclipped val="true"/>
+							</Frame>
+							<Frame type="UnitStatusFrame" name="DragonHealthBar">
+								<Unclipped val="true"/>
+								<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">
+									<Unclipped val="true"/>
+								</Frame>
+								<Frame type="UnitStatusHealthLabel" name="HealthLabel">
+									<Unclipped val="true"/>
+									<Frame type="Label" name="StatusLabel">
+										<Unclipped val="true"/>
+									</Frame>
+								</Frame>
+							</Frame>
+						</Frame>
 					</Frame>
 					<Frame type="Frame" name="GardenOfTerrorPanel">
 						<!-- Garden of Terror -->
@@ -476,242 +620,14 @@
 				<State name="Shut"/>
 			</StateGroup>
 		</Frame>
-		<!-- DIAGNOSTIC (maps.diag): older maps' UI from the start -->
-		<Frame type="Label" name="FCJH_Diag0">
-			<Anchor side="Top"  relative="$GameUI" pos="Min" offset="300"/>
-			<Anchor side="Left" relative="$GameUI" pos="Min" offset="25"/>
-			<Width val="560"/>
-			<Height val="26"/>
-			<Style val="WaitingForPlayersDialogChat"/>
-			<Options val="NoWrapping"/>
-			<Unclipped val="true"/>
-			<AcceptsMouse val="false"/>
-			<Text val="BlackheartsBayPanel: hidden"/>
-			<StateGroup name="FCJH_Diag"><DefaultState val="Off"/><State name="On"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel" Visible="true"/><Action type="SetProperty" frame="$this" Text="BlackheartsBayPanel: SHOWN"/></State><State name="Off"/></StateGroup>
-		</Frame>
-		<Frame type="Label" name="FCJH_Diag1">
-			<Anchor side="Top"  relative="$GameUI" pos="Min" offset="326"/>
-			<Anchor side="Left" relative="$GameUI" pos="Min" offset="25"/>
-			<Width val="560"/>
-			<Height val="26"/>
-			<Style val="WaitingForPlayersDialogChat"/>
-			<Options val="NoWrapping"/>
-			<Unclipped val="true"/>
-			<AcceptsMouse val="false"/>
-			<Text val="RavenCourtPanel: hidden"/>
-			<StateGroup name="FCJH_Diag"><DefaultState val="Off"/><State name="On"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/RavenCourtPanel" Visible="true"/><Action type="SetProperty" frame="$this" Text="RavenCourtPanel: SHOWN"/></State><State name="Off"/></StateGroup>
-		</Frame>
-		<Frame type="Label" name="FCJH_Diag2">
-			<Anchor side="Top"  relative="$GameUI" pos="Min" offset="352"/>
-			<Anchor side="Left" relative="$GameUI" pos="Min" offset="25"/>
-			<Width val="560"/>
-			<Height val="26"/>
-			<Style val="WaitingForPlayersDialogChat"/>
-			<Options val="NoWrapping"/>
-			<Unclipped val="true"/>
-			<AcceptsMouse val="false"/>
-			<Text val="DragonShirePanel: hidden"/>
-			<StateGroup name="FCJH_Diag"><DefaultState val="Off"/><State name="On"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/DragonShirePanel" Visible="true"/><Action type="SetProperty" frame="$this" Text="DragonShirePanel: SHOWN"/></State><State name="Off"/></StateGroup>
-		</Frame>
-		<Frame type="Label" name="FCJH_Diag3">
-			<Anchor side="Top"  relative="$GameUI" pos="Min" offset="378"/>
-			<Anchor side="Left" relative="$GameUI" pos="Min" offset="25"/>
-			<Width val="560"/>
-			<Height val="26"/>
-			<Style val="WaitingForPlayersDialogChat"/>
-			<Options val="NoWrapping"/>
-			<Unclipped val="true"/>
-			<AcceptsMouse val="false"/>
-			<Text val="GardenOfTerrorPanel: hidden"/>
-			<StateGroup name="FCJH_Diag"><DefaultState val="Off"/><State name="On"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/GardenOfTerrorPanel" Visible="true"/><Action type="SetProperty" frame="$this" Text="GardenOfTerrorPanel: SHOWN"/></State><State name="Off"/></StateGroup>
-		</Frame>
-		<Frame type="Label" name="FCJH_Diag4">
-			<Anchor side="Top"  relative="$GameUI" pos="Min" offset="404"/>
-			<Anchor side="Left" relative="$GameUI" pos="Min" offset="25"/>
-			<Width val="560"/>
-			<Height val="26"/>
-			<Style val="WaitingForPlayersDialogChat"/>
-			<Options val="NoWrapping"/>
-			<Unclipped val="true"/>
-			<AcceptsMouse val="false"/>
-			<Text val="HauntedMinesPanel: hidden"/>
-			<StateGroup name="FCJH_Diag"><DefaultState val="Off"/><State name="On"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/HauntedMinesPanel" Visible="true"/><Action type="SetProperty" frame="$this" Text="HauntedMinesPanel: SHOWN"/></State><State name="Off"/></StateGroup>
-		</Frame>
-		<Frame type="Label" name="FCJH_Diag5">
-			<Anchor side="Top"  relative="$GameUI" pos="Min" offset="430"/>
-			<Anchor side="Left" relative="$GameUI" pos="Min" offset="25"/>
-			<Width val="560"/>
-			<Height val="26"/>
-			<Style val="WaitingForPlayersDialogChat"/>
-			<Options val="NoWrapping"/>
-			<Unclipped val="true"/>
-			<AcceptsMouse val="false"/>
-			<Text val="HauntedMinesPanel/MineTimerModeFrame: hidden"/>
-			<StateGroup name="FCJH_Diag"><DefaultState val="Off"/><State name="On"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/HauntedMinesPanel/MineTimerModeFrame" Visible="true"/><Action type="SetProperty" frame="$this" Text="HauntedMinesPanel/MineTimerModeFrame: SHOWN"/></State><State name="Off"/></StateGroup>
-		</Frame>
-		<Frame type="Label" name="FCJH_Diag6">
-			<Anchor side="Top"  relative="$GameUI" pos="Min" offset="456"/>
-			<Anchor side="Left" relative="$GameUI" pos="Min" offset="25"/>
-			<Width val="560"/>
-			<Height val="26"/>
-			<Style val="WaitingForPlayersDialogChat"/>
-			<Options val="NoWrapping"/>
-			<Unclipped val="true"/>
-			<AcceptsMouse val="false"/>
-			<Text val="HauntedMinesPanel/SkullModeFrame: hidden"/>
-			<StateGroup name="FCJH_Diag"><DefaultState val="Off"/><State name="On"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/HauntedMinesPanel/SkullModeFrame" Visible="true"/><Action type="SetProperty" frame="$this" Text="HauntedMinesPanel/SkullModeFrame: SHOWN"/></State><State name="Off"/></StateGroup>
-		</Frame>
-		<Frame type="Label" name="FCJH_Diag7">
-			<Anchor side="Top"  relative="$GameUI" pos="Min" offset="482"/>
-			<Anchor side="Left" relative="$GameUI" pos="Min" offset="25"/>
-			<Width val="560"/>
-			<Height val="26"/>
-			<Style val="WaitingForPlayersDialogChat"/>
-			<Options val="NoWrapping"/>
-			<Unclipped val="true"/>
-			<AcceptsMouse val="false"/>
-			<Text val="HauntedMinesPanel/GolemModeFrame: hidden"/>
-			<StateGroup name="FCJH_Diag"><DefaultState val="Off"/><State name="On"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/HauntedMinesPanel/GolemModeFrame" Visible="true"/><Action type="SetProperty" frame="$this" Text="HauntedMinesPanel/GolemModeFrame: SHOWN"/></State><State name="Off"/></StateGroup>
-		</Frame>
-		<Frame type="Label" name="FCJH_Diag8">
-			<Anchor side="Top"  relative="$GameUI" pos="Min" offset="508"/>
-			<Anchor side="Left" relative="$GameUI" pos="Min" offset="25"/>
-			<Width val="560"/>
-			<Height val="26"/>
-			<Style val="WaitingForPlayersDialogChat"/>
-			<Options val="NoWrapping"/>
-			<Unclipped val="true"/>
-			<AcceptsMouse val="false"/>
-			<Text val="MineOpenTimer:"/>
-		</Frame>
-		<Frame type="Label" name="FCJH_DiagValue8">
-			<Anchor side="Top"  relative="$parent/FCJH_Diag8" pos="Min" offset="0"/>
-			<Anchor side="Left" relative="$parent/FCJH_Diag8" pos="Min" offset="300"/>
-			<Width val="400"/>
-			<Height val="26"/>
-			<Style val="WaitingForPlayersDialogChat"/>
-			<Options val="NoWrapping"/>
-			<Unclipped val="true"/>
-			<AcceptsMouse val="false"/>
-			<Text val="{$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/HauntedMinesPanel/MineTimerModeFrame/MineOpenTimer/@Text}"/>
-		</Frame>
-		<Frame type="Label" name="FCJH_Diag9">
-			<Anchor side="Top"  relative="$GameUI" pos="Min" offset="534"/>
-			<Anchor side="Left" relative="$GameUI" pos="Min" offset="25"/>
-			<Width val="560"/>
-			<Height val="26"/>
-			<Style val="WaitingForPlayersDialogChat"/>
-			<Options val="NoWrapping"/>
-			<Unclipped val="true"/>
-			<AcceptsMouse val="false"/>
-			<Text val="MineOpenLabel:"/>
-		</Frame>
-		<Frame type="Label" name="FCJH_DiagValue9">
-			<Anchor side="Top"  relative="$parent/FCJH_Diag9" pos="Min" offset="0"/>
-			<Anchor side="Left" relative="$parent/FCJH_Diag9" pos="Min" offset="300"/>
-			<Width val="400"/>
-			<Height val="26"/>
-			<Style val="WaitingForPlayersDialogChat"/>
-			<Options val="NoWrapping"/>
-			<Unclipped val="true"/>
-			<AcceptsMouse val="false"/>
-			<Text val="{$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/HauntedMinesPanel/MineTimerModeFrame/MineOpenLabel/@Text}"/>
-		</Frame>
-		<Frame type="Label" name="FCJH_Diag10">
-			<Anchor side="Top"  relative="$GameUI" pos="Min" offset="560"/>
-			<Anchor side="Left" relative="$GameUI" pos="Min" offset="25"/>
-			<Width val="560"/>
-			<Height val="26"/>
-			<Style val="WaitingForPlayersDialogChat"/>
-			<Options val="NoWrapping"/>
-			<Unclipped val="true"/>
-			<AcceptsMouse val="false"/>
-			<Text val="Team1SkullCounter:"/>
-		</Frame>
-		<Frame type="Label" name="FCJH_DiagValue10">
-			<Anchor side="Top"  relative="$parent/FCJH_Diag10" pos="Min" offset="0"/>
-			<Anchor side="Left" relative="$parent/FCJH_Diag10" pos="Min" offset="300"/>
-			<Width val="400"/>
-			<Height val="26"/>
-			<Style val="WaitingForPlayersDialogChat"/>
-			<Options val="NoWrapping"/>
-			<Unclipped val="true"/>
-			<AcceptsMouse val="false"/>
-			<Text val="{$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/HauntedMinesPanel/SkullModeFrame/Team1SkullCounter/@Text}"/>
-		</Frame>
-		<Frame type="Label" name="FCJH_Diag11">
-			<Anchor side="Top"  relative="$GameUI" pos="Min" offset="586"/>
-			<Anchor side="Left" relative="$GameUI" pos="Min" offset="25"/>
-			<Width val="560"/>
-			<Height val="26"/>
-			<Style val="WaitingForPlayersDialogChat"/>
-			<Options val="NoWrapping"/>
-			<Unclipped val="true"/>
-			<AcceptsMouse val="false"/>
-			<Text val="Team2SkullCounter:"/>
-		</Frame>
-		<Frame type="Label" name="FCJH_DiagValue11">
-			<Anchor side="Top"  relative="$parent/FCJH_Diag11" pos="Min" offset="0"/>
-			<Anchor side="Left" relative="$parent/FCJH_Diag11" pos="Min" offset="300"/>
-			<Width val="400"/>
-			<Height val="26"/>
-			<Style val="WaitingForPlayersDialogChat"/>
-			<Options val="NoWrapping"/>
-			<Unclipped val="true"/>
-			<AcceptsMouse val="false"/>
-			<Text val="{$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/HauntedMinesPanel/SkullModeFrame/Team2SkullCounter/@Text}"/>
-		</Frame>
-		<Frame type="Label" name="FCJH_Diag12">
-			<Anchor side="Top"  relative="$GameUI" pos="Min" offset="612"/>
-			<Anchor side="Left" relative="$GameUI" pos="Min" offset="25"/>
-			<Width val="560"/>
-			<Height val="26"/>
-			<Style val="WaitingForPlayersDialogChat"/>
-			<Options val="NoWrapping"/>
-			<Unclipped val="true"/>
-			<AcceptsMouse val="false"/>
-			<Text val="SkullsRemainingLabel:"/>
-		</Frame>
-		<Frame type="Label" name="FCJH_DiagValue12">
-			<Anchor side="Top"  relative="$parent/FCJH_Diag12" pos="Min" offset="0"/>
-			<Anchor side="Left" relative="$parent/FCJH_Diag12" pos="Min" offset="300"/>
-			<Width val="400"/>
-			<Height val="26"/>
-			<Style val="WaitingForPlayersDialogChat"/>
-			<Options val="NoWrapping"/>
-			<Unclipped val="true"/>
-			<AcceptsMouse val="false"/>
-			<Text val="{$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/HauntedMinesPanel/SkullModeFrame/SkullsRemainingLabel/@Text}"/>
-		</Frame>
-		<Frame type="Label" name="FCJH_Diag13">
-			<Anchor side="Top"  relative="$GameUI" pos="Min" offset="638"/>
-			<Anchor side="Left" relative="$GameUI" pos="Min" offset="25"/>
-			<Width val="560"/>
-			<Height val="26"/>
-			<Style val="WaitingForPlayersDialogChat"/>
-			<Options val="NoWrapping"/>
-			<Unclipped val="true"/>
-			<AcceptsMouse val="false"/>
-			<Text val="AllySkullCounter:"/>
-		</Frame>
-		<Frame type="Label" name="FCJH_DiagValue13">
-			<Anchor side="Top"  relative="$parent/FCJH_Diag13" pos="Min" offset="0"/>
-			<Anchor side="Left" relative="$parent/FCJH_Diag13" pos="Min" offset="300"/>
-			<Width val="400"/>
-			<Height val="26"/>
-			<Style val="WaitingForPlayersDialogChat"/>
-			<Options val="NoWrapping"/>
-			<Unclipped val="true"/>
-			<AcceptsMouse val="false"/>
-			<Text val="{$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/HauntedMinesPanel/GolemModeFrame/AllySkullCounter/@Text}"/>
-		</Frame>
+		<!-- DIAGNOSTIC (maps.diag): the map id -->
 		<Frame type="DataRefFrame" name="FCJH_DiagMapId">
 			<Argument name="GalaxyVar" val="libCore_gv_mAPMapStringID"/>
 		</Frame>
-		<Frame type="Label" name="FCJH_Diag14">
-			<Anchor side="Top"  relative="$GameUI" pos="Min" offset="664"/>
+		<Frame type="Label" name="FCJH_Diag0">
+			<Anchor side="Top"  relative="$GameUI" pos="Min" offset="300"/>
 			<Anchor side="Left" relative="$GameUI" pos="Min" offset="25"/>
-			<Width val="560"/>
+			<Width val="300"/>
 			<Height val="26"/>
 			<Style val="WaitingForPlayersDialogChat"/>
 			<Options val="NoWrapping"/>
@@ -719,9 +635,9 @@
 			<AcceptsMouse val="false"/>
 			<Text val="map id:"/>
 		</Frame>
-		<Frame type="Label" name="FCJH_DiagValue14">
-			<Anchor side="Top"  relative="$parent/FCJH_Diag14" pos="Min" offset="0"/>
-			<Anchor side="Left" relative="$parent/FCJH_Diag14" pos="Min" offset="300"/>
+		<Frame type="Label" name="FCJH_DiagValue0">
+			<Anchor side="Top"  relative="$GameUI" pos="Min" offset="300"/>
+			<Anchor side="Left" relative="$GameUI" pos="Min" offset="325"/>
 			<Width val="400"/>
 			<Height val="26"/>
 			<Style val="WaitingForPlayersDialogChat"/>
@@ -729,18 +645,6 @@
 			<Unclipped val="true"/>
 			<AcceptsMouse val="false"/>
 			<Text val="{$parent/FCJH_DiagMapId/@StringValue}"/>
-		</Frame>
-		<Frame type="Label" name="FCJH_Diag15">
-			<Anchor side="Top"  relative="$GameUI" pos="Min" offset="690"/>
-			<Anchor side="Left" relative="$GameUI" pos="Min" offset="25"/>
-			<Width val="560"/>
-			<Height val="26"/>
-			<Style val="WaitingForPlayersDialogChat"/>
-			<Options val="NoWrapping"/>
-			<Unclipped val="true"/>
-			<AcceptsMouse val="false"/>
-			<Text val="map id test HauntedMines: no"/>
-			<StateGroup name="FCJH_Diag"><DefaultState val="No"/><State name="Yes"><When type="Property" frame="$parent/FCJH_DiagMapId" StringValue="HauntedMines"/><Action type="SetProperty" frame="$this" Text="map id test HauntedMines: YES"/></State><State name="No"/></StateGroup>
 		</Frame>
 	</Frame>
 	<!-- ===== Alterac Pass: a strip down the right edge; the cage fight bar and its two event banners at its middle ===== -->

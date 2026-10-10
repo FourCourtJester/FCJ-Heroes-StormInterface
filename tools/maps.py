@@ -649,6 +649,62 @@ GOLEM_PARTS = (("Image", "BackgroundImage", (), f'<Anchor side="Right" relative=
                ("Label", "AllyGolemLabel", ()), ("Label", "EnemyGolemLabel", ()))
 
 
+# ------------------------------------------------------------------ Dragon Shire's banners
+
+# "Shrines activate in: 0:02" (core MapMechanicPanel, DragonShirePanel/ShrineTimerModeFrame),
+# built as the mines' (user, 2026-10-09: "move that spawn banner to the right"): its hexagon
+# (CenterpieceImage, the dragonstone) pinned to the frame's top-right, 10 in; the bar ending 10
+# past it, starting 35 before its words, the count right-aligned in the 50 before the hexagon -
+# Blizzard sizes it to its words, growing left. Measured at 1080p (2026-10-09, at Blizzard's
+# place, the panel's top-right at 1184, 718): the bar 382 px from its tip to its end in English,
+# its lower bracket 113 units under the frame's top (y 820); the hexagon's bottom 835. On red's
+# side laid out from its left end, as the mines': the bar from the spot's left, our copy of the
+# words 35 in, the count one space after them, the hexagon after that.
+SHRINE_BOX = (-432, 0, 0, 113)
+SHRINE_WORDS_START = 35
+SHRINE_HEX_AFTER = 121     # the hexagon's right from the count's (measured: 112 px from the count's
+                           # last letter to its box's right, less the label's padding, as the mines')
+ALERT_ART["SHRINE"] = Art(SHRINE_BOX[2] - SHRINE_BOX[0], 0, height=130)   # down to the hexagon's bottom
+SHRINE_TEXT = "".join(
+    f'{T*7}<Frame type="Label" name="{name_}">\n'
+    + "".join(f'{T*8}<Anchor side="{sd}"{" " * (6 - len(sd))} relative="{rel}" pos="{pos}" offset="{off}"/>\n'
+              for sd, rel, pos, off in anchors)
+    + f'{T*8}<Text val="{{$parent/{theirs}/@Text}}"/>\n{T*8}<Style val="{{$parent/{theirs}/@Style}}"/>\n'
+    f'{T*8}<Options val="NoWrapping"/>\n{T*8}<Unclipped val="true"/>\n{T*7}</Frame>\n'
+    for name_, theirs, anchors in (
+        ("FCJH_ShrineText", "ShrineActivateLabel", (("Top", "$parent/ShrineActivateLabel", "Min", 0),
+                                                    ("Bottom", "$parent/ShrineActivateLabel", "Max", 0),
+                                                    ("Left", "$parent/BackgroundImage", "Min", SHRINE_WORDS_START))),
+        ("FCJH_ShrineCount", "ShrineActivateTimer", (("Top", "$parent/FCJH_ShrineText", "Min", 0),
+                                                     ("Bottom", "$parent/FCJH_ShrineText", "Max", 0),
+                                                     ("Left", "$parent/FCJH_ShrineText", "Max", COUNT_SPACE)))))
+SHRINE_PARTS = (("Image", "BackgroundImage", (), f'<Anchor side="Left" relative="$parent" pos="Min" offset="{-MINES_TIP_IN}"/>'),
+                ("Image", "CenterpieceImage", (),
+                 f'<Anchor side="Right" relative="$parent/FCJH_ShrineCount" pos="Max" offset="{SHRINE_HEX_AFTER}"/>'),
+                ("Label", "ShrineActivateLabel", (), '<Alpha val="0"/>'),
+                ("Label", "ShrineActivateTimer", (), '<Alpha val="0"/>'))
+# The Dragon Knight (DragonModeFrame, shown instead once a team holds both shrines): Blizzard pins
+# its bar's bottom-right to the countdown's bar's, the dragon's head (DragonHud), its timer and
+# health bar all hanging off its bar. Ours from the spot's left, as the golems': its bar at its
+# texture's own width (481, as the golems'; measured 432 px), its bottom still on the countdown's.
+# Its timer (how long the knight lasts) hung under the dragon's head, below the bar - up beside
+# the % instead, on the "DRAGON KNIGHT" row, in that row's small style (user, 2026-10-09).
+DRAGON_TIMER_GAP, DRAGON_TIMER_W = 8, 80   # its right this far into the %'s box (58 wide, the
+                                           # %'s figures at its right end); its box's width
+_ROW = "$parent/DragonInfoLabel"
+_PCT_BOX = "$parent/DragonHealthBar/HealthLabel"
+DRAGON_TIMER = "\n".join((
+    f'<Anchor side="Top"    relative="{_ROW}" pos="Min" offset="0"/>',
+    f'<Anchor side="Bottom" relative="{_ROW}" pos="Max" offset="0"/>',
+    f'<Anchor side="Right"  relative="{_PCT_BOX}" pos="Min" offset="{DRAGON_TIMER_GAP}"/>',
+    f'<Anchor side="Left"   relative="{_PCT_BOX}" pos="Min" offset="{DRAGON_TIMER_GAP - DRAGON_TIMER_W}"/>',
+    '<Style val="Storm_MapMechanic_MechanicCounterSmallRight_Blue"/>'))
+DRAGON_PARTS = (("Image", "BackgroundImage", (), f'<Anchor side="Right" relative="$parent" pos="Min" offset="{GOLEM_BAR}"/>'),
+                ("Image", "HealthBarBG", ()), ("Image", "DragonHud", ()),
+                ("Label", "DragonTimer", (), DRAGON_TIMER), ("Label", "DragonInfoLabel", ()),
+                ("UnitStatusFrame", "DragonHealthBar", _HEALTH))
+
+
 # The skull counts (HauntedMinesPanel/SkullModeFrame), shown while the mines are open. Their
 # team-coloured line (the TeamHighlight backgrounds, everything else pinned to them) crossed the
 # mines' map: lowered SKULL_LINE_DOWN, to just under the map's bottom (at 1080p the line 1048,
@@ -766,7 +822,17 @@ MAPS = {
                           extra=cursed_side() + tribute_count() + unclipped(TRIBUTE_PARTS),
                           note="the tribute spawning, then waiting to be collected (neutral); the curse on red")]}},
         notes="the tribute counts sit at the minimap's bottom corners"),
-    "dragon_shire": Map("Dragon Shire", (434, 282), core="DragonShirePanel"),
+    "dragon_shire": Map(
+        "Dragon Shire", (434, 282), core="DragonShirePanel",
+        # "Shrines activate in", then the Dragon Knight in its place: one neutral banner, on red's
+        # side. The shrine markers (ShrineModeFrame: each team's moon and star, lit while it holds
+        # them) stay on the panel, pinned to the screen's bottom as Blizzard's:
+        # [minimap.panel_nudge] puts them on the padding line.
+        team={"DragonShirePanel": {
+            "red": [Alert("ShrineTimerModeFrame", kind="SHRINE", box=SHRINE_BOX,
+                          followers=(("DragonModeFrame", 0, unclipped(DRAGON_PARTS)),),
+                          extra=SHRINE_TEXT + unclipped(SHRINE_PARTS),
+                          note="the shrines' countdown, then the Dragon Knight (neutral)")]}}),
     "garden_of_terror": Map(
         "Garden of Terror", (438, 270), core="GardenOfTerrorPanel", file="GardenMapMechanic",
         panels={"GardenTerrorHealthFrame": (("Top", "Min", 220), ("Bottom", "Max", 220), ("Right", "Max", 0))},
@@ -863,7 +929,7 @@ MAP_IDS = {
     "blackhearts_bay": "BlackheartsBay",              # SPAZZO
     "braxis_holdout": "BraxisHoldout",                # GAME (2026-10-09)
     "cursed_hollow": "CursedHollow",                  # GAME (2026-10-09; CursedHollowSandbox: the sandbox's)
-    "dragon_shire": "DragonShire",                    # SCRIPT
+    "dragon_shire": "DragonShire",                    # GAME (2026-10-09)
     "garden_of_terror": "HauntedWoods",               # SPAZZO
     "hanamura_temple": "Hanamura",                    # SPAZZO
     "haunted_mines": "HauntedMines",                  # GAME (2026-10-09)
@@ -1262,66 +1328,27 @@ def id_placers(glides):
     return out
 
 
-# DIAGNOSTIC (2026-10-09): what an older map's UI shows from the match's start, read on screen -
-# the user watches it change, looking for anything that tells Haunted Mines apart before its
-# first objective; now the map id (id_placers). Remove once settled.
-# Each "shown" line reads hidden unless its state is on (leaving a state undoes its text); each
-# text line is bound to Blizzard's label.
-DIAG_SHOWN = [m.core for m in MAPS.values() if m.core] + [
-    f"HauntedMinesPanel/{f}" for f in ("MineTimerModeFrame", "SkullModeFrame", "GolemModeFrame")]
-DIAG_TEXT = [f"HauntedMinesPanel/{f}" for f in (
-    "MineTimerModeFrame/MineOpenTimer", "MineTimerModeFrame/MineOpenLabel", "SkullModeFrame/Team1SkullCounter",
-    "SkullModeFrame/Team2SkullCounter", "SkullModeFrame/SkullsRemainingLabel", "GolemModeFrame/AllySkullCounter")]
-
-
+# DIAGNOSTIC (2026-10-09): the map's id, read on screen, for each map until its id is confirmed
+# in game (MAP_IDS' sources); remove once every map's is. The rest of it - each older panel's
+# shown/hidden and Haunted Mines' labels - went once the map id solved the jitter (user,
+# 2026-10-09).
 def diag():
     t = T * 2
-    row = lambda n, body: (
-        f'{t}<Frame type="Label" name="FCJH_Diag{n}">\n'
-        f'{t}\t<Anchor side="Top"  relative="$GameUI" pos="Min" offset="{300 + 26 * n}"/>\n'
-        f'{t}\t<Anchor side="Left" relative="$GameUI" pos="Min" offset="25"/>\n'
-        f'{t}\t<Width val="560"/>\n{t}\t<Height val="26"/>\n'
+    cell = lambda name, left, width, text: (
+        f'{t}<Frame type="Label" name="{name}">\n'
+        f'{t}\t<Anchor side="Top"  relative="$GameUI" pos="Min" offset="300"/>\n'
+        f'{t}\t<Anchor side="Left" relative="$GameUI" pos="Min" offset="{left}"/>\n'
+        f'{t}\t<Width val="{width}"/>\n{t}\t<Height val="26"/>\n'
         f'{t}\t<Style val="WaitingForPlayersDialogChat"/>\n{t}\t<Options val="NoWrapping"/>\n'
         f'{t}\t<Unclipped val="true"/>\n{t}\t<AcceptsMouse val="false"/>\n'
-        + body + f'{t}</Frame>\n')
-    out, n = "", 0
-    for path in DIAG_SHOWN:
-        out += row(n, f'{t}\t<Text val="{path}: hidden"/>\n'
-                   f'{t}\t<StateGroup name="FCJH_Diag"><DefaultState val="Off"/>'
-                   f'<State name="On"><When type="Property" frame="{MECHANICS}/{path}" Visible="true"/>'
-                   f'<Action type="SetProperty" frame="$this" Text="{path}: SHOWN"/></State>'
-                   f'<State name="Off"/></StateGroup>\n')
-        n += 1
-    for path in DIAG_TEXT:
-        out += row(n, f'{t}\t<Text val="{path.split("/")[-1]}:"/>\n')
-        out += (f'{t}<Frame type="Label" name="FCJH_DiagValue{n}">\n'
-                f'{t}\t<Anchor side="Top"  relative="$parent/FCJH_Diag{n}" pos="Min" offset="0"/>\n'
-                f'{t}\t<Anchor side="Left" relative="$parent/FCJH_Diag{n}" pos="Min" offset="300"/>\n'
-                f'{t}\t<Width val="400"/>\n{t}\t<Height val="26"/>\n'
-                f'{t}\t<Style val="WaitingForPlayersDialogChat"/>\n{t}\t<Options val="NoWrapping"/>\n'
-        f'{t}\t<Unclipped val="true"/>\n{t}\t<AcceptsMouse val="false"/>\n'
-                f'{t}\t<Text val="{{{MECHANICS}/{path}/@Text}}"/>\n{t}</Frame>\n')
-        n += 1
-    # the map's id, Blizzard's script variable read the way Spazzo does (CustomPanelSpazzo:
-    # DataRefFrame GalaxyVar libCore_gv_mAPMapStringID, his states test its StringValue)
-    out += (f'{t}<Frame type="DataRefFrame" name="FCJH_DiagMapId">\n'
-            f'{t}\t<Argument name="GalaxyVar" val="libCore_gv_mAPMapStringID"/>\n{t}</Frame>\n')
-    out += row(n, f'{t}\t<Text val="map id:"/>\n')
-    out += (f'{t}<Frame type="Label" name="FCJH_DiagValue{n}">\n'
-            f'{t}\t<Anchor side="Top"  relative="$parent/FCJH_Diag{n}" pos="Min" offset="0"/>\n'
-            f'{t}\t<Anchor side="Left" relative="$parent/FCJH_Diag{n}" pos="Min" offset="300"/>\n'
-            f'{t}\t<Width val="400"/>\n{t}\t<Height val="26"/>\n'
-            f'{t}\t<Style val="WaitingForPlayersDialogChat"/>\n{t}\t<Options val="NoWrapping"/>\n'
-            f'{t}\t<Unclipped val="true"/>\n{t}\t<AcceptsMouse val="false"/>\n'
-            f'{t}\t<Text val="{{$parent/FCJH_DiagMapId/@StringValue}}"/>\n{t}</Frame>\n')
-    n += 1
-    out += row(n, f'{t}\t<Text val="map id test HauntedMines: no"/>\n'
-               f'{t}\t<StateGroup name="FCJH_Diag"><DefaultState val="No"/>'
-               f'<State name="Yes"><When type="Property" frame="$parent/FCJH_DiagMapId" StringValue="HauntedMines"/>'
-               f'<Action type="SetProperty" frame="$this" Text="map id test HauntedMines: YES"/></State>'
-               f'<State name="No"/></StateGroup>\n')
-    # inside the file's one GameUI override: a second one in the same file drew nothing
-    return f'{t}<!-- DIAGNOSTIC (maps.diag): older maps\' UI from the start -->\n' + out
+        f'{t}\t<Text val="{text}"/>\n{t}</Frame>\n')
+    # Blizzard's script variable, read the way Spazzo does (CustomPanelSpazzo: DataRefFrame
+    # GalaxyVar libCore_gv_mAPMapStringID)
+    return (f'{t}<!-- DIAGNOSTIC (maps.diag): the map id -->\n'
+            f'{t}<Frame type="DataRefFrame" name="FCJH_DiagMapId">\n'
+            f'{t}\t<Argument name="GalaxyVar" val="libCore_gv_mAPMapStringID"/>\n{t}</Frame>\n'
+            + cell("FCJH_Diag0", 25, 300, "map id:")
+            + cell("FCJH_DiagValue0", 325, 400, "{$parent/FCJH_DiagMapId/@StringValue}"))
 
 
 def layout(header, at, down, bottoms, glides):
