@@ -385,7 +385,7 @@ land on whole pixels at 1080p (`inspect_card.line`), so at 1440p they may come o
 ## 7. What's next
 
 **Next (2026-10-09, end of night; start here).** The map pass: the four working maps and
-Dragon Shire are DONE (items 3-4). **Next session: Blackheart's Bay** (the simpler of the two
+Dragon Shire are DONE (items 3-4; Dragon Shire's knight on either team's side, blue's mirrored). **Next session: Blackheart's Bay** (the simpler of the two
 left; id `BlackheartsBay` from Spazzo, unconfirmed), then Garden of Terror (`HauntedWoods`,
 unconfirmed; it has its own layout file too). For each, screenshots of: the map id at load
 (the diagnostic, now just that line), each banner as it comes up, anything hanging off the
