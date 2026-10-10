@@ -596,6 +596,8 @@ SKULL_GAP_PX = (-8, 35)
 SKULL_PLAQUE_H_PX = 42
 SKULL_PLAQUE_DOWN_PX = 2   # ...then 2 px lower (user, 2026-10-09, by eye)
 SKULL_PLAQUE_B = round(-219 + (sum(SKULL_GAP_PX) / 2 + SKULL_PLAQUE_H_PX / 2 + SKULL_PLAQUE_DOWN_PX) / 0.9)   # from the square's bottom
+SKULL_PLAQUE_TRIM_PX = 1   # px off its top and its bottom, its middle kept (user, 2026-10-09):
+                           # anchored top and bottom, the nine-slice stretched to fit
 # The skulls and their counts, off the line (user, 2026-10-09, by eye): 2 px lower and 4 px in,
 # towards the map, each side; the line stays. Blizzard's places across, from the line's outer
 # end: blue's skull -5 and count 70 from its left, red's 5 and -72 from its right.
@@ -610,6 +612,8 @@ def skulls_extra():
         + more + f'<Unclipped val="true"/></Frame>\n')
     mid = lambda sd, off: f'<Anchor side="{sd}" relative="$GameUI" pos="Mid" offset="{off}"/>'
     down, inward = round(SKULLS_DOWN_PX / 0.9), round(SKULLS_IN_PX / 0.9)
+    plaque_b = SKULL_PLAQUE_B - round(SKULL_PLAQUE_TRIM_PX / 0.9)
+    plaque_h = round((SKULL_PLAQUE_H_PX - 2 * SKULL_PLAQUE_TRIM_PX) / 0.9)
     def across(n, skull):
         sd, pos, s, c, sign = SKULL_ACROSS[n]
         return (f'<Anchor side="{sd}" relative="$parent/Team{n}Background" pos="{pos}" '
@@ -624,7 +628,8 @@ def skulls_extra():
                              f"$parent/Team{n}Background", more=across(n, False))
                       for n in (1, 2))
             + f'{t}\t<Frame type="Image" name="FCJH_SkullsPlaque">\n'
-            f'{t}\t\t<Anchor side="Bottom" relative="{MINIMAP}" pos="Max" offset="{SKULL_PLAQUE_B}"/>\n'
+            f'{t}\t\t<Anchor side="Bottom" relative="{MINIMAP}" pos="Max" offset="{plaque_b}"/>\n'
+            f'{t}\t\t<Anchor side="Top"    relative="{MINIMAP}" pos="Max" offset="{plaque_b - plaque_h}"/>\n'
             f'{t}\t\t{mid("Left", -SKULL_PLAQUE_W // 2)}\n{t}\t\t{mid("Right", SKULL_PLAQUE_W // 2)}\n'
             f'{t}\t\t<Texture val="@UI/HUD_MapMechanic_BG_CenterBar"/>\n{t}\t\t<TextureType val="Nineslice"/>\n'
             f'{t}\t\t<RenderPriority val="500"/>\n{t}\t\t<Unclipped val="true"/>\n{t}\t</Frame>\n'

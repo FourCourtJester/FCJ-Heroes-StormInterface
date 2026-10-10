@@ -403,7 +403,8 @@
 							<Frame type="Image" name="Team2Skull"><Anchor side="Bottom" relative="$parent/Team2Background" pos="Max" offset="-4"/><Anchor side="Right" relative="$parent/Team2Background" pos="Max" offset="1"/><Unclipped val="true"/></Frame>
 							<Frame type="Label" name="Team2SkullCounter"><Anchor side="Bottom" relative="$parent/Team2Background" pos="Max" offset="-24"/><Anchor side="Right" relative="$parent/Team2Background" pos="Max" offset="-76"/><Unclipped val="true"/></Frame>
 							<Frame type="Image" name="FCJH_SkullsPlaque">
-								<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-178"/>
+								<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-179"/>
+								<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-223"/>
 								<Anchor side="Left" relative="$GameUI" pos="Mid" offset="-100"/>
 								<Anchor side="Right" relative="$GameUI" pos="Mid" offset="100"/>
 								<Texture val="@UI/HUD_MapMechanic_BG_CenterBar"/>
