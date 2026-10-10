@@ -389,10 +389,12 @@ tech"). The plan (user): go over the four working maps - Towers of Doom, Cursed 
 Braxis Holdout, Haunted Mines - adjusting each map's minimap and panels with it, before new maps.
 
 1. **Look in game at what's built but unseen** (build 2026-10-09 evening):
-   - Haunted Mines: the glide WORKS, and the second mines opening didn't replay it (user,
-     2026-10-09). To see: the skull counts' red/blue line back (it was clipped away under its
-     panel: Unclipped), and the "Needed" plaque in the gap between the surface and the mines,
-     riding with the minimap.
+   - **Haunted Mines: DONE (user, 2026-10-09).** The two views and the glide (once only), the
+     skull counts' line back (it was clipped under its panel: Unclipped), skulls and counts 2 px
+     lower and 4 px in, the "Needed" plaque 28 px in the gap between the maps (the bar art
+     stretched whole: a squeezed nine-slice loses its corners), riding with the minimap. The
+     surface sits ~20 px left of centre in Blizzard's art at launch: left as is (user: it
+     lasts two minutes).
    - Cursed Hollow: the tribute and curse banners now FADE in without sliding - check both
      land on their spots every time, the curse on red's side and (if a replay has one) on blue's.
 2. **Banners stay put - check on each map in the pass:** every bar's bottom on the one place
@@ -401,8 +403,7 @@ Braxis Holdout, Haunted Mines - adjusting each map's minimap and panels with it,
    move with the minimap: all 90 banner anchors and stack moves are to the screen (checked
    2026-10-09). Any banner whose sides a STATE moves must stay fade-only (`maps.FADE_ONLY`).
 3. **The four working maps, map by map (map-id tech):**
-   - **Haunted Mines** - finish: the launch cut (`[minimap.launch_nudge]`), the glide, the plaque,
-     `[minimap.panel_nudge]` (-11, tuned before the two views).
+   - **Haunted Mines** - DONE (above).
    - **Cursed Hollow** - give it `own_place=True`: off the shared place, its own. Its approved
      look had the map's bottom on the screen's edge: `[minimap.nudge] cursed_hollow = 20` keeps
      that. Its id is SPAZZO-only: read it on the diagnostic first.
