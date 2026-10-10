@@ -739,9 +739,10 @@ KNIGHT_COPIES = (
 # spans the bar's frame, and the bar drains by cropping (a flat end), so the cut ends hold.
 # Measured at 1080p (2026-10-09): the fill's ends lean ~6 px over its 10 px height.
 KNIGHT_LEAN = 7            # units
-KNIGHT_OUTER_TRIM = 4      # units more off the outer (left) end: cut at the lean alone it sat 2-3 px
-                           # past the backing's slanted edge (user, 2026-10-09: "a bit more trim");
-                           # the inner end was right
+KNIGHT_OUTER_TRIM = 2      # units more off the outer (left) end: cut at the lean alone it sat 2-3 px
+                           # past the backing's slanted edge (user, 2026-10-09: "a bit more trim"), 4
+                           # sat inside it - but red's own fill overshoots its backing there (Blizzard's),
+                           # and blue's mimics red's (user): half back. The inner end was right
 KNIGHT_BAR_H = 11          # units: Blizzard's HealthBar Height
 TEXTURES = "_Assets\\Textures"   # gen.TEXTURE_DIR
 WHITE = TEXTURES + "\\FCJH_White.dds"   # gen.WHITE: an opaque mask, for red's
