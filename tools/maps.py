@@ -700,10 +700,78 @@ DRAGON_TIMER = "\n".join((
     f'<Anchor side="Right"  relative="{_PCT_BOX}" pos="Min" offset="{DRAGON_TIMER_GAP}"/>',
     f'<Anchor side="Left"   relative="{_PCT_BOX}" pos="Min" offset="{DRAGON_TIMER_GAP - DRAGON_TIMER_W}"/>',
     '<Style val="Storm_MapMechanic_MechanicCounterSmallRight_Blue"/>'))
+# Drawn over the dragon's head, as in Blizzard's order - and over blue's copy of it (KNIGHT_COPIES),
+# which, being ours, comes after them (siblings at the default 512 draw in order)
+_OVER = '<RenderPriority val="513"/>'
 DRAGON_PARTS = (("Image", "BackgroundImage", (), f'<Anchor side="Right" relative="$parent" pos="Min" offset="{GOLEM_BAR}"/>'),
                 ("Image", "HealthBarBG", ()), ("Image", "DragonHud", ()),
-                ("Label", "DragonTimer", (), DRAGON_TIMER), ("Label", "DragonInfoLabel", ()),
-                ("UnitStatusFrame", "DragonHealthBar", _HEALTH))
+                ("Label", "DragonTimer", (), DRAGON_TIMER + "\n" + _OVER), ("Label", "DragonInfoLabel", (), _OVER),
+                ("UnitStatusFrame", "DragonHealthBar", _HEALTH, _OVER))
+# The knight on its team's side (user, 2026-10-09: "like Curse"): red's on red's side as above,
+# blue's on blue's spot, mirrored - the bar ending at blue's inner edge, the dragon's head at its
+# outer end (flipped), "DRAGON KNIGHT" at the inner end, the % then the timer from the outer.
+# It's one frame for either team, and to an observer it says the same: the team is told by the
+# shrine markers (ShrineModeFrame), hidden while the knight is up but left as they stood - the
+# script sets each team's lit moon and star only while the shrines are up (mapmechanicslib MM
+# Gardens dragon UI loop), so the knight's team is the one with both lit (Team1 is blue). The
+# head and its health bar's backing are images with only one side anchored (their own size),
+# so blue's are copies of ours, the other side anchored; the labels move and change alignment.
+SHIRE = MECHANICS + "/DragonShirePanel"
+KNIGHT = SHIRE + "/DragonModeFrame"
+KNIGHT_COPIES = (
+    f'{T*7}<Frame type="Image" name="FCJH_KnightBarBG">\n'
+    f'{T*8}<Anchor side="Top"   relative="$parent/BackgroundImage" pos="Mid" offset="5"/>\n'
+    f'{T*8}<Anchor side="Right" relative="$parent/BackgroundImage" pos="Max" offset="-12"/>\n'
+    f'{T*8}<Texture val="@UI/HUD_MapMechanic_BG_HealthBar"/>\n'
+    f'{T*8}<Unclipped val="true"/>\n{T*8}<Alpha val="0"/>\n{T*7}</Frame>\n'
+    f'{T*7}<Frame type="Image" name="FCJH_KnightHead">\n'
+    f'{T*8}<Anchor side="Top"  relative="$parent/BackgroundImage" pos="Min" offset="-43"/>\n'
+    f'{T*8}<Anchor side="Left" relative="$parent/BackgroundImage" pos="Min" offset="-30"/>\n'
+    f'{T*8}<Texture val="@UI/HUD_MapMechanic_DragonShire_DragonHUD"/>\n'
+    f'{T*8}<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>\n'
+    f'{T*8}<Unclipped val="true"/>\n{T*8}<Alpha val="0"/>\n{T*7}</Frame>\n')
+
+
+def knight_side():
+    t = T * 7
+    act = lambda frame, sd, rel, pos, off: (f'<Action type="SetAnchor" frame="{KNIGHT}{frame}" side="{sd}" '
+                                            f'relative="{rel}" pos="{pos}" offset="{off}"/>')
+    prop = lambda frame, **kw: "".join(f'<Action type="SetProperty" frame="{KNIGHT}{frame}" {k}="{v}"/>'
+                                       for k, v in kw.items())
+    small = lambda sd: f"Storm_MapMechanic_MechanicCounterSmall{sd}_Blue"
+    pct, bar = f"{KNIGHT}/DragonHealthBar/HealthLabel", f"{KNIGHT}/DragonHealthBar/HealthBar"
+
+    def place(blue):
+        spot = f"{SHIRE}/FCJH_{'DragonModeFrame' if blue else 'ShrineTimerModeFrame'}Spot"
+        bg = f"{KNIGHT}/{'FCJH_KnightBarBG' if blue else 'HealthBarBG'}"
+        out = "".join(act("", sd, spot, pos, off) for sd, pos, off in box_sides(SHRINE_BOX))
+        out += (act("/BackgroundImage", "Right", KNIGHT, *(("Max", 0) if blue else ("Min", GOLEM_BAR)))
+                + prop("/DragonHud", Alpha=0 if blue else 255) + prop("/FCJH_KnightHead", Alpha=255 if blue else 0)
+                + prop("/HealthBarBG", Alpha=0 if blue else 255) + prop("/FCJH_KnightBarBG", Alpha=255 if blue else 0)
+                + act("/DragonHealthBar/HealthBar", "Top", bg, "Min", 5)
+                + act("/DragonHealthBar/HealthBar", "Left", bg, "Min", 8)
+                # "DRAGON KNIGHT": from the backing's inner end, 15 in
+                + act("/DragonInfoLabel", "Bottom", bg, "Min", 2)
+                + act("/DragonInfoLabel", "Left", bg, "Min", 15) + act("/DragonInfoLabel", "Right", bg, "Max", -15)
+                + prop("/DragonInfoLabel", Style=small("Right" if blue else "Left")))
+        if blue:     # the % from the health bar's outer end, then the timer after it
+            out += (act("/DragonHealthBar/HealthLabel", "Right", bar, "Min", 3 + 58)
+                    + prop("/DragonHealthBar/HealthLabel/StatusLabel", Style=small("Right"))
+                    + act("/DragonTimer", "Left", pct, "Max", -DRAGON_TIMER_GAP)
+                    + act("/DragonTimer", "Right", pct, "Max", DRAGON_TIMER_W - DRAGON_TIMER_GAP)
+                    + prop("/DragonTimer", Style=small("Left")))
+        else:
+            out += (act("/DragonHealthBar/HealthLabel", "Right", bar, "Max", -3)
+                    + prop("/DragonHealthBar/HealthLabel/StatusLabel", Style=small("Left"))
+                    + act("/DragonTimer", "Right", pct, "Min", DRAGON_TIMER_GAP)
+                    + act("/DragonTimer", "Left", pct, "Min", DRAGON_TIMER_GAP - DRAGON_TIMER_W)
+                    + prop("/DragonTimer", Style=small("Right")))
+        return out
+    lit = "".join(f'<When type="Property" frame="{SHIRE}/ShrineModeFrame/Team1{s}ShrineEnabled" Visible="true"/>'
+                  for s in ("Moon", "Star"))
+    return (f'{t}<StateGroup name="FCJH_KnightSide">\n{t}\t<DefaultState val="Red"/>\n'
+            f'{t}\t<State name="Blue">{lit}{place(True)}</State>\n'
+            f'{t}\t<State name="Red">{place(False)}</State>\n{t}</StateGroup>\n')
 
 
 # The skull counts (HauntedMinesPanel/SkullModeFrame), shown while the mines are open. Their
@@ -825,15 +893,18 @@ MAPS = {
         notes="the tribute counts sit at the minimap's bottom corners"),
     "dragon_shire": Map(
         "Dragon Shire", (434, 282), core="DragonShirePanel",
-        # "Shrines activate in", then the Dragon Knight in its place: one neutral banner, on red's
-        # side. The shrine markers (ShrineModeFrame: each team's moon and star, lit while it holds
+        # "Shrines activate in", then the Dragon Knight in its place: a neutral banner, on red's
+        # side, then the knight on its team's. The shrine markers (ShrineModeFrame: each team's moon and star, lit while it holds
         # them) stay on the panel, pinned to the screen's bottom as Blizzard's:
         # [minimap.panel_nudge] puts them on the padding line.
+        # The knight moves to blue's spot, mirrored, when it's blue's (knight_side).
         team={"DragonShirePanel": {
+            "blue": [Alert("DragonModeFrame", kind="SHRINE", box=SHRINE_BOX, spot_only=True,
+                           note="the Dragon Knight, when it's blue's")],
             "red": [Alert("ShrineTimerModeFrame", kind="SHRINE", box=SHRINE_BOX,
-                          followers=(("DragonModeFrame", 0, unclipped(DRAGON_PARTS)),),
+                          followers=(("DragonModeFrame", 0, unclipped(DRAGON_PARTS) + KNIGHT_COPIES + knight_side()),),
                           extra=SHRINE_TEXT + unclipped(SHRINE_PARTS),
-                          note="the shrines' countdown, then the Dragon Knight (neutral)")]}}),
+                          note="the shrines' countdown (neutral), then the Dragon Knight on red")]}}),
     "garden_of_terror": Map(
         "Garden of Terror", (438, 270), core="GardenOfTerrorPanel", file="GardenMapMechanic",
         panels={"GardenTerrorHealthFrame": (("Top", "Min", 220), ("Bottom", "Max", 220), ("Right", "Max", 0))},
@@ -1051,7 +1122,8 @@ NOT_BANNERS = ("GolemModeFrame",)
 # SetAnchor, and end="Pause" holds it (Haunted Mines' glide, 2026-10-09): the slide would
 # have pinned the curse to red's spot and Blizzard's bar layout after its first intro. The
 # tribute too: cursed_side moves it with the curse, whose hexagon on blue hangs off the tribute's.
-FADE_ONLY = ("CurseFrame", "TributeSpawnFrame")
+# The Dragon Knight: knight_side moves it to blue's side.
+FADE_ONLY = ("CurseFrame", "TributeSpawnFrame", "DragonModeFrame")
 
 
 def intro(indent, slide=True):
