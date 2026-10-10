@@ -384,9 +384,12 @@ land on whole pixels at 1080p (`inspect_card.line`), so at 1440p they may come o
 
 ## 7. What's next
 
-**Next (2026-10-09; start here).** Map-specific tech is established (item 8, "Map-specific
-tech"). The plan (user): go over the four working maps - Towers of Doom, Cursed Hollow,
-Braxis Holdout, Haunted Mines - adjusting each map's minimap and panels with it, before new maps.
+**Next (2026-10-09, end of night; start here).** The map pass: the four working maps and
+Dragon Shire are DONE (items 3-4). **Next session: Blackheart's Bay** (the simpler of the two
+left; id `BlackheartsBay` from Spazzo, unconfirmed), then Garden of Terror (`HauntedWoods`,
+unconfirmed; it has its own layout file too). For each, screenshots of: the map id at load
+(the diagnostic, now just that line), each banner as it comes up, anything hanging off the
+minimap's bottom. Hero test rosters come from the tracker in item 14 ("not seen yet").
 
 1. **Look in game at what's built but unseen** (build 2026-10-09 evening):
    - **Haunted Mines: DONE (user, 2026-10-09).** The two views and the glide (once only), the
