@@ -853,17 +853,18 @@ commits around it).
 14. **Final pass: every map, every hero** (user, 2026-10-05). The last QA round, with replays
     that cover every map and every hero; the checks that need a particular hero or map collect
     here until then (no replay with them yet):
-    - **Heroes seen in game - the tracker (user, 2026-10-09: "make sure you're tracking who
-      we've seen"). Update it after every replay.** From the user's own messages across the
-      session logs (a floor: heroes on screen but never named aren't counted). 90 heroes;
-      25 seen:
-      - **Seen (25):** Abathur, Anub'arak, Auriel, Blaze, Chromie, Deathwing, Diablo, Gazlowe, Hogger, Jaina, Johanna, Leoric, Li Li, Lt. Morales, Lúcio, Maiev, Nova, Rexxar, Sonya, The Lost Vikings, Tracer, Valeera, Varian, Xul, Zarya. (Hogger: the Rage tooltip swap; Lucio, Anub'arak and
-        Jaina: the hotkey-order replay.)
-      - **Next roster (Dragon Shire, 2026-10-09), chosen for the checks above:** blue Medivh
-        (Raven form), Alexstrasza (Dragonqueen), Ragnaros (Molten Core), Greymane (Worgen),
-        Samuro (images); red D.Va (mech/pilot, `ALSO`), Tychus (Odin), Chen (Brew), Murky (egg,
-        short respawns), Zeratul (stealth, like Valeera's). Inspect each form while it's up.
-      - **Not seen yet (55):** Alarak, Ana, Anduin, Artanis, Arthas, Azmodan, Brightwing, Cassia, Cho'gall, Deckard, Dehaka, E.T.C., Falstad, Fenix, Gall, Garrosh, Genji, Gul'dan, Hanzo, Illidan, Imperius, Junkrat, Kael'thas, Kel'Thuzad, Kerrigan, Kharazim, Li-Ming, Lunara, Mal'Ganis, Malfurion, Malthael, Mei, Mephisto, Muradin, Nazeebo, Orphea, Probius, Qhira, Raynor, Rehgar, Sgt. Hammer, Stitches, Stukov, Sylvanas, Tassadar, The Butcher, Thrall, Tyrael, Tyrande, Uther, Valla, Whitemane, Yrel, Zagara, Zul'jin.
+    - **Heroes seen in game - the tracker (user, 2026-10-09). Update it after every replay; the
+      user's own list is the source (a reconstruction from chat logs missed 15).** 91
+      heroes (Cho and Gall counted apart; Xal'atath the newest); 46 seen:
+      - **In the user's replays across 4 maps (user's list, 2026-10-09; 39):** Illidan, Stitches, Probius, Brightwing, Tychus, Fenix, Anub'arak, Tyrael, Zagara, Rehgar, Uther, Murky, Zarya, Gazlowe, Nova, Zeratul, Sgt. Hammer, Lt. Morales, Hogger, Leoric, Deathwing, Alexstrasza, Ragnaros, Greymane, Valeera, Samuro, D.Va, Chen, Medivh, Auriel, Chromie, Sonya, Johanna, Rexxar, The Lost Vikings, Tracer, Varian, Xal'atath, Abathur.
+        (The user's list also had "Varion" beside Varian - read as a typo; ask if not.)
+      - **Named in earlier sessions, not in those replays (7):** Blaze, Diablo, Jaina, Li Li, Lúcio, Maiev, Xul.
+      - **The form checks below can be done in those replays:** Medivh, Deathwing,
+        Alexstrasza, Ragnaros, Greymane, Valeera, Samuro, D.Va, the Vikings, Tychus are all in them.
+      - **Next roster (Dragon Shire), all unseen:** blue Cho + Gall (two players, one hero),
+        Dehaka (Essence), Qhira (no mana), The Butcher (no mana, meat stacks); red Kel'Thuzad
+        and Nazeebo (stacks), Genji (no mana), Ana, Junkrat.
+      - **Not seen yet (45):** Alarak, Ana, Anduin, Artanis, Arthas, Azmodan, Cassia, Cho, Gall, Deckard, Dehaka, E.T.C., Falstad, Garrosh, Genji, Gul'dan, Hanzo, Imperius, Junkrat, Kael'thas, Kel'Thuzad, Kerrigan, Kharazim, Li-Ming, Lunara, Mal'Ganis, Malfurion, Malthael, Mei, Mephisto, Muradin, Nazeebo, Orphea, Qhira, Raynor, Stukov, Sylvanas, Tassadar, The Butcher, Thrall, Tyrande, Valla, Whitemane, Yrel, Zul'jin.
     - **forms** (item 3): Medivh's Raven, Deathwing in Dragonflight and as World Breaker,
       Alexstrasza's Dragonqueen, Ragnaros in Molten Core, Greymane's Worgen, Valeera
       stealthed - each gets the TALL card with its player's portrait, talents and name, and
