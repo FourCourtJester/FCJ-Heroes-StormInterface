@@ -324,41 +324,71 @@ BEACON_AT_PX = tuple(round(e / 2 + o * (_RING + BEACON_GAP_PX) + (-HEX_W_PX / 2 
                      for i, (e, o) in enumerate(zip(_EDGE, _OUT)))   # the left ring's centre (-66.6, 37.4); the right's mirrors it
 _DISH_SIDE = round((abs(BEACON_AT_PX[0]) + BEACON_W_PX * BEACON_SCALE / 2) / 0.9)   # its image's outer side
 _DISH_BOTTOM = round((BEACON_AT_PX[1] + _RING + BEACON_MARGIN_PX * BEACON_SCALE) / 0.9)
-# The electric line (HoldOutLink1-4; the script shows 1-2, blue's, while blue holds both beacons
-# and 3-4, red's, while red does - libscho MMHO lightning links): a beam from each team's dish
-# into its own hexagon while its zerg charge (user, 2026-10-09: "shoot it into the hexagons").
-# Drawn over the hexagon (RadarDishModeFrame raised over the BossDuel frames, its siblings) and
-# under the dish, from the ring's centre to the hexagon's; its mask fades both ends. Turned with
-# Rotation (degrees clockwise: Blizzard turns a down arrow left with 90, standardtemplates),
-# about its middle. Its height is the texture's own, ~61 units: Blizzard's line starts 35 down
-# a dish whose ring's centre is 65.6 down, so it's centred on the ring.
-BEAM_H = 61
-BEAM_LEN_PX = math.hypot(*BEACON_AT_PX)
-BEAM_TURN = round(math.degrees(math.atan2(BEACON_AT_PX[1], -BEACON_AT_PX[0])), 1)   # 29.3: the left beam turns back by it
-DISHES_OVER = 600       # RadarDishModeFrame's RenderPriority: over the BossDuel frames (512)
+# "On air" (user, 2026-10-09): while one team holds both beacons - its zerg charging - a bold
+# ring in its colour over each dish, breathing like an on-air light, and a broadcast wave
+# rolling out from it (they're satellites). Blizzard's electric line is only the signal now:
+# the script shows HoldOutLink1-2 (blue's) while BLUE holds both and 3-4 (red's) while red does
+# (libscho MMHO lightning links); kept at Alpha 0, and a state on its Visible shows our rings.
+# (The line itself, first a long line along the map's bottom edge, then turned into a beam into
+# each hexagon, read as nothing much - user, 2026-10-09.) The art: Blizzard's generic ring glow,
+# tinted (Volskaya's stopwatch ring); each ring centred on its dish's ring (the image's Mid -
+# its ring sits centred in it), sized by Width/Height with all four sides on that point (Zarya's
+# energy ring), which the wave animates. Under the hexagons: the wave rolls behind them.
+ON_AIR = (("Blue", 1, "TeamOrderColors"), ("Red", 3, "TeamChaosColors"))   # team, its line, its colour
+ON_AIR_RING = 84                       # the steady ring, units across (the dish's ring is 72)
+ON_AIR_BREATHE = (1.6, 255, 130)       # its breath: seconds, full and low alpha
+ON_AIR_WAVE = (1.4, 72, 150, 220)      # the wave: seconds, units across from and to, starting alpha
+
+
+def _ring(team, colour, dish, kind):
+    """One of team's rings on a dish (Top/Bottom), steady or the wave, inside FCJH_OnAir<team>."""
+    def keys(pairs):
+        return "".join(f'<Key type="Curve" time="{t}" value="{v}"/>' for t, v in pairs)
+    if kind == "Ring":
+        size = ON_AIR_RING
+        s, hi, lo = ON_AIR_BREATHE
+        anim = f'<Controller type="Fade" end="Loop">{keys(((0, hi), (s / 2, lo), (s, hi)))}</Controller>'
+    else:
+        s, start, end, alpha = ON_AIR_WAVE
+        size = start
+        anim = "".join(f'<Controller type="Dimension" dimension="{d}" relative="False" percentage="False" end="Loop">'
+                       f'{keys(((0, start), (s, end)))}</Controller>' for d in ("Width", "Height"))
+        anim += f'<Controller type="Fade" end="Loop">{keys(((0, alpha), (s, 0)))}</Controller>'
+    dish_at = f"$parent/$parent/HoldOutBeacon{dish}Off"
+    return (f'<Frame type="Image" name="FCJH_OnAir{kind}{dish}">'
+            + "".join(f'<Anchor side="{side}" relative="{dish_at}" pos="Mid" offset="0"/>'
+                      for side in ("Top", "Bottom", "Left", "Right"))
+            + f'<Width val="{size}"/><Height val="{size}"/><Visible val="false"/>'
+            f'<Texture val="@UI/Storm_UI_GenFX_RingGlow"/><BlendMode val="Add"/><ColorAdjustMode val="Colorize"/>'
+            f'<LightAdjustColor val="#ColorWhite"/><DarkAdjustColor val="{{$GameUI/{colour}/@Color}}"/>'
+            f'<Unclipped val="true"/><AcceptsMouse val="false"/>'
+            f'<Animation name="FCJH_OnAir"><Event event="OnShown" action="Restart,Play"/>{anim}</Animation></Frame>')
+
+
+def _on_air(team, link, colour):
+    """FCJH_OnAir<team>: its four rings, shown while its line (HoldOutLink<link>) is."""
+    parts = [(dish, kind) for dish in ("Top", "Bottom") for kind in ("Wave", "Ring")]
+    return (f'<Frame type="Frame" name="FCJH_OnAir{team}"><Anchor relative="$parent"/><AcceptsMouse val="false"/>'
+            f'<RenderPriority val="110"/>'      # over the dishes (100)
+            + "".join(_ring(team, colour, dish, kind) for dish, kind in parts)
+            + f'<StateGroup name="FCJH_OnAir"><DefaultState val="Off"/><State name="On">'
+            f'<When type="Property" frame="$parent/HoldOutLink{link}" Visible="true"/>'
+            + "".join(f'<Action type="SetProperty" frame="$this/FCJH_OnAir{kind}{dish}" Visible="true"/>'
+                      for dish, kind in parts)
+            + '</State><State name="Off"/></StateGroup></Frame>')
+
+
 _SIZE = (f'<Width val="#FCJH_MAP_BEACON_W"/><Height val="#FCJH_MAP_BEACON_H"/>'
          f'<Unclipped val="true"/></Frame>')
-
-
-def _beam(n):
-    """HoldOutLink<n>'s box (before it turns), from its hexagon's centre: blue's 1-2, red's 3-4."""
-    side = -1 if n <= 2 else 1
-    cx, cy = side * abs(BEACON_AT_PX[0]) / 2 / 0.9, BEACON_AT_PX[1] / 2 / 0.9
-    half = BEAM_LEN_PX / 2 / 0.9
-    hexagon = HEX["Top" if n <= 2 else "Bottom"]
-    edge = lambda s, v: f'<Anchor side="{s}" relative="{hexagon}" pos="Mid" offset="{round(v)}"/>'
-    return (f'<Frame type="Image" name="HoldOutLink{n}">' + edge("Left", cx - half) + edge("Right", cx + half)
-            + edge("Top", cy - BEAM_H / 2) + edge("Bottom", cy + BEAM_H / 2)
-            + f'<Rotation val="{side * BEAM_TURN}"/><RenderPriority val="99"/><Unclipped val="true"/></Frame>')
-
-
-BEACON_ICONS = f'<RenderPriority val="{DISHES_OVER}"/>' + "".join(
+BEACON_ICONS = "".join(
     f'<Frame type="Image" name="HoldOutBeaconTop{s}"><Anchor side="Bottom" relative="{HEX["Top"]}" pos="Mid" '
     f'offset="{_DISH_BOTTOM}"/><Anchor side="Left" relative="{HEX["Top"]}" pos="Mid" '
     f'offset="{-_DISH_SIDE}"/>{_SIZE}' for s in ("Off", "Order", "Chaos")) + "".join(
     # the bottom lane's keep Blizzard's bottom, on the top lane's Off
     f'<Frame type="Image" name="HoldOutBeaconBottom{s}"><Anchor side="Right" relative="{HEX["Bottom"]}" pos="Mid" '
-    f'offset="{_DISH_SIDE}"/>{_SIZE}' for s in ("Off", "Order", "Chaos")) + "".join(_beam(n) for n in range(1, 5))
+    f'offset="{_DISH_SIDE}"/>{_SIZE}' for s in ("Off", "Order", "Chaos")) + "".join(
+    f'<Frame type="Image" name="HoldOutLink{n}"><Alpha val="0"/></Frame>' for n in range(1, 5)) + "".join(
+    _on_air(*t) for t in ON_AIR)
 # The words on the HUD, in both BossDuel frames (the Right one is team 2's players'):
 #   - each % (LeftBossHealthLabel; the right one keeps Blizzard's bottom, on the left's) inside its
 #     hexagon, over the egg's foot: its letters' middle PCT_DOWN_PX under the centre (they sat

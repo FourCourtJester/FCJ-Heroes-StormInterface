@@ -414,14 +414,16 @@ Braxis Holdout, Haunted Mines - adjusting each map's minimap and panels with it,
      - the % labels inside their hexagons, their letters' middle 19 px under the centre;
      - the dishes against each hexagon's lower outer edge (rings tangent, 2 px off), anchored
        to the hexagons (BossDuelLeftFrame/BossHudLeft, /BossHudRight), so they follow the HUD;
-     - the electric line repurposed: the script shows blue's pair (Link1-2) while BLUE holds
-       both beacons and red's (3-4) while red does - so each team's beam runs from its dish
-       into its own hexagon, over it (RadarDishModeFrame raised to 600), turned 29.3 deg by
-       Rotation. Unknowns to check: the turn's direction and pivot, the texture's height (61
-       assumed);
+     - the electric line hidden (Alpha 0; user: the beam "won't be useful"). It's the signal
+       now: the script shows blue's pair (Link1-2) while BLUE holds both beacons and red's (3-4)
+       while red does, and a state on it shows "on air" rings in that team's colour over both
+       dishes (FCJH_OnAirBlue/Red): a bold breathing ring and a wave rolling out
+       (Storm_UI_GenFX_RingGlow, tinted). To check: the ring's size on the dish (84 units
+       assumed), the wave's reach and pace;
      - "BEACON PROGRESS" and the wave's "Enemy Zerg" above the bar, on Blizzard's "Allied
        Zerg" row; the whole HUD 20 px lower (`[minimap.panel_nudge] braxis_holdout = 24`);
-     - the mechanics panel no longer goes under the minimap (that was for the old line).
+     - the mechanics panel no longer goes under the minimap (that was for the old line);
+     - its map 18 px down onto the floor (`[minimap.nudge] braxis_holdout = 18`).
      Its map's visual bottom ~1047 at 1080p: ~18 px of room above the floor.
    - **THE FLOOR, every map (user, 2026-10-09):** no map's visual bottom edge (its art's
      outline, not the texture box or unit icons) may sit lower than Cursed Hollow's: y ~1065
