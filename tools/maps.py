@@ -723,6 +723,7 @@ KNIGHT_COPIES = (
     f'{T*8}<Anchor side="Top"   relative="$parent/BackgroundImage" pos="Mid" offset="5"/>\n'
     f'{T*8}<Anchor side="Right" relative="$parent/BackgroundImage" pos="Max" offset="-12"/>\n'
     f'{T*8}<Texture val="@UI/HUD_MapMechanic_BG_HealthBar"/>\n'
+    f'{T*8}<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>\n'
     f'{T*8}<Unclipped val="true"/>\n{T*8}<Alpha val="0"/>\n{T*7}</Frame>\n'
     f'{T*7}<Frame type="Image" name="FCJH_KnightHead">\n'
     f'{T*8}<Anchor side="Top"  relative="$parent/BackgroundImage" pos="Min" offset="-43"/>\n'
@@ -749,13 +750,17 @@ def knight_side():
                 + prop("/DragonHud", Alpha=0 if blue else 255) + prop("/FCJH_KnightHead", Alpha=255 if blue else 0)
                 + prop("/HealthBarBG", Alpha=0 if blue else 255) + prop("/FCJH_KnightBarBG", Alpha=255 if blue else 0)
                 + act("/DragonHealthBar/HealthBar", "Top", bg, "Min", 5)
-                + act("/DragonHealthBar/HealthBar", "Left", bg, "Min", 8)
+                # the bar 8 in from the backing's outer end, as red's (its 360 to the inner end)
+                + act("/DragonHealthBar/HealthBar", "Left", bg, *(("Max", -8 - 360) if blue else ("Min", 8)))
+                # the backing and the bar flipped too: their slanted ends had red's angles (user,
+                # 2026-10-09). Blizzard's mirrored portrait: TextureCoords top,left,bottom,right
+                + prop("/DragonHealthBar/HealthBar", TextureCoords="0,1,1,0" if blue else "0,0,1,1")
                 # "DRAGON KNIGHT": from the backing's inner end, 15 in
                 + act("/DragonInfoLabel", "Bottom", bg, "Min", 2)
                 + act("/DragonInfoLabel", "Left", bg, "Min", 15) + act("/DragonInfoLabel", "Right", bg, "Max", -15)
                 + prop("/DragonInfoLabel", Style=small("Right" if blue else "Left")))
         # which end the health drains from: Blizzard's from the bar's left (the start of red's),
-        # blue's from its right. Blizzard never sets Expansion from a state: to see if it takes
+        # blue's from its right (Blizzard never sets Expansion from a state; it takes - 2026-10-09)
         out += prop("/DragonHealthBar/HealthBar", Expansion="Right" if blue else "Left")
         if blue:     # the % from the health bar's outer end, then the timer after it
             out += (act("/DragonHealthBar/HealthLabel", "Right", bar, "Min", 3 + 58)
