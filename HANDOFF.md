@@ -925,6 +925,10 @@ commits around it).
       2026-10-06; `windowstate=1` is maximised - on 2026-10-09 a maximised window on a bigger
       monitor ran the game at 2558 x 1401 unnoticed: check screenshots' size) -
       Claude puts it back to 1080p afterwards, with the game closed.
+15. **The Lost Vikings' nameplate in player view - look at it later** (user, 2026-10-09). In a
+    player's view TLV's nameplate seems to be a three-slice, one per Viking, each with its own
+    click handler. Worth studying for ours: how Blizzard splits one plate into three clickable
+    parts (find it in JamiePhan's layouts), and whether our plates could use it.
 
 ## 8. Original brief
 
