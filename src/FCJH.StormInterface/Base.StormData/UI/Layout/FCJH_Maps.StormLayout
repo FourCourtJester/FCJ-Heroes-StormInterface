@@ -398,12 +398,12 @@
 						<Frame type="Frame" name="SkullModeFrame">
 							<Frame type="Image" name="Team1Background"><Anchor side="Bottom" relative="$parent" pos="Max" offset="16"/><Unclipped val="true"/></Frame>
 							<Frame type="Image" name="Team2Background"><Anchor side="Bottom" relative="$parent" pos="Max" offset="16"/><Unclipped val="true"/></Frame>
-							<Frame type="Image" name="Team1Skull"><Anchor side="Bottom" relative="$parent/Team1Background" pos="Max" offset="-6"/><Unclipped val="true"/></Frame>
-							<Frame type="Label" name="Team1SkullCounter"><Anchor side="Bottom" relative="$parent/Team1Background" pos="Max" offset="-26"/><Unclipped val="true"/></Frame>
-							<Frame type="Image" name="Team2Skull"><Anchor side="Bottom" relative="$parent/Team2Background" pos="Max" offset="-6"/><Unclipped val="true"/></Frame>
-							<Frame type="Label" name="Team2SkullCounter"><Anchor side="Bottom" relative="$parent/Team2Background" pos="Max" offset="-26"/><Unclipped val="true"/></Frame>
+							<Frame type="Image" name="Team1Skull"><Anchor side="Bottom" relative="$parent/Team1Background" pos="Max" offset="-4"/><Anchor side="Left" relative="$parent/Team1Background" pos="Min" offset="-1"/><Unclipped val="true"/></Frame>
+							<Frame type="Label" name="Team1SkullCounter"><Anchor side="Bottom" relative="$parent/Team1Background" pos="Max" offset="-24"/><Anchor side="Left" relative="$parent/Team1Background" pos="Min" offset="74"/><Unclipped val="true"/></Frame>
+							<Frame type="Image" name="Team2Skull"><Anchor side="Bottom" relative="$parent/Team2Background" pos="Max" offset="-4"/><Anchor side="Right" relative="$parent/Team2Background" pos="Max" offset="1"/><Unclipped val="true"/></Frame>
+							<Frame type="Label" name="Team2SkullCounter"><Anchor side="Bottom" relative="$parent/Team2Background" pos="Max" offset="-24"/><Anchor side="Right" relative="$parent/Team2Background" pos="Max" offset="-76"/><Unclipped val="true"/></Frame>
 							<Frame type="Image" name="FCJH_SkullsPlaque">
-								<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-181"/>
+								<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-178"/>
 								<Anchor side="Left" relative="$GameUI" pos="Mid" offset="-100"/>
 								<Anchor side="Right" relative="$GameUI" pos="Mid" offset="100"/>
 								<Texture val="@UI/HUD_MapMechanic_BG_CenterBar"/>

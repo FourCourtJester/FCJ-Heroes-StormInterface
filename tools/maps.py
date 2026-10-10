@@ -594,21 +594,34 @@ SKULL_PLAQUE_W = 200
 # minimap square's (438 units, its half 219); 1 unit = 0.9 px.
 SKULL_GAP_PX = (-8, 35)
 SKULL_PLAQUE_H_PX = 42
-SKULL_PLAQUE_B = round(-219 + (sum(SKULL_GAP_PX) / 2 + SKULL_PLAQUE_H_PX / 2) / 0.9)   # from the square's bottom
+SKULL_PLAQUE_DOWN_PX = 2   # ...then 2 px lower (user, 2026-10-09, by eye)
+SKULL_PLAQUE_B = round(-219 + (sum(SKULL_GAP_PX) / 2 + SKULL_PLAQUE_H_PX / 2 + SKULL_PLAQUE_DOWN_PX) / 0.9)   # from the square's bottom
+# The skulls and their counts, off the line (user, 2026-10-09, by eye): 2 px lower and 4 px in,
+# towards the map, each side; the line stays. Blizzard's places across, from the line's outer
+# end: blue's skull -5 and count 70 from its left, red's 5 and -72 from its right.
+SKULLS_DOWN_PX, SKULLS_IN_PX = 2, 4
+SKULL_ACROSS = {1: ("Left", "Min", -5, 70, 1), 2: ("Right", "Max", 5, -72, -1)}   # side, pos, skull, count, inward sign
 
 
 def skulls_extra():
     t = T * 6
-    line = lambda name_, kind, sd, off, rel="$parent", pos="Max": (
+    line = lambda name_, kind, sd, off, rel="$parent", pos="Max", more="": (
         f'{t}\t<Frame type="{kind}" name="{name_}"><Anchor side="{sd}" relative="{rel}" pos="{pos}" offset="{off}"/>'
-        f'<Unclipped val="true"/></Frame>\n')
+        + more + f'<Unclipped val="true"/></Frame>\n')
     mid = lambda sd, off: f'<Anchor side="{sd}" relative="$GameUI" pos="Mid" offset="{off}"/>'
+    down, inward = round(SKULLS_DOWN_PX / 0.9), round(SKULLS_IN_PX / 0.9)
+    def across(n, skull):
+        sd, pos, s, c, sign = SKULL_ACROSS[n]
+        return (f'<Anchor side="{sd}" relative="$parent/Team{n}Background" pos="{pos}" '
+                f'offset="{(s if skull else c) + sign * inward}"/>')
     return (f'{t}<!-- the skull counts\' line under the mines\' map; the skulls needed above it (maps.skulls_extra) -->\n'
             f'{t}<Frame type="Frame" name="SkullModeFrame">\n'
             + line("Team1Background", "Image", "Bottom", SKULL_LINE_DOWN)
             + line("Team2Background", "Image", "Bottom", SKULL_LINE_DOWN)
-            + "".join(line(f"Team{n}Skull", "Image", "Bottom", 10 - SKULL_LINE_DOWN, f"$parent/Team{n}Background")
-                      + line(f"Team{n}SkullCounter", "Label", "Bottom", -10 - SKULL_LINE_DOWN, f"$parent/Team{n}Background")
+            + "".join(line(f"Team{n}Skull", "Image", "Bottom", 10 - SKULL_LINE_DOWN + down, f"$parent/Team{n}Background",
+                           more=across(n, True))
+                      + line(f"Team{n}SkullCounter", "Label", "Bottom", -10 - SKULL_LINE_DOWN + down,
+                             f"$parent/Team{n}Background", more=across(n, False))
                       for n in (1, 2))
             + f'{t}\t<Frame type="Image" name="FCJH_SkullsPlaque">\n'
             f'{t}\t\t<Anchor side="Bottom" relative="{MINIMAP}" pos="Max" offset="{SKULL_PLAQUE_B}"/>\n'
