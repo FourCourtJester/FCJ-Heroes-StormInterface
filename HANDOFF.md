@@ -389,8 +389,10 @@ tech"). The plan (user): go over the four working maps - Towers of Doom, Cursed 
 Braxis Holdout, Haunted Mines - adjusting each map's minimap and panels with it, before new maps.
 
 1. **Look in game at what's built but unseen** (build 2026-10-09 evening):
-   - Haunted Mines: the glide WORKS (user, 2026-10-09). Still to see: the map stays put at the
-     SECOND mines opening; the "Needed" plaque just above the map.
+   - Haunted Mines: the glide WORKS, and the second mines opening didn't replay it (user,
+     2026-10-09). To see: the skull counts' red/blue line back (it was clipped away under its
+     panel: Unclipped), and the "Needed" plaque in the gap between the surface and the mines,
+     riding with the minimap.
    - Cursed Hollow: the tribute and curse banners now FADE in without sliding - check both
      land on their spots every time, the curse on red's side and (if a replay has one) on blue's.
 2. **Banners stay put - check on each map in the pass:** every bar's bottom on the one place

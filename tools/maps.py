@@ -582,20 +582,26 @@ GOLEM_PARTS = (("Image", "BackgroundImage", (), f'<Anchor side="Right" relative=
 # mines' map: lowered SKULL_LINE_DOWN, to just under the map's bottom (at 1080p the line 1048,
 # the map's bottom 1060; user, 2026-10-09), the skulls and counts kept where they were.
 # The skulls still needed ("55 Needed", SkullsRemainingLabel) sat between them on the line:
-# moved to the top of the map, on a plaque of Blizzard's bar art - its pointed ends make the
+# moved between the surface and the mines, on a plaque of Blizzard's bar art - its pointed ends make the
 # elongated hexagon (user) - sized for the longest language ("Необходимо: 100").
-SKULL_LINE_DOWN = 16       # units (14 px)
+SKULL_LINE_DOWN = 16       # units (14 px). That put the line wholly under its panel's box, which
+                           # clipped it away (user, 2026-10-09: "we lost the line"): Unclipped
 SKULL_PLAQUE_W = 200
-SKULL_PLAQUE_B = -356      # its bottom from the screen's: 4 px over the map's top once the minimap
-                           # has moved (at 1080p the map's top 764: 760 px). The art's own height,
-                           # as the mines bar's: a Height of 50 drew it 30 px tall, its slices off
-                           # (user, 2026-10-09); placed from the minimap's top it sat 22 px low
+# The plaque fills the gap between the two maps, centred in it (user, 2026-10-09), and rides with
+# the minimap (its glide). Measured at 1080p: the surface's bottom 8 px above the drawn map's
+# middle, the mines' top 35 below; the plaque 42 px tall (the art's own height, as the mines
+# bar's: a Height of 50 drew it 30 px tall, its slices off). The drawn map's middle is the
+# minimap square's (438 units, its half 219); 1 unit = 0.9 px.
+SKULL_GAP_PX = (-8, 35)
+SKULL_PLAQUE_H_PX = 42
+SKULL_PLAQUE_B = round(-219 + (sum(SKULL_GAP_PX) / 2 + SKULL_PLAQUE_H_PX / 2) / 0.9)   # from the square's bottom
 
 
 def skulls_extra():
     t = T * 6
     line = lambda name_, kind, sd, off, rel="$parent", pos="Max": (
-        f'{t}\t<Frame type="{kind}" name="{name_}"><Anchor side="{sd}" relative="{rel}" pos="{pos}" offset="{off}"/></Frame>\n')
+        f'{t}\t<Frame type="{kind}" name="{name_}"><Anchor side="{sd}" relative="{rel}" pos="{pos}" offset="{off}"/>'
+        f'<Unclipped val="true"/></Frame>\n')
     mid = lambda sd, off: f'<Anchor side="{sd}" relative="$GameUI" pos="Mid" offset="{off}"/>'
     return (f'{t}<!-- the skull counts\' line under the mines\' map; the skulls needed above it (maps.skulls_extra) -->\n'
             f'{t}<Frame type="Frame" name="SkullModeFrame">\n'
@@ -605,7 +611,7 @@ def skulls_extra():
                       + line(f"Team{n}SkullCounter", "Label", "Bottom", -10 - SKULL_LINE_DOWN, f"$parent/Team{n}Background")
                       for n in (1, 2))
             + f'{t}\t<Frame type="Image" name="FCJH_SkullsPlaque">\n'
-            f'{t}\t\t<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="{SKULL_PLAQUE_B}"/>\n'
+            f'{t}\t\t<Anchor side="Bottom" relative="{MINIMAP}" pos="Max" offset="{SKULL_PLAQUE_B}"/>\n'
             f'{t}\t\t{mid("Left", -SKULL_PLAQUE_W // 2)}\n{t}\t\t{mid("Right", SKULL_PLAQUE_W // 2)}\n'
             f'{t}\t\t<Texture val="@UI/HUD_MapMechanic_BG_CenterBar"/>\n{t}\t\t<TextureType val="Nineslice"/>\n'
             f'{t}\t\t<RenderPriority val="500"/>\n{t}\t\t<Unclipped val="true"/>\n{t}\t</Frame>\n'
