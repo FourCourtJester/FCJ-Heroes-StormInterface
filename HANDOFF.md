@@ -443,9 +443,10 @@ minimap's bottom. Hero test rosters come from the tracker in item 14 ("not seen 
      "DRAGON KNIGHT" at the inner end, its health draining from the right (knight_side). Told
      by blue's moon and star both still lit: the script stops setting them once the knight is
      up, and the markers' hidden panel doesn't stop a When reading them. Red's knight after a
-     blue one went back to red's layout, draining as before (user, 2026-10-09). Then blue's
-     health bar and its backing flipped too, their slanted ends red's way round (user: "the
-     angles don't add up") - unseen yet.
+     blue one went back to red's layout, draining as before (user, 2026-10-09). Blue's backing
+     flipped (our copy, TextureCoords); its fill can't be - a status bar ignores TextureCoords -
+     so it's widened and cut to the mirrored lean by a mask of ours (knight_mask), its outer end
+     overshooting the backing as red's does (Blizzard's own). DONE (user, 2026-10-09).
    - The shrine markers (moon, star) up from off the screen, their team line level with Towers'
      at ~1070 (`[minimap.panel_nudge] dragon_shire = -29`); the stars clear the map's flanks.
    **Then the other older maps** - Blackheart's Bay, Garden of Terror: read each
