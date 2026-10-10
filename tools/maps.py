@@ -593,11 +593,17 @@ SKULL_PLAQUE_W = 200
 # bar's: a Height of 50 drew it 30 px tall, its slices off). The drawn map's middle is the
 # minimap square's (438 units, its half 219); 1 unit = 0.9 px.
 SKULL_GAP_PX = (-8, 35)
-SKULL_PLAQUE_H_PX = 42
-SKULL_PLAQUE_DOWN_PX = 2   # ...then 2 px lower (user, 2026-10-09, by eye)
-SKULL_PLAQUE_B = round(-219 + (sum(SKULL_GAP_PX) / 2 + SKULL_PLAQUE_H_PX / 2 + SKULL_PLAQUE_DOWN_PX) / 0.9)   # from the square's bottom
-SKULL_PLAQUE_TRIM_PX = 1   # px off its top and its bottom, its middle kept (user, 2026-10-09):
-                           # anchored top and bottom, the nine-slice stretched to fit
+SKULL_PLAQUE_DOWN_PX = 2   # its middle 2 px under the gap's (user, 2026-10-09, by eye)
+# Its height: 28 px (user, 2026-10-09: the size a squeezed nine-slice drew, "about the size I
+# want"). The art is a nine-slice 42 px tall: drawn shorter as one (a Height, or anchored top and
+# bottom) its corners overlap and only the top bracket shows - Blizzard only ever draws it
+# taller. So it's drawn as a plain image, the whole art stretched into the box.
+SKULL_PLAQUE_H_PX = 28
+SKULL_PLAQUE_ART_PX = 42   # the art's own height: Blizzard's bar words sit 5 under its middle
+_MID = -219 + (sum(SKULL_GAP_PX) / 2 + SKULL_PLAQUE_DOWN_PX) / 0.9    # its middle, from the square's bottom
+SKULL_PLAQUE_B = round(_MID + SKULL_PLAQUE_H_PX / 2 / 0.9)
+SKULL_PLAQUE_T = round(_MID - SKULL_PLAQUE_H_PX / 2 / 0.9)
+SKULL_WORDS_DOWN = round(5 * SKULL_PLAQUE_H_PX / SKULL_PLAQUE_ART_PX)
 # The skulls and their counts, off the line (user, 2026-10-09, by eye): 2 px lower and 4 px in,
 # towards the map, each side; the line stays. Blizzard's places across, from the line's outer
 # end: blue's skull -5 and count 70 from its left, red's 5 and -72 from its right.
@@ -612,8 +618,6 @@ def skulls_extra():
         + more + f'<Unclipped val="true"/></Frame>\n')
     mid = lambda sd, off: f'<Anchor side="{sd}" relative="$GameUI" pos="Mid" offset="{off}"/>'
     down, inward = round(SKULLS_DOWN_PX / 0.9), round(SKULLS_IN_PX / 0.9)
-    plaque_b = SKULL_PLAQUE_B - round(SKULL_PLAQUE_TRIM_PX / 0.9)
-    plaque_h = round((SKULL_PLAQUE_H_PX - 2 * SKULL_PLAQUE_TRIM_PX) / 0.9)
     def across(n, skull):
         sd, pos, s, c, sign = SKULL_ACROSS[n]
         return (f'<Anchor side="{sd}" relative="$parent/Team{n}Background" pos="{pos}" '
@@ -628,15 +632,15 @@ def skulls_extra():
                              f"$parent/Team{n}Background", more=across(n, False))
                       for n in (1, 2))
             + f'{t}\t<Frame type="Image" name="FCJH_SkullsPlaque">\n'
-            f'{t}\t\t<Anchor side="Bottom" relative="{MINIMAP}" pos="Max" offset="{plaque_b}"/>\n'
-            f'{t}\t\t<Anchor side="Top"    relative="{MINIMAP}" pos="Max" offset="{plaque_b - plaque_h}"/>\n'
+            f'{t}\t\t<Anchor side="Bottom" relative="{MINIMAP}" pos="Max" offset="{SKULL_PLAQUE_B}"/>\n'
+            f'{t}\t\t<Anchor side="Top"    relative="{MINIMAP}" pos="Max" offset="{SKULL_PLAQUE_T}"/>\n'
             f'{t}\t\t{mid("Left", -SKULL_PLAQUE_W // 2)}\n{t}\t\t{mid("Right", SKULL_PLAQUE_W // 2)}\n'
-            f'{t}\t\t<Texture val="@UI/HUD_MapMechanic_BG_CenterBar"/>\n{t}\t\t<TextureType val="Nineslice"/>\n'
+            f'{t}\t\t<Texture val="@UI/HUD_MapMechanic_BG_CenterBar"/>\n'
             f'{t}\t\t<RenderPriority val="500"/>\n{t}\t\t<Unclipped val="true"/>\n{t}\t</Frame>\n'
-            # its words centred on it, as Blizzard's bar words sit (Mid +5)
+            # its words centred on it, as Blizzard's bar words sit (Mid +5 on the art's own height)
             f'{t}\t<Frame type="Label" name="SkullsRemainingLabel">\n'
-            f'{t}\t\t<Anchor side="Top"    relative="$parent/FCJH_SkullsPlaque" pos="Mid" offset="5"/>\n'
-            f'{t}\t\t<Anchor side="Bottom" relative="$parent/FCJH_SkullsPlaque" pos="Mid" offset="5"/>\n'
+            f'{t}\t\t<Anchor side="Top"    relative="$parent/FCJH_SkullsPlaque" pos="Mid" offset="{SKULL_WORDS_DOWN}"/>\n'
+            f'{t}\t\t<Anchor side="Bottom" relative="$parent/FCJH_SkullsPlaque" pos="Mid" offset="{SKULL_WORDS_DOWN}"/>\n'
             f'{t}\t\t{mid("Left", 0)}\n{t}\t\t{mid("Right", 0)}\n'
             f'{t}\t\t<Unclipped val="true"/>\n{t}\t</Frame>\n'
             f'{t}</Frame>\n')
