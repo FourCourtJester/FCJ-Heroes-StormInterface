@@ -792,7 +792,7 @@ MAP_IDS = {
     "battlefield_of_eternity": "BattlefieldOfEternity",  # SCRIPT
     "blackhearts_bay": "BlackheartsBay",              # SPAZZO
     "braxis_holdout": "BraxisHoldout",                # GAME (2026-10-09)
-    "cursed_hollow": "CursedHollow",                  # SPAZZO (CursedHollowSandbox: the sandbox's)
+    "cursed_hollow": "CursedHollow",                  # GAME (2026-10-09; CursedHollowSandbox: the sandbox's)
     "dragon_shire": "DragonShire",                    # SCRIPT
     "garden_of_terror": "HauntedWoods",               # SPAZZO
     "hanamura_temple": "Hanamura",                    # SPAZZO

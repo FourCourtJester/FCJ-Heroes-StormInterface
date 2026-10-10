@@ -40,7 +40,9 @@ centre_x = 960               # the square's horizontal centre
 bottom = 1141                # the square's bottom edge; > 1080 hangs off-screen. The place of every map
                              # that doesn't move it: the older maps without own_place in
                              # tools/maps.py (Cursed Hollow, Blackheart's Bay, Dragon Shire, Garden;
-                             # Haunted Mines has it - placed by Blizzard's map id) and the ARAM maps. 1141 is
+                             # Haunted Mines has it - placed by Blizzard's map id) and the ARAM maps.
+                             # Cursed Hollow is the BASELINE: this is its place, so it never needs
+                             # own_place (user, 2026-10-09) - change this and it moves too. 1141 is
                              # Cursed Hollow's approved place (2026-10-06: its map's bottom on the
                              # screen's edge); the others' bottoms land at 1061-1076, Haunted
                              # Mines' (380 px tall) 54 px off the bottom (user, 2026-10-09: no

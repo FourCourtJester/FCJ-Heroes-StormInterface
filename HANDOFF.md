@@ -404,9 +404,10 @@ Braxis Holdout, Haunted Mines - adjusting each map's minimap and panels with it,
    2026-10-09). Any banner whose sides a STATE moves must stay fade-only (`maps.FADE_ONLY`).
 3. **The four working maps, map by map (map-id tech):**
    - **Haunted Mines** - DONE (above).
-   - **Cursed Hollow** - give it `own_place=True`: off the shared place, its own. Its approved
-     look had the map's bottom on the screen's edge: `[minimap.nudge] cursed_hollow = 20` keeps
-     that. Its id is SPAZZO-only: read it on the diagnostic first.
+   - **Cursed Hollow - DONE (user, 2026-10-09):** id read in game (`CursedHollow`), banners
+     correct, the tribute and curse fading in. It's the BASELINE (user): `[minimap] bottom` is
+     its place, so it keeps no `own_place`; the other older maps get their own. Changing
+     `[minimap] bottom` moves Cursed Hollow and the ARAM maps.
    - **Braxis Holdout** - its panel placer stays; check the minimap from 0:00, the electric
      line's last 2 px, nothing else under the map.
    - **Towers of Doom** - done; a look that nothing changed.
