@@ -754,6 +754,9 @@ def knight_side():
                 + act("/DragonInfoLabel", "Bottom", bg, "Min", 2)
                 + act("/DragonInfoLabel", "Left", bg, "Min", 15) + act("/DragonInfoLabel", "Right", bg, "Max", -15)
                 + prop("/DragonInfoLabel", Style=small("Right" if blue else "Left")))
+        # which end the health drains from: Blizzard's from the bar's left (the start of red's),
+        # blue's from its right. Blizzard never sets Expansion from a state: to see if it takes
+        out += prop("/DragonHealthBar/HealthBar", Expansion="Right" if blue else "Left")
         if blue:     # the % from the health bar's outer end, then the timer after it
             out += (act("/DragonHealthBar/HealthLabel", "Right", bar, "Min", 3 + 58)
                     + prop("/DragonHealthBar/HealthLabel/StatusLabel", Style=small("Right"))
