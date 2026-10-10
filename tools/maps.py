@@ -316,14 +316,16 @@ HEX = {"Top": "$parent/$parent/BossDuelLeftFrame/BossHudLeft",       # from Rada
 BEACON_W_PX, BEACON_H_PX = 99, 117   # a dish image at Blizzard's size (ring 72 across, centred across it)
 BEACON_MARGIN_PX = 22   # ...its transparent space under its ring
 BEACON_SCALE = 0.9      # drawn at 90% (user, 2026-10-09); the ring and margin scale with it
-BEACON_GAP_PX = 2       # each ring this far off its hexagon's edge
+BEACON_GAP_PX = 2       # each ring this far off its hexagon's edge...
+BEACON_DOWN_PX = 4      # ...then this far straight down (user, 2026-10-09: a bit close, the left one's
+                        # pointer reaching for its hexagon's point)
 _RING = 72 * BEACON_SCALE / 2
 _EDGE = (HEX_CORNER_IN_PX, HEX_H_PX / 2)               # the left hexagon's lower outer edge, point to corner
 _OUT = (-_EDGE[1] / math.hypot(*_EDGE), _EDGE[0] / math.hypot(*_EDGE))   # ...facing out (left, down)
 BEACON_AT_PX = tuple(round(e / 2 + o * (_RING + BEACON_GAP_PX) + (-HEX_W_PX / 2 if i == 0 else 0), 1)
                      for i, (e, o) in enumerate(zip(_EDGE, _OUT)))   # the left ring's centre (-66.6, 37.4); the right's mirrors it
 _DISH_SIDE = round((abs(BEACON_AT_PX[0]) + BEACON_W_PX * BEACON_SCALE / 2) / 0.9)   # its image's outer side
-_DISH_BOTTOM = round((BEACON_AT_PX[1] + _RING + BEACON_MARGIN_PX * BEACON_SCALE) / 0.9)
+_DISH_BOTTOM = round((BEACON_AT_PX[1] + BEACON_DOWN_PX + _RING + BEACON_MARGIN_PX * BEACON_SCALE) / 0.9)
 # "On air" (user, 2026-10-09): while one team holds both beacons - its zerg charging - a bold
 # ring in its colour over each dish, breathing like an on-air light, and a broadcast wave
 # rolling out from it (they're satellites). Blizzard's electric line is only the signal now:
@@ -337,7 +339,9 @@ _DISH_BOTTOM = round((BEACON_AT_PX[1] + _RING + BEACON_MARGIN_PX * BEACON_SCALE)
 ON_AIR = (("Blue", 1, "TeamOrderColors"), ("Red", 3, "TeamChaosColors"))   # team, its line, its colour
 ON_AIR_RING = 84                       # the steady ring, units across (the dish's ring is 72)
 ON_AIR_BREATHE = (1.6, 255, 130)       # its breath: seconds, full and low alpha
-ON_AIR_WAVE = (1.4, 72, 150, 220)      # the wave: seconds, units across from and to, starting alpha
+ON_AIR_WAVE = (1.4, 86, 160, 220)      # the wave: seconds, units across from and to, starting alpha - from
+                                       # the dish's border, where the steady ring draws (user, 2026-10-09:
+                                       # from 72 it began inside it)
 
 
 def _ring(team, colour, dish, kind):
@@ -390,15 +394,18 @@ BEACON_ICONS = "".join(
     f'<Frame type="Image" name="HoldOutLink{n}"><Alpha val="0"/></Frame>' for n in range(1, 5)) + "".join(
     _on_air(*t) for t in ON_AIR)
 # The words on the HUD, in both BossDuel frames (the Right one is team 2's players'):
-#   - each % (LeftBossHealthLabel; the right one keeps Blizzard's bottom, on the left's) inside its
-#     hexagon, over the egg's foot: its letters' middle PCT_DOWN_PX under the centre (they sat
-#     58 px under it, under the hexagon). Its letters' middle is ~6 px above its box's bottom.
+#   - each % (Left/RightBossHealthLabel) centred in its hexagon (user, 2026-10-09; Blizzard's sat
+#     2 right of the middle, under the hexagon). Its letters' middle is 14 px above its box's bottom
+#     (measured: offset 28 put them 11 px under the centre).
 #   - "BEACON PROGRESS" and the wave's "Enemy Zerg" ABOVE the bar, on the row Blizzard gives
 #     "Allied Zerg": under it they'd sit on the map once the HUD came down (user, 2026-10-09).
-PCT_DOWN_PX, PCT_LETTERS_UP_PX = 19, 6
-ZERG_WORDS = (f'<Frame type="Label" name="LeftBossHealthLabel"><Anchor side="Bottom" relative="$parent/BossHudLeft" '
-              f'pos="Mid" offset="{round((PCT_DOWN_PX + PCT_LETTERS_UP_PX) / 0.9)}"/></Frame>'
-              '<Frame type="Label" name="BeaconProgressLabel"><Anchor side="Top" relative="$parent/BackgroundImage" '
+PCT_LETTERS_UP_PX = 14
+_PCT = lambda side, hexagon: (f'<Frame type="Label" name="{side}BossHealthLabel">'
+                              f'<Anchor side="Bottom" relative="$parent/BossHudLeft" pos="Mid" offset="{round(PCT_LETTERS_UP_PX / 0.9)}"/>'
+                              f'<Anchor side="Left" relative="$parent/{hexagon}" pos="Mid" offset="0"/>'
+                              f'<Anchor side="Right" relative="$parent/{hexagon}" pos="Mid" offset="0"/></Frame>')
+ZERG_WORDS = (_PCT("Left", "BossHudLeft") + _PCT("Right", "BossHudRight")
+              + '<Frame type="Label" name="BeaconProgressLabel"><Anchor side="Top" relative="$parent/BackgroundImage" '
               'pos="Min" offset="-15"/></Frame>'
               '<Frame type="Label" name="EnemyZergLabel"><Anchor side="Bottom" relative="$parent/AlliedZergLabel" '
               'pos="Max" offset="0"/></Frame>')
