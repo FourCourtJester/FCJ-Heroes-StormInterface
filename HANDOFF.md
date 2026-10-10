@@ -434,9 +434,10 @@ Braxis Holdout, Haunted Mines - adjusting each map's minimap and panels with it,
    ~1060, inside the floor, at the shared place (no own_place yet - nothing to move). Built,
    to look at: the shrines' countdown as the neutral banner on red's side (maps.py SHRINE_*,
    laid out from its left end as the mines'), the Dragon Knight replacing it from the same spot
-   (DRAGON_PARTS), its timer moved up beside the % (DRAGON_TIMER); the shrine markers (moon,
-   star) raised 41 px onto the padding line (`[minimap.panel_nudge] dragon_shire = -41`) -
-   watch whether the inner ones (the stars) now overlap the map's lower flanks.
+   (DRAGON_PARTS), its timer moved up beside the % (DRAGON_TIMER). The countdown banner: good
+   (user). The shrine markers (moon, star) raised onto the padding line
+   (`[minimap.panel_nudge] dragon_shire = -33`; -41 was a bit high); the stars clear the map's
+   flanks. To look at: the markers at -33, the knight's timer with a gap before the %.
    **Then the other older maps** - Blackheart's Bay, Garden of Terror: read each
    id on the diagnostic, `own_place=True`, tune nudge/panel_nudge. Then the newer maps' QA
    (Alterac, Battlefield, Hanamura - its ICON art unmeasured -, Shrines, Sky Temple, Tomb,

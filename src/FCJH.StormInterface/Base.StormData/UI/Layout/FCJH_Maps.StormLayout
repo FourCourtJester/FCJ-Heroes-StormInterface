@@ -246,7 +246,7 @@
 					</Frame>
 					<Frame type="Frame" name="DragonShirePanel">
 						<!-- Dragon Shire -->
-						<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-81"/>
+						<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-72"/>
 						<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="0"/>
 						<!-- red, the bottom slot: the shrines' countdown, then the Dragon Knight (neutral) -->
 						<Frame type="Frame" name="FCJH_ShrineTimerModeFrameSpot">
@@ -372,8 +372,8 @@
 								<Unclipped val="true"/>
 								<Anchor side="Top"    relative="$parent/DragonInfoLabel" pos="Min" offset="0"/>
 								<Anchor side="Bottom" relative="$parent/DragonInfoLabel" pos="Max" offset="0"/>
-								<Anchor side="Right"  relative="$parent/DragonHealthBar/HealthLabel" pos="Min" offset="8"/>
-								<Anchor side="Left"   relative="$parent/DragonHealthBar/HealthLabel" pos="Min" offset="-72"/>
+								<Anchor side="Right"  relative="$parent/DragonHealthBar/HealthLabel" pos="Min" offset="-2"/>
+								<Anchor side="Left"   relative="$parent/DragonHealthBar/HealthLabel" pos="Min" offset="-82"/>
 								<Style val="Storm_MapMechanic_MechanicCounterSmallRight_Blue"/>
 							</Frame>
 							<Frame type="Label" name="DragonInfoLabel">
