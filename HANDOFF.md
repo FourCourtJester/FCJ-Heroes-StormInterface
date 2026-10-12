@@ -877,16 +877,18 @@ commits around it).
     here until then (no replay with them yet):
     - **Heroes seen in game - the tracker (user, 2026-10-09). Update it after every replay; the
       user's own list is the source (a reconstruction from chat logs missed 15).** 91
-      heroes (Cho and Gall counted apart; Xal'atath the newest); 46 seen:
+      heroes (Cho and Gall counted apart; Xal'atath the newest); 56 seen:
       - **In the user's replays across 4 maps (user's list, 2026-10-09; 39):** Illidan, Stitches, Probius, Brightwing, Tychus, Fenix, Anub'arak, Tyrael, Zagara, Rehgar, Uther, Murky, Zarya, Gazlowe, Nova, Zeratul, Sgt. Hammer, Lt. Morales, Hogger, Leoric, Deathwing, Alexstrasza, Ragnaros, Greymane, Valeera, Samuro, D.Va, Chen, Medivh, Auriel, Chromie, Sonya, Johanna, Rexxar, The Lost Vikings, Tracer, Varian, Xal'atath, Abathur.
         (The user's list also had "Varion" beside Varian - read as a typo; ask if not.)
       - **Named in earlier sessions, not in those replays (7):** Blaze, Diablo, Jaina, Li Li, Lúcio, Maiev, Xul.
       - **The form checks below can be done in those replays:** Medivh, Deathwing,
         Alexstrasza, Ragnaros, Greymane, Valeera, Samuro, D.Va, the Vikings, Tychus are all in them.
-      - **Next roster (Dragon Shire), all unseen:** blue Cho + Gall (two players, one hero),
-        Dehaka (Essence), Qhira (no mana), The Butcher (no mana, meat stacks); red Kel'Thuzad
-        and Nazeebo (stacks), Genji (no mana), Ana, Junkrat.
-      - **Not seen yet (45):** Alarak, Ana, Anduin, Artanis, Arthas, Azmodan, Cassia, Cho, Gall, Deckard, Dehaka, E.T.C., Falstad, Garrosh, Genji, Gul'dan, Hanzo, Imperius, Junkrat, Kael'thas, Kel'Thuzad, Kerrigan, Kharazim, Li-Ming, Lunara, Mal'Ganis, Malfurion, Malthael, Mei, Mephisto, Muradin, Nazeebo, Orphea, Qhira, Raynor, Stukov, Sylvanas, Tassadar, The Butcher, Thrall, Tyrande, Valla, Whitemane, Yrel, Zul'jin.
+      - **Dragon Shire's roster, played (user, 2026-10-12: the roster below was the one used; 10):**
+        Cho, Gall, Dehaka, Qhira, The Butcher, Kel'Thuzad, Nazeebo, Genji, Ana, Junkrat.
+      - **Next roster (Blackheart's Bay), all unseen:** blue Muradin, Thrall (Frostwolf
+        Resilience), Kael'thas (Verdant Spheres), Valla (Hatred stacks), Whitemane (Zeal); red
+        Arthas, Zul'jin (no mana; Berserker), Gul'dan (Life Tap), Alarak (Sadism), Stukov.
+      - **Not seen yet (35):** Alarak, Anduin, Artanis, Arthas, Azmodan, Cassia, Deckard, E.T.C., Falstad, Garrosh, Gul'dan, Hanzo, Imperius, Kael'thas, Kerrigan, Kharazim, Li-Ming, Lunara, Mal'Ganis, Malfurion, Malthael, Mei, Mephisto, Muradin, Orphea, Raynor, Stukov, Sylvanas, Tassadar, Thrall, Tyrande, Valla, Whitemane, Yrel, Zul'jin.
     - **forms** (item 3): Medivh's Raven, Deathwing in Dragonflight and as World Breaker,
       Alexstrasza's Dragonqueen, Ragnaros in Molten Core, Greymane's Worgen, Valeera
       stealthed - each gets the TALL card with its player's portrait, talents and name, and
