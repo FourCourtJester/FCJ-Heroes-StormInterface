@@ -1120,6 +1120,119 @@ def fountain_rect(cfg, team):
     return (round(left - ax), round(top - ay), round(left - ax + SLOT_W * f), round(top - ay + SLOT_H * f)), f
 
 
+# The carried-objective box (user, 2026-10-12): what the hero is carrying on a map with droppable
+# collectibles - Blackheart's doubloons, the Spider Queen's gems - in the fountain's slot one step
+# up the plate's slant: the foundation of a strip that could grow up the slant. Blizzard's own
+# stack (the MapMechanicStack behaviour: its icon a doubloon, the Tomb's own a gem), shown from 1
+# with the count over the icon, gone at 0 - as on the world nameplate (unitstatus.stormlayout
+# UnitBehaviorStackCountFrame); Spazzo has the same beside his top bar's fountain. Only on those
+# maps (CARRY_MAPS, by the map id): D.Va's script moves the stack between pilot and mech, and
+# Hanamura defines it (hidden).
+CARRY_MAPS = ("blackhearts_bay", "tomb_of_the_spider_queen")
+CARRY_GAP = 1                    # cell units between the fountain's art and the box's above it
+
+
+def carry_rect(cfg, team):
+    """The carried box: the fountain's slot one step up, slid along the plate's edge."""
+    c = HeroCell(cfg)
+    (l, t, r, b), f = fountain_rect(cfg, team)
+    up = FOUNTAIN_H * cfg["hero_row"]["scale"] + CARRY_GAP
+    across = c.overlap * up / c.h * (-1 if team == "blue" else 1)
+    return (round(l + across), round(t - up), round(r + across), round(b - up)), f
+
+
+def carry_box(cfg, team, mask, slot_coords, near, far):
+    """The carried box in a plate's HeroStatus (carry_rect): the fountain's slot and mask, the
+    behaviour's own icon in it, its count over it in the fountain's countdown style. Red's
+    inherits blue's and restates only what's mirrored."""
+    (l, t, r, b), f = carry_rect(cfg, team)
+    u = lambda v: round(v * f)
+    mx, my, mw, mh = SLOT_MASK
+    mx, my, mw, mh = mx + MASK_INSET, my + MASK_INSET, mw - 2 * MASK_INSET, mh - 2 * MASK_INSET
+    anchors = "".join(f'\n\t\t\t\t<Anchor side="{sd}"{" " * (6 - len(sd))} relative="$parent/$parent" pos="Min" offset="{v}"/>'
+                      for sd, v in (("Top", t), ("Left", l), ("Bottom", b), ("Right", r)))
+    count = (f'<Anchor side="Left"   relative="$parent" pos="Min" offset="{u(near)}"/>\n'
+             f'\t\t\t\t\t\t<Anchor side="Right"  relative="$parent" pos="Max" offset="-{u(far)}"/>')
+    if team != "blue":
+        return f"""
+			<Frame type="UnitStatusBehaviorIcon" name="FCJH_Carry">{anchors}
+				<Frame type="BehaviorIcon" name="BehaviorIcon">
+					<Frame type="Frame" name="ImageMaskContainer"><AlphaMaskTexture val="{mask}"/></Frame>
+					<Frame type="Image" name="IconImageBg">{slot_coords}</Frame>
+					<Frame type="Label" name="StackLabel">
+						{count}
+					</Frame>
+				</Frame>
+			</Frame>"""
+    hidden = "".join(f'\n\t\t\t\t\t<Frame type="{ty}" name="{nm}"><Visible val="false"/><Alpha val="0"/></Frame>'
+                     for ty, nm in (("ProgressBar", "QuestProgressBar"), ("ProgressBar", "CooldownBar"),
+                                    ("Image", "BGFlashImage"), ("Label", "BuffLabel")))
+    shown = "".join(f'\n\t\t\t\t\t<State name="{k}">{maps.on_map(k)}'
+                    f'<Action type="SetProperty" frame="$parent/FCJH_Carry" Alpha="255"/></State>' for k in CARRY_MAPS)
+    return f"""
+			<!-- What the hero carries (user, 2026-10-12): Blizzard's map stack - doubloons, the
+			     Spider Queen's gems - in the fountain's slot one step up the slant, the count over
+			     its icon; shown from 1 (carry_rect, CARRY_MAPS) -->
+			<Frame type="UnitStatusBehaviorIcon" name="FCJH_Carry">{anchors}
+				<Behavior val="MapMechanicStack"/>
+				<Alpha val="0"/>
+				<RenderPriority val="525"/>
+				<Unclipped val="true"/>
+				<AcceptsMouse val="false"/>
+				<AcceptsMouseTooltip val="false"/>
+				<Frame type="BehaviorIcon" name="BehaviorIcon" template="BehaviorBar/BehaviorIconTemplate">
+					<Anchor relative="$parent"/>
+					<MinStackCountDisplayed val="1"/>
+					<AcceptsMouse val="false"/>
+					<AcceptsMouseTooltip val="false"/>
+					<Frame type="Frame" name="ImageMaskContainer">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="{u(my)}"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="{u(mx)}"/>
+						<Width val="{u(mw)}"/>
+						<Height val="{u(mh)}"/>
+						<AlphaMaskTexture val="{mask}"/>
+						<Unclipped val="true"/>
+						<Frame type="Image" name="FCJH_Backdrop">
+							<Anchor relative="$parent"/>
+							<Texture val="{WHITE}"/>
+							<Color val="{FOUNTAIN_BACKDROP}"/>
+							<RenderPriority val="511"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<!-- the mask's size exactly: the template's 45 in 40 overhangs it (the fountain) -->
+						<Frame type="Image" name="IconImage">
+							<Width val="{u(mw)}"/>
+							<Height val="{u(mh)}"/>
+							<Unclipped val="true"/>
+						</Frame>
+					</Frame>
+					<Frame type="Image" name="IconImageBg">
+						<Anchor relative="$parent"/>
+						{slot_coords}
+						<Unclipped val="true"/>
+					</Frame>
+					<Frame type="Label" name="StackLabel">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="{u(2)}"/>
+						{count}
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+						<Style val="FCJH_FountainCooldown"/>
+						<Options val="NoWrapping | ScaleToPreventTruncation"/>
+						<Unclipped val="true"/>
+					</Frame>{hidden}
+				</Frame>
+			</Frame>
+			<!-- ...shown on CARRY_MAPS only, by the map id: a group in a frame that's always shown -->
+			<Frame type="Frame" name="FCJH_CarryGate">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<StateGroup name="FCJH_CarryMaps">
+					<DefaultState val="Off"/>{shown}
+					<State name="Off"><Action type="SetProperty" frame="$parent/FCJH_Carry" Alpha="0"/></State>
+				</StateGroup>
+			</Frame>"""
+
+
 def heroic_panel(cfg, team_frame, i):
     """Per cell: Blizzard's own heroic panel, mirrored from the hidden in-game top bar's cell
     (the engine keeps that bar current for observers - the per-Viking timers proved it):
@@ -1904,6 +2017,7 @@ def hero_cell_template(team, c, cfg):
 					</Frame>
 				</Frame>
 			</Frame>"""
+    health += carry_box(cfg, team, mask, slot_coords, near, far)
     if blue:
         health += health_sensor(cfg)
     health += "\n\t\t</Frame>"

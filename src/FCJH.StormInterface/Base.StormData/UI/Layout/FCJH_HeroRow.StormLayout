@@ -566,6 +566,78 @@
 					<Action type="SetProperty" frame="$parent/TargetHeroUnitFrame" Visible="true"/>
 				</State>
 			</StateGroup>
+			<!-- What the hero carries (user, 2026-10-12): Blizzard's map stack - doubloons, the
+			     Spider Queen's gems - in the fountain's slot one step up the slant, the count over
+			     its icon; shown from 1 (carry_rect, CARRY_MAPS) -->
+			<Frame type="UnitStatusBehaviorIcon" name="FCJH_Carry">
+				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="8"/>
+				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="5"/>
+				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="34"/>
+				<Anchor side="Right"  relative="$parent/$parent" pos="Min" offset="50"/>
+				<Behavior val="MapMechanicStack"/>
+				<Alpha val="0"/>
+				<RenderPriority val="525"/>
+				<Unclipped val="true"/>
+				<AcceptsMouse val="false"/>
+				<AcceptsMouseTooltip val="false"/>
+				<Frame type="BehaviorIcon" name="BehaviorIcon" template="BehaviorBar/BehaviorIconTemplate">
+					<Anchor relative="$parent"/>
+					<MinStackCountDisplayed val="1"/>
+					<AcceptsMouse val="false"/>
+					<AcceptsMouseTooltip val="false"/>
+					<Frame type="Frame" name="ImageMaskContainer">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="9"/>
+						<Width val="28"/>
+						<Height val="28"/>
+						<AlphaMaskTexture val="@UI/HUD_TopBar_Team_HeroFrame_Ult_Bg"/>
+						<Unclipped val="true"/>
+						<Frame type="Image" name="FCJH_Backdrop">
+							<Anchor relative="$parent"/>
+							<Texture val="_Assets\Textures\FCJH_White.dds"/>
+							<Color val="42,24,70"/>
+							<RenderPriority val="511"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<!-- the mask's size exactly: the template's 45 in 40 overhangs it (the fountain) -->
+						<Frame type="Image" name="IconImage">
+							<Width val="28"/>
+							<Height val="28"/>
+							<Unclipped val="true"/>
+						</Frame>
+					</Frame>
+					<Frame type="Image" name="IconImageBg">
+						<Anchor relative="$parent"/>
+						<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>
+						<Unclipped val="true"/>
+					</Frame>
+					<Frame type="Label" name="StackLabel">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="2"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="5"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="-7"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+						<Style val="FCJH_FountainCooldown"/>
+						<Options val="NoWrapping | ScaleToPreventTruncation"/>
+						<Unclipped val="true"/>
+					</Frame>
+					<Frame type="ProgressBar" name="QuestProgressBar"><Visible val="false"/><Alpha val="0"/></Frame>
+					<Frame type="ProgressBar" name="CooldownBar"><Visible val="false"/><Alpha val="0"/></Frame>
+					<Frame type="Image" name="BGFlashImage"><Visible val="false"/><Alpha val="0"/></Frame>
+					<Frame type="Label" name="BuffLabel"><Visible val="false"/><Alpha val="0"/></Frame>
+				</Frame>
+			</Frame>
+			<!-- ...shown on CARRY_MAPS only, by the map id: a group in a frame that's always shown -->
+			<Frame type="Frame" name="FCJH_CarryGate">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<StateGroup name="FCJH_CarryMaps">
+					<DefaultState val="Off"/>
+					<State name="blackhearts_bay"><When type="Property" frame="$GameUI/FCJH_MapId" StringValue="BlackheartsBay"/><Action type="SetProperty" frame="$parent/FCJH_Carry" Alpha="255"/></State>
+					<State name="tomb_of_the_spider_queen"><When type="Property" frame="$GameUI/FCJH_MapId" StringValue="Crypts"/><Action type="SetProperty" frame="$parent/FCJH_Carry" Alpha="255"/></State>
+					<State name="Off"><Action type="SetProperty" frame="$parent/FCJH_Carry" Alpha="0"/></State>
+				</StateGroup>
+			</Frame>
 			<!-- Heal pop-ups: the health sensor (tools/gen.py health_sensor) -->
 			<Frame type="UnitStatusHealthLabel" name="FCJH_HPPercent">
 				<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
@@ -1057,6 +1129,20 @@
 			<Frame type="UnitStatusBehaviorIcon" name="FCJH_FountainSensor">
 				<Frame type="BehaviorIcon" name="BehaviorIcon">
 					<Frame type="Label" name="CooldownLabel">
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="7"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="-5"/>
+					</Frame>
+				</Frame>
+			</Frame>
+			<Frame type="UnitStatusBehaviorIcon" name="FCJH_Carry">
+				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="8"/>
+				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="146"/>
+				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="34"/>
+				<Anchor side="Right"  relative="$parent/$parent" pos="Min" offset="191"/>
+				<Frame type="BehaviorIcon" name="BehaviorIcon">
+					<Frame type="Frame" name="ImageMaskContainer"><AlphaMaskTexture val="@UI/Storm_UI_InGame_Buff_IconMask"/></Frame>
+					<Frame type="Image" name="IconImageBg"><TextureCoords top="0.0" left="0.0" bottom="1.0" right="1.0"/></Frame>
+					<Frame type="Label" name="StackLabel">
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="7"/>
 						<Anchor side="Right"  relative="$parent" pos="Max" offset="-5"/>
 					</Frame>
