@@ -887,7 +887,7 @@ commits around it).
         Cho, Gall, Dehaka, Qhira, The Butcher, Kel'Thuzad, Nazeebo, Genji, Ana, Junkrat.
       - **Next roster (Blackheart's Bay), all unseen:** blue Muradin, Thrall (Frostwolf
         Resilience), Kael'thas (Verdant Spheres), Valla (Hatred stacks), Whitemane (Zeal); red
-        Arthas, Zul'jin (no mana; Berserker), Gul'dan (Life Tap), Alarak (Sadism), Stukov.
+        Arthas, Zul'jin (Berserker), Gul'dan (Life Tap), Alarak (Sadism), Stukov.
       - **Not seen yet (35):** Alarak, Anduin, Artanis, Arthas, Azmodan, Cassia, Deckard, E.T.C., Falstad, Garrosh, Gul'dan, Hanzo, Imperius, Kael'thas, Kerrigan, Kharazim, Li-Ming, Lunara, Mal'Ganis, Malfurion, Malthael, Mei, Mephisto, Muradin, Orphea, Raynor, Stukov, Sylvanas, Tassadar, Thrall, Tyrande, Valla, Whitemane, Yrel, Zul'jin.
     - **forms** (item 3): Medivh's Raven, Deathwing in Dragonflight and as World Breaker,
       Alexstrasza's Dragonqueen, Ragnaros in Molten Core, Greymane's Worgen, Valeera
