@@ -820,6 +820,89 @@ def knight_side():
             f'{t}\t<State name="Red">{place(False)}</State>\n{t}</StateGroup>\n')
 
 
+# ------------------------------------------------------------------ Blackheart's Bay's banners
+
+# "Chests have spawned" (core MapMechanicPanel, BlackheartsBayPanel/ChestSpawnFrame): the
+# tribute's build - the hexagon (the chest) 20 in from the frame's top-right, the bar its art's
+# own width (481) ending 15 past it, the words in the bar. The neutral banner on red's side, as
+# the tribute (user, 2026-10-12). Measured at 1080p (2026-10-12, at Blizzard's place): the
+# chest's top 691, the bar's lower bracket 776 (94 units), the chest's bottom 794; the bar
+# 435 px tip to end. Its left as the tribute's, the tip on red's plates.
+CHEST_BOX = (-489, 0, -5, 94)
+ALERT_ART["CHEST"] = Art(CHEST_BOX[2] - CHEST_BOX[0], 0, height=114)     # down to the chest's bottom
+CHEST_PARTS = (("Image", "BackgroundImage", ()), ("Image", "ChestImage", ()), ("Label", "ChestInfoLabel", ()))
+# Blackheart's cannon (CannonModeFrame, in the chests' place while a team's cannonballs last): on
+# the firing team's side (user, 2026-10-12), like the Dragon Knight - red's on red's spot, blue's
+# on blue's, mirrored. Blizzard's own tell: the script shows the firing team's shots count
+# (Team1ShotCounter blue, Team2 red) to everyone and hides the other (libbbay
+# ShowCannonballForTeam); its "cannonballs remaining" label colours itself by it. Its art: the
+# cannon's hexagon 15 down and 20 in from the frame's top-right, the bar (a nine-slice) from the
+# frame's left to 15 past the hexagon, its bottom on the chests' bar's; twelve cannonball pips
+# chained left from the hexagon (42 wide, 30 apart), the words and count above the bar. Its
+# bar measured 461 px (516 units) tip to end at Blizzard's place (2026-10-12), the first pip
+# 14 in from its tip. From the spot's left on red, as the mines' (the chests' box is too
+# narrow for twelve pips): the bar CANNON_BAR long, the hexagon at its right end.
+CANNON_BAR = 518
+BAY = MECHANICS + "/BlackheartsBayPanel"
+CANNON = BAY + "/CannonModeFrame"
+CANNON_PARTS = ((("Image", "BackgroundImage", (), f'<Anchor side="Left" relative="$parent" pos="Min" offset="{-MINES_TIP_IN}"/>'),
+                 ("Image", "CenterpieceImageCannon", (),
+                  f'<Anchor side="Right" relative="$parent" pos="Min" offset="{-MINES_TIP_IN + CANNON_BAR - 15}"/>'),
+                 ("Label", "Team1ShotCounter", ()), ("Label", "Team2ShotCounter", ()), ("Label", "CannonballsLeftLabel", ()))
+                + tuple(("Frame", f"CannonShotFrame{n}", ()) for n in range(1, 13)))
+# Blue's: the cannon flipped (our copy) at the outer end, the pips chained right from it; the
+# words and count ours too (bound to Blizzard's, blue's colour), after the hexagon - Blizzard's
+# words are a fixed box, right-aligned before the count.
+CANNON_COPIES = (
+    f'{T*7}<Frame type="Image" name="FCJH_CannonHex">\n'
+    f'{T*8}<Anchor side="Top"  relative="$parent" pos="Min" offset="15"/>\n'
+    f'{T*8}<Anchor side="Left" relative="$parent/BackgroundImage" pos="Min" offset="15"/>\n'
+    f'{T*8}<Texture val="@UI/HUD_MapMechanic_BlackheartsBay_Cannon"/>\n'
+    f'{T*8}<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>\n'
+    f'{T*8}<Unclipped val="true"/>\n{T*8}<Alpha val="0"/>\n{T*7}</Frame>\n'
+    + "".join(
+        f'{T*7}<Frame type="Label" name="{name_}">\n'
+        f'{T*8}<Anchor side="Top"    relative="$parent/Team1ShotCounter" pos="Min" offset="0"/>\n'
+        f'{T*8}<Anchor side="Bottom" relative="$parent/Team1ShotCounter" pos="Max" offset="0"/>\n'
+        f'{T*8}<Anchor side="Left"   relative="{rel}" pos="Max" offset="{off}"/>\n'
+        f'{T*8}<Text val="{{$parent/{theirs}/@Text}}"/>\n{T*8}<Style val="{{$parent/{theirs}/@Style}}"/>\n'
+        f'{T*8}<ColorAdjustMode val="Colorize"/>\n{T*8}<LightAdjustColor val="#ColorWhite"/>\n'
+        f'{T*8}<DarkAdjustColor val="{{$GameUI/TeamOrderColors/@Color}}"/>\n'
+        f'{T*8}<GlowColor val="{{$GameUI/TeamOrderColors/@Color}}"/>\n'
+        f'{T*8}<Options val="NoWrapping"/>\n{T*8}<Unclipped val="true"/>\n{T*8}<Alpha val="0"/>\n{T*7}</Frame>\n'
+        for name_, theirs, rel, off in (("FCJH_CannonText", "CannonballsLeftLabel", "$parent/FCJH_CannonHex", 10),
+                                        ("FCJH_CannonCount", "Team1ShotCounter", "$parent/FCJH_CannonText", 2))))
+
+
+def cannon_side():
+    t = T * 7
+    act = lambda frame, sd, rel, pos, off: (f'<Action type="SetAnchor" frame="{CANNON}{frame}" side="{sd}" '
+                                            f'relative="{rel}" pos="{pos}" offset="{off}"/>')
+    alpha = lambda frame, on: f'<Action type="SetProperty" frame="{CANNON}{frame}" Alpha="{255 if on else 0}"/>'
+    shot = lambda n: f"{CANNON}/CannonShotFrame{n}"
+
+    def place(blue):
+        spot = f"{BAY}/FCJH_{'CannonModeFrame' if blue else 'ChestSpawnFrame'}Spot"
+        out = "".join(act("", sd, spot, pos, off) for sd, pos, off in box_sides(CHEST_BOX))
+        if blue:     # the bar's tip on blue's inner edge (as red's on red's), CANNON_BAR long
+            out += (act("/BackgroundImage", "Right", CANNON, "Max", CHEST_BOX[2] + MINES_TIP_IN)
+                    + act("/BackgroundImage", "Left", CANNON, "Max", CHEST_BOX[2] + MINES_TIP_IN - CANNON_BAR)
+                    + act("/CannonShotFrame1", "Right", f"{CANNON}/FCJH_CannonHex", "Max", -3 + 42)
+                    + "".join(act(f"/CannonShotFrame{n}", "Right", shot(n - 1), "Max", 42 - 12) for n in range(2, 13)))
+        else:        # Blizzard's chain, the bar from the spot's left (CANNON_PARTS)
+            out += (act("/BackgroundImage", "Right", f"{CANNON}/CenterpieceImageCannon", "Max", 15)
+                    + act("/BackgroundImage", "Left", CANNON, "Min", -MINES_TIP_IN)
+                    + act("/CannonShotFrame1", "Right", f"{CANNON}/CenterpieceImageCannon", "Min", 3)
+                    + "".join(act(f"/CannonShotFrame{n}", "Right", shot(n - 1), "Min", 12) for n in range(2, 13)))
+        return (out + alpha("/CenterpieceImageCannon", not blue) + alpha("/CannonballsLeftLabel", not blue)
+                + alpha("/Team1ShotCounter", not blue) + alpha("/Team2ShotCounter", not blue)
+                + alpha("/FCJH_CannonHex", blue) + alpha("/FCJH_CannonText", blue) + alpha("/FCJH_CannonCount", blue))
+    return (f'{t}<StateGroup name="FCJH_CannonSide">\n{t}\t<DefaultState val="Red"/>\n'
+            f'{t}\t<State name="Blue"><When type="Property" frame="{CANNON}/Team1ShotCounter" Visible="true"/>'
+            f'{place(True)}</State>\n'
+            f'{t}\t<State name="Red">{place(False)}</State>\n{t}</StateGroup>\n')
+
+
 # The skull counts (HauntedMinesPanel/SkullModeFrame), shown while the mines are open. Their
 # team-coloured line (the TeamHighlight backgrounds, everything else pinned to them) crossed the
 # mines' map: lowered SKULL_LINE_DOWN, to just under the map's bottom (at 1080p the line 1048,
@@ -906,7 +989,18 @@ MAPS = {
     "battlefield_of_eternity": Map(
         "Battlefield of Eternity", (438, 269), file="BossDuel", minimap=(75, 0),
         panels={"BossDuelPanel": BOTTOM_RIGHT}, place=("BossDuelPanel",)),
-    "blackhearts_bay": Map("Blackheart's Bay", (452, 313), core="BlackheartsBayPanel"),
+    "blackhearts_bay": Map(
+        "Blackheart's Bay", (452, 313), core="BlackheartsBayPanel",
+        # "Chests have spawned": the neutral banner, on red's side; Blackheart's cannon in its
+        # place, on the firing team's side (cannon_side). The doubloon counts stay on the panel,
+        # pinned to the screen's bottom as Blizzard's: [minimap.panel_nudge] lifts them.
+        team={"BlackheartsBayPanel": {
+            "blue": [Alert("CannonModeFrame", kind="CHEST", box=CHEST_BOX, spot_only=True,
+                           note="Blackheart's cannon, when it's blue's")],
+            "red": [Alert("ChestSpawnFrame", kind="CHEST", box=CHEST_BOX,
+                          followers=(("CannonModeFrame", 0, unclipped(CANNON_PARTS) + CANNON_COPIES + cannon_side()),),
+                          extra=unclipped(CHEST_PARTS),
+                          note="the chests spawning (neutral), then Blackheart's cannon on red")]}}),
     "braxis_holdout": Map(
         "Braxis Holdout", (447, 264), file="HoldOut", minimap=(-35, 0),
         # its zerg HUD compacted: the dishes and their beams on the hexagons, the words in and
@@ -1168,8 +1262,8 @@ NOT_BANNERS = ("GolemModeFrame",)
 # SetAnchor, and end="Pause" holds it (Haunted Mines' glide, 2026-10-09): the slide would
 # have pinned the curse to red's spot and Blizzard's bar layout after its first intro. The
 # tribute too: cursed_side moves it with the curse, whose hexagon on blue hangs off the tribute's.
-# The Dragon Knight: knight_side moves it to blue's side.
-FADE_ONLY = ("CurseFrame", "TributeSpawnFrame", "DragonModeFrame")
+# The Dragon Knight and Blackheart's cannon: knight_side / cannon_side move them to blue's side.
+FADE_ONLY = ("CurseFrame", "TributeSpawnFrame", "DragonModeFrame", "CannonModeFrame")
 
 
 def intro(indent, slide=True):

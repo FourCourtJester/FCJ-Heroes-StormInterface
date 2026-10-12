@@ -25,6 +25,183 @@
 						<!-- Blackheart's Bay -->
 						<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-68"/>
 						<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="0"/>
+						<!-- blue, the bottom slot: Blackheart's cannon, when it's blue's -->
+						<Frame type="Frame" name="FCJH_CannonModeFrameSpot">
+							<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_CHEST"/>
+							<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_BLUE_R_CHEST"/>
+							<Unclipped val="true"/>
+							<Width val="484"/>
+							<Height val="94"/>
+							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_Stack">
+								<DefaultState val="Bottom"/>
+								<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_CHEST"/></State>
+							</StateGroup>
+						</Frame>
+						<!-- red, the bottom slot: the chests spawning (neutral), then Blackheart's cannon on red -->
+						<Frame type="Frame" name="FCJH_ChestSpawnFrameSpot">
+							<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_CHEST"/>
+							<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_CHEST"/>
+							<Unclipped val="true"/>
+							<Width val="484"/>
+							<Height val="94"/>
+							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_Stack">
+								<DefaultState val="Bottom"/>
+								<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_CHEST"/></State>
+							</StateGroup>
+						</Frame>
+						<Frame type="Frame" name="ChestSpawnFrame">
+							<Anchor side="Top"    relative="$parent/FCJH_ChestSpawnFrameSpot" pos="Min" offset="0"/>
+							<Anchor side="Left"   relative="$parent/FCJH_ChestSpawnFrameSpot" pos="Min" offset="0"/>
+							<Anchor side="Bottom" relative="$parent/FCJH_ChestSpawnFrameSpot" pos="Max" offset="0"/>
+							<Anchor side="Right"  relative="$parent/FCJH_ChestSpawnFrameSpot" pos="Max" offset="5"/>
+							<Unclipped val="true"/>
+							<Animation name="FCJH_Intro">
+								<Event event="OnShown" action="Restart,Play"/>
+								<Event event="OnShown" action="Restart,Play" frame="$parent"/>
+								<Controller type="Fade" end="Pause">
+									<Key type="Curve" time="0" value="0"/>
+									<Key type="Curve" time=".2" value="255"/>
+									<Key type="Curve" time=".4" value="255"/>
+								</Controller>
+								<Controller type="Anchor" end="Pause" side="Left" relative="true">
+									<Key type="Curve" time="0" value="50"/>
+									<Key type="Curve" time=".1" value="0"/>
+									<Key type="Curve" time=".4" value="0"/>
+								</Controller>
+								<Controller type="Anchor" end="Pause" side="Right" relative="true">
+									<Key type="Curve" time="0" value="50"/>
+									<Key type="Curve" time=".1" value="0"/>
+									<Key type="Curve" time=".4" value="0"/>
+								</Controller>
+								<Controller type="Anchor" end="Pause" side="Left" relative="true" frame="BackgroundImage">
+									<Key type="Curve" time="0" value="350"/>
+									<Key type="Curve" time=".1" value="350"/>
+									<Key type="Curve" time=".3" value="0"/>
+									<Key type="Curve" time=".4" value="0"/>
+								</Controller>
+							</Animation>
+							<Frame type="Image" name="BackgroundImage">
+								<Unclipped val="true"/>
+							</Frame>
+							<Frame type="Image" name="ChestImage">
+								<Unclipped val="true"/>
+							</Frame>
+							<Frame type="Label" name="ChestInfoLabel">
+								<Unclipped val="true"/>
+							</Frame>
+						</Frame>
+						<Frame type="Frame" name="CannonModeFrame">
+							<Anchor side="Top"    relative="$parent/FCJH_ChestSpawnFrameSpot" pos="Min" offset="0"/>
+							<Anchor side="Left"   relative="$parent/FCJH_ChestSpawnFrameSpot" pos="Min" offset="0"/>
+							<Anchor side="Bottom" relative="$parent/FCJH_ChestSpawnFrameSpot" pos="Max" offset="0"/>
+							<Anchor side="Right"  relative="$parent/FCJH_ChestSpawnFrameSpot" pos="Max" offset="5"/>
+							<Unclipped val="true"/>
+							<Animation name="FCJH_Intro">
+								<Event event="OnShown" action="Restart,Play"/>
+								<Event event="OnShown" action="Restart,Play" frame="$parent"/>
+								<Controller type="Fade" end="Pause">
+									<Key type="Curve" time="0" value="0"/>
+									<Key type="Curve" time=".2" value="255"/>
+									<Key type="Curve" time=".4" value="255"/>
+								</Controller>
+							</Animation>
+							<Frame type="Image" name="BackgroundImage">
+								<Unclipped val="true"/>
+								<Anchor side="Left" relative="$parent" pos="Min" offset="-3"/>
+							</Frame>
+							<Frame type="Image" name="CenterpieceImageCannon">
+								<Unclipped val="true"/>
+								<Anchor side="Right" relative="$parent" pos="Min" offset="500"/>
+							</Frame>
+							<Frame type="Label" name="Team1ShotCounter">
+								<Unclipped val="true"/>
+							</Frame>
+							<Frame type="Label" name="Team2ShotCounter">
+								<Unclipped val="true"/>
+							</Frame>
+							<Frame type="Label" name="CannonballsLeftLabel">
+								<Unclipped val="true"/>
+							</Frame>
+							<Frame type="Frame" name="CannonShotFrame1">
+								<Unclipped val="true"/>
+							</Frame>
+							<Frame type="Frame" name="CannonShotFrame2">
+								<Unclipped val="true"/>
+							</Frame>
+							<Frame type="Frame" name="CannonShotFrame3">
+								<Unclipped val="true"/>
+							</Frame>
+							<Frame type="Frame" name="CannonShotFrame4">
+								<Unclipped val="true"/>
+							</Frame>
+							<Frame type="Frame" name="CannonShotFrame5">
+								<Unclipped val="true"/>
+							</Frame>
+							<Frame type="Frame" name="CannonShotFrame6">
+								<Unclipped val="true"/>
+							</Frame>
+							<Frame type="Frame" name="CannonShotFrame7">
+								<Unclipped val="true"/>
+							</Frame>
+							<Frame type="Frame" name="CannonShotFrame8">
+								<Unclipped val="true"/>
+							</Frame>
+							<Frame type="Frame" name="CannonShotFrame9">
+								<Unclipped val="true"/>
+							</Frame>
+							<Frame type="Frame" name="CannonShotFrame10">
+								<Unclipped val="true"/>
+							</Frame>
+							<Frame type="Frame" name="CannonShotFrame11">
+								<Unclipped val="true"/>
+							</Frame>
+							<Frame type="Frame" name="CannonShotFrame12">
+								<Unclipped val="true"/>
+							</Frame>
+							<Frame type="Image" name="FCJH_CannonHex">
+								<Anchor side="Top"  relative="$parent" pos="Min" offset="15"/>
+								<Anchor side="Left" relative="$parent/BackgroundImage" pos="Min" offset="15"/>
+								<Texture val="@UI/HUD_MapMechanic_BlackheartsBay_Cannon"/>
+								<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>
+								<Unclipped val="true"/>
+								<Alpha val="0"/>
+							</Frame>
+							<Frame type="Label" name="FCJH_CannonText">
+								<Anchor side="Top"    relative="$parent/Team1ShotCounter" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$parent/Team1ShotCounter" pos="Max" offset="0"/>
+								<Anchor side="Left"   relative="$parent/FCJH_CannonHex" pos="Max" offset="10"/>
+								<Text val="{$parent/CannonballsLeftLabel/@Text}"/>
+								<Style val="{$parent/CannonballsLeftLabel/@Style}"/>
+								<ColorAdjustMode val="Colorize"/>
+								<LightAdjustColor val="#ColorWhite"/>
+								<DarkAdjustColor val="{$GameUI/TeamOrderColors/@Color}"/>
+								<GlowColor val="{$GameUI/TeamOrderColors/@Color}"/>
+								<Options val="NoWrapping"/>
+								<Unclipped val="true"/>
+								<Alpha val="0"/>
+							</Frame>
+							<Frame type="Label" name="FCJH_CannonCount">
+								<Anchor side="Top"    relative="$parent/Team1ShotCounter" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$parent/Team1ShotCounter" pos="Max" offset="0"/>
+								<Anchor side="Left"   relative="$parent/FCJH_CannonText" pos="Max" offset="2"/>
+								<Text val="{$parent/Team1ShotCounter/@Text}"/>
+								<Style val="{$parent/Team1ShotCounter/@Style}"/>
+								<ColorAdjustMode val="Colorize"/>
+								<LightAdjustColor val="#ColorWhite"/>
+								<DarkAdjustColor val="{$GameUI/TeamOrderColors/@Color}"/>
+								<GlowColor val="{$GameUI/TeamOrderColors/@Color}"/>
+								<Options val="NoWrapping"/>
+								<Unclipped val="true"/>
+								<Alpha val="0"/>
+							</Frame>
+							<StateGroup name="FCJH_CannonSide">
+								<DefaultState val="Red"/>
+								<State name="Blue"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/Team1ShotCounter" Visible="true"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/FCJH_CannonModeFrameSpot" pos="Min" offset="0"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/FCJH_CannonModeFrameSpot" pos="Min" offset="0"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/FCJH_CannonModeFrameSpot" pos="Max" offset="0"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/FCJH_CannonModeFrameSpot" pos="Max" offset="5"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/BackgroundImage" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame" pos="Max" offset="-2"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/BackgroundImage" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame" pos="Max" offset="-520"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame1" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/FCJH_CannonHex" pos="Max" offset="39"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame2" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame1" pos="Max" offset="30"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame3" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame2" pos="Max" offset="30"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame4" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame3" pos="Max" offset="30"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame5" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame4" pos="Max" offset="30"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame6" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame5" pos="Max" offset="30"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame7" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame6" pos="Max" offset="30"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame8" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame7" pos="Max" offset="30"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame9" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame8" pos="Max" offset="30"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame10" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame9" pos="Max" offset="30"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame11" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame10" pos="Max" offset="30"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame12" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame11" pos="Max" offset="30"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CenterpieceImageCannon" Alpha="0"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonballsLeftLabel" Alpha="0"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/Team1ShotCounter" Alpha="0"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/Team2ShotCounter" Alpha="0"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/FCJH_CannonHex" Alpha="255"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/FCJH_CannonText" Alpha="255"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/FCJH_CannonCount" Alpha="255"/></State>
+								<State name="Red"><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/FCJH_ChestSpawnFrameSpot" pos="Min" offset="0"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/FCJH_ChestSpawnFrameSpot" pos="Min" offset="0"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/FCJH_ChestSpawnFrameSpot" pos="Max" offset="0"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/FCJH_ChestSpawnFrameSpot" pos="Max" offset="5"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/BackgroundImage" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CenterpieceImageCannon" pos="Max" offset="15"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/BackgroundImage" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame" pos="Min" offset="-3"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame1" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CenterpieceImageCannon" pos="Min" offset="3"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame2" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame1" pos="Min" offset="12"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame3" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame2" pos="Min" offset="12"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame4" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame3" pos="Min" offset="12"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame5" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame4" pos="Min" offset="12"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame6" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame5" pos="Min" offset="12"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame7" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame6" pos="Min" offset="12"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame8" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame7" pos="Min" offset="12"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame9" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame8" pos="Min" offset="12"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame10" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame9" pos="Min" offset="12"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame11" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame10" pos="Min" offset="12"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame12" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonShotFrame11" pos="Min" offset="12"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CenterpieceImageCannon" Alpha="255"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/CannonballsLeftLabel" Alpha="255"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/Team1ShotCounter" Alpha="255"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/Team2ShotCounter" Alpha="255"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/FCJH_CannonHex" Alpha="0"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/FCJH_CannonText" Alpha="0"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/BlackheartsBayPanel/CannonModeFrame/FCJH_CannonCount" Alpha="0"/></State>
+							</StateGroup>
+						</Frame>
 					</Frame>
 					<Frame type="Frame" name="RavenCourtPanel">
 						<!-- Cursed Hollow -->
