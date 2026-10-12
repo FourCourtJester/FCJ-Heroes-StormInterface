@@ -1044,7 +1044,7 @@ EXTRAS = {"towers": towers_extra, "skulls": skulls_extra}
 MAP_IDS = {
     "alterac_pass": "AlteracPass",                    # SPAZZO
     "battlefield_of_eternity": "BattlefieldOfEternity",  # SCRIPT
-    "blackhearts_bay": "BlackheartsBay",              # SPAZZO
+    "blackhearts_bay": "BlackheartsBay",              # GAME (2026-10-12)
     "braxis_holdout": "BraxisHoldout",                # GAME (2026-10-09)
     "cursed_hollow": "CursedHollow",                  # GAME (2026-10-09; CursedHollowSandbox: the sandbox's)
     "dragon_shire": "DragonShire",                    # GAME (2026-10-09)
