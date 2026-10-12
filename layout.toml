@@ -86,7 +86,8 @@ haunted_mines = 0            # the surface only, its bottom on the line; the min
 [minimap.panel_nudge]
 alterac_pass = 0
 battlefield_of_eternity = 0
-blackhearts_bay = 0
+blackhearts_bay = -30         # the doubloon counts' team line up to ~1070, level with Towers' (user, 2026-10-12:
+                             # too low - the coins cut off by the screen's edge, their tops at 1052)
 braxis_holdout = 24          # its zerg HUD above the map, 24 px down (user, 2026-10-09: 2, 2 more, then 20 once compacted)
 cursed_hollow = -25          # the tribute counts' ravens ran off the bottom (user, 2026-10-06)
 dragon_shire = -29           # its shrine markers' team line level with Towers' (~1070 at 1080p; user, 2026-10-09:
