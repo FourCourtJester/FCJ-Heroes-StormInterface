@@ -701,6 +701,80 @@ def seed_banner(count):
     return out
 
 
+# The Terrors' health (GardenTerrorHealthFrame, the map file's template, made in the mechanics
+# panel): the plant in its hexagon (Icon_Blue / Icon_Red, 184 x 172 at the frame's top-left, -12)
+# and a chevron-ended plate (MapMechanicStatusBG, 463 x 50) with a bar per lane's Terror (65 in
+# from the plate's left, 9 from its right). On the summoning team's side (user, 2026-10-12), as
+# the Dragon Knight: blue's Blizzard's way round, the plant at the outer end; red's mirrored, the
+# plate's chevron on red's plates and the plant at the outer end, flipped. Blizzard's frame
+# (530 x 150) centres the plate 10 right of its middle; ours places it from the frame's top-left
+# in the same place (TERROR_PLATE), the art 5 .. 507 across - so mirrored, x -> 512 - x.
+# Measured at 1080p (2026-10-12, red's, at Blizzard's place): the plate 754 .. 1171 (its chevron's
+# tip), its drawn lower edge 795 (105 under the frame's top), the bars' red 9 px tall; the plant's
+# leaves out to 720. The bars' red ends at the chevron: the middle one's 1153, the others' 1148 -
+# 20 and 25 in from the plate's left once mirrored, flat (a status bar ignores TextureCoords).
+# The team: the summoning team's seed count reads "ACTIVE" (SeedsFrame/Team<n>StatusLabel, shown
+# to everyone); the script shows each team its own icon colour and observers both, red's on top.
+# Red's sits on the seed banners' spot (red's: the two never share the screen for long), blue's
+# on a spot of its own.
+GARDEN = MECHANICS + "/GardenOfTerrorPanel"
+TERROR_ART = (5, 507)                   # the art across, frame units: the leaves to the chevron
+TERROR_LINE = 105                       # the plate's drawn lower edge under the frame's top
+TERROR_PLATE = (44, 50, 507, 100)       # Blizzard's plate in the frame: left, top, right, bottom
+TERROR_BOX = (TERROR_ART[0] - TERROR_ART[1], 0, 0, TERROR_LINE)
+ALERT_ART["TERROR"] = Art(TERROR_ART[1] - TERROR_ART[0], 0, height=TERROR_LINE)
+TERROR_RED_IN = {1: 25, 2: 20, 3: 25}   # mirrored, each bar's red from the plate's left
+
+
+def terror_side():
+    mirror = lambda x: TERROR_ART[0] + TERROR_ART[1] - x
+    act = lambda frame, sd, rel, pos, off: (f'<Action type="SetAnchor" frame="$this{frame}" side="{sd}" '
+                                            f'relative="{rel}" pos="{pos}" offset="{off}"/>')
+    prop = lambda frame, **kw: "".join(f'<Action type="SetProperty" frame="$this{frame}" {k}="{v}"/>'
+                                       for k, v in kw.items())
+    plate = "/MapMechanicStatus"
+
+    def place(blue):
+        # everything from the spot (an absolute path), in frame units less the art's left
+        spot = f"{GARDEN}/FCJH_{'GardenTerrorHealthFrame' if blue else 'EventWarningFrame'}Spot"
+        x = lambda v: v - TERROR_ART[0]
+        y = lambda v: v - TERROR_LINE
+        out = (act("", "Left", spot, "Min", x(0)) + act("", "Right", spot, "Min", x(530))
+               + act("", "Top", spot, "Max", y(0)) + act("", "Bottom", spot, "Max", y(150)))
+        l, t, r, b = TERROR_PLATE
+        if not blue:
+            l, r = mirror(r), mirror(l)
+        out += (act(plate, "Left", spot, "Min", x(l)) + act(plate, "Right", spot, "Min", x(r))
+                + act(plate, "Top", spot, "Max", y(t)) + act(plate, "Bottom", spot, "Max", y(b)))
+        out += prop(plate + "/MapMechanicStatusBG", TextureCoords="0,0,1,1" if blue else "0,1,1,0")
+        for n in (1, 2, 3):
+            bar = f"{plate}/TerrorHealthBarAnchorFrame{n}"
+            out += (act(bar, "Left", spot, "Min", x(l + (65 if blue else TERROR_RED_IN[n])))
+                    + act(bar, "Right", spot, "Min", x(r - (9 if blue else 65)))
+                    # which end it drains from: the chevron's, towards the plant
+                    + prop(f"{bar}/TerrorUnitStatusFrame/HealthBar", Expansion="Right" if blue else "Left"))
+        icon_left = -12 if blue else mirror(-12 + 184)
+        for icon in ("Icon_Blue", "Icon_Red"):
+            out += (act(f"/{icon}", "Left", spot, "Min", x(icon_left))
+                    + prop(f"/{icon}", TextureCoords="0,0,1,1" if blue else "0,1,1,0",
+                           Alpha=255 if (icon == "Icon_Blue") == blue else 0))
+        return out
+    active = f'<When type="Property" frame="{GARDEN}/SeedsFrame/Team1StatusLabel" Visible="true"/>'
+    return (f'<StateGroup name="FCJH_TerrorSide">\n\t<DefaultState val="Red"/>\n'
+            f'\t<State name="Blue">{active}{place(True)}</State>\n'
+            f'\t<State name="Red">{place(False)}</State>\n</StateGroup>\n')
+
+
+def terror_frame():
+    """The Terrors' frame override: on red's spot to start (terror_side moves it), fade-only -
+    a state moves it (FADE_ONLY)."""
+    spot = f"{GARDEN}/FCJH_EventWarningFrameSpot"
+    return ("".join(f'<Anchor side="{sd}"{" " * (6 - len(sd))} relative="{spot}" pos="{pos}" offset="{off}"/>\n'
+                    for sd, pos, off in (("Left", "Min", -TERROR_ART[0]), ("Right", "Min", 530 - TERROR_ART[0]),
+                                         ("Top", "Max", -TERROR_LINE), ("Bottom", "Max", 150 - TERROR_LINE)))
+            + '<Unclipped val="true"/>\n' + intro(0, slide=False) + terror_side())
+
+
 # ------------------------------------------------------------------ Dragon Shire's banners
 
 # "Shrines activate in: 0:02" (core MapMechanicPanel, DragonShirePanel/ShrineTimerModeFrame),
@@ -1104,12 +1178,14 @@ MAPS = {
                           note="the shrines' countdown (neutral), then the Dragon Knight on red")]}}),
     "garden_of_terror": Map(
         "Garden of Terror", (438, 270), core="GardenOfTerrorPanel", file="GardenMapMechanic",
-        panels={"GardenTerrorHealthFrame": (("Top", "Min", 220), ("Bottom", "Max", 220), ("Right", "Max", 0))},
-        # the seed banners: the map file's own templates, on this spot (seed_banner, PARTS)
+        # the seed banners and the Terrors: the map file's own templates, on these spots
+        # (seed_banner, terror_frame; PARTS)
         team={"GardenOfTerrorPanel": {
+            "blue": [Alert("GardenTerrorHealthFrame", kind="TERROR", box=TERROR_BOX, spot_only=True,
+                           note="the Terrors' health, when they're blue's (terror_side)")],
             "red": [Alert("EventWarningFrame", kind="SEED", box=SEED_BOX, spot_only=True,
                           note="the seed banners' spot (neutral): EventWarningFrame and "
-                               "GatherTheSeedsFrame, the map file's, hang off it")]}}),
+                               "GatherTheSeedsFrame, the map file's, hang off it; red's Terrors too")]}}),
     "hanamura_temple": Map(
         "Hanamura Temple", (473, 287), file="HanamuraRework", minimap=(80, 0),
         # three screen-sized panels, their parts placed from the screen's right edge
@@ -1353,7 +1429,8 @@ def intro(indent, slide=True):
 
 # Garden's seed banners (seed_banner): written here, after intro
 PARTS["garden_of_terror"] = {"EventWarningFrame": seed_banner(True),
-                             "GatherTheSeedsFrame": seed_banner(False)}
+                             "GatherTheSeedsFrame": seed_banner(False),
+                             "GardenTerrorHealthFrame": terror_frame()}
 
 def alert_frame(team, column, i, at, indent=2):
     a = column[i]
