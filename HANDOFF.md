@@ -410,8 +410,9 @@ land on whole pixels at 1080p (`inspect_card.line`), so at 1440p they may come o
 **Next (2026-10-09, end of night; start here).** The map pass: the four working maps and
 Dragon Shire are DONE (items 3-4; Dragon Shire's knight on either team's side, blue's mirrored);
 Blackheart's Bay DONE 2026-10-12 (chests banner, either team's cannon, the plates' carried
-doubloons). **Next: Garden of Terror** (`HauntedWoods`, unconfirmed; the plain map, not
-"Simple"; it has its own layout file too). For each, screenshots of: the map id at load
+doubloons); Garden of Terror DONE 2026-10-12 (the seed banners, the Terrors on the summoning
+team's side; blue's Terrors still unseen). **Next: the newer maps' QA** (item 4: Alterac first).
+For each, screenshots of: the map id at load
 (the diagnostic, now just that line), each banner as it comes up, anything hanging off the
 minimap's bottom. Hero test rosters come from the tracker in item 14 ("not seen yet").
 
@@ -496,8 +497,16 @@ have been rebuilt on the two builders. Check each when its map comes up:
      red's Blizzard's layout, blue's mirrored - our flipped cannon at the outer end, the pips
      running right from it, our copy of the words and count. Fade-only (FADE_ONLY).
    - The plates' carried box shows the doubloons (item 7's note; gen.py `carry_box`).
-   **Then Garden of Terror:** read its
-   id on the diagnostic, `own_place=True`, tune nudge/panel_nudge. Then the newer maps' QA
+   **Garden of Terror: DONE (user, 2026-10-12).** Its id `HauntedWoods` read in game.
+   - The seed counts' team line 29 up (`[minimap.panel_nudge] garden_of_terror = -29`).
+   - "Seed spawning in" and "Gather the seed!" are neutral banners on red's side (`seed_banner`
+     on `left_banner`; they're templates of the map's own file, so they're overridden through
+     PARTS and hang off our spot). They restate their box's size: the template's 600 x 140 was
+     centred on the box.
+   - The Terrors' health is on the summoning team's side (`team_banner`, told by its ACTIVE seed
+     count): blue's is Blizzard's way round, red's the mirror. **Blue's not seen yet** - blue never
+     summoned in the test replay; look next time.
+   **Then the newer maps' QA
    (Alterac, Battlefield, Hanamura - its ICON art unmeasured -, Shrines, Sky Temple, Tomb,
    Volskaya, Warhead). Any map could get a two-view or other per-map behaviour the same way
    (`launch_cut`/`opens`, `on_map`).
@@ -929,7 +938,7 @@ commits around it).
     here until then (no replay with them yet):
     - **Heroes seen in game - the tracker (user, 2026-10-09). Update it after every replay; the
       user's own list is the source (a reconstruction from chat logs missed 15).** 91
-      heroes (Cho and Gall counted apart; Xal'atath the newest); 66 seen:
+      heroes (Cho and Gall counted apart; Xal'atath the newest); 76 seen:
       - **In the user's replays across 4 maps (user's list, 2026-10-09; 39):** Illidan, Stitches, Probius, Brightwing, Tychus, Fenix, Anub'arak, Tyrael, Zagara, Rehgar, Uther, Murky, Zarya, Gazlowe, Nova, Zeratul, Sgt. Hammer, Lt. Morales, Hogger, Leoric, Deathwing, Alexstrasza, Ragnaros, Greymane, Valeera, Samuro, D.Va, Chen, Medivh, Auriel, Chromie, Sonya, Johanna, Rexxar, The Lost Vikings, Tracer, Varian, Xal'atath, Abathur.
         (The user's list also had "Varion" beside Varian - read as a typo; ask if not.)
       - **Named in earlier sessions, not in those replays (7):** Blaze, Diablo, Jaina, Li Li, Lúcio, Maiev, Xul.
@@ -939,10 +948,11 @@ commits around it).
         Cho, Gall, Dehaka, Qhira, The Butcher, Kel'Thuzad, Nazeebo, Genji, Ana, Junkrat.
       - **Blackheart's Bay's roster, played (user, 2026-10-12; 10):** Muradin, Thrall,
         Kael'thas, Valla, Whitemane, Arthas, Zul'jin, Gul'dan, Alarak, Stukov.
-      - **Next roster (Garden of Terror), all unseen:** blue Garrosh, Malthael (Reaper's Mark),
-        Li-Ming (Critical Mass), Hanzo, Anduin; red E.T.C., Kerrigan (Assimilation shields),
-        Sylvanas, Mephisto, Malfurion.
-      - **Not seen yet (25):** Anduin, Artanis, Azmodan, Cassia, Deckard, E.T.C., Falstad, Garrosh, Hanzo, Imperius, Kerrigan, Kharazim, Li-Ming, Lunara, Mal'Ganis, Malfurion, Malthael, Mei, Mephisto, Orphea, Raynor, Sylvanas, Tassadar, Tyrande, Yrel.
+      - **Garden of Terror's roster, played (user, 2026-10-12; 10):** Garrosh, Malthael, Li-Ming,
+        Hanzo, Anduin, E.T.C., Kerrigan, Sylvanas, Mephisto, Malfurion.
+      - **Next roster (the next map), all unseen:** blue Artanis, Kharazim, Falstad, Mei, Tyrande;
+        red Imperius, Mal'Ganis, Raynor, Orphea, Deckard.
+      - **Not seen yet (15):** Artanis, Azmodan, Cassia, Deckard, Falstad, Imperius, Kharazim, Lunara, Mal'Ganis, Mei, Orphea, Raynor, Tassadar, Tyrande, Yrel.
     - **forms** (item 3): Medivh's Raven, Deathwing in Dragonflight and as World Breaker,
       Alexstrasza's Dragonqueen, Ragnaros in Molten Core, Greymane's Worgen, Valeera
       stealthed - each gets the TALL card with its player's portrait, talents and name, and
