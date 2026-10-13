@@ -510,6 +510,19 @@ def constants_layout(cfg):
             for n in range(1, maps.max_stack()):
                 const(name("map", "alert", team, "b", *k, n + 1), bar + art.bar_up - n * maps.step() - oy,
                       f"alert {n + 1} in the stack, {n} up")
+    # Alterac Pass's banner sits at Blizzard's place above the minimap, and its cavalry jumps to
+    # the winning team's spot (maps.av_carrier): the jump, from that place to the spot
+    lines.append("\t<!-- Alterac Pass's cavalry: its carrier's move from Blizzard's place to each spot (maps.av_carrier) -->")
+    across, up = maps.av_neutral(u(map_table(cfg, "panel_nudge").get("alterac_pass", 0)))
+    neutral = (left + MINIMAP_PANEL_W + across, minimap_bottoms(cfg)["alterac_pass"] + up)
+    for team in ("red", "blue"):
+        ox, oy = anchor_origin(cfg, f"{team}_xp")
+        (_, cy, _, _), _ = rects(cfg)[f"{team}_core"]
+        art = maps.ALERT_ART["AV"]
+        spot = ((u(row["red_left"]) + art.reach if team == "red" else u(row["blue_right"]) + art.tail) - ox,
+                u(cy - above) + art.bar_up - oy)
+        const(name("map", "av", team, "dx"), round(spot[0] - neutral[0]))
+        const(name("map", "av", team, "dy"), round(spot[1] - neutral[1]))
     for kind, what in maps.unmeasured().items():
         print(f"gen: banner art not measured yet - {kind}: {what} (tools/maps.py ALERT_ART)", file=sys.stderr)
 

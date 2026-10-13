@@ -939,7 +939,7 @@
 			</StateGroup>
 		</Frame>
 		<!-- blue, the bottom slot: the cavalry, when it's blue's (av_carrier) -->
-		<Frame type="Frame" name="FCJH_AVCavalrySpot">
+		<Frame type="Frame" name="FCJH_AVCavalryBlueSpot">
 			<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_AV"/>
 			<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_BLUE_R_AV"/>
 			<Unclipped val="true"/>
@@ -951,8 +951,8 @@
 				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_AV"/></State>
 			</StateGroup>
 		</Frame>
-		<!-- red, the bottom slot: the prisoners and the cage fight (neutral), red's cavalry -->
-		<Frame type="Frame" name="FCJH_AVMechanicContainerSpot">
+		<!-- red, the bottom slot: the cavalry, when it's red's (av_carrier) -->
+		<Frame type="Frame" name="FCJH_AVCavalryRedSpot">
 			<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_AV"/>
 			<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_AV"/>
 			<Unclipped val="true"/>
@@ -965,15 +965,46 @@
 			</StateGroup>
 		</Frame>
 		<Frame type="Frame" name="FCJH_AVCarrier">
-			<Anchor side="Top"    relative="$parent/FCJH_AVMechanicContainerSpot" pos="Min" offset="0"/>
-			<Anchor side="Bottom" relative="$parent/FCJH_AVMechanicContainerSpot" pos="Max" offset="0"/>
-			<Anchor side="Left"   relative="$parent/FCJH_AVMechanicContainerSpot" pos="Min" offset="0"/>
-			<Anchor side="Right"  relative="$parent/FCJH_AVMechanicContainerSpot" pos="Max" offset="0"/>
+			<Anchor side="Right"  relative="$parent" pos="Max" offset="-16"/>
+			<Anchor side="Bottom" relative="$parent" pos="Mid" offset="273"/>
+			<Width val="488"/>
+			<Height val="99"/>
 			<AcceptsMouse val="false"/>
+			<Animation name="FCJH_ToBlue">
+				<Event event="FCJH_Blue" action="Restart,Play"/>
+				<Event event="FCJH_Neutral" action="Reset"/>
+				<Event event="FCJH_Red" action="Reset"/>
+				<Controller type="Anchor" end="Pause" side="Right" relative="true">
+					<Key type="Curve" time="0" value="0"/>
+					<Key type="Curve" time="0.6" value="0"/>
+					<Key type="Curve" time="0.61" value="#FCJH_MAP_AV_BLUE_DX"/>
+				</Controller>
+				<Controller type="Anchor" end="Pause" side="Bottom" relative="true">
+					<Key type="Curve" time="0" value="0"/>
+					<Key type="Curve" time="0.6" value="0"/>
+					<Key type="Curve" time="0.61" value="#FCJH_MAP_AV_BLUE_DY"/>
+				</Controller>
+			</Animation>
+			<Animation name="FCJH_ToRed">
+				<Event event="FCJH_Red" action="Restart,Play"/>
+				<Event event="FCJH_Neutral" action="Reset"/>
+				<Event event="FCJH_Blue" action="Reset"/>
+				<Controller type="Anchor" end="Pause" side="Right" relative="true">
+					<Key type="Curve" time="0" value="0"/>
+					<Key type="Curve" time="0.6" value="0"/>
+					<Key type="Curve" time="0.61" value="#FCJH_MAP_AV_RED_DX"/>
+				</Controller>
+				<Controller type="Anchor" end="Pause" side="Bottom" relative="true">
+					<Key type="Curve" time="0" value="0"/>
+					<Key type="Curve" time="0.6" value="0"/>
+					<Key type="Curve" time="0.61" value="#FCJH_MAP_AV_RED_DY"/>
+				</Controller>
+			</Animation>
 			<StateGroup name="FCJH_AVSide">
-				<DefaultState val="Red"/>
-				<State name="Blue"><When type="AnimationState" frame="$parent/AVMechanicContainer" TeamWins="1"/><Action type="SetAnchor" frame="$this" side="Top" relative="$parent/FCJH_AVCavalrySpot" pos="Min" offset="0"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$parent/FCJH_AVCavalrySpot" pos="Max" offset="0"/><Action type="SetAnchor" frame="$this" side="Left" relative="$parent/FCJH_AVCavalrySpot" pos="Min" offset="0"/><Action type="SetAnchor" frame="$this" side="Right" relative="$parent/FCJH_AVCavalrySpot" pos="Max" offset="0"/></State>
-				<State name="Red"/>
+				<DefaultState val="Neutral"/>
+				<State name="Blue"><When type="AnimationState" frame="$parent/AVMechanicContainer" TeamWins="1"/><Action type="SendEvent" frame="$this" event="FCJH_Blue"/></State>
+				<State name="Red"><When type="AnimationState" frame="$parent/AVMechanicContainer" TeamWins="2"/><Action type="SendEvent" frame="$this" event="FCJH_Red"/></State>
+				<State name="Neutral"><Action type="SendEvent" frame="$this" event="FCJH_Neutral"/></State>
 			</StateGroup>
 		</Frame>
 		<Frame type="Frame" name="AVMechanicContainer">

@@ -512,13 +512,21 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    **Alterac Pass: built 2026-10-12, unseen.** Its id `AlteracPass` read in game. One Blizzard
    frame (`AVMechanicContainer`) shows the prisoners countdown, then the cage fight, then the
    cavalry's health. Measured at Blizzard's place (all four modes seen there, both teams' cavalry).
-   - It now hangs off a carrier of ours (`maps.av_carrier`): red's spot, as a neutral, and
-     blue's spot while blue's cavalry is up (`TeamWins` 1). Check on screen:
-     - the prisoners' bar on the banner line, its tip on red's plates;
-     - the cage fight and red's cavalry there too;
-     - blue's cavalry on blue's side;
-     - the next prisoners back on red's (if `TeamWins` doesn't return to 0 between rounds, it'd stay
-       on the last winner's side).
+   - It hangs off a carrier of ours (`maps.av_carrier`). The first build (caa5687) put the
+     prisoners and cage on red's spot and the cavalry on its team's; seen in game, all four landed
+     (tips 1167 / 755, brackets 930), and the carrier move worked both ways.
+   - **Redone (user, 2026-10-12, having watched it a few times): the prisoners and the cage stay
+     above the minimap, at Blizzard's place; once the cage is won its outro plays there and the
+     cavalry appears on its team's side.** The carrier sits at Blizzard's place; on `TeamWins`
+     1 or 2 it jumps to that team's spot 0.6 s on (`AV_HANDOFF_S`: Blizzard's cage bars are
+     gone and the cavalry plate shows then), by a relative Anchor controller with gen.py's
+     `FCJH_MAP_AV_<TEAM>_DX/_DY`; `TeamWins` 0 resets it. Unseen. Check:
+     - the cage's outro above the minimap, then the cavalry on the winner's side. If it jumps
+       before the outro, `TeamWins` is set before "MechanicDone" and the delay needs raising;
+     - the next prisoners back above the minimap (if not, `TeamWins` doesn't return to 0);
+     - the hexagon jumps with it at 0.6 s (a cut, not a slide).
+   - The cage's timer rides the fill's end, its glow with it: Blizzard's own anchoring
+     (`ProgressLabel` on `FillImage`). If wanted, pin the timer to the bar's fixed end instead.
    - **Technical limitation (user, 2026-10-12: "not the end of the world"): not mirrored.**
      Blizzard's animations slide its parts: the hexagon 373 left when the cage starts, the cage
      bars and the cavalry's fill-up in from the left. Each slide counts from its layout anchor, so

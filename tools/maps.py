@@ -1201,15 +1201,17 @@ def skulls_extra():
 # One frame (AlteracMechanicsPanel/AVMechanicContainer, the map file's), three things in turn:
 # "Prisoners located in: 0:28" (neutral), the cage fight (both teams' bars; neutral) and the
 # cavalry's health (the team that won the cage: TeamWins, 1 Order = blue, 2 Chaos = red; 0
-# between). Like Garden's (user, 2026-10-12): the neutral two on red's side, the cavalry on its
-# team's. Measured at 1080p (2026-10-12, at Blizzard's place: the frame's right 1184, its middle
-# 748): the bar's bracket tips 730 and 1163, the prisoners' hexagon out to 1170, its lower bracket
-# 773.5; the cavalry's hammers up to 684.
+# between). The neutral two stay at Blizzard's place, above the minimap; once the cage is won
+# its outro plays there and the cavalry appears on its team's side (user, 2026-10-12, having
+# watched it on red's side a few times). Measured at 1080p (2026-10-12, at Blizzard's place: the
+# frame's right 1184, its middle 748): the bar's bracket tips 730 and 1163, the prisoners' hexagon
+# out to 1170, its lower bracket 773.5; the cavalry's hammers up to 684. On the spots (2026-10-12):
+# red's tip 1167, blue's 755, both lower brackets 930.
 # Not mirrored (a technical limitation, user 2026-10-12: "not the end of the world"): Blizzard's
 # own animations slide its parts - the hexagon 373 left when the cage starts, the cage bars and
-# the cavalry's fill-up in from the left - each counted from its layout anchor, so no state can
-# move or mirror them (storminterface-layout-rules 28). Moving the WHOLE banner works: its layout
-# anchors hang off a carrier of ours, and only the carrier moves between the sides (av_carrier).
+# the cavalry's plate and fill-up in from the left - each counted from its layout anchor, so no
+# state can move or mirror them (storminterface-layout-rules 28). Moving the WHOLE banner works:
+# its layout anchors hang off a carrier of ours, and only the carrier moves (av_carrier).
 # Blue's cavalry comes out Blizzard's way round - blue's mirror, the hexagon at the outer end; red's
 # keeps its hexagon at the inner end, by the minimap. The full mirror would rewrite those slides
 # and flip the cage's ProgressBars (no Blizzard bar fills right to left): HANDOFF.
@@ -1217,21 +1219,45 @@ AV_BOX = (-504, -21, -16, 78)   # the art from the frame's top-right: the left t
                                 # the hexagon's right, the lower bracket
 ALERT_ART["AV"] = Art(AV_BOX[2] - AV_BOX[0], 0, height=AV_BOX[3] - AV_BOX[1])
 AV_HALF_H = 50                  # half Blizzard's frame (Height 100), centred on its Top/Bottom anchor
-AV_RED, AV_BLUE = "FCJH_AVMechanicContainerSpot", "FCJH_AVCavalrySpot"   # the spots (MAPS entry)
+AV_MID = 245                    # Blizzard's frame's middle under its panel's (alteracmechanics)
+AV_HANDOFF_S = 0.6              # the cage won ("MechanicDone"), its bars are gone and the cavalry's
+                                # plate shows 0.6 s on, sliding in from there: the carrier moves then
+TEAM_WINS = {"Blue": 1, "Red": 2}
+
+
+def av_neutral(down):
+    """The carrier at Blizzard's place: (its right from MinimapPanel's right, its bottom from
+    MinimapPanel's bottom), units - gen.py works the moves to the spots out from it. down: the
+    panel's [minimap.panel_nudge], units."""
+    m = MAPS["alterac_pass"]
+    sides = {sd: on_minimap(sd, pos, off, m, down)[1] for sd, pos, off in m.panels["AlteracMechanicsPanel"]}
+    return sides["Right"] + AV_BOX[2], (sides["Top"] + sides["Bottom"]) / 2 + AV_MID + AV_BOX[3] - AV_HALF_H
 
 
 def av_carrier():
-    """The carrier the banner hangs off: red's spot, blue's while blue's cavalry is up."""
-    sides = ("Top", "Bottom", "Left", "Right")
-    pos = {"Top": "Min", "Bottom": "Max", "Left": "Min", "Right": "Max"}
-    return ("".join(f'<Anchor side="{sd}"{" " * (6 - len(sd))} relative="$parent/{AV_RED}" pos="{pos[sd]}" offset="0"/>\n'
-                    for sd in sides)
-            + '<AcceptsMouse val="false"/>\n'
-            '<StateGroup name="FCJH_AVSide">\n\t<DefaultState val="Red"/>\n'
-            '\t<State name="Blue"><When type="AnimationState" frame="$parent/AVMechanicContainer" TeamWins="1"/>'
-            + "".join(f'<Action type="SetAnchor" frame="$this" side="{sd}" relative="$parent/{AV_BLUE}" pos="{pos[sd]}" offset="0"/>'
-                      for sd in sides)
-            + '</State>\n\t<State name="Red"/>\n</StateGroup>\n')
+    """The carrier the banner hangs off: at Blizzard's place (av_neutral), the art's box; the cage
+    won, it jumps to the winner's spot AV_HANDOFF_S on, by #FCJH_MAP_AV_<TEAM>_DX/_DY (gen.py) - a
+    relative Anchor controller, held there (end Pause) until the next round puts it back (Reset)."""
+    l, tp, r, b = AV_BOX
+    out = (f'<Anchor side="Right"  relative="$parent" pos="Max" offset="{r}"/>\n'
+           f'<Anchor side="Bottom" relative="$parent" pos="Mid" offset="{AV_MID + b - AV_HALF_H}"/>\n'
+           f'<Width val="{r - l}"/>\n<Height val="{b - tp}"/>\n<AcceptsMouse val="false"/>\n')
+    for team in TEAM_WINS:
+        out += (f'<Animation name="FCJH_To{team}">\n\t<Event event="FCJH_{team}" action="Restart,Play"/>\n'
+                + "".join(f'\t<Event event="FCJH_{other}" action="Reset"/>\n'
+                          for other in ("Neutral", *TEAM_WINS) if other != team))
+        for sd, d in (("Right", "DX"), ("Bottom", "DY")):
+            out += (f'\t<Controller type="Anchor" end="Pause" side="{sd}" relative="true">\n'
+                    f'\t\t<Key type="Curve" time="0" value="0"/>\n'
+                    f'\t\t<Key type="Curve" time="{AV_HANDOFF_S}" value="0"/>\n'
+                    f'\t\t<Key type="Curve" time="{AV_HANDOFF_S + 0.01}" value="#FCJH_MAP_AV_{team.upper()}_{d}"/>\n'
+                    f'\t</Controller>\n')
+        out += '</Animation>\n'
+    when = lambda team: f'<When type="AnimationState" frame="$parent/AVMechanicContainer" TeamWins="{TEAM_WINS[team]}"/>'
+    send = lambda event: f'<Action type="SendEvent" frame="$this" event="FCJH_{event}"/>'
+    return (out + '<StateGroup name="FCJH_AVSide">\n\t<DefaultState val="Neutral"/>\n'
+            + "".join(f'\t<State name="{team}">{when(team)}{send(team)}</State>\n' for team in TEAM_WINS)
+            + f'\t<State name="Neutral">{send("Neutral")}</State>\n</StateGroup>\n')
 
 
 def av_frame():
@@ -1244,9 +1270,8 @@ def av_frame():
 
 
 # The flag-capture alerts (NotificationFrame1, 2 over it) stand on the banner's top, 10 over it:
-# kept where Blizzard's banner put them (its middle 245 under the panel's, its Height 100), not
-# on the minimap with ours - unseen yet (HANDOFF)
-AV_ALERTS_B = 245 - AV_HALF_H - 10
+# kept where Blizzard's banner sits between rounds, not dragged along with the cavalry (HANDOFF)
+AV_ALERTS_B = AV_MID - AV_HALF_H - 10
 PARTS["alterac_pass"] = {"AlteracMechanicsPanel/FCJH_AVCarrier": av_carrier(),
                          "AlteracMechanicsPanel/AVMechanicContainer": av_frame(),
                          "AlteracMechanicsPanel/NotificationFrame1":
@@ -1266,13 +1291,13 @@ MAPS = {
         "Alterac Pass", (441, 316), file="AlteracMechanics",
         panels={"AlteracMechanicsPanel": (("Top", "Min", -25), ("Bottom", "Max", -25), ("Right", "Max", 0))},
         place=("AlteracMechanicsPanel",),
-        # the prisoners, the cage fight and the cavalry: one frame, on a carrier (av_carrier)
-        # that sits on red's spot - blue's while blue's cavalry is up
+        # the prisoners, the cage fight and the cavalry: one frame, on a carrier (av_carrier) at
+        # Blizzard's place above the minimap; the cavalry on these spots
         team={"AlteracMechanicsPanel": {
-            "blue": [Alert("AVCavalry", kind="AV", box=AV_BOX, spot_only=True,
+            "blue": [Alert("AVCavalryBlue", kind="AV", box=AV_BOX, spot_only=True,
                            note="the cavalry, when it's blue's (av_carrier)")],
-            "red": [Alert("AVMechanicContainer", kind="AV", box=AV_BOX, spot_only=True,
-                          note="the prisoners and the cage fight (neutral), red's cavalry")]}},
+            "red": [Alert("AVCavalryRed", kind="AV", box=AV_BOX, spot_only=True,
+                          note="the cavalry, when it's red's (av_carrier)")]}},
         notes="a strip down the right edge; the cage fight bar and its two event banners at its middle"),
     "battlefield_of_eternity": Map(
         "Battlefield of Eternity", (438, 269), file="BossDuel", minimap=(75, 0),
