@@ -411,13 +411,15 @@ land on whole pixels at 1080p (`inspect_card.line`), so at 1440p they may come o
 Dragon Shire are DONE (items 3-4; Dragon Shire's knight on either team's side, blue's mirrored);
 Blackheart's Bay DONE 2026-10-12 (chests banner, either team's cannon, the plates' carried
 doubloons); Garden of Terror DONE 2026-10-12 (the seed banners, the Terrors on the summoning
-team's side; blue's Terrors still unseen). **Next: the newer maps' QA** (item 4: Alterac first).
+team's side; blue's Terrors still unseen). The banner protocols' recheck PASSED on all five
+(2026-10-12). **Next: the newer maps' QA** (item 4: Alterac first).
 For each, screenshots of: the map id at load
 (the diagnostic, now just that line), each banner as it comes up, anything hanging off the
 minimap's bottom. Hero test rosters come from the tracker in item 14 ("not seen yet").
 
-**Recheck after the banner protocols (2026-10-12, d2604a6 and after; §3 "Banners").** The banners
-have been rebuilt on the two builders. Check each when its map comes up:
+**Recheck after the banner protocols (2026-10-12, d2604a6 and after; §3 "Banners"): PASSED (user,
+2026-10-12: "all the banner generation on the other maps seem solid", every map before Alterac).
+Not recorded: whether a replay showed blue's curse; check it if one does.** What was checked:
 - **Mines, shrines, seeds, curse:** the banner holds its width while the count runs, down to single
   digits. A narrow count leaves a wider space before it.
 - **Dragon Knight:** both bars are on the standard tip now, red's 3 units (about 3 px) left and
@@ -431,7 +433,8 @@ have been rebuilt on the two builders. Check each when its map comes up:
    - **Haunted Mines: DONE (user, 2026-10-09).** The two views and the glide (once only), the
      skull counts' line back (it was clipped under its panel: Unclipped), skulls and counts 2 px
      lower and 4 px in, the "Needed" plaque 28 px in the gap between the maps (the bar art
-     stretched whole: a squeezed nine-slice loses its corners), riding with the minimap. The
+     stretched whole: a squeezed nine-slice loses its corners), riding with the minimap; centred
+     in the gap 2026-10-12 (6 px up, by measure then eye). The
      surface sits ~20 px left of centre in Blizzard's art at launch: left as is (user: it
      lasts two minutes).
    - Cursed Hollow: the tribute and curse banners now FADE in without sliding - check both
