@@ -1203,7 +1203,7 @@ MAP_IDS = {
     "braxis_holdout": "BraxisHoldout",                # GAME (2026-10-09)
     "cursed_hollow": "CursedHollow",                  # GAME (2026-10-09; CursedHollowSandbox: the sandbox's)
     "dragon_shire": "DragonShire",                    # GAME (2026-10-09)
-    "garden_of_terror": "HauntedWoods",               # SPAZZO
+    "garden_of_terror": "HauntedWoods",               # GAME (2026-10-12)
     "hanamura_temple": "Hanamura",                    # SPAZZO
     "haunted_mines": "HauntedMines",                  # GAME (2026-10-09)
     "infernal_shrines": "Shrines",                    # SCRIPT
