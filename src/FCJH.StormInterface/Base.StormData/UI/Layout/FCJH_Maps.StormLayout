@@ -616,7 +616,7 @@
 							<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_SEED"/>
 							<Unclipped val="true"/>
 							<Width val="373"/>
-							<Height val="109"/>
+							<Height val="107"/>
 							<AcceptsMouse val="false"/>
 							<StateGroup name="FCJH_Stack">
 								<DefaultState val="Bottom"/>
@@ -1000,6 +1000,8 @@
 		<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/GardenOfTerrorPanel/FCJH_EventWarningFrameSpot" pos="Min" offset="0"/>
 		<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/GardenOfTerrorPanel/FCJH_EventWarningFrameSpot" pos="Max" offset="0"/>
 		<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/GardenOfTerrorPanel/FCJH_EventWarningFrameSpot" pos="Max" offset="5"/>
+		<Width val="378"/>
+		<Height val="107"/>
 		<Unclipped val="true"/>
 		<Animation name="FCJH_Intro">
 			<Event event="OnShown" action="Restart,Play"/>
@@ -1050,7 +1052,7 @@
 		</Frame>
 		<Frame type="Image" name="CenterpieceImage">
 			<Unclipped val="true"/>
-			<Anchor side="Right" relative="$parent/FCJH_SeedCount" pos="Max" offset="153"/>
+			<Anchor side="Right" relative="$parent/FCJH_SeedCount" pos="Max" offset="110"/>
 		</Frame>
 		<Frame type="Label" name="TextLabel">
 			<Unclipped val="true"/>
@@ -1066,6 +1068,8 @@
 		<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/GardenOfTerrorPanel/FCJH_EventWarningFrameSpot" pos="Min" offset="0"/>
 		<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/GardenOfTerrorPanel/FCJH_EventWarningFrameSpot" pos="Max" offset="0"/>
 		<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/GardenOfTerrorPanel/FCJH_EventWarningFrameSpot" pos="Max" offset="5"/>
+		<Width val="378"/>
+		<Height val="107"/>
 		<Unclipped val="true"/>
 		<Animation name="FCJH_Intro">
 			<Event event="OnShown" action="Restart,Play"/>

@@ -665,10 +665,15 @@ GOLEM_PARTS = (("Image", "BackgroundImage", (), f'<Anchor side="Right" relative=
 # On red's side laid out from its left end, as the mines': the bar from the spot's left, our
 # copy of the words 35 in, the count one space after, the seed after that - and our intro (the
 # template's own slides its Right anchor, which nothing hangs off any more).
-SEED_BOX = (-378, 0, -5, 109)
+# The templates set Width 600 and Height 140, and the engine keeps them, centring that on the box
+# the anchors give: ours restate the box's size (it sat 100 px left and 15 up, user 2026-10-12).
+# Read off that: the bar's lower bracket 107 under the frame's top.
+SEED_BOX = (-378, 0, -5, 107)
 SEED_WORDS_START = 35
-SEED_HEX_AFTER = 153      # the seed's right from the words' (or count's): 140 px from the last
-                          # letter to its right, less the label's padding, as the mines'
+SEED_HEX_AFTER = {True: 110,   # the seed's right from the count's: 153 left a 39 px wider gap than
+                               # Blizzard's (2026-10-12, "SEED SPAWNING IN: 25")
+                  False: 153}  # ...from the words' ("Gather the seed!"): 140 px from the last letter
+                               # to its right, less the label's padding, as the mines' - unmeasured
 SEED_SPOT = MECHANICS + "/GardenOfTerrorPanel/FCJH_EventWarningFrameSpot"
 ALERT_ART["SEED"] = Art(SEED_BOX[2] - SEED_BOX[0], 0, height=SEED_BOX[3] - SEED_BOX[1])
 
@@ -683,7 +688,8 @@ def seed_banner(count):
         f'\t<Options val="NoWrapping"/>\n\t<Unclipped val="true"/>\n</Frame>\n')
     out = "".join(f'<Anchor side="{sd}"{" " * (6 - len(sd))} relative="{SEED_SPOT}" pos="{pos}" offset="{off}"/>\n'
                   for sd, pos, off in box_sides(SEED_BOX))
-    out += '<Unclipped val="true"/>\n' + intro(0)
+    out += (f'<Width val="{-SEED_BOX[0]}"/>\n'      # the spot's left to 5 past its right (box_sides)
+            f'<Height val="{SEED_BOX[3] - SEED_BOX[1]}"/>\n<Unclipped val="true"/>\n' + intro(0))
     out += copy("FCJH_SeedText", "TextLabel", (("Top", "$parent/TextLabel", "Min", 0),
                                                ("Bottom", "$parent/TextLabel", "Max", 0),
                                                ("Left", "$parent/BackgroundImage", "Min", SEED_WORDS_START)))
@@ -695,7 +701,7 @@ def seed_banner(count):
         last = "FCJH_SeedCount"
     out += unclipped((("Image", "BackgroundImage", (), f'<Anchor side="Left" relative="$parent" pos="Min" offset="{-MINES_TIP_IN}"/>'),
                       ("Image", "CenterpieceImage", (),
-                       f'<Anchor side="Right" relative="$parent/{last}" pos="Max" offset="{SEED_HEX_AFTER}"/>'),
+                       f'<Anchor side="Right" relative="$parent/{last}" pos="Max" offset="{SEED_HEX_AFTER[count]}"/>'),
                       ("Label", "TextLabel", (), '<Alpha val="0"/>'))
                      + ((("Label", "TimerLabel", (), '<Alpha val="0"/>'),) if count else ()), 0)
     return out
