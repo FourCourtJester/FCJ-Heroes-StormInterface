@@ -1367,7 +1367,7 @@ EXTRAS = {"towers": towers_extra, "skulls": skulls_extra}
 # gamelib.galaxy / uilib.galaxy - the battlegrounds' own scripts aren't in it); SPAZZO tested in
 # Spazzo's interface (CustomPanelSpazzo) only - read one on screen before relying on it.
 MAP_IDS = {
-    "alterac_pass": "AlteracPass",                    # SPAZZO
+    "alterac_pass": "AlteracPass",                    # GAME (2026-10-12)
     "battlefield_of_eternity": "BattlefieldOfEternity",  # SCRIPT
     "blackhearts_bay": "BlackheartsBay",              # GAME (2026-10-12)
     "braxis_holdout": "BraxisHoldout",                # GAME (2026-10-09)
