@@ -418,6 +418,57 @@ HOLDOUT_PARTS = (("Image", "BackgroundImage", ()), ("Image", "TimerImage", ()),
                  ("Label", "HoldOutWarningInfoLabel", ()), ("Label", "HoldOutWarningTimerLabel", ()))
 
 
+# ------------------------------------------------------------------ banners laid out from the bar's left
+
+# Every banner on red's side that Blizzard sizes to its words (the hexagon at its right end, the
+# bar growing left) is laid out from its left end instead, so it starts at red's plates in every
+# language: the bar from the frame's left, our copy of the words in, the count one space after
+# them, the hexagon after that. A banner never changes size while it counts (user, 2026-10-12:
+# Garden's seed widened and narrowed with its number - the hexagon had hung off the count, and
+# "11" is less than half as wide as "25"): the count gets a slot as wide as the widest it can
+# read (BANNER_SLOT, the game's own sizing text, in the count's font; drawn at Alpha 0), right-
+# aligned in it, and the hexagon hangs off the slot. Its width changes only with the language.
+BANNER_SLOT = "8:88"
+
+
+def banner_label(name_, anchors, text, style, more=""):
+    """One of our banner labels: anchors ((side, relative, pos, offset), ...), unindented."""
+    return (f'<Frame type="Label" name="{name_}">\n'
+            + "".join(f'\t<Anchor side="{sd}"{" " * (6 - len(sd))} relative="{rel}" pos="{pos}" offset="{off}"/>\n'
+                      for sd, rel, pos, off in anchors)
+            + f'\t<Text val="{text}"/>\n\t<Style val="{style}"/>\n'
+            f'\t<Options val="NoWrapping"/>\n\t<Unclipped val="true"/>\n' + more + '</Frame>\n')
+
+
+def count_slot(name_, row, anchor, style, slot=BANNER_SLOT):
+    """The slot a count sits right-aligned in, as wide as `slot` reads: row, its Top/Bottom
+    anchors; anchor, its one side's; style, the count's (the slot takes its font)."""
+    return banner_label(name_, row + (anchor,), slot, style, '\t<Alpha val="0"/>\n')
+
+
+def left_banner(prefix, words, count, hexagon, words_start, hex_after, depth=7, slot=BANNER_SLOT):
+    """A banner laid out from its bar's left end (above): FCJH_<prefix>Text copying Blizzard's
+    words, FCJH_<prefix>Slot and FCJH_<prefix>Count its count (count None: it has none), and
+    Blizzard's parts - the bar from the frame's left, the hexagon's right hex_after past the
+    slot's (or the words'), Blizzard's labels hidden. -> the frame's insides, at depth."""
+    w, s, c = (f"FCJH_{prefix}{n}" for n in ("Text", "Slot", "Count"))
+    out = banner_label(w, (("Top", f"$parent/{words}", "Min", 0), ("Bottom", f"$parent/{words}", "Max", 0),
+                           ("Left", "$parent/BackgroundImage", "Min", words_start)),
+                       f"{{$parent/{words}/@Text}}", f"{{$parent/{words}/@Style}}")
+    last = w
+    if count:
+        row = (("Top", f"$parent/{w}", "Min", 0), ("Bottom", f"$parent/{w}", "Max", 0))
+        style = f"{{$parent/{count}/@Style}}"
+        out += (count_slot(s, row, ("Left", f"$parent/{w}", "Max", COUNT_SPACE), style, slot)
+                + banner_label(c, row + (("Right", f"$parent/{s}", "Max", 0),), f"{{$parent/{count}/@Text}}", style))
+        last = s
+    parts = ((("Image", "BackgroundImage", (), f'<Anchor side="Left" relative="$parent" pos="Min" offset="{-MINES_TIP_IN}"/>'),
+              ("Image", hexagon, (), f'<Anchor side="Right" relative="$parent/{last}" pos="Max" offset="{hex_after}"/>'),
+              ("Label", words, (), '<Alpha val="0"/>'))
+             + ((("Label", count, (), '<Alpha val="0"/>'),) if count else ()))
+    return "".join(T * depth + line + "\n" for line in out.splitlines()) + unclipped(parts, depth)
+
+
 RAVEN = MECHANICS + "/RavenCourtPanel"
 CURSE = RAVEN + "/CurseFrame"
 CURSE_SPARE = 200     # red's curse box reaches this much further right: its hexagon follows the
@@ -437,19 +488,21 @@ CURSE_TEXT = (f'{T*7}<Frame type="Label" name="FCJH_CurseText">\n'
 # (cursed_side): red's after our words, flowing right; blue's where Blizzard ends the words
 # (the bar's right end -130), Blizzard's words ending one space before it.
 CURSE_WORDS_END = -130
+CURSE_STYLE = "{$parent/CurseInfoLabel/@Style}"
+_CURSE_ROW = (("Top", "$parent/FCJH_CurseText", "Min", 0), ("Bottom", "$parent/FCJH_CurseText", "Max", 0))
+_CURSE_ROW_BLUE = (("Top", "$parent/CurseInfoLabel", "Min", 0), ("Bottom", "$parent/CurseInfoLabel", "Max", 0))
+_BLUE_END = ("Right", "$parent/BackgroundImage", "Max", CURSE_WORDS_END)
+# Each count right-aligned in its slot (left_banner): red's slot after the words (or their
+# colon, curse_colon), the hexagon off it (cursed_side); blue's ending where Blizzard ends the
+# words, which end one space before it - so neither side's bar changes size as the count runs.
 CURSE_COUNT = "".join(
-    f'{T*7}<Frame type="Label" name="{name_}">\n'
-    + "".join(f'{T*8}<Anchor side="{sd}"{" " * (6 - len(sd))} relative="{rel}" pos="{pos}" offset="{off}"/>\n'
-              for sd, rel, pos, off in anchors)
-    + f'{T*8}<Text val="{{$parent/CurseTimerLabel/@Text}}"/>\n'
-    f'{T*8}<Style val="{{$parent/CurseInfoLabel/@Style}}"/>\n'
-    f'{T*8}<Options val="NoWrapping"/>\n{T*8}<Unclipped val="true"/>\n{T*8}<Alpha val="0"/>\n'
-    f'{T*7}</Frame>\n'
-    for name_, anchors in (
-        ("FCJH_CurseCount", (("Top", "$parent/FCJH_CurseText", "Min", 0), ("Bottom", "$parent/FCJH_CurseText", "Max", 0),
-                             ("Left", "$parent/FCJH_CurseText", "Max", COUNT_SPACE))),
-        ("FCJH_CurseCountBlue", (("Top", "$parent/CurseInfoLabel", "Min", 0), ("Bottom", "$parent/CurseInfoLabel", "Max", 0),
-                                 ("Right", "$parent/BackgroundImage", "Max", CURSE_WORDS_END)))))
+    "".join(T * 7 + line + "\n" for line in xml.splitlines()) for xml in (
+        count_slot("FCJH_CurseSlot", _CURSE_ROW, ("Left", "$parent/FCJH_CurseText", "Max", COUNT_SPACE), CURSE_STYLE),
+        banner_label("FCJH_CurseCount", _CURSE_ROW + (("Right", "$parent/FCJH_CurseSlot", "Max", 0),),
+                     "{$parent/CurseTimerLabel/@Text}", CURSE_STYLE, '\t<Alpha val="0"/>\n'),
+        count_slot("FCJH_CurseSlotBlue", _CURSE_ROW_BLUE, _BLUE_END, CURSE_STYLE),
+        banner_label("FCJH_CurseCountBlue", _CURSE_ROW_BLUE + (_BLUE_END,),
+                     "{$parent/CurseTimerLabel/@Text}", CURSE_STYLE, '\t<Alpha val="0"/>\n')))
 
 
 # The curse's words -> the colon before its count, where that language's Towers of Doom
@@ -472,7 +525,7 @@ def curse_colon():
     """The colon between the curse's words and its count, in its own label (the words are
     Blizzard's, or bound to them): one per side's layout, shown with that side's words
     (cursed_side). In a language with a colon the count follows the colon, else the words."""
-    count, blue_count = f"{CURSE}/FCJH_CurseCount", f"{CURSE}/FCJH_CurseCountBlue"
+    count, blue_count = f"{CURSE}/FCJH_CurseSlot", f"{CURSE}/FCJH_CurseSlotBlue"
     act = lambda frame, sd, rel, pos, off: (f'<Action type="SetAnchor" frame="{frame}" side="{sd}" relative="{rel}" '
                                             f'pos="{pos}" offset="{off}"/>')
     text = lambda c: (f'<Action type="SetProperty" frame="{CURSE}/FCJH_CurseColon" Text="{c}"/>'
@@ -495,7 +548,7 @@ def curse_colon():
         f'{t}<Options val="NoWrapping"/>\n{t}<Unclipped val="true"/>\n{t}<Alpha val="0"/>\n'
         + more + f'{T*7}</Frame>\n')
     return (label("FCJH_CurseColon", "$parent/FCJH_CurseText", "Left", "$parent/FCJH_CurseText", "Max", COLON_SPACE, group)
-            + label("FCJH_CurseColonBlue", "$parent/CurseInfoLabel", "Right", "$parent/FCJH_CurseCountBlue", "Min",
+            + label("FCJH_CurseColonBlue", "$parent/CurseInfoLabel", "Right", "$parent/FCJH_CurseSlotBlue", "Min",
                     -COUNT_SPACE))
 
 
@@ -555,7 +608,7 @@ TRIBUTE_PARTS = (("Image", "BackgroundImage", ()), ("Image", "TimerImage", ()),
                  ("Label", "TributeTimerLabel", (), '<Alpha val="0"/>'))
 CURSE_PARTS = (("Image", "BackgroundImage", ()), ("Image", "TimerImage", ()),
                ("Label", "CurseInfoLabel", (),
-                f'<Anchor side="Right" relative="$parent/FCJH_CurseCountBlue" pos="Min" offset="{-COUNT_SPACE}"/>'),
+                f'<Anchor side="Right" relative="$parent/FCJH_CurseSlotBlue" pos="Min" offset="{-COUNT_SPACE}"/>'),
                ("Label", "CurseTimerLabel", (), '<Alpha val="0"/>'),
                ("Frame", "AttentionEffect", (("Image", "AttentionEffectImage", ()),
                                              ("Image", "AttentionEffect2Image", ()))))
@@ -581,7 +634,7 @@ def cursed_side():
         tribute = f"{RAVEN}/TributeSpawnFrame"
         if red:
             out += (act(f"{CURSE}/BackgroundImage", "Left", CURSE, "Min", 0)
-                    + act(f"{CURSE}/TimerImage", "Right", f"{CURSE}/FCJH_CurseCount", "Max", 115))
+                    + act(f"{CURSE}/TimerImage", "Right", f"{CURSE}/FCJH_CurseSlot", "Max", 115))
         else:      # Blizzard's own layout, the count before the hexagon
             out += (act(f"{CURSE}/BackgroundImage", "Left", f"{CURSE}/CurseInfoLabel", "Min", -35)
                     + act(f"{CURSE}/TimerImage", "Right", f"{tribute}/TimerImage", "Max", 0))
@@ -605,9 +658,7 @@ def cursed_side():
 # at 1080p (2026-10-09): the bar 385 px wide in English (428 units), its bottom 86 under the
 # hexagon's top as placed (the frame's 27 + 50 = 77 put the bar's bottom edge 8 px under the
 # tribute's and Towers', user - read by the bar's lower bracket: 937 against 929). On red's side
-# it's laid out from its left end, as red's curse is (cursed_side): the bar from the spot's
-# left, our copy of the words 50 in, the count one space after them, the hexagon after that -
-# so in every language the bar starts at red's plates.
+# it's laid out from its left end (left_banner), the words 50 in.
 MINES_BOX = (-433, 0, -5, 86)
 MINES_WORDS_START = 50
 MINES_TIP_IN = 3          # the bar art's left tip is 3 px inside its frame: the frame starts that
@@ -617,24 +668,8 @@ MINES_TIP_IN = 3          # the bar art's left tip is 3 px inside its frame: the
 MINES_HEX_AFTER = 115     # the hexagon's right from the count's: 5 + its width, as the curse's
                           # (measured: 106 px from the count's last letter to its right edge)
 ALERT_ART["MINES"] = Art(MINES_BOX[2] - MINES_BOX[0], 0, height=MINES_BOX[3] - MINES_BOX[1] + 6)
-MINES_TEXT = "".join(
-    f'{T*7}<Frame type="Label" name="{name_}">\n'
-    + "".join(f'{T*8}<Anchor side="{sd}"{" " * (6 - len(sd))} relative="{rel}" pos="{pos}" offset="{off}"/>\n'
-              for sd, rel, pos, off in anchors)
-    + f'{T*8}<Text val="{{$parent/{theirs}/@Text}}"/>\n{T*8}<Style val="{{$parent/{theirs}/@Style}}"/>\n'
-    f'{T*8}<Options val="NoWrapping"/>\n{T*8}<Unclipped val="true"/>\n{T*7}</Frame>\n'
-    for name_, theirs, anchors in (
-        ("FCJH_MinesText", "MineOpenLabel", (("Top", "$parent/MineOpenLabel", "Min", 0),
-                                             ("Bottom", "$parent/MineOpenLabel", "Max", 0),
-                                             ("Left", "$parent/BackgroundImage", "Min", MINES_WORDS_START))),
-        ("FCJH_MinesCount", "MineOpenTimer", (("Top", "$parent/FCJH_MinesText", "Min", 0),
-                                              ("Bottom", "$parent/FCJH_MinesText", "Max", 0),
-                                              ("Left", "$parent/FCJH_MinesText", "Max", COUNT_SPACE)))))
-MINES_PARTS = (("Image", "BackgroundImage", (), f'<Anchor side="Left" relative="$parent" pos="Min" offset="{-MINES_TIP_IN}"/>'),
-               ("Image", "CenterpieceImageMine", (),
-                f'<Anchor side="Right" relative="$parent/FCJH_MinesCount" pos="Max" offset="{MINES_HEX_AFTER}"/>'),
-               ("Label", "MineOpenLabel", (), '<Alpha val="0"/>'),
-               ("Label", "MineOpenTimer", (), '<Alpha val="0"/>'))
+MINES_BANNER = left_banner("Mines", "MineOpenLabel", "MineOpenTimer", "CenterpieceImageMine",
+                           MINES_WORDS_START, MINES_HEX_AFTER)
 # The golems' health (GolemModeFrame, shown instead of the mines banner once one is summoned):
 # Blizzard pins its bar's bottom-right to the mines bar's and its hexagon (GolemHud) to the
 # frame's top-right. Ours from the spot's left too: its bar (481 units, its texture's own width,
@@ -662,14 +697,14 @@ GOLEM_PARTS = (("Image", "BackgroundImage", (), f'<Anchor side="Right" relative=
 # end at x 1040, the bar's right end 1153; its tip 817 ("Seed spawning in: 23", 373 units) and
 # 853 ("Gather the seed!"); its lower bracket 790. The bar is the mines' art (its height theirs:
 # 59 units from its top to the lower bracket), so its bottom is 50 + 59 under the frame's top.
-# On red's side laid out from its left end, as the mines': the bar from the spot's left, our
-# copy of the words 35 in, the count one space after, the seed after that - and our intro (the
+# On red's side laid out from its left end (left_banner), the words 35 in - and our intro (the
 # template's own slides its Right anchor, which nothing hangs off any more).
 # The templates set Width 600 and Height 140, and the engine keeps them, centring that on the box
 # the anchors give: ours restate the box's size (it sat 100 px left and 15 up, user 2026-10-12).
 # Read off that: the bar's lower bracket 107 under the frame's top.
 SEED_BOX = (-378, 0, -5, 107)
 SEED_WORDS_START = 35
+SEED_SLOT = "88"               # its count is bare seconds ("25", "11")
 SEED_HEX_AFTER = {True: 110,   # the seed's right from the count's: 153 left a 39 px wider gap than
                                # Blizzard's (2026-10-12, "SEED SPAWNING IN: 25")
                   False: 153}  # ...from the words' ("Gather the seed!"): 140 px from the last letter
@@ -680,31 +715,12 @@ ALERT_ART["SEED"] = Art(SEED_BOX[2] - SEED_BOX[0], 0, height=SEED_BOX[3] - SEED_
 
 def seed_banner(count):
     """One of Garden's seed banners on the seed spot (above). count: it has a TimerLabel."""
-    copy = lambda name_, theirs, anchors: (
-        f'<Frame type="Label" name="{name_}">\n'
-        + "".join(f'\t<Anchor side="{sd}"{" " * (6 - len(sd))} relative="{rel}" pos="{pos}" offset="{off}"/>\n'
-                  for sd, rel, pos, off in anchors)
-        + f'\t<Text val="{{$parent/{theirs}/@Text}}"/>\n\t<Style val="{{$parent/{theirs}/@Style}}"/>\n'
-        f'\t<Options val="NoWrapping"/>\n\t<Unclipped val="true"/>\n</Frame>\n')
     out = "".join(f'<Anchor side="{sd}"{" " * (6 - len(sd))} relative="{SEED_SPOT}" pos="{pos}" offset="{off}"/>\n'
                   for sd, pos, off in box_sides(SEED_BOX))
     out += (f'<Width val="{-SEED_BOX[0]}"/>\n'      # the spot's left to 5 past its right (box_sides)
             f'<Height val="{SEED_BOX[3] - SEED_BOX[1]}"/>\n<Unclipped val="true"/>\n' + intro(0))
-    out += copy("FCJH_SeedText", "TextLabel", (("Top", "$parent/TextLabel", "Min", 0),
-                                               ("Bottom", "$parent/TextLabel", "Max", 0),
-                                               ("Left", "$parent/BackgroundImage", "Min", SEED_WORDS_START)))
-    last = "FCJH_SeedText"
-    if count:
-        out += copy("FCJH_SeedCount", "TimerLabel", (("Top", "$parent/FCJH_SeedText", "Min", 0),
-                                                     ("Bottom", "$parent/FCJH_SeedText", "Max", 0),
-                                                     ("Left", "$parent/FCJH_SeedText", "Max", COUNT_SPACE)))
-        last = "FCJH_SeedCount"
-    out += unclipped((("Image", "BackgroundImage", (), f'<Anchor side="Left" relative="$parent" pos="Min" offset="{-MINES_TIP_IN}"/>'),
-                      ("Image", "CenterpieceImage", (),
-                       f'<Anchor side="Right" relative="$parent/{last}" pos="Max" offset="{SEED_HEX_AFTER[count]}"/>'),
-                      ("Label", "TextLabel", (), '<Alpha val="0"/>'))
-                     + ((("Label", "TimerLabel", (), '<Alpha val="0"/>'),) if count else ()), 0)
-    return out
+    return out + left_banner("Seed", "TextLabel", "TimerLabel" if count else None, "CenterpieceImage",
+                             SEED_WORDS_START, SEED_HEX_AFTER[count], depth=0, slot=SEED_SLOT)
 
 
 # The Terrors' health (GardenTerrorHealthFrame, the map file's template, made in the mechanics
@@ -790,31 +806,14 @@ def terror_frame():
 # Blizzard sizes it to its words, growing left. Measured at 1080p (2026-10-09, at Blizzard's
 # place, the panel's top-right at 1184, 718): the bar 382 px from its tip to its end in English,
 # its lower bracket 113 units under the frame's top (y 820); the hexagon's bottom 835. On red's
-# side laid out from its left end, as the mines': the bar from the spot's left, our copy of the
-# words 35 in, the count one space after them, the hexagon after that.
+# side laid out from its left end (left_banner), the words 35 in.
 SHRINE_BOX = (-432, 0, 0, 113)
 SHRINE_WORDS_START = 35
 SHRINE_HEX_AFTER = 121     # the hexagon's right from the count's (measured: 112 px from the count's
                            # last letter to its box's right, less the label's padding, as the mines')
 ALERT_ART["SHRINE"] = Art(SHRINE_BOX[2] - SHRINE_BOX[0], 0, height=130)   # down to the hexagon's bottom
-SHRINE_TEXT = "".join(
-    f'{T*7}<Frame type="Label" name="{name_}">\n'
-    + "".join(f'{T*8}<Anchor side="{sd}"{" " * (6 - len(sd))} relative="{rel}" pos="{pos}" offset="{off}"/>\n'
-              for sd, rel, pos, off in anchors)
-    + f'{T*8}<Text val="{{$parent/{theirs}/@Text}}"/>\n{T*8}<Style val="{{$parent/{theirs}/@Style}}"/>\n'
-    f'{T*8}<Options val="NoWrapping"/>\n{T*8}<Unclipped val="true"/>\n{T*7}</Frame>\n'
-    for name_, theirs, anchors in (
-        ("FCJH_ShrineText", "ShrineActivateLabel", (("Top", "$parent/ShrineActivateLabel", "Min", 0),
-                                                    ("Bottom", "$parent/ShrineActivateLabel", "Max", 0),
-                                                    ("Left", "$parent/BackgroundImage", "Min", SHRINE_WORDS_START))),
-        ("FCJH_ShrineCount", "ShrineActivateTimer", (("Top", "$parent/FCJH_ShrineText", "Min", 0),
-                                                     ("Bottom", "$parent/FCJH_ShrineText", "Max", 0),
-                                                     ("Left", "$parent/FCJH_ShrineText", "Max", COUNT_SPACE)))))
-SHRINE_PARTS = (("Image", "BackgroundImage", (), f'<Anchor side="Left" relative="$parent" pos="Min" offset="{-MINES_TIP_IN}"/>'),
-                ("Image", "CenterpieceImage", (),
-                 f'<Anchor side="Right" relative="$parent/FCJH_ShrineCount" pos="Max" offset="{SHRINE_HEX_AFTER}"/>'),
-                ("Label", "ShrineActivateLabel", (), '<Alpha val="0"/>'),
-                ("Label", "ShrineActivateTimer", (), '<Alpha val="0"/>'))
+SHRINE_BANNER = left_banner("Shrine", "ShrineActivateLabel", "ShrineActivateTimer", "CenterpieceImage",
+                            SHRINE_WORDS_START, SHRINE_HEX_AFTER)
 # The Dragon Knight (DragonModeFrame, shown instead once a team holds both shrines): Blizzard pins
 # its bar's bottom-right to the countdown's bar's, the dragon's head (DragonHud), its timer and
 # health bar all hanging off its bar. Ours from the spot's left, as the golems': its bar at its
@@ -1180,7 +1179,7 @@ MAPS = {
                            note="the Dragon Knight, when it's blue's")],
             "red": [Alert("ShrineTimerModeFrame", kind="SHRINE", box=SHRINE_BOX,
                           followers=(("DragonModeFrame", 0, unclipped(DRAGON_PARTS) + KNIGHT_COPIES + knight_side()),),
-                          extra=SHRINE_TEXT + unclipped(SHRINE_PARTS),
+                          extra=SHRINE_BANNER,
                           note="the shrines' countdown (neutral), then the Dragon Knight on red")]}}),
     "garden_of_terror": Map(
         "Garden of Terror", (438, 270), core="GardenOfTerrorPanel", file="GardenMapMechanic",
@@ -1228,7 +1227,7 @@ MAPS = {
         team={"HauntedMinesPanel": {
             "red": [Alert("MineTimerModeFrame", kind="MINES", box=MINES_BOX,
                           followers=(("GolemModeFrame", 0, unclipped(GOLEM_PARTS)),),
-                          extra=MINES_TEXT + unclipped(MINES_PARTS),
+                          extra=MINES_BANNER,
                           note="the mines opening, then the golems (neutral)")]}},
         extra="skulls"),
     "infernal_shrines": Map(
