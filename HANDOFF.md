@@ -941,7 +941,7 @@ commits around it).
     here until then (no replay with them yet):
     - **Heroes seen in game - the tracker (user, 2026-10-09). Update it after every replay; the
       user's own list is the source (a reconstruction from chat logs missed 15).** 91
-      heroes (Cho and Gall counted apart; Xal'atath the newest); 76 seen:
+      heroes (Cho and Gall counted apart; Xal'atath the newest); 86 seen:
       - **In the user's replays across 4 maps (user's list, 2026-10-09; 39):** Illidan, Stitches, Probius, Brightwing, Tychus, Fenix, Anub'arak, Tyrael, Zagara, Rehgar, Uther, Murky, Zarya, Gazlowe, Nova, Zeratul, Sgt. Hammer, Lt. Morales, Hogger, Leoric, Deathwing, Alexstrasza, Ragnaros, Greymane, Valeera, Samuro, D.Va, Chen, Medivh, Auriel, Chromie, Sonya, Johanna, Rexxar, The Lost Vikings, Tracer, Varian, Xal'atath, Abathur.
         (The user's list also had "Varion" beside Varian - read as a typo; ask if not.)
       - **Named in earlier sessions, not in those replays (7):** Blaze, Diablo, Jaina, Li Li, Lúcio, Maiev, Xul.
@@ -953,9 +953,10 @@ commits around it).
         Kael'thas, Valla, Whitemane, Arthas, Zul'jin, Gul'dan, Alarak, Stukov.
       - **Garden of Terror's roster, played (user, 2026-10-12; 10):** Garrosh, Malthael, Li-Ming,
         Hanzo, Anduin, E.T.C., Kerrigan, Sylvanas, Mephisto, Malfurion.
-      - **Next roster (the next map), all unseen:** blue Artanis, Kharazim, Falstad, Mei, Tyrande;
-        red Imperius, Mal'Ganis, Raynor, Orphea, Deckard.
-      - **Not seen yet (15):** Artanis, Azmodan, Cassia, Deckard, Falstad, Imperius, Kharazim, Lunara, Mal'Ganis, Mei, Orphea, Raynor, Tassadar, Tyrande, Yrel.
+      - **Alterac Pass's roster, played (user, 2026-10-12; 10):** blue Artanis, Kharazim,
+        Falstad, Mei, Tyrande; red Imperius, Mal'Ganis, Raynor, Orphea, Deckard.
+      - **Next roster (the next map):** the last five unseen, any seen five beside them.
+      - **Not seen yet (5):** Azmodan, Cassia, Lunara, Tassadar, Yrel.
     - **forms** (item 3): Medivh's Raven, Deathwing in Dragonflight and as World Breaker,
       Alexstrasza's Dragonqueen, Ragnaros in Molten Core, Greymane's Worgen, Valeera
       stealthed - each gets the TALL card with its player's portrait, talents and name, and
