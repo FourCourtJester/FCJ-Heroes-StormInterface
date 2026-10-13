@@ -595,8 +595,21 @@
 					</Frame>
 					<Frame type="Frame" name="GardenOfTerrorPanel">
 						<!-- Garden of Terror -->
-						<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-35"/>
+						<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-67"/>
 						<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="0"/>
+						<!-- red, the bottom slot: the seed banners' spot (neutral): EventWarningFrame and GatherTheSeedsFrame, the map file's, hang off it -->
+						<Frame type="Frame" name="FCJH_EventWarningFrameSpot">
+							<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_SEED"/>
+							<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_SEED"/>
+							<Unclipped val="true"/>
+							<Width val="373"/>
+							<Height val="109"/>
+							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_Stack">
+								<DefaultState val="Bottom"/>
+								<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_SEED"/></State>
+							</StateGroup>
+						</Frame>
 					</Frame>
 					<Frame type="Frame" name="HauntedMinesPanel">
 						<!-- Haunted Mines -->
@@ -968,11 +981,130 @@
 			<Frame type="Label" name="LeftBossHealthLabel"><Anchor side="Bottom" relative="$parent/BossHudLeft" pos="Mid" offset="16"/><Anchor side="Left" relative="$parent/BossHudLeft" pos="Mid" offset="0"/><Anchor side="Right" relative="$parent/BossHudLeft" pos="Mid" offset="0"/></Frame><Frame type="Label" name="RightBossHealthLabel"><Anchor side="Bottom" relative="$parent/BossHudLeft" pos="Mid" offset="16"/><Anchor side="Left" relative="$parent/BossHudRight" pos="Mid" offset="0"/><Anchor side="Right" relative="$parent/BossHudRight" pos="Mid" offset="0"/></Frame><Frame type="Label" name="BeaconProgressLabel"><Anchor side="Top" relative="$parent/BackgroundImage" pos="Min" offset="-15"/></Frame><Frame type="Label" name="EnemyZergLabel"><Anchor side="Bottom" relative="$parent/AlliedZergLabel" pos="Max" offset="0"/></Frame>
 		</Frame>
 	</Frame>
-	<!-- ===== Garden of Terror: its night warning and seed frames are placed from the minimap already ===== -->
+	<!-- ===== Garden of Terror ===== -->
 	<Frame type="Frame" name="GardenTerrorHealthFrame" file="GardenMapMechanic">
-		<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-1015"/>
-		<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="185"/>
+		<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-1047"/>
+		<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="153"/>
 		<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="0"/>
+	</Frame>
+	<Frame type="Frame" name="EventWarningFrame" file="GardenMapMechanic">
+		<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/GardenOfTerrorPanel/FCJH_EventWarningFrameSpot" pos="Min" offset="0"/>
+		<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/GardenOfTerrorPanel/FCJH_EventWarningFrameSpot" pos="Min" offset="0"/>
+		<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/GardenOfTerrorPanel/FCJH_EventWarningFrameSpot" pos="Max" offset="0"/>
+		<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/GardenOfTerrorPanel/FCJH_EventWarningFrameSpot" pos="Max" offset="5"/>
+		<Unclipped val="true"/>
+		<Animation name="FCJH_Intro">
+			<Event event="OnShown" action="Restart,Play"/>
+			<Event event="OnShown" action="Restart,Play" frame="$parent"/>
+			<Controller type="Fade" end="Pause">
+				<Key type="Curve" time="0" value="0"/>
+				<Key type="Curve" time=".2" value="255"/>
+				<Key type="Curve" time=".4" value="255"/>
+			</Controller>
+			<Controller type="Anchor" end="Pause" side="Left" relative="true">
+				<Key type="Curve" time="0" value="50"/>
+				<Key type="Curve" time=".1" value="0"/>
+				<Key type="Curve" time=".4" value="0"/>
+			</Controller>
+			<Controller type="Anchor" end="Pause" side="Right" relative="true">
+				<Key type="Curve" time="0" value="50"/>
+				<Key type="Curve" time=".1" value="0"/>
+				<Key type="Curve" time=".4" value="0"/>
+			</Controller>
+			<Controller type="Anchor" end="Pause" side="Left" relative="true" frame="BackgroundImage">
+				<Key type="Curve" time="0" value="350"/>
+				<Key type="Curve" time=".1" value="350"/>
+				<Key type="Curve" time=".3" value="0"/>
+				<Key type="Curve" time=".4" value="0"/>
+			</Controller>
+		</Animation>
+		<Frame type="Label" name="FCJH_SeedText">
+			<Anchor side="Top"    relative="$parent/TextLabel" pos="Min" offset="0"/>
+			<Anchor side="Bottom" relative="$parent/TextLabel" pos="Max" offset="0"/>
+			<Anchor side="Left"   relative="$parent/BackgroundImage" pos="Min" offset="35"/>
+			<Text val="{$parent/TextLabel/@Text}"/>
+			<Style val="{$parent/TextLabel/@Style}"/>
+			<Options val="NoWrapping"/>
+			<Unclipped val="true"/>
+		</Frame>
+		<Frame type="Label" name="FCJH_SeedCount">
+			<Anchor side="Top"    relative="$parent/FCJH_SeedText" pos="Min" offset="0"/>
+			<Anchor side="Bottom" relative="$parent/FCJH_SeedText" pos="Max" offset="0"/>
+			<Anchor side="Left"   relative="$parent/FCJH_SeedText" pos="Max" offset="-1"/>
+			<Text val="{$parent/TimerLabel/@Text}"/>
+			<Style val="{$parent/TimerLabel/@Style}"/>
+			<Options val="NoWrapping"/>
+			<Unclipped val="true"/>
+		</Frame>
+		<Frame type="Image" name="BackgroundImage">
+			<Unclipped val="true"/>
+			<Anchor side="Left" relative="$parent" pos="Min" offset="-3"/>
+		</Frame>
+		<Frame type="Image" name="CenterpieceImage">
+			<Unclipped val="true"/>
+			<Anchor side="Right" relative="$parent/FCJH_SeedCount" pos="Max" offset="153"/>
+		</Frame>
+		<Frame type="Label" name="TextLabel">
+			<Unclipped val="true"/>
+			<Alpha val="0"/>
+		</Frame>
+		<Frame type="Label" name="TimerLabel">
+			<Unclipped val="true"/>
+			<Alpha val="0"/>
+		</Frame>
+	</Frame>
+	<Frame type="Frame" name="GatherTheSeedsFrame" file="GardenMapMechanic">
+		<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/GardenOfTerrorPanel/FCJH_EventWarningFrameSpot" pos="Min" offset="0"/>
+		<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/GardenOfTerrorPanel/FCJH_EventWarningFrameSpot" pos="Min" offset="0"/>
+		<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/GardenOfTerrorPanel/FCJH_EventWarningFrameSpot" pos="Max" offset="0"/>
+		<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/GardenOfTerrorPanel/FCJH_EventWarningFrameSpot" pos="Max" offset="5"/>
+		<Unclipped val="true"/>
+		<Animation name="FCJH_Intro">
+			<Event event="OnShown" action="Restart,Play"/>
+			<Event event="OnShown" action="Restart,Play" frame="$parent"/>
+			<Controller type="Fade" end="Pause">
+				<Key type="Curve" time="0" value="0"/>
+				<Key type="Curve" time=".2" value="255"/>
+				<Key type="Curve" time=".4" value="255"/>
+			</Controller>
+			<Controller type="Anchor" end="Pause" side="Left" relative="true">
+				<Key type="Curve" time="0" value="50"/>
+				<Key type="Curve" time=".1" value="0"/>
+				<Key type="Curve" time=".4" value="0"/>
+			</Controller>
+			<Controller type="Anchor" end="Pause" side="Right" relative="true">
+				<Key type="Curve" time="0" value="50"/>
+				<Key type="Curve" time=".1" value="0"/>
+				<Key type="Curve" time=".4" value="0"/>
+			</Controller>
+			<Controller type="Anchor" end="Pause" side="Left" relative="true" frame="BackgroundImage">
+				<Key type="Curve" time="0" value="350"/>
+				<Key type="Curve" time=".1" value="350"/>
+				<Key type="Curve" time=".3" value="0"/>
+				<Key type="Curve" time=".4" value="0"/>
+			</Controller>
+		</Animation>
+		<Frame type="Label" name="FCJH_SeedText">
+			<Anchor side="Top"    relative="$parent/TextLabel" pos="Min" offset="0"/>
+			<Anchor side="Bottom" relative="$parent/TextLabel" pos="Max" offset="0"/>
+			<Anchor side="Left"   relative="$parent/BackgroundImage" pos="Min" offset="35"/>
+			<Text val="{$parent/TextLabel/@Text}"/>
+			<Style val="{$parent/TextLabel/@Style}"/>
+			<Options val="NoWrapping"/>
+			<Unclipped val="true"/>
+		</Frame>
+		<Frame type="Image" name="BackgroundImage">
+			<Unclipped val="true"/>
+			<Anchor side="Left" relative="$parent" pos="Min" offset="-3"/>
+		</Frame>
+		<Frame type="Image" name="CenterpieceImage">
+			<Unclipped val="true"/>
+			<Anchor side="Right" relative="$parent/FCJH_SeedText" pos="Max" offset="153"/>
+		</Frame>
+		<Frame type="Label" name="TextLabel">
+			<Unclipped val="true"/>
+			<Alpha val="0"/>
+		</Frame>
 	</Frame>
 	<!-- ===== Hanamura Temple ===== -->
 	<Frame type="Frame" name="HanamuraReworkPayloadWarningTimerPanel" file="HanamuraRework">

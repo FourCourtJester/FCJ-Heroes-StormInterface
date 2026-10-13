@@ -650,6 +650,57 @@ GOLEM_PARTS = (("Image", "BackgroundImage", (), f'<Anchor side="Right" relative=
                ("Label", "AllyGolemLabel", ()), ("Label", "EnemyGolemLabel", ()))
 
 
+# ------------------------------------------------------------------ Garden of Terror's banners
+
+# "Seed spawning in: 0:23" (EventWarningFrame) and "Gather the seed!" (GatherTheSeedsFrame):
+# templates of the map's own file (gardenmapmechanic), which its script makes in the mechanics
+# panel - nothing to put them in, so they hang off a spot of ours in the core panel
+# (GardenOfTerrorPanel/FCJH_EventWarningFrameSpot, red's: neutral, user 2026-10-12). Blizzard's:
+# the seed (CenterpieceImage) 20 down at the frame's top-right, the bar's top 30 under its top
+# and its right end 30 in from its right, sized to the words (35 before them), growing left;
+# the count right-aligned 10 into the seed. Measured at 1080p (2026-10-12): the words and count
+# end at x 1040, the bar's right end 1153; its tip 817 ("Seed spawning in: 23", 373 units) and
+# 853 ("Gather the seed!"); its lower bracket 790. The bar is the mines' art (its height theirs:
+# 59 units from its top to the lower bracket), so its bottom is 50 + 59 under the frame's top.
+# On red's side laid out from its left end, as the mines': the bar from the spot's left, our
+# copy of the words 35 in, the count one space after, the seed after that - and our intro (the
+# template's own slides its Right anchor, which nothing hangs off any more).
+SEED_BOX = (-378, 0, -5, 109)
+SEED_WORDS_START = 35
+SEED_HEX_AFTER = 153      # the seed's right from the words' (or count's): 140 px from the last
+                          # letter to its right, less the label's padding, as the mines'
+SEED_SPOT = MECHANICS + "/GardenOfTerrorPanel/FCJH_EventWarningFrameSpot"
+ALERT_ART["SEED"] = Art(SEED_BOX[2] - SEED_BOX[0], 0, height=SEED_BOX[3] - SEED_BOX[1])
+
+
+def seed_banner(count):
+    """One of Garden's seed banners on the seed spot (above). count: it has a TimerLabel."""
+    copy = lambda name_, theirs, anchors: (
+        f'<Frame type="Label" name="{name_}">\n'
+        + "".join(f'\t<Anchor side="{sd}"{" " * (6 - len(sd))} relative="{rel}" pos="{pos}" offset="{off}"/>\n'
+                  for sd, rel, pos, off in anchors)
+        + f'\t<Text val="{{$parent/{theirs}/@Text}}"/>\n\t<Style val="{{$parent/{theirs}/@Style}}"/>\n'
+        f'\t<Options val="NoWrapping"/>\n\t<Unclipped val="true"/>\n</Frame>\n')
+    out = "".join(f'<Anchor side="{sd}"{" " * (6 - len(sd))} relative="{SEED_SPOT}" pos="{pos}" offset="{off}"/>\n'
+                  for sd, pos, off in box_sides(SEED_BOX))
+    out += '<Unclipped val="true"/>\n' + intro(0)
+    out += copy("FCJH_SeedText", "TextLabel", (("Top", "$parent/TextLabel", "Min", 0),
+                                               ("Bottom", "$parent/TextLabel", "Max", 0),
+                                               ("Left", "$parent/BackgroundImage", "Min", SEED_WORDS_START)))
+    last = "FCJH_SeedText"
+    if count:
+        out += copy("FCJH_SeedCount", "TimerLabel", (("Top", "$parent/FCJH_SeedText", "Min", 0),
+                                                     ("Bottom", "$parent/FCJH_SeedText", "Max", 0),
+                                                     ("Left", "$parent/FCJH_SeedText", "Max", COUNT_SPACE)))
+        last = "FCJH_SeedCount"
+    out += unclipped((("Image", "BackgroundImage", (), f'<Anchor side="Left" relative="$parent" pos="Min" offset="{-MINES_TIP_IN}"/>'),
+                      ("Image", "CenterpieceImage", (),
+                       f'<Anchor side="Right" relative="$parent/{last}" pos="Max" offset="{SEED_HEX_AFTER}"/>'),
+                      ("Label", "TextLabel", (), '<Alpha val="0"/>'))
+                     + ((("Label", "TimerLabel", (), '<Alpha val="0"/>'),) if count else ()), 0)
+    return out
+
+
 # ------------------------------------------------------------------ Dragon Shire's banners
 
 # "Shrines activate in: 0:02" (core MapMechanicPanel, DragonShirePanel/ShrineTimerModeFrame),
@@ -1054,7 +1105,11 @@ MAPS = {
     "garden_of_terror": Map(
         "Garden of Terror", (438, 270), core="GardenOfTerrorPanel", file="GardenMapMechanic",
         panels={"GardenTerrorHealthFrame": (("Top", "Min", 220), ("Bottom", "Max", 220), ("Right", "Max", 0))},
-        notes="its night warning and seed frames are placed from the minimap already"),
+        # the seed banners: the map file's own templates, on this spot (seed_banner, PARTS)
+        team={"GardenOfTerrorPanel": {
+            "red": [Alert("EventWarningFrame", kind="SEED", box=SEED_BOX, spot_only=True,
+                          note="the seed banners' spot (neutral): EventWarningFrame and "
+                               "GatherTheSeedsFrame, the map file's, hang off it")]}}),
     "hanamura_temple": Map(
         "Hanamura Temple", (473, 287), file="HanamuraRework", minimap=(80, 0),
         # three screen-sized panels, their parts placed from the screen's right edge
@@ -1295,6 +1350,11 @@ def intro(indent, slide=True):
             + f'{t}</Animation>\n')
 
 
+
+# Garden's seed banners (seed_banner): written here, after intro
+PARTS["garden_of_terror"] = {"EventWarningFrame": seed_banner(True),
+                             "GatherTheSeedsFrame": seed_banner(False)}
+
 def alert_frame(team, column, i, at, indent=2):
     a = column[i]
     t = T * indent
@@ -1391,7 +1451,7 @@ def map_file(key, at, down):
     for path, sides in m.panels.items():
         root.at(path).body += anchor_lines(sides, m, len(path.split("/")) + 1, down.get(key, 0))
     for path, xml in PARTS.get(key, {}).items():
-        root.at(path).body += T * (len(path.split("/")) + 1) + xml + "\n"
+        root.at(path).body += "".join(T * (len(path.split("/")) + 1) + line + "\n" for line in xml.splitlines())
     if m.place:
         root.at(m.place[0]).body += placer(key, len(m.place[0].split("/")) + 1)
     for panel, cols in m.team.items():
