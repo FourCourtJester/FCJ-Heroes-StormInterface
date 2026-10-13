@@ -820,8 +820,9 @@ GOLEM_PARTS = (("Image", "BackgroundImage", (), f'<Anchor side="Right" relative=
 SEED_BOX = (-378, 0, -5, 107)
 SEED_WORDS_START = 35
 SEED_SLOT = "88"               # its count is bare seconds ("25", "11")
-SEED_HEX_AFTER = {True: 110,   # the seed's right from the count's: 153 left a 39 px wider gap than
-                               # Blizzard's (2026-10-12, "SEED SPAWNING IN: 25")
+SEED_HEX_AFTER = {True: 153,   # the seed's right from the count's slot: the count's last letter 113 px
+                               # from the bar's right end, as Blizzard's (2026-10-12: 153 read 107-112;
+                               # 110, from a misread, put the seed over the count, user)
                   False: 153}  # ...from the words' ("Gather the seed!"): 140 px from the last letter
                                # to its right, less the label's padding, as the mines' - unmeasured
 SEED_SPOT = MECHANICS + "/GardenOfTerrorPanel/FCJH_EventWarningFrameSpot"
