@@ -385,9 +385,10 @@ land on whole pixels at 1080p (`inspect_card.line`), so at 1440p they may come o
 ## 7. What's next
 
 **Next (2026-10-09, end of night; start here).** The map pass: the four working maps and
-Dragon Shire are DONE (items 3-4; Dragon Shire's knight on either team's side, blue's mirrored). **Next session: Blackheart's Bay** (the simpler of the two
-left; id `BlackheartsBay` from Spazzo, unconfirmed), then Garden of Terror (`HauntedWoods`,
-unconfirmed; it has its own layout file too). For each, screenshots of: the map id at load
+Dragon Shire are DONE (items 3-4; Dragon Shire's knight on either team's side, blue's mirrored);
+Blackheart's Bay DONE 2026-10-12 (chests banner, either team's cannon, the plates' carried
+doubloons). **Next: Garden of Terror** (`HauntedWoods`, unconfirmed; the plain map, not
+"Simple"; it has its own layout file too). For each, screenshots of: the map id at load
 (the diagnostic, now just that line), each banner as it comes up, anything hanging off the
 minimap's bottom. Hero test rosters come from the tracker in item 14 ("not seen yet").
 
@@ -449,7 +450,19 @@ minimap's bottom. Hero test rosters come from the tracker in item 14 ("not seen 
      overshooting the backing as red's does (Blizzard's own). DONE (user, 2026-10-09).
    - The shrine markers (moon, star) up from off the screen, their team line level with Towers'
      at ~1070 (`[minimap.panel_nudge] dragon_shire = -29`); the stars clear the map's flanks.
-   **Then the other older maps** - Blackheart's Bay, Garden of Terror: read each
+   **Blackheart's Bay - DONE (user, 2026-10-12):** id `BlackheartsBay` read in game; its map's
+   bottom tab ~1056, inside the floor, at the shared place.
+   - The doubloon counts' team line up to ~1070, level with Towers' (`[minimap.panel_nudge]
+     blackhearts_bay = -30`; they'd been cut off by the screen's edge).
+   - "Chests have spawned" is the neutral banner on red's side (maps.py CHEST_*), with the full
+     intro: its bar is a nine-slice from the frame's left, as the cannon's, so the bar grow has
+     a left end to move (Blizzard's is a fixed-width image anchored at its right only - nothing
+     grew, 2026-10-12).
+   - The cannon on the firing team's side (cannon_side, told by Team1ShotCounter's Visible):
+     red's Blizzard's layout, blue's mirrored - our flipped cannon at the outer end, the pips
+     running right from it, our copy of the words and count. Fade-only (FADE_ONLY).
+   - The plates' carried box shows the doubloons (item 7's note; gen.py `carry_box`).
+   **Then Garden of Terror:** read its
    id on the diagnostic, `own_place=True`, tune nudge/panel_nudge. Then the newer maps' QA
    (Alterac, Battlefield, Hanamura - its ICON art unmeasured -, Shrines, Sky Temple, Tomb,
    Volskaya, Warhead). Any map could get a two-view or other per-map behaviour the same way
@@ -882,7 +895,7 @@ commits around it).
     here until then (no replay with them yet):
     - **Heroes seen in game - the tracker (user, 2026-10-09). Update it after every replay; the
       user's own list is the source (a reconstruction from chat logs missed 15).** 91
-      heroes (Cho and Gall counted apart; Xal'atath the newest); 56 seen:
+      heroes (Cho and Gall counted apart; Xal'atath the newest); 66 seen:
       - **In the user's replays across 4 maps (user's list, 2026-10-09; 39):** Illidan, Stitches, Probius, Brightwing, Tychus, Fenix, Anub'arak, Tyrael, Zagara, Rehgar, Uther, Murky, Zarya, Gazlowe, Nova, Zeratul, Sgt. Hammer, Lt. Morales, Hogger, Leoric, Deathwing, Alexstrasza, Ragnaros, Greymane, Valeera, Samuro, D.Va, Chen, Medivh, Auriel, Chromie, Sonya, Johanna, Rexxar, The Lost Vikings, Tracer, Varian, Xal'atath, Abathur.
         (The user's list also had "Varion" beside Varian - read as a typo; ask if not.)
       - **Named in earlier sessions, not in those replays (7):** Blaze, Diablo, Jaina, Li Li, Lúcio, Maiev, Xul.
@@ -890,10 +903,12 @@ commits around it).
         Alexstrasza, Ragnaros, Greymane, Valeera, Samuro, D.Va, the Vikings, Tychus are all in them.
       - **Dragon Shire's roster, played (user, 2026-10-12: the roster below was the one used; 10):**
         Cho, Gall, Dehaka, Qhira, The Butcher, Kel'Thuzad, Nazeebo, Genji, Ana, Junkrat.
-      - **Next roster (Blackheart's Bay), all unseen:** blue Muradin, Thrall (Frostwolf
-        Resilience), Kael'thas (Verdant Spheres), Valla (Hatred stacks), Whitemane (Zeal); red
-        Arthas, Zul'jin (Berserker), Gul'dan (Life Tap), Alarak (Sadism), Stukov.
-      - **Not seen yet (35):** Alarak, Anduin, Artanis, Arthas, Azmodan, Cassia, Deckard, E.T.C., Falstad, Garrosh, Gul'dan, Hanzo, Imperius, Kael'thas, Kerrigan, Kharazim, Li-Ming, Lunara, Mal'Ganis, Malfurion, Malthael, Mei, Mephisto, Muradin, Orphea, Raynor, Stukov, Sylvanas, Tassadar, Thrall, Tyrande, Valla, Whitemane, Yrel, Zul'jin.
+      - **Blackheart's Bay's roster, played (user, 2026-10-12; 10):** Muradin, Thrall,
+        Kael'thas, Valla, Whitemane, Arthas, Zul'jin, Gul'dan, Alarak, Stukov.
+      - **Next roster (Garden of Terror), all unseen:** blue Garrosh, Malthael (Reaper's Mark),
+        Li-Ming (Critical Mass), Hanzo, Anduin; red E.T.C., Kerrigan (Assimilation shields),
+        Sylvanas, Mephisto, Malfurion.
+      - **Not seen yet (25):** Anduin, Artanis, Azmodan, Cassia, Deckard, E.T.C., Falstad, Garrosh, Hanzo, Imperius, Kerrigan, Kharazim, Li-Ming, Lunara, Mal'Ganis, Malfurion, Malthael, Mei, Mephisto, Orphea, Raynor, Sylvanas, Tassadar, Tyrande, Yrel.
     - **forms** (item 3): Medivh's Raven, Deathwing in Dragonflight and as World Breaker,
       Alexstrasza's Dragonqueen, Ragnaros in Molten Core, Greymane's Worgen, Valeera
       stealthed - each gets the TALL card with its player's portrait, talents and name, and
