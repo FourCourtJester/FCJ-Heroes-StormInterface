@@ -571,9 +571,9 @@
 			     its icon; shown from 1 (carry_rect, CARRY_MAPS) -->
 			<Frame type="UnitStatusBehaviorIcon" name="FCJH_Carry">
 				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="8"/>
-				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="5"/>
+				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="1"/>
 				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="34"/>
-				<Anchor side="Right"  relative="$parent/$parent" pos="Min" offset="50"/>
+				<Anchor side="Right"  relative="$parent/$parent" pos="Min" offset="46"/>
 				<Behavior val="MapMechanicStack"/>
 				<Alpha val="0"/>
 				<RenderPriority val="525"/>
@@ -1136,9 +1136,9 @@
 			</Frame>
 			<Frame type="UnitStatusBehaviorIcon" name="FCJH_Carry">
 				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="8"/>
-				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="146"/>
+				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="150"/>
 				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="34"/>
-				<Anchor side="Right"  relative="$parent/$parent" pos="Min" offset="191"/>
+				<Anchor side="Right"  relative="$parent/$parent" pos="Min" offset="195"/>
 				<Frame type="BehaviorIcon" name="BehaviorIcon">
 					<Frame type="Frame" name="ImageMaskContainer"><AlphaMaskTexture val="@UI/Storm_UI_InGame_Buff_IconMask"/></Frame>
 					<Frame type="Image" name="IconImageBg"><TextureCoords top="0.0" left="0.0" bottom="1.0" right="1.0"/></Frame>

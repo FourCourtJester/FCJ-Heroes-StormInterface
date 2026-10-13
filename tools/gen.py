@@ -1130,6 +1130,9 @@ def fountain_rect(cfg, team):
 # Hanamura defines it (hidden).
 CARRY_MAPS = ("blackhearts_bay", "tomb_of_the_spider_queen")
 CARRY_GAP = 1                    # cell units between the fountain's art and the box's above it
+CARRY_SLIDE = 4                  # ...and further out along the slant than the plate's edge lean
+                                 # puts it: its sides ran ~4 inside the fountain's, both edges,
+                                 # both teams (user's zoom of Zul'jin, 2026-10-12)
 
 
 def carry_rect(cfg, team):
@@ -1137,7 +1140,7 @@ def carry_rect(cfg, team):
     c = HeroCell(cfg)
     (l, t, r, b), f = fountain_rect(cfg, team)
     up = FOUNTAIN_H * cfg["hero_row"]["scale"] + CARRY_GAP
-    across = c.overlap * up / c.h * (-1 if team == "blue" else 1)
+    across = (c.overlap * up / c.h + CARRY_SLIDE) * (-1 if team == "blue" else 1)
     return (round(l + across), round(t - up), round(r + across), round(b - up)), f
 
 
