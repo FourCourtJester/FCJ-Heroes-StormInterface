@@ -509,8 +509,27 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    - The Terrors' health is on the summoning team's side (`team_banner`, told by its ACTIVE seed
      count): blue's is Blizzard's way round, red's the mirror. **Blue's not seen yet** - blue never
      summoned in the test replay; look next time.
-   **Then the newer maps' QA
-   (Alterac, Battlefield, Hanamura - its ICON art unmeasured -, Shrines, Sky Temple, Tomb,
+   **Alterac Pass: built 2026-10-12, unseen.** Its id `AlteracPass` read in game. One Blizzard
+   frame (`AVMechanicContainer`) shows the prisoners countdown, then the cage fight, then the
+   cavalry's health. Measured at Blizzard's place (all four modes seen there, both teams' cavalry).
+   - It now hangs off a carrier of ours (`maps.av_carrier`): red's spot, as a neutral, and
+     blue's spot while blue's cavalry is up (`TeamWins` 1). Check on screen:
+     - the prisoners' bar on the banner line, its tip on red's plates;
+     - the cage fight and red's cavalry there too;
+     - blue's cavalry on blue's side;
+     - the next prisoners back on red's (if `TeamWins` doesn't return to 0 between rounds, it'd stay
+       on the last winner's side).
+   - **Technical limitation (user, 2026-10-12: "not the end of the world"): not mirrored.**
+     Blizzard's animations slide its parts: the hexagon 373 left when the cage starts, the cage
+     bars and the cavalry's fill-up in from the left. Each slide counts from its layout anchor, so
+     no state can mirror them. Blue's cavalry is Blizzard's way round, which is blue's mirror; red's
+     keeps the hexagon at the inner end. **Later, maybe:** restate those animations for red and
+     flip the cage's `ProgressBar`s (the `$this` anchor trick, untested - no Blizzard bar fills
+     right to left).
+   - The flag-capture alerts (`NotificationFrame1`/`2`, stood on the banner's top) are pinned
+     where Blizzard's banner had them. Unseen: place them on the capturing team's side when seen.
+   **Then the rest of the newer maps' QA
+   (Battlefield, Hanamura - its ICON art unmeasured -, Shrines, Sky Temple, Tomb,
    Volskaya, Warhead). Any map could get a two-view or other per-map behaviour the same way
    (`launch_cut`/`opens`, `on_map`).
 5. **The diagnostic - trimmed to the map id (user, 2026-10-09);** remove `maps.diag` and

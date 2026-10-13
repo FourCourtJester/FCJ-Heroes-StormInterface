@@ -938,6 +938,53 @@
 				</State>
 			</StateGroup>
 		</Frame>
+		<!-- blue, the bottom slot: the cavalry, when it's blue's (av_carrier) -->
+		<Frame type="Frame" name="FCJH_AVCavalrySpot">
+			<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_AV"/>
+			<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_BLUE_R_AV"/>
+			<Unclipped val="true"/>
+			<Width val="488"/>
+			<Height val="99"/>
+			<AcceptsMouse val="false"/>
+			<StateGroup name="FCJH_Stack">
+				<DefaultState val="Bottom"/>
+				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_AV"/></State>
+			</StateGroup>
+		</Frame>
+		<!-- red, the bottom slot: the prisoners and the cage fight (neutral), red's cavalry -->
+		<Frame type="Frame" name="FCJH_AVMechanicContainerSpot">
+			<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_AV"/>
+			<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_AV"/>
+			<Unclipped val="true"/>
+			<Width val="488"/>
+			<Height val="99"/>
+			<AcceptsMouse val="false"/>
+			<StateGroup name="FCJH_Stack">
+				<DefaultState val="Bottom"/>
+				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_AV"/></State>
+			</StateGroup>
+		</Frame>
+		<Frame type="Frame" name="FCJH_AVCarrier">
+			<Anchor side="Top"    relative="$parent/FCJH_AVMechanicContainerSpot" pos="Min" offset="0"/>
+			<Anchor side="Bottom" relative="$parent/FCJH_AVMechanicContainerSpot" pos="Max" offset="0"/>
+			<Anchor side="Left"   relative="$parent/FCJH_AVMechanicContainerSpot" pos="Min" offset="0"/>
+			<Anchor side="Right"  relative="$parent/FCJH_AVMechanicContainerSpot" pos="Max" offset="0"/>
+			<AcceptsMouse val="false"/>
+			<StateGroup name="FCJH_AVSide">
+				<DefaultState val="Red"/>
+				<State name="Blue"><When type="AnimationState" frame="$parent/AVMechanicContainer" TeamWins="1"/><Action type="SetAnchor" frame="$this" side="Top" relative="$parent/FCJH_AVCavalrySpot" pos="Min" offset="0"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$parent/FCJH_AVCavalrySpot" pos="Max" offset="0"/><Action type="SetAnchor" frame="$this" side="Left" relative="$parent/FCJH_AVCavalrySpot" pos="Min" offset="0"/><Action type="SetAnchor" frame="$this" side="Right" relative="$parent/FCJH_AVCavalrySpot" pos="Max" offset="0"/></State>
+				<State name="Red"/>
+			</StateGroup>
+		</Frame>
+		<Frame type="Frame" name="AVMechanicContainer">
+			<Anchor side="Top" relative="$parent/FCJH_AVCarrier" pos="Max" offset="-28"/>
+			<Anchor side="Bottom" relative="$parent/FCJH_AVCarrier" pos="Max" offset="-28"/>
+			<Anchor side="Right" relative="$parent/FCJH_AVCarrier" pos="Max" offset="16"/>
+			<Unclipped val="true"/>
+		</Frame>
+		<Frame type="Frame" name="NotificationFrame1">
+			<Anchor side="Bottom" relative="$parent" pos="Mid" offset="185"/>
+		</Frame>
 	</Frame>
 	<!-- ===== Battlefield of Eternity ===== -->
 	<Frame type="Frame" name="BossDuelPanel" file="BossDuel">

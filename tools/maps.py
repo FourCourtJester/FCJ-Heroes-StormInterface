@@ -1196,9 +1196,66 @@ def skulls_extra():
             f'{t}</Frame>\n')
 
 
+# ------------------------------------------------------------------ Alterac Pass's banner
+
+# One frame (AlteracMechanicsPanel/AVMechanicContainer, the map file's), three things in turn:
+# "Prisoners located in: 0:28" (neutral), the cage fight (both teams' bars; neutral) and the
+# cavalry's health (the team that won the cage: TeamWins, 1 Order = blue, 2 Chaos = red; 0
+# between). Like Garden's (user, 2026-10-12): the neutral two on red's side, the cavalry on its
+# team's. Measured at 1080p (2026-10-12, at Blizzard's place: the frame's right 1184, its middle
+# 748): the bar's bracket tips 730 and 1163, the prisoners' hexagon out to 1170, its lower bracket
+# 773.5; the cavalry's hammers up to 684.
+# Not mirrored (a technical limitation, user 2026-10-12: "not the end of the world"): Blizzard's
+# own animations slide its parts - the hexagon 373 left when the cage starts, the cage bars and
+# the cavalry's fill-up in from the left - each counted from its layout anchor, so no state can
+# move or mirror them (storminterface-layout-rules 28). Moving the WHOLE banner works: its layout
+# anchors hang off a carrier of ours, and only the carrier moves between the sides (av_carrier).
+# Blue's cavalry comes out Blizzard's way round - blue's mirror, the hexagon at the outer end; red's
+# keeps its hexagon at the inner end, by the minimap. The full mirror would rewrite those slides
+# and flip the cage's ProgressBars (no Blizzard bar fills right to left): HANDOFF.
+AV_BOX = (-504, -21, -16, 78)   # the art from the frame's top-right: the left tip, the hammers,
+                                # the hexagon's right, the lower bracket
+ALERT_ART["AV"] = Art(AV_BOX[2] - AV_BOX[0], 0, height=AV_BOX[3] - AV_BOX[1])
+AV_HALF_H = 50                  # half Blizzard's frame (Height 100), centred on its Top/Bottom anchor
+AV_RED, AV_BLUE = "FCJH_AVMechanicContainerSpot", "FCJH_AVCavalrySpot"   # the spots (MAPS entry)
+
+
+def av_carrier():
+    """The carrier the banner hangs off: red's spot, blue's while blue's cavalry is up."""
+    sides = ("Top", "Bottom", "Left", "Right")
+    pos = {"Top": "Min", "Bottom": "Max", "Left": "Min", "Right": "Max"}
+    return ("".join(f'<Anchor side="{sd}"{" " * (6 - len(sd))} relative="$parent/{AV_RED}" pos="{pos[sd]}" offset="0"/>\n'
+                    for sd in sides)
+            + '<AcceptsMouse val="false"/>\n'
+            '<StateGroup name="FCJH_AVSide">\n\t<DefaultState val="Red"/>\n'
+            '\t<State name="Blue"><When type="AnimationState" frame="$parent/AVMechanicContainer" TeamWins="1"/>'
+            + "".join(f'<Action type="SetAnchor" frame="$this" side="{sd}" relative="$parent/{AV_BLUE}" pos="{pos[sd]}" offset="0"/>'
+                      for sd in sides)
+            + '</State>\n\t<State name="Red"/>\n</StateGroup>\n')
+
+
+def av_frame():
+    """Blizzard's frame on the carrier, its art on the carrier's box (AV_BOX)."""
+    l, tp, r, b = AV_BOX
+    mid = AV_HALF_H - b                 # its middle, from the carrier's bottom (the art's)
+    return ("".join(f'<Anchor side="{sd}" relative="$parent/FCJH_AVCarrier" pos="Max" offset="{off}"/>\n'
+                    for sd, off in (("Top", mid), ("Bottom", mid), ("Right", -r)))
+            + '<Unclipped val="true"/>\n')
+
+
+# The flag-capture alerts (NotificationFrame1, 2 over it) stand on the banner's top, 10 over it:
+# kept where Blizzard's banner put them (its middle 245 under the panel's, its Height 100), not
+# on the minimap with ours - unseen yet (HANDOFF)
+AV_ALERTS_B = 245 - AV_HALF_H - 10
+PARTS["alterac_pass"] = {"AlteracMechanicsPanel/FCJH_AVCarrier": av_carrier(),
+                         "AlteracMechanicsPanel/AVMechanicContainer": av_frame(),
+                         "AlteracMechanicsPanel/NotificationFrame1":
+                             f'<Anchor side="Bottom" relative="$parent" pos="Mid" offset="{AV_ALERTS_B}"/>\n'}
+
+
 # ------------------------------------------------------------------ the maps
 
-BOTTOM_RIGHT = (("Bottom", "Max", 0), ("Right", "Max", 0))     # pinned to the screen's corner
+BOTTOM_RIGHT =(("Bottom", "Max", 0), ("Right", "Max", 0))     # pinned to the screen's corner
 STRIP = (("Top", "Min", 0), ("Bottom", "Max", 0), ("Right", "Max", 0))   # down the right edge
 SCREEN = (("Top", "Min", 0), ("Bottom", "Max", 0), ("Left", "Min", 0), ("Right", "Max", 0))
 
@@ -1209,6 +1266,13 @@ MAPS = {
         "Alterac Pass", (441, 316), file="AlteracMechanics",
         panels={"AlteracMechanicsPanel": (("Top", "Min", -25), ("Bottom", "Max", -25), ("Right", "Max", 0))},
         place=("AlteracMechanicsPanel",),
+        # the prisoners, the cage fight and the cavalry: one frame, on a carrier (av_carrier)
+        # that sits on red's spot - blue's while blue's cavalry is up
+        team={"AlteracMechanicsPanel": {
+            "blue": [Alert("AVCavalry", kind="AV", box=AV_BOX, spot_only=True,
+                           note="the cavalry, when it's blue's (av_carrier)")],
+            "red": [Alert("AVMechanicContainer", kind="AV", box=AV_BOX, spot_only=True,
+                          note="the prisoners and the cage fight (neutral), red's cavalry")]}},
         notes="a strip down the right edge; the cage fight bar and its two event banners at its middle"),
     "battlefield_of_eternity": Map(
         "Battlefield of Eternity", (438, 269), file="BossDuel", minimap=(75, 0),
