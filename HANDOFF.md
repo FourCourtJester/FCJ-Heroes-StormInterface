@@ -627,6 +627,11 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    timers' end (user, 2026-10-09): in a player's view, Blizzard's own death timer flashes as
    it comes to an end - find how (the player HUD's layout: its animation or StateGroup on the
    respawn countdown) and give our plates' death timers the same for the observer.
+   And the plates' carried box (gen.py `carry_box`, user 2026-10-12): Blackheart's doubloons /
+   the Spider Queen's gems in the fountain's slot one step up the slant, the count over the
+   icon, hidden at 0, on CARRY_MAPS only. Working and its borders now continue the fountain's
+   (`CARRY_SLIDE = 4`, confirmed on Zul'jin, 2026-10-12); parked for the art pass - the coin is
+   a touch big for its window, and the strip could grow further up the slant.
 8. **Map objectives and the minimap per map - BUILT 2026-10-06, a first pass; the user will
    fine-tune with test maps that cover every map.** All of it is `tools/maps.py`, written by gen
    into `FCJH_Maps.StormLayout` (it replaced the hand-written `FCJH_MapAlerts`; its docstring
