@@ -830,7 +830,13 @@ def knight_side():
 # 435 px tip to end. Its left as the tribute's, the tip on red's plates.
 CHEST_BOX = (-489, 0, -5, 94)
 ALERT_ART["CHEST"] = Art(CHEST_BOX[2] - CHEST_BOX[0], 0, height=114)     # down to the chest's bottom
-CHEST_PARTS = (("Image", "BackgroundImage", ()), ("Image", "ChestImage", ()), ("Label", "ChestInfoLabel", ()))
+# Its bar is Blizzard's fixed-width image, anchored by its right end only: the intro's bar grow
+# moves a Left anchor, so it had none to move (user, 2026-10-12: neither banner animated). Drawn
+# as the cannon's is - the same art, a nine-slice from the frame's left (CANNON_PARTS).
+CHEST_PARTS = (("Image", "BackgroundImage", (),
+                f'<Anchor side="Left" relative="$parent" pos="Min" offset="-{MINES_TIP_IN}"/>\n'
+                '<TextureType val="Nineslice"/>'),
+               ("Image", "ChestImage", ()), ("Label", "ChestInfoLabel", ()))
 # Blackheart's cannon (CannonModeFrame, in the chests' place while a team's cannonballs last): on
 # the firing team's side (user, 2026-10-12), like the Dragon Knight - red's on red's spot, blue's
 # on blue's, mirrored. Blizzard's own tell: the script shows the firing team's shots count
