@@ -429,6 +429,10 @@ HOLDOUT_PARTS = (("Image", "BackgroundImage", ()), ("Image", "TimerImage", ()),
 # read (BANNER_SLOT, the game's own sizing text, in the count's font; drawn at Alpha 0), right-
 # aligned in it, and the hexagon hangs off the slot. Its width changes only with the language.
 BANNER_SLOT = "8:88"
+BAR_TIP_IN = 3     # the banners' bar art (HUD_MapMechanic_BG_CenterBar, every banner's) has its tip
+                   # 3 in from its image's end: the image starts that much past the spot's edge, for
+                   # the tip to sit on red's plates' edge (1167) as Towers' and Braxis's do (measured at
+                   # the mines' tip 2026-10-09: 1170; a first read along one row for every bar said 1177)
 
 
 def banner_label(name_, anchors, text, style, more=""):
@@ -462,11 +466,125 @@ def left_banner(prefix, words, count, hexagon, words_start, hex_after, depth=7, 
         out += (count_slot(s, row, ("Left", f"$parent/{w}", "Max", COUNT_SPACE), style, slot)
                 + banner_label(c, row + (("Right", f"$parent/{s}", "Max", 0),), f"{{$parent/{count}/@Text}}", style))
         last = s
-    parts = ((("Image", "BackgroundImage", (), f'<Anchor side="Left" relative="$parent" pos="Min" offset="{-MINES_TIP_IN}"/>'),
+    parts = ((("Image", "BackgroundImage", (), f'<Anchor side="Left" relative="$parent" pos="Min" offset="{-BAR_TIP_IN}"/>'),
               ("Image", hexagon, (), f'<Anchor side="Right" relative="$parent/{last}" pos="Max" offset="{hex_after}"/>'),
               ("Label", words, (), '<Alpha val="0"/>'))
              + ((("Label", count, (), '<Alpha val="0"/>'),) if count else ()))
     return "".join(T * depth + line + "\n" for line in out.splitlines()) + unclipped(parts, depth)
+
+
+# ------------------------------------------------------------------ team banners: left on red, right on blue
+
+# A banner Blizzard shows for either team - one frame - sits on the owning team's side, and every
+# one is made by the same protocol (user, 2026-10-12): team_banner. Red's side is a left banner -
+# the bar's tip on red's inner edge at its LEFT end, the art at its outer end, as left_banner's -
+# and blue's a right banner, its mirror: the tip on blue's inner edge at its RIGHT end, the art at
+# its outer end, flipped. Each side's tip is its spot's inner edge (red's spot's left, blue's
+# spot's right), the bar's image BAR_TIP_IN past it. A banner's layout is written ONCE, in red's
+# terms - x out from the tip (Side) - and the protocol writes red's state from it and blue's as
+# its mirror. Where blue can't be the plain mirror (a status bar's fill won't flip; text still
+# reads left to right) the layout picks per side (Side.pick), beside the reason.
+FLIPPED = '<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>'
+_OPPOSITE = {"Left": "Right", "Right": "Left", "Min": "Max", "Max": "Min", "Mid": "Mid"}
+
+
+class Side:
+    """One side of a team banner, for its layout to write in red's terms (team_banner). Parts:
+    "" the banner's frame, "/Part" under it, or an absolute path. x: out from the bar's tip -
+    rightwards on red's side, leftwards on blue's."""
+
+    def __init__(self, frame, spot, blue):
+        self.frame, self.spot, self.blue, self.xml = frame, spot, blue, ""
+
+    def path(self, part):
+        return self.frame + part if part == "" or part.startswith("/") else part
+
+    def pick(self, red, blue):
+        return blue if self.blue else red
+
+    def anchor(self, part, side, rel, pos, off):
+        """An anchor the same on both sides (not mirrored)."""
+        self.xml += (f'<Action type="SetAnchor" frame="{self.path(part)}" side="{side}" '
+                     f'relative="{self.path(rel)}" pos="{pos}" offset="{off}"/>')
+
+    def set(self, part, **props):
+        self.xml += "".join(f'<Action type="SetProperty" frame="{self.path(part)}" {k}="{v}"/>'
+                            for k, v in props.items())
+
+    def box(self, part, box, up=0, spare=0):
+        """part as a box alert's frame on this side's spot (box_sides), `spare` more to its right."""
+        for sd, pos, off in box_sides(box, up):
+            self.anchor(part, sd, self.spot, pos, off + (spare if sd == "Right" else 0))
+
+    def _tip(self, x):
+        return ("Max", -x) if self.blue else ("Min", x)
+
+    def at(self, part, side, x):
+        """part's side x out from the tip (blue's: the other side)."""
+        self.anchor(part, _OPPOSITE[side] if self.blue else side, self.spot, *self._tip(x))
+
+    def span(self, part, a, b):
+        """part from a to b out from the tip."""
+        self.at(part, "Left", a)
+        self.at(part, "Right", b)
+
+    def hold(self, part, side, a, b):
+        """A part of its own size, a to b out from the tip, that Blizzard holds by one side: held
+        by that side on both teams' (a state can't take an anchor away)."""
+        self.anchor(part, side, self.spot, *self._tip(b if (side == "Right") != self.blue else a))
+
+    def hang(self, part, side, rel, pos, off, width=None):
+        """part's side off rel's edge, as on red's. Blue's mirror: the other side off rel's other
+        edge - or, for a part of its own size (width), the same side, moved by its width."""
+        if not self.blue:
+            return self.anchor(part, side, rel, pos, off)
+        if width is None:
+            return self.anchor(part, _OPPOSITE[side], rel, _OPPOSITE[pos], -off)
+        self.anchor(part, side, rel, _OPPOSITE[pos], -off + (width if side == "Right" else -width))
+
+    def flip(self, part, faces="red"):
+        """An image drawn for one side's layout, flipped on the other."""
+        self.set(part, TextureCoords="0,0,1,1" if self.blue == (faces == "blue") else "0,1,1,0")
+
+    def drain(self, bar):
+        """A status bar draining from the tip's end, towards the art."""
+        self.set(bar, Expansion=self.pick("Left", "Right"))
+
+    def justify(self, part, style, toward):
+        """A label's style ({} -> Left/Right) set towards the inner end (the tip's) or the outer."""
+        self.set(part, Style=style.format(self.pick("Left", "Right") if toward == "inner" else self.pick("Right", "Left")))
+
+    def show(self, part, team):
+        """part shown on one team's side only: its copy (flipped_copy) or Blizzard's original."""
+        self.set(part, Alpha=255 if (team == "blue") == self.blue else 0)
+
+
+def team_banner(name, frame, spots, blue_when, layout, depth=7):
+    """StateGroup FCJH_<name>Side on a team banner's frame (above): red's state the default, blue's
+    while blue_when holds (its <When>s; a list for alternatives, a state each). spots: (red's,
+    blue's). layout(side) writes the banner on a Side, in red's terms."""
+    def write(blue):
+        side = Side(frame, spots[blue], blue)
+        layout(side)
+        return side.xml
+    whens = [blue_when] if isinstance(blue_when, str) else blue_when
+    blue, t = write(True), T * depth
+    return (f'{t}<StateGroup name="FCJH_{name}Side">\n{t}\t<DefaultState val="Red"/>\n'
+            + "".join(f'{t}\t<State name="Blue{n if len(whens) > 1 else ""}">{when}{blue}</State>\n'
+                      for n, when in enumerate(whens))
+            + f'{t}\t<State name="Red">{write(False)}</State>\n{t}</StateGroup>\n')
+
+
+def flipped_copy(name_, texture, anchors, depth=7):
+    """Blue's copy of an image Blizzard holds by one side (a state can't take that anchor away,
+    and blue's mirror is held by the other): the same art, flipped, shown on blue's side only
+    (Side.show). anchors: ((side, relative, pos, offset), ...)."""
+    t = T * depth
+    return (f'{t}<Frame type="Image" name="{name_}">\n'
+            + "".join(f'{t}\t<Anchor side="{sd}"{" " * (6 - len(sd))} relative="{rel}" pos="{pos}" offset="{off}"/>\n'
+                      for sd, rel, pos, off in anchors)
+            + f'{t}\t<Texture val="{texture}"/>\n{t}\t{FLIPPED}\n{t}\t<Unclipped val="true"/>\n'
+            f'{t}\t<Alpha val="0"/>\n{t}</Frame>\n')
 
 
 RAVEN = MECHANICS + "/RavenCourtPanel"
@@ -475,9 +593,10 @@ CURSE_SPARE = 200     # red's curse box reaches this much further right: its hex
                       # text, and a long translation pushes it past the tribute's box
 # The curse's words on red's side: ours, the same text and style as Blizzard's label, but
 # placed from the bar's LEFT end - Blizzard's is placed from the hexagon (cursed_side).
+CURSE_WORDS_START = 35     # the words this far into the bar from its tip's end, both sides
 CURSE_TEXT = (f'{T*7}<Frame type="Label" name="FCJH_CurseText">\n'
               f'{T*8}<Anchor side="Bottom" relative="$parent/BackgroundImage" pos="Max" offset="-10"/>\n'
-              f'{T*8}<Anchor side="Left"   relative="$parent/BackgroundImage" pos="Min" offset="35"/>\n'
+              f'{T*8}<Anchor side="Left"   relative="$parent/BackgroundImage" pos="Min" offset="{CURSE_WORDS_START}"/>\n'
               f'{T*8}<Text val="{{$parent/CurseInfoLabel/@Text}}"/>\n'
               f'{T*8}<Style val="{{$parent/CurseInfoLabel/@Style}}"/>\n'
               f'{T*8}<Options val="NoWrapping"/>\n'
@@ -485,16 +604,16 @@ CURSE_TEXT = (f'{T*7}<Frame type="Label" name="FCJH_CurseText">\n'
               f'{T*7}</Frame>\n')
 # The curse's countdown in its bar after the words, as the tribute's (user, 2026-10-06), one
 # space after them; Blizzard's (in the raven head) hidden. Two of ours, one per side's layout
-# (cursed_side): red's after our words, flowing right; blue's where Blizzard ends the words
-# (the bar's right end -130), Blizzard's words ending one space before it.
-CURSE_WORDS_END = -130
+# (cursed_side): red's after our words, flowing right; blue's ending CURSE_WORDS_START in from
+# the bar's tip, Blizzard's words ending one space before it (text reads left to right on
+# both sides: blue's mirror runs it from the tip leftwards).
 CURSE_STYLE = "{$parent/CurseInfoLabel/@Style}"
 _CURSE_ROW = (("Top", "$parent/FCJH_CurseText", "Min", 0), ("Bottom", "$parent/FCJH_CurseText", "Max", 0))
 _CURSE_ROW_BLUE = (("Top", "$parent/CurseInfoLabel", "Min", 0), ("Bottom", "$parent/CurseInfoLabel", "Max", 0))
-_BLUE_END = ("Right", "$parent/BackgroundImage", "Max", CURSE_WORDS_END)
+_BLUE_END = ("Right", "$parent/BackgroundImage", "Max", -CURSE_WORDS_START)
 # Each count right-aligned in its slot (left_banner): red's slot after the words (or their
-# colon, curse_colon), the hexagon off it (cursed_side); blue's ending where Blizzard ends the
-# words, which end one space before it - so neither side's bar changes size as the count runs.
+# colon, curse_colon), the raven off it (cursed_side); blue's before the tip, the words ending
+# one space before it - so neither side's bar changes size as the count runs.
 CURSE_COUNT = "".join(
     "".join(T * 7 + line + "\n" for line in xml.splitlines()) for xml in (
         count_slot("FCJH_CurseSlot", _CURSE_ROW, ("Left", "$parent/FCJH_CurseText", "Max", COUNT_SPACE), CURSE_STYLE),
@@ -614,40 +733,40 @@ CURSE_PARTS = (("Image", "BackgroundImage", ()), ("Image", "TimerImage", ()),
                                              ("Image", "AttentionEffect2Image", ()))))
 
 
+CURSE_RAVEN_AFTER = 115   # the raven's outer side from the count's slot (red: its right; 5 + its width)
+# Blue's raven, flipped at the outer end (team_banner): Blizzard's is held by its right side
+CURSE_RAVEN = flipped_copy("FCJH_CurseRaven", "@UI/HUD_MapMechanic_CursedHollow_RavenHead",
+                           (("Top", "$parent/TimerImage", "Min", 0),))
+
+
+def curse_layout(s):
+    """The curse banner, red's terms (team_banner). It hangs off the tribute banner's frame, which
+    the script hides while a curse is on: both frames move onto the cursed team's spot (red's
+    holds the tribute, the neutral banner). Blizzard sizes it to its words, the raven at its right
+    end; ours runs from the tip: the bar from it, the words CURSE_WORDS_START in, the count after
+    them (CURSE_COUNT), the raven after that - mirrored on blue, where the words still read left to
+    right: Blizzard's, ending in the count before the tip."""
+    s.box(RAVEN + "/TributeSpawnFrame", TRIBUTE_BOX)
+    s.box("", TRIBUTE_BOX, CURSE_UP, spare=s.pick(CURSE_SPARE, 0))   # red's box: room for long words
+    raven = s.pick("/TimerImage", "/FCJH_CurseRaven")
+    s.at("/BackgroundImage", "Left", -BAR_TIP_IN)
+    s.hang("/BackgroundImage", "Right", raven, "Max", 15)            # Blizzard's: 15 past the raven
+    s.hang(raven, "Right", s.pick("/FCJH_CurseSlot", "/CurseInfoLabel"), "Max", CURSE_RAVEN_AFTER)
+    for glow in ("AttentionEffectImage", "AttentionEffect2Image"):  # round the raven's middle
+        for sd in ("Left", "Right"):
+            s.anchor(f"/AttentionEffect/{glow}", sd, raven, "Mid", 0)
+    for part, team in (("/TimerImage", "red"), ("/FCJH_CurseText", "red"), ("/FCJH_CurseCount", "red"),
+                       ("/FCJH_CurseColon", "red"), ("/FCJH_CurseRaven", "blue"), ("/CurseInfoLabel", "blue"),
+                       ("/FCJH_CurseCountBlue", "blue"), ("/FCJH_CurseColonBlue", "blue")):
+        s.show(part, team)
+
+
 def cursed_side():
-    """The curse banner on the cursed team's side (user, 2026-10-06). It hangs off the tribute
-    banner's frame, which the script hides while a curse is on: when the banner says blue,
-    both frames move onto blue's spot; otherwise they stay on red's (red's side holds the
-    tribute banner, the neutral one).
-    Blizzard sizes the banner to its words, the hexagon at its right end. That suits blue's
-    side - the hexagon at the minimap, the bar growing outward - but on red's a short text
-    left the bar's start far from the minimap (user). So on red the banner is laid out from
-    its left end: the bar starts at the spot's left, our copy of the words after it, the
-    count after them (CURSE_COUNT), the hexagon after that."""
-    t = T * 7
-    act = lambda frame, sd, rel, pos, off: (f'<Action type="SetAnchor" frame="{frame}" side="{sd}" relative="{rel}" '
-                                            f'pos="{pos}" offset="{off}"/>')
-    def place(spot, red):
-        out = "".join(act(frame, sd, f"{RAVEN}/{spot}", pos, off + (CURSE_SPARE if red and frame == CURSE and sd == "Right" else 0))
-                      for frame, up in ((f"{RAVEN}/TributeSpawnFrame", 0), (CURSE, CURSE_UP))
-                      for sd, pos, off in box_sides(TRIBUTE_BOX, up))
-        tribute = f"{RAVEN}/TributeSpawnFrame"
-        if red:
-            out += (act(f"{CURSE}/BackgroundImage", "Left", CURSE, "Min", 0)
-                    + act(f"{CURSE}/TimerImage", "Right", f"{CURSE}/FCJH_CurseSlot", "Max", 115))
-        else:      # Blizzard's own layout, the count before the hexagon
-            out += (act(f"{CURSE}/BackgroundImage", "Left", f"{CURSE}/CurseInfoLabel", "Min", -35)
-                    + act(f"{CURSE}/TimerImage", "Right", f"{tribute}/TimerImage", "Max", 0))
-        shown = lambda frame, on: f'<Action type="SetProperty" frame="{CURSE}/{frame}" Alpha="{255 if on else 0}"/>'
-        return (out + shown("CurseInfoLabel", not red) + shown("FCJH_CurseCountBlue", not red)
-                + shown("FCJH_CurseColonBlue", not red) + shown("FCJH_CurseText", red)
-                + shown("FCJH_CurseCount", red) + shown("FCJH_CurseColon", red))
-    out = f'{t}<StateGroup name="FCJH_CursedSide">\n{t}\t<DefaultState val="Red"/>\n'
-    for n, text in enumerate(BLUE_CURSED):
-        out += (f'{t}\t<State name="Blue{n}"><When type="Property" frame="{CURSE}" Visible="true"/>'
-                f'<When type="Property" frame="{CURSE}/CurseInfoLabel" Text="{text}"/>'
-                f'{place("FCJH_CurseFrameSpot", False)}</State>\n')
-    return out + f'{t}\t<State name="Red">{place("FCJH_TributeSpawnFrameSpot", True)}</State>\n{t}</StateGroup>\n'
+    """The curse on the cursed team's side (user, 2026-10-06): blue's when its words say so."""
+    return team_banner("Cursed", CURSE, (f"{RAVEN}/FCJH_TributeSpawnFrameSpot", f"{RAVEN}/FCJH_CurseFrameSpot"),
+                       [f'<When type="Property" frame="{CURSE}" Visible="true"/>'
+                        f'<When type="Property" frame="{CURSE}/CurseInfoLabel" Text="{text}"/>' for text in BLUE_CURSED],
+                       curse_layout)
 
 
 # ------------------------------------------------------------------ Haunted Mines' banner
@@ -661,10 +780,6 @@ def cursed_side():
 # it's laid out from its left end (left_banner), the words 50 in.
 MINES_BOX = (-433, 0, -5, 86)
 MINES_WORDS_START = 50
-MINES_TIP_IN = 3          # the bar art's left tip is 3 px inside its frame: the frame starts that
-                          # much left of the spot, for the tip to sit on red's plates' edge (1167) as
-                          # Towers' and Braxis's do (measured at its tip 2026-10-09: 1170; a first
-                          # read along one row for every bar said 1177)
 MINES_HEX_AFTER = 115     # the hexagon's right from the count's: 5 + its width, as the curse's
                           # (measured: 106 px from the count's last letter to its right edge)
 ALERT_ART["MINES"] = Art(MINES_BOX[2] - MINES_BOX[0], 0, height=MINES_BOX[3] - MINES_BOX[1] + 6)
@@ -748,43 +863,42 @@ ALERT_ART["TERROR"] = Art(TERROR_ART[1] - TERROR_ART[0], 0, height=TERROR_LINE)
 TERROR_RED_IN = {1: 25, 2: 20, 3: 25}   # mirrored, each bar's red from the plate's left
 
 
-def terror_side():
-    mirror = lambda x: TERROR_ART[0] + TERROR_ART[1] - x
-    act = lambda frame, sd, rel, pos, off: (f'<Action type="SetAnchor" frame="$this{frame}" side="{sd}" '
-                                            f'relative="{rel}" pos="{pos}" offset="{off}"/>')
-    prop = lambda frame, **kw: "".join(f'<Action type="SetProperty" frame="$this{frame}" {k}="{v}"/>'
-                                       for k, v in kw.items())
-    plate = "/MapMechanicStatus"
+TERROR_ICON = (-12, 184)                # the plant's hexagon: its left in Blizzard's frame, its width
 
-    def place(blue):
-        # everything from the spot (an absolute path), in frame units less the art's left
-        spot = f"{GARDEN}/FCJH_{'GardenTerrorHealthFrame' if blue else 'EventWarningFrame'}Spot"
-        x = lambda v: v - TERROR_ART[0]
-        y = lambda v: v - TERROR_LINE
-        out = (act("", "Left", spot, "Min", x(0)) + act("", "Right", spot, "Min", x(530))
-               + act("", "Top", spot, "Max", y(0)) + act("", "Bottom", spot, "Max", y(150)))
-        l, t, r, b = TERROR_PLATE
-        if not blue:
-            l, r = mirror(r), mirror(l)
-        out += (act(plate, "Left", spot, "Min", x(l)) + act(plate, "Right", spot, "Min", x(r))
-                + act(plate, "Top", spot, "Max", y(t)) + act(plate, "Bottom", spot, "Max", y(b)))
-        out += prop(plate + "/MapMechanicStatusBG", TextureCoords="0,0,1,1" if blue else "0,1,1,0")
-        for n in (1, 2, 3):
-            bar = f"{plate}/TerrorHealthBarAnchorFrame{n}"
-            out += (act(bar, "Left", spot, "Min", x(l + (65 if blue else TERROR_RED_IN[n])))
-                    + act(bar, "Right", spot, "Min", x(r - (9 if blue else 65)))
-                    # which end it drains from: the chevron's, towards the plant
-                    + prop(f"{bar}/TerrorUnitStatusFrame/HealthBar", Expansion="Right" if blue else "Left"))
-        icon_left = -12 if blue else mirror(-12 + 184)
-        for icon in ("Icon_Blue", "Icon_Red"):
-            out += (act(f"/{icon}", "Left", spot, "Min", x(icon_left))
-                    + prop(f"/{icon}", TextureCoords="0,0,1,1" if blue else "0,1,1,0",
-                           Alpha=255 if (icon == "Icon_Blue") == blue else 0))
-        return out
-    active = f'<When type="Property" frame="{GARDEN}/SeedsFrame/Team1StatusLabel" Visible="true"/>'
-    return (f'<StateGroup name="FCJH_TerrorSide">\n\t<DefaultState val="Red"/>\n'
-            f'\t<State name="Blue">{active}{place(True)}</State>\n'
-            f'\t<State name="Red">{place(False)}</State>\n</StateGroup>\n')
+
+def terror_layout(s):
+    """The Terrors' health, red's terms (team_banner): x out from the plate's chevron, Blizzard's
+    frame's v at x = TERROR_PLATE's right - v (its art is drawn for blue's side: the mirror)."""
+    x = lambda v: TERROR_PLATE[2] - v
+    y = lambda v: v - TERROR_LINE                  # down from the spot's bottom, the plate's lower edge on it
+    # the frame keeps Blizzard's size, its art 5 .. 507 across, from the spot's left
+    for sd, pos, off in (("Left", "Min", -TERROR_ART[0]), ("Right", "Min", 530 - TERROR_ART[0]),
+                         ("Top", "Max", y(0)), ("Bottom", "Max", y(150))):
+        s.anchor("", sd, s.spot, pos, off)
+    plate = "/MapMechanicStatus"
+    l, t, r, b = TERROR_PLATE
+    s.span(plate, x(r), x(l))
+    s.anchor(plate, "Top", s.spot, "Max", y(t))
+    s.anchor(plate, "Bottom", s.spot, "Max", y(b))
+    s.flip(plate + "/MapMechanicStatusBG", faces="blue")
+    for n in (1, 2, 3):
+        bar = f"{plate}/TerrorHealthBarAnchorFrame{n}"
+        # 65 in from the plate's outer end and 9 from the chevron on blue (Blizzard's); a status
+        # bar's fill doesn't flip, so red's ends where its red does (TERROR_RED_IN)
+        s.span(bar, s.pick(TERROR_RED_IN[n], 9), x(l + 65))
+        s.drain(f"{bar}/TerrorUnitStatusFrame/HealthBar")
+    left, width = TERROR_ICON
+    for icon, team in (("Icon_Blue", "blue"), ("Icon_Red", "red")):
+        s.hold(f"/{icon}", "Left", x(left + width), x(left))
+        s.flip(f"/{icon}", faces="blue")
+        s.show(f"/{icon}", team)
+
+
+def terror_side():
+    return team_banner("Terror", "$this", (f"{GARDEN}/FCJH_EventWarningFrameSpot",
+                                            f"{GARDEN}/FCJH_GardenTerrorHealthFrameSpot"),
+                       f'<When type="Property" frame="{GARDEN}/SeedsFrame/Team1StatusLabel" Visible="true"/>',
+                       terror_layout, depth=0)
 
 
 def terror_frame():
@@ -850,18 +964,10 @@ DRAGON_PARTS = (("Image", "BackgroundImage", (), f'<Anchor side="Right" relative
 SHIRE = MECHANICS + "/DragonShirePanel"
 KNIGHT = SHIRE + "/DragonModeFrame"
 KNIGHT_COPIES = (
-    f'{T*7}<Frame type="Image" name="FCJH_KnightBarBG">\n'
-    f'{T*8}<Anchor side="Top"   relative="$parent/BackgroundImage" pos="Mid" offset="5"/>\n'
-    f'{T*8}<Anchor side="Right" relative="$parent/BackgroundImage" pos="Max" offset="-12"/>\n'
-    f'{T*8}<Texture val="@UI/HUD_MapMechanic_BG_HealthBar"/>\n'
-    f'{T*8}<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>\n'
-    f'{T*8}<Unclipped val="true"/>\n{T*8}<Alpha val="0"/>\n{T*7}</Frame>\n'
-    f'{T*7}<Frame type="Image" name="FCJH_KnightHead">\n'
-    f'{T*8}<Anchor side="Top"  relative="$parent/BackgroundImage" pos="Min" offset="-43"/>\n'
-    f'{T*8}<Anchor side="Left" relative="$parent/BackgroundImage" pos="Min" offset="-30"/>\n'
-    f'{T*8}<Texture val="@UI/HUD_MapMechanic_DragonShire_DragonHUD"/>\n'
-    f'{T*8}<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>\n'
-    f'{T*8}<Unclipped val="true"/>\n{T*8}<Alpha val="0"/>\n{T*7}</Frame>\n')
+    flipped_copy("FCJH_KnightBarBG", "@UI/HUD_MapMechanic_BG_HealthBar",
+                 (("Top", "$parent/BackgroundImage", "Mid", 5), ("Right", "$parent/BackgroundImage", "Max", -12)))
+    + flipped_copy("FCJH_KnightHead", "@UI/HUD_MapMechanic_DragonShire_DragonHUD",
+                   (("Top", "$parent/BackgroundImage", "Min", -43), ("Left", "$parent/BackgroundImage", "Min", -30))))
 # Blue's health bar mirrored. Its fill is a parallelogram leaning \ at both ends (Blizzard's art)
 # and a status bar won't flip it - TextureCoords on it did nothing (2026-10-09; Blizzard ships a
 # second texture where it needs a bar mirrored, and the dragon's has none). So blue's is widened
@@ -901,53 +1007,41 @@ KNIGHT_MASK_FILE = f"FCJH_KnightMask_{hashlib.sha1(KNIGHT_MASK[2]).hexdigest()[:
 KNIGHT_MASK_PATH = TEXTURES + "\\" + KNIGHT_MASK_FILE
 
 
-def knight_side():
-    t = T * 7
-    act = lambda frame, sd, rel, pos, off: (f'<Action type="SetAnchor" frame="{KNIGHT}{frame}" side="{sd}" '
-                                            f'relative="{rel}" pos="{pos}" offset="{off}"/>')
-    prop = lambda frame, **kw: "".join(f'<Action type="SetProperty" frame="{KNIGHT}{frame}" {k}="{v}"/>'
-                                       for k, v in kw.items())
-    small = lambda sd: f"Storm_MapMechanic_MechanicCounterSmall{sd}_Blue"
-    pct, bar = f"{KNIGHT}/DragonHealthBar/HealthLabel", f"{KNIGHT}/DragonHealthBar/HealthBar"
+KNIGHT_PCT_W = 58         # the health %'s box (Blizzard's HealthLabel, its own width)
+SMALL = "Storm_MapMechanic_MechanicCounterSmall{}_Blue"
 
-    def place(blue):
-        spot = f"{SHIRE}/FCJH_{'DragonModeFrame' if blue else 'ShrineTimerModeFrame'}Spot"
-        bg = f"{KNIGHT}/{'FCJH_KnightBarBG' if blue else 'HealthBarBG'}"
-        out = "".join(act("", sd, spot, pos, off) for sd, pos, off in box_sides(SHRINE_BOX))
-        out += (act("/BackgroundImage", "Right", KNIGHT, *(("Max", 0) if blue else ("Min", GOLEM_BAR)))
-                + prop("/DragonHud", Alpha=0 if blue else 255) + prop("/FCJH_KnightHead", Alpha=255 if blue else 0)
-                + prop("/HealthBarBG", Alpha=0 if blue else 255) + prop("/FCJH_KnightBarBG", Alpha=255 if blue else 0)
-                + act("/DragonHealthBar/HealthBar", "Top", bg, "Min", 5)
-                # the bar 8 in from the backing's outer end, as red's (its 360 to the inner end);
-                # blue's widened and cut to the mirrored lean (KNIGHT_MASK)
-                + act("/DragonHealthBar/HealthBar", "Left", bg, *(("Max", -8 - 360 - KNIGHT_LEAN) if blue else ("Min", 8)))
-                + prop("/DragonHealthBar/HealthBar", Width=360 + 2 * KNIGHT_LEAN if blue else 360,
-                       AlphaMaskTexture=KNIGHT_MASK_PATH if blue else WHITE)
-                # "DRAGON KNIGHT": from the backing's inner end, 15 in
-                + act("/DragonInfoLabel", "Bottom", bg, "Min", 2)
-                + act("/DragonInfoLabel", "Left", bg, "Min", 15) + act("/DragonInfoLabel", "Right", bg, "Max", -15)
-                + prop("/DragonInfoLabel", Style=small("Right" if blue else "Left")))
-        # which end the health drains from: Blizzard's from the bar's left (the start of red's),
-        # blue's from its right (Blizzard never sets Expansion from a state; it takes - 2026-10-09)
-        out += prop("/DragonHealthBar/HealthBar", Expansion="Right" if blue else "Left")
-        if blue:     # the % from the health bar's outer end, then the timer after it
-            out += (act("/DragonHealthBar/HealthLabel", "Right", bar, "Min", KNIGHT_LEAN + 3 + 58)
-                    + prop("/DragonHealthBar/HealthLabel/StatusLabel", Style=small("Right"))
-                    + act("/DragonTimer", "Left", pct, "Max", -DRAGON_TIMER_GAP)
-                    + act("/DragonTimer", "Right", pct, "Max", DRAGON_TIMER_W - DRAGON_TIMER_GAP)
-                    + prop("/DragonTimer", Style=small("Left")))
-        else:
-            out += (act("/DragonHealthBar/HealthLabel", "Right", bar, "Max", -3)
-                    + prop("/DragonHealthBar/HealthLabel/StatusLabel", Style=small("Left"))
-                    + act("/DragonTimer", "Right", pct, "Min", DRAGON_TIMER_GAP)
-                    + act("/DragonTimer", "Left", pct, "Min", DRAGON_TIMER_GAP - DRAGON_TIMER_W)
-                    + prop("/DragonTimer", Style=small("Right")))
-        return out
-    lit = "".join(f'<When type="Property" frame="{SHIRE}/ShrineModeFrame/Team1{s}ShrineEnabled" Visible="true"/>'
-                  for s in ("Moon", "Star"))
-    return (f'{t}<StateGroup name="FCJH_KnightSide">\n{t}\t<DefaultState val="Red"/>\n'
-            f'{t}\t<State name="Blue">{lit}{place(True)}</State>\n'
-            f'{t}\t<State name="Red">{place(False)}</State>\n{t}</StateGroup>\n')
+
+def knight_layout(s):
+    """The Dragon Knight, red's terms (team_banner): the bar its art's own width from the tip, the
+    dragon's head at its outer end, "DRAGON KNIGHT" from the inner, the % then the timer from the
+    outer; the health draining from the tip's end (Blizzard never sets Expansion from a state;
+    a state's takes - 2026-10-09). Blue's head and backing are flipped copies (KNIGHT_COPIES)."""
+    s.box("", SHRINE_BOX)
+    s.hold("/BackgroundImage", "Right", -BAR_TIP_IN, GOLEM_BAR - BAR_TIP_IN)
+    for part, team in (("/DragonHud", "red"), ("/HealthBarBG", "red"),
+                       ("/FCJH_KnightHead", "blue"), ("/FCJH_KnightBarBG", "blue")):
+        s.show(part, team)
+    bg, bar, pct = s.pick("/HealthBarBG", "/FCJH_KnightBarBG"), "/DragonHealthBar/HealthBar", "/DragonHealthBar/HealthLabel"
+    s.anchor(bar, "Top", bg, "Min", 5)
+    # the bar 8 in from the backing's end, 360 long; blue's fill can't flip, so it's widened by the
+    # lean at each end and cut to the mirrored lean (KNIGHT_MASK) - its box a lean further out
+    s.hang(bar, "Left", bg, "Min", s.pick(8, 8 + KNIGHT_LEAN), width=360)
+    s.set(bar, Width=s.pick(360, 360 + 2 * KNIGHT_LEAN), AlphaMaskTexture=s.pick(WHITE, KNIGHT_MASK_PATH))
+    s.drain(bar)
+    for sd, pos, off in (("Bottom", "Min", 2), ("Left", "Min", 15), ("Right", "Max", -15)):
+        s.anchor("/DragonInfoLabel", sd, bg, pos, off)          # the backing's ends, 15 in
+    s.justify("/DragonInfoLabel", SMALL, "inner")
+    s.hang(pct, "Right", bar, "Max", s.pick(-3, -3 - KNIGHT_LEAN), width=KNIGHT_PCT_W)
+    s.justify(pct + "/StatusLabel", SMALL, "inner")
+    s.hang("/DragonTimer", "Right", pct, "Min", DRAGON_TIMER_GAP)
+    s.hang("/DragonTimer", "Left", pct, "Min", DRAGON_TIMER_GAP - DRAGON_TIMER_W)
+    s.justify("/DragonTimer", SMALL, "outer")
+
+
+def knight_side():
+    return team_banner("Knight", KNIGHT, (f"{SHIRE}/FCJH_ShrineTimerModeFrameSpot", f"{SHIRE}/FCJH_DragonModeFrameSpot"),
+                       "".join(f'<When type="Property" frame="{SHIRE}/ShrineModeFrame/Team1{s}ShrineEnabled" Visible="true"/>'
+                               for s in ("Moon", "Star")), knight_layout)
 
 
 # ------------------------------------------------------------------ Blackheart's Bay's banners
@@ -964,7 +1058,7 @@ ALERT_ART["CHEST"] = Art(CHEST_BOX[2] - CHEST_BOX[0], 0, height=114)     # down 
 # moves a Left anchor, so it had none to move (user, 2026-10-12: neither banner animated). Drawn
 # as the cannon's is - the same art, a nine-slice from the frame's left (CANNON_PARTS).
 CHEST_PARTS = (("Image", "BackgroundImage", (),
-                f'<Anchor side="Left" relative="$parent" pos="Min" offset="-{MINES_TIP_IN}"/>\n'
+                f'<Anchor side="Left" relative="$parent" pos="Min" offset="-{BAR_TIP_IN}"/>\n'
                 '<TextureType val="Nineslice"/>'),
                ("Image", "ChestImage", ()), ("Label", "ChestInfoLabel", ()))
 # Blackheart's cannon (CannonModeFrame, in the chests' place while a team's cannonballs last): on
@@ -981,21 +1075,17 @@ CHEST_PARTS = (("Image", "BackgroundImage", (),
 CANNON_BAR = 518
 BAY = MECHANICS + "/BlackheartsBayPanel"
 CANNON = BAY + "/CannonModeFrame"
-CANNON_PARTS = ((("Image", "BackgroundImage", (), f'<Anchor side="Left" relative="$parent" pos="Min" offset="{-MINES_TIP_IN}"/>'),
+CANNON_PARTS = ((("Image", "BackgroundImage", (), f'<Anchor side="Left" relative="$parent" pos="Min" offset="{-BAR_TIP_IN}"/>'),
                  ("Image", "CenterpieceImageCannon", (),
-                  f'<Anchor side="Right" relative="$parent" pos="Min" offset="{-MINES_TIP_IN + CANNON_BAR - 15}"/>'),
+                  f'<Anchor side="Right" relative="$parent" pos="Min" offset="{-BAR_TIP_IN + CANNON_BAR - 15}"/>'),
                  ("Label", "Team1ShotCounter", ()), ("Label", "Team2ShotCounter", ()), ("Label", "CannonballsLeftLabel", ()))
                 + tuple(("Frame", f"CannonShotFrame{n}", ()) for n in range(1, 13)))
 # Blue's: the cannon flipped (our copy) at the outer end, the pips chained right from it; the
 # words and count ours too (bound to Blizzard's, blue's colour), after the hexagon - Blizzard's
 # words are a fixed box, right-aligned before the count.
 CANNON_COPIES = (
-    f'{T*7}<Frame type="Image" name="FCJH_CannonHex">\n'
-    f'{T*8}<Anchor side="Top"  relative="$parent" pos="Min" offset="15"/>\n'
-    f'{T*8}<Anchor side="Left" relative="$parent/BackgroundImage" pos="Min" offset="15"/>\n'
-    f'{T*8}<Texture val="@UI/HUD_MapMechanic_BlackheartsBay_Cannon"/>\n'
-    f'{T*8}<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>\n'
-    f'{T*8}<Unclipped val="true"/>\n{T*8}<Alpha val="0"/>\n{T*7}</Frame>\n'
+    flipped_copy("FCJH_CannonHex", "@UI/HUD_MapMechanic_BlackheartsBay_Cannon",
+                 (("Top", "$parent", "Min", 15), ("Left", "$parent/BackgroundImage", "Min", 15)))
     + "".join(
         f'{T*7}<Frame type="Label" name="{name_}">\n'
         f'{T*8}<Anchor side="Top"    relative="$parent/Team1ShotCounter" pos="Min" offset="0"/>\n'
@@ -1010,33 +1100,28 @@ CANNON_COPIES = (
                                         ("FCJH_CannonCount", "Team1ShotCounter", "$parent/FCJH_CannonText", 2))))
 
 
-def cannon_side():
-    t = T * 7
-    act = lambda frame, sd, rel, pos, off: (f'<Action type="SetAnchor" frame="{CANNON}{frame}" side="{sd}" '
-                                            f'relative="{rel}" pos="{pos}" offset="{off}"/>')
-    alpha = lambda frame, on: f'<Action type="SetProperty" frame="{CANNON}{frame}" Alpha="{255 if on else 0}"/>'
-    shot = lambda n: f"{CANNON}/CannonShotFrame{n}"
+CANNON_SHOT_W = 42        # a cannonball pip's box
 
-    def place(blue):
-        spot = f"{BAY}/FCJH_{'CannonModeFrame' if blue else 'ChestSpawnFrame'}Spot"
-        out = "".join(act("", sd, spot, pos, off) for sd, pos, off in box_sides(CHEST_BOX))
-        if blue:     # the bar's tip on blue's inner edge (as red's on red's), CANNON_BAR long
-            out += (act("/BackgroundImage", "Right", CANNON, "Max", CHEST_BOX[2] + MINES_TIP_IN)
-                    + act("/BackgroundImage", "Left", CANNON, "Max", CHEST_BOX[2] + MINES_TIP_IN - CANNON_BAR)
-                    + act("/CannonShotFrame1", "Right", f"{CANNON}/FCJH_CannonHex", "Max", -3 + 42)
-                    + "".join(act(f"/CannonShotFrame{n}", "Right", shot(n - 1), "Max", 42 - 12) for n in range(2, 13)))
-        else:        # Blizzard's chain, the bar from the spot's left (CANNON_PARTS)
-            out += (act("/BackgroundImage", "Right", f"{CANNON}/CenterpieceImageCannon", "Max", 15)
-                    + act("/BackgroundImage", "Left", CANNON, "Min", -MINES_TIP_IN)
-                    + act("/CannonShotFrame1", "Right", f"{CANNON}/CenterpieceImageCannon", "Min", 3)
-                    + "".join(act(f"/CannonShotFrame{n}", "Right", shot(n - 1), "Min", 12) for n in range(2, 13)))
-        return (out + alpha("/CenterpieceImageCannon", not blue) + alpha("/CannonballsLeftLabel", not blue)
-                + alpha("/Team1ShotCounter", not blue) + alpha("/Team2ShotCounter", not blue)
-                + alpha("/FCJH_CannonHex", blue) + alpha("/FCJH_CannonText", blue) + alpha("/FCJH_CannonCount", blue))
-    return (f'{t}<StateGroup name="FCJH_CannonSide">\n{t}\t<DefaultState val="Red"/>\n'
-            f'{t}\t<State name="Blue"><When type="Property" frame="{CANNON}/Team1ShotCounter" Visible="true"/>'
-            f'{place(True)}</State>\n'
-            f'{t}\t<State name="Red">{place(False)}</State>\n{t}</StateGroup>\n')
+
+def cannon_layout(s):
+    """Blackheart's cannon, red's terms (team_banner): the bar CANNON_BAR long from the tip, the
+    cannon at its outer end (Blizzard's 15 in, CANNON_PARTS; blue's a flipped copy), the twelve
+    pips chained in from it (the first 3 inside it, then 12 apart, Blizzard's)."""
+    s.box("", CHEST_BOX)
+    s.span("/BackgroundImage", -BAR_TIP_IN, CANNON_BAR - BAR_TIP_IN)
+    hexagon = s.pick("/CenterpieceImageCannon", "/FCJH_CannonHex")
+    for n in range(1, 13):
+        s.hang(f"/CannonShotFrame{n}", "Right", hexagon if n == 1 else f"/CannonShotFrame{n - 1}", "Min",
+               3 if n == 1 else 12, width=CANNON_SHOT_W)
+    for part in ("/CenterpieceImageCannon", "/CannonballsLeftLabel", "/Team1ShotCounter", "/Team2ShotCounter"):
+        s.show(part, "red")
+    for part in ("/FCJH_CannonHex", "/FCJH_CannonText", "/FCJH_CannonCount"):
+        s.show(part, "blue")
+
+
+def cannon_side():
+    return team_banner("Cannon", CANNON, (f"{BAY}/FCJH_ChestSpawnFrameSpot", f"{BAY}/FCJH_CannonModeFrameSpot"),
+                       f'<When type="Property" frame="{CANNON}/Team1ShotCounter" Visible="true"/>', cannon_layout)
 
 
 # The skull counts (HauntedMinesPanel/SkullModeFrame), shown while the mines are open. Their
@@ -1163,7 +1248,8 @@ MAPS = {
             "blue": [Alert("CurseFrame", kind="BANNER", box=TRIBUTE_BOX, spot_only=True,
                            note="the curse, when it's on blue")],
             "red": [Alert("TributeSpawnFrame", kind="BANNER", box=TRIBUTE_BOX,
-                          followers=(("CurseFrame", CURSE_UP, CURSE_TEXT + CURSE_COUNT + curse_colon() + unclipped(CURSE_PARTS)),),
+                          followers=(("CurseFrame", CURSE_UP, CURSE_TEXT + CURSE_COUNT + curse_colon() + unclipped(CURSE_PARTS)
+                                       + CURSE_RAVEN),),
                           extra=cursed_side() + tribute_count() + unclipped(TRIBUTE_PARTS),
                           note="the tribute spawning, then waiting to be collected (neutral); the curse on red")]}},
         notes="the tribute counts sit at the minimap's bottom corners"),
@@ -1399,12 +1485,11 @@ def spot_name(a):
 # and hexagon art; nothing of a map's own (user, 2026-10-09: the golems' double health bar, Braxis's
 # beacons and zerg HUD keep only their placement). NOT_BANNERS: followers that aren't one.
 NOT_BANNERS = ("GolemModeFrame",)
-# Banners whose sides a state moves - the curse, between red's layout and blue's (cursed_side):
-# the fade only. A relative Anchor controller counts from the LAYOUT anchor, not a state's
-# SetAnchor, and end="Pause" holds it (Haunted Mines' glide, 2026-10-09): the slide would
+# Banners whose sides a state moves - the team banners, between red's side and blue's
+# (team_banner): the fade only. A relative Anchor controller counts from the LAYOUT anchor, not a
+# state's SetAnchor, and end="Pause" holds it (Haunted Mines' glide, 2026-10-09): the slide would
 # have pinned the curse to red's spot and Blizzard's bar layout after its first intro. The
-# tribute too: cursed_side moves it with the curse, whose hexagon on blue hangs off the tribute's.
-# The Dragon Knight and Blackheart's cannon: knight_side / cannon_side move them to blue's side.
+# tribute too: cursed_side moves it with the curse, whose raven's height hangs off the tribute's.
 FADE_ONLY = ("CurseFrame", "TributeSpawnFrame", "DragonModeFrame", "CannonModeFrame")
 
 

@@ -175,6 +175,29 @@ src/dev/                                     dev-only probes (empty now; packed 
   an empty frame. Constants are global across all files, so ours are `FCJH_` too.
 - Split layouts by concern, not one file.
 
+### Banners: two protocols, no hand copies (user, 2026-10-12)
+
+Every map banner is made by one of two builders in `tools/maps.py`. A new map only supplies its
+measured constants. If a banner needs something the builders can't do, extend the builder rather
+than writing a per-map copy.
+
+- **Neutral banners** sit on red's side and go through **`left_banner`**. It lays the banner out
+  from the bar's tip at red's plates: the words come first, then the count, then the hexagon.
+- **Team banners** (curse, Dragon Knight, Terrors, cannons) appear on the owning team's side and go
+  through **`team_banner`**. The layout is written once, in red's terms, as distances out from the
+  tip (`Side`).
+  - Red's side is a left banner.
+  - Blue's side is a right banner: the mirror, with the tip at blue's inner edge and the art
+    flipped at the outer end. Flipped copies come from `flipped_copy`, used when Blizzard holds the
+    image by one side.
+  - Where blue can't be a plain mirror, `Side.pick` says so beside the reason. For example, a
+    status bar's fill won't flip, and text still reads left to right.
+- **Tips:** the tip is each spot's inner edge. The bar image starts `BAR_TIP_IN` (3) past it. All
+  banners use the same art.
+- **No banner changes size while it counts.** Each count sits right-aligned in a slot as wide as
+  the game's own sizing text ("8:88", or "88" for bare seconds), and the art hangs off the slot.
+  Width varies only with the language.
+
 ### Rules learned the hard way (all confirmed in game)
 
 - **Park, don't hide.** `Visible=false` does not stick on Blizzard panels; move the frame
@@ -391,6 +414,17 @@ doubloons). **Next: Garden of Terror** (`HauntedWoods`, unconfirmed; the plain m
 "Simple"; it has its own layout file too). For each, screenshots of: the map id at load
 (the diagnostic, now just that line), each banner as it comes up, anything hanging off the
 minimap's bottom. Hero test rosters come from the tracker in item 14 ("not seen yet").
+
+**Recheck after the banner protocols (2026-10-12, d2604a6 and after; §3 "Banners").** The banners
+have been rebuilt on the two builders. Check each when its map comes up:
+- **Mines, shrines, seeds, curse:** the banner holds its width while the count runs, down to single
+  digits. A narrow count leaves a wider space before it.
+- **Dragon Knight:** both bars are on the standard tip now, red's 3 units (about 3 px) left and
+  blue's 2 units out.
+- **Curse, red:** 3 units left.
+- **Curse, blue:** now the mirror, never seen. The raven is flipped at the outer end with its glow
+  around it, the words read toward the tip, and the bar runs from the raven to blue's inner edge.
+- **Cannons and Terrors:** unchanged, position for position.
 
 1. **Look in game at what's built but unseen** (build 2026-10-09 evening):
    - **Haunted Mines: DONE (user, 2026-10-09).** The two views and the glide (once only), the
