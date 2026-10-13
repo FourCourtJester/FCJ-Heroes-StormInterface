@@ -1141,7 +1141,9 @@ SKULL_PLAQUE_W = 200
 # bar's: a Height of 50 drew it 30 px tall, its slices off). The drawn map's middle is the
 # minimap square's (438 units, its half 219); 1 unit = 0.9 px.
 SKULL_GAP_PX = (-8, 35)
-SKULL_PLAQUE_DOWN_PX = 2   # its middle 2 px under the gap's (user, 2026-10-09, by eye)
+SKULL_PLAQUE_DOWN_PX = -6  # centred in the gap (user, 2026-10-12). At 2 (2 under, by eye 2026-10-09) its
+                           # middle read 922-923 at 1080p, the gap's 913-915 (the surface's bottom 893-894,
+                           # the mines' top 932-937 under the hero icons): 8 up
 # Its height: 28 px (user, 2026-10-09: the size a squeezed nine-slice drew, "about the size I
 # want"). The art is a nine-slice 42 px tall: drawn shorter as one (a Height, or anchored top and
 # bottom) its corners overlap and only the top bracket shows - Blizzard only ever draws it
