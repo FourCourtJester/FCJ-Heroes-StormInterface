@@ -1185,16 +1185,42 @@
 	<Frame type="Frame" name="AVNotificationFrameTemplate" file="AlteracMechanics">
 		<StateGroup name="FCJH_CampWords">
 			<DefaultState val="Theirs"/>
-			<State name="Event120"><When type="AnimationState" EventID="12"/><When type="Property" frame="$this/NotificationLabel" Text="Allies capturing enemy camp"/><Action type="SetProperty" frame="$this/NotificationLabel" Text="Alliance capturing Horde camp"/></State>
-			<State name="Event121"><When type="AnimationState" EventID="12"/><When type="Property" frame="$this/NotificationLabel" Text="Enemies capturing allied camp"/><Action type="SetProperty" frame="$this/NotificationLabel" Text="Alliance capturing Horde camp"/></State>
-			<State name="Event210"><When type="AnimationState" EventID="21"/><When type="Property" frame="$this/NotificationLabel" Text="Allies capturing enemy camp"/><Action type="SetProperty" frame="$this/NotificationLabel" Text="Horde capturing Alliance camp"/></State>
-			<State name="Event211"><When type="AnimationState" EventID="21"/><When type="Property" frame="$this/NotificationLabel" Text="Enemies capturing allied camp"/><Action type="SetProperty" frame="$this/NotificationLabel" Text="Horde capturing Alliance camp"/></State>
-			<State name="Event110"><When type="AnimationState" EventID="11"/><When type="Property" frame="$this/NotificationLabel" Text="Allies retook their camp"/><Action type="SetProperty" frame="$this/NotificationLabel" Text="Alliance retook their camp"/></State>
-			<State name="Event111"><When type="AnimationState" EventID="11"/><When type="Property" frame="$this/NotificationLabel" Text="Enemies retook their camp"/><Action type="SetProperty" frame="$this/NotificationLabel" Text="Alliance retook their camp"/></State>
-			<State name="Event220"><When type="AnimationState" EventID="22"/><When type="Property" frame="$this/NotificationLabel" Text="Allies retook their camp"/><Action type="SetProperty" frame="$this/NotificationLabel" Text="Horde retook their camp"/></State>
-			<State name="Event221"><When type="AnimationState" EventID="22"/><When type="Property" frame="$this/NotificationLabel" Text="Enemies retook their camp"/><Action type="SetProperty" frame="$this/NotificationLabel" Text="Horde retook their camp"/></State>
+			<State name="Event120"><When type="AnimationState" EventID="12"/><When type="Property" frame="$this/NotificationLabel" Text="Allies capturing enemy camp"/><Action type="SetProperty" frame="$this/NotificationLabel" Text="Alliance capturing Horde camp"/><Action type="SetProperty" frame="$this/FCJH_CampDiagState" Text="match 12"/></State>
+			<State name="Event121"><When type="AnimationState" EventID="12"/><When type="Property" frame="$this/NotificationLabel" Text="Enemies capturing allied camp"/><Action type="SetProperty" frame="$this/NotificationLabel" Text="Alliance capturing Horde camp"/><Action type="SetProperty" frame="$this/FCJH_CampDiagState" Text="match 12"/></State>
+			<State name="Event210"><When type="AnimationState" EventID="21"/><When type="Property" frame="$this/NotificationLabel" Text="Allies capturing enemy camp"/><Action type="SetProperty" frame="$this/NotificationLabel" Text="Horde capturing Alliance camp"/><Action type="SetProperty" frame="$this/FCJH_CampDiagState" Text="match 21"/></State>
+			<State name="Event211"><When type="AnimationState" EventID="21"/><When type="Property" frame="$this/NotificationLabel" Text="Enemies capturing allied camp"/><Action type="SetProperty" frame="$this/NotificationLabel" Text="Horde capturing Alliance camp"/><Action type="SetProperty" frame="$this/FCJH_CampDiagState" Text="match 21"/></State>
+			<State name="Event110"><When type="AnimationState" EventID="11"/><When type="Property" frame="$this/NotificationLabel" Text="Allies retook their camp"/><Action type="SetProperty" frame="$this/NotificationLabel" Text="Alliance retook their camp"/><Action type="SetProperty" frame="$this/FCJH_CampDiagState" Text="match 11"/></State>
+			<State name="Event111"><When type="AnimationState" EventID="11"/><When type="Property" frame="$this/NotificationLabel" Text="Enemies retook their camp"/><Action type="SetProperty" frame="$this/NotificationLabel" Text="Alliance retook their camp"/><Action type="SetProperty" frame="$this/FCJH_CampDiagState" Text="match 11"/></State>
+			<State name="Event220"><When type="AnimationState" EventID="22"/><When type="Property" frame="$this/NotificationLabel" Text="Allies retook their camp"/><Action type="SetProperty" frame="$this/NotificationLabel" Text="Horde retook their camp"/><Action type="SetProperty" frame="$this/FCJH_CampDiagState" Text="match 22"/></State>
+			<State name="Event221"><When type="AnimationState" EventID="22"/><When type="Property" frame="$this/NotificationLabel" Text="Enemies retook their camp"/><Action type="SetProperty" frame="$this/NotificationLabel" Text="Horde retook their camp"/><Action type="SetProperty" frame="$this/FCJH_CampDiagState" Text="match 22"/></State>
+			<State name="ByEvent12"><When type="AnimationState" EventID="12"/><When type="Property" frame="$this/NotificationLabel" Text="Alliance capturing Horde camp" operator="NotEqual"/><Action type="SetProperty" frame="$this/NotificationLabel" Text="Alliance capturing Horde camp"/><Action type="SetProperty" frame="$this/FCJH_CampDiagState" Text="event 12"/></State>
+			<State name="ByEvent21"><When type="AnimationState" EventID="21"/><When type="Property" frame="$this/NotificationLabel" Text="Horde capturing Alliance camp" operator="NotEqual"/><Action type="SetProperty" frame="$this/NotificationLabel" Text="Horde capturing Alliance camp"/><Action type="SetProperty" frame="$this/FCJH_CampDiagState" Text="event 21"/></State>
+			<State name="ByEvent11"><When type="AnimationState" EventID="11"/><When type="Property" frame="$this/NotificationLabel" Text="Alliance retook their camp" operator="NotEqual"/><Action type="SetProperty" frame="$this/NotificationLabel" Text="Alliance retook their camp"/><Action type="SetProperty" frame="$this/FCJH_CampDiagState" Text="event 11"/></State>
+			<State name="ByEvent22"><When type="AnimationState" EventID="22"/><When type="Property" frame="$this/NotificationLabel" Text="Horde retook their camp" operator="NotEqual"/><Action type="SetProperty" frame="$this/NotificationLabel" Text="Horde retook their camp"/><Action type="SetProperty" frame="$this/FCJH_CampDiagState" Text="event 22"/></State>
 			<State name="Theirs"/>
 		</StateGroup>
+		<Frame type="Label" name="FCJH_CampDiagText">
+			<Anchor side="Bottom" relative="$parent/BackgroundImage" pos="Min" offset="-4"/>
+			<Anchor side="Left" relative="$parent/BackgroundImage" pos="Min" offset="0"/>
+			<Width val="600"/>
+			<Height val="26"/>
+			<Style val="WaitingForPlayersDialogChat"/>
+			<Options val="NoWrapping"/>
+			<Unclipped val="true"/>
+			<AcceptsMouse val="false"/>
+			<Text val="{$parent/NotificationLabel/@Text}"/>
+		</Frame>
+		<Frame type="Label" name="FCJH_CampDiagState">
+			<Anchor side="Bottom" relative="$parent/BackgroundImage" pos="Min" offset="-30"/>
+			<Anchor side="Left" relative="$parent/BackgroundImage" pos="Min" offset="0"/>
+			<Width val="600"/>
+			<Height val="26"/>
+			<Style val="WaitingForPlayersDialogChat"/>
+			<Options val="NoWrapping"/>
+			<Unclipped val="true"/>
+			<AcceptsMouse val="false"/>
+			<Text val="none"/>
+		</Frame>
 	</Frame>
 	<!-- ===== Battlefield of Eternity ===== -->
 	<Frame type="Frame" name="BossDuelPanel" file="BossDuel">

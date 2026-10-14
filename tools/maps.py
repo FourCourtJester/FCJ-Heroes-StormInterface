@@ -1435,13 +1435,30 @@ def camp_words():
     The first build drew a label of ours over Blizzard's, hidden by Visible: ours drew nothing
     (its Style bound to Blizzard's label's) and Blizzard's stayed up (user, 2026-10-14).
     -> {path: xml} for PARTS."""
+    diag = lambda what: f'<Action type="SetProperty" frame="$this/FCJH_CampDiagState" Text="{what}"/>'
     states = "".join(
         f'\t<State name="Event{event}{n}"><When type="AnimationState" EventID="{event}"/>'
         f'<When type="Property" frame="$this/NotificationLabel" Text="{theirs}"/>'
-        f'<Action type="SetProperty" frame="$this/NotificationLabel" Text="{ours}"/></State>\n'
+        f'<Action type="SetProperty" frame="$this/NotificationLabel" Text="{ours}"/>{diag(f"match {event}")}</State>\n'
         for event, (words, ours) in CAMP_WORDS.items() for n, theirs in enumerate(words))
+    # DIAGNOSTIC (2026-10-14): the words still showed Blizzard's twice. A fallback by the event
+    # alone (any text but ours), and two lines over the banner: the label's Text as it reads,
+    # and which state last fired.
+    states += "".join(
+        f'\t<State name="ByEvent{event}"><When type="AnimationState" EventID="{event}"/>'
+        f'<When type="Property" frame="$this/NotificationLabel" Text="{ours}" operator="NotEqual"/>'
+        f'<Action type="SetProperty" frame="$this/NotificationLabel" Text="{ours}"/>{diag(f"event {event}")}</State>\n'
+        for event, (words, ours) in CAMP_WORDS.items())
+    line = lambda name_, up, text: {f"AVNotificationFrameTemplate/{name_}:Label": (
+        f'<Anchor side="Bottom" relative="$parent/BackgroundImage" pos="Min" offset="{-up}"/>\n'
+        '<Anchor side="Left" relative="$parent/BackgroundImage" pos="Min" offset="0"/>\n'
+        '<Width val="600"/>\n<Height val="26"/>\n<Style val="WaitingForPlayersDialogChat"/>\n'
+        '<Options val="NoWrapping"/>\n<Unclipped val="true"/>\n<AcceptsMouse val="false"/>\n'
+        f'<Text val="{text}"/>\n')}
     return {"AVNotificationFrameTemplate": f'<StateGroup name="FCJH_CampWords">\n\t<DefaultState val="Theirs"/>\n'
-                                           + states + '\t<State name="Theirs"/>\n</StateGroup>\n'}
+                                           + states + '\t<State name="Theirs"/>\n</StateGroup>\n',
+            **line("FCJH_CampDiagText", 4, "{$parent/NotificationLabel/@Text}"),
+            **line("FCJH_CampDiagState", 30, "none")}
 
 
 PARTS["alterac_pass"] = {"AlteracMechanicsPanel": f'<Width val="{AV_PANEL_W}"/>\n',
