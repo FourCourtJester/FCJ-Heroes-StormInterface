@@ -1003,15 +1003,46 @@
 			</Animation>
 			<StateGroup name="FCJH_AVSide">
 				<DefaultState val="Neutral"/>
-				<State name="Blue"><When type="AnimationState" frame="$parent/AVMechanicContainer" TeamWins="1"/><Action type="SendEvent" frame="$this" event="FCJH_Blue"/></State>
-				<State name="Red"><When type="AnimationState" frame="$parent/AVMechanicContainer" TeamWins="2"/><Action type="SendEvent" frame="$this" event="FCJH_Red"/></State>
+				<State name="Blue"><When type="AnimationState" frame="$parent/AVMechanicContainer" TeamWins="1"/><Action type="SendEvent" frame="$this" event="FCJH_Blue"/><Action type="SendEvent" frame="$parent/FCJH_AVBlink" event="FCJH_Won"/></State>
+				<State name="Red"><When type="AnimationState" frame="$parent/AVMechanicContainer" TeamWins="2"/><Action type="SendEvent" frame="$this" event="FCJH_Red"/><Action type="SendEvent" frame="$parent/FCJH_AVBlink" event="FCJH_Won"/></State>
 				<State name="Neutral"><Action type="SendEvent" frame="$this" event="FCJH_Neutral"/></State>
 			</StateGroup>
 		</Frame>
+		<Frame type="Frame" name="FCJH_AVBlink">
+			<Anchor side="Right" relative="$parent/FCJH_AVCarrier" pos="Max" offset="0"/>
+			<Anchor side="Bottom" relative="$parent/FCJH_AVCarrier" pos="Max" offset="0"/>
+			<Width val="488"/>
+			<Height val="99"/>
+			<AcceptsMouse val="false"/>
+			<Animation name="FCJH_Blink">
+				<Event event="FCJH_Won" action="Restart,Play"/>
+				<Controller type="Anchor" end="Pause" side="Bottom" relative="true">
+					<Key type="Curve" time="0" value="0"/>
+					<Key type="Curve" time="0.001" value="2000"/>
+					<Key type="Curve" time="0.6" value="2000"/>
+					<Key type="Curve" time="0.61" value="0"/>
+				</Controller>
+			</Animation>
+		</Frame>
+		<Frame type="Frame" name="FCJH_AVSlain">
+			<Anchor side="Right" relative="$parent/FCJH_AVBlink" pos="Max" offset="0"/>
+			<Anchor side="Bottom" relative="$parent/FCJH_AVBlink" pos="Max" offset="0"/>
+			<Width val="488"/>
+			<Height val="99"/>
+			<AcceptsMouse val="false"/>
+			<Animation name="FCJH_Slain">
+				<Event event="CavalrySlain" action="Restart,Play" frame="$parent/AVMechanicContainer"/>
+				<Event event="Show" action="Reset" frame="$parent/AVMechanicContainer"/>
+				<Controller type="Anchor" end="Pause" side="Bottom" relative="true">
+					<Key type="Curve" time="0" value="0"/>
+					<Key type="Curve" time="0.001" value="2000"/>
+				</Controller>
+			</Animation>
+		</Frame>
 		<Frame type="Frame" name="AVMechanicContainer">
-			<Anchor side="Top" relative="$parent/FCJH_AVCarrier" pos="Max" offset="-28"/>
-			<Anchor side="Bottom" relative="$parent/FCJH_AVCarrier" pos="Max" offset="-28"/>
-			<Anchor side="Right" relative="$parent/FCJH_AVCarrier" pos="Max" offset="16"/>
+			<Anchor side="Top" relative="$parent/FCJH_AVSlain" pos="Max" offset="-28"/>
+			<Anchor side="Bottom" relative="$parent/FCJH_AVSlain" pos="Max" offset="-28"/>
+			<Anchor side="Right" relative="$parent/FCJH_AVSlain" pos="Max" offset="16"/>
 			<Frame type="Frame" name="ProgressBarMasker">
 				<Frame type="Frame" name="ProgressBarsContainer">
 					<Anchor side="Left" relative="$parent/$parent/BackgroundImage" pos="Mid" offset="4"/>

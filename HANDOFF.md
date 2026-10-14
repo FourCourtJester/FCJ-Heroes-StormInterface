@@ -525,6 +525,14 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
        before the outro, `TeamWins` is set before "MechanicDone" and the delay needs raising;
      - the next prisoners back above the minimap (if not, `TeamWins` doesn't return to 0);
      - the hexagon jumps with it at 0.6 s (a cut, not a slide).
+     **Seen (user, 2026-10-13):** the outro above the minimap and then the jump "looks like a
+     staggered movement; not quite polished", and when blue's cavalry died the slain banner went
+     back above the minimap (the script resets `TeamWins` and sends "Hide" 5 s after
+     "CavalrySlain"). Now (`maps.av_parkers`): the banner is parked off-screen from the win until
+     it lands on the winner's spot at 0.6 s, and from "CavalrySlain" until the next round's
+     "Show": no outro above the minimap and no slain line. Unseen.
+   - The neutral banner sits 10 px lower (user, 2026-10-13: `[minimap.panel_nudge]`
+     alterac_pass; the cavalry's jump allows for it, so only the neutral moved).
    - **The cage bars broke (user, 2026-10-13, against the default UI):** in Blizzard's, the fill
      and its timer move while the team-coloured backing stands the bar's length; in ours the
      backing slid along with the fill. Cause: `Unclipped` on the frame (to draw past its panel on

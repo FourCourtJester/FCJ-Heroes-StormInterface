@@ -1222,6 +1222,7 @@ AV_HALF_H = 50                  # half Blizzard's frame (Height 100), centred on
 AV_MID = 245                    # Blizzard's frame's middle under its panel's (alteracmechanics)
 AV_HANDOFF_S = 0.6              # the cage won ("MechanicDone"), its bars are gone and the cavalry's
                                 # plate shows 0.6 s on, sliding in from there: the carrier moves then
+AV_PARK = 2000                  # units down: off the screen's bottom (av_parkers)
 TEAM_WINS = {"Blue": 1, "Red": 2}
 # Its panel is a strip up the minimap's right (1000 wide) and clips what it holds: red's spot is
 # past it. Unclipped on the frame let it draw there, but it also took the clipping from inside it -
@@ -1246,7 +1247,8 @@ def av_neutral(down):
 def av_carrier():
     """The carrier the banner hangs off: at Blizzard's place (av_neutral), the art's box; the cage
     won, it jumps to the winner's spot AV_HANDOFF_S on, by #FCJH_MAP_AV_<TEAM>_DX/_DY (gen.py) - a
-    relative Anchor controller, held there (end Pause) until the next round puts it back (Reset)."""
+    relative Anchor controller, held there (end Pause) until the next round puts it back (Reset).
+    The banner hangs off it through two parkers (av_parkers), which hide it meanwhile."""
     l, tp, r, b = AV_BOX
     out = (f'<Anchor side="Right"  relative="$parent" pos="Max" offset="{r - AV_PANEL_GROW}"/>\n'
            f'<Anchor side="Bottom" relative="$parent" pos="Mid" offset="{AV_MID + b - AV_HALF_H}"/>\n'
@@ -1264,16 +1266,47 @@ def av_carrier():
         out += '</Animation>\n'
     when = lambda team: f'<When type="AnimationState" frame="$parent/AVMechanicContainer" TeamWins="{TEAM_WINS[team]}"/>'
     send = lambda event: f'<Action type="SendEvent" frame="$this" event="FCJH_{event}"/>'
+    blink = '<Action type="SendEvent" frame="$parent/FCJH_AVBlink" event="FCJH_Won"/>'
     return (out + '<StateGroup name="FCJH_AVSide">\n\t<DefaultState val="Neutral"/>\n'
-            + "".join(f'\t<State name="{team}">{when(team)}{send(team)}</State>\n' for team in TEAM_WINS)
+            + "".join(f'\t<State name="{team}">{when(team)}{send(team)}{blink}</State>\n' for team in TEAM_WINS)
             + f'\t<State name="Neutral">{send("Neutral")}</State>\n</StateGroup>\n')
 
 
+def av_parkers():
+    """Between the carrier and the banner, two frames that park it off the screen's bottom
+    (AV_PARK; user, 2026-10-13 - "completely hide the neutral when a side completes the event"):
+    FCJH_AVBlink from the cage's win until the carrier lands on the winner's spot (no outro above
+    the minimap, no jump across: it read as a staggered movement), and FCJH_AVSlain from the
+    cavalry's death ("CavalrySlain") until the next round's "Show" (the script resets TeamWins
+    and fades the banner 5 s after the death: the carrier went home and the slain line faded out
+    above the minimap). Each its own frame, each animation's first key 0, so a Reset, whatever
+    it holds, never leaves the banner parked. -> {path: xml} for PARTS."""
+    l, tp, r, b = AV_BOX
+    av = "$parent/AVMechanicContainer"
+
+    def parker(on, name_, events, keys):
+        return ("".join(f'<Anchor side="{sd}" relative="$parent/{on}" pos="Max" offset="0"/>\n'
+                        for sd in ("Right", "Bottom"))
+                + f'<Width val="{r - l}"/>\n<Height val="{b - tp}"/>\n<AcceptsMouse val="false"/>\n'
+                + f'<Animation name="{name_}">\n'
+                + "".join(f'\t<Event event="{e}" action="{a}"' + (f' frame="{f}"' if f else "") + '/>\n'
+                          for e, a, f in events)
+                + '\t<Controller type="Anchor" end="Pause" side="Bottom" relative="true">\n'
+                + "".join(f'\t\t<Key type="Curve" time="{t}" value="{v}"/>\n' for t, v in keys)
+                + '\t</Controller>\n</Animation>\n')
+    return {"AlteracMechanicsPanel/FCJH_AVBlink":
+                parker("FCJH_AVCarrier", "FCJH_Blink", [("FCJH_Won", "Restart,Play", "")],
+                       [(0, 0), (0.001, AV_PARK), (AV_HANDOFF_S, AV_PARK), (AV_HANDOFF_S + 0.01, 0)]),
+            "AlteracMechanicsPanel/FCJH_AVSlain":
+                parker("FCJH_AVBlink", "FCJH_Slain", [("CavalrySlain", "Restart,Play", av), ("Show", "Reset", av)],
+                       [(0, 0), (0.001, AV_PARK)])}
+
+
 def av_frame():
-    """Blizzard's frame on the carrier, its art on the carrier's box (AV_BOX)."""
+    """Blizzard's frame on the carrier (through the parkers), its art on the carrier's box (AV_BOX)."""
     l, tp, r, b = AV_BOX
     mid = AV_HALF_H - b                 # its middle, from the carrier's bottom (the art's)
-    return "".join(f'<Anchor side="{sd}" relative="$parent/FCJH_AVCarrier" pos="Max" offset="{off}"/>\n'
+    return "".join(f'<Anchor side="{sd}" relative="$parent/FCJH_AVSlain" pos="Max" offset="{off}"/>\n'
                    for sd, off in (("Top", mid), ("Bottom", mid), ("Right", -r)))
 
 
@@ -1376,6 +1409,7 @@ def camp_words():
 
 PARTS["alterac_pass"] = {"AlteracMechanicsPanel": f'<Width val="{AV_PANEL_W}"/>\n',
                          "AlteracMechanicsPanel/FCJH_AVCarrier": av_carrier(),
+                         **av_parkers(),
                          "AlteracMechanicsPanel/AVMechanicContainer": av_frame(),
                          "AlteracMechanicsPanel/AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer": av_bars(),
                          "AlteracMechanicsPanel/FCJH_CampSlot1": camp_slot(1),
