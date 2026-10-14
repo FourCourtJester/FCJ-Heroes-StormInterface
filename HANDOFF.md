@@ -510,7 +510,8 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    - The Terrors' health is on the summoning team's side (`team_banner`, told by its ACTIVE seed
      count): blue's is Blizzard's way round, red's the mirror. **Blue's not seen yet** - blue never
      summoned in the test replay; look next time.
-   **Alterac Pass: DONE (user, 2026-10-14: "That looks great!").** Its id `AlteracPass` read in game. One Blizzard
+   **Alterac Pass: DONE, every item closed (user, 2026-10-14: "That looks great!", then on the
+   clean build 0c07030: "Everything can be marked off for alterac").** Its id `AlteracPass` read in game. One Blizzard
    frame (`AVMechanicContainer`) shows the prisoners countdown, then the cage fight, then the
    cavalry's health. Measured at Blizzard's place (all four modes seen there, both teams' cavalry).
    - It hangs off a carrier of ours (`maps.av_carrier`). The first build (caa5687) put the
@@ -558,9 +559,9 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
      Blizzard's animations slide its parts: the hexagon 373 left when the cage starts, the cage
      bars and the cavalry's fill-up in from the left. Each slide counts from its layout anchor, so
      no state can mirror them. Blue's cavalry is Blizzard's way round, which is blue's mirror; red's
-     keeps the hexagon at the inner end. **Later, maybe:** restate those animations for red and
-     flip the cage's `ProgressBar`s (the `$this` anchor trick, untested - no Blizzard bar fills
-     right to left).
+     keeps the hexagon at the inner end. Accepted as is (user, 2026-10-14: everything marked off).
+     If it's ever wanted: restate those animations for red and flip the cage's `ProgressBar`s
+     (the `$this` anchor trick, untested - no Blizzard bar fills right to left).
    - **The camp alerts (`NotificationFrame1`/`2`) go to the side their event names (user,
      2026-10-13):** Alliance's (EventID 11/12) on blue's, Horde's (21/22) on red's, on that side's
      stack - a slot up for the cavalry there, and alert 2 a slot up for alert 1 there. Each hangs
@@ -585,8 +586,8 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
      alone (any language gets ours in English); until a state runs it mirrors Blizzard's words
      (after a replay seek one alert showed no state had run). CONFIRMED (user, 2026-10-14): both
      teams' words, several rounds, after a fast-forward to 8:37; the diagnostic line is gone.
-     **Later:** the cavalry-slain line ("All Allied/Enemy Cavalry Slain", in the banner itself) is
-     the same problem. Its label has a Visibility animation, so it needs another way to hide it.
+     The cavalry-slain line ("All Allied/Enemy Cavalry Slain", in the banner itself) had the same
+     player's wording, but it never shows now: the banner is parked from "CavalrySlain" (above).
    **Then the rest of the newer maps' QA
    (Battlefield, Hanamura - its ICON art unmeasured -, Shrines, Sky Temple, Tomb,
    Volskaya, Warhead). Any map could get a two-view or other per-map behaviour the same way
