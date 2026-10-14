@@ -626,6 +626,9 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    fixes that); the shots' art then runs 274 left of the placed edge to 246 right of it, bar
    bottom 28 over the box's (off one blue screen; never committed -
    these numbers are the record). The countdown on red's side was 95114db.
+   Next try, if wanted (2026-10-14, ~75-85%): not copies (the status's validator gets its unit
+   from the script only) but Alterac's way - each team's shots frame on a carrier on its side,
+   a parker hiding the status's outro; the unknown is the script's cue for the hand-off.
    Also: THE GAP's measure here is still ESTIMATED (`above`) - measure it off any screen of the status.
    Roster played (user, 2026-10-14): blue Azmodan, Cassia, Lunara, Tassadar, Yrel; red Medivh,
    Deathwing, Abathur, Samuro, D.Va.
@@ -1061,7 +1064,7 @@ commits around it).
     here until then (no replay with them yet):
     - **Heroes seen in game - the tracker (user, 2026-10-09). Update it after every replay; the
       user's own list is the source (a reconstruction from chat logs missed 15).** 91
-      heroes (Cho and Gall counted apart; Xal'atath the newest); 86 seen:
+      heroes (Cho and Gall counted apart; Xal'atath the newest); ALL 91 seen (2026-10-14):
       - **In the user's replays across 4 maps (user's list, 2026-10-09; 39):** Illidan, Stitches, Probius, Brightwing, Tychus, Fenix, Anub'arak, Tyrael, Zagara, Rehgar, Uther, Murky, Zarya, Gazlowe, Nova, Zeratul, Sgt. Hammer, Lt. Morales, Hogger, Leoric, Deathwing, Alexstrasza, Ragnaros, Greymane, Valeera, Samuro, D.Va, Chen, Medivh, Auriel, Chromie, Sonya, Johanna, Rexxar, The Lost Vikings, Tracer, Varian, Xal'atath, Abathur.
         (The user's list also had "Varion" beside Varian - read as a typo; ask if not.)
       - **Named in earlier sessions, not in those replays (7):** Blaze, Diablo, Jaina, Li Li, Lúcio, Maiev, Xul.
@@ -1075,8 +1078,9 @@ commits around it).
         Hanzo, Anduin, E.T.C., Kerrigan, Sylvanas, Mephisto, Malfurion.
       - **Alterac Pass's roster, played (user, 2026-10-12; 10):** blue Artanis, Kharazim,
         Falstad, Mei, Tyrande; red Imperius, Mal'Ganis, Raynor, Orphea, Deckard.
-      - **Next roster (the next map):** the last five unseen, any seen five beside them.
-      - **Not seen yet (5):** Azmodan, Cassia, Lunara, Tassadar, Yrel.
+      - **Hanamura Temple's roster, played (user, 2026-10-14; 10):** blue Azmodan, Cassia, Lunara,
+        Tassadar, Yrel (the last five unseen); red Medivh, Deathwing, Abathur, Samuro, D.Va.
+      - **Next rosters:** for the form checks below (no hero is unseen now).
     - **forms** (item 3): Medivh's Raven, Deathwing in Dragonflight and as World Breaker,
       Alexstrasza's Dragonqueen, Ragnaros in Molten Core, Greymane's Worgen, Valeera
       stealthed - each gets the TALL card with its player's portrait, talents and name, and
