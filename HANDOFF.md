@@ -531,6 +531,11 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
      "CavalrySlain"). Now (`maps.av_parkers`): the banner is parked off-screen from the win until
      it lands on the winner's spot at 0.6 s, and from "CavalrySlain" until the next round's
      "Show": no outro above the minimap and no slain line. Unseen.
+   - **Both teams capturing lit only one half of the cage's hexagon** (Blizzard's, seen in Ahli's
+     too; user, 2026-10-13): it lights "who's winning", whoever channelled first. Now
+     (`maps.av_both_lit`): with both bars capturing (`TopBarCaptured` and `BottomBarCaptured` "10"
+     or "11"), our copies of both lit halves and glows draw over Blizzard's darkened half. Unseen.
+     If a copy shows outside a capture (after the win, say), the bars' states outlive it.
    - The neutral banner sits 10 px lower (user, 2026-10-13: `[minimap.panel_nudge]`
      alterac_pass; the cavalry's jump allows for it, so only the neutral moved).
    - **The cage bars broke (user, 2026-10-13, against the default UI):** in Blizzard's, the fill

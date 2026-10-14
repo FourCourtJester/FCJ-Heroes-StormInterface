@@ -1302,6 +1302,46 @@ def av_parkers():
                        [(0, 0), (0.001, AV_PARK)])}
 
 
+# The cage's hexagon lights one half - "who's winning" (TeamWinningCage), set to whichever team
+# channelled first - so with both teams capturing, only that team's half shows lit (Blizzard's
+# own, seen in Ahli's too; user, 2026-10-13). The bars say each team's capture apart
+# (TopBarCaptured: Order's, BottomBarCaptured: Chaos's, in the everyone view; "10" capturing,
+# "11" contested): with both on, our copies of both lit halves and their glows draw over
+# Blizzard's darkened half. Copies, not Blizzard's images, so no state of ours fights theirs.
+AV_ICON = "AlteracMechanicsPanel/AVMechanicContainer/Team0Icon/IconContainer/FCJH_BothLit"
+AV_LIT = (("FCJH_OrderLit", "Order", "TimerBGNeutralAlliance", False),
+          ("FCJH_ChaosLit", "Chaos", "TimerBGNeutralHorde", False),
+          ("FCJH_OrderGlow", "Order", "TimerBGGlowAlliance", True),
+          ("FCJH_ChaosGlow", "Chaos", "TimerBGGlowHorde", True))
+
+
+def av_both_lit():
+    av = "$parent/$parent/$parent"          # AVMechanicContainer, from the copies' frame
+    states = "".join(f'\t<State name="Both{t}{b}"><When type="AnimationState" frame="{av}" TopBarCaptured="{t}"/>'
+                     f'<When type="AnimationState" frame="{av}" BottomBarCaptured="{b}"/>'
+                     '<Action type="SetProperty" frame="$this" Visible="true"/></State>\n'
+                     for t in ("10", "11") for b in ("10", "11"))
+    colours = '{$ancestor[@name=AlteracMechanicsPanel]/UnitStatusColorContainer/Team%s%sColors/@Color}'
+    out = {AV_ICON: ('<Anchor relative="$parent"/>\n<AcceptsMouse val="false"/>\n<Visible val="false"/>\n'
+                     '<StateGroup name="FCJH_BothCapturing">\n\t<DefaultState val="One"/>\n' + states
+                     + '\t<State name="One"><Action type="SetProperty" frame="$this" Visible="false"/></State>\n'
+                     '</StateGroup>\n')}
+    for name_, team, texture, glow in AV_LIT:
+        out[f"{AV_ICON}/{name_}:Image"] = (
+            '<Anchor relative="$parent"/>\n<ColorAdjustMode val="Colorize"/>\n'
+            + ('<BlendMode val="Add"/>\n' if glow else "")
+            + f'<DarkAdjustColor val="{colours % (team, "Dark")}"/>\n'
+            f'<LightAdjustColor val="{colours % (team, "Light")}"/>\n'
+            f'<Texture val="@UI/Storm_UI_HUD_WCAV_{texture}"/>\n<AcceptsMouse val="false"/>\n'
+            + ('<Animation name="FCJH_Pulse">\n\t<Event event="OnShown" action="Restart,Play"/>\n'
+               '\t<Event event="OnShown" action="Restart,Play" frame="$parent"/>\n'
+               '\t<Controller type="Fade" end="PingPong">\n'
+               + "".join(f'\t\t<Key type="Curve" time="{k}" value="{v}" inout="Linear,Fast"/>\n'
+                         for k, v in ((0, 255), (0.5, 127), (1, 255)))
+               + '\t</Controller>\n</Animation>\n' if glow else ""))
+    return out
+
+
 def av_frame():
     """Blizzard's frame on the carrier (through the parkers), its art on the carrier's box (AV_BOX)."""
     l, tp, r, b = AV_BOX
@@ -1412,6 +1452,7 @@ PARTS["alterac_pass"] = {"AlteracMechanicsPanel": f'<Width val="{AV_PANEL_W}"/>\
                          **av_parkers(),
                          "AlteracMechanicsPanel/AVMechanicContainer": av_frame(),
                          "AlteracMechanicsPanel/AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer": av_bars(),
+                         **av_both_lit(),
                          "AlteracMechanicsPanel/FCJH_CampSlot1": camp_slot(1),
                          "AlteracMechanicsPanel/FCJH_CampSlot2": camp_slot(2),
                          "AlteracMechanicsPanel/NotificationFrame1": camp_frame(1),

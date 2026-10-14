@@ -1049,6 +1049,75 @@
 					<Anchor side="Right" relative="$parent/$parent/BackgroundImage" pos="Mid" offset="4"/>
 				</Frame>
 			</Frame>
+			<Frame type="Frame" name="Team0Icon">
+				<Frame type="Frame" name="IconContainer">
+					<Frame type="Frame" name="FCJH_BothLit">
+						<Anchor relative="$parent"/>
+						<AcceptsMouse val="false"/>
+						<Visible val="false"/>
+						<StateGroup name="FCJH_BothCapturing">
+							<DefaultState val="One"/>
+							<State name="Both1010"><When type="AnimationState" frame="$parent/$parent/$parent" TopBarCaptured="10"/><When type="AnimationState" frame="$parent/$parent/$parent" BottomBarCaptured="10"/><Action type="SetProperty" frame="$this" Visible="true"/></State>
+							<State name="Both1011"><When type="AnimationState" frame="$parent/$parent/$parent" TopBarCaptured="10"/><When type="AnimationState" frame="$parent/$parent/$parent" BottomBarCaptured="11"/><Action type="SetProperty" frame="$this" Visible="true"/></State>
+							<State name="Both1110"><When type="AnimationState" frame="$parent/$parent/$parent" TopBarCaptured="11"/><When type="AnimationState" frame="$parent/$parent/$parent" BottomBarCaptured="10"/><Action type="SetProperty" frame="$this" Visible="true"/></State>
+							<State name="Both1111"><When type="AnimationState" frame="$parent/$parent/$parent" TopBarCaptured="11"/><When type="AnimationState" frame="$parent/$parent/$parent" BottomBarCaptured="11"/><Action type="SetProperty" frame="$this" Visible="true"/></State>
+							<State name="One"><Action type="SetProperty" frame="$this" Visible="false"/></State>
+						</StateGroup>
+						<Frame type="Image" name="FCJH_OrderLit">
+							<Anchor relative="$parent"/>
+							<ColorAdjustMode val="Colorize"/>
+							<DarkAdjustColor val="{$ancestor[@name=AlteracMechanicsPanel]/UnitStatusColorContainer/TeamOrderDarkColors/@Color}"/>
+							<LightAdjustColor val="{$ancestor[@name=AlteracMechanicsPanel]/UnitStatusColorContainer/TeamOrderLightColors/@Color}"/>
+							<Texture val="@UI/Storm_UI_HUD_WCAV_TimerBGNeutralAlliance"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<Frame type="Image" name="FCJH_ChaosLit">
+							<Anchor relative="$parent"/>
+							<ColorAdjustMode val="Colorize"/>
+							<DarkAdjustColor val="{$ancestor[@name=AlteracMechanicsPanel]/UnitStatusColorContainer/TeamChaosDarkColors/@Color}"/>
+							<LightAdjustColor val="{$ancestor[@name=AlteracMechanicsPanel]/UnitStatusColorContainer/TeamChaosLightColors/@Color}"/>
+							<Texture val="@UI/Storm_UI_HUD_WCAV_TimerBGNeutralHorde"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<Frame type="Image" name="FCJH_OrderGlow">
+							<Anchor relative="$parent"/>
+							<ColorAdjustMode val="Colorize"/>
+							<BlendMode val="Add"/>
+							<DarkAdjustColor val="{$ancestor[@name=AlteracMechanicsPanel]/UnitStatusColorContainer/TeamOrderDarkColors/@Color}"/>
+							<LightAdjustColor val="{$ancestor[@name=AlteracMechanicsPanel]/UnitStatusColorContainer/TeamOrderLightColors/@Color}"/>
+							<Texture val="@UI/Storm_UI_HUD_WCAV_TimerBGGlowAlliance"/>
+							<AcceptsMouse val="false"/>
+							<Animation name="FCJH_Pulse">
+								<Event event="OnShown" action="Restart,Play"/>
+								<Event event="OnShown" action="Restart,Play" frame="$parent"/>
+								<Controller type="Fade" end="PingPong">
+									<Key type="Curve" time="0" value="255" inout="Linear,Fast"/>
+									<Key type="Curve" time="0.5" value="127" inout="Linear,Fast"/>
+									<Key type="Curve" time="1" value="255" inout="Linear,Fast"/>
+								</Controller>
+							</Animation>
+						</Frame>
+						<Frame type="Image" name="FCJH_ChaosGlow">
+							<Anchor relative="$parent"/>
+							<ColorAdjustMode val="Colorize"/>
+							<BlendMode val="Add"/>
+							<DarkAdjustColor val="{$ancestor[@name=AlteracMechanicsPanel]/UnitStatusColorContainer/TeamChaosDarkColors/@Color}"/>
+							<LightAdjustColor val="{$ancestor[@name=AlteracMechanicsPanel]/UnitStatusColorContainer/TeamChaosLightColors/@Color}"/>
+							<Texture val="@UI/Storm_UI_HUD_WCAV_TimerBGGlowHorde"/>
+							<AcceptsMouse val="false"/>
+							<Animation name="FCJH_Pulse">
+								<Event event="OnShown" action="Restart,Play"/>
+								<Event event="OnShown" action="Restart,Play" frame="$parent"/>
+								<Controller type="Fade" end="PingPong">
+									<Key type="Curve" time="0" value="255" inout="Linear,Fast"/>
+									<Key type="Curve" time="0.5" value="127" inout="Linear,Fast"/>
+									<Key type="Curve" time="1" value="255" inout="Linear,Fast"/>
+								</Controller>
+							</Animation>
+						</Frame>
+					</Frame>
+				</Frame>
+			</Frame>
 		</Frame>
 		<Frame type="Frame" name="FCJH_CampSlot1">
 			<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_CAMP"/>
