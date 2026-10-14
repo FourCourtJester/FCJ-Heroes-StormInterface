@@ -646,7 +646,13 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    to its nudge (maps.shift_lines). Seen on 01359b3: the floor right (the marker ~1062), the
    banner 10 px over the tip. Its art is drawn ~21 px left of its square's centre (the outline's
    sides ~780 / ~1098): the minimap 18 px right (maps.py `across`, its panels taken back in
-   on_minimap - only the map moves, user; 20 seen a touch right, 17 a touch left: 18, user); unseen. Next: the user's idea for the three hexagons.
+   on_minimap - only the map moves, user; 20 seen a touch right, 17 a touch left: 18, user); unseen.
+   The Webweavers' hexagons (user's plan A, 2026-10-14): each team's three - Blizzard's own set
+   per team, `SoulEaterModeBlueFrame` / `RedFrame`, the summoner's shown - stacked over its
+   inner plate, bottom lane lowest, the bottom one on the banners' line (930, clear of the core
+   bar), each 81 px up and 40 out along the plates' slant (maps.weaver_parts; gen.py places
+   them; all Unclipped). Sizes measured off the screen (57 x 67, the textures aren't on disk);
+   unseen. Fallback (plan B): the three in a row on a team banner on the per-side spot.
    **Then the rest of the newer maps' QA
    (Battlefield, Shrines, Sky Temple, Tomb,
    Volskaya, Warhead). Any map could get a two-view or other per-map behaviour the same way

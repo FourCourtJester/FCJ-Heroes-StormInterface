@@ -536,6 +536,21 @@ def constants_layout(cfg):
             for n in range(1, maps.max_stack()):
                 const(name("map", "alert", team, "b", *k, n + 1), bar + art.bar_up - n * maps.step() - oy,
                       f"alert {n + 1} in the stack, {n} up")
+    # Tomb's Webweavers (maps.weaver_parts): each team's three hexagons stacked over its inner
+    # plate, the bottom one's bottom on the banners' line (clear of the core bar), each one's
+    # inner side on the row's inner edge carried up the plates' slant, at its middle's height
+    lines.append("\t<!-- Tomb of the Spider Queen's Webweavers: each hexagon's centre and bottom (maps.weaver_parts) -->")
+    lean = HeroCell(cfg).overlap / HeroCell(cfg).h
+    for team in ("red", "blue"):
+        ox, oy = anchor_origin(cfg, f"{team}_xp")
+        (_, cy, _, _), _ = rects(cfg)[f"{team}_core"]
+        for i, lane in enumerate(maps.WEAVER_LANES):
+            b = cy - above - i * (maps.WEAVER_H_PX + maps.WEAVER_GAP_PX)
+            rise = lean * (row["bottom"] - (b - maps.WEAVER_H_PX / 2))
+            x = row["red_left"] + rise + maps.WEAVER_W_PX / 2 if team == "red" \
+                else row["blue_right"] - rise - maps.WEAVER_W_PX / 2
+            const(name("map", "weaver", team, lane, "x"), u(x) - ox, f"{round(x)} px across")
+            const(name("map", "weaver", team, lane, "b"), u(b) - oy, f"{round(b)} px down")
     # Alterac Pass's banner sits at Blizzard's place above the minimap, and its cavalry jumps to
     # the winning team's spot (maps.av_carrier): the jump, from that place to the spot
     lines.append("\t<!-- Alterac Pass's cavalry: its carrier's move from Blizzard's place to each spot (maps.av_carrier) -->")

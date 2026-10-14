@@ -1843,6 +1843,37 @@ def intro(indent, slide=True):
 
 
 # Garden's seed banners (seed_banner): written here, after intro
+# Tomb's Webweavers (user, 2026-10-14, "plan A"): the three lanes' hexagons on the summoning
+# team's side, stacked over its inner plate - the bottom lane lowest - and stepping out along
+# the plates' slant. Blizzard keeps a set per team (SoulEaterModeBlueFrame / RedFrame; the
+# script shows the summoner's), so each set lives on its side for good. Each lane's health
+# fill, lit frame and fire ring hang off its hexagon; all of it may draw past the panel's box.
+# gen.py places them (FCJH_MAP_WEAVER_<TEAM>_<LANE>_X/_B: the hexagon's centre and bottom).
+WEAVER_W_PX, WEAVER_H_PX = 57, 67     # a hexagon as drawn at 1080p (2026-10-14, 5f04383)
+WEAVER_GAP_PX = 14                    # between hexagons: a live one's fire ring reaches ~12 past it
+WEAVER_LANES = ("Bottom", "Mid", "Top")   # from the stack's bottom up
+
+
+def weaver_parts():
+    out = {}
+    for team, frame in (("blue", "SoulEaterModeBlueFrame"), ("red", "SoulEaterModeRedFrame")):
+        for lane in WEAVER_LANES:
+            at, c = f"CryptPanel/{frame}/", f"#FCJH_MAP_WEAVER_{team.upper()}_{lane.upper()}"
+            out[f"{at}{lane}SoulEaterDisabled:Image"] = (
+                '<Unclipped val="true"/>\n'
+                f'<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="{c}_B"/>\n'
+                f'<Anchor side="Left"   relative="$GameUI" pos="Mid" offset="{c}_X"/>\n'
+                f'<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="{c}_X"/>\n')
+            for part in (f"{lane}SoulEaterHealthDisabled:Image", f"{lane}SoulEaterEnabled:Image",
+                         f"{lane}SoulEaterHealth", f"{lane}SoulEaterHealth/{lane}SoulEaterHealthImage:Image",
+                         f"{lane}FireEffect", f"{lane}FireEffect/FireEffectBase:Image",
+                         f"{lane}FireEffect/FireEffectAdd:Image"):
+                out[at + part] = '<Unclipped val="true"/>\n'
+    return out
+
+
+PARTS["tomb_of_the_spider_queen"] = weaver_parts()
+
 PARTS["garden_of_terror"] = {"EventWarningFrame": seed_banner(True),
                              "GatherTheSeedsFrame": seed_banner(False),
                              "GardenTerrorHealthFrame": terror_frame()}
