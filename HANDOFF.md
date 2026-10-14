@@ -611,7 +611,10 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    hexagon on the tip), so it goes back up 10 (unseen). Hanamura: ESTIMATED from the template
    (35 over at 0), so 25 down - measure it from the next screen and fix `above`. Every newer
    map left gets a measure (and `proxy` if its frames hang off the proxy) in its QA.
-   Red's shots never fired in the test replay.
+   Red's shots never fired in the test replay. A spawn's flick (neutral, blue +1, neutral) was
+   seen in the default UI too; most likely Cassia at the payload's edge as it spawned (user,
+   2026-10-14) - left as is. If it recurs with no one near, suspect the validator's state left
+   from the previous payload (hide the status ~0.25 s after it shows).
    Roster played (user, 2026-10-14): blue Azmodan, Cassia, Lunara, Tassadar, Yrel; red Medivh,
    Deathwing, Abathur, Samuro, D.Va.
    **Then the rest of the newer maps' QA
