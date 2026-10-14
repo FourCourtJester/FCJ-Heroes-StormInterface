@@ -597,7 +597,9 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    intro slides the icon 198 right, past the frame's edge). Now (unseen): the whole objective 26
    px lower (`[minimap.panel_nudge]`), the status's hexagon bottom 10 px over the map's tip
    (798 -> 824, tip 834), and "CONTESTED!" above the hexagon instead of under it (the escort
-   counts there are hidden while contested). Red's shots never fired in the test replay.
+   counts there are hidden while contested). The contested status seen and approved (user,
+   2026-10-14: "Contested looks good"); the countdown and shots not yet seen at the new height.
+   Red's shots never fired in the test replay.
    Roster played (user, 2026-10-14): blue Azmodan, Cassia, Lunara, Tassadar, Yrel; red Medivh,
    Deathwing, Abathur, Samuro, D.Va.
    **Then the rest of the newer maps' QA
