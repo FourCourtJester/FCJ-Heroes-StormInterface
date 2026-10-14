@@ -583,8 +583,8 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
      a later alert (the script rewrites the label; a state already entered doesn't act again).
      Now Blizzard's label is hidden for good and ours, in its style, takes the words by the event
      alone (any language gets ours in English); until a state runs it mirrors Blizzard's words
-     (after a replay seek one alert showed no state had run). Diagnostic line over each alert
-     ("event NN"). Unseen.
+     (after a replay seek one alert showed no state had run). CONFIRMED (user, 2026-10-14): both
+     teams' words, several rounds, after a fast-forward to 8:37; the diagnostic line is gone.
      **Later:** the cavalry-slain line ("All Allied/Enemy Cavalry Slain", in the banner itself) is
      the same problem. Its label has a Visibility animation, so it needs another way to hide it.
    **Then the rest of the newer maps' QA

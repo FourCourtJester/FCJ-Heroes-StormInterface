@@ -1178,10 +1178,10 @@
 			<Anchor side="Right" relative="$parent/FCJH_CampSlot1" pos="Max" offset="0"/>
 			<StateGroup name="FCJH_CampWords">
 				<DefaultState val="None"/>
-				<State name="Event12"><When type="AnimationState" EventID="12"/><Action type="SetProperty" frame="$this/FCJH_CampDiag" Text="event 12"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="Alliance capturing Horde camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamOrderColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamOrderColors/@Color}"/></State>
-				<State name="Event21"><When type="AnimationState" EventID="21"/><Action type="SetProperty" frame="$this/FCJH_CampDiag" Text="event 21"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="Horde capturing Alliance camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamChaosColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamChaosColors/@Color}"/></State>
-				<State name="Event11"><When type="AnimationState" EventID="11"/><Action type="SetProperty" frame="$this/FCJH_CampDiag" Text="event 11"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="Alliance retook their camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamOrderColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamOrderColors/@Color}"/></State>
-				<State name="Event22"><When type="AnimationState" EventID="22"/><Action type="SetProperty" frame="$this/FCJH_CampDiag" Text="event 22"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="Horde retook their camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamChaosColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamChaosColors/@Color}"/></State>
+				<State name="Event12"><When type="AnimationState" EventID="12"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="Alliance capturing Horde camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamOrderColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamOrderColors/@Color}"/></State>
+				<State name="Event21"><When type="AnimationState" EventID="21"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="Horde capturing Alliance camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamChaosColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamChaosColors/@Color}"/></State>
+				<State name="Event11"><When type="AnimationState" EventID="11"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="Alliance retook their camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamOrderColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamOrderColors/@Color}"/></State>
+				<State name="Event22"><When type="AnimationState" EventID="22"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="Horde retook their camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamChaosColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamChaosColors/@Color}"/></State>
 				<State name="None"/>
 			</StateGroup>
 			<Frame type="Label" name="NotificationLabel">
@@ -1198,17 +1198,6 @@
 				<DarkAdjustColor val="{$parent/NotificationLabel/@DarkAdjustColor}"/>
 				<Text val="{$parent/NotificationLabel/@Text}"/>
 				<AcceptsMouse val="false"/>
-			</Frame>
-			<Frame type="Label" name="FCJH_CampDiag">
-				<Anchor side="Bottom" relative="$parent/BackgroundImage" pos="Min" offset="-4"/>
-				<Anchor side="Left" relative="$parent/BackgroundImage" pos="Min" offset="0"/>
-				<Width val="600"/>
-				<Height val="26"/>
-				<Style val="WaitingForPlayersDialogChat"/>
-				<Options val="NoWrapping"/>
-				<Unclipped val="true"/>
-				<AcceptsMouse val="false"/>
-				<Text val="none"/>
 			</Frame>
 		</Frame>
 		<Frame type="Frame" name="NotificationFrame2">
@@ -1216,10 +1205,10 @@
 			<Anchor side="Right" relative="$parent/FCJH_CampSlot2" pos="Max" offset="0"/>
 			<StateGroup name="FCJH_CampWords">
 				<DefaultState val="None"/>
-				<State name="Event12"><When type="AnimationState" EventID="12"/><Action type="SetProperty" frame="$this/FCJH_CampDiag" Text="event 12"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="Alliance capturing Horde camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamOrderColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamOrderColors/@Color}"/></State>
-				<State name="Event21"><When type="AnimationState" EventID="21"/><Action type="SetProperty" frame="$this/FCJH_CampDiag" Text="event 21"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="Horde capturing Alliance camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamChaosColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamChaosColors/@Color}"/></State>
-				<State name="Event11"><When type="AnimationState" EventID="11"/><Action type="SetProperty" frame="$this/FCJH_CampDiag" Text="event 11"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="Alliance retook their camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamOrderColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamOrderColors/@Color}"/></State>
-				<State name="Event22"><When type="AnimationState" EventID="22"/><Action type="SetProperty" frame="$this/FCJH_CampDiag" Text="event 22"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="Horde retook their camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamChaosColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamChaosColors/@Color}"/></State>
+				<State name="Event12"><When type="AnimationState" EventID="12"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="Alliance capturing Horde camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamOrderColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamOrderColors/@Color}"/></State>
+				<State name="Event21"><When type="AnimationState" EventID="21"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="Horde capturing Alliance camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamChaosColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamChaosColors/@Color}"/></State>
+				<State name="Event11"><When type="AnimationState" EventID="11"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="Alliance retook their camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamOrderColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamOrderColors/@Color}"/></State>
+				<State name="Event22"><When type="AnimationState" EventID="22"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="Horde retook their camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamChaosColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamChaosColors/@Color}"/></State>
 				<State name="None"/>
 			</StateGroup>
 			<Frame type="Label" name="NotificationLabel">
@@ -1236,17 +1225,6 @@
 				<DarkAdjustColor val="{$parent/NotificationLabel/@DarkAdjustColor}"/>
 				<Text val="{$parent/NotificationLabel/@Text}"/>
 				<AcceptsMouse val="false"/>
-			</Frame>
-			<Frame type="Label" name="FCJH_CampDiag">
-				<Anchor side="Bottom" relative="$parent/BackgroundImage" pos="Min" offset="-4"/>
-				<Anchor side="Left" relative="$parent/BackgroundImage" pos="Min" offset="0"/>
-				<Width val="600"/>
-				<Height val="26"/>
-				<Style val="WaitingForPlayersDialogChat"/>
-				<Options val="NoWrapping"/>
-				<Unclipped val="true"/>
-				<AcceptsMouse val="false"/>
-				<Text val="none"/>
 			</Frame>
 		</Frame>
 	</Frame>

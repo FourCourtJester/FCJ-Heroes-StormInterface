@@ -1436,13 +1436,11 @@ def camp_words(i):
     the alert's event alone. Writing into Blizzard's label worked once, then the next alert's
     words came back (user, 2026-10-14: "the second volley reverted"): the script rewrites them,
     and a state already entered doesn't act again. The script never touches ours, so a repeat of
-    the same event keeps them. -> {path: xml} for PARTS."""
+    the same event keeps them - seen over several rounds and after a fast-forward (user,
+    2026-10-14). -> {path: xml} for PARTS."""
     frame = f"AlteracMechanicsPanel/NotificationFrame{i}"
-    # DIAGNOSTIC (2026-10-14): which event's state last ran, over the banner - after a replay
-    # seek one alert showed none had (Blizzard's words up); ours mirror Blizzard's until one does
-    diag = lambda what: f'<Action type="SetProperty" frame="$this/FCJH_CampDiag" Text="{what}"/>'
     states = "".join(
-        f'\t<State name="Event{event}"><When type="AnimationState" EventID="{event}"/>{diag(f"event {event}")}'
+        f'\t<State name="Event{event}"><When type="AnimationState" EventID="{event}"/>'
         f'<Action type="SetProperty" frame="$this/FCJH_CampText" Text="{ours}"/>'
         f'<Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{{$GameUI/{colour}/@Color}}"/>'
         f'<Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{{$GameUI/{colour}/@Color}}"/></State>\n'
@@ -1457,12 +1455,7 @@ def camp_words(i):
     return {frame: camp_frame(i) + '<StateGroup name="FCJH_CampWords">\n\t<DefaultState val="None"/>\n'
                    + states + '\t<State name="None"/>\n</StateGroup>\n',
             f"{frame}/NotificationLabel:Label": '<Visible val="false"/>\n',
-            f"{frame}/FCJH_CampText:Label": label,
-            f"{frame}/FCJH_CampDiag:Label": (
-                '<Anchor side="Bottom" relative="$parent/BackgroundImage" pos="Min" offset="-4"/>\n'
-                '<Anchor side="Left" relative="$parent/BackgroundImage" pos="Min" offset="0"/>\n'
-                '<Width val="600"/>\n<Height val="26"/>\n<Style val="WaitingForPlayersDialogChat"/>\n'
-                '<Options val="NoWrapping"/>\n<Unclipped val="true"/>\n<AcceptsMouse val="false"/>\n<Text val="none"/>\n')}
+            f"{frame}/FCJH_CampText:Label": label}
 
 
 PARTS["alterac_pass"] = {"AlteracMechanicsPanel": f'<Width val="{AV_PANEL_W}"/>\n',
