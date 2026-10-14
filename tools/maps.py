@@ -1369,13 +1369,14 @@ CAMP_TEAMS = {"Blue": (11, 12), "Red": (21, 22)}   # EventID: the captor's team,
 # observers, we shouldn't have allies or enemies"). The team is the alert's own event (its
 # EventID, which picks its icon and colours: 1x Order's doing, 2x Chaos's; x2 / x1 the other's
 # camp / its own), so it holds in a player's view too; Blizzard's words only say which kind of
-# event it is and that it's English. Other languages keep Blizzard's words.
-CAMP_WORDS = {   # EventID: (Blizzard's words that event shows, ours)
-    12: (("Allies capturing enemy camp", "Enemies capturing allied camp"), "Alliance capturing Horde camp"),
-    21: (("Allies capturing enemy camp", "Enemies capturing allied camp"), "Horde capturing Alliance camp"),
-    11: (("Allies retook their camp", "Enemies retook their camp"), "Alliance retook their camp"),
-    22: (("Allies retook their camp", "Enemies retook their camp"), "Horde retook their camp"),
+# event it is. Ours are English in every language (camp_words).
+CAMP_WORDS = {   # EventID: (ours - Blizzard's: "Allies/Enemies capturing enemy/allied camp", "... retook their camp"; the colour)
+    12: ("Alliance capturing Horde camp", "TeamOrderColors"),
+    21: ("Horde capturing Alliance camp", "TeamChaosColors"),
+    11: ("Alliance retook their camp", "TeamOrderColors"),
+    22: ("Horde retook their camp", "TeamChaosColors"),
 }
+CAMP_STYLE = "Storm_MapMechanic_MechanicTimerCentered_Blue"   # Blizzard's label's (NotificationFrameTemplate)
 
 
 def av_bars():
@@ -1429,38 +1430,39 @@ def camp_frame(i):
 
 def camp_words(i):
     """Alert i's frame (NotificationFrame1, 2 - not their template: nothing added to
-    AVNotificationFrameTemplate reached them, seen 2026-10-14 by a diagnostic): the side names written into
-    Blizzard's own label, a state per event and English wording - Blizzard's EventID states
-    already colour it by team. Once written its words no longer match, so the group falls back
-    to "Theirs" (no actions) and the label keeps ours until the script writes the next alert.
-    The first build drew a label of ours over Blizzard's, hidden by Visible: ours drew nothing
-    (its Style bound to Blizzard's label's) and Blizzard's stayed up (user, 2026-10-14).
-    -> {path: xml} for PARTS."""
-    diag = lambda what: f'<Action type="SetProperty" frame="$this/FCJH_CampDiagState" Text="{what}"/>'
-    states = "".join(
-        f'\t<State name="Event{event}{n}"><When type="AnimationState" EventID="{event}"/>'
-        f'<When type="Property" frame="$this/NotificationLabel" Text="{theirs}"/>'
-        f'<Action type="SetProperty" frame="$this/NotificationLabel" Text="{ours}"/>{diag(f"match {event}")}</State>\n'
-        for event, (words, ours) in CAMP_WORDS.items() for n, theirs in enumerate(words))
-    # DIAGNOSTIC (2026-10-14): the words still showed Blizzard's twice. A fallback by the event
-    # alone (any text but ours), and two lines over the banner: the label's Text as it reads,
-    # and which state last fired.
-    states += "".join(
-        f'\t<State name="ByEvent{event}"><When type="AnimationState" EventID="{event}"/>'
-        f'<When type="Property" frame="$this/NotificationLabel" Text="{ours}" operator="NotEqual"/>'
-        f'<Action type="SetProperty" frame="$this/NotificationLabel" Text="{ours}"/>{diag(f"event {event}")}</State>\n'
-        for event, (words, ours) in CAMP_WORDS.items())
+    AVNotificationFrameTemplate reached them, seen 2026-10-14 by a diagnostic): Blizzard's label
+    hidden for good (nothing animates its visibility - the intro only fades it - and the script
+    only writes its text), ours in its place in Blizzard's style, its words and team colour by
+    the alert's event alone. Writing into Blizzard's label worked once, then the next alert's
+    words came back (user, 2026-10-14: "the second volley reverted"): the script rewrites them,
+    and a state already entered doesn't act again. The script never touches ours, so a repeat of
+    the same event keeps them. -> {path: xml} for PARTS."""
     frame = f"AlteracMechanicsPanel/NotificationFrame{i}"
-    line = lambda name_, up, text: {f"{frame}/{name_}:Label": (
-        f'<Anchor side="Bottom" relative="$parent/BackgroundImage" pos="Min" offset="{-up}"/>\n'
-        '<Anchor side="Left" relative="$parent/BackgroundImage" pos="Min" offset="0"/>\n'
-        '<Width val="600"/>\n<Height val="26"/>\n<Style val="WaitingForPlayersDialogChat"/>\n'
-        '<Options val="NoWrapping"/>\n<Unclipped val="true"/>\n<AcceptsMouse val="false"/>\n'
-        f'<Text val="{text}"/>\n')}
-    return {frame: camp_frame(i) + '<StateGroup name="FCJH_CampWords">\n\t<DefaultState val="Theirs"/>\n'
-                   + states + '\t<State name="Theirs"/>\n</StateGroup>\n',
-            **line("FCJH_CampDiagText", 4, "{$parent/NotificationLabel/@Text}"),
-            **line("FCJH_CampDiagState", 30, "none")}
+    # DIAGNOSTIC (2026-10-14): which event's state last ran, over the banner - after a replay
+    # seek one alert showed none had (Blizzard's words up); ours mirror Blizzard's until one does
+    diag = lambda what: f'<Action type="SetProperty" frame="$this/FCJH_CampDiag" Text="{what}"/>'
+    states = "".join(
+        f'\t<State name="Event{event}"><When type="AnimationState" EventID="{event}"/>{diag(f"event {event}")}'
+        f'<Action type="SetProperty" frame="$this/FCJH_CampText" Text="{ours}"/>'
+        f'<Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{{$GameUI/{colour}/@Color}}"/>'
+        f'<Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{{$GameUI/{colour}/@Color}}"/></State>\n'
+        for event, (ours, colour) in CAMP_WORDS.items())
+    label = ("".join(f'<Anchor side="{sd}" relative="$parent/NotificationLabel" pos="{pos}" offset="0"/>\n'
+                     for sd, pos in (("Top", "Min"), ("Bottom", "Max"), ("Left", "Min"), ("Right", "Max")))
+             + f'<Style val="{CAMP_STYLE}"/>\n<ColorAdjustMode val="Colorize"/>\n<LightAdjustColor val="#ColorWhite"/>\n'
+             '<DarkAdjustColor val="{$parent/NotificationLabel/@DarkAdjustColor}"/>\n'
+             # Blizzard's words until a state writes ours (a missed state shows theirs, not nothing)
+             '<Text val="{$parent/NotificationLabel/@Text}"/>\n'
+             '<AcceptsMouse val="false"/>\n')   # as the map's label (alteracmechanics AVNotificationFrameTemplate)
+    return {frame: camp_frame(i) + '<StateGroup name="FCJH_CampWords">\n\t<DefaultState val="None"/>\n'
+                   + states + '\t<State name="None"/>\n</StateGroup>\n',
+            f"{frame}/NotificationLabel:Label": '<Visible val="false"/>\n',
+            f"{frame}/FCJH_CampText:Label": label,
+            f"{frame}/FCJH_CampDiag:Label": (
+                '<Anchor side="Bottom" relative="$parent/BackgroundImage" pos="Min" offset="-4"/>\n'
+                '<Anchor side="Left" relative="$parent/BackgroundImage" pos="Min" offset="0"/>\n'
+                '<Width val="600"/>\n<Height val="26"/>\n<Style val="WaitingForPlayersDialogChat"/>\n'
+                '<Options val="NoWrapping"/>\n<Unclipped val="true"/>\n<AcceptsMouse val="false"/>\n<Text val="none"/>\n')}
 
 
 PARTS["alterac_pass"] = {"AlteracMechanicsPanel": f'<Width val="{AV_PANEL_W}"/>\n',

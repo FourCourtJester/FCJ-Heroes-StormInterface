@@ -577,8 +577,14 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
      (2026-10-14), the words weren't: the first build drew a label of ours over Blizzard's, hidden
      by Visible - ours drew nothing (its Style bound to Blizzard's label's) and Blizzard's stayed
      up. Now the side names are written into Blizzard's own label (its EventID states already
-     colour it); once written the words stop matching, so nothing loops. Unseen. Other languages
-     keep Blizzard's words; translate if wanted.
+     colour it); once written the words stop matching, so nothing loops. Nothing added to the
+     alerts' template (`AVNotificationFrameTemplate`) reached them, so the states sit on each
+     alert (`NotificationFrame1`/`2`). Written into Blizzard's label it worked, then reverted on
+     a later alert (the script rewrites the label; a state already entered doesn't act again).
+     Now Blizzard's label is hidden for good and ours, in its style, takes the words by the event
+     alone (any language gets ours in English); until a state runs it mirrors Blizzard's words
+     (after a replay seek one alert showed no state had run). Diagnostic line over each alert
+     ("event NN"). Unseen.
      **Later:** the cavalry-slain line ("All Allied/Enemy Cavalry Slain", in the banner itself) is
      the same problem. Its label has a Visibility animation, so it needs another way to hide it.
    **Then the rest of the newer maps' QA

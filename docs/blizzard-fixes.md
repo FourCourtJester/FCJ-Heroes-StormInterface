@@ -84,9 +84,11 @@ from then on are written with their fix.
   blue's, Horde on red's), stacked with the side's other banners, instead of all piling up in
   the middle (`maps.camp_words`, `camp_slot`; 99f6a23, 8836507).
 - **Status:** placement confirmed in game (2026-10-14). The wording didn't show on the first try
-  (a label of ours drawn over Blizzard's drew nothing); rebuilt 2026-10-14 to write the side
-  names into Blizzard's own label - not yet seen.
-- **Limit:** English only - other languages keep Blizzard's words.
+  (a label of ours drawn over Blizzard's drew nothing, and nothing added to the alerts'
+  template reached them); the side names written into Blizzard's own label worked, then a later
+  alert reverted (the script rewrites it); now our own label in Blizzard's style, chosen by the
+  alert's event - not yet seen.
+- **Limit:** our lines are English; a client in another language gets them in English too.
 
 ## Made for observers
 
