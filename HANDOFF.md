@@ -632,6 +632,11 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    Also: THE GAP's measure here is still ESTIMATED (`above`) - measure it off any screen of the status.
    Roster played (user, 2026-10-14): blue Azmodan, Cassia, Lunara, Tassadar, Yrel; red Medivh,
    Deathwing, Abathur, Samuro, D.Va.
+   **Tomb of the Spider Queen (in progress, 2026-10-14):** id `Crypts` read in game (the
+   script's, as guessed). Its map's bottom ~1025: 40 px down onto the floor (`[minimap.nudge]`).
+   The gem counts (`CryptPanel`, hung off the minimap's bottom, no proxy) were cut off by the
+   screen's edge (their numbers' tops at 1060): raised to ~1031 as Garden's, the minimap's 40
+   taken back (`[minimap.panel_nudge]` -69). Both unseen.
    **Then the rest of the newer maps' QA
    (Battlefield, Shrines, Sky Temple, Tomb,
    Volskaya, Warhead). Any map could get a two-view or other per-map behaviour the same way

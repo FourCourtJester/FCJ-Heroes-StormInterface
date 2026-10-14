@@ -74,7 +74,7 @@ hanamura_temple = 18         # down to the floor (user, 2026-10-14): its map's v
 haunted_mines = 34           # its whole map on the line (where it glides to when the mines open): its texture's opaque box is taller than the map - drawn, the mines' bottom was 34 above the line (2026-10-09)
 infernal_shrines = 0
 sky_temple = 0
-tomb_of_the_spider_queen = 0
+tomb_of_the_spider_queen = 40 # down to the floor (user's screen, 2026-10-14): its map's visual bottom ~1025 -> 1065
 towers_of_doom = 0
 volskaya_foundry = 0
 warhead_junction = 0
@@ -103,7 +103,8 @@ haunted_mines = -11          # the skull counts' skulls on the padding line, onc
                              # (user, 2026-10-09: they ran off the bottom; measured 8 px short, then the map's 34)
 infernal_shrines = 0
 sky_temple = 0
-tomb_of_the_spider_queen = 0
+tomb_of_the_spider_queen = -69 # the gem counts on screen: their numbers' tops 1060 (cut off by the edge) up to ~1031, as
+                             # Garden's - 29 up, and the minimap's 40 down taken back (unseen)
 towers_of_doom = 0
 volskaya_foundry = 0
 warhead_junction = 0
