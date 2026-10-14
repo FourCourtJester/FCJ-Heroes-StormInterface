@@ -1604,6 +1604,12 @@
 				</State>
 			</StateGroup>
 		</Frame>
+		<Frame type="Frame" name="SoulEaterFrame">
+			<Anchor side="Top" relative="$parent" pos="Min" offset="101"/>
+			<Anchor side="Bottom" relative="$parent" pos="Max" offset="101"/>
+			<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+			<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+		</Frame>
 	</Frame>
 	<!-- ===== Towers of Doom ===== -->
 	<Frame type="Frame" name="MainFoSPanel" file="FieldofSlaughter">

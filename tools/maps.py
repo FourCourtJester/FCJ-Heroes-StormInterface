@@ -140,7 +140,9 @@ class Map:
                                       # ([minimap] alert_gap): (px, at) - measured at 1080p, its
                                       # lowest part `px` over the drawn map's top tip (the art's
                                       # outline) with its panels `at` px lower. gen.py moves its
-                                      # panels to the gap (panel_nudges); it rides on the minimap
+                                      # panels to the gap (panel_nudges); it rides on the minimap.
+                                      # (px, at, part): only that part (anchored all round to its
+                                      # panel) goes to the gap, its panel kept to its panel_nudge
     proxy: bool = False               # its file's panels' MinimapProxyFrame tied to our minimap
                                       # by its full path (proxy_lines)
     notes: str = ""
@@ -1625,7 +1627,12 @@ MAPS = {
         panels={"CapturePointsPanel": BOTTOM_RIGHT}, place=("CapturePointsPanel",)),
     "tomb_of_the_spider_queen": Map(
         "Tomb of the Spider Queen", (430, 262), file="SoulCage",
-        panels={"CryptPanel": BOTTOM_RIGHT}, place=("CryptPanel",)),
+        panels={"CryptPanel": BOTTOM_RIGHT}, place=("CryptPanel",),
+        # the Webweavers' banner (one frame, its words set per team by the script - neutral, as
+        # Hanamura's) to the gap on its own: the gem counts and the lanes' hexagons share its
+        # panel, at the screen's bottom. Measured 2026-10-14 (f11f8f4): the portrait's bottom ~806,
+        # the map's tip ~838.
+        above=(32, 0, "CryptPanel/SoulEaterFrame")),
     "towers_of_doom": Map(
         "Towers of Doom", (436, 298), file="FieldofSlaughter",
         place=("MainFoSPanel",),
@@ -1926,6 +1933,12 @@ def proxy_lines(down):
             + f'{t}</Frame>\n')
 
 
+def shift_lines(down, depth):
+    """A part anchored all round to its panel (`relative="$parent"`), `down` units lower in it."""
+    return "".join(f'{T * depth}<Anchor side="{sd}" relative="$parent" pos="{pos}" offset="{down if sd in ("Top", "Bottom") else 0}"/>\n'
+                   for sd, pos in (("Top", "Min"), ("Bottom", "Max"), ("Left", "Min"), ("Right", "Max")))
+
+
 def map_file(key, at, down):
     """Everything this map's own layout file gets: its panels on our minimap, the minimap's
     place (placer, in its first panel), its team alerts."""
@@ -1935,6 +1948,9 @@ def map_file(key, at, down):
         root.at(path).body += anchor_lines(sides, m, len(path.split("/")) + 1, down.get(key, 0))
         if m.proxy and "/" not in path:
             root.at(path).body += proxy_lines(down.get(key, 0))
+    if m.above and len(m.above) > 2:
+        part = m.above[2]
+        root.at(part).body += shift_lines(down[key, part], len(part.split("/")) + 1)
     for path, xml in PARTS.get(key, {}).items():
         root.at(path).body += "".join(T * (len(path.split("/")) + 1) + line + "\n" for line in xml.splitlines())
     if m.place:

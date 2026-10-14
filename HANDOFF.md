@@ -636,7 +636,12 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    script's, as guessed). Its map's bottom ~1025: 40 px down onto the floor (`[minimap.nudge]`).
    The gem counts (`CryptPanel`, hung off the minimap's bottom, no proxy) were cut off by the
    screen's edge (their numbers' tops at 1060): raised to ~1031 as Garden's, the minimap's 40
-   taken back (`[minimap.panel_nudge]` -69). Both unseen.
+   taken back (`[minimap.panel_nudge]` -69). The Webweavers' banner (`SoulEaterFrame`, the
+   same panel: one frame for both teams, its words set by the script) left neutral above the
+   minimap as Hanamura's, put to THE GAP on its own (`above`'s part: maps.shift_lines) - its
+   portrait's bottom ~806 over the tip ~838 on f11f8f4. The lanes' three hexagons (the
+   Webweavers' health, the panel's bottom) were cut off too; they ride with the gem counts. All
+   unseen.
    **Then the rest of the newer maps' QA
    (Battlefield, Shrines, Sky Temple, Tomb,
    Volskaya, Warhead). Any map could get a two-view or other per-map behaviour the same way
