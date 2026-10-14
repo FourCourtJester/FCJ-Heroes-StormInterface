@@ -69,12 +69,10 @@ class Art:
 # templates' arithmetic gave 388); 117 tall (Blizzard's stacked step, 147, less its 30-unit
 # gap). Its bar's bottom sits 20 above its frame's, its hexagon hanging 14 under the bar
 # (measured 2026-10-09 at 1080p: the bar 18 px above the tribute's baseline when placed level).
-# "ICON": placed by its icon box (Hanamura's attacking pair: a background 300 left of a 112-unit
-# icon box, from the template). "BANNER" and "HOLDOUT": the older maps' centre banners, placed
-# by a spot of ours the size of the art (Alert.box) - set with their boxes, below.
+# "BANNER" and "HOLDOUT": the older maps' centre banners, placed by a spot of ours the size of
+# the art (Alert.box) - set with their boxes, below.
 ALERT_ART = {
     "": Art(499, 12, bar_up=20, below=14, height=117),   # reach 500 put its tip 1 px past red's plates
-    "ICON": Art(412, 0, measured=False, note="Hanamura's attacking alerts: all of it"),
 }
 STACK_GAP = 8             # units between two stacked banners: Blizzard's 30, less 22 (20 px - user, 2026-10-09: too much dead space)
 
@@ -1469,6 +1467,13 @@ PARTS["alterac_pass"] = {"AlteracMechanicsPanel": f'<Width val="{AV_PANEL_W}"/>\
                          **camp_words(1), **camp_words(2)}
 
 
+# "CONTESTED!" above the payload's hexagon, not under it (user, 2026-10-14) - the escort counts
+# that sit there are hidden while it's contested (hanamurarework Payload_Contested)
+PARTS["hanamura_temple"] = {"HanamuraReworkActivePaylaodStatusPanel/HanamuraPayloadContestedFrame": "".join(
+    f'<Anchor side="{sd}" relative="$parent/ActivePayloadImageNeutral" pos="Min" offset="{off}"/>\n'
+    for sd, off in (("Top", -38), ("Bottom", -2)))}
+
+
 # ------------------------------------------------------------------ the maps
 
 BOTTOM_RIGHT =(("Bottom", "Max", 0), ("Right", "Max", 0))     # pinned to the screen's corner
@@ -1573,19 +1578,13 @@ MAPS = {
                              "ActivePayloadImageChaos", "ActivePayloadImageNeutral")}},
         place=("HanamuraReworkPayloadWarningTimerPanel", "HanamuraReworkActivePaylaodStatusPanel",
                "HanamuraReworkVictoryShotsStatusPanel"),
-        # "Attacking the core": one frame per team, shown to everyone, by the attacking team
-        # (the map script, libmhmu: lv_attackingStructureFrame[team]) - Order is blue. Placed
-        # by its icon box (its art hangs off that, not off the frame).
-        # "Payload spawns in": neutral, so on red's side (seen centred above the minimap, user
-        # 2026-10-14) - Blizzard's NotificationFrameTemplate, Towers' kind. Another panel's, so
-        # not stacked with red's attacking alert: they'd overlap if a countdown ran during an attack.
-        team={"HanamuraReworkPayloadWarningTimerPanel": {
-                  "red": [Alert("PayloadSpawningFrame", note="the next payload's countdown (neutral)")]},
-              "HanamuraReworkVictoryShotsStatusPanel": {
-            "blue": [Alert("AttackingCoreFrame_Order", kind="ICON", place="NotificationIconAnchor:Image",
-                           note="blue's payload on a fort")],
-            "red": [Alert("AttackingCoreFrame_Chaos", kind="ICON", place="NotificationIconAnchor:Image",
-                          note="red's payload on a fort")]}}),
+        # No alerts on the teams' sides (user, 2026-10-14): the countdown ("Payload spawns in"),
+        # the payload's push status and the shots ("Attacking the core", one frame per team)
+        # take turns in one place above the minimap and animate as one, so they stay Blizzard's,
+        # there. Tried and dropped: the countdown on red's side, the shots on their team's (the
+        # shots' frame clipped its bar and icon: Blizzard's intro slides the icon 198 right of
+        # its layout place, past the frame's right edge where ours put it).
+        ),
     "haunted_mines": Map(
         "Haunted Mines", (433, 437), core="HauntedMinesPanel",
         # Its minimap holds the surface and the mines stacked: square, so at the older five's

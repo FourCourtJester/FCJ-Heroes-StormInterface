@@ -1487,8 +1487,8 @@
 	</Frame>
 	<!-- ===== Hanamura Temple ===== -->
 	<Frame type="Frame" name="HanamuraReworkPayloadWarningTimerPanel" file="HanamuraRework">
-		<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-1280"/>
-		<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-80"/>
+		<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-1251"/>
+		<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-51"/>
 		<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-2134"/>
 		<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="0"/>
 		<!-- the minimap's place on Hanamura Temple, from the moment this panel exists -->
@@ -1504,20 +1504,10 @@
 				</State>
 			</StateGroup>
 		</Frame>
-		<!-- red, the bottom slot: the next payload's countdown (neutral) -->
-		<Frame type="Frame" name="PayloadSpawningFrame">
-			<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B"/>
-			<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R"/>
-			<Unclipped val="true"/>
-			<StateGroup name="FCJH_Stack">
-				<DefaultState val="Bottom"/>
-				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B"/></State>
-			</StateGroup>
-		</Frame>
 	</Frame>
 	<Frame type="Frame" name="HanamuraReworkActivePaylaodStatusPanel" file="HanamuraRework">
-		<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-1280"/>
-		<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-80"/>
+		<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-1251"/>
+		<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-51"/>
 		<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-2134"/>
 		<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="0"/>
 		<Frame type="Image" name="ActivePayloadImageAnchor">
@@ -1532,42 +1522,16 @@
 		<Frame type="Image" name="ActivePayloadImageNeutral">
 			<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-204"/>
 		</Frame>
+		<Frame type="Frame" name="HanamuraPayloadContestedFrame">
+			<Anchor side="Top" relative="$parent/ActivePayloadImageNeutral" pos="Min" offset="-38"/>
+			<Anchor side="Bottom" relative="$parent/ActivePayloadImageNeutral" pos="Min" offset="-2"/>
+		</Frame>
 	</Frame>
 	<Frame type="Frame" name="HanamuraReworkVictoryShotsStatusPanel" file="HanamuraRework">
-		<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-1280"/>
-		<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-80"/>
+		<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-1251"/>
+		<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-51"/>
 		<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-2134"/>
 		<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="0"/>
-		<!-- blue, the bottom slot: blue's payload on a fort -->
-		<Frame type="Frame" name="AttackingCoreFrame_Order">
-			<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_ICON"/>
-			<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_BLUE_R_ICON"/>
-			<Unclipped val="true"/>
-			<Frame type="Image" name="NotificationIconAnchor">
-				<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_ICON"/>
-				<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_BLUE_R_ICON"/>
-				<Unclipped val="true"/>
-			</Frame>
-			<StateGroup name="FCJH_Stack">
-				<DefaultState val="Bottom"/>
-				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_ICON"/><Action type="SetAnchor" frame="$this/NotificationIconAnchor" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_ICON"/></State>
-			</StateGroup>
-		</Frame>
-		<!-- red, the bottom slot: red's payload on a fort -->
-		<Frame type="Frame" name="AttackingCoreFrame_Chaos">
-			<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_ICON"/>
-			<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_ICON"/>
-			<Unclipped val="true"/>
-			<Frame type="Image" name="NotificationIconAnchor">
-				<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_ICON"/>
-				<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_ICON"/>
-				<Unclipped val="true"/>
-			</Frame>
-			<StateGroup name="FCJH_Stack">
-				<DefaultState val="Bottom"/>
-				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_ICON"/><Action type="SetAnchor" frame="$this/NotificationIconAnchor" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_ICON"/></State>
-			</StateGroup>
-		</Frame>
 	</Frame>
 	<!-- ===== Infernal Shrines ===== -->
 	<Frame type="Frame" name="ShrinesPanel" file="Shrines">

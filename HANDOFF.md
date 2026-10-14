@@ -589,11 +589,15 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
      The cavalry-slain line ("All Allied/Enemy Cavalry Slain", in the banner itself) had the same
      player's wording, but it never shows now: the banner is parked from "CavalrySlain" (above).
    **Hanamura Temple (in progress, 2026-10-14):** id `Hanamura` read in game (Spazzo's, as
-   guessed). Its map's bottom ~1050, inside the floor. "Payload spawns in" (`PayloadSpawningFrame`,
-   Towers' alert template) sat centred above the minimap: now on red's side, as a neutral banner
-   (unseen). The payload's push status stays above the minimap, as Alterac's cage. Still to see:
-   the attacking-the-core alerts (ICON art unmeasured - screenshots wanted), and whether a
-   countdown ever runs during an attack (other panel, not stacked: they'd overlap).
+   guessed). Its map's bottom ~1047, 18 px above the floor (`[minimap.nudge]` 0: not moved).
+   **No per-side alerts here (user, 2026-10-14):** the countdown ("Payload spawns in"), the
+   payload's push status and the shots ("Shots remaining") take turns in one place above the
+   minimap and animate as one, so all three stay Blizzard's, there. Tried and dropped: the
+   countdown on red's side and the shots on their team's - blue's shots came out clipped (the
+   intro slides the icon 198 right, past the frame's edge). Now (unseen): the whole objective 26
+   px lower (`[minimap.panel_nudge]`), the status's hexagon bottom 10 px over the map's tip
+   (798 -> 824, tip 834), and "CONTESTED!" above the hexagon instead of under it (the escort
+   counts there are hidden while contested). Red's shots never fired in the test replay.
    Roster played (user, 2026-10-14): blue Azmodan, Cassia, Lunara, Tassadar, Yrel; red Medivh,
    Deathwing, Abathur, Samuro, D.Va.
    **Then the rest of the newer maps' QA
