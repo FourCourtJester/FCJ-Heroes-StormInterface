@@ -1590,7 +1590,7 @@
 	<!-- ===== Tomb of the Spider Queen ===== -->
 	<Frame type="Frame" name="CryptPanel" file="SoulCage">
 		<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-99"/>
-		<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="0"/>
+		<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-22"/>
 		<!-- the minimap's place on Tomb of the Spider Queen, from the moment this panel exists -->
 		<Frame type="Frame" name="FCJH_MinimapPlace">
 			<Anchor relative="$parent"/>
@@ -1598,8 +1598,8 @@
 			<StateGroup name="FCJH_Place">
 				<DefaultState val="Placed"/>
 				<State name="Placed">
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_L"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_R"/>
+					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_L_TOMB_OF_THE_SPIDER_QUEEN"/>
+					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_R_TOMB_OF_THE_SPIDER_QUEEN"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MINIMAP_BOTTOM_TOMB_OF_THE_SPIDER_QUEEN"/>
 				</State>
 			</StateGroup>

@@ -91,6 +91,14 @@ from then on are written with their fix.
   alert's event (b6e0e68).
 - **Limit:** our lines are English; a client in another language gets them in English too.
 
+### Tomb of the Spider Queen: its minimap drawn off-centre
+- **Blizzard's:** the map's art sits about 21 px (at 1080p) left of the centre of its own
+  minimap square, so its bottom point lands well left of the gem counts' blue/red split under it.
+  The user called it the most lopsided map so far (2026-10-14).
+- **Ours:** Tomb's minimap moves 20 px right, so the art is centred. The gem counts, the
+  Webweavers banner and the egg timer stay where they were (`maps.py` `across`).
+- **Status:** built, not yet seen in game.
+
 ## Made for observers
 
 Not bugs - things Blizzard's observer UI never offered, which the write-up may want.

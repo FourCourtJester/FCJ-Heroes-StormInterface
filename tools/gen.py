@@ -474,6 +474,11 @@ def constants_layout(cfg):
     const(name("minimap", "panel", "l"), left)
     const(name("minimap", "panel", "r"), left + MINIMAP_PANEL_W)
     const(name("minimap", "panel", "bottom"), minimap_bottoms(cfg)[None])
+    # ...and a map's own sides, its art drawn off-centre (maps.py across)
+    for key, m in maps.MAPS.items():
+        if m.across:
+            const(name("minimap", "panel", "l", key), left + u(m.across), f"{m.title}: {m.across} px right")
+            const(name("minimap", "panel", "r", key), left + MINIMAP_PANEL_W + u(m.across))
     # ...and per map (tools/maps.py): the map as drawn in the square, its bottom on the padding
     # line (the plates' bottom), nudged by [minimap.nudge]
     lines.append("\t<!-- _BOTTOM_<MAP>: MinimapPanel's bottom on that map, from the screen's bottom -->")

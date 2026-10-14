@@ -643,7 +643,10 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    gem counts' -58 follows it. The egg timer (`SoulCageCooldownFrame`, shown after the
    Webweavers die - never with the banner) to the gap above the minimap too (user: "top of the
    minimap is fine"). Both as maps.py `gap_parts`: a part to THE GAP on its own, its panel kept
-   to its nudge (maps.shift_lines). Next: the user's idea for the three hexagons.
+   to its nudge (maps.shift_lines). Seen on 01359b3: the floor right (the marker ~1062), the
+   banner 10 px over the tip. Its art is drawn ~21 px left of its square's centre (the outline's
+   sides ~780 / ~1098): the minimap 20 px right (maps.py `across`, its panels taken back in
+   on_minimap - only the map moves, user); unseen. Next: the user's idea for the three hexagons.
    **Then the rest of the newer maps' QA
    (Battlefield, Shrines, Sky Temple, Tomb,
    Volskaya, Warhead). Any map could get a two-view or other per-map behaviour the same way

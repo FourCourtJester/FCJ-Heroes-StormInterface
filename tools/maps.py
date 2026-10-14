@@ -145,6 +145,9 @@ class Map:
                                       # (anchored all round to its panel) goes to the gap, its
                                       # panel kept to its [minimap.panel_nudge]; `at`, px, is the
                                       # panel's nudge plus the part's own move when measured
+    across: int = 0                   # px right: its map's art is drawn off its square's centre
+                                      # (measured at 1080p); its minimap goes this far right to
+                                      # put the art on centre, its panels taken back (on_minimap)
     proxy: bool = False               # its file's panels' MinimapProxyFrame tied to our minimap
                                       # by its full path (proxy_lines)
     notes: str = ""
@@ -1637,7 +1640,11 @@ MAPS = {
         # The egg timer (user, 2026-10-14: "top of the minimap is fine"): on f03aba6 its hexagon's
         # bottom ~1066, the tip ~878, the panel at -69.
         gap_parts={"CryptPanel/SoulEaterFrame": (32, 0),
-                   "CryptPanel/SoulCageCooldownFrame": (-188, -69)}),
+                   "CryptPanel/SoulCageCooldownFrame": (-188, -69)},
+        # its art drawn 21 px left of its square's centre (2026-10-14, 01359b3: the outline's
+        # sides at ~780 and ~1098, the bottom point at ~936 against the counts' line at ~956 -
+        # user: "the most lopsided map I've seen"). Only the map moves.
+        across=20),
     "towers_of_doom": Map(
         "Towers of Doom", (436, 298), file="FieldofSlaughter",
         place=("MainFoSPanel",),
@@ -1717,10 +1724,12 @@ def on_minimap(side, pos, offset, m, down=0):
     """A side Blizzard anchored to the screen (`pos` of it, `offset` units), as the same
     distance from our minimap's bottom-right corner: Blizzard's minimap's bottom is m.minimap[0]
     below the screen's, its right m.minimap[1] right of the screen's. `down`: units more,
-    downwards (layout.toml [minimap.panel_nudge]). -> (pos, offset) of MINIMAP."""
+    downwards (layout.toml [minimap.panel_nudge]). A map moved across (m.across) has its panels
+    taken back: they stay where they were, only the map moves (user, 2026-10-14). -> (pos,
+    offset) of MINIMAP."""
     right = m.minimap[1]
     if side in ("Left", "Right"):
-        return "Max", offset - right - {"Min": SCREEN_W, "Mid": SCREEN_W // 2, "Max": 0}[pos]
+        return "Max", offset - right - round(m.across / 0.9) - {"Min": SCREEN_W, "Mid": SCREEN_W // 2, "Max": 0}[pos]
     return "Max", offset - m.minimap[0] + down - {"Min": SCREEN_H, "Mid": SCREEN_H // 2, "Max": 0}[pos]
 
 
@@ -1733,8 +1742,9 @@ def place_actions(key, indent):
     opens on part of its map (launch_cut)."""
     t = T * indent
     bottom = f"#FCJH_MINIMAP_LAUNCH_{key.upper()}" if MAPS[key].launch_cut is not None else const(key)
-    out = (f'{t}<Action type="SetAnchor" frame="{MINIMAP}" side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_L"/>\n'
-           f'{t}<Action type="SetAnchor" frame="{MINIMAP}" side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_R"/>\n'
+    sides = "_" + key.upper() if MAPS[key].across else ""      # its own, moved across (gen.py)
+    out = (f'{t}<Action type="SetAnchor" frame="{MINIMAP}" side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_L{sides}"/>\n'
+           f'{t}<Action type="SetAnchor" frame="{MINIMAP}" side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_R{sides}"/>\n'
            f'{t}<Action type="SetAnchor" frame="{MINIMAP}" side="Bottom" relative="$GameUI" pos="Max" offset="{bottom}"/>\n')
     return out + (f"{t}{MAPS[key].fix}\n" if MAPS[key].fix else "")
 
