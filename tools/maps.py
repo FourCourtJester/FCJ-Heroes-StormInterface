@@ -1294,6 +1294,18 @@ CAMP_WORDS = {   # EventID: (Blizzard's words that event shows, ours, the colour
 }
 
 
+def av_bars():
+    """The cage bars' strip (ProgressBarsContainer). Blizzard's: Left at the art's Mid -210, Right
+    at Mid +218, Width 463 - in ours it came out 891 wide (seen 2026-10-13, av_diag: each side
+    its anchor -/+ half the width), the bars starting far left under the mask, which hid their
+    start, the timers and red's stub. Both sides on one point, as the art and the mask: centred
+    there, 463 wide - Blizzard's span exactly (-227.5 .. +235.5). The slide-in (MapMechanicActive,
+    MechanicDone) moves both sides alike, so it holds."""
+    mid = (-210 + 218) // 2
+    return "".join(f'<Anchor side="{sd}" relative="$parent/$parent/BackgroundImage" pos="Mid" offset="{mid}"/>\n'
+                   for sd in ("Left", "Right"))
+
+
 # DIAGNOSTIC (2026-10-13): the cage bars draw cut short. A strip per frame on the bars' chain,
 # stacked above the banner, each spanning its frame's left to right - read off a screenshot.
 AV_DIAG = (("AVMechanicContainer", "255,255,255,255"),
@@ -1342,6 +1354,7 @@ _ALERTS_R = f'<Anchor side="Right" relative="$parent" pos="Max" offset="{-1 - AV
 PARTS["alterac_pass"] = {"AlteracMechanicsPanel": f'<Width val="{AV_PANEL_W}"/>\n',
                          "AlteracMechanicsPanel/FCJH_AVCarrier": av_carrier(),
                          "AlteracMechanicsPanel/AVMechanicContainer": av_frame(),
+                         "AlteracMechanicsPanel/AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer": av_bars(),
                          "AlteracMechanicsPanel/NotificationFrame1":
                              f'<Anchor side="Bottom" relative="$parent" pos="Mid" offset="{AV_ALERTS_B}"/>\n' + _ALERTS_R,
                          "AlteracMechanicsPanel/NotificationFrame2": _ALERTS_R,

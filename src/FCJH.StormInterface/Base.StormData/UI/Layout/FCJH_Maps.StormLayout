@@ -1012,6 +1012,12 @@
 			<Anchor side="Top" relative="$parent/FCJH_AVCarrier" pos="Max" offset="-28"/>
 			<Anchor side="Bottom" relative="$parent/FCJH_AVCarrier" pos="Max" offset="-28"/>
 			<Anchor side="Right" relative="$parent/FCJH_AVCarrier" pos="Max" offset="16"/>
+			<Frame type="Frame" name="ProgressBarMasker">
+				<Frame type="Frame" name="ProgressBarsContainer">
+					<Anchor side="Left" relative="$parent/$parent/BackgroundImage" pos="Mid" offset="4"/>
+					<Anchor side="Right" relative="$parent/$parent/BackgroundImage" pos="Mid" offset="4"/>
+				</Frame>
+			</Frame>
 		</Frame>
 		<Frame type="Frame" name="NotificationFrame1">
 			<Anchor side="Bottom" relative="$parent" pos="Mid" offset="185"/>
