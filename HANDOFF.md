@@ -573,8 +573,12 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
      are for observers and they stack. Their words are blue's player's ("Allies capturing enemy
      camp" = blue capturing). Ours name the side (user): "Alliance capturing Horde camp", "Horde
      retook their camp" and so on (`maps.camp_words`). The team comes from the alert's EventID; the
-     English words only gate the kind and the language. Blizzard's label is hidden by Visible (its
-     intro fades it). Seen (2026-10-14). Other languages keep Blizzard's words; translate if wanted.
+     English words only gate the kind and the language. The placement was seen working
+     (2026-10-14), the words weren't: the first build drew a label of ours over Blizzard's, hidden
+     by Visible - ours drew nothing (its Style bound to Blizzard's label's) and Blizzard's stayed
+     up. Now the side names are written into Blizzard's own label (its EventID states already
+     colour it); once written the words stop matching, so nothing loops. Unseen. Other languages
+     keep Blizzard's words; translate if wanted.
      **Later:** the cavalry-slain line ("All Allied/Enemy Cavalry Slain", in the banner itself) is
      the same problem. Its label has a Visibility animation, so it needs another way to hide it.
    **Then the rest of the newer maps' QA

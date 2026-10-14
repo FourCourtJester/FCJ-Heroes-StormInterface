@@ -1364,15 +1364,17 @@ ALERT_ART["CAMP"] = Art(509, 18, bar_up=21, below=15, height=91)
 CAMP_TEAMS = {"Blue": (11, 12), "Red": (21, 22)}   # EventID: the captor's team, then the camp's
 # Their words are a player's ("Allies capturing enemy camp"); an observer's screen shows blue's
 # (user, 2026-10-13, everyone view: blue's capture read "Allies", red's "Enemies"). Ours name the
-# side: Alliance (Order, blue) and Horde (Chaos, red), as the map has them (user). The team is the
-# alert's own event (its EventID, which picks its icon and colours: 1x Order's doing, 2x Chaos's;
-# x2 / x1 the other's camp / its own), so it holds in a player's view too; Blizzard's words only
-# say which kind of event it is and that it's English. Other languages keep Blizzard's words.
-CAMP_WORDS = {   # EventID: (Blizzard's words that event shows, ours, the colour)
-    12: (("Allies capturing enemy camp", "Enemies capturing allied camp"), "Alliance capturing Horde camp", "TeamOrderColors"),
-    21: (("Allies capturing enemy camp", "Enemies capturing allied camp"), "Horde capturing Alliance camp", "TeamChaosColors"),
-    11: (("Allies retook their camp", "Enemies retook their camp"), "Alliance retook their camp", "TeamOrderColors"),
-    22: (("Allies retook their camp", "Enemies retook their camp"), "Horde retook their camp", "TeamChaosColors"),
+# side: Blizzard's sentences, only "Allies" / "Enemies" (and "allied" / "enemy") swapped for
+# Alliance (Order, blue) and Horde (Chaos, red), as the map has them (user, 2026-10-14: "we're
+# observers, we shouldn't have allies or enemies"). The team is the alert's own event (its
+# EventID, which picks its icon and colours: 1x Order's doing, 2x Chaos's; x2 / x1 the other's
+# camp / its own), so it holds in a player's view too; Blizzard's words only say which kind of
+# event it is and that it's English. Other languages keep Blizzard's words.
+CAMP_WORDS = {   # EventID: (Blizzard's words that event shows, ours)
+    12: (("Allies capturing enemy camp", "Enemies capturing allied camp"), "Alliance capturing Horde camp"),
+    21: (("Allies capturing enemy camp", "Enemies capturing allied camp"), "Horde capturing Alliance camp"),
+    11: (("Allies retook their camp", "Enemies retook their camp"), "Alliance retook their camp"),
+    22: (("Allies retook their camp", "Enemies retook their camp"), "Horde retook their camp"),
 }
 
 
@@ -1426,25 +1428,20 @@ def camp_frame(i):
 
 
 def camp_words():
-    """The flag alerts' template (AVNotificationFrameTemplate): ours over Blizzard's words, a
-    state per event and English wording; Blizzard's label hidden by Visible (its intro fades it,
-    so an Alpha wouldn't hold). -> {path: xml} for PARTS."""
+    """The flag alerts' template (AVNotificationFrameTemplate): the side names written into
+    Blizzard's own label, a state per event and English wording - Blizzard's EventID states
+    already colour it by team. Once written its words no longer match, so the group falls back
+    to "Theirs" (no actions) and the label keeps ours until the script writes the next alert.
+    The first build drew a label of ours over Blizzard's, hidden by Visible: ours drew nothing
+    (its Style bound to Blizzard's label's) and Blizzard's stayed up (user, 2026-10-14).
+    -> {path: xml} for PARTS."""
     states = "".join(
         f'\t<State name="Event{event}{n}"><When type="AnimationState" EventID="{event}"/>'
         f'<When type="Property" frame="$this/NotificationLabel" Text="{theirs}"/>'
-        f'<Action type="SetProperty" frame="$this/FCJH_CampText" Text="{ours}"/>'
-        f'<Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{{$GameUI/{colour}/@Color}}"/>'
-        f'<Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{{$GameUI/{colour}/@Color}}"/>'
-        f'<Action type="SetProperty" frame="$this/FCJH_CampText" Visible="true"/>'
-        f'<Action type="SetProperty" frame="$this/NotificationLabel" Visible="false"/></State>\n'
-        for event, (words, ours, colour) in CAMP_WORDS.items() for n, theirs in enumerate(words))
-    label = ("".join(f'<Anchor side="{sd}" relative="$parent/NotificationLabel" pos="{pos}" offset="0"/>\n'
-                     for sd, pos in (("Top", "Min"), ("Bottom", "Max"), ("Left", "Min"), ("Right", "Max")))
-             + '<Style val="{$parent/NotificationLabel/@Style}"/>\n<Options val="NoWrapping"/>\n<ColorAdjustMode val="Colorize"/>\n'
-             '<LightAdjustColor val="#ColorWhite"/>\n<RenderPriority val="3"/>\n<Visible val="false"/>\n')
+        f'<Action type="SetProperty" frame="$this/NotificationLabel" Text="{ours}"/></State>\n'
+        for event, (words, ours) in CAMP_WORDS.items() for n, theirs in enumerate(words))
     return {"AVNotificationFrameTemplate": f'<StateGroup name="FCJH_CampWords">\n\t<DefaultState val="Theirs"/>\n'
-                                           + states + '\t<State name="Theirs"/>\n</StateGroup>\n',
-            "AVNotificationFrameTemplate/FCJH_CampText:Label": label}
+                                           + states + '\t<State name="Theirs"/>\n</StateGroup>\n'}
 
 
 PARTS["alterac_pass"] = {"AlteracMechanicsPanel": f'<Width val="{AV_PANEL_W}"/>\n',

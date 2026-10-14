@@ -77,12 +77,15 @@ from then on are written with their fix.
 - **Blizzard's:** the prisoner-camp alerts are sent to observers too, but in a player's words:
   "Allies capturing enemy camp", "Enemies retook their camp". On the everyone view they read from
   blue's side, so a caster sees "Enemies" for red. Seen in the default UI (user, 2026-10-13).
-- **Ours:** they name the side - "Alliance capturing Horde camp", "Horde retook their camp" - in
-  the capturing team's colour, the team taken from the alert's own event rather than its words, so
+- **Ours:** Blizzard's sentences with the side names in place of "Allies" / "Enemies" -
+  "Alliance capturing Horde camp", "Horde retook their camp" - in the colour Blizzard already
+  gives the capturing team, the team taken from the alert's own event rather than its words, so
   it's right in any view. And each alert appears on its team's side of the screen (Alliance on
   blue's, Horde on red's), stacked with the side's other banners, instead of all piling up in
   the middle (`maps.camp_words`, `camp_slot`; 99f6a23, 8836507).
-- **Status:** confirmed in game (2026-10-14).
+- **Status:** placement confirmed in game (2026-10-14). The wording didn't show on the first try
+  (a label of ours drawn over Blizzard's drew nothing); rebuilt 2026-10-14 to write the side
+  names into Blizzard's own label - not yet seen.
 - **Limit:** English only - other languages keep Blizzard's words.
 
 ## Made for observers
