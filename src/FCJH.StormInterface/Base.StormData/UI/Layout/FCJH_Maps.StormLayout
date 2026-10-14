@@ -1020,6 +1020,114 @@
 		<Frame type="Frame" name="NotificationFrame2">
 			<Anchor side="Right" relative="$parent" pos="Max" offset="-601"/>
 		</Frame>
+		<Frame type="Image" name="FCJH_AVDiag0">
+			<Anchor side="Left" relative="$parent/AVMechanicContainer" pos="Min" offset="0"/>
+			<Anchor side="Right" relative="$parent/AVMechanicContainer" pos="Max" offset="0"/>
+			<Anchor side="Bottom" relative="$parent/AVMechanicContainer" pos="Min" offset="-12"/>
+			<Height val="8"/>
+			<Texture val="@UI/PauseScreenDimImage"/>
+			<ColorAdjustMode val="Fill"/>
+			<AdjustmentColor val="255,255,255,255"/>
+			<RenderPriority val="999"/>
+			<Unclipped val="true"/>
+			<AcceptsMouse val="false"/>
+		</Frame>
+		<Frame type="Image" name="FCJH_AVDiag1">
+			<Anchor side="Left" relative="$parent/AVMechanicContainer/BackgroundImage" pos="Min" offset="0"/>
+			<Anchor side="Right" relative="$parent/AVMechanicContainer/BackgroundImage" pos="Max" offset="0"/>
+			<Anchor side="Bottom" relative="$parent/AVMechanicContainer" pos="Min" offset="-24"/>
+			<Height val="8"/>
+			<Texture val="@UI/PauseScreenDimImage"/>
+			<ColorAdjustMode val="Fill"/>
+			<AdjustmentColor val="255,128,128,128"/>
+			<RenderPriority val="999"/>
+			<Unclipped val="true"/>
+			<AcceptsMouse val="false"/>
+		</Frame>
+		<Frame type="Image" name="FCJH_AVDiag2">
+			<Anchor side="Left" relative="$parent/AVMechanicContainer/ProgressBarMasker" pos="Min" offset="0"/>
+			<Anchor side="Right" relative="$parent/AVMechanicContainer/ProgressBarMasker" pos="Max" offset="0"/>
+			<Anchor side="Bottom" relative="$parent/AVMechanicContainer" pos="Min" offset="-36"/>
+			<Height val="8"/>
+			<Texture val="@UI/PauseScreenDimImage"/>
+			<ColorAdjustMode val="Fill"/>
+			<AdjustmentColor val="255,255,255,0"/>
+			<RenderPriority val="999"/>
+			<Unclipped val="true"/>
+			<AcceptsMouse val="false"/>
+		</Frame>
+		<Frame type="Image" name="FCJH_AVDiag3">
+			<Anchor side="Left" relative="$parent/AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer" pos="Min" offset="0"/>
+			<Anchor side="Right" relative="$parent/AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer" pos="Max" offset="0"/>
+			<Anchor side="Bottom" relative="$parent/AVMechanicContainer" pos="Min" offset="-48"/>
+			<Height val="8"/>
+			<Texture val="@UI/PauseScreenDimImage"/>
+			<ColorAdjustMode val="Fill"/>
+			<AdjustmentColor val="255,0,220,0"/>
+			<RenderPriority val="999"/>
+			<Unclipped val="true"/>
+			<AcceptsMouse val="false"/>
+		</Frame>
+		<Frame type="Image" name="FCJH_AVDiag4">
+			<Anchor side="Left" relative="$parent/AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer/TopProgressBar" pos="Min" offset="0"/>
+			<Anchor side="Right" relative="$parent/AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer/TopProgressBar" pos="Max" offset="0"/>
+			<Anchor side="Bottom" relative="$parent/AVMechanicContainer" pos="Min" offset="-60"/>
+			<Height val="8"/>
+			<Texture val="@UI/PauseScreenDimImage"/>
+			<ColorAdjustMode val="Fill"/>
+			<AdjustmentColor val="255,0,80,255"/>
+			<RenderPriority val="999"/>
+			<Unclipped val="true"/>
+			<AcceptsMouse val="false"/>
+		</Frame>
+		<Frame type="Image" name="FCJH_AVDiag5">
+			<Anchor side="Left" relative="$parent/AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer/TopProgressBar/ProgressBar/FillImageContainer" pos="Min" offset="0"/>
+			<Anchor side="Right" relative="$parent/AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer/TopProgressBar/ProgressBar/FillImageContainer" pos="Max" offset="0"/>
+			<Anchor side="Bottom" relative="$parent/AVMechanicContainer" pos="Min" offset="-72"/>
+			<Height val="8"/>
+			<Texture val="@UI/PauseScreenDimImage"/>
+			<ColorAdjustMode val="Fill"/>
+			<AdjustmentColor val="255,0,255,255"/>
+			<RenderPriority val="999"/>
+			<Unclipped val="true"/>
+			<AcceptsMouse val="false"/>
+		</Frame>
+		<Frame type="Image" name="FCJH_AVDiag6">
+			<Anchor side="Left" relative="$parent/AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer/TopProgressBar/ProgressBar/Background" pos="Min" offset="0"/>
+			<Anchor side="Right" relative="$parent/AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer/TopProgressBar/ProgressBar/Background" pos="Max" offset="0"/>
+			<Anchor side="Bottom" relative="$parent/AVMechanicContainer" pos="Min" offset="-84"/>
+			<Height val="8"/>
+			<Texture val="@UI/PauseScreenDimImage"/>
+			<ColorAdjustMode val="Fill"/>
+			<AdjustmentColor val="255,255,0,255"/>
+			<RenderPriority val="999"/>
+			<Unclipped val="true"/>
+			<AcceptsMouse val="false"/>
+		</Frame>
+		<Frame type="Image" name="FCJH_AVDiag7">
+			<Anchor side="Left" relative="$parent/AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer/BottomProgressBar/ProgressBar/FillImageContainer" pos="Min" offset="0"/>
+			<Anchor side="Right" relative="$parent/AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer/BottomProgressBar/ProgressBar/FillImageContainer" pos="Max" offset="0"/>
+			<Anchor side="Bottom" relative="$parent/AVMechanicContainer" pos="Min" offset="-96"/>
+			<Height val="8"/>
+			<Texture val="@UI/PauseScreenDimImage"/>
+			<ColorAdjustMode val="Fill"/>
+			<AdjustmentColor val="255,255,40,40"/>
+			<RenderPriority val="999"/>
+			<Unclipped val="true"/>
+			<AcceptsMouse val="false"/>
+		</Frame>
+		<Frame type="Image" name="FCJH_AVDiag8">
+			<Anchor side="Left" relative="$parent/AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer/TopProgressBar/ProgressBar/FillImageContainer/ProgressLabel" pos="Min" offset="0"/>
+			<Anchor side="Right" relative="$parent/AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer/TopProgressBar/ProgressBar/FillImageContainer/ProgressLabel" pos="Max" offset="0"/>
+			<Anchor side="Bottom" relative="$parent/AVMechanicContainer" pos="Min" offset="-108"/>
+			<Height val="8"/>
+			<Texture val="@UI/PauseScreenDimImage"/>
+			<ColorAdjustMode val="Fill"/>
+			<AdjustmentColor val="255,255,160,0"/>
+			<RenderPriority val="999"/>
+			<Unclipped val="true"/>
+			<AcceptsMouse val="false"/>
+		</Frame>
 	</Frame>
 	<Frame type="Frame" name="AVNotificationFrameTemplate" file="AlteracMechanics">
 		<StateGroup name="FCJH_CampWords">

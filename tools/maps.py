@@ -1294,6 +1294,30 @@ CAMP_WORDS = {   # EventID: (Blizzard's words that event shows, ours, the colour
 }
 
 
+# DIAGNOSTIC (2026-10-13): the cage bars draw cut short. A strip per frame on the bars' chain,
+# stacked above the banner, each spanning its frame's left to right - read off a screenshot.
+AV_DIAG = (("AVMechanicContainer", "255,255,255,255"),
+           ("AVMechanicContainer/BackgroundImage", "255,128,128,128"),
+           ("AVMechanicContainer/ProgressBarMasker", "255,255,255,0"),
+           ("AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer", "255,0,220,0"),
+           ("AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer/TopProgressBar", "255,0,80,255"),
+           ("AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer/TopProgressBar/ProgressBar/FillImageContainer", "255,0,255,255"),
+           ("AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer/TopProgressBar/ProgressBar/Background", "255,255,0,255"),
+           ("AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer/BottomProgressBar/ProgressBar/FillImageContainer", "255,255,40,40"),
+           ("AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer/TopProgressBar/ProgressBar/FillImageContainer/ProgressLabel", "255,255,160,0"))
+
+
+def av_diag():
+    return {f"AlteracMechanicsPanel/FCJH_AVDiag{i}:Image":
+            (f'<Anchor side="Left" relative="$parent/{target}" pos="Min" offset="0"/>\n'
+             f'<Anchor side="Right" relative="$parent/{target}" pos="Max" offset="0"/>\n'
+             f'<Anchor side="Bottom" relative="$parent/AVMechanicContainer" pos="Min" offset="{-12 - 12 * i}"/>\n'
+             f'<Height val="8"/>\n<Texture val="@UI/PauseScreenDimImage"/>\n<ColorAdjustMode val="Fill"/>\n'
+             f'<AdjustmentColor val="{colour}"/>\n<RenderPriority val="999"/>\n<Unclipped val="true"/>\n'
+             f'<AcceptsMouse val="false"/>\n')
+            for i, (target, colour) in enumerate(AV_DIAG)}
+
+
 def camp_words():
     """The flag alerts' template (AVNotificationFrameTemplate): ours over Blizzard's words, a
     state per event and English wording; Blizzard's label hidden by Visible (its intro fades it,
@@ -1321,7 +1345,7 @@ PARTS["alterac_pass"] = {"AlteracMechanicsPanel": f'<Width val="{AV_PANEL_W}"/>\
                          "AlteracMechanicsPanel/NotificationFrame1":
                              f'<Anchor side="Bottom" relative="$parent" pos="Mid" offset="{AV_ALERTS_B}"/>\n' + _ALERTS_R,
                          "AlteracMechanicsPanel/NotificationFrame2": _ALERTS_R,
-                         **camp_words()}
+                         **camp_words(), **av_diag()}
 
 
 # ------------------------------------------------------------------ the maps
