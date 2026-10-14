@@ -84,7 +84,8 @@ haunted_mines = 0            # the surface only, its bottom on the line; the min
 # px per map: that map's objective panel (its counters, timers and banners), moved with the
 # minimap as it sat round Blizzard's; + lowers it, - raises it.
 [minimap.panel_nudge]
-alterac_pass = 0
+alterac_pass = 10            # the neutral banner (prisoners, cage) 10 px down (user, 2026-10-13); the cavalry's
+                             # jump is from here (gen.py), so its spots hold
 battlefield_of_eternity = 0
 blackhearts_bay = -30         # the doubloon counts' team line up to ~1070, level with Towers' (user, 2026-10-12:
                              # too low - the coins cut off by the screen's edge, their tops at 1052)
