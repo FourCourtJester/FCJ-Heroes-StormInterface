@@ -1672,11 +1672,11 @@ MAP_IDS = {
     "cursed_hollow": "CursedHollow",                  # GAME (2026-10-09; CursedHollowSandbox: the sandbox's)
     "dragon_shire": "DragonShire",                    # GAME (2026-10-09)
     "garden_of_terror": "HauntedWoods",               # GAME (2026-10-12)
-    "hanamura_temple": "Hanamura",                    # SPAZZO
+    "hanamura_temple": "Hanamura",                    # GAME (2026-10-14)
     "haunted_mines": "HauntedMines",                  # GAME (2026-10-09)
     "infernal_shrines": "Shrines",                    # SCRIPT
     "sky_temple": "ControlPoints",                    # SCRIPT
-    "tomb_of_the_spider_queen": "Crypts",             # SCRIPT
+    "tomb_of_the_spider_queen": "Crypts",             # GAME (2026-10-14)
     "towers_of_doom": "TowersOfDoom",                 # GAME (2026-10-09)
     "volskaya_foundry": "Volskaya",                   # SCRIPT
     "warhead_junction": "Warhead Junction",           # SCRIPT - with the space
