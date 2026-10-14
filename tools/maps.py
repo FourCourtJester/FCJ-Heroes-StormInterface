@@ -1427,8 +1427,9 @@ def camp_frame(i):
                    for sd in ("Bottom", "Right"))
 
 
-def camp_words():
-    """The flag alerts' template (AVNotificationFrameTemplate): the side names written into
+def camp_words(i):
+    """Alert i's frame (NotificationFrame1, 2 - not their template: nothing added to
+    AVNotificationFrameTemplate reached them, seen 2026-10-14 by a diagnostic): the side names written into
     Blizzard's own label, a state per event and English wording - Blizzard's EventID states
     already colour it by team. Once written its words no longer match, so the group falls back
     to "Theirs" (no actions) and the label keeps ours until the script writes the next alert.
@@ -1449,14 +1450,15 @@ def camp_words():
         f'<When type="Property" frame="$this/NotificationLabel" Text="{ours}" operator="NotEqual"/>'
         f'<Action type="SetProperty" frame="$this/NotificationLabel" Text="{ours}"/>{diag(f"event {event}")}</State>\n'
         for event, (words, ours) in CAMP_WORDS.items())
-    line = lambda name_, up, text: {f"AVNotificationFrameTemplate/{name_}:Label": (
+    frame = f"AlteracMechanicsPanel/NotificationFrame{i}"
+    line = lambda name_, up, text: {f"{frame}/{name_}:Label": (
         f'<Anchor side="Bottom" relative="$parent/BackgroundImage" pos="Min" offset="{-up}"/>\n'
         '<Anchor side="Left" relative="$parent/BackgroundImage" pos="Min" offset="0"/>\n'
         '<Width val="600"/>\n<Height val="26"/>\n<Style val="WaitingForPlayersDialogChat"/>\n'
         '<Options val="NoWrapping"/>\n<Unclipped val="true"/>\n<AcceptsMouse val="false"/>\n'
         f'<Text val="{text}"/>\n')}
-    return {"AVNotificationFrameTemplate": f'<StateGroup name="FCJH_CampWords">\n\t<DefaultState val="Theirs"/>\n'
-                                           + states + '\t<State name="Theirs"/>\n</StateGroup>\n',
+    return {frame: camp_frame(i) + '<StateGroup name="FCJH_CampWords">\n\t<DefaultState val="Theirs"/>\n'
+                   + states + '\t<State name="Theirs"/>\n</StateGroup>\n',
             **line("FCJH_CampDiagText", 4, "{$parent/NotificationLabel/@Text}"),
             **line("FCJH_CampDiagState", 30, "none")}
 
@@ -1469,9 +1471,7 @@ PARTS["alterac_pass"] = {"AlteracMechanicsPanel": f'<Width val="{AV_PANEL_W}"/>\
                          **av_both_lit(),
                          "AlteracMechanicsPanel/FCJH_CampSlot1": camp_slot(1),
                          "AlteracMechanicsPanel/FCJH_CampSlot2": camp_slot(2),
-                         "AlteracMechanicsPanel/NotificationFrame1": camp_frame(1),
-                         "AlteracMechanicsPanel/NotificationFrame2": camp_frame(2),
-                         **camp_words()}
+                         **camp_words(1), **camp_words(2)}
 
 
 # ------------------------------------------------------------------ the maps
