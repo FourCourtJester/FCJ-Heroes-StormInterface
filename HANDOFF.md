@@ -654,6 +654,16 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    gap between the minimap and the plates - now the bottom one on the plates' bottom (1060),
    each 81 up, its outer side 6 px short of the plates' edge carried up (red's centres 1143 /
    1183 / 1223); unseen. Fallback (plan B): the three in a row on a team banner.
+   **Open (every map), the minimap's tooltip:** hovering a named minimap icon (Tomb's Spider
+   Altar, 2026-10-14) shows Blizzard's `MinimapPanel/MinimapPanelTooltip` at ~1345-1467 x,
+   ~800-850 y - where its `$parent` anchors (Right -500, Bottom -250 of MinimapPanel) put it
+   with the panel still in Blizzard's corner; like Hanamura's proxy (rule 32) it doesn't follow
+   our SetAnchors. Fix: tie it to our minimap by full path. WHERE is the user's call, not made
+   yet (user: "we will need to anchor them, just not sure where yet"); suggested: centred above
+   the minimap at THE GAP (Blizzard's relation would land it on blue's inner plate). Which icons
+   carry a name is unit data - untested on other maps (a fort / camp hover would show it).
+   **Unseen on Tomb (31a031d):** the minimap 18 px right; the Webweavers' hexagons in the gap;
+   the egg timer at THE GAP.
    **Then the rest of the newer maps' QA
    (Battlefield, Shrines, Sky Temple, Tomb,
    Volskaya, Warhead). Any map could get a two-view or other per-map behaviour the same way
