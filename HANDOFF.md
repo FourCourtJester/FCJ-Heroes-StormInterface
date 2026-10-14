@@ -530,8 +530,16 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
      backing slid along with the fill. Cause: `Unclipped` on the frame (to draw past its panel on
      red's spot) took the clipping from inside it. Fixed: no `Unclipped`. Instead the panel strip
      is widened (`AV_PANEL_GROW` right, 200 left), and the carrier and flag alerts are placed back
-     from its new right. Unseen. The cavalry's plate and fill-up slide in under masks too: check
+     from its new right. The cavalry's plate and fill-up slide in under masks too: check
      they don't show outside the bar.
+   - **Then the bars drew cut short (user, 2026-10-13):** no timers, no red stub, the fill's end
+     off. A diagnostic (coloured strips spanning each frame on the bars' chain) showed the bars'
+     strip (`ProgressBarsContainer`) 891 units wide: Blizzard anchors its Left and Right to two
+     different points (art Mid -210, +218) with Width 463, and ours resolved each side as its
+     anchor -/+ half the width, so the bars started far left under the mask. Fixed
+     (`maps.av_bars`): both sides on one point, Mid +4, which centres 463 on Blizzard's span.
+     **Seen and approved** (user: "looks good"), matching the default UI at the same times.
+     Lesson: a Width with Left and Right on DIFFERENT points isn't centred between them.
    - **Technical limitation (user, 2026-10-12: "not the end of the world"): not mirrored.**
      Blizzard's animations slide its parts: the hexagon 373 left when the cage starts, the cage
      bars and the cavalry's fill-up in from the left. Each slide counts from its layout anchor, so
@@ -539,8 +547,15 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
      keeps the hexagon at the inner end. **Later, maybe:** restate those animations for red and
      flip the cage's `ProgressBar`s (the `$this` anchor trick, untested - no Blizzard bar fills
      right to left).
-   - The camp alerts (`NotificationFrame1`/`2`, stacked over the banner) are pinned where Blizzard's
-     banner sits between rounds. **Seen in the default UI's everyone view (user, 2026-10-13):** they
+   - **The camp alerts (`NotificationFrame1`/`2`) go to the side their event names (user,
+     2026-10-13):** Alliance's (EventID 11/12) on blue's, Horde's (21/22) on red's, on that side's
+     stack - a slot up for the cavalry there, and alert 2 a slot up for alert 1 there. Each hangs
+     off a carrier of ours (`maps.camp_slot`, states keyed on its EventID) so Blizzard's intro
+     still slides. Art kind `CAMP` measured off the default UI (`ALERT_ART`). Unseen. Technical
+     limitation: not mirrored on blue's side (one frame serves both teams; the intro's relative
+     slide would undo a state's mirror), so blue's hexagon is at its inner end.
+     Earlier they were pinned where Blizzard's banner sits between rounds (seen stacking over it).
+     **Seen in the default UI's everyone view (user, 2026-10-13):** they
      are for observers and they stack. Their words are blue's player's ("Allies capturing enemy
      camp" = blue capturing). Ours name the side (user): "Alliance capturing Horde camp", "Horde
      retook their camp" and so on (`maps.camp_words`). The team comes from the alert's EventID; the

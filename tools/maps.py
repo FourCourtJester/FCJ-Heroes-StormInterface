@@ -1277,9 +1277,18 @@ def av_frame():
                    for sd, off in (("Top", mid), ("Bottom", mid), ("Right", -r)))
 
 
-# The flag-capture alerts (NotificationFrame1, 2 over it) stand on the banner's top, 10 over it:
-# kept where Blizzard's banner sits between rounds, not dragged along with the cavalry (HANDOFF)
-AV_ALERTS_B = AV_MID - AV_HALF_H - 10
+# The flag-capture alerts (NotificationFrame1, 2 - the script fills 2 while 1 shows) go to the
+# side their event names (user, 2026-10-13: Alliance's on blue's, Horde's on red's), on that
+# side's stack, one slot up per banner already there: the cavalry, and for 2, 1. Each hangs off
+# a carrier of ours (FCJH_CampSlot1, 2) that states move - Blizzard's intro slides it relative to
+# its layout anchors, the carrier's (av_carrier's way). Their art: AVNotificationFrameTemplate,
+# 500 x 184, placed by its frame's bottom-right as Towers' (""): measured 2026-10-13 off the
+# default UI (alert 1, its frame's right 1 in from the screen's, bottom 10 over the cage
+# banner's): the bracket tip 509 back, the hexagon's right 18 short, the bar's bottom 21 up,
+# the hexagon 15 under it. Not mirrored on blue's side - one frame serves both teams, and the
+# intro's relative slide on its art would undo a state's mirror: the hexagon at blue's inner end.
+ALERT_ART["CAMP"] = Art(509, 18, bar_up=21, below=15, height=91)
+CAMP_TEAMS = {"Blue": (11, 12), "Red": (21, 22)}   # EventID: the captor's team, then the camp's
 # Their words are a player's ("Allies capturing enemy camp"); an observer's screen shows blue's
 # (user, 2026-10-13, everyone view: blue's capture read "Allies", red's "Enemies"). Ours name the
 # side: Alliance (Order, blue) and Horde (Chaos, red), as the map has them (user). The team is the
@@ -1306,28 +1315,41 @@ def av_bars():
                    for sd in ("Left", "Right"))
 
 
-# DIAGNOSTIC (2026-10-13): the cage bars draw cut short. A strip per frame on the bars' chain,
-# stacked above the banner, each spanning its frame's left to right - read off a screenshot.
-AV_DIAG = (("AVMechanicContainer", "255,255,255,255"),
-           ("AVMechanicContainer/BackgroundImage", "255,128,128,128"),
-           ("AVMechanicContainer/ProgressBarMasker", "255,255,255,0"),
-           ("AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer", "255,0,220,0"),
-           ("AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer/TopProgressBar", "255,0,80,255"),
-           ("AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer/TopProgressBar/ProgressBar/FillImageContainer", "255,0,255,255"),
-           ("AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer/TopProgressBar/ProgressBar/Background", "255,255,0,255"),
-           ("AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer/BottomProgressBar/ProgressBar/FillImageContainer", "255,255,40,40"),
-           ("AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer/TopProgressBar/ProgressBar/FillImageContainer/ProgressLabel", "255,255,160,0"))
+def camp_slot(i, at=("$GameUI", "Mid", "Max")):
+    """Alert i's carrier (CAMP_TEAMS above): on its team's side, a slot up for the cavalry there
+    and, for 2, for 1 showing there. States most-conditions first; the first that holds wins."""
+    place = lambda team, up: (
+        f'<Action type="SetAnchor" frame="$this" side="Right" relative="{at[0]}" pos="{at[1]}" '
+        f'offset="#FCJH_MAP_ALERT_{team.upper()}_R_CAMP"/>'
+        f'<Action type="SetAnchor" frame="$this" side="Bottom" relative="{at[0]}" pos="{at[2]}" '
+        f'offset="#FCJH_MAP_ALERT_{team.upper()}_B_CAMP{f"_{up + 1}" if up else ""}"/>')
+    states = []
+    for team, events in CAMP_TEAMS.items():
+        cavalry = (f'<When type="AnimationState" frame="$parent/AVMechanicContainer" TeamWins="{TEAM_WINS[team]}"/>'
+                   '<When type="Property" frame="$parent/AVMechanicContainer" Visible="true"/>')
+        below = [("", "")] + ([(f"Over1_{e}",
+                                f'<When type="Property" frame="$parent/NotificationFrame1" Visible="true"/>'
+                                f'<When type="AnimationState" frame="$parent/NotificationFrame1" EventID="{e}"/>')
+                               for e in events] if i == 2 else [])
+        for event in events:
+            mine = f'<When type="AnimationState" frame="$parent/NotificationFrame{i}" EventID="{event}"/>'
+            for label, one in below:
+                for cav in (cavalry, ""):
+                    up = (one != "") + (cav != "")
+                    states.append((up, f'{team}{event}{label}{"OverCavalry" * (cav != "")}',
+                                   mine + one + cav + place(team, up)))
+    states.sort(key=lambda s: -s[0])
+    return (f'<Anchor side="Right"  relative="{at[0]}" pos="{at[1]}" offset="#FCJH_MAP_ALERT_RED_R_CAMP"/>\n'
+            f'<Anchor side="Bottom" relative="{at[0]}" pos="{at[2]}" offset="#FCJH_MAP_ALERT_RED_B_CAMP"/>\n'
+            '<Width val="1"/>\n<Height val="1"/>\n<AcceptsMouse val="false"/>\n'
+            f'<StateGroup name="FCJH_CampSide">\n\t<DefaultState val="Waiting"/>\n'
+            + "".join(f'\t<State name="{name_}">{xml}</State>\n' for _, name_, xml in states)
+            + '\t<State name="Waiting"/>\n</StateGroup>\n')
 
 
-def av_diag():
-    return {f"AlteracMechanicsPanel/FCJH_AVDiag{i}:Image":
-            (f'<Anchor side="Left" relative="$parent/{target}" pos="Min" offset="0"/>\n'
-             f'<Anchor side="Right" relative="$parent/{target}" pos="Max" offset="0"/>\n'
-             f'<Anchor side="Bottom" relative="$parent/AVMechanicContainer" pos="Min" offset="{-12 - 12 * i}"/>\n'
-             f'<Height val="8"/>\n<Texture val="@UI/PauseScreenDimImage"/>\n<ColorAdjustMode val="Fill"/>\n'
-             f'<AdjustmentColor val="{colour}"/>\n<RenderPriority val="999"/>\n<Unclipped val="true"/>\n'
-             f'<AcceptsMouse val="false"/>\n')
-            for i, (target, colour) in enumerate(AV_DIAG)}
+def camp_frame(i):
+    return "".join(f'<Anchor side="{sd}" relative="$parent/FCJH_CampSlot{i}" pos="Max" offset="0"/>\n'
+                   for sd in ("Bottom", "Right"))
 
 
 def camp_words():
@@ -1350,15 +1372,17 @@ def camp_words():
     return {"AVNotificationFrameTemplate": f'<StateGroup name="FCJH_CampWords">\n\t<DefaultState val="Theirs"/>\n'
                                            + states + '\t<State name="Theirs"/>\n</StateGroup>\n',
             "AVNotificationFrameTemplate/FCJH_CampText:Label": label}
-_ALERTS_R = f'<Anchor side="Right" relative="$parent" pos="Max" offset="{-1 - AV_PANEL_GROW}"/>\n'   # Blizzard's -1
+
+
 PARTS["alterac_pass"] = {"AlteracMechanicsPanel": f'<Width val="{AV_PANEL_W}"/>\n',
                          "AlteracMechanicsPanel/FCJH_AVCarrier": av_carrier(),
                          "AlteracMechanicsPanel/AVMechanicContainer": av_frame(),
                          "AlteracMechanicsPanel/AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer": av_bars(),
-                         "AlteracMechanicsPanel/NotificationFrame1":
-                             f'<Anchor side="Bottom" relative="$parent" pos="Mid" offset="{AV_ALERTS_B}"/>\n' + _ALERTS_R,
-                         "AlteracMechanicsPanel/NotificationFrame2": _ALERTS_R,
-                         **camp_words(), **av_diag()}
+                         "AlteracMechanicsPanel/FCJH_CampSlot1": camp_slot(1),
+                         "AlteracMechanicsPanel/FCJH_CampSlot2": camp_slot(2),
+                         "AlteracMechanicsPanel/NotificationFrame1": camp_frame(1),
+                         "AlteracMechanicsPanel/NotificationFrame2": camp_frame(2),
+                         **camp_words()}
 
 
 # ------------------------------------------------------------------ the maps

@@ -1019,120 +1019,67 @@
 				</Frame>
 			</Frame>
 		</Frame>
+		<Frame type="Frame" name="FCJH_CampSlot1">
+			<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_CAMP"/>
+			<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_CAMP"/>
+			<Width val="1"/>
+			<Height val="1"/>
+			<AcceptsMouse val="false"/>
+			<StateGroup name="FCJH_CampSide">
+				<DefaultState val="Waiting"/>
+				<State name="Blue11OverCavalry"><When type="AnimationState" frame="$parent/NotificationFrame1" EventID="11"/><When type="AnimationState" frame="$parent/AVMechanicContainer" TeamWins="1"/><When type="Property" frame="$parent/AVMechanicContainer" Visible="true"/><Action type="SetAnchor" frame="$this" side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_BLUE_R_CAMP"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_CAMP_2"/></State>
+				<State name="Blue12OverCavalry"><When type="AnimationState" frame="$parent/NotificationFrame1" EventID="12"/><When type="AnimationState" frame="$parent/AVMechanicContainer" TeamWins="1"/><When type="Property" frame="$parent/AVMechanicContainer" Visible="true"/><Action type="SetAnchor" frame="$this" side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_BLUE_R_CAMP"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_CAMP_2"/></State>
+				<State name="Red21OverCavalry"><When type="AnimationState" frame="$parent/NotificationFrame1" EventID="21"/><When type="AnimationState" frame="$parent/AVMechanicContainer" TeamWins="2"/><When type="Property" frame="$parent/AVMechanicContainer" Visible="true"/><Action type="SetAnchor" frame="$this" side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_CAMP"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_CAMP_2"/></State>
+				<State name="Red22OverCavalry"><When type="AnimationState" frame="$parent/NotificationFrame1" EventID="22"/><When type="AnimationState" frame="$parent/AVMechanicContainer" TeamWins="2"/><When type="Property" frame="$parent/AVMechanicContainer" Visible="true"/><Action type="SetAnchor" frame="$this" side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_CAMP"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_CAMP_2"/></State>
+				<State name="Blue11"><When type="AnimationState" frame="$parent/NotificationFrame1" EventID="11"/><Action type="SetAnchor" frame="$this" side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_BLUE_R_CAMP"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_CAMP"/></State>
+				<State name="Blue12"><When type="AnimationState" frame="$parent/NotificationFrame1" EventID="12"/><Action type="SetAnchor" frame="$this" side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_BLUE_R_CAMP"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_CAMP"/></State>
+				<State name="Red21"><When type="AnimationState" frame="$parent/NotificationFrame1" EventID="21"/><Action type="SetAnchor" frame="$this" side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_CAMP"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_CAMP"/></State>
+				<State name="Red22"><When type="AnimationState" frame="$parent/NotificationFrame1" EventID="22"/><Action type="SetAnchor" frame="$this" side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_CAMP"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_CAMP"/></State>
+				<State name="Waiting"/>
+			</StateGroup>
+		</Frame>
+		<Frame type="Frame" name="FCJH_CampSlot2">
+			<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_CAMP"/>
+			<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_CAMP"/>
+			<Width val="1"/>
+			<Height val="1"/>
+			<AcceptsMouse val="false"/>
+			<StateGroup name="FCJH_CampSide">
+				<DefaultState val="Waiting"/>
+				<State name="Blue11Over1_11OverCavalry"><When type="AnimationState" frame="$parent/NotificationFrame2" EventID="11"/><When type="Property" frame="$parent/NotificationFrame1" Visible="true"/><When type="AnimationState" frame="$parent/NotificationFrame1" EventID="11"/><When type="AnimationState" frame="$parent/AVMechanicContainer" TeamWins="1"/><When type="Property" frame="$parent/AVMechanicContainer" Visible="true"/><Action type="SetAnchor" frame="$this" side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_BLUE_R_CAMP"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_CAMP_3"/></State>
+				<State name="Blue11Over1_12OverCavalry"><When type="AnimationState" frame="$parent/NotificationFrame2" EventID="11"/><When type="Property" frame="$parent/NotificationFrame1" Visible="true"/><When type="AnimationState" frame="$parent/NotificationFrame1" EventID="12"/><When type="AnimationState" frame="$parent/AVMechanicContainer" TeamWins="1"/><When type="Property" frame="$parent/AVMechanicContainer" Visible="true"/><Action type="SetAnchor" frame="$this" side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_BLUE_R_CAMP"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_CAMP_3"/></State>
+				<State name="Blue12Over1_11OverCavalry"><When type="AnimationState" frame="$parent/NotificationFrame2" EventID="12"/><When type="Property" frame="$parent/NotificationFrame1" Visible="true"/><When type="AnimationState" frame="$parent/NotificationFrame1" EventID="11"/><When type="AnimationState" frame="$parent/AVMechanicContainer" TeamWins="1"/><When type="Property" frame="$parent/AVMechanicContainer" Visible="true"/><Action type="SetAnchor" frame="$this" side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_BLUE_R_CAMP"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_CAMP_3"/></State>
+				<State name="Blue12Over1_12OverCavalry"><When type="AnimationState" frame="$parent/NotificationFrame2" EventID="12"/><When type="Property" frame="$parent/NotificationFrame1" Visible="true"/><When type="AnimationState" frame="$parent/NotificationFrame1" EventID="12"/><When type="AnimationState" frame="$parent/AVMechanicContainer" TeamWins="1"/><When type="Property" frame="$parent/AVMechanicContainer" Visible="true"/><Action type="SetAnchor" frame="$this" side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_BLUE_R_CAMP"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_CAMP_3"/></State>
+				<State name="Red21Over1_21OverCavalry"><When type="AnimationState" frame="$parent/NotificationFrame2" EventID="21"/><When type="Property" frame="$parent/NotificationFrame1" Visible="true"/><When type="AnimationState" frame="$parent/NotificationFrame1" EventID="21"/><When type="AnimationState" frame="$parent/AVMechanicContainer" TeamWins="2"/><When type="Property" frame="$parent/AVMechanicContainer" Visible="true"/><Action type="SetAnchor" frame="$this" side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_CAMP"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_CAMP_3"/></State>
+				<State name="Red21Over1_22OverCavalry"><When type="AnimationState" frame="$parent/NotificationFrame2" EventID="21"/><When type="Property" frame="$parent/NotificationFrame1" Visible="true"/><When type="AnimationState" frame="$parent/NotificationFrame1" EventID="22"/><When type="AnimationState" frame="$parent/AVMechanicContainer" TeamWins="2"/><When type="Property" frame="$parent/AVMechanicContainer" Visible="true"/><Action type="SetAnchor" frame="$this" side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_CAMP"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_CAMP_3"/></State>
+				<State name="Red22Over1_21OverCavalry"><When type="AnimationState" frame="$parent/NotificationFrame2" EventID="22"/><When type="Property" frame="$parent/NotificationFrame1" Visible="true"/><When type="AnimationState" frame="$parent/NotificationFrame1" EventID="21"/><When type="AnimationState" frame="$parent/AVMechanicContainer" TeamWins="2"/><When type="Property" frame="$parent/AVMechanicContainer" Visible="true"/><Action type="SetAnchor" frame="$this" side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_CAMP"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_CAMP_3"/></State>
+				<State name="Red22Over1_22OverCavalry"><When type="AnimationState" frame="$parent/NotificationFrame2" EventID="22"/><When type="Property" frame="$parent/NotificationFrame1" Visible="true"/><When type="AnimationState" frame="$parent/NotificationFrame1" EventID="22"/><When type="AnimationState" frame="$parent/AVMechanicContainer" TeamWins="2"/><When type="Property" frame="$parent/AVMechanicContainer" Visible="true"/><Action type="SetAnchor" frame="$this" side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_CAMP"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_CAMP_3"/></State>
+				<State name="Blue11OverCavalry"><When type="AnimationState" frame="$parent/NotificationFrame2" EventID="11"/><When type="AnimationState" frame="$parent/AVMechanicContainer" TeamWins="1"/><When type="Property" frame="$parent/AVMechanicContainer" Visible="true"/><Action type="SetAnchor" frame="$this" side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_BLUE_R_CAMP"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_CAMP_2"/></State>
+				<State name="Blue11Over1_11"><When type="AnimationState" frame="$parent/NotificationFrame2" EventID="11"/><When type="Property" frame="$parent/NotificationFrame1" Visible="true"/><When type="AnimationState" frame="$parent/NotificationFrame1" EventID="11"/><Action type="SetAnchor" frame="$this" side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_BLUE_R_CAMP"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_CAMP_2"/></State>
+				<State name="Blue11Over1_12"><When type="AnimationState" frame="$parent/NotificationFrame2" EventID="11"/><When type="Property" frame="$parent/NotificationFrame1" Visible="true"/><When type="AnimationState" frame="$parent/NotificationFrame1" EventID="12"/><Action type="SetAnchor" frame="$this" side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_BLUE_R_CAMP"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_CAMP_2"/></State>
+				<State name="Blue12OverCavalry"><When type="AnimationState" frame="$parent/NotificationFrame2" EventID="12"/><When type="AnimationState" frame="$parent/AVMechanicContainer" TeamWins="1"/><When type="Property" frame="$parent/AVMechanicContainer" Visible="true"/><Action type="SetAnchor" frame="$this" side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_BLUE_R_CAMP"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_CAMP_2"/></State>
+				<State name="Blue12Over1_11"><When type="AnimationState" frame="$parent/NotificationFrame2" EventID="12"/><When type="Property" frame="$parent/NotificationFrame1" Visible="true"/><When type="AnimationState" frame="$parent/NotificationFrame1" EventID="11"/><Action type="SetAnchor" frame="$this" side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_BLUE_R_CAMP"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_CAMP_2"/></State>
+				<State name="Blue12Over1_12"><When type="AnimationState" frame="$parent/NotificationFrame2" EventID="12"/><When type="Property" frame="$parent/NotificationFrame1" Visible="true"/><When type="AnimationState" frame="$parent/NotificationFrame1" EventID="12"/><Action type="SetAnchor" frame="$this" side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_BLUE_R_CAMP"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_CAMP_2"/></State>
+				<State name="Red21OverCavalry"><When type="AnimationState" frame="$parent/NotificationFrame2" EventID="21"/><When type="AnimationState" frame="$parent/AVMechanicContainer" TeamWins="2"/><When type="Property" frame="$parent/AVMechanicContainer" Visible="true"/><Action type="SetAnchor" frame="$this" side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_CAMP"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_CAMP_2"/></State>
+				<State name="Red21Over1_21"><When type="AnimationState" frame="$parent/NotificationFrame2" EventID="21"/><When type="Property" frame="$parent/NotificationFrame1" Visible="true"/><When type="AnimationState" frame="$parent/NotificationFrame1" EventID="21"/><Action type="SetAnchor" frame="$this" side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_CAMP"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_CAMP_2"/></State>
+				<State name="Red21Over1_22"><When type="AnimationState" frame="$parent/NotificationFrame2" EventID="21"/><When type="Property" frame="$parent/NotificationFrame1" Visible="true"/><When type="AnimationState" frame="$parent/NotificationFrame1" EventID="22"/><Action type="SetAnchor" frame="$this" side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_CAMP"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_CAMP_2"/></State>
+				<State name="Red22OverCavalry"><When type="AnimationState" frame="$parent/NotificationFrame2" EventID="22"/><When type="AnimationState" frame="$parent/AVMechanicContainer" TeamWins="2"/><When type="Property" frame="$parent/AVMechanicContainer" Visible="true"/><Action type="SetAnchor" frame="$this" side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_CAMP"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_CAMP_2"/></State>
+				<State name="Red22Over1_21"><When type="AnimationState" frame="$parent/NotificationFrame2" EventID="22"/><When type="Property" frame="$parent/NotificationFrame1" Visible="true"/><When type="AnimationState" frame="$parent/NotificationFrame1" EventID="21"/><Action type="SetAnchor" frame="$this" side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_CAMP"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_CAMP_2"/></State>
+				<State name="Red22Over1_22"><When type="AnimationState" frame="$parent/NotificationFrame2" EventID="22"/><When type="Property" frame="$parent/NotificationFrame1" Visible="true"/><When type="AnimationState" frame="$parent/NotificationFrame1" EventID="22"/><Action type="SetAnchor" frame="$this" side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_CAMP"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_CAMP_2"/></State>
+				<State name="Blue11"><When type="AnimationState" frame="$parent/NotificationFrame2" EventID="11"/><Action type="SetAnchor" frame="$this" side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_BLUE_R_CAMP"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_CAMP"/></State>
+				<State name="Blue12"><When type="AnimationState" frame="$parent/NotificationFrame2" EventID="12"/><Action type="SetAnchor" frame="$this" side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_BLUE_R_CAMP"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_CAMP"/></State>
+				<State name="Red21"><When type="AnimationState" frame="$parent/NotificationFrame2" EventID="21"/><Action type="SetAnchor" frame="$this" side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_CAMP"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_CAMP"/></State>
+				<State name="Red22"><When type="AnimationState" frame="$parent/NotificationFrame2" EventID="22"/><Action type="SetAnchor" frame="$this" side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_CAMP"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_CAMP"/></State>
+				<State name="Waiting"/>
+			</StateGroup>
+		</Frame>
 		<Frame type="Frame" name="NotificationFrame1">
-			<Anchor side="Bottom" relative="$parent" pos="Mid" offset="185"/>
-			<Anchor side="Right" relative="$parent" pos="Max" offset="-601"/>
+			<Anchor side="Bottom" relative="$parent/FCJH_CampSlot1" pos="Max" offset="0"/>
+			<Anchor side="Right" relative="$parent/FCJH_CampSlot1" pos="Max" offset="0"/>
 		</Frame>
 		<Frame type="Frame" name="NotificationFrame2">
-			<Anchor side="Right" relative="$parent" pos="Max" offset="-601"/>
-		</Frame>
-		<Frame type="Image" name="FCJH_AVDiag0">
-			<Anchor side="Left" relative="$parent/AVMechanicContainer" pos="Min" offset="0"/>
-			<Anchor side="Right" relative="$parent/AVMechanicContainer" pos="Max" offset="0"/>
-			<Anchor side="Bottom" relative="$parent/AVMechanicContainer" pos="Min" offset="-12"/>
-			<Height val="8"/>
-			<Texture val="@UI/PauseScreenDimImage"/>
-			<ColorAdjustMode val="Fill"/>
-			<AdjustmentColor val="255,255,255,255"/>
-			<RenderPriority val="999"/>
-			<Unclipped val="true"/>
-			<AcceptsMouse val="false"/>
-		</Frame>
-		<Frame type="Image" name="FCJH_AVDiag1">
-			<Anchor side="Left" relative="$parent/AVMechanicContainer/BackgroundImage" pos="Min" offset="0"/>
-			<Anchor side="Right" relative="$parent/AVMechanicContainer/BackgroundImage" pos="Max" offset="0"/>
-			<Anchor side="Bottom" relative="$parent/AVMechanicContainer" pos="Min" offset="-24"/>
-			<Height val="8"/>
-			<Texture val="@UI/PauseScreenDimImage"/>
-			<ColorAdjustMode val="Fill"/>
-			<AdjustmentColor val="255,128,128,128"/>
-			<RenderPriority val="999"/>
-			<Unclipped val="true"/>
-			<AcceptsMouse val="false"/>
-		</Frame>
-		<Frame type="Image" name="FCJH_AVDiag2">
-			<Anchor side="Left" relative="$parent/AVMechanicContainer/ProgressBarMasker" pos="Min" offset="0"/>
-			<Anchor side="Right" relative="$parent/AVMechanicContainer/ProgressBarMasker" pos="Max" offset="0"/>
-			<Anchor side="Bottom" relative="$parent/AVMechanicContainer" pos="Min" offset="-36"/>
-			<Height val="8"/>
-			<Texture val="@UI/PauseScreenDimImage"/>
-			<ColorAdjustMode val="Fill"/>
-			<AdjustmentColor val="255,255,255,0"/>
-			<RenderPriority val="999"/>
-			<Unclipped val="true"/>
-			<AcceptsMouse val="false"/>
-		</Frame>
-		<Frame type="Image" name="FCJH_AVDiag3">
-			<Anchor side="Left" relative="$parent/AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer" pos="Min" offset="0"/>
-			<Anchor side="Right" relative="$parent/AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer" pos="Max" offset="0"/>
-			<Anchor side="Bottom" relative="$parent/AVMechanicContainer" pos="Min" offset="-48"/>
-			<Height val="8"/>
-			<Texture val="@UI/PauseScreenDimImage"/>
-			<ColorAdjustMode val="Fill"/>
-			<AdjustmentColor val="255,0,220,0"/>
-			<RenderPriority val="999"/>
-			<Unclipped val="true"/>
-			<AcceptsMouse val="false"/>
-		</Frame>
-		<Frame type="Image" name="FCJH_AVDiag4">
-			<Anchor side="Left" relative="$parent/AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer/TopProgressBar" pos="Min" offset="0"/>
-			<Anchor side="Right" relative="$parent/AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer/TopProgressBar" pos="Max" offset="0"/>
-			<Anchor side="Bottom" relative="$parent/AVMechanicContainer" pos="Min" offset="-60"/>
-			<Height val="8"/>
-			<Texture val="@UI/PauseScreenDimImage"/>
-			<ColorAdjustMode val="Fill"/>
-			<AdjustmentColor val="255,0,80,255"/>
-			<RenderPriority val="999"/>
-			<Unclipped val="true"/>
-			<AcceptsMouse val="false"/>
-		</Frame>
-		<Frame type="Image" name="FCJH_AVDiag5">
-			<Anchor side="Left" relative="$parent/AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer/TopProgressBar/ProgressBar/FillImageContainer" pos="Min" offset="0"/>
-			<Anchor side="Right" relative="$parent/AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer/TopProgressBar/ProgressBar/FillImageContainer" pos="Max" offset="0"/>
-			<Anchor side="Bottom" relative="$parent/AVMechanicContainer" pos="Min" offset="-72"/>
-			<Height val="8"/>
-			<Texture val="@UI/PauseScreenDimImage"/>
-			<ColorAdjustMode val="Fill"/>
-			<AdjustmentColor val="255,0,255,255"/>
-			<RenderPriority val="999"/>
-			<Unclipped val="true"/>
-			<AcceptsMouse val="false"/>
-		</Frame>
-		<Frame type="Image" name="FCJH_AVDiag6">
-			<Anchor side="Left" relative="$parent/AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer/TopProgressBar/ProgressBar/Background" pos="Min" offset="0"/>
-			<Anchor side="Right" relative="$parent/AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer/TopProgressBar/ProgressBar/Background" pos="Max" offset="0"/>
-			<Anchor side="Bottom" relative="$parent/AVMechanicContainer" pos="Min" offset="-84"/>
-			<Height val="8"/>
-			<Texture val="@UI/PauseScreenDimImage"/>
-			<ColorAdjustMode val="Fill"/>
-			<AdjustmentColor val="255,255,0,255"/>
-			<RenderPriority val="999"/>
-			<Unclipped val="true"/>
-			<AcceptsMouse val="false"/>
-		</Frame>
-		<Frame type="Image" name="FCJH_AVDiag7">
-			<Anchor side="Left" relative="$parent/AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer/BottomProgressBar/ProgressBar/FillImageContainer" pos="Min" offset="0"/>
-			<Anchor side="Right" relative="$parent/AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer/BottomProgressBar/ProgressBar/FillImageContainer" pos="Max" offset="0"/>
-			<Anchor side="Bottom" relative="$parent/AVMechanicContainer" pos="Min" offset="-96"/>
-			<Height val="8"/>
-			<Texture val="@UI/PauseScreenDimImage"/>
-			<ColorAdjustMode val="Fill"/>
-			<AdjustmentColor val="255,255,40,40"/>
-			<RenderPriority val="999"/>
-			<Unclipped val="true"/>
-			<AcceptsMouse val="false"/>
-		</Frame>
-		<Frame type="Image" name="FCJH_AVDiag8">
-			<Anchor side="Left" relative="$parent/AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer/TopProgressBar/ProgressBar/FillImageContainer/ProgressLabel" pos="Min" offset="0"/>
-			<Anchor side="Right" relative="$parent/AVMechanicContainer/ProgressBarMasker/ProgressBarsContainer/TopProgressBar/ProgressBar/FillImageContainer/ProgressLabel" pos="Max" offset="0"/>
-			<Anchor side="Bottom" relative="$parent/AVMechanicContainer" pos="Min" offset="-108"/>
-			<Height val="8"/>
-			<Texture val="@UI/PauseScreenDimImage"/>
-			<ColorAdjustMode val="Fill"/>
-			<AdjustmentColor val="255,255,160,0"/>
-			<RenderPriority val="999"/>
-			<Unclipped val="true"/>
-			<AcceptsMouse val="false"/>
+			<Anchor side="Bottom" relative="$parent/FCJH_CampSlot2" pos="Max" offset="0"/>
+			<Anchor side="Right" relative="$parent/FCJH_CampSlot2" pos="Max" offset="0"/>
 		</Frame>
 	</Frame>
 	<Frame type="Frame" name="AVNotificationFrameTemplate" file="AlteracMechanics">
