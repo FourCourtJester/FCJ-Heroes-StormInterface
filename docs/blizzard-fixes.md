@@ -95,7 +95,7 @@ from then on are written with their fix.
 - **Blizzard's:** the map's art sits about 21 px (at 1080p) left of the centre of its own
   minimap square, so its bottom point lands well left of the gem counts' blue/red split under it.
   The user called it the most lopsided map so far (2026-10-14).
-- **Ours:** Tomb's minimap moves 17 px right, so the art is centred. The gem counts, the
+- **Ours:** Tomb's minimap moves 18 px right, so the art is centred. The gem counts, the
   Webweavers banner and the egg timer stay where they were (`maps.py` `across`).
 - **Status:** built, not yet seen in game.
 
