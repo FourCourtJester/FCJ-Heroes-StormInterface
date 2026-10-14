@@ -412,7 +412,8 @@ Dragon Shire are DONE (items 3-4; Dragon Shire's knight on either team's side, b
 Blackheart's Bay DONE 2026-10-12 (chests banner, either team's cannon, the plates' carried
 doubloons); Garden of Terror DONE 2026-10-12 (the seed banners, the Terrors on the summoning
 team's side; blue's Terrors still unseen). The banner protocols' recheck PASSED on all five
-(2026-10-12). **Next: the newer maps' QA** (item 4: Alterac first).
+(2026-10-12). Alterac Pass DONE 2026-10-14 (everything below seen and approved in one pass).
+**Next: the rest of the newer maps' QA** (item 4).
 For each, screenshots of: the map id at load
 (the diagnostic, now just that line), each banner as it comes up, anything hanging off the
 minimap's bottom. Hero test rosters come from the tracker in item 14 ("not seen yet").
@@ -509,7 +510,7 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    - The Terrors' health is on the summoning team's side (`team_banner`, told by its ACTIVE seed
      count): blue's is Blizzard's way round, red's the mirror. **Blue's not seen yet** - blue never
      summoned in the test replay; look next time.
-   **Alterac Pass: built 2026-10-12, unseen.** Its id `AlteracPass` read in game. One Blizzard
+   **Alterac Pass: DONE (user, 2026-10-14: "That looks great!").** Its id `AlteracPass` read in game. One Blizzard
    frame (`AVMechanicContainer`) shows the prisoners countdown, then the cage fight, then the
    cavalry's health. Measured at Blizzard's place (all four modes seen there, both teams' cavalry).
    - It hangs off a carrier of ours (`maps.av_carrier`). The first build (caa5687) put the
@@ -520,7 +521,7 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
      cavalry appears on its team's side.** The carrier sits at Blizzard's place; on `TeamWins`
      1 or 2 it jumps to that team's spot 0.6 s on (`AV_HANDOFF_S`: Blizzard's cage bars are
      gone and the cavalry plate shows then), by a relative Anchor controller with gen.py's
-     `FCJH_MAP_AV_<TEAM>_DX/_DY`; `TeamWins` 0 resets it. Unseen. Check:
+     `FCJH_MAP_AV_<TEAM>_DX/_DY`; `TeamWins` 0 resets it. Checked:
      - the cage's outro above the minimap, then the cavalry on the winner's side. If it jumps
        before the outro, `TeamWins` is set before "MechanicDone" and the delay needs raising;
      - the next prisoners back above the minimap (if not, `TeamWins` doesn't return to 0);
@@ -530,11 +531,11 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
      back above the minimap (the script resets `TeamWins` and sends "Hide" 5 s after
      "CavalrySlain"). Now (`maps.av_parkers`): the banner is parked off-screen from the win until
      it lands on the winner's spot at 0.6 s, and from "CavalrySlain" until the next round's
-     "Show": no outro above the minimap and no slain line. Unseen.
+     "Show": no outro above the minimap and no slain line. Seen (2026-10-14).
    - **Both teams capturing lit only one half of the cage's hexagon** (Blizzard's, seen in Ahli's
      too; user, 2026-10-13): it lights "who's winning", whoever channelled first. Now
      (`maps.av_both_lit`): with both bars capturing (`TopBarCaptured` and `BottomBarCaptured` "10"
-     or "11"), our copies of both lit halves and glows draw over Blizzard's darkened half. Unseen.
+     or "11"), our copies of both lit halves and glows draw over Blizzard's darkened half. Seen (2026-10-14).
      If a copy shows outside a capture (after the win, say), the bars' states outlive it.
    - The neutral banner sits 10 px lower (user, 2026-10-13: `[minimap.panel_nudge]`
      alterac_pass; the cavalry's jump allows for it, so only the neutral moved).
@@ -564,7 +565,7 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
      2026-10-13):** Alliance's (EventID 11/12) on blue's, Horde's (21/22) on red's, on that side's
      stack - a slot up for the cavalry there, and alert 2 a slot up for alert 1 there. Each hangs
      off a carrier of ours (`maps.camp_slot`, states keyed on its EventID) so Blizzard's intro
-     still slides. Art kind `CAMP` measured off the default UI (`ALERT_ART`). Unseen. Technical
+     still slides. Art kind `CAMP` measured off the default UI (`ALERT_ART`). Seen (2026-10-14). Technical
      limitation: not mirrored on blue's side (one frame serves both teams; the intro's relative
      slide would undo a state's mirror), so blue's hexagon is at its inner end.
      Earlier they were pinned where Blizzard's banner sits between rounds (seen stacking over it).
@@ -573,7 +574,7 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
      camp" = blue capturing). Ours name the side (user): "Alliance capturing Horde camp", "Horde
      retook their camp" and so on (`maps.camp_words`). The team comes from the alert's EventID; the
      English words only gate the kind and the language. Blizzard's label is hidden by Visible (its
-     intro fades it). Unseen. Other languages keep Blizzard's words; translate if wanted.
+     intro fades it). Seen (2026-10-14). Other languages keep Blizzard's words; translate if wanted.
      **Later:** the cavalry-slain line ("All Allied/Enemy Cavalry Slain", in the banner itself) is
      the same problem. Its label has a Visibility animation, so it needs another way to hide it.
    **Then the rest of the newer maps' QA

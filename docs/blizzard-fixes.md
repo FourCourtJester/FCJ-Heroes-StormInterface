@@ -71,7 +71,7 @@ from then on are written with their fix.
 - **Ours:** when both bars report capturing (or contested), our own copies of both lit halves and
   their pulsing glows draw over Blizzard's darkened half: same textures, team colours and pulse.
   Copies, so nothing fights Blizzard's own state for the hexagon (`maps.av_both_lit`; 2bcea1d).
-- **Status:** built 2026-10-13, not yet seen in game.
+- **Status:** confirmed in game (user, 2026-10-14: "You even fixed the blizzard logic").
 
 ### Alterac Pass: camp alerts in a player's words on the observer's screen
 - **Blizzard's:** the prisoner-camp alerts are sent to observers too, but in a player's words:
@@ -82,7 +82,7 @@ from then on are written with their fix.
   it's right in any view. And each alert appears on its team's side of the screen (Alliance on
   blue's, Horde on red's), stacked with the side's other banners, instead of all piling up in
   the middle (`maps.camp_words`, `camp_slot`; 99f6a23, 8836507).
-- **Status:** built 2026-10-13, not yet seen in game.
+- **Status:** confirmed in game (2026-10-14).
 - **Limit:** English only - other languages keep Blizzard's words.
 
 ## Made for observers
