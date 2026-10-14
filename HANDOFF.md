@@ -412,7 +412,8 @@ Dragon Shire are DONE (items 3-4; Dragon Shire's knight on either team's side, b
 Blackheart's Bay DONE 2026-10-12 (chests banner, either team's cannon, the plates' carried
 doubloons); Garden of Terror DONE 2026-10-12 (the seed banners, the Terrors on the summoning
 team's side; blue's Terrors still unseen). The banner protocols' recheck PASSED on all five
-(2026-10-12). Alterac Pass DONE 2026-10-14 (everything below seen and approved in one pass).
+(2026-10-12). Alterac Pass DONE 2026-10-14 (everything below seen and approved in one pass). Hanamura
+Temple DONE for now 2026-10-14 (user: "for today, it's good to go"; its split is a Later).
 **Next: the rest of the newer maps' QA** (item 4).
 For each, screenshots of: the map id at load
 (the diagnostic, now just that line), each banner as it comes up, anything hanging off the
@@ -589,7 +590,7 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
      teams' words, several rounds, after a fast-forward to 8:37; the diagnostic line is gone.
      The cavalry-slain line ("All Allied/Enemy Cavalry Slain", in the banner itself) had the same
      player's wording, but it never shows now: the banner is parked from "CavalrySlain" (above).
-   **Hanamura Temple (in progress, 2026-10-14):** id `Hanamura` read in game (Spazzo's, as
+   **Hanamura Temple: DONE for now (user, 2026-10-14: "for today, it's good to go").** id `Hanamura` read in game (Spazzo's, as
    guessed). Its map's bottom was ~1047, 18 px above the floor: now 18 px down onto it
    (`[minimap.nudge]`, user 2026-10-14: "Minimap looks good").
    **No per-side alerts here (user, 2026-10-14):** the countdown ("Payload spawns in"), the
@@ -615,6 +616,17 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    seen in the default UI too; most likely Cassia at the payload's edge as it spawned (user,
    2026-10-14) - left as is. If it recurs with no one near, suspect the validator's state left
    from the previous payload (hide the status ~0.25 s after it shows).
+   **Later (user, 2026-10-14): come back and split the objective into its parts** - the
+   countdown, the push status and the shots, each placed by the banner protocols (the countdown
+   neutral on red's side, the shots on their team's, blue's mirrored), instead of Blizzard's one
+   spot above the minimap. Why it was left: Blizzard animates the three as one unit in one place,
+   so pulled apart they didn't look good. What we learned: the countdown is Towers' alert
+   template and moved fine; the shots' intro slides the icon box 198 right of its layout place,
+   past the frame's right edge, which clips it (Unclipped on BackgroundImage and NotificationIcon
+   fixes that); the shots' art then runs 274 left of the placed edge to 246 right of it, bar
+   bottom 28 over the box's (off one blue screen; never committed -
+   these numbers are the record). The countdown on red's side was 95114db.
+   Also: THE GAP's measure here is still ESTIMATED (`above`) - measure it off any screen of the status.
    Roster played (user, 2026-10-14): blue Azmodan, Cassia, Lunara, Tassadar, Yrel; red Medivh,
    Deathwing, Abathur, Samuro, D.Va.
    **Then the rest of the newer maps' QA
