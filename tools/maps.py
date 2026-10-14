@@ -1643,8 +1643,9 @@ MAPS = {
                    "CryptPanel/SoulCageCooldownFrame": (-188, -69)},
         # its art drawn 21 px left of its square's centre (2026-10-14, 01359b3: the outline's
         # sides at ~780 and ~1098, the bottom point at ~936 against the counts' line at ~956 -
-        # user: "the most lopsided map I've seen"). Only the map moves.
-        across=20),
+        # user: "the most lopsided map I've seen"). Only the map moves. 20 put the point ~1-2 px
+        # right of the split (127c01a); the user: "back to the left about 3px".
+        across=17),
     "towers_of_doom": Map(
         "Towers of Doom", (436, 298), file="FieldofSlaughter",
         place=("MainFoSPanel",),
