@@ -633,15 +633,17 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    Roster played (user, 2026-10-14): blue Azmodan, Cassia, Lunara, Tassadar, Yrel; red Medivh,
    Deathwing, Abathur, Samuro, D.Va.
    **Tomb of the Spider Queen (in progress, 2026-10-14):** id `Crypts` read in game (the
-   script's, as guessed). Its map's bottom ~1025: 40 px down onto the floor (`[minimap.nudge]`).
-   The gem counts (`CryptPanel`, hung off the minimap's bottom, no proxy) were cut off by the
-   screen's edge (their numbers' tops at 1060): raised to ~1031 as Garden's, the minimap's 40
-   taken back (`[minimap.panel_nudge]` -69). The Webweavers' banner (`SoulEaterFrame`, the
-   same panel: one frame for both teams, its words set by the script) left neutral above the
-   minimap as Hanamura's, put to THE GAP on its own (`above`'s part: maps.shift_lines) - its
-   portrait's bottom ~806 over the tip ~838 on f11f8f4. The lanes' three hexagons (the
-   Webweavers' health, the panel's bottom) were cut off too; they ride with the gem counts. All
-   unseen.
+   script's, as guessed). On f03aba6 (seen): the gem counts (`CryptPanel`, hung off the
+   minimap's bottom, no proxy; their numbers' tops were at 1060, cut off) at ~1030, as Garden's;
+   the Webweavers' banner (`SoulEaterFrame`, the same panel: one frame for both teams, its words
+   set by the script - neutral as Hanamura's) 11 px over the tip; the lanes' three hexagons (the
+   Webweavers' health) 997-1062, on screen. Then (unseen): the minimap 29 down, not 40 - 40 put
+   the map's outline (~1025) on the floor and cut off its bottom marker (a building's, ~1036 at
+   0: user, "you've mismeasured the floor"; the floor now counts the map's own markers); the
+   gem counts' -58 follows it. The egg timer (`SoulCageCooldownFrame`, shown after the
+   Webweavers die - never with the banner) to the gap above the minimap too (user: "top of the
+   minimap is fine"). Both as maps.py `gap_parts`: a part to THE GAP on its own, its panel kept
+   to its nudge (maps.shift_lines). Next: the user's idea for the three hexagons.
    **Then the rest of the newer maps' QA
    (Battlefield, Shrines, Sky Temple, Tomb,
    Volskaya, Warhead). Any map could get a two-view or other per-map behaviour the same way

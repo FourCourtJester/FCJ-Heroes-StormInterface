@@ -271,16 +271,15 @@ def panel_nudges(cfg):
     for a map with a neutral objective above the minimap (maps.py `above`) the move that leaves
     THE GAP ([minimap] alert_gap) between its lowest part and the drawn map's top tip - the same
     on every map (user, 2026-10-14: "standardize that gap between maps"). It rides on the
-    minimap, so where the minimap sits doesn't change it. With a part named (`above`'s third),
-    only that part goes to the gap: (key, part) -> its move in its panel, the panel's nudge kept."""
+    minimap, so where the minimap sits doesn't change it. A map's `gap_parts` go there on their
+    own: (key, part) -> that part's move in its panel, the panel's nudge kept."""
     table = dict(map_table(cfg, "panel_nudge"))
     gap = cfg["minimap"]["alert_gap"]
     for key, m in maps.MAPS.items():
+        for part, (over, at) in m.gap_parts.items():
+            table[key, part] = at + over - gap - table.get(key, 0)
         if m.above:
-            over, at, *part = m.above
-            if part:
-                table[key, part[0]] = at + over - gap - table.get(key, 0)
-                continue
+            over, at = m.above
             if table.get(key):
                 raise SystemExit(f"layout.toml [minimap.panel_nudge]: {key} is placed by the gap "
                                  f"([minimap] alert_gap; tools/maps.py above) - remove its nudge")

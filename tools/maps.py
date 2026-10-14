@@ -140,9 +140,11 @@ class Map:
                                       # ([minimap] alert_gap): (px, at) - measured at 1080p, its
                                       # lowest part `px` over the drawn map's top tip (the art's
                                       # outline) with its panels `at` px lower. gen.py moves its
-                                      # panels to the gap (panel_nudges); it rides on the minimap.
-                                      # (px, at, part): only that part (anchored all round to its
-                                      # panel) goes to the gap, its panel kept to its panel_nudge
+                                      # panels to the gap (panel_nudges); it rides on the minimap
+    gap_parts: dict = field(default_factory=dict)  # {part: (px, at)}: as `above`, but only that part
+                                      # (anchored all round to its panel) goes to the gap, its
+                                      # panel kept to its [minimap.panel_nudge]; `at`, px, is the
+                                      # panel's nudge plus the part's own move when measured
     proxy: bool = False               # its file's panels' MinimapProxyFrame tied to our minimap
                                       # by its full path (proxy_lines)
     notes: str = ""
@@ -1628,11 +1630,14 @@ MAPS = {
     "tomb_of_the_spider_queen": Map(
         "Tomb of the Spider Queen", (430, 262), file="SoulCage",
         panels={"CryptPanel": BOTTOM_RIGHT}, place=("CryptPanel",),
-        # the Webweavers' banner (one frame, its words set per team by the script - neutral, as
-        # Hanamura's) to the gap on its own: the gem counts and the lanes' hexagons share its
-        # panel, at the screen's bottom. Measured 2026-10-14 (f11f8f4): the portrait's bottom ~806,
-        # the map's tip ~838.
-        above=(32, 0, "CryptPanel/SoulEaterFrame")),
+        # Its neutral two to the gap on their own - the gem counts and the lanes' hexagons share
+        # their panel, at the screen's bottom. They never show together (the timer after the
+        # Webweavers die). The Webweavers' banner (one frame, its words set per team by the
+        # script - neutral, as Hanamura's): on f11f8f4 its portrait's bottom ~806, the tip ~838.
+        # The egg timer (user, 2026-10-14: "top of the minimap is fine"): on f03aba6 its hexagon's
+        # bottom ~1066, the tip ~878, the panel at -69.
+        gap_parts={"CryptPanel/SoulEaterFrame": (32, 0),
+                   "CryptPanel/SoulCageCooldownFrame": (-188, -69)}),
     "towers_of_doom": Map(
         "Towers of Doom", (436, 298), file="FieldofSlaughter",
         place=("MainFoSPanel",),
@@ -1948,8 +1953,7 @@ def map_file(key, at, down):
         root.at(path).body += anchor_lines(sides, m, len(path.split("/")) + 1, down.get(key, 0))
         if m.proxy and "/" not in path:
             root.at(path).body += proxy_lines(down.get(key, 0))
-    if m.above and len(m.above) > 2:
-        part = m.above[2]
+    for part in m.gap_parts:
         root.at(part).body += shift_lines(down[key, part], len(part.split("/")) + 1)
     for path, xml in PARTS.get(key, {}).items():
         root.at(path).body += "".join(T * (len(path.split("/")) + 1) + line + "\n" for line in xml.splitlines())

@@ -1589,7 +1589,7 @@
 	</Frame>
 	<!-- ===== Tomb of the Spider Queen ===== -->
 	<Frame type="Frame" name="CryptPanel" file="SoulCage">
-		<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-112"/>
+		<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-99"/>
 		<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="0"/>
 		<!-- the minimap's place on Tomb of the Spider Queen, from the moment this panel exists -->
 		<Frame type="Frame" name="FCJH_MinimapPlace">
@@ -1605,8 +1605,14 @@
 			</StateGroup>
 		</Frame>
 		<Frame type="Frame" name="SoulEaterFrame">
-			<Anchor side="Top" relative="$parent" pos="Min" offset="101"/>
-			<Anchor side="Bottom" relative="$parent" pos="Max" offset="101"/>
+			<Anchor side="Top" relative="$parent" pos="Min" offset="89"/>
+			<Anchor side="Bottom" relative="$parent" pos="Max" offset="89"/>
+			<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+			<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+		</Frame>
+		<Frame type="Frame" name="SoulCageCooldownFrame">
+			<Anchor side="Top" relative="$parent" pos="Min" offset="-232"/>
+			<Anchor side="Bottom" relative="$parent" pos="Max" offset="-232"/>
 			<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
 			<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
 		</Frame>
