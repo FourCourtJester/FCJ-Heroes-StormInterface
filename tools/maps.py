@@ -136,6 +136,13 @@ class Map:
     fix: str = ""                     # extra SetAnchors when this map's minimap is placed
     team: dict = field(default_factory=dict)     # {"blue": [Alert...], "red": [...]}: panel -> column
     extra: str = ""                   # map-specific XML in its file's panel (see TOWERS_EXTRA)
+    above: tuple = None               # its neutral objective above the minimap, for THE GAP
+                                      # ([minimap] alert_gap): (px, at) - measured at 1080p, its
+                                      # lowest part `px` over the drawn map's top tip (the art's
+                                      # outline) with its panels `at` px lower. gen.py moves its
+                                      # panels to the gap (panel_nudges); it rides on the minimap
+    proxy: bool = False               # its file's panels' MinimapProxyFrame tied to our minimap
+                                      # by its full path (proxy_lines)
     notes: str = ""
 
 
@@ -1488,6 +1495,9 @@ MAPS = {
         # its right AV_PANEL_GROW further, for red's cavalry spot (av_carrier)
         panels={"AlteracMechanicsPanel": (("Top", "Min", -25), ("Bottom", "Max", -25), ("Right", "Max", AV_PANEL_GROW))},
         place=("AlteracMechanicsPanel",),
+        # THE GAP: the cage's hexagon on the map's top tip (797 px both) with the panel 10 px
+        # lower (user, 2026-10-13: "move down the neutral banner ... by about 10px"; b6e0e68)
+        above=(0, 10),
         # the prisoners, the cage fight and the cavalry: one frame, on a carrier (av_carrier) at
         # Blizzard's place above the minimap; the cavalry on these spots
         team={"AlteracMechanicsPanel": {
@@ -1578,6 +1588,9 @@ MAPS = {
                              "ActivePayloadImageChaos", "ActivePayloadImageNeutral")}},
         place=("HanamuraReworkPayloadWarningTimerPanel", "HanamuraReworkActivePaylaodStatusPanel",
                "HanamuraReworkVictoryShotsStatusPanel"),
+        # THE GAP: the payload status's hexagon - estimated from the template (its image's bottom
+        # 57 units under the minimap's top) and the map's tip at 852 px; measure it in game
+        above=(35, 0), proxy=True,
         # No alerts on the teams' sides (user, 2026-10-14): the countdown ("Payload spawns in"),
         # the payload's push status and the shots ("Attacking the core", one frame per team)
         # take turns in one place above the minimap and animate as one, so they stay Blizzard's,
@@ -1898,6 +1911,21 @@ class Node:
         return out + f"{t}</Frame>\n"
 
 
+def proxy_lines(down):
+    """A map panel's MinimapProxyFrame (Blizzard's MechanicFrameTemplate), the stand-in for the
+    minimap that the map's own frames hang off, tied to our minimap by its full path, `down`
+    units lower. Blizzard's finds it by $parent/$parent/$parent: on Hanamura its frames stayed
+    put both when the panel moved (they don't hang off the panel) and when the minimap did
+    (user, 2026-10-14: "you didn't bring the alert with you"), while everything anchored to
+    MinimapPanel by its full path follows it (our panels; Haunted Mines' plaque, Braxis's HUD)."""
+    t = T * 2
+    return (f'{t}<Frame type="Frame" name="MinimapProxyFrame">\n'
+            + "".join(f'{t}\t<Anchor side="{sd}"{" " * (6 - len(sd))} relative="{MINIMAP}/Minimap" pos="{pos}" '
+                      f'offset="{down if sd in ("Top", "Bottom") else 0}"/>\n'
+                      for sd, pos in (("Top", "Min"), ("Bottom", "Max"), ("Left", "Min"), ("Right", "Max")))
+            + f'{t}</Frame>\n')
+
+
 def map_file(key, at, down):
     """Everything this map's own layout file gets: its panels on our minimap, the minimap's
     place (placer, in its first panel), its team alerts."""
@@ -1905,6 +1933,8 @@ def map_file(key, at, down):
     root = Node(None)
     for path, sides in m.panels.items():
         root.at(path).body += anchor_lines(sides, m, len(path.split("/")) + 1, down.get(key, 0))
+        if m.proxy and "/" not in path:
+            root.at(path).body += proxy_lines(down.get(key, 0))
     for path, xml in PARTS.get(key, {}).items():
         root.at(path).body += "".join(T * (len(path.split("/")) + 1) + line + "\n" for line in xml.splitlines())
     if m.place:

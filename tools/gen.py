@@ -266,6 +266,24 @@ def minimap_launch(cfg):
             for k, m in maps.MAPS.items() if m.launch_cut is not None}
 
 
+def panel_nudges(cfg):
+    """How much lower each map's objective panels go, px: layout.toml [minimap.panel_nudge], and
+    for a map with a neutral objective above the minimap (maps.py `above`) the move that leaves
+    THE GAP ([minimap] alert_gap) between its lowest part and the drawn map's top tip - the same
+    on every map (user, 2026-10-14: "standardize that gap between maps"). It rides on the
+    minimap, so where the minimap sits doesn't change it."""
+    table = dict(map_table(cfg, "panel_nudge"))
+    gap = cfg["minimap"]["alert_gap"]
+    for key, m in maps.MAPS.items():
+        if m.above:
+            if table.get(key):
+                raise SystemExit(f"layout.toml [minimap.panel_nudge]: {key} is placed by the gap "
+                                 f"([minimap] alert_gap; tools/maps.py above) - remove its nudge")
+            over, at = m.above
+            table[key] = at + over - gap
+    return table
+
+
 def map_table(cfg, key, section="minimap"):
     """layout.toml [<section>.<key>]: px per map (tools/maps.py's keys), checked."""
     table = cfg[section].get(key, {})
@@ -513,7 +531,7 @@ def constants_layout(cfg):
     # Alterac Pass's banner sits at Blizzard's place above the minimap, and its cavalry jumps to
     # the winning team's spot (maps.av_carrier): the jump, from that place to the spot
     lines.append("\t<!-- Alterac Pass's cavalry: its carrier's move from Blizzard's place to each spot (maps.av_carrier) -->")
-    across, up = maps.av_neutral(u(map_table(cfg, "panel_nudge").get("alterac_pass", 0)))
+    across, up = maps.av_neutral(u(panel_nudges(cfg).get("alterac_pass", 0)))
     neutral = (left + MINIMAP_PANEL_W + across, minimap_bottoms(cfg)["alterac_pass"] + up)
     for team in ("red", "blue"):
         ox, oy = anchor_origin(cfg, f"{team}_xp")
@@ -2946,7 +2964,7 @@ def committed_files(cfg, source=SOURCE):
             (u(rects(cfg)["inspect"][0][0]), u(rects(cfg)["inspect"][0][1])), 1 / u.scale,   # its place, for pixel-exact lines
             (*PLATES_AT, anchor_edges(cfg, "inspect")["t"])),   # where it's anchored, and its top from there
         LAYOUT_REL / MAPS_FILE: maps.layout(XML_DECL + "<Desc>\n" + GENERATED, PLATES_AT,
-                                            {k: u(v) for k, v in map_table(cfg, "panel_nudge").items()},
+                                            {k: u(v) for k, v in panel_nudges(cfg).items()},
                                             minimap_bottoms(cfg),
                                             {k: (v - minimap_bottoms(cfg)[None], minimap_bottoms(cfg)[k] - minimap_bottoms(cfg)[None])
                                              for k, v in minimap_launch(cfg).items()}),

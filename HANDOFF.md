@@ -538,8 +538,9 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
      (`maps.av_both_lit`): with both bars capturing (`TopBarCaptured` and `BottomBarCaptured` "10"
      or "11"), our copies of both lit halves and glows draw over Blizzard's darkened half. Seen (2026-10-14).
      If a copy shows outside a capture (after the win, say), the bars' states outlive it.
-   - The neutral banner sits 10 px lower (user, 2026-10-13: `[minimap.panel_nudge]`
-     alterac_pass; the cavalry's jump allows for it, so only the neutral moved).
+   - The neutral banner sat 10 px lower (user, 2026-10-13); since 2026-10-14 it's placed by THE
+     GAP (Hanamura below; `maps.py above`) - 10 px back up, unseen. The cavalry's jump allows for
+     it (gen.py), so only the neutral moves.
    - **The cage bars broke (user, 2026-10-13, against the default UI):** in Blizzard's, the fill
      and its timer move while the team-coloured backing stands the bar's length; in ours the
      backing slid along with the fill. Cause: `Unclipped` on the frame (to draw past its panel on
@@ -590,17 +591,26 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
      player's wording, but it never shows now: the banner is parked from "CavalrySlain" (above).
    **Hanamura Temple (in progress, 2026-10-14):** id `Hanamura` read in game (Spazzo's, as
    guessed). Its map's bottom was ~1047, 18 px above the floor: now 18 px down onto it
-   (`[minimap.nudge]`, user 2026-10-14; unseen), the objective riding along.
+   (`[minimap.nudge]`, user 2026-10-14: "Minimap looks good").
    **No per-side alerts here (user, 2026-10-14):** the countdown ("Payload spawns in"), the
    payload's push status and the shots ("Shots remaining") take turns in one place above the
    minimap and animate as one, so all three stay Blizzard's, there. Tried and dropped: the
    countdown on red's side and the shots on their team's - blue's shots came out clipped (the
-   intro slides the icon 198 right, past the frame's edge). Now (unseen): the whole objective 26
-   px lower (`[minimap.panel_nudge]`), the status's hexagon bottom 10 px over the map's tip
-   (798 -> 824, tip 834), and "CONTESTED!" above the hexagon instead of under it (the escort
-   counts there are hidden while contested). The contested status seen and approved (user,
-   2026-10-14: "Contested looks good"), and blue's shots ("shots remaining looks good"); the
-   countdown is Blizzard's but for the 26 px.
+   intro slides the icon 198 right, past the frame's edge). "CONTESTED!" above the hexagon
+   instead of under it (the escort counts there are hidden while contested): seen and approved
+   (user: "Contested looks good"), and blue's shots ("shots remaining looks good").
+   **The objective never moved:** a 26 px panel nudge did nothing (the hexagon stayed at ~798,
+   which I misread as moved), and the minimap's 18 px move left it behind (user: "you didn't
+   bring the alert with you"). Its frames hang off each panel's MinimapProxyFrame, which
+   Blizzard ties to the minimap by `$parent/$parent/$parent` - and that never followed. Now tied
+   by the full path (`maps.proxy_lines`, `proxy=True`), as everything that does follow is.
+   **THE GAP (user, 2026-10-14: "standardize that gap between maps"):** every neutral objective
+   above the minimap sits `[minimap] alert_gap` (10 px) over the drawn map's top tip. Each such
+   map has a measure (`maps.py above`: px over the tip, at a known panel move); gen.py's
+   `panel_nudges` moves its panels to the gap. Alterac: measured 0 at 10 down (its cage's
+   hexagon on the tip), so it goes back up 10 (unseen). Hanamura: ESTIMATED from the template
+   (35 over at 0), so 25 down - measure it from the next screen and fix `above`. Every newer
+   map left gets a measure (and `proxy` if its frames hang off the proxy) in its QA.
    Red's shots never fired in the test replay.
    Roster played (user, 2026-10-14): blue Azmodan, Cassia, Lunara, Tassadar, Yrel; red Medivh,
    Deathwing, Abathur, Samuro, D.Va.
