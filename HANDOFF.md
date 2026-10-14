@@ -589,7 +589,8 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
      The cavalry-slain line ("All Allied/Enemy Cavalry Slain", in the banner itself) had the same
      player's wording, but it never shows now: the banner is parked from "CavalrySlain" (above).
    **Hanamura Temple (in progress, 2026-10-14):** id `Hanamura` read in game (Spazzo's, as
-   guessed). Its map's bottom ~1047, 18 px above the floor (`[minimap.nudge]` 0: not moved).
+   guessed). Its map's bottom was ~1047, 18 px above the floor: now 18 px down onto it
+   (`[minimap.nudge]`, user 2026-10-14; unseen), the objective riding along.
    **No per-side alerts here (user, 2026-10-14):** the countdown ("Payload spawns in"), the
    payload's push status and the shots ("Shots remaining") take turns in one place above the
    minimap and animate as one, so all three stay Blizzard's, there. Tried and dropped: the
@@ -598,7 +599,8 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    px lower (`[minimap.panel_nudge]`), the status's hexagon bottom 10 px over the map's tip
    (798 -> 824, tip 834), and "CONTESTED!" above the hexagon instead of under it (the escort
    counts there are hidden while contested). The contested status seen and approved (user,
-   2026-10-14: "Contested looks good"); the countdown and shots not yet seen at the new height.
+   2026-10-14: "Contested looks good"), and blue's shots ("shots remaining looks good"); the
+   countdown is Blizzard's but for the 26 px.
    Red's shots never fired in the test replay.
    Roster played (user, 2026-10-14): blue Azmodan, Cassia, Lunara, Tassadar, Yrel; red Medivh,
    Deathwing, Abathur, Samuro, D.Va.
