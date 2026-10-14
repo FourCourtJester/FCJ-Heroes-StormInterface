@@ -588,8 +588,16 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
      teams' words, several rounds, after a fast-forward to 8:37; the diagnostic line is gone.
      The cavalry-slain line ("All Allied/Enemy Cavalry Slain", in the banner itself) had the same
      player's wording, but it never shows now: the banner is parked from "CavalrySlain" (above).
+   **Hanamura Temple (in progress, 2026-10-14):** id `Hanamura` read in game (Spazzo's, as
+   guessed). Its map's bottom ~1050, inside the floor. "Payload spawns in" (`PayloadSpawningFrame`,
+   Towers' alert template) sat centred above the minimap: now on red's side, as a neutral banner
+   (unseen). The payload's push status stays above the minimap, as Alterac's cage. Still to see:
+   the attacking-the-core alerts (ICON art unmeasured - screenshots wanted), and whether a
+   countdown ever runs during an attack (other panel, not stacked: they'd overlap).
+   Roster played (user, 2026-10-14): blue Azmodan, Cassia, Lunara, Tassadar, Yrel; red Medivh,
+   Deathwing, Abathur, Samuro, D.Va.
    **Then the rest of the newer maps' QA
-   (Battlefield, Hanamura - its ICON art unmeasured -, Shrines, Sky Temple, Tomb,
+   (Battlefield, Shrines, Sky Temple, Tomb,
    Volskaya, Warhead). Any map could get a two-view or other per-map behaviour the same way
    (`launch_cut`/`opens`, `on_map`).
 5. **The diagnostic - trimmed to the map id (user, 2026-10-09);** remove `maps.diag` and

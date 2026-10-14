@@ -1504,6 +1504,16 @@
 				</State>
 			</StateGroup>
 		</Frame>
+		<!-- red, the bottom slot: the next payload's countdown (neutral) -->
+		<Frame type="Frame" name="PayloadSpawningFrame">
+			<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B"/>
+			<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R"/>
+			<Unclipped val="true"/>
+			<StateGroup name="FCJH_Stack">
+				<DefaultState val="Bottom"/>
+				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B"/></State>
+			</StateGroup>
+		</Frame>
 	</Frame>
 	<Frame type="Frame" name="HanamuraReworkActivePaylaodStatusPanel" file="HanamuraRework">
 		<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-1280"/>

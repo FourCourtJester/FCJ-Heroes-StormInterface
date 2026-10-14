@@ -1576,7 +1576,12 @@ MAPS = {
         # "Attacking the core": one frame per team, shown to everyone, by the attacking team
         # (the map script, libmhmu: lv_attackingStructureFrame[team]) - Order is blue. Placed
         # by its icon box (its art hangs off that, not off the frame).
-        team={"HanamuraReworkVictoryShotsStatusPanel": {
+        # "Payload spawns in": neutral, so on red's side (seen centred above the minimap, user
+        # 2026-10-14) - Blizzard's NotificationFrameTemplate, Towers' kind. Another panel's, so
+        # not stacked with red's attacking alert: they'd overlap if a countdown ran during an attack.
+        team={"HanamuraReworkPayloadWarningTimerPanel": {
+                  "red": [Alert("PayloadSpawningFrame", note="the next payload's countdown (neutral)")]},
+              "HanamuraReworkVictoryShotsStatusPanel": {
             "blue": [Alert("AttackingCoreFrame_Order", kind="ICON", place="NotificationIconAnchor:Image",
                            note="blue's payload on a fort")],
             "red": [Alert("AttackingCoreFrame_Chaos", kind="ICON", place="NotificationIconAnchor:Image",
