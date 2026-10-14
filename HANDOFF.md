@@ -539,8 +539,15 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
      keeps the hexagon at the inner end. **Later, maybe:** restate those animations for red and
      flip the cage's `ProgressBar`s (the `$this` anchor trick, untested - no Blizzard bar fills
      right to left).
-   - The flag-capture alerts (`NotificationFrame1`/`2`, stood on the banner's top) are pinned
-     where Blizzard's banner had them. Unseen: place them on the capturing team's side when seen.
+   - The camp alerts (`NotificationFrame1`/`2`, stacked over the banner) are pinned where Blizzard's
+     banner sits between rounds. **Seen in the default UI's everyone view (user, 2026-10-13):** they
+     are for observers and they stack. Their words are blue's player's ("Allies capturing enemy
+     camp" = blue capturing). Ours name the side (user): "Alliance capturing Horde camp", "Horde
+     retook their camp" and so on (`maps.camp_words`). The team comes from the alert's EventID; the
+     English words only gate the kind and the language. Blizzard's label is hidden by Visible (its
+     intro fades it). Unseen. Other languages keep Blizzard's words; translate if wanted.
+     **Later:** the cavalry-slain line ("All Allied/Enemy Cavalry Slain", in the banner itself) is
+     the same problem. Its label has a Visibility animation, so it needs another way to hide it.
    **Then the rest of the newer maps' QA
    (Battlefield, Hanamura - its ICON art unmeasured -, Shrines, Sky Temple, Tomb,
    Volskaya, Warhead). Any map could get a two-view or other per-map behaviour the same way

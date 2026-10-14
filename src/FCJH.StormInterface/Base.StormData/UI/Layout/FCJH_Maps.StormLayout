@@ -1021,6 +1021,32 @@
 			<Anchor side="Right" relative="$parent" pos="Max" offset="-601"/>
 		</Frame>
 	</Frame>
+	<Frame type="Frame" name="AVNotificationFrameTemplate" file="AlteracMechanics">
+		<StateGroup name="FCJH_CampWords">
+			<DefaultState val="Theirs"/>
+			<State name="Event120"><When type="AnimationState" EventID="12"/><When type="Property" frame="$this/NotificationLabel" Text="Allies capturing enemy camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="Alliance capturing Horde camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamOrderColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamOrderColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" Visible="true"/><Action type="SetProperty" frame="$this/NotificationLabel" Visible="false"/></State>
+			<State name="Event121"><When type="AnimationState" EventID="12"/><When type="Property" frame="$this/NotificationLabel" Text="Enemies capturing allied camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="Alliance capturing Horde camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamOrderColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamOrderColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" Visible="true"/><Action type="SetProperty" frame="$this/NotificationLabel" Visible="false"/></State>
+			<State name="Event210"><When type="AnimationState" EventID="21"/><When type="Property" frame="$this/NotificationLabel" Text="Allies capturing enemy camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="Horde capturing Alliance camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamChaosColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamChaosColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" Visible="true"/><Action type="SetProperty" frame="$this/NotificationLabel" Visible="false"/></State>
+			<State name="Event211"><When type="AnimationState" EventID="21"/><When type="Property" frame="$this/NotificationLabel" Text="Enemies capturing allied camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="Horde capturing Alliance camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamChaosColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamChaosColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" Visible="true"/><Action type="SetProperty" frame="$this/NotificationLabel" Visible="false"/></State>
+			<State name="Event110"><When type="AnimationState" EventID="11"/><When type="Property" frame="$this/NotificationLabel" Text="Allies retook their camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="Alliance retook their camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamOrderColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamOrderColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" Visible="true"/><Action type="SetProperty" frame="$this/NotificationLabel" Visible="false"/></State>
+			<State name="Event111"><When type="AnimationState" EventID="11"/><When type="Property" frame="$this/NotificationLabel" Text="Enemies retook their camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="Alliance retook their camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamOrderColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamOrderColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" Visible="true"/><Action type="SetProperty" frame="$this/NotificationLabel" Visible="false"/></State>
+			<State name="Event220"><When type="AnimationState" EventID="22"/><When type="Property" frame="$this/NotificationLabel" Text="Allies retook their camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="Horde retook their camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamChaosColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamChaosColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" Visible="true"/><Action type="SetProperty" frame="$this/NotificationLabel" Visible="false"/></State>
+			<State name="Event221"><When type="AnimationState" EventID="22"/><When type="Property" frame="$this/NotificationLabel" Text="Enemies retook their camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="Horde retook their camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamChaosColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamChaosColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" Visible="true"/><Action type="SetProperty" frame="$this/NotificationLabel" Visible="false"/></State>
+			<State name="Theirs"/>
+		</StateGroup>
+		<Frame type="Label" name="FCJH_CampText">
+			<Anchor side="Top" relative="$parent/NotificationLabel" pos="Min" offset="0"/>
+			<Anchor side="Bottom" relative="$parent/NotificationLabel" pos="Max" offset="0"/>
+			<Anchor side="Left" relative="$parent/NotificationLabel" pos="Min" offset="0"/>
+			<Anchor side="Right" relative="$parent/NotificationLabel" pos="Max" offset="0"/>
+			<Style val="{$parent/NotificationLabel/@Style}"/>
+			<Options val="NoWrapping"/>
+			<ColorAdjustMode val="Colorize"/>
+			<LightAdjustColor val="#ColorWhite"/>
+			<RenderPriority val="3"/>
+			<Visible val="false"/>
+		</Frame>
+	</Frame>
 	<!-- ===== Battlefield of Eternity ===== -->
 	<Frame type="Frame" name="BossDuelPanel" file="BossDuel">
 		<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-75"/>

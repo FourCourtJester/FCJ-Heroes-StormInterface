@@ -1280,13 +1280,48 @@ def av_frame():
 # The flag-capture alerts (NotificationFrame1, 2 over it) stand on the banner's top, 10 over it:
 # kept where Blizzard's banner sits between rounds, not dragged along with the cavalry (HANDOFF)
 AV_ALERTS_B = AV_MID - AV_HALF_H - 10
+# Their words are a player's ("Allies capturing enemy camp"); an observer's screen shows blue's
+# (user, 2026-10-13, everyone view: blue's capture read "Allies", red's "Enemies"). Ours name the
+# side: Alliance (Order, blue) and Horde (Chaos, red), as the map has them (user). The team is the
+# alert's own event (its EventID, which picks its icon and colours: 1x Order's doing, 2x Chaos's;
+# x2 / x1 the other's camp / its own), so it holds in a player's view too; Blizzard's words only
+# say which kind of event it is and that it's English. Other languages keep Blizzard's words.
+CAMP_WORDS = {   # EventID: (Blizzard's words that event shows, ours, the colour)
+    12: (("Allies capturing enemy camp", "Enemies capturing allied camp"), "Alliance capturing Horde camp", "TeamOrderColors"),
+    21: (("Allies capturing enemy camp", "Enemies capturing allied camp"), "Horde capturing Alliance camp", "TeamChaosColors"),
+    11: (("Allies retook their camp", "Enemies retook their camp"), "Alliance retook their camp", "TeamOrderColors"),
+    22: (("Allies retook their camp", "Enemies retook their camp"), "Horde retook their camp", "TeamChaosColors"),
+}
+
+
+def camp_words():
+    """The flag alerts' template (AVNotificationFrameTemplate): ours over Blizzard's words, a
+    state per event and English wording; Blizzard's label hidden by Visible (its intro fades it,
+    so an Alpha wouldn't hold). -> {path: xml} for PARTS."""
+    states = "".join(
+        f'\t<State name="Event{event}{n}"><When type="AnimationState" EventID="{event}"/>'
+        f'<When type="Property" frame="$this/NotificationLabel" Text="{theirs}"/>'
+        f'<Action type="SetProperty" frame="$this/FCJH_CampText" Text="{ours}"/>'
+        f'<Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{{$GameUI/{colour}/@Color}}"/>'
+        f'<Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{{$GameUI/{colour}/@Color}}"/>'
+        f'<Action type="SetProperty" frame="$this/FCJH_CampText" Visible="true"/>'
+        f'<Action type="SetProperty" frame="$this/NotificationLabel" Visible="false"/></State>\n'
+        for event, (words, ours, colour) in CAMP_WORDS.items() for n, theirs in enumerate(words))
+    label = ("".join(f'<Anchor side="{sd}" relative="$parent/NotificationLabel" pos="{pos}" offset="0"/>\n'
+                     for sd, pos in (("Top", "Min"), ("Bottom", "Max"), ("Left", "Min"), ("Right", "Max")))
+             + '<Style val="{$parent/NotificationLabel/@Style}"/>\n<Options val="NoWrapping"/>\n<ColorAdjustMode val="Colorize"/>\n'
+             '<LightAdjustColor val="#ColorWhite"/>\n<RenderPriority val="3"/>\n<Visible val="false"/>\n')
+    return {"AVNotificationFrameTemplate": f'<StateGroup name="FCJH_CampWords">\n\t<DefaultState val="Theirs"/>\n'
+                                           + states + '\t<State name="Theirs"/>\n</StateGroup>\n',
+            "AVNotificationFrameTemplate/FCJH_CampText:Label": label}
 _ALERTS_R = f'<Anchor side="Right" relative="$parent" pos="Max" offset="{-1 - AV_PANEL_GROW}"/>\n'   # Blizzard's -1
 PARTS["alterac_pass"] = {"AlteracMechanicsPanel": f'<Width val="{AV_PANEL_W}"/>\n',
                          "AlteracMechanicsPanel/FCJH_AVCarrier": av_carrier(),
                          "AlteracMechanicsPanel/AVMechanicContainer": av_frame(),
                          "AlteracMechanicsPanel/NotificationFrame1":
                              f'<Anchor side="Bottom" relative="$parent" pos="Mid" offset="{AV_ALERTS_B}"/>\n' + _ALERTS_R,
-                         "AlteracMechanicsPanel/NotificationFrame2": _ALERTS_R}
+                         "AlteracMechanicsPanel/NotificationFrame2": _ALERTS_R,
+                         **camp_words()}
 
 
 # ------------------------------------------------------------------ the maps
