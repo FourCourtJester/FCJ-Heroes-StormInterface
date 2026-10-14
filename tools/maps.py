@@ -1844,12 +1844,16 @@ def intro(indent, slide=True):
 
 # Garden's seed banners (seed_banner): written here, after intro
 # Tomb's Webweavers (user, 2026-10-14, "plan A"): the three lanes' hexagons on the summoning
-# team's side, stacked over its inner plate - the bottom lane lowest - and stepping out along
-# the plates' slant. Blizzard keeps a set per team (SoulEaterModeBlueFrame / RedFrame; the
+# team's side, in the gap between the minimap and its plates - the bottom lane lowest, level
+# with the plates' bottom - and climbing out along the plates' slant, each one's outer side
+# just short of the plates' inner edge carried up (user: "between the minimap and the team
+# nameplates" - over the plate they stood too far out; nothing else of a team's stacks there). Blizzard keeps a set per team (SoulEaterModeBlueFrame / RedFrame; the
 # script shows the summoner's), so each set lives on its side for good. Each lane's health
 # fill, lit frame and fire ring hang off its hexagon; all of it may draw past the panel's box.
 # gen.py places them (FCJH_MAP_WEAVER_<TEAM>_<LANE>_X/_B: the hexagon's centre and bottom).
-WEAVER_W_PX, WEAVER_H_PX = 57, 67     # a hexagon as drawn at 1080p (2026-10-14, 5f04383)
+WEAVER_W_PX, WEAVER_H_PX = 52, 67     # a hexagon as drawn at 1080p (2026-10-14, ddea07c: ~50 x 70
+                                      # with its outline, its box's bottom ~5 under the art)
+WEAVER_PLATE_GAP_PX = 6               # its outer side short of the plates' edge (and the core bar's)
 WEAVER_GAP_PX = 14                    # between hexagons: a live one's fire ring reaches ~12 past it
 WEAVER_LANES = ("Bottom", "Mid", "Top")   # from the stack's bottom up
 

@@ -536,19 +536,19 @@ def constants_layout(cfg):
             for n in range(1, maps.max_stack()):
                 const(name("map", "alert", team, "b", *k, n + 1), bar + art.bar_up - n * maps.step() - oy,
                       f"alert {n + 1} in the stack, {n} up")
-    # Tomb's Webweavers (maps.weaver_parts): each team's three hexagons stacked over its inner
-    # plate, the bottom one's bottom on the banners' line (clear of the core bar), each one's
-    # inner side on the row's inner edge carried up the plates' slant, at its middle's height
+    # Tomb's Webweavers (maps.weaver_parts): each team's three hexagons between the minimap and
+    # its plates, the bottom one's bottom on the plates' bottom, each one a step up; its outer
+    # side WEAVER_PLATE_GAP_PX short of the row's inner edge carried up the plates' slant, at
+    # its lower corners' height (the edge leans in below there)
     lines.append("\t<!-- Tomb of the Spider Queen's Webweavers: each hexagon's centre and bottom (maps.weaver_parts) -->")
     lean = HeroCell(cfg).overlap / HeroCell(cfg).h
     for team in ("red", "blue"):
         ox, oy = anchor_origin(cfg, f"{team}_xp")
-        (_, cy, _, _), _ = rects(cfg)[f"{team}_core"]
         for i, lane in enumerate(maps.WEAVER_LANES):
-            b = cy - above - i * (maps.WEAVER_H_PX + maps.WEAVER_GAP_PX)
-            rise = lean * (row["bottom"] - (b - maps.WEAVER_H_PX / 2))
-            x = row["red_left"] + rise + maps.WEAVER_W_PX / 2 if team == "red" \
-                else row["blue_right"] - rise - maps.WEAVER_W_PX / 2
+            b = row["bottom"] - i * (maps.WEAVER_H_PX + maps.WEAVER_GAP_PX)
+            rise = lean * (row["bottom"] - (b - maps.WEAVER_H_PX / 4))
+            inset = maps.WEAVER_PLATE_GAP_PX + maps.WEAVER_W_PX / 2
+            x = row["red_left"] + rise - inset if team == "red" else row["blue_right"] - rise + inset
             const(name("map", "weaver", team, lane, "x"), u(x) - ox, f"{round(x)} px across")
             const(name("map", "weaver", team, lane, "b"), u(b) - oy, f"{round(b)} px down")
     # Alterac Pass's banner sits at Blizzard's place above the minimap, and its cavalry jumps to

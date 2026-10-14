@@ -648,11 +648,12 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    sides ~780 / ~1098): the minimap 18 px right (maps.py `across`, its panels taken back in
    on_minimap - only the map moves, user; 20 seen a touch right, 17 a touch left: 18, user); unseen.
    The Webweavers' hexagons (user's plan A, 2026-10-14): each team's three - Blizzard's own set
-   per team, `SoulEaterModeBlueFrame` / `RedFrame`, the summoner's shown - stacked over its
-   inner plate, bottom lane lowest, the bottom one on the banners' line (930, clear of the core
-   bar), each 81 px up and 40 out along the plates' slant (maps.weaver_parts; gen.py places
-   them; all Unclipped). Sizes measured off the screen (57 x 67, the textures aren't on disk);
-   unseen. Fallback (plan B): the three in a row on a team banner on the per-side spot.
+   per team, `SoulEaterModeBlueFrame` / `RedFrame`, the summoner's shown - on its side, climbing
+   the plates' slant (maps.weaver_parts; gen.py places them; all Unclipped). Seen on ddea07c over
+   the inner plate (930-701, fire rings drawn): "the right idea", but the user wants them in the
+   gap between the minimap and the plates - now the bottom one on the plates' bottom (1060),
+   each 81 up, its outer side 6 px short of the plates' edge carried up (red's centres 1143 /
+   1183 / 1223); unseen. Fallback (plan B): the three in a row on a team banner.
    **Then the rest of the newer maps' QA
    (Battlefield, Shrines, Sky Temple, Tomb,
    Volskaya, Warhead). Any map could get a two-view or other per-map behaviour the same way
