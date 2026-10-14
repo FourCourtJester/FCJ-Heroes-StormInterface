@@ -525,8 +525,13 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
        before the outro, `TeamWins` is set before "MechanicDone" and the delay needs raising;
      - the next prisoners back above the minimap (if not, `TeamWins` doesn't return to 0);
      - the hexagon jumps with it at 0.6 s (a cut, not a slide).
-   - The cage's timer rides the fill's end, its glow with it: Blizzard's own anchoring
-     (`ProgressLabel` on `FillImage`). If wanted, pin the timer to the bar's fixed end instead.
+   - **The cage bars broke (user, 2026-10-13, against the default UI):** in Blizzard's, the fill
+     and its timer move while the team-coloured backing stands the bar's length; in ours the
+     backing slid along with the fill. Cause: `Unclipped` on the frame (to draw past its panel on
+     red's spot) took the clipping from inside it. Fixed: no `Unclipped`. Instead the panel strip
+     is widened (`AV_PANEL_GROW` right, 200 left), and the carrier and flag alerts are placed back
+     from its new right. Unseen. The cavalry's plate and fill-up slide in under masks too: check
+     they don't show outside the bar.
    - **Technical limitation (user, 2026-10-12: "not the end of the world"): not mirrored.**
      Blizzard's animations slide its parts: the hexagon 373 left when the cage starts, the cage
      bars and the cavalry's fill-up in from the left. Each slide counts from its layout anchor, so

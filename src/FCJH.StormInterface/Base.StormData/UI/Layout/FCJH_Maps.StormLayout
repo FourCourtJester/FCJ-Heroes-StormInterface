@@ -924,7 +924,8 @@
 	<Frame type="Frame" name="AlteracMechanicsPanel" file="AlteracMechanics">
 		<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-1260"/>
 		<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-60"/>
-		<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="0"/>
+		<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="600"/>
+		<Width val="1800"/>
 		<!-- the minimap's place on Alterac Pass, from the moment this panel exists -->
 		<Frame type="Frame" name="FCJH_MinimapPlace">
 			<Anchor relative="$parent"/>
@@ -965,7 +966,7 @@
 			</StateGroup>
 		</Frame>
 		<Frame type="Frame" name="FCJH_AVCarrier">
-			<Anchor side="Right"  relative="$parent" pos="Max" offset="-16"/>
+			<Anchor side="Right"  relative="$parent" pos="Max" offset="-616"/>
 			<Anchor side="Bottom" relative="$parent" pos="Mid" offset="273"/>
 			<Width val="488"/>
 			<Height val="99"/>
@@ -1011,10 +1012,13 @@
 			<Anchor side="Top" relative="$parent/FCJH_AVCarrier" pos="Max" offset="-28"/>
 			<Anchor side="Bottom" relative="$parent/FCJH_AVCarrier" pos="Max" offset="-28"/>
 			<Anchor side="Right" relative="$parent/FCJH_AVCarrier" pos="Max" offset="16"/>
-			<Unclipped val="true"/>
 		</Frame>
 		<Frame type="Frame" name="NotificationFrame1">
 			<Anchor side="Bottom" relative="$parent" pos="Mid" offset="185"/>
+			<Anchor side="Right" relative="$parent" pos="Max" offset="-601"/>
+		</Frame>
+		<Frame type="Frame" name="NotificationFrame2">
+			<Anchor side="Right" relative="$parent" pos="Max" offset="-601"/>
 		</Frame>
 	</Frame>
 	<!-- ===== Battlefield of Eternity ===== -->

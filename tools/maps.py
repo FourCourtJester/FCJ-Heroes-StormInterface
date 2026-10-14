@@ -1223,6 +1223,14 @@ AV_MID = 245                    # Blizzard's frame's middle under its panel's (a
 AV_HANDOFF_S = 0.6              # the cage won ("MechanicDone"), its bars are gone and the cavalry's
                                 # plate shows 0.6 s on, sliding in from there: the carrier moves then
 TEAM_WINS = {"Blue": 1, "Red": 2}
+# Its panel is a strip up the minimap's right (1000 wide) and clips what it holds: red's spot is
+# past it. Unclipped on the frame let it draw there, but it also took the clipping from inside it -
+# the cage bars' fill: their team-coloured backing slid along with the fill instead of standing
+# the bar's length (user, 2026-10-13, against the default UI). So the strip is widened instead, its
+# right AV_PANEL_GROW further right (past red's spot) and 200 more to the left (blue's), and what
+# Blizzard places from its right is placed back where it was.
+AV_PANEL_GROW = 600
+AV_PANEL_W = 1000 + AV_PANEL_GROW + 200
 
 
 def av_neutral(down):
@@ -1231,7 +1239,8 @@ def av_neutral(down):
     panel's [minimap.panel_nudge], units."""
     m = MAPS["alterac_pass"]
     sides = {sd: on_minimap(sd, pos, off, m, down)[1] for sd, pos, off in m.panels["AlteracMechanicsPanel"]}
-    return sides["Right"] + AV_BOX[2], (sides["Top"] + sides["Bottom"]) / 2 + AV_MID + AV_BOX[3] - AV_HALF_H
+    return (sides["Right"] - AV_PANEL_GROW + AV_BOX[2],
+            (sides["Top"] + sides["Bottom"]) / 2 + AV_MID + AV_BOX[3] - AV_HALF_H)
 
 
 def av_carrier():
@@ -1239,7 +1248,7 @@ def av_carrier():
     won, it jumps to the winner's spot AV_HANDOFF_S on, by #FCJH_MAP_AV_<TEAM>_DX/_DY (gen.py) - a
     relative Anchor controller, held there (end Pause) until the next round puts it back (Reset)."""
     l, tp, r, b = AV_BOX
-    out = (f'<Anchor side="Right"  relative="$parent" pos="Max" offset="{r}"/>\n'
+    out = (f'<Anchor side="Right"  relative="$parent" pos="Max" offset="{r - AV_PANEL_GROW}"/>\n'
            f'<Anchor side="Bottom" relative="$parent" pos="Mid" offset="{AV_MID + b - AV_HALF_H}"/>\n'
            f'<Width val="{r - l}"/>\n<Height val="{b - tp}"/>\n<AcceptsMouse val="false"/>\n')
     for team in TEAM_WINS:
@@ -1264,18 +1273,20 @@ def av_frame():
     """Blizzard's frame on the carrier, its art on the carrier's box (AV_BOX)."""
     l, tp, r, b = AV_BOX
     mid = AV_HALF_H - b                 # its middle, from the carrier's bottom (the art's)
-    return ("".join(f'<Anchor side="{sd}" relative="$parent/FCJH_AVCarrier" pos="Max" offset="{off}"/>\n'
-                    for sd, off in (("Top", mid), ("Bottom", mid), ("Right", -r)))
-            + '<Unclipped val="true"/>\n')
+    return "".join(f'<Anchor side="{sd}" relative="$parent/FCJH_AVCarrier" pos="Max" offset="{off}"/>\n'
+                   for sd, off in (("Top", mid), ("Bottom", mid), ("Right", -r)))
 
 
 # The flag-capture alerts (NotificationFrame1, 2 over it) stand on the banner's top, 10 over it:
 # kept where Blizzard's banner sits between rounds, not dragged along with the cavalry (HANDOFF)
 AV_ALERTS_B = AV_MID - AV_HALF_H - 10
-PARTS["alterac_pass"] = {"AlteracMechanicsPanel/FCJH_AVCarrier": av_carrier(),
+_ALERTS_R = f'<Anchor side="Right" relative="$parent" pos="Max" offset="{-1 - AV_PANEL_GROW}"/>\n'   # Blizzard's -1
+PARTS["alterac_pass"] = {"AlteracMechanicsPanel": f'<Width val="{AV_PANEL_W}"/>\n',
+                         "AlteracMechanicsPanel/FCJH_AVCarrier": av_carrier(),
                          "AlteracMechanicsPanel/AVMechanicContainer": av_frame(),
                          "AlteracMechanicsPanel/NotificationFrame1":
-                             f'<Anchor side="Bottom" relative="$parent" pos="Mid" offset="{AV_ALERTS_B}"/>\n'}
+                             f'<Anchor side="Bottom" relative="$parent" pos="Mid" offset="{AV_ALERTS_B}"/>\n' + _ALERTS_R,
+                         "AlteracMechanicsPanel/NotificationFrame2": _ALERTS_R}
 
 
 # ------------------------------------------------------------------ the maps
@@ -1289,7 +1300,8 @@ SCREEN = (("Top", "Min", 0), ("Bottom", "Max", 0), ("Left", "Min", 0), ("Right",
 MAPS = {
     "alterac_pass": Map(
         "Alterac Pass", (441, 316), file="AlteracMechanics",
-        panels={"AlteracMechanicsPanel": (("Top", "Min", -25), ("Bottom", "Max", -25), ("Right", "Max", 0))},
+        # its right AV_PANEL_GROW further, for red's cavalry spot (av_carrier)
+        panels={"AlteracMechanicsPanel": (("Top", "Min", -25), ("Bottom", "Max", -25), ("Right", "Max", AV_PANEL_GROW))},
         place=("AlteracMechanicsPanel",),
         # the prisoners, the cage fight and the cavalry: one frame, on a carrier (av_carrier) at
         # Blizzard's place above the minimap; the cavalry on these spots
