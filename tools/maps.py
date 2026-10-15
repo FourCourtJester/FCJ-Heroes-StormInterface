@@ -1908,9 +1908,11 @@ MAPS = {
         # fight's tips 736 .. 1168, 13_48_52; the map itself centred, 774 .. 1145) - user,
         # 2026-10-15: "if its not centered, then center it"
         panels={"BossDuelPanel": (("Bottom", "Max", 0), ("Right", "Max", 9))}, place=("BossDuelPanel",),
-        # The fight above the minimap. THE GAP: its lowest part, its health numbers, 812 px over
-        # the map's top tip 825 (13_48_52, before its label moved above the bars)
-        above=(13, 0),
+        # The fight above the minimap. THE GAP: its box's bottom edge between the hexagons, not
+        # its lowest part (the health numbers, 31 lower, hang either side of the map's tip - the
+        # map's narrow enough there to afford it; user, 2026-10-15). 781 px over the map's top
+        # tip 825 (13_48_52, the numbers 812; 14_29_30: the edge 799, the numbers 830)
+        above=(44, 0),
         # "Immortals spawning": the neutral banner, on red's side; the winner's Immortal pushing
         # in its place, on its team's side, mirrored on blue's (lane_side)
         team={"BossDuelPanel": {
