@@ -1700,7 +1700,7 @@ MAP_IDS = {
     "tomb_of_the_spider_queen": "Crypts",             # GAME (2026-10-14)
     "towers_of_doom": "TowersOfDoom",                 # GAME (2026-10-09)
     "volskaya_foundry": "Volskaya",                   # SCRIPT
-    "warhead_junction": "Warhead Junction",           # SCRIPT - with the space
+    "warhead_junction": "Warhead Junction",           # GAME (2026-10-15) - with the space
 }
 assert set(MAP_IDS) == set(MAPS), f"MAP_IDS: every map needs its id - {set(MAPS) ^ set(MAP_IDS)}"
 # own_place is for the older maps: a newer one's panel placer moves it already (placer)
@@ -1894,6 +1894,36 @@ def weaver_parts():
 
 
 PARTS["tomb_of_the_spider_queen"] = weaver_parts()
+
+
+# Warhead Junction's nuke counters (Team1TerrazineFrame blue, Team2 red: each team's nukes
+# held, an icon and a count, hung off the minimap's bottom either side of its tip). With the
+# map down to the floor ([minimap.nudge]) they'd sit on its lower sides, and they were cut off
+# at the screen's bottom already (2026-10-15, 08eeb21: icons ~1020 down past 1080, the map's
+# tip at 1043). The map has no markers under it to keep clear (user: "we can probably move
+# these nukes outwards and move the minimap downwards"): each team's out to its side, clear of
+# the map's sides at their height, and up off the screen's bottom.
+WARHEAD_COUNTERS_OUT_PX = 50          # blue's icon 865-920 -> 815-870, red's 990-1045 -> 1040-1095:
+                                      # the map's sides ~880 / ~1030 at the icons' top, as lowered
+WARHEAD_COUNTERS_UP_PX = 42           # the map's 22 down taken back, then 20 up: the icons' visible
+                                      # bottom wasn't seen (past 1080) - tune by eye
+MINIMAP_SQUARE = "$parent/$parent/$parent/MinimapPanel/Minimap"   # as Blizzard's anchors name it
+
+
+def warhead_counters():
+    up, out = round(WARHEAD_COUNTERS_UP_PX / 0.9), round(WARHEAD_COUNTERS_OUT_PX / 0.9)
+    parts = {}
+    for n, side in ((1, -1), (2, 1)):
+        x = side * out
+        parts[f"SC2Panel/Team{n}TerrazineFrame"] = (
+            f'<Anchor side="Top"    relative="{MINIMAP_SQUARE}" pos="Max" offset="{-146 - up}"/>\n'
+            f'<Anchor side="Bottom" relative="$parent" pos="Max" offset="{-up}"/>\n'
+            f'<Anchor side="Left"   relative="{MINIMAP_SQUARE}" pos="Min" offset="{x}"/>\n'
+            f'<Anchor side="Right"  relative="{MINIMAP_SQUARE}" pos="Max" offset="{x}"/>\n')
+    return parts
+
+
+PARTS["warhead_junction"] = warhead_counters()
 
 PARTS["garden_of_terror"] = {"EventWarningFrame": seed_banner(True),
                              "GatherTheSeedsFrame": seed_banner(False),

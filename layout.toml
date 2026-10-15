@@ -79,7 +79,8 @@ tomb_of_the_spider_queen = 29 # down to the floor: its bottom marker (a building
                              # ~1036 -> 1065. 40 put the outline there and cut the marker off (user, 2026-10-14)
 towers_of_doom = 0
 volskaya_foundry = 0
-warhead_junction = 0
+warhead_junction = 22         # down to the floor (user, 2026-10-15): its map's visual bottom (the outline's tip) 1043 -> 1065;
+                             # the nuke counters beside it move out of its way (maps.py WARHEAD_COUNTERS_*)
 
 # px per map that opens on part of its map (launch_cut in tools/maps.py): at load that part's
 # bottom sits on the padding line, + lowers it. When the map opens in full it glides up to its
