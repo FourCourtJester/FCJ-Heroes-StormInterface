@@ -632,28 +632,23 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    Also: THE GAP's measure here is still ESTIMATED (`above`) - measure it off any screen of the status.
    Roster played (user, 2026-10-14): blue Azmodan, Cassia, Lunara, Tassadar, Yrel; red Medivh,
    Deathwing, Abathur, Samuro, D.Va.
-   **Tomb of the Spider Queen (in progress, 2026-10-14):** id `Crypts` read in game (the
-   script's, as guessed). On f03aba6 (seen): the gem counts (`CryptPanel`, hung off the
-   minimap's bottom, no proxy; their numbers' tops were at 1060, cut off) at ~1030, as Garden's;
-   the Webweavers' banner (`SoulEaterFrame`, the same panel: one frame for both teams, its words
-   set by the script - neutral as Hanamura's) 11 px over the tip; the lanes' three hexagons (the
-   Webweavers' health) 997-1062, on screen. Then (unseen): the minimap 29 down, not 40 - 40 put
-   the map's outline (~1025) on the floor and cut off its bottom marker (a building's, ~1036 at
-   0: user, "you've mismeasured the floor"; the floor now counts the map's own markers); the
-   gem counts' -58 follows it. The egg timer (`SoulCageCooldownFrame`, shown after the
-   Webweavers die - never with the banner) to the gap above the minimap too (user: "top of the
-   minimap is fine"). Both as maps.py `gap_parts`: a part to THE GAP on its own, its panel kept
-   to its nudge (maps.shift_lines). Seen on 01359b3: the floor right (the marker ~1062), the
-   banner 10 px over the tip. Its art is drawn ~21 px left of its square's centre (the outline's
-   sides ~780 / ~1098): the minimap 18 px right (maps.py `across`, its panels taken back in
-   on_minimap - only the map moves, user; 20 seen a touch right, 17 a touch left: 18, user); unseen.
-   The Webweavers' hexagons (user's plan A, 2026-10-14): each team's three - Blizzard's own set
-   per team, `SoulEaterModeBlueFrame` / `RedFrame`, the summoner's shown - on its side, climbing
-   the plates' slant (maps.weaver_parts; gen.py places them; all Unclipped). Seen on ddea07c over
-   the inner plate (930-701, fire rings drawn): "the right idea", but the user wants them in the
-   gap between the minimap and the plates - now the bottom one on the plates' bottom (1060),
-   each 81 up, its outer side 6 px short of the plates' edge carried up (red's centres 1143 /
-   1183 / 1223); unseen. Fallback (plan B): the three in a row on a team banner.
+   **Tomb of the Spider Queen (done, user 2026-10-15: "I think that's that"):** id `Crypts`
+   read in game. The gem counts (`CryptPanel`, hung off the minimap's bottom, no proxy) at
+   ~1030, as Garden's. The minimap 29 down (40 cut off its bottom marker - a building's, ~1036
+   at 0; the floor now counts the map's own markers). The Webweavers' banner (`SoulEaterFrame`,
+   one frame for both teams, neutral) and the egg timer (`SoulCageCooldownFrame`, shown after
+   the Webweavers die) at THE GAP over the minimap, as maps.py `gap_parts` (a part placed on its
+   own, its panel kept to its nudge). Its art is drawn ~21 px left of its square's centre: the
+   minimap 18 px right (maps.py `across`, its panels taken back - only the map moves).
+   The Webweavers' hexagons (user's plan A): Blizzard's own set per team
+   (`SoulEaterModeBlueFrame` / `RedFrame`, the summoner's shown) on that team's side, in the dead
+   space between the drawn minimap and the plates - from the gem counts' line (1071) up the
+   minimap's height, each 40 px further out, centred between the minimap's side and the plates'
+   edge then 10 px out (maps.py WEAVER_*, gen.py places them). Seen on fb854f0, both teams
+   (red's centres 1109 / 1149 / 1189, blue's 805 / 765 / 725). Their health image must stay
+   clipped: the script drains it by shrinking its frame (Unclipped there kept it full; fixed in
+   6c52e5e, drain seen). Clicking them can't pan the camera (no click events in the script, no
+   unit behind them; the user let it go).
    **Open (every map), the minimap's tooltip:** hovering a named minimap icon (Tomb's Spider
    Altar, 2026-10-14) shows Blizzard's `MinimapPanel/MinimapPanelTooltip` at ~1345-1467 x,
    ~800-850 y - where its `$parent` anchors (Right -500, Bottom -250 of MinimapPanel) put it
@@ -662,10 +657,8 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    yet (user: "we will need to anchor them, just not sure where yet"); suggested: centred above
    the minimap at THE GAP (Blizzard's relation would land it on blue's inner plate). Which icons
    carry a name is unit data - untested on other maps (a fort / camp hover would show it).
-   **Unseen on Tomb (31a031d):** the minimap 18 px right; the Webweavers' hexagons in the gap;
-   the egg timer at THE GAP.
    **Then the rest of the newer maps' QA
-   (Battlefield, Shrines, Sky Temple, Tomb,
+   (Battlefield, Shrines, Sky Temple,
    Volskaya, Warhead). Any map could get a two-view or other per-map behaviour the same way
    (`launch_cut`/`opens`, `on_map`).
 5. **The diagnostic - trimmed to the map id (user, 2026-10-09);** remove `maps.diag` and

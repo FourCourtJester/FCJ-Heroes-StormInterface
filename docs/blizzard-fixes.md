@@ -97,7 +97,7 @@ from then on are written with their fix.
   The user called it the most lopsided map so far (2026-10-14).
 - **Ours:** Tomb's minimap moves 18 px right, so the art is centred. The gem counts, the
   Webweavers banner and the egg timer stay where they were (`maps.py` `across`).
-- **Status:** built, not yet seen in game.
+- **Status:** fixed, seen in game (2026-10-15).
 
 ## Made for observers
 
