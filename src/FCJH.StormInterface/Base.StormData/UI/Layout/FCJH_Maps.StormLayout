@@ -2195,6 +2195,77 @@
 				</State>
 			</StateGroup>
 		</Frame>
+		<!-- red, the bottom slot: the warheads' countdown, then how many are left (neutral) -->
+		<Frame type="Frame" name="FCJH_TerrazineEruptionFrameSpot">
+			<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_WARHEAD"/>
+			<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_WARHEAD"/>
+			<Unclipped val="true"/>
+			<Width val="472"/>
+			<Height val="106"/>
+			<AcceptsMouse val="false"/>
+			<StateGroup name="FCJH_Stack">
+				<DefaultState val="Bottom"/>
+				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_WARHEAD"/></State>
+			</StateGroup>
+		</Frame>
+		<Frame type="Frame" name="TerrazineEruptionFrame">
+			<Anchor side="Top"    relative="$parent/FCJH_TerrazineEruptionFrameSpot" pos="Min" offset="-20"/>
+			<Anchor side="Left"   relative="$parent/FCJH_TerrazineEruptionFrameSpot" pos="Min" offset="0"/>
+			<Anchor side="Bottom" relative="$parent/FCJH_TerrazineEruptionFrameSpot" pos="Max" offset="0"/>
+			<Anchor side="Right"  relative="$parent/FCJH_TerrazineEruptionFrameSpot" pos="Max" offset="0"/>
+			<Unclipped val="true"/>
+			<Animation name="FCJH_Intro">
+				<Event event="OnShown" action="Restart,Play"/>
+				<Event event="OnShown" action="Restart,Play" frame="$parent"/>
+				<Controller type="Fade" end="Pause">
+					<Key type="Curve" time="0" value="0"/>
+					<Key type="Curve" time=".2" value="255"/>
+					<Key type="Curve" time=".4" value="255"/>
+				</Controller>
+				<Controller type="Anchor" end="Pause" side="Left" relative="true">
+					<Key type="Curve" time="0" value="50"/>
+					<Key type="Curve" time=".1" value="0"/>
+					<Key type="Curve" time=".4" value="0"/>
+				</Controller>
+				<Controller type="Anchor" end="Pause" side="Right" relative="true">
+					<Key type="Curve" time="0" value="50"/>
+					<Key type="Curve" time=".1" value="0"/>
+					<Key type="Curve" time=".4" value="0"/>
+				</Controller>
+				<Controller type="Anchor" end="Pause" side="Left" relative="true" frame="BackgroundImage">
+					<Key type="Curve" time="0" value="350"/>
+					<Key type="Curve" time=".1" value="350"/>
+					<Key type="Curve" time=".3" value="0"/>
+					<Key type="Curve" time=".4" value="0"/>
+				</Controller>
+			</Animation>
+			<Frame type="Label" name="FCJH_WarheadText">
+				<Anchor side="Top"    relative="$parent/EruptionInfoLabel" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent/EruptionInfoLabel" pos="Max" offset="0"/>
+				<Anchor side="Left"   relative="$parent/BackgroundImage" pos="Min" offset="35"/>
+				<Text val="{$parent/EruptionInfoLabel/@Text}"/>
+				<Style val="{$parent/EruptionInfoLabel/@Style}"/>
+				<Options val="NoWrapping"/>
+				<Unclipped val="true"/>
+			</Frame>
+			<Frame type="Image" name="BackgroundImage">
+				<Unclipped val="true"/>
+				<Anchor side="Left" relative="$parent" pos="Min" offset="-3"/>
+			</Frame>
+			<Frame type="Image" name="TimerImage">
+				<Unclipped val="true"/>
+			</Frame>
+			<Frame type="Label" name="EruptionInfoLabel">
+				<Unclipped val="true"/>
+				<Alpha val="0"/>
+			</Frame>
+			<Frame type="Label" name="EruptionTimerLabel">
+				<Unclipped val="true"/>
+			</Frame>
+			<Frame type="Label" name="EruptionQuantityLabel">
+				<Unclipped val="true"/>
+			</Frame>
+		</Frame>
 		<Frame type="Frame" name="Team1TerrazineFrame">
 			<Anchor side="Top"    relative="$parent/$parent/$parent/MinimapPanel/Minimap" pos="Max" offset="-193"/>
 			<Anchor side="Bottom" relative="$parent" pos="Max" offset="-47"/>
