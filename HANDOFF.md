@@ -681,13 +681,19 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    own animation, the same in default - left alone. SetAnchor relative="$this" doesn't take:
    name frames by path.
    **Battlefield of Eternity - in QA (2026-10-15, bot game).** Id `BattlefieldOfEternity` read in
-   game (9f4d45f). Minimap 16 down to the floor (60558ea, unseen). One panel (`BossDuelPanel`)
-   above the minimap, its three phases taking turns there as Hanamura's do: the countdown
-   ("Immortals spawning"), the fight (BossDuelLeft/RightFrame, Braxis's zerg template) and the
-   winner's Immortal pushing (BossLaningFrame, one frame recoloured per team - a team's, but kept
-   there with the other two, as Hanamura's payload). "IMMORTALS FIGHTING" moved above the bars as
-   Braxis's (user: "like the other maps"); the fight's numbers set to THE GAP (`above=(13, 0)`,
-   29d57e6); the lane frame 22 down so its hexagon meets the same line (a30f3a5). The panel 9 right: Blizzard draws its boxes 8 px left of centre (the map itself is centred). All unseen.
+   game (9f4d45f). Minimap 16 down to the floor (60558ea, unseen). `BossDuelPanel`'s three
+   phases are three sibling frames, one shown at a time, so they're split up as Dragon Shire's
+   (user, e5c7c9c): the countdown ("Immortals spawning", BossSpawnFrame) is the neutral banner
+   in red's column (`SPAWN_BANNER`, left_banner); the fight (BossDuelLeft/RightFrame, Braxis's
+   zerg template) stays above the minimap, "IMMORTALS FIGHTING" above its bars as Braxis's, its
+   numbers at THE GAP (`above=(13, 0)`), the panel 9 right (Blizzard draws its boxes 8 px left
+   of centre); the winner's Immortal pushing (BossLaningFrame) goes in the countdown's place on
+   its team's side, mirrored on blue's (`lane_side`, team_banner; blue told by its label's text,
+   `BLUE_IMMORTAL`, 24 strings). All unseen. **To check:** the countdown's hexagon/count spacing
+   (`SPAWN_HEX_AFTER` 180) and art height (114); blue's lane mirror - its portraits placed on
+   invisible copies of their own art (`FCJH_LaneDemonBox`/`AngelBox`), its backings flipped
+   copies (the shield's both ways), its health fill masked to the knight's lean; the shield fill
+   isn't masked, so check its lean on blue.
    **Then the rest of the newer maps' QA
    (Shrines, Sky Temple). Any map could get a two-view or other per-map behaviour the same way
    (`launch_cut`/`opens`, `on_map`).
