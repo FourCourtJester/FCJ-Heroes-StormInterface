@@ -667,9 +667,17 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    stranded by its `$parent` anchors when we move the panel. Not stoppable at the source (no
    tooltip frame named: the name showed anyway, clamped elsewhere; the minimap with tooltip
    hover off: no change); the box is see-through instead (FCJH_Minimap.StormLayout).
+   **Volskaya Foundry (in progress, 2026-10-15):** id `Volskaya` read in game; its minimap 7
+   down to the floor (a1f60ca). 9a94772, unseen: the toast ("Control point will unlock",
+   `VolskayaToastContainer`) in our banners' font, its countdown in the bar after the words
+   (maps.TOAST); CONTESTED over the capture hex, hidden while `VolskayaOvertimePanel` shows;
+   hex and toast down to the gap (`gap_parts` with a third element: a part hung by its Bottom
+   off the minimap, not its panel); the robot (`VolskayaRobotHealthSlideout`, one frame,
+   recoloured per holder) a team banner (maps.robot_layout) - pilot, gunner, timer over the bar.
+   Its bar measured, not read (the map's textures aren't extracted). Limitation: blue's health
+   fill keeps Blizzard's direction (a TextureCoordinateProgressBar, no flip known).
    **Then the rest of the newer maps' QA
-   (Battlefield, Shrines, Sky Temple,
-   Volskaya). Any map could get a two-view or other per-map behaviour the same way
+   (Battlefield, Shrines, Sky Temple). Any map could get a two-view or other per-map behaviour the same way
    (`launch_cut`/`opens`, `on_map`).
 5. **The diagnostic - trimmed to the map id (user, 2026-10-09);** remove `maps.diag` and
    `FCJH_DiagMapId` once every map's id is confirmed in game (MAP_IDS' GAME sources).
