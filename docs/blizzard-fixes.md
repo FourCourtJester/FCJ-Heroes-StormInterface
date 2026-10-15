@@ -99,6 +99,12 @@ from then on are written with their fix.
   Webweavers banner and the egg timer stay where they were (`maps.py` `across`).
 - **Status:** fixed, seen in game (2026-10-15).
 
+### Battlefield of Eternity: the Immortals' fight drawn off-centre
+- **Blizzard's:** the fight's boxes sit 8 px (at 1080p) left of the screen's centre, though the
+  minimap under them is centred.
+- **Ours:** the panel moves 9 right (`maps.py`, the Battlefield entry's `panels`; 90da446).
+- **Status:** fixed, seen centred in game (2026-10-15).
+
 ## Made for observers
 
 Not bugs - things Blizzard's observer UI never offered, which the write-up may want.
@@ -107,7 +113,10 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
   both teams. Ours put each on its team's side, beside that team's plates, and mirror blue's
   (the hexagon at the outer end) - one builder for every map (`maps.team_banner`; 73fa559).
   Seen: Cursed Hollow's curse, Dragon Shire's knight, Blackheart's Bay's cannon, Towers of Doom's
-  alerts, Garden of Terror's Terrors (red), Alterac Pass's cavalry.
+  alerts, Garden of Terror's Terrors (red), Alterac Pass's cavalry, Battlefield of Eternity's
+  winning Immortal (red; 2026-10-15 - Blizzard's countdown, fight and pushing Immortal all took
+  turns in one place above the minimap; the countdown is now a neutral banner and the pushing
+  Immortal goes to the winner's side).
 - **Banner intros on the older maps.** Towers of Doom's banners slide and fade in; the older
   maps' have no intro at all. Ours give every banner the same intro (`maps.intro`). Blackheart's
   chests banner needed rebuilding to do it: Blizzard's bar is a fixed-width image anchored at
@@ -144,3 +153,9 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
 - From Blizzard's script (`libmmap.galaxy`): it picks the alert slot by a running count, so if
   alert 1 ends while alert 2 is still up, the next alert goes into slot 2 again, replacing it.
   Not seen yet; script-side, so not ours to fix.
+
+### Battlefield of Eternity: the pushing Immortal's box just vanishes
+- When the winner's Immortal dies, the script keeps its box up about a second, then turns the
+  whole panel off: no outro. The fight's loser gets an X slashed across its portrait
+  (`SlashAnimationTemplate`), the pushing Immortal nothing - checked in the default UI (user,
+  2026-10-15). Ours would have to fit in that second, so we've left it.
