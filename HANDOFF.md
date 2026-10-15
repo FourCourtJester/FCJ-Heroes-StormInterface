@@ -674,8 +674,14 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    hex and toast down to the gap (`gap_parts` with a third element: a part hung by its Bottom
    off the minimap, not its panel); the robot (`VolskayaRobotHealthSlideout`, one frame,
    recoloured per holder) a team banner (maps.robot_layout) - pilot, gunner, timer over the bar.
-   Its bar measured, not read (the map's textures aren't extracted). Limitation: blue's health
-   fill keeps Blizzard's direction (a TextureCoordinateProgressBar, no flip known).
+   Its bar measured, not read (the map's textures aren't extracted). Seen and fixed (6f61b54):
+   CONTESTED's overtime hide moved to the robot's frame - a `<When>` naming a script-built frame
+   built AFTER the watcher's never fires (the script builds capture panel, toast, overtime,
+   robot in that order); the toast's count slot "88:88"; blue's fill draining from its tip.
+   118b1e3, unseen: the toast a sentence while counting (VOLSKAYA_UNLOCKS_IN, every language);
+   blue's fill its own bar copy (FCJH_BlueHealthBar: the progress bar mirrors only its mask
+   layer, the colour layer's stripes stayed red's slant); the timer over the % at the tip's end.
+   Open: the robot's outro animation looks wonky - user checking default's.
    **Then the rest of the newer maps' QA
    (Battlefield, Shrines, Sky Temple). Any map could get a two-view or other per-map behaviour the same way
    (`launch_cut`/`opens`, `on_map`).
