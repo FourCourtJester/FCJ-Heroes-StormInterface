@@ -685,8 +685,9 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    phases are three sibling frames, one shown at a time, so they're split up as Dragon Shire's
    (user, e5c7c9c): the countdown ("Immortals spawning", BossSpawnFrame) is the neutral banner
    in red's column (`SPAWN_BANNER`, left_banner); the fight (BossDuelLeft/RightFrame, Braxis's
-   zerg template) stays above the minimap, "IMMORTALS FIGHTING" above its bars as Braxis's, its
-   numbers at THE GAP (`above=(13, 0)`), the panel 9 right (Blizzard draws its boxes 8 px left
+   zerg template) stays above the minimap, "IMMORTALS FIGHTING" above its bars as Braxis's (seen,
+   centred, 14_29_30), THE GAP from its box's bottom edge between the hexagons, the numbers
+   hanging either side of the map's tip (user; `above=(44, 0)`, c24525d, unseen), the panel 9 right (Blizzard draws its boxes 8 px left
    of centre); the winner's Immortal pushing (BossLaningFrame) goes in the countdown's place on
    its team's side, mirrored on blue's (`lane_side`, team_banner; blue told by its label's text,
    `BLUE_IMMORTAL`, 24 strings). All unseen. **To check:** the countdown's hexagon/count spacing
