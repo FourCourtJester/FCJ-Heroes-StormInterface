@@ -537,18 +537,21 @@ def constants_layout(cfg):
                 const(name("map", "alert", team, "b", *k, n + 1), bar + art.bar_up - n * maps.step() - oy,
                       f"alert {n + 1} in the stack, {n} up")
     # Tomb's Webweavers (maps.weaver_parts): each team's three hexagons between the minimap and
-    # its plates, the bottom one's bottom on the plates' bottom, each one a step up; its outer
-    # side WEAVER_PLATE_GAP_PX short of the row's inner edge carried up the plates' slant, at
-    # its lower corners' height (the edge leans in below there)
+    # its plates, from the plates' bottom up to the minimap's top tip, the middle one's centre
+    # halfway between the others'. The bottom one's outer side WEAVER_PLATE_GAP_PX short of the
+    # row's inner edge at its lower corners' height (the edge leans in below there); each one
+    # above WEAVER_STEP_PX further out
     lines.append("\t<!-- Tomb of the Spider Queen's Webweavers: each hexagon's centre and bottom (maps.weaver_parts) -->")
     lean = HeroCell(cfg).overlap / HeroCell(cfg).h
+    (bot_h, bot_pad), (top_h, top_pad) = maps.WEAVER_ART["Bottom"], maps.WEAVER_ART["Top"]
+    low, high = row["bottom"] - bot_h / 2, maps.WEAVER_TOP_PX + top_h / 2   # the end ones' centres
     for team in ("red", "blue"):
         ox, oy = anchor_origin(cfg, f"{team}_xp")
         for i, lane in enumerate(maps.WEAVER_LANES):
-            b = row["bottom"] - i * (maps.WEAVER_H_PX + maps.WEAVER_GAP_PX)
-            rise = lean * (row["bottom"] - (b - maps.WEAVER_H_PX / 4))
-            inset = maps.WEAVER_PLATE_GAP_PX + maps.WEAVER_W_PX / 2
-            x = row["red_left"] + rise - inset if team == "red" else row["blue_right"] - rise + inset
+            h, pad = maps.WEAVER_ART[lane]
+            b = low + (high - low) * i / (len(maps.WEAVER_LANES) - 1) + h / 2 + pad
+            out = lean * bot_h / 4 - maps.WEAVER_PLATE_GAP_PX - maps.WEAVER_W_PX / 2 + i * maps.WEAVER_STEP_PX
+            x = row["red_left"] + out if team == "red" else row["blue_right"] - out
             const(name("map", "weaver", team, lane, "x"), u(x) - ox, f"{round(x)} px across")
             const(name("map", "weaver", team, lane, "b"), u(b) - oy, f"{round(b)} px down")
     # Alterac Pass's banner sits at Blizzard's place above the minimap, and its cavalry jumps to

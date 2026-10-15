@@ -1845,16 +1845,22 @@ def intro(indent, slide=True):
 # Garden's seed banners (seed_banner): written here, after intro
 # Tomb's Webweavers (user, 2026-10-14, "plan A"): the three lanes' hexagons on the summoning
 # team's side, in the gap between the minimap and its plates - the bottom lane lowest, level
-# with the plates' bottom - and climbing out along the plates' slant, each one's outer side
-# just short of the plates' inner edge carried up (user: "between the minimap and the team
+# with the plates' bottom - and climbing outward (user: "between the minimap and the team
 # nameplates" - over the plate they stood too far out; nothing else of a team's stacks there). Blizzard keeps a set per team (SoulEaterModeBlueFrame / RedFrame; the
 # script shows the summoner's), so each set lives on its side for good. Each lane's health
 # fill, lit frame and fire ring hang off its hexagon; all of it may draw past the panel's box.
 # gen.py places them (FCJH_MAP_WEAVER_<TEAM>_<LANE>_X/_B: the hexagon's centre and bottom).
-WEAVER_W_PX, WEAVER_H_PX = 52, 67     # a hexagon as drawn at 1080p (2026-10-14, ddea07c: ~50 x 70
-                                      # with its outline, its box's bottom ~5 under the art)
-WEAVER_PLATE_GAP_PX = 6               # its outer side short of the plates' edge (and the core bar's)
-WEAVER_GAP_PX = 14                    # between hexagons: a live one's fire ring reaches ~12 past it
+# The stack (user, 2026-10-15: "about as high as the minimap total") runs from the plates'
+# bottom up to the minimap's drawn top tip; the middle one halfway, the hexagons nesting
+# into each other a little, each WEAVER_STEP_PX further out than the one below.
+WEAVER_W_PX = 54                      # a hexagon's width as drawn at 1080p (31a031d)
+WEAVER_ART = {"Bottom": (72, 5),      # each lane's hexagon as drawn at 1080p (31a031d): its height
+              "Mid": (62, 14),        # (the top one has a point above, the bottom one a point
+              "Top": (72, 14)}        # below) and its box's bottom under it
+WEAVER_TOP_PX = 868                   # Tomb's minimap's drawn top tip, at its nudge (31a031d)
+WEAVER_PLATE_GAP_PX = 6               # the bottom one's outer side short of the plates' edge
+WEAVER_STEP_PX = 40                   # each one this much further out than the one below (31a031d:
+                                      # 40 per 81 up, the plates' slant; now per ~60 up, leaning more)
 WEAVER_LANES = ("Bottom", "Mid", "Top")   # from the stack's bottom up
 
 
@@ -1868,8 +1874,10 @@ def weaver_parts():
                 f'<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="{c}_B"/>\n'
                 f'<Anchor side="Left"   relative="$GameUI" pos="Mid" offset="{c}_X"/>\n'
                 f'<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="{c}_X"/>\n')
+            # not the health image: the script drains it by shrinking its frame, which crops it
+            # (Unclipped there kept it full - user, 2026-10-15: "they dont seem to drain their hp")
             for part in (f"{lane}SoulEaterHealthDisabled:Image", f"{lane}SoulEaterEnabled:Image",
-                         f"{lane}SoulEaterHealth", f"{lane}SoulEaterHealth/{lane}SoulEaterHealthImage:Image",
+                         f"{lane}SoulEaterHealth",
                          f"{lane}FireEffect", f"{lane}FireEffect/FireEffectBase:Image",
                          f"{lane}FireEffect/FireEffectAdd:Image"):
                 out[at + part] = '<Unclipped val="true"/>\n'
