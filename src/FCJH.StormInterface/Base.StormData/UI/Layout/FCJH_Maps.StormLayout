@@ -2215,6 +2215,7 @@
 	<Frame type="Frame" name="VolskayaToastContainer" file="VolskayaMapMechanic">
 		<Anchor side="Bottom" relative="$parent/$parent/MinimapPanel" pos="Min" offset="111"/>
 		<Frame type="Frame" name="ToastNotification">
+			<Anchor side="Right" relative="$parent" pos="Max" offset="29"/>
 			<Frame type="Label" name="FCJH_VolskayaText">
 				<Anchor side="Top"    relative="$parent/BackgroundImage" pos="Mid" offset="4"/>
 				<Anchor side="Bottom" relative="$parent/BackgroundImage" pos="Mid" offset="4"/>

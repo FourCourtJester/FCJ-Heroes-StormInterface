@@ -1521,6 +1521,7 @@ VOLSKAYA = MECHANICS + "/VolskayaCapturePointPanel"
 # keeps that, the words ending one space before the count's slot where Blizzard's ended, the bar
 # starting the standard 35 before them. Blizzard's labels hidden, ours bound to them.
 TOAST_WORDS_START = 35
+TOAST_RIGHT = 29           # the toast's right end this far right of Blizzard's (units; 26 px)
 TOAST_STYLE = "Storm_MapMechanic_MechanicTimerCentered_Blue"
 _TOAST_ROW = (("Top", "$parent/BackgroundImage", "Mid", 4), ("Bottom", "$parent/BackgroundImage", "Mid", 4))
 _TOAST_COUNT = "$parent/TimerLabel"
@@ -1568,6 +1569,10 @@ def toast_sentence():
 
 
 TOAST = "".join((
+    # the bar grows left from its right end (Blizzard's, the minimap panel's right): English's
+    # sentence put its middle 26 px left of the screen's (13_33_27, bar 690-1178) - moved over.
+    # Longer languages still sit further left (no anchor halves a label's width)
+    f'<Anchor side="Right" relative="$parent" pos="Max" offset="{TOAST_RIGHT}"/>\n',
     banner_label("FCJH_VolskayaText", _TOAST_ROW + (("Right", "$parent/FCJH_VolskayaSlot", "Min", -COUNT_SPACE),),
                  "{$parent/InfoLabel/@Text}", TOAST_STYLE),
     # its count reads "00:22" (GetFormattedTimeRemaining), wider than our banners' "8:88"
