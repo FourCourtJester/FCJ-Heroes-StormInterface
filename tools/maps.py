@@ -1800,7 +1800,10 @@ MAPS = {
         notes="a strip down the right edge; the cage fight bar and its two event banners at its middle"),
     "battlefield_of_eternity": Map(
         "Battlefield of Eternity", (438, 269), file="BossDuel", minimap=(75, 0),
-        panels={"BossDuelPanel": BOTTOM_RIGHT}, place=("BossDuelPanel",),
+        # Blizzard's corner, 9 right: its boxes are drawn 8 px left of the screen's centre (the
+        # fight's tips 736 .. 1168, 13_48_52; the map itself centred, 774 .. 1145) - user,
+        # 2026-10-15: "if its not centered, then center it"
+        panels={"BossDuelPanel": (("Bottom", "Max", 0), ("Right", "Max", 9))}, place=("BossDuelPanel",),
         # The countdown ("Immortals spawning") and the fight take turns in one place above the
         # minimap, as Hanamura's. THE GAP: the fight's lowest part, its health numbers, 812 px
         # over the map's top tip 825 (13_48_52, before the label moved above the bars)

@@ -687,7 +687,7 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    winner's Immortal pushing (BossLaningFrame, one frame recoloured per team - a team's, but kept
    there with the other two, as Hanamura's payload). "IMMORTALS FIGHTING" moved above the bars as
    Braxis's (user: "like the other maps"); the fight's numbers set to THE GAP (`above=(13, 0)`,
-   29d57e6); the lane frame 22 down so its hexagon meets the same line (a30f3a5). All unseen.
+   29d57e6); the lane frame 22 down so its hexagon meets the same line (a30f3a5). The panel 9 right: Blizzard draws its boxes 8 px left of centre (the map itself is centred). All unseen.
    **Then the rest of the newer maps' QA
    (Shrines, Sky Temple). Any map could get a two-view or other per-map behaviour the same way
    (`launch_cut`/`opens`, `on_map`).
