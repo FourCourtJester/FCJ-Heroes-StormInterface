@@ -1844,8 +1844,8 @@ def intro(indent, slide=True):
 
 # Garden's seed banners (seed_banner): written here, after intro
 # Tomb's Webweavers (user, 2026-10-14, "plan A"): the three lanes' hexagons on the summoning
-# team's side, in the gap between the minimap and its plates - the bottom lane lowest, level
-# with the plates' bottom - and climbing outward (user: "between the minimap and the team
+# team's side, in the gap between the minimap and its plates - the bottom lane lowest - and
+# climbing outward (user: "between the minimap and the team
 # nameplates" - over the plate they stood too far out; nothing else of a team's stacks there). Blizzard keeps a set per team (SoulEaterModeBlueFrame / RedFrame; the
 # script shows the summoner's), so each set lives on its side for good. Each lane's health
 # fill, lit frame and fire ring hang off its hexagon; all of it may draw past the panel's box.
@@ -1857,8 +1857,15 @@ WEAVER_W_PX = 54                      # a hexagon's width as drawn at 1080p (31a
 WEAVER_ART = {"Bottom": (72, 5),      # each lane's hexagon as drawn at 1080p (31a031d): its height
               "Mid": (62, 14),        # (the top one has a point above, the bottom one a point
               "Top": (72, 14)}        # below) and its box's bottom under it
-WEAVER_TOP_PX = 868                   # Tomb's minimap's drawn top tip, at its nudge (31a031d)
-WEAVER_PLATE_GAP_PX = 6               # the bottom one's outer side short of the plates' edge
+# Lowered (user, 2026-10-15) so the bottom one's point is level with the gem counts' blue/red
+# line, the stack's height kept; and across, centred in the dead space between the drawn
+# minimap and the plates (user: "center it in the deadspace"): each one's centre between the
+# two edges at its height, then the straight line nearest those.
+WEAVER_BOTTOM_PX = 1071               # the gem counts' blue/red line (127c01a, Tomb's minimap at 29 down)
+WEAVER_TOP_PX = 868 + WEAVER_BOTTOM_PX - 1060   # the minimap's drawn top tip (868, 31a031d), as lowered
+WEAVER_MINIMAP_PX = (955, 158, 943, 1.05)   # Tomb's drawn minimap (6c52e5e): its middle, its side
+                                      # lobes' reach either way, and its sides from that height down
+                                      # going in this much per px
 WEAVER_STEP_PX = 40                   # each one this much further out than the one below (31a031d:
                                       # 40 per 81 up, the plates' slant; now per ~60 up, leaning more)
 WEAVER_LANES = ("Bottom", "Mid", "Top")   # from the stack's bottom up
