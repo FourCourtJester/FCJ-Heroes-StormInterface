@@ -2200,7 +2200,7 @@
 			<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_WARHEAD"/>
 			<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_WARHEAD"/>
 			<Unclipped val="true"/>
-			<Width val="472"/>
+			<Width val="460"/>
 			<Height val="106"/>
 			<AcceptsMouse val="false"/>
 			<StateGroup name="FCJH_Stack">
@@ -2239,25 +2239,14 @@
 					<Key type="Curve" time=".4" value="0"/>
 				</Controller>
 			</Animation>
-			<Frame type="Label" name="FCJH_WarheadText">
-				<Anchor side="Top"    relative="$parent/EruptionInfoLabel" pos="Min" offset="0"/>
-				<Anchor side="Bottom" relative="$parent/EruptionInfoLabel" pos="Max" offset="0"/>
-				<Anchor side="Left"   relative="$parent/BackgroundImage" pos="Min" offset="35"/>
-				<Text val="{$parent/EruptionInfoLabel/@Text}"/>
-				<Style val="{$parent/EruptionInfoLabel/@Style}"/>
-				<Options val="NoWrapping"/>
-				<Unclipped val="true"/>
-			</Frame>
 			<Frame type="Image" name="BackgroundImage">
 				<Unclipped val="true"/>
-				<Anchor side="Left" relative="$parent" pos="Min" offset="-3"/>
 			</Frame>
 			<Frame type="Image" name="TimerImage">
 				<Unclipped val="true"/>
 			</Frame>
 			<Frame type="Label" name="EruptionInfoLabel">
 				<Unclipped val="true"/>
-				<Alpha val="0"/>
 			</Frame>
 			<Frame type="Label" name="EruptionTimerLabel">
 				<Unclipped val="true"/>

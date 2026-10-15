@@ -947,32 +947,20 @@ SHRINE_BANNER = left_banner("Shrine", "ShrineActivateLabel", "ShrineActivateTime
 
 # "Warheads deployed in: 0:14", then "Warheads available: 3 left" (scmap2.stormlayout,
 # SC2Panel/TerrazineEruptionFrame; libmsc2.galaxy MMSC2UISetMode): one neutral banner, centred
-# over the minimap by Blizzard - to red's side (user, 2026-10-15: "Since this doesnt have a
-# red/blue system, we can probably move the alert to the neutral red-side"). Blizzard's bar
-# starts 25 before the words and grows left with them, to the frame's right; its hexagon
-# (TimerImage) 12 in from the frame's right, on the bar's middle. The words' label is right-
-# aligned against the count, which is one of two: the countdown (EruptionTimerLabel, 50 left of
-# the hexagon) while warning, the warheads left (EruptionQuantityLabel, right against the
-# hexagon; an animation moves it to 50 left and blanks it meanwhile). Ours: the bar a fixed
-# width from the tip, our copy of the words 35 in (left_banner's way), the counts and hexagon
-# Blizzard's, at the outer end. Measured at Blizzard's place (2026-10-15, 08eeb21 at 1080p;
-# the frame's bottom-right worked out at 1184, 747): the bar 768-1182 in English with its
-# words 21 px in, its lower bracket 724 (25 units over the frame's bottom), the hexagon 652-746.
-WARHEAD_BOX = (-472, 20, 0, 126)   # Blizzard's 460 from its tip, 12 more for the words 35 in, not 23
-WARHEAD_WORDS_START = 35
+# over the minimap by Blizzard - to red's side as it is (user, 2026-10-15: "Since this doesnt
+# have a red/blue system, we can probably move the alert to the neutral red-side"; "the default
+# banner just being moved shouldnt require any word or translation changes"). Blizzard's bar
+# grows left with its words from the frame's right, its hexagon (TimerImage) 12 in from there:
+# the box is its English countdown's, so that tip lands on red's plates; other words reach
+# their own length from the same right end. Measured at Blizzard's place (2026-10-15, 08eeb21 at
+# 1080p; the frame's bottom-right worked out at 1184, 747): the bar 768-1182, its lower bracket
+# 724 (25 units over the frame's bottom), the hexagon 652-746.
+WARHEAD_BOX = (-460, 20, 0, 126)
 ALERT_ART["WARHEAD"] = Art(WARHEAD_BOX[2] - WARHEAD_BOX[0], 0, bar_up=25, below=25,
                            height=WARHEAD_BOX[3] - WARHEAD_BOX[1])
-WARHEAD_BANNER = (
-    "".join(T * 3 + line + "\n" for line in banner_label(
-        "FCJH_WarheadText", (("Top", "$parent/EruptionInfoLabel", "Min", 0),
-                             ("Bottom", "$parent/EruptionInfoLabel", "Max", 0),
-                             ("Left", "$parent/BackgroundImage", "Min", WARHEAD_WORDS_START)),
-        "{$parent/EruptionInfoLabel/@Text}", "{$parent/EruptionInfoLabel/@Style}").splitlines())
-    + unclipped((("Image", "BackgroundImage", (), f'<Anchor side="Left" relative="$parent" pos="Min" offset="{-BAR_TIP_IN}"/>'),
-                 ("Image", "TimerImage", (), ""),
-                 ("Label", "EruptionInfoLabel", (), '<Alpha val="0"/>'),
-                 ("Label", "EruptionTimerLabel", (), ""),
-                 ("Label", "EruptionQuantityLabel", (), "")), 3))
+WARHEAD_PARTS = (("Image", "BackgroundImage", ()), ("Image", "TimerImage", ()),
+                 ("Label", "EruptionInfoLabel", ()), ("Label", "EruptionTimerLabel", ()),
+                 ("Label", "EruptionQuantityLabel", ()))
 # The Dragon Knight (DragonModeFrame, shown instead once a team holds both shrines): Blizzard pins
 # its bar's bottom-right to the countdown's bar's, the dragon's head (DragonHud), its timer and
 # health bar all hanging off its bar. Ours from the spot's left, as the golems': its bar at its
@@ -1709,9 +1697,9 @@ MAPS = {
         # its file nudges the map 30 units right in the minimap panel: back to the square's place
         fix=f'<Action type="SetAnchor" frame="{MINIMAP}/Minimap" side="Left" relative="{MINIMAP}" pos="Min" offset="0"/>',
         # the warheads' countdown, then how many are left: one neutral banner, on red's side
-        # (WARHEAD_BANNER); the nuke counters by the minimap (warhead_counters, PARTS)
+        # (WARHEAD_BOX, as Blizzard draws it); the nuke counters by the minimap (warhead_counters, PARTS)
         team={"SC2Panel": {
-            "red": [Alert("TerrazineEruptionFrame", kind="WARHEAD", box=WARHEAD_BOX, extra=WARHEAD_BANNER,
+            "red": [Alert("TerrazineEruptionFrame", kind="WARHEAD", box=WARHEAD_BOX, extra=unclipped(WARHEAD_PARTS, 3),
                           note="the warheads' countdown, then how many are left (neutral)")]}},
         notes="its panel is placed from the minimap already"),
 }
