@@ -1753,6 +1753,13 @@ def robot_frame():
                           robot_layout, depth=0))
 
 
+# The Immortals' fight (BossDuelLeft/RightFrame, the template Braxis's zerg HUD uses): "IMMORTALS
+# FIGHTING" (PhaseLabel) above the bars, where Braxis's "BEACON PROGRESS" sits (user, 2026-10-15:
+# "like the other maps") - Blizzard hangs it under them, over the map
+PHASE_ABOVE = '<Frame type="Label" name="PhaseLabel"><Anchor side="Top" relative="$parent/BackgroundImage" pos="Min" offset="-15"/></Frame>'
+PARTS["battlefield_of_eternity"] = {"BossDuelPanel/BossDuelLeftFrame": PHASE_ABOVE,
+                                    "BossDuelPanel/BossDuelRightFrame": PHASE_ABOVE}
+
 PARTS["volskaya_foundry"] = {"VolskayaToastContainer/ToastNotification": TOAST,
                              "VolskayaCapturePointPanel/ContestedLabel:Label": CONTESTED,
                              "VolskayaRobotHealthSlideout": robot_frame()}
@@ -1785,7 +1792,11 @@ MAPS = {
         notes="a strip down the right edge; the cage fight bar and its two event banners at its middle"),
     "battlefield_of_eternity": Map(
         "Battlefield of Eternity", (438, 269), file="BossDuel", minimap=(75, 0),
-        panels={"BossDuelPanel": BOTTOM_RIGHT}, place=("BossDuelPanel",)),
+        panels={"BossDuelPanel": BOTTOM_RIGHT}, place=("BossDuelPanel",),
+        # The countdown ("Immortals spawning") and the fight take turns in one place above the
+        # minimap, as Hanamura's. THE GAP: the fight's lowest part, its health numbers, 812 px
+        # over the map's top tip 825 (13_48_52, before the label moved above the bars)
+        above=(13, 0)),
     "blackhearts_bay": Map(
         "Blackheart's Bay", (452, 313), core="BlackheartsBayPanel",
         # "Chests have spawned": the neutral banner, on red's side; Blackheart's cannon in its

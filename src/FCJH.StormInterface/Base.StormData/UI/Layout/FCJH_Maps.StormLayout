@@ -1230,7 +1230,7 @@
 	</Frame>
 	<!-- ===== Battlefield of Eternity ===== -->
 	<Frame type="Frame" name="BossDuelPanel" file="BossDuel">
-		<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-75"/>
+		<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-72"/>
 		<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="0"/>
 		<!-- the minimap's place on Battlefield of Eternity, from the moment this panel exists -->
 		<Frame type="Frame" name="FCJH_MinimapPlace">
@@ -1244,6 +1244,12 @@
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MINIMAP_BOTTOM_BATTLEFIELD_OF_ETERNITY"/>
 				</State>
 			</StateGroup>
+		</Frame>
+		<Frame type="Frame" name="BossDuelLeftFrame">
+			<Frame type="Label" name="PhaseLabel"><Anchor side="Top" relative="$parent/BackgroundImage" pos="Min" offset="-15"/></Frame>
+		</Frame>
+		<Frame type="Frame" name="BossDuelRightFrame">
+			<Frame type="Label" name="PhaseLabel"><Anchor side="Top" relative="$parent/BackgroundImage" pos="Min" offset="-15"/></Frame>
 		</Frame>
 	</Frame>
 	<!-- ===== Braxis Holdout ===== -->
