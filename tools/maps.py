@@ -1621,7 +1621,11 @@ ROBOT_TIP_IN = 4           # its tip this far in from the image's inner end
 ROBOT_BAR_H = 49           # ...and its height, the lower bracket ROBOT_BRACKET over its bottom
 ROBOT_BRACKET = 3
 ROBOT_SEATS = 108          # the seats' boxes' top over the bracket (their rings' bottom ~2 over the plate)
-ROBOT_TIMER_MID = ROBOT_BRACKET - ROBOT_BAR_H - 14   # the timer's middle: its digits' bottom ~5 px over the bar
+# The seats at the outer end, beside the robot (the timer moved off them; user, 2026-10-15): the
+# gunner's box out to here. Measured on blue (13_26_05): the robot's shoulder at seat height 339
+# out from the tip, a seat's ring 4 inside its 72-unit box - so THE GAP between them.
+ROBOT_SEATS_OUT = 339 - 11 + 4
+ROBOT_TIMER_MID =ROBOT_BRACKET - ROBOT_BAR_H - 14   # the timer's middle: its digits' bottom ~5 px over the bar
 ROBOT_BOX = (-447, 0, 0, 108)          # the robot's art's outer side, its top
 # Blue's fill: Blizzard's TextureCoordinateProgressBar slides only its mask (layer 0) - mirroring
 # its coords drained it from blue's tip, but the colour layer's stripes stayed red's slant against
@@ -1678,14 +1682,14 @@ def robot_layout(s):
     # the fill: Blizzard's on red's side, blue's own copy on blue's (ROBOT_BLUE_FILL)
     s.show("/RobotStatusFrame/FCJH_BlueHealthBar", "blue")
     s.show("/RobotStatusFrame/RobotHealthBar", "red")
-    # over the bar, out from the tip: the pilot, the gunner, the timer, then the robot. Each
+    # over the bar's outer end: the pilot, the gunner, then the robot (ROBOT_SEATS_OUT). Each
     # seat's ring and border are separate images (the border Blizzard's template copy of the
     # ring, its anchors too); the pilot's top follows the gunner's (Blizzard's)
     for part in ("/GunnerEmptyIcon", "/GunnerBorderIcon"):
         s.anchor(part, "Top", s.spot, "Max", -ROBOT_SEATS)
-        s.hold(part, "Right", 186, 258)
+        s.hold(part, "Right", ROBOT_SEATS_OUT - 72, ROBOT_SEATS_OUT)
     for part in ("/PilotEmptyIcon", "/PilotBorderIcon"):
-        s.hold(part, "Right", 114, 186)
+        s.hold(part, "Right", ROBOT_SEATS_OUT - 144, ROBOT_SEATS_OUT - 72)
     # the timer over the % at the tip's end, just over the bar's top (user, 2026-10-15). Its
     # style centres it; its digits ~16 px tall (Blizzard's zero-width label centred on the robot
     # drew nothing here: given a width)
