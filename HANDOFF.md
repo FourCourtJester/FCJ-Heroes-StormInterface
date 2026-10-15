@@ -680,8 +680,16 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    the timer over the %, pilot and gunner beside the robot (THE GAP). Its outro is Blizzard's
    own animation, the same in default - left alone. SetAnchor relative="$this" doesn't take:
    name frames by path.
+   **Battlefield of Eternity - in QA (2026-10-15, bot game).** Id `BattlefieldOfEternity` read in
+   game (9f4d45f). Minimap 16 down to the floor (60558ea, unseen). One panel (`BossDuelPanel`)
+   above the minimap, its three phases taking turns there as Hanamura's do: the countdown
+   ("Immortals spawning"), the fight (BossDuelLeft/RightFrame, Braxis's zerg template) and the
+   winner's Immortal pushing (BossLaningFrame, one frame recoloured per team - a team's, but kept
+   there with the other two, as Hanamura's payload). "IMMORTALS FIGHTING" moved above the bars as
+   Braxis's (user: "like the other maps"); the fight's numbers set to THE GAP (`above=(13, 0)`,
+   29d57e6); the lane frame 22 down so its hexagon meets the same line (a30f3a5). All unseen.
    **Then the rest of the newer maps' QA
-   (Battlefield, Shrines, Sky Temple). Any map could get a two-view or other per-map behaviour the same way
+   (Shrines, Sky Temple). Any map could get a two-view or other per-map behaviour the same way
    (`launch_cut`/`opens`, `on_map`).
 5. **The diagnostic - trimmed to the map id (user, 2026-10-09);** remove `maps.diag` and
    `FCJH_DiagMapId` once every map's id is confirmed in game (MAP_IDS' GAME sources).
