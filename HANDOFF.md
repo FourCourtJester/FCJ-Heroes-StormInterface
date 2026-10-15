@@ -649,14 +649,12 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    clipped: the script drains it by shrinking its frame (Unclipped there kept it full; fixed in
    6c52e5e, drain seen). Clicking them can't pan the camera (no click events in the script, no
    unit behind them; the user let it go).
-   **Open (every map), the minimap's tooltip:** hovering a named minimap icon (Tomb's Spider
-   Altar, 2026-10-14) shows Blizzard's `MinimapPanel/MinimapPanelTooltip` at ~1345-1467 x,
-   ~800-850 y - where its `$parent` anchors (Right -500, Bottom -250 of MinimapPanel) put it
-   with the panel still in Blizzard's corner; like Hanamura's proxy (rule 32) it doesn't follow
-   our SetAnchors. Fix: tie it to our minimap by full path. WHERE is the user's call, not made
-   yet (user: "we will need to anchor them, just not sure where yet"); suggested: centred above
-   the minimap at THE GAP (Blizzard's relation would land it on blue's inner plate). Which icons
-   carry a name is unit data - untested on other maps (a fort / camp hover would show it).
+   **The minimap's tooltip - OFF, every map (user, 2026-10-15: "Just hide it or disable it";
+   seen gone on 08eeb21).** Hovering a named minimap icon (a watch tower, a fort, Tomb's Spider
+   Altar) showed Blizzard's `MinimapPanel/MinimapPanelTooltip` at ~1332-1467 x, ~800-850 y,
+   stranded by its `$parent` anchors when we move the panel. Not stoppable at the source (no
+   tooltip frame named: the name showed anyway, clamped elsewhere; the minimap with tooltip
+   hover off: no change); the box is see-through instead (FCJH_Minimap.StormLayout).
    **Then the rest of the newer maps' QA
    (Battlefield, Shrines, Sky Temple,
    Volskaya, Warhead). Any map could get a two-view or other per-map behaviour the same way
