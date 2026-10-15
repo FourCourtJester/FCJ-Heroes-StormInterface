@@ -681,7 +681,9 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    118b1e3, unseen: the toast a sentence while counting (VOLSKAYA_UNLOCKS_IN, every language);
    blue's fill its own bar copy (FCJH_BlueHealthBar: the progress bar mirrors only its mask
    layer, the colour layer's stripes stayed red's slant); the timer over the % at the tip's end.
-   Open: the robot's outro animation looks wonky - user checking default's.
+   The robot's outro looked wonky: it's Blizzard's own animation, the same in default (user,
+   2026-10-15) - left alone. ca251c3, unseen: pilot and gunner out beside the robot (THE GAP).
+   120283f, unseen: the toast's bar out to its sentence (SetAnchor relative="$this" didn't take).
    **Then the rest of the newer maps' QA
    (Battlefield, Shrines, Sky Temple). Any map could get a two-view or other per-map behaviour the same way
    (`launch_cut`/`opens`, `on_map`).
