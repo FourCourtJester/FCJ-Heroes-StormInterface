@@ -55,8 +55,9 @@ floor = 1065                 # THE FLOOR, every map (user, 2026-10-09): no map's
                              # map ([minimap.nudge]); the build doesn't (each map's art ends short of
                              # its texture box by its own amount: Cursed Hollow's by ~15 px).
 alert_gap = 10               # THE GAP, every map (user, 2026-10-14): a neutral objective above the minimap
-                             # (Alterac's cage, Hanamura's payload) sits with its lowest part this many px
-                             # over the drawn map's top tip. Each such map's measure is tools/maps.py
+                             # (Alterac's cage, Hanamura's payload) sits with its hexagon's bottom this many px
+                             # over the drawn map's top tip - the hexagon, not its lowest part: what hangs under it
+                             # goes either side of the tip (user, 2026-10-15). Each such map's measure is tools/maps.py
                              # `above`; gen.py moves its panels to it (panel_nudges) - not [minimap.panel_nudge].
 
 # px per map, added to where tools/maps.py puts it: + lowers that map, - raises it. For fine

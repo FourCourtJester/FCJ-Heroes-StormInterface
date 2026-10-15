@@ -138,7 +138,7 @@ class Map:
     extra: str = ""                   # map-specific XML in its file's panel (see TOWERS_EXTRA)
     above: tuple = None               # its neutral objective above the minimap, for THE GAP
                                       # ([minimap] alert_gap): (px, at) - measured at 1080p, its
-                                      # lowest part `px` over the drawn map's top tip (the art's
+                                      # hexagon's bottom `px` over the drawn map's top tip (the art's
                                       # outline) with its panels `at` px lower. gen.py moves its
                                       # panels to the gap (panel_nudges); it rides on the minimap
     gap_parts: dict = field(default_factory=dict)  # {part: (px, at)}: as `above`, but only that part
@@ -1910,11 +1910,10 @@ MAPS = {
         # fight's tips 736 .. 1168, 13_48_52; the map itself centred, 774 .. 1145) - user,
         # 2026-10-15: "if its not centered, then center it"
         panels={"BossDuelPanel": (("Bottom", "Max", 0), ("Right", "Max", 9))}, place=("BossDuelPanel",),
-        # The fight above the minimap. THE GAP: its box's bottom edge between the hexagons, not
-        # its lowest part (the health numbers, 31 lower, hang either side of the map's tip - the
-        # map's narrow enough there to afford it; user, 2026-10-15). 781 px over the map's top
-        # tip 825 (13_48_52, the numbers 812; 14_29_30: the edge 799, the numbers 830)
-        above=(44, 0),
+        # The fight above the minimap. THE GAP: its portraits' hexagons (the health numbers, 19
+        # lower, hang either side of the map's tip). 793 px over the map's top tip 825 (13_48_52,
+        # the numbers 812; 14_29_30: the hexagons 811, the box's bottom edge 799, the numbers 830)
+        above=(32, 0),
         # "Immortals spawning": the neutral banner, on red's side; the winner's Immortal pushing
         # in its place, on its team's side, mirrored on blue's (lane_side)
         team={"BossDuelPanel": {

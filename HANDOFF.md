@@ -606,7 +606,9 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    Blizzard ties to the minimap by `$parent/$parent/$parent` - and that never followed. Now tied
    by the full path (`maps.proxy_lines`, `proxy=True`), as everything that does follow is.
    **THE GAP (user, 2026-10-14: "standardize that gap between maps"):** every neutral objective
-   above the minimap sits `[minimap] alert_gap` (10 px) over the drawn map's top tip. Each such
+   above the minimap sits `[minimap] alert_gap` (10 px) over the drawn map's top tip, measured
+   from its HEXAGON's bottom - what hangs under it (labels, timers, numbers) goes either side of
+   the tip, and those are moving above the alerts anyway (user, 2026-10-15). Each such
    map has a measure (`maps.py above`: px over the tip, at a known panel move); gen.py's
    `panel_nudges` moves its panels to the gap. Alterac: measured 0 at 10 down (its cage's
    hexagon on the tip), so it goes back up 10 (unseen). Hanamura: ESTIMATED from the template
@@ -686,8 +688,8 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    (user, e5c7c9c): the countdown ("Immortals spawning", BossSpawnFrame) is the neutral banner
    in red's column (`SPAWN_BANNER`, left_banner); the fight (BossDuelLeft/RightFrame, Braxis's
    zerg template) stays above the minimap, "IMMORTALS FIGHTING" above its bars as Braxis's (seen,
-   centred, 14_29_30), THE GAP from its box's bottom edge between the hexagons, the numbers
-   hanging either side of the map's tip (user; `above=(44, 0)`, c24525d, unseen), the panel 9 right (Blizzard draws its boxes 8 px left
+   centred, 14_29_30), THE GAP from its portraits' hexagons, the numbers
+   hanging either side of the map's tip (`above=(32, 0)`, unseen), the panel 9 right (Blizzard draws its boxes 8 px left
    of centre); the winner's Immortal pushing (BossLaningFrame) goes in the countdown's place on
    its team's side, mirrored on blue's (`lane_side`, team_banner; blue told by its label's text,
    `BLUE_IMMORTAL`, 24 strings). All unseen. **To check:** the countdown's hexagon/count spacing

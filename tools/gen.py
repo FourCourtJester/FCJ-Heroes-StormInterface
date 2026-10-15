@@ -269,7 +269,7 @@ def minimap_launch(cfg):
 def panel_nudges(cfg):
     """How much lower each map's objective panels go, px: layout.toml [minimap.panel_nudge], and
     for a map with a neutral objective above the minimap (maps.py `above`) the move that leaves
-    THE GAP ([minimap] alert_gap) between its lowest part and the drawn map's top tip - the same
+    THE GAP ([minimap] alert_gap) between its hexagon's bottom and the drawn map's top tip - the same
     on every map (user, 2026-10-14: "standardize that gap between maps"). It rides on the
     minimap, so where the minimap sits doesn't change it. A map's `gap_parts` go there on their
     own: (key, part) -> that part's move in its panel, the panel's nudge kept."""
