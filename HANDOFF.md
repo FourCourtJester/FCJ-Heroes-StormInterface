@@ -649,6 +649,18 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    clipped: the script drains it by shrinking its frame (Unclipped there kept it full; fixed in
    6c52e5e, drain seen). Clicking them can't pan the camera (no click events in the script, no
    unit behind them; the user let it go).
+   **Warhead Junction (done, user 2026-10-15: "I think that's all for this map"):** id
+   `Warhead Junction` (with the space) read in game. Drawn centred (no `across`); its outline's
+   tip, its lowest part, 1043 -> the floor: [minimap.nudge] 22, seen at 1065 (1b0dea6). The nuke
+   counters (`SC2Panel/Team1TerrazineFrame` blue, `Team2` red - hung off the minimap's bottom
+   either side of its tip, cut off at the screen's bottom at Blizzard's place) 50 px out and up
+   (maps.warhead_counters): seen clear of the map, icons ~815-870 / ~1040-1100 down to ~1062;
+   then 2 more up (cd1e81b, unseen) for their team strips, uncovered by the lift, to end on the
+   floor. The warheads' banner (`TerrazineEruptionFrame`: the countdown, then how many are left)
+   moved as Blizzard draws it to red's bottom slot - a neutral banner, no copied words (user);
+   its box is the English countdown's, so the other text's tip lands off red's plates by its
+   length (1b0dea6; not screenshotted). Its other SC2Panel parts (NukeSiloFrame, TerrazineBuffFrame)
+   not seen on screen.
    **The minimap's tooltip - OFF, every map (user, 2026-10-15: "Just hide it or disable it";
    seen gone on 08eeb21).** Hovering a named minimap icon (a watch tower, a fort, Tomb's Spider
    Altar) showed Blizzard's `MinimapPanel/MinimapPanelTooltip` at ~1332-1467 x, ~800-850 y,
@@ -657,7 +669,7 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    hover off: no change); the box is see-through instead (FCJH_Minimap.StormLayout).
    **Then the rest of the newer maps' QA
    (Battlefield, Shrines, Sky Temple,
-   Volskaya, Warhead). Any map could get a two-view or other per-map behaviour the same way
+   Volskaya). Any map could get a two-view or other per-map behaviour the same way
    (`launch_cut`/`opens`, `on_map`).
 5. **The diagnostic - trimmed to the map id (user, 2026-10-09);** remove `maps.diag` and
    `FCJH_DiagMapId` once every map's id is confirmed in game (MAP_IDS' GAME sources).
