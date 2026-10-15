@@ -154,6 +154,13 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
   alert 1 ends while alert 2 is still up, the next alert goes into slot 2 again, replacing it.
   Not seen yet; script-side, so not ours to fix.
 
+### A script's label style beats a layout's
+- Where Blizzard's script sets a label's style (`SetDialogItemStyle`), a layout state's `Style`
+  doesn't stick: Battlefield of Eternity's pushing-Immortal label is restyled left-justified
+  whenever its words are written. To right-justify blue's, we hide Blizzard's label there and
+  show our own bound to its text (`maps.LANE_COPIES` `FCJH_LaneWords`). This is a workaround,
+  not a fix of Blizzard's.
+
 ### Battlefield of Eternity: the pushing Immortal's box just vanishes
 - When the winner's Immortal dies, the script keeps its box up about a second, then turns the
   whole panel off: no outro. The fight's loser gets an X slashed across its portrait

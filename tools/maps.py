@@ -1813,7 +1813,19 @@ LANE_COPIES = (
     + flipped_copy("FCJH_LaneDemonBox", "@UI/hud_minimap_boe_portrait_demon_blue",
                    (("Top", "$parent", "Min", 75), ("Left", LANE_SPOTS[1], "Max", -LANE_DEMON_R)))
     + flipped_copy("FCJH_LaneAngelBox", "@UI/hud_minimap_boe_portrait_angel_blue",
-                   (("Top", "$parent", "Min", 75), ("Right", "$parent/FCJH_LaneDemonBox", "Max", -4))))
+                   (("Top", "$parent", "Min", 75), ("Right", "$parent/FCJH_LaneDemonBox", "Max", -4)))
+    # blue's words: Blizzard's label is restyled by the script as it writes them (libmlbd.galaxy
+    # SetDialogItemStyle ...SmallLeft_Blue), which beats a state's Style, so blue's stayed
+    # left-justified (14_38_47). Ours, right-justified from the tip, shows Blizzard's words.
+    + f'{T*7}<Frame type="Label" name="FCJH_LaneWords">\n'
+    + "".join(f'{T*8}<Anchor side="{sd}" relative="{rel}" pos="{pos}" offset="{off}"/>\n'
+              for sd, rel, pos, off in (("Bottom", "$parent/BackgroundImage", "Min", 10),
+                                        ("Left", "$parent/AllyAngelHud", "Max", 0),
+                                        ("Right", "$parent/BackgroundImage", "Max", -25)))
+    + f'{T*8}<Style val="{SMALL.format("Right")}"/>\n'
+    + f'{T*8}<Text val="{{$parent/BossLaningInfoLabel/@Text}}"/>\n'
+    + f'{T*8}<Unclipped val="true"/>\n{T*8}<RenderPriority val="513"/>\n'
+    + f'{T*8}<AcceptsMouse val="false"/>\n{T*8}<Alpha val="0"/>\n{T*7}</Frame>\n')
 # What Blizzard draws after the backings drawn over blue's copies of them too, as the knight's
 # (_OVER): the copies, being ours, come last and hid the fills (14_31_07)
 LANE_PARTS = (("Image", "BackgroundImage", ()), ("Label", "BossLaningInfoLabel", (), _OVER),
@@ -1843,12 +1855,9 @@ def lane_layout(s):
     for part in ("/AllyAngelHud", "/EnemyAngelHud"):    # Blizzard's drawn flipped on red's
         s.flip(part, faces="blue")
     for part, team in (("/ShieldBarBg", "red"), ("/HealthBarBg", "red"),
-                       ("/FCJH_LaneShieldBG", "blue"), ("/FCJH_LaneHealthBG", "blue")):
+                       ("/FCJH_LaneShieldBG", "blue"), ("/FCJH_LaneHealthBG", "blue"),
+                       ("/BossLaningInfoLabel", "red"), ("/FCJH_LaneWords", "blue")):
         s.show(part, team)
-    label = "/BossLaningInfoLabel"
-    s.hang(label, "Left", "/BackgroundImage", "Min", 25)
-    s.hang(label, "Right", "/AllyAngelHud", "Min", 0)
-    s.justify(label, SMALL, "inner")
     # the shield: its frame from its backing to under the portrait, the bar 354 long from its left
     sbg, shield = s.pick("/ShieldBarBg", "/FCJH_LaneShieldBG"), "/BossLaningShieldBar"
     s.anchor(shield, "Top", sbg, "Min", 4)

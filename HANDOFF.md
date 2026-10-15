@@ -692,11 +692,14 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    hanging either side of the map's tip (`above=(32, 0)`, unseen), the panel 9 right (Blizzard draws its boxes 8 px left
    of centre); the winner's Immortal pushing (BossLaningFrame) goes in the countdown's place on
    its team's side, mirrored on blue's (`lane_side`, team_banner; blue told by its label's text,
-   `BLUE_IMMORTAL`, 24 strings). All unseen. **To check:** the countdown's hexagon/count spacing
-   (`SPAWN_HEX_AFTER` 180) and art height (114); blue's lane mirror - its portraits placed on
-   invisible copies of their own art (`FCJH_LaneDemonBox`/`AngelBox`), its backings flipped
-   copies (the shield's both ways), its health fill masked to the knight's lean; the shield fill
-   isn't masked, so check its lean on blue.
+   `BLUE_IMMORTAL`, 24 strings). Seen: the countdown (14_28_58), red's pushing Immortal
+   (14_32_30, 14_39_52), blue's with its fills (14_38_47, after 5054b41). Blue's words came out
+   left-justified: the script restyles Blizzard's label as it writes it, beating a state's
+   Style, so blue now shows our own right-justified label bound to Blizzard's text
+   (`FCJH_LaneWords`), Blizzard's hidden - unseen. **To check:** blue's words ending ~25 in
+   from the tip; the countdown's hexagon/count spacing (`SPAWN_HEX_AFTER` 180) and art height
+   (114); blue's portraits on their invisible boxes (`FCJH_LaneDemonBox`/`AngelBox`); blue's
+   shield fill isn't masked, so check its lean.
    **Then the rest of the newer maps' QA
    (Shrines, Sky Temple). Any map could get a two-view or other per-map behaviour the same way
    (`launch_cut`/`opens`, `on_map`).
