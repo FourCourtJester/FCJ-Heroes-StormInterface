@@ -1251,6 +1251,9 @@
 		<Frame type="Frame" name="BossDuelRightFrame">
 			<Frame type="Label" name="PhaseLabel"><Anchor side="Top" relative="$parent/BackgroundImage" pos="Min" offset="-15"/></Frame>
 		</Frame>
+		<Frame type="Frame" name="BossLaningFrame">
+			<Anchor side="Top" relative="$parent" pos="Min" offset="22"/><Anchor side="Bottom" relative="$parent" pos="Max" offset="22"/>
+		</Frame>
 	</Frame>
 	<!-- ===== Braxis Holdout ===== -->
 	<Frame type="Frame" name="HoldOutPanel" file="HoldOut">

@@ -1757,8 +1757,16 @@ def robot_frame():
 # FIGHTING" (PhaseLabel) above the bars, where Braxis's "BEACON PROGRESS" sits (user, 2026-10-15:
 # "like the other maps") - Blizzard hangs it under them, over the map
 PHASE_ABOVE = '<Frame type="Label" name="PhaseLabel"><Anchor side="Top" relative="$parent/BackgroundImage" pos="Min" offset="-15"/></Frame>'
+# The winner's Immortal pushing (BossLaningFrame, "BLUE TEAM IMMORTAL PREPARING"): a team's, but it
+# takes turns with the countdown and the fight in their place, as Hanamura's payload does, so it
+# stays there. Down by its hexagon's bottom (792) to the fight's numbers (812), both at THE GAP
+# (13_50_25, 13_48_52: 20 px)
+LANE_DOWN = 22
+LANE_LOWER = "".join(f'<Anchor side="{s}" relative="$parent" pos="{p}" offset="{LANE_DOWN}"/>'
+                     for s, p in (("Top", "Min"), ("Bottom", "Max")))
 PARTS["battlefield_of_eternity"] = {"BossDuelPanel/BossDuelLeftFrame": PHASE_ABOVE,
-                                    "BossDuelPanel/BossDuelRightFrame": PHASE_ABOVE}
+                                    "BossDuelPanel/BossDuelRightFrame": PHASE_ABOVE,
+                                    "BossDuelPanel/BossLaningFrame": LANE_LOWER}
 
 PARTS["volskaya_foundry"] = {"VolskayaToastContainer/ToastNotification": TOAST,
                              "VolskayaCapturePointPanel/ContestedLabel:Label": CONTESTED,
