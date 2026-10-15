@@ -667,27 +667,19 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    stranded by its `$parent` anchors when we move the panel. Not stoppable at the source (no
    tooltip frame named: the name showed anyway, clamped elsewhere; the minimap with tooltip
    hover off: no change); the box is see-through instead (FCJH_Minimap.StormLayout).
-   **Volskaya Foundry (in progress, 2026-10-15):** id `Volskaya` read in game; its minimap 7
-   down to the floor (a1f60ca). 9a94772, unseen: the toast ("Control point will unlock",
-   `VolskayaToastContainer`) in our banners' font, its countdown in the bar after the words
-   (maps.TOAST); CONTESTED over the capture hex, hidden while `VolskayaOvertimePanel` shows;
-   hex and toast down to the gap (`gap_parts` with a third element: a part hung by its Bottom
-   off the minimap, not its panel); the robot (`VolskayaRobotHealthSlideout`, one frame,
-   recoloured per holder) a team banner (maps.robot_layout) - pilot, gunner, timer over the bar.
-   Its bar measured, not read (the map's textures aren't extracted). Seen and fixed (6f61b54):
-   CONTESTED's overtime hide moved to the robot's frame - a `<When>` naming a script-built frame
-   built AFTER the watcher's never fires (the script builds capture panel, toast, overtime,
-   robot in that order); the toast's count slot "88:88"; blue's fill draining from its tip.
-   118b1e3, unseen: the toast a sentence while counting (VOLSKAYA_UNLOCKS_IN, every language);
-   blue's fill its own bar copy (FCJH_BlueHealthBar: the progress bar mirrors only its mask
-   layer, the colour layer's stripes stayed red's slant); the timer over the % at the tip's end.
-   The robot's outro looked wonky: it's Blizzard's own animation, the same in default (user,
-   2026-10-15) - left alone. ca251c3, unseen: pilot and gunner out beside the robot (THE GAP).
-   120283f, seen good: the toast's bar out to its sentence (SetAnchor relative="$this" didn't take).
-   44b79a7 centred English's toast (26 px right). 6ff536a, unseen: centred in every language -
-   the bar's right end hangs from the Mid of a hidden copy of the words shown, anchored by its
-   Left only (so it sits half their width out); check English hasn't moved and a longer
-   language (FR) is centred too. The user's last open Volskaya item.
+   **Volskaya Foundry - DONE (user, 2026-10-15: "perfect. mark it done!").** Id `Volskaya`
+   read in game; minimap 7 down to the floor (a1f60ca). The toast (`VolskayaToastContainer`,
+   maps.TOAST): our banners' font, a sentence before its count while counting
+   (VOLSKAYA_UNLOCKS_IN, every language), the bar out to the sentence and centred on the screen
+   in every language (6ff536a: the bar's right end hangs from the Mid of a hidden copy of the
+   words shown, anchored by its Left only - half their width out). CONTESTED over the capture
+   hex, hidden in overtime from the robot's frame (a `<When>` naming a script-built frame built
+   AFTER the watcher never fires; the script builds capture panel, toast, overtime, robot in that
+   order). The robot (`VolskayaRobotHealthSlideout`) a team banner (maps.robot_layout): blue's
+   fill its own bar copy (FCJH_BlueHealthBar - the progress bar mirrors only its mask layer),
+   the timer over the %, pilot and gunner beside the robot (THE GAP). Its outro is Blizzard's
+   own animation, the same in default - left alone. SetAnchor relative="$this" doesn't take:
+   name frames by path.
    **Then the rest of the newer maps' QA
    (Battlefield, Shrines, Sky Temple). Any map could get a two-view or other per-map behaviour the same way
    (`launch_cut`/`opens`, `on_map`).
@@ -951,7 +943,7 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    **Done:** Towers of Doom (2026-10-06; DONE again 2026-10-09 on the banner standard: bars on
    the fixed place with and without the core bar, blue's mirrored, the stack's spacing - user:
    "not likely to adjust them again"); Cursed Hollow (2026-10-06, below; its minimap and counters
-   seen right after the no-jitter change).
+   seen right after the no-jitter change); Volskaya Foundry (2026-10-15, under item 4 above).
    **Towers of Doom, as approved (2026-10-06):** altar countdown and towers upgrading on red's
    side, tunnels on blue's (kept balanced, user). "Cannons are firing": the script shows RAVEN's
    alert for blue's capture and NECRO's for red's (only the Your/Enemy text is per viewer), to
