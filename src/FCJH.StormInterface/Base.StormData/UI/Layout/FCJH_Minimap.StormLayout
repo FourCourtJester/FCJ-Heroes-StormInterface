@@ -23,13 +23,25 @@
 					<Anchor side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_L"/>
 					<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_R"/>
 					<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MINIMAP_PANEL_BOTTOM"/>
-					<!-- No tooltips off the minimap (user, 2026-10-15: "Just hide it or disable it"). A
-					     minimap icon's name went to Blizzard's MinimapPanelTooltip, a box anchored in the
-					     panel's own corner (Right -500, Bottom -250), stranded when we move the panel;
-					     with no tooltip frame named the game showed the name anyway, clamped elsewhere
-					     (abbf1bd). So the minimap takes no tooltip hover at all; clicks are apart. -->
-					<Frame type="Minimap" name="Minimap">
-						<AcceptsMouseTooltip val="false"/>
+					<!-- No tooltip off the minimap (user, 2026-10-15: "Just hide it or disable it"). A
+					     minimap icon's name goes to Blizzard's MinimapPanelTooltip, a box anchored in the
+					     panel's own corner (Right -500, Bottom -250), stranded when we move the panel.
+					     Neither stopping it at the source worked: with no tooltip frame named the game
+					     showed the name anyway, clamped elsewhere (abbf1bd), and the minimap taking no
+					     tooltip hover changed nothing (2d791af). So the box is see-through, every
+					     drawn part of it (its border sets its own alpha, its blur draws on its own). -->
+					<Frame type="MinimapPanelTooltip" name="MinimapPanelTooltip">
+						<Alpha val="0"/>
+						<Frame type="BlurFrame" name="BlurBackground">
+							<Visible val="false"/>
+							<Alpha val="0"/>
+						</Frame>
+						<Frame type="Image" name="TopBorder">
+							<Alpha val="0"/>
+						</Frame>
+						<Frame type="Label" name="TipLabel">
+							<Alpha val="0"/>
+						</Frame>
 					</Frame>
 				</Frame>
 			</Frame>
