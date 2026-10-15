@@ -23,6 +23,14 @@
 					<Anchor side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_L"/>
 					<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_R"/>
 					<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MINIMAP_PANEL_BOTTOM"/>
+					<!-- A minimap icon's name went to Blizzard's MinimapPanelTooltip, a box anchored in
+					     the panel's own corner (Right -500, Bottom -250), left behind when we move the
+					     panel. TRIAL (user, 2026-10-15): no tooltip frame named here, to see whether the
+					     game then gives the name as its cursor tooltip; if nothing shows, it's off,
+					     which the user prefers to the box anyway. -->
+					<Frame type="Minimap" name="Minimap">
+						<TooltipFrame val=""/>
+					</Frame>
 				</Frame>
 			</Frame>
 		</Frame>
