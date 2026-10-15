@@ -1814,12 +1814,14 @@ LANE_COPIES = (
                    (("Top", "$parent", "Min", 75), ("Left", LANE_SPOTS[1], "Max", -LANE_DEMON_R)))
     + flipped_copy("FCJH_LaneAngelBox", "@UI/hud_minimap_boe_portrait_angel_blue",
                    (("Top", "$parent", "Min", 75), ("Right", "$parent/FCJH_LaneDemonBox", "Max", -4))))
-LANE_PARTS = (("Image", "BackgroundImage", ()), ("Label", "BossLaningInfoLabel", ()),
+# What Blizzard draws after the backings drawn over blue's copies of them too, as the knight's
+# (_OVER): the copies, being ours, come last and hid the fills (14_31_07)
+LANE_PARTS = (("Image", "BackgroundImage", ()), ("Label", "BossLaningInfoLabel", (), _OVER),
               ("Image", "ShieldBarBg", ()), ("Image", "HealthBarBg", ()),
-              ("UnitStatusFrame", "BossLaningShieldBar", (("UnitStatusShieldedHealthBar", "ShieldBar", ()),)),
-              ("UnitStatusFrame", "BossLaningHealthBar", (("UnitStatusShieldedHealthBar", "HealthBar", ()),)),
-              ("Image", "AllyDemonHud", ()), ("Image", "EnemyDemonHud", ()),
-              ("Image", "AllyAngelHud", ()), ("Image", "EnemyAngelHud", ()))
+              ("UnitStatusFrame", "BossLaningShieldBar", (("UnitStatusShieldedHealthBar", "ShieldBar", ()),), _OVER),
+              ("UnitStatusFrame", "BossLaningHealthBar", (("UnitStatusShieldedHealthBar", "HealthBar", ()),), _OVER),
+              ("Image", "AllyDemonHud", (), _OVER), ("Image", "EnemyDemonHud", (), _OVER),
+              ("Image", "AllyAngelHud", (), _OVER), ("Image", "EnemyAngelHud", (), _OVER))
 
 
 def lane_layout(s):

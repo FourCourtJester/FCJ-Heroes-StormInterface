@@ -1370,6 +1370,7 @@
 							</Frame>
 							<Frame type="Label" name="BossLaningInfoLabel">
 								<Unclipped val="true"/>
+								<RenderPriority val="513"/>
 							</Frame>
 							<Frame type="Image" name="ShieldBarBg">
 								<Unclipped val="true"/>
@@ -1379,27 +1380,33 @@
 							</Frame>
 							<Frame type="UnitStatusFrame" name="BossLaningShieldBar">
 								<Unclipped val="true"/>
+								<RenderPriority val="513"/>
 								<Frame type="UnitStatusShieldedHealthBar" name="ShieldBar">
 									<Unclipped val="true"/>
 								</Frame>
 							</Frame>
 							<Frame type="UnitStatusFrame" name="BossLaningHealthBar">
 								<Unclipped val="true"/>
+								<RenderPriority val="513"/>
 								<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">
 									<Unclipped val="true"/>
 								</Frame>
 							</Frame>
 							<Frame type="Image" name="AllyDemonHud">
 								<Unclipped val="true"/>
+								<RenderPriority val="513"/>
 							</Frame>
 							<Frame type="Image" name="EnemyDemonHud">
 								<Unclipped val="true"/>
+								<RenderPriority val="513"/>
 							</Frame>
 							<Frame type="Image" name="AllyAngelHud">
 								<Unclipped val="true"/>
+								<RenderPriority val="513"/>
 							</Frame>
 							<Frame type="Image" name="EnemyAngelHud">
 								<Unclipped val="true"/>
+								<RenderPriority val="513"/>
 							</Frame>
 							<Frame type="Image" name="FCJH_LaneShieldBG">
 								<Anchor side="Bottom" relative="$parent/BackgroundImage" pos="Mid" offset="5"/>
