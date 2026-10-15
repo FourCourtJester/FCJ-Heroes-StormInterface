@@ -696,8 +696,8 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    (14_32_30, 14_39_52), blue's with its fills (14_38_47, after 5054b41). Blue's words came out
    left-justified: the script restyles Blizzard's label as it writes it, beating a state's
    Style, so blue now shows our own right-justified label bound to Blizzard's text
-   (`FCJH_LaneWords`), Blizzard's hidden - unseen. **To check:** blue's words ending ~25 in
-   from the tip; the countdown's hexagon/count spacing (`SPAWN_HEX_AFTER` 180) and art height
+   (`FCJH_LaneWords`), Blizzard's hidden - seen right (14_44_56), inset as red's. **To check:**
+   the countdown's hexagon/count spacing (`SPAWN_HEX_AFTER` 180) and art height
    (114); blue's portraits on their invisible boxes (`FCJH_LaneDemonBox`/`AngelBox`); blue's
    shield fill isn't masked, so check its lean.
    **Then the rest of the newer maps' QA

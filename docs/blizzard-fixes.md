@@ -114,7 +114,7 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
   (the hexagon at the outer end) - one builder for every map (`maps.team_banner`; 73fa559).
   Seen: Cursed Hollow's curse, Dragon Shire's knight, Blackheart's Bay's cannon, Towers of Doom's
   alerts, Garden of Terror's Terrors (red), Alterac Pass's cavalry, Battlefield of Eternity's
-  winning Immortal (red; 2026-10-15 - Blizzard's countdown, fight and pushing Immortal all took
+  winning Immortal (both teams; 2026-10-15 - Blizzard's countdown, fight and pushing Immortal all took
   turns in one place above the minimap; the countdown is now a neutral banner and the pushing
   Immortal goes to the winner's side).
 - **Banner intros on the older maps.** Towers of Doom's banners slide and fade in; the older
@@ -158,8 +158,8 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
 - Where Blizzard's script sets a label's style (`SetDialogItemStyle`), a layout state's `Style`
   doesn't stick: Battlefield of Eternity's pushing-Immortal label is restyled left-justified
   whenever its words are written. To right-justify blue's, we hide Blizzard's label there and
-  show our own bound to its text (`maps.LANE_COPIES` `FCJH_LaneWords`). This is a workaround,
-  not a fix of Blizzard's.
+  show our own bound to its text (`maps.LANE_COPIES` `FCJH_LaneWords`; 3edae7a, seen right
+  2026-10-15). This is a workaround, not a fix of Blizzard's.
 
 ### Battlefield of Eternity: the pushing Immortal's box just vanishes
 - When the winner's Immortal dies, the script keeps its box up about a second, then turns the
