@@ -1724,7 +1724,7 @@ MAP_IDS = {
     "sky_temple": "ControlPoints",                    # SCRIPT
     "tomb_of_the_spider_queen": "Crypts",             # GAME (2026-10-14)
     "towers_of_doom": "TowersOfDoom",                 # GAME (2026-10-09)
-    "volskaya_foundry": "Volskaya",                   # SCRIPT
+    "volskaya_foundry": "Volskaya",                   # GAME (2026-10-15)
     "warhead_junction": "Warhead Junction",           # GAME (2026-10-15) - with the space
 }
 assert set(MAP_IDS) == set(MAPS), f"MAP_IDS: every map needs its id - {set(MAPS) ^ set(MAP_IDS)}"
