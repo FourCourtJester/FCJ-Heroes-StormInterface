@@ -696,8 +696,21 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    both teams, 14_39_52, 14_44_56, 14_49_19, 14_49_45). Blue's words are our own label
    (`FCJH_LaneWords`) bound to Blizzard's text: the script restyles Blizzard's label as it
    writes it, beating a state's Style, so it stayed left-justified (14_38_47).
-   **Then the rest of the newer maps' QA
-   (Shrines, Sky Temple). Any map could get a two-view or other per-map behaviour the same way
+   **Infernal Shrines - next (map id `Shrines` read in game, 2026-10-15).** The entry is still
+   bare (only the minimap placed), so the first replay is a look at Blizzard's panel as it is.
+   Screenshots to bring (build 3edae7a or later):
+   1. The minimap with nothing above it - does its bottom sit on THE FLOOR (Battlefield needed
+      16 down)?
+   2. "Shrine activates in" with its count (ShrineWarningFrame).
+   3. "Shrine active" (ShrineActiveFrame).
+   4. The skull race (CursedMinionKillFrame): both teams' counts and the crystal under them.
+   5. The Punisher, ideally one of each team's (PunisherFrame) - its icon, words and health bar.
+   Plan once seen: countdown then "active" as one neutral banner on red's side (like Dragon
+   Shire's countdown); the skulls at the bottom, counted either side of the minimap's bottom
+   point (like Haunted Mines'); the Punisher a team banner built like the knight, blue told by
+   the `Punisher*Ally` icons being shown (libmshe.galaxy ~372-401). A Sky Temple replay on the
+   same pass can confirm its id (expected `ControlPoints`, the last SCRIPT one in MAP_IDS).
+   **Then Sky Temple's QA.** Any map could get a two-view or other per-map behaviour the same way
    (`launch_cut`/`opens`, `on_map`).
 5. **The diagnostic - trimmed to the map id (user, 2026-10-09);** remove `maps.diag` and
    `FCJH_DiagMapId` once every map's id is confirmed in game (MAP_IDS' GAME sources).
