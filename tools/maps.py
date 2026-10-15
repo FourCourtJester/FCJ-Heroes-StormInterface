@@ -1930,8 +1930,9 @@ PARTS["tomb_of_the_spider_queen"] = weaver_parts()
 # the map's sides at their height, and up off the screen's bottom.
 WARHEAD_COUNTERS_OUT_PX = 50          # blue's icon 865-920 -> 815-870, red's 990-1045 -> 1040-1095:
                                       # the map's sides ~880 / ~1030 at the icons' top, as lowered
-WARHEAD_COUNTERS_UP_PX = 42           # the map's 22 down taken back, then 20 up: the icons' visible
-                                      # bottom wasn't seen (past 1080) - tune by eye
+WARHEAD_COUNTERS_UP_PX = 44           # the map's 22 down taken back, then 22 up: seen on 1b0dea6 at 20
+                                      # up, the icons' bottom ~1062 and their team strips' (blue/red
+                                      # lines under them, once off the screen) 1067 - 2 past the floor
 MINIMAP_SQUARE = "$parent/$parent/$parent/MinimapPanel/Minimap"   # as Blizzard's anchors name it
 
 
