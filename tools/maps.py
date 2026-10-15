@@ -1522,6 +1522,10 @@ VOLSKAYA = MECHANICS + "/VolskayaCapturePointPanel"
 # starting the standard 35 before them. Blizzard's labels hidden, ours bound to them.
 TOAST_WORDS_START = 35
 TOAST_RIGHT = 29           # the toast's right end this far right of Blizzard's (units; 26 px)
+# English's sentence measured 320 wide (13_33_27: words 719 px, count 1006.5 px): the bar's right
+# end half that left of its words' copy's middle keeps English where 44b79a7 centred it
+TOAST_CENTRE = -160
+TOAST_SLOT = 53            # the count's slot and the space before it: the bar without them halves it
 TOAST_STYLE = "Storm_MapMechanic_MechanicTimerCentered_Blue"
 _TOAST_ROW = (("Top", "$parent/BackgroundImage", "Mid", 4), ("Bottom", "$parent/BackgroundImage", "Mid", 4))
 _TOAST_COUNT = "$parent/TimerLabel"
@@ -1552,27 +1556,44 @@ VOLSKAYA_UNLOCKS_IN = {
 def toast_sentence():
     """FCJH_VolskayaSentence's states: shown, Blizzard's words (ours, copied) hidden and the bar
     from the sentence, while the count shows and the words are a language's listed; else hidden.
-    The bar's anchor names the sentence by path: relative="$this" left the bar where it was
-    (seen 2026-10-15, the sentence running over the bar's tip)."""
+    And the bar centred whatever its words' length (user, 2026-10-15): its right end hangs from
+    the middle of a hidden copy of the words shown (FCJH_VolskayaSentenceWidth/TextWidth), held
+    by its left - half their width out - so the bar grows both ways. Anchors name frames by path:
+    relative="$this" left the bar where it was (seen 2026-10-15)."""
     alpha = lambda frame, a: f'<Action type="SetProperty" frame="{frame}" Alpha="{a}"/>'
-    bar = lambda frame: (f'<Action type="SetAnchor" frame="$parent/BackgroundImage" side="Left" '
-                         f'relative="{frame}" pos="Min" offset="{-TOAST_WORDS_START}"/>')
-    words = "$parent/FCJH_VolskayaText"
+    anchor = lambda side, rel, pos, off: (f'<Action type="SetAnchor" frame="$parent/BackgroundImage" side="{side}" '
+                                          f'relative="{rel}" pos="{pos}" offset="{off}"/>')
+    bar = lambda frame: anchor("Left", frame, "Min", -TOAST_WORDS_START)
+    centre = lambda width, off=TOAST_CENTRE: anchor("Right", width, "Mid", off)
+    words, sentence = "$parent/FCJH_VolskayaText", "$parent/FCJH_VolskayaSentence"
     return ('\t<StateGroup name="FCJH_Sentence">\n\t\t<DefaultState val="Words"/>\n'
             + "".join(f'\t\t<State name="In{i}"><When type="Property" frame="{_TOAST_COUNT}" Visible="true"/>'
                       f'<When type="Property" frame="$parent/InfoLabel" Text="{theirs}"/>'
-                      f'<Action type="SetProperty" frame="$this" Text="{ours}"/>'
-                      + alpha("$this", 255) + alpha(words, 0) + bar("$parent/FCJH_VolskayaSentence") + '</State>\n'
+                      f'<Action type="SetProperty" frame="{sentence}" Text="{ours}"/>'
+                      f'<Action type="SetProperty" frame="{sentence}Width" Text="{ours}"/>'
+                      + alpha(sentence, 255) + alpha(words, 0) + bar(sentence) + centre(sentence + "Width") + '</State>\n'
                       for i, (theirs, ours) in enumerate(VOLSKAYA_UNLOCKS_IN.items()))
-            + '\t\t<State name="Words">' + alpha("$this", 0) + alpha(words, 255) + bar(words) + '</State>\n'
+            # no count: the bar shorter by its slot and the space before it
+            + f'\t\t<State name="Bare"><When type="Property" frame="{_TOAST_COUNT}" Visible="false"/>'
+            + alpha(sentence, 0) + alpha(words, 255) + bar(words)
+            + centre(words + "Width", TOAST_CENTRE - TOAST_SLOT // 2) + '</State>\n'
+            + '\t\t<State name="Words">' + alpha(sentence, 0) + alpha(words, 255) + bar(words)
+            + centre(words + "Width") + '</State>\n'
             '\t</StateGroup>\n')
+
+
+def toast_width(name_, text):
+    """A hidden copy of the toast's words, its left at the toast's right (toast_sentence)."""
+    return banner_label(name_, _TOAST_ROW + (("Left", "$parent", "Max", 0),), text, TOAST_STYLE, '\t<Alpha val="0"/>\n')
 
 
 TOAST = "".join((
     # the bar grows left from its right end (Blizzard's, the minimap panel's right): English's
     # sentence put its middle 26 px left of the screen's (13_33_27, bar 690-1178) - moved over.
-    # Longer languages still sit further left (no anchor halves a label's width)
+    # Every language centred by the bar's right end (toast_sentence), from these hidden copies
     f'<Anchor side="Right" relative="$parent" pos="Max" offset="{TOAST_RIGHT}"/>\n',
+    toast_width("FCJH_VolskayaTextWidth", "{$parent/InfoLabel/@Text}"),
+    toast_width("FCJH_VolskayaSentenceWidth", ""),
     banner_label("FCJH_VolskayaText", _TOAST_ROW + (("Right", "$parent/FCJH_VolskayaSlot", "Min", -COUNT_SPACE),),
                  "{$parent/InfoLabel/@Text}", TOAST_STYLE),
     # its count reads "00:22" (GetFormattedTimeRemaining), wider than our banners' "8:88"
