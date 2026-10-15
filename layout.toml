@@ -65,7 +65,7 @@ alert_gap = 10               # THE GAP, every map (user, 2026-10-14): a neutral 
 # ([minimap.panel_nudge]). Given own_place, it moves here from the start, by its map id.
 [minimap.nudge]
 alterac_pass = 0
-battlefield_of_eternity = 0
+battlefield_of_eternity = 16  # down to the floor (2026-10-15): its map's visual bottom (the outline's flat south edge) 1049 -> 1065
 blackhearts_bay = 0
 braxis_holdout = 18          # down to the floor (user, 2026-10-09): its map's visual bottom 1047 -> 1065; the HUD rides along
 cursed_hollow = 0            # was 20 (its map's bottom on the screen's edge): [minimap] bottom now
