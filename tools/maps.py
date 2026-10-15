@@ -2127,7 +2127,7 @@ MAP_IDS = {
     "garden_of_terror": "HauntedWoods",               # GAME (2026-10-12)
     "hanamura_temple": "Hanamura",                    # GAME (2026-10-14)
     "haunted_mines": "HauntedMines",                  # GAME (2026-10-09)
-    "infernal_shrines": "Shrines",                    # SCRIPT
+    "infernal_shrines": "Shrines",                    # GAME (2026-10-15)
     "sky_temple": "ControlPoints",                    # SCRIPT
     "tomb_of_the_spider_queen": "Crypts",             # GAME (2026-10-14)
     "towers_of_doom": "TowersOfDoom",                 # GAME (2026-10-09)
