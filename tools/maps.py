@@ -1527,7 +1527,9 @@ _TOAST_COUNT = "$parent/TimerLabel"
 TOAST = "".join((
     banner_label("FCJH_VolskayaText", _TOAST_ROW + (("Right", "$parent/FCJH_VolskayaSlot", "Min", -COUNT_SPACE),),
                  "{$parent/InfoLabel/@Text}", TOAST_STYLE),
-    count_slot("FCJH_VolskayaSlot", _TOAST_ROW, ("Right", "$parent/BackgroundImage", "Max", -140), TOAST_STYLE),
+    # its count reads "00:22" (GetFormattedTimeRemaining), wider than our banners' "8:88"
+    count_slot("FCJH_VolskayaSlot", _TOAST_ROW, ("Right", "$parent/BackgroundImage", "Max", -140), TOAST_STYLE,
+               slot="88:88"),
     # no countdown (Blizzard's hidden): the words end where Blizzard's did
     banner_label("FCJH_VolskayaCount", _TOAST_ROW + (("Right", "$parent/FCJH_VolskayaSlot", "Max", 0),),
                  f"{{{_TOAST_COUNT}/@Text}}", TOAST_STYLE,
@@ -1549,12 +1551,16 @@ TOAST = "".join((
 # The capture point (user, 2026-10-15): "CONTESTED" above the hexagon, as Hanamura's, and gone
 # in overtime - the overtime banner says it ("that's the definition of overtime"), above the hex.
 CONTESTED = (
-    '<Anchor side="Top"    relative="$parent/CenterHex" pos="Mid" offset="-83"/>\n'
-    '<Anchor side="Bottom" relative="$parent/CenterHex" pos="Mid" offset="-33"/>\n'
+    '<Anchor side="Top"    relative="$parent/CenterHex" pos="Mid" offset="-89"/>\n'
+    '<Anchor side="Bottom" relative="$parent/CenterHex" pos="Mid" offset="-39"/>\n')
+# ...hidden from the robot's frame: the script builds the capture panel before the overtime panel,
+# and a <When> naming a frame not yet built never fires (seen 2026-10-15, CONTESTED under OVERTIME).
+# The robot's frame is built last, and a hidden frame's StateGroup still runs (layout rule 30).
+CONTESTED_OVERTIME = (
     '<StateGroup name="FCJH_Overtime">\n\t<DefaultState val="Normal"/>\n'
     f'\t<State name="Overtime"><When type="Property" frame="{MECHANICS}/VolskayaOvertimePanel" Visible="true"/>'
-    '<Action type="SetProperty" frame="$this" Alpha="0"/></State>\n'
-    '\t<State name="Normal"><Action type="SetProperty" frame="$this" Alpha="255"/></State>\n'
+    f'<Action type="SetProperty" frame="{VOLSKAYA}/ContestedLabel" Alpha="0"/></State>\n'
+    f'\t<State name="Normal"><Action type="SetProperty" frame="{VOLSKAYA}/ContestedLabel" Alpha="255"/></State>\n'
     '</StateGroup>\n')
 
 # The Triglav Protector's health (VolskayaRobotHealthSlideout, its own frame: one, recoloured for
@@ -1592,6 +1598,11 @@ def robot_layout(s):
     s.hold(plate, "Left", 68 - ROBOT_TIP_IN, 68 - ROBOT_TIP_IN + 272)
     s.flip(plate)
     s.hold("/RobotStatusFrame/HealthLabel", "Left", 16 - ROBOT_TIP_IN, 16 - ROBOT_TIP_IN + 70)
+    # the fill, a TextureCoordinateProgressBar, slides its texture between two coords: Blizzard's
+    # drain from the tip on red; blue's mirrored (u -> the other end), its slant the plate's
+    s.set("/RobotStatusFrame/RobotHealthBar",
+          MaxTextureCoords=s.pick("0,-0.01,1,0.99", "0,0.99,1,-0.01"),
+          MinTextureCoords=s.pick("0,-0.92,1,0.08", "0,0.08,1,-0.92"))
     # over the bar, out from the tip: the pilot, the gunner, the timer, then the robot. Each
     # seat's ring and border are separate images (the border Blizzard's template copy of the
     # ring, its anchors too); the pilot's top follows the gunner's (Blizzard's)
@@ -1600,8 +1611,10 @@ def robot_layout(s):
         s.hold(part, "Right", 186, 258)
     for part in ("/PilotEmptyIcon", "/PilotBorderIcon"):
         s.hold(part, "Right", 114, 186)
-    s.at("/RobotTimer", "Left", 293)
-    s.at("/RobotTimer", "Right", 293)
+    # the timer centred 293 out, between the gunner and the robot (Blizzard's zero-width label
+    # centred on the robot drew nothing here: given a width)
+    s.at("/RobotTimer", "Left", 293 - 45)
+    s.at("/RobotTimer", "Right", 293 + 45)
     s.anchor("/RobotTimer", "Top", s.spot, "Max", -ROBOT_SEATS)
     s.anchor("/RobotTimer", "Bottom", s.spot, "Max", 72 - ROBOT_SEATS)
 
@@ -1625,7 +1638,7 @@ def robot_frame():
     return ("".join(f'<Anchor side="{sd}"{" " * (6 - len(sd))} relative="{ROBOT_SPOTS[0]}" pos="{pos}" offset="{off}"/>\n'
                     for sd, pos, off in box_sides(ROBOT_BOX))
             + f'<Width val="{r - l}"/>\n<Height val="{b - tp}"/>\n<Unclipped val="true"/>\n'
-            + unclipped(ROBOT_PARTS, 0)
+            + unclipped(ROBOT_PARTS, 0) + CONTESTED_OVERTIME
             + team_banner("Robot", "$this", ROBOT_SPOTS,
                           f'<When type="StateGroup" frame="{ROBOT}/RobotStatusFrame/RobotColorizeFrame" RedBlue="Blue"/>',
                           robot_layout, depth=0))
