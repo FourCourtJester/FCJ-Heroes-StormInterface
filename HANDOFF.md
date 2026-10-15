@@ -682,24 +682,20 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    the timer over the %, pilot and gunner beside the robot (THE GAP). Its outro is Blizzard's
    own animation, the same in default - left alone. SetAnchor relative="$this" doesn't take:
    name frames by path.
-   **Battlefield of Eternity - in QA (2026-10-15, bot game).** Id `BattlefieldOfEternity` read in
-   game (9f4d45f). Minimap 16 down to the floor (60558ea, unseen). `BossDuelPanel`'s three
-   phases are three sibling frames, one shown at a time, so they're split up as Dragon Shire's
-   (user, e5c7c9c): the countdown ("Immortals spawning", BossSpawnFrame) is the neutral banner
-   in red's column (`SPAWN_BANNER`, left_banner); the fight (BossDuelLeft/RightFrame, Braxis's
-   zerg template) stays above the minimap, "IMMORTALS FIGHTING" above its bars as Braxis's (seen,
-   centred, 14_29_30), THE GAP from its portraits' hexagons, the numbers
-   hanging either side of the map's tip (`above=(32, 0)`, unseen), the panel 9 right (Blizzard draws its boxes 8 px left
-   of centre); the winner's Immortal pushing (BossLaningFrame) goes in the countdown's place on
-   its team's side, mirrored on blue's (`lane_side`, team_banner; blue told by its label's text,
-   `BLUE_IMMORTAL`, 24 strings). Seen: the countdown (14_28_58), red's pushing Immortal
-   (14_32_30, 14_39_52), blue's with its fills (14_38_47, after 5054b41). Blue's words came out
-   left-justified: the script restyles Blizzard's label as it writes it, beating a state's
-   Style, so blue now shows our own right-justified label bound to Blizzard's text
-   (`FCJH_LaneWords`), Blizzard's hidden - seen right (14_44_56), inset as red's. **To check:**
-   the countdown's hexagon/count spacing (`SPAWN_HEX_AFTER` 180) and art height
-   (114); blue's portraits on their invisible boxes (`FCJH_LaneDemonBox`/`AngelBox`); blue's
-   shield fill isn't masked, so check its lean.
+   **Battlefield of Eternity - done (2026-10-15, bot game).** Id `BattlefieldOfEternity` read in
+   game (9f4d45f). Minimap 16 down to the floor (60558ea). `BossDuelPanel`'s three phases are
+   three sibling frames, one shown at a time, so they're split up as Dragon Shire's (user,
+   e5c7c9c): the countdown ("Immortals spawning", BossSpawnFrame) is the neutral banner in red's
+   column (`SPAWN_BANNER`, left_banner; seen 14_28_58, 14_48_59); the fight
+   (BossDuelLeft/RightFrame, Braxis's zerg template) stays above the minimap, "IMMORTALS
+   FIGHTING" above its bars as Braxis's, the panel 9 right (Blizzard draws its boxes 8 px left
+   of centre), THE GAP from its portraits' hexagons with the numbers either side of the map's
+   tip (`above=(32, 0)`; seen centred, ~11 px, 14_49_06); the winner's Immortal pushing
+   (BossLaningFrame) goes in the countdown's place on its team's side, mirrored on blue's
+   (`lane_side`, team_banner; blue told by its label's text, `BLUE_IMMORTAL`, 24 strings; seen
+   both teams, 14_39_52, 14_44_56, 14_49_19, 14_49_45). Blue's words are our own label
+   (`FCJH_LaneWords`) bound to Blizzard's text: the script restyles Blizzard's label as it
+   writes it, beating a state's Style, so it stayed left-justified (14_38_47).
    **Then the rest of the newer maps' QA
    (Shrines, Sky Temple). Any map could get a two-view or other per-map behaviour the same way
    (`launch_cut`/`opens`, `on_map`).
