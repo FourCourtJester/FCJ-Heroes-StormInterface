@@ -589,7 +589,7 @@ def team_banner(name, frame, spots, blue_when, layout, depth=7):
             + f'{t}\t<State name="Red">{write(False)}</State>\n{t}</StateGroup>\n')
 
 
-def flipped_copy(name_, texture, anchors, depth=7):
+def flipped_copy(name_, texture, anchors, depth=7, coords=FLIPPED):
     """Blue's copy of an image Blizzard holds by one side (a state can't take that anchor away,
     and blue's mirror is held by the other): the same art, flipped, shown on blue's side only
     (Side.show). anchors: ((side, relative, pos, offset), ...)."""
@@ -597,7 +597,7 @@ def flipped_copy(name_, texture, anchors, depth=7):
     return (f'{t}<Frame type="Image" name="{name_}">\n'
             + "".join(f'{t}\t<Anchor side="{sd}"{" " * (6 - len(sd))} relative="{rel}" pos="{pos}" offset="{off}"/>\n'
                       for sd, rel, pos, off in anchors)
-            + f'{t}\t<Texture val="{texture}"/>\n{t}\t{FLIPPED}\n{t}\t<Unclipped val="true"/>\n'
+            + f'{t}\t<Texture val="{texture}"/>\n{t}\t{coords}\n{t}\t<Unclipped val="true"/>\n'
             f'{t}\t<Alpha val="0"/>\n{t}</Frame>\n')
 
 
@@ -1757,16 +1757,120 @@ def robot_frame():
 # FIGHTING" (PhaseLabel) above the bars, where Braxis's "BEACON PROGRESS" sits (user, 2026-10-15:
 # "like the other maps") - Blizzard hangs it under them, over the map
 PHASE_ABOVE = '<Frame type="Label" name="PhaseLabel"><Anchor side="Top" relative="$parent/BackgroundImage" pos="Min" offset="-15"/></Frame>'
-# The winner's Immortal pushing (BossLaningFrame, "BLUE TEAM IMMORTAL PREPARING"): a team's, but it
-# takes turns with the countdown and the fight in their place, as Hanamura's payload does, so it
-# stays there. Down by its hexagon's bottom (792) to the fight's numbers (812), both at THE GAP
-# (13_50_25, 13_48_52: 20 px)
-LANE_DOWN = 22
-LANE_LOWER = "".join(f'<Anchor side="{s}" relative="$parent" pos="{p}" offset="{LANE_DOWN}"/>'
-                     for s, p in (("Top", "Min"), ("Bottom", "Max")))
 PARTS["battlefield_of_eternity"] = {"BossDuelPanel/BossDuelLeftFrame": PHASE_ABOVE,
-                                    "BossDuelPanel/BossDuelRightFrame": PHASE_ABOVE,
-                                    "BossDuelPanel/BossLaningFrame": LANE_LOWER}
+                                    "BossDuelPanel/BossDuelRightFrame": PHASE_ABOVE}
+
+# Its three phases are three frames of BossDuelPanel, one shown at a time (libMLBD MMBOEUISetMode),
+# split up as Dragon Shire's (user, 2026-10-15): "Immortals spawning 0:27" (BossSpawnFrame) the
+# neutral banner on red's side; the fight stays above the minimap; the winner's Immortal pushing
+# (BossLaningFrame) in its place, on the winning team's side, mirrored on blue's (lane_side).
+# Measured at 1080p (13_48_24, 13_50_25; the frames' top-right at 1184.1, 622.8): the countdown's
+# tip 732, its lower bracket 773 (167 under the frame's top), the wings' top 689, its hexagon's
+# bottom 790, its sword's right 1175; the lane box's lower bracket 773 too (they take turns in
+# one place), its tip 737 - its bar the golems' 481 units, the portrait 8 in from its right end.
+SPAWN_BOX = (-502, 74, -10, 167)
+SPAWN_WORDS_START = 55     # Blizzard's: the bar 55 before its words
+SPAWN_HEX_AFTER = 180      # the incoming portrait's right from the count's (165 px from the count's
+                           # last glyph, 1028, to its box's right, 1193 - Blizzard's 10 past the frame's
+                           # - less the label's padding, as the shrine's)
+ALERT_ART["SPAWN"] = Art(SPAWN_BOX[2] - SPAWN_BOX[0], 0, height=114)   # the hexagons' bottom, 188 (790, 792)
+SPAWN_BANNER = (left_banner("Spawn", "InfoLabel", "TimerLabel", "BossLaningHudAngelImage",
+                            SPAWN_WORDS_START, SPAWN_HEX_AFTER)
+                + unclipped((("Image", "BossLaningHudDemonImage", ()),)))   # on the angel, as Blizzard's
+
+BOE = MECHANICS + "/BossDuelPanel"
+LANE = BOE + "/BossLaningFrame"
+LANE_SPOTS = (f"{BOE}/FCJH_BossSpawnFrameSpot", f"{BOE}/FCJH_BossLaningFrameSpot")
+LANE_DEMON_R = GOLEM_BAR - BAR_TIP_IN - 8    # the portrait's right out from the tip: 8 short of the bar's end
+# What the lane label says to an observer when it's BLUE's Immortal, preparing then attacking, in
+# every language the game ships (heroesdata gamestrings, lib_MLBD_2C3736B5 / 89ACF292): the text
+# is all that tells the teams apart (the curse's protocol, BLUE_CURSED)
+BLUE_IMMORTAL = (
+    "Blue Team Immortal Preparing", "Blue Team Immortal Is Attacking",
+    "Ilarian wappnet sich", "Ilarian greift an",
+    "Preparando inmortal: equipo azul", "El inmortal del equipo azul ataca",
+    "El Inmortal del equipo azul se está preparando", "El Inmortal del equipo azul está atacando",
+    "L’Immortel de l’équipe bleue se prépare", "L’Immortel de l’équipe bleue attaque",
+    "Immortale della squadra blu in preparazione", "L'immortale della squadra blu attacca",
+    "파랑팀 불멸자 준비 중", "파랑팀 불멸자 공격 중",
+    "Nieśmiertelny niebieskich przygotowuje się", "Nieśmiertelny niebieskich atakuje",
+    "O Imortal da Equipe Azul está se preparando", "O Imortal da Equipe Azul está atacando",
+    "Бессмертный синей команды готовится к бою", "Бессмертный синей команды атакует",
+    "蓝队不朽者正在准备中", "蓝队不朽者正在攻击",
+    "藍隊的不朽戰士正在準備", "藍隊的不朽戰士正在攻擊")
+# Blue's backings, flipped copies as the knight's (KNIGHT_COPIES): Blizzard's are held by their
+# left. The shield's is upside down too, as Blizzard's. And blue's portraits' boxes: invisible
+# copies of the portraits themselves (their own size, which nothing here knows), mirroring red's -
+# the demon's left where red's right is, the angel 4 short of the demon's other end (Blizzard's
+# angel 4 in from the demon's left, flipped). Blizzard's portraits are held by one side, and the
+# script fades them (the winner's in): they're moved onto these, not copied.
+LANE_COPIES = (
+    flipped_copy("FCJH_LaneShieldBG", "@UI/HUD_MapMechanic_BG_HealthBar",
+                 (("Bottom", "$parent/BackgroundImage", "Mid", 5), ("Right", "$parent/BackgroundImage", "Max", -13)),
+                 coords='<TextureCoords top="1.0" left="1.0" bottom="0.0" right="0.0"/>')
+    + flipped_copy("FCJH_LaneHealthBG", "@UI/HUD_MapMechanic_BG_HealthBar",
+                   (("Top", "$parent/BackgroundImage", "Mid", 5), ("Right", "$parent/BackgroundImage", "Max", -13)))
+    + flipped_copy("FCJH_LaneDemonBox", "@UI/hud_minimap_boe_portrait_demon_blue",
+                   (("Top", "$parent", "Min", 75), ("Left", LANE_SPOTS[1], "Max", -LANE_DEMON_R)))
+    + flipped_copy("FCJH_LaneAngelBox", "@UI/hud_minimap_boe_portrait_angel_blue",
+                   (("Top", "$parent", "Min", 75), ("Right", "$parent/FCJH_LaneDemonBox", "Max", -4))))
+LANE_PARTS = (("Image", "BackgroundImage", ()), ("Label", "BossLaningInfoLabel", ()),
+              ("Image", "ShieldBarBg", ()), ("Image", "HealthBarBg", ()),
+              ("UnitStatusFrame", "BossLaningShieldBar", (("UnitStatusShieldedHealthBar", "ShieldBar", ()),)),
+              ("UnitStatusFrame", "BossLaningHealthBar", (("UnitStatusShieldedHealthBar", "HealthBar", ()),)),
+              ("Image", "AllyDemonHud", ()), ("Image", "EnemyDemonHud", ()),
+              ("Image", "AllyAngelHud", ()), ("Image", "EnemyAngelHud", ()))
+
+
+def lane_layout(s):
+    """The winner's Immortal pushing, red's terms (team_banner): the bar its art's own width from
+    the tip, the portrait at its outer end, the words from the inner; the shield over the health,
+    both draining from the tip's end. Blue's health fill is cut to the mirrored lean, as the
+    knight's (KNIGHT_MASK); its shield's segments aren't."""
+    s.box("", SPAWN_BOX)
+    s.hold("/BackgroundImage", "Right", -BAR_TIP_IN, GOLEM_BAR - BAR_TIP_IN)
+    # the portraits: the Enemy ones hang off the Ally ones (Blizzard's)
+    if s.blue:
+        s.anchor("/AllyDemonHud", "Right", "/FCJH_LaneDemonBox", "Max", 0)
+        s.anchor("/AllyAngelHud", "Left", "/FCJH_LaneAngelBox", "Min", 0)
+    else:
+        s.anchor("/AllyDemonHud", "Right", s.spot, "Min", LANE_DEMON_R)
+        s.anchor("/AllyAngelHud", "Left", "/AllyDemonHud", "Min", 4)
+    for part in ("/AllyDemonHud", "/EnemyDemonHud"):
+        s.flip(part)
+    for part in ("/AllyAngelHud", "/EnemyAngelHud"):    # Blizzard's drawn flipped on red's
+        s.flip(part, faces="blue")
+    for part, team in (("/ShieldBarBg", "red"), ("/HealthBarBg", "red"),
+                       ("/FCJH_LaneShieldBG", "blue"), ("/FCJH_LaneHealthBG", "blue")):
+        s.show(part, team)
+    label = "/BossLaningInfoLabel"
+    s.hang(label, "Left", "/BackgroundImage", "Min", 25)
+    s.hang(label, "Right", "/AllyAngelHud", "Min", 0)
+    s.justify(label, SMALL, "inner")
+    # the shield: its frame from its backing to under the portrait, the bar 354 long from its left
+    sbg, shield = s.pick("/ShieldBarBg", "/FCJH_LaneShieldBG"), "/BossLaningShieldBar"
+    s.anchor(shield, "Top", sbg, "Min", 4)
+    s.hang(shield, "Left", sbg, "Min", 8)
+    s.hang(shield, "Right", "/AllyDemonHud", "Min", 43)
+    s.hang(shield + "/ShieldBar", "Left", shield, "Min", 0, width=354)
+    s.drain(shield + "/ShieldBar")
+    # the health: its frame from the bar's end to under the portrait, the fill 8 in from its
+    # backing's end to 8 past the frame's; blue's a lean further out at each end, masked
+    hbg, health = s.pick("/HealthBarBg", "/FCJH_LaneHealthBG"), "/BossLaningHealthBar"
+    s.hang(health, "Left", "/BackgroundImage", "Min", 0)
+    s.hang(health, "Right", "/AllyDemonHud", "Min", 58)
+    bar = health + "/HealthBar"
+    s.anchor(bar, "Top", hbg, "Min", 5)
+    s.hang(bar, "Left", hbg, "Min", s.pick(8, 8 - KNIGHT_LEAN))
+    s.hang(bar, "Right", health, "Max", s.pick(8, 8 + KNIGHT_LEAN))
+    s.set(bar, AlphaMaskTexture=s.pick(WHITE, KNIGHT_MASK_PATH))
+    s.drain(bar)
+
+
+def lane_side():
+    return team_banner("Lane", LANE, LANE_SPOTS,
+                       [f'<When type="Property" frame="{LANE}/BossLaningInfoLabel" Text="{t}"/>' for t in BLUE_IMMORTAL],
+                       lane_layout)
 
 PARTS["volskaya_foundry"] = {"VolskayaToastContainer/ToastNotification": TOAST,
                              "VolskayaCapturePointPanel/ContestedLabel:Label": CONTESTED,
@@ -1804,10 +1908,18 @@ MAPS = {
         # fight's tips 736 .. 1168, 13_48_52; the map itself centred, 774 .. 1145) - user,
         # 2026-10-15: "if its not centered, then center it"
         panels={"BossDuelPanel": (("Bottom", "Max", 0), ("Right", "Max", 9))}, place=("BossDuelPanel",),
-        # The countdown ("Immortals spawning") and the fight take turns in one place above the
-        # minimap, as Hanamura's. THE GAP: the fight's lowest part, its health numbers, 812 px
-        # over the map's top tip 825 (13_48_52, before the label moved above the bars)
-        above=(13, 0)),
+        # The fight above the minimap. THE GAP: its lowest part, its health numbers, 812 px over
+        # the map's top tip 825 (13_48_52, before its label moved above the bars)
+        above=(13, 0),
+        # "Immortals spawning": the neutral banner, on red's side; the winner's Immortal pushing
+        # in its place, on its team's side, mirrored on blue's (lane_side)
+        team={"BossDuelPanel": {
+            "blue": [Alert("BossLaningFrame", kind="SPAWN", box=SPAWN_BOX, spot_only=True,
+                           note="the winner's Immortal pushing, when it's blue's")],
+            "red": [Alert("BossSpawnFrame", kind="SPAWN", box=SPAWN_BOX,
+                          followers=(("BossLaningFrame", 0, unclipped(LANE_PARTS) + LANE_COPIES + lane_side()),),
+                          extra=SPAWN_BANNER,
+                          note="the Immortals' countdown (neutral), then the winner's Immortal pushing on red")]}}),
     "blackhearts_bay": Map(
         "Blackheart's Bay", (452, 313), core="BlackheartsBayPanel",
         # "Chests have spawned": the neutral banner, on red's side; Blackheart's cannon in its
@@ -2123,7 +2235,7 @@ NOT_BANNERS = ("GolemModeFrame",)
 # state's SetAnchor, and end="Pause" holds it (Haunted Mines' glide, 2026-10-09): the slide would
 # have pinned the curse to red's spot and Blizzard's bar layout after its first intro. The
 # tribute too: cursed_side moves it with the curse, whose raven's height hangs off the tribute's.
-FADE_ONLY = ("CurseFrame", "TributeSpawnFrame", "DragonModeFrame", "CannonModeFrame")
+FADE_ONLY = ("CurseFrame", "TributeSpawnFrame", "DragonModeFrame", "CannonModeFrame", "BossLaningFrame")
 
 
 def intro(indent, slide=True):
