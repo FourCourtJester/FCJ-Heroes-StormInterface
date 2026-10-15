@@ -683,7 +683,11 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    layer, the colour layer's stripes stayed red's slant); the timer over the % at the tip's end.
    The robot's outro looked wonky: it's Blizzard's own animation, the same in default (user,
    2026-10-15) - left alone. ca251c3, unseen: pilot and gunner out beside the robot (THE GAP).
-   120283f, unseen: the toast's bar out to its sentence (SetAnchor relative="$this" didn't take).
+   120283f, seen good: the toast's bar out to its sentence (SetAnchor relative="$this" didn't take).
+   44b79a7 centred English's toast (26 px right). 6ff536a, unseen: centred in every language -
+   the bar's right end hangs from the Mid of a hidden copy of the words shown, anchored by its
+   Left only (so it sits half their width out); check English hasn't moved and a longer
+   language (FR) is centred too. The user's last open Volskaya item.
    **Then the rest of the newer maps' QA
    (Battlefield, Shrines, Sky Temple). Any map could get a two-view or other per-map behaviour the same way
    (`launch_cut`/`opens`, `on_map`).
