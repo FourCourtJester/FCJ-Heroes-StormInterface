@@ -1866,7 +1866,9 @@ WEAVER_TOP_PX = 868 + WEAVER_BOTTOM_PX - 1060   # the minimap's drawn top tip (8
 WEAVER_MINIMAP_PX = (955, 158, 943, 1.05)   # Tomb's drawn minimap (6c52e5e): its middle, its side
                                       # lobes' reach either way, and its sides from that height down
                                       # going in this much per px
-WEAVER_STEP_PX = 40                   # each one this much further out than the one below (31a031d:
+WEAVER_OUT_PX = 10                    # then this much further out (user, 2026-10-15, 48d775e centred:
+                                      # "still slightly too close the minimap")
+WEAVER_STEP_PX = 40                  # each one this much further out than the one below (31a031d:
                                       # 40 per 81 up, the plates' slant; now per ~60 up, leaning more)
 WEAVER_LANES = ("Bottom", "Mid", "Top")   # from the stack's bottom up
 

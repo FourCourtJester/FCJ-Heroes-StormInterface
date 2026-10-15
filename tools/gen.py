@@ -553,7 +553,7 @@ def constants_layout(cfg):
         sign, edge = (1, row["red_left"]) if team == "red" else (-1, row["blue_right"])
         gaps = [(sign * (mid - edge) + reach - slope * max(0, y - corner)            # minimap side
                  + lean * (row["bottom"] - y)) / 2 for y in ys]                      # plates' edge
-        start = sum(g - i * maps.WEAVER_STEP_PX for i, g in enumerate(gaps)) / len(gaps)
+        start = sum(g - i * maps.WEAVER_STEP_PX for i, g in enumerate(gaps)) / len(gaps) + maps.WEAVER_OUT_PX
         for i, (lane, y) in enumerate(zip(maps.WEAVER_LANES, ys)):
             h, pad = maps.WEAVER_ART[lane]
             b = y + h / 2 + pad
