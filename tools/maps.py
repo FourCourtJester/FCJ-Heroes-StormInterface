@@ -1524,6 +1524,47 @@ TOAST_WORDS_START = 35
 TOAST_STYLE = "Storm_MapMechanic_MechanicTimerCentered_Blue"
 _TOAST_ROW = (("Top", "$parent/BackgroundImage", "Mid", 4), ("Bottom", "$parent/BackgroundImage", "Mid", 4))
 _TOAST_COUNT = "$parent/TimerLabel"
+# "Control Point Will Unlock", in every language the game ships (volskayamechanics gamestrings:
+# Param/Value/lib_VLSK_81009092, what the script shows, and UI/MapMechanic/Volskaya/
+# ControlPointWillUnlock, the layout's - French and Taiwanese differ) -> a sentence to go before the count, as the
+# tribute's (TRIBUTE_SPAWNS_IN; user, 2026-10-15: "Control Point Will Unlock in: 00:xx"):
+# Blizzard's words for the point, worded as that language's "TEMPLE ACTIVATES IN:" (Sky Temple,
+# lib_MLCP_6037C0FB) and "MINES WILL OPEN IN:" (UI/MapMechanics/MinesOpen) are, colon or not.
+VOLSKAYA_UNLOCKS_IN = {
+    "Control Point Will Unlock": "Control Point Will Unlock In:",
+    "Kontrollpunkt wird verfügbar": "Kontrollpunkt verfügbar in",
+    "Punto de control activándose": "Punto de control activo en:",
+    "El punto de control se activará": "El punto de control se activará en:",
+    "Déblocage du point de contrôle": "Déblocage du point de contrôle dans :",
+    "Le point de contrôle va bientôt être débloqué": "Point de contrôle débloqué dans :",
+    "Attivazione punto di conquista": "Punto di conquista attivo fra:",
+    "거점 해제": "거점 해제:",
+    "Odblokowanie punktu": "Punkt odblokuje się za:",
+    "Ponto de Controle ativará em": "Ponto de Controle ativará em:",
+    "Объект активируется": "Объект активируется через",
+    "控制点将会解锁": "控制点解锁还剩：",
+    "平台即將解鎖": "平台即將解鎖：",
+    "控制平台即將解鎖": "控制平台即將解鎖：",
+}
+
+
+def toast_sentence():
+    """FCJH_VolskayaSentence's states: shown, Blizzard's words (ours, copied) hidden and the bar
+    from the sentence, while the count shows and the words are a language's listed; else hidden."""
+    alpha = lambda frame, a: f'<Action type="SetProperty" frame="{frame}" Alpha="{a}"/>'
+    bar = lambda frame: (f'<Action type="SetAnchor" frame="$parent/BackgroundImage" side="Left" '
+                         f'relative="{frame}" pos="Min" offset="{-TOAST_WORDS_START}"/>')
+    words = "$parent/FCJH_VolskayaText"
+    return ('\t<StateGroup name="FCJH_Sentence">\n\t\t<DefaultState val="Words"/>\n'
+            + "".join(f'\t\t<State name="In{i}"><When type="Property" frame="{_TOAST_COUNT}" Visible="true"/>'
+                      f'<When type="Property" frame="$parent/InfoLabel" Text="{theirs}"/>'
+                      f'<Action type="SetProperty" frame="$this" Text="{ours}"/>'
+                      + alpha("$this", 255) + alpha(words, 0) + bar("$this") + '</State>\n'
+                      for i, (theirs, ours) in enumerate(VOLSKAYA_UNLOCKS_IN.items()))
+            + '\t\t<State name="Words">' + alpha("$this", 0) + alpha(words, 255) + bar(words) + '</State>\n'
+            '\t</StateGroup>\n')
+
+
 TOAST = "".join((
     banner_label("FCJH_VolskayaText", _TOAST_ROW + (("Right", "$parent/FCJH_VolskayaSlot", "Min", -COUNT_SPACE),),
                  "{$parent/InfoLabel/@Text}", TOAST_STYLE),
@@ -1542,6 +1583,10 @@ TOAST = "".join((
                  '<Action type="SetAnchor" frame="$parent/FCJH_VolskayaText" side="Right" '
                  f'relative="$parent/FCJH_VolskayaSlot" pos="Min" offset="{-COUNT_SPACE}"/></State>\n'
                  '\t</StateGroup>\n'),
+    # while it counts, in a language listed: our sentence over the words (VOLSKAYA_UNLOCKS_IN),
+    # ending where they end, the bar's left end moved out to it
+    banner_label("FCJH_VolskayaSentence", _TOAST_ROW + (("Right", "$parent/FCJH_VolskayaText", "Max", 0),),
+                 "", TOAST_STYLE, '\t<Alpha val="0"/>\n' + toast_sentence()),
     '<Frame type="Image" name="BackgroundImage">\n'
     f'\t<Anchor side="Left" relative="$parent/FCJH_VolskayaText" pos="Min" offset="{-TOAST_WORDS_START}"/>\n'
     '</Frame>\n',
@@ -1576,7 +1621,39 @@ ROBOT_TIP_IN = 4           # its tip this far in from the image's inner end
 ROBOT_BAR_H = 49           # ...and its height, the lower bracket ROBOT_BRACKET over its bottom
 ROBOT_BRACKET = 3
 ROBOT_SEATS = 108          # the seats' boxes' top over the bracket (their rings' bottom ~2 over the plate)
+ROBOT_TIMER_MID = ROBOT_BRACKET - ROBOT_BAR_H - 14   # the timer's middle: its digits' bottom ~5 px over the bar
 ROBOT_BOX = (-447, 0, 0, 108)          # the robot's art's outer side, its top
+# Blue's fill: Blizzard's TextureCoordinateProgressBar slides only its mask (layer 0) - mirroring
+# its coords drained it from blue's tip, but the colour layer's stripes stayed red's slant against
+# blue's flipped plate (2026-10-15), and a state can't set one layer's coords. So blue's side has
+# its own: the same bar, its coords mirrored, its colour layer flipped and read from Blizzard's.
+_FILL = "$parent/$parent/$parent/RobotHealthBar/FillImageContainer/FillImage/TexturePathStore"
+ROBOT_BLUE_FILL = (
+    '<Frame type="TextureCoordinateProgressBar" name="FCJH_BlueHealthBar">\n'
+    '\t<Anchor relative="$parent/Background" offset="0"/>\n'
+    '\t<AcceptsMouse val="False"/>\n'
+    '\t<MinValue val="0"/>\n'
+    '\t<MaxValue val="{$parent/HealthValues/@MaxHealth}"/>\n'
+    '\t<Value val="{$parent/HealthValues/@Health}"/>\n'
+    '\t<NumSegments val="20"/>\n'
+    '\t<UseFillContainer val="false"/>\n'
+    '\t<MaxTextureCoords top="0" left="0.99" bottom="1" right="-0.01"/>\n'
+    '\t<MinTextureCoords top="0" left="0.08" bottom="1" right="-0.92"/>\n'
+    '\t<Unclipped val="true"/>\n'
+    '\t<Alpha val="0"/>\n'
+    '\t<Frame type="Frame" name="FillImageContainer">\n'
+    '\t\t<Anchor relative="$parent"/>\n'
+    '\t\t<Frame type="Image" name="FillImage">\n'
+    '\t\t\t<Anchor relative="$parent"/>\n'
+    '\t\t\t<RenderPriority val="800"/>\n'
+    '\t\t\t<LayerCount val="2"/>\n'
+    '\t\t\t<Texture val="Assets\\Textures\\storm_ui_hud_volskaya_mech_health_mask.dds" layer="0"/>\n'
+    '\t\t\t<AlphaLayer val="True" layer="0"/>\n'
+    f'\t\t\t<Texture val="{{{_FILL}/@Text}}" layer="1"/>\n'
+    '\t\t\t<TextureCoords top="0" left="1" bottom="1" right="0" layer="1"/>\n'
+    '\t\t</Frame>\n'
+    '\t</Frame>\n'
+    '</Frame>')
 ALERT_ART["ROBOT"] = Art(447, 0, height=121)   # down to the robot's bottom, 13 under the bracket
 ROBOT_SPOTS = (f"{VOLSKAYA}/FCJH_VolskayaRobotHealthSlideoutSpot", f"{VOLSKAYA}/FCJH_VolskayaRobotBlueSpot")
 
@@ -1598,11 +1675,9 @@ def robot_layout(s):
     s.hold(plate, "Left", 68 - ROBOT_TIP_IN, 68 - ROBOT_TIP_IN + 272)
     s.flip(plate)
     s.hold("/RobotStatusFrame/HealthLabel", "Left", 16 - ROBOT_TIP_IN, 16 - ROBOT_TIP_IN + 70)
-    # the fill, a TextureCoordinateProgressBar, slides its texture between two coords: Blizzard's
-    # drain from the tip on red; blue's mirrored (u -> the other end), its slant the plate's
-    s.set("/RobotStatusFrame/RobotHealthBar",
-          MaxTextureCoords=s.pick("0,-0.01,1,0.99", "0,0.99,1,-0.01"),
-          MinTextureCoords=s.pick("0,-0.92,1,0.08", "0,0.08,1,-0.92"))
+    # the fill: Blizzard's on red's side, blue's own copy on blue's (ROBOT_BLUE_FILL)
+    s.show("/RobotStatusFrame/FCJH_BlueHealthBar", "blue")
+    s.show("/RobotStatusFrame/RobotHealthBar", "red")
     # over the bar, out from the tip: the pilot, the gunner, the timer, then the robot. Each
     # seat's ring and border are separate images (the border Blizzard's template copy of the
     # ring, its anchors too); the pilot's top follows the gunner's (Blizzard's)
@@ -1611,12 +1686,13 @@ def robot_layout(s):
         s.hold(part, "Right", 186, 258)
     for part in ("/PilotEmptyIcon", "/PilotBorderIcon"):
         s.hold(part, "Right", 114, 186)
-    # the timer centred 293 out, between the gunner and the robot (Blizzard's zero-width label
-    # centred on the robot drew nothing here: given a width)
-    s.at("/RobotTimer", "Left", 293 - 45)
-    s.at("/RobotTimer", "Right", 293 + 45)
-    s.anchor("/RobotTimer", "Top", s.spot, "Max", -ROBOT_SEATS)
-    s.anchor("/RobotTimer", "Bottom", s.spot, "Max", 72 - ROBOT_SEATS)
+    # the timer over the % at the tip's end, just over the bar's top (user, 2026-10-15). Its
+    # style centres it; its digits ~16 px tall (Blizzard's zero-width label centred on the robot
+    # drew nothing here: given a width)
+    s.at("/RobotTimer", "Left", 16 - ROBOT_TIP_IN)
+    s.at("/RobotTimer", "Right", 16 - ROBOT_TIP_IN + 70)
+    s.anchor("/RobotTimer", "Top", s.spot, "Max", ROBOT_TIMER_MID - 20)
+    s.anchor("/RobotTimer", "Bottom", s.spot, "Max", ROBOT_TIMER_MID + 20)
 
 
 ROBOT_PARTS = (("Image", "BackgroundImage", ()), ("Image", "RobotIcon", ()),
@@ -1626,7 +1702,8 @@ ROBOT_PARTS = (("Image", "BackgroundImage", ()), ("Image", "RobotIcon", ()),
                    ("Image", "Background", ()),
                    ("TextureCoordinateProgressBar", "RobotHealthBar", (
                        ("Frame", "FillImageContainer", (("Image", "FillImage", ()),)),)),
-                   ("UnitStatusHealthLabel", "HealthLabel", (("Label", "StatusLabel", ()),)))),
+                   ("UnitStatusHealthLabel", "HealthLabel", (("Label", "StatusLabel", ()),))),
+                ROBOT_BLUE_FILL),
                ("Image", "GunnerEmptyIcon", ()), ("Image", "GunnerPlayerIcon", ()), ("Image", "GunnerBorderIcon", ()),
                ("Image", "PilotEmptyIcon", ()), ("Image", "PilotPlayerIcon", ()), ("Image", "PilotBorderIcon", ()))
 
