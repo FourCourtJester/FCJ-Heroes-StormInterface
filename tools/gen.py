@@ -276,8 +276,9 @@ def panel_nudges(cfg):
     table = dict(map_table(cfg, "panel_nudge"))
     gap = cfg["minimap"]["alert_gap"]
     for key, m in maps.MAPS.items():
-        for part, (over, at) in m.gap_parts.items():
-            table[key, part] = at + over - gap - table.get(key, 0)
+        for part, (over, at, *hung) in m.gap_parts.items():
+            # a part hung off the minimap doesn't ride on its panel's nudge
+            table[key, part] = at + over - gap - (0 if hung else table.get(key, 0))
         if m.above:
             over, at = m.above
             if table.get(key):

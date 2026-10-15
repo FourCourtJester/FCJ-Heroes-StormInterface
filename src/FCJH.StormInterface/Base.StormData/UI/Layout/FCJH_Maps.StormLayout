@@ -2178,6 +2178,162 @@
 				</State>
 			</StateGroup>
 		</Frame>
+		<!-- blue, the bottom slot: the robot's spot when it's blue's -->
+		<Frame type="Frame" name="FCJH_VolskayaRobotBlueSpot">
+			<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_ROBOT"/>
+			<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_BLUE_R_ROBOT"/>
+			<Unclipped val="true"/>
+			<Width val="447"/>
+			<Height val="108"/>
+			<AcceptsMouse val="false"/>
+			<StateGroup name="FCJH_Stack">
+				<DefaultState val="Bottom"/>
+				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_ROBOT"/></State>
+			</StateGroup>
+		</Frame>
+		<!-- red, the bottom slot: the robot's spot when it's red's (robot_frame) -->
+		<Frame type="Frame" name="FCJH_VolskayaRobotHealthSlideoutSpot">
+			<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_ROBOT"/>
+			<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_ROBOT"/>
+			<Unclipped val="true"/>
+			<Width val="447"/>
+			<Height val="108"/>
+			<AcceptsMouse val="false"/>
+			<StateGroup name="FCJH_Stack">
+				<DefaultState val="Bottom"/>
+				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_ROBOT"/></State>
+			</StateGroup>
+		</Frame>
+		<Frame type="Image" name="CenterHex">
+			<Anchor side="Bottom" relative="$parent/$parent/$parent/MinimapPanel/Minimap" pos="Min" offset="108"/>
+		</Frame>
+		<Frame type="Label" name="ContestedLabel">
+			<Anchor side="Top"    relative="$parent/CenterHex" pos="Mid" offset="-83"/>
+			<Anchor side="Bottom" relative="$parent/CenterHex" pos="Mid" offset="-33"/>
+			<StateGroup name="FCJH_Overtime">
+				<DefaultState val="Normal"/>
+				<State name="Overtime"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaOvertimePanel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+				<State name="Normal"><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+			</StateGroup>
+		</Frame>
+	</Frame>
+	<Frame type="Frame" name="VolskayaToastContainer" file="VolskayaMapMechanic">
+		<Anchor side="Bottom" relative="$parent/$parent/MinimapPanel" pos="Min" offset="111"/>
+		<Frame type="Frame" name="ToastNotification">
+			<Frame type="Label" name="FCJH_VolskayaText">
+				<Anchor side="Top"    relative="$parent/BackgroundImage" pos="Mid" offset="4"/>
+				<Anchor side="Bottom" relative="$parent/BackgroundImage" pos="Mid" offset="4"/>
+				<Anchor side="Right"  relative="$parent/FCJH_VolskayaSlot" pos="Min" offset="1"/>
+				<Text val="{$parent/InfoLabel/@Text}"/>
+				<Style val="Storm_MapMechanic_MechanicTimerCentered_Blue"/>
+				<Options val="NoWrapping"/>
+				<Unclipped val="true"/>
+			</Frame>
+			<Frame type="Label" name="FCJH_VolskayaSlot">
+				<Anchor side="Top"    relative="$parent/BackgroundImage" pos="Mid" offset="4"/>
+				<Anchor side="Bottom" relative="$parent/BackgroundImage" pos="Mid" offset="4"/>
+				<Anchor side="Right"  relative="$parent/BackgroundImage" pos="Max" offset="-140"/>
+				<Text val="8:88"/>
+				<Style val="Storm_MapMechanic_MechanicTimerCentered_Blue"/>
+				<Options val="NoWrapping"/>
+				<Unclipped val="true"/>
+				<Alpha val="0"/>
+			</Frame>
+			<Frame type="Label" name="FCJH_VolskayaCount">
+				<Anchor side="Top"    relative="$parent/BackgroundImage" pos="Mid" offset="4"/>
+				<Anchor side="Bottom" relative="$parent/BackgroundImage" pos="Mid" offset="4"/>
+				<Anchor side="Right"  relative="$parent/FCJH_VolskayaSlot" pos="Max" offset="0"/>
+				<Text val="{$parent/TimerLabel/@Text}"/>
+				<Style val="Storm_MapMechanic_MechanicTimerCentered_Blue"/>
+				<Options val="NoWrapping"/>
+				<Unclipped val="true"/>
+				<StateGroup name="FCJH_Counting">
+					<DefaultState val="Counting"/>
+					<State name="Bare"><When type="Property" frame="$parent/TimerLabel" Visible="false"/><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SetAnchor" frame="$parent/FCJH_VolskayaText" side="Right" relative="$parent/BackgroundImage" pos="Max" offset="-140"/></State>
+					<State name="Counting"><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SetAnchor" frame="$parent/FCJH_VolskayaText" side="Right" relative="$parent/FCJH_VolskayaSlot" pos="Min" offset="1"/></State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Image" name="BackgroundImage">
+				<Anchor side="Left" relative="$parent/FCJH_VolskayaText" pos="Min" offset="-35"/>
+			</Frame>
+			<Frame type="Label" name="InfoLabel">
+				<Alpha val="0"/>
+			</Frame>
+			<Frame type="Label" name="TimerLabel">
+				<Alpha val="0"/>
+			</Frame>
+		</Frame>
+	</Frame>
+	<Frame type="Frame" name="VolskayaRobotHealthSlideout" file="VolskayaMapMechanic">
+		<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaCapturePointPanel/FCJH_VolskayaRobotHealthSlideoutSpot" pos="Min" offset="0"/>
+		<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaCapturePointPanel/FCJH_VolskayaRobotHealthSlideoutSpot" pos="Min" offset="0"/>
+		<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaCapturePointPanel/FCJH_VolskayaRobotHealthSlideoutSpot" pos="Max" offset="0"/>
+		<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaCapturePointPanel/FCJH_VolskayaRobotHealthSlideoutSpot" pos="Max" offset="0"/>
+		<Width val="447"/>
+		<Height val="108"/>
+		<Unclipped val="true"/>
+		<Frame type="Image" name="BackgroundImage">
+			<Unclipped val="true"/>
+		</Frame>
+		<Frame type="Image" name="RobotIcon">
+			<Unclipped val="true"/>
+		</Frame>
+		<Frame type="Image" name="DeathIcon1">
+			<Unclipped val="true"/>
+		</Frame>
+		<Frame type="Image" name="DeathIcon2">
+			<Unclipped val="true"/>
+		</Frame>
+		<Frame type="Image" name="DeathIcon3">
+			<Unclipped val="true"/>
+		</Frame>
+		<Frame type="Label" name="RobotTimer">
+			<Unclipped val="true"/>
+		</Frame>
+		<Frame type="UnitStatusFrame" name="RobotStatusFrame">
+			<Unclipped val="true"/>
+			<Frame type="Image" name="Background">
+				<Unclipped val="true"/>
+			</Frame>
+			<Frame type="TextureCoordinateProgressBar" name="RobotHealthBar">
+				<Unclipped val="true"/>
+				<Frame type="Frame" name="FillImageContainer">
+					<Unclipped val="true"/>
+					<Frame type="Image" name="FillImage">
+						<Unclipped val="true"/>
+					</Frame>
+				</Frame>
+			</Frame>
+			<Frame type="UnitStatusHealthLabel" name="HealthLabel">
+				<Unclipped val="true"/>
+				<Frame type="Label" name="StatusLabel">
+					<Unclipped val="true"/>
+				</Frame>
+			</Frame>
+		</Frame>
+		<Frame type="Image" name="GunnerEmptyIcon">
+			<Unclipped val="true"/>
+		</Frame>
+		<Frame type="Image" name="GunnerPlayerIcon">
+			<Unclipped val="true"/>
+		</Frame>
+		<Frame type="Image" name="GunnerBorderIcon">
+			<Unclipped val="true"/>
+		</Frame>
+		<Frame type="Image" name="PilotEmptyIcon">
+			<Unclipped val="true"/>
+		</Frame>
+		<Frame type="Image" name="PilotPlayerIcon">
+			<Unclipped val="true"/>
+		</Frame>
+		<Frame type="Image" name="PilotBorderIcon">
+			<Unclipped val="true"/>
+		</Frame>
+		<StateGroup name="FCJH_RobotSide">
+			<DefaultState val="Red"/>
+			<State name="Blue"><When type="StateGroup" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaRobotHealthSlideout/RobotStatusFrame/RobotColorizeFrame" RedBlue="Blue"/><Action type="SetAnchor" frame="$this/BackgroundImage" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaCapturePointPanel/FCJH_VolskayaRobotBlueSpot" pos="Max" offset="4"/><Action type="SetAnchor" frame="$this/BackgroundImage" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaCapturePointPanel/FCJH_VolskayaRobotBlueSpot" pos="Max" offset="-427"/><Action type="SetAnchor" frame="$this/BackgroundImage" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaCapturePointPanel/FCJH_VolskayaRobotBlueSpot" pos="Max" offset="-46"/><Action type="SetProperty" frame="$this/BackgroundImage" TextureCoords="0,1,1,0"/><Action type="SetAnchor" frame="$this/RobotIcon" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaCapturePointPanel/FCJH_VolskayaRobotBlueSpot" pos="Max" offset="-303"/><Action type="SetProperty" frame="$this/RobotIcon" TextureCoords="0,1,1,0"/><Action type="SetProperty" frame="$this/DeathIcon1" TextureCoords="0,1,1,0"/><Action type="SetProperty" frame="$this/DeathIcon2" TextureCoords="0,1,1,0"/><Action type="SetProperty" frame="$this/DeathIcon3" TextureCoords="0,1,1,0"/><Action type="SetAnchor" frame="$this/RobotStatusFrame/Background" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaCapturePointPanel/FCJH_VolskayaRobotBlueSpot" pos="Max" offset="-336"/><Action type="SetProperty" frame="$this/RobotStatusFrame/Background" TextureCoords="0,1,1,0"/><Action type="SetAnchor" frame="$this/RobotStatusFrame/HealthLabel" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaCapturePointPanel/FCJH_VolskayaRobotBlueSpot" pos="Max" offset="-82"/><Action type="SetAnchor" frame="$this/GunnerEmptyIcon" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaCapturePointPanel/FCJH_VolskayaRobotBlueSpot" pos="Max" offset="-108"/><Action type="SetAnchor" frame="$this/GunnerEmptyIcon" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaCapturePointPanel/FCJH_VolskayaRobotBlueSpot" pos="Max" offset="-186"/><Action type="SetAnchor" frame="$this/GunnerBorderIcon" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaCapturePointPanel/FCJH_VolskayaRobotBlueSpot" pos="Max" offset="-108"/><Action type="SetAnchor" frame="$this/GunnerBorderIcon" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaCapturePointPanel/FCJH_VolskayaRobotBlueSpot" pos="Max" offset="-186"/><Action type="SetAnchor" frame="$this/PilotEmptyIcon" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaCapturePointPanel/FCJH_VolskayaRobotBlueSpot" pos="Max" offset="-114"/><Action type="SetAnchor" frame="$this/PilotBorderIcon" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaCapturePointPanel/FCJH_VolskayaRobotBlueSpot" pos="Max" offset="-114"/><Action type="SetAnchor" frame="$this/RobotTimer" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaCapturePointPanel/FCJH_VolskayaRobotBlueSpot" pos="Max" offset="-293"/><Action type="SetAnchor" frame="$this/RobotTimer" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaCapturePointPanel/FCJH_VolskayaRobotBlueSpot" pos="Max" offset="-293"/><Action type="SetAnchor" frame="$this/RobotTimer" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaCapturePointPanel/FCJH_VolskayaRobotBlueSpot" pos="Max" offset="-108"/><Action type="SetAnchor" frame="$this/RobotTimer" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaCapturePointPanel/FCJH_VolskayaRobotBlueSpot" pos="Max" offset="-36"/></State>
+			<State name="Red"><Action type="SetAnchor" frame="$this/BackgroundImage" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaCapturePointPanel/FCJH_VolskayaRobotHealthSlideoutSpot" pos="Min" offset="-4"/><Action type="SetAnchor" frame="$this/BackgroundImage" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaCapturePointPanel/FCJH_VolskayaRobotHealthSlideoutSpot" pos="Min" offset="427"/><Action type="SetAnchor" frame="$this/BackgroundImage" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaCapturePointPanel/FCJH_VolskayaRobotHealthSlideoutSpot" pos="Max" offset="-46"/><Action type="SetProperty" frame="$this/BackgroundImage" TextureCoords="0,0,1,1"/><Action type="SetAnchor" frame="$this/RobotIcon" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaCapturePointPanel/FCJH_VolskayaRobotHealthSlideoutSpot" pos="Min" offset="467"/><Action type="SetProperty" frame="$this/RobotIcon" TextureCoords="0,0,1,1"/><Action type="SetProperty" frame="$this/DeathIcon1" TextureCoords="0,0,1,1"/><Action type="SetProperty" frame="$this/DeathIcon2" TextureCoords="0,0,1,1"/><Action type="SetProperty" frame="$this/DeathIcon3" TextureCoords="0,0,1,1"/><Action type="SetAnchor" frame="$this/RobotStatusFrame/Background" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaCapturePointPanel/FCJH_VolskayaRobotHealthSlideoutSpot" pos="Min" offset="64"/><Action type="SetProperty" frame="$this/RobotStatusFrame/Background" TextureCoords="0,0,1,1"/><Action type="SetAnchor" frame="$this/RobotStatusFrame/HealthLabel" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaCapturePointPanel/FCJH_VolskayaRobotHealthSlideoutSpot" pos="Min" offset="12"/><Action type="SetAnchor" frame="$this/GunnerEmptyIcon" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaCapturePointPanel/FCJH_VolskayaRobotHealthSlideoutSpot" pos="Max" offset="-108"/><Action type="SetAnchor" frame="$this/GunnerEmptyIcon" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaCapturePointPanel/FCJH_VolskayaRobotHealthSlideoutSpot" pos="Min" offset="258"/><Action type="SetAnchor" frame="$this/GunnerBorderIcon" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaCapturePointPanel/FCJH_VolskayaRobotHealthSlideoutSpot" pos="Max" offset="-108"/><Action type="SetAnchor" frame="$this/GunnerBorderIcon" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaCapturePointPanel/FCJH_VolskayaRobotHealthSlideoutSpot" pos="Min" offset="258"/><Action type="SetAnchor" frame="$this/PilotEmptyIcon" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaCapturePointPanel/FCJH_VolskayaRobotHealthSlideoutSpot" pos="Min" offset="186"/><Action type="SetAnchor" frame="$this/PilotBorderIcon" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaCapturePointPanel/FCJH_VolskayaRobotHealthSlideoutSpot" pos="Min" offset="186"/><Action type="SetAnchor" frame="$this/RobotTimer" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaCapturePointPanel/FCJH_VolskayaRobotHealthSlideoutSpot" pos="Min" offset="293"/><Action type="SetAnchor" frame="$this/RobotTimer" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaCapturePointPanel/FCJH_VolskayaRobotHealthSlideoutSpot" pos="Min" offset="293"/><Action type="SetAnchor" frame="$this/RobotTimer" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaCapturePointPanel/FCJH_VolskayaRobotHealthSlideoutSpot" pos="Max" offset="-108"/><Action type="SetAnchor" frame="$this/RobotTimer" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/VolskayaCapturePointPanel/FCJH_VolskayaRobotHealthSlideoutSpot" pos="Max" offset="-36"/></State>
+		</StateGroup>
 	</Frame>
 	<!-- ===== Warhead Junction: its panel is placed from the minimap already ===== -->
 	<Frame type="Frame" name="SC2Panel" file="SCMap2">

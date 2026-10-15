@@ -144,7 +144,9 @@ class Map:
     gap_parts: dict = field(default_factory=dict)  # {part: (px, at)}: as `above`, but only that part
                                       # (anchored all round to its panel) goes to the gap, its
                                       # panel kept to its [minimap.panel_nudge]; `at`, px, is the
-                                      # panel's nudge plus the part's own move when measured
+                                      # panel's nudge plus the part's own move when measured.
+                                      # (px, at, (relative, pos, offset)): a part hung by its
+                                      # Bottom off the minimap (Blizzard's anchor), not its panel
     across: int = 0                   # px right: its map's art is drawn off its square's centre
                                       # (measured at 1080p); its minimap goes this far right to
                                       # put the art on centre, its panels taken back (on_minimap)
@@ -1508,6 +1510,132 @@ PARTS["hanamura_temple"] = {"HanamuraReworkActivePaylaodStatusPanel/HanamuraPayl
     for sd, off in (("Top", -38), ("Bottom", -2)))}
 
 
+# ------------------------------------------------------------------ Volskaya Foundry
+
+MINIMAP_SQUARE = "$parent/$parent/$parent/MinimapPanel/Minimap"   # as Blizzard's anchors name it
+VOLSKAYA = MECHANICS + "/VolskayaCapturePointPanel"
+# "Control point will unlock" (VolskayaToastContainer, the map's own toast): in our banners' font
+# (Blizzard's banner words, MechanicTimerCentered_Blue; user, 2026-10-15: "standardize the font
+# with the others"), its countdown in the bar after the words as Cursed Hollow's (Blizzard hangs
+# it under the hexagon). Blizzard's bar is sized to its words, the hexagon at its right end: ours
+# keeps that, the words ending one space before the count's slot where Blizzard's ended, the bar
+# starting the standard 35 before them. Blizzard's labels hidden, ours bound to them.
+TOAST_WORDS_START = 35
+TOAST_STYLE = "Storm_MapMechanic_MechanicTimerCentered_Blue"
+_TOAST_ROW = (("Top", "$parent/BackgroundImage", "Mid", 4), ("Bottom", "$parent/BackgroundImage", "Mid", 4))
+_TOAST_COUNT = "$parent/TimerLabel"
+TOAST = "".join((
+    banner_label("FCJH_VolskayaText", _TOAST_ROW + (("Right", "$parent/FCJH_VolskayaSlot", "Min", -COUNT_SPACE),),
+                 "{$parent/InfoLabel/@Text}", TOAST_STYLE),
+    count_slot("FCJH_VolskayaSlot", _TOAST_ROW, ("Right", "$parent/BackgroundImage", "Max", -140), TOAST_STYLE),
+    # no countdown (Blizzard's hidden): the words end where Blizzard's did
+    banner_label("FCJH_VolskayaCount", _TOAST_ROW + (("Right", "$parent/FCJH_VolskayaSlot", "Max", 0),),
+                 f"{{{_TOAST_COUNT}/@Text}}", TOAST_STYLE,
+                 '\t<StateGroup name="FCJH_Counting">\n\t\t<DefaultState val="Counting"/>\n'
+                 f'\t\t<State name="Bare"><When type="Property" frame="{_TOAST_COUNT}" Visible="false"/>'
+                 '<Action type="SetProperty" frame="$this" Alpha="0"/>'
+                 '<Action type="SetAnchor" frame="$parent/FCJH_VolskayaText" side="Right" '
+                 'relative="$parent/BackgroundImage" pos="Max" offset="-140"/></State>\n'
+                 '\t\t<State name="Counting"><Action type="SetProperty" frame="$this" Alpha="255"/>'
+                 '<Action type="SetAnchor" frame="$parent/FCJH_VolskayaText" side="Right" '
+                 f'relative="$parent/FCJH_VolskayaSlot" pos="Min" offset="{-COUNT_SPACE}"/></State>\n'
+                 '\t</StateGroup>\n'),
+    '<Frame type="Image" name="BackgroundImage">\n'
+    f'\t<Anchor side="Left" relative="$parent/FCJH_VolskayaText" pos="Min" offset="{-TOAST_WORDS_START}"/>\n'
+    '</Frame>\n',
+    '<Frame type="Label" name="InfoLabel">\n\t<Alpha val="0"/>\n</Frame>\n',
+    '<Frame type="Label" name="TimerLabel">\n\t<Alpha val="0"/>\n</Frame>\n'))
+
+# The capture point (user, 2026-10-15): "CONTESTED" above the hexagon, as Hanamura's, and gone
+# in overtime - the overtime banner says it ("that's the definition of overtime"), above the hex.
+CONTESTED = (
+    '<Anchor side="Top"    relative="$parent/CenterHex" pos="Mid" offset="-83"/>\n'
+    '<Anchor side="Bottom" relative="$parent/CenterHex" pos="Mid" offset="-33"/>\n'
+    '<StateGroup name="FCJH_Overtime">\n\t<DefaultState val="Normal"/>\n'
+    f'\t<State name="Overtime"><When type="Property" frame="{MECHANICS}/VolskayaOvertimePanel" Visible="true"/>'
+    '<Action type="SetProperty" frame="$this" Alpha="0"/></State>\n'
+    '\t<State name="Normal"><Action type="SetProperty" frame="$this" Alpha="255"/></State>\n'
+    '</StateGroup>\n')
+
+# The Triglav Protector's health (VolskayaRobotHealthSlideout, its own frame: one, recoloured for
+# the team that holds it - TeamColoringTemplate's RedBlue): a team banner (team_banner), on the
+# owning team's side (user, 2026-10-15), its pilot, gunner and timer moved up over the bar.
+# Measured at 1080p (2026-10-15, Blizzard's place, the minimap panel's right at 1184): the bar's
+# image (storm_ui_hud_volskaya_objective_bg, as the toast's) 778-1166 x 675-719 - its tip 4 in, its
+# lower bracket 3 over its bottom; the robot's art 1075-1180 x 620-728, the seats' rings 48 px
+# inside their 72-unit boxes. Red's terms: x from the tip, y up from the lower bracket.
+ROBOT = MECHANICS + "/VolskayaRobotHealthSlideout"
+ROBOT_BAR = 431            # the bar's image across, units
+ROBOT_TIP_IN = 4           # its tip this far in from the image's inner end
+ROBOT_BAR_H = 49           # ...and its height, the lower bracket ROBOT_BRACKET over its bottom
+ROBOT_BRACKET = 3
+ROBOT_SEATS = 108          # the seats' boxes' top over the bracket (their rings' bottom ~2 over the plate)
+ROBOT_BOX = (-447, 0, 0, 108)          # the robot's art's outer side, its top
+ALERT_ART["ROBOT"] = Art(447, 0, height=121)   # down to the robot's bottom, 13 under the bracket
+ROBOT_SPOTS = (f"{VOLSKAYA}/FCJH_VolskayaRobotHealthSlideoutSpot", f"{VOLSKAYA}/FCJH_VolskayaRobotBlueSpot")
+
+
+def robot_layout(s):
+    """The robot's banner, red's terms (team_banner): x out from the bar's tip. Every part hangs
+    off the spot, not the frame - Blizzard's slide holds the frame's layout anchor (layout rule 28)."""
+    bar = "/BackgroundImage"
+    s.span(bar, -ROBOT_TIP_IN, ROBOT_BAR - ROBOT_TIP_IN)
+    s.anchor(bar, "Top", s.spot, "Max", ROBOT_BRACKET - ROBOT_BAR_H)
+    s.flip(bar)
+    # Blizzard's: the robot 40 past the bar's outer end, 164 across; the health plate 68 in, 272
+    # across; the % 16 in, 70 across
+    end = ROBOT_BAR - ROBOT_TIP_IN
+    s.hold("/RobotIcon", "Right", end + 40 - 164, end + 40)
+    for part in ("/RobotIcon", "/DeathIcon1", "/DeathIcon2", "/DeathIcon3"):
+        s.flip(part)
+    plate = "/RobotStatusFrame/Background"
+    s.hold(plate, "Left", 68 - ROBOT_TIP_IN, 68 - ROBOT_TIP_IN + 272)
+    s.flip(plate)
+    s.hold("/RobotStatusFrame/HealthLabel", "Left", 16 - ROBOT_TIP_IN, 16 - ROBOT_TIP_IN + 70)
+    # over the bar, out from the tip: the pilot, the gunner, the timer, then the robot. Each
+    # seat's ring and border are separate images (the border Blizzard's template copy of the
+    # ring, its anchors too); the pilot's top follows the gunner's (Blizzard's)
+    for part in ("/GunnerEmptyIcon", "/GunnerBorderIcon"):
+        s.anchor(part, "Top", s.spot, "Max", -ROBOT_SEATS)
+        s.hold(part, "Right", 186, 258)
+    for part in ("/PilotEmptyIcon", "/PilotBorderIcon"):
+        s.hold(part, "Right", 114, 186)
+    s.at("/RobotTimer", "Left", 293)
+    s.at("/RobotTimer", "Right", 293)
+    s.anchor("/RobotTimer", "Top", s.spot, "Max", -ROBOT_SEATS)
+    s.anchor("/RobotTimer", "Bottom", s.spot, "Max", 72 - ROBOT_SEATS)
+
+
+ROBOT_PARTS = (("Image", "BackgroundImage", ()), ("Image", "RobotIcon", ()),
+               ("Image", "DeathIcon1", ()), ("Image", "DeathIcon2", ()), ("Image", "DeathIcon3", ()),
+               ("Label", "RobotTimer", ()),
+               ("UnitStatusFrame", "RobotStatusFrame", (
+                   ("Image", "Background", ()),
+                   ("TextureCoordinateProgressBar", "RobotHealthBar", (
+                       ("Frame", "FillImageContainer", (("Image", "FillImage", ()),)),)),
+                   ("UnitStatusHealthLabel", "HealthLabel", (("Label", "StatusLabel", ()),)))),
+               ("Image", "GunnerEmptyIcon", ()), ("Image", "GunnerPlayerIcon", ()), ("Image", "GunnerBorderIcon", ()),
+               ("Image", "PilotEmptyIcon", ()), ("Image", "PilotPlayerIcon", ()), ("Image", "PilotBorderIcon", ()))
+
+
+def robot_frame():
+    """The robot's frame override: on red's spot to start (its team_banner moves the parts), the
+    box the art's. Blizzard's own slide and fade kept: its parts hang off the spots, not the frame."""
+    l, tp, r, b = ROBOT_BOX
+    return ("".join(f'<Anchor side="{sd}"{" " * (6 - len(sd))} relative="{ROBOT_SPOTS[0]}" pos="{pos}" offset="{off}"/>\n'
+                    for sd, pos, off in box_sides(ROBOT_BOX))
+            + f'<Width val="{r - l}"/>\n<Height val="{b - tp}"/>\n<Unclipped val="true"/>\n'
+            + unclipped(ROBOT_PARTS, 0)
+            + team_banner("Robot", "$this", ROBOT_SPOTS,
+                          f'<When type="StateGroup" frame="{ROBOT}/RobotStatusFrame/RobotColorizeFrame" RedBlue="Blue"/>',
+                          robot_layout, depth=0))
+
+
+PARTS["volskaya_foundry"] = {"VolskayaToastContainer/ToastNotification": TOAST,
+                             "VolskayaCapturePointPanel/ContestedLabel:Label": CONTESTED,
+                             "VolskayaRobotHealthSlideout": robot_frame()}
+
+
 # ------------------------------------------------------------------ the maps
 
 BOTTOM_RIGHT =(("Bottom", "Max", 0), ("Right", "Max", 0))     # pinned to the screen's corner
@@ -1691,6 +1819,17 @@ MAPS = {
     "volskaya_foundry": Map(
         "Volskaya Foundry", (452, 314), file="VolskayaMapMechanic",
         panels={"VolskayaCapturePointPanel": STRIP}, place=("VolskayaCapturePointPanel",),
+        # its two neutrals to the gap, each from Blizzard's own anchor to the minimap (they don't
+        # hang off their panels). On a1f60ca: the capture point's hexagon's bottom 40 px over the
+        # map's top tip (803); the toast's lowest part, its hexagon, 765
+        gap_parts={"VolskayaCapturePointPanel/CenterHex:Image": (40, 0, (MINIMAP_SQUARE, "Min", 75)),
+                   "VolskayaToastContainer": (38, 0, ("$parent/$parent/MinimapPanel", "Min", 80))},
+        # the robot (robot_frame, PARTS): a team banner on these spots
+        team={"VolskayaCapturePointPanel": {
+            "red": [Alert("VolskayaRobotHealthSlideout", kind="ROBOT", box=ROBOT_BOX, spot_only=True,
+                          note="the robot's spot when it's red's (robot_frame)")],
+            "blue": [Alert("VolskayaRobotBlue", kind="ROBOT", box=ROBOT_BOX, spot_only=True,
+                           note="the robot's spot when it's blue's")]}},
         notes="the capture point's hex is placed from the minimap; its strip clipped it"),
     "warhead_junction": Map(
         "Warhead Junction", (460, 390), file="SCMap2", minimap=(0, 0), place=("SC2Panel",),
@@ -1933,7 +2072,6 @@ WARHEAD_COUNTERS_OUT_PX = 50          # blue's icon 865-920 -> 815-870, red's 99
 WARHEAD_COUNTERS_UP_PX = 44           # the map's 22 down taken back, then 22 up: seen on 1b0dea6 at 20
                                       # up, the icons' bottom ~1062 and their team strips' (blue/red
                                       # lines under them, once off the screen) 1067 - 2 past the floor
-MINIMAP_SQUARE = "$parent/$parent/$parent/MinimapPanel/Minimap"   # as Blizzard's anchors name it
 
 
 def warhead_counters():
@@ -2073,8 +2211,13 @@ def map_file(key, at, down):
         root.at(path).body += anchor_lines(sides, m, len(path.split("/")) + 1, down.get(key, 0))
         if m.proxy and "/" not in path:
             root.at(path).body += proxy_lines(down.get(key, 0))
-    for part in m.gap_parts:
-        root.at(part).body += shift_lines(down[key, part], len(part.split("/")) + 1)
+    for part, (_, _, *hung) in m.gap_parts.items():
+        depth = len(part.split("/")) + 1
+        if hung:
+            rel, pos, off = hung[0]
+            root.at(part).body += f'{T * depth}<Anchor side="Bottom" relative="{rel}" pos="{pos}" offset="{off + down[key, part]}"/>\n'
+        else:
+            root.at(part).body += shift_lines(down[key, part], depth)
     for path, xml in PARTS.get(key, {}).items():
         root.at(path).body += "".join(T * (len(path.split("/")) + 1) + line + "\n" for line in xml.splitlines())
     if m.place:
