@@ -1550,7 +1550,9 @@ VOLSKAYA_UNLOCKS_IN = {
 
 def toast_sentence():
     """FCJH_VolskayaSentence's states: shown, Blizzard's words (ours, copied) hidden and the bar
-    from the sentence, while the count shows and the words are a language's listed; else hidden."""
+    from the sentence, while the count shows and the words are a language's listed; else hidden.
+    The bar's anchor names the sentence by path: relative="$this" left the bar where it was
+    (seen 2026-10-15, the sentence running over the bar's tip)."""
     alpha = lambda frame, a: f'<Action type="SetProperty" frame="{frame}" Alpha="{a}"/>'
     bar = lambda frame: (f'<Action type="SetAnchor" frame="$parent/BackgroundImage" side="Left" '
                          f'relative="{frame}" pos="Min" offset="{-TOAST_WORDS_START}"/>')
@@ -1559,7 +1561,7 @@ def toast_sentence():
             + "".join(f'\t\t<State name="In{i}"><When type="Property" frame="{_TOAST_COUNT}" Visible="true"/>'
                       f'<When type="Property" frame="$parent/InfoLabel" Text="{theirs}"/>'
                       f'<Action type="SetProperty" frame="$this" Text="{ours}"/>'
-                      + alpha("$this", 255) + alpha(words, 0) + bar("$this") + '</State>\n'
+                      + alpha("$this", 255) + alpha(words, 0) + bar("$parent/FCJH_VolskayaSentence") + '</State>\n'
                       for i, (theirs, ours) in enumerate(VOLSKAYA_UNLOCKS_IN.items()))
             + '\t\t<State name="Words">' + alpha("$this", 0) + alpha(words, 255) + bar(words) + '</State>\n'
             '\t</StateGroup>\n')
