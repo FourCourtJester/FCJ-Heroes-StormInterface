@@ -2003,9 +2003,11 @@ def punisher_side():
 # 1080p (22_00_38, 3227b64, Blizzard's place): the bar's tip 784, its other tip 1175, its top
 # 628, its lower bracket 668; the hexagon 1067-1164, its top ~606, its bottom 683 - so the
 # frame's top-right about 1182, 606. On red's side laid out from its left end (left_banner),
-# the words 35 in.
+# the words 35 in. The frame's top isn't the hexagon's visible top (the image's top is clear
+# above it): 69 units down put the bar's lower bracket at 956, against every banner's 930 (the
+# core bar's top 940, less 10) - 22_18_43, c7e5da1; so 26 px (29 units) further down.
 TEMPLE = MECHANICS + "/CapturePointsPanel/TimerModeFrame"
-TEMPLE_BOX = (-444, 0, -5, 69)
+TEMPLE_BOX = (-444, 0, -5, 98)
 TEMPLE_WORDS_START = 35
 TEMPLE_HEX_AFTER = 115     # the hexagon's right from the count's: 106 px from its last letter, as the mines'
 ALERT_ART["TEMPLE"] = Art(TEMPLE_BOX[2] - TEMPLE_BOX[0], 0, height=TEMPLE_BOX[3] - TEMPLE_BOX[1] + 17)   # down to the hexagon's bottom
