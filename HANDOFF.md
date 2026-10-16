@@ -490,13 +490,15 @@ from their plates (docs/blizzard-fixes.md).
    a touch big for its window, and the strip could grow further up the slant.
    **The polish phase - the user's first pass (2026-10-16; "there might be more"; not all at
    once).** Research done (2026-10-16): docs/polish-research.md - feasibility, approach, tests
-   and questions for each. **Test build ad48279 deployed (2026-10-16), not seen yet**, with
+   and questions for each. **Test build 1a3233a deployed (2026-10-16), not seen yet**, with
    defaults picked for the questions (docs/polish-research.md, "Tonight's test build", which
    has the checklist):
    - the skull, the respawn flash and glow;
    - the event squares (which cell gets the respawn events);
    - thumbnails of the party cell's three portraits (for the split plates);
-   - the chrome row frame (`[row_frame]`; the rows now sit 2 px higher, scale 1.5507).
+   - the chrome row frame (`[row_frame]`; the rows now sit 2 px higher, scale 1.5507), with
+     seams between plates and under the XP bar, and the core bar's own line (`[team_core]`);
+   - the on-fire squares (a second row), ammo segments, the talents pane's quest column.
 
    Diagnostics to remove once read: `respawn_diagnostics`, `split_portrait_diagnostics`.
    The intro waits for the user's OBS plan. The items as the user gave them:

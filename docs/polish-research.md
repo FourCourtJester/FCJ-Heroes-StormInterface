@@ -157,18 +157,19 @@ All of them are driven by events from the game to that hidden cell, so they woul
   - the Viking and Misha timers: `PET_TIMERS` and `pet_death_labels` / `pet_death_bindings`;
   - the textures: `slant_bars` and `top_backplate_texture`.
 
-## Tonight's test build (2026-10-16, stamp ad48279)
+## Tonight's test build (2026-10-16, stamp 1a3233a)
 
 **What I picked for your questions** (say if any is wrong):
 1. Skull: Blizzard's art and timings, with Ahli's handover to the number.
 2. Flash: the white text flash in the last 5 s, plus Blizzard's glow pulse over the plate.
-3. Frame: one chrome line round the plates and the XP bar together. The core bar is left out, and there are no lines between heroes. `[row_frame] width = 0` takes it away.
+3. Frame: one chrome line round the plates and the XP bar together, a 3 px seam on every slant between two plates and under the XP bar (`[row_frame] seam`), and the core bar's own 2 px line (`[team_core] frame_width`). `[row_frame] width = 0` takes the row frame away.
 4. Intro: not built. It still needs your OBS plan (hotkey, game start, or both).
-5. Extras: the hearthstone squares only. The glow, Auriel's revive and "on fire" come later, if the squares light.
-6. The test build is made and deployed.
+5. Extras: the hearthstone squares and the on-fire squares only. The glow, Auriel's revive and the fire itself come later, if the squares light.
+6. Also in: ammo segments (Tracer, Junkrat, Gazlowe) and the talents pane's default-quest column.
+7. The test build is made and deployed.
 
 **What to check in a replay:**
-- The stamp, top left, says ad48279.
+- The stamp, top left, says 1a3233a.
 - **The squares** above each plate light for 6 s when an event arrives. Left to right:
 
   | # | Colour | Event | Cell |
@@ -230,7 +231,7 @@ All of them are driven by events from the game to that hidden cell, so they woul
 
 ## Decisions from the question round (2026-10-16, before the test)
 
-Nothing here is built yet; it waits for tonight's diagnostics.
+Built for tonight: the seams, the core's own frame, the quest column and the ammo segments. The rest waits for tonight's diagnostics.
 
 - **The row frame:**
   - The nameplate row and its XP bar stay one piece.
