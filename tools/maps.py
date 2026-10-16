@@ -2598,8 +2598,13 @@ WARHEAD_COUNTERS_UP_PX = 44           # the map's 22 down taken back, then 22 up
 # red's mirrored (84 / 105). Ours: the icons 30 in (blue's art ~827-880 px) and 46 (red's ~1026-
 # 1079 - its art sits further in its image), the counts' inner edges ~915 / ~991 px, either side
 # of the map's stub (centre ~953). Blizzard's count styles kept: blue's right-justified, red's left.
-WARHEAD_ICON_IN = (30, 46)            # blue's icon Left from its strip's Min, red's Right from Max
-WARHEAD_COUNT_IN = (39, 37)           # blue's count Right from its strip's Max, red's Left from Min
+# Seen so (18f4cbb): icons ~828-880 / ~1028-1078, counts ~895-917 / ~992-1005, strips ~814-1103 -
+# too close to the map (user, 2026-10-16), so both moved out WARHEAD_MARKS_OUT_PX, the strips left
+# be: blue's icon to its strip's outer end (~813), red's ~10 in (~1093).
+WARHEAD_MARKS_OUT_PX = 15
+_out = round(WARHEAD_MARKS_OUT_PX / 0.9)
+WARHEAD_ICON_IN = (30 - _out, 46 - _out)    # blue's icon Left from its strip's Min, red's Right from Max
+WARHEAD_COUNT_IN = (39 + _out, 37 + _out)   # blue's count Right from its strip's Max, red's Left from Min
 
 
 def warhead_counters():
