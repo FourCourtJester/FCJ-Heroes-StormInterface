@@ -767,8 +767,7 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    id").** Every map's id was confirmed in game first, so `maps.diag` and `FCJH_DiagMapId`
    are gone. No diagnostics are left in the build.
 6. **Inspect card, intermittent (user, 2026-10-09):** on hero inspects only, now and then the
-   ability BORDERS keep showing after the card hides. Not pinned down yet: next time, a
-   screenshot of it. Lead (unconfirmed): the only border-like art that can show without a
+   ability BORDERS keep showing after the card hides. Caught 2026-10-16 (below). Lead (unconfirmed): the only border-like art that can show without a
    unit is ours, the empty-slot frames under Q W E R (`FCJH_EmptySlot*`,
    `inspect_card.command_panel`). They live in Blizzard's command card, not on the card, and a
    button with no unit is Cleared (alpha 0) but our frames aren't. So if the card hides while
@@ -781,6 +780,14 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    left edge, halfway down (`inspect_card.gate_diag`): green Hero, yellow Unit, red Hide. When
    the borders stay after the card hides, a screenshot with those squares in view says
    whether the gate missed it. Seen working (green on a hero card).
+   **Caught (user, 2026-10-16), not every time:** click Sonya's unit, inspect, click Johanna's
+   plate, deselect. The card went, the gate stayed GREEN, and Johanna's whole ability card
+   stayed where the card had been (not just the empty slots - that lead was wrong). Only the
+   gate hides the card, so the game hid our TargetInfoFrame itself while Blizzard's parked one
+   still read visible. **Fix in (untested):** the command card and the talent tips follow
+   OUR card (`inspect_card.card_watch`), not the gate; the gate only shows and shapes the
+   card. The watcher's state is a second row of squares under the gate's (green Hero, yellow
+   Unit, red Closed). Both rows come out once the stray card hasn't come back for a while.
    The resource tooltip (item 14) turned out to be a separate problem and is solved, so the
    "one problem, one swap signal" plan is dropped.
 7. **Parked:** blue's curse mirror (unseen).
