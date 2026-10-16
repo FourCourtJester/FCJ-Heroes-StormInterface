@@ -1892,7 +1892,7 @@ def lane_side():
 
 # "A shrine is activating" (ShrineWarningFrame), "Shrine active" (ShrineActiveFrame) and the
 # Punisher (PunisherFrame) take turns in one place over the minimap (shrines.stormlayout,
-# ShrinesPanel): the two shrine banners the neutral banner on red's side; the Punisher, one frame
+# ShrinesPanel): the countdown the neutral banner on red's side ("Shrine active" hidden, below); the Punisher, one frame
 # for either team, on the summoner's side, mirrored on blue's (punisher_side). Blizzard's: the
 # hexagon (TimerImage, ActiveImage) 20 down and 20 in from the frame's top-right, the bar a fixed-
 # width image ending 15 past it, the words centred in it and the count under the hexagon.
@@ -1915,13 +1915,12 @@ _NINESLICE = '<TextureType val="Nineslice"/>'
 WARNING_BANNER = left_banner("ShrineWarning", "ShrineWarningInfoLabel", "ShrineWarningTimerLabel", "TimerImage",
                              INFERNAL_WORDS_START, INFERNAL_HEX_AFTER, slot=INFERNAL_SLOT,
                              count_style="{$parent/ShrineWarningInfoLabel/@Style}", bar=_NINESLICE)
-# "Shrine active" has no count; Blizzard hangs its bar off the WARNING's hexagon (the two share a
-# place): ours off its own, as the warning's is
-ACTIVE_BANNER = left_banner("ShrineActive", "ShrineActiveInfoLabel", None, "ActiveImage",
-                            INFERNAL_WORDS_START, INFERNAL_HEX_AFTER,
-                            bar='<Anchor side="Bottom" relative="$parent/ActiveImage" pos="Max" offset="-33"/>\n'
-                                '<Anchor side="Right" relative="$parent/ActiveImage" pos="Max" offset="15"/>\n'
-                                + _NINESLICE)
+# "Shrine active" (ShrineActiveFrame) hidden (user, 2026-10-15: the objective markers say it; it
+# flickered on 61f1be5). Between the countdown and the skull race the script re-sets that mode
+# every 0.25 s (libmshe.galaxy MMISUIHandler: its lastState never updates there), showing the
+# panel again each time - the likely restart of the banner's intro. Alpha, not a park: its bar
+# hangs off the warning's hexagon, not its own frame.
+PARTS["infernal_shrines"] = {"ShrinesPanel/ShrineActiveFrame": '<Alpha val="0"/>\n'}
 # The Punisher (PunisherFrame): Blizzard's bar (481, fixed) ends 10 past ShrineHud, a frame 111 x
 # 124 at the frame's top-right, 20 in, the bar's bottom 33 over the hud's; the Punisher's portrait
 # 26 over the hud, 8 past its right; the health backing (a nine-slice) from 12 in to 18 under the
@@ -2150,17 +2149,16 @@ MAPS = {
     "infernal_shrines": Map(
         "Infernal Shrines", (458, 301), file="Shrines",
         panels={"ShrinesPanel": BOTTOM_RIGHT}, place=("ShrinesPanel",),
-        # "A shrine is activating", then "Shrine active": the neutral banner, on red's side; the
-        # Punisher in its place, on its summoner's side (punisher_side). The skull race stays on
-        # the panel: [minimap.panel_nudge] lifts it.
+        # "A shrine is activating": the neutral banner, on red's side ("Shrine active" hidden:
+        # PARTS); the Punisher in its place, on its summoner's side (punisher_side). The skull
+        # race stays on the panel: [minimap.panel_nudge] lifts it.
         team={"ShrinesPanel": {
             "blue": [Alert("PunisherFrame", kind="INFERNAL", box=INFERNAL_BOX, spot_only=True,
                            note="the Punisher, when it's blue's")],
             "red": [Alert("ShrineWarningFrame", kind="INFERNAL", box=INFERNAL_BOX,
-                          followers=(("ShrineActiveFrame", 0, ACTIVE_BANNER),
-                                     ("PunisherFrame", 0, unclipped(PUNISHER_PARTS) + PUNISHER_COPIES + punisher_side())),
+                          followers=(("PunisherFrame", 0, unclipped(PUNISHER_PARTS) + PUNISHER_COPIES + punisher_side()),),
                           extra=WARNING_BANNER,
-                          note="the shrine's countdown, then the shrine active (neutral), then the Punisher on red")]}}),
+                          note="the shrine's countdown (neutral), then the Punisher on red")]}}),
     "sky_temple": Map(
         "Sky Temple", (437, 344), file="CapturePoints",
         panels={"CapturePointsPanel": BOTTOM_RIGHT}, place=("CapturePointsPanel",)),
