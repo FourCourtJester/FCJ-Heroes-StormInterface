@@ -490,7 +490,16 @@ from their plates (docs/blizzard-fixes.md).
    a touch big for its window, and the strip could grow further up the slant.
    **The polish phase - the user's first pass (2026-10-16; "there might be more"; not all at
    once).** Research done (2026-10-16): docs/polish-research.md - feasibility, approach, tests
-   and questions for each; awaiting the user's answers:
+   and questions for each. **Test build ad48279 deployed (2026-10-16), not seen yet**, with
+   defaults picked for the questions (docs/polish-research.md, "Tonight's test build", which
+   has the checklist):
+   - the skull, the respawn flash and glow;
+   - the event squares (which cell gets the respawn events);
+   - thumbnails of the party cell's three portraits (for the split plates);
+   - the chrome row frame (`[row_frame]`; the rows now sit 2 px higher, scale 1.5507).
+
+   Diagnostics to remove once read: `respawn_diagnostics`, `split_portrait_diagnostics`.
+   The intro waits for the user's OBS plan. The items as the user gave them:
    - **The plates closer to the player's in-game top bar.** Played as a player, Blizzard's
      plates feel far more polished than the observer's; find out what we can copy (the
      player HUD's layouts in JamiePhan - their animations and StateGroups);

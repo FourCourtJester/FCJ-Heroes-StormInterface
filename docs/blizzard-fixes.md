@@ -56,6 +56,9 @@ detail.
   - the word-only static banners hidden;
   - every banner given an intro.
 - Tomb's Webweavers on the summoning team's side.
+- The player top bar's death and respawn animations on the plates: the skull, the respawn
+  flash and glow (test build, not seen yet).
+- A chrome frame round each team's row (test build, not seen yet).
 
 **Can't be fixed from a layout** - the last section: Towers' cannon alerts, the death recap,
 the talent picker under Ctrl, the command card for a hero's other unit, plate clicks for
@@ -311,6 +314,20 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
     has, the heroes' own included.
   - **Status:** replay, chat and names confirmed first, then inspect, rebuilt
     to park off screen. All four confirmed in game (user, 2026-10-16) - DONE.
+
+- **The player's death and respawn animations, on the observer plates** (test build ad48279,
+  2026-10-16; not seen yet). The player's top bar (`partyframe.stormlayout`,
+  `HeroDeathAnimFrameTemplate`) plays a skull when a hero dies. In the last 5 s of the timer it
+  flashes the number white and pulses a glow over the plate. The observer cells have none of it. Ours:
+  - Blizzard's skull art and timings, with Ahli's handover: the number fades in about 1 s after
+    the skull (`gen.death_skull`);
+  - Blizzard's flash keys between the red and pale timer styles, plus the glow pulse, on the
+    respawn events (`gen.style_flash`, `pet_death_bindings`). The Vikings' own timers flash too.
+  Which cell the game sends the respawn events to is still being tested (the event squares).
+- **A chrome frame round each team's row** (test build ad48279, 2026-10-16; not seen yet).
+  Blizzard's player view has a flat tray behind each row (`HUD_TopBar_Team_Backing_*`); the
+  observer view has nothing. Ours is one anti-aliased line round the plates and the XP bar, in
+  the top backplate's rim colours, cut for rows of 1-5 (`gen.row_frame_texture`, `[row_frame]`).
 
 ## Known, not fixed
 
