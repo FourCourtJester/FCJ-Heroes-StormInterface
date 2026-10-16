@@ -654,7 +654,9 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    seen (2026-10-16): both strips 1063-1065, on the floor. The warheads' banner (`TerrazineEruptionFrame`: the countdown, then how many are left)
    moved as Blizzard draws it to red's bottom slot - a neutral banner, no copied words (user);
    its box is the English countdown's, so the other text's tip lands off red's plates by its
-   length (1b0dea6; not screenshotted). Its other SC2Panel parts (NukeSiloFrame, TerrazineBuffFrame)
+   length (1b0dea6). Seen, both texts (2026-10-16): "WARHEADS DEPLOYED IN: 0:27" tip at x 1166,
+   "WARHEADS AVAILABLE: 3 LEFT" at 1171 - both just off red's plates (~1175) - its words ~15 px
+   clear of the hexagon, the bar over the XP bar (966) as the other bottom-slot banners. Its other SC2Panel parts (NukeSiloFrame, TerrazineBuffFrame)
    not seen on screen.
    **The minimap's tooltip - OFF, every map (user, 2026-10-15: "Just hide it or disable it";
    seen gone on 08eeb21).** Hovering a named minimap icon (a watch tower, a fort, Tomb's Spider
