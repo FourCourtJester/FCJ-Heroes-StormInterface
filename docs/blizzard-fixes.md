@@ -122,6 +122,16 @@ from then on are written with their fix.
   2026-10-16). So Ctrl+Shift+R, and an interface can't add or move entries in the game's hotkey
   menu that way either.
 
+### Replay controls: hiding the timeline drops the box's top
+- **Blizzard's:** the panel's art hangs off its timeline, so hiding the timeline (its chevron or
+  Ctrl+T) shrinks the box from its top. That suits a box at the bottom of the screen, but a
+  box in a top corner falls away from the edge. Blizzard's hide/show also always slides in
+  from the left.
+- **Ours:** the box sits top-right (user, 2026-10-16). `FCJH_TimelineLift` raises the panel 40
+  units (gen.py `REPLAY_TIMELINE`) while the timeline is hidden, and our own copy of
+  Blizzard's toggle slides it in from the right.
+- **Status:** to test (user, 2026-10-16).
+
 ## Made for observers
 
 Not bugs - things Blizzard's observer UI never offered, which the write-up may want.

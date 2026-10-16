@@ -49,6 +49,8 @@ MINIMAP_SQUARE = 438
 MINIMAP_PANEL_W = 468
 REPLAY_BUTTON = 55       # Blizzard's ReplayButtonTemplate, square (replaypanel.stormlayout)
 REPLAY_BUTTON_IN = 17    # PlayButton's and HideTimelineButton's inset from the panel art's sides
+REPLAY_TIMELINE = 40     # what hiding the timeline takes off the art's top: ProgressSlider's 30
+                         # and its 10 above Play (BackgroundImage's top hangs off the slider)
 # A kill row's portraits, from the row's left (killlog.stormlayout Item): killer from 27, one
 # victim ending at 210; each further victim adds a portrait to the right (TgtPortrait1-4 at
 # +43 +43 +41 +19), so a pentakill's fifth ends at 356. The kill feed is Blizzard's, in its
@@ -493,6 +495,10 @@ def constants_layout(cfg):
     lines.append("")
     const(name("replay", "button", "gap"), gap, "between the replay panel's bottom-row buttons")
     const(name("replay", "key"), cfg["element"]["replay"]["hotkey"], "hides/shows the replay panel")
+    # the art shrinks from its top when the timeline hides; the panel goes up as far, so its
+    # top stays in the corner (user, 2026-10-16)
+    const(name("replay", "lifted", "t"), anchor_edges(cfg, "replay")["t"] - REPLAY_TIMELINE,
+          "the replay panel's top while its timeline is hidden")
 
     mm = cfg["minimap"]
     left = round(u(mm["centre_x"]) - MINIMAP_SQUARE / 2) - anchor_origin(cfg, "minimap")[0]
