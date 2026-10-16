@@ -8,9 +8,9 @@
 	     Collapse: Blizzard's own toggle (ToggleControlObserverTools in
 	     stormobserverpanel.stormlayout) slides ReplayPanel out to the left and fades it, and
 	     back. We keep that and only move and narrow the panel - and give the toggle a key that
-	     works: Blizzard's Ctrl+Shift+O is the game's UI editor's Save All, so it never reached
-	     the interface (user, 2026-10-16). #FCJH_REPLAY_KEY, layout.toml element.replay hotkey -
-	     Ctrl+Shift+O again, with Save All moved off it by our GameHotkeys.txt ([blizzard_hotkeys]).
+	     works: Blizzard's Ctrl+Shift+O is the game's UI editor's Save All, so it never reaches
+	     the interface, and an interface's own GameHotkeys.txt can't move Save All off it (user,
+	     2026-10-16). #FCJH_REPLAY_KEY, layout.toml element.replay hotkey.
 	     The toggle starts off while the panel shows, so the first press only "showed" it (user,
 	     2026-10-16): FCJH_ReplaySeen switches it on when a replay first shows the panel, as
 	     Ahli 0.75 does.
@@ -69,7 +69,7 @@
 			<Frame type="Label" name="FCJH_TabLabel">
 				<Anchor relative="$parent"/>
 				<Style val="ObsBar_MatchTimer"/>
-				<Text val="REPLAY  Ctrl+Shift+O"/>
+				<Text val="REPLAY  Ctrl+Shift+R"/>
 				<Options val="NoWrapping | ScaleToPreventTruncation"/>
 				<Alpha val="0"/>
 				<AcceptsMouse val="false"/>

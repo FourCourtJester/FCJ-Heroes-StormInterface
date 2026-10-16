@@ -3031,18 +3031,7 @@ def committed_files(cfg, source=SOURCE):
                                             minimap_lifts(cfg)),
         LAYOUT_REL / INDEX_FILE: desc_index(layout_order(layout_dir, generated=GENERATED_LAYOUTS)),
     }
-    return {rel: text.encode("utf-8") for rel, text in texts.items()} | texture_files(cfg)         | hotkey_files(cfg, source)
-
-
-def hotkey_files(cfg, source=SOURCE):
-    """Blizzard's hotkeys we move ([blizzard_hotkeys]), one GameHotkeys.txt per language, beside
-    its GameStrings.txt. Plain key=value lines like core.stormmod's; no comments."""
-    keys = cfg.get("blizzard_hotkeys", {})
-    if not keys:
-        return {}
-    text = "".join(f"UI/Hotkey/{k}={v}\n" for k, v in keys.items())
-    return {p.relative_to(source) / "LocalizedData" / "GameHotkeys.txt": "\ufeff".encode("utf-8") + text.encode("utf-8")
-            for p in sorted(source.glob("*.StormData")) if p.name != "Base.StormData"}
+    return {rel: text.encode("utf-8") for rel, text in texts.items()} | texture_files(cfg)
 
 
 def stale(cfg, source=SOURCE, files=None):

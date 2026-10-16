@@ -209,17 +209,11 @@ flush = "right"              # its art's right edge on the row's
 art_inset = 6                # its glass art's outer line sits 6 px inside the frame on every side
                              # (measured in game, 2026-10-05)
 kind = "ui"
-hotkey = "Control+Shift+O"   # hides/shows it (Blizzard's toggle, and Blizzard's key - everyone
-                             # knows it; user, 2026-10-16). The game's UI editor's Save All takes it
-                             # first, so it never worked - nor Ahli's; [blizzard_hotkeys] moves Save
-                             # All off it. Ctrl+Shift+R worked (2026-10-16), the fallback if that
-                             # override doesn't load. The tab's label (FCJH_Replay) says it too.
-# Blizzard's own hotkeys we move, written to every language's GameHotkeys.txt (gen.py), in
-# Blizzard's names (core.stormmod gamehotkeys.txt, UI/Hotkey/<name>). TRIAL (2026-10-16): no
-# interface we know of ships one, so it may not load.
-[blizzard_hotkeys]
-UIEditorSaveAll = "Control+Alt+Shift+O"   # was Control+Shift+O, which element.replay's toggle wants
-
+hotkey = "Control+Shift+R"   # hides/shows it (Blizzard's toggle). Blizzard gave it Ctrl+Shift+O,
+                             # which the game's UI editor's Save All takes first (gamehotkeys.txt),
+                             # so it never worked - nor Ahli's (user, 2026-10-16). Moving Save All
+                             # off it with our own GameHotkeys.txt didn't load (2026-10-16), so
+                             # Ctrl+Shift+R. The tab's label (FCJH_Replay) says it too.
 [element.replay_collapsed]
 rect = [0, 0, 200, 24]       # hidden state: a slim tab at the panel's art's bottom-right corner
 above = "red_xp"

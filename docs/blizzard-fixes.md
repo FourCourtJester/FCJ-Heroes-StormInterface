@@ -116,10 +116,10 @@ from then on are written with their fix.
   switched on when a replay first shows the panel (as Ahli does, 030278d); a tab names the key
   while the panel is hidden.
 - **Status:** hides in one press and the tab shows (user, 2026-10-16).
-- **TRIAL, back on Ctrl+Shift+O** (everyone knows Blizzard's key; user, 2026-10-16): our own
-  GameHotkeys.txt in every language (layout.toml `[blizzard_hotkeys]`) moves Save All to
-  Ctrl+Alt+Shift+O. No interface we know of ships one, so it may not load; if Ctrl+Shift+O still
-  does nothing, Ctrl+Shift+R goes back.
+- **Blizzard's key can't be freed:** an interface's own GameHotkeys.txt (every language, moving
+  Save All to Ctrl+Alt+Shift+O) doesn't load - Ctrl+Shift+O still did nothing (d33a0ec, user,
+  2026-10-16). So Ctrl+Shift+R, and an interface can't add or move entries in the game's hotkey
+  menu that way either.
 
 ## Made for observers
 
