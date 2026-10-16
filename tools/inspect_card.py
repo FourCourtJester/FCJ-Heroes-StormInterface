@@ -682,12 +682,15 @@ def player_pack(n):
     shift = round(0.2 * (CROP[3] - CROP[1]), 3)
     swap = lambda wide: (f'<Action type="SetProperty" frame="$this/FCJH_PortraitWide" Alpha="{255 if wide else 0}"/>'
                          f'<Action type="SetProperty" frame="$this/FCJH_Portrait" Alpha="{0 if wide else 255}"/>')
-    portrait = (pic("FCJH_Portrait", CROP, 255)
+    # in one frame, as the matcher shows a pack's portrait and name apart for Abathur's clone
+    portrait = (f'{T*5}<Frame type="Frame" name="FCJH_PackPortrait">\n{T*5}<Anchor relative="$parent"/>\n'
+                f'{T*5}<AcceptsMouse val="false"/>\n'
+                + pic("FCJH_Portrait", CROP, 255)
                 + pic("FCJH_PortraitWide", (CROP[0], round(CROP[1] - shift, 3), CROP[2], round(CROP[3] - shift, 3)), 0)
                 + f'{T*5}<StateGroup name="FCJH_PortraitCrop">\n{T*6}<DefaultState val="Hero"/>\n'
                 + "".join(f'{T*6}<State name="{u}"><When type="Property" frame="{plate(n)}/HeroStatus" Unit="{u}"/>{swap(True)}</State>\n'
                           for u in WIDE_PORTRAITS)
-                + f'{T*6}<State name="Hero">{swap(False)}</State>\n{T*5}</StateGroup>\n')
+                + f'{T*6}<State name="Hero">{swap(False)}</State>\n{T*5}</StateGroup>\n{T*5}</Frame>\n')
     name = label("FCJH_PlayerName", NAME_BAND + NAME_DROP, M, NAME_BAND + NAME_H + NAME_DROP, W - M - 70, "FCJH_InspectSub",
                  f"{{{row}/PlayerNameFrame/PlayerNameLabel/@Text}}", 5)
     # (the card's edge in the team colour is the unit's now, every unit: unit_team)
@@ -728,7 +731,8 @@ ALSO += [pair for form, hero in FORMS.items() for pair in ((form, form), (form, 
 
 def matcher(n):
     """FCJH_IsPlayer{n}: shows pack n while the selected unit is the hero on plate n, and
-    raises flag FCJH_TipSel{n}, which brings player n's talent tooltips onto the card."""
+    raises flag FCJH_TipSel{n}, which brings player n's talent tooltips onto the card. Then
+    FCJH_CloneParts{n}: which of the pack's portrait and player's name show (Abathur's clone)."""
     flag = lambda on: f'<Action type="SetProperty" frame="$this/FCJH_TipSel{n}" Visible="{on}"/>'
     states = "".join(
         f'{T*5}<State name="{sel}{"" if sel == on else "_" + on}">'
@@ -744,18 +748,25 @@ def matcher(n):
     wrong = (f'{T*5}<State name="OtherTeam"><When type="Property" frame="$this/{TEAM_SENSE}" CurrentRelation="{other}"/>'
              f'<Action type="SetProperty" frame="$this/FCJH_Player{n}" Alpha="0"/>{flag("false")}</State>\n')
     # Abathur's clone (Ultimate Evolution, 2026-10-16) is a unit of the copied ally's type, so
-    # the hero check matched the ally's plate and the card showed the ally's player and talents.
-    # On a clone (CLONE_SENSOR) the pack is Abathur's, his plate unchanged meanwhile (gen.py's
-    # FCJH_CloneSensor); its talents stay off (the gate) and so do the talent tips.
+    # the hero check matches the ally's plate (which showed the ally's player and talents). On a
+    # clone (CLONE_SENSOR) Abathur's pack shows too (his plate unchanged meanwhile: gen.py's
+    # FCJH_CloneSensor), and the two show in part: Abathur's player's name, the ally's portrait
+    # (the clone wears the ally's skin: Ultimate Evolution's script; user, 2026-10-16). Neither
+    # pack's talents (the gate) nor the talent tips (card_watch).
     sensor = f'<When type="Property" frame="$this/{CLONE_SENSOR}" Visible="true"/>'
-    clone = (f'{T*5}<State name="CloneAbathur">{sensor}<When type="Property" frame="{plate(n)}/HeroStatus" Unit="HeroAbathur"/>'
-             f'<Action type="SetProperty" frame="$this/FCJH_Player{n}" Alpha="255"/>{flag("false")}</State>\n'
-             f'{T*5}<State name="Clone">{sensor}'
-             f'<Action type="SetProperty" frame="$this/FCJH_Player{n}" Alpha="0"/>{flag("false")}</State>\n')
+    abathur = f'<When type="Property" frame="{plate(n)}/HeroStatus" Unit="HeroAbathur"/>'
+    clone = (f'{T*5}<State name="CloneAbathur">{sensor}{abathur}'
+             f'<Action type="SetProperty" frame="$this/FCJH_Player{n}" Alpha="255"/>{flag("false")}</State>\n')
+    parts = lambda pic, name: (f'<Action type="SetProperty" frame="$this/FCJH_Player{n}/FCJH_PackPortrait" Alpha="{pic}"/>'
+                               f'<Action type="SetProperty" frame="$this/FCJH_Player{n}/FCJH_PlayerName" Alpha="{name}"/>')
     return (f'{T*4}<StateGroup name="FCJH_IsPlayer{n}">\n{T*5}<DefaultState val="No"/>\n{wrong}{clone}{states}'
             f'{T*5}<State name="No"><Action type="SetProperty" frame="$this/FCJH_Player{n}" Alpha="0"/>{flag("false")}</State>\n'
+            f'{T*4}</StateGroup>\n'
+            f'{T*4}<StateGroup name="FCJH_CloneParts{n}">\n{T*5}<DefaultState val="Whole"/>\n'
+            f'{T*5}<State name="CloneAbathur">{sensor}{abathur}{parts(0, 255)}</State>\n'
+            f'{T*5}<State name="CloneOf">{sensor}{parts(255, 0)}</State>\n'
+            f'{T*5}<State name="Whole">{parts(255, 255)}</State>\n'
             f'{T*4}</StateGroup>\n')
-
 
 TIPS = "$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips"
 TIP_ROW = TIPS + "/FCJH_TalentTipPanel/TalentOverview/HeroTalentsPanelContainer/PlayerFrame{n}"
@@ -907,7 +918,12 @@ def card_watch():
     return (f'{T*2}<Frame type="Frame" name="FCJH_CardWatch">\n'
             f'{T*3}<Anchor relative="$parent"/>\n{T*3}<AcceptsMouse val="false"/>\n'
             f'{T*3}<StateGroup name="FCJH_CardShown">\n{T*4}<DefaultState val="Closed"/>\n'
-            f'{T*4}<State name="Hero">\n' + open_
+            # Abathur's clone has no talents: no tips (matcher)
+            f'{T*4}<State name="Clone">\n' + open_
+            + f'{T*5}<When type="Property" frame="{UNIT}/{IS_HERO}" Visible="true"/>\n'
+            + f'{T*5}<When type="Property" frame="{UNIT}/{CLONE_SENSOR}" Visible="true"/>\n'
+            + tips("false") + command_anchors(True, 5) + f'{T*4}</State>\n'
+            + f'{T*4}<State name="Hero">\n' + open_
             + f'{T*5}<When type="Property" frame="{UNIT}/{IS_HERO}" Visible="true"/>\n'
             + tips("true") + command_anchors(True, 5) + f'{T*4}</State>\n'
             f'{T*4}<State name="Unit">\n' + open_
