@@ -131,7 +131,8 @@ from then on are written with their fix.
   2026-10-16). `FCJH_TimelineLift`
   raises the panel 40 units (gen.py `REPLAY_TIMELINE`) while the timeline is hidden, and our own
   copy of Blizzard's toggle slides it in from the right.
-- **Status:** the slide from the right confirmed in game (user, 2026-10-16); the lift to test.
+- **Status:** confirmed in game (user, 2026-10-16): the slide from the right, the box's top
+  staying put with the timeline hidden, and the tab flush in the corner.
 
 ## Made for observers
 

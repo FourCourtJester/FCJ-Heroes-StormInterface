@@ -70,10 +70,11 @@ drawn by OBS over empty regions the interface leaves (§6).
   each map's objective panel round it and a team's alerts stacked on its side (§7 item 8;
   Towers of Doom passed QA on the per-map system 2026-10-06, the rest a first pass; since
   2026-10-09 every map can be told apart from load by Blizzard's map id - §7 "Next"). **Replay controls**
-  in the top-right corner (red's row until 2026-10-16), 231 px with its four buttons evenly
-  spaced; Ctrl+Shift+R hides them (Blizzard's Ctrl+Shift+O is taken by the game), leaving a
-  tab (replays only) - seen working 2026-10-16. Its timeline (the chevron, or Ctrl+T) can't be
-  made to start hidden. Blizzard's player HUD never shows; its
+  in the top-right corner, [screen] padding in (red's row until 2026-10-16), 231 px with its
+  four buttons evenly spaced; Ctrl+Shift+R slides them out to the right (Blizzard's
+  Ctrl+Shift+O is taken by the game), leaving a tab flush in the corner (replays only). Hiding
+  the timeline (the chevron, or Ctrl+T) keeps the box's top in place; it can't be made to
+  start hidden. All confirmed in game 2026-10-16 - DONE. Blizzard's player HUD never shows; its
   talent picker is left to the game: held Ctrl shows it, steady, only in a player's view
   (1-8 keys), not when following from a plate click - as in Ahli's and Spazzo's UIs (§3;
   confirmed 2026-10-06).
@@ -891,8 +892,9 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
      inside Blizzard's observer panel came out twice their height and 40 px high. Anchor to
      the screen or a sibling, never to one of our frames in another branch (memory rule 22);
    - **left edge**: the info panes, [screen] padding in (user: they line up with the card at
-     1080p); **top right**: the replay box and its tab (since 2026-10-16; the right edge's middle,
-     then red's row, before); top left: the dev stamp.
+     1080p); **top right**: the replay box, [screen] padding in, and its tab flush in the corner
+     (since 2026-10-16, confirmed; the right edge's middle, then red's row, before); top left:
+     the dev stamp.
    At 16:9 nothing moved (gen's `check_anchoring`, and every anchor in the XML resolved before
    and after: none off by a unit). Wider, the centred pieces stay together round the middle,
    the panes and replay box keep to their edges. Narrower than 16:9 isn't supported (the rows
