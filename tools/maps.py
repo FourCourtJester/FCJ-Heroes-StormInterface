@@ -2214,7 +2214,8 @@ MAPS = {
         place=("HanamuraReworkPayloadWarningTimerPanel", "HanamuraReworkActivePaylaodStatusPanel",
                "HanamuraReworkVictoryShotsStatusPanel"),
         # THE GAP: the payload status's hexagon - estimated from the template (its image's bottom
-        # 57 units under the minimap's top) and the map's tip at 852 px; measure it in game
+        # 57 units under the minimap's top) and the map's tip at 852 px; measured in game off the
+        # countdown's hexagon (2026-10-16): ~9 px at 1080p, on the gap within JPEG and scaling
         above=(35, 0), proxy=True,
         # No alerts on the teams' sides (user, 2026-10-14): the countdown ("Payload spawns in"),
         # the payload's push status and the shots ("Attacking the core", one frame per team)
