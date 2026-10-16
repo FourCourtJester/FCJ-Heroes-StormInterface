@@ -1963,6 +1963,100 @@
 				</State>
 			</StateGroup>
 		</Frame>
+		<!-- red, the bottom slot: the temples' countdown (neutral) -->
+		<Frame type="Frame" name="FCJH_TimerModeFrameSpot">
+			<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_TEMPLE"/>
+			<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_TEMPLE"/>
+			<Unclipped val="true"/>
+			<Width val="439"/>
+			<Height val="69"/>
+			<AcceptsMouse val="false"/>
+			<StateGroup name="FCJH_Stack">
+				<DefaultState val="Bottom"/>
+				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_TEMPLE"/></State>
+			</StateGroup>
+		</Frame>
+		<Frame type="Frame" name="TimerModeFrame">
+			<Anchor side="Top"    relative="$parent/FCJH_TimerModeFrameSpot" pos="Min" offset="0"/>
+			<Anchor side="Left"   relative="$parent/FCJH_TimerModeFrameSpot" pos="Min" offset="0"/>
+			<Anchor side="Bottom" relative="$parent/FCJH_TimerModeFrameSpot" pos="Max" offset="0"/>
+			<Anchor side="Right"  relative="$parent/FCJH_TimerModeFrameSpot" pos="Max" offset="5"/>
+			<Unclipped val="true"/>
+			<Animation name="FCJH_Intro">
+				<Event event="OnShown" action="Restart,Play"/>
+				<Event event="OnShown" action="Restart,Play" frame="$parent"/>
+				<Controller type="Fade" end="Pause">
+					<Key type="Curve" time="0" value="0"/>
+					<Key type="Curve" time=".2" value="255"/>
+					<Key type="Curve" time=".4" value="255"/>
+				</Controller>
+				<Controller type="Anchor" end="Pause" side="Left" relative="true">
+					<Key type="Curve" time="0" value="50"/>
+					<Key type="Curve" time=".1" value="0"/>
+					<Key type="Curve" time=".4" value="0"/>
+				</Controller>
+				<Controller type="Anchor" end="Pause" side="Right" relative="true">
+					<Key type="Curve" time="0" value="50"/>
+					<Key type="Curve" time=".1" value="0"/>
+					<Key type="Curve" time=".4" value="0"/>
+				</Controller>
+				<Controller type="Anchor" end="Pause" side="Left" relative="true" frame="BackgroundImage">
+					<Key type="Curve" time="0" value="350"/>
+					<Key type="Curve" time=".1" value="350"/>
+					<Key type="Curve" time=".3" value="0"/>
+					<Key type="Curve" time=".4" value="0"/>
+				</Controller>
+			</Animation>
+							<Frame type="Label" name="FCJH_TempleText">
+								<Anchor side="Top"    relative="$parent/TempleActivateLabel" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$parent/TempleActivateLabel" pos="Max" offset="0"/>
+								<Anchor side="Left"   relative="$parent/BackgroundImage" pos="Min" offset="35"/>
+								<Text val="{$parent/TempleActivateLabel/@Text}"/>
+								<Style val="{$parent/TempleActivateLabel/@Style}"/>
+								<Options val="NoWrapping"/>
+								<Unclipped val="true"/>
+							</Frame>
+							<Frame type="Label" name="FCJH_TempleSlot">
+								<Anchor side="Top"    relative="$parent/FCJH_TempleText" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$parent/FCJH_TempleText" pos="Max" offset="0"/>
+								<Anchor side="Left"   relative="$parent/FCJH_TempleText" pos="Max" offset="-1"/>
+								<Text val="8:88"/>
+								<Style val="{$parent/TempleActivateTimer/@Style}"/>
+								<Options val="NoWrapping"/>
+								<Unclipped val="true"/>
+								<Alpha val="0"/>
+							</Frame>
+							<Frame type="Label" name="FCJH_TempleCount">
+								<Anchor side="Top"    relative="$parent/FCJH_TempleText" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$parent/FCJH_TempleText" pos="Max" offset="0"/>
+								<Anchor side="Right"  relative="$parent/FCJH_TempleSlot" pos="Max" offset="0"/>
+								<Text val="{$parent/TempleActivateTimer/@Text}"/>
+								<Style val="{$parent/TempleActivateTimer/@Style}"/>
+								<Options val="NoWrapping"/>
+								<Unclipped val="true"/>
+							</Frame>
+							<Frame type="Image" name="BackgroundImage">
+								<Unclipped val="true"/>
+								<Anchor side="Left" relative="$parent" pos="Min" offset="-3"/>
+							</Frame>
+							<Frame type="Image" name="CenterpieceImage">
+								<Unclipped val="true"/>
+								<Anchor side="Right" relative="$parent/FCJH_TempleSlot" pos="Max" offset="115"/>
+							</Frame>
+							<Frame type="Label" name="TempleActivateLabel">
+								<Unclipped val="true"/>
+								<Alpha val="0"/>
+							</Frame>
+							<Frame type="Label" name="TempleActivateTimer">
+								<Unclipped val="true"/>
+								<Alpha val="0"/>
+							</Frame>
+							<StateGroup name="FCJH_TempleCounting">
+								<DefaultState val="Idle"/>
+								<State name="Counting"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/CapturePointsPanel/TimerModeFrame/TempleActivateTimer" Visible="true"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/CapturePointsPanel/TimerModeFrame/BackgroundImage" Alpha="255"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/CapturePointsPanel/TimerModeFrame/CenterpieceImage" Alpha="255"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/CapturePointsPanel/TimerModeFrame/FCJH_TempleText" Alpha="255"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/CapturePointsPanel/TimerModeFrame/FCJH_TempleCount" Alpha="255"/></State>
+								<State name="Idle"><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/CapturePointsPanel/TimerModeFrame/BackgroundImage" Alpha="0"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/CapturePointsPanel/TimerModeFrame/CenterpieceImage" Alpha="0"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/CapturePointsPanel/TimerModeFrame/FCJH_TempleText" Alpha="0"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/CapturePointsPanel/TimerModeFrame/FCJH_TempleCount" Alpha="0"/></State>
+							</StateGroup>
+		</Frame>
 	</Frame>
 	<!-- ===== Tomb of the Spider Queen ===== -->
 	<Frame type="Frame" name="CryptPanel" file="SoulCage">

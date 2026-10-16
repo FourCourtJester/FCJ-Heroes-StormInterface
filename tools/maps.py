@@ -1992,6 +1992,42 @@ def punisher_side():
                         for icon in PUNISHER_ICONS if icon.endswith("Ally")],
                        punisher_layout)
 
+
+# ------------------------------------------------------------------ Sky Temple's banner
+
+# "Temples activate in: 0:04" (TimerModeFrame), then "Capture the Temples" - the same frame, its
+# timer hidden (libmlcp.galaxy MMSkyTempleUISetMode: Timer mode shows the time label, Temple mode
+# hides it). Blizzard's (capturepoints.stormlayout): the hexagon (CenterpieceImage, the temple)
+# at the frame's top, 20 in from its right; the bar ending 15 past it, starting 35 before its
+# words, its bottom 11 under them - Blizzard sizes it to its words, growing left. Measured at
+# 1080p (22_00_38, 3227b64, Blizzard's place): the bar's tip 784, its other tip 1175, its top
+# 628, its lower bracket 668; the hexagon 1067-1164, its top ~606, its bottom 683 - so the
+# frame's top-right about 1182, 606. On red's side laid out from its left end (left_banner),
+# the words 35 in.
+TEMPLE = MECHANICS + "/CapturePointsPanel/TimerModeFrame"
+TEMPLE_BOX = (-444, 0, -5, 69)
+TEMPLE_WORDS_START = 35
+TEMPLE_HEX_AFTER = 115     # the hexagon's right from the count's: 106 px from its last letter, as the mines'
+ALERT_ART["TEMPLE"] = Art(TEMPLE_BOX[2] - TEMPLE_BOX[0], 0, height=TEMPLE_BOX[3] - TEMPLE_BOX[1] + 17)   # down to the hexagon's bottom
+
+
+def temple_banner():
+    """The countdown, the neutral banner on red's side. "Capture the Temples" (no count) is
+    hidden, the whole banner (user, 2026-10-15: "that useless banner", as Cursed Hollow's
+    "Collect the Tribute"): its art and words faded out while the timer is hidden - the frame
+    stays shown, its intro fading it."""
+    alpha = lambda a: "".join(f'<Action type="SetProperty" frame="{TEMPLE}/{part}" Alpha="{a}"/>'
+                              for part in ("BackgroundImage", "CenterpieceImage", "FCJH_TempleText", "FCJH_TempleCount"))
+    t = T * 7
+    return (left_banner("Temple", "TempleActivateLabel", "TempleActivateTimer", "CenterpieceImage",
+                        TEMPLE_WORDS_START, TEMPLE_HEX_AFTER)
+            + f'{t}<StateGroup name="FCJH_TempleCounting">\n{t}\t<DefaultState val="Idle"/>\n'
+            f'{t}\t<State name="Counting"><When type="Property" frame="{TEMPLE}/TempleActivateTimer" Visible="true"/>'
+            + alpha(255) + "</State>\n"
+            f'{t}\t<State name="Idle">' + alpha(0) + "</State>\n"
+            f'{t}</StateGroup>\n')
+
+
 PARTS["volskaya_foundry"] = {"VolskayaToastContainer/ToastNotification": TOAST,
                              "VolskayaCapturePointPanel/ContestedLabel:Label": CONTESTED,
                              "VolskayaRobotHealthSlideout": robot_frame()}
@@ -2164,7 +2200,12 @@ MAPS = {
                           note="the shrine's countdown (neutral), then the Punisher on red")]}}),
     "sky_temple": Map(
         "Sky Temple", (437, 344), file="CapturePoints",
-        panels={"CapturePointsPanel": BOTTOM_RIGHT}, place=("CapturePointsPanel",)),
+        panels={"CapturePointsPanel": BOTTOM_RIGHT}, place=("CapturePointsPanel",),
+        # "Temples activate in": the neutral banner, on red's side ("Capture the Temples"
+        # hidden: temple_banner). The temples stay on the panel.
+        team={"CapturePointsPanel": {
+            "red": [Alert("TimerModeFrame", kind="TEMPLE", box=TEMPLE_BOX, extra=temple_banner(),
+                          note="the temples' countdown (neutral)")]}}),
     "tomb_of_the_spider_queen": Map(
         "Tomb of the Spider Queen", (430, 262), file="SoulCage",
         panels={"CryptPanel": BOTTOM_RIGHT}, place=("CryptPanel",),
