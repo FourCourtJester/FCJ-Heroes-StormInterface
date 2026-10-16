@@ -447,8 +447,9 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
    Abathur's clone on the inspect card).
 - Also open: rewinding a replay upsets pop-ups and latches (final polish - the product
   is for live games); rows with fewer than five heroes (a 3v3 or 1v1 replay).
-- **To return to (user, 2026-10-16):** the fly-out (info pane) and inspect panels inheriting
-  Blizzard's assets (docs/polish-research.md, "Decisions from the question round").
+- **To do (user, 2026-10-16):** a pass on the panes and the inspect card to make them
+  Heroes-like (Blizzard's menu panel: blur, translucency, chrome border), and a colour, font
+  and art pass on the numbers panes (docs/polish-research.md, "Decisions from the question round").
 - **Parked:** blue's curse mirror (unseen; item 14).
 - **Later:** extract the toolchain into its own repo for open-sourcing (user, 2026-10-09) -
   [docs/generator.md](docs/generator.md) says what it is, [docs/extraction-plan.md](docs/extraction-plan.md)

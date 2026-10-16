@@ -270,6 +270,18 @@ Built for tonight: the seams, the core's own frame, the quest column and the amm
 - **Replay rewind:** not a design consideration. The overlay is for live casting, not replay
   analysis. If there's time at the end, research what a rewind upsets (pop-ups replaying,
   the latched talent watchers, flashes) and whether any of it is cheap to fix.
-- **The fly-out and inspect panels: inherit Blizzard's assets** (user, 2026-10-16, a note to
-  return to). Go back over the fly-out (the info pane) and the inspect card for where they
-  could use Blizzard's own art and templates instead of ours.
+- **The panes and the inspect card: a pass to make them Heroes-like** (user, 2026-10-16: at
+  the very least; the skin we've had was good enough until now). One template covers all
+  five (`inspect_card.pane_skin` -> `FCJH_Constants/FCJH_PaneSkin`): the talents, KDA, healing
+  and structures panes and the inspect card.
+  - The user's model: the front-end Escape menu - purplish translucency, chrome round it.
+    That's `glue/menupanel.stormlayout` on `StandardTemplates/PopupPanelTemplate`
+    (standardtemplates.stormlayout:5882): a BlurFrame (BlurAmount 0.8), then
+    `Storm_Generic_Background_Low`, a `08081d` tint, and the `Storm_Generic_SmallPanel_Border`
+    nine-slice. Blizzard blurs in game too (the Tab panel's and the talents overview's
+    `GlassBlur`: BlurAmount .8, RenderType HDR, Visible `#IngameBlur`), and the border loads in
+    game (the in-game tooltips use it). Not yet tried in observer mode.
+  - Open: Blizzard's menu border, or our own chrome line (the plates' `[row_frame]` look).
+  - The numbers panes also need a colour, font and art pass. Candidates (parked 2026-10-05):
+    Blizzard's `obs_stats_top` grid (1130 wide, like the talents grid) and the
+    `obs_stats_leader_blue/red` underlines; styles in FontStyles.StormStyle (`FCJH_Stat*`).
