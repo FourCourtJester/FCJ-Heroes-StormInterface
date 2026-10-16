@@ -660,8 +660,8 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    hidden at the start and through the first countdown, up at "N LEFT"; strips ~814-1103 at
    1063-1065, meeting at the map's tip (~955); icons ~828-880 / ~1028-1078, counts ~895-917 /
    ~992-1005. Later waves seen too: they stayed up, no blink (user, 2026-10-16, three waves). Icon
-   and count too close to the map (user): both moved 15 px out (WARHEAD_MARKS_OUT_PX), strips
-   left meeting - unseen.
+   and count too close to the map (user): both moved out (WARHEAD_MARKS_OUT_PX), strips left
+   meeting - 15 px seen (7236174), "a bit more" (user); 30 px unseen.
    The warheads' banner (`TerrazineEruptionFrame`: the countdown, then how many are left)
    moved as Blizzard draws it to red's bottom slot - a neutral banner, no copied words (user);
    its box is the English countdown's, so the other text's tip lands off red's plates by its
@@ -670,7 +670,7 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    clear of the hexagon, its bar ending ~37 px over the XP bar (966). Its other SC2Panel parts
    (NukeSiloFrame, NukeSiloFrame2, TerrazineBuffFrame) never show, in any view: the map's
    script (`libmsc2.galaxy`) hides them for everyone at setup and nothing ever shows them -
-   leftovers. Left on Warhead: the counters' 15 px out, to see.
+   leftovers. Left on Warhead: the counters' 30 px out, to see.
    **The minimap's tooltip - OFF, every map (user, 2026-10-15: "Just hide it or disable it";
    seen gone on 08eeb21).** Hovering a named minimap icon (a watch tower, a fort, Tomb's Spider
    Altar) showed Blizzard's `MinimapPanel/MinimapPanelTooltip` at ~1332-1467 x, ~800-850 y,
