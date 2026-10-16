@@ -25,7 +25,8 @@ padding = 20
 
 # Dev builds only. Release builds leave all of this out.
 [dev]
-build_stamp = [1600, 20]     # x, y of the build stamp (top right)
+build_stamp = [20, 20]       # x, y of the build stamp: top left, above the kill feed (top right
+                             # until 2026-10-16, when the replay box took that corner)
 
 # ---------------------------------------------------------------------------
 # Minimap. Blizzard's minimap is a fixed square (438 layout units = 394 px); the engine
@@ -195,17 +196,15 @@ kind = "obs"
 
 # Around the edges
 [element.replay]
-rect = [0, 0, 231, 153]      # Blizzard's ReplayPanel, 257 x 170 units (native 420 wide). On red's row,
-                             # the inspect card's mirror (user, 2026-10-16): narrowed to keep clear
-                             # of red's map alerts, which start at the row's inner end and grow
-                             # outward (a banner and its hexagon end ~50 px short of it at 252).
+rect = [1675, 14, 231, 153]  # Blizzard's ReplayPanel, 257 x 170 units (native 420 wide), in the
+                             # top-right corner, its art [screen] padding from both edges (user,
+                             # 2026-10-16; on red's row before, the inspect card's mirror, and
+                             # narrowed then to clear red's map alerts).
                              # Its four buttons need 254 units (55 each, the ends 17 in); the
                              # rest is shared evenly between them (gen.py REPLAY_BUTTON_GAP): 1
                              # unit, so the ~9 px seen between buttons (each frame pads its box
                              # ~4 px) matches the ~9 px from the panel's edge to Pause.
                              # Was the right edge's middle 2026-10-06..16, native width.
-above = "red_xp"             # its art's bottom sits [screen] padding above red's row
-flush = "right"              # its art's right edge on the row's
 art_inset = 6                # its glass art's outer line sits 6 px inside the frame on every side
                              # (measured in game, 2026-10-05)
 kind = "ui"
@@ -215,9 +214,7 @@ hotkey = "Control+Shift+R"   # hides/shows it (Blizzard's toggle). Blizzard gave
                              # off it with our own GameHotkeys.txt didn't load (2026-10-16), so
                              # Ctrl+Shift+R. The tab's label (FCJH_Replay) says it too.
 [element.replay_collapsed]
-rect = [0, 0, 200, 24]       # hidden state: a slim tab at the panel's art's bottom-right corner
-above = "red_xp"
-flush = "right"
+rect = [1700, 20, 200, 24]   # hidden state: a slim tab in the panel's art's top-right corner
 kind = "demand"
 [element.kill_feed]
 rect = [0, 104.4, 540, 300]  # Blizzard's, in its own place, not moved (user, 2026-10-05): top-left,

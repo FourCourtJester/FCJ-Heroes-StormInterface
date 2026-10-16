@@ -25,7 +25,7 @@ In one paragraph: the ten hero cells sit along the bottom (blue 1–5 left of th
 red 6–0 right of it) with portrait, HP, mana and CC; the minimap and its objective widgets
 at bottom-centre; team core HP above the cells; a two-line top bar of series score, team
 name, logo and level either side of Blizzard's hexagon, with bans, bracket and game count
-beneath; Blizzard's own kill feed top-left; replay controls on red's row, Ctrl+Shift+R hides them; info panes
+beneath; Blizzard's own kill feed top-left; replay controls top-right, Ctrl+Shift+R hides them; info panes
 (talents, KDA/damage, healing, siege) at middle-left on hotkeys; talent pop-ups on the
 cells, and a green-plus pop-up on any hero below 25% health (drawn under the talent
 pop-up). **Fight mode is not a separate layout** — it is one hotkey that hides a list of
@@ -70,7 +70,7 @@ drawn by OBS over empty regions the interface leaves (§6).
   each map's objective panel round it and a team's alerts stacked on its side (§7 item 8;
   Towers of Doom passed QA on the per-map system 2026-10-06, the rest a first pass; since
   2026-10-09 every map can be told apart from load by Blizzard's map id - §7 "Next"). **Replay controls**
-  on red's row, the inspect card's mirror, narrowed to 231 px with its four buttons evenly
+  in the top-right corner (red's row until 2026-10-16), 231 px with its four buttons evenly
   spaced; Ctrl+Shift+R hides them (Blizzard's Ctrl+Shift+O is taken by the game), leaving a
   tab (replays only) - seen working 2026-10-16. Its timeline (the chevron, or Ctrl+T) can't be
   made to start hidden. Blizzard's player HUD never shows; its
@@ -891,8 +891,8 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
      inside Blizzard's observer panel came out twice their height and 40 px high. Anchor to
      the screen or a sibling, never to one of our frames in another branch (memory rule 22);
    - **left edge**: the info panes, [screen] padding in (user: they line up with the card at
-     1080p); **right edge, middle**: the replay box and its tab (since 2026-10-16 on red's row, its right
-     edge in line with the row's); top right: the dev stamp.
+     1080p); **top right**: the replay box and its tab (since 2026-10-16; the right edge's middle,
+     then red's row, before); top left: the dev stamp.
    At 16:9 nothing moved (gen's `check_anchoring`, and every anchor in the XML resolved before
    and after: none off by a unit). Wider, the centred pieces stay together round the middle,
    the panes and replay box keep to their edges. Narrower than 16:9 isn't supported (the rows

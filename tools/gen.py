@@ -208,7 +208,7 @@ def team_bar_rects(cfg, n=5):
 # twice their height and 40 px high while the frame sat right (user, 2026-10-06). Anchored
 # straight to the screen's bottom-centre they landed. So what's on the rows takes the rows'
 # own point, BOTTOM_CENTRE, and still moves with them.
-TOP_CENTRE, BOTTOM_CENTRE, TOP_LEFT = ("Mid", "Min"), ("Mid", "Max"), ("Min", "Min")
+TOP_CENTRE, BOTTOM_CENTRE, TOP_LEFT, TOP_RIGHT = ("Mid", "Min"), ("Mid", "Max"), ("Min", "Min"), ("Max", "Min")
 ANCHORS = {
     # the top bar sits on Blizzard's hexagon, centred on the top edge; the team levels on our
     # backplate. The OBS boxes go with it (the OBS package draws them from layout.toml's px).
@@ -227,9 +227,9 @@ ANCHORS = {
     # the left column keeps to the left edge, [screen] padding in (user, 2026-10-06); at 16:9
     # it lines up with the card. The kill feed is Blizzard's, where Blizzard puts it.
     "info_pane": TOP_LEFT, "kill_feed": TOP_LEFT,
-    # the replay box (and its collapsed tab) stands on red's row, its right edge in line with the
-    # row's - the inspect card's mirror (user, 2026-10-16)
-    "replay": BOTTOM_CENTRE, "replay_collapsed": BOTTOM_CENTRE,
+    # the replay box (and its collapsed tab) in the top-right corner, [screen] padding in (user,
+    # 2026-10-16; on red's row before)
+    "replay": TOP_RIGHT, "replay_collapsed": TOP_RIGHT,
 }
 # Where the plates are anchored, for what's placed on them outside gen.py's own rects (the
 # map alerts, the inspect card): (frame, across pos, down pos)

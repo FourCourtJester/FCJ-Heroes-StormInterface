@@ -115,7 +115,8 @@ from then on are written with their fix.
 - **Ours:** Blizzard's toggle on Ctrl+Shift+R (layout.toml `element.replay` hotkey, ef1f1b6),
   switched on when a replay first shows the panel (as Ahli does, 030278d); a tab names the key
   while the panel is hidden.
-- **Status:** hides in one press and the tab shows (user, 2026-10-16).
+- **Status:** confirmed in game - one press hides it and the tab shows, the next brings it back
+  (user, 2026-10-16).
 - **Blizzard's key can't be freed:** an interface's own GameHotkeys.txt (every language, moving
   Save All to Ctrl+Alt+Shift+O) doesn't load - Ctrl+Shift+O still did nothing (d33a0ec, user,
   2026-10-16). So Ctrl+Shift+R, and an interface can't add or move entries in the game's hotkey
