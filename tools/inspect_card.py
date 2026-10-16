@@ -100,6 +100,7 @@ TEAM = {}                          # the border's colours, "a,r,g,b" by team (an
 
 ORIGIN = (0, 0)   # the card's top-left on screen, in layout units: set by layout()
 PX = 0.9          # screen pixels per layout unit: set by layout()
+HOLDER_AT = "$parent"   # the frame the slot covers (layout())
 HOLDER = ("$parent", "Min", "Min", 0)   # what the card is anchored to (frame, across pos, down pos), and its top from there: set by layout()
 
 
@@ -165,6 +166,8 @@ COMMAND_PANEL = "$GameUI/UIContainer/ConsoleUIContainer/CommandPanel"
 
 
 CARD = "$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect"
+SLOT = "$GameUI/UIContainer/ConsoleUIContainer/FCJH_InspectSlot"   # the card hangs from it (card())
+PARK = 2000   # how far the slot drops, in units, while the card is switched off: off screen
 
 
 def command_switch():
@@ -452,7 +455,6 @@ def card():
     # the gate shows and shapes the card; the command card and the talent tips follow the card
     # itself (card_watch), since the game can hide it behind the gate's back
     shown = f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="true"/>\n'
-    switched_on = f'{T*5}<When type="Property" frame="$parent/FCJH_InspectOn" Visible="true"/>\n'
     out = [f'{T*2}<!-- Round 9 (2026-09-30): the card shows exactly when Blizzard\'s own small inspector\n'
            f'{T*2}     would. Ours alone (a TargetInfoFrame the game doesn\'t manage) came up on the first\n'
            f'{T*2}     plate click of a game; the default UI\'s doesn\'t (user). Blizzard\'s is now parked\n'
@@ -461,23 +463,34 @@ def card():
            f'{T*2}<!-- Hero or not (2026-10-05): the selected unit is a hero unit (FCJH_IsHero, hero_check).\n'
            f'{T*2}     A hero gets the tall card with Blizzard\'s command card on it; anything else the\n'
            f'{T*2}     short card (shape), command card away. -->\n'
-           f'{T*2}<!-- The card\'s switch (layout.toml [toggles] inspect; user, 2026-10-16): a ToggleControl,\n'
-           f'{T*2}     shown to start; hidden by its key, the card stays shut whatever is selected. -->\n'
-           f'{T*2}<Frame type="ToggleControl" name="FCJH_InspectOn">\n'
-           f'{T*3}<Anchor side="Top"  relative="$parent" pos="Min" offset="0"/>\n'
-           f'{T*3}<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>\n'
-           f'{T*3}<Width val="1"/>\n{T*3}<Height val="1"/>\n'
-           f'{T*3}<Shortcut val="#FCJH_INSPECT_KEY"/>\n'
-           f'{T*3}<AcceptsMouse val="false"/>\n'
+           f'{T*2}<!-- The card\'s switch (layout.toml [toggles] inspect; user, 2026-10-16). The card hangs\n'
+           f'{T*2}     from FCJH_InspectSlot, which covers the screen, and the key drops the slot {PARK} units,\n'
+           f'{T*2}     so the card goes off screen with whatever follows it (command card, talent tips).\n'
+           f'{T*2}     Hiding the card lost: the game shows its TargetInfoFrame again on every new\n'
+           f'{T*2}     selection (2026-10-16). Ahli 0.75 moves his panel\'s holder the same way. The\n'
+           f'{T*2}     gate\'s SetAnchors keep their pos on the slot, which nothing else moves. -->\n'
+           f'{T*2}<Frame type="Frame" name="FCJH_InspectSlot">\n'
+           f'{T*3}<Anchor relative="{HOLDER_AT}"/>\n{T*3}<AcceptsMouse val="false"/>\n'
            f'{T*2}</Frame>\n'
+           f'{T*2}<Frame type="ToggleControl" name="FCJH_InspectToggle">\n'
+           f'{T*3}<Anchor relative="$parent"/>\n{T*3}<AcceptsMouse val="false"/>\n'
+           f'{T*3}<CollapseLayout val="true"/>\n{T*3}<Visible val="false"/>\n'
+           f'{T*3}<Shortcut val="#FCJH_INSPECT_KEY"/>\n'
+           f'{T*3}<Animation name="FCJH_ParkCard">\n'
+           f'{T*4}<Event event="OnShown" action="DirectionForward,Play"/>\n'
+           f'{T*4}<Event event="OnHidden" action="DirectionReverse,Play"/>\n'
+           + "".join(f'{T*4}<Controller type="Anchor" end="Pause" side="{side}" relative="true" frame="$parent/FCJH_InspectSlot">\n'
+                     f'{T*5}<Key type="Curve" time="0" value="0"/>\n{T*5}<Key type="Curve" time="0.001" value="{PARK}"/>\n'
+                     f'{T*4}</Controller>\n' for side in ("Top", "Bottom"))
+           + f'{T*3}</Animation>\n{T*2}</Frame>\n'
            f'{T*2}<Frame type="Frame" name="FCJH_InspectGate">\n'
            f'{T*3}<Anchor relative="$parent"/>\n{T*3}<AcceptsMouse val="false"/>\n'
            f'{T*3}<StateGroup name="FCJH_Gate">\n{T*4}<DefaultState val="Hide"/>\n'
            + f'{T*4}<State name="Hero">\n{T*5}<When type="Property" frame="{TARGET_INFO}" Visible="true"/>\n'
            f'{T*5}<When type="Property" frame="{UNIT}/{IS_HERO}" Visible="true"/>\n'
-           + switched_on + shown + shape(True) + f'{T*4}</State>\n'
+           + shown + shape(True) + f'{T*4}</State>\n'
            + f'{T*4}<State name="Unit">\n{T*5}<When type="Property" frame="{TARGET_INFO}" Visible="true"/>\n'
-           + switched_on + shown + shape(False) + f'{T*4}</State>\n'
+           + shown + shape(False) + f'{T*4}</State>\n'
            f'{T*4}<State name="Hide">\n'
            f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="false"/>\n{T*4}</State>\n'
            f'{T*3}</StateGroup>\n{T*2}</Frame>\n' + card_watch() + command_switch() +
@@ -1082,8 +1095,9 @@ def layout(crop, head, team_colours, origin=(0, 0), px=0.9, holder=("$parent", "
     anything of neither team, from layout.toml element.inspect); holder: what the card is
     anchored to - a frame, and the pos values across and down that its #FCJH_INSPECT_*
     constants run from - and the card's top from there, in units."""
-    global CROP, ORIGIN, PX, HOLDER
-    CROP, ORIGIN, PX, HOLDER = crop, origin, px, holder
+    global CROP, ORIGIN, PX, HOLDER, HOLDER_AT
+    # the card's anchors run from the same pos and offsets, on the slot laid over the holder
+    CROP, ORIGIN, PX, HOLDER, HOLDER_AT = crop, origin, px, (SLOT, *holder[1:]), holder[0]
     TEAM.update({team: "255," + ",".join(str(int(hex_[i:i + 2], 16)) for i in (0, 2, 4))
                  for team, hex_ in team_colours.items()})
     HEROES[:] = cached_heroes()

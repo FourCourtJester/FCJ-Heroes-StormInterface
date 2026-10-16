@@ -19,15 +19,34 @@
 		<!-- Hero or not (2026-10-05): the selected unit is a hero unit (FCJH_IsHero, hero_check).
 		     A hero gets the tall card with Blizzard's command card on it; anything else the
 		     short card (shape), command card away. -->
-		<!-- The card's switch (layout.toml [toggles] inspect; user, 2026-10-16): a ToggleControl,
-		     shown to start; hidden by its key, the card stays shut whatever is selected. -->
-		<Frame type="ToggleControl" name="FCJH_InspectOn">
-			<Anchor side="Top"  relative="$parent" pos="Min" offset="0"/>
-			<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-			<Width val="1"/>
-			<Height val="1"/>
-			<Shortcut val="#FCJH_INSPECT_KEY"/>
+		<!-- The card's switch (layout.toml [toggles] inspect; user, 2026-10-16). The card hangs
+		     from FCJH_InspectSlot, which covers the screen, and the key drops the slot 2000 units,
+		     so the card goes off screen with whatever follows it (command card, talent tips).
+		     Hiding the card lost: the game shows its TargetInfoFrame again on every new
+		     selection (2026-10-16). Ahli 0.75 moves his panel's holder the same way. The
+		     gate's SetAnchors keep their pos on the slot, which nothing else moves. -->
+		<Frame type="Frame" name="FCJH_InspectSlot">
+			<Anchor relative="$GameUI"/>
 			<AcceptsMouse val="false"/>
+		</Frame>
+		<Frame type="ToggleControl" name="FCJH_InspectToggle">
+			<Anchor relative="$parent"/>
+			<AcceptsMouse val="false"/>
+			<CollapseLayout val="true"/>
+			<Visible val="false"/>
+			<Shortcut val="#FCJH_INSPECT_KEY"/>
+			<Animation name="FCJH_ParkCard">
+				<Event event="OnShown" action="DirectionForward,Play"/>
+				<Event event="OnHidden" action="DirectionReverse,Play"/>
+				<Controller type="Anchor" end="Pause" side="Top" relative="true" frame="$parent/FCJH_InspectSlot">
+					<Key type="Curve" time="0" value="0"/>
+					<Key type="Curve" time="0.001" value="2000"/>
+				</Controller>
+				<Controller type="Anchor" end="Pause" side="Bottom" relative="true" frame="$parent/FCJH_InspectSlot">
+					<Key type="Curve" time="0" value="0"/>
+					<Key type="Curve" time="0.001" value="2000"/>
+				</Controller>
+			</Animation>
 		</Frame>
 		<Frame type="Frame" name="FCJH_InspectGate">
 			<Anchor relative="$parent"/>
@@ -37,9 +56,8 @@
 				<State name="Hero">
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/TargetInfoFrame" Visible="true"/>
 					<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_IsHero" Visible="true"/>
-					<When type="Property" frame="$parent/FCJH_InspectOn" Visible="true"/>
 					<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="true"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" side="Top" relative="$GameUI" pos="Max" offset="#FCJH_INSPECT_T"/>
+					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_InspectSlot" pos="Max" offset="#FCJH_INSPECT_T"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SkinName" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="155"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SkinName" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="185"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Level" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="157"/>
@@ -66,9 +84,8 @@
 				</State>
 				<State name="Unit">
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/TargetInfoFrame" Visible="true"/>
-					<When type="Property" frame="$parent/FCJH_InspectOn" Visible="true"/>
 					<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="true"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" side="Top" relative="$GameUI" pos="Max" offset="-399"/>
+					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_InspectSlot" pos="Max" offset="-399"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SkinName" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="30"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SkinName" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="60"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Level" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="32"/>
@@ -136,10 +153,10 @@
 		<!-- The card: our copy of Blizzard's inspect box -->
 		<Frame type="TargetInfoFrame" name="FCJH_Inspect">
 			<Visible val="false"/>
-			<Anchor side="Top"    relative="$GameUI" pos="Max" offset="#FCJH_INSPECT_T"/>
-			<Anchor side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_INSPECT_L"/>
-			<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_INSPECT_B"/>
-			<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_INSPECT_R"/>
+			<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_InspectSlot" pos="Max" offset="#FCJH_INSPECT_T"/>
+			<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_InspectSlot" pos="Mid" offset="#FCJH_INSPECT_L"/>
+			<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_InspectSlot" pos="Max" offset="#FCJH_INSPECT_B"/>
+			<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_InspectSlot" pos="Mid" offset="#FCJH_INSPECT_R"/>
 			<AcceptsMouse val="false"/>
 			<RenderPriority val="600"/>
 			<Frame type="Frame" name="TargetInfoPanel" template="TargetInfoPanel/TargetInfoPanelTemplate">
