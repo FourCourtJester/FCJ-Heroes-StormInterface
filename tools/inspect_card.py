@@ -420,9 +420,10 @@ TARGET_INFO = "$GameUI/UIContainer/FullscreenUpperContainer/TargetInfoFrame"
 UNIT = CARD + "/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0"
 
 
-def shape(hero):
-    """The gate's actions for the tall (hero) card or the short one (SHIFT, H_SHORT). Every
-    anchor given both ways, the hero's as the frames declare them."""
+def shape(hero, clone=False):
+    """The gate's actions for the tall (hero) card or the short one (SHIFT, H_SHORT), or the
+    tall one for Abathur's clone (talents off, the clone note on). Every anchor given both
+    ways, the hero's as the frames declare them."""
     d = 0 if hero else SHIFT
     at = lambda frame, side, rel, pos, v: (f'{T*5}<Action type="SetAnchor" frame="{frame}" side="{side}" '
                                            f'relative="{rel}" pos="{pos}" offset="{v}"/>\n')
@@ -445,9 +446,12 @@ def shape(hero):
          at(f"{UNIT}/FCJH_Stats", "Top", UNIT, "Min", stats),
          at(f"{UNIT}/FCJH_Stats", "Bottom", UNIT, "Min", stats + stat_rows * STAT_ROW),
          shown(f"{UNIT}/FCJH_FountainReady", hero),
-         shown(f"{UNIT}/FCJH_SectionTalents", hero),
+         shown(f"{UNIT}/FCJH_SectionTalents", hero and not clone),
+         shown(f"{UNIT}/FCJH_CloneNote", clone),
          shown(f"{UNIT}/FCJH_UnitTeam", not hero)]
-        + [shown(f"{UNIT}/FCJH_Tier{k}", hero) for k in range(1, 8)]
+        + [shown(f"{UNIT}/FCJH_Tier{k}", hero and not clone) for k in range(1, 8)]
+        + [f'{T*5}<Action type="SetProperty" frame="{UNIT}/FCJH_Player{n}/FCJH_PackTalents" Alpha="{0 if clone else 255}"/>\n'
+           for n in range(10)]
         + [at(f"{UNIT}/FCJH_UnitEdge/FCJH_Side{side}/FCJH_EdgeTop", "Bottom", f"{UNIT}/FCJH_UnitEdge/FCJH_Side{side}",
               "Min", edge_top(hero)) for side, _, _, _ in SIDES]))
 
@@ -497,6 +501,10 @@ def card():
            f'{T*2}<Frame type="Frame" name="FCJH_InspectGate">\n'
            f'{T*3}<Anchor relative="$parent"/>\n{T*3}<AcceptsMouse val="false"/>\n'
            f'{T*3}<StateGroup name="FCJH_Gate">\n{T*4}<DefaultState val="Hide"/>\n'
+           + f'{T*4}<State name="Clone">\n{T*5}<When type="Property" frame="{TARGET_INFO}" Visible="true"/>\n'
+           f'{T*5}<When type="Property" frame="{UNIT}/{IS_HERO}" Visible="true"/>\n'
+           f'{T*5}<When type="Property" frame="{UNIT}/{CLONE_SENSOR}" Visible="true"/>\n'
+           + shown + shape(True, True) + f'{T*4}</State>\n'
            + f'{T*4}<State name="Hero">\n{T*5}<When type="Property" frame="{TARGET_INFO}" Visible="true"/>\n'
            f'{T*5}<When type="Property" frame="{UNIT}/{IS_HERO}" Visible="true"/>\n'
            + shown + shape(True) + f'{T*4}</State>\n'
@@ -530,6 +538,17 @@ def card():
     # no buffs or abilities heading (user, 2026-10-05): their pictures say what they are
     for text, top in (("TALENTS", TAL_LABEL), ("STATS", STATS_LABEL)):
         chrome.append(label(f"FCJH_Section{text.capitalize()}", top, M, top + 15, -M, "FCJH_InspectSection", text, 3, "Max"))
+    # Abathur's clone (the gate's Clone state): its heading, the Ultimate Evolution icon and what
+    # it is, where the talents go - the clone has no talents of its own (2026-10-16)
+    chrome.append(f'{T*3}<Frame type="Frame" name="FCJH_CloneNote">\n{T*4}<Anchor relative="$parent"/>\n'
+                  f'{T*4}<Visible val="false"/>\n{T*4}<AcceptsMouse val="false"/>\n'
+                  + label("FCJH_CloneHead", TAL_LABEL, M, TAL_LABEL + 15, -M, "FCJH_InspectSection", "CLONE", 4, "Max")
+                  + f'{T*4}<Frame type="Image" name="FCJH_CloneIcon">\n'
+                  + rect(TAL, M, TAL + TAL_SIZE, M + TAL_SIZE, i=5)
+                  + f'{T*5}<Texture val="{CLONE_ICON}"/>\n{T*5}<AcceptsMouse val="false"/>\n{T*4}</Frame>\n'
+                  + label("FCJH_CloneWhat", TAL, M + TAL_SIZE + PAD, TAL + TAL_SIZE, -M, "FCJH_InspectSub",
+                          "Abathur's Ultimate Evolution: no talents", 4, "Max")
+                  + f'{T*3}</Frame>\n')
     stat_frames = "".join(
         f'{T*6}<Frame type="TargetInfoStatFrame" name="{n}">\n'
         f'{T*7}<Anchor side="Top" relative="$parent" pos="Min" offset="{r * STAT_ROW}"/>\n'
@@ -674,6 +693,9 @@ def player_pack(n):
     # (the card's edge in the team colour is the unit's now, every unit: unit_team)
     return (f'{T*4}<Frame type="Frame" name="FCJH_Player{n}">\n{T*5}<Anchor relative="$parent"/>\n'
             f'{T*5}<Alpha val="0"/>\n{T*5}<AcceptsMouse val="false"/>\n{T*5}<RenderPriority val="670"/>\n'
+            f'{T*5}<!-- the talents, in one frame: Abathur\'s clone shows none (the gate, shape) -->\n'
+            f'{T*5}<Frame type="Frame" name="FCJH_PackTalents">\n{T*5}<Anchor relative="$parent"/>\n'
+            f'{T*5}<AcceptsMouse val="false"/>\n'
             f'{T*5}<!-- an empty tier\'s box under each icon: a line in the band art\'s 73668d round a dark\n'
             f'{T*5}     square (the old plain dark squares vanished on Blizzard\'s background, 2026-10-05) -->\n'
             # (2 units: 1 is 0.9 px, and the top line rounded away, 2026-10-05)
@@ -683,7 +705,7 @@ def player_pack(n):
                              TAL + TAL_SIZE - line(TAL + TAL_SIZE, 1, -1),
                              tal_left(k) + TAL_SIZE - line(tal_left(k) + TAL_SIZE, 0, -1), "230,8,8,16", 665, 5)
                       for k in range(1, 8))
-            + portrait + icons + name + f'{T*4}</Frame>\n')
+            + icons + f'{T*5}</Frame>\n' + portrait + name + f'{T*4}</Frame>\n')
 
 
 # Heroes whose selected unit can differ from the plate's: (selected, on the plate). Guesses
@@ -721,7 +743,16 @@ def matcher(n):
     other = "TeamChaos" if n < 5 else "TeamOrder"
     wrong = (f'{T*5}<State name="OtherTeam"><When type="Property" frame="$this/{TEAM_SENSE}" CurrentRelation="{other}"/>'
              f'<Action type="SetProperty" frame="$this/FCJH_Player{n}" Alpha="0"/>{flag("false")}</State>\n')
-    return (f'{T*4}<StateGroup name="FCJH_IsPlayer{n}">\n{T*5}<DefaultState val="No"/>\n{wrong}{states}'
+    # Abathur's clone (Ultimate Evolution, 2026-10-16) is a unit of the copied ally's type, so
+    # the hero check matched the ally's plate and the card showed the ally's player and talents.
+    # On a clone (CLONE_SENSOR) the pack is Abathur's, his plate unchanged meanwhile (gen.py's
+    # FCJH_CloneSensor); its talents stay off (the gate) and so do the talent tips.
+    sensor = f'<When type="Property" frame="$this/{CLONE_SENSOR}" Visible="true"/>'
+    clone = (f'{T*5}<State name="CloneAbathur">{sensor}<When type="Property" frame="{plate(n)}/HeroStatus" Unit="HeroAbathur"/>'
+             f'<Action type="SetProperty" frame="$this/FCJH_Player{n}" Alpha="255"/>{flag("false")}</State>\n'
+             f'{T*5}<State name="Clone">{sensor}'
+             f'<Action type="SetProperty" frame="$this/FCJH_Player{n}" Alpha="0"/>{flag("false")}</State>\n')
+    return (f'{T*4}<StateGroup name="FCJH_IsPlayer{n}">\n{T*5}<DefaultState val="No"/>\n{wrong}{clone}{states}'
             f'{T*5}<State name="No"><Action type="SetProperty" frame="$this/FCJH_Player{n}" Alpha="0"/>{flag("false")}</State>\n'
             f'{T*4}</StateGroup>\n')
 
@@ -887,6 +918,22 @@ def card_watch():
 
 
 IS_HERO = "FCJH_IsHero"
+CLONE_SENSOR = "FCJH_CloneSensor"
+CLONE_ICON = "Assets\\Textures\\storm_ui_icon_abathur_ultimateevolution.dds"
+
+
+def clone_sensor():
+    """FCJH_CloneSensor: shown while the selected unit is Abathur's clone - Blizzard's
+    UltimateEvolutionBuff, which Ultimate Evolution's script puts on the clone (gamedatahelperlib
+    HeroAbathurUltimateEvolutionStartControl; its 20% and 110% are the clone's stats). The
+    plates' sensor (gen.py) reads Abathur's own behaviour instead."""
+    return (f'{T*4}<!-- Abathur\'s clone or not (inspect_card.clone_sensor): the gate and the matchers read it -->\n'
+            f'{T*4}<Frame type="UnitStatusBehaviorIcon" name="{CLONE_SENSOR}">\n{T*5}<Anchor relative="$parent"/>\n'
+            f'{T*5}<Behavior val="UltimateEvolutionBuff"/>\n{T*5}<Alpha val="0"/>\n'
+            f'{T*5}<AcceptsMouse val="false"/>\n{T*5}<AcceptsMouseTooltip val="false"/>\n'
+            f'{T*5}<Frame type="BehaviorIcon" name="BehaviorIcon" template="BehaviorBar/BehaviorIconTemplate">\n'
+            f'{T*6}<Anchor relative="$parent"/>\n{T*6}<AcceptsMouse val="false"/>\n{T*6}<AcceptsMouseTooltip val="false"/>\n'
+            f'{T*5}</Frame>\n{T*4}</Frame>\n')
 
 
 def hero_check():
@@ -969,7 +1016,7 @@ def unit():
 {T*4}<!-- 1. animated model: DROPPED (round 6). The hero cutscene kept the first hero clicked
 {T*4}     (Chromie) over every later selection; the static portrait underneath updates. -->
 
-{team_sense()}{unit_team()}{hero_check()}
+{team_sense()}{unit_team()}{hero_check()}{clone_sensor()}
 {T*4}<!-- 2. name (in the title band, user 2026-10-05), player, level -->
 {T*4}<Frame type="UnitStatusName" name="FCJH_HeroName" template="UnitStatus/UnitStatusUnitNameTemplate">
 {T*5}<!-- centred on the card: the template's own size (220 x 30) beat the
