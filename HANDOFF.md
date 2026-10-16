@@ -553,7 +553,9 @@ from their plates (docs/blizzard-fixes.md).
       KIT_HEROIC_COOLDOWNS`). At 10 he picks an active talent, pressed on 1, which Blizzard's
       observer slot then follows. Ask casters and players which they want on the plate after
       10: Cataclysm, the level-10 ability, or both (the user may enlist help, 2026-10-16);
-    - **the D.Va and Viking guesses** in `inspect_card.ALSO`;
+    - **the D.Va and Viking guesses** in `inspect_card.ALSO` SEEN (user, 2026-10-16): D.Va's pilot
+      and mech, and each Viking (Olaf, Baleog, Erik), get the tall card - the player, the
+      talents, each Viking's own health;
     - **rows with fewer than five heroes** (a 3v3 or 1v1 replay);
     - **every map**: the map objectives, the minimap per map (docs/maps.md; the jitter is solved -
       map id, 2026-10-09; every map id read in game by 2026-10-15);
