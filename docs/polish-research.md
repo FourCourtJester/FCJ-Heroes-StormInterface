@@ -156,3 +156,39 @@ All of them are driven by events from the game to that hidden cell, so they woul
   - the timer: `HeroDeathTimeLabel` (~2163);
   - the Viking and Misha timers: `PET_TIMERS` and `pet_death_labels` / `pet_death_bindings`;
   - the textures: `slant_bars` and `top_backplate_texture`.
+
+## Tonight's test build (2026-10-16, stamp ad48279)
+
+**What I picked for your questions** (say if any is wrong):
+1. Skull: Blizzard's art and timings, with Ahli's handover to the number.
+2. Flash: the white text flash in the last 5 s, plus Blizzard's glow pulse over the plate.
+3. Frame: one chrome line round the plates and the XP bar together. The core bar is left out, and there are no lines between heroes. `[row_frame] width = 0` takes it away.
+4. Intro: not built. It still needs your OBS plan (hotkey, game start, or both).
+5. Extras: the hearthstone squares only. The glow, Auriel's revive and "on fire" come later, if the squares light.
+6. The test build is made and deployed.
+
+**What to check in a replay:**
+- The stamp, top left, says ad48279.
+- **The squares** above each plate light for 6 s when an event arrives. Left to right:
+
+  | # | Colour | Event | Cell |
+  |---|---|---|---|
+  | 0 | magenta | almost respawned | ours |
+  | 1 | cyan | almost respawned | party |
+  | 2 | yellow | Viking almost respawned | party |
+  | 3 | orange | Viking almost respawned | ours |
+  | 4 | green | respawned | ours |
+  | 5 | white | respawned | party |
+  | 6 | purple | pet almost respawned | party |
+  | 7 | pink | hearthstone start | party |
+  | 8 | teal | hearthstone start | ours |
+
+  Tell me which ones light.
+- **A death:** the skull plays, then the number fades in about 1 s later.
+- **Respawn:** in the last 5 s, the number flashes white and the glow pulses. The Vikings' own timers flash too.
+- **Thumbnails** above the plates show the party cell's portraits 1, 2 and 3. In a Rexxar game and a Vikings game, do 2 and 3 show Misha and each Viking?
+- **The frame:**
+  - Does the chrome line sit cleanly round each row?
+  - Do the pop-ups and the heroic stay on top of it?
+  - Does it look right in a 3v3, if you have one?
+  - The rows now sit 2 px higher and a touch smaller, to keep the frame inside the padding.
