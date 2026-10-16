@@ -1842,13 +1842,29 @@ RESPAWN_DIAGNOSTICS = [
     ("255,255,120,190", [("HearthstoneStartDefault", "party")]),                # pink
     ("255,0,128,128", [("HearthstoneStartDefault", "ours")]),                   # teal
 ]
+# A second row, under the first: on fire. Blizzard sends these to the party cell's
+# OnFireCutsceneFrame (uilib.galaxy libUIUI_gf_UIOnFireSetOnFireType/Level): the levels, Left
+# (Order, blue) / Right (Chaos, red) to everyone; Ally / Enemy only to the hero's allies /
+# enemies, so an observer may see neither. Squares 0-6 of row 2.
+ONFIRE_DIAGNOSTICS = [
+    ("255,255,140,0", [("OnFireEmbers", "fire")]),                              # orange
+    ("255,255,0,0", [("OnFireInferno", "fire")]),                               # red
+    ("255,128,128,128", [("OnFireEnd", "fire")]),                               # grey
+    ("255,0,90,255", [("OnFireAlly", "fire")]),                                 # blue
+    ("255,120,0,0", [("OnFireEnemy", "fire")]),                                 # dark red
+    ("255,140,210,255", [("OnFireLeft", "fire")]),                              # light blue
+    ("255,255,160,160", [("OnFireRight", "fire")]),                             # light red
+]
 
 
 def respawn_diagnostics(cell):
     out = ""
-    for j, (colour, events) in enumerate(RESPAWN_DIAGNOSTICS):
+    src_frame = {"ours": "$parent", "party": cell, "fire": f"{cell}/OnFireCutsceneFrame"}
+    rows = [("FCJH_Diag", 4, RESPAWN_DIAGNOSTICS), ("FCJH_FireDiag", 18, ONFIRE_DIAGNOSTICS)]
+    squares = [(prefix, top, j, sq) for prefix, top, table in rows for j, sq in enumerate(table)]
+    for prefix, top, j, (colour, events) in squares:
         x = 40 + 14 * j
-        evs = "".join(f'\n\t\t\t\t\t\t\t\t\t<Event event="{e}" action="Reset,Play" frame="{"$parent" if src == "ours" else cell}"/>'
+        evs = "".join(f'\n\t\t\t\t\t\t\t\t\t<Event event="{e}" action="Reset,Play" frame="{src_frame[src]}"/>'
                       for e, src in events)
         extra = (f'\n\t\t\t\t\t\t\t\t<Alpha val="0"/>\n\t\t\t\t\t\t\t\t<Unclipped val="true"/>'
                  f'\n\t\t\t\t\t\t\t\t<Animation name="FCJH_Seen">{evs}'
@@ -1857,7 +1873,7 @@ def respawn_diagnostics(cell):
                  '\n\t\t\t\t\t\t\t\t\t\t<Key type="Curve" time="6" value="255" inout="Linear"/>'
                  '\n\t\t\t\t\t\t\t\t\t\t<Key type="Curve" time="6.01" value="0" inout="Linear"/>'
                  '\n\t\t\t\t\t\t\t\t\t</Controller>\n\t\t\t\t\t\t\t\t</Animation>')
-        out += "\n" + fill_image(f"FCJH_Diag{j}", box(("Min", 4), ("Min", x), ("Min", 14), ("Min", x + 10)),
+        out += "\n" + fill_image(f"{prefix}{j}", box(("Min", top), ("Min", x), ("Min", top + 10), ("Min", x + 10)),
                                   colour, 700, 7, extra).rstrip("\n")
     return out
 

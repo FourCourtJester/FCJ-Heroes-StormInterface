@@ -183,7 +183,22 @@ All of them are driven by events from the game to that hidden cell, so they woul
   | 7 | pink | hearthstone start | party |
   | 8 | teal | hearthstone start | ours |
 
-  Tell me which ones light.
+  A second row under it (new in this build) is for **on fire**, all from the party cell's fire
+  frame:
+
+  | # | Colour | Event |
+  |---|---|---|
+  | 0 | orange | embers (on fire, level 1) |
+  | 1 | red | inferno (level 2) |
+  | 2 | grey | fire ended |
+  | 3 | blue | ally (Blizzard sends it only to the hero's allies) |
+  | 4 | dark red | enemy (only to the hero's enemies) |
+  | 5 | light blue | left side (Order) |
+  | 6 | light red | right side (Chaos) |
+
+  Tell me which ones light, in both rows. For the fire row, a hero on a kill streak should
+  light orange then red, and one of light blue / light red. Ally and enemy may never light for
+  an observer.
 - **A death:** the skull plays, then the number fades in about 1 s later.
 - **Respawn:** in the last 5 s, the number flashes white and the glow pulses. The Vikings' own timers flash too.
 - **Thumbnails** above the plates show the party cell's portraits 1, 2 and 3. In a Rexxar game and a Vikings game, do 2 and 3 show Misha and each Viking?
