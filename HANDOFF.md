@@ -656,8 +656,10 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    its box is the English countdown's, so the other text's tip lands off red's plates by its
    length (1b0dea6). Seen, both texts (2026-10-16): "WARHEADS DEPLOYED IN: 0:27" tip at x 1166,
    "WARHEADS AVAILABLE: 3 LEFT" at 1171 - both just off red's plates (~1175) - its words ~15 px
-   clear of the hexagon, its bar ending ~37 px over the XP bar (966). Its other SC2Panel parts (NukeSiloFrame, TerrazineBuffFrame)
-   not seen on screen.
+   clear of the hexagon, its bar ending ~37 px over the XP bar (966). Its other SC2Panel parts
+   (NukeSiloFrame, NukeSiloFrame2, TerrazineBuffFrame) never show, in any view: the map's
+   script (`libmsc2.galaxy`) hides them for everyone at setup and nothing ever shows them -
+   leftovers. Nothing left on Warhead.
    **The minimap's tooltip - OFF, every map (user, 2026-10-15: "Just hide it or disable it";
    seen gone on 08eeb21).** Hovering a named minimap icon (a watch tower, a fort, Tomb's Spider
    Altar) showed Blizzard's `MinimapPanel/MinimapPanelTooltip` at ~1332-1467 x, ~800-850 y,
