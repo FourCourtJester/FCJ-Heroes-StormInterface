@@ -519,12 +519,12 @@ from their plates (docs/blizzard-fixes.md).
       game's own unit, fine); her plate's click selects only the pilot, so does nothing while
       she's in the mech (Blizzard's, docs/blizzard-fixes.md). Samuro's images and Abathur's
       Evolved Monstrosity get the SHORT card (team, health, stats) - right: they aren't heroes,
-      and the short card tells an image from Samuro. Still to see:
-      Deathwing in Dragonflight and in World Breaker form (one of his two ground forms: from
+      and the short card tells an image from Samuro. Deathwing SEEN (user, 2026-10-16: good)
+      in Dragonflight and in World Breaker form (one of his two ground forms: from
       Dragonflight he lands as Destroyer or, with the World Breaker button, as World Breaker -
       a buff, `DeathwingWorldbreakerForm`, on the same `HeroDeathwing` unit, so the card's
       match holds and only the buttons are left: World Breaker's read Lava Burst and Earth
-      Shatter, Destroyer's Incinerate and Onslaught; the user may enlist help, 2026-10-16).
+      Shatter, Destroyer's Incinerate and Onslaught).
       Alexstrasza's Dragonqueen, Ragnaros in Molten Core, Greymane's Worgen and Valeera
       stealthed SEEN (user, 2026-10-16: all good). Each form gets the TALL card with its player's portrait, talents and name, and
       its own buttons. If one gets the short card or no player, look at which unit the plate
