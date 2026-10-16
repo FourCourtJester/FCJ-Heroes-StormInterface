@@ -190,8 +190,8 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
     on purpose (the NoName status frames, Medivh's raven, the Volskaya robot); ours binds the
     name's inner Label instead, so it only ever hides - on all 40 hero status frames Blizzard
     has, the heroes' own included.
-  - **Status:** replay, chat and names confirmed in game (user, 2026-10-16); inspect rebuilt
-    to park off screen, which works (user, 2026-10-16); its slide left to test.
+  - **Status:** replay, chat and names confirmed first, then inspect, rebuilt
+    to park off screen. All four confirmed in game (user, 2026-10-16) - DONE.
 
 ## Known, not fixed
 
