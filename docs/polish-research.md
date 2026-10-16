@@ -192,6 +192,8 @@ All of them are driven by events from the game to that hidden cell, so they woul
   - Do the pop-ups and the heroic stay on top of it?
   - Does it look right in a 3v3, if you have one?
   - The rows now sit 2 px higher and a touch smaller, to keep the frame inside the padding.
+- **D.Va's Self-Destruct charge** (visual pass): her mech's charge meter doesn't go on the
+  plate, but check it shows on her talent card, the way Tracer's Pulse Bomb meter does.
 
 ## Decisions from the question round (2026-10-16, before the test)
 
