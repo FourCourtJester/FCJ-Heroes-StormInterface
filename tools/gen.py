@@ -47,6 +47,8 @@ RED_SLOTS = ["6", "7", "8", "9", "0"]
 # Minimap child (438 x 438) at its top-left. The engine fits each map inside that square.
 MINIMAP_SQUARE = 438
 MINIMAP_PANEL_W = 468
+REPLAY_BUTTON = 55       # Blizzard's ReplayButtonTemplate, square (replaypanel.stormlayout)
+REPLAY_BUTTON_IN = 17    # PlayButton's and HideTimelineButton's inset from the panel art's sides
 # A kill row's portraits, from the row's left (killlog.stormlayout Item): killer from 27, one
 # victim ending at 210; each further victim adds a portrait to the right (TgtPortrait1-4 at
 # +43 +43 +41 +19), so a pentakill's fifth ends at 356. The kill feed is Blizzard's, in its
@@ -481,6 +483,15 @@ def constants_layout(cfg):
             const(name(stem, side), v)
         const(name(stem, "w"), u(w))
         const(name(stem, "h"), u(h))
+
+    # The replay panel's bottom row evened out (user, 2026-10-16): Play and Hide keep Blizzard's
+    # insets, and Slower and Faster chain off Play at this gap instead of hugging the middle
+    w = u(cfg["element"]["replay"]["rect"][2])
+    gap = round((w - 2 * REPLAY_BUTTON_IN - 4 * REPLAY_BUTTON) / 3)
+    if gap < 0:
+        sys.exit(f"replay: {w} units is too narrow for its four buttons")
+    lines.append("")
+    const(name("replay", "button", "gap"), gap, "between the replay panel's bottom-row buttons")
 
     mm = cfg["minimap"]
     left = round(u(mm["centre_x"]) - MINIMAP_SQUARE / 2) - anchor_origin(cfg, "minimap")[0]

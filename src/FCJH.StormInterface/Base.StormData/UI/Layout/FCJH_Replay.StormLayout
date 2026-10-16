@@ -26,6 +26,22 @@
 						<Frame type="Image" name="BackgroundImage">
 							<Width val="#FCJH_REPLAY_W"/>
 						</Frame>
+						<!-- the bottom row evened out: Slower and Faster chain off Play instead of hugging the
+						     middle (gen.py REPLAY_BUTTON_GAP; user, 2026-10-16) -->
+						<Frame type="Button" name="DecSpeedButton">
+							<Anchor side="Left"  relative="$parent/PlayButton" pos="Max" offset="#FCJH_REPLAY_BUTTON_GAP"/>
+							<Anchor side="Right" relative="$this" pos="Min" offset="0"/>
+						</Frame>
+						<Frame type="Button" name="IncSpeedButton">
+							<Anchor side="Left"  relative="$parent/DecSpeedButton" pos="Max" offset="#FCJH_REPLAY_BUTTON_GAP"/>
+							<Anchor side="Right" relative="$this" pos="Min" offset="0"/>
+						</Frame>
+						<!-- Start with the timeline hidden (user, 2026-10-16): the slider down and the Show
+						     button up, as if Hide had been clicked. TRIAL - the toggle is the engine's, and it may
+						     put its own state back when the panel opens. -->
+						<Frame type="Slider" name="ProgressSlider"><Visible val="false"/></Frame>
+						<Frame type="Button" name="HideTimelineButton"><Visible val="false"/></Frame>
+						<Frame type="Button" name="ShowTimelineButton"><Visible val="true"/></Frame>
 					</Frame>
 				</Frame>
 			</Frame>

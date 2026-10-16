@@ -195,12 +195,13 @@ kind = "obs"
 
 # Around the edges
 [element.replay]
-rect = [0, 0, 252, 153]      # Blizzard's ReplayPanel, 280 x 170 units (native 420 wide). On red's row,
+rect = [0, 0, 245, 153]      # Blizzard's ReplayPanel, 272 x 170 units (native 420 wide). On red's row,
                              # the inspect card's mirror (user, 2026-10-16): narrowed to keep clear
                              # of red's map alerts, which start at the row's inner end and grow
-                             # outward. Its buttons need 254 units (two 55s at the ends, 17 in,
-                             # and the two speed buttons either side of the middle); 280 leaves a
-                             # little air. Was the right edge's middle 2026-10-06..16, native width.
+                             # outward (a banner and its hexagon end ~50 px short of it at 252).
+                             # Its four buttons need 254 units (55 each, the ends 17 in); the
+                             # rest is shared evenly between them (gen.py REPLAY_BUTTON_GAP, 6).
+                             # Was the right edge's middle 2026-10-06..16, native width.
 above = "red_xp"             # its art's bottom sits [screen] padding above red's row
 flush = "right"              # its art's right edge on the row's
 art_inset = 6                # its glass art's outer line sits 6 px inside the frame on every side
