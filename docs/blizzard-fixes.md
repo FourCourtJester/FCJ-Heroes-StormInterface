@@ -217,13 +217,16 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
   is the same so far. Hero forms that are units of their own (Medivh's Raven and the like) are
   still to be checked (HANDOFF item 14).
 
-### D.Va's plate can't select her mech
+### D.Va's plate can't select her mech, nor Rexxar's Misha
 - A plate's click (Blizzard's UnitTargetFrame: select the hero, centre the camera) always
   takes the player's hero unit, which for D.Va is the pilot. In her mech the pilot is tucked
   inside it, so the click does nothing (user, 2026-10-16); out of it, it works. Her data has
   no tracker from the pilot to the mech (only the mech's DVaMechPilotUnitTracker, the other
   way), so the plate can't be given a mech click as each Viking's is.
   Not fixable in a layout. TLV's plates take no clicks at all (user, 2026-10-16).
+- Rexxar's Misha is the same: she can't be selected from the plate either (user, 2026-09-30,
+  when her bar was dropped; 2026-10-16). A diagnostic then showed no click squares on her or
+  on D.Va's mech - the game gives them no target.
 
 ### A replay can't open with its timeline hidden
 - The replay panel's timeline (the slider) hides only by its own Hide button or the "Toggle
