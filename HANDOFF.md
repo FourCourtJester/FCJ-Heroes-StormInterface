@@ -723,6 +723,10 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    Seen on 54eaed2: no flicker between the countdown and the skull race. Blue's
    Punisher - the bots never got one - is in the final pass (14). Player views (1-8) show the
    Punisher by the viewer's team (the script shows the viewer's team as Ally) - expected, logged.
+   **The floor's one exception (user, 2026-10-15: "only this map"; 5099bf4):** the skull race's
+   counts, crystal and Punishers covered the minimap's bottom (21_39_22, 21_39_31), so Infernal's
+   minimap sits 60 px up off THE FLOOR (`[minimap.nudge]` -49, notch ~1005) and the race stays
+   where it was (`[minimap.panel_nudge]` +30). Moving the race above the map was declined.
    Sky Temple's id `ControlPoints` read in game (user, 2026-10-15) - every id now GAME.
    **Then Sky Temple's QA.** Any map could get a two-view or other per-map behaviour the same way
    (`launch_cut`/`opens`, `on_map`).
