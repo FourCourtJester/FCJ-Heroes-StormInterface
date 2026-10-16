@@ -707,8 +707,9 @@ RESOURCE_TABLE = [
 # Ammo heroes: the resource bar cut into one segment per shot, as Blizzard's own Tracer and
 # Junkrat bars are (tracer.stormlayout, junkrat.stormlayout: Segmented + SegmentValue = energy
 # per segment). Tracer: 20 energy, 2 a shot, so 10 segments. Junkrat: 4 (3 with Cannonball),
-# 1 a shot. A per-shot value, not a count, so a talent that changes the max needs nothing.
-RESOURCE_SEGMENTS = {"HeroTracer": 2, "HeroJunkrat": 1}
+# 1 a shot. Gazlowe's scrap: 10 (12 with a talent), one segment each, as Ahli does it. A
+# per-segment value, not a count, so a talent that changes the max needs nothing.
+RESOURCE_SEGMENTS = {"HeroTracer": 2, "HeroJunkrat": 1, "HeroTinker": 1}
 
 HERO_ROW_FILE = "FCJH_HeroRow.StormLayout"
 

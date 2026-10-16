@@ -581,7 +581,7 @@
 				<State name="Valeera"><When type="Property" Unit="HeroValeera"/><Action type="SetProperty" frame="FCJH_Resource" ColorStyle="BrewEnergy"/><Action type="SetProperty" frame="FCJH_Resource" Segmented="false" index="0"/></State>
 				<State name="VolskayaGunner"><When type="Property" Unit="VolskayaVehicleGunner"/><Action type="SetProperty" frame="FCJH_Resource" ColorStyle="DivaEnergy"/><Action type="SetProperty" frame="FCJH_Resource" Segmented="false" index="0"/></State>
 				<State name="Zarya"><When type="Property" Unit="HeroZarya"/><Action type="SetProperty" frame="FCJH_Resource" ColorStyle="DivaEnergy"/><Action type="SetProperty" frame="FCJH_Resource" Segmented="false" index="0"/></State>
-				<State name="Gazlowe"><When type="Property" Unit="HeroTinker"/><Action type="SetProperty" frame="FCJH_Resource" ColorStyle="FuryEnergy"/><Action type="SetProperty" frame="FCJH_Resource" Segmented="false" index="0"/></State>
+				<State name="Gazlowe"><When type="Property" Unit="HeroTinker"/><Action type="SetProperty" frame="FCJH_Resource" ColorStyle="FuryEnergy"/><Action type="SetProperty" frame="FCJH_Resource" Segmented="true" index="0"/><Action type="SetProperty" frame="FCJH_Resource" SegmentValue="1"/></State>
 				<State name="Normal"><Action type="SetProperty" frame="FCJH_Resource" ColorStyle="StandardEnergy"/><Action type="SetProperty" frame="FCJH_Resource" Segmented="false" index="0"/></State>
 			</StateGroup>
 			<!-- Fountain (user, 2026-10-06): the inspect card's - Blizzard's buff slot with the

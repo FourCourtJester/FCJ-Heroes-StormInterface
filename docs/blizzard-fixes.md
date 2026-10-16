@@ -59,7 +59,8 @@ detail.
 - The player top bar's death and respawn animations on the plates: the skull, the respawn
   flash and glow (test build, not seen yet).
 - A chrome frame round each team's row (test build, not seen yet).
-- Tracer's and Junkrat's resource bars on the plates cut into one segment per shot, as in
+- Tracer's, Junkrat's and Gazlowe's resource bars on the plates cut into one segment per shot
+  (or scrap), as in
   Blizzard's own player bars (`gen.RESOURCE_SEGMENTS`; test build, not seen yet).
 
 **Can't be fixed from a layout** - the last section: Towers' cannon alerts, the death recap,

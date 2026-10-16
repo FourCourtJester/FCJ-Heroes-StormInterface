@@ -195,8 +195,11 @@ All of them are driven by events from the game to that hidden cell, so they woul
 - **D.Va's Self-Destruct charge** (visual pass): her mech's charge meter doesn't go on the
   plate, but check it shows on her talent card, the way Tracer's Pulse Bomb meter does.
 - **Ammo segments** (new in this build): Tracer's bar should show 10 segments, Junkrat's 4
-  (3 with Cannonball). If the dividers look wrong or don't show, we revisit; if they work,
-  they stay.
+  (3 with Cannonball), Gazlowe's scrap 10 (12 with his talent). If the dividers look wrong or
+  don't show, we revisit; if they work, they stay.
+- **Hogger:** check his plate's resource bar. He isn't in our per-hero colour list, so it
+  probably shows mana blue rather than his rage colour, and unsegmented. Blizzard's own
+  Hogger bar is segmented (`hogger.stormlayout`); Ahli cuts his rage every 50.
 
 ## Decisions from the question round (2026-10-16, before the test)
 
