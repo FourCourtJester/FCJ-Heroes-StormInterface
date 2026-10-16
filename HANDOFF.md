@@ -416,7 +416,10 @@ team's side; blue's Terrors still unseen). The banner protocols' recheck PASSED 
 Temple DONE for now 2026-10-14 (user: "for today, it's good to go"; its split is a Later).
 Tomb, Warhead, Volskaya, Battlefield done 2026-10-15; Infernal Shrines DONE 2026-10-15 but
 for blue's Punisher (final pass, item 14). Sky Temple DONE 2026-10-15 (eedab7d): every map passed.
-**Next: the rest of the newer maps' QA** (item 4).
+Infernal's minimap on the floor with its skull-race lift, 2026-10-15 (082126f).
+**The map pass is COMPLETE (user, 2026-10-15: "That's all the real maps").** ARAM maps have no
+banners (as the user last checked). Brawls are out of scope: the user intends to ignore them.
+What's left is the final every-map pass (item 14) and the other open items.
 For each, screenshots of: each banner as it comes up, anything hanging off the
 minimap's bottom. Hero test rosters come from the tracker in item 14 ("not seen yet").
 
