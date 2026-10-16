@@ -127,10 +127,10 @@ from then on are written with their fix.
   Ctrl+T) shrinks the box from its top. That suits a box at the bottom of the screen, but a
   box in a top corner falls away from the edge. Blizzard's hide/show also always slides in
   from the left.
-- **Ours:** the box sits top-right (user, 2026-10-16). `FCJH_TimelineLift` raises the panel 40
-  units (gen.py `REPLAY_TIMELINE`) while the timeline is hidden, and our own copy of
-  Blizzard's toggle slides it in from the right.
-- **Status:** to test (user, 2026-10-16).
+- **Ours:** the box sits flush in the top-right corner (user, 2026-10-16). `FCJH_TimelineLift`
+  raises the panel 40 units (gen.py `REPLAY_TIMELINE`) while the timeline is hidden, and our own
+  copy of Blizzard's toggle slides it in from the right.
+- **Status:** the slide from the right confirmed in game (user, 2026-10-16); the lift to test.
 
 ## Made for observers
 

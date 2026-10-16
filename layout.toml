@@ -196,10 +196,10 @@ kind = "obs"
 
 # Around the edges
 [element.replay]
-rect = [1675, 14, 231, 153]  # Blizzard's ReplayPanel, 257 x 170 units (native 420 wide), in the
-                             # top-right corner, its art [screen] padding from both edges (user,
-                             # 2026-10-16; on red's row before, the inspect card's mirror, and
-                             # narrowed then to clear red's map alerts).
+rect = [1695, -6, 231, 153]  # Blizzard's ReplayPanel, 257 x 170 units (native 420 wide), in the
+                             # top-right corner, its art flush with both edges - no [screen]
+                             # padding (user, 2026-10-16; on red's row before, the inspect card's
+                             # mirror, and narrowed then to clear red's map alerts).
                              # Its four buttons need 254 units (55 each, the ends 17 in); the
                              # rest is shared evenly between them (gen.py REPLAY_BUTTON_GAP): 1
                              # unit, so the ~9 px seen between buttons (each frame pads its box
@@ -214,7 +214,7 @@ hotkey = "Control+Shift+R"   # hides/shows it (Blizzard's toggle). Blizzard gave
                              # off it with our own GameHotkeys.txt didn't load (2026-10-16), so
                              # Ctrl+Shift+R. The tab's label (FCJH_Replay) says it too.
 [element.replay_collapsed]
-rect = [1700, 20, 200, 24]   # hidden state: a slim tab in the panel's art's top-right corner
+rect = [1720, 0, 200, 24]    # hidden state: a slim tab flush in the screen's top-right corner
 kind = "demand"
 [element.kill_feed]
 rect = [0, 104.4, 540, 300]  # Blizzard's, in its own place, not moved (user, 2026-10-05): top-left,

@@ -123,18 +123,18 @@
 	<Constant name="FCJH_GAME_COUNT_B" val="101"/>
 	<Constant name="FCJH_GAME_COUNT_W" val="113"/>
 	<Constant name="FCJH_GAME_COUNT_H" val="27"/>
-	<!-- replay: ui, px [1675, 14, 231, 153], from the screen's Max / Min -->
-	<Constant name="FCJH_REPLAY_L" val="-272"/>
-	<Constant name="FCJH_REPLAY_T" val="16"/>
-	<Constant name="FCJH_REPLAY_R" val="-15"/>
-	<Constant name="FCJH_REPLAY_B" val="186"/>
+	<!-- replay: ui, px [1695, -6, 231, 153], from the screen's Max / Min -->
+	<Constant name="FCJH_REPLAY_L" val="-250"/>
+	<Constant name="FCJH_REPLAY_T" val="-7"/>
+	<Constant name="FCJH_REPLAY_R" val="7"/>
+	<Constant name="FCJH_REPLAY_B" val="163"/>
 	<Constant name="FCJH_REPLAY_W" val="257"/>
 	<Constant name="FCJH_REPLAY_H" val="170"/>
-	<!-- replay_collapsed: demand, px [1700, 20, 200, 24], from the screen's Max / Min -->
-	<Constant name="FCJH_REPLAY_COLLAPSED_L" val="-244"/>
-	<Constant name="FCJH_REPLAY_COLLAPSED_T" val="22"/>
-	<Constant name="FCJH_REPLAY_COLLAPSED_R" val="-22"/>
-	<Constant name="FCJH_REPLAY_COLLAPSED_B" val="49"/>
+	<!-- replay_collapsed: demand, px [1720, 0, 200, 24], from the screen's Max / Min -->
+	<Constant name="FCJH_REPLAY_COLLAPSED_L" val="-222"/>
+	<Constant name="FCJH_REPLAY_COLLAPSED_T" val="0"/>
+	<Constant name="FCJH_REPLAY_COLLAPSED_R" val="0"/>
+	<Constant name="FCJH_REPLAY_COLLAPSED_B" val="27"/>
 	<Constant name="FCJH_REPLAY_COLLAPSED_W" val="222"/>
 	<Constant name="FCJH_REPLAY_COLLAPSED_H" val="27"/>
 	<!-- kill_feed: ui, px [0, 104.4, 540, 300], from the screen's Min / Min -->
@@ -287,7 +287,7 @@
 
 	<Constant name="FCJH_REPLAY_BUTTON_GAP" val="1"/>  <!-- between the replay panel's bottom-row buttons -->
 	<Constant name="FCJH_REPLAY_KEY" val="Control+Shift+R"/>  <!-- hides/shows the replay panel -->
-	<Constant name="FCJH_REPLAY_LIFTED_T" val="-24"/>  <!-- the replay panel's top while its timeline is hidden -->
+	<Constant name="FCJH_REPLAY_LIFTED_T" val="-47"/>  <!-- the replay panel's top while its timeline is hidden -->
 
 	<!-- MinimapPanel edges: the square centred on centre_x, its bottom edge at `bottom`.
 	     _L _R from the screen's middle; _BOTTOM from its bottom (positive hangs off-screen). -->
