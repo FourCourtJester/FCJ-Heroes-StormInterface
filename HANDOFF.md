@@ -415,7 +415,7 @@ team's side; blue's Terrors still unseen). The banner protocols' recheck PASSED 
 (2026-10-12). Alterac Pass DONE 2026-10-14 (everything below seen and approved in one pass). Hanamura
 Temple DONE for now 2026-10-14 (user: "for today, it's good to go"; its split is a Later).
 Tomb, Warhead, Volskaya, Battlefield done 2026-10-15; Infernal Shrines DONE 2026-10-15 but
-for blue's Punisher (final pass, item 14). Left: Sky Temple.
+for blue's Punisher (final pass, item 14). Sky Temple DONE 2026-10-15 (eedab7d): every map passed.
 **Next: the rest of the newer maps' QA** (item 4).
 For each, screenshots of: the map id at load
 (the diagnostic, now just that line), each banner as it comes up, anything hanging off the
@@ -732,8 +732,17 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    (20 px at the bar vs ~22 for a move) - not convincing, reverted. Shipped as is: this map stays
    50 px above the baseline (user, 2026-10-15). A 50% build would tell them apart, if it comes up.
    Sky Temple's id `ControlPoints` read in game (user, 2026-10-15) - every id now GAME.
-   **Then Sky Temple's QA.** Any map could get a two-view or other per-map behaviour the same way
-   (`launch_cut`/`opens`, `on_map`).
+   **Sky Temple DONE (user, 2026-10-15: "no flicker ... Sky Temple is done"; eedab7d).** The
+   countdown is the neutral banner on red's side (`temple_banner`; Blizzard's centre-screen
+   banner), its bar on the shared 930 line (`TEMPLE_BOX`'s bottom 98: the hexagon image's top is
+   clear above its art, so 69 had put it 26 px low). "Capture the Temples" hidden (item 16).
+   The three discs moved off the minimap's bottom half to THE GAP above it, centred on the tip,
+   on a CenterBar backing (`PARTS["sky_temple"]`); the minimap up 22 to THE FLOOR. Only what
+   matters shows: the row and bar only while the countdown frame is up (countdown and live),
+   each disc only while it carries the time (next) or is lit (live) - hidden in its own slot,
+   so the left is always the top temple. No flicker going live (the script lights all three
+   and greys the dead ones in one pass). Seen: between rounds, two next, one next, live.
+   Any map could get a two-view or other per-map behaviour the same way (`launch_cut`/`opens`, `on_map`).
 5. **The diagnostic - trimmed to the map id (user, 2026-10-09);** every map's id is now
    confirmed in game (2026-10-15), so `maps.diag` and `FCJH_DiagMapId` can go - the Infernal
    pass is done.
@@ -1243,7 +1252,9 @@ commits around it).
     - Cursed Hollow's "Collect the Tribute" (`tribute_count`: the art and words faded while
       the count is hidden);
     - Garden of Terror's "Gather the seed!" (`GatherTheSeedsFrame` parked above the screen;
-      `seed_banner(False)` builds it again).
+      `seed_banner(False)` builds it again);
+    - Sky Temple's "Capture the Temples" (`temple_banner`: the art and words faded while the
+      count is hidden - the same frame as the countdown).
     Left as they were, brief: Volskaya's 2 s point toast, Towers' 5 s tunnels notice.
 
 ## 8. Original brief

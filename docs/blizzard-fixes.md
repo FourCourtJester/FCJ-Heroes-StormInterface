@@ -121,6 +121,12 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
   countdown, "active" banner, Punisher and skull race all sit in one place above the minimap.
   Limit: in a player view (1-8) the script shows the viewer's team as Ally, so there the
   Punisher goes by the viewer's team, not the summoner's.
+- **Sky Temple: only the temples that matter.** Blizzard's three temple discs sit on the
+  minimap's bottom half all game, greyed between rounds, with no mark on the ones about to
+  activate but a countdown label. Ours sit above the minimap on a backing bar, shown only during
+  the countdown and while temples are live, and each disc only while it's next (carrying the
+  time) or live - hidden in its own slot, so its place still names its lane (`PARTS["sky_temple"]`;
+  c7e5da1). Seen in game with one and two temples (2026-10-15).
 - **Banner intros on the older maps.** Towers of Doom's banners slide and fade in; the older
   maps' have no intro at all. Ours give every banner the same intro (`maps.intro`). Blackheart's
   chests banner needed rebuilding to do it: Blizzard's bar is a fixed-width image anchored at
