@@ -7031,6 +7031,18 @@
 			<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 			<Width val="303"/>
 			<Height val="95"/>
+				<Frame type="Image" name="FCJH_EmptyBack00">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="48"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="55"/>
+					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+					<Width val="42"/>
+					<Height val="42"/>
+					<LayerColor val="000000"/>
+					<ImageMaskTexture val="@UI/HUD_BTN_BG_Ability_AlphaMask"/>
+					<RenderPriority val="10"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
 				<Frame type="Image" name="FCJH_EmptySlot00" template="CommandPanel/EmptyDynamicButtonImageTemplate">
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="35"/>
 					<Anchor side="Left"   relative="$parent" pos="Min" offset="42"/>
@@ -7038,6 +7050,18 @@
 					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 					<Width val="68"/>
 					<Height val="68"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_EmptyBack01">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="48"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="105"/>
+					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+					<Width val="42"/>
+					<Height val="42"/>
+					<LayerColor val="000000"/>
+					<ImageMaskTexture val="@UI/HUD_BTN_BG_Ability_AlphaMask"/>
+					<RenderPriority val="10"/>
 					<AcceptsMouse val="false"/>
 				</Frame>
 				<Frame type="Image" name="FCJH_EmptySlot01" template="CommandPanel/EmptyDynamicButtonImageTemplate">
@@ -7049,6 +7073,18 @@
 					<Height val="68"/>
 					<AcceptsMouse val="false"/>
 				</Frame>
+				<Frame type="Image" name="FCJH_EmptyBack02">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="48"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="156"/>
+					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+					<Width val="42"/>
+					<Height val="42"/>
+					<LayerColor val="000000"/>
+					<ImageMaskTexture val="@UI/HUD_BTN_BG_Ability_AlphaMask"/>
+					<RenderPriority val="10"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
 				<Frame type="Image" name="FCJH_EmptySlot02" template="CommandPanel/EmptyDynamicButtonImageTemplate">
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="35"/>
 					<Anchor side="Left"   relative="$parent" pos="Min" offset="143"/>
@@ -7056,6 +7092,18 @@
 					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 					<Width val="68"/>
 					<Height val="68"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_EmptyBack03">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="48"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="206"/>
+					<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
+					<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+					<Width val="42"/>
+					<Height val="42"/>
+					<LayerColor val="000000"/>
+					<ImageMaskTexture val="@UI/HUD_BTN_BG_Ability_AlphaMask"/>
+					<RenderPriority val="10"/>
 					<AcceptsMouse val="false"/>
 				</Frame>
 				<Frame type="Image" name="FCJH_EmptySlot03" template="CommandPanel/EmptyDynamicButtonImageTemplate">

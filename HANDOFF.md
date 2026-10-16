@@ -1205,7 +1205,12 @@ commits around it).
         Tassadar, Yrel (the last five unseen); red Medivh, Deathwing, Abathur, Samuro, D.Va.
       - **Next rosters:** for the form checks below (no hero is unseen now).
     - **forms** (item 3): Medivh's Raven SEEN (user, 2026-10-16, Hanamura: the tall card, his
-      player, and his own buttons - Raven Form's cancel on the mount slot); still to see:
+      player, and his own buttons - Raven Form's cancel on the mount slot). D.Va SEEN (user, 2026-10-16): the pilot gets the tall
+      card with her buttons; the self-destructing mech the tall card at 1 hp, invulnerable (the
+      game's own unit, fine); her plate's click selects only the pilot, so does nothing while
+      she's in the mech (Blizzard's, docs/blizzard-fixes.md). Samuro's images and Abathur's
+      Evolved Monstrosity get the SHORT card (team, health, stats) - right: they aren't heroes,
+      and the short card tells an image from Samuro. Still to see:
       Deathwing in Dragonflight and as World Breaker,
       Alexstrasza's Dragonqueen, Ragnaros in Molten Core, Greymane's Worgen, Valeera
       stealthed - each gets the TALL card with its player's portrait, talents and name, and

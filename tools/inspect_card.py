@@ -306,8 +306,15 @@ def command_panel():
     # An empty slot's frame under Q W E R (Blizzard's, as on its talent-active row: drawn at the
     # size of the button's frame art, at 80 alpha). A button covers its own; a hero without that
     # ability - Abathur has no E - shows the empty frame, not a hole (user, 2026-10-05). Z and
-    # D, at the row's ends, just aren't there when a hero hasn't one.
+    # D, at the row's ends, just aren't there when a hero hasn't one. Under the frame, the
+    # ability buttons' own dark hexagon (Blizzard's IconBackground: black through the ability
+    # mask, at the icon's inset) - the bare frame read as a hole (user, Abathur, 2026-10-16).
     empties = "".join(
+        f'{T*4}<Frame type="Image" name="FCJH_EmptyBack{k}">\n'
+        + placed(ABIL_ROWS[1] - top + CMD_INSET, round(cmd_centre(1, c) - CMD_SIZE / 2) - M + CMD_INSET,
+                 CMD_SIZE - 2 * CMD_INSET, CMD_SIZE - 2 * CMD_INSET, 5)
+        + f'{T*5}<LayerColor val="000000"/>\n{T*5}<ImageMaskTexture val="@UI/HUD_BTN_BG_Ability_AlphaMask"/>\n'
+        f'{T*5}<RenderPriority val="10"/>\n{T*5}<AcceptsMouse val="false"/>\n{T*4}</Frame>\n'
         f'{T*4}<Frame type="Image" name="FCJH_EmptySlot{k}" template="CommandPanel/EmptyDynamicButtonImageTemplate">\n'
         + placed(ABIL_ROWS[1] - top - ART, round(cmd_centre(1, c) - CMD_SIZE / 2) - M - ART, CMD_BORDER, CMD_BORDER, 5)
         + f'{T*5}<AcceptsMouse val="false"/>\n{T*4}</Frame>\n'
