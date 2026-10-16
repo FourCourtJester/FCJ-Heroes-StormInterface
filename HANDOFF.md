@@ -410,6 +410,10 @@ land on whole pixels at 1080p (`inspect_card.line`), so at 1440p they may come o
 **The road to release (user, 2026-10-16): "We're done maps. We're almost done heroes."** Warhead's
 nuke counters closed the maps (e966a07). Left, in order: the last few heroes, then a final
 visual polish, then screenshots of everything for posting.
+Plan for 2026-10-17 (user): human replays to catch the blue-side cases never seen (Punisher,
+Terrors, curse - blue never summoned in the test replays); while those come, the TO DO list
+and the hero-specific items. Once maps and heroes are done it's all polish - visual work.
+Once the user's happy with that: an OBS overlay to pair with the interface. Then done.
 
 **Next (2026-10-09, end of night; start here).** The map pass: the four working maps and
 Dragon Shire are DONE (items 3-4; Dragon Shire's knight on either team's side, blue's mirrored);
