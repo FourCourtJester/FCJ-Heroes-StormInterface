@@ -105,6 +105,18 @@ from then on are written with their fix.
 - **Ours:** the panel moves 9 right (`maps.py`, the Battlefield entry's `panels`; 90da446).
 - **Status:** fixed, seen centred in game (2026-10-15).
 
+### Replay controls: the hide key never worked
+- **Blizzard's:** the replay panel's own hide toggle (`ToggleControlObserverTools`,
+  stormobserverpanel.stormlayout) is bound to Ctrl+Shift+O, which Blizzard's own hotkeys give to
+  the UI editor's Save All (`gamehotkeys.txt`: `UIEditorSaveAll=Control+Shift+O`), so the key never
+  reaches the interface. It does nothing in the default UI, in Ahli 0.75 (which rebinds the same
+  key) or in ours (user, 2026-10-16). The toggle also starts off while the panel shows, so a
+  working key needed two presses.
+- **Ours:** Blizzard's toggle on Ctrl+Shift+R (layout.toml `element.replay` hotkey, ef1f1b6),
+  switched on when a replay first shows the panel (as Ahli does, 030278d); a tab names the key
+  while the panel is hidden.
+- **Status:** hides in one press and the tab shows (user, 2026-10-16).
+
 ## Made for observers
 
 Not bugs - things Blizzard's observer UI never offered, which the write-up may want.
