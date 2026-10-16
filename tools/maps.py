@@ -697,12 +697,15 @@ def tribute_count():
     (uilib.galaxy hides the count then). While it counts, our words in the game's language
     ("Tribute Spawns In", TRIBUTE_SPAWNS_IN) replace Blizzard's. They flow as text: the words
     from the bar's left end, as the red curse's, the count one space after them, middle to
-    middle (user, 2026-10-06). "Collect the Tribute" stays Blizzard's (user: good); in a
-    language not listed, Blizzard's words and count stand."""
+    middle (user, 2026-10-06). In a language not listed, Blizzard's words and count stand.
+    "Collect the Tribute" (no count) is hidden, the whole banner (user, 2026-10-15: static words
+    the minimap's marker already says; revisit after the final pass): its art and words faded
+    out while the count is hidden - the frame stays shown, its intro fading it."""
     tribute = RAVEN + "/TributeSpawnFrame"
     info, count, words = f"{tribute}/TributeInfoLabel", f"{tribute}/FCJH_TributeCount", f"{tribute}/FCJH_TributeWords"
     timer = f"{tribute}/TributeTimerLabel"
     alpha = lambda frame, a: f'<Action type="SetProperty" frame="{frame}" Alpha="{a}"/>'
+    art = lambda a: alpha(f"{tribute}/BackgroundImage", a) + alpha(f"{tribute}/TimerImage", a)
     counting = f'<When type="Property" frame="{timer}" Visible="true"/>'
     t = T * 8
     label = lambda name_, anchors, text, more="": (
@@ -714,12 +717,12 @@ def tribute_count():
         + more + f'{T*7}</Frame>\n')
     states = "".join(f'{t}\t<State name="In{i}">{counting}<When type="Property" frame="{info}" Text="{theirs}"/>'
                      f'<Action type="SetProperty" frame="{words}" Text="{ours}"/>'
-                     + alpha(words, 255) + alpha(count, 255) + alpha(info, 0) + alpha(timer, 0) + "</State>\n"
+                     + alpha(words, 255) + alpha(count, 255) + alpha(info, 0) + alpha(timer, 0) + art(255) + "</State>\n"
                      for i, (theirs, ours) in enumerate(TRIBUTE_SPAWNS_IN.items()))
     group = (f'{t}<StateGroup name="FCJH_TributeWords">\n{t}\t<DefaultState val="Words"/>\n' + states
              + f'{t}\t<State name="Counting">{counting}' + alpha(words, 0) + alpha(count, 0)
-             + alpha(info, 255) + alpha(timer, 255) + "</State>\n"
-             f'{t}\t<State name="Words">' + alpha(words, 0) + alpha(count, 0) + alpha(info, 255) + "</State>\n"
+             + alpha(info, 255) + alpha(timer, 255) + art(255) + "</State>\n"
+             f'{t}\t<State name="Words">' + alpha(words, 0) + alpha(count, 0) + alpha(info, 0) + art(0) + "</State>\n"
              f'{t}</StateGroup>\n')
     return (label("FCJH_TributeWords", (("Top", "$parent/TributeInfoLabel", "Min", 0),
                                         ("Bottom", "$parent/TributeInfoLabel", "Max", 0),
@@ -2067,7 +2070,7 @@ MAPS = {
                           extra=unclipped(HOLDOUT_PARTS, 3), note="the zerg wave warning (neutral)")]}}),
     "cursed_hollow": Map(
         "Cursed Hollow", (436, 312), core="RavenCourtPanel",
-        # "Tribute spawning" / "Collect the tribute": one neutral banner, on red's side. Its art:
+        # "Tribute spawning" ("Collect the tribute" hidden: tribute_count): one neutral banner, on red's side. Its art:
         # the hexagon pinned 20 in from the frame's top-right, the bar 481 wide ending 15 past it,
         # the count under the hexagon (measured in game, 2026-10-06). The curse banner hangs off
         # the same hexagon (CurseFrame/TimerImage) and goes to the cursed team's side
@@ -2079,7 +2082,7 @@ MAPS = {
                           followers=(("CurseFrame", CURSE_UP, CURSE_TEXT + CURSE_COUNT + curse_colon() + unclipped(CURSE_PARTS)
                                        + CURSE_RAVEN),),
                           extra=cursed_side() + tribute_count() + unclipped(TRIBUTE_PARTS),
-                          note="the tribute spawning, then waiting to be collected (neutral); the curse on red")]}},
+                          note="the tribute spawning (neutral); the curse on red")]}},
         notes="the tribute counts sit at the minimap's bottom corners"),
     "dragon_shire": Map(
         "Dragon Shire", (434, 282), core="DragonShirePanel",
@@ -2103,8 +2106,8 @@ MAPS = {
             "blue": [Alert("GardenTerrorHealthFrame", kind="TERROR", box=TERROR_BOX, spot_only=True,
                            note="the Terrors' health, when they're blue's (terror_side)")],
             "red": [Alert("EventWarningFrame", kind="SEED", box=SEED_BOX, spot_only=True,
-                          note="the seed banners' spot (neutral): EventWarningFrame and "
-                               "GatherTheSeedsFrame, the map file's, hang off it; red's Terrors too")]}}),
+                          note="the seed banners' spot (neutral): EventWarningFrame (and "
+                               "GatherTheSeedsFrame, hidden) hang off it; red's Terrors too")]}}),
     "hanamura_temple": Map(
         "Hanamura Temple", (473, 287), file="HanamuraRework", minimap=(80, 0),
         # three screen-sized panels, their parts placed from the screen's right edge
@@ -2475,7 +2478,11 @@ def warhead_counters():
 PARTS["warhead_junction"] = warhead_counters()
 
 PARTS["garden_of_terror"] = {"EventWarningFrame": seed_banner(True),
-                             "GatherTheSeedsFrame": seed_banner(False),
+                             # "Gather the seed!" hidden (user, 2026-10-15: static words the minimap's
+                             # seed already says; revisit after the final pass): parked above the
+                             # screen, as Towers' pair (towers_extra) - its own slide-in fades it, so
+                             # not by alpha. seed_banner(False) builds it again.
+                             "GatherTheSeedsFrame": '<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="-9999"/>\n',
                              "GardenTerrorHealthFrame": terror_frame()}
 
 def alert_frame(team, column, i, at, indent=2):
