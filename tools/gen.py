@@ -200,6 +200,29 @@ def team_bar_rects(cfg, n=5):
     return out
 
 
+def core_chrome_outset(cfg):
+    """How far the core bar's own chrome line ([team_core] frame_width / frame_inside) reaches
+    outside the bar, in layout units (whole ones: the frame is anchored to Blizzard's bar)."""
+    core = cfg["team_core"]
+    return max(0, Units(cfg)(core.get("frame_width", 0) - core.get("frame_inside", 0)))
+
+
+def core_chrome_texture(cfg, team):
+    """The core bar's chrome line, drawn as the row frame's (_row_frame_dds) round the bar's
+    parallelogram: blue's top edge flush left, red's flush right (slant_texture's shapes)."""
+    core, px = cfg["team_core"], 1 / Units(cfg).scale
+    (x, y, w, h), _ = team_bar_rects(cfg)[f"{team}_core"]
+    run = HeroCell(cfg).overlap / HeroCell(cfg).h * h
+    if team == "blue":
+        pts = [(x, y), (x + w - run, y), (x + w, y + h), (x + run, y + h)]
+    else:
+        pts = [(x + run, y), (x + w, y), (x + w - run, y + h), (x, y + h)]
+    o = core_chrome_outset(cfg) * px
+    inside = float(core.get("frame_inside", 0)) if core.get("frame_width", 0) else 0.0
+    box = (x - o, y - o, w + 2 * o, h + 2 * o)
+    return _row_frame_dds(tuple(pts), box, o, inside, art_scale(cfg), tuple(cfg["top_backplate"]["rim"]))
+
+
 def row_frame_outset(cfg):
     """How far the row frame ([row_frame]) reaches outside the plates and the XP bar, px."""
     spec = cfg.get("row_frame", {})
@@ -584,6 +607,9 @@ def constants_layout(cfg):
     const(name("blue", "core", "frame", "r"), blue["r"] + 34)
     const(name("red", "core", "frame", "t"), red["t"] - 18)
     const(name("red", "core", "frame", "l"), red["l"] - 28)
+    # the core bar's chrome line ([team_core] frame_width), anchored to Blizzard's bar this far out
+    const(name("core", "chrome", "tl"), -core_chrome_outset(cfg))
+    const(name("core", "chrome", "br"), core_chrome_outset(cfg))
 
     # A team's map alerts (FCJH_Maps, tools/maps.py), stacked either side of the map at the
     # rows' inner ends: on the XP bar where the core bar lives, stepping up onto the core bar
@@ -1072,6 +1098,10 @@ def slant_bars(cfg):
                                ("mask", slant_texture(team, cut, "ffffff", size=size))):
                 digest = hashlib.sha1(data).hexdigest()[:8]
                 out[name(bar, part, team)] = (f"FCJH_Bar_{bar}_{part}_{team}_{digest}.dds", data)
+        # the core bar's own chrome line ([team_core] frame_width)
+        data = core_chrome_texture(cfg, team)
+        digest = hashlib.sha1(data).hexdigest()[:8]
+        out[name("core", "chrome", team)] = (f"FCJH_CoreChrome_{team}_{digest}.dds", data)
         # XP for rows of 1-4 heroes: a shorter bar keeps the same slant only with its own cut
         for n in range(1, 5):
             (_, _, w, h), _ = team_bar_rects(cfg, n)[f"{team}_xp"]

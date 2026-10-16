@@ -381,6 +381,11 @@ blue_colour = "3f8cff"
 red_colour = "ff4a5e"
 track_colour = "0b0c14"
 track_alpha = 220
+# Its own chrome line (user, 2026-10-16), as the row frame's ([row_frame]: the rim colours,
+# rounded outside corners), round the core bar alone, so it shows only with the core bar.
+# frame_width = 0 takes it away.
+frame_width = 2              # the line, px
+frame_inside = 1             # of which over the bar's edges (the rest outside)
 
 # A chrome frame round each team's row (user, 2026-10-16): one line round the plates and the XP
 # bar together (the XP bar's top down to the plates' bottom, both slanted ends), not the core
