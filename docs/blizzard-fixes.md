@@ -39,6 +39,7 @@ detail.
 - Blizzard's talent-lead flame, brought over from the player HUD.
 - Four info panes, one at a time, on Ctrl+1-4.
 - An inspect card for observers, Blizzard's own command card on it.
+- Abathur's clone marked on the inspect card, with his player, not the copied hero's.
 - The operator's four toggles: replay controls, chat, inspect card, player names.
 - Every battleground fitted round one minimap place:
   - each map's minimap set by its own drawn size;
@@ -264,6 +265,11 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
 - **An inspect card for observers**, with Blizzard's own command card on it so the ability
   tooltips, cooldowns and charges are live, plus the player's talents with their tooltips on both
   teams (`inspect_card`; confirmed 2026-10-05).
+  - **Abathur's clone marked** (2026-10-16, d309816; seen working): Ultimate Evolution's clone
+    is a unit of the copied ally's type with nothing on it saying clone, so it read as that
+    ally. The card shows Abathur's player and portrait, and a CLONE note with Ultimate
+    Evolution's icon in place of the talents, which the clone doesn't have
+    (`inspect_card.clone_sensor`, Blizzard's `UltimateEvolutionBuff`).
 - **The operator's four toggles** (layout.toml `[toggles]`; user, 2026-10-16). Blizzard's
   hotkeys (`gamehotkeys.txt`) have none of these that works for an observer: the replay panel's
   is dead (above), and there's no chat, inspect or player-name toggle at all. Ahli and Spazzo
