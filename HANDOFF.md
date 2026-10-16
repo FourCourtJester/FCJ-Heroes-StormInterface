@@ -727,10 +727,10 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    counts, crystal and Punishers covered the minimap's bottom (21_39_22, 21_39_31), so Infernal's
    minimap sits 50 px up off THE FLOOR (`[minimap.nudge]` -39, notch ~1015; 60 too tall) and the race stays
    where it was (`[minimap.panel_nudge]` +20). Moving the race above the map was declined.
-   The crystal 85% (`CRYSTAL_SCALE`, a Dimension animation as Blizzard's pulse; 75ecc91, reverted
-   then restored): it did shrink - 21_50_40 ~20 px wide (was ~25), its tip 1021 -> ~1035, 13 clear
-   of the minimap's bottom marker. Its bottom stays Blizzard's (37 units under the race's bar, off
-   screen ~1108): the shrink comes off its top. This map stays above the baseline (user, 2026-10-15).
+   Tried: the crystal 85% by a Dimension animation, as Blizzard's pulse (75ecc91, 578f83d). Its tip
+   came down 1021 -> ~1035, but with its bottom off screen a shrink and a 14 px move look alike
+   (20 px at the bar vs ~22 for a move) - not convincing, reverted. Shipped as is: this map stays
+   50 px above the baseline (user, 2026-10-15). A 50% build would tell them apart, if it comes up.
    Sky Temple's id `ControlPoints` read in game (user, 2026-10-15) - every id now GAME.
    **Then Sky Temple's QA.** Any map could get a two-view or other per-map behaviour the same way
    (`launch_cut`/`opens`, `on_map`).
