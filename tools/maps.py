@@ -2601,7 +2601,8 @@ WARHEAD_COUNTERS_UP_PX = 44           # the map's 22 down taken back, then 22 up
 # Seen so (18f4cbb): icons ~828-880 / ~1028-1078, counts ~895-917 / ~992-1005, strips ~814-1103 -
 # too close to the map (user, 2026-10-16), so both moved out WARHEAD_MARKS_OUT_PX, the strips left
 # be. At 15 (7236174): icons ~813-863 / ~1042-1093, counts end ~902 / start ~1005, ~22 px off the
-# map's sides - "a bit more" (user): at 30 blue's icon hangs ~15 past its strip's end, as Tomb's.
+# map's sides - "a bit more" (user): at 30 blue's icon hangs ~15 past its strip's end, as Tomb's -
+# "perfect" (user, 2026-10-16, bca6517).
 WARHEAD_MARKS_OUT_PX = 30
 _out = round(WARHEAD_MARKS_OUT_PX / 0.9)
 WARHEAD_ICON_IN = (30 - _out, 46 - _out)    # blue's icon Left from its strip's Min, red's Right from Max

@@ -128,6 +128,13 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
   the countdown and while temples are live, and each disc only while it's next (carrying the
   time) or live - hidden in its own slot, so its place still names its lane (`PARTS["sky_temple"]`;
   c7e5da1). Seen in game with one and two temples (2026-10-15).
+- **Warhead Junction: nuke counters only once there are nukes.** Blizzard's two "0" counters sit
+  under the minimap from the start, though no warhead can be picked up until the first wave.
+  Ours stay hidden until the warheads banner first says how many are left, then fade in for the
+  rest of the game - and they're turned round as Tomb's gem counts (icon outer, count inner,
+  the team strips meeting under the map), where Blizzard's had the count outside the icon
+  (`maps.warhead_counters`, `nuke_sensor`; 18f4cbb, bca6517). Seen over three waves, no blink
+  (2026-10-16).
 - **Banner intros on the older maps.** Towers of Doom's banners slide and fade in; the older
   maps' have no intro at all. Ours give every banner the same intro (`maps.intro`). Blackheart's
   chests banner needed rebuilding to do it: Blizzard's bar is a fixed-width image anchored at
