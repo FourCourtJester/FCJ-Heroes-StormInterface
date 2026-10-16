@@ -414,6 +414,8 @@ doubloons); Garden of Terror DONE 2026-10-12 (the seed banners, the Terrors on t
 team's side; blue's Terrors still unseen). The banner protocols' recheck PASSED on all five
 (2026-10-12). Alterac Pass DONE 2026-10-14 (everything below seen and approved in one pass). Hanamura
 Temple DONE for now 2026-10-14 (user: "for today, it's good to go"; its split is a Later).
+Tomb, Warhead, Volskaya, Battlefield done 2026-10-15; Infernal Shrines DONE 2026-10-15 but
+for blue's Punisher (final pass, item 14). Left: Sky Temple.
 **Next: the rest of the newer maps' QA** (item 4).
 For each, screenshots of: the map id at load
 (the diagnostic, now just that line), each banner as it comes up, anything hanging off the
@@ -696,7 +698,9 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    both teams, 14_39_52, 14_44_56, 14_49_19, 14_49_45). Blue's words are our own label
    (`FCJH_LaneWords`) bound to Blizzard's text: the script restyles Blizzard's label as it
    writes it, beating a state's Style, so it stayed left-justified (14_38_47).
-   **Infernal Shrines - first build 61f1be5 (map id `Shrines` read in game, 2026-10-15),** from
+   **Infernal Shrines - DONE but for blue's Punisher (user, 2026-10-15: "Infernal looks great.
+   Mark it done except for the blue mortar"; 54eaed2).** First build 61f1be5 (map id `Shrines`
+   read in game), from
    Blizzard's panel as seen (20_52_34 - 20_53_22: everything in one place above the minimap,
    the minimap 11 short of THE FLOOR, the skulls at ~1050):
    - The minimap 11 down (`[minimap.nudge]`), its notch 1054 -> 1065.
@@ -704,7 +708,7 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
      ~1031, the crystal riding with them over the map's bottom.
    - "Shrine activates in" and "Shrine active" as one neutral banner on red's side
      (`WARNING_BANNER`, `ACTIVE_BANNER` - `left_banner`, `INFERNAL_BOX`; the active banner a
-     follower on the warning's spot). Blizzard's count sat on the map under its words; ours is
+     follower on the warning's spot - since hidden, below). Blizzard's count sat on the map under its words; ours is
      in the bar after the words, in their style, as the tribute's (`left_banner` gained
      `count_style` and `bar`).
    - The Punisher a team banner (`punisher_side`, team_banner; blue told by any `Punisher*Ally`
@@ -716,15 +720,15 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    Punisher, the skull race and crystal - all right. "Shrine active" barely showed and
    flickered: hidden (user: "lets avoid activating 'shrine is active' banner" - the objective
    markers say it; e48326a). The countdown ends without an outro, as Blizzard's (user: fine).
-   Left to check on e48326a: no flicker between the countdown and the skull race. Blue's
+   Seen on 54eaed2: no flicker between the countdown and the skull race. Blue's
    Punisher - the bots never got one - is in the final pass (14). Player views (1-8) show the
    Punisher by the viewer's team (the script shows the viewer's team as Ally) - expected, logged.
    Sky Temple's id `ControlPoints` read in game (user, 2026-10-15) - every id now GAME.
    **Then Sky Temple's QA.** Any map could get a two-view or other per-map behaviour the same way
    (`launch_cut`/`opens`, `on_map`).
 5. **The diagnostic - trimmed to the map id (user, 2026-10-09);** every map's id is now
-   confirmed in game (2026-10-15), so `maps.diag` and `FCJH_DiagMapId` can go - after the
-   Infernal pass.
+   confirmed in game (2026-10-15), so `maps.diag` and `FCJH_DiagMapId` can go - the Infernal
+   pass is done.
 6. **Inspect card, intermittent (user, 2026-10-09):** on hero inspects only, now and then the
    ability BORDERS keep showing after the card hides. Not pinned down yet: next time, a
    screenshot of it. Lead (unconfirmed): the only border-like art that can show without a
