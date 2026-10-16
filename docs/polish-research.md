@@ -157,7 +157,7 @@ All of them are driven by events from the game to that hidden cell, so they woul
   - the Viking and Misha timers: `PET_TIMERS` and `pet_death_labels` / `pet_death_bindings`;
   - the textures: `slant_bars` and `top_backplate_texture`.
 
-## Tonight's test build (2026-10-16, stamp 1a3233a)
+## Tonight's test build (2026-10-16, stamp 9720882)
 
 **What I picked for your questions** (say if any is wrong):
 1. Skull: Blizzard's art and timings, with Ahli's handover to the number.
@@ -169,7 +169,7 @@ All of them are driven by events from the game to that hidden cell, so they woul
 7. The test build is made and deployed.
 
 **What to check in a replay:**
-- The stamp, top left, says 1a3233a.
+- The stamp, top left, says 9720882.
 - **The squares** above each plate light for 6 s when an event arrives. Left to right:
 
   | # | Colour | Event | Cell |

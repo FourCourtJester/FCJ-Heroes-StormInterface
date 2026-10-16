@@ -493,7 +493,7 @@ from their plates (docs/blizzard-fixes.md).
    a touch big for its window, and the strip could grow further up the slant.
    **The polish phase - the user's first pass (2026-10-16; "there might be more"; not all at
    once).** Research done (2026-10-16): docs/polish-research.md - feasibility, approach, tests
-   and questions for each. **Test build 1a3233a deployed (2026-10-16), not seen yet**, with
+   and questions for each. **Test build 9720882 deployed (2026-10-16), not seen yet**, with
    defaults picked for the questions (docs/polish-research.md, "Tonight's test build", which
    has the checklist):
    - the skull, the respawn flash and glow;
