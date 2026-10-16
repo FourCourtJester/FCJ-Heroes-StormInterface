@@ -227,8 +227,9 @@ rect = [0, 104.4, 540, 300]  # Blizzard's, in its own place, not moved (user, 20
                              # down. Here only for the padding check and the canvas.
 kind = "ui"
 [element.info_pane]
-rect = [20, 196, 494, 576]   # sized to the talents table: 23-unit margins either side of its
-                             # rows (portrait at 23, last talent ending at 526 of 549 units) and
+rect = [20, 196, 546, 576]   # sized to the talents table: 23-unit margins either side of its
+                             # rows (portrait at 23, last talent ending at 584 of 607 units: 549
+                             # and the default-quest column, one talent cell, user 2026-10-16) and
                              # just tall enough for its ten 60-unit rows under the title band.
                              # The stats panes spread their rows to fill the same box.
 kind = "demand"

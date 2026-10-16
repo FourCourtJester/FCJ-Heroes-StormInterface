@@ -212,6 +212,13 @@ All of them are driven by events from the game to that hidden cell, so they woul
   - Do the pop-ups and the heroic stay on top of it?
   - Does it look right in a 3v3, if you have one?
   - The rows now sit 2 px higher and a touch smaller, to keep the frame inside the padding.
+- **The talents pane's quest column** (new; Ctrl+1): a column between each hero and their
+  level-1 talent, so the pane is one cell wider.
+  - Heroes with a default quest (Azmodan, Butcher, Diablo, Jaina, Kerrigan, Leoric, Muradin,
+    Murky, Nova, Sylvanas, Tyrande, Witch Doctor) should show its icon and progress there.
+  - Arthas's and the Vikings' fill only through talents. Everyone else's column stays empty.
+  - Hover it: does Blizzard's quest tooltip show?
+  - The grid art behind it is talent 1's cell drawn twice. Does it join cleanly?
 - **D.Va's Self-Destruct charge** (visual pass): her mech's charge meter doesn't go on the
   plate, but check it shows on her talent card, the way Tracer's Pulse Bomb meter does.
 - **Ammo segments** (new in this build): Tracer's bar should show 10 segments, Junkrat's 4

@@ -66,6 +66,9 @@ detail.
 - The row frame now also runs a 3 px chrome seam along each slant between two plates, to hide
   the slants' rough edges (`[row_frame] seam`; test build, not seen yet).
 - ...and the same line under the XP bar, so the bar is fully enclosed (user, 2026-10-16).
+- The talents pane has a default-quest column between the hero and the level-1 talent:
+  Blizzard's own baseline-quest icon from the player's leader panel, which the observer talents
+  pane doesn't show at all (FCJH_InfoPane `FCJH_BaseQuestIcon`; test build, not seen yet).
 
 **Can't be fixed from a layout** - the last section: Towers' cannon alerts, the death recap,
 the talent picker under Ctrl, the command card for a hero's other unit, plate clicks for
