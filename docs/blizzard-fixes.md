@@ -167,6 +167,11 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
   is the same so far. Hero forms that are units of their own (Medivh's Raven and the like) are
   still to be checked (HANDOFF item 14).
 
+### A replay can't open with its timeline hidden
+- The replay panel's timeline (the slider) hides only by its own Hide button or the "Toggle
+  Replay Timeline" hotkey, both engine-side; there's no option for it. Starting the slider
+  hidden in the layout was tried (user, 2026-10-16): the game showed it again on load.
+
 ### A paused replay opens no inspector
 - Clicking a unit while paused selects nothing new, so neither Blizzard's inspector nor ours can
   appear until the replay runs.
