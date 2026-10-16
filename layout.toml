@@ -209,11 +209,6 @@ rect = [1675, 14, 231, 153]  # Blizzard's ReplayPanel, 257 x 170 units (native 4
 art_inset = 6                # its glass art's outer line sits 6 px inside the frame on every side
                              # (measured in game, 2026-10-05)
 kind = "ui"
-hotkey = "Control+Shift+R"   # hides/shows it (Blizzard's toggle). Blizzard gave it Ctrl+Shift+O,
-                             # which the game's UI editor's Save All takes first (gamehotkeys.txt),
-                             # so it never worked - nor Ahli's (user, 2026-10-16). Moving Save All
-                             # off it with our own GameHotkeys.txt didn't load (2026-10-16), so
-                             # Ctrl+Shift+R. The tab's label (FCJH_Replay) says it too.
 [element.replay_collapsed]
 rect = [1720, 0, 200, 24]    # hidden state: a slim tab flush in the screen's top-right corner
 kind = "demand"
@@ -237,6 +232,21 @@ kind = "demand"
 neutral_colour = "b4a5e6"    # the card's edge for a unit of neither team (a mercenary camp, a
                              # boss): a lighter purple (user, 2026-10-05); blue and red are the plates'.
                              # Anything not a hero gets a short card (tools/inspect_card.py H_SHORT)
+
+# The operator's toggles (user, 2026-10-16): just the four we care about, each Ctrl+Shift and
+# the thing's initial, none of them a Blizzard key (validate.py checks every key here and the
+# info panes' against Blizzard's game hotkeys, and against each other). Each starts on.
+# Ahli and Spazzo have dozens; Blizzard has none of these four that works for an observer.
+[toggles]
+replay = "Control+Shift+R"   # the replay box (Blizzard's toggle, FCJH_Replay). Blizzard gave it
+                             # Ctrl+Shift+O, which the game's UI editor's Save All takes first
+                             # (gamehotkeys.txt), so it never worked - nor Ahli's (user,
+                             # 2026-10-16). Moving Save All off it with our own GameHotkeys.txt
+                             # didn't load (2026-10-16). The box's tab says the key too.
+chat = "Control+Shift+C"     # Blizzard's chat messages (FCJH_Toggles); Ahli's key too
+inspect = "Control+Shift+I"  # the inspect card (inspect_card.py); off, it stays shut whatever is
+                             # selected. Tried on Ctrl+I 2026-10-05 and dropped then.
+names = "Control+Shift+N"    # the player names over the heroes' health bars (FCJH_Toggles)
 
 [info_pane]
 title_height = 26            # the title band across the top of the pane

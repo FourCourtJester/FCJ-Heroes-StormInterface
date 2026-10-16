@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+	<!-- The operator's chat and player-name toggles (layout.toml [toggles]; user, 2026-10-16).
+	     The replay box's is in FCJH_Replay, the inspect card's in FCJH_Inspect. Blizzard has no
+	     key for either of these: Ahli and Spazzo both add one (docs/blizzard-fixes.md).
+
+	     Chat: a ToggleControl beside Blizzard's ChatDisplay fades it out and in, as Ahli's does.
+
+	     Names: the player name over every hero's health bar. The toggle is a handle
+	     (FCJH_NAMES), and each name's Label binds its Visible to it. Ahli binds the names'
+	     VisibleToOwner/Ally/Enemy instead, but some of Blizzard's bars hide their name on purpose
+	     that way (the NoName templates, Medivh's raven, Volskaya's robot) and that would show
+	     them; the Label only ever hides. Unit status frames are built when a unit appears, so
+	     overriding the templates reaches them (unlike frames built at load, memory rule 31).
+	     The list: every unit status frame in the JamiePhan extract with a PlayerUnitNameLabel,
+	     through its templates (2026-10-16; Ahli's list had 31, without the newer heroes). -->
+	<Frame type="GameUI" name="GameUI" file="GameUI">
+		<Frame type="Frame" name="UIContainer">
+			<Frame type="Frame" name="FullscreenUpperContainer">
+				<Frame type="ToggleControl" name="FCJH_ChatToggle">
+					<Anchor relative="$parent"/>
+					<AcceptsMouse val="false"/>
+					<CollapseLayout val="true"/>
+					<Shortcut val="#FCJH_CHAT_KEY"/>
+					<Animation name="FCJH_ChatShow">
+						<Event event="OnShown" action="DirectionForward,Play"/>
+						<Event event="OnHidden" action="DirectionReverse,Play"/>
+						<Controller type="Fade" end="Pause" frame="$parent/ChatDisplay">
+							<Key type="Curve" time="0.0" value="0"/>
+							<Key type="Curve" time="0.2" value="255"/>
+						</Controller>
+						<Controller type="Visibility" end="Pause" frame="$parent/ChatDisplay">
+							<Key type="Bool" time="0.0" value="false"/>
+							<Key type="Bool" time="0.001" value="true"/>
+							<Key type="Bool" time="0.2" value="true"/>
+						</Controller>
+					</Animation>
+				</Frame>
+				<Frame type="ToggleControl" name="FCJH_NamesToggle">
+					<Anchor relative="$parent"/>
+					<AcceptsMouse val="false"/>
+					<CollapseLayout val="true"/>
+					<Handle val="FCJH_NAMES"/>
+					<Shortcut val="#FCJH_NAMES_KEY"/>
+				</Frame>
+			</Frame>
+		</Frame>
+	</Frame>
+
+	<Frame type="UnitStatusName" name="HeroUnit1SegmentStatusFrame/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="UnitStatus">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="HeroUnitStatusFrameAllGreyNoEnergyTemplate/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="UnitStatus">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="HeroUnitStatusFrameBlinkingEnergy/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="UnitStatus">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="HeroUnitStatusFrameBreathEnergy/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="UnitStatus">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="HeroUnitStatusFrameDoubleTallNoEnergyTemplate/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="UnitStatus">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="HeroUnitStatusFrameGreyEnergy/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="UnitStatus">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="HeroUnitStatusFrameNoEnergyTemplate/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="UnitStatus">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="HeroUnitStatusFrameNoHealthNoEnergyTemplate/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="UnitStatus">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="HeroUnitStatusFrameNoNameNoEnergyShowDebuffs_PetTemplate/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="UnitStatus">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="HeroUnitStatusFrameNoNameNoEnergyTemplate/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="UnitStatus">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="HeroUnitStatusFrameNoTalentNotification/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="UnitStatus">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="HeroUnitStatusFrameOrangeEnergy/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="UnitStatus">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="HeroUnitStatusFramePinkEnergy/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="UnitStatus">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="HeroUnitStatusFrameRage/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="UnitStatus">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="HeroUnitStatusFrameRedEnergy/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="UnitStatus">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="HeroUnitStatusFrameSeparateShieldBar/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="UnitStatus">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="HeroUnitStatusFrameTemplate/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="UnitStatus">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="HeroUnitStatusFrameYellowEnergy/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="UnitStatus">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="HeroUnitVehicleStatusFrame/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="UnitStatus">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="IllusionHeroUnitStatusFrameTemplate/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="UnitStatus">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="LostVikingsBaleogUnitStatusFrameTemplate/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="UnitStatus">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="LostVikingsErikUnitStatusFrameTemplate/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="UnitStatus">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="LostVikingsOlafUnitStatusFrameTemplate/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="UnitStatus">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="LostVikingsUnitStatusFrameTemplate/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="UnitStatus">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="AurielUnitStatusFrameTemplate/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="Auriel">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="DVaUnitStatusFrameTemplate/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="DVa">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="DeathwingUnitStatusFrame/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="Deathwing">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="HeroUnitStatusFrameGazlowe/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="Gazlowe">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="HeroUnitStatusFrameJunkrat/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="Junkrat">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="MaievVaultOfTheWardensStatusFrame/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="Maiev">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="MedivhRavenFormStatusFrame/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="Medivh">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="NexusHunterRevolvingSweepStatusFrame/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="NexusHunter">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="SamuroMirrorImageStatusFrame/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="Samuro">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="SamuroUnitStatusFrameTemplate/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="Samuro">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="CustomStitchesUnitStatusFrame/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="Stitches">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="BigRagUnitStatusFrame/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="TheFirelords">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="HeroUnitStatusFrameTracer/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="Tracer">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="VolskayaVehicleUnitStatusFrame/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="VolskayaRobot">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="CustomWhitemaneUnitStatusFrame/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="Whitemane">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+	<Frame type="UnitStatusName" name="HeroUnitStatusFrameZarya/HeroUnitStatusParentFrame/PlayerUnitNameLabel" file="Zarya">
+		<Frame type="Label" name="Label"><Visible val="{$FCJH_NAMES/@Visible}"/></Frame>
+	</Frame>
+</Desc>

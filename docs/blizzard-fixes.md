@@ -112,7 +112,7 @@ from then on are written with their fix.
   reaches the interface. It does nothing in the default UI, in Ahli 0.75 (which rebinds the same
   key) or in ours (user, 2026-10-16). The toggle also starts off while the panel shows, so a
   working key needed two presses.
-- **Ours:** Blizzard's toggle on Ctrl+Shift+R (layout.toml `element.replay` hotkey, ef1f1b6),
+- **Ours:** Blizzard's toggle on Ctrl+Shift+R (layout.toml `[toggles]` replay, ef1f1b6),
   switched on when a replay first shows the panel (as Ahli does, 030278d); a tab names the key
   while the panel is hidden.
 - **Status:** confirmed in game - one press hides it and the tab shows, the next brings it back
@@ -171,6 +171,24 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
 - **An inspect card for observers**, with Blizzard's own command card on it so the ability
   tooltips, cooldowns and charges are live, plus the player's talents with their tooltips on both
   teams (`inspect_card`; confirmed 2026-10-05).
+- **The operator's four toggles** (layout.toml `[toggles]`; user, 2026-10-16). Blizzard's
+  hotkeys (`gamehotkeys.txt`) have none of these that works for an observer: the replay panel's
+  is dead (above), and there's no chat, inspect or player-name toggle at all. Ahli and Spazzo
+  each ship dozens of toggles; ours are just these four, each Ctrl+Shift and the thing's
+  initial, and `validate.py` fails the build if one is a Blizzard in-game key or two of ours
+  share one (the info panes' Ctrl+1-4 are the players' quick talent picks, which an observer
+  can't use, so they're allowed):
+  - Ctrl+Shift+R, the replay panel (above).
+  - Ctrl+Shift+C, the chat messages (`FCJH_Toggles`: Blizzard's `ChatDisplay` fades out and in;
+    Ahli's key too).
+  - Ctrl+Shift+I, the inspect card: off, it stays shut whatever is selected (`inspect_card`,
+    `FCJH_InspectOn`). Tried on Ctrl+I 2026-10-05 and dropped then.
+  - Ctrl+Shift+N, the player names over the heroes' health bars (`FCJH_Toggles`). Ahli binds
+    each name's VisibleTo* to his toggle, which would also bring back the names Blizzard hides
+    on purpose (the NoName status frames, Medivh's raven, the Volskaya robot); ours binds the
+    name's inner Label instead, so it only ever hides - on all 40 hero status frames Blizzard
+    has, the heroes' own included.
+  - **Status:** built, not yet tried in game (2026-10-16).
 
 ## Known, not fixed
 

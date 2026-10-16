@@ -14,6 +14,9 @@ Errors (the build is almost certainly wrong):
   - a frame reference that resolves to nothing: Anchor relative=, Animation
     Controller/Event frame=, StateGroup When/Action frame=, {bindings}
   - Anchor with a bad side / pos / non-numeric offset
+  - a hotkey in layout.toml ([toggles], [info_pane] hotkeys) that is one of
+    Blizzard's in-game keys (UI/Hotkey/ in gamehotkeys.txt), or that two of
+    ours share: the game's key wins, or one of ours never fires
   - editing a Blizzard frame's child that does not exist: the game (and the
     old Java builder) silently creates a NEW empty frame instead. A typo, or a
     frame a patch renamed. Frames we add on purpose carry the FCJH_ prefix.
@@ -35,6 +38,7 @@ Warnings (legal, but has cost us builds before):
 import argparse
 import re
 import sys
+import tomllib
 import xml.parsers.expat
 from pathlib import Path
 
@@ -571,6 +575,70 @@ def load_base(cat):
     return count
 
 
+MODIFIERS = {"control": "Control", "ctrl": "Control", "shift": "Shift", "alt": "Alt"}
+# Blizzard keys that do nothing for an observer, so ours may share them: the player's quick
+# talent picks (Ctrl+1-4 take that talent; an observer has none to take). The info panes have
+# used them since Phase 1, confirmed in game; Ahli 0.75 binds Ctrl+1-8 the same way.
+PLAYER_ONLY = re.compile(r"QuickHeroTalentTreeSelection\d$")
+
+
+def hotkey_norm(key):
+    """'Shift+Ctrl+R' -> 'Control+Shift+R': modifiers in one order, so keys compare."""
+    parts = [p.strip() for p in key.split("+") if p.strip()]
+    mods = sorted({MODIFIERS[p.lower()] for p in parts if p.lower() in MODIFIERS})
+    rest = [p.capitalize() if len(p) == 1 else p for p in parts if p.lower() not in MODIFIERS]
+    return "+".join(mods + rest) if rest else None   # modifier alone (hold Control): no key
+
+
+def blizzard_hotkeys():
+    """Blizzard's in-game keys, normalised -> the hotkey names using them. core first, then
+    heroesdata overriding it, as the game loads them. The _NRS/_GRS/_USD/_USDL variants are
+    other keyboard layouts and hotkey profiles; the defaults are the plain names."""
+    keys = {}
+    for mod in BASE_MODS:
+        path = MODS / mod / "enus.stormdata" / "localizeddata" / "gamehotkeys.txt"
+        if not path.is_file():
+            continue
+        for line in path.read_text(encoding="utf-8-sig").splitlines():
+            name, _, value = line.partition("=")
+            if not name.startswith("UI/Hotkey/") or re.search(r"_(NRS|GRS|USD|USDL)$", name):
+                continue
+            keys[name[len("UI/Hotkey/"):]] = value
+    used = {}
+    for name, value in keys.items():
+        for alt in value.split(","):
+            norm = hotkey_norm(alt)
+            if norm:
+                used.setdefault(norm, []).append(name)
+    return used
+
+
+def check_hotkeys(cat, toml_path=REPO / "layout.toml"):
+    """Our keys must be none of Blizzard's in-game keys, and none of each other's."""
+    if not toml_path.is_file():
+        return
+    cfg = tomllib.loads(toml_path.read_text(encoding="utf-8"))
+    ours = [(f"[toggles] {k}", v) for k, v in cfg.get("toggles", {}).items()]
+    ours += [(f"[info_pane] hotkeys {k}", v) for k, v in cfg.get("info_pane", {}).get("hotkeys", {}).items()]
+    lines = toml_path.read_text(encoding="utf-8").splitlines()
+    line_of = lambda v: next((i + 1 for i, l in enumerate(lines) if f'"{v}"' in l), 0)
+    blizzard, seen = blizzard_hotkeys(), {}
+    for where, key in ours:
+        norm = hotkey_norm(key)
+        if norm is None:
+            cat.report("error", "layout.toml", line_of(key), f"{where} '{key}' is only modifiers")
+            continue
+        theirs = blizzard.get(norm, [])
+        if theirs and all(PLAYER_ONLY.match(n) for n in theirs):
+            cat.report("note", "layout.toml", line_of(key),
+                       f"{where} '{key}' is Blizzard's {', '.join(theirs)} - players only, so free")
+        elif theirs:
+            cat.report("error", "layout.toml", line_of(key), f"{where} '{key}' is Blizzard's {', '.join(theirs)}")
+        if norm in seen:
+            cat.report("error", "layout.toml", line_of(key), f"{where} '{key}' is also {seen[norm]}")
+        seen.setdefault(norm, where)
+
+
 def validate(source=DEFAULT_SOURCE):
     """Returns (errors, warnings, lines) for the interface folder."""
     source = Path(source).resolve()
@@ -613,6 +681,7 @@ def validate(source=DEFAULT_SOURCE):
     if game_ui is None:
         raise SystemExit("base UI has no GameUI/GameUI - is the JamiePhan extract intact?")
     check_tree(cat, game_ui)
+    check_hotkeys(cat)
 
     for root, stem in ours:
         for top in root.children:

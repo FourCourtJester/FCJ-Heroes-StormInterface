@@ -25,7 +25,8 @@ In one paragraph: the ten hero cells sit along the bottom (blue 1–5 left of th
 red 6–0 right of it) with portrait, HP, mana and CC; the minimap and its objective widgets
 at bottom-centre; team core HP above the cells; a two-line top bar of series score, team
 name, logo and level either side of Blizzard's hexagon, with bans, bracket and game count
-beneath; Blizzard's own kill feed top-left; replay controls top-right, Ctrl+Shift+R hides them; info panes
+beneath; Blizzard's own kill feed top-left; replay controls top-right; four operator keys, Ctrl+Shift+R/C/I/N, toggle the replay controls,
+chat, inspect card and player names (layout.toml `[toggles]`); info panes
 (talents, KDA/damage, healing, siege) at middle-left on hotkeys; talent pop-ups on the
 cells, and a green-plus pop-up on any hero below 25% health (drawn under the talent
 pop-up). **Fight mode is not a separate layout** — it is one hotkey that hides a list of
@@ -74,7 +75,10 @@ drawn by OBS over empty regions the interface leaves (§6).
   four buttons evenly spaced; Ctrl+Shift+R slides them out to the right (Blizzard's
   Ctrl+Shift+O is taken by the game), leaving a tab flush in the corner (replays only). Hiding
   the timeline (the chevron, or Ctrl+T) keeps the box's top in place; it can't be made to
-  start hidden. All confirmed in game 2026-10-16 - DONE. Blizzard's player HUD never shows; its
+  start hidden. All confirmed in game 2026-10-16 - DONE. **Operator toggles** (layout.toml
+  `[toggles]`, 2026-10-16): Ctrl+Shift+R replay controls, Ctrl+Shift+C chat, Ctrl+Shift+I
+  inspect card, Ctrl+Shift+N player names over the heroes - none a Blizzard key (validate.py
+  checks); built, not yet tried in game. Blizzard's player HUD never shows; its
   talent picker is left to the game: held Ctrl shows it, steady, only in a player's view
   (1-8 keys), not when following from a plate click - as in Ahli's and Spazzo's UIs (§3;
   confirmed 2026-10-06).

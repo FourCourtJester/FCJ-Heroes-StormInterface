@@ -9,8 +9,8 @@
 	     stormobserverpanel.stormlayout: fade, and a 300-unit slide) sliding in from the RIGHT,
 	     since the box sits in the top-right corner (user, 2026-10-16) - Blizzard's slides from
 	     the left, and its keys can't be changed in an override. Blizzard's toggle loses its key,
-	     so only ours moves the panel. Ours is #FCJH_REPLAY_KEY (layout.toml element.replay
-	     hotkey): Blizzard's Ctrl+Shift+O is the game's UI editor's Save All, so it never reaches
+	     so only ours moves the panel. Ours is #FCJH_REPLAY_KEY (layout.toml [toggles]
+	     replay): Blizzard's Ctrl+Shift+O is the game's UI editor's Save All, so it never reaches
 	     the interface, and an interface's own GameHotkeys.txt can't move Save All off it (user,
 	     2026-10-16). The toggle starts off while the panel shows, so the first press only
 	     "showed" it: FCJH_ReplaySeen switches it on when a replay first shows the panel, as

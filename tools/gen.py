@@ -494,7 +494,9 @@ def constants_layout(cfg):
         sys.exit(f"replay: {w} units is too narrow for its four buttons")
     lines.append("")
     const(name("replay", "button", "gap"), gap, "between the replay panel's bottom-row buttons")
-    const(name("replay", "key"), cfg["element"]["replay"]["hotkey"], "hides/shows the replay panel")
+    const(name("replay", "key"), cfg["toggles"]["replay"], "hides/shows the replay panel")
+    for key in ("chat", "inspect", "names"):
+        const(name(key, "key"), cfg["toggles"][key], f"layout.toml [toggles] {key}")
     # the art shrinks from its top when the timeline hides; the panel goes up as far, so its
     # top stays in the corner (user, 2026-10-16)
     const(name("replay", "lifted", "t"), anchor_edges(cfg, "replay")["t"] - REPLAY_TIMELINE,
