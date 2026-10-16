@@ -1774,34 +1774,6 @@
 					<Key type="Curve" time="1.0" value="-53"/>
 				</Controller>
 			</Animation>
-			<Frame type="Image" name="FCJH_DiagPanel">
-				<Anchor side="Left" relative="$GameUI" pos="Mid" offset="-420"/>
-				<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="-330"/>
-				<Width val="24"/>
-				<Height val="24"/>
-				<Texture val="@UI/PauseScreenDimImage"/>
-				<ColorAdjustMode val="Fill"/>
-				<AdjustmentColor val="255,255,0,255"/>
-				<Alpha val="255"/>
-				<IgnoreParentAlpha val="true"/>
-				<RenderPriority val="999"/>
-				<Unclipped val="true"/>
-				<AcceptsMouse val="false"/>
-			</Frame>
-			<Frame type="Image" name="FCJH_DiagLifted">
-				<Anchor side="Left" relative="$GameUI" pos="Mid" offset="-390"/>
-				<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="-330"/>
-				<Width val="24"/>
-				<Height val="24"/>
-				<Texture val="@UI/PauseScreenDimImage"/>
-				<ColorAdjustMode val="Fill"/>
-				<AdjustmentColor val="255,255,255,0"/>
-				<Alpha val="0"/>
-				<IgnoreParentAlpha val="true"/>
-				<RenderPriority val="999"/>
-				<Unclipped val="true"/>
-				<AcceptsMouse val="false"/>
-			</Frame>
 		</Frame>
 		<!-- blue, the bottom slot: the Punisher, when it's blue's -->
 		<Frame type="Frame" name="FCJH_PunisherFrameSpot">
@@ -1993,20 +1965,6 @@
 			<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
 			<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
 			<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="2"/>
-			<Frame type="Image" name="FCJH_DiagRace">
-				<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-				<Anchor side="Left" relative="$parent" pos="Mid" offset="-12"/>
-				<Width val="24"/>
-				<Height val="24"/>
-				<Texture val="@UI/PauseScreenDimImage"/>
-				<ColorAdjustMode val="Fill"/>
-				<AdjustmentColor val="255,0,255,255"/>
-				<Alpha val="255"/>
-				<IgnoreParentAlpha val="true"/>
-				<RenderPriority val="999"/>
-				<Unclipped val="true"/>
-				<AcceptsMouse val="false"/>
-			</Frame>
 			<!-- Infernal Shrines: lifts the minimap while this shows (maps.lift_sensor) -->
 			<Frame type="Frame" name="FCJH_LiftSensor">
 				<Anchor relative="$parent"/>
@@ -2016,7 +1974,6 @@
 					<State name="Lifted">
 						<When type="Property" frame="$parent" Visible="true"/>
 						<Action type="SendEvent" frame="$parent/$parent/FCJH_MinimapPlace" event="FCJH_Lift"/>
-						<Action type="SetProperty" frame="$parent/$parent/FCJH_MinimapPlace/FCJH_DiagLifted" Alpha="255"/>
 					</State>
 					<State name="Settled">
 						<Action type="SendEvent" frame="$parent/$parent/FCJH_MinimapPlace" event="FCJH_Settle"/>

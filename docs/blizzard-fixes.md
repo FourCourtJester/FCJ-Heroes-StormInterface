@@ -116,9 +116,10 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
   alerts, Garden of Terror's Terrors (red), Alterac Pass's cavalry, Battlefield of Eternity's
   winning Immortal (both teams; 2026-10-15 - Blizzard's countdown, fight and pushing Immortal all took
   turns in one place above the minimap; the countdown is now a neutral banner and the pushing
-  Immortal goes to the winner's side). Built, not seen yet: Infernal Shrines' Punisher on its
-  summoner's side, blue's mirrored (`maps.punisher_side`; 61f1be5) - Blizzard's shrine
-  countdown, "active" banner, Punisher and skull race all sit in one place above the minimap.
+  Immortal goes to the winner's side). Infernal Shrines' Punisher on its summoner's side
+  (`maps.punisher_side`; 61f1be5) - Blizzard's shrine countdown, "active" banner, Punisher and
+  skull race all sit in one place above the minimap. Red's seen (2026-10-15); blue's mirrored
+  one is built but not seen yet.
   Limit: in a player view (1-8) the script shows the viewer's team as Ally, so there the
   Punisher goes by the viewer's team, not the summoner's.
 - **Sky Temple: only the temples that matter.** Blizzard's three temple discs sit on the

@@ -2716,7 +2716,7 @@ def map_file(key, at, down, bottoms, lifts):
                                   f'{t}<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>\n'
                                   f'{t}<Anchor side="Bottom" relative="$GameUI" pos="Max" '
                                   f'offset="{bottoms[None] + lifts[key][1] + off}"/>\n'
-                                  + lift_diag_race(t) + lift_sensor(key, len(m.lifts.split("/")) + 1))
+                                  + lift_sensor(key, len(m.lifts.split("/")) + 1))
     for path, sides in m.panels.items():
         root.at(path).body += anchor_lines(sides, m, len(path.split("/")) + 1, down.get(key, 0))
         if m.proxy and "/" not in path:
@@ -2839,8 +2839,7 @@ def lift(key, ends, indent):
             f'{t}\t<Controller type="Anchor" end="Pause" side="Bottom" relative="true" frame="{MINIMAP}">\n'
             + glide_keys(ends, indent) +
             f'{t}\t</Controller>\n'
-            f'{t}</Animation>\n'
-            + lift_diag_squares(t))
+            f'{t}</Animation>\n')
 
 
 def lift_sensor(key, indent):
@@ -2860,40 +2859,12 @@ def lift_sensor(key, indent):
             f'{t}\t\t<State name="Lifted">\n'
             f'{t}\t\t\t<When type="Property" frame="$parent" Visible="true"/>\n'
             f'{t}\t\t\t<Action type="SendEvent" frame="{place}" event="FCJH_Lift"/>\n'
-            f'{t}\t\t\t<Action type="SetProperty" frame="{place}/FCJH_DiagLifted" Alpha="255"/>\n'
             f'{t}\t\t</State>\n'
             f'{t}\t\t<State name="Settled">\n'
             f'{t}\t\t\t<Action type="SendEvent" frame="{place}" event="FCJH_Settle"/>\n'
             f'{t}\t\t</State>\n'
             f'{t}\t</StateGroup>\n'
             f'{t}</Frame>\n')
-
-
-# DIAGNOSTIC (2026-10-15): fbebed4 showed neither the skull race nor the lift. Squares in a
-# row left of the minimap's top, read off a screenshot: MAGENTA the panel is shown (the
-# placer's frame); YELLOW the lift's Lifted state is on (it saw the race shown); CYAN, inside
-# the race's own frame at its bottom middle, the race frame drawn and where its bottom is.
-def lift_diag_square(name, colour, anchors, t, alpha=255):
-    return (f'{t}<Frame type="Image" name="{name}">\n' + "".join(f'{t}\t{a}\n' for a in anchors) +
-            f'{t}\t<Width val="24"/>\n{t}\t<Height val="24"/>\n'
-            f'{t}\t<Texture val="@UI/PauseScreenDimImage"/>\n{t}\t<ColorAdjustMode val="Fill"/>\n'
-            f'{t}\t<AdjustmentColor val="{colour}"/>\n{t}\t<Alpha val="{alpha}"/>\n'
-            f'{t}\t<IgnoreParentAlpha val="true"/>\n'
-            f'{t}\t<RenderPriority val="999"/>\n{t}\t<Unclipped val="true"/>\n'
-            f'{t}\t<AcceptsMouse val="false"/>\n{t}</Frame>\n')
-
-
-def lift_diag_squares(t):
-    at = lambda dx: ('<Anchor side="Left" relative="$GameUI" pos="Mid" offset="' + str(dx) + '"/>',
-                     '<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="-330"/>')
-    return (lift_diag_square("FCJH_DiagPanel", "255,255,0,255", at(-420), t)
-            + lift_diag_square("FCJH_DiagLifted", "255,255,255,0", at(-390), t, alpha=0))
-
-
-def lift_diag_race(t):
-    return lift_diag_square("FCJH_DiagRace", "255,0,255,255",
-                            ('<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>',
-                             '<Anchor side="Left" relative="$parent" pos="Mid" offset="-12"/>'), t)
 
 
 def glide(key, ends, indent):

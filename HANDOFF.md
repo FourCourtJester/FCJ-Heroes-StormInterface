@@ -723,14 +723,20 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    Seen on 54eaed2: no flicker between the countdown and the skull race. Blue's
    Punisher - the bots never got one - is in the final pass (14). Player views (1-8) show the
    Punisher by the viewer's team (the script shows the viewer's team as Ally) - expected, logged.
-   **The floor's one exception (user, 2026-10-15: "only this map"; 5099bf4):** the skull race's
-   counts, crystal and Punishers covered the minimap's bottom (21_39_22, 21_39_31), so Infernal's
-   minimap sits 50 px up off THE FLOOR (`[minimap.nudge]` -39, notch ~1015; 60 too tall) and the race stays
-   where it was (`[minimap.panel_nudge]` +20). Moving the race above the map was declined.
-   Tried: the crystal 85% by a Dimension animation, as Blizzard's pulse (75ecc91, 578f83d). Its tip
-   came down 1021 -> ~1035, but with its bottom off screen a shrink and a 14 px move look alike
-   (20 px at the bar vs ~22 for a move) - not convincing, reverted. Shipped as is: this map stays
-   50 px above the baseline (user, 2026-10-15). A 50% build would tell them apart, if it comes up.
+   **On THE FLOOR, lifting for the skull race (user, 2026-10-15: "Houston, we have lift" /
+   "And touchdown"; 082126f).** The skull race's counts and crystal cover the minimap's bottom
+   (21_39_22, 21_39_31). It was the floor's one exception for a while: the map 50 px up all game
+   (5099bf4). Now the minimap sits on THE FLOOR (`[minimap.nudge]` 11) and glides 50 px up
+   (`[minimap.lift]`) only while the race shows, then back down for the Punisher (`maps.lift`,
+   the `lifts` field). The race is pinned to the screen where the lifted panel hung it, so it
+   doesn't ride the map (all four sides overridden: overriding only Blizzard's bottom drew
+   nothing, fbebed4). The glide is triggered by `lift_sensor`, a frame inside the race watching
+   `$parent`'s Visible. Watched by name from the placer, which comes before the race in the
+   panel, it never fired (135435c; layout rule 34). Seen in game: the race at 3:00 on Normal,
+   the lift (22_48_56), and the settle with red's Punisher (22_49_26). The second race lifted and
+   settled too (user: "the second one works too").
+   Earlier tries: moving the race above the map was declined. The crystal at 85% by a Dimension
+   animation (75ecc91, 578f83d) wasn't convincing and was reverted.
    Sky Temple's id `ControlPoints` read in game (user, 2026-10-15) - every id now GAME.
    **Sky Temple DONE (user, 2026-10-15: "no flicker ... Sky Temple is done"; eedab7d).** The
    countdown is the neutral banner on red's side (`temple_banner`; Blizzard's centre-screen
