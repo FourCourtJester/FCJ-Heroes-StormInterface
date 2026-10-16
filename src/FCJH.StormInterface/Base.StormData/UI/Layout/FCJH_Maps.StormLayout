@@ -2057,6 +2057,27 @@
 								<State name="Idle"><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/CapturePointsPanel/TimerModeFrame/BackgroundImage" Alpha="0"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/CapturePointsPanel/TimerModeFrame/CenterpieceImage" Alpha="0"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/CapturePointsPanel/TimerModeFrame/FCJH_TempleText" Alpha="0"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/CapturePointsPanel/TimerModeFrame/FCJH_TempleCount" Alpha="0"/></State>
 							</StateGroup>
 		</Frame>
+		<Frame type="Frame" name="TempleModeFrame">
+			<Anchor side="Top" relative="$parent" pos="Min" offset="-311"/>
+			<Anchor side="Bottom" relative="$parent" pos="Max" offset="-311"/>
+			<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+			<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+			<Frame type="Frame" name="ShrineIndicators1">
+				<Frame type="Image" name="ShrineIcon">
+					<Anchor side="Left" relative="$parent/$parent" pos="Min" offset="92"/>
+				</Frame>
+			</Frame>
+			<Frame type="Image" name="FCJH_TempleBar">
+				<Anchor side="Left"   relative="$parent/ShrineIndicators1/ShrineIcon" pos="Min" offset="-30"/>
+				<Anchor side="Right"  relative="$parent/ShrineIndicators3/ShrineIcon" pos="Max" offset="30"/>
+				<Anchor side="Bottom" relative="$parent/ShrineIndicators1/ShrineIcon" pos="Mid" offset="25"/>
+				<Texture val="@UI/HUD_MapMechanic_BG_CenterBar"/>
+				<TextureType val="Nineslice"/>
+				<RenderPriority val="500"/>
+				<Unclipped val="true"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
+		</Frame>
 	</Frame>
 	<!-- ===== Tomb of the Spider Queen ===== -->
 	<Frame type="Frame" name="CryptPanel" file="SoulCage">

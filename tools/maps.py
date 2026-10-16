@@ -2028,6 +2028,30 @@ def temple_banner():
             f'{t}</StateGroup>\n')
 
 
+# The temples (TempleModeFrame: three discs, each its capture fill, bullets and cooldown) above
+# the minimap, at THE GAP, on a bar of Blizzard's banner art (user, 2026-10-15: under the map
+# they covered its bottom half). Blizzard's: the first disc's left 110 in from the panel's left,
+# the others chained right off it (each off the one before's fire effect). The discs are
+# Blizzard's size (the script fills a 112 x 112 mask: a smaller disc would read full early).
+# Measured at 1080p (22_00_20, 3227b64, Blizzard's place): the discs 823-893, 947-1016,
+# 1069-1140, their bottoms 1055-1058; the map's top tip 788, its notch's middle ~965 - the row's
+# middle 981.5, so 18 units left. The bar (its art's own height) runs from 30 before the first
+# disc to 30 past the last, its bottom 25 under the discs' middle; under them (RenderPriority).
+TEMPLE_ROW_LEFT = 92       # the first disc's left in from the panel's: Blizzard's 110, centred on the tip
+TEMPLE_BAR_PAST = 30       # the bar's ends past the outer discs
+TEMPLE_BAR_DOWN = 25       # the bar's bottom under the discs' middle
+_DISC = "$parent/ShrineIndicators{}/ShrineIcon"
+PARTS["sky_temple"] = {
+    "CapturePointsPanel/TempleModeFrame/ShrineIndicators1/ShrineIcon:Image":
+        f'<Anchor side="Left" relative="$parent/$parent" pos="Min" offset="{TEMPLE_ROW_LEFT}"/>',
+    "CapturePointsPanel/TempleModeFrame/FCJH_TempleBar:Image":
+        f'<Anchor side="Left"   relative="{_DISC.format(1)}" pos="Min" offset="{-TEMPLE_BAR_PAST}"/>\n'
+        f'<Anchor side="Right"  relative="{_DISC.format(3)}" pos="Max" offset="{TEMPLE_BAR_PAST}"/>\n'
+        f'<Anchor side="Bottom" relative="{_DISC.format(1)}" pos="Mid" offset="{TEMPLE_BAR_DOWN}"/>\n'
+        '<Texture val="@UI/HUD_MapMechanic_BG_CenterBar"/>\n<TextureType val="Nineslice"/>\n'
+        '<RenderPriority val="500"/>\n<Unclipped val="true"/>\n<AcceptsMouse val="false"/>'}
+
+
 PARTS["volskaya_foundry"] = {"VolskayaToastContainer/ToastNotification": TOAST,
                              "VolskayaCapturePointPanel/ContestedLabel:Label": CONTESTED,
                              "VolskayaRobotHealthSlideout": robot_frame()}
@@ -2202,7 +2226,9 @@ MAPS = {
         "Sky Temple", (437, 344), file="CapturePoints",
         panels={"CapturePointsPanel": BOTTOM_RIGHT}, place=("CapturePointsPanel",),
         # "Temples activate in": the neutral banner, on red's side ("Capture the Temples"
-        # hidden: temple_banner). The temples stay on the panel.
+        # hidden: temple_banner). The temples to the gap on their own, on a bar (PARTS): on
+        # 3227b64 their lowest bottom ~1058, the tip ~788.
+        gap_parts={"CapturePointsPanel/TempleModeFrame": (-270, 0)},
         team={"CapturePointsPanel": {
             "red": [Alert("TimerModeFrame", kind="TEMPLE", box=TEMPLE_BOX, extra=temple_banner(),
                           note="the temples' countdown (neutral)")]}}),

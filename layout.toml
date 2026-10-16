@@ -77,7 +77,8 @@ haunted_mines = 34           # its whole map on the line (where it glides to whe
 infernal_shrines = -39        # THE EXCEPTION (user, 2026-10-15: "only this map"): 50 up off the floor, its notch 1065 -> ~1015 (60 too tall),
                              # so the skull race under it (counts' tops ~1032, crystal ~1012) no longer covers its bottom.
                              # Was 11 (the floor: notch 1054 -> 1065). The race stays put: [minimap.panel_nudge]
-sky_temple = 0
+sky_temple = -22             # up to the floor (2026-10-15): its map's visual bottom (the south stub, off screen) ~1087 -> 1065
+                             # (its top tip 788, its art 299 px tall); the temples ride along, at THE GAP (maps.py gap_parts)
 tomb_of_the_spider_queen = 29 # down to the floor: its bottom marker (a building's, under the outline's ~1025) at
                              # ~1036 -> 1065. 40 put the outline there and cut the marker off (user, 2026-10-14)
 towers_of_doom = 0
