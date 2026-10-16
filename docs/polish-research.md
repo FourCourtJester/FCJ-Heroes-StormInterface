@@ -220,6 +220,10 @@ All of them are driven by events from the game to that hidden cell, so they woul
   - Arthas's and the Vikings' fill only through talents. Everyone else's column stays empty.
   - Hover it: does Blizzard's quest tooltip show?
   - The grid art behind it is talent 1's cell drawn twice. Does it join cleanly?
+- **The menu border test** (new; Ctrl+1): the talents pane alone wears Blizzard's front-end
+  menu border (`Storm_Generic_SmallPanel_Border`, the nine-slice) in place of the inspector
+  border. Does it read Heroes-like? Is it too thick, or does it crowd the title or the rows?
+  If we like it, it goes on every pane and the inspect card.
 - **D.Va's Self-Destruct charge** (visual pass): her mech's charge meter doesn't go on the
   plate, but check it shows on her talent card, the way Tracer's Pulse Bomb meter does.
 - **Ammo segments** (new in this build): Tracer's bar should show 10 segments, Junkrat's 4

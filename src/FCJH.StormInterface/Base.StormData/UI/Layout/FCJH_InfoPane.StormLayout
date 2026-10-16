@@ -29,6 +29,9 @@
 				<!-- the look: the inspect card's (tools/inspect_card.py pane_skin), as every pane -->
 				<Frame type="Frame" name="FCJH_Skin" template="FCJH_Constants/FCJH_PaneSkin">
 					<Anchor relative="$parent"/>
+					<!-- TEST (user, 2026-10-16): this pane wears Blizzard's menu border instead
+					     (FCJH_MenuBorder, below); extended to every pane if we like it -->
+					<Frame type="Image" name="FCJH_SkinBorder"><Alpha val="0"/></Frame>
 				</Frame>
 				<!-- Blizzard's observer talent grid (obs_talents_top; approved in game, user 2026-10-05)
 				     behind the rows. Blizzard tiles it once per 60-unit row (TextureCoords 0-5 over
@@ -947,6 +950,13 @@
 					<Style val="ObsBar_MatchTimer"/>
 					<Text val="TALENTS"/>
 					<RenderPriority val="610"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<!-- TEST (user, 2026-10-16): the front-end menu's border - Blizzard's own nine-slice
+				     (StandardSmallPanelBorderTemplate: Storm_Generic_SmallPanel_Border, as
+				     PopupPanelTemplate and the in-game tooltips), round the whole pane, over the rows -->
+				<Frame type="Image" name="FCJH_MenuBorder" template="StandardTemplates/StandardSmallPanelBorderTemplate">
+					<RenderPriority val="605"/>
 					<AcceptsMouse val="false"/>
 				</Frame>
 			</Frame>
