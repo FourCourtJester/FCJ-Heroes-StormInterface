@@ -788,6 +788,9 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    OUR card (`inspect_card.card_watch`), not the gate; the gate only shows and shapes the
    card. The watcher's state is a second row of squares under the gate's (green Hero, yellow
    Unit, red Closed). Both rows come out once the stray card hasn't come back for a while.
+   **Can't be proven fixed (user, 2026-10-16):** it never reproduced every time, so it not
+   showing up only means the sequences tried don't trigger it. Treat it as possibly still
+   there: if a stray ability card is ever seen again, screenshot it with both rows in view.
    The resource tooltip (item 14) turned out to be a separate problem and is solved, so the
    "one problem, one swap signal" plan is dropped.
 7. **Parked:** blue's curse mirror (unseen).
