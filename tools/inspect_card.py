@@ -504,7 +504,7 @@ def card():
         f'{T*7}<Anchor side="Right" relative="$this" pos="Min" offset="0"/>\n{T*7}<Width val="{STAT_COL - 4}"/>\n{T*6}</Frame>\n'
         for n, c, r in STATS_GRID)
     stat_rows = 1 + max(r for _, _, r in STATS_GRID)
-    energy = "".join(f'{T*4}<Frame type="UnitStatusEnergyBar" name="{n}"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/></Frame>\n'
+    energy = "".join(f'{T*4}<Frame type="UnitStatusEnergyBar" name="{n}"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/>{energy_formats()}</Frame>\n'
                      for n in ("NormalEnergyBar", "OrangeEnergyBar", "PinkEnergyBar", "YellowEnergyBar", "DeathwingEnergyBar"))
     # Round 7: everything drawn follows the SELECTION. Blizzard's inspect box (TargetInfoFrame)
     # follows its own target - at game start it latched onto something and showed, and later it
@@ -513,7 +513,7 @@ def card():
     global CARD_CONTENT
     CARD_CONTENT = (
         f'{T*4}<!-- the card itself, inside the selection panel: shown only with a selection -->\n'
-        + "".join(chrome) +
+        + "".join(chrome) + vital() +
         f'''{T*4}<!-- health and resource: Blizzard's inspect-box bars (this frame's template), placed -->
 {T*4}<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">
 {T*5}<Anchor side="Top"   relative="$parent" pos="Min" offset="{HP[0]}"/>
@@ -778,6 +778,57 @@ def team_sense():
             f'{T*4}<Frame type="UnitStatusColor" name="{TEAM_SENSE}">\n{T*5}<Anchor relative="$parent"/>\n'
             f'{T*5}<ColorStyle val="MinimapTeams"/>\n{T*5}<AcceptsMouse val="false"/>\n{T*5}<AcceptsMouseTooltip val="false"/>\n'
             f'{T*4}</Frame>\n')
+
+
+VITAL = "FCJH_VitalName"
+VITAL_DEFAULT = "UI/HeroEnergyType/Mana"   # StormHeroBase's: every hero not naming its own
+
+
+def vital_words():
+    """{unit: its resource's name (a string link)} for every hero unit whose resource isn't
+    Mana, from the game data: the unit actors' VitalNames Energy, through their parents. Units
+    with no resource (an empty name: Abathur, Illidan, Murky) have no bar, so they're left out."""
+    import xml.etree.ElementTree as ET
+    actors = {}
+    for f in MODS.rglob("*.xml"):
+        try:
+            root = ET.parse(f).getroot()
+        except ET.ParseError:
+            continue
+        for a in root.iter("CActorUnit"):
+            word = next((v.get("value") for v in a.findall("VitalNames") if v.get("index") == "Energy"), None)
+            parent, old = a.get("parent"), actors.get(a.get("id"), (None, None))
+            actors[a.get("id")] = (parent or old[0], word if word is not None else old[1])
+    def word(actor, seen=()):
+        parent, w = actors.get(actor, (None, None))
+        if w is not None or not parent or parent in seen:
+            return w
+        return word(parent, seen + (actor,))
+    units = set(HEROES) | {sel for sel, _ in ALSO}
+    return {u: w for u in sorted(units) if (w := word(u)) and w != VITAL_DEFAULT}
+
+
+def vital():
+    """The selected unit's resource name, for the bars' tooltips (energy_formats). Blizzard's
+    read the card's TargetInfoFrame (@UnitVitalName), which follows the last unit CLICKED in the
+    world, not the selection: a plate click left the name behind (Chromie's plate after Sonya
+    read "Fury", user 2026-10-16). This label follows the selection: one unit check per hero
+    whose resource isn't Mana (vital_words), Mana otherwise."""
+    words = vital_words()
+    return (f'{T*4}<!-- the selected unit\'s resource name, for the bars\' tooltips (inspect_card.vital) -->\n'
+            + label(VITAL, 0, 0, 20, 100, "FCJH_InspectSub", "@" + VITAL_DEFAULT, 4, extra=f'{T*5}<Alpha val="0"/>\n')
+            + f'{T*4}<StateGroup name="FCJH_Vital">\n{T*5}<DefaultState val="Mana"/>\n'
+            + "".join(f'{T*5}<State name="{u}"><When type="Property" Unit="{u}"/>'
+                      f'<Action type="SetProperty" frame="$this/{VITAL}" Text="@{w}"/></State>\n' for u, w in words.items())
+            + f'{T*5}<State name="Mana"><Action type="SetProperty" frame="$this/{VITAL}" Text="@{VITAL_DEFAULT}"/></State>\n'
+            f'{T*4}</StateGroup>\n')
+
+
+def energy_formats():
+    """An energy bar's two tooltip formats naming the resource from our label (vital), not the
+    card's TargetInfoFrame."""
+    return "".join(f'<Frame type="TextFormatFrame" name="{n}"><Replacement index="0" val="{{{UNIT}/{VITAL}/@Text}}"/></Frame>'
+                   for n in ("RegenTooltipFormatFrame", "NoRegenTooltipFormatFrame"))
 
 
 FORMAT = UNIT + "/NormalEnergyBar/NoRegenTooltipFormatFrame"   # Blizzard's resource tooltip text

@@ -298,6 +298,36 @@
 				<Options val="NoWrapping | ScaleToPreventTruncation"/>
 				<AcceptsMouse val="false"/>
 			</Frame>
+				<!-- the selected unit's resource name, for the bars' tooltips (inspect_card.vital) -->
+				<Frame type="Label" name="FCJH_VitalName">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="20"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="100"/>
+					<Style val="FCJH_InspectSub"/>
+					<Text val="@UI/HeroEnergyType/Mana"/>
+					<Options val="NoWrapping | ScaleToPreventTruncation"/>
+					<AcceptsMouse val="false"/>
+					<Alpha val="0"/>
+				</Frame>
+				<StateGroup name="FCJH_Vital">
+					<DefaultState val="Mana"/>
+					<State name="DeathwingDragonflightUnit"><When type="Property" Unit="DeathwingDragonflightUnit"/><Action type="SetProperty" frame="$this/FCJH_VitalName" Text="@UI/HeroEnergyType/Energy"/></State>
+					<State name="HeroAuriel"><When type="Property" Unit="HeroAuriel"/><Action type="SetProperty" frame="$this/FCJH_VitalName" Text="@UI/HeroEnergyType/StoredHealing"/></State>
+					<State name="HeroBarbarian"><When type="Property" Unit="HeroBarbarian"/><Action type="SetProperty" frame="$this/FCJH_VitalName" Text="@UI/HeroEnergyType/Fury"/></State>
+					<State name="HeroChen"><When type="Property" Unit="HeroChen"/><Action type="SetProperty" frame="$this/FCJH_VitalName" Text="@UI/HeroEnergyType/Brew"/></State>
+					<State name="HeroDVaMech"><When type="Property" Unit="HeroDVaMech"/><Action type="SetProperty" frame="$this/FCJH_VitalName" Text="@UI/HeroEnergyType/DVaMechCharge"/></State>
+					<State name="HeroDVaPilot"><When type="Property" Unit="HeroDVaPilot"/><Action type="SetProperty" frame="$this/FCJH_VitalName" Text="@UI/HeroEnergyType/DVaPilotCharge"/></State>
+					<State name="HeroDeathwing"><When type="Property" Unit="HeroDeathwing"/><Action type="SetProperty" frame="$this/FCJH_VitalName" Text="@UI/HeroEnergyType/Energy"/></State>
+					<State name="HeroHogger"><When type="Property" Unit="HeroHogger"/><Action type="SetProperty" frame="$this/FCJH_VitalName" Text="@UI/HeroEnergyType/Rage"/></State>
+					<State name="HeroJunkrat"><When type="Property" Unit="HeroJunkrat"/><Action type="SetProperty" frame="$this/FCJH_VitalName" Text="@UI/HeroEnergyType/Ammo"/></State>
+					<State name="HeroMedic"><When type="Property" Unit="HeroMedic"/><Action type="SetProperty" frame="$this/FCJH_VitalName" Text="@UI/HeroEnergyType/Energy"/></State>
+					<State name="HeroTinker"><When type="Property" Unit="HeroTinker"/><Action type="SetProperty" frame="$this/FCJH_VitalName" Text="@UI/HeroEnergyType/Scrap"/></State>
+					<State name="HeroTracer"><When type="Property" Unit="HeroTracer"/><Action type="SetProperty" frame="$this/FCJH_VitalName" Text="@UI/HeroEnergyType/Ammo"/></State>
+					<State name="HeroValeera"><When type="Property" Unit="HeroValeera"/><Action type="SetProperty" frame="$this/FCJH_VitalName" Text="@UI/HeroEnergyType/Energy"/></State>
+					<State name="HeroZarya"><When type="Property" Unit="HeroZarya"/><Action type="SetProperty" frame="$this/FCJH_VitalName" Text="@UI/HeroEnergyType/ZaryaEnergy"/></State>
+					<State name="Mana"><Action type="SetProperty" frame="$this/FCJH_VitalName" Text="@UI/HeroEnergyType/Mana"/></State>
+				</StateGroup>
 				<!-- health and resource: Blizzard's inspect-box bars (this frame's template), placed -->
 				<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">
 					<Anchor side="Top"   relative="$parent" pos="Min" offset="195"/>
@@ -306,11 +336,11 @@
 					<Height val="24"/>
 					<Width val="0"/>
 				</Frame>
-				<Frame type="UnitStatusEnergyBar" name="NormalEnergyBar"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/></Frame>
-				<Frame type="UnitStatusEnergyBar" name="OrangeEnergyBar"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/></Frame>
-				<Frame type="UnitStatusEnergyBar" name="PinkEnergyBar"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/></Frame>
-				<Frame type="UnitStatusEnergyBar" name="YellowEnergyBar"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/></Frame>
-				<Frame type="UnitStatusEnergyBar" name="DeathwingEnergyBar"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/></Frame>
+				<Frame type="UnitStatusEnergyBar" name="NormalEnergyBar"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/><Frame type="TextFormatFrame" name="RegenTooltipFormatFrame"><Replacement index="0" val="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_VitalName/@Text}"/></Frame><Frame type="TextFormatFrame" name="NoRegenTooltipFormatFrame"><Replacement index="0" val="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_VitalName/@Text}"/></Frame></Frame>
+				<Frame type="UnitStatusEnergyBar" name="OrangeEnergyBar"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/><Frame type="TextFormatFrame" name="RegenTooltipFormatFrame"><Replacement index="0" val="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_VitalName/@Text}"/></Frame><Frame type="TextFormatFrame" name="NoRegenTooltipFormatFrame"><Replacement index="0" val="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_VitalName/@Text}"/></Frame></Frame>
+				<Frame type="UnitStatusEnergyBar" name="PinkEnergyBar"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/><Frame type="TextFormatFrame" name="RegenTooltipFormatFrame"><Replacement index="0" val="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_VitalName/@Text}"/></Frame><Frame type="TextFormatFrame" name="NoRegenTooltipFormatFrame"><Replacement index="0" val="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_VitalName/@Text}"/></Frame></Frame>
+				<Frame type="UnitStatusEnergyBar" name="YellowEnergyBar"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/><Frame type="TextFormatFrame" name="RegenTooltipFormatFrame"><Replacement index="0" val="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_VitalName/@Text}"/></Frame><Frame type="TextFormatFrame" name="NoRegenTooltipFormatFrame"><Replacement index="0" val="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_VitalName/@Text}"/></Frame></Frame>
+				<Frame type="UnitStatusEnergyBar" name="DeathwingEnergyBar"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/><Frame type="TextFormatFrame" name="RegenTooltipFormatFrame"><Replacement index="0" val="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_VitalName/@Text}"/></Frame><Frame type="TextFormatFrame" name="NoRegenTooltipFormatFrame"><Replacement index="0" val="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_VitalName/@Text}"/></Frame></Frame>
 				<!-- stats: Blizzard's stat rows, from the inspect box's template -->
 				<Frame type="Frame" name="FCJH_Stats" template="TargetInfoPanel/TargetInfoPanelTemplate/HealthAndManaUnitStatusFrame/TargetStatsPanel">
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="500"/>
