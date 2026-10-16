@@ -266,8 +266,7 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
 - **An inspect card for observers**, with Blizzard's own command card on it so the ability
   tooltips, cooldowns and charges are live, plus the player's talents with their tooltips on both
   teams (`inspect_card`; confirmed 2026-10-05).
-  - **Abathur's clone marked** (2026-10-16, d309816 and 4fa66d8; d309816 seen working, the
-    portrait to confirm): Ultimate Evolution's clone is a unit of the copied ally's type with
+  - **Abathur's clone marked** (2026-10-16, d309816 and 4fa66d8; seen working 2026-10-16): Ultimate Evolution's clone is a unit of the copied ally's type with
     nothing on it saying clone, so Blizzard's card - and ours, until now - read it as that ally:
     the ally's player and the ally's talents, none of which the clone has (Blizzard's script
     only levels it). Our card now takes it apart and puts it back right:

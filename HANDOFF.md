@@ -538,7 +538,7 @@ from their plates (docs/blizzard-fixes.md).
       showed the ally's player and talents (BlackoutCR's on a Falstad clone of Budokai's). Now
       it shows Abathur's player and a CLONE note where the talents go, keyed off
       `UltimateEvolutionBuff` (inspect_card.clone_sensor) - seen right 2026-10-16; since
-      4fa66d8 the portrait is the copied ally's (the clone wears their skin) - **to confirm**.
+      4fa66d8 the portrait is the copied ally's (the clone wears their skin) - seen right 2026-10-16.
       A paused replay showed stale stats on the card (0% / 100%, 20% / 110% running). A
       show-off shot: how to stage it is in docs/blizzard-fixes.md (the inspect card's entry);
     - **Deathwing's heroic after level 10 - ask other players (user, 2026-10-06).** His plate's
