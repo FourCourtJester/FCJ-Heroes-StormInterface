@@ -725,8 +725,8 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    Punisher by the viewer's team (the script shows the viewer's team as Ally) - expected, logged.
    **The floor's one exception (user, 2026-10-15: "only this map"; 5099bf4):** the skull race's
    counts, crystal and Punishers covered the minimap's bottom (21_39_22, 21_39_31), so Infernal's
-   minimap sits 60 px up off THE FLOOR (`[minimap.nudge]` -49, notch ~1005) and the race stays
-   where it was (`[minimap.panel_nudge]` +30). Moving the race above the map was declined.
+   minimap sits 50 px up off THE FLOOR (`[minimap.nudge]` -39, notch ~1015; 60 too tall) and the race stays
+   where it was (`[minimap.panel_nudge]` +20). Moving the race above the map was declined.
    Sky Temple's id `ControlPoints` read in game (user, 2026-10-15) - every id now GAME.
    **Then Sky Temple's QA.** Any map could get a two-view or other per-map behaviour the same way
    (`launch_cut`/`opens`, `on_map`).
