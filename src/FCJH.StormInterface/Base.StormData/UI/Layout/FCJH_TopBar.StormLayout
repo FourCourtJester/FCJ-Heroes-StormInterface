@@ -134,6 +134,29 @@
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
 						</Frame>
+						<!-- The row frames: a chrome line round each team's plates and XP bar ([row_frame];
+						     tools/gen.py row_frame_texture), over the bars. FCJH_RowPacker moves and swaps
+						     them for rows of 1-4. -->
+						<Frame type="Image" name="FCJH_BlueRowFrame">
+							<Anchor side="Top"    relative="$GameUI" pos="Max" offset="#FCJH_BLUE_ROW_FRAME_T"/>
+							<Anchor side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_BLUE_ROW_FRAME_L"/>
+							<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_BLUE_ROW_FRAME_B"/>
+							<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_BLUE_ROW_FRAME_R"/>
+							<Texture val="#FCJH_ROW_FRAME_BLUE"/>
+							<RenderPriority val="520"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<Frame type="Image" name="FCJH_RedRowFrame">
+							<Anchor side="Top"    relative="$GameUI" pos="Max" offset="#FCJH_RED_ROW_FRAME_T"/>
+							<Anchor side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_RED_ROW_FRAME_L"/>
+							<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_RED_ROW_FRAME_B"/>
+							<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_RED_ROW_FRAME_R"/>
+							<Texture val="#FCJH_ROW_FRAME_RED"/>
+							<RenderPriority val="520"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
 						<Frame type="TeamVeterancyUnitStatusFrame" name="Team1XPUnitStatusFrame">
 							<Anchor side="Top"    relative="$GameUI" pos="Max" offset="#FCJH_BLUE_XP_T"/>
 							<Anchor side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_BLUE_XP_L"/>

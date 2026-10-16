@@ -80,7 +80,7 @@ def derive(cfg):
     row = cfg["hero_row"]
     pad = cfg["screen"].get("padding")
     if pad is not None:
-        row.setdefault("bottom", cfg["screen"]["height"] - pad)
+        row.setdefault("bottom", cfg["screen"]["height"] - pad - row_frame_outset(cfg))
     if row.get("scale") == "fit":
         row["scale"] = fit_hero_scale(cfg, pad)
     if "bottom" in row:
@@ -109,11 +109,12 @@ def place_hero_rows(cfg):
 
 def row_reach(cfg):
     """How close the hero rows come to the screen's sides, px: the XP bars along their top
-    edges reach furthest out (the plates lean outward going up)."""
+    edges reach furthest out (the plates lean outward going up), and the row frame round them
+    its outset further."""
     bars = team_bar_rects(cfg)
     (bx, _, _, _), _ = bars["blue_xp"]
     (rx, _, rw, _), _ = bars["red_xp"]
-    return min(bx, cfg["screen"]["width"] - (rx + rw))
+    return min(bx, cfg["screen"]["width"] - (rx + rw)) - row_frame_outset(cfg)
 
 
 def fit_hero_scale(cfg, pad):
@@ -156,6 +157,8 @@ def rects(cfg):
             out[f"hero_{slot}"] = ((round(left + i * cell.pitch * px, 1), row["top"],
                                     round(cell.w * px, 1), round(cell.h * px, 1)), "ui")
     out.update(team_bar_rects(cfg))
+    for team in ("blue", "red"):
+        out[f"{team}_row_frame"] = (row_frame_shape(cfg, team)[1], "ui")
     out["top_backplate"] = (top_backplate_geometry(cfg)["box"], "ui")
     return out
 
@@ -197,6 +200,36 @@ def team_bar_rects(cfg, n=5):
     return out
 
 
+def row_frame_outset(cfg):
+    """How far the row frame ([row_frame]) reaches outside the plates and the XP bar, px."""
+    spec = cfg.get("row_frame", {})
+    return max(0, spec.get("width", 0) - spec.get("inside", 0)) if spec.get("width", 0) else 0
+
+
+def row_frame_shape(cfg, team, n=5):
+    """The row frame's outline ([row_frame]), screen px: the parallelogram the plates and the
+    XP bar make together, from the XP bar's top to the plates' bottom, its ends the row's
+    slanted edges (as team_bar_rects) - and the frame's rect, that grown by the outset.
+    n: heroes per team, as team_bar_rects. Returns (corners clockwise from top-left, rect)."""
+    row, px = cfg["hero_row"], 1 / Units(cfg).scale
+    cell = HeroCell(cfg)
+    lean = cell.overlap / cell.h
+    edge = ((n - 1) * cell.pitch + cell.w - cell.overlap) * px
+    shift = (5 - n) * cell.pitch * px
+    top = row["top"]
+    y0 = top - cfg["team_xp"]["gap"] - cfg["team_xp"]["height"]
+    y1 = top + cell.h * px
+    if team == "blue":
+        left = lambda y: row["blue_left"] + shift - lean * (top - y)
+    else:
+        left = lambda y: row["red_left"] + cell.overlap * px + lean * (top - y)
+    pts = [(left(y0), y0), (left(y0) + edge, y0), (left(y1) + edge, y1), (left(y1), y1)]
+    o = row_frame_outset(cfg)
+    xs = [x for x, _ in pts]
+    r1 = lambda v: round(v, 1)
+    return pts, (r1(min(xs) - o), r1(y0 - o), r1(max(xs) - min(xs) + 2 * o), r1(y1 - y0 + 2 * o))
+
+
 # ------------------------------------------------------------------ anchoring
 # The game lays the screen out 1200 units tall whatever the window; its WIDTH follows the
 # window's shape (2133 at 16:9, ~2800 at 21:9). So every rect is anchored to a point and its
@@ -230,7 +263,7 @@ ANCHORS = {
     # from these constants' point)
     "minimap": BOTTOM_CENTRE, "map_objectives": BOTTOM_CENTRE,
     **{f"hero_{s}": BOTTOM_CENTRE for s in BLUE_SLOTS + RED_SLOTS},
-    **{s: BOTTOM_CENTRE for s in ("blue_xp", "blue_core", "red_xp", "red_core")},
+    **{s: BOTTOM_CENTRE for s in ("blue_xp", "blue_core", "red_xp", "red_core", "blue_row_frame", "red_row_frame")},
     # the inspect card stands on blue's row, its left edge in line with the row's (user, 2026-10-06)
     "inspect": BOTTOM_CENTRE,
     # the left column keeps to the left edge, [screen] padding in (user, 2026-10-06); at 16:9
@@ -924,6 +957,83 @@ def top_backplate_texture(cfg):
     return dds_bgra(w, h, b"".join(rows))
 
 
+def row_frame_texture(cfg, team, n):
+    """The row frame ([row_frame]) for n heroes, its rect drawn at ART_HEIGHT's resolution: a
+    chrome line round row_frame_shape's outline, `width` px with `inside` of it over the plates'
+    and the XP bar's edges, in the top backplate's rim colours ramped top to bottom."""
+    pts, box = row_frame_shape(cfg, team, n)
+    spec = cfg["row_frame"]
+    return _row_frame_dds(tuple(pts), box, float(row_frame_outset(cfg)), float(spec.get("inside", 0)),
+                          art_scale(cfg), tuple(cfg["top_backplate"]["rim"]))
+
+
+@functools.lru_cache(maxsize=None)
+def _row_frame_dds(pts, box, outset, inside, k, rim):
+    """row_frame_texture's drawing (cached: the textures are asked for several times a run).
+    The distance outside is the true one, so the outside corners come out rounded: a mitred
+    corner (convex_sdf's) on the plates' sharp slant pokes out about twice the width. Each
+    edge of the line ramps over one texel inside it, so the anti-aliasing stays in the rect.
+    Only the band along the outline is worked out; the middle is clear."""
+    x0, y0, bw, bh = box
+    w, h = round(bw * k), round(bh * k)
+    n = len(pts)
+    planes, segs = [], []
+    cx, cy = sum(p[0] for p in pts) / n, sum(p[1] for p in pts) / n
+    for i in range(n):
+        (x1, y1), (x2, y2) = pts[i], pts[(i + 1) % n]
+        ln = math.hypot(x2 - x1, y2 - y1)
+        nx, ny = (y2 - y1) / ln, -(x2 - x1) / ln
+        if nx * (cx - x1) + ny * (cy - y1) > 0:
+            nx, ny = -nx, -ny
+        planes.append((nx, ny, nx * x1 + ny * y1))
+        segs.append((x1, y1, x2 - x1, y2 - y1, ln * ln))
+
+    def dist(x, y):
+        d = max(nx * x + ny * y - c for nx, ny, c in planes)
+        if d <= 0:
+            return d
+        best = d * d * 4 + 1e9
+        for sx, sy, dx, dy, l2 in segs:
+            t = max(0.0, min(1.0, ((x - sx) * dx + (y - sy) * dy) / l2))
+            ex, ey = x - sx - t * dx, y - sy - t * dy
+            best = min(best, ex * ex + ey * ey)
+        return math.sqrt(best)
+
+    clamp = lambda v: 0.0 if v < 0 else 1.0 if v > 1 else v
+    rgb = lambda hx: tuple(int(hx[i:i + 2], 16) / 255 for i in (0, 2, 4))
+    chrome = list(zip((0, .35, .6, 1), (rgb(c) for c in rim)))
+
+    def colour(t):
+        for (o1, c1), (o2, c2) in zip(chrome, chrome[1:]):
+            if t <= o2:
+                f = (t - o1) / (o2 - o1)
+                return tuple(p + (q - p) * f for p, q in zip(c1, c2))
+        return chrome[-1][1]
+
+    (ax, top), (_, _), (_, bottom), (bx, _) = pts[0], pts[1], pts[2], pts[3]
+    edge = pts[1][0] - pts[0][0]
+    reach = outset + inside + 2 / k
+    rows = []
+    for ty in range(h):
+        y = y0 + (ty + 0.5) / k
+        row = bytearray(4 * w)
+        c = colour(clamp((y - y0) / bh))
+        if y - top < reach or bottom - y < reach:
+            spans = [(0, w)]
+        else:
+            lx = ax + (bx - ax) * (y - top) / (bottom - top)
+            span = lambda a, b: (max(0, int((a - x0) * k)), min(w, int((b - x0) * k) + 1))
+            spans = [span(lx - reach, lx + reach), span(lx + edge - reach, lx + edge + reach)]
+        for a, b in spans:
+            for tx in range(a, b):
+                d = dist(x0 + (tx + 0.5) / k, y)
+                cover = clamp((outset - d) * k) * clamp((d + inside) * k)
+                if cover > 0:
+                    row[4 * tx:4 * tx + 4] = bytes((round(c[2] * 255), round(c[1] * 255), round(c[0] * 255), round(cover * 255)))
+        rows.append(bytes(row))
+    return dds_bgra(w, h, b"".join(rows))
+
+
 def bar_texture_size(cfg, w, h):
     """A slanted bar texture at its size on a 1440p screen (w x h: layout.toml px; ART_HEIGHT).
     Our DDS files carry no mipmaps, so a texture drawn much smaller than it is gets sampled
@@ -963,6 +1073,11 @@ def slant_bars(cfg):
                 data = slant_texture(team, lean * h / w, colour, alpha, size=bar_texture_size(cfg, w, h))
                 digest = hashlib.sha1(data).hexdigest()[:8]
                 out[name("xp", part, team, f"n{n}")] = (f"FCJH_Bar_xp_{part}_{team}_n{n}_{digest}.dds", data)
+        # the row frame round the plates and the XP bar ([row_frame]), for rows of 1-5
+        for n in range(1, 6):
+            data = row_frame_texture(cfg, team, n)
+            digest = hashlib.sha1(data).hexdigest()[:8]
+            out[name("row", "frame", team, *([] if n == 5 else [f"n{n}"]))] = (f"FCJH_RowFrame_{team}_n{n}_{digest}.dds", data)
     # the top bar's backplate behind Blizzard's hexagon (layout.toml [top_backplate])
     data = top_backplate_texture(cfg)
     digest = hashlib.sha1(data).hexdigest()[:8]
@@ -2728,7 +2843,8 @@ def row_packer(cfg):
     the screen edge with a hole by the minimap (red already fills from the minimap out).
     This counts each team's visible cells and, for n heroes: moves blue's cells 1..n onto
     the n slots nearest the minimap, and cuts both XP bars (the track's texture and the fill's
-    mask, each cut for that length) to span only n plates. Core bars already sit at the inner ends.
+    mask, each cut for that length) and the row frames to span only n plates. Core bars already
+    sit at the inner ends.
     Every state sets everything it touches, so no state depends on another's undo."""
     u = Units(cfg)
     bars = slant_bars(cfg)
@@ -2745,12 +2861,13 @@ def row_packer(cfg):
         cell = lambda i: f"{OVERVIEW}/{tn}HeroOverview/HeroOverview{i}"
         Team = team.capitalize()
         xp_frames = (f"{top_panel}/FCJH_{Team}XPTrack", f"{top_panel}/{tn}XPUnitStatusFrame")
+        row_frame = f"{top_panel}/FCJH_{Team}RowFrame"
         if n == 0:
             # no hero loaded yet (the loading seconds): the bar spanned all five slots over
             # empty space, then snapped as heroes arrived (user, 2026-09-30) - hidden instead
             return (f'\t\t\t<State name="Heroes0">\n'
                     f'\t\t\t\t<When type="Property" frame="{cell(1)}" Visible="false"/>\n'
-                    + "".join(f'\t\t\t\t<Action type="SetProperty" frame="{f}" Alpha="0"/>\n' for f in xp_frames)
+                    + "".join(f'\t\t\t\t<Action type="SetProperty" frame="{f}" Alpha="0"/>\n' for f in xp_frames + (row_frame,))
                     + '\t\t\t</State>\n')
         # n visible: cell n shown and cell n+1 hidden (n = 5: all shown)
         when = f'\t\t\t\t<When type="Property" frame="{cell(n)}" Visible="true"/>\n'
@@ -2771,6 +2888,10 @@ def row_packer(cfg):
         acts += (f'\t\t\t\t<Action type="SetProperty" frame="{top_panel}/FCJH_{Team}XPTrack" Texture="{track}"/>\n'
                  f'\t\t\t\t<Action type="SetProperty" frame="{top_panel}/{tn}XPUnitStatusFrame/FCJH_XPMask" AlphaMaskTexture="{mask}"/>\n'
                  f'\t\t\t\t<Action type="SetProperty" frame="{top_panel}/{tn}XPUnitStatusFrame/XPBar" AlphaMaskTexture="{mask}"/>\n')
+        x, _, w, _ = row_frame_shape(cfg, team, n)[1]
+        acts += (anchor(row_frame, "Left", x) + anchor(row_frame, "Right", x + w)
+                 + f'\t\t\t\t<Action type="SetProperty" frame="{row_frame}" Alpha="255"/>\n'
+                 + f'\t\t\t\t<Action type="SetProperty" frame="{row_frame}" Texture="{tex(name("row", "frame", team) + suffix)}"/>\n')
         return f'\t\t\t<State name="Heroes{n}">\n{when}{acts}\t\t\t</State>\n'
 
     groups = ""

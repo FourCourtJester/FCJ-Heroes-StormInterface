@@ -381,3 +381,13 @@ blue_colour = "3f8cff"
 red_colour = "ff4a5e"
 track_colour = "0b0c14"
 track_alpha = 220
+
+# A chrome frame round each team's row (user, 2026-10-16): one line round the plates and the XP
+# bar together (the XP bar's top down to the plates' bottom, both slanted ends), not the core
+# bar, no lines between heroes. In the top backplate's rim colours, top to bottom ([top_backplate]
+# rim), anti-aliased the same way; its outside corners rounded. Rows of 1-4 heroes get their own
+# (FCJH_RowPacker). The part outside the plates counts against [screen] padding, so the rows sit
+# that much higher and narrower; width = 0 takes the frame away and puts them back.
+[row_frame]
+width = 3                    # the line, px
+inside = 1                   # of which over the plates' and the XP bar's edges (the rest outside)

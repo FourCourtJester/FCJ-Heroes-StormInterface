@@ -137,7 +137,7 @@
 				<State name="Unit">
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/TargetInfoFrame" Visible="true"/>
 					<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="true"/>
-					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_InspectSlot" pos="Max" offset="-399"/>
+					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_InspectSlot" pos="Max" offset="-401"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SkinName" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="30"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SkinName" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="60"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_Level" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="32"/>
