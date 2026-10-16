@@ -440,7 +440,9 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
    palette; the numbers panes need a better visual - docs/history.md item 1). The canvas draws
    the build as it is (`design/canvas_gen.py`); the art pass designs over those boards.
 3. **Screenshots of everything for posting**, then **the OBS overlay** to pair with the
-   interface (docs/obs.md).
+   interface (docs/obs.md). Per-map shots: docs/maps.md. Show-off shots, with how to stage
+   them, are marked **A show-off shot** in docs/blizzard-fixes.md's "Made" list (first:
+   Abathur's clone on the inspect card).
 - Also open: the fight-mode hotkey (our panes hold Ctrl+1-4; the game's Ctrl+1-8 are also
   "observe player N"); rewinding a replay upsets pop-ups and latches (final polish - the product
   is for live games); rows with fewer than five heroes (a 3v3 or 1v1 replay).
@@ -534,9 +536,11 @@ from their plates (docs/blizzard-fixes.md).
       2026-10-16 - right). The clone is a unit of the copied ally's type, and the card only
       changes when someone clicks it (Abathur stays selected as he burrows). Before d309816 it
       showed the ally's player and talents (BlackoutCR's on a Falstad clone of Budokai's). Now
-      it shows Abathur's player and portrait and a CLONE note where the talents go, keyed off
-      `UltimateEvolutionBuff` (inspect_card.clone_sensor) - seen right 2026-10-16. A paused
-      replay showed stale stats on the card (0% / 100%, 20% / 110% running);
+      it shows Abathur's player and a CLONE note where the talents go, keyed off
+      `UltimateEvolutionBuff` (inspect_card.clone_sensor) - seen right 2026-10-16; since
+      4fa66d8 the portrait is the copied ally's (the clone wears their skin) - **to confirm**.
+      A paused replay showed stale stats on the card (0% / 100%, 20% / 110% running). A
+      show-off shot: how to stage it is in docs/blizzard-fixes.md (the inspect card's entry);
     - **Deathwing's heroic after level 10 - ask other players (user, 2026-10-06).** His plate's
       heroic is Cataclysm, his kit heroic, counted by our own reader (`gen.py
       KIT_HEROIC_COOLDOWNS`). At 10 he picks an active talent, pressed on 1, which Blizzard's

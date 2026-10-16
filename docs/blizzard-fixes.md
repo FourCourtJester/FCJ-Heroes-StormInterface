@@ -39,7 +39,8 @@ detail.
 - Blizzard's talent-lead flame, brought over from the player HUD.
 - Four info panes, one at a time, on Ctrl+1-4.
 - An inspect card for observers, Blizzard's own command card on it.
-- Abathur's clone marked on the inspect card, with his player, not the copied hero's.
+- Abathur's clone marked on the inspect card: the copied hero's face, Abathur's player, a
+  CLONE note for the talents it hasn't got. **A show-off shot** (see the card's entry).
 - The operator's four toggles: replay controls, chat, inspect card, player names.
 - Every battleground fitted round one minimap place:
   - each map's minimap set by its own drawn size;
@@ -265,11 +266,31 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
 - **An inspect card for observers**, with Blizzard's own command card on it so the ability
   tooltips, cooldowns and charges are live, plus the player's talents with their tooltips on both
   teams (`inspect_card`; confirmed 2026-10-05).
-  - **Abathur's clone marked** (2026-10-16, d309816; seen working): Ultimate Evolution's clone
-    is a unit of the copied ally's type with nothing on it saying clone, so it read as that
-    ally. The card shows Abathur's player and portrait, and a CLONE note with Ultimate
-    Evolution's icon in place of the talents, which the clone doesn't have
-    (`inspect_card.clone_sensor`, Blizzard's `UltimateEvolutionBuff`).
+  - **Abathur's clone marked** (2026-10-16, d309816 and 4fa66d8; d309816 seen working, the
+    portrait to confirm): Ultimate Evolution's clone is a unit of the copied ally's type with
+    nothing on it saying clone, so Blizzard's card - and ours, until now - read it as that ally:
+    the ally's player and the ally's talents, none of which the clone has (Blizzard's script
+    only levels it). Our card now takes it apart and puts it back right:
+    - the **copied ally's portrait**, as the clone wears their skin;
+    - **Abathur's player's name**, as Abathur's player owns and steers it;
+    - a **CLONE note** with Ultimate Evolution's icon ("Abathur's Ultimate Evolution: no
+      talents") where the talents go, and no talent tooltips;
+    - the live command card and stats as on any hero (Evolution's +20% heal and damage, +10%
+      speed show in the stats).
+
+    Keyed off Blizzard's `UltimateEvolutionBuff`, which sits on the clone for its whole life
+    (`inspect_card.clone_sensor`); the two players' packs each show their part
+    (`FCJH_CloneParts{n}`). Cost: +34 KB on a 1 MB layout (a first draft cost 1.1 MB).
+
+    **Showing it off** - a before/after pair is the shot: the copied ally's own card next to
+    the clone's (same face, different player, talents swapped for the CLONE note), with the
+    plate's CLONE marker in frame. To stage it:
+    - build 4fa66d8 or later (the stamp, top left);
+    - the replay **running** - a paused replay leaves stale stats on the card (0% / 100%
+      paused, 20% / 110% running);
+    - **click the clone** - the card doesn't follow it: Abathur stays selected as he burrows,
+      and there's no hotkey for the clone;
+    - the user's example: Budokai's Abathur cloning BlackoutCR's Falstad, about 8:20-9:01.
 - **The operator's four toggles** (layout.toml `[toggles]`; user, 2026-10-16). Blizzard's
   hotkeys (`gamehotkeys.txt`) have none of these that works for an observer: the replay panel's
   is dead (above), and there's no chat, inspect or player-name toggle at all. Ahli and Spazzo
