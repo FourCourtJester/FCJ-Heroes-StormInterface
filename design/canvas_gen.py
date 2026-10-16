@@ -1070,7 +1070,6 @@ def spec_board():
         ("Inspect card", f"{R['inspect'][0]}, {R['inspect'][1]} · {xs('inspect')}", "game", f"Shows when Blizzard's small inspector would. Anything not a hero gets a short card. {key('inspect')} slides it off left"),
         ("Blizzard's small inspector", "Parked off screen", "game", "Never shows; its visibility drives our card"),
         ("Player HUD", "Hidden", "game", "Ctrl+5 is Blizzard's observe-player key"),
-        ("Fight mode", "One hotkey", "unk", "Hides a list of elements (the info pane, the health markers). Not started"),
     ]
     # the board's height, from the rows: each as tall as its longest cell wrapped (~7 px a
     # character at 15 px, in columns of ~156, ~266 and ~430 px)

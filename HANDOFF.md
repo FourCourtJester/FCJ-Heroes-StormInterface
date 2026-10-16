@@ -30,8 +30,9 @@ beneath; Blizzard's own kill feed top-left; replay controls top-right; four oper
 chat, inspect card and player names (layout.toml `[toggles]`); info panes
 (talents, KDA/damage, healing, siege) at middle-left on hotkeys; talent pop-ups on the
 cells, and a green-plus pop-up on any hero below 25% health (drawn under the talent
-pop-up). **Fight mode is not a separate layout** — it is one hotkey that hides a list of
-elements (so far: the info pane and the health markers). The top bar and minimap always stay.
+pop-up). **There is no fight mode** (user, 2026-10-16: the spec has moved past it) - the
+default view is the old fight-mode cluster, and the operator's toggles hide what needs hiding.
+The top bar and minimap always stay.
 
 **OBS draws data only, never art** (user, 2026-10-16): team names, logos, series score, the
 tournament's name, division and logo, and the game's bans, on plates the interface draws.
@@ -84,7 +85,7 @@ Nothing on the bottom UI. Its places are `kind = "obs"` rects in `layout.toml` (
   (1-8 keys), not when following from a plate click - as in Ahli's and Spazzo's UIs (§3;
   confirmed 2026-10-06).
 
-Not yet: the OBS graphics package, the fight-mode hotkey, and the visual pass that takes the chrome look of
+Not yet: the OBS graphics package and the visual pass that takes the chrome look of
 the top bar to the plates, bars and panes. §7 has the open list.
 
 ---
@@ -403,8 +404,9 @@ or logos.
 stacking are rebuilt in `tools/gen.py` (`HeroCell`) and only scaled; the portrait crop is
 worked out from the cell's shape. The user wants that look (their screenshots are in `design/`).
 
-**Fight mode = a hotkey that hides a list, not a layout.** The agreed default view already
-is the old fight-mode cluster. Pooled team HP is dropped: layouts have no arithmetic, and
+**No fight mode** (user, 2026-10-16: the spec has moved past it; it was once a hotkey that
+hid a list). The agreed default view already is the old fight-mode cluster, and the
+operator's toggles (`[toggles]`) do the hiding. Pooled team HP is dropped: layouts have no arithmetic, and
 five segments would duplicate the hero row. If plates read too small, widen them.
 
 **Art is sized for 1440p and scaled down at 1080p** (user, 2026-10-06), not the other way
@@ -443,8 +445,7 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
    interface (docs/obs.md). Per-map shots: docs/maps.md. Show-off shots, with how to stage
    them, are marked **A show-off shot** in docs/blizzard-fixes.md's "Made" list (first:
    Abathur's clone on the inspect card).
-- Also open: the fight-mode hotkey (our panes hold Ctrl+1-4; the game's Ctrl+1-8 are also
-  "observe player N"); rewinding a replay upsets pop-ups and latches (final polish - the product
+- Also open: rewinding a replay upsets pop-ups and latches (final polish - the product
   is for live games); rows with fewer than five heroes (a 3v3 or 1v1 replay).
 - **Parked:** blue's curse mirror (unseen; item 14).
 - **Later:** extract the toolchain into its own repo for open-sourcing (user, 2026-10-09) -
@@ -519,7 +520,11 @@ from their plates (docs/blizzard-fixes.md).
       she's in the mech (Blizzard's, docs/blizzard-fixes.md). Samuro's images and Abathur's
       Evolved Monstrosity get the SHORT card (team, health, stats) - right: they aren't heroes,
       and the short card tells an image from Samuro. Still to see:
-      Deathwing in Dragonflight and as World Breaker,
+      Deathwing in Dragonflight and in World Breaker form (one of his two ground forms: from
+      Dragonflight he lands as Destroyer or, with the World Breaker button, as World Breaker -
+      a buff, `DeathwingWorldbreakerForm`, on the same `HeroDeathwing` unit, so the card's
+      match holds and only the buttons are left: World Breaker's read Lava Burst and Earth
+      Shatter, Destroyer's Incinerate and Onslaught; the user may enlist help, 2026-10-16),
       Alexstrasza's Dragonqueen, Ragnaros in Molten Core, Greymane's Worgen, Valeera
       stealthed - each gets the TALL card with its player's portrait, talents and name, and
       its own buttons. If one gets the short card or no player, look at which unit the plate
@@ -527,7 +532,8 @@ from their plates (docs/blizzard-fixes.md).
       right player in every form (2026-10-16), so only the buttons are left to check. Ahli's
       and Spazzo's command cards don't swap either (Abathur in Symbiote keeps his own;
       docs/blizzard-fixes.md), so matching theirs is fine. `HeroValeeraStealthed` and
-      `HeroDeathwingWorldBreaker` aren't units in the game data: guesses, harmless;
+      `HeroDeathwingWorldBreaker` aren't units in the game data: guesses, harmless (World Breaker
+      is a buff, above - the guess can go in a tidy);
     - **empty slots**: Abathur's missing E shows Blizzard's empty frame over the buttons' own
       dark hexagon (added 2026-10-16, 5f78047, after the bare frame read as a hole; confirmed 2026-10-16);
       on any hero, no faint outline peeking round Q W E R (else resize `command_panel`'s
@@ -538,14 +544,15 @@ from their plates (docs/blizzard-fixes.md).
       showed the ally's player and talents (BlackoutCR's on a Falstad clone of Budokai's). Now
       it shows Abathur's player and a CLONE note where the talents go, keyed off
       `UltimateEvolutionBuff` (inspect_card.clone_sensor) - seen right 2026-10-16; since
-      4fa66d8 the portrait is the copied ally's (the clone wears their skin) - seen right 2026-10-16.
+      4fa66d8 the portrait is the copied ally's (the clone wears their skin) - seen right 2026-10-16, with no
+      talent tooltips on the clone and the real heroes' cards unaffected.
       A paused replay showed stale stats on the card (0% / 100%, 20% / 110% running). A
       show-off shot: how to stage it is in docs/blizzard-fixes.md (the inspect card's entry);
     - **Deathwing's heroic after level 10 - ask other players (user, 2026-10-06).** His plate's
       heroic is Cataclysm, his kit heroic, counted by our own reader (`gen.py
       KIT_HEROIC_COOLDOWNS`). At 10 he picks an active talent, pressed on 1, which Blizzard's
       observer slot then follows. Ask casters and players which they want on the plate after
-      10: Cataclysm, the level-10 ability, or both;
+      10: Cataclysm, the level-10 ability, or both (the user may enlist help, 2026-10-16);
     - **the D.Va and Viking guesses** in `inspect_card.ALSO`;
     - **rows with fewer than five heroes** (a 3v3 or 1v1 replay);
     - **every map**: the map objectives, the minimap per map (docs/maps.md; the jitter is solved -
