@@ -727,6 +727,8 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    counts, crystal and Punishers covered the minimap's bottom (21_39_22, 21_39_31), so Infernal's
    minimap sits 50 px up off THE FLOOR (`[minimap.nudge]` -39, notch ~1015; 60 too tall) and the race stays
    where it was (`[minimap.panel_nudge]` +20). Moving the race above the map was declined.
+   Shrinking the crystal 85% by a Dimension animation (75ecc91) moved it rather than shrank it:
+   reverted (8ad8a04). Shipped as is - this map stays above the baseline (user, 2026-10-15).
    Sky Temple's id `ControlPoints` read in game (user, 2026-10-15) - every id now GAME.
    **Then Sky Temple's QA.** Any map could get a two-view or other per-map behaviour the same way
    (`launch_cut`/`opens`, `on_map`).
