@@ -1774,17 +1774,6 @@
 					<Key type="Curve" time="1.0" value="-53"/>
 				</Controller>
 			</Animation>
-			<StateGroup name="FCJH_Lift">
-				<DefaultState val="Settled"/>
-				<State name="Lifted">
-					<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/CursedMinionKillFrame" Visible="true"/>
-					<Action type="SendEvent" frame="$this" event="FCJH_Lift"/>
-					<Action type="SetProperty" frame="$this/FCJH_DiagLifted" Alpha="255"/>
-				</State>
-				<State name="Settled">
-					<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>
-				</State>
-			</StateGroup>
 			<Frame type="Image" name="FCJH_DiagPanel">
 				<Anchor side="Left" relative="$GameUI" pos="Mid" offset="-420"/>
 				<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="-330"/>
@@ -2017,6 +2006,22 @@
 				<RenderPriority val="999"/>
 				<Unclipped val="true"/>
 				<AcceptsMouse val="false"/>
+			</Frame>
+			<!-- Infernal Shrines: lifts the minimap while this shows (maps.lift_sensor) -->
+			<Frame type="Frame" name="FCJH_LiftSensor">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
+				<StateGroup name="FCJH_Lift">
+					<DefaultState val="Settled"/>
+					<State name="Lifted">
+						<When type="Property" frame="$parent" Visible="true"/>
+						<Action type="SendEvent" frame="$parent/$parent/FCJH_MinimapPlace" event="FCJH_Lift"/>
+						<Action type="SetProperty" frame="$parent/$parent/FCJH_MinimapPlace/FCJH_DiagLifted" Alpha="255"/>
+					</State>
+					<State name="Settled">
+						<Action type="SendEvent" frame="$parent/$parent/FCJH_MinimapPlace" event="FCJH_Settle"/>
+					</State>
+				</StateGroup>
 			</Frame>
 		</Frame>
 		<Frame type="Frame" name="ShrineActiveFrame">

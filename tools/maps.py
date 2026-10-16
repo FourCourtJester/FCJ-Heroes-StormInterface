@@ -2716,7 +2716,7 @@ def map_file(key, at, down, bottoms, lifts):
                                   f'{t}<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>\n'
                                   f'{t}<Anchor side="Bottom" relative="$GameUI" pos="Max" '
                                   f'offset="{bottoms[None] + lifts[key][1] + off}"/>\n'
-                                  + lift_diag_race(t))
+                                  + lift_diag_race(t) + lift_sensor(key, len(m.lifts.split("/")) + 1))
     for path, sides in m.panels.items():
         root.at(path).body += anchor_lines(sides, m, len(path.split("/")) + 1, down.get(key, 0))
         if m.proxy and "/" not in path:
@@ -2829,7 +2829,7 @@ def lift(key, ends, indent):
     settle: from wherever it is, so a settle mid-lift turns round. ends: (from, to), as glide's -
     counted from the minimap's LAYOUT anchor, not the placer's. Settled, it rests at its first
     key: the placer's own place. In the map's own panel, the placer's frame: the part's path
-    exists only on this map."""
+    exists only on this map. Played by lift_sensor, inside the part."""
     t = T * indent
     return (f'{t}<!-- {MAPS[key].title}: the minimap up while {MAPS[key].lifts.split("/")[-1]} shows, '
             f'back down when it hides (maps.lift) -->\n'
@@ -2840,18 +2840,33 @@ def lift(key, ends, indent):
             + glide_keys(ends, indent) +
             f'{t}\t</Controller>\n'
             f'{t}</Animation>\n'
-            f'{t}<StateGroup name="FCJH_Lift">\n'
-            f'{t}\t<DefaultState val="Settled"/>\n'
-            f'{t}\t<State name="Lifted">\n'
-            f'{t}\t\t<When type="Property" frame="{MECHANICS}/{MAPS[key].lifts}" Visible="true"/>\n'
-            f'{t}\t\t<Action type="SendEvent" frame="$this" event="FCJH_Lift"/>\n'
-            f'{t}\t\t<Action type="SetProperty" frame="$this/FCJH_DiagLifted" Alpha="255"/>\n'
-            f'{t}\t</State>\n'
-            f'{t}\t<State name="Settled">\n'
-            f'{t}\t\t<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>\n'
-            f'{t}\t</State>\n'
-            f'{t}</StateGroup>\n'
             + lift_diag_squares(t))
+
+
+def lift_sensor(key, indent):
+    """lift's trigger: a frame inside the lifting part, its group on the part's own Visible
+    ($parent, rule 30 - it runs while the part is hidden), playing the placer's animation. In
+    the placer, watching the part by name, it never fired (135435c): the placer comes before
+    the part in the panel (rule 34). The animation stays in the placer: shown while the part
+    hides (Punisher mode), so the settle still runs (rule 11)."""
+    t = T * indent
+    place = "$parent/" * len(MAPS[key].lifts.split("/")[1:]) + "$parent/FCJH_MinimapPlace"
+    return (f'{t}<!-- {MAPS[key].title}: lifts the minimap while this shows (maps.lift_sensor) -->\n'
+            f'{t}<Frame type="Frame" name="FCJH_LiftSensor">\n'
+            f'{t}\t<Anchor relative="$parent"/>\n'
+            f'{t}\t<AcceptsMouse val="false"/>\n'
+            f'{t}\t<StateGroup name="FCJH_Lift">\n'
+            f'{t}\t\t<DefaultState val="Settled"/>\n'
+            f'{t}\t\t<State name="Lifted">\n'
+            f'{t}\t\t\t<When type="Property" frame="$parent" Visible="true"/>\n'
+            f'{t}\t\t\t<Action type="SendEvent" frame="{place}" event="FCJH_Lift"/>\n'
+            f'{t}\t\t\t<Action type="SetProperty" frame="{place}/FCJH_DiagLifted" Alpha="255"/>\n'
+            f'{t}\t\t</State>\n'
+            f'{t}\t\t<State name="Settled">\n'
+            f'{t}\t\t\t<Action type="SendEvent" frame="{place}" event="FCJH_Settle"/>\n'
+            f'{t}\t\t</State>\n'
+            f'{t}\t</StateGroup>\n'
+            f'{t}</Frame>\n')
 
 
 # DIAGNOSTIC (2026-10-15): fbebed4 showed neither the skull race nor the lift. Squares in a
