@@ -777,22 +777,13 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    itself (an inspected hero dying?) while Blizzard's parked one still reads visible.
    Likely fix: move the empty slots onto the card (they hide with it; the command card
    draws over the card, so the buttons still cover them), hero-only via `shape()`.
-   **Later, a simplification (user, 2026-10-09):** treat this and the resource tooltip
-   refresh (item 14) as one problem.
-   - **One controller.** Blizzard's hidden inspector is the single source of truth (round 9),
-     and everything of ours derives from it.
-   - **No second opinions:**
-     - our card is a TargetInfoFrame, so the game can show or hide it by itself;
-     - the gate copies state onto pieces (by SetProperty and SetAnchor) instead of having
-       them follow it.
-   - **One missing input: a swap signal.** The inspector stays visible across a hero swap, so
-     nothing reruns the tooltip states. A swap state is needed, closed -> open, like Blizzard's
-     per-target rebuild.
-   - **Prove the swap signal with a diagnostic first.** Does a label's text change alone rerun
-     a group? That is memory rule 26, unverified.
-   - **Keep the command card and its tooltips.** They are the commentators' only live ability
-     data (user).
-7. **Parked:** the resource tooltip refresh; blue's curse mirror (unseen).
+   **Diagnostic in (2026-10-16, f7260a6):** the gate's state as three squares at the screen's
+   left edge, halfway down (`inspect_card.gate_diag`): green Hero, yellow Unit, red Hide. When
+   the borders stay after the card hides, a screenshot with those squares in view says
+   whether the gate missed it. Seen working (green on a hero card).
+   The resource tooltip (item 14) turned out to be a separate problem and is solved, so the
+   "one problem, one swap signal" plan is dropped.
+7. **Parked:** blue's curse mirror (unseen).
 8. **Later: extract the toolchain into its own repo** for open-sourcing (user, 2026-10-09) -
    the plan, inventory and open questions in [docs/extraction-plan.md](docs/extraction-plan.md).
    After the map pass and Phase 2.
@@ -1213,7 +1204,11 @@ commits around it).
       Alexstrasza's Dragonqueen, Ragnaros in Molten Core, Greymane's Worgen, Valeera
       stealthed - each gets the TALL card with its player's portrait, talents and name, and
       its own buttons. If one gets the short card or no player, look at which unit the plate
-      shows meanwhile (`inspect_card.FORMS`);
+      shows meanwhile (`inspect_card.FORMS`). The user is 99% sure the card already picks the
+      right player in every form (2026-10-16), so only the buttons are left to check. Ahli's
+      and Spazzo's command cards don't swap either (Abathur in Symbiote keeps his own;
+      docs/blizzard-fixes.md), so matching theirs is fine. `HeroValeeraStealthed` and
+      `HeroDeathwingWorldBreaker` aren't units in the game data: guesses, harmless;
     - **empty slots** (item 3): Abathur shows Blizzard's empty frame where E would be; on any
       hero, no faint outline peeking round Q W E R (else resize `command_panel`'s empties);
       Deathwing in flight with no Z or D reads fine;
@@ -1234,21 +1229,15 @@ commits around it).
     - **Infernal Shrines, blue's Punisher** (user, 2026-10-15: the bots never got one - a human
       replay): on blue's side, mirrored - the icon at the outer end, the backing flipped, the fill
       draining from the right, the % at the outer end (`maps.punisher_side`);
-    - **resource tooltip names** (inspect card) - REVERTED to 2026-10-06's (user, 2026-10-09)
-      after three tries. **The lookup is right; only the refresh is wrong (user, 2026-10-09,
-      on the reverted card):** every hero's name is correct the first time the card opens
-      (Morales, Zarya, Gazlowe included); swap to another hero with the card left open and the
-      tooltip keeps the first hero's name (everything else on the card follows the swap). The
-      "Rage" seen earlier was a swap from Hogger. Confirmed on a second map (user). So the fix
-      is a refresh on swap, nothing else. Blizzard's default UI
-      names them right (user checked: Scrap, Energy) - it rebuilds its card per target. Facts:
-      the bars' tooltip comes from Blizzard's TooltipStates, set only when the regen line comes
-      or goes; the names live on the unit ACTORS (VitalNames Energy). Tried and failed: (1) a
-      per-unit StateGroup on UnitStatusFrame0 setting a label the format frames read - everyone
-      Mana; (2) the format frames reading the game's TargetInfoFrame @UnitVitalName - right on
-      the first card, stale on a swap; (3) (1) plus per-hero states on each bar re-applying the
-      Tooltip on a swap - still not working (the A/B/C diagnostic lines were never read back).
-      Next time: start from a diagnostic and read it before building anything;
+    - **resource tooltip names** (inspect card) - SOLVED (user, 2026-10-16, 8ea751d). It was
+      never a refresh problem: Blizzard's bar tooltips name the resource by the card's
+      TargetInfoFrame (`@UnitVitalName`), which follows the last unit CLICKED in the world, not
+      the selection. A plate click selects without retargeting, so the name stayed behind
+      (user: Sonya's unit, then Chromie's plate, read "Fury"); clicking units worked. Now our
+      own label (`inspect_card.vital`), set per unit from the game data (`vital_words`: the
+      actors' VitalNames Energy through their parents, Mana by default), feeds the bars' two
+      tooltip formats (`energy_formats`). Seen right on Chromie's plate after Sonya's;
+      the diagnostic read Blizzard's name "Fury" and ours "Mana: 371/510";
     - **a live custom game with observers**: the game binds Ctrl+1-8 to "Observe Player 9-16"
       (gamehotkeys.txt) - check our panes' Ctrl+1-4 still win with observer slots filled. Also
       O / Ctrl+O lock the camera to the commentator's / a referee's (their tooltips still

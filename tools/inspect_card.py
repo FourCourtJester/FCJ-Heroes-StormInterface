@@ -831,50 +831,6 @@ def energy_formats():
                    for n in ("RegenTooltipFormatFrame", "NoRegenTooltipFormatFrame"))
 
 
-FORMAT = UNIT + "/NormalEnergyBar/NoRegenTooltipFormatFrame"   # Blizzard's resource tooltip text
-VITAL_WORDS = ("Energy", "Fury", "Brew", "Scrap", "Rage", "Ammo", "Heat")   # not Mana: DIAG square C
-
-
-def swap_diag():
-    """DIAGNOSTIC (2026-10-16), the resource tooltip on a hero swap with the card open. Blizzard's
-    bars copy their tooltip once (TooltipStates: SetProperty Tooltip="{format/@Text}", only when
-    the regen line comes or goes), so it keeps the first hero's name. Over the card: A, the card's
-    resource name (@UnitVitalName) as live text; B, the tooltip format's text as live text; C,
-    blue for Mana, orange for another resource's name, grey for none - does a text change re-run
-    a group (rule 26)? On the portrait: D, a square whose tooltip is the format's text bound in
-    its declaration (live?); E, the same set by a per-hero state on every swap (try 3's way)."""
-    key = lambda n, top, colour: fill(f"FCJH_DiagKey{n}", top, M, top + 22, M + 22, colour, 700, 4).replace(
-        '<AcceptsMouse val="false"/>', '<AcceptsMouse val="false"/>\n\t\t\t\t\t<Unclipped val="true"/>')
-    text = lambda n, top, bind: label(f"FCJH_Diag{n}", top, M + 28, top + 22, W + 120, "FCJH_InspectSub", bind, 4,
-                                      extra=f'{T*5}<Unclipped val="true"/>\n{T*5}<RenderPriority val="700"/>\n')
-    square = lambda n, left, colour, tip: (
-        fill(f"FCJH_Diag{n}", TITLE + 6, left, TITLE + 34, left + 28, colour, 700, 4).replace(
-            '<AcceptsMouse val="false"/>', '<AcceptsMouse val="true"/>\n\t\t\t\t\t<AcceptsMouseTooltip val="true"/>'
-            + (f'\n\t\t\t\t\t<Tooltip val="{tip}"/>' if tip else "")))
-    c = lambda name_, colour: fill(f"FCJH_DiagC{name_}", -84, M, -62, M + 22, colour, 701, 4).replace(
-        '<AcceptsMouse val="false"/>', '<AcceptsMouse val="false"/>\n\t\t\t\t\t<Unclipped val="true"/>\n\t\t\t\t\t<Alpha val="0"/>')
-    shows = lambda pick: "".join(f'<Action type="SetProperty" frame="$this/FCJH_DiagC{p}" Alpha="{255 if p == pick else 0}"/>'
-                                 for p in ("Mana", "Other"))
-    units = sorted(set(HEROES) | {sel for sel, _ in ALSO})
-    return (f'{T*4}<!-- DIAGNOSTIC (inspect_card.swap_diag): the resource tooltip on a swap -->\n'
-            + key("A", -56, "255,0,200,255") + text("A", -56, f"{{{CARD}/@UnitVitalName}}")
-            + key("B", -28, "255,255,220,0") + text("B", -28, f"{{{FORMAT}/@Text}}")
-            + fill("FCJH_DiagCNone", -84, M, -62, M + 22, "255,90,90,90", 700, 4).replace(
-                '<AcceptsMouse val="false"/>', '<AcceptsMouse val="false"/>\n\t\t\t\t\t<Unclipped val="true"/>')
-            + c("Mana", "255,40,90,255") + c("Other", "255,255,140,0")
-            + f'{T*4}<StateGroup name="FCJH_DiagC">\n{T*5}<DefaultState val="None"/>\n'
-            + f'{T*5}<State name="Mana"><When type="Property" frame="$this/FCJH_DiagA" Text="Mana"/>{shows("Mana")}</State>\n'
-            + "".join(f'{T*5}<State name="{w}"><When type="Property" frame="$this/FCJH_DiagA" Text="{w}"/>{shows("Other")}</State>\n'
-                      for w in VITAL_WORDS)
-            + f'{T*5}<State name="None">{shows("None")}</State>\n{T*4}</StateGroup>\n'
-            + square("D", M, "255,0,200,255", f"{{{FORMAT}/@Text}}")
-            + square("E", M + 34, "255,255,0,200", "")
-            + f'{T*4}<StateGroup name="FCJH_DiagE">\n{T*5}<DefaultState val="No"/>\n'
-            + "".join(f'{T*5}<State name="{u}"><When type="Property" Unit="{u}"/>'
-                      f'<Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{{{FORMAT}/@Text}}"/></State>\n' for u in units)
-            + f'{T*5}<State name="No"/>\n{T*4}</StateGroup>\n')
-
-
 GATE_DIAG = (("Hero", "255,0,220,0"), ("Unit", "255,255,220,0"), ("Hide", "255,255,0,0"))
 
 
@@ -974,7 +930,7 @@ def unit():
 {T*4}<!-- 1. animated model: DROPPED (round 6). The hero cutscene kept the first hero clicked
 {T*4}     (Chromie) over every later selection; the static portrait underneath updates. -->
 
-{team_sense()}{unit_team()}{hero_check()}{swap_diag()}
+{team_sense()}{unit_team()}{hero_check()}
 {T*4}<!-- 2. name (in the title band, user 2026-10-05), player, level -->
 {T*4}<Frame type="UnitStatusName" name="FCJH_HeroName" template="UnitStatus/UnitStatusUnitNameTemplate">
 {T*5}<!-- centred on the card: the template's own size (220 x 30) beat the
