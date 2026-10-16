@@ -524,9 +524,9 @@ from their plates (docs/blizzard-fixes.md).
       Dragonflight he lands as Destroyer or, with the World Breaker button, as World Breaker -
       a buff, `DeathwingWorldbreakerForm`, on the same `HeroDeathwing` unit, so the card's
       match holds and only the buttons are left: World Breaker's read Lava Burst and Earth
-      Shatter, Destroyer's Incinerate and Onslaught; the user may enlist help, 2026-10-16),
-      Alexstrasza's Dragonqueen, Ragnaros in Molten Core, Greymane's Worgen, Valeera
-      stealthed - each gets the TALL card with its player's portrait, talents and name, and
+      Shatter, Destroyer's Incinerate and Onslaught; the user may enlist help, 2026-10-16).
+      Alexstrasza's Dragonqueen, Ragnaros in Molten Core, Greymane's Worgen and Valeera
+      stealthed SEEN (user, 2026-10-16: all good). Each form gets the TALL card with its player's portrait, talents and name, and
       its own buttons. If one gets the short card or no player, look at which unit the plate
       shows meanwhile (`inspect_card.FORMS`). The user is 99% sure the card already picks the
       right player in every form (2026-10-16), so only the buttons are left to check. Ahli's
