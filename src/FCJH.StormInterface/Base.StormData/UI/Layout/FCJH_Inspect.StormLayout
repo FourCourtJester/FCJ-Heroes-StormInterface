@@ -22,6 +22,42 @@
 		<Frame type="Frame" name="FCJH_InspectGate">
 			<Anchor relative="$parent"/>
 			<AcceptsMouse val="false"/>
+			<Frame type="Image" name="FCJH_DiagGateHero">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="560"/>
+				<Anchor side="Left"   relative="$parent" pos="Min" offset="20"/>
+				<Anchor side="Bottom" relative="$parent" pos="Min" offset="584"/>
+				<Anchor side="Right"  relative="$parent" pos="Min" offset="44"/>
+				<Texture val="@UI/PauseScreenDimImage"/>
+				<ColorAdjustMode val="Fill"/>
+				<AdjustmentColor val="255,0,220,0"/>
+				<RenderPriority val="700"/>
+				<AcceptsMouse val="false"/>
+				<Alpha val="0"/>
+			</Frame>
+			<Frame type="Image" name="FCJH_DiagGateUnit">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="560"/>
+				<Anchor side="Left"   relative="$parent" pos="Min" offset="50"/>
+				<Anchor side="Bottom" relative="$parent" pos="Min" offset="584"/>
+				<Anchor side="Right"  relative="$parent" pos="Min" offset="74"/>
+				<Texture val="@UI/PauseScreenDimImage"/>
+				<ColorAdjustMode val="Fill"/>
+				<AdjustmentColor val="255,255,220,0"/>
+				<RenderPriority val="700"/>
+				<AcceptsMouse val="false"/>
+				<Alpha val="0"/>
+			</Frame>
+			<Frame type="Image" name="FCJH_DiagGateHide">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="560"/>
+				<Anchor side="Left"   relative="$parent" pos="Min" offset="80"/>
+				<Anchor side="Bottom" relative="$parent" pos="Min" offset="584"/>
+				<Anchor side="Right"  relative="$parent" pos="Min" offset="104"/>
+				<Texture val="@UI/PauseScreenDimImage"/>
+				<ColorAdjustMode val="Fill"/>
+				<AdjustmentColor val="255,255,0,0"/>
+				<RenderPriority val="700"/>
+				<AcceptsMouse val="false"/>
+				<Alpha val="0"/>
+			</Frame>
 			<StateGroup name="FCJH_Gate">
 				<DefaultState val="Hide"/>
 				<State name="Hero">
@@ -29,6 +65,7 @@
 					<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_IsHero" Visible="true"/>
 					<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="true"/>
 					<Action type="SetProperty" frame="$parent/FCJH_TalentTips" Visible="true"/>
+					<Action type="SetProperty" frame="$this/FCJH_DiagGateHero" Alpha="255"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="291"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="15"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" side="Top" relative="$GameUI" pos="Max" offset="#FCJH_INSPECT_T"/>
@@ -60,6 +97,7 @@
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/TargetInfoFrame" Visible="true"/>
 					<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="true"/>
 					<Action type="SetProperty" frame="$parent/FCJH_TalentTips" Visible="true"/>
+					<Action type="SetProperty" frame="$this/FCJH_DiagGateUnit" Alpha="255"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Top" relative="$GameUI" pos="Min" offset="9999"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Left" relative="$GameUI" pos="Min" offset="9999"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" side="Top" relative="$GameUI" pos="Max" offset="-399"/>
@@ -90,6 +128,7 @@
 				<State name="Hide">
 					<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="false"/>
 					<Action type="SetProperty" frame="$parent/FCJH_TalentTips" Visible="false"/>
+					<Action type="SetProperty" frame="$this/FCJH_DiagGateHide" Alpha="255"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Top" relative="$GameUI" pos="Min" offset="9999"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Left" relative="$GameUI" pos="Min" offset="9999"/>
 				</State>
@@ -666,6 +705,256 @@
 					<State name="Hero_Empty"><When type="Property" Unit="Hero_Empty"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
 					<State name="RagnarosBigRag"><When type="Property" Unit="RagnarosBigRag"/><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="true"/></State>
 					<State name="No"><Action type="SetProperty" frame="$this/FCJH_IsHero" Visible="false"/></State>
+				</StateGroup>
+				<!-- DIAGNOSTIC (inspect_card.swap_diag): the resource tooltip on a swap -->
+				<Frame type="Image" name="FCJH_DiagKeyA">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="-56"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="15"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="-34"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="37"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="255,0,200,255"/>
+					<RenderPriority val="700"/>
+					<AcceptsMouse val="false"/>
+					<Unclipped val="true"/>
+				</Frame>
+				<Frame type="Label" name="FCJH_DiagA">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="-56"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="43"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="-34"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="453"/>
+					<Style val="FCJH_InspectSub"/>
+					<Text val="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/@UnitVitalName}"/>
+					<Options val="NoWrapping | ScaleToPreventTruncation"/>
+					<AcceptsMouse val="false"/>
+					<Unclipped val="true"/>
+					<RenderPriority val="700"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_DiagKeyB">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="-28"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="15"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="37"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="255,255,220,0"/>
+					<RenderPriority val="700"/>
+					<AcceptsMouse val="false"/>
+					<Unclipped val="true"/>
+				</Frame>
+				<Frame type="Label" name="FCJH_DiagB">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="-28"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="43"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="453"/>
+					<Style val="FCJH_InspectSub"/>
+					<Text val="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/>
+					<Options val="NoWrapping | ScaleToPreventTruncation"/>
+					<AcceptsMouse val="false"/>
+					<Unclipped val="true"/>
+					<RenderPriority val="700"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_DiagCNone">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="-84"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="15"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="-62"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="37"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="255,90,90,90"/>
+					<RenderPriority val="700"/>
+					<AcceptsMouse val="false"/>
+					<Unclipped val="true"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_DiagCMana">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="-84"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="15"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="-62"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="37"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="255,40,90,255"/>
+					<RenderPriority val="701"/>
+					<AcceptsMouse val="false"/>
+					<Unclipped val="true"/>
+					<Alpha val="0"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_DiagCOther">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="-84"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="15"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="-62"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="37"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="255,255,140,0"/>
+					<RenderPriority val="701"/>
+					<AcceptsMouse val="false"/>
+					<Unclipped val="true"/>
+					<Alpha val="0"/>
+				</Frame>
+				<StateGroup name="FCJH_DiagC">
+					<DefaultState val="None"/>
+					<State name="Mana"><When type="Property" frame="$this/FCJH_DiagA" Text="Mana"/><Action type="SetProperty" frame="$this/FCJH_DiagCMana" Alpha="255"/><Action type="SetProperty" frame="$this/FCJH_DiagCOther" Alpha="0"/></State>
+					<State name="Energy"><When type="Property" frame="$this/FCJH_DiagA" Text="Energy"/><Action type="SetProperty" frame="$this/FCJH_DiagCMana" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_DiagCOther" Alpha="255"/></State>
+					<State name="Fury"><When type="Property" frame="$this/FCJH_DiagA" Text="Fury"/><Action type="SetProperty" frame="$this/FCJH_DiagCMana" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_DiagCOther" Alpha="255"/></State>
+					<State name="Brew"><When type="Property" frame="$this/FCJH_DiagA" Text="Brew"/><Action type="SetProperty" frame="$this/FCJH_DiagCMana" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_DiagCOther" Alpha="255"/></State>
+					<State name="Scrap"><When type="Property" frame="$this/FCJH_DiagA" Text="Scrap"/><Action type="SetProperty" frame="$this/FCJH_DiagCMana" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_DiagCOther" Alpha="255"/></State>
+					<State name="Rage"><When type="Property" frame="$this/FCJH_DiagA" Text="Rage"/><Action type="SetProperty" frame="$this/FCJH_DiagCMana" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_DiagCOther" Alpha="255"/></State>
+					<State name="Ammo"><When type="Property" frame="$this/FCJH_DiagA" Text="Ammo"/><Action type="SetProperty" frame="$this/FCJH_DiagCMana" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_DiagCOther" Alpha="255"/></State>
+					<State name="Heat"><When type="Property" frame="$this/FCJH_DiagA" Text="Heat"/><Action type="SetProperty" frame="$this/FCJH_DiagCMana" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_DiagCOther" Alpha="255"/></State>
+					<State name="None"><Action type="SetProperty" frame="$this/FCJH_DiagCMana" Alpha="0"/><Action type="SetProperty" frame="$this/FCJH_DiagCOther" Alpha="0"/></State>
+				</StateGroup>
+				<Frame type="Image" name="FCJH_DiagD">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="36"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="15"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="64"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="43"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="255,0,200,255"/>
+					<RenderPriority val="700"/>
+					<AcceptsMouse val="true"/>
+					<AcceptsMouseTooltip val="true"/>
+					<Tooltip val="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_DiagE">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="36"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="49"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="64"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="77"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="255,255,0,200"/>
+					<RenderPriority val="700"/>
+					<AcceptsMouse val="true"/>
+					<AcceptsMouseTooltip val="true"/>
+				</Frame>
+				<StateGroup name="FCJH_DiagE">
+					<DefaultState val="No"/>
+					<State name="DeathwingDragonflightUnit"><When type="Property" Unit="DeathwingDragonflightUnit"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroAI"><When type="Property" Unit="HeroAI"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroAbathur"><When type="Property" Unit="HeroAbathur"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroAbathurSymbiote"><When type="Property" Unit="HeroAbathurSymbiote"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroAlarak"><When type="Property" Unit="HeroAlarak"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroAlexstrasza"><When type="Property" Unit="HeroAlexstrasza"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroAlexstraszaDragon"><When type="Property" Unit="HeroAlexstraszaDragon"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroAmazon"><When type="Property" Unit="HeroAmazon"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroAna"><When type="Property" Unit="HeroAna"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroAnduin"><When type="Property" Unit="HeroAnduin"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroAnubarak"><When type="Property" Unit="HeroAnubarak"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroArtanis"><When type="Property" Unit="HeroArtanis"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroArthas"><When type="Property" Unit="HeroArthas"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroAuriel"><When type="Property" Unit="HeroAuriel"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroAzmodan"><When type="Property" Unit="HeroAzmodan"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroBaleog"><When type="Property" Unit="HeroBaleog"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroBarbarian"><When type="Property" Unit="HeroBarbarian"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroButcher"><When type="Property" Unit="HeroButcher"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroChen"><When type="Property" Unit="HeroChen"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroCho"><When type="Property" Unit="HeroCho"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroChoGallBundleProduct"><When type="Property" Unit="HeroChoGallBundleProduct"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroChromie"><When type="Property" Unit="HeroChromie"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroClassicEvent"><When type="Property" Unit="HeroClassicEvent"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroCraftWarsEvent"><When type="Property" Unit="HeroCraftWarsEvent"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroCrusader"><When type="Property" Unit="HeroCrusader"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroCyberpunk"><When type="Property" Unit="HeroCyberpunk"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroDVaMech"><When type="Property" Unit="HeroDVaMech"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroDVaPilot"><When type="Property" Unit="HeroDVaPilot"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroDarkNexusEvent"><When type="Property" Unit="HeroDarkNexusEvent"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroDeathwing"><When type="Property" Unit="HeroDeathwing"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroDeathwingWorldBreaker"><When type="Property" Unit="HeroDeathwingWorldBreaker"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroDeckard"><When type="Property" Unit="HeroDeckard"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroDehaka"><When type="Property" Unit="HeroDehaka"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroDemonHunter"><When type="Property" Unit="HeroDemonHunter"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroDiablo"><When type="Property" Unit="HeroDiablo"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroDryad"><When type="Property" Unit="HeroDryad"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroErik"><When type="Property" Unit="HeroErik"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroEvergreenEvent"><When type="Property" Unit="HeroEvergreenEvent"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroFaerieDragon"><When type="Property" Unit="HeroFaerieDragon"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroFallOfKingsCrest"><When type="Property" Unit="HeroFallOfKingsCrest"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroFalstad"><When type="Property" Unit="HeroFalstad"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroFenix"><When type="Property" Unit="HeroFenix"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroFirebat"><When type="Property" Unit="HeroFirebat"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroGall"><When type="Property" Unit="HeroGall"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroGarrosh"><When type="Property" Unit="HeroGarrosh"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroGenji"><When type="Property" Unit="HeroGenji"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroGreymane"><When type="Property" Unit="HeroGreymane"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroGreymaneWorgen"><When type="Property" Unit="HeroGreymaneWorgen"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroGuldan"><When type="Property" Unit="HeroGuldan"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroHanzo"><When type="Property" Unit="HeroHanzo"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroHogger"><When type="Property" Unit="HeroHogger"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroIllidan"><When type="Property" Unit="HeroIllidan"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroImperius"><When type="Property" Unit="HeroImperius"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroInvisibleHero"><When type="Property" Unit="HeroInvisibleHero"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroJaina"><When type="Property" Unit="HeroJaina"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroJunkrat"><When type="Property" Unit="HeroJunkrat"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroKaelthas"><When type="Property" Unit="HeroKaelthas"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroKelThuzad"><When type="Property" Unit="HeroKelThuzad"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroKerrigan"><When type="Property" Unit="HeroKerrigan"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroL90ETC"><When type="Property" Unit="HeroL90ETC"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroLeoric"><When type="Property" Unit="HeroLeoric"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroLiLi"><When type="Property" Unit="HeroLiLi"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroLostVikingsController"><When type="Property" Unit="HeroLostVikingsController"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroLucio"><When type="Property" Unit="HeroLucio"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroMaiev"><When type="Property" Unit="HeroMaiev"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroMalGanis"><When type="Property" Unit="HeroMalGanis"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroMalfurion"><When type="Property" Unit="HeroMalfurion"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroMalthael"><When type="Property" Unit="HeroMalthael"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroMechaEvent"><When type="Property" Unit="HeroMechaEvent"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroMedic"><When type="Property" Unit="HeroMedic"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroMedivh"><When type="Property" Unit="HeroMedivh"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroMedivhRaven"><When type="Property" Unit="HeroMedivhRaven"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroMeiOW"><When type="Property" Unit="HeroMeiOW"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroMephisto"><When type="Property" Unit="HeroMephisto"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroMobsterEvent"><When type="Property" Unit="HeroMobsterEvent"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroMonk"><When type="Property" Unit="HeroMonk"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroMuradin"><When type="Property" Unit="HeroMuradin"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroMurky"><When type="Property" Unit="HeroMurky"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroNecromancer"><When type="Property" Unit="HeroNecromancer"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroNexusHunter"><When type="Property" Unit="HeroNexusHunter"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroNova"><When type="Property" Unit="HeroNova"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroOlaf"><When type="Property" Unit="HeroOlaf"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroOrphea"><When type="Property" Unit="HeroOrphea"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroOverwatchCosplayEvent"><When type="Property" Unit="HeroOverwatchCosplayEvent"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroProbius"><When type="Property" Unit="HeroProbius"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroRagnaros"><When type="Property" Unit="HeroRagnaros"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroRandom"><When type="Property" Unit="HeroRandom"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroRaynor"><When type="Property" Unit="HeroRaynor"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroRehgar"><When type="Property" Unit="HeroRehgar"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroResistance"><When type="Property" Unit="HeroResistance"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroRexxar"><When type="Property" Unit="HeroRexxar"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroSamuro"><When type="Property" Unit="HeroSamuro"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroSgtHammer"><When type="Property" Unit="HeroSgtHammer"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroStitches"><When type="Property" Unit="HeroStitches"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroStukov"><When type="Property" Unit="HeroStukov"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroSylvanas"><When type="Property" Unit="HeroSylvanas"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroTassadar"><When type="Property" Unit="HeroTassadar"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroTestHero"><When type="Property" Unit="HeroTestHero"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroThrall"><When type="Property" Unit="HeroThrall"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroTinker"><When type="Property" Unit="HeroTinker"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroToy2019Event"><When type="Property" Unit="HeroToy2019Event"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroToyEvent"><When type="Property" Unit="HeroToyEvent"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroTracer"><When type="Property" Unit="HeroTracer"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroTychus"><When type="Property" Unit="HeroTychus"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroTyrael"><When type="Property" Unit="HeroTyrael"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroTyrande"><When type="Property" Unit="HeroTyrande"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroUther"><When type="Property" Unit="HeroUther"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroValeera"><When type="Property" Unit="HeroValeera"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroValeeraStealthed"><When type="Property" Unit="HeroValeeraStealthed"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroVarian"><When type="Property" Unit="HeroVarian"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroWarchromeWastes"><When type="Property" Unit="HeroWarchromeWastes"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroWhitemane"><When type="Property" Unit="HeroWhitemane"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroWitchDoctor"><When type="Property" Unit="HeroWitchDoctor"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroWizard"><When type="Property" Unit="HeroWizard"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroXalatath"><When type="Property" Unit="HeroXalatath"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroYrel"><When type="Property" Unit="HeroYrel"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroZagara"><When type="Property" Unit="HeroZagara"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroZarya"><When type="Property" Unit="HeroZarya"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroZeratul"><When type="Property" Unit="HeroZeratul"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="HeroZuljin"><When type="Property" Unit="HeroZuljin"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="Hero_Empty"><When type="Property" Unit="Hero_Empty"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="RagnarosBigRag"><When type="Property" Unit="RagnarosBigRag"/><Action type="SetProperty" frame="$this/FCJH_DiagE" Tooltip="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/NormalEnergyBar/NoRegenTooltipFormatFrame/@Text}"/></State>
+					<State name="No"/>
 				</StateGroup>
 
 				<!-- 2. name (in the title band, user 2026-10-05), player, level -->

@@ -159,6 +159,14 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
   re-asserts it every frame: every way of hiding it lost, and fighting it made it flicker. Ahli
   and Spazzo leave it be too (2026-10-06).
 
+### The command card doesn't follow a hero's other unit
+- An observer's command card follows the selected unit only. Selecting Abathur while he's in
+  Symbiote on someone leaves his own buttons up, not the Symbiote's. The same goes for a hero
+  steering another unit. Neither Ahli's nor Spazzo's command card changes over (user,
+  2026-10-16), so either neither author cared or the game sends nothing to change it by. Ours
+  is the same so far. Hero forms that are units of their own (Medivh's Raven and the like) are
+  still to be checked (HANDOFF item 14).
+
 ### A paused replay opens no inspector
 - Clicking a unit while paused selects nothing new, so neither Blizzard's inspector nor ours can
   appear until the replay runs.
