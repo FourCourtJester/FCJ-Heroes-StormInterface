@@ -970,9 +970,31 @@ SHRINE_BANNER = left_banner("Shrine", "ShrineActivateLabel", "ShrineActivateTime
 WARHEAD_BOX = (-460, 20, 0, 126)
 ALERT_ART["WARHEAD"] = Art(WARHEAD_BOX[2] - WARHEAD_BOX[0], 0, bar_up=25, below=25,
                            height=WARHEAD_BOX[3] - WARHEAD_BOX[1])
+def nuke_sensor():
+    """The nuke counters' trigger (warhead_counters), in this banner's "N LEFT" label, which the
+    script shows only while warheads are out (NukesActive, libmsc2 MMSC2UISetMode). The counters
+    come before the banner in the panel, so they can't watch it (rules 34, 38): the sensor sends
+    across. The label is visible in Blizzard's layout until the first countdown hides it, so ours
+    starts hidden, or the sensor would fire at load."""
+    return ('<Visible val="false"/>\n'
+            '<Frame type="Frame" name="FCJH_NukeSensor">\n'
+            '\t<Anchor relative="$parent"/>\n'
+            '\t<AcceptsMouse val="false"/>\n'
+            '\t<StateGroup name="FCJH_Nukes">\n'
+            '\t\t<DefaultState val="Off"/>\n'
+            '\t\t<State name="On">\n'
+            '\t\t\t<When type="Property" frame="$parent" Visible="true"/>\n'
+            + "".join(f'\t\t\t<Action type="SendEvent" frame="$parent/$parent/$parent/Team{n}TerrazineFrame" event="FCJH_NukesOn"/>\n'
+                      for n in (1, 2)) +
+            '\t\t</State>\n'
+            '\t\t<State name="Off"/>\n'
+            '\t</StateGroup>\n'
+            '</Frame>')
+
+
 WARHEAD_PARTS = (("Image", "BackgroundImage", ()), ("Image", "TimerImage", ()),
                  ("Label", "EruptionInfoLabel", ()), ("Label", "EruptionTimerLabel", ()),
-                 ("Label", "EruptionQuantityLabel", ()))
+                 ("Label", "EruptionQuantityLabel", (), nuke_sensor()))
 # The Dragon Knight (DragonModeFrame, shown instead once a team holds both shrines): Blizzard pins
 # its bar's bottom-right to the countdown's bar's, the dragon's head (DragonHud), its timer and
 # health bar all hanging off its bar. Ours from the spot's left, as the golems': its bar at its
@@ -2561,11 +2583,23 @@ PARTS["tomb_of_the_spider_queen"] = weaver_parts()
 # tip at 1043). The map has no markers under it to keep clear (user: "we can probably move
 # these nukes outwards and move the minimap downwards"): each team's out to its side, clear of
 # the map's sides at their height, and up off the screen's bottom.
-WARHEAD_COUNTERS_OUT_PX = 50          # blue's icon 865-920 -> 815-870, red's 990-1045 -> 1040-1095:
-                                      # the map's sides ~880 / ~1030 at the icons' top, as lowered
+#
+# Then turned round as Tomb's gem counts (user, 2026-10-16): the icon at the outer end, the count
+# inner, the two strips meeting under the map's tip, and hidden until warheads first spawn (no
+# point counting nukes nobody can pick up yet), then up for the rest of the game.
+WARHEAD_COUNTERS_OUT_PX = 0           # the strips meet at the square's Mid-5, ~950 px; at 50 out
+                                      # they ran ~762-904 / ~1007-1155 (00_14_47). Under the map's
+                                      # stub (~928-978 at the floor): raise if it reads badly
 WARHEAD_COUNTERS_UP_PX = 44           # the map's 22 down taken back, then 22 up: seen on 1b0dea6 at 20
                                       # up, the icons' bottom ~1062 and their team strips' (blue/red
                                       # lines under them, once off the screen) 1067 - 2 past the floor
+# Turned round, in units from each strip's ends (its Background: blue's ~798-950 px, red's
+# ~950-1103). Blizzard's: blue's icon 74 in from its outer end, its count 105 in from the inner,
+# red's mirrored (84 / 105). Ours: the icons 30 in (blue's art ~827-880 px) and 46 (red's ~1026-
+# 1079 - its art sits further in its image), the counts' inner edges ~915 / ~991 px, either side
+# of the map's stub (centre ~953). Blizzard's count styles kept: blue's right-justified, red's left.
+WARHEAD_ICON_IN = (30, 46)            # blue's icon Left from its strip's Min, red's Right from Max
+WARHEAD_COUNT_IN = (39, 37)           # blue's count Right from its strip's Max, red's Left from Min
 
 
 def warhead_counters():
@@ -2573,11 +2607,28 @@ def warhead_counters():
     parts = {}
     for n, side in ((1, -1), (2, 1)):
         x = side * out
-        parts[f"SC2Panel/Team{n}TerrazineFrame"] = (
+        frame = f"SC2Panel/Team{n}TerrazineFrame"
+        parts[frame] = (
             f'<Anchor side="Top"    relative="{MINIMAP_SQUARE}" pos="Max" offset="{-146 - up}"/>\n'
             f'<Anchor side="Bottom" relative="$parent" pos="Max" offset="{-up}"/>\n'
             f'<Anchor side="Left"   relative="{MINIMAP_SQUARE}" pos="Min" offset="{x}"/>\n'
-            f'<Anchor side="Right"  relative="{MINIMAP_SQUARE}" pos="Max" offset="{x}"/>\n')
+            f'<Anchor side="Right"  relative="{MINIMAP_SQUARE}" pos="Max" offset="{x}"/>\n'
+            # hidden until FCJH_NukeSensor (in the warheads banner) sends this, once: never reversed
+            '<Alpha val="0"/>\n'
+            '<Animation name="FCJH_NukesOn">\n'
+            '\t<Event event="FCJH_NukesOn" action="Play"/>\n'
+            '\t<Controller type="Fade" end="Pause">\n'
+            + "".join(f'\t\t<Key type="Curve" time="{k}" value="{v}"/>\n' for k, v in ((0, 0), (".2", 255), (".4", 255)))
+            + '\t</Controller>\n'
+            '</Animation>\n')
+        icon = (f'<Anchor side="Left" relative="$parent/Background" pos="Min" offset="{WARHEAD_ICON_IN[0]}"/>\n'
+                if n == 1 else
+                f'<Anchor side="Right" relative="$parent/Background" pos="Max" offset="{-WARHEAD_ICON_IN[1]}"/>\n')
+        parts[frame + "/TerrazineIcon:Image"] = parts[frame + "/TerrazineIconGlow:Image"] = icon
+        parts[frame + "/TerrazineCounter:Label"] = (
+            f'<Anchor side="Right" relative="$parent/Background" pos="Max" offset="{-WARHEAD_COUNT_IN[0]}"/>\n'
+            if n == 1 else
+            f'<Anchor side="Left" relative="$parent/Background" pos="Min" offset="{WARHEAD_COUNT_IN[1]}"/>\n')
     return parts
 
 

@@ -651,7 +651,12 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    either side of its tip, cut off at the screen's bottom at Blizzard's place) 50 px out and up
    (maps.warhead_counters): seen clear of the map, icons ~815-870 / ~1040-1100 down to ~1062;
    then 2 more up (cd1e81b) for their team strips, uncovered by the lift, to end on the floor -
-   seen (2026-10-16): both strips 1063-1065, on the floor. The warheads' banner (`TerrazineEruptionFrame`: the countdown, then how many are left)
+   seen (2026-10-16): both strips 1063-1065, on the floor. Then turned round as Tomb's (user,
+   2026-10-16): icon outer, count inner, the strips meeting at the centre (out 0 - under the
+   map's tip at the floor; "build it first, and raise later if need"), and hidden (alpha 0) until
+   warheads first spawn, shown for good after: a sensor in the banner's "N LEFT" label (shown
+   only while warheads are out; started hidden, as Blizzard's is visible until the first
+   countdown) plays a never-reversed fade on both (maps.nuke_sensor). Unseen. The warheads' banner (`TerrazineEruptionFrame`: the countdown, then how many are left)
    moved as Blizzard draws it to red's bottom slot - a neutral banner, no copied words (user);
    its box is the English countdown's, so the other text's tip lands off red's plates by its
    length (1b0dea6). Seen, both texts (2026-10-16): "WARHEADS DEPLOYED IN: 0:27" tip at x 1166,
@@ -659,7 +664,7 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    clear of the hexagon, its bar ending ~37 px over the XP bar (966). Its other SC2Panel parts
    (NukeSiloFrame, NukeSiloFrame2, TerrazineBuffFrame) never show, in any view: the map's
    script (`libmsc2.galaxy`) hides them for everyone at setup and nothing ever shows them -
-   leftovers. Nothing left on Warhead.
+   leftovers. Left on Warhead: see the turned-round counters.
    **The minimap's tooltip - OFF, every map (user, 2026-10-15: "Just hide it or disable it";
    seen gone on 08eeb21).** Hovering a named minimap icon (a watch tower, a fort, Tomb's Spider
    Altar) showed Blizzard's `MinimapPanel/MinimapPanelTooltip` at ~1332-1467 x, ~800-850 y,
