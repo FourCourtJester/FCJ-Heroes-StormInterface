@@ -656,7 +656,11 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    map's tip at the floor; "build it first, and raise later if need"), and hidden (alpha 0) until
    warheads first spawn, shown for good after: a sensor in the banner's "N LEFT" label (shown
    only while warheads are out; started hidden, as Blizzard's is visible until the first
-   countdown) plays a never-reversed fade on both (maps.nuke_sensor). Unseen. The warheads' banner (`TerrazineEruptionFrame`: the countdown, then how many are left)
+   countdown) plays a never-reversed fade on both (maps.nuke_sensor). Seen (2026-10-16, 18f4cbb):
+   hidden at the start and through the first countdown, up at "N LEFT"; strips ~814-1103 at
+   1063-1065, meeting at the map's tip (~955); icons ~828-880 / ~1028-1078, counts ~895-917 /
+   ~992-1005. Not yet seen: a later wave (no blink expected - the fade is played, not restarted).
+   The warheads' banner (`TerrazineEruptionFrame`: the countdown, then how many are left)
    moved as Blizzard draws it to red's bottom slot - a neutral banner, no copied words (user);
    its box is the English countdown's, so the other text's tip lands off red's plates by its
    length (1b0dea6). Seen, both texts (2026-10-16): "WARHEADS DEPLOYED IN: 0:27" tip at x 1166,
