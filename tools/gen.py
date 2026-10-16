@@ -704,6 +704,11 @@ RESOURCE_TABLE = [
     ("VolskayaGunner", "VolskayaVehicleGunner", "Pink"), ("Zarya", "HeroZarya", "Pink"),
     ("Gazlowe", "HeroTinker", "Orange"),
 ]
+# Ammo heroes: the resource bar cut into one segment per shot, as Blizzard's own Tracer and
+# Junkrat bars are (tracer.stormlayout, junkrat.stormlayout: Segmented + SegmentValue = energy
+# per segment). Tracer: 20 energy, 2 a shot, so 10 segments. Junkrat: 4 (3 with Cannonball),
+# 1 a shot. A per-shot value, not a count, so a talent that changes the max needs nothing.
+RESOURCE_SEGMENTS = {"HeroTracer": 2, "HeroJunkrat": 1}
 
 HERO_ROW_FILE = "FCJH_HeroRow.StormLayout"
 
@@ -2237,14 +2242,19 @@ def hero_cell_template(team, c, cfg):
 				</StateGroup>
 			</Frame>"""
     if blue:
+        def segments(unit):
+            per = RESOURCE_SEGMENTS.get(unit)
+            on = (f'<Action type="SetProperty" frame="FCJH_Resource" Segmented="true" index="0"/>'
+                  f'<Action type="SetProperty" frame="FCJH_Resource" SegmentValue="{per}"/>')
+            return on if per else '<Action type="SetProperty" frame="FCJH_Resource" Segmented="false" index="0"/>'
         colour_states = "".join(
             f'\n\t\t\t\t<State name="{n}"><When type="Property" Unit="{unit}"/>'
-            f'<Action type="SetProperty" frame="FCJH_Resource" ColorStyle="{RESOURCE_STYLE[c]}"/></State>'
+            f'<Action type="SetProperty" frame="FCJH_Resource" ColorStyle="{RESOURCE_STYLE[c]}"/>{segments(unit)}</State>'
             for n, unit, c in RESOURCE_TABLE)
         health += f"""
 			<StateGroup name="FCJH_ResourceColour">
 				<DefaultState val="Normal"/>{colour_states}
-				<State name="Normal"><Action type="SetProperty" frame="FCJH_Resource" ColorStyle="StandardEnergy"/></State>
+				<State name="Normal"><Action type="SetProperty" frame="FCJH_Resource" ColorStyle="StandardEnergy"/>{segments(None)}</State>
 			</StateGroup>"""
     (fl, ft, fr, fb), f = fountain_rect(cfg, team)
     fountain_anchors = f"""

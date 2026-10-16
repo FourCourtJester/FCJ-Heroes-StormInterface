@@ -194,6 +194,9 @@ All of them are driven by events from the game to that hidden cell, so they woul
   - The rows now sit 2 px higher and a touch smaller, to keep the frame inside the padding.
 - **D.Va's Self-Destruct charge** (visual pass): her mech's charge meter doesn't go on the
   plate, but check it shows on her talent card, the way Tracer's Pulse Bomb meter does.
+- **Ammo segments** (new in this build): Tracer's bar should show 10 segments, Junkrat's 4
+  (3 with Cannonball). If the dividers look wrong or don't show, we revisit; if they work,
+  they stay.
 
 ## Decisions from the question round (2026-10-16, before the test)
 
