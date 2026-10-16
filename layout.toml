@@ -195,16 +195,21 @@ kind = "obs"
 
 # Around the edges
 [element.replay]
-rect = [1528, 463.5, 378, 153]  # Blizzard's ReplayPanel, native 420 x 170 units - only moved here
-                             # (user: nothing else about it changes). Right edge, centred: its art
-                             # [screen] padding in from the side, its middle on the screen's (user,
-                             # 2026-10-06: out of the way while the map alerts are tested; on red's
-                             # row it sat in their way)
+rect = [0, 0, 252, 153]      # Blizzard's ReplayPanel, 280 x 170 units (native 420 wide). On red's row,
+                             # the inspect card's mirror (user, 2026-10-16): narrowed to keep clear
+                             # of red's map alerts, which start at the row's inner end and grow
+                             # outward. Its buttons need 254 units (two 55s at the ends, 17 in,
+                             # and the two speed buttons either side of the middle); 280 leaves a
+                             # little air. Was the right edge's middle 2026-10-06..16, native width.
+above = "red_xp"             # its art's bottom sits [screen] padding above red's row
+flush = "right"              # its art's right edge on the row's
 art_inset = 6                # its glass art's outer line sits 6 px inside the frame on every side
-                             # (measured in game, 2026-10-05): the box you see is 1534, 469.5 - 1900, 610.5
+                             # (measured in game, 2026-10-05)
 kind = "ui"
 [element.replay_collapsed]
-rect = [1700, 586.5, 200, 24]  # hidden state: a slim tab where the panel's bottom-right corner was
+rect = [0, 0, 200, 24]       # hidden state: a slim tab at the panel's art's bottom-right corner
+above = "red_xp"
+flush = "right"
 kind = "demand"
 [element.kill_feed]
 rect = [0, 104.4, 540, 300]  # Blizzard's, in its own place, not moved (user, 2026-10-05): top-left,

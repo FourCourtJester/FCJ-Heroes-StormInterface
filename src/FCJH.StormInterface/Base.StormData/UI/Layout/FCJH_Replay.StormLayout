@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <Desc>
-	<!-- Replay controls, on the right edge, centred (layout.toml element.replay; user,
-	     2026-10-06), collapsible.
+	<!-- Replay controls, on red's row, its right edge in line with the row's: the inspect
+	     card's mirror (layout.toml element.replay; user, 2026-10-16), collapsible. Narrowed to
+	     #FCJH_REPLAY_W (native 420) to keep clear of red's map alerts: everything in Blizzard's
+	     panel hangs off its BackgroundImage's edges and middle, so it closes up with it.
 
 	     Collapse: Blizzard's own. Control+Shift+O (ToggleControlObserverTools in
 	     stormobserverpanel.stormlayout) slides ReplayPanel out to the left and fades it, and
-	     back. We keep that and only move the panel: left and top edges ours, native size.
+	     back. We keep that and only move and narrow the panel.
 
 	     While it's collapsed, a slim tab shows in the panel's bottom-right corner
 	     (element.replay_collapsed) so the operator can see it's there and how to bring it back. The tab watches the panel's
@@ -16,20 +18,24 @@
 			<Frame type="Frame" name="FullscreenUpperContainer">
 				<Frame type="MovingFrame" name="ObserverPanelMovingContainer">
 					<Frame type="ReplayPanel" name="ReplayPanel">
-						<Anchor side="Top"   relative="$GameUI" pos="Mid" offset="#FCJH_REPLAY_T"/>
-						<Anchor side="Left"  relative="$GameUI" pos="Max" offset="#FCJH_REPLAY_L"/>
+						<Anchor side="Top"   relative="$GameUI" pos="Max" offset="#FCJH_REPLAY_T"/>
+						<Anchor side="Left"  relative="$GameUI" pos="Mid" offset="#FCJH_REPLAY_L"/>
 						<Anchor side="Right" relative="$this"   pos="Min" offset="0"/>
+						<Width val="#FCJH_REPLAY_W"/>
 						<Unclipped val="true"/>
+						<Frame type="Image" name="BackgroundImage">
+							<Width val="#FCJH_REPLAY_W"/>
+						</Frame>
 					</Frame>
 				</Frame>
 			</Frame>
 		</Frame>
 
 		<Frame type="Frame" name="FCJH_ReplayTab">
-			<Anchor side="Top"    relative="$parent" pos="Mid" offset="#FCJH_REPLAY_COLLAPSED_T"/>
-			<Anchor side="Left"   relative="$parent" pos="Max" offset="#FCJH_REPLAY_COLLAPSED_L"/>
-			<Anchor side="Bottom" relative="$parent" pos="Mid" offset="#FCJH_REPLAY_COLLAPSED_B"/>
-			<Anchor side="Right"  relative="$parent" pos="Max" offset="#FCJH_REPLAY_COLLAPSED_R"/>
+			<Anchor side="Top"    relative="$parent" pos="Max" offset="#FCJH_REPLAY_COLLAPSED_T"/>
+			<Anchor side="Left"   relative="$parent" pos="Mid" offset="#FCJH_REPLAY_COLLAPSED_L"/>
+			<Anchor side="Bottom" relative="$parent" pos="Max" offset="#FCJH_REPLAY_COLLAPSED_B"/>
+			<Anchor side="Right"  relative="$parent" pos="Mid" offset="#FCJH_REPLAY_COLLAPSED_R"/>
 			<AcceptsMouse val="false"/>
 			<Frame type="Image" name="FCJH_TabBack">
 				<Anchor relative="$parent"/>

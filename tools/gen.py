@@ -225,8 +225,9 @@ ANCHORS = {
     # the left column keeps to the left edge, [screen] padding in (user, 2026-10-06); at 16:9
     # it lines up with the card. The kill feed is Blizzard's, where Blizzard puts it.
     "info_pane": TOP_LEFT, "kill_feed": TOP_LEFT,
-    # the replay box: the right edge's middle
-    "replay": ("Max", "Mid"), "replay_collapsed": ("Max", "Mid"),
+    # the replay box (and its collapsed tab) stands on red's row, its right edge in line with the
+    # row's - the inspect card's mirror (user, 2026-10-16)
+    "replay": BOTTOM_CENTRE, "replay_collapsed": BOTTOM_CENTRE,
 }
 # Where the plates are anchored, for what's placed on them outside gen.py's own rects (the
 # map alerts, the inspect card): (frame, across pos, down pos)
