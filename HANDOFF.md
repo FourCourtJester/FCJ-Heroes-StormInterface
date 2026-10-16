@@ -712,11 +712,13 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
      outer end, the backing a flipped stretched copy (`FCJH_PunisherBarBG` - Blizzard's is a
      NineSlice, which a flip can't use), the fill masked and drained from the right as the
      knight's, the % at the outer end. Hud placed from 20_53_22 (`PUNISHER_HUD`, `_TOP` -86).
-   Next pass - screenshots (build 61f1be5 or later): the countdown (count in the bar, hexagon
-   at the tip); "Shrine active" (never captured yet - untested); a Punisher on each team
-   (blue's untested: flipped icons, backing, fill, %); the skulls and crystal at ~1031; the
-   minimap on the floor. Player views (1-8) show the Punisher by the viewer's team (the script
-   shows the viewer's team as Ally) - expected, logged.
+   Seen on 61f1be5 (21_28_14 - 21_29_45): the countdown with its count in the bar, red's
+   Punisher, the skull race and crystal - all right. "Shrine active" barely showed and
+   flickered: hidden (user: "lets avoid activating 'shrine is active' banner" - the objective
+   markers say it; e48326a). The countdown ends without an outro, as Blizzard's (user: fine).
+   Left to check on e48326a: no flicker between the countdown and the skull race. Blue's
+   Punisher - the bots never got one - is in the final pass (14). Player views (1-8) show the
+   Punisher by the viewer's team (the script shows the viewer's team as Ally) - expected, logged.
    Sky Temple's id `ControlPoints` read in game (user, 2026-10-15) - every id now GAME.
    **Then Sky Temple's QA.** Any map could get a two-view or other per-map behaviour the same way
    (`launch_cut`/`opens`, `on_map`).
@@ -1188,6 +1190,9 @@ commits around it).
     - **Cursed Hollow, blue cursed** (item 8): the banner on blue's side, left of the map,
       ending at the map's edge, its text and timer inside the art - not yet seen (user,
       2026-10-06: red's looks great);
+    - **Infernal Shrines, blue's Punisher** (user, 2026-10-15: the bots never got one - a human
+      replay): on blue's side, mirrored - the icon at the outer end, the backing flipped, the fill
+      draining from the right, the % at the outer end (`maps.punisher_side`);
     - **resource tooltip names** (inspect card) - REVERTED to 2026-10-06's (user, 2026-10-09)
       after three tries. **The lookup is right; only the refresh is wrong (user, 2026-10-09,
       on the reverted card):** every hero's name is correct the first time the card opens
