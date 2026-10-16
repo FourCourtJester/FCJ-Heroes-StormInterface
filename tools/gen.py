@@ -989,23 +989,41 @@ def top_backplate_texture(cfg):
     return dds_bgra(w, h, b"".join(rows))
 
 
+def row_frame_seams(cfg, team, n=5):
+    """The slants between neighbouring plates ([row_frame] seam), screen px: ((x, y) at the
+    plates' top, (x, y) at their bottom) for each of the n - 1. Each is the row's outer
+    slanted edge (row_frame_shape's) moved along one plate pitch at a time: a plate's right
+    slant is its neighbour's left (HeroCell: pitch = width - overlap)."""
+    pts, _ = row_frame_shape(cfg, team, n)
+    (xa, ya), (xb, yb) = pts[0], pts[3]
+    at = lambda y: xa + (xb - xa) * (y - ya) / (yb - ya)
+    top, bottom = cfg["hero_row"]["top"], yb
+    pitch = HeroCell(cfg).pitch / Units(cfg).scale
+    return tuple(((at(top) + i * pitch, top), (at(bottom) + i * pitch, bottom)) for i in range(1, n))
+
+
 def row_frame_texture(cfg, team, n):
     """The row frame ([row_frame]) for n heroes, its rect drawn at ART_HEIGHT's resolution: a
     chrome line round row_frame_shape's outline, `width` px with `inside` of it over the plates'
-    and the XP bar's edges, in the top backplate's rim colours ramped top to bottom."""
+    and the XP bar's edges, and a `seam` px line along each slant between two plates, in the
+    top backplate's rim colours ramped top to bottom."""
     pts, box = row_frame_shape(cfg, team, n)
     spec = cfg["row_frame"]
+    seam = float(spec.get("seam", 0)) if spec.get("width", 0) else 0.0
     return _row_frame_dds(tuple(pts), box, float(row_frame_outset(cfg)), float(spec.get("inside", 0)),
-                          art_scale(cfg), tuple(cfg["top_backplate"]["rim"]))
+                          art_scale(cfg), tuple(cfg["top_backplate"]["rim"]),
+                          row_frame_seams(cfg, team, n) if seam else (), seam)
 
 
 @functools.lru_cache(maxsize=None)
-def _row_frame_dds(pts, box, outset, inside, k, rim):
+def _row_frame_dds(pts, box, outset, inside, k, rim, seams=(), seam=0.0):
     """row_frame_texture's drawing (cached: the textures are asked for several times a run).
     The distance outside is the true one, so the outside corners come out rounded: a mitred
     corner (convex_sdf's) on the plates' sharp slant pokes out about twice the width. Each
     edge of the line ramps over one texel inside it, so the anti-aliasing stays in the rect.
-    Only the band along the outline is worked out; the middle is clear."""
+    seams: lines ((top x, y), (bottom x, y)), `seam` px wide centred on each, cut flat at
+    their ends' heights. Only the bands along the outline and the seams are worked out; the
+    rest is clear."""
     x0, y0, bw, bh = box
     w, h = round(bw * k), round(bh * k)
     n = len(pts)
@@ -1042,24 +1060,37 @@ def _row_frame_dds(pts, box, outset, inside, k, rim):
                 return tuple(p + (q - p) * f for p, q in zip(c1, c2))
         return chrome[-1][1]
 
+    # each seam as (x at y, across distance -> perpendicular, its top, its bottom)
+    lines = []
+    for (sx1, sy1), (sx2, sy2) in seams:
+        run = (sx2 - sx1) / (sy2 - sy1)
+        lines.append((lambda y, sx1=sx1, sy1=sy1, run=run: sx1 + run * (y - sy1), 1 / math.hypot(1, run), sy1, sy2))
+    half = seam / 2
+
     (ax, top), (_, _), (_, bottom), (bx, _) = pts[0], pts[1], pts[2], pts[3]
     edge = pts[1][0] - pts[0][0]
     reach = outset + inside + 2 / k
+    span = lambda a, b: (max(0, int((a - x0) * k)), min(w, int((b - x0) * k) + 1))
     rows = []
     for ty in range(h):
         y = y0 + (ty + 0.5) / k
         row = bytearray(4 * w)
         c = colour(clamp((y - y0) / bh))
+        here = [(at, perp) for at, perp, s1, s2 in lines if s1 <= y <= s2]
         if y - top < reach or bottom - y < reach:
             spans = [(0, w)]
         else:
             lx = ax + (bx - ax) * (y - top) / (bottom - top)
-            span = lambda a, b: (max(0, int((a - x0) * k)), min(w, int((b - x0) * k) + 1))
             spans = [span(lx - reach, lx + reach), span(lx + edge - reach, lx + edge + reach)]
+            spans += [span(at(y) - half - 2 / k, at(y) + half + 2 / k) for at, _ in here]
         for a, b in spans:
             for tx in range(a, b):
-                d = dist(x0 + (tx + 0.5) / k, y)
+                x = x0 + (tx + 0.5) / k
+                d = dist(x, y)
                 cover = clamp((outset - d) * k) * clamp((d + inside) * k)
+                for at, perp in here:
+                    if d < 0:
+                        cover = max(cover, clamp((half - abs(x - at(y)) * perp) * k))
                 if cover > 0:
                     row[4 * tx:4 * tx + 4] = bytes((round(c[2] * 255), round(c[1] * 255), round(c[0] * 255), round(cover * 255)))
         rows.append(bytes(row))

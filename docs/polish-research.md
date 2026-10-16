@@ -204,6 +204,10 @@ All of them are driven by events from the game to that hidden cell, so they woul
 - **Thumbnails** above the plates show the party cell's portraits 1, 2 and 3. In a Rexxar game and a Vikings game, do 2 and 3 show Misha and each Viking?
 - **The frame:**
   - Does the chrome line sit cleanly round each row?
+  - **New:** a 3 px seam along each slant between two plates. Does it hide the rough edges?
+    Does it cover anything it shouldn't (the heroic, the bars' ends)?
+  - **New:** the core bar has its own 2 px chrome line. Does it show only with the core
+    bar, and does its bottom sit well on the row frame's top?
   - Do the pop-ups and the heroic stay on top of it?
   - Does it look right in a 3v3, if you have one?
   - The rows now sit 2 px higher and a touch smaller, to keep the frame inside the padding.

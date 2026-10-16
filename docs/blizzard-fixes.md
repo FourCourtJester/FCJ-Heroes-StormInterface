@@ -63,6 +63,8 @@ detail.
   (or scrap), as in Blizzard's own player bars (`gen.RESOURCE_SEGMENTS`; test build, not seen yet).
 - The core health bar got its own chrome line round it, in the row frame's colours, showing
   only when Blizzard shows the core bar (`[team_core] frame_width`; test build, not seen yet).
+- The row frame now also runs a 3 px chrome seam along each slant between two plates, to hide
+  the slants' rough edges (`[row_frame] seam`; test build, not seen yet).
 
 **Can't be fixed from a layout** - the last section: Towers' cannon alerts, the death recap,
 the talent picker under Ctrl, the command card for a hero's other unit, plate clicks for
