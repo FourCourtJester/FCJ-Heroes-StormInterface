@@ -2989,8 +2989,9 @@ def layout_order(layout_dir, extra=(), generated=None):
 PADDING_EXEMPT = {"blue_score", "blue_name", "blue_logo", "blue_level", "blue_talent_lead", "blue_bans",
                   "bracket", "logo_plate", "clock", "red_level", "red_talent_lead", "red_logo", "red_name",
                   "red_score", "red_bans", "game_count", "top_backplate", "minimap", "kill_feed",
-                  # the replay box and its tab sit flush in the top-right corner (user, 2026-10-16)
-                  "replay", "replay_collapsed"}
+                  # the replay box's tab sits flush in the top-right corner; the box itself
+                  # keeps the padding (user, 2026-10-16)
+                  "replay_collapsed"}
 
 
 def check_padding(cfg):
