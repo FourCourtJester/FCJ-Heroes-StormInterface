@@ -116,6 +116,10 @@ from then on are written with their fix.
   switched on when a replay first shows the panel (as Ahli does, 030278d); a tab names the key
   while the panel is hidden.
 - **Status:** hides in one press and the tab shows (user, 2026-10-16).
+- **TRIAL, back on Ctrl+Shift+O** (everyone knows Blizzard's key; user, 2026-10-16): our own
+  GameHotkeys.txt in every language (layout.toml `[blizzard_hotkeys]`) moves Save All to
+  Ctrl+Alt+Shift+O. No interface we know of ships one, so it may not load; if Ctrl+Shift+O still
+  does nothing, Ctrl+Shift+R goes back.
 
 ## Made for observers
 
