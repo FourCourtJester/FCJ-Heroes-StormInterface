@@ -116,7 +116,11 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
   alerts, Garden of Terror's Terrors (red), Alterac Pass's cavalry, Battlefield of Eternity's
   winning Immortal (both teams; 2026-10-15 - Blizzard's countdown, fight and pushing Immortal all took
   turns in one place above the minimap; the countdown is now a neutral banner and the pushing
-  Immortal goes to the winner's side).
+  Immortal goes to the winner's side). Built, not seen yet: Infernal Shrines' Punisher on its
+  summoner's side, blue's mirrored (`maps.punisher_side`; 61f1be5) - Blizzard's shrine
+  countdown, "active" banner, Punisher and skull race all sit in one place above the minimap.
+  Limit: in a player view (1-8) the script shows the viewer's team as Ally, so there the
+  Punisher goes by the viewer's team, not the summoner's.
 - **Banner intros on the older maps.** Towers of Doom's banners slide and fade in; the older
   maps' have no intro at all. Ours give every banner the same intro (`maps.intro`). Blackheart's
   chests banner needed rebuilding to do it: Blizzard's bar is a fixed-width image anchored at

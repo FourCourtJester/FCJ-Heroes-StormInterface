@@ -696,24 +696,33 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    both teams, 14_39_52, 14_44_56, 14_49_19, 14_49_45). Blue's words are our own label
    (`FCJH_LaneWords`) bound to Blizzard's text: the script restyles Blizzard's label as it
    writes it, beating a state's Style, so it stayed left-justified (14_38_47).
-   **Infernal Shrines - next (map id `Shrines` read in game, 2026-10-15).** The entry is still
-   bare (only the minimap placed), so the first replay is a look at Blizzard's panel as it is.
-   Screenshots to bring (build 3edae7a or later):
-   1. The minimap with nothing above it - does its bottom sit on THE FLOOR (Battlefield needed
-      16 down)?
-   2. "Shrine activates in" with its count (ShrineWarningFrame).
-   3. "Shrine active" (ShrineActiveFrame).
-   4. The skull race (CursedMinionKillFrame): both teams' counts and the crystal under them.
-   5. The Punisher, ideally one of each team's (PunisherFrame) - its icon, words and health bar.
-   Plan once seen: countdown then "active" as one neutral banner on red's side (like Dragon
-   Shire's countdown); the skulls at the bottom, counted either side of the minimap's bottom
-   point (like Haunted Mines'); the Punisher a team banner built like the knight, blue told by
-   the `Punisher*Ally` icons being shown (libmshe.galaxy ~372-401). A Sky Temple replay on the
-   same pass can confirm its id (expected `ControlPoints`, the last SCRIPT one in MAP_IDS).
+   **Infernal Shrines - first build 61f1be5 (map id `Shrines` read in game, 2026-10-15),** from
+   Blizzard's panel as seen (20_52_34 - 20_53_22: everything in one place above the minimap,
+   the minimap 11 short of THE FLOOR, the skulls at ~1050):
+   - The minimap 11 down (`[minimap.nudge]`), its notch 1054 -> 1065.
+   - The skull race 30 up (`[minimap.panel_nudge]`, ShrinesPanel) - its counts' tops ~1050 ->
+     ~1031, the crystal riding with them over the map's bottom.
+   - "Shrine activates in" and "Shrine active" as one neutral banner on red's side
+     (`WARNING_BANNER`, `ACTIVE_BANNER` - `left_banner`, `INFERNAL_BOX`; the active banner a
+     follower on the warning's spot). Blizzard's count sat on the map under its words; ours is
+     in the bar after the words, in their style, as the tribute's (`left_banner` gained
+     `count_style` and `bar`).
+   - The Punisher a team banner (`punisher_side`, team_banner; blue told by any `Punisher*Ally`
+     icon being shown, libmshe.galaxy ~372-401), mirrored on blue's: the icons flipped to the
+     outer end, the backing a flipped stretched copy (`FCJH_PunisherBarBG` - Blizzard's is a
+     NineSlice, which a flip can't use), the fill masked and drained from the right as the
+     knight's, the % at the outer end. Hud placed from 20_53_22 (`PUNISHER_HUD`, `_TOP` -86).
+   Next pass - screenshots (build 61f1be5 or later): the countdown (count in the bar, hexagon
+   at the tip); "Shrine active" (never captured yet - untested); a Punisher on each team
+   (blue's untested: flipped icons, backing, fill, %); the skulls and crystal at ~1031; the
+   minimap on the floor. Player views (1-8) show the Punisher by the viewer's team (the script
+   shows the viewer's team as Ally) - expected, logged.
+   Sky Temple's id `ControlPoints` read in game (user, 2026-10-15) - every id now GAME.
    **Then Sky Temple's QA.** Any map could get a two-view or other per-map behaviour the same way
    (`launch_cut`/`opens`, `on_map`).
-5. **The diagnostic - trimmed to the map id (user, 2026-10-09);** remove `maps.diag` and
-   `FCJH_DiagMapId` once every map's id is confirmed in game (MAP_IDS' GAME sources).
+5. **The diagnostic - trimmed to the map id (user, 2026-10-09);** every map's id is now
+   confirmed in game (2026-10-15), so `maps.diag` and `FCJH_DiagMapId` can go - after the
+   Infernal pass.
 6. **Inspect card, intermittent (user, 2026-10-09):** on hero inspects only, now and then the
    ability BORDERS keep showing after the card hides. Not pinned down yet: next time, a
    screenshot of it. Lead (unconfirmed): the only border-like art that can show without a
