@@ -504,7 +504,7 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    - The plates' carried box shows the doubloons (item 7's note; gen.py `carry_box`).
    **Garden of Terror: DONE (user, 2026-10-12).** Its id `HauntedWoods` read in game.
    - The seed counts' team line 29 up (`[minimap.panel_nudge] garden_of_terror = -29`).
-   - "Seed spawning in" and "Gather the seed!" are neutral banners on red's side (`seed_banner`
+   - "Seed spawning in" and "Gather the seed!" (hidden 2026-10-15, §7 item 16) are neutral banners on red's side (`seed_banner`
      on `left_banner`; they're templates of the map's own file, so they're overridden through
      PARTS and hang off our spot). They restate their box's size: the template's 600 x 140 was
      centred on the box.
@@ -1007,7 +1007,7 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    our words per language ("Tribute Spawns In:", `TRIBUTE_SPAWNS_IN`, found by matching
    Blizzard's literal words), from the bar's left end like the red curse's, the count one space
    after them (`TRIBUTE_COUNT_SPACE` -1 units: the labels pad ~8 px, measured), Blizzard's count
-   hidden; "Collect the Tribute" stays Blizzard's (no count then - the script hides it).
+   hidden; "Collect the Tribute" (no count then - the script hides it) hidden 2026-10-15 (§7 item 16).
    The curse's countdown the same way (approved 2026-10-06): Blizzard's in the raven head
    hidden, ours after the words (`CURSE_COUNT`; red's flows right from our words, the hexagon
    after it; blue's sits where Blizzard ends the words, they end before it), with a colon
@@ -1222,6 +1222,17 @@ commits around it).
     player's view TLV's nameplate seems to be a three-slice, one per Viking, each with its own
     click handler. Worth studying for ours: how Blizzard splits one plate into three clickable
     parts (find it in JamiePhan's layouts), and whether our plates could use it.
+16. **Static banners hidden - revisit AFTER the final pass (user, 2026-10-15).** Word-only
+    banners that sit up until the objective is taken, saying what the objective markers on the
+    minimap already say, are hidden (54eaed2, e48326a). Once the final pass's screenshots are in,
+    look again at whether any should come back, or come back as something that counts:
+    - Infernal Shrines' "Shrine active" (`ShrineActiveFrame`, alpha 0 by PARTS; Blizzard's
+      script re-sets that mode every 0.25 s, the likely flicker);
+    - Cursed Hollow's "Collect the Tribute" (`tribute_count`: the art and words faded while
+      the count is hidden);
+    - Garden of Terror's "Gather the seed!" (`GatherTheSeedsFrame` parked above the screen;
+      `seed_banner(False)` builds it again).
+    Left as they were, brief: Volskaya's 2 s point toast, Towers' 5 s tunnels notice.
 
 ## 8. Original brief
 
