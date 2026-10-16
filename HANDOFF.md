@@ -1204,7 +1204,9 @@ commits around it).
       - **Hanamura Temple's roster, played (user, 2026-10-14; 10):** blue Azmodan, Cassia, Lunara,
         Tassadar, Yrel (the last five unseen); red Medivh, Deathwing, Abathur, Samuro, D.Va.
       - **Next rosters:** for the form checks below (no hero is unseen now).
-    - **forms** (item 3): Medivh's Raven, Deathwing in Dragonflight and as World Breaker,
+    - **forms** (item 3): Medivh's Raven SEEN (user, 2026-10-16, Hanamura: the tall card, his
+      player, and his own buttons - Raven Form's cancel on the mount slot); still to see:
+      Deathwing in Dragonflight and as World Breaker,
       Alexstrasza's Dragonqueen, Ragnaros in Molten Core, Greymane's Worgen, Valeera
       stealthed - each gets the TALL card with its player's portrait, talents and name, and
       its own buttons. If one gets the short card or no player, look at which unit the plate
