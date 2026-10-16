@@ -270,3 +270,6 @@ Built for tonight: the seams, the core's own frame, the quest column and the amm
 - **Replay rewind:** not a design consideration. The overlay is for live casting, not replay
   analysis. If there's time at the end, research what a rewind upsets (pop-ups replaying,
   the latched talent watchers, flashes) and whether any of it is cheap to fix.
+- **The fly-out and inspect panels: inherit Blizzard's assets** (user, 2026-10-16, a note to
+  return to). Go back over the fly-out (the info pane) and the inspect card for where they
+  could use Blizzard's own art and templates instead of ours.
