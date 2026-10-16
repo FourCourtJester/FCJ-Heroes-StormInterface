@@ -27,12 +27,13 @@ Ours, all Python 3.11+ **standard library only** (no install step, no Java):
 
 ## Inventory: what's generic, what's FCJH
 
-Line counts as of 2026-10-09 (`tools/`, `design/`).
+Line counts as of 2026-10-16 (`tools/`, `design/`). What the generator is and does, as a
+user sees it: [generator.md](generator.md).
 
 **Generic already (move nearly as is):**
 - `tools/mpq.py` (260): MPQ reader/writer; `list` and `extract` on any archive, zlib/bzip2
   sectors on read. No FCJH references at all.
-- `tools/validate.py` (667): the base-UI tree builder (Blizzard's layouts in DescIndex order,
+- `tools/validate.py` (736): the base-UI tree builder (Blizzard's layouts in DescIndex order,
   templates expanded, `file=` overrides applied, hero and battleground mods merged) and every
   check:
   - errors: XML that doesn't parse, missing DescIndex files, undefined constants, missing
@@ -52,7 +53,7 @@ Line counts as of 2026-10-09 (`tools/`, `design/`).
 - `tools/test_validate.py` (163): breaks a copy of a real interface on purpose, one mistake per
   test. Needs a neutral fixture (below).
 
-**Mixed (split the helpers out of `gen.py`, ~2900 lines):**
+**Mixed (split the helpers out of `gen.py`, ~3130 lines):**
 - `Units`: px at a screen height to layout units (the 1200-unit reference grid).
 - `name()` (constant naming; prefix hard-coded) and the constants-layout writer.
 - `dds_bgra`: an uncompressed 32-bit DDS writer. With `offset_polygon` / `convex_sdf` and the
@@ -64,13 +65,13 @@ Line counts as of 2026-10-09 (`tools/`, `design/`).
 - Everything else in `gen.py` is FCJH's design: hero rows, plates, panes, pop-ups.
 
 **FCJH-only, with generic knowledge inside:**
-- `tools/maps.py` (1381): FCJH's per-map placements. What generalises, as a "map kit":
+- `tools/maps.py` (3026): FCJH's per-map placements. What generalises, as a "map kit":
   - `MAP_IDS` (every battleground's `libCore_gv_mAPMapStringID`, with where each was read);
   - `on_map()` (the DataRefFrame and When test);
   - the placer pattern (a frame in a map's own panel, one unconditioned state);
   - the objective-keyed glide (relative Anchor controller, Visibility latch);
   - `Node`, the frame-override tree that writes each path once.
-- `tools/inspect_card.py` (1042): FCJH's card. Generic inside it: reading hero, unit and
+- `tools/inspect_card.py` (1149): FCJH's card. Generic inside it: reading hero, unit and
   ability data from the JamiePhan extract (`hero_units`, the forms table, `CardLayouts`
   slots).
 - `design/canvas_gen.py` (1064), `design/render_png.py`: as-built wireframe boards from the

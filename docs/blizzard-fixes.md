@@ -10,6 +10,56 @@ Blizzard's frames - don't belong here.
 Back-filled from the project's history (HANDOFF.md and the commit log) on 2026-10-13; entries
 from then on are written with their fix.
 
+## At a glance, for the discussions
+
+Two lists the write-up will want (user, 2026-10-16), one line each. The entries below have the
+detail.
+
+**Fixed: Blizzard handled it badly**
+- Plates' heroic cooldowns and tooltips, which an observer never got.
+- The inspect card showing the wrong player's talents in a mirror match.
+- The inspect card's resource tooltip naming the last clicked unit's resource, not the
+  selected hero's.
+- Towers of Doom's town captures, invisible to the free observer view.
+- Dragon Shire's Dragon Knight and Garden of Terror's Terrors, which didn't say (or said
+  wrongly) whose they were.
+- Alterac Pass: the cage's hexagon lighting one team when both capture, and the camp alerts
+  in a player's words.
+- Tomb of the Spider Queen's minimap and Battlefield of Eternity's Immortals fight, drawn
+  off-centre.
+- The replay controls: a hide key that never worked, and the box losing its top when the
+  timeline hides.
+
+**Made: Blizzard never had it**
+- Hero plates built from the player's in-game top bar, with:
+  - the fountain;
+  - the heroic, its cooldown and tooltip;
+  - a pop-up for each talent picked;
+  - a heal pop-up when a hero drops to 25%.
+- Blizzard's talent-lead flame, brought over from the player HUD.
+- Four info panes, one at a time, on Ctrl+1-4.
+- An inspect card for observers, Blizzard's own command card on it.
+- The operator's four toggles: replay controls, chat, inspect card, player names.
+- Every battleground fitted round one minimap place:
+  - each map's minimap set by its own drawn size;
+  - its objectives above it;
+  - team banners on their team's side;
+  - Haunted Mines' two views;
+  - Infernal Shrines' lift for the skull race.
+- Banners that say less and count more:
+  - Sky Temple's live temples only;
+  - Warhead's counters once there are nukes;
+  - the tribute's count in its bar;
+  - Volskaya's toast as a sentence;
+  - the word-only static banners hidden;
+  - every banner given an intro.
+- Tomb's Webweavers on the summoning team's side.
+
+**Can't be fixed from a layout** - the last section: Towers' cannon alerts, the death recap,
+the talent picker under Ctrl, the command card for a hero's other unit, plate clicks for
+D.Va's mech, Misha and the Vikings, a replay opening with its timeline hidden, inspecting
+while paused, two Alterac script bugs, and script styles beating layout styles.
+
 ## Fixed
 
 ### Plates: heroic cooldowns for observers
@@ -33,6 +83,16 @@ from then on are written with their fix.
   way Blizzard colours the minimap - so the card shows the selected hero's own player
   (`inspect_card` `team_sense`; 69c45df, f1496c6).
 - **Status:** confirmed on two Blazes (2026-10-05).
+
+### Inspect card: the resource tooltip names the wrong unit's resource
+- **Blizzard's:** the health and resource bars' tooltips name the resource by the card's
+  TargetInfoFrame (`@UnitVitalName`). That follows the last unit *clicked* in the world, not
+  the selection. A plate click selects without retargeting, so after clicking Sonya's unit,
+  Chromie's plate read "Fury" (user).
+- **Ours:** our own label (`inspect_card.vital`), set per unit from the game data
+  (`vital_words`: the actors' VitalNames, through their parents, Mana by default), feeds the
+  bars' two tooltip formats (`energy_formats`; 8ea751d).
+- **Status:** confirmed in game, Chromie's plate after Sonya's (user, 2026-10-16).
 
 ### Towers of Doom: town captures invisible to the free observer view
 - **Blizzard's:** "Allies / The Enemy captured <town>" is worded per viewer and sent to each
@@ -168,6 +228,39 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
   maps' have no intro at all. Ours give every banner the same intro (`maps.intro`). Blackheart's
   chests banner needed rebuilding to do it: Blizzard's bar is a fixed-width image anchored at
   one end, so there was nothing for the intro to grow (99a8030).
+- **The rest of the map pass** (docs/maps.md has each map):
+  - **One minimap place for every map.** Each map's minimap sits by its own drawn size (read
+    from Blizzard's minimap art) on THE FLOOR, with its objectives above it at THE GAP.
+    Blizzard's objective panels each sit wherever the map's script put them.
+  - **Haunted Mines' two views:** the surface at load, then a 1 s glide to the whole map once
+    the mines open (`maps.glide`; 2026-10-09).
+  - **Infernal Shrines' lift:** the minimap rises 50 px only while the skull race covers its
+    bottom, then settles back for the Punisher (`maps.lift`; 082126f).
+  - **Tomb's Webweavers on the summoner's side:** Blizzard's own hexagon set per team, in the
+    space between the minimap and that team's plates (seen both teams).
+  - **Cursed Hollow's tribute count in its bar:** "Tribute Spawns In: 0:24", as Towers' altars
+    read, where Blizzard's count hung under its hexagon (`maps.tribute_count`).
+  - **Volskaya's toast as a sentence:** a sentence before its count, every language, centred on
+    the screen (`maps.TOAST`; 6ff536a).
+  - **Static banners hidden:** word-only banners that sit up until the objective is taken, saying
+    what the minimap's markers already say (Shrine active, Collect the Tribute, Gather the seed!,
+    Capture the Temples; 54eaed2, e48326a). To revisit after the final pass (HANDOFF item 16).
+- **Hero plates for observers, from the player's in-game top bar** (`gen.py HeroCell`). It's the
+  player's cell art, slanted and interlocking, scaled to fit. On it:
+  - **Blizzard's in-game heroic panel**: icon, ready glow, cooldown, tooltip, Tracer's charge;
+  - **the fountain**: bright when ready, dimmed with its countdown;
+  - per-Viking bars and death timers, and Abathur's clone marker.
+  Blizzard's observer bar has none of the fountain or the heroic panel.
+- **Talent pop-ups:** the talent just picked pops up on its hero's plate, for every hero.
+- **A heal pop-up:** a green plus when a hero drops to 25% health (once per dip; gone after
+  about 4 s, at death or above 30%). Blizzard's critical-health element doesn't run in observer
+  cells.
+- **The talent-lead flame:** the player HUD's flame, shown behind the level of the team a talent
+  tier ahead. The panel that carries it (`PartyFramePanel`) is hidden for observers, so it
+  plays in our own frame.
+- **Four info panes on Ctrl+1-4**: talents (in Blizzard's observer talent grid), KDA and hero
+  damage, healing, structures and XP. One at a time, with each column's leader highlighted.
+  Blizzard's observer panes keep their own places and lose Ctrl+1/2.
 - **An inspect card for observers**, with Blizzard's own command card on it so the ability
   tooltips, cooldowns and charges are live, plus the player's talents with their tooltips on both
   teams (`inspect_card`; confirmed 2026-10-05).
@@ -214,8 +307,8 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
   Symbiote on someone leaves his own buttons up, not the Symbiote's. The same goes for a hero
   steering another unit. Neither Ahli's nor Spazzo's command card changes over (user,
   2026-10-16), so either neither author cared or the game sends nothing to change it by. Ours
-  is the same so far. Hero forms that are units of their own (Medivh's Raven and the like) are
-  still to be checked (HANDOFF item 14).
+  is the same. A form the player becomes (Medivh's Raven, 2026-10-16) is selected itself, so
+  its own buttons show; the rest of the forms are in HANDOFF's final pass (item 14).
 
 ### D.Va's plate can't select her mech, nor Rexxar's Misha
 - A plate's click (Blizzard's UnitTargetFrame: select the hero, centre the camera) always

@@ -2533,7 +2533,6 @@ def intro(indent, slide=True):
 # The stack (user, 2026-10-15: "about as high as the minimap total") runs from the plates'
 # bottom up to the minimap's drawn top tip; the middle one halfway, the hexagons nesting
 # into each other a little, each WEAVER_STEP_PX further out than the one below.
-WEAVER_W_PX = 54                      # a hexagon's width as drawn at 1080p (31a031d)
 WEAVER_ART = {"Bottom": (72, 5),      # each lane's hexagon as drawn at 1080p (31a031d): its height
               "Mid": (62, 14),        # (the top one has a point above, the bottom one a point
               "Top": (72, 14)}        # below) and its box's bottom under it

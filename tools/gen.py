@@ -3,7 +3,14 @@ Generate layouts from layout.toml.
 
 Committed output (written into src/, reviewed like any other file):
   FCJH_Constants.StormLayout   every layout.toml number, converted to layout units
+  FCJH_HeroRow.StormLayout     the plates, heroic panels, pop-ups and row packer
+  FCJH_StatPanes.StormLayout   the three stat info panes
+  FCJH_Inspect.StormLayout     the inspect card (tools/inspect_card.py)
+  FCJH_Maps.StormLayout        each battleground's minimap, panel and banners (tools/maps.py)
   DescIndex.StormLayout        every layout in the folder, constants first
+  _Assets/Textures/FCJH_*.dds  the slanted bars and masks, plate art, the top backplate
+                               (most named by a hash of their content; gen removes superseded ones)
+The other FCJH_*.StormLayout files are hand-written. docs/generator.md has the whole picture.
 
 Dev-only output (staged at pack time, never committed, never shipped):
   FCJH_Dev.StormLayout         build stamp

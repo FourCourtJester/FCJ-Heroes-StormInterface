@@ -10,7 +10,7 @@ Build the interface: generate, stage, validate, pack, deploy.
   5. deploy    written to the Heroes Interfaces folder
 
 Profiles:
-  dev (default)  stamp + overlay, deployed as FCJH.StormInterface
+  dev (default)  the build stamp (and any src/dev/ layouts), deployed as FCJH.StormInterface
   --release      exactly what src/ holds; refuses if src/, layout.toml or tools/ have
                  uncommitted changes, so every release is reproducible from its commit;
                  written to dist/v<version>/, deployed only with --deploy
