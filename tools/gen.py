@@ -1106,6 +1106,133 @@ TALENT_ROW = ("$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverview
               "SelectionUnitStatusPanel/UnitStatusFrame0")
 
 
+# The respawn flash (2026-10-16): Blizzard's player-view timer (partyframe HeroDeathTimeLabel's
+# HeroRespawnAnim) swaps between its red and pale styles every half second for the last 5 s,
+# from the game's HeroAlmostRespawned event to HeroRespawned. Copied key for key.
+FLASH_KEYS = [(0, 1), (.5, 0), (1, 1), (1.5, 0), (2, 1), (2.5, 0), (3, 1), (3.5, 0), (4, 1),
+              (4.5, 0), (5, 1), (5.01, 1)]
+
+
+def style_flash(name, frame, style1, style2, starts, stops, t):
+    """An animation flashing `frame` between two styles (FLASH_KEYS), started and stopped by
+    (event, source) pairs; and a second one that puts style1 back on `stops` too, in case a
+    stopped flash leaves the pale style on (Blizzard's Reset,Stop isn't documented)."""
+    ev = lambda pairs, action: "".join(
+        f'{t}\t<Event event="{e}" action="{action}" frame="{src}"/>\n' for e, src in pairs)
+    keys = "".join(f'{t}\t\t<Key type="Curve" time="{k}" value="{v}"/>\n' for k, v in FLASH_KEYS)
+    target = "" if frame == "$this" else f' frame="{frame}"'
+    return (f'\n{t}<Animation name="{name}">\n' + ev(starts, "Reset,Play") + ev(stops, "Reset,Stop")
+            + f'{t}\t<Controller type="Style" end="Pause"{target} style1="{style1}" style2="{style2}">\n'
+            + keys + f'{t}\t</Controller>\n{t}</Animation>'
+            + f'\n{t}<Animation name="{name}Clear">\n' + ev(stops, "Reset,Play")
+            + f'{t}\t<Controller type="Style" end="Pause"{target} style1="{style1}" style2="{style1}">\n'
+            + f'{t}\t\t<Key type="Curve" time="0" value="0"/>\n{t}\t\t<Key type="Curve" time=".01" value="0"/>\n'
+            + f'{t}\t</Controller>\n{t}</Animation>')
+
+
+# The skull (2026-10-16): Blizzard's player-view death animation (partyframe
+# HeroDeathAnimFrameTemplate), 1.1 s, scaled to our cell: a burst frame that snaps in toward
+# the plate and settles (twice, the second softer), a dark flash over the plate, and the
+# skull icon fading in by 0.35 s and out by 1.1 s. Ahli's handover: the countdown fades in
+# from 0.7 to 1.2 s (FCJH_DeathTimeHold), so the skull hands over to the number.
+SKULL_FADES = {
+    "FCJH_SkullBurst": [(0, 0, "Slow"), (.15, 40, "Linear"), (.25, 85, "Linear"), (.35, 255, "Linear"),
+                        (.351, 50, "Linear"), (.352, 125, "Linear"), (.45, 0, "Linear"), (1.1, 0, "Slow")],
+    "FCJH_SkullBurst2": [(0, 0, "Slow"), (.15, 20, "Linear"), (.25, 65, "Linear"), (.45, 155, "Linear"),
+                         (1.1, 0, "Slow")],
+    "FCJH_SkullOverlay": [(0, 0, "Slow"), (.15, 40, "Linear"), (.25, 85, "Linear"), (.35, 255, "Linear"),
+                          (.351, 50, "Linear"), (.352, 125, "Linear"), (.45, 0, "Linear"), (1.1, 0, "Slow")],
+    "FCJH_SkullIcon": [(0, 0, "Linear"), (.35, 255, "Slow,Linear"), (1.1, 0, "Slow,Linear")],
+}
+# relative anchor keys, Left side (Right is the negative; Top / Bottom are the second number)
+SKULL_MOVES = {
+    "FCJH_SkullBurst": [(0, -50, -25, "Slow"), (.35, 0, 0, "Linear"), (.45, -25, -12, "Linear"),
+                        (1.1, 0, 0, "Slow,Linear")],
+    "FCJH_SkullBurst2": [(0, -80, -45, "Slow"), (.35, 0, 0, "Linear"), (1.1, 0, 0, "Linear")],
+    "FCJH_SkullOverlay": [(0, -50, -25, "Slow"), (.35, 0, 0, "Linear"), (.45, -25, -12, "Linear"),
+                          (1.1, 0, 0, "Slow,Linear")],
+}
+SKULL_FLIPPED = ["FCJH_SkullOverlay", "FCJH_SkullBurst", "FCJH_SkullBurst2", "FCJH_RespawnGlow"]
+
+
+def death_skull(team, c):
+    """The skull frame (the cell template). Blue carries it all; red only mirrors the art,
+    as Blizzard's _R cell does. Plays when the plate's timer appears (Ahli's trigger)."""
+    if team != "blue":
+        flips = "".join(f"""
+			<Frame type="Image" name="{n}"><TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/></Frame>"""
+                        for n in SKULL_FLIPPED)
+        return f"""
+		<Frame type="Frame" name="FCJH_DeathSkull">{flips}
+		</Frame>"""
+    k = c.w / c.W
+    s = lambda v: round(v * k)
+    t = "\t\t\t"
+    anim = ""
+    for name, keys in SKULL_FADES.items():
+        anim += f'\n{t}\t<Controller type="Fade" frame="{name}" end="Pause">' + "".join(
+            f'\n{t}\t\t<Key type="Curve" time="{tm}" value="{v}" inout="{io}"/>' for tm, v, io in keys) \
+            + f'\n{t}\t</Controller>'
+    for name, keys in SKULL_MOVES.items():
+        for side, pick, sign in (("Left", 1, 1), ("Right", 1, -1), ("Top", 2, 1), ("Bottom", 2, -1)):
+            anim += (f'\n{t}\t<Controller type="Anchor" end="Pause" side="{side}" frame="{name}" relative="true">'
+                     + "".join(f'\n{t}\t\t<Key type="Curve" time="{key[0]}" value="{sign * s(key[pick]) or 0}" inout="{key[3]}"/>'
+                               for key in keys) + f'\n{t}\t</Controller>')
+    inset = lambda name, tex, prio: f"""
+			<Frame type="Image" name="{name}">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="{s(9)}"/>
+				<Anchor side="Left"   relative="$parent" pos="Min" offset="{s(8)}"/>
+				<Anchor side="Bottom" relative="$parent" pos="Max" offset="-{s(9)}"/>
+				<Anchor side="Right"  relative="$parent" pos="Max" offset="-{s(8)}"/>
+				<Texture val="@UI/{tex}"/>
+				<Alpha val="0"/>
+				<RenderPriority val="{prio}"/>
+				<Unclipped val="true"/>
+				<AcceptsMouse val="false"/>
+			</Frame>"""
+    full = lambda name: f"""
+			<Frame type="Image" name="{name}">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+				<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
+				<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathFrame"/>
+				<Alpha val="0"/>
+				<RenderPriority val="516"/>
+				<Unclipped val="true"/>
+				<AcceptsMouse val="false"/>
+			</Frame>"""
+    # Blizzard's frame is 136 x 68, centred on the 128 x 61 cell
+    return f"""
+		<!-- The skull (death_skull): Blizzard's player-view death animation, scaled. The
+		     respawn glow inside it pulses from the instance (pet_death_bindings). -->
+		<Frame type="Frame" name="FCJH_DeathSkull">
+			<Anchor side="Top"    relative="$parent" pos="Min" offset="-{s(3.5)}"/>
+			<Anchor side="Left"   relative="$parent" pos="Min" offset="-{s(4)}"/>
+			<Anchor side="Bottom" relative="$parent" pos="Max" offset="{s(3.5)}"/>
+			<Anchor side="Right"  relative="$parent" pos="Max" offset="{s(4)}"/>
+			<Unclipped val="true"/>
+			<AcceptsMouse val="false"/>
+			<Animation name="FCJH_SkullAnim">
+				<Event event="OnShown" action="Reset,Play" frame="$parent/HeroDeathTimeLabel"/>
+				<Event event="OnHidden" action="Reset,Stop" frame="$parent/HeroDeathTimeLabel"/>{anim}
+			</Animation>{inset("FCJH_SkullOverlay", "HUD_TopBar_Team_HeroFrame_DeathOverlay", 515)}{full("FCJH_SkullBurst")}{full("FCJH_SkullBurst2")}
+			<Frame type="Image" name="FCJH_SkullIcon">
+				<Anchor side="Top"    relative="$parent" pos="Mid" offset="-{s(5)}"/>
+				<Anchor side="Left"   relative="$parent" pos="Mid" offset="0"/>
+				<Anchor side="Bottom" relative="$parent" pos="Mid" offset="-{s(5)}"/>
+				<Anchor side="Right"  relative="$parent" pos="Mid" offset="0"/>
+				<Width val="{s(56)}"/>
+				<Height val="{s(65)}"/>
+				<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+				<Alpha val="0"/>
+				<RenderPriority val="517"/>
+				<Unclipped val="true"/>
+				<AcceptsMouse val="false"/>
+			</Frame>{inset("FCJH_RespawnGlow", "HUD_TopBar_Team_HeroFrame_RespawnFrame", 590)}
+		</Frame>"""
+
+
 def pet_death_labels(team, c):
     """Per-unit death timers (2026-09-29) - placement (the cell template). Our
     observer cells only have one death timer, which took the whole plate when one Viking
@@ -1498,8 +1625,12 @@ def pet_death_bindings(team_frame, i):
     """Per cell: our per-unit death timers show the hidden party frame's matching label (same
     team and cell), and the plate's own timer steps aside while any Viking's shows."""
     cell = f"{PARTY}/{team_frame}/HeroOverview{i}"
+    t = "\t" * 8
     out = ""
-    for ours, theirs in PET_TIMERS.items():
+    for n, (ours, theirs) in enumerate(PET_TIMERS.items(), start=1):   # Olaf Hero1, Baleog 2, Erik 3
+        flash = style_flash("FCJH_RespawnFlash", "$this", "FCJH_PetDeathTimer", "FCJH_PetDeathTimer_Respawn",
+                            [(f"HeroAlmostRespawnedHero{n}", cell), (f"HeroAlmostRespawnedHero{n}", "$parent")],
+                            [(f"HeroRespawnedHero{n}", cell), (f"HeroRespawnedHero{n}", "$parent")], t)
         out += f"""
 							<Frame type="Label" name="FCJH_Death{ours}">
 								<Text val="{{{cell}/{theirs}/@Text}}"/>
@@ -1507,11 +1638,15 @@ def pet_death_bindings(team_frame, i):
 									<DefaultState val="No"/>
 									<State name="Yes"><When type="Property" frame="{cell}/{theirs}" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
 									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
-								</StateGroup>
+								</StateGroup>{flash}
 							</Frame>"""
+    # the plate's own timer (FCJH_DeathTime, a copy of Blizzard's hidden one) and the skull
+    # step aside while any Viking's shows
+    hide = lambda a: (f'<Action type="SetProperty" frame="$parent/FCJH_DeathTimeHold/FCJH_DeathTime" Alpha="{a}"/>'
+                      f'<Action type="SetProperty" frame="$parent/FCJH_DeathSkull" Alpha="{a}"/>')
     states = "".join(
         f'\n\t\t\t\t\t\t\t\t\t<State name="{v}Dead"><When type="Property" frame="{cell}/{PET_TIMERS[v]}" Visible="true"/>'
-        f'<Action type="SetProperty" frame="$parent/HeroDeathTimeLabel" Alpha="0"/></State>'
+        f'{hide(0)}</State>'
         for v in ("Olaf", "Baleog", "Erik"))
     out += f"""
 							<Frame type="Frame" name="FCJH_VikingDeathWatch">
@@ -1519,9 +1654,67 @@ def pet_death_bindings(team_frame, i):
 								<AcceptsMouse val="false"/>
 								<StateGroup name="FCJH_OneDown">
 									<DefaultState val="No"/>{states}
-									<State name="No"><Action type="SetProperty" frame="$parent/HeroDeathTimeLabel" Alpha="255"/></State>
+									<State name="No">{hide(255)}</State>
 								</StateGroup>
 							</Frame>"""
+    # the main flash and the glow listen on both cells - ours and the hidden party one - as
+    # it isn't known yet which the game sends HeroAlmostRespawned to (respawn_diagnostics)
+    starts = [("HeroAlmostRespawned", "$parent"), ("HeroAlmostRespawned", cell)]
+    stops = [("HeroRespawned", "$parent"), ("HeroRespawned", cell), ("OnHidden", "$parent/HeroDeathTimeLabel")]
+    flash = style_flash("FCJH_RespawnFlash", "FCJH_DeathTime", "Storm_TopBar_DeathTimer",
+                        "Storm_TopBar_DeathTimer_Respawn", starts, stops, t)
+    # the glow is a child of the skull: its paths are one level further down
+    t9 = t + "\t"
+    glow = "".join(f'\n{t9}\t\t<Key type="Curve" time="{k}" value="{255 if v else 0}" inout="Linear"/>'
+                   for k, v in FLASH_KEYS[:-1]) + f'\n{t9}\t\t<Key type="Curve" time="5.01" value="0" inout="Linear"/>'
+    ev = lambda pairs, action: "".join(
+        f'\n{t9}\t<Event event="{e}" action="{action}" frame="{src.replace("$parent", "$parent/$parent", 1) if src.startswith("$parent") else src}"/>'
+        for e, src in pairs)
+    out += f"""
+							<Frame type="Frame" name="FCJH_DeathTimeHold">{flash}
+							</Frame>
+							<Frame type="Frame" name="FCJH_DeathSkull">
+								<Frame type="Image" name="FCJH_RespawnGlow">
+									<Animation name="FCJH_RespawnPulse">{ev(starts, "Reset,Play")}{ev(stops, "Reset,Stop")}
+										<Controller type="Fade" end="Pause">{glow}
+										</Controller>
+									</Animation>
+								</Frame>
+							</Frame>{respawn_diagnostics(cell)}"""
+    return out
+
+
+# Test build (2026-10-16): which cell does the game send each event to? One square per
+# (event, cell) along the plate's top; each lights for 6 s when its event arrives.
+# Remove once read (the keep-diagnostics rule).
+RESPAWN_DIAGNOSTICS = [
+    ("255,255,0,255", [("HeroAlmostRespawned", "ours")]),                       # magenta
+    ("255,0,255,255", [("HeroAlmostRespawned", "party")]),                      # cyan
+    ("255,255,255,0", [(f"HeroAlmostRespawnedHero{n}", "party") for n in (1, 2, 3)]),  # yellow
+    ("255,255,140,0", [(f"HeroAlmostRespawnedHero{n}", "ours") for n in (1, 2, 3)]),   # orange
+    ("255,0,255,0", [("HeroRespawned", "ours")]),                               # green
+    ("255,255,255,255", [("HeroRespawned", "party")]),                          # white
+    ("255,150,60,255", [("HeroAlmostRespawnedPet", "party")]),                  # purple
+    ("255,255,120,190", [("HearthstoneStartDefault", "party")]),                # pink
+    ("255,0,128,128", [("HearthstoneStartDefault", "ours")]),                   # teal
+]
+
+
+def respawn_diagnostics(cell):
+    out = ""
+    for j, (colour, events) in enumerate(RESPAWN_DIAGNOSTICS):
+        x = 40 + 14 * j
+        evs = "".join(f'\n\t\t\t\t\t\t\t\t\t<Event event="{e}" action="Reset,Play" frame="{"$parent" if src == "ours" else cell}"/>'
+                      for e, src in events)
+        extra = (f'\n\t\t\t\t\t\t\t\t<Alpha val="0"/>\n\t\t\t\t\t\t\t\t<Unclipped val="true"/>'
+                 f'\n\t\t\t\t\t\t\t\t<Animation name="FCJH_Seen">{evs}'
+                 '\n\t\t\t\t\t\t\t\t\t<Controller type="Fade" end="Pause">'
+                 '\n\t\t\t\t\t\t\t\t\t\t<Key type="Curve" time="0" value="255" inout="Linear"/>'
+                 '\n\t\t\t\t\t\t\t\t\t\t<Key type="Curve" time="6" value="255" inout="Linear"/>'
+                 '\n\t\t\t\t\t\t\t\t\t\t<Key type="Curve" time="6.01" value="0" inout="Linear"/>'
+                 '\n\t\t\t\t\t\t\t\t\t</Controller>\n\t\t\t\t\t\t\t\t</Animation>')
+        out += "\n" + fill_image(f"FCJH_Diag{j}", box(("Min", 4), ("Min", x), ("Min", 14), ("Min", x + 10)),
+                                  colour, 700, 7, extra).rstrip("\n")
     return out
 
 
@@ -2160,6 +2353,10 @@ def hero_cell_template(team, c, cfg):
 			<HitTestTexture val="#FCJH_PLATE_HIT_BLUE"/>
 			<RenderPriority val="600"/>
 		</Frame>
+		<!-- Blizzard's timer is now only a sensor (Alpha 0): ours, FCJH_DeathTime, shows its
+		     text and visibility, inside a holder that fades it in after the skull (Ahli's
+		     handover) - the Viking watch sets the label's own Alpha, the holder's is the fade's.
+		     The respawn flash is the instance's (pet_death_bindings). -->
 		<Frame type="Label" name="HeroDeathTimeLabel">
 			<Anchor side="Top"    relative="$parent" pos="Min" offset="2"/>
 			<Anchor side="Left"   relative="$parent" pos="Min" offset="{shift}"/>
@@ -2168,7 +2365,34 @@ def hero_cell_template(team, c, cfg):
 			<Width val="0"/>
 			<Height val="0"/>
 			<Style val="Storm_TopBar_DeathTimer"/>
+			<Alpha val="0"/>
 			<RenderPriority val="520"/>
+		</Frame>
+		<Frame type="Frame" name="FCJH_DeathTimeHold">
+			<Anchor side="Top"    relative="$parent" pos="Min" offset="2"/>
+			<Anchor side="Left"   relative="$parent" pos="Min" offset="{shift}"/>
+			<Anchor side="Bottom" relative="$parent" pos="Min" offset="{c.h - 1}"/>
+			<Anchor side="Right"  relative="$parent" pos="Max" offset="{shift}"/>
+			<RenderPriority val="520"/>
+			<Unclipped val="true"/>
+			<AcceptsMouse val="false"/>
+			<Animation name="FCJH_Handover">
+				<Event event="OnShown" action="Reset,Play" frame="$parent/HeroDeathTimeLabel"/>
+				<Controller type="Fade" end="Pause">
+					<Key type="Curve" time="0" value="0" inout="Linear"/>
+					<Key type="Curve" time=".7" value="0" inout="Linear"/>
+					<Key type="Curve" time="1.2" value="255" inout="Linear"/>
+				</Controller>
+			</Animation>
+			<Frame type="Label" name="FCJH_DeathTime">
+				<Anchor relative="$parent"/>
+				<Text val="{{$parent/$parent/HeroDeathTimeLabel/@Text}}"/>
+				<Visible val="{{$parent/$parent/HeroDeathTimeLabel/@Visible}}"/>
+				<Style val="Storm_TopBar_DeathTimer"/>
+				<RenderPriority val="520"/>
+				<Unclipped val="true"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
 		</Frame>""" if blue else ""
     portrait = f"""
 		<Frame type="Image" name="HeroPortraitImage">
@@ -2206,7 +2430,7 @@ def hero_cell_template(team, c, cfg):
     return (f"\t{header}"
             + art("FCJH_FrameBg", "HUD_TopBar_Team_HeroFrame", 400)
             + art("FCJH_TeamBg", f"HUD_TopBar_Team_HeroFrame_BG_{'Blue' if blue else 'Red'}", 401)
-            + common + pet_death_labels(team, c) + portrait
+            + common + death_skull(team, c) + pet_death_labels(team, c) + portrait
             + art("FCJH_Glass", "HUD_TopBar_Team_HeroFrame_Glass", 505)
             + health + "\n\t</Frame>\n")
 
