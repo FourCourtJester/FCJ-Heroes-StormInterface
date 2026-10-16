@@ -222,7 +222,8 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
   takes the player's hero unit, which for D.Va is the pilot. In her mech the pilot is tucked
   inside it, so the click does nothing (user, 2026-10-16); out of it, it works. Her data has
   no tracker from the pilot to the mech (only the mech's DVaMechPilotUnitTracker, the other
-  way), so the plate can't be given a mech click as each Viking's is. Not fixable in a layout.
+  way), so the plate can't be given a mech click as each Viking's is.
+  Not fixable in a layout. TLV's plates take no clicks at all (user, 2026-10-16).
 
 ### A replay can't open with its timeline hidden
 - The replay panel's timeline (the slider) hides only by its own Hide button or the "Toggle
