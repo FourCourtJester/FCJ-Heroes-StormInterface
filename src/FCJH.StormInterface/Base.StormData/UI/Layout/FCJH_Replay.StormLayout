@@ -20,8 +20,9 @@
 	     top hangs off, so the box shrinks from its top; FCJH_TimelineLift raises the panel as far
 	     (gen.py REPLAY_TIMELINE) so the top stays in the corner (user, 2026-10-16).
 
-	     While it's collapsed, a slim tab shows in the panel's top-right corner
-	     (element.replay_collapsed) so the operator can see it's there and how to bring it back. The tab watches the panel's
+	     While it's collapsed, a slim tab shows flush in the screen's top-right corner - the box
+	     itself keeps the [screen] padding (element.replay_collapsed; user, 2026-10-16) - so the
+	     operator can see it's there and how to bring it back. The tab watches the panel's
 	     visibility; its pieces fade rather than the tab hiding itself, so its watcher keeps
 	     running. -->
 	<Frame type="GameUI" name="GameUI" file="GameUI">
