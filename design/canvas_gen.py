@@ -21,6 +21,7 @@ REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "tools"))
 import gen                   # noqa: E402
 import inspect_card as ic    # noqa: E402
+import maps                  # noqa: E402
 
 OUT = Path(__file__).resolve().parent / "canvas" / "project"
 CFG = gen.load_config()
@@ -526,6 +527,8 @@ def at(key, cls, inner="", extra=""):
 
 
 CENTRE = "display: flex; align-items: center; justify-content: center; text-align: center;"
+key = lambda k: CFG["toggles"][k].replace("Control", "Ctrl")      # layout.toml [toggles], as written on screen
+TOGGLES = (("replay", "replay box"), ("chat", "chat"), ("inspect", "inspect card"), ("names", "player names"))
 
 
 def hexagon_svg():
@@ -536,24 +539,43 @@ def hexagon_svg():
     inner = [(cx + (x - cx) * 0.86, cy + (y - cy) * 0.86) for x, y in h]
     return (f'<polygon points="{pts(h)}" fill="#1a1740" stroke="#6b5fd6" stroke-width="4"></polygon>'
             f'<polygon points="{pts(inner)}" fill="none" stroke="#a79bff" stroke-opacity=".5" stroke-width="1.5"></polygon>'
-            f'<ellipse cx="{round(cx, 1)}" cy="{round(cy, 1)}" rx="34" ry="31" fill="rgba(242,166,90,.12)" stroke="#F2A65A" stroke-width="2.5" stroke-dasharray="7 5"></ellipse>'
-            f'<text x="{round(cx, 1)}" y="{round(cy + 4, 1)}" text-anchor="middle" fill="#F7C08A" font-family="Barlow Condensed, sans-serif" font-weight="600" font-size="13" letter-spacing="1">LOGO · OBS</text>')
+            + event_logo_svg())
+
+
+def event_logo_svg():
+    """OBS's tournament logo in the hexagon's middle ([element.event_logo])."""
+    x, y, w, h = R["event_logo"]
+    cx, cy = x + w / 2, y + h / 2
+    return (f'<ellipse cx="{f1(cx)}" cy="{f1(cy)}" rx="{f1(w / 2)}" ry="{f1(h / 2)}" fill="rgba(242,166,90,.12)" stroke="#F2A65A" stroke-width="2.5" stroke-dasharray="7 5"></ellipse>'
+            f'<text x="{f1(cx)}" y="{f1(cy - 3)}" text-anchor="middle" fill="#F7C08A" font-family="Barlow Condensed, sans-serif" font-weight="600" font-size="12" letter-spacing="1">EVENT</text>'
+            f'<text x="{f1(cx)}" y="{f1(cy + 11)}" text-anchor="middle" fill="#F7C08A" font-family="Barlow Condensed, sans-serif" font-weight="600" font-size="12" letter-spacing="1">LOGO</text>')
+
+
+BANS = 3     # bans a side, as the canvas draws them: three slots fill [element.*_bans], square
+
+
+def ban_slots(team):
+    x, y, w, h = R[f"{team}_bans"]
+    gap = (w - BANS * h) / (BANS - 1)
+    return "".join(f'<div class="ob t" style="left: {f1(x + i * (h + gap))}px; top: {f1(y)}px; width: {f1(h)}px; height: {f1(h)}px; {CENTRE} font-size: 10px;">Ban</div>\n'
+                   for i in range(BANS))
 
 
 def top_bar(levels=("12", "9")):
-    """The top bar as built: our backplate texture, Blizzard's hexagon, level numbers and clock,
-    and the OBS areas."""
+    """The top bar as built: our backplate texture, Blizzard's hexagon, level numbers and clock;
+    and OBS's data, stand-ins in orange. OBS draws data only, never art (user, 2026-10-16): team
+    names, logos, series score, the tournament's name, division and logo, the game's bans. The
+    plates under them are the interface's (white: the name plates; the rest come with the art
+    pass)."""
     b = []
-    for key in ("blue_score", "red_score"):
-        b.append(at(key, "ob t", '<span style="font-size: 12px;">Score</span>', CENTRE))
-    for key in ("blue_name", "red_name"):
-        b.append(at(key, "ob t", '<span style="font-size: 14px;">Team name · OBS</span>', CENTRE))
-    for key in ("blue_logo", "red_logo"):
-        b.append(at(key, "ob t", '<span style="font-size: 12px;">Logo</span>', CENTRE))
-    for key in ("blue_bans", "red_bans"):
-        b.append(at(key, "ob t", '<span style="font-size: 12px;">Bans</span>', CENTRE))
-    b.append(at("bracket", "ob t", '<span style="font-size: 12px;">Bracket · OBS</span>', CENTRE))
-    b.append(at("game_count", "ob t", '<span style="font-size: 12px;">Game 1 of 5 · OBS</span>', CENTRE))
+    for team, score in (("blue", "1"), ("red", "2")):
+        b.append(at(f"{team}_score", "ob t", f'<span style="font-size: 34px; {GAME}">{score}</span>', CENTRE))
+        b.append(at(f"{team}_name", "ui t", '<span style="font-size: 22px; color: #F7C08A;">Team name</span>', CENTRE))
+        b.append(at(f"{team}_logo", "ob t", '<span style="font-size: 12px;">Logo</span>', CENTRE))
+        b.append(ban_slots(team))
+    b.append(at("division", "ob t", '<span style="font-size: 12px;">Division 1</span>', CENTRE))
+    b.append(at("game_count", "ob t", '<span style="font-size: 12px;">Game 3 of 5</span>', CENTRE))
+    b.append(at("event_name", "ob t", '<span style="font-size: 14px;">Tournament name</span>', CENTRE))
     x, y, w, h = R["top_backplate"]
     b.append(f'<img src="{BACKPLATE}" alt="Our top bar backplate texture, as built" style="position: absolute; left: {x}px; top: {y}px; width: {w}px; height: {h}px;">\n')
     b.append(f'<svg width="1920" height="140" viewBox="0 0 1920 140" style="position: absolute; left: 0; top: 0;" aria-label="Blizzard\'s centre hexagon">{hexagon_svg()}</svg>\n')
@@ -580,19 +602,19 @@ def main_board():
     b = [f'<img src="{BG}" alt="Heroes of the Storm game view, used as a background" style="position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; object-fit: cover; opacity: 0.55;">\n',
          '<div style="position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; background: rgba(8,10,20,0.35);"></div>\n']
     b.append(at("replay", "ui", f'<div class="t" style="font-size: 18px;">Replay controls · Blizzard\'s panel</div>'
-                f'<div class="s">Replays only · {R["replay"][2]} × {R["replay"][3]} · Ctrl+Shift+O collapses it to a tab</div>',
+                f'<div class="s">Replays only · {R["replay"][2]} × {R["replay"][3]} · {key("replay")} slides it out, leaving a tab in the corner</div>',
                 "padding: 12px; display: flex; flex-direction: column; justify-content: space-between;"))
     b.append(top_bar())
-    b.append(at("centre_banners", "faint t", "Blizzard centre banners · untouched", CENTRE))
+    b.append(at("centre_banners", "faint t", "Blizzard's centre banners · the map banners went beside the minimap (Maps board)", CENTRE + " font-size: 14px;"))
     b.append("".join(kill_row(y, k, v) for y, k, v in ((122, "red", "blue"), (188, "blue", "red"), (254, "blue", "red"))))
     kx, _, kw, _ = R["kill_feed"]
-    b.append(f'<div class="chip s" style="left: {kx + 24}px; top: 322px; width: 264px;">Kill feed · Blizzard\'s, in its own place</div>\n')
+    b.append(f'<div class="chip s" style="left: {kx + 210}px; top: 126px; width: 250px;">Kill feed · Blizzard\'s, in its own place; under an info pane while one shows</div>\n')
     b.append(f'<div style="position: absolute; left: {PANE_X}px; top: {PANE_Y}px;">' + stats_pane("kda") + '</div>\n')
     ix, iy, iw, ih = R["inspect"]
     b.append(f'<div class="dem" style="left: {ix}px; top: {iy}px; width: {iw}px; height: {ih}px; background: transparent;"></div>\n')
     b.append(f'<div class="chip s" style="left: {PANE_X + PANE_W + 12}px; top: {PANE_Y + 90}px; width: 270px;">Info pane · {PANE_W} × {PANE_H} · Ctrl+1 talents, 2 KDA, 3 healing, 4 structures (KDA shown)</div>\n')
     b.append(f'<div class="chip s" style="left: {ix + iw + 12}px; top: {iy + ih - 120}px; width: 300px; border: 1px solid #6FD3D3;">Teal: the inspect card, {iw} × {ih}, while a unit is selected (same left column; bottom at y {iy + ih})</div>\n')
-    b.append(at("map_objectives", "dem", '<div class="t" style="font-size: 14px;">Map objective widgets · not started</div>', CENTRE))
+    b.append(at("map_objectives", "dem", '<div class="t" style="font-size: 14px;">Map objectives · per map, at THE GAP (Maps board)</div>', CENTRE))
     mm = CFG["minimap"]
     sq = gen.MINIMAP_SQUARE * PX
     b.append(f'<div class="faint" style="left: {f1(mm["centre_x"] - sq / 2)}px; top: {f1(mm["bottom"] - sq)}px; width: {f1(sq)}px; height: {f1(sq)}px; border-color: rgba(250,249,245,.25);"></div>\n')
@@ -600,7 +622,10 @@ def main_board():
                 "display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;"))
     b.append(hero_rows_svg() + '\n')
     bx, by = CFG["dev"]["build_stamp"]
-    b.append(f'<div class="chip s" style="left: {bx + 320}px; top: {by - 150}px; padding: 3px 8px;">FCJH DEV build stamp at {bx}, {by} (dev only)</div>\n')
+    b.append(f'<div class="chip s" style="left: {bx}px; top: {by}px; padding: 3px 8px;">FCJH DEV build stamp at {bx}, {by} (dev only)</div>\n')
+    rx, ry, rw, rh = R["replay"]
+    b.append(f'<div class="chip s" style="left: {rx}px; top: {ry + rh + 10}px; width: {rw}px; padding: 4px 8px;">Operator keys: '
+             + " · ".join(f"{key(k)} {what}" for k, what in TOGGLES) + '</div>\n')
     x, y, w, h = R["blue_core"]
     b.append(f'<div class="chip s" style="left: {f1(x)}px; top: {f1(y - 40)}px; width: {f1(w)}px; padding: 3px 8px;">Core HP {f1(w)} × {f1(h)} · shown when a core takes damage</div>\n')
     b.append(f'<div class="chip s" style="left: {f1(R["red_core"][0] + R["red_core"][2] + 10)}px; top: {f1(R["red_xp"][1] - 44)}px; width: 250px; padding: 3px 8px;">'
@@ -836,8 +861,9 @@ def obs_areas():
     lx, ly, lw, _ = R["blue_logo"]
     gap = round(geo["ends"][0] + LEAN * ly - (lx + lw), 1)       # the wing's slanted end at the logo's top
     return (f"Blue, outside in: score {r('blue_score')}, name {r('blue_name')}, logo {r('blue_logo')} ({gap} px clear of the wing). "
-            f"The top row is the wings' height. Second row: bans under the name, {r('blue_bans')}; bracket {r('bracket')} and game count "
-            f"{r('game_count')} under the wings, each as wide as its wing's bottom edge. Red mirrors blue about x 960.")
+            f"The top row is the wings' height. Second row: bans under the name, {r('blue_bans')}, {BANS} slots; division {r('division')} and game count "
+            f"{r('game_count')} under the wings, each as wide as its wing's bottom edge. Red mirrors blue about x 960. The tournament: "
+            f"its logo in the hexagon's middle, {r('event_logo')}; its name under the clock, {r('event_name')} (proposed).")
 
 
 def topbar_board():
@@ -886,12 +912,12 @@ def topbar_board():
                                             "The talent-lead flame shows behind the team that's ahead."),
              ("Colour", f"Team colours = the plates' health bars ({HP['blue']}, {HP['red']}), strength along each wing {BP['fade']} (0 beside the hexagon, 1 at the end), "
                         f"over a stock dark {BP['stock'][0]} to {BP['stock'][1]}."),
-             ("Orange dashes · OBS areas", "Left empty for OBS. " + obs_areas()),
+             ("Orange dashes · OBS", "OBS draws data only, never art (user, 2026-10-16): the plates under it are ours, the name plates now and the rest in the art pass. " + obs_areas()),
              ("Rim and pattern", f"Chrome {', '.join('#' + c for c in BP['rim'])}, {BP['rim_width']} px; sheen {BP['sheen']}; hexagons {BP['hex_px']} px across at {BP['lattice']} strength.")]
     y = zy
     for t, d in items:
         b.append(note(nx, y, w - nx - 48, t, d))
-        y += 128
+        y += max(128, 60 + 20 * -(-len(d) * 7 // (w - nx - 48)))   # as tall as its text wraps
     # references
     ry = max(zy + zh, y) + 80
     b.append(heading(48, ry, "Blizzard's, for reference",
@@ -1002,37 +1028,54 @@ def visual_board():
 
 # ================================================================= Spec
 def spec_board():
-    w, h = 1100, 1460
+    w = 1100
     blue_r = R["hero_5"][0] + R["hero_5"][2]
     red_r = R["hero_0"][0] + R["hero_0"][2]
     tp, hp = CFG["talent_popup"], CFG["heal_popup"]
     xs = lambda k: f"{f1(R[k][2])} × {f1(R[k][3])}"
+    obs = lambda k: f"{f1(R[k][0])}, {f1(R[k][1])} · {xs(k)}"
     rows = [
-        ("Hero plates × 10", f"{px_(CELL.w)} × {px_(CELL.h)} (scale {ROW['scale']:g}), blue x {f1(ROW['blue_left'])}–{f1(blue_r)}, red x {ROW['red_left']}–{f1(red_r)}, y {f1(ROW['top'])}–{ROW['bottom']}", "built",
-         "Blizzard's in-game cell art, portrait masked to the slant, click selects the hero and clamps the camera. Seen at 1.375; this +10% not yet"),
+        ("Hero plates × 10", f"{px_(CELL.w)} × {px_(CELL.h)} (scale {ROW['scale']:g}), blue x {f1(ROW['blue_left'])}–{f1(blue_r)}, red x {ROW['red_left']}–{f1(red_r)}, y {f1(ROW['top'])}–{ROW['bottom']}", "game",
+         "Blizzard's in-game cell art, scaled to fit the padding, portrait masked to the slant. A click selects the hero and follows it (camera lock L on). D.Va's mech, TLV and Misha take no clicks (Blizzard's)"),
         ("Health + resource", "Each plate; narrowed while the heroic shows", "game", "Blizzard's fill art. Resource colour per hero"),
-        ("Heroic panel", "The plate's inner end: blue bottom right, red bottom left", "built", "Blizzard's panel mirrored: icon, gold frame, ready glow, cooldown dim + count, tooltip (the talent icon's own), Tracer's charge meter"),
+        ("Heroic panel", "The plate's inner end: blue bottom right, red bottom left", "game", "Blizzard's panel mirrored: icon, gold frame, ready glow, cooldown dim + count, tooltip, Tracer's charge meter"),
         ("CC icon + text", f"Icon {px_(2 * CELL.cc_half)} px in the portrait; text on the health bar", "game", "Text fits the bar's width (UNSTOPPABLE fits)"),
         ("Death timers", "Plate centre", "game", "Per-Viking timers too; Misha's removed"),
         ("Special plates", "Vikings, Rexxar, Abathur", "game", "Vikings in thirds (Baleog, Erik, Olaf); Rexxar full-height bar; Abathur's clone icon + CLONE"),
-        ("Fountain", "On the health bar at the plate's outer end", "built", "Bright when ready, dimmed with its count on cooldown"),
-        ("Talent pop-ups", f"{ROW['talent_popup_size']} px, straddling the top edge", "game", f"Hold {tp['hold']} s, fade {tp['fade']} s; always play out; drawn over heal. Seen at 40 px"),
+        ("Fountain", "On the health bar at the plate's outer end", "game", "Bright when ready, dimmed with its count on cooldown"),
+        ("Talent pop-ups", f"{ROW['talent_popup_size']} px, straddling the top edge", "game", f"Hold {tp['hold']} s, fade {tp['fade']} s; always play out; drawn over heal"),
         ("Heal pop-up", f"Same spot and motion; at {hp['threshold']}% or less", "game", f"Hold {hp['hold']} s; clears above {hp['clear_above']}%; fades at once on death; {hp['lock']:g} s lock per plate"),
-        ("Team XP", f"{xs('blue_xp')}, y {f1(R['blue_xp'][1])}, on the plates' top edge", "game", "Cut to the slant; hidden before the game starts. Moves with the plates"),
-        ("Core HP", f"{xs('blue_core')}, y {f1(R['blue_core'][1])}, on XP at the inner end", "built", "Blizzard's bar and size, our slanted track and mask. Check in Towers of Doom; restyle from the reference"),
+        ("Team XP", f"{xs('blue_xp')}, y {f1(R['blue_xp'][1])}, on the plates' top edge", "game", "Cut to the slant; hidden until a team's first hero loads. Moves with the plates"),
+        ("Core HP", f"{xs('blue_core')}, y {f1(R['blue_core'][1])}, on XP at the inner end", "game", "Blizzard's bar and size, our slanted track and mask; shows while a core takes damage"),
+        ("Map banners", f"Beside the minimap: bars {CFG['map_alerts']['above_core']} px over the core bar, blue's ending at x {ROW['blue_right']}, red's starting at {ROW['red_left']}", "game",
+         f"Every map's, in one place on every map; neutral ones on red's side; stacked {f1(round(maps.step() * PX, 1))} px apart (Maps board)"),
+        ("Map objectives", "Round the minimap, per map", "game", f"Neutral objectives above the minimap at THE GAP ({CFG['minimap']['alert_gap']} px over the map's top tip). Every map passed 2026-10-15/16 (Maps board)"),
+        ("Minimap", f"Bottom-centre, {xs('minimap')}", "game", f"Placed per map, each map's visual bottom on THE FLOOR, y {CFG['minimap']['floor']}"),
         ("Top bar backplate", f"{gen.TOP_BACKPLATE_SIZE[0]} × {gen.TOP_BACKPLATE_SIZE[1]} texture at x {R['top_backplate'][0]}", "game", "Variant C, chrome. The look the rest of the UI follows"),
         ("Team levels + flame", f"{xs('blue_level')} at x {R['blue_level'][0]} / {R['red_level'][0]}", "game", "Blizzard's numbers; the talent-lead flame works"),
         ("Hexagon, clock", "Blizzard's places", "game", "Towers and kills removed"),
-        ("Names, logos, scores, bans, bracket", "Top bar", "obs", "Left empty for OBS; no name plate drawn yet"),
+        ("Name plates", f"{obs('blue_name')} / {f1(R['red_name'][0])}", "unk", "Ours, in the art pass; OBS draws the name on them"),
+        ("Team names", "On the name plates", "obs", "Data only: OBS never draws art (user, 2026-10-16)"),
+        ("Team logos", f"{obs('blue_logo')} / {f1(R['red_logo'][0])}", "obs", "8 px clear of the wings' ends"),
+        ("Series score", f"{obs('blue_score')} / {f1(R['red_score'][0])}", "obs", "A number or pips: to decide"),
+        ("Bans", f"{obs('blue_bans')} / {f1(R['red_bans'][0])}", "obs", f"The game's bans, {BANS} slots a side, under the name"),
+        ("Tournament logo", f"{obs('event_logo')}, the hexagon's middle", "obs", "Over Blizzard's hexagon"),
+        ("Tournament name", f"{obs('event_name')}, under the clock", "obs", "Proposed 2026-10-16"),
+        ("Division", f"{obs('division')}, under blue's wing", "obs", "With the bracket stage if it fits"),
+        ("Game count", f"{obs('game_count')}, under red's wing", "obs", "Game N of M"),
         ("Kill feed", "Blizzard's own, top-left", "game", "Not moved: its rows grow rightward, so multi-kills ran off a right-hand feed"),
-        ("Replay controls", f"{R['replay'][0]}, {R['replay'][1]} · {xs('replay')}", "game", "Ctrl+Shift+O collapses to a tab"),
+        ("Replay controls", f"{R['replay'][0]}, {R['replay'][1]} · {xs('replay')}, top-right", "game", f"{key('replay')} slides them out, leaving a tab flush in the corner. Replays only"),
+        ("Operator keys", " · ".join(key(k) for k, _ in TOGGLES), "game", "The replay box, chat, the inspect card, player names. None a Blizzard key (validate.py checks)"),
         ("Info panes", f"{PANE_X}, {PANE_Y} · {PANE_W} × {PANE_H}", "game", "Ctrl+1-4: talents, KDA + hero dmg, healing, structures + XP. One at a time"),
-        ("Inspect card", f"{R['inspect'][0]}, {R['inspect'][1]} · {xs('inspect')}", "game", "Follows Blizzard's inspector: shows on selecting a unit, not on plate clicks; clicks inside stay. Anything not a hero gets a short card"),
+        ("Inspect card", f"{R['inspect'][0]}, {R['inspect'][1]} · {xs('inspect')}", "game", f"Shows when Blizzard's small inspector would. Anything not a hero gets a short card. {key('inspect')} slides it off left"),
         ("Blizzard's small inspector", "Parked off screen", "game", "Never shows; its visibility drives our card"),
-        ("Minimap", f"Bottom-centre, {xs('minimap')}", "game", "The engine fits each map in its square"),
-        ("Map objectives", "Over the minimap", "unk", "Per map; not started"),
         ("Player HUD", "Hidden", "game", "Ctrl+5 is Blizzard's observe-player key"),
+        ("Fight mode", "One hotkey", "unk", "Hides a list of elements (the info pane, the health markers). Not started"),
     ]
+    # the board's height, from the rows: each as tall as its longest cell wrapped (~7 px a
+    # character at 15 px, in columns of ~156, ~266 and ~430 px)
+    lines = lambda t, cw: -(-len(t) * 7 // cw)
+    h = 300 + sum(19 + 20 * max(lines(n, 156), lines(wh, 266), lines(nt, 430)) for n, wh, _, nt in rows)
     b = [f'<div style="position: absolute; left: 0; top: 0; width: {w}px; box-sizing: border-box; padding: 40px 44px; display: flex; flex-direction: column; gap: 18px;">\n',
          '<div style="display: flex; flex-direction: column; gap: 6px;"><h1 style="margin: 0; font-family: \'Barlow Condensed\', sans-serif; font-weight: 700; font-size: 40px; letter-spacing: .03em; text-transform: uppercase;">Default view · element spec</h1>'
          f'<p style="margin: 0; font-size: 16px; color: #A7A9B8;">As built, {STAMP}. Positions in px at 1920 × 1080, from layout.toml through tools/gen.py.</p></div>\n',
@@ -1045,13 +1088,244 @@ def spec_board():
     return page("Default view element spec", w, h, "".join(b)), (w, h)
 
 
+# ================================================================= Maps
+# Every battleground's minimap and banners, from tools/maps.py and layout.toml: the drawn map
+# (its texture's opaque part, as the engine fits it), the banners where the banner standard puts
+# them (user, 2026-10-09), and the neutral objectives at THE GAP. What the drawing can't show
+# (counters, hexagons, gliding) is in each map's note, from docs/maps.md.
+MAP_CROP = (240, 440, 1440, 640)          # x, y, w, h: the bottom of the screen, where every map's UI is
+STANDARD_CROP = (160, 440, 1740, 640)     # ...wider for the standard's numbers
+NEUTRAL = "#9C8CFF"
+FLOOR_C, GAP_C, MAP_C = "#F2C94C", "#FF7A7F", "#6FD3D3"
+LINE = CFG["screen"]["height"] - CFG["screen"]["padding"]     # the padding line: a placed map's box bottom
+SQ = gen.MINIMAP_SQUARE * PX
+BANNER = {                                # labels where the alert's note doesn't make one
+    "RavenNotificationFrame": "cannons firing (players only)", "NecroNotificationFrame": "cannons firing (players only)",
+    "FCJH_BlueTown": "a town taken (ours)", "FCJH_RedTown": "a town taken (ours)",
+    "AVCavalryBlue": "the cavalry, blue's", "AVCavalryRed": "the cavalry, red's",
+}
+AT_GAP = {                                # what each map has at THE GAP: maps.py `above` and gap_parts
+    "alterac_pass": ["the cage fight"], "battlefield_of_eternity": ["the Immortals' fight"],
+    "hanamura_temple": ["payload · countdown · shots"], "TempleModeFrame": "the temples",
+    "SoulEaterFrame": "Webweavers", "SoulCageCooldownFrame": "egg timer", "CenterHex": "capture point",
+    "VolskayaToastContainer": "toast",
+}
+MAP_NOTES = {                             # summarised from docs/maps.md
+    "alterac_pass": "The cage fight's bar and banners at THE GAP; the cavalry jumps to the winning team's banner spot.",
+    "battlefield_of_eternity": "The Immortals' fight above the minimap at THE GAP. Their countdown neutral on red's side, then the winner's Immortal on its own side.",
+    "blackhearts_bay": "The chests neutral on red's side; the cannon on the firing team's side; doubloon counts on the panel.",
+    "braxis_holdout": "The zerg wave warning neutral on red's side; Blizzard's HUD compacted above the map.",
+    "cursed_hollow": "The tribute neutral on red's side; the curse on the cursed team's side; tribute counts at the minimap's bottom corners.",
+    "dragon_shire": "The shrines' countdown neutral on red's side; the Dragon Knight on its team's side; shrine markers on the panel.",
+    "garden_of_terror": "The seed banners neutral, at red's spot; the Terrors on their team's side.",
+    "hanamura_temple": "No team banners: the payload, countdown and shots stay Blizzard's, above the minimap at THE GAP.",
+    "haunted_mines": "Opens on its top part (dashed, at load) and glides to its place when the mines open. Mines and golems neutral on red's side; skull counts.",
+    "infernal_shrines": "The shrine's countdown neutral on red's side; the Punisher on the summoner's side. Lifts while the skull race shows (dashed).",
+    "sky_temple": "The temples' countdown neutral on red's side; the temples themselves at THE GAP.",
+    "tomb_of_the_spider_queen": "The Webweavers banner and the egg timer at THE GAP; the Webweaver lane hexagons either side of the minimap.",
+    "towers_of_doom": "The tallest stacks. Blue: tunnels, cannons, a town taken. Red: the altar, the towers upgrading, cannons, a town taken.",
+    "volskaya_foundry": "The capture point's hexagon and its toast at THE GAP; the robot as a team banner on either side.",
+    "warhead_junction": "The warheads' countdown neutral on red's side, then how many are left; the nuke counters by the minimap.",
+}
+
+
+def drawn_box(key):
+    """The drawn map on `key` (its art fitted to maps.DRAWN_PX), px: (x, y, w, h). A map that
+    moves the minimap has its box's bottom on the padding line, nudged; the rest share the
+    square's place ([minimap] bottom), centred in it."""
+    m = maps.MAPS[key]
+    aw, ah = m.art
+    k = min(maps.DRAWN_PX / aw, maps.DRAWN_PX / ah)
+    w, h = aw * k, ah * k
+    bottom = (LINE + CFG["minimap"].get("nudge", {}).get(key, 0) if m.place or m.own_place
+              else CFG["minimap"]["bottom"] - SQ / 2 + h / 2)
+    return CFG["minimap"]["centre_x"] - w / 2, bottom - h, w, h
+
+
+def banner_boxes(key):
+    """Each banner on `key` as the banner standard places it, px: (team, x, top, w, h, bar, alert):
+    its bar's bottom [map_alerts] above_core over the core bar's top, one step up per alert
+    below it; red's from red's row's inner edge, blue's ending at blue's."""
+    out = []
+    for cols in maps.MAPS[key].team.values():
+        for team, col in cols.items():
+            bar0 = R[f"{team}_core"][1] - CFG["map_alerts"]["above_core"]
+            for i, a in enumerate(col):
+                art = maps.ALERT_ART[a.kind]
+                w, bar = (art.reach - art.tail) * PX, bar0 - i * maps.step() * PX
+                top = bar - (art.height - art.below) * PX
+                x = ROW["red_left"] if team == "red" else ROW["blue_right"] - w
+                out.append((team, x, top, w, bar + art.below * PX - top, bar, a))
+    return out
+
+
+def gap_labels(key):
+    m = maps.MAPS[key]
+    parts = [AT_GAP[p.split("/")[-1].split(":")[0]] for p in m.gap_parts]
+    return (AT_GAP.get(key, ["the objective"]) if m.above else []) + parts
+
+
+def svg_text(x, y, t, fs, fill, anchor="middle", weight=600):
+    return (f'<text x="{f1(x)}" y="{f1(y)}" text-anchor="{anchor}" dominant-baseline="central" fill="{fill}" '
+            f'font-family="Barlow, sans-serif" font-weight="{weight}" font-size="{f1(fs)}">{t}</text>')
+
+
+def hexagon_at(cx, bottom, w=64, h=56):
+    return [(cx - w / 2, bottom - h / 2), (cx - w / 4, bottom - h), (cx + w / 4, bottom - h),
+            (cx + w / 2, bottom - h / 2), (cx + w / 4, bottom), (cx - w / 4, bottom)]
+
+
+def map_scene(key, scale, standard=False, crop=MAP_CROP):
+    """One map's bottom of the screen (MAP_CROP) at `scale`, as an svg. standard: the banner
+    standard on its own, every slot outlined, on a stand-in map (`key`'s)."""
+    cx0, cy0, cw, ch = crop
+    fs = lambda v: v / scale                           # screen px wanted -> viewBox units
+    sw = fs(1.5)
+    p = [f'<svg width="{round(cw * scale)}" height="{round(ch * scale)}" viewBox="{cx0} {cy0} {cw} {ch}" style="display: block; background: #0b0c14; border-radius: 6px;" aria-label="{maps.MAPS[key].title}: minimap and banners">',
+         f'<rect x="{cx0}" y="{cy0}" width="{cw}" height="{ch}" fill="#0f111b"></rect>']
+    # the plates, their XP and core bars
+    for s in gen.BLUE_SLOTS + gen.RED_SLOTS:
+        team = "blue" if s in gen.BLUE_SLOTS else "red"
+        x, y, w, h = R[f"hero_{s}"]
+        p.append(f'<polygon points="{pts(slanted(team, x, y, x + w, y + h))}" fill="{COL[team]["portrait"]}" fill-opacity=".6" stroke="{COL[team]["line"]}" stroke-opacity=".45" stroke-width="{f1(sw)}"></polygon>')
+    for team in ("blue", "red"):
+        for bar, fill in (("xp", XP_FILL), ("core", CORE[team])):
+            x, y, w, h = R[f"{team}_{bar}"]
+            p.append(f'<polygon points="{pts(slanted(team, x, y, x + w, y + h))}" fill="{fill}" fill-opacity=".55"></polygon>')
+    # the minimap's square and the drawn map
+    m = maps.MAPS[key]
+    x, y, w, h = drawn_box(key)
+    mid = y + h / 2
+    p.append(f'<rect x="{f1(CFG["minimap"]["centre_x"] + m.across - SQ / 2)}" y="{f1(mid - SQ / 2)}" width="{f1(SQ)}" height="{f1(SQ)}" fill="none" stroke="#FAF9F5" stroke-opacity=".22" stroke-width="{f1(sw)}" stroke-dasharray="{f1(fs(5))} {f1(fs(4))}"></rect>')
+    if m.launch_cut is not None:                       # at load: its top part on the padding line
+        ly = LINE + CFG["minimap"].get("launch_nudge", {}).get(key, 0) - m.launch_cut - h / 2
+        p.append(f'<rect x="{f1(x)}" y="{f1(ly)}" width="{f1(w)}" height="{f1(h)}" fill="none" stroke="{MAP_C}" stroke-opacity=".6" stroke-width="{f1(sw)}" stroke-dasharray="{f1(fs(6))} {f1(fs(4))}"></rect>')
+        p.append(svg_text(x + w + fs(6), min(ly + h, cy0 + ch) - fs(30), "at load", fs(11), MAP_C, "start"))
+    lift = CFG["minimap"].get("lift", {}).get(key)
+    if lift:
+        p.append(f'<rect x="{f1(x)}" y="{f1(y - lift)}" width="{f1(w)}" height="{f1(h)}" fill="none" stroke="{MAP_C}" stroke-opacity=".6" stroke-width="{f1(sw)}" stroke-dasharray="{f1(fs(6))} {f1(fs(4))}"></rect>')
+        p.append(svg_text(x + w + fs(6), y - lift + fs(10), f"lifted {lift} px", fs(11), MAP_C, "start"))
+    p.append(f'<rect x="{f1(x)}" y="{f1(y)}" width="{f1(w)}" height="{f1(h)}" rx="{f1(fs(3))}" fill="{MAP_C}" fill-opacity=".14" stroke="{MAP_C}" stroke-width="{f1(sw)}"></rect>')
+    p.append(svg_text(x + w / 2, mid, "the map" if standard else f"{f1(round(w))} × {f1(round(h))}", fs(12), "#A8EBEB"))
+    # THE FLOOR, and THE GAP over the map's top
+    floor = CFG["minimap"]["floor"]
+    p.append(f'<line x1="{cx0}" y1="{floor}" x2="{cx0 + cw}" y2="{floor}" stroke="{FLOOR_C}" stroke-opacity=".7" stroke-width="{f1(sw)}" stroke-dasharray="{f1(fs(8))} {f1(fs(5))}"></line>')
+    gap = CFG["minimap"]["alert_gap"]
+    labels = ["a neutral objective"] if standard else gap_labels(key)
+    for i, label in enumerate(labels):
+        hx = CFG["minimap"]["centre_x"] + (i - (len(labels) - 1) / 2) * 150
+        p.append(f'<polygon points="{pts(hexagon_at(hx, y - gap))}" fill="{NEUTRAL}" fill-opacity=".3" stroke="{NEUTRAL}" stroke-width="{f1(sw)}"></polygon>')
+        p.append(svg_text(hx, y - gap - 56 - fs(9), label, fs(11), "#CFC7FF"))
+    # the banners
+    bars = set()
+    boxes = banner_boxes(key)
+    if standard:                                       # every slot, in the Towers-style art
+        art = maps.ALERT_ART[""]
+        boxes = []
+        for team in ("blue", "red"):
+            bar0 = R[f"{team}_core"][1] - CFG["map_alerts"]["above_core"]
+            for i in range(maps.max_stack()):
+                w_, bar = (art.reach - art.tail) * PX, bar0 - i * maps.step() * PX
+                top = bar - (art.height - art.below) * PX
+                bx = ROW["red_left"] if team == "red" else ROW["blue_right"] - w_
+                boxes.append((team, bx, top, w_, bar + art.below * PX - top, bar, f"slot {i + 1}"))
+    for team, bx, top, bw, bh, bar, a in boxes:
+        if standard:
+            colour, label, then = COL[team]["pop"], a, ""
+        else:
+            colour = NEUTRAL if "(neutral)" in a.note else COL[team]["pop"]
+            label = BANNER.get(a.name) or re.split(r",|;| \(", a.note)[0]
+            then = a.note.split(", then ")[1].replace(" (neutral)", "") if ", then " in a.note else ""
+        p.append(f'<rect x="{f1(bx)}" y="{f1(top)}" width="{f1(bw)}" height="{f1(bh)}" rx="{f1(fs(3))}" fill="{colour}" fill-opacity=".2" stroke="{colour}" stroke-width="{f1(sw)}"></rect>')
+        p.append(f'<line x1="{f1(bx)}" y1="{f1(bar)}" x2="{f1(bx + bw)}" y2="{f1(bar)}" stroke="{colour}" stroke-width="{f1(fs(3))}"></line>')
+        p.append(svg_text(bx + bw / 2, top + bh / 2 - (fs(7) if then else 0), label, fs(12), "#FAF9F5"))
+        if then:
+            p.append(svg_text(bx + bw / 2, top + bh / 2 + fs(8), "then " + then, fs(10), "#C9CAD6", weight=500))
+        bars.add(round(bar, 1))
+    if standard:                                       # the numbers
+        bar0 = R["red_core"][1] - CFG["map_alerts"]["above_core"]
+        p.append(dim_v(ROW["red_left"] + 480, bar0, R["red_core"][1], f'{CFG["map_alerts"]["above_core"]} px over the core bar'))
+        p.append(dim_v(ROW["red_left"] + 470, bar0 - maps.step() * PX, bar0, f"step {f1(round(maps.step() * PX, 1))} px"))
+        for ex, label, anchor in ((ROW["blue_right"], f"blue's end at x {ROW['blue_right']}", "end"), (ROW["red_left"], f"red's start at x {ROW['red_left']}", "start")):
+            p.append(f'<line x1="{ex}" y1="{cy0}" x2="{ex}" y2="{cy0 + ch}" stroke="#FAF9F5" stroke-opacity=".5" stroke-width="1.5" stroke-dasharray="6 5"></line>')
+            p.append(svg_text(ex + (-8 if anchor == "end" else 8), cy0 + 16, label, 14, "#FAF9F5", anchor))
+        p.append(dim_v(CFG["minimap"]["centre_x"] + 70, y - gap, y, f"THE GAP {gap} px"))
+        p.append(svg_text(cx0 + 12, floor - 12, f"THE FLOOR y {floor}: every map's visual bottom", 14, FLOOR_C, "start"))
+    p.append('</svg>')
+    return "".join(p)
+
+
+def place_note(key):
+    """How `key`'s minimap is placed, from maps.py and layout.toml."""
+    m = maps.MAPS[key]
+    n = CFG["minimap"].get("nudge", {}).get(key, 0)
+    how = ("its own place, by map id" if m.own_place else "moved by its panel" if m.place
+           else f"the shared place ([minimap] bottom {CFG['minimap']['bottom']})")
+    bits = [how + (f", {n:+} px" if n else "")]
+    if m.across:
+        bits.append(f"its art {m.across} px off its square's centre, put back")
+    pn = gen.panel_nudges(CFG).get(key, 0)
+    if pn and not m.above:
+        bits.append(f"its panel {pn:+} px")
+    return "; ".join(bits)
+
+
+def maps_board():
+    scale, cols, gutter = 0.4, 4, 36
+    cw, ch = round(MAP_CROP[2] * scale), round(MAP_CROP[3] * scale)
+    w = 96 + cols * cw + (cols - 1) * gutter
+    b = [header("Maps · as built",
+                f"Every battleground's minimap and banners, drawn from tools/maps.py and layout.toml (build {STAMP}). The bottom of the screen, "
+                f"x {MAP_CROP[0]}–{MAP_CROP[0] + MAP_CROP[2]}, y {MAP_CROP[1]}–1080. The drawn map is its texture's opaque box as the engine fits it, "
+                "so THE GAP is shown to the box's top; in game it's measured to the art's top tip.", w - 96)]
+    legend = [(COL["blue"]["pop"], "blue's banner"), (COL["red"]["pop"], "red's banner"), (NEUTRAL, "neutral: on red's side, or at THE GAP"),
+              (MAP_C, "the drawn map (dashed: lifted, or at load)"), (FLOOR_C, "THE FLOOR")]
+    b.append('<div style="position: absolute; left: 48px; top: 150px; display: flex; gap: 22px; font-size: 14px; color: #C9CAD6;">'
+             + "".join(f'<span style="display: flex; align-items: center; gap: 8px;"><span style="width: 22px; height: 12px; border-radius: 2px; '
+                       f'border: 2px solid {c}; background: {c}33;"></span>{t}</span>' for c, t in legend) + '</div>\n')
+    # the standard, at 3/4
+    sk = 0.75
+    sy = 250
+    b.append(heading(48, 200, "The banner standard", "The same on every map (user, 2026-10-09 and 2026-10-14). Towers of Doom's art in every slot.", 1400))
+    b.append(f'<div style="position: absolute; left: 48px; top: {sy + 20}px;">' + map_scene("cursed_hollow", sk, standard=True, crop=STANDARD_CROP) + '</div>\n')
+    nx = 48 + round(STANDARD_CROP[2] * sk) + 48
+    items = [("Bars, not boxes", f"Every banner is placed by its bar: the bar's bottom {CFG['map_alerts']['above_core']} px over the core bar's top, in one place on every map, "
+                                 "whether the core bar shows or not. What hangs under a bar is ignored: the banners draw over the plates' pop-ups."),
+             ("Across", f"Red's banners start where red's row does (x {ROW['red_left']}); blue's end where blue's does (x {ROW['blue_right']}): "
+                        "the same distance from the minimap as the plates."),
+             ("Stacking", f"One step up per banner below: the tallest art that ever stacks plus {maps.STACK_GAP} units, "
+                          f"{f1(round(maps.step() * PX, 1))} px. Up to {maps.max_stack()} (Towers of Doom's red). A banner alone in its column never stacks."),
+             ("Neutral", "A banner that is no team's goes in red's column; red shares its side with them. A neutral objective that sits above the minimap "
+                         f"goes to THE GAP: its hexagon's bottom {CFG['minimap']['alert_gap']} px over the drawn map's top tip, on every map."),
+             ("THE FLOOR", f"Each map's visual bottom (its outline, not its box) at y {CFG['minimap']['floor']}: [minimap.nudge] per map.")]
+    y = sy + 20
+    for t, d in items:
+        b.append(note(nx, y, w - nx - 48, t, d))
+        y += 96
+    # every map
+    gy = sy + 20 + round(STANDARD_CROP[3] * sk) + 70
+    b.append(heading(48, gy, "Every battleground", "Each banner labelled from its note in tools/maps.py; \"then\" is what the same spot shows next."))
+    y0 = gy + 70
+    pitch = ch + 190
+    for i, (key, m) in enumerate(maps.MAPS.items()):
+        x = 48 + (i % cols) * (cw + gutter)
+        y = y0 + (i // cols) * pitch
+        b.append(f'<div class="t" style="position: absolute; left: {x}px; top: {y}px; font-size: 20px; color: #F2C94C;">{m.title}</div>\n')
+        b.append(f'<div style="position: absolute; left: {x}px; top: {y + 32}px;">' + map_scene(key, scale) + '</div>\n')
+        b.append(f'<div class="s" style="position: absolute; left: {x}px; top: {y + 42 + ch}px; width: {cw}px; font-size: 14px; color: #C9CAD6;">'
+                 f'<div style="color: #A8EBEB; margin-bottom: 4px;">Minimap: {place_note(key)}.</div>{MAP_NOTES[key]}</div>\n')
+    h = y0 + -(-len(maps.MAPS) // cols) * pitch
+    return page("Maps, as built", w, h, "".join(b)), (w, h)
+
+
 # ================================================================= write
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     sizes = {}
     (OUT / "Main.dc.html").write_text(main_board(), encoding="utf-8")
     for name, fn in (("Plate.dc.html", plate_board), ("Panes.dc.html", panes_board), ("Inspect.dc.html", inspect_board),
-                     ("TopBar.dc.html", topbar_board), ("Visual.dc.html", visual_board), ("Spec.dc.html", spec_board)):
+                     ("TopBar.dc.html", topbar_board), ("Maps.dc.html", maps_board), ("Visual.dc.html", visual_board),
+                     ("Spec.dc.html", spec_board)):
         html, size = fn()
         (OUT / name).write_text(html, encoding="utf-8")
         sizes[name] = size

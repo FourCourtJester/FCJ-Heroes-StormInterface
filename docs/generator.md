@@ -112,7 +112,7 @@ an uncompressed **MPQ v1** `FCJH.StormInterface`, deployed to
 
 Beside the build, from the same numbers: **the wireframe canvas.** `design/canvas_gen.py`
 imports gen and draws the as-built boards (the default view, the spec table, the plate
-anatomy, the panes, the inspect card, the top bar) into `design/canvas/project/*.dc.html`.
+anatomy, the panes, the inspect card, the top bar, every map's minimap and banners) into `design/canvas/project/*.dc.html`.
 Those are published to the canvas artifact. Every build is checked against it.
 
 ## The numbers it works in

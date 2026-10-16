@@ -15,7 +15,8 @@ build 50 lives in git history and as the validator's test fixture
 **The design is agreed** and lives in a canvas of to-scale wireframes:
 **https://claude.ai/artifact/6MmAcxcKjfAAprCN3oc3ZK** — the stock UI annotated, then the
 build as it stands: the default view at 1920×1080, the spec table, the plate anatomy, the
-info panes, the inspect card, the top bar and the visual-language agenda for the art pass.
+info panes, the inspect card, the top bar, every map's minimap and banners, and the
+visual-language agenda for the art pass.
 Those boards are drawn from the build's own numbers by `design/canvas_gen.py` (it imports
 `tools/gen.py`; it's tracked, the rest of `design/` isn't): after a layout change, run
 `python design/canvas_gen.py` and publish `design/canvas/project/` to the canvas.
@@ -24,7 +25,7 @@ Those boards are drawn from the build's own numbers by `design/canvas_gen.py` (i
 In one paragraph: the ten hero cells sit along the bottom (blue 1–5 left of the minimap,
 red 6–0 right of it) with portrait, HP, mana and CC; the minimap and its objective widgets
 at bottom-centre; team core HP above the cells; a two-line top bar of series score, team
-name, logo and level either side of Blizzard's hexagon, with bans, bracket and game count
+name, logo and level either side of Blizzard's hexagon, with bans, division and game count
 beneath; Blizzard's own kill feed top-left; replay controls top-right; four operator keys, Ctrl+Shift+R/C/I/N, toggle the replay controls,
 chat, inspect card and player names (layout.toml `[toggles]`); info panes
 (talents, KDA/damage, healing, siege) at middle-left on hotkeys; talent pop-ups on the
@@ -32,8 +33,9 @@ cells, and a green-plus pop-up on any hero below 25% health (drawn under the tal
 pop-up). **Fight mode is not a separate layout** — it is one hotkey that hides a list of
 elements (so far: the info pane and the health markers). The top bar and minimap always stay.
 
-**Branding is negative space**: names, logos, scores, bans, bracket and game count are
-drawn by OBS over empty regions the interface leaves (§6).
+**OBS draws data only, never art** (user, 2026-10-16): team names, logos, series score, the
+tournament's name, division and logo, and the game's bans, on plates the interface draws.
+Nothing on the bottom UI. Its places are `kind = "obs"` rects in `layout.toml` (§6, docs/obs.md).
 
 **Status, 2026-10-16: Phase 2 (building the default view) is all but done** - every map passed, every hero seen; the final pass, the art pass and OBS are left (§7). Phases 0
 (toolchain) and 1 (probing the unknowns) are done. Built, and confirmed in game unless noted:
@@ -392,8 +394,10 @@ its talent icons only give tooltips inside Blizzard's own talent-row copy — se
 **Use Blizzard's CC plate, not a rebuilt one.** A hand-built label rendered nothing; the
 engine's element is self-managing.
 
-**Branding is negative space**, drawn by OBS. The interface can't see OBS, so there is no
-in-game fallback for missing names or logos.
+**Branding is OBS's data on our plates.** OBS draws only what the game can't know (names,
+logos, score, the tournament, bans) and never art (user, 2026-10-16); the interface draws every
+plate it sits on. The interface can't see OBS, so there is no in-game fallback for missing names
+or logos.
 
 **Plates are Blizzard's in-game top-bar cell, not the observer's.** Its art, sizes and
 stacking are rebuilt in `tools/gen.py` (`HeroCell`) and only scaled; the portrait crop is

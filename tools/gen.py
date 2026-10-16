@@ -222,7 +222,7 @@ ANCHORS = {
     # the top bar sits on Blizzard's hexagon, centred on the top edge; the team levels on our
     # backplate. The OBS boxes go with it (the OBS package draws them from layout.toml's px).
     **{s: TOP_CENTRE for s in ("top_backplate", "logo_plate", "clock", "blue_score", "blue_name", "blue_logo",
-                               "blue_bans", "bracket", "red_score", "red_name", "red_logo", "red_bans",
+                               "blue_bans", "division", "event_logo", "event_name", "red_score", "red_name", "red_logo", "red_bans",
                                "game_count", "centre_banners")},
     **{s: "top_backplate" for s in ("blue_level", "red_level", "blue_talent_lead", "red_talent_lead")},
     # the rows sit either side of the minimap, bottom-centre, and so does all that's on them:
@@ -2996,7 +2996,7 @@ def layout_order(layout_dir, extra=(), generated=None):
 # whose square hangs off the bottom by design ([minimap] bottom); and Blizzard's kill feed,
 # left where Blizzard puts it.
 PADDING_EXEMPT = {"blue_score", "blue_name", "blue_logo", "blue_level", "blue_talent_lead", "blue_bans",
-                  "bracket", "logo_plate", "clock", "red_level", "red_talent_lead", "red_logo", "red_name",
+                  "division", "logo_plate", "clock", "red_level", "red_talent_lead", "red_logo", "red_name",
                   "red_score", "red_bans", "game_count", "top_backplate", "minimap", "kill_feed",
                   # the replay box's tab sits flush in the top-right corner; the box itself
                   # keeps the padding (user, 2026-10-16)

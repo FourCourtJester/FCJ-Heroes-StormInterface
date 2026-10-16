@@ -138,15 +138,18 @@ warhead_junction = 0
 #   wings: the top edge to y 63.3 (the hexagon's side points), so their art matches it;
 # - logos are 8 px clear of the wings' slanted outer ends (762.4 / 1157.7 on the top edge);
 #   blue's score stays clear of the replay panel (x 14-392, its art 20-386);
-# - the second row: bans under each name; bracket (blue) and game count (red) under the
+# - the second row: bans under each name; division (blue) and game count (red) under the
 #   level labels, as wide as their wing's bottom edge (blue 794-890, red 1024-1126: Blizzard's
 #   hexagon sits 2.75 px left of the screen's centre, so the wings differ).
+# OBS draws data only, never art (user, 2026-10-16): team names, logos, series score, the
+# tournament's name, division and logo, and the game's bans. Every plate and frame they sit
+# on is the interface's (the art pass).
 [element.blue_score]
 rect = [400, 0, 64, 63.3]
 kind = "obs"
 [element.blue_name]
 rect = [470, 0, 214, 63.3]
-kind = "ui"                  # the plate is ours; OBS draws the name on it
+kind = "ui"                  # the plate is ours (the art pass); OBS draws the name on it
 [element.blue_logo]
 rect = [690, 0, 64, 63.3]
 kind = "obs"
@@ -159,8 +162,8 @@ kind = "demand"
 [element.blue_bans]
 rect = [576, 67, 108, 32]    # under the name, flush with its inner end
 kind = "obs"
-[element.bracket]
-rect = [794, 67, 96, 24]     # under blue's wing
+[element.division]
+rect = [794, 67, 96, 24]     # under blue's wing: the division, and the bracket stage if it fits
 kind = "obs"
 
 # Top bar, centre
@@ -170,6 +173,12 @@ kind = "ui"
 [element.clock]
 rect = [906, 128, 108, 32]
 kind = "ui"
+[element.event_logo]
+rect = [922, 32, 68, 62]     # the tournament's logo, in the hexagon's middle (its centre 956, 63)
+kind = "obs"
+[element.event_name]
+rect = [810, 164, 300, 24]   # the tournament's name, under the clock (proposed, 2026-10-16)
+kind = "obs"
 
 # Top bar, red side (inside out: level, logo, name, score)
 [element.red_level]
