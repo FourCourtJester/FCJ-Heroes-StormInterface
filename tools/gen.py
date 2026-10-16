@@ -266,6 +266,20 @@ def minimap_launch(cfg):
             for k, m in maps.MAPS.items() if m.launch_cut is not None}
 
 
+def minimap_lifts(cfg):
+    """A map whose minimap moves out of a part's way while it shows (maps.py lifts): MinimapPanel's
+    bottom settled and lifted [minimap.lift] px, units from the shared place. {map key: (from, to)}"""
+    lift = map_table(cfg, "lift")
+    keys = {k for k, m in maps.MAPS.items() if m.lifts}
+    if set(lift) != keys:
+        raise SystemExit(f"layout.toml [minimap.lift]: one per map with lifts in tools/maps.py - {sorted(keys)}")
+    shared, nudge = minimap_bottoms(cfg)[None], map_table(cfg, "nudge")
+    line = cfg["screen"]["height"] - cfg["screen"]["padding"]
+    return {k: (minimap_bottoms(cfg)[k] - shared,
+                square_bottom(cfg, line + nudge.get(k, 0) - px - maps.drawn_height(k) / 2) - shared)
+            for k, px in lift.items()}
+
+
 def panel_nudges(cfg):
     """How much lower each map's objective panels go, px: layout.toml [minimap.panel_nudge], and
     for a map with a neutral objective above the minimap (maps.py `above`) the move that leaves
@@ -3000,7 +3014,8 @@ def committed_files(cfg, source=SOURCE):
                                             {k: u(v) for k, v in panel_nudges(cfg).items()},
                                             minimap_bottoms(cfg),
                                             {k: (v - minimap_bottoms(cfg)[None], minimap_bottoms(cfg)[k] - minimap_bottoms(cfg)[None])
-                                             for k, v in minimap_launch(cfg).items()}),
+                                             for k, v in minimap_launch(cfg).items()},
+                                            minimap_lifts(cfg)),
         LAYOUT_REL / INDEX_FILE: desc_index(layout_order(layout_dir, generated=GENERATED_LAYOUTS)),
     }
     return {rel: text.encode("utf-8") for rel, text in texts.items()} | texture_files(cfg)

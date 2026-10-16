@@ -133,6 +133,9 @@ class Map:
                                       # padding line at load ([minimap.launch_nudge])
     opens: str = None                 # ...until this (under MapMechanicPanel) first shows: then the
                                       # minimap glides to its place, for good (id_placers)
+    lifts: str = None                 # a part of its own panel: while it shows, the minimap glides
+                                      # [minimap.lift] px up, and back down when it hides; the part
+                                      # stays put, where the lifted map hung it (lift)
     fix: str = ""                     # extra SetAnchors when this map's minimap is placed
     team: dict = field(default_factory=dict)     # {"blue": [Alert...], "red": [...]}: panel -> column
     extra: str = ""                   # map-specific XML in its file's panel (see TOWERS_EXTRA)
@@ -2244,7 +2247,10 @@ MAPS = {
         panels={"ShrinesPanel": BOTTOM_RIGHT}, place=("ShrinesPanel",),
         # "A shrine is activating": the neutral banner, on red's side ("Shrine active" hidden:
         # PARTS); the Punisher in its place, on its summoner's side (punisher_side). The skull
-        # race stays on the panel: [minimap.panel_nudge] lifts it.
+        # race stays on the panel: [minimap.panel_nudge] lifts it. The minimap on THE FLOOR but
+        # while the race shows (CursedEvent mode, libmshe.galaxy MMTowerPushUISetMode): then it
+        # glides up out of the race's way, the race pinned where it was (user, 2026-10-15; lift).
+        lifts="ShrinesPanel/CursedMinionKillFrame",
         team={"ShrinesPanel": {
             "blue": [Alert("PunisherFrame", kind="INFERNAL", box=INFERNAL_BOX, spot_only=True,
                            note="the Punisher, when it's blue's")],
@@ -2353,6 +2359,8 @@ MAP_IDS = {
 assert set(MAP_IDS) == set(MAPS), f"MAP_IDS: every map needs its id - {set(MAPS) ^ set(MAP_IDS)}"
 # own_place is for the older maps: a newer one's panel placer moves it already (placer)
 assert not [k for k, m in MAPS.items() if m.own_place and m.place], "own_place: a map with a placer of its own"
+# a lift is played in the map's own panel, by its placer (lift)
+assert not [k for k, m in MAPS.items() if m.lifts and not (m.place and m.file)], "lifts: a map with its own panel's placer"
 # a map opening on part of its map is placed by its id, and needs what opens it
 assert not [k for k, m in MAPS.items() if (m.launch_cut is not None) != bool(m.own_place and m.opens)], \
     "launch_cut: with own_place and opens, and only then"
@@ -2691,11 +2699,17 @@ def shift_lines(down, depth):
                    for sd, pos in (("Top", "Min"), ("Bottom", "Max"), ("Left", "Min"), ("Right", "Max")))
 
 
-def map_file(key, at, down):
+def map_file(key, at, down, bottoms, lifts):
     """Everything this map's own layout file gets: its panels on our minimap, the minimap's
-    place (placer, in its first panel), its team alerts."""
+    place (placer, in its first panel), its team alerts. bottoms, lifts: as layout's."""
     m = MAPS[key]
     root = Node(None)
+    if m.lifts:
+        # the lifting part pinned to the screen, its bottom where its panel's is with the map
+        # lifted: Blizzard's hang only its bottom and middle off it (shrines.stormlayout)
+        _, off = on_minimap("Bottom", "Max", 0, m, down.get(key, 0))
+        root.at(m.lifts).body += (f'{T * (len(m.lifts.split("/")) + 1)}<Anchor side="Bottom" relative="$GameUI" pos="Max" '
+                                  f'offset="{bottoms[None] + lifts[key][1] + off}"/>\n')
     for path, sides in m.panels.items():
         root.at(path).body += anchor_lines(sides, m, len(path.split("/")) + 1, down.get(key, 0))
         if m.proxy and "/" not in path:
@@ -2710,7 +2724,7 @@ def map_file(key, at, down):
     for path, xml in PARTS.get(key, {}).items():
         root.at(path).body += "".join(T * (len(path.split("/")) + 1) + line + "\n" for line in xml.splitlines())
     if m.place:
-        root.at(m.place[0]).body += placer(key, len(m.place[0].split("/")) + 1)
+        root.at(m.place[0]).body += placer(key, len(m.place[0].split("/")) + 1, lifts.get(key))
     for panel, cols in m.team.items():
         if panel == m.core:
             continue                  # in the core panel: core_panels
@@ -2755,7 +2769,7 @@ def core_panels(down, at, bottoms):
             f'{T*4}<Frame type="Frame" name="MapMechanicPanel">\n' + panels + f'{T*4}</Frame>\n')
 
 
-def placer(key, indent):
+def placer(key, indent, lifted=None):
     """A frame inside the map's panel - which exists only on this map - that moves the minimap
     to this map's place as soon as the script builds the panel, shown or hidden: one state, no
     condition (a state group runs on a hidden frame too). It used to wait for the panel to
@@ -2773,10 +2787,11 @@ def placer(key, indent):
             + place_actions(key, indent + 3) +
             f'{t}\t\t</State>\n'
             f'{t}\t</StateGroup>\n'
+            + (lift(key, lifted, indent + 1) if lifted else "") +
             f'{t}</Frame>\n')
 
 
-MAP_ID = "libCore_gv_mAPMapStringID"   # Blizzard's script variable naming the map (MAP_IDS)
+MAP_ID ="libCore_gv_mAPMapStringID"   # Blizzard's script variable naming the map (MAP_IDS)
 MAP_ID_READER = "$GameUI/FCJH_MapId"   # ours, reading it (id_placers)
 
 
@@ -2791,6 +2806,45 @@ GLIDE_S = 1.0         # seconds the minimap takes to glide to its place (opens)
 GLIDE_STEPS = 10      # keys along it, eased in and out
 
 
+def glide_keys(ends, indent):
+    """The minimap's bottom from ends[0] to ends[1], eased in and out over GLIDE_S."""
+    t = T * indent
+    ease = lambda f: f * f * (3 - 2 * f)
+    return "".join(f'{t}\t\t<Key type="Curve" time="{round(GLIDE_S * n / GLIDE_STEPS, 2)}" '
+                   f'value="{round(ends[0] + (ends[1] - ends[0]) * ease(n / GLIDE_STEPS))}"/>\n'
+                   for n in range(GLIDE_STEPS + 1))
+
+
+def lift(key, ends, indent):
+    """While the map's `lifts` part shows, the minimap glides up out of its way, and back down
+    when it hides - every time (user, 2026-10-15: Infernal Shrines' skull race; Haunted Mines'
+    glide goes up once and stays). One animation, played forwards to lift and backwards to
+    settle: from wherever it is, so a settle mid-lift turns round. ends: (from, to), as glide's -
+    counted from the minimap's LAYOUT anchor, not the placer's. Settled, it rests at its first
+    key: the placer's own place. In the map's own panel, the placer's frame: the part's path
+    exists only on this map."""
+    t = T * indent
+    return (f'{t}<!-- {MAPS[key].title}: the minimap up while {MAPS[key].lifts.split("/")[-1]} shows, '
+            f'back down when it hides (maps.lift) -->\n'
+            f'{t}<Animation name="FCJH_Lift">\n'
+            f'{t}\t<Event event="FCJH_Lift" action="DirectionForward,Play"/>\n'
+            f'{t}\t<Event event="FCJH_Settle" action="DirectionReverse,Play"/>\n'
+            f'{t}\t<Controller type="Anchor" end="Pause" side="Bottom" relative="true" frame="{MINIMAP}">\n'
+            + glide_keys(ends, indent) +
+            f'{t}\t</Controller>\n'
+            f'{t}</Animation>\n'
+            f'{t}<StateGroup name="FCJH_Lift">\n'
+            f'{t}\t<DefaultState val="Settled"/>\n'
+            f'{t}\t<State name="Lifted">\n'
+            f'{t}\t\t<When type="Property" frame="{MECHANICS}/{MAPS[key].lifts}" Visible="true"/>\n'
+            f'{t}\t\t<Action type="SendEvent" frame="$this" event="FCJH_Lift"/>\n'
+            f'{t}\t</State>\n'
+            f'{t}\t<State name="Settled">\n'
+            f'{t}\t\t<Action type="SendEvent" frame="$this" event="FCJH_Settle"/>\n'
+            f'{t}\t</State>\n'
+            f'{t}</StateGroup>\n')
+
+
 def glide(key, ends, indent):
     """A map that opens on part of its map (launch_cut): when its `opens` frame first shows,
     the minimap glides up to its place, and stays for the rest of the game (user, 2026-10-09).
@@ -2803,10 +2857,7 @@ def glide(key, ends, indent):
     time nothing plays. Its first key is the launch place, so it starts where the map sits;
     end="Pause" holds its last key."""
     t = T * indent
-    ease = lambda f: f * f * (3 - 2 * f)
-    keys = "".join(f'{t}\t\t<Key type="Curve" time="{round(GLIDE_S * n / GLIDE_STEPS, 2)}" '
-                   f'value="{round(ends[0] + (ends[1] - ends[0]) * ease(n / GLIDE_STEPS))}"/>\n'
-                   for n in range(GLIDE_STEPS + 1))
+    keys = glide_keys(ends, indent)
     return (f'{t}<!-- {MAPS[key].title}: the whole map once {MAPS[key].opens.split("/")[-1]} first shows, gliding up (maps.glide) -->\n'
             f'{t}<Frame type="Frame" name="FCJH_Opened">\n'
             f'{t}\t<Anchor relative="$parent"/>\n{t}\t<Visible val="false"/>\n{t}\t<AcceptsMouse val="false"/>\n'
@@ -2887,13 +2938,14 @@ def diag():
             + cell("FCJH_DiagValue0", 325, 400, "{$parent/FCJH_DiagMapId/@StringValue}"))
 
 
-def layout(header, at, down, bottoms, glides):
+def layout(header, at, down, bottoms, glides, lifts):
     """FCJH_Maps.StormLayout. at: (frame, across pos, down pos), where the plates are anchored -
     the stacks' constants run from there, as the plates' do (gen.py PLATES_AT). down: {map key:
     units}, how much lower each map's panel goes (layout.toml [minimap.panel_nudge]). bottoms:
     the minimap's bottom, units from the screen's: {None: the shared place, map key: its own}
     (gen.py minimap_bottoms). glides: {map key: (from, to)}, the minimap's bottom at load and in
-    full, units from the shared place, for a map that opens on part of its map (launch_cut; glide)."""
+    full, units from the shared place, for a map that opens on part of its map (launch_cut; glide).
+    lifts: {map key: (from, to)}, the same, settled and lifted, for a map with `lifts` (lift)."""
     return header + f'''
 	<!-- Each battleground's own UI on our screen (tools/maps.py, which says how a map's UI works).
 
@@ -2914,4 +2966,4 @@ def layout(header, at, down, bottoms, glides):
 		</Frame>
 {id_placers(glides)}{diag()}	</Frame>
 ''' + "".join(f"\t<!-- ===== {MAPS[k].title}{(': ' + MAPS[k].notes) if MAPS[k].notes else ''} ===== -->\n"
-              + map_file(k, at, down) for k in MAPS if MAPS[k].file) + "</Desc>\n"
+              + map_file(k, at, down, bottoms, lifts) for k in MAPS if MAPS[k].file) + "</Desc>\n"
