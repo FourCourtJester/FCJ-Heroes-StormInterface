@@ -2041,7 +2041,35 @@ TEMPLE_ROW_LEFT = 92       # the first disc's left in from the panel's: Blizzard
 TEMPLE_BAR_PAST = 30       # the bar's ends past the outer discs
 TEMPLE_BAR_DOWN = 25       # the bar's bottom under the discs' middle
 _DISC = "$parent/ShrineIndicators{}/ShrineIcon"
+_ROW = MECHANICS + "/CapturePointsPanel/TempleModeFrame"
+
+
+def temple_shown(name, whens):
+    """A StateGroup showing its frame (Alpha) while any of whens holds, hidden otherwise."""
+    t = T * 4
+    return (f'{t}<StateGroup name="{name}">\n{t}\t<DefaultState val="Hidden"/>\n'
+            + "".join(f'{t}\t<State name="Shown{i}">{w}<Action type="SetProperty" Alpha="255"/></State>\n'
+                      for i, w in enumerate(whens, 1))
+            + f'{t}\t<State name="Hidden"><Action type="SetProperty" Alpha="0"/></State>\n{t}</StateGroup>')
+
+
+# Only the temples that matter (user, 2026-10-15: "No real reason to show dead temples, and no
+# real reason to show the bar between temple objectives"). Blizzard's script never hides the row
+# (MMSkyTempleUIHandler shows the panel once): between rounds all three discs greyed, in the
+# countdown the next ones carrying the time (their CooldownLabel), live the live ones lit
+# (ShrineIcon's Ownership Order or Chaos, the rest Disable). So: the row and its bar shown only
+# while the countdown frame is (Timer and Temple modes; Idle hides it); each disc shown, in its
+# own slot (the left always the top temple), only while it carries the time or is lit. Going
+# live the script lights all three then greys the dead ones - the same pass, no Wait between.
+TEMPLE_DISC_SHOWN = lambda i: temple_shown("FCJH_TempleDisc", (
+    f'<When type="Property" frame="{_ROW}/ShrineIndicators{i}/CooldownLabel" Visible="true"/>',
+    f'<When type="AnimationState" frame="{_ROW}/ShrineIndicators{i}/ShrineIcon" Ownership="Order"/>',
+    f'<When type="AnimationState" frame="{_ROW}/ShrineIndicators{i}/ShrineIcon" Ownership="Chaos"/>'))
 PARTS["sky_temple"] = {
+    "CapturePointsPanel/TempleModeFrame":
+        temple_shown("FCJH_TempleRow", (f'<When type="Property" frame="{TEMPLE}" Visible="true"/>',)).replace(T * 4, ""),
+    **{f"CapturePointsPanel/TempleModeFrame/ShrineIndicators{i}":
+           TEMPLE_DISC_SHOWN(i).replace(T * 4, "") for i in (1, 2, 3)},
     "CapturePointsPanel/TempleModeFrame/ShrineIndicators1/ShrineIcon:Image":
         f'<Anchor side="Left" relative="$parent/$parent" pos="Min" offset="{TEMPLE_ROW_LEFT}"/>',
     "CapturePointsPanel/TempleModeFrame/FCJH_TempleBar:Image":

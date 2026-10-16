@@ -2062,10 +2062,40 @@
 			<Anchor side="Bottom" relative="$parent" pos="Max" offset="-311"/>
 			<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
 			<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+			<StateGroup name="FCJH_TempleRow">
+				<DefaultState val="Hidden"/>
+				<State name="Shown1"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/CapturePointsPanel/TimerModeFrame" Visible="true"/><Action type="SetProperty" Alpha="255"/></State>
+				<State name="Hidden"><Action type="SetProperty" Alpha="0"/></State>
+			</StateGroup>
 			<Frame type="Frame" name="ShrineIndicators1">
+				<StateGroup name="FCJH_TempleDisc">
+					<DefaultState val="Hidden"/>
+					<State name="Shown1"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/CapturePointsPanel/TempleModeFrame/ShrineIndicators1/CooldownLabel" Visible="true"/><Action type="SetProperty" Alpha="255"/></State>
+					<State name="Shown2"><When type="AnimationState" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/CapturePointsPanel/TempleModeFrame/ShrineIndicators1/ShrineIcon" Ownership="Order"/><Action type="SetProperty" Alpha="255"/></State>
+					<State name="Shown3"><When type="AnimationState" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/CapturePointsPanel/TempleModeFrame/ShrineIndicators1/ShrineIcon" Ownership="Chaos"/><Action type="SetProperty" Alpha="255"/></State>
+					<State name="Hidden"><Action type="SetProperty" Alpha="0"/></State>
+				</StateGroup>
 				<Frame type="Image" name="ShrineIcon">
 					<Anchor side="Left" relative="$parent/$parent" pos="Min" offset="92"/>
 				</Frame>
+			</Frame>
+			<Frame type="Frame" name="ShrineIndicators2">
+				<StateGroup name="FCJH_TempleDisc">
+					<DefaultState val="Hidden"/>
+					<State name="Shown1"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/CapturePointsPanel/TempleModeFrame/ShrineIndicators2/CooldownLabel" Visible="true"/><Action type="SetProperty" Alpha="255"/></State>
+					<State name="Shown2"><When type="AnimationState" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/CapturePointsPanel/TempleModeFrame/ShrineIndicators2/ShrineIcon" Ownership="Order"/><Action type="SetProperty" Alpha="255"/></State>
+					<State name="Shown3"><When type="AnimationState" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/CapturePointsPanel/TempleModeFrame/ShrineIndicators2/ShrineIcon" Ownership="Chaos"/><Action type="SetProperty" Alpha="255"/></State>
+					<State name="Hidden"><Action type="SetProperty" Alpha="0"/></State>
+				</StateGroup>
+			</Frame>
+			<Frame type="Frame" name="ShrineIndicators3">
+				<StateGroup name="FCJH_TempleDisc">
+					<DefaultState val="Hidden"/>
+					<State name="Shown1"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/CapturePointsPanel/TempleModeFrame/ShrineIndicators3/CooldownLabel" Visible="true"/><Action type="SetProperty" Alpha="255"/></State>
+					<State name="Shown2"><When type="AnimationState" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/CapturePointsPanel/TempleModeFrame/ShrineIndicators3/ShrineIcon" Ownership="Order"/><Action type="SetProperty" Alpha="255"/></State>
+					<State name="Shown3"><When type="AnimationState" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/CapturePointsPanel/TempleModeFrame/ShrineIndicators3/ShrineIcon" Ownership="Chaos"/><Action type="SetProperty" Alpha="255"/></State>
+					<State name="Hidden"><Action type="SetProperty" Alpha="0"/></State>
+				</StateGroup>
 			</Frame>
 			<Frame type="Image" name="FCJH_TempleBar">
 				<Anchor side="Left"   relative="$parent/ShrineIndicators1/ShrineIcon" pos="Min" offset="-30"/>
