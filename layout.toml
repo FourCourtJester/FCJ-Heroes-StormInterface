@@ -74,7 +74,9 @@ dragon_shire = 0
 garden_of_terror = 0
 hanamura_temple = 18         # down to the floor (user, 2026-10-14): its map's visual bottom 1047 -> 1065; the objective rides along
 haunted_mines = 34           # its whole map on the line (where it glides to when the mines open): its texture's opaque box is taller than the map - drawn, the mines' bottom was 34 above the line (2026-10-09)
-infernal_shrines = 11         # down to the floor (2026-10-15): its map's visual bottom (the outline's bottom notch) 1054 -> 1065
+infernal_shrines = -49        # THE EXCEPTION (user, 2026-10-15: "only this map"): 60 up off the floor, its notch 1065 -> ~1005,
+                             # so the skull race under it (counts' tops ~1032, crystal ~1012) no longer covers its bottom.
+                             # Was 11 (the floor: notch 1054 -> 1065). The race stays put: [minimap.panel_nudge]
 sky_temple = 0
 tomb_of_the_spider_queen = 29 # down to the floor: its bottom marker (a building's, under the outline's ~1025) at
                              # ~1036 -> 1065. 40 put the outline there and cut the marker off (user, 2026-10-14)
@@ -105,8 +107,8 @@ garden_of_terror = -29       # the seed counts' team line up to ~1070, level wit
 hanamura_temple = 0          # placed by [minimap] alert_gap (26 here never moved it: maps.proxy_lines)
 haunted_mines = -11          # the skull counts' skulls on the padding line, once the minimap has moved
                              # (user, 2026-10-09: they ran off the bottom; measured 8 px short, then the map's 34)
-infernal_shrines = -30        # the skull counts' tops ~1050 (cut off by the edge) up to ~1031, as Garden's and Blackheart's -
-                             # 19 up, and the minimap's 11 down taken back; the crystal rides with them
+infernal_shrines = 30         # the skull counts' tops ~1050 (cut off by the edge) up to ~1031, as Garden's and Blackheart's -
+                             # 19 up, and the minimap's 49 up taken back (it rides with it); the crystal rides with them
 sky_temple = 0
 tomb_of_the_spider_queen = -58 # the gem counts on screen: their numbers' tops 1060 (cut off by the edge) up to ~1031, as
                              # Garden's - 29 up, and the minimap's 29 down taken back (seen at 1030 with -69 and 40)
