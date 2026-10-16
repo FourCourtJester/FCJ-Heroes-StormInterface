@@ -791,6 +791,11 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    **Can't be proven fixed (user, 2026-10-16):** it never reproduced every time, so it not
    showing up only means the sequences tried don't trigger it. Treat it as possibly still
    there: if a stray ability card is ever seen again, screenshot it with both rows in view.
+   **Fix seen working (user, 2026-10-16):** the same sequence left the gate green (tricked,
+   as expected: Blizzard's parked card stays on the last hero CLICKED, Sonya) and the watcher
+   red - no stray ability card. Re-opening after the trick works, with one known quirk,
+   accepted: opening on Auriel shows the tricked hero (Sonya) for under a second first.
+   Unlikely to be noticed; revisit only if the one-gate rewrite fixes it for free.
    The resource tooltip (item 14) turned out to be a separate problem and is solved, so the
    "one problem, one swap signal" plan is dropped.
 7. **Parked:** blue's curse mirror (unseen).
