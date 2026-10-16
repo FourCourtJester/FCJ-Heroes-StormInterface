@@ -1010,20 +1010,22 @@ def row_frame_texture(cfg, team, n):
     pts, box = row_frame_shape(cfg, team, n)
     spec = cfg["row_frame"]
     seam = float(spec.get("seam", 0)) if spec.get("width", 0) else 0.0
+    # under the XP bar: the middle of its gap to the plates
+    base = (cfg["hero_row"]["top"] - cfg["team_xp"]["gap"] / 2,) if seam else ()
     return _row_frame_dds(tuple(pts), box, float(row_frame_outset(cfg)), float(spec.get("inside", 0)),
                           art_scale(cfg), tuple(cfg["top_backplate"]["rim"]),
-                          row_frame_seams(cfg, team, n) if seam else (), seam)
+                          row_frame_seams(cfg, team, n) if seam else (), seam, base)
 
 
 @functools.lru_cache(maxsize=None)
-def _row_frame_dds(pts, box, outset, inside, k, rim, seams=(), seam=0.0):
+def _row_frame_dds(pts, box, outset, inside, k, rim, seams=(), seam=0.0, rules=()):
     """row_frame_texture's drawing (cached: the textures are asked for several times a run).
     The distance outside is the true one, so the outside corners come out rounded: a mitred
     corner (convex_sdf's) on the plates' sharp slant pokes out about twice the width. Each
     edge of the line ramps over one texel inside it, so the anti-aliasing stays in the rect.
     seams: lines ((top x, y), (bottom x, y)), `seam` px wide centred on each, cut flat at
-    their ends' heights. Only the bands along the outline and the seams are worked out; the
-    rest is clear."""
+    their ends' heights; rules: heights of lines straight across, `seam` px wide too. Only the
+    bands along the outline, the seams and the rules are worked out; the rest is clear."""
     x0, y0, bw, bh = box
     w, h = round(bw * k), round(bh * k)
     n = len(pts)
@@ -1077,7 +1079,7 @@ def _row_frame_dds(pts, box, outset, inside, k, rim, seams=(), seam=0.0):
         row = bytearray(4 * w)
         c = colour(clamp((y - y0) / bh))
         here = [(at, perp) for at, perp, s1, s2 in lines if s1 <= y <= s2]
-        if y - top < reach or bottom - y < reach:
+        if y - top < reach or bottom - y < reach or any(abs(y - r) < half + 2 / k for r in rules):
             spans = [(0, w)]
         else:
             lx = ax + (bx - ax) * (y - top) / (bottom - top)
@@ -1088,9 +1090,11 @@ def _row_frame_dds(pts, box, outset, inside, k, rim, seams=(), seam=0.0):
                 x = x0 + (tx + 0.5) / k
                 d = dist(x, y)
                 cover = clamp((outset - d) * k) * clamp((d + inside) * k)
-                for at, perp in here:
-                    if d < 0:
+                if d < 0:
+                    for at, perp in here:
                         cover = max(cover, clamp((half - abs(x - at(y)) * perp) * k))
+                    for r in rules:
+                        cover = max(cover, clamp((half - abs(y - r)) * k))
                 if cover > 0:
                     row[4 * tx:4 * tx + 4] = bytes((round(c[2] * 255), round(c[1] * 255), round(c[0] * 255), round(cover * 255)))
         rows.append(bytes(row))

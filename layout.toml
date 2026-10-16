@@ -397,4 +397,6 @@ frame_inside = 1             # of which over the bar's edges (the rest outside)
 width = 3                    # the line, px
 inside = 1                   # of which over the plates' and the XP bar's edges (the rest outside)
 seam = 3                     # a line along each slant between two plates, centred on it (1 px of each
-                             # plate and 1 between: it hides the slants' rough edges), px; 0 = none
+                             # plate and 1 between: it hides the slants' rough edges), px; 0 = none.
+                             # The same line runs under the XP bar, centred on its gap to the plates,
+                             # so the bar is fully enclosed (user, 2026-10-16)

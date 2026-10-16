@@ -206,6 +206,7 @@ All of them are driven by events from the game to that hidden cell, so they woul
   - Does the chrome line sit cleanly round each row?
   - **New:** a 3 px seam along each slant between two plates. Does it hide the rough edges?
     Does it cover anything it shouldn't (the heroic, the bars' ends)?
+  - **New:** the XP bar is fully enclosed: the same 3 px line runs under it, on its gap to the plates.
   - **New:** the core bar has its own 2 px chrome line. Does it show only with the core
     bar, and does its bottom sit well on the row frame's top?
   - Do the pop-ups and the heroic stay on top of it?
