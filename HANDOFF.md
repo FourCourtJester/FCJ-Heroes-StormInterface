@@ -650,8 +650,8 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    counters (`SC2Panel/Team1TerrazineFrame` blue, `Team2` red - hung off the minimap's bottom
    either side of its tip, cut off at the screen's bottom at Blizzard's place) 50 px out and up
    (maps.warhead_counters): seen clear of the map, icons ~815-870 / ~1040-1100 down to ~1062;
-   then 2 more up (cd1e81b, unseen) for their team strips, uncovered by the lift, to end on the
-   floor. The warheads' banner (`TerrazineEruptionFrame`: the countdown, then how many are left)
+   then 2 more up (cd1e81b) for their team strips, uncovered by the lift, to end on the floor -
+   seen (2026-10-16): both strips 1063-1065, on the floor. The warheads' banner (`TerrazineEruptionFrame`: the countdown, then how many are left)
    moved as Blizzard draws it to red's bottom slot - a neutral banner, no copied words (user);
    its box is the English countdown's, so the other text's tip lands off red's plates by its
    length (1b0dea6; not screenshotted). Its other SC2Panel parts (NukeSiloFrame, TerrazineBuffFrame)
