@@ -1680,7 +1680,30 @@ def pet_death_bindings(team_frame, i):
 										</Controller>
 									</Animation>
 								</Frame>
-							</Frame>{respawn_diagnostics(cell)}"""
+							</Frame>{respawn_diagnostics(cell)}{split_portrait_diagnostics(cell)}"""
+    return out
+
+
+def split_portrait_diagnostics(cell):
+    """Test build (2026-10-16), for the split plates: the hidden party cell's three portrait
+    pictures (HeroPortraitImage, 2, 3), raw and uncropped, as thumbnails above the plate, each
+    shown only while Blizzard shows its own. 1 shows on every plate if the binding works; 2
+    and 3 should show for Rexxar and the Vikings. Remove once read."""
+    out = ""
+    for j, name in enumerate(("HeroPortraitImage", "HeroPortraitImage2", "HeroPortraitImage3")):
+        x = 70 * j
+        out += f"""
+							<Frame type="Image" name="FCJH_DiagPortrait{j + 1}">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="{x}"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="{x + 64}"/>
+								<Texture val="{{{cell}/{name}/@Texture}}"/>
+								<Visible val="{{{cell}/{name}/@Visible}}"/>
+								<RenderPriority val="700"/>
+								<Unclipped val="true"/>
+								<AcceptsMouse val="false"/>
+							</Frame>"""
     return out
 
 

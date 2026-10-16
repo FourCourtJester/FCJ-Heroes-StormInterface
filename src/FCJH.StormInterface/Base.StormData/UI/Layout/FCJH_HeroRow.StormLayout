@@ -7988,6 +7988,39 @@
 									</Controller>
 								</Animation>
 							</Frame>
+							<Frame type="Image" name="FCJH_DiagPortrait1">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="64"/>
+								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/HeroPortraitImage/@Texture}"/>
+								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/HeroPortraitImage/@Visible}"/>
+								<RenderPriority val="700"/>
+								<Unclipped val="true"/>
+								<AcceptsMouse val="false"/>
+							</Frame>
+							<Frame type="Image" name="FCJH_DiagPortrait2">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="70"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="134"/>
+								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/HeroPortraitImage2/@Texture}"/>
+								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/HeroPortraitImage2/@Visible}"/>
+								<RenderPriority val="700"/>
+								<Unclipped val="true"/>
+								<AcceptsMouse val="false"/>
+							</Frame>
+							<Frame type="Image" name="FCJH_DiagPortrait3">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="140"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="204"/>
+								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/HeroPortraitImage3/@Texture}"/>
+								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/HeroPortraitImage3/@Visible}"/>
+								<RenderPriority val="700"/>
+								<Unclipped val="true"/>
+								<AcceptsMouse val="false"/>
+							</Frame>
 							<!-- the heroic, Blizzard's in-game panel mirrored (tools/gen.py heroic_panel) -->
 							<Frame type="Frame" name="FCJH_HeroicPanel">
 								<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="124"/>
@@ -8522,6 +8555,39 @@
 										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
 									</Controller>
 								</Animation>
+							</Frame>
+							<Frame type="Image" name="FCJH_DiagPortrait1">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="64"/>
+								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/HeroPortraitImage/@Texture}"/>
+								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/HeroPortraitImage/@Visible}"/>
+								<RenderPriority val="700"/>
+								<Unclipped val="true"/>
+								<AcceptsMouse val="false"/>
+							</Frame>
+							<Frame type="Image" name="FCJH_DiagPortrait2">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="70"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="134"/>
+								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/HeroPortraitImage2/@Texture}"/>
+								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/HeroPortraitImage2/@Visible}"/>
+								<RenderPriority val="700"/>
+								<Unclipped val="true"/>
+								<AcceptsMouse val="false"/>
+							</Frame>
+							<Frame type="Image" name="FCJH_DiagPortrait3">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="140"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="204"/>
+								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/HeroPortraitImage3/@Texture}"/>
+								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/HeroPortraitImage3/@Visible}"/>
+								<RenderPriority val="700"/>
+								<Unclipped val="true"/>
+								<AcceptsMouse val="false"/>
 							</Frame>
 							<!-- the heroic, Blizzard's in-game panel mirrored (tools/gen.py heroic_panel) -->
 							<Frame type="Frame" name="FCJH_HeroicPanel">
@@ -9058,6 +9124,39 @@
 									</Controller>
 								</Animation>
 							</Frame>
+							<Frame type="Image" name="FCJH_DiagPortrait1">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="64"/>
+								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/HeroPortraitImage/@Texture}"/>
+								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/HeroPortraitImage/@Visible}"/>
+								<RenderPriority val="700"/>
+								<Unclipped val="true"/>
+								<AcceptsMouse val="false"/>
+							</Frame>
+							<Frame type="Image" name="FCJH_DiagPortrait2">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="70"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="134"/>
+								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/HeroPortraitImage2/@Texture}"/>
+								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/HeroPortraitImage2/@Visible}"/>
+								<RenderPriority val="700"/>
+								<Unclipped val="true"/>
+								<AcceptsMouse val="false"/>
+							</Frame>
+							<Frame type="Image" name="FCJH_DiagPortrait3">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="140"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="204"/>
+								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/HeroPortraitImage3/@Texture}"/>
+								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/HeroPortraitImage3/@Visible}"/>
+								<RenderPriority val="700"/>
+								<Unclipped val="true"/>
+								<AcceptsMouse val="false"/>
+							</Frame>
 							<!-- the heroic, Blizzard's in-game panel mirrored (tools/gen.py heroic_panel) -->
 							<Frame type="Frame" name="FCJH_HeroicPanel">
 								<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" pos="Min" offset="124"/>
@@ -9593,6 +9692,39 @@
 									</Controller>
 								</Animation>
 							</Frame>
+							<Frame type="Image" name="FCJH_DiagPortrait1">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="64"/>
+								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/HeroPortraitImage/@Texture}"/>
+								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/HeroPortraitImage/@Visible}"/>
+								<RenderPriority val="700"/>
+								<Unclipped val="true"/>
+								<AcceptsMouse val="false"/>
+							</Frame>
+							<Frame type="Image" name="FCJH_DiagPortrait2">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="70"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="134"/>
+								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/HeroPortraitImage2/@Texture}"/>
+								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/HeroPortraitImage2/@Visible}"/>
+								<RenderPriority val="700"/>
+								<Unclipped val="true"/>
+								<AcceptsMouse val="false"/>
+							</Frame>
+							<Frame type="Image" name="FCJH_DiagPortrait3">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="140"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="204"/>
+								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/HeroPortraitImage3/@Texture}"/>
+								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/HeroPortraitImage3/@Visible}"/>
+								<RenderPriority val="700"/>
+								<Unclipped val="true"/>
+								<AcceptsMouse val="false"/>
+							</Frame>
 							<!-- the heroic, Blizzard's in-game panel mirrored (tools/gen.py heroic_panel) -->
 							<Frame type="Frame" name="FCJH_HeroicPanel">
 								<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" pos="Min" offset="124"/>
@@ -10127,6 +10259,39 @@
 										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
 									</Controller>
 								</Animation>
+							</Frame>
+							<Frame type="Image" name="FCJH_DiagPortrait1">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="64"/>
+								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/HeroPortraitImage/@Texture}"/>
+								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/HeroPortraitImage/@Visible}"/>
+								<RenderPriority val="700"/>
+								<Unclipped val="true"/>
+								<AcceptsMouse val="false"/>
+							</Frame>
+							<Frame type="Image" name="FCJH_DiagPortrait2">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="70"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="134"/>
+								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/HeroPortraitImage2/@Texture}"/>
+								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/HeroPortraitImage2/@Visible}"/>
+								<RenderPriority val="700"/>
+								<Unclipped val="true"/>
+								<AcceptsMouse val="false"/>
+							</Frame>
+							<Frame type="Image" name="FCJH_DiagPortrait3">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="140"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="204"/>
+								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/HeroPortraitImage3/@Texture}"/>
+								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/HeroPortraitImage3/@Visible}"/>
+								<RenderPriority val="700"/>
+								<Unclipped val="true"/>
+								<AcceptsMouse val="false"/>
 							</Frame>
 							<!-- the heroic, Blizzard's in-game panel mirrored (tools/gen.py heroic_panel) -->
 							<Frame type="Frame" name="FCJH_HeroicPanel">
@@ -10664,6 +10829,39 @@
 										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
 									</Controller>
 								</Animation>
+							</Frame>
+							<Frame type="Image" name="FCJH_DiagPortrait1">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="64"/>
+								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/HeroPortraitImage/@Texture}"/>
+								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/HeroPortraitImage/@Visible}"/>
+								<RenderPriority val="700"/>
+								<Unclipped val="true"/>
+								<AcceptsMouse val="false"/>
+							</Frame>
+							<Frame type="Image" name="FCJH_DiagPortrait2">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="70"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="134"/>
+								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/HeroPortraitImage2/@Texture}"/>
+								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/HeroPortraitImage2/@Visible}"/>
+								<RenderPriority val="700"/>
+								<Unclipped val="true"/>
+								<AcceptsMouse val="false"/>
+							</Frame>
+							<Frame type="Image" name="FCJH_DiagPortrait3">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="140"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="204"/>
+								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/HeroPortraitImage3/@Texture}"/>
+								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/HeroPortraitImage3/@Visible}"/>
+								<RenderPriority val="700"/>
+								<Unclipped val="true"/>
+								<AcceptsMouse val="false"/>
 							</Frame>
 							<!-- the heroic, Blizzard's in-game panel mirrored (tools/gen.py heroic_panel) -->
 							<Frame type="Frame" name="FCJH_HeroicPanel">
@@ -11203,6 +11401,39 @@
 									</Controller>
 								</Animation>
 							</Frame>
+							<Frame type="Image" name="FCJH_DiagPortrait1">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="64"/>
+								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/HeroPortraitImage/@Texture}"/>
+								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/HeroPortraitImage/@Visible}"/>
+								<RenderPriority val="700"/>
+								<Unclipped val="true"/>
+								<AcceptsMouse val="false"/>
+							</Frame>
+							<Frame type="Image" name="FCJH_DiagPortrait2">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="70"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="134"/>
+								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/HeroPortraitImage2/@Texture}"/>
+								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/HeroPortraitImage2/@Visible}"/>
+								<RenderPriority val="700"/>
+								<Unclipped val="true"/>
+								<AcceptsMouse val="false"/>
+							</Frame>
+							<Frame type="Image" name="FCJH_DiagPortrait3">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="140"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="204"/>
+								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/HeroPortraitImage3/@Texture}"/>
+								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/HeroPortraitImage3/@Visible}"/>
+								<RenderPriority val="700"/>
+								<Unclipped val="true"/>
+								<AcceptsMouse val="false"/>
+							</Frame>
 							<!-- the heroic, Blizzard's in-game panel mirrored (tools/gen.py heroic_panel) -->
 							<Frame type="Frame" name="FCJH_HeroicPanel">
 								<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" pos="Min" offset="0"/>
@@ -11740,6 +11971,39 @@
 										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
 									</Controller>
 								</Animation>
+							</Frame>
+							<Frame type="Image" name="FCJH_DiagPortrait1">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="64"/>
+								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/HeroPortraitImage/@Texture}"/>
+								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/HeroPortraitImage/@Visible}"/>
+								<RenderPriority val="700"/>
+								<Unclipped val="true"/>
+								<AcceptsMouse val="false"/>
+							</Frame>
+							<Frame type="Image" name="FCJH_DiagPortrait2">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="70"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="134"/>
+								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/HeroPortraitImage2/@Texture}"/>
+								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/HeroPortraitImage2/@Visible}"/>
+								<RenderPriority val="700"/>
+								<Unclipped val="true"/>
+								<AcceptsMouse val="false"/>
+							</Frame>
+							<Frame type="Image" name="FCJH_DiagPortrait3">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="140"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="204"/>
+								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/HeroPortraitImage3/@Texture}"/>
+								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/HeroPortraitImage3/@Visible}"/>
+								<RenderPriority val="700"/>
+								<Unclipped val="true"/>
+								<AcceptsMouse val="false"/>
 							</Frame>
 							<!-- the heroic, Blizzard's in-game panel mirrored (tools/gen.py heroic_panel) -->
 							<Frame type="Frame" name="FCJH_HeroicPanel">
@@ -12279,6 +12543,39 @@
 									</Controller>
 								</Animation>
 							</Frame>
+							<Frame type="Image" name="FCJH_DiagPortrait1">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="64"/>
+								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/HeroPortraitImage/@Texture}"/>
+								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/HeroPortraitImage/@Visible}"/>
+								<RenderPriority val="700"/>
+								<Unclipped val="true"/>
+								<AcceptsMouse val="false"/>
+							</Frame>
+							<Frame type="Image" name="FCJH_DiagPortrait2">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="70"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="134"/>
+								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/HeroPortraitImage2/@Texture}"/>
+								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/HeroPortraitImage2/@Visible}"/>
+								<RenderPriority val="700"/>
+								<Unclipped val="true"/>
+								<AcceptsMouse val="false"/>
+							</Frame>
+							<Frame type="Image" name="FCJH_DiagPortrait3">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="140"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="204"/>
+								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/HeroPortraitImage3/@Texture}"/>
+								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/HeroPortraitImage3/@Visible}"/>
+								<RenderPriority val="700"/>
+								<Unclipped val="true"/>
+								<AcceptsMouse val="false"/>
+							</Frame>
 							<!-- the heroic, Blizzard's in-game panel mirrored (tools/gen.py heroic_panel) -->
 							<Frame type="Frame" name="FCJH_HeroicPanel">
 								<Anchor side="Left"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" pos="Min" offset="0"/>
@@ -12816,6 +13113,39 @@
 										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
 									</Controller>
 								</Animation>
+							</Frame>
+							<Frame type="Image" name="FCJH_DiagPortrait1">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="64"/>
+								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/HeroPortraitImage/@Texture}"/>
+								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/HeroPortraitImage/@Visible}"/>
+								<RenderPriority val="700"/>
+								<Unclipped val="true"/>
+								<AcceptsMouse val="false"/>
+							</Frame>
+							<Frame type="Image" name="FCJH_DiagPortrait2">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="70"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="134"/>
+								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/HeroPortraitImage2/@Texture}"/>
+								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/HeroPortraitImage2/@Visible}"/>
+								<RenderPriority val="700"/>
+								<Unclipped val="true"/>
+								<AcceptsMouse val="false"/>
+							</Frame>
+							<Frame type="Image" name="FCJH_DiagPortrait3">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="140"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="204"/>
+								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/HeroPortraitImage3/@Texture}"/>
+								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/HeroPortraitImage3/@Visible}"/>
+								<RenderPriority val="700"/>
+								<Unclipped val="true"/>
+								<AcceptsMouse val="false"/>
 							</Frame>
 							<!-- the heroic, Blizzard's in-game panel mirrored (tools/gen.py heroic_panel) -->
 							<Frame type="Frame" name="FCJH_HeroicPanel">
