@@ -530,14 +530,13 @@ from their plates (docs/blizzard-fixes.md).
       dark hexagon (added 2026-10-16, 5f78047, after the bare frame read as a hole; confirmed 2026-10-16);
       on any hero, no faint outline peeking round Q W E R (else resize `command_panel`'s
       empties); Deathwing in flight with no Z or D reads fine;
-    - **Abathur's clone** (Ultimate Evolution): which card and player it gets (Samuro's images:
-      the short card, seen 2026-10-16 - right). Seen in game 2026-10-16 (a Chromie clone): the
-      card follows the clone, as Blizzard's selection does - the target's name and buttons,
-      its heroic slot empty (the clone can't use it), Evolution's buffs in the stats (20%,
-      110%). The talents are Abathur's (the card keys talents to the plate's player); the
-      clone gets none of its own (`libGDHL_gt_HeroAbathurUltimateEvolutionStartControl` only
-      levels it). Nothing on the card says clone; the user doesn't see it as a problem. If
-      wanted: a CLONE tag keyed off `UltimateEvolutionBuff`, like the plate's;
+    - **Abathur's clone** (Ultimate Evolution): the short card for Samuro's images (seen
+      2026-10-16 - right). The clone is a unit of the copied ally's type, and the card only
+      changes when someone clicks it (Abathur stays selected as he burrows). Before d309816 it
+      showed the ally's player and talents (BlackoutCR's on a Falstad clone of Budokai's). Now
+      it shows Abathur's player and portrait and a CLONE note where the talents go, keyed off
+      `UltimateEvolutionBuff` (inspect_card.clone_sensor) - seen right 2026-10-16. A paused
+      replay showed stale stats on the card (0% / 100%, 20% / 110% running);
     - **Deathwing's heroic after level 10 - ask other players (user, 2026-10-06).** His plate's
       heroic is Cataclysm, his kit heroic, counted by our own reader (`gen.py
       KIT_HEROIC_COOLDOWNS`). At 10 he picks an active talent, pressed on 1, which Blizzard's
