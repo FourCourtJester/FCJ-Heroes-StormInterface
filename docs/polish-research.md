@@ -192,3 +192,45 @@ All of them are driven by events from the game to that hidden cell, so they woul
   - Do the pop-ups and the heroic stay on top of it?
   - Does it look right in a 3v3, if you have one?
   - The rows now sit 2 px higher and a touch smaller, to keep the frame inside the padding.
+
+## Decisions from the question round (2026-10-16, before the test)
+
+Nothing here is built yet; it waits for tonight's diagnostics.
+
+- **The row frame:**
+  - The nameplate row and its XP bar stay one piece.
+  - Each plate is also wrapped: 3 px seams along every slant (1 px of this plate's inset,
+    1 px of border, 1 px of the neighbour's inset), to hide the rough slant edges.
+  - The core bar gets its own thinner frame (1-2 px). It's attached to the core and shows only
+    when the core shows. The exact widths are for the visual pass.
+- **The intro:** at game start. Details and the OBS plan come later.
+- **Hearthstone glow, Auriel's revive, on fire:** all wanted, if buildable.
+  - Each effect has to work with the chrome: drawn over it, or masked to the plate's shape.
+  - On fire comes in team colours. Blizzard's cutscene has Ally/Enemy filters (the colour)
+    and Left/Right (the side). An observer may get neither Ally nor Enemy, so we pin blue's
+    copy to Ally and red's to Enemy. The next test build needs an on-fire square.
+- **Death recap:** to test tonight. In player view, press V (the default hotkey) on a dead
+  hero: does Blizzard's recap open? If so, we may only need to keep that route working.
+- **Quests:**
+  - **Talents pane:** a default-quest column between the hero card and the level-1 talent,
+    empty when the hero has none. The pane gets one icon wider; one slot is enough.
+    - Blizzard's data shows no hero starting with two default quests; its second slot looks
+      like spare room.
+    - The heroes that start with a quest counter: Arthas, Azmodan, Butcher, Diablo, Jaina,
+      Kerrigan, Leoric, the Lost Vikings, Muradin, Murky, Nova, Sylvanas, Tyrande and
+      Witch Doctor. Arthas's and the Vikings' only fill after a talent pick.
+  - **Talent quests:** progress shows on the talent's own icon, in the pane and on the
+    inspect card.
+  - **Inspect card:** nothing extra. Quest counters are visible buffs with their count, so
+    the card's buff row already shows them.
+  - Buff-row overflow: not a worry unless the user sees it.
+- **Tracer:**
+  - Pulse Bomb is done (Blizzard's charge meter, lifted onto her plate).
+  - Ammo segments are a nice-to-have, only if cheap. Her ammo is her energy: 20 max, and each
+    shot spends 2, so 10 shots. No talent changes the max in the current data.
+  - Blizzard's own Tracer bar is a segmented energy bar (`Segmented` + `SegmentValue 2`,
+    `tracer.stormlayout`), and our plate's `FCJH_Resource` is the same frame type. So it
+    may be one Tracer-only state; the divider art needs checking in game.
+- **Replay rewind:** not a design consideration. The overlay is for live casting, not replay
+  analysis. If there's time at the end, research what a rewind upsets (pop-ups replaying,
+  the latched talent watchers, flashes) and whether any of it is cheap to fix.
