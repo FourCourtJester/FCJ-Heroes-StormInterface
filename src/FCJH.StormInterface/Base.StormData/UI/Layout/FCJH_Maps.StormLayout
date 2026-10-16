@@ -1945,6 +1945,22 @@
 		<Frame type="Frame" name="ShrineActiveFrame">
 			<Alpha val="0"/>
 		</Frame>
+		<Frame type="Frame" name="CursedMinionKillFrame">
+			<Frame type="Image" name="CrystalArcaneImage">
+				<Animation name="FCJH_CrystalScale">
+					<Event event="OnShown" action="Restart,Play"/>
+					<Event event="OnShown" action="Restart,Play" frame="$parent"/>
+					<Event event="OnShown" action="Restart,Play" frame="$parent/CrystalFrozenImage"/>
+					<Event event="OnShown" action="Restart,Play" frame="$parent/CrystalMortarImage"/>
+					<Controller type="Dimension" dimension="Width" relative="False" percentage="True" end="Pause">
+						<Key type="Curve" time="0" value="85" inout="Linear"/>
+					</Controller>
+					<Controller type="Dimension" dimension="Height" relative="False" percentage="True" end="Pause">
+						<Key type="Curve" time="0" value="85" inout="Linear"/>
+					</Controller>
+				</Animation>
+			</Frame>
+		</Frame>
 	</Frame>
 	<!-- ===== Sky Temple ===== -->
 	<Frame type="Frame" name="CapturePointsPanel" file="CapturePoints">

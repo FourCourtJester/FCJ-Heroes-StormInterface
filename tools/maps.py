@@ -1924,6 +1924,20 @@ WARNING_BANNER = left_banner("ShrineWarning", "ShrineWarningInfoLabel", "ShrineW
 # panel again each time - the likely restart of the banner's intro. Alpha, not a park: its bar
 # hangs off the warning's hexagon, not its own frame.
 PARTS["infernal_shrines"] = {"ShrinesPanel/ShrineActiveFrame": '<Alpha val="0"/>\n'}
+# The skull race's crystal 85% (user, 2026-10-15: it reached the lifted minimap). Blizzard's has
+# no size - its texture's own, which we can't read - so a Dimension animation scales it, as
+# Blizzard's pulse does; its bottom stays anchored, so its top comes down. Frozen and Mortar are
+# anchored all round to the Arcane one, so it alone scales, on any of the three (or the race)
+# showing - the script shows only that round's crystal. CRYSTAL_SCALE: % of its own size.
+CRYSTAL_SCALE = 85
+PARTS["infernal_shrines"]["ShrinesPanel/CursedMinionKillFrame/CrystalArcaneImage:Image"] = (
+    '<Animation name="FCJH_CrystalScale">\n'
+    + "".join(f'\t<Event event="OnShown" action="Restart,Play"{f" frame=\"{f}\"" if f else ""}/>\n'
+              for f in ("", "$parent", "$parent/CrystalFrozenImage", "$parent/CrystalMortarImage"))
+    + "".join(f'\t<Controller type="Dimension" dimension="{d}" relative="False" percentage="True" end="Pause">\n'
+              f'\t\t<Key type="Curve" time="0" value="{CRYSTAL_SCALE}" inout="Linear"/>\n'
+              f'\t</Controller>\n' for d in ("Width", "Height"))
+    + '</Animation>\n')
 # The Punisher (PunisherFrame): Blizzard's bar (481, fixed) ends 10 past ShrineHud, a frame 111 x
 # 124 at the frame's top-right, 20 in, the bar's bottom 33 over the hud's; the Punisher's portrait
 # 26 over the hud, 8 past its right; the health backing (a nine-slice) from 12 in to 18 under the
