@@ -1794,7 +1794,7 @@
 	</Frame>
 	<!-- ===== Infernal Shrines ===== -->
 	<Frame type="Frame" name="ShrinesPanel" file="Shrines">
-		<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-35"/>
+		<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="-68"/>
 		<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" pos="Max" offset="0"/>
 		<!-- the minimap's place on Infernal Shrines, from the moment this panel exists -->
 		<Frame type="Frame" name="FCJH_MinimapPlace">
@@ -1808,6 +1808,247 @@
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MINIMAP_BOTTOM_INFERNAL_SHRINES"/>
 				</State>
 			</StateGroup>
+		</Frame>
+		<!-- blue, the bottom slot: the Punisher, when it's blue's -->
+		<Frame type="Frame" name="FCJH_PunisherFrameSpot">
+			<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_INFERNAL"/>
+			<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_BLUE_R_INFERNAL"/>
+			<Unclipped val="true"/>
+			<Width val="478"/>
+			<Height val="71"/>
+			<AcceptsMouse val="false"/>
+			<StateGroup name="FCJH_Stack">
+				<DefaultState val="Bottom"/>
+				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_BLUE_B_INFERNAL"/></State>
+			</StateGroup>
+		</Frame>
+		<!-- red, the bottom slot: the shrine's countdown, then the shrine active (neutral), then the Punisher on red -->
+		<Frame type="Frame" name="FCJH_ShrineWarningFrameSpot">
+			<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_INFERNAL"/>
+			<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MAP_ALERT_RED_R_INFERNAL"/>
+			<Unclipped val="true"/>
+			<Width val="478"/>
+			<Height val="71"/>
+			<AcceptsMouse val="false"/>
+			<StateGroup name="FCJH_Stack">
+				<DefaultState val="Bottom"/>
+				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_INFERNAL"/></State>
+			</StateGroup>
+		</Frame>
+		<Frame type="Frame" name="ShrineWarningFrame">
+			<Anchor side="Top"    relative="$parent/FCJH_ShrineWarningFrameSpot" pos="Min" offset="-102"/>
+			<Anchor side="Left"   relative="$parent/FCJH_ShrineWarningFrameSpot" pos="Min" offset="0"/>
+			<Anchor side="Bottom" relative="$parent/FCJH_ShrineWarningFrameSpot" pos="Max" offset="0"/>
+			<Anchor side="Right"  relative="$parent/FCJH_ShrineWarningFrameSpot" pos="Max" offset="5"/>
+			<Unclipped val="true"/>
+			<Animation name="FCJH_Intro">
+				<Event event="OnShown" action="Restart,Play"/>
+				<Event event="OnShown" action="Restart,Play" frame="$parent"/>
+				<Controller type="Fade" end="Pause">
+					<Key type="Curve" time="0" value="0"/>
+					<Key type="Curve" time=".2" value="255"/>
+					<Key type="Curve" time=".4" value="255"/>
+				</Controller>
+				<Controller type="Anchor" end="Pause" side="Left" relative="true">
+					<Key type="Curve" time="0" value="50"/>
+					<Key type="Curve" time=".1" value="0"/>
+					<Key type="Curve" time=".4" value="0"/>
+				</Controller>
+				<Controller type="Anchor" end="Pause" side="Right" relative="true">
+					<Key type="Curve" time="0" value="50"/>
+					<Key type="Curve" time=".1" value="0"/>
+					<Key type="Curve" time=".4" value="0"/>
+				</Controller>
+				<Controller type="Anchor" end="Pause" side="Left" relative="true" frame="BackgroundImage">
+					<Key type="Curve" time="0" value="350"/>
+					<Key type="Curve" time=".1" value="350"/>
+					<Key type="Curve" time=".3" value="0"/>
+					<Key type="Curve" time=".4" value="0"/>
+				</Controller>
+			</Animation>
+							<Frame type="Label" name="FCJH_ShrineWarningText">
+								<Anchor side="Top"    relative="$parent/ShrineWarningInfoLabel" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$parent/ShrineWarningInfoLabel" pos="Max" offset="0"/>
+								<Anchor side="Left"   relative="$parent/BackgroundImage" pos="Min" offset="35"/>
+								<Text val="{$parent/ShrineWarningInfoLabel/@Text}"/>
+								<Style val="{$parent/ShrineWarningInfoLabel/@Style}"/>
+								<Options val="NoWrapping"/>
+								<Unclipped val="true"/>
+							</Frame>
+							<Frame type="Label" name="FCJH_ShrineWarningSlot">
+								<Anchor side="Top"    relative="$parent/FCJH_ShrineWarningText" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$parent/FCJH_ShrineWarningText" pos="Max" offset="0"/>
+								<Anchor side="Left"   relative="$parent/FCJH_ShrineWarningText" pos="Max" offset="-1"/>
+								<Text val="88:88"/>
+								<Style val="{$parent/ShrineWarningInfoLabel/@Style}"/>
+								<Options val="NoWrapping"/>
+								<Unclipped val="true"/>
+								<Alpha val="0"/>
+							</Frame>
+							<Frame type="Label" name="FCJH_ShrineWarningCount">
+								<Anchor side="Top"    relative="$parent/FCJH_ShrineWarningText" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$parent/FCJH_ShrineWarningText" pos="Max" offset="0"/>
+								<Anchor side="Right"  relative="$parent/FCJH_ShrineWarningSlot" pos="Max" offset="0"/>
+								<Text val="{$parent/ShrineWarningTimerLabel/@Text}"/>
+								<Style val="{$parent/ShrineWarningInfoLabel/@Style}"/>
+								<Options val="NoWrapping"/>
+								<Unclipped val="true"/>
+							</Frame>
+							<Frame type="Image" name="BackgroundImage">
+								<Unclipped val="true"/>
+								<Anchor side="Left" relative="$parent" pos="Min" offset="-3"/>
+								<TextureType val="Nineslice"/>
+							</Frame>
+							<Frame type="Image" name="TimerImage">
+								<Unclipped val="true"/>
+								<Anchor side="Right" relative="$parent/FCJH_ShrineWarningSlot" pos="Max" offset="118"/>
+							</Frame>
+							<Frame type="Label" name="ShrineWarningInfoLabel">
+								<Unclipped val="true"/>
+								<Alpha val="0"/>
+							</Frame>
+							<Frame type="Label" name="ShrineWarningTimerLabel">
+								<Unclipped val="true"/>
+								<Alpha val="0"/>
+							</Frame>
+		</Frame>
+		<Frame type="Frame" name="ShrineActiveFrame">
+			<Anchor side="Top"    relative="$parent/FCJH_ShrineWarningFrameSpot" pos="Min" offset="-102"/>
+			<Anchor side="Left"   relative="$parent/FCJH_ShrineWarningFrameSpot" pos="Min" offset="0"/>
+			<Anchor side="Bottom" relative="$parent/FCJH_ShrineWarningFrameSpot" pos="Max" offset="0"/>
+			<Anchor side="Right"  relative="$parent/FCJH_ShrineWarningFrameSpot" pos="Max" offset="5"/>
+			<Unclipped val="true"/>
+			<Animation name="FCJH_Intro">
+				<Event event="OnShown" action="Restart,Play"/>
+				<Event event="OnShown" action="Restart,Play" frame="$parent"/>
+				<Controller type="Fade" end="Pause">
+					<Key type="Curve" time="0" value="0"/>
+					<Key type="Curve" time=".2" value="255"/>
+					<Key type="Curve" time=".4" value="255"/>
+				</Controller>
+				<Controller type="Anchor" end="Pause" side="Left" relative="true">
+					<Key type="Curve" time="0" value="50"/>
+					<Key type="Curve" time=".1" value="0"/>
+					<Key type="Curve" time=".4" value="0"/>
+				</Controller>
+				<Controller type="Anchor" end="Pause" side="Right" relative="true">
+					<Key type="Curve" time="0" value="50"/>
+					<Key type="Curve" time=".1" value="0"/>
+					<Key type="Curve" time=".4" value="0"/>
+				</Controller>
+				<Controller type="Anchor" end="Pause" side="Left" relative="true" frame="BackgroundImage">
+					<Key type="Curve" time="0" value="350"/>
+					<Key type="Curve" time=".1" value="350"/>
+					<Key type="Curve" time=".3" value="0"/>
+					<Key type="Curve" time=".4" value="0"/>
+				</Controller>
+			</Animation>
+							<Frame type="Label" name="FCJH_ShrineActiveText">
+								<Anchor side="Top"    relative="$parent/ShrineActiveInfoLabel" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$parent/ShrineActiveInfoLabel" pos="Max" offset="0"/>
+								<Anchor side="Left"   relative="$parent/BackgroundImage" pos="Min" offset="35"/>
+								<Text val="{$parent/ShrineActiveInfoLabel/@Text}"/>
+								<Style val="{$parent/ShrineActiveInfoLabel/@Style}"/>
+								<Options val="NoWrapping"/>
+								<Unclipped val="true"/>
+							</Frame>
+							<Frame type="Image" name="BackgroundImage">
+								<Unclipped val="true"/>
+								<Anchor side="Left" relative="$parent" pos="Min" offset="-3"/>
+								<Anchor side="Bottom" relative="$parent/ActiveImage" pos="Max" offset="-33"/>
+								<Anchor side="Right" relative="$parent/ActiveImage" pos="Max" offset="15"/>
+								<TextureType val="Nineslice"/>
+							</Frame>
+							<Frame type="Image" name="ActiveImage">
+								<Unclipped val="true"/>
+								<Anchor side="Right" relative="$parent/FCJH_ShrineActiveText" pos="Max" offset="118"/>
+							</Frame>
+							<Frame type="Label" name="ShrineActiveInfoLabel">
+								<Unclipped val="true"/>
+								<Alpha val="0"/>
+							</Frame>
+		</Frame>
+		<Frame type="Frame" name="PunisherFrame">
+			<Anchor side="Top"    relative="$parent/FCJH_ShrineWarningFrameSpot" pos="Min" offset="-102"/>
+			<Anchor side="Left"   relative="$parent/FCJH_ShrineWarningFrameSpot" pos="Min" offset="0"/>
+			<Anchor side="Bottom" relative="$parent/FCJH_ShrineWarningFrameSpot" pos="Max" offset="0"/>
+			<Anchor side="Right"  relative="$parent/FCJH_ShrineWarningFrameSpot" pos="Max" offset="5"/>
+			<Unclipped val="true"/>
+			<Animation name="FCJH_Intro">
+				<Event event="OnShown" action="Restart,Play"/>
+				<Event event="OnShown" action="Restart,Play" frame="$parent"/>
+				<Controller type="Fade" end="Pause">
+					<Key type="Curve" time="0" value="0"/>
+					<Key type="Curve" time=".2" value="255"/>
+					<Key type="Curve" time=".4" value="255"/>
+				</Controller>
+			</Animation>
+							<Frame type="Image" name="BackgroundImage">
+								<Unclipped val="true"/>
+							</Frame>
+							<Frame type="Image" name="HealthBarBG">
+								<Unclipped val="true"/>
+							</Frame>
+							<Frame type="Frame" name="ShrineHud">
+								<Unclipped val="true"/>
+							</Frame>
+							<Frame type="Image" name="PunisherArcaneAlly">
+								<Unclipped val="true"/>
+								<RenderPriority val="513"/>
+							</Frame>
+							<Frame type="Image" name="PunisherArcaneEnemy">
+								<Unclipped val="true"/>
+								<RenderPriority val="513"/>
+							</Frame>
+							<Frame type="Image" name="PunisherFrozenAlly">
+								<Unclipped val="true"/>
+								<RenderPriority val="513"/>
+							</Frame>
+							<Frame type="Image" name="PunisherFrozenEnemy">
+								<Unclipped val="true"/>
+								<RenderPriority val="513"/>
+							</Frame>
+							<Frame type="Image" name="PunisherMortarAlly">
+								<Unclipped val="true"/>
+								<RenderPriority val="513"/>
+							</Frame>
+							<Frame type="Image" name="PunisherMortarEnemy">
+								<Unclipped val="true"/>
+								<RenderPriority val="513"/>
+							</Frame>
+							<Frame type="Label" name="PunisherInfoLabel">
+								<Unclipped val="true"/>
+								<RenderPriority val="513"/>
+							</Frame>
+							<Frame type="UnitStatusFrame" name="PunisherHealthBar">
+								<Unclipped val="true"/>
+								<RenderPriority val="513"/>
+								<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">
+									<Unclipped val="true"/>
+								</Frame>
+								<Frame type="UnitStatusHealthLabel" name="HealthLabel">
+									<Unclipped val="true"/>
+									<Frame type="Label" name="StatusLabel">
+										<Unclipped val="true"/>
+									</Frame>
+								</Frame>
+							</Frame>
+							<Frame type="Image" name="FCJH_PunisherBarBG">
+								<Anchor side="Top"    relative="$parent/BackgroundImage" pos="Mid" offset="5"/>
+								<Anchor side="Left"   relative="$parent/ShrineHud" pos="Max" offset="-18"/>
+								<Anchor side="Right"  relative="$parent/BackgroundImage" pos="Max" offset="-12"/>
+								<Texture val="@UI/HUD_MapMechanic_BG_HealthBar"/>
+								<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>
+								<Unclipped val="true"/>
+								<Alpha val="0"/>
+							</Frame>
+							<StateGroup name="FCJH_PunisherSide">
+								<DefaultState val="Red"/>
+								<State name="Blue0"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherArcaneAlly" Visible="true"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/FCJH_PunisherFrameSpot" pos="Min" offset="-102"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/FCJH_PunisherFrameSpot" pos="Min" offset="0"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/FCJH_PunisherFrameSpot" pos="Max" offset="0"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/FCJH_PunisherFrameSpot" pos="Max" offset="5"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/BackgroundImage" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/FCJH_PunisherFrameSpot" pos="Max" offset="3"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/ShrineHud" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/FCJH_PunisherFrameSpot" pos="Max" offset="-357"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/ShrineHud" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/FCJH_PunisherFrameSpot" pos="Max" offset="-86"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherArcaneAlly" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/ShrineHud" pos="Min" offset="-8"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherArcaneAlly" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/ShrineHud" pos="Max" offset="8"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherArcaneAlly" TextureCoords="0,1,1,0"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherArcaneEnemy" TextureCoords="0,1,1,0"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherFrozenAlly" TextureCoords="0,1,1,0"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherFrozenEnemy" TextureCoords="0,1,1,0"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherMortarAlly" TextureCoords="0,1,1,0"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherMortarEnemy" TextureCoords="0,1,1,0"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/HealthBarBG" Alpha="0"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/FCJH_PunisherBarBG" Alpha="255"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/FCJH_PunisherBarBG" pos="Min" offset="0"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/FCJH_PunisherBarBG" pos="Max" offset="0"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar/HealthBar" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/FCJH_PunisherBarBG" pos="Min" offset="5"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar/HealthBar" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/FCJH_PunisherBarBG" pos="Max" offset="-1"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar/HealthBar" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/FCJH_PunisherBarBG" pos="Min" offset="1"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar/HealthBar" AlphaMaskTexture="_Assets\Textures\FCJH_KnightMask_e72a3845.dds"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar/HealthBar" Expansion="Right"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherInfoLabel" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/FCJH_PunisherBarBG" pos="Min" offset="2"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherInfoLabel" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/FCJH_PunisherBarBG" pos="Min" offset="15"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherInfoLabel" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/FCJH_PunisherBarBG" pos="Max" offset="-15"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherInfoLabel" Style="Storm_MapMechanic_MechanicCounterSmallRight_Blue"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar/HealthLabel" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar/HealthBar" pos="Min" offset="80"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar/HealthLabel/StatusLabel" Style="Storm_MapMechanic_MechanicCounterSmallRight_Blue"/></State>
+								<State name="Blue1"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherFrozenAlly" Visible="true"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/FCJH_PunisherFrameSpot" pos="Min" offset="-102"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/FCJH_PunisherFrameSpot" pos="Min" offset="0"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/FCJH_PunisherFrameSpot" pos="Max" offset="0"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/FCJH_PunisherFrameSpot" pos="Max" offset="5"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/BackgroundImage" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/FCJH_PunisherFrameSpot" pos="Max" offset="3"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/ShrineHud" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/FCJH_PunisherFrameSpot" pos="Max" offset="-357"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/ShrineHud" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/FCJH_PunisherFrameSpot" pos="Max" offset="-86"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherArcaneAlly" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/ShrineHud" pos="Min" offset="-8"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherArcaneAlly" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/ShrineHud" pos="Max" offset="8"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherArcaneAlly" TextureCoords="0,1,1,0"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherArcaneEnemy" TextureCoords="0,1,1,0"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherFrozenAlly" TextureCoords="0,1,1,0"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherFrozenEnemy" TextureCoords="0,1,1,0"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherMortarAlly" TextureCoords="0,1,1,0"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherMortarEnemy" TextureCoords="0,1,1,0"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/HealthBarBG" Alpha="0"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/FCJH_PunisherBarBG" Alpha="255"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/FCJH_PunisherBarBG" pos="Min" offset="0"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/FCJH_PunisherBarBG" pos="Max" offset="0"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar/HealthBar" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/FCJH_PunisherBarBG" pos="Min" offset="5"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar/HealthBar" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/FCJH_PunisherBarBG" pos="Max" offset="-1"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar/HealthBar" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/FCJH_PunisherBarBG" pos="Min" offset="1"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar/HealthBar" AlphaMaskTexture="_Assets\Textures\FCJH_KnightMask_e72a3845.dds"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar/HealthBar" Expansion="Right"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherInfoLabel" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/FCJH_PunisherBarBG" pos="Min" offset="2"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherInfoLabel" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/FCJH_PunisherBarBG" pos="Min" offset="15"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherInfoLabel" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/FCJH_PunisherBarBG" pos="Max" offset="-15"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherInfoLabel" Style="Storm_MapMechanic_MechanicCounterSmallRight_Blue"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar/HealthLabel" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar/HealthBar" pos="Min" offset="80"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar/HealthLabel/StatusLabel" Style="Storm_MapMechanic_MechanicCounterSmallRight_Blue"/></State>
+								<State name="Blue2"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherMortarAlly" Visible="true"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/FCJH_PunisherFrameSpot" pos="Min" offset="-102"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/FCJH_PunisherFrameSpot" pos="Min" offset="0"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/FCJH_PunisherFrameSpot" pos="Max" offset="0"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/FCJH_PunisherFrameSpot" pos="Max" offset="5"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/BackgroundImage" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/FCJH_PunisherFrameSpot" pos="Max" offset="3"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/ShrineHud" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/FCJH_PunisherFrameSpot" pos="Max" offset="-357"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/ShrineHud" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/FCJH_PunisherFrameSpot" pos="Max" offset="-86"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherArcaneAlly" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/ShrineHud" pos="Min" offset="-8"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherArcaneAlly" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/ShrineHud" pos="Max" offset="8"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherArcaneAlly" TextureCoords="0,1,1,0"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherArcaneEnemy" TextureCoords="0,1,1,0"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherFrozenAlly" TextureCoords="0,1,1,0"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherFrozenEnemy" TextureCoords="0,1,1,0"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherMortarAlly" TextureCoords="0,1,1,0"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherMortarEnemy" TextureCoords="0,1,1,0"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/HealthBarBG" Alpha="0"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/FCJH_PunisherBarBG" Alpha="255"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/FCJH_PunisherBarBG" pos="Min" offset="0"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/FCJH_PunisherBarBG" pos="Max" offset="0"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar/HealthBar" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/FCJH_PunisherBarBG" pos="Min" offset="5"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar/HealthBar" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/FCJH_PunisherBarBG" pos="Max" offset="-1"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar/HealthBar" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/FCJH_PunisherBarBG" pos="Min" offset="1"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar/HealthBar" AlphaMaskTexture="_Assets\Textures\FCJH_KnightMask_e72a3845.dds"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar/HealthBar" Expansion="Right"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherInfoLabel" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/FCJH_PunisherBarBG" pos="Min" offset="2"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherInfoLabel" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/FCJH_PunisherBarBG" pos="Min" offset="15"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherInfoLabel" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/FCJH_PunisherBarBG" pos="Max" offset="-15"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherInfoLabel" Style="Storm_MapMechanic_MechanicCounterSmallRight_Blue"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar/HealthLabel" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar/HealthBar" pos="Min" offset="80"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar/HealthLabel/StatusLabel" Style="Storm_MapMechanic_MechanicCounterSmallRight_Blue"/></State>
+								<State name="Red"><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/FCJH_ShrineWarningFrameSpot" pos="Min" offset="-102"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/FCJH_ShrineWarningFrameSpot" pos="Min" offset="0"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/FCJH_ShrineWarningFrameSpot" pos="Max" offset="0"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/FCJH_ShrineWarningFrameSpot" pos="Max" offset="5"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/BackgroundImage" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/FCJH_ShrineWarningFrameSpot" pos="Min" offset="478"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/ShrineHud" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/FCJH_ShrineWarningFrameSpot" pos="Min" offset="468"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/ShrineHud" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/FCJH_ShrineWarningFrameSpot" pos="Max" offset="-86"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherArcaneAlly" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/ShrineHud" pos="Min" offset="-8"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherArcaneAlly" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/ShrineHud" pos="Max" offset="8"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherArcaneAlly" TextureCoords="0,0,1,1"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherArcaneEnemy" TextureCoords="0,0,1,1"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherFrozenAlly" TextureCoords="0,0,1,1"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherFrozenEnemy" TextureCoords="0,0,1,1"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherMortarAlly" TextureCoords="0,0,1,1"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherMortarEnemy" TextureCoords="0,0,1,1"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/HealthBarBG" Alpha="255"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/FCJH_PunisherBarBG" Alpha="0"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/HealthBarBG" pos="Min" offset="0"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/HealthBarBG" pos="Max" offset="0"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar/HealthBar" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/HealthBarBG" pos="Min" offset="5"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar/HealthBar" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/HealthBarBG" pos="Min" offset="8"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar/HealthBar" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/HealthBarBG" pos="Max" offset="-8"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar/HealthBar" AlphaMaskTexture="_Assets\Textures\FCJH_White.dds"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar/HealthBar" Expansion="Left"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherInfoLabel" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/HealthBarBG" pos="Min" offset="2"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherInfoLabel" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/HealthBarBG" pos="Min" offset="15"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherInfoLabel" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/HealthBarBG" pos="Max" offset="-15"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherInfoLabel" Style="Storm_MapMechanic_MechanicCounterSmallLeft_Blue"/><Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar/HealthLabel" side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar/HealthBar" pos="Max" offset="-15"/><Action type="SetProperty" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel/ShrinesPanel/PunisherFrame/PunisherHealthBar/HealthLabel/StatusLabel" Style="Storm_MapMechanic_MechanicCounterSmallLeft_Blue"/></State>
+							</StateGroup>
 		</Frame>
 	</Frame>
 	<!-- ===== Sky Temple ===== -->

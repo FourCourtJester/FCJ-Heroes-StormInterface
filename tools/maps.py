@@ -464,11 +464,14 @@ def count_slot(name_, row, anchor, style, slot=BANNER_SLOT):
     return banner_label(name_, row + (anchor,), slot, style, '\t<Alpha val="0"/>\n')
 
 
-def left_banner(prefix, words, count, hexagon, words_start, hex_after, depth=7, slot=BANNER_SLOT):
+def left_banner(prefix, words, count, hexagon, words_start, hex_after, depth=7, slot=BANNER_SLOT,
+                count_style=None, bar=""):
     """A banner laid out from its bar's left end (above): FCJH_<prefix>Text copying Blizzard's
     words, FCJH_<prefix>Slot and FCJH_<prefix>Count its count (count None: it has none), and
     Blizzard's parts - the bar from the frame's left, the hexagon's right hex_after past the
-    slot's (or the words'), Blizzard's labels hidden. -> the frame's insides, at depth."""
+    slot's (or the words'), Blizzard's labels hidden. count_style: the count's, if not its own
+    (a count Blizzard hung under the hexagon, in a bigger style, takes the words'); bar: more
+    inside the bar's image. -> the frame's insides, at depth."""
     w, s, c = (f"FCJH_{prefix}{n}" for n in ("Text", "Slot", "Count"))
     out = banner_label(w, (("Top", f"$parent/{words}", "Min", 0), ("Bottom", f"$parent/{words}", "Max", 0),
                            ("Left", "$parent/BackgroundImage", "Min", words_start)),
@@ -476,11 +479,12 @@ def left_banner(prefix, words, count, hexagon, words_start, hex_after, depth=7, 
     last = w
     if count:
         row = (("Top", f"$parent/{w}", "Min", 0), ("Bottom", f"$parent/{w}", "Max", 0))
-        style = f"{{$parent/{count}/@Style}}"
+        style = count_style or f"{{$parent/{count}/@Style}}"
         out += (count_slot(s, row, ("Left", f"$parent/{w}", "Max", COUNT_SPACE), style, slot)
                 + banner_label(c, row + (("Right", f"$parent/{s}", "Max", 0),), f"{{$parent/{count}/@Text}}", style))
         last = s
-    parts = ((("Image", "BackgroundImage", (), f'<Anchor side="Left" relative="$parent" pos="Min" offset="{-BAR_TIP_IN}"/>'),
+    parts = ((("Image", "BackgroundImage", (), f'<Anchor side="Left" relative="$parent" pos="Min" offset="{-BAR_TIP_IN}"/>'
+               + (f"\n{bar}" if bar else "")),
               ("Image", hexagon, (), f'<Anchor side="Right" relative="$parent/{last}" pos="Max" offset="{hex_after}"/>'),
               ("Label", words, (), '<Alpha val="0"/>'))
              + ((("Label", count, (), '<Alpha val="0"/>'),) if count else ()))
@@ -1883,6 +1887,109 @@ def lane_side():
                        [f'<When type="Property" frame="{LANE}/BossLaningInfoLabel" Text="{t}"/>' for t in BLUE_IMMORTAL],
                        lane_layout)
 
+
+# ------------------------------------------------------------------ Infernal Shrines' banners
+
+# "A shrine is activating" (ShrineWarningFrame), "Shrine active" (ShrineActiveFrame) and the
+# Punisher (PunisherFrame) take turns in one place over the minimap (shrines.stormlayout,
+# ShrinesPanel): the two shrine banners the neutral banner on red's side; the Punisher, one frame
+# for either team, on the summoner's side, mirrored on blue's (punisher_side). Blizzard's: the
+# hexagon (TimerImage, ActiveImage) 20 down and 20 in from the frame's top-right, the bar a fixed-
+# width image ending 15 past it, the words centred in it and the count under the hexagon.
+# Measured at 1080p (20_52_52, 3edae7a; the panel's top-right at about 1176, 605.5): the bar's
+# tip 743, its top 718, its lower bracket 760 (173 under the frame's top); the hexagon 1067-1161,
+# its top 697, its bottom 779. On red's side laid out from its left end (left_banner), the words
+# 35 in, and the count up off the hexagon into the bar after them, in the words' style, as the
+# tribute's (tribute_count): under the hexagon it hung onto the map.
+SHRINES = MECHANICS + "/ShrinesPanel"
+INFERNAL_BOX = (-483, 102, -5, 173)
+INFERNAL_WORDS_START = 35
+INFERNAL_HEX_AFTER = 118   # the hexagon's right from the count's: its art ~91 px left of its box's
+                           # right, 12 px after the count, less the label's padding (as the shrine's)
+INFERNAL_SLOT = "88:88"    # its count reads "00:27"
+ALERT_ART["INFERNAL"] = Art(INFERNAL_BOX[2] - INFERNAL_BOX[0], 0,
+                            height=INFERNAL_BOX[3] - INFERNAL_BOX[1] + 21)   # down to the hexagon's bottom
+# Its bar is the fixed-width image, held by its right end: with our left end it's a nine-slice,
+# as the chests' (CHEST_PARTS)
+_NINESLICE = '<TextureType val="Nineslice"/>'
+WARNING_BANNER = left_banner("ShrineWarning", "ShrineWarningInfoLabel", "ShrineWarningTimerLabel", "TimerImage",
+                             INFERNAL_WORDS_START, INFERNAL_HEX_AFTER, slot=INFERNAL_SLOT,
+                             count_style="{$parent/ShrineWarningInfoLabel/@Style}", bar=_NINESLICE)
+# "Shrine active" has no count; Blizzard hangs its bar off the WARNING's hexagon (the two share a
+# place): ours off its own, as the warning's is
+ACTIVE_BANNER = left_banner("ShrineActive", "ShrineActiveInfoLabel", None, "ActiveImage",
+                            INFERNAL_WORDS_START, INFERNAL_HEX_AFTER,
+                            bar='<Anchor side="Bottom" relative="$parent/ActiveImage" pos="Max" offset="-33"/>\n'
+                                '<Anchor side="Right" relative="$parent/ActiveImage" pos="Max" offset="15"/>\n'
+                                + _NINESLICE)
+# The Punisher (PunisherFrame): Blizzard's bar (481, fixed) ends 10 past ShrineHud, a frame 111 x
+# 124 at the frame's top-right, 20 in, the bar's bottom 33 over the hud's; the Punisher's portrait
+# 26 over the hud, 8 past its right; the health backing (a nine-slice) from 12 in to 18 under the
+# hud, the fill 8 in at each end. Measured at 1080p (20_53_22, Blizzard's place): the bar's tip
+# 738, its top 643, its lower bracket 683 - 4 px over the image's bottom (687, worked out); the
+# portrait's art 1068-1172, centred on the hud - so its image is 127 wide, 8 past the hud each side.
+# Ours as the knight's: the bar from the tip, the portrait at its outer end, the words from the
+# inner, the % from the outer; its lower bracket on the spot's bottom, as the warning's.
+PUNISHER = SHRINES + "/PunisherFrame"
+PUNISHER_HUD = (357, 468)  # the hud's sides out from the tip: its outer 10 short of the bar's end
+PUNISHER_HUD_TOP = -86     # its top from the spot's bottom: 124 tall, the bar's image 33 over its
+                           # bottom and the lower bracket 5 over the image's
+PUNISHER_ICONS = tuple(f"/Punisher{k}{t}" for k in ("Arcane", "Frozen", "Mortar") for t in ("Ally", "Enemy"))
+# Blue's health backing, a flipped copy as the knight's (KNIGHT_COPIES), from 18 under the hud to
+# 12 in from the bar's end - stretched (Blizzard's a nine-slice; its own width is about this)
+PUNISHER_COPIES = flipped_copy("FCJH_PunisherBarBG", "@UI/HUD_MapMechanic_BG_HealthBar",
+                               (("Top", "$parent/BackgroundImage", "Mid", 5),
+                                ("Left", "$parent/ShrineHud", "Max", -18),
+                                ("Right", "$parent/BackgroundImage", "Max", -12)))
+# What Blizzard draws after the backing drawn over blue's copy too (_OVER)
+PUNISHER_PARTS = ((("Image", "BackgroundImage", ()), ("Image", "HealthBarBG", ()), ("Frame", "ShrineHud", ()))
+                  + tuple(("Image", icon[1:], (), _OVER) for icon in PUNISHER_ICONS)
+                  + (("Label", "PunisherInfoLabel", (), _OVER),
+                     ("UnitStatusFrame", "PunisherHealthBar", _HEALTH, _OVER)))
+
+
+def punisher_layout(s):
+    """The Punisher, red's terms (team_banner): the bar its art's own width from the tip, the
+    portrait at its outer end (flipped on blue's), the words from the inner end, the % from the
+    outer; the health draining from the tip's end, blue's cut to the mirrored lean (KNIGHT_MASK)."""
+    s.box("", INFERNAL_BOX)
+    s.hold("/BackgroundImage", "Right", -BAR_TIP_IN, GOLEM_BAR - BAR_TIP_IN)   # its bottom hangs off the hud
+    s.hold("/ShrineHud", "Right", *PUNISHER_HUD)
+    s.anchor("/ShrineHud", "Top", s.spot, "Max", PUNISHER_HUD_TOP)
+    # the portraits: the others fill the first's box (Blizzard's), 8 past the hud each side
+    s.anchor(PUNISHER_ICONS[0], "Left", "/ShrineHud", "Min", -8)
+    s.anchor(PUNISHER_ICONS[0], "Right", "/ShrineHud", "Max", 8)
+    for icon in PUNISHER_ICONS:
+        s.flip(icon)
+    s.show("/HealthBarBG", "red")
+    s.show("/FCJH_PunisherBarBG", "blue")
+    hbg, health = s.pick("/HealthBarBG", "/FCJH_PunisherBarBG"), "/PunisherHealthBar"
+    s.anchor(health, "Left", hbg, "Min", 0)
+    s.anchor(health, "Right", hbg, "Max", 0)
+    bar = health + "/HealthBar"
+    s.anchor(bar, "Top", hbg, "Min", 5)
+    s.hang(bar, "Left", hbg, "Min", s.pick(8, 8 - KNIGHT_LEAN))
+    s.hang(bar, "Right", hbg, "Max", s.pick(-8, -8 + KNIGHT_LEAN))
+    s.set(bar, AlphaMaskTexture=s.pick(WHITE, KNIGHT_MASK_PATH))
+    s.drain(bar)
+    for sd, pos, off in (("Bottom", "Min", 2), ("Left", "Min", 15), ("Right", "Max", -15)):
+        s.anchor("/PunisherInfoLabel", sd, hbg, pos, off)       # the backing's ends, 15 in
+    s.justify("/PunisherInfoLabel", SMALL, "inner")
+    pct = health + "/HealthLabel"
+    s.hang(pct, "Right", bar, "Max", s.pick(-15, -15 - KNIGHT_LEAN), width=KNIGHT_PCT_W)
+    s.justify(pct + "/StatusLabel", SMALL, "inner")
+
+
+def punisher_side():
+    """The Punisher on its summoner's side. The script hides all six portraits, then shows the
+    observer the Ally one if the summoner is Order (blue), the Enemy one if not (libmshe.galaxy):
+    blue's while an Ally portrait shows. A player's view is per team - red's players' Ally is
+    red's - so in a red player's view red's Punisher goes to blue's side."""
+    return team_banner("Punisher", PUNISHER, (f"{SHRINES}/FCJH_ShrineWarningFrameSpot", f"{SHRINES}/FCJH_PunisherFrameSpot"),
+                       [f'<When type="Property" frame="{PUNISHER}{icon}" Visible="true"/>'
+                        for icon in PUNISHER_ICONS if icon.endswith("Ally")],
+                       punisher_layout)
+
 PARTS["volskaya_foundry"] = {"VolskayaToastContainer/ToastNotification": TOAST,
                              "VolskayaCapturePointPanel/ContestedLabel:Label": CONTESTED,
                              "VolskayaRobotHealthSlideout": robot_frame()}
@@ -2042,7 +2149,18 @@ MAPS = {
         extra="skulls"),
     "infernal_shrines": Map(
         "Infernal Shrines", (458, 301), file="Shrines",
-        panels={"ShrinesPanel": BOTTOM_RIGHT}, place=("ShrinesPanel",)),
+        panels={"ShrinesPanel": BOTTOM_RIGHT}, place=("ShrinesPanel",),
+        # "A shrine is activating", then "Shrine active": the neutral banner, on red's side; the
+        # Punisher in its place, on its summoner's side (punisher_side). The skull race stays on
+        # the panel: [minimap.panel_nudge] lifts it.
+        team={"ShrinesPanel": {
+            "blue": [Alert("PunisherFrame", kind="INFERNAL", box=INFERNAL_BOX, spot_only=True,
+                           note="the Punisher, when it's blue's")],
+            "red": [Alert("ShrineWarningFrame", kind="INFERNAL", box=INFERNAL_BOX,
+                          followers=(("ShrineActiveFrame", 0, ACTIVE_BANNER),
+                                     ("PunisherFrame", 0, unclipped(PUNISHER_PARTS) + PUNISHER_COPIES + punisher_side())),
+                          extra=WARNING_BANNER,
+                          note="the shrine's countdown, then the shrine active (neutral), then the Punisher on red")]}}),
     "sky_temple": Map(
         "Sky Temple", (437, 344), file="CapturePoints",
         panels={"CapturePointsPanel": BOTTOM_RIGHT}, place=("CapturePointsPanel",)),
@@ -2128,7 +2246,7 @@ MAP_IDS = {
     "hanamura_temple": "Hanamura",                    # GAME (2026-10-14)
     "haunted_mines": "HauntedMines",                  # GAME (2026-10-09)
     "infernal_shrines": "Shrines",                    # GAME (2026-10-15)
-    "sky_temple": "ControlPoints",                    # SCRIPT
+    "sky_temple": "ControlPoints",                    # GAME (2026-10-15)
     "tomb_of_the_spider_queen": "Crypts",             # GAME (2026-10-14)
     "towers_of_doom": "TowersOfDoom",                 # GAME (2026-10-09)
     "volskaya_foundry": "Volskaya",                   # GAME (2026-10-15)
@@ -2247,7 +2365,8 @@ NOT_BANNERS = ("GolemModeFrame",)
 # state's SetAnchor, and end="Pause" holds it (Haunted Mines' glide, 2026-10-09): the slide would
 # have pinned the curse to red's spot and Blizzard's bar layout after its first intro. The
 # tribute too: cursed_side moves it with the curse, whose raven's height hangs off the tribute's.
-FADE_ONLY = ("CurseFrame", "TributeSpawnFrame", "DragonModeFrame", "CannonModeFrame", "BossLaningFrame")
+FADE_ONLY = ("CurseFrame", "TributeSpawnFrame", "DragonModeFrame", "CannonModeFrame", "BossLaningFrame",
+             "PunisherFrame")
 
 
 def intro(indent, slide=True):
