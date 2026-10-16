@@ -492,6 +492,7 @@ def constants_layout(cfg):
         sys.exit(f"replay: {w} units is too narrow for its four buttons")
     lines.append("")
     const(name("replay", "button", "gap"), gap, "between the replay panel's bottom-row buttons")
+    const(name("replay", "key"), cfg["element"]["replay"]["hotkey"], "hides/shows the replay panel")
 
     mm = cfg["minimap"]
     left = round(u(mm["centre_x"]) - MINIMAP_SQUARE / 2) - anchor_origin(cfg, "minimap")[0]

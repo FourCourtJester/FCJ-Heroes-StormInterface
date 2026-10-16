@@ -209,6 +209,10 @@ flush = "right"              # its art's right edge on the row's
 art_inset = 6                # its glass art's outer line sits 6 px inside the frame on every side
                              # (measured in game, 2026-10-05)
 kind = "ui"
+hotkey = "Control+Shift+R"   # hides/shows it (Blizzard's toggle). Blizzard gave it Ctrl+Shift+O,
+                             # which the game's UI editor's Save All takes first (gamehotkeys.txt),
+                             # so it never worked - nor Ahli's (user, 2026-10-16). Ctrl+Shift+R
+                             # isn't one of Blizzard's. The tab's label (FCJH_Replay) says it too.
 [element.replay_collapsed]
 rect = [0, 0, 200, 24]       # hidden state: a slim tab at the panel's art's bottom-right corner
 above = "red_xp"

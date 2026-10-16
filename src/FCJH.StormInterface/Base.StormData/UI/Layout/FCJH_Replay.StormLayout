@@ -5,9 +5,12 @@
 	     #FCJH_REPLAY_W (native 420) to keep clear of red's map alerts: everything in Blizzard's
 	     panel hangs off its BackgroundImage's edges and middle, so it closes up with it.
 
-	     Collapse: Blizzard's own. Control+Shift+O (ToggleControlObserverTools in
+	     Collapse: Blizzard's own toggle (ToggleControlObserverTools in
 	     stormobserverpanel.stormlayout) slides ReplayPanel out to the left and fades it, and
-	     back. We keep that and only move and narrow the panel.
+	     back. We keep that and only move and narrow the panel - and give the toggle a key that
+	     works: Blizzard's Ctrl+Shift+O is the game's UI editor's Save All, so it never reaches
+	     the interface (user, 2026-10-16). #FCJH_REPLAY_KEY, layout.toml element.replay hotkey.
+	     The toggle starts off while the panel shows, so the first press may only "show" it.
 
 	     While it's collapsed, a slim tab shows in the panel's bottom-right corner
 	     (element.replay_collapsed) so the operator can see it's there and how to bring it back. The tab watches the panel's
@@ -16,6 +19,11 @@
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<Frame type="Frame" name="UIContainer">
 			<Frame type="Frame" name="FullscreenUpperContainer">
+				<Frame type="Frame" name="ObserverToggleControls">
+					<Frame type="ToggleControl" name="ToggleControlObserverTools">
+						<Shortcut val="#FCJH_REPLAY_KEY"/>
+					</Frame>
+				</Frame>
 				<Frame type="MovingFrame" name="ObserverPanelMovingContainer">
 					<Frame type="ReplayPanel" name="ReplayPanel">
 						<Anchor side="Top"   relative="$GameUI" pos="Max" offset="#FCJH_REPLAY_T"/>
@@ -58,7 +66,7 @@
 			<Frame type="Label" name="FCJH_TabLabel">
 				<Anchor relative="$parent"/>
 				<Style val="ObsBar_MatchTimer"/>
-				<Text val="REPLAY  Ctrl+Shift+O"/>
+				<Text val="REPLAY  Ctrl+Shift+R"/>
 				<Options val="NoWrapping | ScaleToPreventTruncation"/>
 				<Alpha val="0"/>
 				<AcceptsMouse val="false"/>
