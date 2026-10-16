@@ -20,8 +20,8 @@
 		     A hero gets the tall card with Blizzard's command card on it; anything else the
 		     short card (shape), command card away. -->
 		<!-- The card's switch (layout.toml [toggles] inspect; user, 2026-10-16). The card hangs
-		     from FCJH_InspectSlot, which covers the screen, and the key drops the slot 2000 units,
-		     so the card goes off screen with whatever follows it (command card, talent tips).
+		     from FCJH_InspectSlot, which covers the screen, and the key slides the slot left (user,
+		     2026-10-16) till the card is off screen, with what follows it (command card, talent tips).
 		     Hiding the card lost: the game shows its TargetInfoFrame again on every new
 		     selection (2026-10-16). Ahli 0.75 moves his panel's holder the same way. The
 		     gate's SetAnchors keep their pos on the slot, which nothing else moves. -->
@@ -38,13 +38,13 @@
 			<Animation name="FCJH_ParkCard">
 				<Event event="OnShown" action="DirectionForward,Play"/>
 				<Event event="OnHidden" action="DirectionReverse,Play"/>
-				<Controller type="Anchor" end="Pause" side="Top" relative="true" frame="$parent/FCJH_InspectSlot">
-					<Key type="Curve" time="0" value="0"/>
-					<Key type="Curve" time="0.001" value="2000"/>
+				<Controller type="Anchor" end="Pause" side="Left" relative="true" frame="$parent/FCJH_InspectSlot">
+					<Key type="Curve" time="0" value="0" inout="Linear"/>
+					<Key type="Curve" time="0.2" value="-375" inout="Slow,Linear"/>
 				</Controller>
-				<Controller type="Anchor" end="Pause" side="Bottom" relative="true" frame="$parent/FCJH_InspectSlot">
-					<Key type="Curve" time="0" value="0"/>
-					<Key type="Curve" time="0.001" value="2000"/>
+				<Controller type="Anchor" end="Pause" side="Right" relative="true" frame="$parent/FCJH_InspectSlot">
+					<Key type="Curve" time="0" value="0" inout="Linear"/>
+					<Key type="Curve" time="0.2" value="-375" inout="Slow,Linear"/>
 				</Controller>
 			</Animation>
 		</Frame>

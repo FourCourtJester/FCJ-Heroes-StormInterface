@@ -78,7 +78,7 @@ drawn by OBS over empty regions the interface leaves (§6).
   start hidden. All confirmed in game 2026-10-16 - DONE. **Operator toggles** (layout.toml
   `[toggles]`, 2026-10-16): Ctrl+Shift+R replay controls, Ctrl+Shift+C chat, Ctrl+Shift+I
   inspect card, Ctrl+Shift+N player names over the heroes - none a Blizzard key (validate.py
-  checks); R, C and N confirmed in game 2026-10-16, I parks the card off screen (to test). Blizzard's player HUD never shows; its
+  checks); R, C and N confirmed in game 2026-10-16, I slides the card off screen to the left. Blizzard's player HUD never shows; its
   talent picker is left to the game: held Ctrl shows it, steady, only in a player's view
   (1-8 keys), not when following from a plate click - as in Ahli's and Spazzo's UIs (§3;
   confirmed 2026-10-06).

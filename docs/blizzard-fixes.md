@@ -181,7 +181,7 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
   - Ctrl+Shift+R, the replay panel (above).
   - Ctrl+Shift+C, the chat messages (`FCJH_Toggles`: Blizzard's `ChatDisplay` fades out and in;
     Ahli's key too).
-  - Ctrl+Shift+I, the inspect card: off, it drops off screen with its command card and talent
+  - Ctrl+Shift+I, the inspect card: off, it slides left off screen (0.2 s) with its command card and talent
     tips (`inspect_card`, `FCJH_InspectSlot`), as Ahli's does. Hiding it lost: the game shows
     the card again on every new selection (user, 2026-10-16). Tried on Ctrl+I 2026-10-05 and
     dropped then.
@@ -191,7 +191,7 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
     name's inner Label instead, so it only ever hides - on all 40 hero status frames Blizzard
     has, the heroes' own included.
   - **Status:** replay, chat and names confirmed in game (user, 2026-10-16); inspect rebuilt
-    to park off screen, to test.
+    to park off screen, which works (user, 2026-10-16); its slide left to test.
 
 ## Known, not fixed
 

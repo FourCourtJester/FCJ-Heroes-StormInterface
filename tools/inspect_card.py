@@ -167,7 +167,8 @@ COMMAND_PANEL = "$GameUI/UIContainer/ConsoleUIContainer/CommandPanel"
 
 CARD = "$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect"
 SLOT = "$GameUI/UIContainer/ConsoleUIContainer/FCJH_InspectSlot"   # the card hangs from it (card())
-PARK = 2000   # how far the slot drops, in units, while the card is switched off: off screen
+PARK_MARGIN = 20   # units past the screen's left edge the card's right edge slides, for its glow
+PARK_TIME = 0.2    # seconds: the replay box's slide (Blizzard's ToggleControlObserverTools)
 
 
 def command_switch():
@@ -454,6 +455,8 @@ def card():
     else), and its gate."""
     # the gate shows and shapes the card; the command card and the talent tips follow the card
     # itself (card_watch), since the game can hide it behind the gate's back
+    # switched off, the card slides left till its right edge is past the screen's
+    park = -(ORIGIN[0] + W + PARK_MARGIN)
     shown = f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="true"/>\n'
     out = [f'{T*2}<!-- Round 9 (2026-09-30): the card shows exactly when Blizzard\'s own small inspector\n'
            f'{T*2}     would. Ours alone (a TargetInfoFrame the game doesn\'t manage) came up on the first\n'
@@ -464,8 +467,8 @@ def card():
            f'{T*2}     A hero gets the tall card with Blizzard\'s command card on it; anything else the\n'
            f'{T*2}     short card (shape), command card away. -->\n'
            f'{T*2}<!-- The card\'s switch (layout.toml [toggles] inspect; user, 2026-10-16). The card hangs\n'
-           f'{T*2}     from FCJH_InspectSlot, which covers the screen, and the key drops the slot {PARK} units,\n'
-           f'{T*2}     so the card goes off screen with whatever follows it (command card, talent tips).\n'
+           f'{T*2}     from FCJH_InspectSlot, which covers the screen, and the key slides the slot left (user,\n'
+           f'{T*2}     2026-10-16) till the card is off screen, with what follows it (command card, talent tips).\n'
            f'{T*2}     Hiding the card lost: the game shows its TargetInfoFrame again on every new\n'
            f'{T*2}     selection (2026-10-16). Ahli 0.75 moves his panel\'s holder the same way. The\n'
            f'{T*2}     gate\'s SetAnchors keep their pos on the slot, which nothing else moves. -->\n'
@@ -480,8 +483,9 @@ def card():
            f'{T*4}<Event event="OnShown" action="DirectionForward,Play"/>\n'
            f'{T*4}<Event event="OnHidden" action="DirectionReverse,Play"/>\n'
            + "".join(f'{T*4}<Controller type="Anchor" end="Pause" side="{side}" relative="true" frame="$parent/FCJH_InspectSlot">\n'
-                     f'{T*5}<Key type="Curve" time="0" value="0"/>\n{T*5}<Key type="Curve" time="0.001" value="{PARK}"/>\n'
-                     f'{T*4}</Controller>\n' for side in ("Top", "Bottom"))
+                     f'{T*5}<Key type="Curve" time="0" value="0" inout="Linear"/>\n'
+                     f'{T*5}<Key type="Curve" time="{PARK_TIME}" value="{park}" inout="Slow,Linear"/>\n'
+                     f'{T*4}</Controller>\n' for side in ("Left", "Right"))
            + f'{T*3}</Animation>\n{T*2}</Frame>\n'
            f'{T*2}<Frame type="Frame" name="FCJH_InspectGate">\n'
            f'{T*3}<Anchor relative="$parent"/>\n{T*3}<AcceptsMouse val="false"/>\n'
