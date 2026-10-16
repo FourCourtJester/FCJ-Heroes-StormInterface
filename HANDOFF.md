@@ -417,8 +417,7 @@ Temple DONE for now 2026-10-14 (user: "for today, it's good to go"; its split is
 Tomb, Warhead, Volskaya, Battlefield done 2026-10-15; Infernal Shrines DONE 2026-10-15 but
 for blue's Punisher (final pass, item 14). Sky Temple DONE 2026-10-15 (eedab7d): every map passed.
 **Next: the rest of the newer maps' QA** (item 4).
-For each, screenshots of: the map id at load
-(the diagnostic, now just that line), each banner as it comes up, anything hanging off the
+For each, screenshots of: each banner as it comes up, anything hanging off the
 minimap's bottom. Hero test rosters come from the tracker in item 14 ("not seen yet").
 
 **Recheck after the banner protocols (2026-10-12, d2604a6 and after; §3 "Banners"): PASSED (user,
@@ -749,9 +748,9 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    so the left is always the top temple. No flicker going live (the script lights all three
    and greys the dead ones in one pass). Seen: between rounds, two next, one next, live.
    Any map could get a two-view or other per-map behaviour the same way (`launch_cut`/`opens`, `on_map`).
-5. **The diagnostic - trimmed to the map id (user, 2026-10-09);** every map's id is now
-   confirmed in game (2026-10-15), so `maps.diag` and `FCJH_DiagMapId` can go - the Infernal
-   pass is done.
+5. **The diagnostic - REMOVED (user, 2026-10-15: "Lets remove all diagnostics, including map
+   id").** Every map's id was confirmed in game first, so `maps.diag` and `FCJH_DiagMapId`
+   are gone. No diagnostics are left in the build.
 6. **Inspect card, intermittent (user, 2026-10-09):** on hero inspects only, now and then the
    ability BORDERS keep showing after the card hides. Not pinned down yet: next time, a
    screenshot of it. Lead (unconfirmed): the only border-like art that can show without a
@@ -1048,7 +1047,7 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
    way), tested with `<When type="Property" frame="..." StringValue="HauntedMines"/>`. Read on
    screen: `HauntedMines`, `BraxisHoldout`. In code:
    - `maps.MAP_IDS` - every map's id and where it's from (read in GAME, Blizzard's SCRIPT, or
-     SPAZZO only - read a SPAZZO one with the diagnostic's "map id" row before relying on it).
+     SPAZZO only; every one has now been read in GAME, 2026-10-15).
      Odd ones: Garden `HauntedWoods`, Tomb `Crypts`, Sky Temple `ControlPoints`, Warhead
      `Warhead Junction` (a space).
    - `maps.id_placers` - the reader and each map's state group, at GameUI level: **always
@@ -1213,7 +1212,7 @@ commits around it).
     - **the D.Va and Viking guesses** in `inspect_card.ALSO`;
     - **rows with fewer than five heroes** (a 3v3 or 1v1 replay);
     - **every map**: the map objectives, the minimap per map (item 8; the jitter is solved -
-      map id, 2026-10-09), and each SPAZZO-only map id read on the diagnostic;
+      map id, 2026-10-09; every map id read in game by 2026-10-15);
     - **Cursed Hollow, blue cursed** (item 8): the banner on blue's side, left of the map,
       ending at the map's edge, its text and timer inside the art - not yet seen (user,
       2026-10-06: red's looks great);

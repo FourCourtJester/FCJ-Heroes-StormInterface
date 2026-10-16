@@ -893,32 +893,6 @@
 				<State name="Shut"/>
 			</StateGroup>
 		</Frame>
-		<!-- DIAGNOSTIC (maps.diag): the map id -->
-		<Frame type="DataRefFrame" name="FCJH_DiagMapId">
-			<Argument name="GalaxyVar" val="libCore_gv_mAPMapStringID"/>
-		</Frame>
-		<Frame type="Label" name="FCJH_Diag0">
-			<Anchor side="Top"  relative="$GameUI" pos="Min" offset="300"/>
-			<Anchor side="Left" relative="$GameUI" pos="Min" offset="25"/>
-			<Width val="300"/>
-			<Height val="26"/>
-			<Style val="WaitingForPlayersDialogChat"/>
-			<Options val="NoWrapping"/>
-			<Unclipped val="true"/>
-			<AcceptsMouse val="false"/>
-			<Text val="map id:"/>
-		</Frame>
-		<Frame type="Label" name="FCJH_DiagValue0">
-			<Anchor side="Top"  relative="$GameUI" pos="Min" offset="300"/>
-			<Anchor side="Left" relative="$GameUI" pos="Min" offset="325"/>
-			<Width val="400"/>
-			<Height val="26"/>
-			<Style val="WaitingForPlayersDialogChat"/>
-			<Options val="NoWrapping"/>
-			<Unclipped val="true"/>
-			<AcceptsMouse val="false"/>
-			<Text val="{$parent/FCJH_DiagMapId/@StringValue}"/>
-		</Frame>
 	</Frame>
 	<!-- ===== Alterac Pass: a strip down the right edge; the cage fight bar and its two event banners at its middle ===== -->
 	<Frame type="Frame" name="AlteracMechanicsPanel" file="AlteracMechanics">

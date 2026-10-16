@@ -2911,7 +2911,7 @@ def id_placers(glides):
     script variable (Spazzo's way, CustomPanelSpazzo), and each map's one state matches its id.
     Read on screen 2026-10-09: "HauntedMines" on Haunted Mines, "BraxisHoldout" on Braxis.
     Straight in GameUI, never hidden: inside Haunted Mines' panel - hidden from the start - the
-    same reader never placed the minimap, while the diagnostic's here read the id (user,
+    same reader never placed the minimap, while a diagnostic's here read the id (user,
     2026-10-09). The id never changes, so a group never leaves its state (leaving undoes its
     actions). "Other", with no condition, is the fallback when nothing matches - the DefaultState."""
     t = T * 2
@@ -2935,29 +2935,6 @@ def id_placers(glides):
                     + (glide(key, glides[key], 3) if m.opens else "") +
                     f'{t}</Frame>\n')
     return out
-
-
-# DIAGNOSTIC (2026-10-09): the map's id, read on screen, for each map until its id is confirmed
-# in game (MAP_IDS' sources); remove once every map's is. The rest of it - each older panel's
-# shown/hidden and Haunted Mines' labels - went once the map id solved the jitter (user,
-# 2026-10-09).
-def diag():
-    t = T * 2
-    cell = lambda name, left, width, text: (
-        f'{t}<Frame type="Label" name="{name}">\n'
-        f'{t}\t<Anchor side="Top"  relative="$GameUI" pos="Min" offset="300"/>\n'
-        f'{t}\t<Anchor side="Left" relative="$GameUI" pos="Min" offset="{left}"/>\n'
-        f'{t}\t<Width val="{width}"/>\n{t}\t<Height val="26"/>\n'
-        f'{t}\t<Style val="WaitingForPlayersDialogChat"/>\n{t}\t<Options val="NoWrapping"/>\n'
-        f'{t}\t<Unclipped val="true"/>\n{t}\t<AcceptsMouse val="false"/>\n'
-        f'{t}\t<Text val="{text}"/>\n{t}</Frame>\n')
-    # Blizzard's script variable, read the way Spazzo does (CustomPanelSpazzo: DataRefFrame
-    # GalaxyVar libCore_gv_mAPMapStringID)
-    return (f'{t}<!-- DIAGNOSTIC (maps.diag): the map id -->\n'
-            f'{t}<Frame type="DataRefFrame" name="FCJH_DiagMapId">\n'
-            f'{t}\t<Argument name="GalaxyVar" val="libCore_gv_mAPMapStringID"/>\n{t}</Frame>\n'
-            + cell("FCJH_Diag0", 25, 300, "map id:")
-            + cell("FCJH_DiagValue0", 325, 400, "{$parent/FCJH_DiagMapId/@StringValue}"))
 
 
 def layout(header, at, down, bottoms, glides, lifts):
@@ -2986,6 +2963,6 @@ def layout(header, at, down, bottoms, glides, lifts):
 			<Frame type="Frame" name="ConsoleUIContainer">
 {core_panels(down, at, bottoms)}			</Frame>
 		</Frame>
-{id_placers(glides)}{diag()}	</Frame>
+{id_placers(glides)}	</Frame>
 ''' + "".join(f"\t<!-- ===== {MAPS[k].title}{(': ' + MAPS[k].notes) if MAPS[k].notes else ''} ===== -->\n"
               + map_file(k, at, down, bottoms, lifts) for k in MAPS if MAPS[k].file) + "</Desc>\n"
