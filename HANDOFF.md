@@ -488,9 +488,28 @@ from their plates (docs/blizzard-fixes.md).
    icon, hidden at 0, on CARRY_MAPS only. Working and its borders now continue the fountain's
    (`CARRY_SLIDE = 4`, confirmed on Zul'jin, 2026-10-12); parked for the art pass - the coin is
    a touch big for its window, and the strip could grow further up the slant.
+   **The polish phase - the user's first pass (2026-10-16; "there might be more"; not all at
+   once):**
+   - **The plates closer to the player's in-game top bar.** Played as a player, Blizzard's
+     plates feel far more polished than the observer's; find out what we can copy (the
+     player HUD's layouts in JamiePhan - their animations and StateGroups);
+   - **Split plates for heroes with more than one unit** (Rexxar and Misha, the Lost
+     Vikings). The player's top bar slices their boxes much better than the observer view:
+     when Misha dies, only her part of the portrait darkens, and her death timer sits
+     centred on it. Today Misha's bar is hidden and Rexxar's runs full height; the Vikings'
+     bars and timers are in thirds. See item 15 too (Blizzard's three-slice Vikings plate);
+   - **Death timers flash white under 5 s**, like the player view's (the same as the
+     death-timer note above - find Blizzard's animation);
+   - **Ahli's death animation** - a skull animation, then the countdown (item 12);
+   - **A frame round each team's row of plates**: silver-grey metallic like the top bar's
+     edges, about 3 px, slanted where the plates slant, to cover the gaps and overflows
+     between heroes;
+   - **An intro animation for the elements, to pair with OBS** (more from the user later;
+     Ahli's plates slide and fade in, above).
 12. **Ahli's death animation on the nameplate** (user, 2026-10-05: "a nice touch", not to
-    copy) - his plate does something when its hero dies. For the art pass (item 7): study
-    what it does, then design our own.
+    copy) - his plate does something when its hero dies: a skull animation, then the
+    countdown (user, 2026-10-16). For the art pass (item 7): study what it does, then design
+    our own.
 14. **Final pass: every map, every hero** (user, 2026-10-05). The last QA round, with replays
     that cover every map and every hero; the checks that need a particular hero or map collect
     here until then (no replay with them yet):
