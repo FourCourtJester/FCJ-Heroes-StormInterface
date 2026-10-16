@@ -544,8 +544,9 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
      or "11"), our copies of both lit halves and glows draw over Blizzard's darkened half. Seen (2026-10-14).
      If a copy shows outside a capture (after the win, say), the bars' states outlive it.
    - The neutral banner sat 10 px lower (user, 2026-10-13); since 2026-10-14 it's placed by THE
-     GAP (Hanamura below; `maps.py above`) - 10 px back up, unseen. The cavalry's jump allows for
-     it (gen.py), so only the neutral moves.
+     GAP (Hanamura below; `maps.py above`) - 10 px back up. Seen on target (2026-10-16, "PRISONERS
+     LOCATED IN"): the hexagon's bottom ~10 px over the map's tip at 1080p. The cavalry's jump
+     allows for it (gen.py), so only the neutral moves.
    - **The cage bars broke (user, 2026-10-13, against the default UI):** in Blizzard's, the fill
      and its timer move while the team-coloured backing stands the bar's length; in ours the
      backing slid along with the fill. Cause: `Unclipped` on the frame (to draw past its panel on
