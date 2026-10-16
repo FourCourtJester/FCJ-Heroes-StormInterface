@@ -766,38 +766,17 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
 5. **The diagnostic - REMOVED (user, 2026-10-15: "Lets remove all diagnostics, including map
    id").** Every map's id was confirmed in game first, so `maps.diag` and `FCJH_DiagMapId`
    are gone. No diagnostics are left in the build.
-6. **Inspect card, intermittent (user, 2026-10-09):** on hero inspects only, now and then the
-   ability BORDERS keep showing after the card hides. Caught 2026-10-16 (below). Lead (unconfirmed): the only border-like art that can show without a
-   unit is ours, the empty-slot frames under Q W E R (`FCJH_EmptySlot*`,
-   `inspect_card.command_panel`). They live in Blizzard's command card, not on the card, and a
-   button with no unit is Cleared (alpha 0) but our frames aren't. So if the card hides while
-   the gate (`FCJH_Gate`) is still "Hero", the command card stays on screen and only those
-   frames show. Suspects for the gate missing it: the engine hiding our TargetInfoFrame
-   itself (an inspected hero dying?) while Blizzard's parked one still reads visible.
-   Likely fix: move the empty slots onto the card (they hide with it; the command card
-   draws over the card, so the buttons still cover them), hero-only via `shape()`.
-   **Diagnostic in (2026-10-16, f7260a6):** the gate's state as three squares at the screen's
-   left edge, halfway down (`inspect_card.gate_diag`): green Hero, yellow Unit, red Hide. When
-   the borders stay after the card hides, a screenshot with those squares in view says
-   whether the gate missed it. Seen working (green on a hero card).
-   **Caught (user, 2026-10-16), not every time:** click Sonya's unit, inspect, click Johanna's
-   plate, deselect. The card went, the gate stayed GREEN, and Johanna's whole ability card
-   stayed where the card had been (not just the empty slots - that lead was wrong). Only the
-   gate hides the card, so the game hid our TargetInfoFrame itself while Blizzard's parked one
-   still read visible. **Fix in (untested):** the command card and the talent tips follow
-   OUR card (`inspect_card.card_watch`), not the gate; the gate only shows and shapes the
-   card. The watcher's state is a second row of squares under the gate's (green Hero, yellow
-   Unit, red Closed). Both rows come out once the stray card hasn't come back for a while.
-   **Can't be proven fixed (user, 2026-10-16):** it never reproduced every time, so it not
-   showing up only means the sequences tried don't trigger it. Treat it as possibly still
-   there: if a stray ability card is ever seen again, screenshot it with both rows in view.
-   **Fix seen working (user, 2026-10-16):** the same sequence left the gate green (tricked,
-   as expected: Blizzard's parked card stays on the last hero CLICKED, Sonya) and the watcher
-   red - no stray ability card. Re-opening after the trick works, with one known quirk,
-   accepted: opening on Auriel shows the tricked hero (Sonya) for under a second first.
-   Unlikely to be noticed; revisit only if the one-gate rewrite fixes it for free.
-   The resource tooltip (item 14) turned out to be a separate problem and is solved, so the
-   "one problem, one swap signal" plan is dropped.
+6. **DONE (2026-10-16): the stray ability card.** Now and then, on hero inspects, the ability
+   card stayed on screen after the card hid (user, 2026-10-09). Caught with the gate's state as
+   squares on screen: click Sonya's unit, inspect, click Johanna's plate, deselect - the game
+   hid our TargetInfoFrame itself while Blizzard's parked one (on the last hero CLICKED, Sonya)
+   still read visible, so the gate stayed on Hero and kept the command card on the card's rows.
+   Fix: the command card and the talent tips follow OUR card (`inspect_card.card_watch`), the
+   gate only shows and shapes it. Seen fixed with a second row of squares for the watcher, then
+   both rows removed. Known, accepted: opening the card after that sequence shows the tricked
+   hero for under a second before the right one. The gate keeps its Hero/Unit split (not
+   merged into the watcher): entering either state re-shows the card, which may be what brings
+   it back after the trick. The resource tooltip (item 14) was a separate problem, solved.
 7. **Parked:** blue's curse mirror (unseen).
 8. **Later: extract the toolchain into its own repo** for open-sourcing (user, 2026-10-09) -
    the plan, inventory and open questions in [docs/extraction-plan.md](docs/extraction-plan.md).

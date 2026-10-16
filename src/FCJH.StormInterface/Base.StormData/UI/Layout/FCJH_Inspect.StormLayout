@@ -22,49 +22,12 @@
 		<Frame type="Frame" name="FCJH_InspectGate">
 			<Anchor relative="$parent"/>
 			<AcceptsMouse val="false"/>
-			<Frame type="Image" name="FCJH_DiagGateHero">
-				<Anchor side="Top"    relative="$parent" pos="Min" offset="560"/>
-				<Anchor side="Left"   relative="$parent" pos="Min" offset="20"/>
-				<Anchor side="Bottom" relative="$parent" pos="Min" offset="584"/>
-				<Anchor side="Right"  relative="$parent" pos="Min" offset="44"/>
-				<Texture val="@UI/PauseScreenDimImage"/>
-				<ColorAdjustMode val="Fill"/>
-				<AdjustmentColor val="255,0,220,0"/>
-				<RenderPriority val="700"/>
-				<AcceptsMouse val="false"/>
-				<Alpha val="0"/>
-			</Frame>
-			<Frame type="Image" name="FCJH_DiagGateUnit">
-				<Anchor side="Top"    relative="$parent" pos="Min" offset="560"/>
-				<Anchor side="Left"   relative="$parent" pos="Min" offset="50"/>
-				<Anchor side="Bottom" relative="$parent" pos="Min" offset="584"/>
-				<Anchor side="Right"  relative="$parent" pos="Min" offset="74"/>
-				<Texture val="@UI/PauseScreenDimImage"/>
-				<ColorAdjustMode val="Fill"/>
-				<AdjustmentColor val="255,255,220,0"/>
-				<RenderPriority val="700"/>
-				<AcceptsMouse val="false"/>
-				<Alpha val="0"/>
-			</Frame>
-			<Frame type="Image" name="FCJH_DiagGateHide">
-				<Anchor side="Top"    relative="$parent" pos="Min" offset="560"/>
-				<Anchor side="Left"   relative="$parent" pos="Min" offset="80"/>
-				<Anchor side="Bottom" relative="$parent" pos="Min" offset="584"/>
-				<Anchor side="Right"  relative="$parent" pos="Min" offset="104"/>
-				<Texture val="@UI/PauseScreenDimImage"/>
-				<ColorAdjustMode val="Fill"/>
-				<AdjustmentColor val="255,255,0,0"/>
-				<RenderPriority val="700"/>
-				<AcceptsMouse val="false"/>
-				<Alpha val="0"/>
-			</Frame>
 			<StateGroup name="FCJH_Gate">
 				<DefaultState val="Hide"/>
 				<State name="Hero">
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/TargetInfoFrame" Visible="true"/>
 					<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_IsHero" Visible="true"/>
 					<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="true"/>
-					<Action type="SetProperty" frame="$this/FCJH_DiagGateHero" Alpha="255"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" side="Top" relative="$GameUI" pos="Max" offset="#FCJH_INSPECT_T"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SkinName" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="155"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SkinName" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="185"/>
@@ -93,7 +56,6 @@
 				<State name="Unit">
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/TargetInfoFrame" Visible="true"/>
 					<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="true"/>
-					<Action type="SetProperty" frame="$this/FCJH_DiagGateUnit" Alpha="255"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" side="Top" relative="$GameUI" pos="Max" offset="-399"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SkinName" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="30"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_SkinName" side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0" pos="Min" offset="60"/>
@@ -121,69 +83,29 @@
 				</State>
 				<State name="Hide">
 					<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="false"/>
-					<Action type="SetProperty" frame="$this/FCJH_DiagGateHide" Alpha="255"/>
 				</State>
 			</StateGroup>
 		</Frame>
 		<Frame type="Frame" name="FCJH_CardWatch">
 			<Anchor relative="$parent"/>
 			<AcceptsMouse val="false"/>
-			<Frame type="Image" name="FCJH_DiagWatchHero">
-				<Anchor side="Top"    relative="$parent" pos="Min" offset="590"/>
-				<Anchor side="Left"   relative="$parent" pos="Min" offset="20"/>
-				<Anchor side="Bottom" relative="$parent" pos="Min" offset="614"/>
-				<Anchor side="Right"  relative="$parent" pos="Min" offset="44"/>
-				<Texture val="@UI/PauseScreenDimImage"/>
-				<ColorAdjustMode val="Fill"/>
-				<AdjustmentColor val="255,0,220,0"/>
-				<RenderPriority val="700"/>
-				<AcceptsMouse val="false"/>
-				<Alpha val="0"/>
-			</Frame>
-			<Frame type="Image" name="FCJH_DiagWatchUnit">
-				<Anchor side="Top"    relative="$parent" pos="Min" offset="590"/>
-				<Anchor side="Left"   relative="$parent" pos="Min" offset="50"/>
-				<Anchor side="Bottom" relative="$parent" pos="Min" offset="614"/>
-				<Anchor side="Right"  relative="$parent" pos="Min" offset="74"/>
-				<Texture val="@UI/PauseScreenDimImage"/>
-				<ColorAdjustMode val="Fill"/>
-				<AdjustmentColor val="255,255,220,0"/>
-				<RenderPriority val="700"/>
-				<AcceptsMouse val="false"/>
-				<Alpha val="0"/>
-			</Frame>
-			<Frame type="Image" name="FCJH_DiagWatchClosed">
-				<Anchor side="Top"    relative="$parent" pos="Min" offset="590"/>
-				<Anchor side="Left"   relative="$parent" pos="Min" offset="80"/>
-				<Anchor side="Bottom" relative="$parent" pos="Min" offset="614"/>
-				<Anchor side="Right"  relative="$parent" pos="Min" offset="104"/>
-				<Texture val="@UI/PauseScreenDimImage"/>
-				<ColorAdjustMode val="Fill"/>
-				<AdjustmentColor val="255,255,0,0"/>
-				<RenderPriority val="700"/>
-				<AcceptsMouse val="false"/>
-				<Alpha val="0"/>
-			</Frame>
 			<StateGroup name="FCJH_CardShown">
 				<DefaultState val="Closed"/>
 				<State name="Hero">
 					<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" Visible="true"/>
 					<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_IsHero" Visible="true"/>
 					<Action type="SetProperty" frame="$parent/FCJH_TalentTips" Visible="true"/>
-					<Action type="SetProperty" frame="$this/FCJH_DiagWatchHero" Alpha="255"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="291"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" pos="Min" offset="15"/>
 				</State>
 				<State name="Unit">
 					<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect" Visible="true"/>
 					<Action type="SetProperty" frame="$parent/FCJH_TalentTips" Visible="true"/>
-					<Action type="SetProperty" frame="$this/FCJH_DiagWatchUnit" Alpha="255"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Top" relative="$GameUI" pos="Min" offset="9999"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Left" relative="$GameUI" pos="Min" offset="9999"/>
 				</State>
 				<State name="Closed">
 					<Action type="SetProperty" frame="$parent/FCJH_TalentTips" Visible="false"/>
-					<Action type="SetProperty" frame="$this/FCJH_DiagWatchClosed" Alpha="255"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Top" relative="$GameUI" pos="Min" offset="9999"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel" side="Left" relative="$GameUI" pos="Min" offset="9999"/>
 				</State>

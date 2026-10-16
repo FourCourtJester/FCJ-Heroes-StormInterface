@@ -461,16 +461,15 @@ def card():
            f'{T*2}     A hero gets the tall card with Blizzard\'s command card on it; anything else the\n'
            f'{T*2}     short card (shape), command card away. -->\n'
            f'{T*2}<Frame type="Frame" name="FCJH_InspectGate">\n'
-           f'{T*3}<Anchor relative="$parent"/>\n{T*3}<AcceptsMouse val="false"/>\n' + gate_diag() +
+           f'{T*3}<Anchor relative="$parent"/>\n{T*3}<AcceptsMouse val="false"/>\n'
            f'{T*3}<StateGroup name="FCJH_Gate">\n{T*4}<DefaultState val="Hide"/>\n'
            + f'{T*4}<State name="Hero">\n{T*5}<When type="Property" frame="{TARGET_INFO}" Visible="true"/>\n'
            f'{T*5}<When type="Property" frame="{UNIT}/{IS_HERO}" Visible="true"/>\n'
-           + shown + gate_lit("Hero") + shape(True) + f'{T*4}</State>\n'
+           + shown + shape(True) + f'{T*4}</State>\n'
            + f'{T*4}<State name="Unit">\n{T*5}<When type="Property" frame="{TARGET_INFO}" Visible="true"/>\n'
-           + shown + gate_lit("Unit") + shape(False) + f'{T*4}</State>\n'
+           + shown + shape(False) + f'{T*4}</State>\n'
            f'{T*4}<State name="Hide">\n'
-           f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="false"/>\n'
-           + gate_lit("Hide") + f'{T*4}</State>\n'
+           f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_Inspect" Visible="false"/>\n{T*4}</State>\n'
            f'{T*3}</StateGroup>\n{T*2}</Frame>\n' + card_watch() + command_switch() +
            f'{T*2}<!-- The card: our copy of Blizzard\'s inspect box -->\n'
            f'{T*2}<Frame type="TargetInfoFrame" name="FCJH_Inspect">\n'
@@ -831,47 +830,25 @@ def energy_formats():
                    for n in ("RegenTooltipFormatFrame", "NoRegenTooltipFormatFrame"))
 
 
-GATE_DIAG = (("Hero", "255,0,220,0"), ("Unit", "255,255,220,0"), ("Hide", "255,255,0,0"))
-WATCH_DIAG = (("Hero", "255,0,220,0"), ("Unit", "255,255,220,0"), ("Closed", "255,255,0,0"))
-
-
-def diag_squares(prefix, states, top):
-    """DIAGNOSTIC (2026-10-16), the stray ability card: a state group's state as three squares
-    at the screen's left edge - green, yellow, red. The gate's row seen green with the card
-    gone (user, 2026-10-16); the card watcher's row (card_watch) under it."""
-    return "".join(fill(f"{prefix}{s}", top, 20 + 30 * i, top + 24, 44 + 30 * i, colour, 700, 3).replace(
-                       '<AcceptsMouse val="false"/>', '<AcceptsMouse val="false"/>\n\t\t\t\t<Alpha val="0"/>')
-                   for i, (s, colour) in enumerate(states))
-
-
-def gate_diag():
-    return diag_squares("FCJH_DiagGate", GATE_DIAG, 560)
-
-
-def gate_lit(state, prefix="FCJH_DiagGate"):
-    return f'{T*5}<Action type="SetProperty" frame="$this/{prefix}{state}" Alpha="255"/>\n'
-
-
 def card_watch():
     """Blizzard's command card and the talent tips follow OUR card, not the gate (2026-10-16).
     The game hides our TargetInfoFrame itself at times while Blizzard's parked one still reads
-    visible, so the gate stays on Hero: click Sonya, inspect, click Johanna's plate, deselect -
-    the card went, the gate stayed green and Johanna's ability card stayed on screen where the
-    card had been (user's screenshot). Only the gate ever hides the card, so that was the game."""
+    visible (it stays on the last hero CLICKED), so the gate stays on Hero: click Sonya,
+    inspect, click Johanna's plate, deselect - the card went and Johanna's ability card stayed
+    on screen where the card had been. Found with the gate's and this watcher's states as
+    squares on screen (user's screenshots); solved."""
     tips = lambda v: f'{T*5}<Action type="SetProperty" frame="$parent/FCJH_TalentTips" Visible="{v}"/>\n'
     open_ = f'{T*5}<When type="Property" frame="{CARD}" Visible="true"/>\n'
-    lit = lambda s: gate_lit(s, "FCJH_DiagWatch")
     return (f'{T*2}<Frame type="Frame" name="FCJH_CardWatch">\n'
             f'{T*3}<Anchor relative="$parent"/>\n{T*3}<AcceptsMouse val="false"/>\n'
-            + diag_squares("FCJH_DiagWatch", WATCH_DIAG, 590) +
             f'{T*3}<StateGroup name="FCJH_CardShown">\n{T*4}<DefaultState val="Closed"/>\n'
             f'{T*4}<State name="Hero">\n' + open_
             + f'{T*5}<When type="Property" frame="{UNIT}/{IS_HERO}" Visible="true"/>\n'
-            + tips("true") + lit("Hero") + command_anchors(True, 5) + f'{T*4}</State>\n'
+            + tips("true") + command_anchors(True, 5) + f'{T*4}</State>\n'
             f'{T*4}<State name="Unit">\n' + open_
-            + tips("true") + lit("Unit") + command_anchors(False, 5) + f'{T*4}</State>\n'
+            + tips("true") + command_anchors(False, 5) + f'{T*4}</State>\n'
             f'{T*4}<State name="Closed">\n'
-            + tips("false") + lit("Closed") + command_anchors(False, 5) + f'{T*4}</State>\n'
+            + tips("false") + command_anchors(False, 5) + f'{T*4}</State>\n'
             f'{T*3}</StateGroup>\n{T*2}</Frame>\n')
 
 
