@@ -310,14 +310,18 @@ came out in fix 8 had been blocking them (user).
     Ahli's fill from the start, his pane being that panel's type). An invisible copy of
     the Tab panel, open from load and off the screen (`FCJH_QuestPrimer`), so the engine
     tracks quests from the start (logged). Built dcf046d, no help; nor the icons' own
-    tooltip (99c7e7e). Now the icons are a leader panel's own, over the pane, as Ahli's
-    (`FCJH_QuestPanel`, f5ab192; blizzard-fixes.md).
+    tooltip (99c7e7e). Nor a leader panel of our own over the pane, as Ahli's
+    (`FCJH_QuestPanel`, f5ab192): its icons never drew and its rows leaked faded portraits
+    (user, 2026-10-16). Out again; our own icons back, whole so the quest ring shows.
+    Unsolved (blizzard-fixes.md).
 14. Blizzard's Tab panel border round every pane (`inspect_card.tab_border`), 12 outside
     it: the sides, top and the bottom's two end pieces, no tab notch or team stripes. Its
     art isn't extracted, so the pieces take their own sizes; the bottom pieces are
     stretched to half the width each, which may squash their corners. They did: the
     bottom sat crooked and dipped in the middle (user, 2026-10-16). Now the bottom is the
-    top's art flipped and the sides run the full height (f5ab192).
+    top's art flipped and the sides run the full height (f5ab192). Still wrong: the sides
+    ran past the bottom with a gap at the corners (user, 2026-10-16). Now the sides are in
+    halves, the lower flipped, so the whole bottom half is the top half upside down.
     The front-end menu (user's screen 22:39:25) is Blizzard's `PopupPanelTemplate`: the
     `Storm_Generic_SmallPanel_Border` nine-slice over `Storm_Generic_Background_Low`, a
     08081d wash at 100 and blur. The menu-border test took only its border.

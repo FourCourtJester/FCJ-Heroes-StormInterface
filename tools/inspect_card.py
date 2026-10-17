@@ -426,14 +426,17 @@ def pane_skin(title_h, indent=1):
 
 def tab_border(t):
     """Blizzard's Tab panel border (HeroLeaderPanelTemplate's BorderContainer) round a pane,
-    TAB_BORDER_OUTSET outside it. Blizzard's sides (nine-slice) the full height and the top
-    between them, each at its art's own thickness. The bottom is the top's art flipped:
-    Blizzard's own bottom pieces slope into the tabs' notch, so they sat crooked and dipped
-    in the middle with no tabs under them (2026-10-16)."""
+    TAB_BORDER_OUTSET outside it, each piece at its art's own thickness. The bottom half is
+    the top half upside down: Blizzard's sides (nine-slice) in two halves, the lower one
+    flipped, and the top's art flipped along the bottom. Blizzard's own bottom pieces slope
+    into the tabs' notch, so they sat crooked and dipped in the middle with no tabs under
+    them; the top flipped between full-height sides left the sides running past it, their
+    art turning the corner only at the top (user, 2026-10-16)."""
     u, o = t + "\t", TAB_BORDER_OUTSET
     tex = lambda name: f'{u}\t<Texture val="@UI/Storm_UI_InGame_Leader_Background_{name}"/>\n'
     flip = f'{u}\t<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>\n'
     upside_down = f'{u}\t<TextureCoords top="1.0" left="0.0" bottom="0.0" right="1.0"/>\n'
+    both = f'{u}\t<TextureCoords top="1.0" left="1.0" bottom="0.0" right="0.0"/>\n'
     def piece(name_, anchors, extra):
         return (f'{u}<Frame type="Image" name="{name_}">\n'
                 + "".join(f'{u}\t<Anchor side="{s}" relative="{r}" pos="{p}" offset="{v}"/>\n' for s, r, p, v in anchors)
@@ -446,14 +449,19 @@ def tab_border(t):
             f'{u}<Anchor side="Bottom" relative="$parent" pos="Max" offset="{o}"/>\n'
             f'{u}<Anchor side="Right"  relative="$parent" pos="Max" offset="{o}"/>\n'
             f'{u}<RenderPriority val="420"/>\n{u}<Unclipped val="true"/>\n{u}<AcceptsMouse val="false"/>\n'
-            + piece("BorderLeft", [("Top", "$parent", "Min", 0), ("Bottom", "$parent", "Max", 0),
+            + piece("BorderLeft", [("Top", "$parent", "Min", 0), ("Bottom", "$parent", "Mid", 0),
                                    ("Left", "$parent", "Min", 0)], tex("VerticalBorder") + nine)
             + piece("BorderRight", [("Top", "$parent/BorderLeft", "Min", 0), ("Bottom", "$parent/BorderLeft", "Max", 0),
                                     ("Right", "$parent", "Max", 0)], tex("VerticalBorder") + nine + flip)
+            + piece("BorderLeftLower", [("Top", "$parent", "Mid", 0), ("Bottom", "$parent", "Max", 0),
+                                        ("Left", "$parent", "Min", 0)], tex("VerticalBorder") + nine + upside_down)
+            + piece("BorderRightLower", [("Top", "$parent/BorderLeftLower", "Min", 0),
+                                         ("Bottom", "$parent/BorderLeftLower", "Max", 0),
+                                         ("Right", "$parent", "Max", 0)], tex("VerticalBorder") + nine + both)
             + piece("BorderTop", [("Top", "$parent", "Min", 0), ("Left", "$parent/BorderLeft", "Max", 0),
                                   ("Right", "$parent/BorderRight", "Min", 0)], tex("HorizontalBorder"))
-            + piece("BorderBottom", [("Bottom", "$parent", "Max", 0), ("Left", "$parent/BorderLeft", "Max", 0),
-                                     ("Right", "$parent/BorderRight", "Min", 0)], tex("HorizontalBorder") + upside_down)
+            + piece("BorderBottom", [("Bottom", "$parent", "Max", 0), ("Left", "$parent/BorderLeftLower", "Max", 0),
+                                     ("Right", "$parent/BorderRightLower", "Min", 0)], tex("HorizontalBorder") + upside_down)
             + f'{t}</Frame>\n')
 
 

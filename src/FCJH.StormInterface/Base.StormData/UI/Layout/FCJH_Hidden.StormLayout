@@ -25,6 +25,11 @@
 				<AcceptsMouse val="false"/>
 				<Animation name="FCJH_KeepHidden">
 					<Event event="OnShown" action="Play"/>
+					<!-- TEMPORARY (user, 2026-10-16): Blizzard's kill feed off while we test, its
+					     portraits read as ours under the panes. Take out before release (HANDOFF) -->
+					<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/ConsolePanel/KillLogPanel">
+						<Key type="Bool" time="0" value="false"/>
+					</Controller>
 					<!-- (the command card - CommandPanel - is shown and hidden with the inspect card
 					     instead: FCJH_Inspect, inspect_card.command_switch) -->
 					<Controller type="Visibility" end="Loop" frame="$GameUI/UIContainer/ConsoleUIContainer/HeroConsolePanel">

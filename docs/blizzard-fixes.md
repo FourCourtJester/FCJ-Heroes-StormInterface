@@ -70,8 +70,8 @@ detail.
 - The talents pane has a default-quest column between the hero and the level-1 talent:
   Blizzard's own baseline-quest icon from the player's leader panel, which the observer talents
   pane doesn't show at all - Blizzard's default pane has no space for default quests (user,
-  2026-10-16) (FCJH_InfoPane: `FCJH_QuestPanel`'s icons on each row's `FCJH_QuestCell`; until
-  f5ab192 our own `FCJH_BaseQuestIcon`). Seen 2026-10-16: the right quest per hero,
+  2026-10-16) (FCJH_InfoPane: `FCJH_BaseQuestIcon` on each row, Blizzard's 68 whole since
+  2026-10-16 so its quest ring shows). Seen 2026-10-16: the right quest per hero,
   but too small, its tooltip empty and its count not updating. Quest talents in the numbered
   columns count and tooltip fine for an observer (user, 2026-10-16), so the data reaches us:
   it's Blizzard's baseline-quest icon (`UnitStatusBaselineQuestIcon`) that fills only its
@@ -132,8 +132,11 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
   over the pane (`FCJH_QuestPanel`), everything in it hidden but each row's `BaseQuestIcon0`,
   which sits on our row's quest cell with a tooltip of its own inside that panel
   (`FCJH_QuestTip0-9`); the panel's talents view held on by a binding, as his. The primer
-  and our own tooltip are gone. Blizzard's icon is whole there, so its quest ring shows too.
-- **Status:** the leader-panel icons built (f5ab192), not seen yet (2026-10-16).
+  and our own tooltip are gone. Seen 2026-10-16: no quest icons drew at all, and the
+  panel's hidden rows leaked faded hero portraits over the pane (user). Taken out; our own
+  icons are back, whole, with Blizzard's shared tooltip.
+- **Status:** unsolved (2026-10-16). Three tries failed: a primer leader panel, the icons'
+  own tooltip, and a leader panel of our own over the pane.
 
 ### Hogger's rage drawn as mana
 - **Blizzard's:** the target panel's per-hero resource colours (`HeroResourceStates`,

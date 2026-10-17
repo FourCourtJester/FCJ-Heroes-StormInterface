@@ -503,14 +503,16 @@ from their plates (docs/blizzard-fixes.md).
      seams between plates and under the XP bar, and the core bar's own line (`[team_core]`);
    - the on-fire squares (a second row), ammo segments, the talents pane's quest column.
 
-   **The next test build (2026-10-16), not seen yet:** the quest icons from a leader panel of
-   our own over the talents pane (`FCJH_QuestPanel`, Ahli's arrangement, with Blizzard's quest
-   ring; the primer and our own tooltip gone); the grid's portrait-to-talent line bridged
-   across the quest column; the pane border's bottom the top flipped, the sides full height;
-   Tracer's round Pulse Bomb dial on her plate heroic (her HUD's, centred on the icon, its art
-   unseen by us) in place of the orange filling border; the heroic badges 6 in from the cell's
-   end (gen `HEROIC_CLEAR`), clear of the chrome's dividers. The chrome's shadows are to be
-   revisited later (user).
+   **The next test build (2026-10-16), not seen yet:** the leader-panel quest overlay
+   (`FCJH_QuestPanel`, f5ab192) is out: its icons never drew and it leaked faded portraits.
+   Our own quest icons are back, Blizzard's 68 whole so the quest ring shows; the tooltips
+   are still blank until Tab (unsolved). The pane border's sides are in halves, the lower
+   flipped, so the bottom half mirrors the top. Tracer's plate dial is now the gold frame's
+   height (35 x 39) and see-through, as Ahli's; the first try was an opaque disc over the
+   badge and bars. Seen fine in 5c38a32: the heroic badges 6 in from the cell's end (gen
+   `HEROIC_CLEAR`). The chrome's shadows are to be revisited later (user).
+   **TEMPORARY:** Blizzard's kill feed is hidden for testing (FCJH_Hidden, `FCJH_KeepHidden`'s
+   KillLogPanel controller; user, 2026-10-16). Take it out before release.
 
    Diagnostics: the respawn, hearthstone and portrait ones are read and gone (2026-10-16);
    `onfire_diagnostics` stays until a known on-fire replay.

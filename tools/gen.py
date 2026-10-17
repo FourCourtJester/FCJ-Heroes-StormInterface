@@ -2762,9 +2762,12 @@ def talent_row_lifts(cfg):
     for n in range(10):
         team, cell = popup_cell(n)
         l, t, r, b = heroic_icon_rect(cfg, team.lower())
-        # her HUD's dial is 68 x 76: here the icon's width, centred on it
-        dial_w = r - l
-        dial_h = round(dial_w * 76 / 68)
+        # her HUD's dial is 68 x 76: here the gold frame's height, centred on the icon, as
+        # Ahli's (34 x 38 on his heroic). At the icon's width (first try, 2026-10-16) it stood
+        # half again over the badge, a black disc over it and the bars (user)
+        _, ft, _, fb = heroic_frame_rect(cfg, team.lower())
+        dial_h = fb - ft
+        dial_w = round(dial_h * 68 / 76)
         # the in-game top bar's heroic panel for this player, which our plate's heroic follows
         # (heroic_panel): the meter goes with it - it stayed on while Tracer was dead and her
         # heroic and bars were gone (user, 2026-10-05)
@@ -2810,9 +2813,11 @@ def talent_row_lifts(cfg):
 													<Width val="{dial_w}"/>
 													<Height val="{dial_h}"/>
 													<Unclipped val="true"/>
+													<!-- half see-through, as Ahli's, so the Pulse Bomb icon under it shows -->
 													<Frame type="Image" name="FCJH_PulseBombBackground">
 														<Anchor relative="$parent"/>
 														<Texture val="@UI/Storm_UI_HUD_Tracer_Pulse_Bomb_Background"/>
+														<Alpha val="128"/>
 														<Unclipped val="true"/>
 														<AcceptsMouse val="false"/>
 													</Frame>
