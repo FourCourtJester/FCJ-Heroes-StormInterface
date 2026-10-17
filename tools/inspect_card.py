@@ -1177,7 +1177,7 @@ def layout(crop, head, team_colours, origin=(0, 0), px=0.9, holder=("$parent", "
     HEROES[:] = cached_heroes()
     return (head + FILE_HEADER + card() + unit() + "\t\t\t</Frame>\n\t\t</Frame>\n"
             + talent_tips() + command_panel()
-            + "\t</Frame>\n\t</Frame>\n\t</Frame>\n" + tracer_charge() + "</Desc>\n")
+            + "\t</Frame>\n\t</Frame>\n\t</Frame>\n" + tracer_charge() + dva_charge() + "</Desc>\n")
 
 
 def tracer_charge():
@@ -1186,20 +1186,42 @@ def tracer_charge():
     button left it oversized (2026-10-05). Overridden in her file at our button's size, as
     Ahli does at his (56): the meter scaled from his 34 x 38, the percent label off (the fill
     shows the charge)."""
+    return charge_meter("Tracer", "Pulse Bomb", "Tracer", "TracerPulseBombChargeButtonOverrideFrame",
+                        "TracerPulseBombChargeFrame", "TracerPulseBombBackgroundImage")
+
+
+def dva_charge():
+    """D.Va's Self-Destruct on her mech's E button: Blizzard's copy of Tracer's meter
+    (DVaMechCommandCardFrame, dva.stormlayout:678, 68 x 76, pink fill, a "0%" label), so it
+    sat oversized as a black dial over the hex ("needs love", user, 2026-10-16). The same
+    fix as Tracer's, in her file, as Ahli does; her meter's Mid +1 anchors put back to 0."""
+    return charge_meter("D.Va", "Self-Destruct", "DVa", "DVaMechCommandCardFrame",
+                        "DVaMechSelfDestructChargeFrame", "DVaMechSelfDestructBackgroundImage",
+                        centred=True)
+
+
+def charge_meter(hero, ability, file, panel, meter, background, centred=False):
+    """A hero's charge meter (Tracer's dial and its copies) on our command card's button: the
+    hero-specific panel at our button size, the meter scaled from Ahli's 34 x 38 at his 56,
+    the percent label off and the count centred in the meter. centred: restate the meter's
+    four Mid anchors at 0 (Blizzard's D.Va copy has them at +1)."""
     k = CMD_SIZE / 56
     w, h, ping = round(34 * k), round(38 * k), round(40 * k)
+    mid = ("".join(f'\t\t\t\t<Anchor side="{s}" relative="$parent" pos="Mid" offset="0"/>\n'
+                   for s in ("Top", "Left", "Bottom", "Right")) if centred else "")
     # the count was anchored to the percent label (now off) and sat cut off to the left
     # (2026-10-05): centred in the meter instead
     count = ('\t\t\t\t<Frame type="Label" name="ChargesLabel">'
-             + "".join(f'<Anchor side="{s}" relative="$parent/TracerPulseBombBackgroundImage" pos="{p}" offset="0"/>'
+             + "".join(f'<Anchor side="{s}" relative="$parent/{background}" pos="{p}" offset="0"/>'
                        for s, p in (("Top", "Min"), ("Left", "Min"), ("Bottom", "Max"), ("Right", "Max")))
              + '<Style val="FCJH_HeroicCooldown"/><Unclipped val="true"/></Frame>\n')
-    return (f'\t<!-- Tracer\'s Pulse Bomb meter on the command card, at our button size (inspect_card.tracer_charge) -->\n'
-            f'\t<Frame type="SelectionUnitStatusPanel" name="TracerPulseBombChargeButtonOverrideFrame" file="Tracer">\n'
+    return (f'\t<!-- {hero}\'s {ability} meter on the command card, at our button size (inspect_card.charge_meter) -->\n'
+            f'\t<Frame type="SelectionUnitStatusPanel" name="{panel}" file="{file}">\n'
             f'\t\t<Width val="{CMD_SIZE}"/>\n\t\t<Height val="{CMD_SIZE}"/>\n'
             f'\t\t<Frame type="UnitStatusFrame" name="UnitStatusFrame0">\n'
-            f'\t\t\t<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">\n'
-            f'\t\t\t\t<Width val="{w}"/>\n\t\t\t\t<Height val="{h}"/>\n'
+            f'\t\t\t<Frame type="UnitStatusAbilCharge" name="{meter}">\n'
+            + mid
+            + f'\t\t\t\t<Width val="{w}"/>\n\t\t\t\t<Height val="{h}"/>\n'
             f'\t\t\t\t<Frame type="ProgressBar" name="ChargeFillProgress"><Width val="{w}"/><Height val="{h}"/></Frame>\n'
             '\t\t\t\t<Frame type="Label" name="ChargePercentLabel"><Visible val="false"/><Text val=""/></Frame>\n'
             + count

@@ -248,7 +248,7 @@ Hearthstone: nothing, ever. Blizzard sends hearth events to the hero's team only
 have been on fire; its squares stay in until then.
 
 **Fixes for the next build:**
-1. The quest column (user): no container. It's an empty column with no grid cell, border or
+1. **Done, not yet built.** The quest column (user): no container. It's an empty column with no grid cell, border or
    background, and it fills only when the hero has a quest to do. So the grid art's doubled
    talent-1 slice (`FCJH_Grid*Q`) goes, leaving a gap, and Blizzard's icon border and
    background show only in its `QuestAvailable` / `QuestSelected` states (its
@@ -268,7 +268,7 @@ have been on fire; its squares stay in until then.
 6. Hogger's rage colour (`RageEnergy`); Blizzard's target panel lacks him (log it).
 7. The core's chrome line up to 3 px like the rest (user).
 8. The answered diagnostics come out (respawn, hearthstone, split portraits).
-9. D.Va's Self-Destruct meter on the inspect card ("needs love", user): Blizzard draws it
+9. **Done, not yet built** (`inspect_card.dva_charge`). D.Va's Self-Destruct meter on the inspect card ("needs love", user): Blizzard draws it
    from her own layout (`DVaMechCommandCardFrame`, dva.stormlayout:678) as a copy of
    Tracer's Pulse Bomb meter, 68 x 76 with a percent label, so it's oversized on our button
    and sits as a black dial with "0%" over the hex. Same fix as Tracer's

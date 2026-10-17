@@ -8043,7 +8043,7 @@
 	</Frame>
 	</Frame>
 	</Frame>
-	<!-- Tracer's Pulse Bomb meter on the command card, at our button size (inspect_card.tracer_charge) -->
+	<!-- Tracer's Pulse Bomb meter on the command card, at our button size (inspect_card.charge_meter) -->
 	<Frame type="SelectionUnitStatusPanel" name="TracerPulseBombChargeButtonOverrideFrame" file="Tracer">
 		<Width val="52"/>
 		<Height val="52"/>
@@ -8054,6 +8054,25 @@
 				<Frame type="ProgressBar" name="ChargeFillProgress"><Width val="32"/><Height val="35"/></Frame>
 				<Frame type="Label" name="ChargePercentLabel"><Visible val="false"/><Text val=""/></Frame>
 				<Frame type="Label" name="ChargesLabel"><Anchor side="Top" relative="$parent/TracerPulseBombBackgroundImage" pos="Min" offset="0"/><Anchor side="Left" relative="$parent/TracerPulseBombBackgroundImage" pos="Min" offset="0"/><Anchor side="Bottom" relative="$parent/TracerPulseBombBackgroundImage" pos="Max" offset="0"/><Anchor side="Right" relative="$parent/TracerPulseBombBackgroundImage" pos="Max" offset="0"/><Style val="FCJH_HeroicCooldown"/><Unclipped val="true"/></Frame>
+				<Frame type="Image" name="PulseBombReadyPingImage"><Width val="37"/><Height val="37"/><Unclipped val="true"/></Frame>
+			</Frame>
+		</Frame>
+	</Frame>
+	<!-- D.Va's Self-Destruct meter on the command card, at our button size (inspect_card.charge_meter) -->
+	<Frame type="SelectionUnitStatusPanel" name="DVaMechCommandCardFrame" file="DVa">
+		<Width val="52"/>
+		<Height val="52"/>
+		<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+			<Frame type="UnitStatusAbilCharge" name="DVaMechSelfDestructChargeFrame">
+				<Anchor side="Top" relative="$parent" pos="Mid" offset="0"/>
+				<Anchor side="Left" relative="$parent" pos="Mid" offset="0"/>
+				<Anchor side="Bottom" relative="$parent" pos="Mid" offset="0"/>
+				<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+				<Width val="32"/>
+				<Height val="35"/>
+				<Frame type="ProgressBar" name="ChargeFillProgress"><Width val="32"/><Height val="35"/></Frame>
+				<Frame type="Label" name="ChargePercentLabel"><Visible val="false"/><Text val=""/></Frame>
+				<Frame type="Label" name="ChargesLabel"><Anchor side="Top" relative="$parent/DVaMechSelfDestructBackgroundImage" pos="Min" offset="0"/><Anchor side="Left" relative="$parent/DVaMechSelfDestructBackgroundImage" pos="Min" offset="0"/><Anchor side="Bottom" relative="$parent/DVaMechSelfDestructBackgroundImage" pos="Max" offset="0"/><Anchor side="Right" relative="$parent/DVaMechSelfDestructBackgroundImage" pos="Max" offset="0"/><Style val="FCJH_HeroicCooldown"/><Unclipped val="true"/></Frame>
 				<Frame type="Image" name="PulseBombReadyPingImage"><Width val="37"/><Height val="37"/><Unclipped val="true"/></Frame>
 			</Frame>
 		</Frame>

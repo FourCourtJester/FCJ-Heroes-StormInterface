@@ -550,7 +550,7 @@ def load_base(cat):
     count = 0
     # the per-hero and per-map mods too (heromods/<hero>.stormmod, heroesmapmods/
     # battlegroundmapmods/<map>.stormmod): their layout files can be overridden by name
-    # (file="Tracer" - Tracer's Pulse Bomb meter, inspect_card.tracer_charge; file=
+    # (file="Tracer" / "DVa" - their charge meters, inspect_card.charge_meter; file=
     # "FieldofSlaughter" - Towers of Doom's alerts; every map's panel, FCJH_Maps)
     extra = sorted(p.relative_to(MODS).as_posix() for p in (MODS / "heromods").glob("*.stormmod")) + \
         sorted(p.relative_to(MODS).as_posix() for p in (MODS / "heroesmapmods" / "battlegroundmapmods").glob("*.stormmod"))
