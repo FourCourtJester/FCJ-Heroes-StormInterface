@@ -280,6 +280,15 @@ have been on fire; its squares stay in until then.
    it per hero). Ours shows every hero's resource bar, empty for these. Do the same: for a
    no-resource hero the health bar takes the resource band too, and the resource bar and
    its backing go. The hero list comes from Blizzard's data, not by hand.
+11. Misha's death (user, 2026-10-16: no square at all, whether Rexxar died or she died
+   alone, and nothing on Rexxar's plate). Blizzard's script does show it to everyone: on
+   her death (gamedatahelperlib.galaxy:20344, `UIPartyFramePetDies`) it shows the cell's
+   `HeroDeathTimePetLabel`, her timer over the portrait's right half, and the cell's
+   `DesaturateOnDeath` state darkens her portrait (`PetDead`: colourized, alpha 180). We
+   dropped her timer on 2026-09-30 because she had no portrait to sit on. With the split
+   portraits (fix 3) she gets one: bring back her timer on her part, and darken it while the
+   label shows. The pet event (`HeroAlmostRespawnedPet`) never arrived, so nothing hangs on
+   it; anything for her keys off the label showing and hiding.
 
 Also seen: Gazlowe's 10 segments and Junkrat's 4; D.Va's plate shows her portrait, not
 white (in mech, early game).
