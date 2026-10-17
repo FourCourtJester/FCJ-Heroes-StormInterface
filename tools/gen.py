@@ -1502,7 +1502,11 @@ def pet_death_labels(team, c):
 # ours sit at the rows' inner ends, by the minimap (user, 2026-10-06): red's is Blizzard's (its
 # bottom left), blue's the mirror of it (bottom right; Blizzard's was 14, 5) - blue keeps its own
 # art, which leans with its plate in either corner.
-HEROIC_PANEL = {"blue": (128 - 48, 48 - 3 - 38), "red": (0, 3)}
+# Both HEROIC_CLEAR in from the cell's end: at the very end the badge's slanted edge lay on
+# the chrome's divider and drew over it and the next cell's bars (Tracer, Varian: user,
+# 2026-10-16; measured 3 px of divider and the bars' own 4 px gap before it).
+HEROIC_CLEAR = 6
+HEROIC_PANEL = {"blue": (128 - 48 - HEROIC_CLEAR, 48 - 3 - 38), "red": (HEROIC_CLEAR, 3)}
 
 
 def heroic_frame_rect(cfg, team):
@@ -1528,9 +1532,9 @@ def heroic_icon_rect(cfg, team):
 # While it shows, Blizzard narrows the bars from the left (right edge fixed): health 97 -> 69,
 # energy 95 -> 67 (UpdateHealthBarWidths). Ours narrow from the heroic's side: blue's from the
 # right, red's from the left.
-NARROW = 28
+NARROW = 28 + HEROIC_CLEAR
 # ...and the no-resource hero's big bar 103 -> 73 (#HeroUnitStatusBar_Wide / _Narrow)
-NARROW_FULL = 30
+NARROW_FULL = 30 + HEROIC_CLEAR
 # The heroic's icon (and its mask) pulled in on every side, cell units: at Blizzard's size the art
 # showed past the gold frame's top-left corner (Tracer's Pulse Bomb: user, 2026-10-06 13:25)
 ULT_ICON_INSET = 2
@@ -2745,7 +2749,10 @@ def talent_row_lifts(cfg):
     """Tracer's charge meter, lifted out of Blizzard's observer talent row onto our plates.
     Pulse Bomb charges rather than cooling down; Blizzard shows the charge on that row
     (TracerChargeContainer: there for every hero, its meter only for one with that ability).
-    Moved over our heroic's gold frame, on Blizzard's own art. Seen working 2026-09-30.
+    Moved onto our heroic's icon as her own HUD's round dial (tracer.stormlayout's
+    TracerPulseBombChargeFrame: the bomb background, the fill circular), not the observer
+    row's straight fill, which lit the gold frame as an orange border (user, 2026-10-16).
+    Seen working 2026-09-30.
     The row is the game's, and the game keeps its talent panel hidden: Blizzard's
     CleanTalentsPanelTemplate starts Visible false, so nothing under it drew wherever it was
     moved (its values still update - our sensors read them). An animation holds it shown.
@@ -2754,7 +2761,10 @@ def talent_row_lifts(cfg):
     out = []
     for n in range(10):
         team, cell = popup_cell(n)
-        l, t, r, b = heroic_frame_rect(cfg, team.lower())
+        l, t, r, b = heroic_icon_rect(cfg, team.lower())
+        # her HUD's dial is 68 x 76: here the icon's width, centred on it
+        dial_w = r - l
+        dial_h = round(dial_w * 76 / 68)
         # the in-game top bar's heroic panel for this player, which our plate's heroic follows
         # (heroic_panel): the meter goes with it - it stayed on while Tracer was dead and her
         # heroic and bars were gone (user, 2026-10-05)
@@ -2793,12 +2803,38 @@ def talent_row_lifts(cfg):
 													</State>
 												</StateGroup>
 												<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
+													{edge("Top", "$parent", "Mid", 0)}
+													{edge("Left", "$parent", "Mid", 0)}
+													{edge("Bottom", "$parent", "Mid", 0)}
+													{edge("Right", "$parent", "Mid", 0)}
+													<Width val="{dial_w}"/>
+													<Height val="{dial_h}"/>
+													<Unclipped val="true"/>
+													<Frame type="Image" name="FCJH_PulseBombBackground">
+														<Anchor relative="$parent"/>
+														<Texture val="@UI/Storm_UI_HUD_Tracer_Pulse_Bomb_Background"/>
+														<Unclipped val="true"/>
+														<AcceptsMouse val="false"/>
+													</Frame>
 													<Frame type="ProgressBar" name="ChargeFillProgress">
 														{edge("Left", "$parent", "Min", 0)}
 														{edge("Top", "$parent", "Min", 0)}
 														{edge("Right", "$parent", "Max", 0)}
 														{edge("Bottom", "$parent", "Max", 0)}
+														<Vertical val="False"/>
+														<FillInset val="0.0"/>
+														<Circular val="True"/>
+														<CircularStart val="0"/>
+														<CircularEndOffset val="360"/>
+														<RenderPriority val="512"/>
 														<Unclipped val="true"/>
+														<Frame type="Frame" name="FillImageContainer">
+															<Frame type="Image" name="FillImage">
+																<TextureCoords top="0" left="0" bottom="1" right="1"/>
+																<Texture val="@UI/Storm_UI_HUD_Tracer_Pulse_Bomb_Fill_Image"/>
+																<TextureType layer="0" val="Circular"/>
+															</Frame>
+														</Frame>
 													</Frame>
 												</Frame>
 											</Frame>"""))

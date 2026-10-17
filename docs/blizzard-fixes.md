@@ -70,7 +70,8 @@ detail.
 - The talents pane has a default-quest column between the hero and the level-1 talent:
   Blizzard's own baseline-quest icon from the player's leader panel, which the observer talents
   pane doesn't show at all - Blizzard's default pane has no space for default quests (user,
-  2026-10-16) (FCJH_InfoPane `FCJH_BaseQuestIcon`). Seen 2026-10-16: the right quest per hero,
+  2026-10-16) (FCJH_InfoPane: `FCJH_QuestPanel`'s icons on each row's `FCJH_QuestCell`; until
+  f5ab192 our own `FCJH_BaseQuestIcon`). Seen 2026-10-16: the right quest per hero,
   but too small, its tooltip empty and its count not updating. Quest talents in the numbered
   columns count and tooltip fine for an observer (user, 2026-10-16), so the data reaches us:
   it's Blizzard's baseline-quest icon (`UnitStatusBaselineQuestIcon`) that fills only its
@@ -125,9 +126,14 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
   screen (`FCJH_QuestPrimer`, FCJH_InfoPane): built dcf046d, no help (user, 2026-10-16).
   Then the icons' own tooltip (`FCJH_QuestTooltip`, Blizzard's `BaselineTooltipTemplate`,
   inside our pane) in place of the shared `GameUI/GameUITooltips/HeroBaselineQuestTooltip`,
-  as Ahli's icons each have their own. Spazzo's interface shows no default quests at all
-  (user, 2026-10-16).
-- **Status:** the own tooltip not yet built (2026-10-16).
+  as Ahli's icons each have their own: built 99c7e7e, the box shows but stays empty (user,
+  2026-10-16). Spazzo's interface shows no default quests at all (user, 2026-10-16).
+  Then Ahli's arrangement whole (f5ab192): the icons come from a `HeroLeaderPanel` of our own
+  over the pane (`FCJH_QuestPanel`), everything in it hidden but each row's `BaseQuestIcon0`,
+  which sits on our row's quest cell with a tooltip of its own inside that panel
+  (`FCJH_QuestTip0-9`); the panel's talents view held on by a binding, as his. The primer
+  and our own tooltip are gone. Blizzard's icon is whole there, so its quest ring shows too.
+- **Status:** the leader-panel icons built (f5ab192), not seen yet (2026-10-16).
 
 ### Hogger's rage drawn as mana
 - **Blizzard's:** the target panel's per-hero resource colours (`HeroResourceStates`,

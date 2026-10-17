@@ -309,11 +309,15 @@ came out in fix 8 had been blocking them (user).
 13. The quest tooltips stayed blank until Blizzard's Tab panel had been open once (user;
     Ahli's fill from the start, his pane being that panel's type). An invisible copy of
     the Tab panel, open from load and off the screen (`FCJH_QuestPrimer`), so the engine
-    tracks quests from the start (logged).
+    tracks quests from the start (logged). Built dcf046d, no help; nor the icons' own
+    tooltip (99c7e7e). Now the icons are a leader panel's own, over the pane, as Ahli's
+    (`FCJH_QuestPanel`, f5ab192; blizzard-fixes.md).
 14. Blizzard's Tab panel border round every pane (`inspect_card.tab_border`), 12 outside
     it: the sides, top and the bottom's two end pieces, no tab notch or team stripes. Its
     art isn't extracted, so the pieces take their own sizes; the bottom pieces are
-    stretched to half the width each, which may squash their corners.
+    stretched to half the width each, which may squash their corners. They did: the
+    bottom sat crooked and dipped in the middle (user, 2026-10-16). Now the bottom is the
+    top's art flipped and the sides run the full height (f5ab192).
     The front-end menu (user's screen 22:39:25) is Blizzard's `PopupPanelTemplate`: the
     `Storm_Generic_SmallPanel_Border` nine-slice over `Storm_Generic_Background_Low`, a
     08081d wash at 100 and blur. The menu-border test took only its border.

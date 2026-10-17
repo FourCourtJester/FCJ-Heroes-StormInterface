@@ -482,7 +482,7 @@ from their plates (docs/blizzard-fixes.md).
 **The numbered items still open** (their numbers kept; the rest are in docs/history.md):
 
 7. **The art pass**, after the functionality: Ahli's Tracer ammo bar (20 segments) and round Pulse
-   Bomb meter; his hero plates' intro animation (a smooth slide and fade). And the death
+   Bomb meter (the meter on the plate built 2026-10-16, not seen yet); his hero plates' intro animation (a smooth slide and fade). And the death
    timers' end (user, 2026-10-09): in a player's view, Blizzard's own death timer flashes as
    it comes to an end - find how (the player HUD's layout: its animation or StateGroup on the
    respawn countdown) and give our plates' death timers the same for the observer.
@@ -502,6 +502,15 @@ from their plates (docs/blizzard-fixes.md).
    - the chrome row frame (`[row_frame]`; the rows now sit 2 px higher, scale 1.5507), with
      seams between plates and under the XP bar, and the core bar's own line (`[team_core]`);
    - the on-fire squares (a second row), ammo segments, the talents pane's quest column.
+
+   **The next test build (2026-10-16), not seen yet:** the quest icons from a leader panel of
+   our own over the talents pane (`FCJH_QuestPanel`, Ahli's arrangement, with Blizzard's quest
+   ring; the primer and our own tooltip gone); the grid's portrait-to-talent line bridged
+   across the quest column; the pane border's bottom the top flipped, the sides full height;
+   Tracer's round Pulse Bomb dial on her plate heroic (her HUD's, centred on the icon, its art
+   unseen by us) in place of the orange filling border; the heroic badges 6 in from the cell's
+   end (gen `HEROIC_CLEAR`), clear of the chrome's dividers. The chrome's shadows are to be
+   revisited later (user).
 
    Diagnostics: the respawn, hearthstone and portrait ones are read and gone (2026-10-16);
    `onfire_diagnostics` stays until a known on-fire replay.
