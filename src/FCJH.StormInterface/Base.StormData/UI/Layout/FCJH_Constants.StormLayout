@@ -642,26 +642,9 @@
 			<RenderPriority val="420"/>
 			<Unclipped val="true"/>
 			<AcceptsMouse val="false"/>
-			<Frame type="Image" name="BorderBottomLeft">
-				<Anchor side="Bottom" relative="$parent" pos="Max" offset="42"/>
-				<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
-				<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
-				<Texture val="@UI/Storm_UI_InGame_Leader_Background_HorizontalBorder_Bottom"/>
-				<Unclipped val="true"/>
-				<AcceptsMouse val="false"/>
-			</Frame>
-			<Frame type="Image" name="BorderBottomRight">
-				<Anchor side="Bottom" relative="$parent" pos="Max" offset="42"/>
-				<Anchor side="Left" relative="$parent" pos="Mid" offset="0"/>
-				<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-				<Texture val="@UI/Storm_UI_InGame_Leader_Background_HorizontalBorder_Bottom"/>
-				<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>
-				<Unclipped val="true"/>
-				<AcceptsMouse val="false"/>
-			</Frame>
 			<Frame type="Image" name="BorderLeft">
 				<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-				<Anchor side="Bottom" relative="$parent/BorderBottomLeft" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 				<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
 				<Texture val="@UI/Storm_UI_InGame_Leader_Background_VerticalBorder"/>
 				<TextureType val="Nineslice"/>
@@ -683,6 +666,15 @@
 				<Anchor side="Left" relative="$parent/BorderLeft" pos="Max" offset="0"/>
 				<Anchor side="Right" relative="$parent/BorderRight" pos="Min" offset="0"/>
 				<Texture val="@UI/Storm_UI_InGame_Leader_Background_HorizontalBorder"/>
+				<Unclipped val="true"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
+			<Frame type="Image" name="BorderBottom">
+				<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+				<Anchor side="Left" relative="$parent/BorderLeft" pos="Max" offset="0"/>
+				<Anchor side="Right" relative="$parent/BorderRight" pos="Min" offset="0"/>
+				<Texture val="@UI/Storm_UI_InGame_Leader_Background_HorizontalBorder"/>
+				<TextureCoords top="1.0" left="0.0" bottom="0.0" right="1.0"/>
 				<Unclipped val="true"/>
 				<AcceptsMouse val="false"/>
 			</Frame>

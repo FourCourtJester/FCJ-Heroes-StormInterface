@@ -360,11 +360,6 @@ SKIN_INSET = 3          # the border, and the bands, this far in from the edge
 # pane all round - the Tab border's art about 15 thick (measured on screen), so it sits just
 # outside the Try Me edge
 TAB_BORDER_OUTSET = 12
-# The bottom pieces' art carries its line well above its own bottom (the notch hangs under
-# it): at its natural place the line crossed the last row, 42 above the outset (measured in
-# game, 2026-10-16). So the bottom pieces hang this much lower, their line 12 under the pane
-# as the top's is 12 over it.
-TAB_BORDER_BOTTOM_DROP = 42
 
 
 def blizzard_skin():
@@ -431,13 +426,14 @@ def pane_skin(title_h, indent=1):
 
 def tab_border(t):
     """Blizzard's Tab panel border (HeroLeaderPanelTemplate's BorderContainer) round a pane,
-    TAB_BORDER_OUTSET outside it. Blizzard's own pieces and anchoring, each at its art's own
-    thickness: the sides (nine-slice), the top, and the bottom's two end pieces - each here
-    half the width, meeting in the middle, without the tab notch between them (we have no
-    tabs) or the team-colour stripes on them (the panes are neutral)."""
+    TAB_BORDER_OUTSET outside it. Blizzard's sides (nine-slice) the full height and the top
+    between them, each at its art's own thickness. The bottom is the top's art flipped:
+    Blizzard's own bottom pieces slope into the tabs' notch, so they sat crooked and dipped
+    in the middle with no tabs under them (2026-10-16)."""
     u, o = t + "\t", TAB_BORDER_OUTSET
     tex = lambda name: f'{u}\t<Texture val="@UI/Storm_UI_InGame_Leader_Background_{name}"/>\n'
     flip = f'{u}\t<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>\n'
+    upside_down = f'{u}\t<TextureCoords top="1.0" left="0.0" bottom="0.0" right="1.0"/>\n'
     def piece(name_, anchors, extra):
         return (f'{u}<Frame type="Image" name="{name_}">\n'
                 + "".join(f'{u}\t<Anchor side="{s}" relative="{r}" pos="{p}" offset="{v}"/>\n' for s, r, p, v in anchors)
@@ -450,16 +446,14 @@ def tab_border(t):
             f'{u}<Anchor side="Bottom" relative="$parent" pos="Max" offset="{o}"/>\n'
             f'{u}<Anchor side="Right"  relative="$parent" pos="Max" offset="{o}"/>\n'
             f'{u}<RenderPriority val="420"/>\n{u}<Unclipped val="true"/>\n{u}<AcceptsMouse val="false"/>\n'
-            + piece("BorderBottomLeft", [("Bottom", "$parent", "Max", TAB_BORDER_BOTTOM_DROP), ("Left", "$parent", "Min", 0),
-                                         ("Right", "$parent", "Mid", 0)], tex("HorizontalBorder_Bottom"))
-            + piece("BorderBottomRight", [("Bottom", "$parent", "Max", TAB_BORDER_BOTTOM_DROP), ("Left", "$parent", "Mid", 0),
-                                          ("Right", "$parent", "Max", 0)], tex("HorizontalBorder_Bottom") + flip)
-            + piece("BorderLeft", [("Top", "$parent", "Min", 0), ("Bottom", "$parent/BorderBottomLeft", "Min", 0),
+            + piece("BorderLeft", [("Top", "$parent", "Min", 0), ("Bottom", "$parent", "Max", 0),
                                    ("Left", "$parent", "Min", 0)], tex("VerticalBorder") + nine)
             + piece("BorderRight", [("Top", "$parent/BorderLeft", "Min", 0), ("Bottom", "$parent/BorderLeft", "Max", 0),
                                     ("Right", "$parent", "Max", 0)], tex("VerticalBorder") + nine + flip)
             + piece("BorderTop", [("Top", "$parent", "Min", 0), ("Left", "$parent/BorderLeft", "Max", 0),
                                   ("Right", "$parent/BorderRight", "Min", 0)], tex("HorizontalBorder"))
+            + piece("BorderBottom", [("Bottom", "$parent", "Max", 0), ("Left", "$parent/BorderLeft", "Max", 0),
+                                     ("Right", "$parent/BorderRight", "Min", 0)], tex("HorizontalBorder") + upside_down)
             + f'{t}</Frame>\n')
 
 
