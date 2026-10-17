@@ -518,7 +518,10 @@ from their plates (docs/blizzard-fixes.md).
    pick of three), the icon showing through; the diagnostics are out. Seen bf31cf2: the ring
    builds but doesn't pop, and it stands over the badge (user, 2026-10-17). Now the disc at
    200, the charge count in the middle (as the inspect card's), the dial 0.8 of the gold
-   frame's height (`PULSE_DIAL_SCALE`). Not seen yet. Seen fine in 5c38a32: the heroic badges 6 in from the cell's end (gen
+   frame's height (`PULSE_DIAL_SCALE`). Seen e153492: fits the frame, the count (56, as the
+   card's) left of the dial, and a 100% animation the user liked (the template's: at full it
+   hides the disc and plays its ready ping). Now as the inspect card's dial (user): the disc
+   opaque, the count centred on it. Not seen yet. Seen fine in 5c38a32: the heroic badges 6 in from the cell's end (gen
    `HEROIC_CLEAR`). The chrome's shadows are to be revisited later (user).
    **TEMPORARY:** Blizzard's kill feed is hidden for testing (FCJH_Hidden, `FCJH_KeepHidden`'s
    KillLogPanel controller; user, 2026-10-16). Take it out before release.

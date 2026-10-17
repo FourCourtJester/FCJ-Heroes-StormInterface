@@ -753,8 +753,9 @@ RESOURCE_TABLE = [
 # per-segment value, not a count, so a talent that changes the max needs nothing.
 # Tracer's plate dial: its dark disc's alpha, so the orange ticks read over her orange icon
 # (unseen at 0, seen at 255 over a hidden icon; at 140 the ring built but didn't pop: user,
-# 2026-10-17)...
-PULSE_DIAL_DISC_ALPHA = 200
+# 2026-10-17; at 200 it still didn't read as the inspect card's dial). Opaque now, as the card's:
+# the template itself hides the disc at full charge, showing the icon (user, 2026-10-17)...
+PULSE_DIAL_DISC_ALPHA = 255
 # ...and its size, a share of the gold frame's height: at the full height it stood over the
 # badge's top and bottom (user, 2026-10-17)
 PULSE_DIAL_SCALE = 0.8
@@ -2821,7 +2822,7 @@ def talent_row_lifts(cfg):
 												<!-- her HUD's round dial, from its own template, as Ahli's: the observer bar restyled
 												     circular never filled (user, 2026-10-16). Its fill drew, but its orange ticks were lost
 												     in the orange Pulse Bomb icon until the dark disc was behind them (diagnostics, 57474cd):
-												     the disc dimmed (PULSE_DIAL_DISC_ALPHA), the icon showing through; the count in the
+												     the disc (PULSE_DIAL_DISC_ALPHA), opaque as the card's; the count in the
 												     middle. No percent label, no ping -->
 												<Frame type="UnitStatusAbilCharge" name="FCJH_PulseBombDial" template="Tracer/TracerPulseBombChargeButtonOverrideFrame/UnitStatusFrame0/TracerPulseBombChargeFrame">
 													{edge("Top", "$parent", "Mid", 0)}
@@ -2847,9 +2848,18 @@ def talent_row_lifts(cfg):
 															</Frame>
 														</Frame>
 													</Frame>
-													<!-- the charge in the middle, as on the inspect card's R button (its override of this
-													     template centres it, inspect_card.charge_meter): the ring alone didn't pop (user) -->
-													<Frame type="Label" name="ChargesLabel"><RenderPriority val="1000"/><Unclipped val="true"/></Frame>
+													<!-- the charge in the middle, as on the inspect card's R button: the ring alone didn't pop
+													     (user). Centred here: the card's override of the template doesn't reach this copy, which
+													     kept Blizzard's place beside the percent label, left of the dial (user, 2026-10-17) -->
+													<Frame type="Label" name="ChargesLabel">
+														<Anchor side="Top" relative="$parent/TracerPulseBombBackgroundImage" pos="Min" offset="0"/>
+														<Anchor side="Left" relative="$parent/TracerPulseBombBackgroundImage" pos="Min" offset="0"/>
+														<Anchor side="Bottom" relative="$parent/TracerPulseBombBackgroundImage" pos="Max" offset="0"/>
+														<Anchor side="Right" relative="$parent/TracerPulseBombBackgroundImage" pos="Max" offset="0"/>
+														<Style val="FCJH_HeroicCooldown"/>
+														<RenderPriority val="1000"/>
+														<Unclipped val="true"/>
+													</Frame>
 													<Frame type="Label" name="ChargePercentLabel"><Alpha val="0"/></Frame>
 													<Frame type="Image" name="PulseBombReadyPingImage"><Width val="0"/><Height val="0"/><Alpha val="0"/></Frame>
 													<!-- full: the template hides its fill (the HUD's ready ping shows instead), so full would
