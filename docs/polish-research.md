@@ -260,6 +260,7 @@ have been on fire; its squares stay in until then.
 3. Split portraits (Rexxar and Misha, the Vikings, maybe D.Va) draw white for observers:
    Blizzard's script sets their textures for players only. Hard-code Blizzard's partyframe
    textures, picked by which images show, with its separators. Mock up two layouts first.
+   **Parked for the round after this one (user): the most work of the eleven.**
 4. The respawn flash and glow listen to the party cell only; the pet event goes on too.
 5. The panes and the inspect card take the Try Me panel's style
    (`Storm_TutorialReferenceCardBG`, tiled nine-slice, alpha 180) and its small close tab,
@@ -289,6 +290,17 @@ have been on fire; its squares stay in until then.
    portraits (fix 3) she gets one: bring back her timer on her part, and darken it while the
    label shows. The pet event (`HeroAlmostRespawnedPet`) never arrived, so nothing hangs on
    it; anything for her keys off the label showing and hiding.
+   **Parked with fix 3**, since her timer needs her part of the portrait.
+   Ahli 0.75 (user's screenshots, 21_47_47 and 21_48_12): his Rexxar plate shows Rexxar with
+   Misha beside him, her side darkened with her timer on it; his Vikings plate shows all
+   three in angled, overlapping slices, each darkened with its own timer while dead. Each
+   timer mirrors Blizzard's per-unit label (`HeroDeathTimeVikingOlafLabel` etc.,
+   `HeroDeathTimePetLabel`) and has its own skull, played on the label's `OnShown` and
+   stopped on `OnHidden`. We mirror the Vikings' timers already (`gen.PET_TIMERS`) but our
+   skull follows only the plate's `HeroDeathTimeLabel`: with fix 3, Blizzard's skull per
+   part, off each part's own label. His pictures are cut less smoothly than Blizzard's
+   (user): a hard box shows around Misha. Ours use Blizzard's partyframe textures and
+   separators, as fix 3 says.
 
 Also seen: Gazlowe's 10 segments and Junkrat's 4; D.Va's plate shows her portrait, not
 white (in mech, early game).
