@@ -248,9 +248,13 @@ Hearthstone: nothing, ever. Blizzard sends hearth events to the hero's team only
 have been on fire; its squares stay in until then.
 
 **Fixes for the next build:**
-1. The quest column's icons fill the 40 cell (Blizzard's template is 68 with 11-14 insets).
-   Its count and tooltip stay empty in observer view, though quest talents work: another
-   hook to find.
+1. The quest column (user): no container. It's an empty column with no grid cell, border or
+   background, and it fills only when the hero has a quest to do. So the grid art's doubled
+   talent-1 slice (`FCJH_Grid*Q`) goes, leaving a gap, and Blizzard's icon border and
+   background show only in its `QuestAvailable` / `QuestSelected` states (its
+   `QuestNotAvailable` state is the empty one). The icon fills the 40 cell (Blizzard's
+   template is 68 with 11-14 insets). Its count and tooltip stay empty in observer view,
+   though quest talents work: another hook to find.
 2. The respawn glow gets its own inset, about 4 Blizzard units (it's sized for Blizzard's
    thick bezel). Both teams.
 3. Split portraits (Rexxar and Misha, the Vikings, maybe D.Va) draw white for observers:
