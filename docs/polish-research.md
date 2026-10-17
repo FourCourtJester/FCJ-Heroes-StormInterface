@@ -267,6 +267,15 @@ have been on fire; its squares stay in until then.
 6. Hogger's rage colour (`RageEnergy`); Blizzard's target panel lacks him (log it).
 7. The core's chrome line up to 3 px like the rest (user).
 8. The answered diagnostics come out (respawn, hearthstone, split portraits).
+9. D.Va's Self-Destruct meter on the inspect card ("needs love", user): Blizzard draws it
+   from her own layout (`DVaMechCommandCardFrame`, dva.stormlayout:678) as a copy of
+   Tracer's Pulse Bomb meter, 68 x 76 with a percent label, so it's oversized on our button
+   and sits as a black dial with "0%" over the hex. Same fix as Tracer's
+   (`inspect_card.tracer_charge`): override it in her file at our button size, percent
+   label off.
+
+Also seen: Gazlowe's 10 segments and Junkrat's 4; D.Va's plate shows her portrait, not
+white (in mech, early game).
 
 ## Decisions from the question round (2026-10-16, before the test)
 
