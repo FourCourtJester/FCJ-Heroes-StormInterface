@@ -503,7 +503,8 @@ from their plates (docs/blizzard-fixes.md).
      seams between plates and under the XP bar, and the core bar's own line (`[team_core]`);
    - the on-fire squares (a second row), ammo segments, the talents pane's quest column.
 
-   Diagnostics to remove once read: `respawn_diagnostics`, `split_portrait_diagnostics`.
+   Diagnostics: the respawn, hearthstone and portrait ones are read and gone (2026-10-16);
+   `onfire_diagnostics` stays until a known on-fire replay.
    The intro waits for the user's OBS plan. The items as the user gave them:
    - **The plates closer to the player's in-game top bar.** Played as a player, Blizzard's
      plates feel far more polished than the observer's; find out what we can copy (the

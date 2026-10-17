@@ -7670,9 +7670,7 @@
 								</StateGroup>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1"/>
-									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawnedHero1" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1"/>
-									<Event event="HeroRespawnedHero1" action="Reset,Stop" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
 										<Key type="Curve" time="0" value="1"/>
 										<Key type="Curve" time="0.5" value="0"/>
@@ -7690,7 +7688,6 @@
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
 									<Event event="HeroRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1"/>
-									<Event event="HeroRespawnedHero1" action="Reset,Play" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
 										<Key type="Curve" time="0" value="0"/>
 										<Key type="Curve" time=".01" value="0"/>
@@ -7706,9 +7703,7 @@
 								</StateGroup>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1"/>
-									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawnedHero2" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1"/>
-									<Event event="HeroRespawnedHero2" action="Reset,Stop" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
 										<Key type="Curve" time="0" value="1"/>
 										<Key type="Curve" time="0.5" value="0"/>
@@ -7726,7 +7721,6 @@
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
 									<Event event="HeroRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1"/>
-									<Event event="HeroRespawnedHero2" action="Reset,Play" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
 										<Key type="Curve" time="0" value="0"/>
 										<Key type="Curve" time=".01" value="0"/>
@@ -7742,9 +7736,7 @@
 								</StateGroup>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1"/>
-									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawnedHero3" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1"/>
-									<Event event="HeroRespawnedHero3" action="Reset,Stop" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
 										<Key type="Curve" time="0" value="1"/>
 										<Key type="Curve" time="0.5" value="0"/>
@@ -7762,7 +7754,6 @@
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
 									<Event event="HeroRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1"/>
-									<Event event="HeroRespawnedHero3" action="Reset,Play" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
 										<Key type="Curve" time="0" value="0"/>
 										<Key type="Curve" time=".01" value="0"/>
@@ -7782,9 +7773,7 @@
 							</Frame>
 							<Frame type="Frame" name="FCJH_DeathTimeHold">
 								<Animation name="FCJH_RespawnFlash">
-									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1"/>
-									<Event event="HeroRespawned" action="Reset,Stop" frame="$parent"/>
 									<Event event="HeroRespawned" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1"/>
 									<Event event="OnHidden" action="Reset,Stop" frame="$parent/HeroDeathTimeLabel"/>
 									<Controller type="Style" end="Pause" frame="FCJH_DeathTime" style1="Storm_TopBar_DeathTimer" style2="Storm_TopBar_DeathTimer_Respawn">
@@ -7803,7 +7792,6 @@
 									</Controller>
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
-									<Event event="HeroRespawned" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1"/>
 									<Event event="OnHidden" action="Reset,Play" frame="$parent/HeroDeathTimeLabel"/>
 									<Controller type="Style" end="Pause" frame="FCJH_DeathTime" style1="Storm_TopBar_DeathTimer" style2="Storm_TopBar_DeathTimer">
@@ -7815,9 +7803,7 @@
 							<Frame type="Frame" name="FCJH_DeathSkull">
 								<Frame type="Image" name="FCJH_RespawnGlow">
 									<Animation name="FCJH_RespawnPulse">
-										<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$parent/$parent"/>
 										<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1"/>
-										<Event event="HeroRespawned" action="Reset,Stop" frame="$parent/$parent"/>
 										<Event event="HeroRespawned" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1"/>
 										<Event event="OnHidden" action="Reset,Stop" frame="$parent/$parent/HeroDeathTimeLabel"/>
 										<Controller type="Fade" end="Pause">
@@ -7836,199 +7822,6 @@
 										</Controller>
 									</Animation>
 								</Frame>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag0">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="40"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="50"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,0,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag1">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="54"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="64"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,255,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag2">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="68"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="78"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,255,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1"/>
-									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1"/>
-									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag3">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="82"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="92"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,140,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$parent"/>
-									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$parent"/>
-									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag4">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="96"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="106"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,255,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroRespawned" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag5">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="110"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="120"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,255,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag6">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="124"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="134"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,150,60,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawnedPet" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag7">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="138"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="148"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,120,190"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HearthstoneStartDefault" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag8">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="152"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="162"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,128,128"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HearthstoneStartDefault" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
 							</Frame>
 							<Frame type="Image" name="FCJH_FireDiag0">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="18"/>
@@ -8176,39 +7969,6 @@
 										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
 									</Controller>
 								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_DiagPortrait1">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
-								<Anchor side="Right"  relative="$parent" pos="Min" offset="64"/>
-								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/HeroPortraitImage/@Texture}"/>
-								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/HeroPortraitImage/@Visible}"/>
-								<RenderPriority val="700"/>
-								<Unclipped val="true"/>
-								<AcceptsMouse val="false"/>
-							</Frame>
-							<Frame type="Image" name="FCJH_DiagPortrait2">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="70"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
-								<Anchor side="Right"  relative="$parent" pos="Min" offset="134"/>
-								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/HeroPortraitImage2/@Texture}"/>
-								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/HeroPortraitImage2/@Visible}"/>
-								<RenderPriority val="700"/>
-								<Unclipped val="true"/>
-								<AcceptsMouse val="false"/>
-							</Frame>
-							<Frame type="Image" name="FCJH_DiagPortrait3">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="140"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
-								<Anchor side="Right"  relative="$parent" pos="Min" offset="204"/>
-								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/HeroPortraitImage3/@Texture}"/>
-								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/HeroPortraitImage3/@Visible}"/>
-								<RenderPriority val="700"/>
-								<Unclipped val="true"/>
-								<AcceptsMouse val="false"/>
 							</Frame>
 							<!-- the heroic, Blizzard's in-game panel mirrored (tools/gen.py heroic_panel) -->
 							<Frame type="Frame" name="FCJH_HeroicPanel">
@@ -8385,9 +8145,7 @@
 								</StateGroup>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2"/>
-									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawnedHero1" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2"/>
-									<Event event="HeroRespawnedHero1" action="Reset,Stop" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
 										<Key type="Curve" time="0" value="1"/>
 										<Key type="Curve" time="0.5" value="0"/>
@@ -8405,7 +8163,6 @@
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
 									<Event event="HeroRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2"/>
-									<Event event="HeroRespawnedHero1" action="Reset,Play" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
 										<Key type="Curve" time="0" value="0"/>
 										<Key type="Curve" time=".01" value="0"/>
@@ -8421,9 +8178,7 @@
 								</StateGroup>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2"/>
-									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawnedHero2" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2"/>
-									<Event event="HeroRespawnedHero2" action="Reset,Stop" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
 										<Key type="Curve" time="0" value="1"/>
 										<Key type="Curve" time="0.5" value="0"/>
@@ -8441,7 +8196,6 @@
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
 									<Event event="HeroRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2"/>
-									<Event event="HeroRespawnedHero2" action="Reset,Play" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
 										<Key type="Curve" time="0" value="0"/>
 										<Key type="Curve" time=".01" value="0"/>
@@ -8457,9 +8211,7 @@
 								</StateGroup>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2"/>
-									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawnedHero3" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2"/>
-									<Event event="HeroRespawnedHero3" action="Reset,Stop" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
 										<Key type="Curve" time="0" value="1"/>
 										<Key type="Curve" time="0.5" value="0"/>
@@ -8477,7 +8229,6 @@
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
 									<Event event="HeroRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2"/>
-									<Event event="HeroRespawnedHero3" action="Reset,Play" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
 										<Key type="Curve" time="0" value="0"/>
 										<Key type="Curve" time=".01" value="0"/>
@@ -8497,9 +8248,7 @@
 							</Frame>
 							<Frame type="Frame" name="FCJH_DeathTimeHold">
 								<Animation name="FCJH_RespawnFlash">
-									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2"/>
-									<Event event="HeroRespawned" action="Reset,Stop" frame="$parent"/>
 									<Event event="HeroRespawned" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2"/>
 									<Event event="OnHidden" action="Reset,Stop" frame="$parent/HeroDeathTimeLabel"/>
 									<Controller type="Style" end="Pause" frame="FCJH_DeathTime" style1="Storm_TopBar_DeathTimer" style2="Storm_TopBar_DeathTimer_Respawn">
@@ -8518,7 +8267,6 @@
 									</Controller>
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
-									<Event event="HeroRespawned" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2"/>
 									<Event event="OnHidden" action="Reset,Play" frame="$parent/HeroDeathTimeLabel"/>
 									<Controller type="Style" end="Pause" frame="FCJH_DeathTime" style1="Storm_TopBar_DeathTimer" style2="Storm_TopBar_DeathTimer">
@@ -8530,9 +8278,7 @@
 							<Frame type="Frame" name="FCJH_DeathSkull">
 								<Frame type="Image" name="FCJH_RespawnGlow">
 									<Animation name="FCJH_RespawnPulse">
-										<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$parent/$parent"/>
 										<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2"/>
-										<Event event="HeroRespawned" action="Reset,Stop" frame="$parent/$parent"/>
 										<Event event="HeroRespawned" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2"/>
 										<Event event="OnHidden" action="Reset,Stop" frame="$parent/$parent/HeroDeathTimeLabel"/>
 										<Controller type="Fade" end="Pause">
@@ -8551,199 +8297,6 @@
 										</Controller>
 									</Animation>
 								</Frame>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag0">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="40"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="50"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,0,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag1">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="54"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="64"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,255,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag2">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="68"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="78"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,255,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2"/>
-									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2"/>
-									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag3">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="82"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="92"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,140,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$parent"/>
-									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$parent"/>
-									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag4">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="96"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="106"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,255,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroRespawned" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag5">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="110"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="120"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,255,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag6">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="124"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="134"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,150,60,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawnedPet" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag7">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="138"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="148"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,120,190"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HearthstoneStartDefault" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag8">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="152"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="162"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,128,128"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HearthstoneStartDefault" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
 							</Frame>
 							<Frame type="Image" name="FCJH_FireDiag0">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="18"/>
@@ -8891,39 +8444,6 @@
 										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
 									</Controller>
 								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_DiagPortrait1">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
-								<Anchor side="Right"  relative="$parent" pos="Min" offset="64"/>
-								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/HeroPortraitImage/@Texture}"/>
-								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/HeroPortraitImage/@Visible}"/>
-								<RenderPriority val="700"/>
-								<Unclipped val="true"/>
-								<AcceptsMouse val="false"/>
-							</Frame>
-							<Frame type="Image" name="FCJH_DiagPortrait2">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="70"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
-								<Anchor side="Right"  relative="$parent" pos="Min" offset="134"/>
-								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/HeroPortraitImage2/@Texture}"/>
-								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/HeroPortraitImage2/@Visible}"/>
-								<RenderPriority val="700"/>
-								<Unclipped val="true"/>
-								<AcceptsMouse val="false"/>
-							</Frame>
-							<Frame type="Image" name="FCJH_DiagPortrait3">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="140"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
-								<Anchor side="Right"  relative="$parent" pos="Min" offset="204"/>
-								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/HeroPortraitImage3/@Texture}"/>
-								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/HeroPortraitImage3/@Visible}"/>
-								<RenderPriority val="700"/>
-								<Unclipped val="true"/>
-								<AcceptsMouse val="false"/>
 							</Frame>
 							<!-- the heroic, Blizzard's in-game panel mirrored (tools/gen.py heroic_panel) -->
 							<Frame type="Frame" name="FCJH_HeroicPanel">
@@ -9100,9 +8620,7 @@
 								</StateGroup>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3"/>
-									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawnedHero1" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3"/>
-									<Event event="HeroRespawnedHero1" action="Reset,Stop" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
 										<Key type="Curve" time="0" value="1"/>
 										<Key type="Curve" time="0.5" value="0"/>
@@ -9120,7 +8638,6 @@
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
 									<Event event="HeroRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3"/>
-									<Event event="HeroRespawnedHero1" action="Reset,Play" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
 										<Key type="Curve" time="0" value="0"/>
 										<Key type="Curve" time=".01" value="0"/>
@@ -9136,9 +8653,7 @@
 								</StateGroup>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3"/>
-									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawnedHero2" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3"/>
-									<Event event="HeroRespawnedHero2" action="Reset,Stop" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
 										<Key type="Curve" time="0" value="1"/>
 										<Key type="Curve" time="0.5" value="0"/>
@@ -9156,7 +8671,6 @@
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
 									<Event event="HeroRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3"/>
-									<Event event="HeroRespawnedHero2" action="Reset,Play" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
 										<Key type="Curve" time="0" value="0"/>
 										<Key type="Curve" time=".01" value="0"/>
@@ -9172,9 +8686,7 @@
 								</StateGroup>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3"/>
-									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawnedHero3" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3"/>
-									<Event event="HeroRespawnedHero3" action="Reset,Stop" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
 										<Key type="Curve" time="0" value="1"/>
 										<Key type="Curve" time="0.5" value="0"/>
@@ -9192,7 +8704,6 @@
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
 									<Event event="HeroRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3"/>
-									<Event event="HeroRespawnedHero3" action="Reset,Play" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
 										<Key type="Curve" time="0" value="0"/>
 										<Key type="Curve" time=".01" value="0"/>
@@ -9212,9 +8723,7 @@
 							</Frame>
 							<Frame type="Frame" name="FCJH_DeathTimeHold">
 								<Animation name="FCJH_RespawnFlash">
-									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3"/>
-									<Event event="HeroRespawned" action="Reset,Stop" frame="$parent"/>
 									<Event event="HeroRespawned" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3"/>
 									<Event event="OnHidden" action="Reset,Stop" frame="$parent/HeroDeathTimeLabel"/>
 									<Controller type="Style" end="Pause" frame="FCJH_DeathTime" style1="Storm_TopBar_DeathTimer" style2="Storm_TopBar_DeathTimer_Respawn">
@@ -9233,7 +8742,6 @@
 									</Controller>
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
-									<Event event="HeroRespawned" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3"/>
 									<Event event="OnHidden" action="Reset,Play" frame="$parent/HeroDeathTimeLabel"/>
 									<Controller type="Style" end="Pause" frame="FCJH_DeathTime" style1="Storm_TopBar_DeathTimer" style2="Storm_TopBar_DeathTimer">
@@ -9245,9 +8753,7 @@
 							<Frame type="Frame" name="FCJH_DeathSkull">
 								<Frame type="Image" name="FCJH_RespawnGlow">
 									<Animation name="FCJH_RespawnPulse">
-										<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$parent/$parent"/>
 										<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3"/>
-										<Event event="HeroRespawned" action="Reset,Stop" frame="$parent/$parent"/>
 										<Event event="HeroRespawned" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3"/>
 										<Event event="OnHidden" action="Reset,Stop" frame="$parent/$parent/HeroDeathTimeLabel"/>
 										<Controller type="Fade" end="Pause">
@@ -9266,199 +8772,6 @@
 										</Controller>
 									</Animation>
 								</Frame>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag0">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="40"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="50"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,0,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag1">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="54"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="64"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,255,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag2">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="68"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="78"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,255,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3"/>
-									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3"/>
-									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag3">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="82"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="92"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,140,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$parent"/>
-									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$parent"/>
-									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag4">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="96"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="106"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,255,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroRespawned" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag5">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="110"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="120"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,255,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag6">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="124"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="134"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,150,60,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawnedPet" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag7">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="138"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="148"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,120,190"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HearthstoneStartDefault" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag8">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="152"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="162"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,128,128"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HearthstoneStartDefault" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
 							</Frame>
 							<Frame type="Image" name="FCJH_FireDiag0">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="18"/>
@@ -9606,39 +8919,6 @@
 										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
 									</Controller>
 								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_DiagPortrait1">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
-								<Anchor side="Right"  relative="$parent" pos="Min" offset="64"/>
-								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/HeroPortraitImage/@Texture}"/>
-								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/HeroPortraitImage/@Visible}"/>
-								<RenderPriority val="700"/>
-								<Unclipped val="true"/>
-								<AcceptsMouse val="false"/>
-							</Frame>
-							<Frame type="Image" name="FCJH_DiagPortrait2">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="70"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
-								<Anchor side="Right"  relative="$parent" pos="Min" offset="134"/>
-								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/HeroPortraitImage2/@Texture}"/>
-								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/HeroPortraitImage2/@Visible}"/>
-								<RenderPriority val="700"/>
-								<Unclipped val="true"/>
-								<AcceptsMouse val="false"/>
-							</Frame>
-							<Frame type="Image" name="FCJH_DiagPortrait3">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="140"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
-								<Anchor side="Right"  relative="$parent" pos="Min" offset="204"/>
-								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/HeroPortraitImage3/@Texture}"/>
-								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/HeroPortraitImage3/@Visible}"/>
-								<RenderPriority val="700"/>
-								<Unclipped val="true"/>
-								<AcceptsMouse val="false"/>
 							</Frame>
 							<!-- the heroic, Blizzard's in-game panel mirrored (tools/gen.py heroic_panel) -->
 							<Frame type="Frame" name="FCJH_HeroicPanel">
@@ -9815,9 +9095,7 @@
 								</StateGroup>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4"/>
-									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawnedHero1" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4"/>
-									<Event event="HeroRespawnedHero1" action="Reset,Stop" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
 										<Key type="Curve" time="0" value="1"/>
 										<Key type="Curve" time="0.5" value="0"/>
@@ -9835,7 +9113,6 @@
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
 									<Event event="HeroRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4"/>
-									<Event event="HeroRespawnedHero1" action="Reset,Play" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
 										<Key type="Curve" time="0" value="0"/>
 										<Key type="Curve" time=".01" value="0"/>
@@ -9851,9 +9128,7 @@
 								</StateGroup>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4"/>
-									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawnedHero2" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4"/>
-									<Event event="HeroRespawnedHero2" action="Reset,Stop" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
 										<Key type="Curve" time="0" value="1"/>
 										<Key type="Curve" time="0.5" value="0"/>
@@ -9871,7 +9146,6 @@
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
 									<Event event="HeroRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4"/>
-									<Event event="HeroRespawnedHero2" action="Reset,Play" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
 										<Key type="Curve" time="0" value="0"/>
 										<Key type="Curve" time=".01" value="0"/>
@@ -9887,9 +9161,7 @@
 								</StateGroup>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4"/>
-									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawnedHero3" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4"/>
-									<Event event="HeroRespawnedHero3" action="Reset,Stop" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
 										<Key type="Curve" time="0" value="1"/>
 										<Key type="Curve" time="0.5" value="0"/>
@@ -9907,7 +9179,6 @@
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
 									<Event event="HeroRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4"/>
-									<Event event="HeroRespawnedHero3" action="Reset,Play" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
 										<Key type="Curve" time="0" value="0"/>
 										<Key type="Curve" time=".01" value="0"/>
@@ -9927,9 +9198,7 @@
 							</Frame>
 							<Frame type="Frame" name="FCJH_DeathTimeHold">
 								<Animation name="FCJH_RespawnFlash">
-									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4"/>
-									<Event event="HeroRespawned" action="Reset,Stop" frame="$parent"/>
 									<Event event="HeroRespawned" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4"/>
 									<Event event="OnHidden" action="Reset,Stop" frame="$parent/HeroDeathTimeLabel"/>
 									<Controller type="Style" end="Pause" frame="FCJH_DeathTime" style1="Storm_TopBar_DeathTimer" style2="Storm_TopBar_DeathTimer_Respawn">
@@ -9948,7 +9217,6 @@
 									</Controller>
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
-									<Event event="HeroRespawned" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4"/>
 									<Event event="OnHidden" action="Reset,Play" frame="$parent/HeroDeathTimeLabel"/>
 									<Controller type="Style" end="Pause" frame="FCJH_DeathTime" style1="Storm_TopBar_DeathTimer" style2="Storm_TopBar_DeathTimer">
@@ -9960,9 +9228,7 @@
 							<Frame type="Frame" name="FCJH_DeathSkull">
 								<Frame type="Image" name="FCJH_RespawnGlow">
 									<Animation name="FCJH_RespawnPulse">
-										<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$parent/$parent"/>
 										<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4"/>
-										<Event event="HeroRespawned" action="Reset,Stop" frame="$parent/$parent"/>
 										<Event event="HeroRespawned" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4"/>
 										<Event event="OnHidden" action="Reset,Stop" frame="$parent/$parent/HeroDeathTimeLabel"/>
 										<Controller type="Fade" end="Pause">
@@ -9981,199 +9247,6 @@
 										</Controller>
 									</Animation>
 								</Frame>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag0">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="40"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="50"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,0,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag1">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="54"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="64"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,255,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag2">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="68"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="78"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,255,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4"/>
-									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4"/>
-									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag3">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="82"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="92"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,140,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$parent"/>
-									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$parent"/>
-									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag4">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="96"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="106"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,255,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroRespawned" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag5">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="110"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="120"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,255,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag6">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="124"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="134"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,150,60,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawnedPet" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag7">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="138"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="148"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,120,190"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HearthstoneStartDefault" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag8">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="152"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="162"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,128,128"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HearthstoneStartDefault" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
 							</Frame>
 							<Frame type="Image" name="FCJH_FireDiag0">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="18"/>
@@ -10321,39 +9394,6 @@
 										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
 									</Controller>
 								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_DiagPortrait1">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
-								<Anchor side="Right"  relative="$parent" pos="Min" offset="64"/>
-								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/HeroPortraitImage/@Texture}"/>
-								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/HeroPortraitImage/@Visible}"/>
-								<RenderPriority val="700"/>
-								<Unclipped val="true"/>
-								<AcceptsMouse val="false"/>
-							</Frame>
-							<Frame type="Image" name="FCJH_DiagPortrait2">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="70"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
-								<Anchor side="Right"  relative="$parent" pos="Min" offset="134"/>
-								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/HeroPortraitImage2/@Texture}"/>
-								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/HeroPortraitImage2/@Visible}"/>
-								<RenderPriority val="700"/>
-								<Unclipped val="true"/>
-								<AcceptsMouse val="false"/>
-							</Frame>
-							<Frame type="Image" name="FCJH_DiagPortrait3">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="140"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
-								<Anchor side="Right"  relative="$parent" pos="Min" offset="204"/>
-								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/HeroPortraitImage3/@Texture}"/>
-								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/HeroPortraitImage3/@Visible}"/>
-								<RenderPriority val="700"/>
-								<Unclipped val="true"/>
-								<AcceptsMouse val="false"/>
 							</Frame>
 							<!-- the heroic, Blizzard's in-game panel mirrored (tools/gen.py heroic_panel) -->
 							<Frame type="Frame" name="FCJH_HeroicPanel">
@@ -10530,9 +9570,7 @@
 								</StateGroup>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5"/>
-									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawnedHero1" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5"/>
-									<Event event="HeroRespawnedHero1" action="Reset,Stop" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
 										<Key type="Curve" time="0" value="1"/>
 										<Key type="Curve" time="0.5" value="0"/>
@@ -10550,7 +9588,6 @@
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
 									<Event event="HeroRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5"/>
-									<Event event="HeroRespawnedHero1" action="Reset,Play" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
 										<Key type="Curve" time="0" value="0"/>
 										<Key type="Curve" time=".01" value="0"/>
@@ -10566,9 +9603,7 @@
 								</StateGroup>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5"/>
-									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawnedHero2" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5"/>
-									<Event event="HeroRespawnedHero2" action="Reset,Stop" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
 										<Key type="Curve" time="0" value="1"/>
 										<Key type="Curve" time="0.5" value="0"/>
@@ -10586,7 +9621,6 @@
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
 									<Event event="HeroRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5"/>
-									<Event event="HeroRespawnedHero2" action="Reset,Play" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
 										<Key type="Curve" time="0" value="0"/>
 										<Key type="Curve" time=".01" value="0"/>
@@ -10602,9 +9636,7 @@
 								</StateGroup>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5"/>
-									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawnedHero3" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5"/>
-									<Event event="HeroRespawnedHero3" action="Reset,Stop" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
 										<Key type="Curve" time="0" value="1"/>
 										<Key type="Curve" time="0.5" value="0"/>
@@ -10622,7 +9654,6 @@
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
 									<Event event="HeroRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5"/>
-									<Event event="HeroRespawnedHero3" action="Reset,Play" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
 										<Key type="Curve" time="0" value="0"/>
 										<Key type="Curve" time=".01" value="0"/>
@@ -10642,9 +9673,7 @@
 							</Frame>
 							<Frame type="Frame" name="FCJH_DeathTimeHold">
 								<Animation name="FCJH_RespawnFlash">
-									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5"/>
-									<Event event="HeroRespawned" action="Reset,Stop" frame="$parent"/>
 									<Event event="HeroRespawned" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5"/>
 									<Event event="OnHidden" action="Reset,Stop" frame="$parent/HeroDeathTimeLabel"/>
 									<Controller type="Style" end="Pause" frame="FCJH_DeathTime" style1="Storm_TopBar_DeathTimer" style2="Storm_TopBar_DeathTimer_Respawn">
@@ -10663,7 +9692,6 @@
 									</Controller>
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
-									<Event event="HeroRespawned" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5"/>
 									<Event event="OnHidden" action="Reset,Play" frame="$parent/HeroDeathTimeLabel"/>
 									<Controller type="Style" end="Pause" frame="FCJH_DeathTime" style1="Storm_TopBar_DeathTimer" style2="Storm_TopBar_DeathTimer">
@@ -10675,9 +9703,7 @@
 							<Frame type="Frame" name="FCJH_DeathSkull">
 								<Frame type="Image" name="FCJH_RespawnGlow">
 									<Animation name="FCJH_RespawnPulse">
-										<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$parent/$parent"/>
 										<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5"/>
-										<Event event="HeroRespawned" action="Reset,Stop" frame="$parent/$parent"/>
 										<Event event="HeroRespawned" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5"/>
 										<Event event="OnHidden" action="Reset,Stop" frame="$parent/$parent/HeroDeathTimeLabel"/>
 										<Controller type="Fade" end="Pause">
@@ -10696,199 +9722,6 @@
 										</Controller>
 									</Animation>
 								</Frame>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag0">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="40"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="50"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,0,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag1">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="54"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="64"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,255,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag2">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="68"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="78"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,255,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5"/>
-									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5"/>
-									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag3">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="82"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="92"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,140,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$parent"/>
-									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$parent"/>
-									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag4">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="96"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="106"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,255,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroRespawned" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag5">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="110"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="120"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,255,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag6">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="124"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="134"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,150,60,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawnedPet" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag7">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="138"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="148"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,120,190"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HearthstoneStartDefault" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag8">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="152"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="162"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,128,128"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HearthstoneStartDefault" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
 							</Frame>
 							<Frame type="Image" name="FCJH_FireDiag0">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="18"/>
@@ -11036,39 +9869,6 @@
 										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
 									</Controller>
 								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_DiagPortrait1">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
-								<Anchor side="Right"  relative="$parent" pos="Min" offset="64"/>
-								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/HeroPortraitImage/@Texture}"/>
-								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/HeroPortraitImage/@Visible}"/>
-								<RenderPriority val="700"/>
-								<Unclipped val="true"/>
-								<AcceptsMouse val="false"/>
-							</Frame>
-							<Frame type="Image" name="FCJH_DiagPortrait2">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="70"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
-								<Anchor side="Right"  relative="$parent" pos="Min" offset="134"/>
-								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/HeroPortraitImage2/@Texture}"/>
-								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/HeroPortraitImage2/@Visible}"/>
-								<RenderPriority val="700"/>
-								<Unclipped val="true"/>
-								<AcceptsMouse val="false"/>
-							</Frame>
-							<Frame type="Image" name="FCJH_DiagPortrait3">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="140"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
-								<Anchor side="Right"  relative="$parent" pos="Min" offset="204"/>
-								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/HeroPortraitImage3/@Texture}"/>
-								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/HeroPortraitImage3/@Visible}"/>
-								<RenderPriority val="700"/>
-								<Unclipped val="true"/>
-								<AcceptsMouse val="false"/>
 							</Frame>
 							<!-- the heroic, Blizzard's in-game panel mirrored (tools/gen.py heroic_panel) -->
 							<Frame type="Frame" name="FCJH_HeroicPanel">
@@ -11247,9 +10047,7 @@
 								</StateGroup>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1"/>
-									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawnedHero1" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1"/>
-									<Event event="HeroRespawnedHero1" action="Reset,Stop" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
 										<Key type="Curve" time="0" value="1"/>
 										<Key type="Curve" time="0.5" value="0"/>
@@ -11267,7 +10065,6 @@
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
 									<Event event="HeroRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1"/>
-									<Event event="HeroRespawnedHero1" action="Reset,Play" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
 										<Key type="Curve" time="0" value="0"/>
 										<Key type="Curve" time=".01" value="0"/>
@@ -11283,9 +10080,7 @@
 								</StateGroup>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1"/>
-									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawnedHero2" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1"/>
-									<Event event="HeroRespawnedHero2" action="Reset,Stop" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
 										<Key type="Curve" time="0" value="1"/>
 										<Key type="Curve" time="0.5" value="0"/>
@@ -11303,7 +10098,6 @@
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
 									<Event event="HeroRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1"/>
-									<Event event="HeroRespawnedHero2" action="Reset,Play" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
 										<Key type="Curve" time="0" value="0"/>
 										<Key type="Curve" time=".01" value="0"/>
@@ -11319,9 +10113,7 @@
 								</StateGroup>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1"/>
-									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawnedHero3" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1"/>
-									<Event event="HeroRespawnedHero3" action="Reset,Stop" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
 										<Key type="Curve" time="0" value="1"/>
 										<Key type="Curve" time="0.5" value="0"/>
@@ -11339,7 +10131,6 @@
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
 									<Event event="HeroRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1"/>
-									<Event event="HeroRespawnedHero3" action="Reset,Play" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
 										<Key type="Curve" time="0" value="0"/>
 										<Key type="Curve" time=".01" value="0"/>
@@ -11359,9 +10150,7 @@
 							</Frame>
 							<Frame type="Frame" name="FCJH_DeathTimeHold">
 								<Animation name="FCJH_RespawnFlash">
-									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1"/>
-									<Event event="HeroRespawned" action="Reset,Stop" frame="$parent"/>
 									<Event event="HeroRespawned" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1"/>
 									<Event event="OnHidden" action="Reset,Stop" frame="$parent/HeroDeathTimeLabel"/>
 									<Controller type="Style" end="Pause" frame="FCJH_DeathTime" style1="Storm_TopBar_DeathTimer" style2="Storm_TopBar_DeathTimer_Respawn">
@@ -11380,7 +10169,6 @@
 									</Controller>
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
-									<Event event="HeroRespawned" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1"/>
 									<Event event="OnHidden" action="Reset,Play" frame="$parent/HeroDeathTimeLabel"/>
 									<Controller type="Style" end="Pause" frame="FCJH_DeathTime" style1="Storm_TopBar_DeathTimer" style2="Storm_TopBar_DeathTimer">
@@ -11392,9 +10180,7 @@
 							<Frame type="Frame" name="FCJH_DeathSkull">
 								<Frame type="Image" name="FCJH_RespawnGlow">
 									<Animation name="FCJH_RespawnPulse">
-										<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$parent/$parent"/>
 										<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1"/>
-										<Event event="HeroRespawned" action="Reset,Stop" frame="$parent/$parent"/>
 										<Event event="HeroRespawned" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1"/>
 										<Event event="OnHidden" action="Reset,Stop" frame="$parent/$parent/HeroDeathTimeLabel"/>
 										<Controller type="Fade" end="Pause">
@@ -11413,199 +10199,6 @@
 										</Controller>
 									</Animation>
 								</Frame>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag0">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="40"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="50"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,0,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag1">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="54"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="64"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,255,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag2">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="68"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="78"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,255,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1"/>
-									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1"/>
-									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag3">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="82"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="92"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,140,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$parent"/>
-									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$parent"/>
-									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag4">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="96"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="106"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,255,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroRespawned" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag5">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="110"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="120"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,255,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag6">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="124"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="134"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,150,60,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawnedPet" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag7">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="138"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="148"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,120,190"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HearthstoneStartDefault" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag8">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="152"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="162"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,128,128"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HearthstoneStartDefault" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
 							</Frame>
 							<Frame type="Image" name="FCJH_FireDiag0">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="18"/>
@@ -11753,39 +10346,6 @@
 										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
 									</Controller>
 								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_DiagPortrait1">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
-								<Anchor side="Right"  relative="$parent" pos="Min" offset="64"/>
-								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/HeroPortraitImage/@Texture}"/>
-								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/HeroPortraitImage/@Visible}"/>
-								<RenderPriority val="700"/>
-								<Unclipped val="true"/>
-								<AcceptsMouse val="false"/>
-							</Frame>
-							<Frame type="Image" name="FCJH_DiagPortrait2">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="70"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
-								<Anchor side="Right"  relative="$parent" pos="Min" offset="134"/>
-								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/HeroPortraitImage2/@Texture}"/>
-								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/HeroPortraitImage2/@Visible}"/>
-								<RenderPriority val="700"/>
-								<Unclipped val="true"/>
-								<AcceptsMouse val="false"/>
-							</Frame>
-							<Frame type="Image" name="FCJH_DiagPortrait3">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="140"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
-								<Anchor side="Right"  relative="$parent" pos="Min" offset="204"/>
-								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/HeroPortraitImage3/@Texture}"/>
-								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/HeroPortraitImage3/@Visible}"/>
-								<RenderPriority val="700"/>
-								<Unclipped val="true"/>
-								<AcceptsMouse val="false"/>
 							</Frame>
 							<!-- the heroic, Blizzard's in-game panel mirrored (tools/gen.py heroic_panel) -->
 							<Frame type="Frame" name="FCJH_HeroicPanel">
@@ -11965,9 +10525,7 @@
 								</StateGroup>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2"/>
-									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawnedHero1" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2"/>
-									<Event event="HeroRespawnedHero1" action="Reset,Stop" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
 										<Key type="Curve" time="0" value="1"/>
 										<Key type="Curve" time="0.5" value="0"/>
@@ -11985,7 +10543,6 @@
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
 									<Event event="HeroRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2"/>
-									<Event event="HeroRespawnedHero1" action="Reset,Play" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
 										<Key type="Curve" time="0" value="0"/>
 										<Key type="Curve" time=".01" value="0"/>
@@ -12001,9 +10558,7 @@
 								</StateGroup>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2"/>
-									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawnedHero2" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2"/>
-									<Event event="HeroRespawnedHero2" action="Reset,Stop" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
 										<Key type="Curve" time="0" value="1"/>
 										<Key type="Curve" time="0.5" value="0"/>
@@ -12021,7 +10576,6 @@
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
 									<Event event="HeroRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2"/>
-									<Event event="HeroRespawnedHero2" action="Reset,Play" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
 										<Key type="Curve" time="0" value="0"/>
 										<Key type="Curve" time=".01" value="0"/>
@@ -12037,9 +10591,7 @@
 								</StateGroup>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2"/>
-									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawnedHero3" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2"/>
-									<Event event="HeroRespawnedHero3" action="Reset,Stop" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
 										<Key type="Curve" time="0" value="1"/>
 										<Key type="Curve" time="0.5" value="0"/>
@@ -12057,7 +10609,6 @@
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
 									<Event event="HeroRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2"/>
-									<Event event="HeroRespawnedHero3" action="Reset,Play" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
 										<Key type="Curve" time="0" value="0"/>
 										<Key type="Curve" time=".01" value="0"/>
@@ -12077,9 +10628,7 @@
 							</Frame>
 							<Frame type="Frame" name="FCJH_DeathTimeHold">
 								<Animation name="FCJH_RespawnFlash">
-									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2"/>
-									<Event event="HeroRespawned" action="Reset,Stop" frame="$parent"/>
 									<Event event="HeroRespawned" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2"/>
 									<Event event="OnHidden" action="Reset,Stop" frame="$parent/HeroDeathTimeLabel"/>
 									<Controller type="Style" end="Pause" frame="FCJH_DeathTime" style1="Storm_TopBar_DeathTimer" style2="Storm_TopBar_DeathTimer_Respawn">
@@ -12098,7 +10647,6 @@
 									</Controller>
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
-									<Event event="HeroRespawned" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2"/>
 									<Event event="OnHidden" action="Reset,Play" frame="$parent/HeroDeathTimeLabel"/>
 									<Controller type="Style" end="Pause" frame="FCJH_DeathTime" style1="Storm_TopBar_DeathTimer" style2="Storm_TopBar_DeathTimer">
@@ -12110,9 +10658,7 @@
 							<Frame type="Frame" name="FCJH_DeathSkull">
 								<Frame type="Image" name="FCJH_RespawnGlow">
 									<Animation name="FCJH_RespawnPulse">
-										<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$parent/$parent"/>
 										<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2"/>
-										<Event event="HeroRespawned" action="Reset,Stop" frame="$parent/$parent"/>
 										<Event event="HeroRespawned" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2"/>
 										<Event event="OnHidden" action="Reset,Stop" frame="$parent/$parent/HeroDeathTimeLabel"/>
 										<Controller type="Fade" end="Pause">
@@ -12131,199 +10677,6 @@
 										</Controller>
 									</Animation>
 								</Frame>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag0">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="40"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="50"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,0,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag1">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="54"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="64"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,255,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag2">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="68"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="78"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,255,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2"/>
-									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2"/>
-									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag3">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="82"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="92"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,140,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$parent"/>
-									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$parent"/>
-									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag4">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="96"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="106"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,255,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroRespawned" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag5">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="110"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="120"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,255,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag6">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="124"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="134"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,150,60,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawnedPet" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag7">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="138"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="148"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,120,190"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HearthstoneStartDefault" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag8">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="152"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="162"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,128,128"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HearthstoneStartDefault" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
 							</Frame>
 							<Frame type="Image" name="FCJH_FireDiag0">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="18"/>
@@ -12471,39 +10824,6 @@
 										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
 									</Controller>
 								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_DiagPortrait1">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
-								<Anchor side="Right"  relative="$parent" pos="Min" offset="64"/>
-								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/HeroPortraitImage/@Texture}"/>
-								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/HeroPortraitImage/@Visible}"/>
-								<RenderPriority val="700"/>
-								<Unclipped val="true"/>
-								<AcceptsMouse val="false"/>
-							</Frame>
-							<Frame type="Image" name="FCJH_DiagPortrait2">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="70"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
-								<Anchor side="Right"  relative="$parent" pos="Min" offset="134"/>
-								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/HeroPortraitImage2/@Texture}"/>
-								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/HeroPortraitImage2/@Visible}"/>
-								<RenderPriority val="700"/>
-								<Unclipped val="true"/>
-								<AcceptsMouse val="false"/>
-							</Frame>
-							<Frame type="Image" name="FCJH_DiagPortrait3">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="140"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
-								<Anchor side="Right"  relative="$parent" pos="Min" offset="204"/>
-								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/HeroPortraitImage3/@Texture}"/>
-								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/HeroPortraitImage3/@Visible}"/>
-								<RenderPriority val="700"/>
-								<Unclipped val="true"/>
-								<AcceptsMouse val="false"/>
 							</Frame>
 							<!-- the heroic, Blizzard's in-game panel mirrored (tools/gen.py heroic_panel) -->
 							<Frame type="Frame" name="FCJH_HeroicPanel">
@@ -12683,9 +11003,7 @@
 								</StateGroup>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3"/>
-									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawnedHero1" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3"/>
-									<Event event="HeroRespawnedHero1" action="Reset,Stop" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
 										<Key type="Curve" time="0" value="1"/>
 										<Key type="Curve" time="0.5" value="0"/>
@@ -12703,7 +11021,6 @@
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
 									<Event event="HeroRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3"/>
-									<Event event="HeroRespawnedHero1" action="Reset,Play" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
 										<Key type="Curve" time="0" value="0"/>
 										<Key type="Curve" time=".01" value="0"/>
@@ -12719,9 +11036,7 @@
 								</StateGroup>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3"/>
-									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawnedHero2" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3"/>
-									<Event event="HeroRespawnedHero2" action="Reset,Stop" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
 										<Key type="Curve" time="0" value="1"/>
 										<Key type="Curve" time="0.5" value="0"/>
@@ -12739,7 +11054,6 @@
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
 									<Event event="HeroRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3"/>
-									<Event event="HeroRespawnedHero2" action="Reset,Play" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
 										<Key type="Curve" time="0" value="0"/>
 										<Key type="Curve" time=".01" value="0"/>
@@ -12755,9 +11069,7 @@
 								</StateGroup>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3"/>
-									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawnedHero3" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3"/>
-									<Event event="HeroRespawnedHero3" action="Reset,Stop" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
 										<Key type="Curve" time="0" value="1"/>
 										<Key type="Curve" time="0.5" value="0"/>
@@ -12775,7 +11087,6 @@
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
 									<Event event="HeroRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3"/>
-									<Event event="HeroRespawnedHero3" action="Reset,Play" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
 										<Key type="Curve" time="0" value="0"/>
 										<Key type="Curve" time=".01" value="0"/>
@@ -12795,9 +11106,7 @@
 							</Frame>
 							<Frame type="Frame" name="FCJH_DeathTimeHold">
 								<Animation name="FCJH_RespawnFlash">
-									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3"/>
-									<Event event="HeroRespawned" action="Reset,Stop" frame="$parent"/>
 									<Event event="HeroRespawned" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3"/>
 									<Event event="OnHidden" action="Reset,Stop" frame="$parent/HeroDeathTimeLabel"/>
 									<Controller type="Style" end="Pause" frame="FCJH_DeathTime" style1="Storm_TopBar_DeathTimer" style2="Storm_TopBar_DeathTimer_Respawn">
@@ -12816,7 +11125,6 @@
 									</Controller>
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
-									<Event event="HeroRespawned" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3"/>
 									<Event event="OnHidden" action="Reset,Play" frame="$parent/HeroDeathTimeLabel"/>
 									<Controller type="Style" end="Pause" frame="FCJH_DeathTime" style1="Storm_TopBar_DeathTimer" style2="Storm_TopBar_DeathTimer">
@@ -12828,9 +11136,7 @@
 							<Frame type="Frame" name="FCJH_DeathSkull">
 								<Frame type="Image" name="FCJH_RespawnGlow">
 									<Animation name="FCJH_RespawnPulse">
-										<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$parent/$parent"/>
 										<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3"/>
-										<Event event="HeroRespawned" action="Reset,Stop" frame="$parent/$parent"/>
 										<Event event="HeroRespawned" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3"/>
 										<Event event="OnHidden" action="Reset,Stop" frame="$parent/$parent/HeroDeathTimeLabel"/>
 										<Controller type="Fade" end="Pause">
@@ -12849,199 +11155,6 @@
 										</Controller>
 									</Animation>
 								</Frame>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag0">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="40"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="50"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,0,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag1">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="54"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="64"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,255,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag2">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="68"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="78"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,255,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3"/>
-									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3"/>
-									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag3">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="82"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="92"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,140,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$parent"/>
-									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$parent"/>
-									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag4">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="96"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="106"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,255,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroRespawned" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag5">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="110"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="120"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,255,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag6">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="124"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="134"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,150,60,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawnedPet" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag7">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="138"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="148"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,120,190"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HearthstoneStartDefault" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag8">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="152"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="162"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,128,128"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HearthstoneStartDefault" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
 							</Frame>
 							<Frame type="Image" name="FCJH_FireDiag0">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="18"/>
@@ -13189,39 +11302,6 @@
 										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
 									</Controller>
 								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_DiagPortrait1">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
-								<Anchor side="Right"  relative="$parent" pos="Min" offset="64"/>
-								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/HeroPortraitImage/@Texture}"/>
-								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/HeroPortraitImage/@Visible}"/>
-								<RenderPriority val="700"/>
-								<Unclipped val="true"/>
-								<AcceptsMouse val="false"/>
-							</Frame>
-							<Frame type="Image" name="FCJH_DiagPortrait2">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="70"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
-								<Anchor side="Right"  relative="$parent" pos="Min" offset="134"/>
-								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/HeroPortraitImage2/@Texture}"/>
-								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/HeroPortraitImage2/@Visible}"/>
-								<RenderPriority val="700"/>
-								<Unclipped val="true"/>
-								<AcceptsMouse val="false"/>
-							</Frame>
-							<Frame type="Image" name="FCJH_DiagPortrait3">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="140"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
-								<Anchor side="Right"  relative="$parent" pos="Min" offset="204"/>
-								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/HeroPortraitImage3/@Texture}"/>
-								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/HeroPortraitImage3/@Visible}"/>
-								<RenderPriority val="700"/>
-								<Unclipped val="true"/>
-								<AcceptsMouse val="false"/>
 							</Frame>
 							<!-- the heroic, Blizzard's in-game panel mirrored (tools/gen.py heroic_panel) -->
 							<Frame type="Frame" name="FCJH_HeroicPanel">
@@ -13401,9 +11481,7 @@
 								</StateGroup>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4"/>
-									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawnedHero1" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4"/>
-									<Event event="HeroRespawnedHero1" action="Reset,Stop" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
 										<Key type="Curve" time="0" value="1"/>
 										<Key type="Curve" time="0.5" value="0"/>
@@ -13421,7 +11499,6 @@
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
 									<Event event="HeroRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4"/>
-									<Event event="HeroRespawnedHero1" action="Reset,Play" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
 										<Key type="Curve" time="0" value="0"/>
 										<Key type="Curve" time=".01" value="0"/>
@@ -13437,9 +11514,7 @@
 								</StateGroup>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4"/>
-									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawnedHero2" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4"/>
-									<Event event="HeroRespawnedHero2" action="Reset,Stop" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
 										<Key type="Curve" time="0" value="1"/>
 										<Key type="Curve" time="0.5" value="0"/>
@@ -13457,7 +11532,6 @@
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
 									<Event event="HeroRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4"/>
-									<Event event="HeroRespawnedHero2" action="Reset,Play" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
 										<Key type="Curve" time="0" value="0"/>
 										<Key type="Curve" time=".01" value="0"/>
@@ -13473,9 +11547,7 @@
 								</StateGroup>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4"/>
-									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawnedHero3" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4"/>
-									<Event event="HeroRespawnedHero3" action="Reset,Stop" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
 										<Key type="Curve" time="0" value="1"/>
 										<Key type="Curve" time="0.5" value="0"/>
@@ -13493,7 +11565,6 @@
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
 									<Event event="HeroRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4"/>
-									<Event event="HeroRespawnedHero3" action="Reset,Play" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
 										<Key type="Curve" time="0" value="0"/>
 										<Key type="Curve" time=".01" value="0"/>
@@ -13513,9 +11584,7 @@
 							</Frame>
 							<Frame type="Frame" name="FCJH_DeathTimeHold">
 								<Animation name="FCJH_RespawnFlash">
-									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4"/>
-									<Event event="HeroRespawned" action="Reset,Stop" frame="$parent"/>
 									<Event event="HeroRespawned" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4"/>
 									<Event event="OnHidden" action="Reset,Stop" frame="$parent/HeroDeathTimeLabel"/>
 									<Controller type="Style" end="Pause" frame="FCJH_DeathTime" style1="Storm_TopBar_DeathTimer" style2="Storm_TopBar_DeathTimer_Respawn">
@@ -13534,7 +11603,6 @@
 									</Controller>
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
-									<Event event="HeroRespawned" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4"/>
 									<Event event="OnHidden" action="Reset,Play" frame="$parent/HeroDeathTimeLabel"/>
 									<Controller type="Style" end="Pause" frame="FCJH_DeathTime" style1="Storm_TopBar_DeathTimer" style2="Storm_TopBar_DeathTimer">
@@ -13546,9 +11614,7 @@
 							<Frame type="Frame" name="FCJH_DeathSkull">
 								<Frame type="Image" name="FCJH_RespawnGlow">
 									<Animation name="FCJH_RespawnPulse">
-										<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$parent/$parent"/>
 										<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4"/>
-										<Event event="HeroRespawned" action="Reset,Stop" frame="$parent/$parent"/>
 										<Event event="HeroRespawned" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4"/>
 										<Event event="OnHidden" action="Reset,Stop" frame="$parent/$parent/HeroDeathTimeLabel"/>
 										<Controller type="Fade" end="Pause">
@@ -13567,199 +11633,6 @@
 										</Controller>
 									</Animation>
 								</Frame>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag0">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="40"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="50"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,0,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag1">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="54"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="64"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,255,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag2">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="68"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="78"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,255,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4"/>
-									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4"/>
-									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag3">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="82"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="92"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,140,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$parent"/>
-									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$parent"/>
-									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag4">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="96"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="106"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,255,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroRespawned" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag5">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="110"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="120"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,255,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag6">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="124"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="134"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,150,60,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawnedPet" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag7">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="138"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="148"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,120,190"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HearthstoneStartDefault" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag8">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="152"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="162"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,128,128"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HearthstoneStartDefault" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
 							</Frame>
 							<Frame type="Image" name="FCJH_FireDiag0">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="18"/>
@@ -13907,39 +11780,6 @@
 										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
 									</Controller>
 								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_DiagPortrait1">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
-								<Anchor side="Right"  relative="$parent" pos="Min" offset="64"/>
-								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/HeroPortraitImage/@Texture}"/>
-								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/HeroPortraitImage/@Visible}"/>
-								<RenderPriority val="700"/>
-								<Unclipped val="true"/>
-								<AcceptsMouse val="false"/>
-							</Frame>
-							<Frame type="Image" name="FCJH_DiagPortrait2">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="70"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
-								<Anchor side="Right"  relative="$parent" pos="Min" offset="134"/>
-								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/HeroPortraitImage2/@Texture}"/>
-								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/HeroPortraitImage2/@Visible}"/>
-								<RenderPriority val="700"/>
-								<Unclipped val="true"/>
-								<AcceptsMouse val="false"/>
-							</Frame>
-							<Frame type="Image" name="FCJH_DiagPortrait3">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="140"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
-								<Anchor side="Right"  relative="$parent" pos="Min" offset="204"/>
-								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/HeroPortraitImage3/@Texture}"/>
-								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/HeroPortraitImage3/@Visible}"/>
-								<RenderPriority val="700"/>
-								<Unclipped val="true"/>
-								<AcceptsMouse val="false"/>
 							</Frame>
 							<!-- the heroic, Blizzard's in-game panel mirrored (tools/gen.py heroic_panel) -->
 							<Frame type="Frame" name="FCJH_HeroicPanel">
@@ -14119,9 +11959,7 @@
 								</StateGroup>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5"/>
-									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawnedHero1" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5"/>
-									<Event event="HeroRespawnedHero1" action="Reset,Stop" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
 										<Key type="Curve" time="0" value="1"/>
 										<Key type="Curve" time="0.5" value="0"/>
@@ -14139,7 +11977,6 @@
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
 									<Event event="HeroRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5"/>
-									<Event event="HeroRespawnedHero1" action="Reset,Play" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
 										<Key type="Curve" time="0" value="0"/>
 										<Key type="Curve" time=".01" value="0"/>
@@ -14155,9 +11992,7 @@
 								</StateGroup>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5"/>
-									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawnedHero2" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5"/>
-									<Event event="HeroRespawnedHero2" action="Reset,Stop" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
 										<Key type="Curve" time="0" value="1"/>
 										<Key type="Curve" time="0.5" value="0"/>
@@ -14175,7 +12010,6 @@
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
 									<Event event="HeroRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5"/>
-									<Event event="HeroRespawnedHero2" action="Reset,Play" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
 										<Key type="Curve" time="0" value="0"/>
 										<Key type="Curve" time=".01" value="0"/>
@@ -14191,9 +12025,7 @@
 								</StateGroup>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5"/>
-									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawnedHero3" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5"/>
-									<Event event="HeroRespawnedHero3" action="Reset,Stop" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
 										<Key type="Curve" time="0" value="1"/>
 										<Key type="Curve" time="0.5" value="0"/>
@@ -14211,7 +12043,6 @@
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
 									<Event event="HeroRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5"/>
-									<Event event="HeroRespawnedHero3" action="Reset,Play" frame="$parent"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
 										<Key type="Curve" time="0" value="0"/>
 										<Key type="Curve" time=".01" value="0"/>
@@ -14231,9 +12062,7 @@
 							</Frame>
 							<Frame type="Frame" name="FCJH_DeathTimeHold">
 								<Animation name="FCJH_RespawnFlash">
-									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5"/>
-									<Event event="HeroRespawned" action="Reset,Stop" frame="$parent"/>
 									<Event event="HeroRespawned" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5"/>
 									<Event event="OnHidden" action="Reset,Stop" frame="$parent/HeroDeathTimeLabel"/>
 									<Controller type="Style" end="Pause" frame="FCJH_DeathTime" style1="Storm_TopBar_DeathTimer" style2="Storm_TopBar_DeathTimer_Respawn">
@@ -14252,7 +12081,6 @@
 									</Controller>
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
-									<Event event="HeroRespawned" action="Reset,Play" frame="$parent"/>
 									<Event event="HeroRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5"/>
 									<Event event="OnHidden" action="Reset,Play" frame="$parent/HeroDeathTimeLabel"/>
 									<Controller type="Style" end="Pause" frame="FCJH_DeathTime" style1="Storm_TopBar_DeathTimer" style2="Storm_TopBar_DeathTimer">
@@ -14264,9 +12092,7 @@
 							<Frame type="Frame" name="FCJH_DeathSkull">
 								<Frame type="Image" name="FCJH_RespawnGlow">
 									<Animation name="FCJH_RespawnPulse">
-										<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$parent/$parent"/>
 										<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5"/>
-										<Event event="HeroRespawned" action="Reset,Stop" frame="$parent/$parent"/>
 										<Event event="HeroRespawned" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5"/>
 										<Event event="OnHidden" action="Reset,Stop" frame="$parent/$parent/HeroDeathTimeLabel"/>
 										<Controller type="Fade" end="Pause">
@@ -14285,199 +12111,6 @@
 										</Controller>
 									</Animation>
 								</Frame>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag0">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="40"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="50"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,0,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag1">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="54"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="64"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,255,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag2">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="68"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="78"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,255,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5"/>
-									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5"/>
-									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag3">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="82"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="92"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,140,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$parent"/>
-									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$parent"/>
-									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag4">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="96"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="106"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,255,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroRespawned" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag5">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="110"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="120"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,255,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroRespawned" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag6">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="124"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="134"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,150,60,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HeroAlmostRespawnedPet" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag7">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="138"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="148"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,120,190"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HearthstoneStartDefault" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_Diag8">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="4"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="152"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="14"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="162"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,128,128"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="HearthstoneStartDefault" action="Reset,Play" frame="$parent"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="255" inout="Linear"/>
-										<Key type="Curve" time="6" value="255" inout="Linear"/>
-										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
 							</Frame>
 							<Frame type="Image" name="FCJH_FireDiag0">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="18"/>
@@ -14625,39 +12258,6 @@
 										<Key type="Curve" time="6.01" value="0" inout="Linear"/>
 									</Controller>
 								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_DiagPortrait1">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
-								<Anchor side="Right"  relative="$parent" pos="Min" offset="64"/>
-								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/HeroPortraitImage/@Texture}"/>
-								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/HeroPortraitImage/@Visible}"/>
-								<RenderPriority val="700"/>
-								<Unclipped val="true"/>
-								<AcceptsMouse val="false"/>
-							</Frame>
-							<Frame type="Image" name="FCJH_DiagPortrait2">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="70"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
-								<Anchor side="Right"  relative="$parent" pos="Min" offset="134"/>
-								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/HeroPortraitImage2/@Texture}"/>
-								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/HeroPortraitImage2/@Visible}"/>
-								<RenderPriority val="700"/>
-								<Unclipped val="true"/>
-								<AcceptsMouse val="false"/>
-							</Frame>
-							<Frame type="Image" name="FCJH_DiagPortrait3">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="140"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
-								<Anchor side="Right"  relative="$parent" pos="Min" offset="204"/>
-								<Texture val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/HeroPortraitImage3/@Texture}"/>
-								<Visible val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/HeroPortraitImage3/@Visible}"/>
-								<RenderPriority val="700"/>
-								<Unclipped val="true"/>
-								<AcceptsMouse val="false"/>
 							</Frame>
 							<!-- the heroic, Blizzard's in-game panel mirrored (tools/gen.py heroic_panel) -->
 							<Frame type="Frame" name="FCJH_HeroicPanel">

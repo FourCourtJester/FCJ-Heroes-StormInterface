@@ -261,14 +261,16 @@ have been on fire; its squares stay in until then.
    Blizzard's script sets their textures for players only. Hard-code Blizzard's partyframe
    textures, picked by which images show, with its separators. Mock up two layouts first.
    **Parked for the round after this one (user): the most work of the eleven.**
-4. The respawn flash and glow listen to the party cell only; the pet event goes on too.
+4. **Done, not yet built.** The respawn flash and glow listen to the party cell only, the
+   Vikings' too. The pet event isn't added: it never arrived, and Misha waits with fix 3.
 5. The panes and the inspect card take the Try Me panel's style
    (`Storm_TutorialReferenceCardBG`, tiled nine-slice, alpha 180) and its small close tab,
    in place of the menu-border test.
 6. Hogger's rage colour (`RageEnergy`); Blizzard's target panel lacks him (log it).
 7. **Done, not yet built.** The core's chrome line up to 3 px like the rest (user); its bottom
    line now lies exactly on the row frame's top line.
-8. The answered diagnostics come out (respawn, hearthstone, split portraits).
+8. **Done, not yet built.** The answered diagnostics come out (respawn, hearthstone, split
+   portraits); the on-fire row stays, in its place (`gen.onfire_diagnostics`).
 9. **Done, not yet built** (`inspect_card.dva_charge`). D.Va's Self-Destruct meter on the inspect card ("needs love", user): Blizzard draws it
    from her own layout (`DVaMechCommandCardFrame`, dva.stormlayout:678) as a copy of
    Tracer's Pulse Bomb meter, 68 x 76 with a percent label, so it's oversized on our button

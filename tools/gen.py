@@ -1819,8 +1819,7 @@ def pet_death_bindings(team_frame, i):
     out = ""
     for n, (ours, theirs) in enumerate(PET_TIMERS.items(), start=1):   # Olaf Hero1, Baleog 2, Erik 3
         flash = style_flash("FCJH_RespawnFlash", "$this", "FCJH_PetDeathTimer", "FCJH_PetDeathTimer_Respawn",
-                            [(f"HeroAlmostRespawnedHero{n}", cell), (f"HeroAlmostRespawnedHero{n}", "$parent")],
-                            [(f"HeroRespawnedHero{n}", cell), (f"HeroRespawnedHero{n}", "$parent")], t)
+                            [(f"HeroAlmostRespawnedHero{n}", cell)], [(f"HeroRespawnedHero{n}", cell)], t)
         out += f"""
 							<Frame type="Label" name="FCJH_Death{ours}">
 								<Text val="{{{cell}/{theirs}/@Text}}"/>
@@ -1847,10 +1846,10 @@ def pet_death_bindings(team_frame, i):
 									<State name="No">{hide(255)}</State>
 								</StateGroup>
 							</Frame>"""
-    # the main flash and the glow listen on both cells - ours and the hidden party one - as
-    # it isn't known yet which the game sends HeroAlmostRespawned to (respawn_diagnostics)
-    starts = [("HeroAlmostRespawned", "$parent"), ("HeroAlmostRespawned", cell)]
-    stops = [("HeroRespawned", "$parent"), ("HeroRespawned", cell), ("OnHidden", "$parent/HeroDeathTimeLabel")]
+    # the main flash and the glow listen to the hidden party cell: the game sends the respawn
+    # events there, never to ours (the test build's squares, 2026-10-16), the Vikings' too
+    starts = [("HeroAlmostRespawned", cell)]
+    stops = [("HeroRespawned", cell), ("OnHidden", "$parent/HeroDeathTimeLabel")]
     flash = style_flash("FCJH_RespawnFlash", "FCJH_DeathTime", "Storm_TopBar_DeathTimer",
                         "Storm_TopBar_DeathTimer_Respawn", starts, stops, t)
     # the glow is a child of the skull: its paths are one level further down
@@ -1870,51 +1869,18 @@ def pet_death_bindings(team_frame, i):
 										</Controller>
 									</Animation>
 								</Frame>
-							</Frame>{respawn_diagnostics(cell)}{split_portrait_diagnostics(cell)}"""
+							</Frame>{onfire_diagnostics(cell)}"""
     return out
 
 
-def split_portrait_diagnostics(cell):
-    """Test build (2026-10-16), for the split plates: the hidden party cell's three portrait
-    pictures (HeroPortraitImage, 2, 3), raw and uncropped, as thumbnails above the plate, each
-    shown only while Blizzard shows its own. 1 shows on every plate if the binding works; 2
-    and 3 should show for Rexxar and the Vikings. Remove once read."""
-    out = ""
-    for j, name in enumerate(("HeroPortraitImage", "HeroPortraitImage2", "HeroPortraitImage3")):
-        x = 70 * j
-        out += f"""
-							<Frame type="Image" name="FCJH_DiagPortrait{j + 1}">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="-34"/>
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="{x}"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="-6"/>
-								<Anchor side="Right"  relative="$parent" pos="Min" offset="{x + 64}"/>
-								<Texture val="{{{cell}/{name}/@Texture}}"/>
-								<Visible val="{{{cell}/{name}/@Visible}}"/>
-								<RenderPriority val="700"/>
-								<Unclipped val="true"/>
-								<AcceptsMouse val="false"/>
-							</Frame>"""
-    return out
-
-
-# Test build (2026-10-16): which cell does the game send each event to? One square per
-# (event, cell) along the plate's top; each lights for 6 s when its event arrives.
-# Remove once read (the keep-diagnostics rule).
-RESPAWN_DIAGNOSTICS = [
-    ("255,255,0,255", [("HeroAlmostRespawned", "ours")]),                       # magenta
-    ("255,0,255,255", [("HeroAlmostRespawned", "party")]),                      # cyan
-    ("255,255,255,0", [(f"HeroAlmostRespawnedHero{n}", "party") for n in (1, 2, 3)]),  # yellow
-    ("255,255,140,0", [(f"HeroAlmostRespawnedHero{n}", "ours") for n in (1, 2, 3)]),   # orange
-    ("255,0,255,0", [("HeroRespawned", "ours")]),                               # green
-    ("255,255,255,255", [("HeroRespawned", "party")]),                          # white
-    ("255,150,60,255", [("HeroAlmostRespawnedPet", "party")]),                  # purple
-    ("255,255,120,190", [("HearthstoneStartDefault", "party")]),                # pink
-    ("255,0,128,128", [("HearthstoneStartDefault", "ours")]),                   # teal
-]
-# A second row, under the first: on fire. Blizzard sends these to the party cell's
-# OnFireCutsceneFrame (uilib.galaxy libUIUI_gf_UIOnFireSetOnFireType/Level): the levels, Left
-# (Order, blue) / Right (Chaos, red) to everyone; Ally / Enemy only to the hero's allies /
-# enemies, so an observer may see neither. Squares 0-6 of row 2.
+# Test build (2026-10-16), kept until a replay where someone was surely on fire (user: shelved
+# till then): one square per on-fire event along the plate's top, each lit for 6 s when it
+# arrives. Blizzard sends these to the party cell's OnFireCutsceneFrame (uilib.galaxy
+# libUIUI_gf_UIOnFireSetOnFireType/Level): the levels, Left (Order, blue) / Right (Chaos, red)
+# to everyone; Ally / Enemy only to the hero's allies / enemies, so an observer may see neither.
+# The respawn, hearthstone and split-portrait squares above them are answered and gone
+# (2026-10-16): the respawn events reach the party cell only; the hearthstone's go to the
+# hero's team only (docs/blizzard-fixes.md); the split portraits draw white for observers.
 ONFIRE_DIAGNOSTICS = [
     ("255,255,140,0", [("OnFireEmbers", "fire")]),                              # orange
     ("255,255,0,0", [("OnFireInferno", "fire")]),                               # red
@@ -1926,11 +1892,10 @@ ONFIRE_DIAGNOSTICS = [
 ]
 
 
-def respawn_diagnostics(cell):
+def onfire_diagnostics(cell):
     out = ""
-    src_frame = {"ours": "$parent", "party": cell, "fire": f"{cell}/OnFireCutsceneFrame"}
-    rows = [("FCJH_Diag", 4, RESPAWN_DIAGNOSTICS), ("FCJH_FireDiag", 18, ONFIRE_DIAGNOSTICS)]
-    squares = [(prefix, top, j, sq) for prefix, top, table in rows for j, sq in enumerate(table)]
+    src_frame = {"fire": f"{cell}/OnFireCutsceneFrame"}
+    squares = [("FCJH_FireDiag", 18, j, sq) for j, sq in enumerate(ONFIRE_DIAGNOSTICS)]
     for prefix, top, j, (colour, events) in squares:
         x = 40 + 14 * j
         evs = "".join(f'\n\t\t\t\t\t\t\t\t\t<Event event="{e}" action="Reset,Play" frame="{src_frame[src]}"/>'
