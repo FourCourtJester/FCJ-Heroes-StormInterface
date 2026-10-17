@@ -230,8 +230,39 @@ All of them are driven by events from the game to that hidden cell, so they woul
   (3 with Cannonball), Gazlowe's scrap 10 (12 with his talent). If the dividers look wrong or
   don't show, we revisit; if they work, they stay.
 - **Hogger:** check his plate's resource bar. He isn't in our per-hero colour list, so it
-  probably shows mana blue rather than his rage colour, and unsegmented. Blizzard's own
-  Hogger bar is segmented (`hogger.stormlayout`); Ahli cuts his rage every 50.
+  probably shows mana blue rather than his rage colour. (Corrected 2026-10-16: his rage,
+  0-100, red, has no segments in player view; the segmented bar in `hogger.stormlayout` is
+  his Loot Hoard's, `MeatEnergy`.)
+
+### Results (2026-10-16)
+
+**Seen and good:** the stamp; the seams and the XP bar's enclosure; the heroic over the
+frame; Tracer's 10 ammo segments; the skull ("looks great"); the 5 s respawn flash ("looks
+great"); the quest column's grid join; talent pop-ups over the chrome; the Vikings' plate
+with 3 health segments; the menu border (a thin lavender line).
+
+**Squares:** cyan (almost respawned, party) and white (respawned, party) lit for Xal'atath;
+yellow (Viking almost respawned, party) for Baelog. Our own cell's squares never lit.
+Hearthstone: nothing, ever. Blizzard sends hearth events to the hero's team only
+(blizzard-fixes.md). On fire: **shelved** (user) until a replay where someone is known to
+have been on fire; its squares stay in until then.
+
+**Fixes for the next build:**
+1. The quest column's icons fill the 40 cell (Blizzard's template is 68 with 11-14 insets).
+   Its count and tooltip stay empty in observer view, though quest talents work: another
+   hook to find.
+2. The respawn glow gets its own inset, about 4 Blizzard units (it's sized for Blizzard's
+   thick bezel). Both teams.
+3. Split portraits (Rexxar and Misha, the Vikings, maybe D.Va) draw white for observers:
+   Blizzard's script sets their textures for players only. Hard-code Blizzard's partyframe
+   textures, picked by which images show, with its separators. Mock up two layouts first.
+4. The respawn flash and glow listen to the party cell only; the pet event goes on too.
+5. The panes and the inspect card take the Try Me panel's style
+   (`Storm_TutorialReferenceCardBG`, tiled nine-slice, alpha 180) and its small close tab,
+   in place of the menu-border test.
+6. Hogger's rage colour (`RageEnergy`); Blizzard's target panel lacks him (log it).
+7. The core's chrome line up to 3 px like the rest (user).
+8. The answered diagnostics come out (respawn, hearthstone, split portraits).
 
 ## Decisions from the question round (2026-10-16, before the test)
 
