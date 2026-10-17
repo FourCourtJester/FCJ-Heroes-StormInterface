@@ -526,7 +526,7 @@ from their plates (docs/blizzard-fixes.md).
    d0438cc: the template's ready ping plays at full despite our hiding it (its own animation
    fades and grows it), and the user wants it kept; the tick ring barely shows over the art.
    Now no tick ring: the count, hidden at 0 (a Text StateGroup), and a 20% black dim in the
-   icon's shape over the heroic while charging, off at full on the template's events
+   icon's shape over the heroic while charging (25% after dfb3ffd), off at full on the template's events
    (`FCJH_ChargeDim`, gen `PULSE_DIAL_DIM_ALPHA`). Not seen yet. Seen fine in 5c38a32: the heroic badges 6 in from the cell's end (gen
    `HEROIC_CLEAR`). The chrome's shadows are to be revisited later (user).
    **TEMPORARY:** Blizzard's kill feed is hidden for testing (FCJH_Hidden, `FCJH_KeepHidden`'s

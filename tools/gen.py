@@ -761,9 +761,9 @@ PULSE_DIAL_DISC_ALPHA = 0
 # ...and its size, a share of the gold frame's height: at the full height it stood over the
 # badge's top and bottom (user, 2026-10-17)
 PULSE_DIAL_SCALE = 0.8
-# ...and the dim over her heroic while it charges, off at full: 20% black in the icon's own
-# shape (user, 2026-10-17). It replaced the orange tick ring, lost in the art
-PULSE_DIAL_DIM_ALPHA = 51
+# ...and the dim over her heroic while it charges, off at full: 25% black in the icon's own
+# shape (user, 2026-10-17; 20% first). It replaced the orange tick ring, lost in the art
+PULSE_DIAL_DIM_ALPHA = 64
 
 RESOURCE_SEGMENTS = {"HeroTracer": 2, "HeroJunkrat": 1, "HeroTinker": 1}
 
