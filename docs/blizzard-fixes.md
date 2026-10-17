@@ -115,6 +115,16 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
   bars' two tooltip formats (`energy_formats`; 8ea751d).
 - **Status:** confirmed in game, Chromie's plate after Sonya's (user, 2026-10-16).
 
+### Quest tooltips blank until Tab
+- **Blizzard's:** a talents panel of our own (a `HeroTalentsPanel`, as Blizzard's Ctrl+1 one)
+  shows blank default-quest tooltips until Blizzard's Tab panel (`GameUI/HeroLeaderPanel`) has
+  been opened once; after that they fill (user, 2026-10-16). Ahli 0.75's talents pane is a
+  `HeroLeaderPanel` and fills from the start: the engine seems to track quest progress only
+  once a leader panel has been open.
+- **Ours:** an invisible leader panel of our own, open from load and parked off the screen
+  (`FCJH_QuestPrimer`, FCJH_InfoPane).
+- **Status:** not yet built (2026-10-16).
+
 ### Hogger's rage drawn as mana
 - **Blizzard's:** the target panel's per-hero resource colours (`HeroResourceStates`,
   targetinfopanelunitstatustemplate.stormlayout:257) leave Hogger out, so his rage draws mana

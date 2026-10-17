@@ -2984,7 +2984,7 @@ def row_packer(cfg):
         cell = lambda i: f"{OVERVIEW}/{tn}HeroOverview/HeroOverview{i}"
         Team = team.capitalize()
         xp_frames = (f"{top_panel}/FCJH_{Team}XPTrack", f"{top_panel}/{tn}XPUnitStatusFrame")
-        row_frame = f"{top_panel}/FCJH_{Team}RowFrame"
+        row_frame = f"{OVERVIEW}/{tn}HeroOverview/FCJH_{Team}RowFrame"   # over the plates (FCJH_TopBar)
         if n == 0:
             # no hero loaded yet (the loading seconds): the bar spanned all five slots over
             # empty space, then snapped as heroes arrived (user, 2026-09-30) - hidden instead

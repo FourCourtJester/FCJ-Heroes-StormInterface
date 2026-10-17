@@ -355,6 +355,11 @@ SKIN_BACK = "Storm_TutorialReferenceCardBG"
 SKIN_ALPHA = 180
 SKIN_BAND, SKIN_LINE = "564c6d", "73668d"   # the title band's tint, and its line
 SKIN_INSET = 3          # the border, and the bands, this far in from the edge
+# The panes' outer border (pane_skin): Blizzard's Tab panel's (HeroLeaderPanelTemplate
+# BorderContainer, heroleaderpanel.stormlayout:1878; user, 2026-10-16), this far outside the
+# pane all round - the Tab border's art about 15 thick (measured on screen), so it sits just
+# outside the Try Me edge
+TAB_BORDER_OUTSET = 12
 
 
 def blizzard_skin():
@@ -392,7 +397,8 @@ def pane_skin(title_h, indent=1):
     pane backdrops were tried and scrapped, the panes take the card's style (user, 2026-10-05).
     The same layers as blizzard_skin - background, title band and its line - filling
     the frame that uses it, the title band `title_h` (a constant name) tall. Under the panes'
-    rows (500) and their title label (610)."""
+    rows (500) and their title label (610). Round it all, Blizzard's Tab panel border
+    (tab_border, 2026-10-16)."""
     t = "\t" * indent
     u = t + "\t\t"
     def img(name_, bottom, extra, prio, inset, top_rel="$parent", top_pos="Min", top_off=None):
@@ -414,6 +420,41 @@ def pane_skin(title_h, indent=1):
             + img("FCJH_SkinTitle", ("$parent", "Min", f"#{title_h}"), tint(SKIN_BAND), 410, SKIN_INSET)
             + img("FCJH_SkinTitleLine", ("$parent/FCJH_SkinTitle", "Max", 0), tint(SKIN_LINE), 412, 0,
                   "$parent/FCJH_SkinTitle", "Max", -1)
+            + tab_border(t + "\t")
+            + f'{t}</Frame>\n')
+
+
+def tab_border(t):
+    """Blizzard's Tab panel border (HeroLeaderPanelTemplate's BorderContainer) round a pane,
+    TAB_BORDER_OUTSET outside it. Blizzard's own pieces and anchoring, each at its art's own
+    thickness: the sides (nine-slice), the top, and the bottom's two end pieces - each here
+    half the width, meeting in the middle, without the tab notch between them (we have no
+    tabs) or the team-colour stripes on them (the panes are neutral)."""
+    u, o = t + "\t", TAB_BORDER_OUTSET
+    tex = lambda name: f'{u}\t<Texture val="@UI/Storm_UI_InGame_Leader_Background_{name}"/>\n'
+    flip = f'{u}\t<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>\n'
+    def piece(name_, anchors, extra):
+        return (f'{u}<Frame type="Image" name="{name_}">\n'
+                + "".join(f'{u}\t<Anchor side="{s}" relative="{r}" pos="{p}" offset="{v}"/>\n' for s, r, p, v in anchors)
+                + extra + f'{u}\t<Unclipped val="true"/>\n{u}\t<AcceptsMouse val="false"/>\n{u}</Frame>\n')
+    nine = f'{u}\t<TextureType val="Nineslice"/>\n'
+    return (f'{t}<!-- the outer border: Blizzard\'s Tab panel\'s (tools/inspect_card.py tab_border) -->\n'
+            f'{t}<Frame type="Frame" name="FCJH_SkinTabBorder">\n'
+            f'{u}<Anchor side="Top"    relative="$parent" pos="Min" offset="{-o}"/>\n'
+            f'{u}<Anchor side="Left"   relative="$parent" pos="Min" offset="{-o}"/>\n'
+            f'{u}<Anchor side="Bottom" relative="$parent" pos="Max" offset="{o}"/>\n'
+            f'{u}<Anchor side="Right"  relative="$parent" pos="Max" offset="{o}"/>\n'
+            f'{u}<RenderPriority val="420"/>\n{u}<Unclipped val="true"/>\n{u}<AcceptsMouse val="false"/>\n'
+            + piece("BorderBottomLeft", [("Bottom", "$parent", "Max", 0), ("Left", "$parent", "Min", 0),
+                                         ("Right", "$parent", "Mid", 0)], tex("HorizontalBorder_Bottom"))
+            + piece("BorderBottomRight", [("Bottom", "$parent", "Max", 0), ("Left", "$parent", "Mid", 0),
+                                          ("Right", "$parent", "Max", 0)], tex("HorizontalBorder_Bottom") + flip)
+            + piece("BorderLeft", [("Top", "$parent", "Min", 0), ("Bottom", "$parent/BorderBottomLeft", "Min", 0),
+                                   ("Left", "$parent", "Min", 0)], tex("VerticalBorder") + nine)
+            + piece("BorderRight", [("Top", "$parent/BorderLeft", "Min", 0), ("Bottom", "$parent/BorderLeft", "Max", 0),
+                                    ("Right", "$parent", "Max", 0)], tex("VerticalBorder") + nine + flip)
+            + piece("BorderTop", [("Top", "$parent", "Min", 0), ("Left", "$parent/BorderLeft", "Max", 0),
+                                  ("Right", "$parent/BorderRight", "Min", 0)], tex("HorizontalBorder"))
             + f'{t}</Frame>\n')
 
 

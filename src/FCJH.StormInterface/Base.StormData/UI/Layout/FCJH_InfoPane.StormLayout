@@ -13,6 +13,24 @@
 	     Shown by its hotkey (layout.toml [info_pane]); starts hidden, and only one info
 	     pane shows at a time - the hotkeys for all four live in FCJH_StatPanes. -->
 	<Frame type="GameUI" name="GameUI" file="GameUI">
+		<!-- The quest primer (2026-10-16): our pane's quest tooltips stayed blank until Blizzard's
+		     Tab panel (GameUI/HeroLeaderPanel) had been open once, then filled. Ahli's talents
+		     pane is that panel's type, and his fill from the start. So: our own instance of it
+		     (HeroLeaderPanelTemplate), open from load as Tab opens it (its container shown) but
+		     invisible and parked off the screen, no mouse - only so the engine tracks quests
+		     from the first second. (docs/blizzard-fixes.md, "Quest tooltips blank until Tab".) -->
+		<Frame type="HeroLeaderPanel" name="FCJH_QuestPrimer" template="HeroLeaderPanel/HeroLeaderPanelTemplate">
+			<Anchor side="Top"    relative="$parent" pos="Min" offset="9999"/>
+			<Anchor side="Left"   relative="$parent" pos="Min" offset="9999"/>
+			<Anchor side="Bottom" relative="$parent" pos="Min" offset="10299"/>
+			<Anchor side="Right"  relative="$parent" pos="Min" offset="10299"/>
+			<Visible val="true"/>
+			<Alpha val="0"/>
+			<AcceptsMouse val="false"/>
+			<Frame type="Frame" name="HeroLeaderPanelContainer">
+				<Visible val="true"/>
+			</Frame>
+		</Frame>
 		<Frame type="Frame" name="FCJH_Pane_Talents">
 			<Anchor relative="$parent"/>
 			<Visible val="false"/>

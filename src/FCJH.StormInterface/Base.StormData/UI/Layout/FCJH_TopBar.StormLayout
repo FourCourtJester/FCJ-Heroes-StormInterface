@@ -134,29 +134,7 @@
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
 						</Frame>
-						<!-- The row frames: a chrome line round each team's plates and XP bar ([row_frame];
-						     tools/gen.py row_frame_texture), over the bars. FCJH_RowPacker moves and swaps
-						     them for rows of 1-4. -->
-						<Frame type="Image" name="FCJH_BlueRowFrame">
-							<Anchor side="Top"    relative="$GameUI" pos="Max" offset="#FCJH_BLUE_ROW_FRAME_T"/>
-							<Anchor side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_BLUE_ROW_FRAME_L"/>
-							<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_BLUE_ROW_FRAME_B"/>
-							<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_BLUE_ROW_FRAME_R"/>
-							<Texture val="#FCJH_ROW_FRAME_BLUE"/>
-							<RenderPriority val="520"/>
-							<Unclipped val="true"/>
-							<AcceptsMouse val="false"/>
-						</Frame>
-						<Frame type="Image" name="FCJH_RedRowFrame">
-							<Anchor side="Top"    relative="$GameUI" pos="Max" offset="#FCJH_RED_ROW_FRAME_T"/>
-							<Anchor side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_RED_ROW_FRAME_L"/>
-							<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_RED_ROW_FRAME_B"/>
-							<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_RED_ROW_FRAME_R"/>
-							<Texture val="#FCJH_ROW_FRAME_RED"/>
-							<RenderPriority val="520"/>
-							<Unclipped val="true"/>
-							<AcceptsMouse val="false"/>
-						</Frame>
+						<!-- The row frames live in Team1/Team2HeroOverview (below), over the plates -->
 						<Frame type="TeamVeterancyUnitStatusFrame" name="Team1XPUnitStatusFrame">
 							<Anchor side="Top"    relative="$GameUI" pos="Max" offset="#FCJH_BLUE_XP_T"/>
 							<Anchor side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_BLUE_XP_L"/>
@@ -293,12 +271,37 @@
 						</Frame>
 					</Frame>
 
-					<!-- Towers and kills -->
+					<!-- Towers and kills; and the row frames: a chrome line round each team's plates and
+					     XP bar ([row_frame]; tools/gen.py row_frame_texture). FCJH_RowPacker moves and
+					     swaps them for rows of 1-4. Here, not in ObserverTopPanel, since RenderPriority
+					     orders siblings only: ObserverTopPanel (200) draws under the team overviews, so
+					     the chrome there sat under every plate (user, 2026-10-16). At 520 they're over
+					     the cells (HeroOverview1-5, 501-505). -->
 					<Frame type="Frame" name="Team1HeroOverview">
+						<Frame type="Image" name="FCJH_BlueRowFrame">
+							<Anchor side="Top"    relative="$GameUI" pos="Max" offset="#FCJH_BLUE_ROW_FRAME_T"/>
+							<Anchor side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_BLUE_ROW_FRAME_L"/>
+							<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_BLUE_ROW_FRAME_B"/>
+							<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_BLUE_ROW_FRAME_R"/>
+							<Texture val="#FCJH_ROW_FRAME_BLUE"/>
+							<RenderPriority val="520"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
 						<Frame type="Label" name="TownsRemainingValueLabel" template="FCJH_HeroRow/FCJH_Parked"/>
 						<Frame type="TeamScoreValueFrame" name="TeamKillsValueFrame" template="FCJH_HeroRow/FCJH_Parked"/>
 					</Frame>
 					<Frame type="Frame" name="Team2HeroOverview">
+						<Frame type="Image" name="FCJH_RedRowFrame">
+							<Anchor side="Top"    relative="$GameUI" pos="Max" offset="#FCJH_RED_ROW_FRAME_T"/>
+							<Anchor side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_RED_ROW_FRAME_L"/>
+							<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_RED_ROW_FRAME_B"/>
+							<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_RED_ROW_FRAME_R"/>
+							<Texture val="#FCJH_ROW_FRAME_RED"/>
+							<RenderPriority val="520"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
 						<Frame type="Label" name="TownsRemainingValueLabel" template="FCJH_HeroRow/FCJH_Parked"/>
 						<Frame type="TeamScoreValueFrame" name="TeamKillsValueFrame" template="FCJH_HeroRow/FCJH_Parked"/>
 					</Frame>

@@ -298,6 +298,25 @@ have been on fire; its squares stay in until then.
    label shows. The pet event (`HeroAlmostRespawnedPet`) never arrived, so nothing hangs on
    it; anything for her keys off the label showing and hiding.
    **Parked with fix 3**, since her timer needs her part of the portrait.
+
+**Built 2026-10-16 (779b8c4), seen in game:** Abathur's tall bar; the Try Me look and close
+tab on the panes (screen 22:26:07). The plate click handlers are back: the diagnostics that
+came out in fix 8 had been blocking them (user).
+
+**The round after (user, 2026-10-16), not yet built:**
+12. The row frames' chrome drew under the plates (ObserverTopPanel sits at 200, under the
+    team overviews): they move into Team1/Team2HeroOverview, over the cells.
+13. The quest tooltips stayed blank until Blizzard's Tab panel had been open once (user;
+    Ahli's fill from the start, his pane being that panel's type). An invisible copy of
+    the Tab panel, open from load and off the screen (`FCJH_QuestPrimer`), so the engine
+    tracks quests from the start (logged).
+14. Blizzard's Tab panel border round every pane (`inspect_card.tab_border`), 12 outside
+    it: the sides, top and the bottom's two end pieces, no tab notch or team stripes. Its
+    art isn't extracted, so the pieces take their own sizes; the bottom pieces are
+    stretched to half the width each, which may squash their corners.
+    The front-end menu (user's screen 22:39:25) is Blizzard's `PopupPanelTemplate`: the
+    `Storm_Generic_SmallPanel_Border` nine-slice over `Storm_Generic_Background_Low`, a
+    08081d wash at 100 and blur. The menu-border test took only its border.
    Ahli 0.75 (user's screenshots, 21_47_47 and 21_48_12): his Rexxar plate shows Rexxar with
    Misha beside him, her side darkened with her timer on it; his Vikings plate shows all
    three in angled, overlapping slices, each darkened with its own timer while dead. Each
