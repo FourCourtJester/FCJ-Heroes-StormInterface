@@ -5812,21 +5812,22 @@
 												<!-- her HUD's round dial, from its own template, as Ahli's: the observer bar restyled
 												     circular never filled (user, 2026-10-16). Its fill drew, but its orange ticks were lost
 												     in the orange Pulse Bomb icon until the dark disc was behind them (diagnostics, 57474cd):
-												     the disc dimmed (PULSE_DIAL_DISC_ALPHA), the icon showing through. No labels, no ping -->
+												     the disc dimmed (PULSE_DIAL_DISC_ALPHA), the icon showing through; the count in the
+												     middle. No percent label, no ping -->
 												<Frame type="UnitStatusAbilCharge" name="FCJH_PulseBombDial" template="Tracer/TracerPulseBombChargeButtonOverrideFrame/UnitStatusFrame0/TracerPulseBombChargeFrame">
 													<Anchor side="Top" relative="$parent" pos="Mid" offset="0"/>
 													<Anchor side="Left" relative="$parent" pos="Mid" offset="0"/>
 													<Anchor side="Bottom" relative="$parent" pos="Mid" offset="0"/>
 													<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
-													<Width val="35"/>
-													<Height val="39"/>
+													<Width val="28"/>
+													<Height val="31"/>
 													<RenderPriority val="1000"/>
 													<Unclipped val="true"/>
-													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="140"/><Unclipped val="true"/></Frame>
+													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="200"/><Unclipped val="true"/></Frame>
 													<!-- our size restated: the inspect card sizes this template's fill for its button -->
 													<Frame type="ProgressBar" name="ChargeFillProgress">
-														<Width val="35"/>
-														<Height val="39"/>
+														<Width val="28"/>
+														<Height val="31"/>
 														<RenderPriority val="1000"/>
 														<Unclipped val="true"/>
 														<Frame type="Frame" name="FillImageContainer">
@@ -5837,7 +5838,9 @@
 															</Frame>
 														</Frame>
 													</Frame>
-													<Frame type="Label" name="ChargesLabel"><Alpha val="0"/></Frame>
+													<!-- the charge in the middle, as on the inspect card's R button (its override of this
+													     template centres it, inspect_card.charge_meter): the ring alone didn't pop (user) -->
+													<Frame type="Label" name="ChargesLabel"><RenderPriority val="1000"/><Unclipped val="true"/></Frame>
 													<Frame type="Label" name="ChargePercentLabel"><Alpha val="0"/></Frame>
 													<Frame type="Image" name="PulseBombReadyPingImage"><Width val="0"/><Height val="0"/><Alpha val="0"/></Frame>
 													<!-- full: the template hides its fill (the HUD's ready ping shows instead), so full would
@@ -5935,21 +5938,22 @@
 												<!-- her HUD's round dial, from its own template, as Ahli's: the observer bar restyled
 												     circular never filled (user, 2026-10-16). Its fill drew, but its orange ticks were lost
 												     in the orange Pulse Bomb icon until the dark disc was behind them (diagnostics, 57474cd):
-												     the disc dimmed (PULSE_DIAL_DISC_ALPHA), the icon showing through. No labels, no ping -->
+												     the disc dimmed (PULSE_DIAL_DISC_ALPHA), the icon showing through; the count in the
+												     middle. No percent label, no ping -->
 												<Frame type="UnitStatusAbilCharge" name="FCJH_PulseBombDial" template="Tracer/TracerPulseBombChargeButtonOverrideFrame/UnitStatusFrame0/TracerPulseBombChargeFrame">
 													<Anchor side="Top" relative="$parent" pos="Mid" offset="0"/>
 													<Anchor side="Left" relative="$parent" pos="Mid" offset="0"/>
 													<Anchor side="Bottom" relative="$parent" pos="Mid" offset="0"/>
 													<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
-													<Width val="35"/>
-													<Height val="39"/>
+													<Width val="28"/>
+													<Height val="31"/>
 													<RenderPriority val="1000"/>
 													<Unclipped val="true"/>
-													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="140"/><Unclipped val="true"/></Frame>
+													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="200"/><Unclipped val="true"/></Frame>
 													<!-- our size restated: the inspect card sizes this template's fill for its button -->
 													<Frame type="ProgressBar" name="ChargeFillProgress">
-														<Width val="35"/>
-														<Height val="39"/>
+														<Width val="28"/>
+														<Height val="31"/>
 														<RenderPriority val="1000"/>
 														<Unclipped val="true"/>
 														<Frame type="Frame" name="FillImageContainer">
@@ -5960,7 +5964,9 @@
 															</Frame>
 														</Frame>
 													</Frame>
-													<Frame type="Label" name="ChargesLabel"><Alpha val="0"/></Frame>
+													<!-- the charge in the middle, as on the inspect card's R button (its override of this
+													     template centres it, inspect_card.charge_meter): the ring alone didn't pop (user) -->
+													<Frame type="Label" name="ChargesLabel"><RenderPriority val="1000"/><Unclipped val="true"/></Frame>
 													<Frame type="Label" name="ChargePercentLabel"><Alpha val="0"/></Frame>
 													<Frame type="Image" name="PulseBombReadyPingImage"><Width val="0"/><Height val="0"/><Alpha val="0"/></Frame>
 													<!-- full: the template hides its fill (the HUD's ready ping shows instead), so full would
@@ -6058,21 +6064,22 @@
 												<!-- her HUD's round dial, from its own template, as Ahli's: the observer bar restyled
 												     circular never filled (user, 2026-10-16). Its fill drew, but its orange ticks were lost
 												     in the orange Pulse Bomb icon until the dark disc was behind them (diagnostics, 57474cd):
-												     the disc dimmed (PULSE_DIAL_DISC_ALPHA), the icon showing through. No labels, no ping -->
+												     the disc dimmed (PULSE_DIAL_DISC_ALPHA), the icon showing through; the count in the
+												     middle. No percent label, no ping -->
 												<Frame type="UnitStatusAbilCharge" name="FCJH_PulseBombDial" template="Tracer/TracerPulseBombChargeButtonOverrideFrame/UnitStatusFrame0/TracerPulseBombChargeFrame">
 													<Anchor side="Top" relative="$parent" pos="Mid" offset="0"/>
 													<Anchor side="Left" relative="$parent" pos="Mid" offset="0"/>
 													<Anchor side="Bottom" relative="$parent" pos="Mid" offset="0"/>
 													<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
-													<Width val="35"/>
-													<Height val="39"/>
+													<Width val="28"/>
+													<Height val="31"/>
 													<RenderPriority val="1000"/>
 													<Unclipped val="true"/>
-													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="140"/><Unclipped val="true"/></Frame>
+													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="200"/><Unclipped val="true"/></Frame>
 													<!-- our size restated: the inspect card sizes this template's fill for its button -->
 													<Frame type="ProgressBar" name="ChargeFillProgress">
-														<Width val="35"/>
-														<Height val="39"/>
+														<Width val="28"/>
+														<Height val="31"/>
 														<RenderPriority val="1000"/>
 														<Unclipped val="true"/>
 														<Frame type="Frame" name="FillImageContainer">
@@ -6083,7 +6090,9 @@
 															</Frame>
 														</Frame>
 													</Frame>
-													<Frame type="Label" name="ChargesLabel"><Alpha val="0"/></Frame>
+													<!-- the charge in the middle, as on the inspect card's R button (its override of this
+													     template centres it, inspect_card.charge_meter): the ring alone didn't pop (user) -->
+													<Frame type="Label" name="ChargesLabel"><RenderPriority val="1000"/><Unclipped val="true"/></Frame>
 													<Frame type="Label" name="ChargePercentLabel"><Alpha val="0"/></Frame>
 													<Frame type="Image" name="PulseBombReadyPingImage"><Width val="0"/><Height val="0"/><Alpha val="0"/></Frame>
 													<!-- full: the template hides its fill (the HUD's ready ping shows instead), so full would
@@ -6181,21 +6190,22 @@
 												<!-- her HUD's round dial, from its own template, as Ahli's: the observer bar restyled
 												     circular never filled (user, 2026-10-16). Its fill drew, but its orange ticks were lost
 												     in the orange Pulse Bomb icon until the dark disc was behind them (diagnostics, 57474cd):
-												     the disc dimmed (PULSE_DIAL_DISC_ALPHA), the icon showing through. No labels, no ping -->
+												     the disc dimmed (PULSE_DIAL_DISC_ALPHA), the icon showing through; the count in the
+												     middle. No percent label, no ping -->
 												<Frame type="UnitStatusAbilCharge" name="FCJH_PulseBombDial" template="Tracer/TracerPulseBombChargeButtonOverrideFrame/UnitStatusFrame0/TracerPulseBombChargeFrame">
 													<Anchor side="Top" relative="$parent" pos="Mid" offset="0"/>
 													<Anchor side="Left" relative="$parent" pos="Mid" offset="0"/>
 													<Anchor side="Bottom" relative="$parent" pos="Mid" offset="0"/>
 													<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
-													<Width val="35"/>
-													<Height val="39"/>
+													<Width val="28"/>
+													<Height val="31"/>
 													<RenderPriority val="1000"/>
 													<Unclipped val="true"/>
-													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="140"/><Unclipped val="true"/></Frame>
+													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="200"/><Unclipped val="true"/></Frame>
 													<!-- our size restated: the inspect card sizes this template's fill for its button -->
 													<Frame type="ProgressBar" name="ChargeFillProgress">
-														<Width val="35"/>
-														<Height val="39"/>
+														<Width val="28"/>
+														<Height val="31"/>
 														<RenderPriority val="1000"/>
 														<Unclipped val="true"/>
 														<Frame type="Frame" name="FillImageContainer">
@@ -6206,7 +6216,9 @@
 															</Frame>
 														</Frame>
 													</Frame>
-													<Frame type="Label" name="ChargesLabel"><Alpha val="0"/></Frame>
+													<!-- the charge in the middle, as on the inspect card's R button (its override of this
+													     template centres it, inspect_card.charge_meter): the ring alone didn't pop (user) -->
+													<Frame type="Label" name="ChargesLabel"><RenderPriority val="1000"/><Unclipped val="true"/></Frame>
 													<Frame type="Label" name="ChargePercentLabel"><Alpha val="0"/></Frame>
 													<Frame type="Image" name="PulseBombReadyPingImage"><Width val="0"/><Height val="0"/><Alpha val="0"/></Frame>
 													<!-- full: the template hides its fill (the HUD's ready ping shows instead), so full would
@@ -6304,21 +6316,22 @@
 												<!-- her HUD's round dial, from its own template, as Ahli's: the observer bar restyled
 												     circular never filled (user, 2026-10-16). Its fill drew, but its orange ticks were lost
 												     in the orange Pulse Bomb icon until the dark disc was behind them (diagnostics, 57474cd):
-												     the disc dimmed (PULSE_DIAL_DISC_ALPHA), the icon showing through. No labels, no ping -->
+												     the disc dimmed (PULSE_DIAL_DISC_ALPHA), the icon showing through; the count in the
+												     middle. No percent label, no ping -->
 												<Frame type="UnitStatusAbilCharge" name="FCJH_PulseBombDial" template="Tracer/TracerPulseBombChargeButtonOverrideFrame/UnitStatusFrame0/TracerPulseBombChargeFrame">
 													<Anchor side="Top" relative="$parent" pos="Mid" offset="0"/>
 													<Anchor side="Left" relative="$parent" pos="Mid" offset="0"/>
 													<Anchor side="Bottom" relative="$parent" pos="Mid" offset="0"/>
 													<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
-													<Width val="35"/>
-													<Height val="39"/>
+													<Width val="28"/>
+													<Height val="31"/>
 													<RenderPriority val="1000"/>
 													<Unclipped val="true"/>
-													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="140"/><Unclipped val="true"/></Frame>
+													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="200"/><Unclipped val="true"/></Frame>
 													<!-- our size restated: the inspect card sizes this template's fill for its button -->
 													<Frame type="ProgressBar" name="ChargeFillProgress">
-														<Width val="35"/>
-														<Height val="39"/>
+														<Width val="28"/>
+														<Height val="31"/>
 														<RenderPriority val="1000"/>
 														<Unclipped val="true"/>
 														<Frame type="Frame" name="FillImageContainer">
@@ -6329,7 +6342,9 @@
 															</Frame>
 														</Frame>
 													</Frame>
-													<Frame type="Label" name="ChargesLabel"><Alpha val="0"/></Frame>
+													<!-- the charge in the middle, as on the inspect card's R button (its override of this
+													     template centres it, inspect_card.charge_meter): the ring alone didn't pop (user) -->
+													<Frame type="Label" name="ChargesLabel"><RenderPriority val="1000"/><Unclipped val="true"/></Frame>
 													<Frame type="Label" name="ChargePercentLabel"><Alpha val="0"/></Frame>
 													<Frame type="Image" name="PulseBombReadyPingImage"><Width val="0"/><Height val="0"/><Alpha val="0"/></Frame>
 													<!-- full: the template hides its fill (the HUD's ready ping shows instead), so full would
@@ -6427,21 +6442,22 @@
 												<!-- her HUD's round dial, from its own template, as Ahli's: the observer bar restyled
 												     circular never filled (user, 2026-10-16). Its fill drew, but its orange ticks were lost
 												     in the orange Pulse Bomb icon until the dark disc was behind them (diagnostics, 57474cd):
-												     the disc dimmed (PULSE_DIAL_DISC_ALPHA), the icon showing through. No labels, no ping -->
+												     the disc dimmed (PULSE_DIAL_DISC_ALPHA), the icon showing through; the count in the
+												     middle. No percent label, no ping -->
 												<Frame type="UnitStatusAbilCharge" name="FCJH_PulseBombDial" template="Tracer/TracerPulseBombChargeButtonOverrideFrame/UnitStatusFrame0/TracerPulseBombChargeFrame">
 													<Anchor side="Top" relative="$parent" pos="Mid" offset="0"/>
 													<Anchor side="Left" relative="$parent" pos="Mid" offset="0"/>
 													<Anchor side="Bottom" relative="$parent" pos="Mid" offset="0"/>
 													<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
-													<Width val="35"/>
-													<Height val="39"/>
+													<Width val="28"/>
+													<Height val="31"/>
 													<RenderPriority val="1000"/>
 													<Unclipped val="true"/>
-													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="140"/><Unclipped val="true"/></Frame>
+													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="200"/><Unclipped val="true"/></Frame>
 													<!-- our size restated: the inspect card sizes this template's fill for its button -->
 													<Frame type="ProgressBar" name="ChargeFillProgress">
-														<Width val="35"/>
-														<Height val="39"/>
+														<Width val="28"/>
+														<Height val="31"/>
 														<RenderPriority val="1000"/>
 														<Unclipped val="true"/>
 														<Frame type="Frame" name="FillImageContainer">
@@ -6452,7 +6468,9 @@
 															</Frame>
 														</Frame>
 													</Frame>
-													<Frame type="Label" name="ChargesLabel"><Alpha val="0"/></Frame>
+													<!-- the charge in the middle, as on the inspect card's R button (its override of this
+													     template centres it, inspect_card.charge_meter): the ring alone didn't pop (user) -->
+													<Frame type="Label" name="ChargesLabel"><RenderPriority val="1000"/><Unclipped val="true"/></Frame>
 													<Frame type="Label" name="ChargePercentLabel"><Alpha val="0"/></Frame>
 													<Frame type="Image" name="PulseBombReadyPingImage"><Width val="0"/><Height val="0"/><Alpha val="0"/></Frame>
 													<!-- full: the template hides its fill (the HUD's ready ping shows instead), so full would
@@ -6550,21 +6568,22 @@
 												<!-- her HUD's round dial, from its own template, as Ahli's: the observer bar restyled
 												     circular never filled (user, 2026-10-16). Its fill drew, but its orange ticks were lost
 												     in the orange Pulse Bomb icon until the dark disc was behind them (diagnostics, 57474cd):
-												     the disc dimmed (PULSE_DIAL_DISC_ALPHA), the icon showing through. No labels, no ping -->
+												     the disc dimmed (PULSE_DIAL_DISC_ALPHA), the icon showing through; the count in the
+												     middle. No percent label, no ping -->
 												<Frame type="UnitStatusAbilCharge" name="FCJH_PulseBombDial" template="Tracer/TracerPulseBombChargeButtonOverrideFrame/UnitStatusFrame0/TracerPulseBombChargeFrame">
 													<Anchor side="Top" relative="$parent" pos="Mid" offset="0"/>
 													<Anchor side="Left" relative="$parent" pos="Mid" offset="0"/>
 													<Anchor side="Bottom" relative="$parent" pos="Mid" offset="0"/>
 													<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
-													<Width val="35"/>
-													<Height val="39"/>
+													<Width val="28"/>
+													<Height val="31"/>
 													<RenderPriority val="1000"/>
 													<Unclipped val="true"/>
-													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="140"/><Unclipped val="true"/></Frame>
+													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="200"/><Unclipped val="true"/></Frame>
 													<!-- our size restated: the inspect card sizes this template's fill for its button -->
 													<Frame type="ProgressBar" name="ChargeFillProgress">
-														<Width val="35"/>
-														<Height val="39"/>
+														<Width val="28"/>
+														<Height val="31"/>
 														<RenderPriority val="1000"/>
 														<Unclipped val="true"/>
 														<Frame type="Frame" name="FillImageContainer">
@@ -6575,7 +6594,9 @@
 															</Frame>
 														</Frame>
 													</Frame>
-													<Frame type="Label" name="ChargesLabel"><Alpha val="0"/></Frame>
+													<!-- the charge in the middle, as on the inspect card's R button (its override of this
+													     template centres it, inspect_card.charge_meter): the ring alone didn't pop (user) -->
+													<Frame type="Label" name="ChargesLabel"><RenderPriority val="1000"/><Unclipped val="true"/></Frame>
 													<Frame type="Label" name="ChargePercentLabel"><Alpha val="0"/></Frame>
 													<Frame type="Image" name="PulseBombReadyPingImage"><Width val="0"/><Height val="0"/><Alpha val="0"/></Frame>
 													<!-- full: the template hides its fill (the HUD's ready ping shows instead), so full would
@@ -6673,21 +6694,22 @@
 												<!-- her HUD's round dial, from its own template, as Ahli's: the observer bar restyled
 												     circular never filled (user, 2026-10-16). Its fill drew, but its orange ticks were lost
 												     in the orange Pulse Bomb icon until the dark disc was behind them (diagnostics, 57474cd):
-												     the disc dimmed (PULSE_DIAL_DISC_ALPHA), the icon showing through. No labels, no ping -->
+												     the disc dimmed (PULSE_DIAL_DISC_ALPHA), the icon showing through; the count in the
+												     middle. No percent label, no ping -->
 												<Frame type="UnitStatusAbilCharge" name="FCJH_PulseBombDial" template="Tracer/TracerPulseBombChargeButtonOverrideFrame/UnitStatusFrame0/TracerPulseBombChargeFrame">
 													<Anchor side="Top" relative="$parent" pos="Mid" offset="0"/>
 													<Anchor side="Left" relative="$parent" pos="Mid" offset="0"/>
 													<Anchor side="Bottom" relative="$parent" pos="Mid" offset="0"/>
 													<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
-													<Width val="35"/>
-													<Height val="39"/>
+													<Width val="28"/>
+													<Height val="31"/>
 													<RenderPriority val="1000"/>
 													<Unclipped val="true"/>
-													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="140"/><Unclipped val="true"/></Frame>
+													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="200"/><Unclipped val="true"/></Frame>
 													<!-- our size restated: the inspect card sizes this template's fill for its button -->
 													<Frame type="ProgressBar" name="ChargeFillProgress">
-														<Width val="35"/>
-														<Height val="39"/>
+														<Width val="28"/>
+														<Height val="31"/>
 														<RenderPriority val="1000"/>
 														<Unclipped val="true"/>
 														<Frame type="Frame" name="FillImageContainer">
@@ -6698,7 +6720,9 @@
 															</Frame>
 														</Frame>
 													</Frame>
-													<Frame type="Label" name="ChargesLabel"><Alpha val="0"/></Frame>
+													<!-- the charge in the middle, as on the inspect card's R button (its override of this
+													     template centres it, inspect_card.charge_meter): the ring alone didn't pop (user) -->
+													<Frame type="Label" name="ChargesLabel"><RenderPriority val="1000"/><Unclipped val="true"/></Frame>
 													<Frame type="Label" name="ChargePercentLabel"><Alpha val="0"/></Frame>
 													<Frame type="Image" name="PulseBombReadyPingImage"><Width val="0"/><Height val="0"/><Alpha val="0"/></Frame>
 													<!-- full: the template hides its fill (the HUD's ready ping shows instead), so full would
@@ -6796,21 +6820,22 @@
 												<!-- her HUD's round dial, from its own template, as Ahli's: the observer bar restyled
 												     circular never filled (user, 2026-10-16). Its fill drew, but its orange ticks were lost
 												     in the orange Pulse Bomb icon until the dark disc was behind them (diagnostics, 57474cd):
-												     the disc dimmed (PULSE_DIAL_DISC_ALPHA), the icon showing through. No labels, no ping -->
+												     the disc dimmed (PULSE_DIAL_DISC_ALPHA), the icon showing through; the count in the
+												     middle. No percent label, no ping -->
 												<Frame type="UnitStatusAbilCharge" name="FCJH_PulseBombDial" template="Tracer/TracerPulseBombChargeButtonOverrideFrame/UnitStatusFrame0/TracerPulseBombChargeFrame">
 													<Anchor side="Top" relative="$parent" pos="Mid" offset="0"/>
 													<Anchor side="Left" relative="$parent" pos="Mid" offset="0"/>
 													<Anchor side="Bottom" relative="$parent" pos="Mid" offset="0"/>
 													<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
-													<Width val="35"/>
-													<Height val="39"/>
+													<Width val="28"/>
+													<Height val="31"/>
 													<RenderPriority val="1000"/>
 													<Unclipped val="true"/>
-													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="140"/><Unclipped val="true"/></Frame>
+													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="200"/><Unclipped val="true"/></Frame>
 													<!-- our size restated: the inspect card sizes this template's fill for its button -->
 													<Frame type="ProgressBar" name="ChargeFillProgress">
-														<Width val="35"/>
-														<Height val="39"/>
+														<Width val="28"/>
+														<Height val="31"/>
 														<RenderPriority val="1000"/>
 														<Unclipped val="true"/>
 														<Frame type="Frame" name="FillImageContainer">
@@ -6821,7 +6846,9 @@
 															</Frame>
 														</Frame>
 													</Frame>
-													<Frame type="Label" name="ChargesLabel"><Alpha val="0"/></Frame>
+													<!-- the charge in the middle, as on the inspect card's R button (its override of this
+													     template centres it, inspect_card.charge_meter): the ring alone didn't pop (user) -->
+													<Frame type="Label" name="ChargesLabel"><RenderPriority val="1000"/><Unclipped val="true"/></Frame>
 													<Frame type="Label" name="ChargePercentLabel"><Alpha val="0"/></Frame>
 													<Frame type="Image" name="PulseBombReadyPingImage"><Width val="0"/><Height val="0"/><Alpha val="0"/></Frame>
 													<!-- full: the template hides its fill (the HUD's ready ping shows instead), so full would
@@ -6919,21 +6946,22 @@
 												<!-- her HUD's round dial, from its own template, as Ahli's: the observer bar restyled
 												     circular never filled (user, 2026-10-16). Its fill drew, but its orange ticks were lost
 												     in the orange Pulse Bomb icon until the dark disc was behind them (diagnostics, 57474cd):
-												     the disc dimmed (PULSE_DIAL_DISC_ALPHA), the icon showing through. No labels, no ping -->
+												     the disc dimmed (PULSE_DIAL_DISC_ALPHA), the icon showing through; the count in the
+												     middle. No percent label, no ping -->
 												<Frame type="UnitStatusAbilCharge" name="FCJH_PulseBombDial" template="Tracer/TracerPulseBombChargeButtonOverrideFrame/UnitStatusFrame0/TracerPulseBombChargeFrame">
 													<Anchor side="Top" relative="$parent" pos="Mid" offset="0"/>
 													<Anchor side="Left" relative="$parent" pos="Mid" offset="0"/>
 													<Anchor side="Bottom" relative="$parent" pos="Mid" offset="0"/>
 													<Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
-													<Width val="35"/>
-													<Height val="39"/>
+													<Width val="28"/>
+													<Height val="31"/>
 													<RenderPriority val="1000"/>
 													<Unclipped val="true"/>
-													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="140"/><Unclipped val="true"/></Frame>
+													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="200"/><Unclipped val="true"/></Frame>
 													<!-- our size restated: the inspect card sizes this template's fill for its button -->
 													<Frame type="ProgressBar" name="ChargeFillProgress">
-														<Width val="35"/>
-														<Height val="39"/>
+														<Width val="28"/>
+														<Height val="31"/>
 														<RenderPriority val="1000"/>
 														<Unclipped val="true"/>
 														<Frame type="Frame" name="FillImageContainer">
@@ -6944,7 +6972,9 @@
 															</Frame>
 														</Frame>
 													</Frame>
-													<Frame type="Label" name="ChargesLabel"><Alpha val="0"/></Frame>
+													<!-- the charge in the middle, as on the inspect card's R button (its override of this
+													     template centres it, inspect_card.charge_meter): the ring alone didn't pop (user) -->
+													<Frame type="Label" name="ChargesLabel"><RenderPriority val="1000"/><Unclipped val="true"/></Frame>
 													<Frame type="Label" name="ChargePercentLabel"><Alpha val="0"/></Frame>
 													<Frame type="Image" name="PulseBombReadyPingImage"><Width val="0"/><Height val="0"/><Alpha val="0"/></Frame>
 													<!-- full: the template hides its fill (the HUD's ready ping shows instead), so full would

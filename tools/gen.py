@@ -752,8 +752,12 @@ RESOURCE_TABLE = [
 # 1 a shot. Gazlowe's scrap: 10 (12 with a talent), one segment each, as Ahli does it. A
 # per-segment value, not a count, so a talent that changes the max needs nothing.
 # Tracer's plate dial: its dark disc's alpha, so the orange ticks read over her orange icon
-# (unseen at 0, seen at 255 over a hidden icon; 2026-10-16)
-PULSE_DIAL_DISC_ALPHA = 140
+# (unseen at 0, seen at 255 over a hidden icon; at 140 the ring built but didn't pop: user,
+# 2026-10-17)...
+PULSE_DIAL_DISC_ALPHA = 200
+# ...and its size, a share of the gold frame's height: at the full height it stood over the
+# badge's top and bottom (user, 2026-10-17)
+PULSE_DIAL_SCALE = 0.8
 
 RESOURCE_SEGMENTS = {"HeroTracer": 2, "HeroJunkrat": 1, "HeroTinker": 1}
 
@@ -2770,7 +2774,7 @@ def talent_row_lifts(cfg):
         # Ahli's (34 x 38 on his heroic). At the icon's width (first try, 2026-10-16) it stood
         # half again over the badge, a black disc over it and the bars (user)
         _, ft, _, fb = heroic_frame_rect(cfg, team.lower())
-        dial_h = fb - ft
+        dial_h = round((fb - ft) * PULSE_DIAL_SCALE)
         dial_w = round(dial_h * 68 / 76)
         # the in-game top bar's heroic panel for this player, which our plate's heroic follows
         # (heroic_panel): the meter goes with it - it stayed on while Tracer was dead and her
@@ -2817,7 +2821,8 @@ def talent_row_lifts(cfg):
 												<!-- her HUD's round dial, from its own template, as Ahli's: the observer bar restyled
 												     circular never filled (user, 2026-10-16). Its fill drew, but its orange ticks were lost
 												     in the orange Pulse Bomb icon until the dark disc was behind them (diagnostics, 57474cd):
-												     the disc dimmed (PULSE_DIAL_DISC_ALPHA), the icon showing through. No labels, no ping -->
+												     the disc dimmed (PULSE_DIAL_DISC_ALPHA), the icon showing through; the count in the
+												     middle. No percent label, no ping -->
 												<Frame type="UnitStatusAbilCharge" name="FCJH_PulseBombDial" template="Tracer/TracerPulseBombChargeButtonOverrideFrame/UnitStatusFrame0/TracerPulseBombChargeFrame">
 													{edge("Top", "$parent", "Mid", 0)}
 													{edge("Left", "$parent", "Mid", 0)}
@@ -2842,7 +2847,9 @@ def talent_row_lifts(cfg):
 															</Frame>
 														</Frame>
 													</Frame>
-													<Frame type="Label" name="ChargesLabel"><Alpha val="0"/></Frame>
+													<!-- the charge in the middle, as on the inspect card's R button (its override of this
+													     template centres it, inspect_card.charge_meter): the ring alone didn't pop (user) -->
+													<Frame type="Label" name="ChargesLabel"><RenderPriority val="1000"/><Unclipped val="true"/></Frame>
 													<Frame type="Label" name="ChargePercentLabel"><Alpha val="0"/></Frame>
 													<Frame type="Image" name="PulseBombReadyPingImage"><Width val="0"/><Height val="0"/><Alpha val="0"/></Frame>
 													<!-- full: the template hides its fill (the HUD's ready ping shows instead), so full would

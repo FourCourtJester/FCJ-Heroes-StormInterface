@@ -515,7 +515,10 @@ from their plates (docs/blizzard-fixes.md).
    ring of our own for full charge, where the template hides its fill. That fill drew all
    along, lost against her orange icon: seen on the dark disc at 56% in the diagnostics
    build 57474cd. Now the disc is back dimmed (gen `PULSE_DIAL_DISC_ALPHA` 140, the user's
-   pick of three), the icon showing through; the diagnostics are out. Not seen yet. Seen fine in 5c38a32: the heroic badges 6 in from the cell's end (gen
+   pick of three), the icon showing through; the diagnostics are out. Seen bf31cf2: the ring
+   builds but doesn't pop, and it stands over the badge (user, 2026-10-17). Now the disc at
+   200, the charge count in the middle (as the inspect card's), the dial 0.8 of the gold
+   frame's height (`PULSE_DIAL_SCALE`). Not seen yet. Seen fine in 5c38a32: the heroic badges 6 in from the cell's end (gen
    `HEROIC_CLEAR`). The chrome's shadows are to be revisited later (user).
    **TEMPORARY:** Blizzard's kill feed is hidden for testing (FCJH_Hidden, `FCJH_KeepHidden`'s
    KillLogPanel controller; user, 2026-10-16). Take it out before release.
