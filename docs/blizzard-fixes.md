@@ -137,6 +137,10 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
   icons are back, whole, with Blizzard's shared tooltip.
 - **Status:** unsolved (2026-10-16). Three tries failed: a primer leader panel, the icons'
   own tooltip, and a leader panel of our own over the pane.
+- **Seen 2026-10-16 (6804bbd, user):** after opening Tab and hovering its two quest icons, both
+  of our pane's quest icons show the tooltip of whichever Tab icon was hovered last. So our
+  icons only show the shared `HeroBaselineQuestTooltip`, and never fill it: only the Tab
+  panel's own icons write into it, on hover.
 
 ### Hogger's rage drawn as mana
 - **Blizzard's:** the target panel's per-hero resource colours (`HeroResourceStates`,

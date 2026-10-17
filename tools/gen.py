@@ -2750,7 +2750,7 @@ def talent_row_lifts(cfg):
     Pulse Bomb charges rather than cooling down; Blizzard shows the charge on that row
     (TracerChargeContainer: there for every hero, its meter only for one with that ability).
     Moved onto our heroic's icon as her own HUD's round dial (tracer.stormlayout's
-    TracerPulseBombChargeFrame: the bomb background, the fill circular), not the observer
+    TracerPulseBombChargeFrame: its fill circular, its tick ring only), not the observer
     row's straight fill, which lit the gold frame as an orange border (user, 2026-10-16).
     Seen working 2026-09-30.
     The row is the game's, and the game keeps its talent panel hidden: Blizzard's
@@ -2813,14 +2813,9 @@ def talent_row_lifts(cfg):
 													<Width val="{dial_w}"/>
 													<Height val="{dial_h}"/>
 													<Unclipped val="true"/>
-													<!-- half see-through, as Ahli's, so the Pulse Bomb icon under it shows -->
-													<Frame type="Image" name="FCJH_PulseBombBackground">
-														<Anchor relative="$parent"/>
-														<Texture val="@UI/Storm_UI_HUD_Tracer_Pulse_Bomb_Background"/>
-														<Alpha val="128"/>
-														<Unclipped val="true"/>
-														<AcceptsMouse val="false"/>
-													</Frame>
+													<!-- the ring of ticks only, over the Pulse Bomb icon: no dark disc behind it. Opaque it
+													     covered the badge; half see-through, as Ahli's, the ring was lost in the icon (user,
+													     2026-10-16) -->
 													<Frame type="ProgressBar" name="ChargeFillProgress">
 														{edge("Left", "$parent", "Min", 0)}
 														{edge("Top", "$parent", "Min", 0)}

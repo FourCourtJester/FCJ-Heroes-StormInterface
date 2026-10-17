@@ -321,7 +321,8 @@ came out in fix 8 had been blocking them (user).
     bottom sat crooked and dipped in the middle (user, 2026-10-16). Now the bottom is the
     top's art flipped and the sides run the full height (f5ab192). Still wrong: the sides
     ran past the bottom with a gap at the corners (user, 2026-10-16). Now the sides are in
-    halves, the lower flipped, so the whole bottom half is the top half upside down.
+    halves, the lower flipped, so the whole bottom half is the top half upside down. Seen
+    6804bbd: much cleaner (user, 2026-10-16).
     The front-end menu (user's screen 22:39:25) is Blizzard's `PopupPanelTemplate`: the
     `Storm_Generic_SmallPanel_Border` nine-slice over `Storm_Generic_Background_Low`, a
     08081d wash at 100 and blur. The menu-border test took only its border.

@@ -507,9 +507,9 @@ from their plates (docs/blizzard-fixes.md).
    (`FCJH_QuestPanel`, f5ab192) is out: its icons never drew and it leaked faded portraits.
    Our own quest icons are back, Blizzard's 68 whole so the quest ring shows; the tooltips
    are still blank until Tab (unsolved). The pane border's sides are in halves, the lower
-   flipped, so the bottom half mirrors the top. Tracer's plate dial is now the gold frame's
-   height (35 x 39) and see-through, as Ahli's; the first try was an opaque disc over the
-   badge and bars. Seen fine in 5c38a32: the heroic badges 6 in from the cell's end (gen
+   flipped, so the bottom half mirrors the top (seen 6804bbd: much cleaner). Tracer's plate
+   dial is the gold frame's height (35 x 39), its tick ring only, with no dark disc: opaque it
+   covered the badge and bars, and half see-through (6804bbd) it was lost in the icon. Seen fine in 5c38a32: the heroic badges 6 in from the cell's end (gen
    `HEROIC_CLEAR`). The chrome's shadows are to be revisited later (user).
    **TEMPORARY:** Blizzard's kill feed is hidden for testing (FCJH_Hidden, `FCJH_KeepHidden`'s
    KillLogPanel controller; user, 2026-10-16). Take it out before release.
