@@ -68,7 +68,10 @@ detail.
 - ...and the same line under the XP bar, so the bar is fully enclosed (user, 2026-10-16).
 - The talents pane has a default-quest column between the hero and the level-1 talent:
   Blizzard's own baseline-quest icon from the player's leader panel, which the observer talents
-  pane doesn't show at all (FCJH_InfoPane `FCJH_BaseQuestIcon`; test build, not seen yet).
+  pane doesn't show at all - Blizzard's default pane has no space for default quests (user,
+  2026-10-16) (FCJH_InfoPane `FCJH_BaseQuestIcon`). Seen 2026-10-16: the right quest per hero,
+  but too small, its tooltip empty and its count not updating (see the quest entry under
+  Known, not fixed, once tested).
 
 **Can't be fixed from a layout** - the last section: Towers' cannon alerts, the death recap,
 the talent picker under Ctrl, the command card for a hero's other unit, plate clicks for
@@ -345,6 +348,14 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
 - "Cannons are firing" goes to each team's players only, and nothing an observer's UI receives
   marks an altar capture, so no layout can raise it for the free view. Player views (1-8) still
   show Blizzard's, on the capturing team's side (568adc9).
+
+### Hearthstone: no hearth animation for an observer
+- Blizzard's top bar plays a hearth animation on a hero's cell while they channel the
+  hearthstone (`HeroHearthAnimFrameTemplate`, partyframe.stormlayout:1518). The script sends its
+  start, fizzle and complete events to the hero's own team only
+  (`libGame_gf_AlliedPlayerGroupOfPlayer`, uilib.galaxy:6733-6753, 15594), where the respawn
+  events go to everyone (`PlayerGroupAll`). An observer is on neither team, so neither
+  Blizzard's cell nor ours ever hears them: watched for in a replay, nothing (user, 2026-10-16).
 
 ### Death recap: never shows for an observer
 - Blizzard's death recap toast is player-only as far as we can tell: pressing it from a hotkey
