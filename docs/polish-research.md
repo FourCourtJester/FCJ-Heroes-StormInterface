@@ -308,8 +308,8 @@ plate bar red, but his inspect card still blue (now its own rage bar, `inspect_c
 not seen yet); the kill feed gone (the temporary hide works). Tracer's plate dial: its fill
 drew all along, lost against her orange Pulse Bomb icon. The diagnostics showed it on the
 dark disc at 56%, matching the inspect card (user's screen 23:43:43). It needs contrast, not
-a new frame: a dimmed disc, a ring round the icon, or the icon dimmed while charging (user to
-pick).
+a new frame: a dimmed disc, a ring round the icon, or the icon dimmed while charging. Picked:
+the dimmed disc (user; gen `PULSE_DIAL_DISC_ALPHA`).
 
 **The round after (user, 2026-10-16), not yet built:**
 12. The row frames' chrome drew under the plates (ObserverTopPanel sits at 200, under the

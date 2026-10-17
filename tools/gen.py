@@ -751,6 +751,10 @@ RESOURCE_TABLE = [
 # per segment). Tracer: 20 energy, 2 a shot, so 10 segments. Junkrat: 4 (3 with Cannonball),
 # 1 a shot. Gazlowe's scrap: 10 (12 with a talent), one segment each, as Ahli does it. A
 # per-segment value, not a count, so a talent that changes the max needs nothing.
+# Tracer's plate dial: its dark disc's alpha, so the orange ticks read over her orange icon
+# (unseen at 0, seen at 255 over a hidden icon; 2026-10-16)
+PULSE_DIAL_DISC_ALPHA = 140
+
 RESOURCE_SEGMENTS = {"HeroTracer": 2, "HeroJunkrat": 1, "HeroTinker": 1}
 
 # Blizzard's party frame picks each hero's bars in script, not layout: uilib.galaxy
@@ -2808,20 +2812,12 @@ def talent_row_lifts(cfg):
 												<!-- Blizzard's own meter here is the observer row's straight fill (it lit the gold frame
 												     as an orange border): hidden. The frame stays: heroic_panel reads it -->
 												<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
-													<!-- DIAGNOSTIC (2026-10-16): Blizzard's straight meter shown, left of the badge: does the
-													     charge reach this row? (was Alpha 0) -->
-													<Frame type="ProgressBar" name="ChargeFillProgress">
-														<Anchor side="Top" relative="$parent/$parent" pos="Min" offset="0"/>
-														<Anchor side="Bottom" relative="$parent/$parent" pos="Max" offset="0"/>
-														<Anchor side="Right" relative="$parent/$parent" pos="Min" offset="-4"/>
-														<Anchor side="Left" relative="$parent/$parent" pos="Min" offset="-40"/>
-														<Unclipped val="true"/>
-													</Frame>
+													<Frame type="ProgressBar" name="ChargeFillProgress"><Alpha val="0"/></Frame>
 												</Frame>
 												<!-- her HUD's round dial, from its own template, as Ahli's: the observer bar restyled
-												     circular never filled (user, 2026-10-16). Its ring of ticks only, over the Pulse Bomb
-												     icon: no dark disc (opaque it covered the badge; half see-through, as Ahli's, the ring
-												     was lost in the icon), no labels, no ready ping -->
+												     circular never filled (user, 2026-10-16). Its fill drew, but its orange ticks were lost
+												     in the orange Pulse Bomb icon until the dark disc was behind them (diagnostics, 57474cd):
+												     the disc dimmed (PULSE_DIAL_DISC_ALPHA), the icon showing through. No labels, no ping -->
 												<Frame type="UnitStatusAbilCharge" name="FCJH_PulseBombDial" template="Tracer/TracerPulseBombChargeButtonOverrideFrame/UnitStatusFrame0/TracerPulseBombChargeFrame">
 													{edge("Top", "$parent", "Mid", 0)}
 													{edge("Left", "$parent", "Mid", 0)}
@@ -2831,8 +2827,7 @@ def talent_row_lifts(cfg):
 													<Height val="{dial_h}"/>
 													<RenderPriority val="1000"/>
 													<Unclipped val="true"/>
-													<!-- DIAGNOSTIC (2026-10-16): the disc back, full: is the template dial there at all? -->
-													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Unclipped val="true"/></Frame>
+													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="{PULSE_DIAL_DISC_ALPHA}"/><Unclipped val="true"/></Frame>
 													<!-- our size restated: the inspect card sizes this template's fill for its button -->
 													<Frame type="ProgressBar" name="ChargeFillProgress">
 														<Width val="{dial_w}"/>
@@ -2869,17 +2864,6 @@ def talent_row_lifts(cfg):
 															<Key type="Bool" time="0" value="True"/>
 														</Controller>
 													</Animation>
-												</Frame>
-												<!-- DIAGNOSTIC (2026-10-16): the ring art alone, right of the badge: does it draw here? -->
-												<Frame type="Image" name="FCJH_DiagRing">
-													<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
-													<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-													<Anchor side="Left" relative="$parent" pos="Max" offset="4"/>
-													<Anchor side="Right" relative="$parent" pos="Max" offset="40"/>
-													<Texture val="@UI/Storm_UI_HUD_Tracer_Pulse_Bomb_Fill_Image"/>
-													<RenderPriority val="1000"/>
-													<Unclipped val="true"/>
-													<AcceptsMouse val="false"/>
 												</Frame>
 											</Frame>"""))
     return ("""

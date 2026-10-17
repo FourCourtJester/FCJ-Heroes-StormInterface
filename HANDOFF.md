@@ -514,8 +514,8 @@ from their plates (docs/blizzard-fixes.md).
    a fresh dial from her HUD's own template (`FCJH_PulseBombDial`, as Ahli's), with a whole
    ring of our own for full charge, where the template hides its fill. That fill drew all
    along, lost against her orange icon: seen on the dark disc at 56% in the diagnostics
-   build 57474cd (the straight meter left of the badge and the bare ring right of it are
-   diagnostics, to come out). Next: contrast (docs/polish-research.md). Seen fine in 5c38a32: the heroic badges 6 in from the cell's end (gen
+   build 57474cd. Now the disc is back dimmed (gen `PULSE_DIAL_DISC_ALPHA` 140, the user's
+   pick of three), the icon showing through; the diagnostics are out. Not seen yet. Seen fine in 5c38a32: the heroic badges 6 in from the cell's end (gen
    `HEROIC_CLEAR`). The chrome's shadows are to be revisited later (user).
    **TEMPORARY:** Blizzard's kill feed is hidden for testing (FCJH_Hidden, `FCJH_KeepHidden`'s
    KillLogPanel controller; user, 2026-10-16). Take it out before release.
