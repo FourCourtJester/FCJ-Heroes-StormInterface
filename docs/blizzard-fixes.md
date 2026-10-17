@@ -121,9 +121,13 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
   been opened once; after that they fill (user, 2026-10-16). Ahli 0.75's talents pane is a
   `HeroLeaderPanel` and fills from the start: the engine seems to track quest progress only
   once a leader panel has been open.
-- **Ours:** an invisible leader panel of our own, open from load and parked off the screen
-  (`FCJH_QuestPrimer`, FCJH_InfoPane).
-- **Status:** not yet built (2026-10-16).
+- **Ours:** first an invisible leader panel of our own, open from load and parked off the
+  screen (`FCJH_QuestPrimer`, FCJH_InfoPane): built dcf046d, no help (user, 2026-10-16).
+  Then the icons' own tooltip (`FCJH_QuestTooltip`, Blizzard's `BaselineTooltipTemplate`,
+  inside our pane) in place of the shared `GameUI/GameUITooltips/HeroBaselineQuestTooltip`,
+  as Ahli's icons each have their own. Spazzo's interface shows no default quests at all
+  (user, 2026-10-16).
+- **Status:** the own tooltip not yet built (2026-10-16).
 
 ### Hogger's rage drawn as mana
 - **Blizzard's:** the target panel's per-hero resource colours (`HeroResourceStates`,

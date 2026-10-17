@@ -360,6 +360,11 @@ SKIN_INSET = 3          # the border, and the bands, this far in from the edge
 # pane all round - the Tab border's art about 15 thick (measured on screen), so it sits just
 # outside the Try Me edge
 TAB_BORDER_OUTSET = 12
+# The bottom pieces' art carries its line well above its own bottom (the notch hangs under
+# it): at its natural place the line crossed the last row, 42 above the outset (measured in
+# game, 2026-10-16). So the bottom pieces hang this much lower, their line 12 under the pane
+# as the top's is 12 over it.
+TAB_BORDER_BOTTOM_DROP = 42
 
 
 def blizzard_skin():
@@ -445,9 +450,9 @@ def tab_border(t):
             f'{u}<Anchor side="Bottom" relative="$parent" pos="Max" offset="{o}"/>\n'
             f'{u}<Anchor side="Right"  relative="$parent" pos="Max" offset="{o}"/>\n'
             f'{u}<RenderPriority val="420"/>\n{u}<Unclipped val="true"/>\n{u}<AcceptsMouse val="false"/>\n'
-            + piece("BorderBottomLeft", [("Bottom", "$parent", "Max", 0), ("Left", "$parent", "Min", 0),
+            + piece("BorderBottomLeft", [("Bottom", "$parent", "Max", TAB_BORDER_BOTTOM_DROP), ("Left", "$parent", "Min", 0),
                                          ("Right", "$parent", "Mid", 0)], tex("HorizontalBorder_Bottom"))
-            + piece("BorderBottomRight", [("Bottom", "$parent", "Max", 0), ("Left", "$parent", "Mid", 0),
+            + piece("BorderBottomRight", [("Bottom", "$parent", "Max", TAB_BORDER_BOTTOM_DROP), ("Left", "$parent", "Mid", 0),
                                           ("Right", "$parent", "Max", 0)], tex("HorizontalBorder_Bottom") + flip)
             + piece("BorderLeft", [("Top", "$parent", "Min", 0), ("Bottom", "$parent/BorderBottomLeft", "Min", 0),
                                    ("Left", "$parent", "Min", 0)], tex("VerticalBorder") + nine)

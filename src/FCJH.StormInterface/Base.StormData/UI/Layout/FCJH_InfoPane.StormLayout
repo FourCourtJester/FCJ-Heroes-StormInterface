@@ -114,6 +114,15 @@
 				<Height val="#FCJH_INFO_PANE_H"/>
 				<Visible val="true"/>
 				<RenderPriority val="500"/>
+				<!-- The quest tooltip (2026-10-16): the quest icons' own, not Blizzard's shared
+				     HeroBaselineQuestTooltip (GameUI/GameUITooltips), which stays blank until the Tab
+				     panel has been open once - the primer (FCJH_QuestPrimer) didn't wake it. Ahli's
+				     quest icons each have a tooltip of their own, inside his pane, and fill from the
+				     start; this is one, Blizzard's template, inside ours. -->
+				<Frame type="BaselineQuestTooltip" name="FCJH_QuestTooltip" template="StandardTooltip/BaselineTooltipTemplate">
+					<RenderPriority val="900"/>
+					<Unclipped val="true"/>
+				</Frame>
 				<Frame type="Frame"  name="TopHexContainer"><Alpha val="0"/></Frame>
 				<Frame type="Image"  name="HexImage"><Alpha val="0"/></Frame>
 				<Frame type="Image"  name="HexOverlayImage"><Alpha val="0"/></Frame>
@@ -167,6 +176,7 @@
 								<Width val="40"/>
 								<Height val="40"/>
 								<QuestIndex val="0"/>
+								<TooltipFrame val="FCJH_QuestTooltip"/>
 								<RenderPriority val="#RenderPriorityLevel_3"/>
 								<Frame type="Image" name="IconBackgroundImage"><Alpha val="0"/></Frame>
 								<Frame type="Image" name="IconBorderImage"><Alpha val="0"/></Frame>
@@ -266,6 +276,7 @@
 								<Width val="40"/>
 								<Height val="40"/>
 								<QuestIndex val="0"/>
+								<TooltipFrame val="FCJH_QuestTooltip"/>
 								<RenderPriority val="#RenderPriorityLevel_3"/>
 								<Frame type="Image" name="IconBackgroundImage"><Alpha val="0"/></Frame>
 								<Frame type="Image" name="IconBorderImage"><Alpha val="0"/></Frame>
@@ -365,6 +376,7 @@
 								<Width val="40"/>
 								<Height val="40"/>
 								<QuestIndex val="0"/>
+								<TooltipFrame val="FCJH_QuestTooltip"/>
 								<RenderPriority val="#RenderPriorityLevel_3"/>
 								<Frame type="Image" name="IconBackgroundImage"><Alpha val="0"/></Frame>
 								<Frame type="Image" name="IconBorderImage"><Alpha val="0"/></Frame>
@@ -464,6 +476,7 @@
 								<Width val="40"/>
 								<Height val="40"/>
 								<QuestIndex val="0"/>
+								<TooltipFrame val="FCJH_QuestTooltip"/>
 								<RenderPriority val="#RenderPriorityLevel_3"/>
 								<Frame type="Image" name="IconBackgroundImage"><Alpha val="0"/></Frame>
 								<Frame type="Image" name="IconBorderImage"><Alpha val="0"/></Frame>
@@ -563,6 +576,7 @@
 								<Width val="40"/>
 								<Height val="40"/>
 								<QuestIndex val="0"/>
+								<TooltipFrame val="FCJH_QuestTooltip"/>
 								<RenderPriority val="#RenderPriorityLevel_3"/>
 								<Frame type="Image" name="IconBackgroundImage"><Alpha val="0"/></Frame>
 								<Frame type="Image" name="IconBorderImage"><Alpha val="0"/></Frame>
@@ -662,6 +676,7 @@
 								<Width val="40"/>
 								<Height val="40"/>
 								<QuestIndex val="0"/>
+								<TooltipFrame val="FCJH_QuestTooltip"/>
 								<RenderPriority val="#RenderPriorityLevel_3"/>
 								<Frame type="Image" name="IconBackgroundImage"><Alpha val="0"/></Frame>
 								<Frame type="Image" name="IconBorderImage"><Alpha val="0"/></Frame>
@@ -761,6 +776,7 @@
 								<Width val="40"/>
 								<Height val="40"/>
 								<QuestIndex val="0"/>
+								<TooltipFrame val="FCJH_QuestTooltip"/>
 								<RenderPriority val="#RenderPriorityLevel_3"/>
 								<Frame type="Image" name="IconBackgroundImage"><Alpha val="0"/></Frame>
 								<Frame type="Image" name="IconBorderImage"><Alpha val="0"/></Frame>
@@ -860,6 +876,7 @@
 								<Width val="40"/>
 								<Height val="40"/>
 								<QuestIndex val="0"/>
+								<TooltipFrame val="FCJH_QuestTooltip"/>
 								<RenderPriority val="#RenderPriorityLevel_3"/>
 								<Frame type="Image" name="IconBackgroundImage"><Alpha val="0"/></Frame>
 								<Frame type="Image" name="IconBorderImage"><Alpha val="0"/></Frame>
@@ -959,6 +976,7 @@
 								<Width val="40"/>
 								<Height val="40"/>
 								<QuestIndex val="0"/>
+								<TooltipFrame val="FCJH_QuestTooltip"/>
 								<RenderPriority val="#RenderPriorityLevel_3"/>
 								<Frame type="Image" name="IconBackgroundImage"><Alpha val="0"/></Frame>
 								<Frame type="Image" name="IconBorderImage"><Alpha val="0"/></Frame>
@@ -1058,6 +1076,7 @@
 								<Width val="40"/>
 								<Height val="40"/>
 								<QuestIndex val="0"/>
+								<TooltipFrame val="FCJH_QuestTooltip"/>
 								<RenderPriority val="#RenderPriorityLevel_3"/>
 								<Frame type="Image" name="IconBackgroundImage"><Alpha val="0"/></Frame>
 								<Frame type="Image" name="IconBorderImage"><Alpha val="0"/></Frame>
