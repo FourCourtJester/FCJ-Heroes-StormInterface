@@ -607,6 +607,7 @@ def card():
     stat_rows = 1 + max(r for _, _, r in STATS_GRID)
     energy = "".join(f'{T*4}<Frame type="UnitStatusEnergyBar" name="{n}"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/>{energy_formats()}</Frame>\n'
                      for n in ("NormalEnergyBar", "OrangeEnergyBar", "PinkEnergyBar", "YellowEnergyBar", "DeathwingEnergyBar"))
+    energy += rage_bar()
     # Round 7: everything drawn follows the SELECTION. Blizzard's inspect box (TargetInfoFrame)
     # follows its own target - at game start it latched onto something and showed, and later it
     # showed Rexxar's portrait, health and stats under Chromie's name. It stays only as the
@@ -945,6 +946,33 @@ def vital():
             + "".join(f'{T*5}<State name="{u}"><When type="Property" Unit="{u}"/>'
                       f'<Action type="SetProperty" frame="$this/{VITAL}" Text="@{w}"/></State>\n' for u, w in words.items())
             + f'{T*5}<State name="Mana"><Action type="SetProperty" frame="$this/{VITAL}" Text="@{VITAL_DEFAULT}"/></State>\n'
+            f'{T*4}</StateGroup>\n')
+
+
+# Heroes Blizzard's inspect box leaves out of its colour table (HeroResourceStates,
+# targetinfopanelunitstatustemplate.stormlayout:257), so their rage draws mana blue there;
+# the party frame's script gives them RageEnergy (gen.RESOURCE_TABLE does the plates).
+RAGE_UNITS = ("HeroHogger",)
+
+
+def rage_bar():
+    """A rage-coloured bar over Blizzard's blue one, shown for RAGE_UNITS only. The box has no
+    rage bar or colour state of its own; ours copies its bars' template and placing, and draws
+    after them, so it covers the blue (same unit, same fill). Seen blue on Hogger's card while
+    his plate read red (user, 2026-10-16)."""
+    states = "".join(f'{T*5}<State name="{u}"><When type="Property" Unit="{u}"/>'
+                     f'<Action type="SetProperty" frame="$this/FCJH_RageEnergyBar" Alpha="255"/></State>\n'
+                     for u in RAGE_UNITS)
+    return (f'{T*4}<!-- rage: Blizzard\'s box has no rage colour (inspect_card.rage_bar) -->\n'
+            f'{T*4}<Frame type="UnitStatusEnergyBar" name="FCJH_RageEnergyBar" template="TargetInfoPanelUnitStatusTemplate/TargetInfoPanelEnergyBarTemplate">\n'
+            f'{T*5}<Anchor side="Top" relative="$parent/HealthBar" pos="Max" offset="2"/>\n'
+            f'{T*5}<Anchor side="Left" relative="$parent/HealthBar" pos="Min" offset="0"/>\n'
+            f'{T*5}<Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/>\n'
+            f'{T*5}<Width val="0"/>\n{T*5}<Alpha val="0"/>\n{T*5}<ColorStyle val="RageEnergy"/>\n'
+            f'{T*5}<AcceptsMouse val="false"/>\n{T*5}<AcceptsMouseTooltip val="false"/>\n'
+            f'{T*5}{energy_formats()}\n{T*4}</Frame>\n'
+            f'{T*4}<StateGroup name="FCJH_Rage">\n{T*5}<DefaultState val="Other"/>\n{states}'
+            f'{T*5}<State name="Other"><Action type="SetProperty" frame="$this/FCJH_RageEnergyBar" Alpha="0"/></State>\n'
             f'{T*4}</StateGroup>\n')
 
 

@@ -441,6 +441,23 @@
 				<Frame type="UnitStatusEnergyBar" name="PinkEnergyBar"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/><Frame type="TextFormatFrame" name="RegenTooltipFormatFrame"><Replacement index="0" val="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_VitalName/@Text}"/></Frame><Frame type="TextFormatFrame" name="NoRegenTooltipFormatFrame"><Replacement index="0" val="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_VitalName/@Text}"/></Frame></Frame>
 				<Frame type="UnitStatusEnergyBar" name="YellowEnergyBar"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/><Frame type="TextFormatFrame" name="RegenTooltipFormatFrame"><Replacement index="0" val="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_VitalName/@Text}"/></Frame><Frame type="TextFormatFrame" name="NoRegenTooltipFormatFrame"><Replacement index="0" val="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_VitalName/@Text}"/></Frame></Frame>
 				<Frame type="UnitStatusEnergyBar" name="DeathwingEnergyBar"><Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/><Width val="0"/><Frame type="TextFormatFrame" name="RegenTooltipFormatFrame"><Replacement index="0" val="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_VitalName/@Text}"/></Frame><Frame type="TextFormatFrame" name="NoRegenTooltipFormatFrame"><Replacement index="0" val="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_VitalName/@Text}"/></Frame></Frame>
+				<!-- rage: Blizzard's box has no rage colour (inspect_card.rage_bar) -->
+				<Frame type="UnitStatusEnergyBar" name="FCJH_RageEnergyBar" template="TargetInfoPanelUnitStatusTemplate/TargetInfoPanelEnergyBarTemplate">
+					<Anchor side="Top" relative="$parent/HealthBar" pos="Max" offset="2"/>
+					<Anchor side="Left" relative="$parent/HealthBar" pos="Min" offset="0"/>
+					<Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="0"/>
+					<Width val="0"/>
+					<Alpha val="0"/>
+					<ColorStyle val="RageEnergy"/>
+					<AcceptsMouse val="false"/>
+					<AcceptsMouseTooltip val="false"/>
+					<Frame type="TextFormatFrame" name="RegenTooltipFormatFrame"><Replacement index="0" val="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_VitalName/@Text}"/></Frame><Frame type="TextFormatFrame" name="NoRegenTooltipFormatFrame"><Replacement index="0" val="{$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0/FCJH_VitalName/@Text}"/></Frame>
+				</Frame>
+				<StateGroup name="FCJH_Rage">
+					<DefaultState val="Other"/>
+					<State name="HeroHogger"><When type="Property" Unit="HeroHogger"/><Action type="SetProperty" frame="$this/FCJH_RageEnergyBar" Alpha="255"/></State>
+					<State name="Other"><Action type="SetProperty" frame="$this/FCJH_RageEnergyBar" Alpha="0"/></State>
+				</StateGroup>
 				<!-- stats: Blizzard's stat rows, from the inspect box's template -->
 				<Frame type="Frame" name="FCJH_Stats" template="TargetInfoPanel/TargetInfoPanelTemplate/HealthAndManaUnitStatusFrame/TargetStatsPanel">
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="500"/>

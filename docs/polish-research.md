@@ -303,6 +303,14 @@ have been on fire; its squares stay in until then.
 tab on the panes (screen 22:26:07). The plate click handlers are back: the diagnostics that
 came out in fix 8 had been blocking them (user).
 
+**Seen 2026-10-16 (57474cd):** D.Va's Self-Destruct meter on the inspect card, good; Hogger's
+plate bar red, but his inspect card still blue (now its own rage bar, `inspect_card.rage_bar`,
+not seen yet); the kill feed gone (the temporary hide works). Tracer's plate dial: its fill
+drew all along, lost against her orange Pulse Bomb icon. The diagnostics showed it on the
+dark disc at 56%, matching the inspect card (user's screen 23:43:43). It needs contrast, not
+a new frame: a dimmed disc, a ring round the icon, or the icon dimmed while charging (user to
+pick).
+
 **The round after (user, 2026-10-16), not yet built:**
 12. The row frames' chrome drew under the plates (ObserverTopPanel sits at 200, under the
     team overviews): they move into Team1/Team2HeroOverview, over the cells.
