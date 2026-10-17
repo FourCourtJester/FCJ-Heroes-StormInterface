@@ -272,7 +272,14 @@ have been on fire; its squares stay in until then.
    Tracer's Pulse Bomb meter, 68 x 76 with a percent label, so it's oversized on our button
    and sits as a black dial with "0%" over the hex. Same fix as Tracer's
    (`inspect_card.tracer_charge`): override it in her file at our button size, percent
-   label off.
+   label off. Tracer's, for reference (user's screenshot): the dial fits inside the hex,
+   with the count in the middle.
+10. Heroes with no resource (Abathur, user, Try Me): Blizzard's top bar gives them a
+   health bar twice the height, filling the empty resource band
+   (`HeroUnitStatusFrameNoResource`, partyframe.stormlayout:150 and 2168; the script picks
+   it per hero). Ours shows every hero's resource bar, empty for these. Do the same: for a
+   no-resource hero the health bar takes the resource band too, and the resource bar and
+   its backing go. The hero list comes from Blizzard's data, not by hand.
 
 Also seen: Gazlowe's 10 segments and Junkrat's 4; D.Va's plate shows her portrait, not
 white (in mech, early game).
