@@ -220,10 +220,10 @@ All of them are driven by events from the game to that hidden cell, so they woul
   - Arthas's and the Vikings' fill only through talents. Everyone else's column stays empty.
   - Hover it: does Blizzard's quest tooltip show?
   - The grid art behind it is talent 1's cell drawn twice. Does it join cleanly?
-- **The menu border test** (new; Ctrl+1): the talents pane alone wears Blizzard's front-end
-  menu border (`Storm_Generic_SmallPanel_Border`, the nine-slice) in place of the inspector
-  border. Does it read Heroes-like? Is it too thick, or does it crowd the title or the rows?
-  If we like it, it goes on every pane and the inspect card.
+- **The Try Me look** (new; every pane and the inspect card): Blizzard's Try Me panel
+  background (`Storm_TutorialReferenceCardBG`, tiled, 70%) with its own edge, no border
+  layer; the panes' X is now Blizzard's small close tab. Does it read like the Try Me panel?
+  Does the tab fit the title band, and does it still close the pane?
 - **D.Va's Self-Destruct charge** (visual pass): her mech's charge meter doesn't go on the
   plate, but check it shows on her talent card, the way Tracer's Pulse Bomb meter does.
 - **Ammo segments** (new in this build): Tracer's bar should show 10 segments, Junkrat's 4
@@ -263,7 +263,7 @@ have been on fire; its squares stay in until then.
    **Parked for the round after this one (user): the most work of the eleven.**
 4. **Done, not yet built.** The respawn flash and glow listen to the party cell only, the
    Vikings' too. The pet event isn't added: it never arrived, and Misha waits with fix 3.
-5. The panes and the inspect card take the Try Me panel's style
+5. **Done, not yet built.** The panes and the inspect card take the Try Me panel's style
    (`Storm_TutorialReferenceCardBG`, tiled nine-slice, alpha 180) and its small close tab,
    in place of the menu-border test.
 6. **Done, not yet built.** Hogger's rage colour (`RageEnergy`, from the party frame's
@@ -364,7 +364,7 @@ Built for tonight: the seams, the core's own frame, the quest column and the amm
     nine-slice. Blizzard blurs in game too (the Tab panel's and the talents overview's
     `GlassBlur`: BlurAmount .8, RenderType HDR, Visible `#IngameBlur`), and the border loads in
     game (the in-game tooltips use it). Not yet tried in observer mode.
-  - Open: Blizzard's menu border, or our own chrome line (the plates' `[row_frame]` look).
+  - Decided 2026-10-16 (user): the Try Me panel's look, which replaced the menu-border test.
   - The numbers panes also need a colour, font and art pass. Candidates (parked 2026-10-05):
     Blizzard's `obs_stats_top` grid (1130 wide, like the talents grid) and the
     `obs_stats_leader_blue/red` underlines; styles in FontStyles.StormStyle (`FCJH_Stat*`).

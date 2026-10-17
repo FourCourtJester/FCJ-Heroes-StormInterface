@@ -308,21 +308,11 @@
 					<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 					<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 					<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
-					<Texture val="@UI/Storm_UI_TargetInfoPanel_Background"/>
+					<Texture val="@UI/Storm_TutorialReferenceCardBG"/>
 					<TextureType val="Nineslice"/>
-					<Alpha val="230"/>
-					<Color val="e6e6e6"/>
+					<Tiled val="true"/>
+					<Alpha val="180"/>
 					<RenderPriority val="205"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
-				<Frame type="Image" name="FCJH_SkinBorder">
-					<Anchor side="Top"    relative="$parent" pos="Min" offset="3"/>
-					<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
-					<Anchor side="Bottom" relative="$parent" pos="Max" offset="-3"/>
-					<Anchor side="Right"  relative="$parent" pos="Max" offset="-3"/>
-					<Texture val="@UI/Storm_UI_TargetInfoPanel_BackgroundBorder"/>
-					<TextureType val="Nineslice"/>
-					<RenderPriority val="207"/>
 					<AcceptsMouse val="false"/>
 				</Frame>
 				<Frame type="Image" name="FCJH_SkinTitle">

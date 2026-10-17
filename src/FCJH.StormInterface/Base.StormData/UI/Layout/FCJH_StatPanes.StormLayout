@@ -2172,19 +2172,13 @@
 					</Frame>
 				</Frame>
 			</Frame>
-			<Frame type="Button" name="FCJH_Close">
-				<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
-				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
-				<Width val="#FCJH_INFO_PANE_TITLE_H"/>
-				<Height val="#FCJH_INFO_PANE_TITLE_H"/>
+			<Frame type="Button" name="FCJH_Close" template="StandardTemplates/SmallPanelCloseButtonTemplate">
+				<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_CLOSE_T"/>
+				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_CLOSE_R"/>
+				<Width val="#FCJH_INFO_PANE_CLOSE_W"/>
+				<Height val="#FCJH_INFO_PANE_CLOSE_H"/>
 				<RenderPriority val="650"/>
 				<AcceptsMouse val="true"/>
-				<Frame type="Label" name="FCJH_X">
-					<Anchor relative="$parent"/>
-					<Style val="ObsBar_MatchTimer"/>
-					<Text val="X"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
 				<Animation name="FCJH_Close">
 					<Event event="OnClick" action="Reset,Play"/>
 					<Controller type="Visibility" end="Stop" frame="$parent/$parent/FCJH_Pane_KdaToggle">
@@ -4103,19 +4097,13 @@
 					</Frame>
 				</Frame>
 			</Frame>
-			<Frame type="Button" name="FCJH_Close">
-				<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
-				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
-				<Width val="#FCJH_INFO_PANE_TITLE_H"/>
-				<Height val="#FCJH_INFO_PANE_TITLE_H"/>
+			<Frame type="Button" name="FCJH_Close" template="StandardTemplates/SmallPanelCloseButtonTemplate">
+				<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_CLOSE_T"/>
+				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_CLOSE_R"/>
+				<Width val="#FCJH_INFO_PANE_CLOSE_W"/>
+				<Height val="#FCJH_INFO_PANE_CLOSE_H"/>
 				<RenderPriority val="650"/>
 				<AcceptsMouse val="true"/>
-				<Frame type="Label" name="FCJH_X">
-					<Anchor relative="$parent"/>
-					<Style val="ObsBar_MatchTimer"/>
-					<Text val="X"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
 				<Animation name="FCJH_Close">
 					<Event event="OnClick" action="Reset,Play"/>
 					<Controller type="Visibility" end="Stop" frame="$parent/$parent/FCJH_Pane_HealingToggle">
@@ -6024,19 +6012,13 @@
 					</Frame>
 				</Frame>
 			</Frame>
-			<Frame type="Button" name="FCJH_Close">
-				<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
-				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
-				<Width val="#FCJH_INFO_PANE_TITLE_H"/>
-				<Height val="#FCJH_INFO_PANE_TITLE_H"/>
+			<Frame type="Button" name="FCJH_Close" template="StandardTemplates/SmallPanelCloseButtonTemplate">
+				<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_CLOSE_T"/>
+				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_CLOSE_R"/>
+				<Width val="#FCJH_INFO_PANE_CLOSE_W"/>
+				<Height val="#FCJH_INFO_PANE_CLOSE_H"/>
 				<RenderPriority val="650"/>
 				<AcceptsMouse val="true"/>
-				<Frame type="Label" name="FCJH_X">
-					<Anchor relative="$parent"/>
-					<Style val="ObsBar_MatchTimer"/>
-					<Text val="X"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
 				<Animation name="FCJH_Close">
 					<Event event="OnClick" action="Reset,Play"/>
 					<Controller type="Visibility" end="Stop" frame="$parent/$parent/FCJH_Pane_StructuresToggle">

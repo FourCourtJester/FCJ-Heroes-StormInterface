@@ -7,7 +7,8 @@
 	     none of the bottom panel's clipping. Rows from Blizzard's own row template: blue 0-4
 	     stacked over red 5-9, red un-mirrored so every row reads portrait-first.
 	     Blizzard's decorations (hex art, borders, buttons, team stats) are hidden; the look is
-	     the inspect card's, shared by every pane (FCJH_PaneSkin, 2026-10-05), under the rows.
+	     the inspect card's, shared by every pane (FCJH_PaneSkin, 2026-10-05; the Try Me
+	     panel's since 2026-10-16), under the rows.
 	     (Promoted from the dev probe of the same design, 2026-09-26.)
 	     Shown by its hotkey (layout.toml [info_pane]); starts hidden, and only one info
 	     pane shows at a time - the hotkeys for all four live in FCJH_StatPanes. -->
@@ -29,9 +30,6 @@
 				<!-- the look: the inspect card's (tools/inspect_card.py pane_skin), as every pane -->
 				<Frame type="Frame" name="FCJH_Skin" template="FCJH_Constants/FCJH_PaneSkin">
 					<Anchor relative="$parent"/>
-					<!-- TEST (user, 2026-10-16): this pane wears Blizzard's menu border instead
-					     (FCJH_MenuBorder, below); extended to every pane if we like it -->
-					<Frame type="Image" name="FCJH_SkinBorder"><Alpha val="0"/></Frame>
 				</Frame>
 				<!-- Blizzard's observer talent grid (obs_talents_top; approved in game, user 2026-10-05)
 				     behind the rows. Blizzard tiles it once per 60-unit row (TextureCoords 0-5 over
@@ -1144,28 +1142,15 @@
 					<RenderPriority val="610"/>
 					<AcceptsMouse val="false"/>
 				</Frame>
-				<!-- TEST (user, 2026-10-16): the front-end menu's border - Blizzard's own nine-slice
-				     (StandardSmallPanelBorderTemplate: Storm_Generic_SmallPanel_Border, as
-				     PopupPanelTemplate and the in-game tooltips), round the whole pane, over the rows -->
-				<Frame type="Image" name="FCJH_MenuBorder" template="StandardTemplates/StandardSmallPanelBorderTemplate">
-					<RenderPriority val="605"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
 			</Frame>
-			<!-- close: the X in the corner (tools/gen.py close_button) -->
-			<Frame type="Button" name="FCJH_Close">
-				<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
-				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
-				<Width val="#FCJH_INFO_PANE_TITLE_H"/>
-				<Height val="#FCJH_INFO_PANE_TITLE_H"/>
+			<!-- close: Blizzard's close tab in the corner (tools/gen.py close_button) -->
+			<Frame type="Button" name="FCJH_Close" template="StandardTemplates/SmallPanelCloseButtonTemplate">
+				<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_CLOSE_T"/>
+				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_CLOSE_R"/>
+				<Width val="#FCJH_INFO_PANE_CLOSE_W"/>
+				<Height val="#FCJH_INFO_PANE_CLOSE_H"/>
 				<RenderPriority val="650"/>
 				<AcceptsMouse val="true"/>
-				<Frame type="Label" name="FCJH_X">
-					<Anchor relative="$parent"/>
-					<Style val="ObsBar_MatchTimer"/>
-					<Text val="X"/>
-					<AcceptsMouse val="false"/>
-				</Frame>
 				<Animation name="FCJH_Close">
 					<Event event="OnClick" action="Reset,Play"/>
 					<Controller type="Visibility" end="Stop" frame="$parent/$parent/FCJH_Pane_TalentsToggle">

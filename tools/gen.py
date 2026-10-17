@@ -693,6 +693,13 @@ def constants_layout(cfg):
     lines.append("")
     lines.append("\t<!-- Info pane chrome -->")
     const(name("info", "pane", "title", "h"), u(pane["title_height"]))
+    # the close tab (close_button): Blizzard's 60 x 38 at its aspect, 4 in from the pane's top
+    # and right as on the Try Me panel, and ending 2 above the title band's line
+    edges, tab_h = anchor_edges(cfg, "info_pane"), u(pane["title_height"]) - CLOSE_INSET - 2
+    const(name("info", "pane", "close", "t"), edges["t"] + CLOSE_INSET)
+    const(name("info", "pane", "close", "r"), edges["r"] - CLOSE_INSET)
+    const(name("info", "pane", "close", "w"), round(tab_h * 60 / 38))
+    const(name("info", "pane", "close", "h"), tab_h)
     const(name("info", "pane", "border"), max(1, u(pane["border"])))
     const(name("info", "pane", "border", "neg"), -max(1, u(pane["border"])))
     const(name("info", "pane", "header", "h"), u(pane["header_height"]))
@@ -3228,23 +3235,23 @@ def team_header(team_id, colour, title_style, value_style, name, top, height, pl
     return out
 
 
+CLOSE_INSET = 4   # the close tab in from the pane's top and right, as on Blizzard's Try Me panel
+
+
 def close_button(container, indent=3):
-    """An X in the pane's top-right corner. A click hides the pane's hotkey toggle, which
-    closes the pane exactly as the hotkey does (its OnHidden plays FCJH_Show backwards)."""
+    """Blizzard's small close tab (SmallPanelCloseButtonTemplate, the Try Me panel's: its
+    own normal, hover and down art) in the pane's top-right corner, sized to the title band
+    (FCJH_INFO_PANE_CLOSE_*); our "X" label until 2026-10-16. A click hides the pane's hotkey
+    toggle, which closes the pane exactly as the hotkey does (its OnHidden plays FCJH_Show
+    backwards)."""
     t = "\t" * indent
-    return f'''{t}<Frame type="Button" name="FCJH_Close">
-{t}	<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
-{t}	<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
-{t}	<Width val="#FCJH_INFO_PANE_TITLE_H"/>
-{t}	<Height val="#FCJH_INFO_PANE_TITLE_H"/>
+    return f'''{t}<Frame type="Button" name="FCJH_Close" template="StandardTemplates/SmallPanelCloseButtonTemplate">
+{t}	<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_CLOSE_T"/>
+{t}	<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_CLOSE_R"/>
+{t}	<Width val="#FCJH_INFO_PANE_CLOSE_W"/>
+{t}	<Height val="#FCJH_INFO_PANE_CLOSE_H"/>
 {t}	<RenderPriority val="650"/>
 {t}	<AcceptsMouse val="true"/>
-{t}	<Frame type="Label" name="FCJH_X">
-{t}		<Anchor relative="$parent"/>
-{t}		<Style val="ObsBar_MatchTimer"/>
-{t}		<Text val="X"/>
-{t}		<AcceptsMouse val="false"/>
-{t}	</Frame>
 {t}	<Animation name="FCJH_Close">
 {t}		<Event event="OnClick" action="Reset,Play"/>
 {t}		<Controller type="Visibility" end="Stop" frame="$parent/$parent/FCJH_{container}Toggle">

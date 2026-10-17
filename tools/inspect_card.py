@@ -345,10 +345,14 @@ def command_panel():
             f'{T*2}</Frame>\n')
 
 
-# The card's skin (blizzard_skin), and the info panes' (pane_skin): Blizzard's inspector art
-SKIN_BACK, SKIN_BORDER = "Storm_UI_TargetInfoPanel_Background", "Storm_UI_TargetInfoPanel_BackgroundBorder"
-SKIN_ALPHA = 230        # 90%: the game shows through a little (user, 2026-10-05)
-SKIN_SHADE = "e6e6e6"   # the background 10% darker (user, 2026-10-05, for every pane)
+# The card's skin (blizzard_skin), and the info panes' (pane_skin): the Try Me panel's look
+# (user, 2026-10-16; TryMeModeButtonPanelTemplate, tutorialui.stormlayout:1070). One image
+# does it all - the in-game tooltip background, its navy-purple fill and thin lavender edge -
+# as a tiled nine-slice at 180 (70%), no blur, no border layer. It replaced Blizzard's
+# inspector art (Storm_UI_TargetInfoPanel_Background + _BackgroundBorder, 90%, shaded 10%
+# darker: 2026-10-05) and the menu-border test (Storm_Generic_SmallPanel_Border, 2026-10-16).
+SKIN_BACK = "Storm_TutorialReferenceCardBG"
+SKIN_ALPHA = 180
 SKIN_BAND, SKIN_LINE = "564c6d", "73668d"   # the title band's tint, and its line
 SKIN_INSET = 3          # the border, and the bands, this far in from the edge
 
@@ -357,8 +361,8 @@ def blizzard_skin():
     """The default inspector's own art on the card (the user's background pass, 2026-10-05:
     "the pure black needs something to punch it up"; chosen over the flat look in game) -
     TargetInfoPanelTemplate's layers: a nine-slice background, its top band tinted 564c6d at
-    76 alpha with a 73668d line under it (here on both our bands), and a nine-slice border
-    inset 3. All of it just over our back (which stays: it takes the mouse) and under
+    76 alpha with a 73668d line under it (here on both our bands). The background is the Try
+    Me panel's since 2026-10-16 (SKIN_BACK), which carries its own edge: no border layer. All of it just over our back (which stays: it takes the mouse) and under
     everything drawn on the card, as in Blizzard's panel (border 270, contents 280): the
     border's middle isn't clear, and drawn over the card (689, the first try) it muted the
     health bars and the fountain (user, 2026-10-05)."""
@@ -372,14 +376,12 @@ def blizzard_skin():
                 f'{u}<Anchor side="Bottom" relative="$parent" pos="{"Max" if to_end else "Min"}" offset="{-inset if to_end else bottom}"/>\n'
                 f'{u}<Anchor side="Right"  relative="$parent" pos="Max" offset="{-inset}"/>\n'
                 f'{extra}{u}<RenderPriority val="{prio}"/>\n{u}<AcceptsMouse val="false"/>\n{T*4}</Frame>\n')
-    nine = lambda tex: f'{u}<Texture val="@UI/{tex}"/>\n{u}<TextureType val="Nineslice"/>\n'
+    nine = lambda tex: f'{u}<Texture val="@UI/{tex}"/>\n{u}<TextureType val="Nineslice"/>\n{u}<Tiled val="true"/>\n'
     tint = lambda colour: f'{u}<Color val="{colour}"/>\n{u}<Alpha val="76"/>\n'
-    # the background at 90%, the game showing through a little as through the replay panel
-    # (user, 2026-10-05: 80% was a touch much), shaded 10% darker (SKIN_SHADE); nothing under
-    # it (our back is faded, mouse only)
-    return (img("FCJH_SkinBack", 0, 0, nine(SKIN_BACK) + f'{u}<Alpha val="{SKIN_ALPHA}"/>\n{u}<Color val="{SKIN_SHADE}"/>\n',
+    # the Try Me panel's background (SKIN_BACK), its own edge the border; nothing under it
+    # (our back is faded, mouse only)
+    return (img("FCJH_SkinBack", 0, 0, nine(SKIN_BACK) + f'{u}<Alpha val="{SKIN_ALPHA}"/>\n',
                 205, to_end=True)
-            + img("FCJH_SkinBorder", 0, 0, nine(SKIN_BORDER), 207, SKIN_INSET, to_end=True)
             + img("FCJH_SkinTitle", 0, TITLE, tint(SKIN_BAND), 211, SKIN_INSET)
             + img("FCJH_SkinTitleLine", TITLE - 1, TITLE, tint(SKIN_LINE), 212)
             + img("FCJH_SkinName", NAME_BAND, NAME_BAND + NAME_H, tint(SKIN_BAND), 241, SKIN_INSET))
@@ -388,7 +390,7 @@ def blizzard_skin():
 def pane_skin(title_h, indent=1):
     """The card's look as a template (FCJH_PaneSkin) for every info pane: once Blizzard's own
     pane backdrops were tried and scrapped, the panes take the card's style (user, 2026-10-05).
-    The same layers as blizzard_skin - background, border, title band and its line - filling
+    The same layers as blizzard_skin - background, title band and its line - filling
     the frame that uses it, the title band `title_h` (a constant name) tall. Under the panes'
     rows (500) and their title label (610)."""
     t = "\t" * indent
@@ -400,7 +402,7 @@ def pane_skin(title_h, indent=1):
                 f'{u}<Anchor side="Bottom" relative="{bottom[0]}" pos="{bottom[1]}" offset="{bottom[2]}"/>\n'
                 f'{u}<Anchor side="Right"  relative="$parent" pos="Max" offset="{-inset}"/>\n'
                 f'{extra}{u}<RenderPriority val="{prio}"/>\n{u}<AcceptsMouse val="false"/>\n{t}\t</Frame>\n')
-    nine = lambda tex: f'{u}<Texture val="@UI/{tex}"/>\n{u}<TextureType val="Nineslice"/>\n'
+    nine = lambda tex: f'{u}<Texture val="@UI/{tex}"/>\n{u}<TextureType val="Nineslice"/>\n{u}<Tiled val="true"/>\n'
     tint = lambda colour: f'{u}<Color val="{colour}"/>\n{u}<Alpha val="76"/>\n'
     # the frame's own priority puts the whole skin under the pane's rows (500): RenderPriority
     # orders siblings only, so its layers' numbers count among themselves (without it the
@@ -408,8 +410,7 @@ def pane_skin(title_h, indent=1):
     return (f'{t}<!-- the info panes\' look: the inspect card\'s (tools/inspect_card.py pane_skin) -->\n'
             f'{t}<Frame type="Frame" name="FCJH_PaneSkin">\n{t}\t<RenderPriority val="400"/>\n{t}\t<AcceptsMouse val="false"/>\n'
             + img("FCJH_SkinBack", ("$parent", "Max", 0),
-                  nine(SKIN_BACK) + f'{u}<Alpha val="{SKIN_ALPHA}"/>\n{u}<Color val="{SKIN_SHADE}"/>\n', 400, 0)
-            + img("FCJH_SkinBorder", ("$parent", "Max", -SKIN_INSET), nine(SKIN_BORDER), 405, SKIN_INSET)
+                  nine(SKIN_BACK) + f'{u}<Alpha val="{SKIN_ALPHA}"/>\n', 400, 0)
             + img("FCJH_SkinTitle", ("$parent", "Min", f"#{title_h}"), tint(SKIN_BAND), 410, SKIN_INSET)
             + img("FCJH_SkinTitleLine", ("$parent/FCJH_SkinTitle", "Max", 0), tint(SKIN_LINE), 412, 0,
                   "$parent/FCJH_SkinTitle", "Max", -1)
