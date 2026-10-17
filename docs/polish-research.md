@@ -255,7 +255,7 @@ have been on fire; its squares stay in until then.
    `QuestNotAvailable` state is the empty one). The icon fills the 40 cell (Blizzard's
    template is 68 with 11-14 insets). Its count and tooltip stay empty in observer view,
    though quest talents work: another hook to find.
-2. The respawn glow gets its own inset, about 4 Blizzard units (it's sized for Blizzard's
+2. **Done, not yet built** (`gen.RESPAWN_GLOW_INSET`). The respawn glow gets its own inset, about 4 Blizzard units (it's sized for Blizzard's
    thick bezel). Both teams.
 3. Split portraits (Rexxar and Misha, the Vikings, maybe D.Va) draw white for observers:
    Blizzard's script sets their textures for players only. Hard-code Blizzard's partyframe
@@ -266,7 +266,8 @@ have been on fire; its squares stay in until then.
    (`Storm_TutorialReferenceCardBG`, tiled nine-slice, alpha 180) and its small close tab,
    in place of the menu-border test.
 6. Hogger's rage colour (`RageEnergy`); Blizzard's target panel lacks him (log it).
-7. The core's chrome line up to 3 px like the rest (user).
+7. **Done, not yet built.** The core's chrome line up to 3 px like the rest (user); its bottom
+   line now lies exactly on the row frame's top line.
 8. The answered diagnostics come out (respawn, hearthstone, split portraits).
 9. **Done, not yet built** (`inspect_card.dva_charge`). D.Va's Self-Destruct meter on the inspect card ("needs love", user): Blizzard draws it
    from her own layout (`DVaMechCommandCardFrame`, dva.stormlayout:678) as a copy of

@@ -1339,6 +1339,10 @@ SKULL_MOVES = {
                           (1.1, 0, 0, "Slow,Linear")],
 }
 SKULL_FLIPPED = ["FCJH_SkullOverlay", "FCJH_SkullBurst", "FCJH_SkullBurst2", "FCJH_RespawnGlow"]
+# The respawn glow sits this much further in than the skull's overlay (Blizzard units, scaled
+# like the rest): Blizzard sizes it for its own thick bezel, so on our thinner frame it stood
+# proud of the plate (user, 2026-10-16)
+RESPAWN_GLOW_INSET = 4
 
 
 def death_skull(team, c):
@@ -1364,12 +1368,12 @@ def death_skull(team, c):
             anim += (f'\n{t}\t<Controller type="Anchor" end="Pause" side="{side}" frame="{name}" relative="true">'
                      + "".join(f'\n{t}\t\t<Key type="Curve" time="{key[0]}" value="{sign * s(key[pick]) or 0}" inout="{key[3]}"/>'
                                for key in keys) + f'\n{t}\t</Controller>')
-    inset = lambda name, tex, prio: f"""
+    inset = lambda name, tex, prio, more=0: f"""
 			<Frame type="Image" name="{name}">
-				<Anchor side="Top"    relative="$parent" pos="Min" offset="{s(9)}"/>
-				<Anchor side="Left"   relative="$parent" pos="Min" offset="{s(8)}"/>
-				<Anchor side="Bottom" relative="$parent" pos="Max" offset="-{s(9)}"/>
-				<Anchor side="Right"  relative="$parent" pos="Max" offset="-{s(8)}"/>
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="{s(9 + more)}"/>
+				<Anchor side="Left"   relative="$parent" pos="Min" offset="{s(8 + more)}"/>
+				<Anchor side="Bottom" relative="$parent" pos="Max" offset="-{s(9 + more)}"/>
+				<Anchor side="Right"  relative="$parent" pos="Max" offset="-{s(8 + more)}"/>
 				<Texture val="@UI/{tex}"/>
 				<Alpha val="0"/>
 				<RenderPriority val="{prio}"/>
@@ -1415,7 +1419,7 @@ def death_skull(team, c):
 				<RenderPriority val="517"/>
 				<Unclipped val="true"/>
 				<AcceptsMouse val="false"/>
-			</Frame>{inset("FCJH_RespawnGlow", "HUD_TopBar_Team_HeroFrame_RespawnFrame", 590)}
+			</Frame>{inset("FCJH_RespawnGlow", "HUD_TopBar_Team_HeroFrame_RespawnFrame", 590, RESPAWN_GLOW_INSET)}
 		</Frame>"""
 
 
