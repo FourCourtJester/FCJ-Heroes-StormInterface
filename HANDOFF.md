@@ -535,6 +535,15 @@ from their plates (docs/blizzard-fixes.md).
    Diagnostics: the respawn, hearthstone and portrait ones are read and gone (2026-10-16);
    `onfire_diagnostics` stays until a known on-fire replay.
    The intro waits for the user's OBS plan. The items as the user gave them:
+   - **The chrome's slant against Blizzard's art** (user, 2026-10-17): the row frame's slants
+     don't gel with the art's: the portraits' edges, the heroic badges, the fountain icons and
+     the resource bars' ends. The portraits can't change, so the chrome follows them. Ours
+     lean `HeroCell.OVERLAP / H` (30 / 61 = 0.492 across per down, `row_frame_shape`,
+     `row_frame_seams`). A first read of the seam between plates 2 and 3 on 00_09_39 gives
+     about 0.48; not yet measured: each piece of art's own slant (a 3x zoom of the blue row,
+     x 40-440, y 950-1080, shows them). Measure each, pick the one the eye follows (likely
+     the portrait edge), then re-cut the frame. Also: **the chrome shadows out** (user: they
+     don't land in good places).
    - **A ready ring for every heroic** (user, 2026-10-17): Tracer's ready ping, the expanding
      gold ring at full charge, made the user want the same whenever any heroic comes off
      cooldown. Notes in docs/polish-research.md ("A ready ring for every heroic").
