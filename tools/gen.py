@@ -761,6 +761,9 @@ PULSE_DIAL_DISC_ALPHA = 0
 # ...and its size, a share of the gold frame's height: at the full height it stood over the
 # badge's top and bottom (user, 2026-10-17)
 PULSE_DIAL_SCALE = 0.8
+# ...and the dim over her heroic while it charges, off at full: 20% black in the icon's own
+# shape (user, 2026-10-17). It replaced the orange tick ring, lost in the art
+PULSE_DIAL_DIM_ALPHA = 51
 
 RESOURCE_SEGMENTS = {"HeroTracer": 2, "HeroJunkrat": 1, "HeroTinker": 1}
 
@@ -2777,6 +2780,7 @@ def talent_row_lifts(cfg):
         # Ahli's (34 x 38 on his heroic). At the icon's width (first try, 2026-10-16) it stood
         # half again over the badge, a black disc over it and the bars (user)
         _, ft, _, fb = heroic_frame_rect(cfg, team.lower())
+        mask = HEROIC_ART[team.lower()][0]
         dial_h = round((fb - ft) * PULSE_DIAL_SCALE)
         dial_w = round(dial_h * 68 / 76)
         # the in-game top bar's heroic panel for this player, which our plate's heroic follows
@@ -2823,9 +2827,10 @@ def talent_row_lifts(cfg):
 												</Frame>
 												<!-- her HUD's round dial, from its own template, as Ahli's: the observer bar restyled
 												     circular never filled (user, 2026-10-16). Its fill drew, but its orange ticks were lost
-												     in the orange Pulse Bomb icon until the dark disc was behind them (diagnostics, 57474cd):
-												     the disc see-through (PULSE_DIAL_DISC_ALPHA); the count in the
-												     middle. No percent label, no ping -->
+												     in the orange Pulse Bomb icon (diagnostics, 57474cd), so they're out: the count in the
+												     middle, hidden at 0, and the heroic dimmed while charging (user, 2026-10-17). No percent
+												     label. The template's ready ping plays at full, though shrunk and faded here: its own
+												     animation drives it (seen, user, 2026-10-17) and it stays -->
 												<Frame type="UnitStatusAbilCharge" name="FCJH_PulseBombDial" template="Tracer/TracerPulseBombChargeButtonOverrideFrame/UnitStatusFrame0/TracerPulseBombChargeFrame">
 													{edge("Top", "$parent", "Mid", 0)}
 													{edge("Left", "$parent", "Mid", 0)}
@@ -2836,19 +2841,22 @@ def talent_row_lifts(cfg):
 													<RenderPriority val="1000"/>
 													<Unclipped val="true"/>
 													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="{PULSE_DIAL_DISC_ALPHA}"/><Unclipped val="true"/></Frame>
-													<!-- our size restated: the inspect card sizes this template's fill for its button -->
-													<Frame type="ProgressBar" name="ChargeFillProgress">
-														<Width val="{dial_w}"/>
-														<Height val="{dial_h}"/>
-														<RenderPriority val="1000"/>
+													<!-- the tick ring out: you could barely see it over the art (user, 2026-10-17) -->
+													<Frame type="ProgressBar" name="ChargeFillProgress"><Alpha val="0"/></Frame>
+													<!-- the dim, over the heroic's icon (the container is its square; the icon is inset in its
+													     backplate's shape, heroic_panel) and under the count -->
+													<Frame type="Image" name="FCJH_ChargeDim">
+														<Anchor side="Top" relative="$parent/$parent" pos="Min" offset="{ULT_ICON_INSET}"/>
+														<Anchor side="Left" relative="$parent/$parent" pos="Min" offset="{ULT_ICON_INSET}"/>
+														<Anchor side="Bottom" relative="$parent/$parent" pos="Max" offset="-{ULT_ICON_INSET}"/>
+														<Anchor side="Right" relative="$parent/$parent" pos="Max" offset="-{ULT_ICON_INSET}"/>
+														<Texture val="@UI/{mask}"/>
+														<AlphaMaskTexture val="@UI/{mask}"/>
+														<Color val="0,0,0"/>
+														<Alpha val="{PULSE_DIAL_DIM_ALPHA}"/>
+														<RenderPriority val="900"/>
 														<Unclipped val="true"/>
-														<Frame type="Frame" name="FillImageContainer">
-															<RenderPriority val="1000"/>
-															<Frame type="Image" name="FillImage">
-																<RenderPriority val="1000"/>
-																<TextureCoords top="0.01" left="0.01" bottom="0.99" right="0.99"/>
-															</Frame>
-														</Frame>
+														<AcceptsMouse val="false"/>
 													</Frame>
 													<!-- the charge in the middle, as on the inspect card's R button: the ring alone didn't pop
 													     (user). Centred here: the card's override of the template doesn't reach this copy, which
@@ -2864,23 +2872,25 @@ def talent_row_lifts(cfg):
 													</Frame>
 													<Frame type="Label" name="ChargePercentLabel"><Alpha val="0"/></Frame>
 													<Frame type="Image" name="PulseBombReadyPingImage"><Width val="0"/><Height val="0"/><Alpha val="0"/></Frame>
-													<!-- full: the template hides its fill (the HUD's ready ping shows instead), so full would
-													     read as empty. The whole ring instead, on the same events -->
-													<Frame type="Image" name="FCJH_FullRing">
-														<Anchor relative="$parent"/>
-														<Texture val="@UI/Storm_UI_HUD_Tracer_Pulse_Bomb_Fill_Image"/>
-														<TextureCoords top="0.01" left="0.01" bottom="0.99" right="0.99"/>
-														<RenderPriority val="1000"/>
-														<Visible val="false"/>
-														<Unclipped val="true"/>
-														<AcceptsMouse val="false"/>
-													</Frame>
-													<Animation name="FCJH_FullRingShown">
+													<!-- no count at 0: the dim alone says charging (user, 2026-10-17). The template hides
+													     the count itself at full -->
+													<StateGroup name="FCJH_CountShown">
+														<DefaultState val="Shown"/>
+														<State name="Zero">
+															<When type="Property" frame="$this/ChargesLabel" Text="0"/>
+															<Action type="SetProperty" frame="$this/ChargesLabel" Alpha="0"/>
+														</State>
+														<State name="Shown">
+															<Action type="SetProperty" frame="$this/ChargesLabel" Alpha="255"/>
+														</State>
+													</StateGroup>
+													<!-- the dim off at full, on the template's own events, as it hides its fill -->
+													<Animation name="FCJH_ChargeDimOff">
 														<Event event="ChargesFull" action="Restart, DirectionForward, Play"/>
 														<Event event="ChargesEmpty" action="Stop"/>
 														<Event event="CurrentChanged_1" action="Stop"/>
-														<Controller type="Visibility" end="Pause" frame="FCJH_FullRing">
-															<Key type="Bool" time="0" value="True"/>
+														<Controller type="Visibility" end="Pause" frame="FCJH_ChargeDim">
+															<Key type="Bool" time="0" value="False"/>
 														</Controller>
 													</Animation>
 												</Frame>

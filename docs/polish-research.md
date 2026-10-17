@@ -132,6 +132,21 @@ Beyond items 1-3, the player's cell also animates:
 
 All of them are driven by events from the game to that hidden cell, so they would each need the same test as item 1 first. Once that test passes, they're cheap.
 
+## A ready ring for every heroic (user, 2026-10-17)
+
+Tracer's plate dial plays her HUD template's ready ping at full charge: an expanding gold ring
+that fades out (seen d0438cc; "hella nice", user). The user wants the same for every heroic
+when it comes off cooldown. Not built. What it is, for later:
+
+- `PulseBombReadyPingImage` in tracer.stormlayout (TracerPulseBombChargeFrame): an Image,
+  Texture `@UI/Storm_UI_HeroUI_Greymane_PulseRing`, BlendMode Add, Visible false, centred on
+  the dial. Its `ReadyPulseAnim` plays OnShown: Fade 255 -> 0 and Width/Height 50% -> 170%
+  (percentage Dimension controllers), over 0.5 s, Unclipped while it plays.
+- Ours could be the same Image on the plate's heroic (`heroic_panel`), shown by whatever
+  already shows `FCJH_UltReady` (the ready frame), so OnShown replays it each time a heroic
+  becomes ready. Check it doesn't fire at load for heroics already ready, and that it doesn't
+  double up with Tracer's own.
+
 ## Questions for you
 
 1. **Skull:** Blizzard's art and timings with Ahli's handover to the number (my pick)? Or Ahli's grow-and-fade?

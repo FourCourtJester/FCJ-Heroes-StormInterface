@@ -522,8 +522,12 @@ from their plates (docs/blizzard-fixes.md).
    card's) left of the dial, and a 100% animation the user liked (the template's: at full it
    hides the disc and plays its ready ping). Now as the inspect card's dial (user): the disc
    opaque, the count centred on it. Seen 5bc2824 (29%): the count reads; the dark hexagon
-   (the disc) to go (user). Now the ring and count over the icon, the disc see-through. Not
-   seen yet. Seen fine in 5c38a32: the heroic badges 6 in from the cell's end (gen
+   (the disc) to go (user). Now the ring and count over the icon, the disc see-through. Seen
+   d0438cc: the template's ready ping plays at full despite our hiding it (its own animation
+   fades and grows it), and the user wants it kept; the tick ring barely shows over the art.
+   Now no tick ring: the count, hidden at 0 (a Text StateGroup), and a 20% black dim in the
+   icon's shape over the heroic while charging, off at full on the template's events
+   (`FCJH_ChargeDim`, gen `PULSE_DIAL_DIM_ALPHA`). Not seen yet. Seen fine in 5c38a32: the heroic badges 6 in from the cell's end (gen
    `HEROIC_CLEAR`). The chrome's shadows are to be revisited later (user).
    **TEMPORARY:** Blizzard's kill feed is hidden for testing (FCJH_Hidden, `FCJH_KeepHidden`'s
    KillLogPanel controller; user, 2026-10-16). Take it out before release.
@@ -531,6 +535,9 @@ from their plates (docs/blizzard-fixes.md).
    Diagnostics: the respawn, hearthstone and portrait ones are read and gone (2026-10-16);
    `onfire_diagnostics` stays until a known on-fire replay.
    The intro waits for the user's OBS plan. The items as the user gave them:
+   - **A ready ring for every heroic** (user, 2026-10-17): Tracer's ready ping, the expanding
+     gold ring at full charge, made the user want the same whenever any heroic comes off
+     cooldown. Notes in docs/polish-research.md ("A ready ring for every heroic").
    - **The plates closer to the player's in-game top bar.** Played as a player, Blizzard's
      plates feel far more polished than the observer's; find out what we can copy (the
      player HUD's layouts in JamiePhan - their animations and StateGroups);
