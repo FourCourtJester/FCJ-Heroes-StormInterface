@@ -311,6 +311,11 @@ dark disc at 56%, matching the inspect card (user's screen 23:43:43). It needs c
 a new frame: a dimmed disc, a ring round the icon, or the icon dimmed while charging. Picked:
 the dimmed disc (user; gen `PULSE_DIAL_DISC_ALPHA`).
 
+**Seen 2026-10-16 (bf31cf2):** Hogger red on the inspect card too. The talents pane's quest
+column (screen 23:57:12): Nova's default quest shows its count (3) and Blizzard's quest ring
+filling round the icon in orange, from the bottom up; Murky's shows 13 with no ring. The
+tooltips are still blank (item 13, unsolved).
+
 **The round after (user, 2026-10-16), not yet built:**
 12. The row frames' chrome drew under the plates (ObserverTopPanel sits at 200, under the
     team overviews): they move into Team1/Team2HeroOverview, over the cells.

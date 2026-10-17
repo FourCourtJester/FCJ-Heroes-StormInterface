@@ -149,8 +149,8 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
 - **Ours:** his plate's bar takes `RageEnergy` (`gen.RESOURCE_TABLE`). The inspect card uses
   Blizzard's own panel, which has no rage bar or colour, so it gets a rage bar of our own over
   Blizzard's blue one, shown for Hogger only (`inspect_card.rage_bar`, `RAGE_UNITS`).
-- **Status:** the plate confirmed red (user, 2026-10-16); the card was still blue, its bar
-  built 2026-10-16, not seen yet.
+- **Status:** confirmed red on the plate and the inspect card (user, bf31cf2, 2026-10-16) -
+  DONE.
 
 ### Towers of Doom: town captures invisible to the free observer view
 - **Blizzard's:** "Allies / The Enemy captured <town>" is worded per viewer and sent to each
