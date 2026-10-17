@@ -266,7 +266,8 @@ have been on fire; its squares stay in until then.
 5. The panes and the inspect card take the Try Me panel's style
    (`Storm_TutorialReferenceCardBG`, tiled nine-slice, alpha 180) and its small close tab,
    in place of the menu-border test.
-6. Hogger's rage colour (`RageEnergy`); Blizzard's target panel lacks him (log it).
+6. **Done, not yet built.** Hogger's rage colour (`RageEnergy`, from the party frame's
+   script); Blizzard's target panel lacks him (logged).
 7. **Done, not yet built.** The core's chrome line up to 3 px like the rest (user); its bottom
    line now lies exactly on the row frame's top line.
 8. **Done, not yet built.** The answered diagnostics come out (respawn, hearthstone, split
@@ -278,7 +279,10 @@ have been on fire; its squares stay in until then.
    (`inspect_card.tracer_charge`): override it in her file at our button size, percent
    label off. Tracer's, for reference (user's screenshot): the dial fits inside the hex,
    with the count in the middle.
-10. Heroes with no resource (Abathur, user, Try Me): Blizzard's top bar gives them a
+10. **Done, not yet built** (`gen.no_resource_units`, read from uilib.galaxy: Illidan,
+   Murky, Cho, Gall, Samuro, Abathur; Tracer and Junkrat keep their ammo bars). The bar
+   is Blizzard's 103 x 14 `HealthFill` (73 narrow).
+   Heroes with no resource (Abathur, user, Try Me): Blizzard's top bar gives them a
    health bar twice the height, filling the empty resource band
    (`HeroUnitStatusFrameNoResource`, partyframe.stormlayout:150 and 2168; the script picks
    it per hero). Ours shows every hero's resource bar, empty for these. Do the same: for a

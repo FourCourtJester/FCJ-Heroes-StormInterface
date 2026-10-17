@@ -115,6 +115,14 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
   bars' two tooltip formats (`energy_formats`; 8ea751d).
 - **Status:** confirmed in game, Chromie's plate after Sonya's (user, 2026-10-16).
 
+### Hogger's rage drawn as mana
+- **Blizzard's:** the target panel's per-hero resource colours (`HeroResourceStates`,
+  targetinfopanelunitstatustemplate.stormlayout:257) leave Hogger out, so his rage draws mana
+  blue there. Only the party frame's script knows him (`RageEnergy`).
+- **Ours:** his plate's bar takes `RageEnergy` (`gen.RESOURCE_TABLE`). The inspect card uses
+  Blizzard's own panel, so his bar there is still theirs.
+- **Status:** not yet built (2026-10-16).
+
 ### Towers of Doom: town captures invisible to the free observer view
 - **Blizzard's:** "Allies / The Enemy captured <town>" is worded per viewer and sent to each
   team's players only. A player view (1-8) shows it; the free observer view never does.

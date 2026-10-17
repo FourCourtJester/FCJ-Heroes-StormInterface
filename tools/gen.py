@@ -26,6 +26,7 @@ import argparse
 import functools
 import hashlib
 import math
+import re
 import sys
 import tomllib
 from pathlib import Path
@@ -472,12 +473,16 @@ class HeroCell:
         "mana_backing": (26, 46, 127, 53),      # backing's left +5 .. right +1, bottom-aligned;
                                                 # Blizzard leaves its height to the art: 7 is ours
         "energy": (30, 48, 125, 52),            # 95 x 4, 2 under health, 6 in from its left
+        # a hero with no resource (no_resource_units): Blizzard's NoResourceTemplate, the health
+        # bar 103 x 14 across both bands, 1 in from the backing's right
+        "health_full": (22, 38, 125, 52),
     }
     RED = {
         "health_backing": (2, 36, 107, 53),
         "health": (8, 38, 105, 46),             # 2 in from the backing's right
         "mana_backing": (2, 46, 102, 53),       # backing's left .. right -5
         "energy": (4, 48, 99, 52),              # 4 left of the health bar
+        "health_full": (2, 38, 105, 52),        # 103 x 14, 2 in from the backing's right
     }
     # Blizzard's death timer spans IconFrame +15 .. -10: centred 2.5 right of the middle
     DEATH_SHIFT = 2.5
@@ -720,7 +725,7 @@ def constants_layout(cfg):
 # core targetinfopanelunitstatustemplate.stormlayout:257, colour names -> ColorStyle from the
 # *EnergyBar frames in the same file. Unlisted heroes use StandardEnergy (mana blue).
 RESOURCE_STYLE = {"Yellow": "BrewEnergy", "Orange": "FuryEnergy", "Pink": "DivaEnergy",
-                  "Deathwing": "DeathwingEnergy", "Normal": "StandardEnergy"}
+                  "Deathwing": "DeathwingEnergy", "Rage": "RageEnergy", "Normal": "StandardEnergy"}
 RESOURCE_TABLE = [
     ("Auriel", "HeroAuriel", "Yellow"), ("Chen", "HeroChen", "Yellow"),
     ("Deathwing", "HeroDeathwing", "Deathwing"), ("DVaPilot", "HeroDVaPilot", "Pink"),
@@ -729,6 +734,10 @@ RESOURCE_TABLE = [
     ("Tracer", "HeroTracer", "Normal"), ("Valeera", "HeroValeera", "Yellow"),
     ("VolskayaGunner", "VolskayaVehicleGunner", "Pink"), ("Zarya", "HeroZarya", "Pink"),
     ("Gazlowe", "HeroTinker", "Orange"),
+    # Hogger: missing from Blizzard's target-panel table (his rage drew mana blue there and on
+    # ours); the party frame's script gives him RageEnergy (uilib.galaxy
+    # libUIUI_gf_UIGetHeroResourceTypeForPartyFrame, HeroUnitStatusRageEnergyTemplate)
+    ("Hogger", "HeroHogger", "Rage"),
 ]
 # Ammo heroes: the resource bar cut into one segment per shot, as Blizzard's own Tracer and
 # Junkrat bars are (tracer.stormlayout, junkrat.stormlayout: Segmented + SegmentValue = energy
@@ -736,6 +745,31 @@ RESOURCE_TABLE = [
 # 1 a shot. Gazlowe's scrap: 10 (12 with a talent), one segment each, as Ahli does it. A
 # per-segment value, not a count, so a talent that changes the max needs nothing.
 RESOURCE_SEGMENTS = {"HeroTracer": 2, "HeroJunkrat": 1, "HeroTinker": 1}
+
+# Blizzard's party frame picks each hero's bars in script, not layout: uilib.galaxy
+# libUIUI_gf_UIGetHeroResourceTypeForPartyFrame. Its _None heroes (Abathur, Illidan, Murky...)
+# get HeroUnitStatusNoResourceTemplate: no mana frame, and the health bar both bands tall in
+# the big fill (HealthFill, not HealthFill_Sm). Read from the script at build time, so a new
+# hero needs nothing here (user, 2026-10-16: the list from Blizzard's data, not by hand).
+# Tracer and Junkrat are _None there but keep their ammo bars (RESOURCE_SEGMENTS).
+GALAXY_UI = inspect_card.MODS / "heroesdata.stormmod" / "base.stormdata" / "triggerlibs" / "uilib.galaxy"
+
+
+@functools.lru_cache(maxsize=None)
+def resource_type_units(kind):
+    """The hero units Blizzard's script gives libUIUI_ge_UIHeroResourceType_<kind>."""
+    src = GALAXY_UI.read_text(encoding="utf-8")
+    body = src[src.index("int libUIUI_gf_UIGetHeroResourceTypeForPartyFrame"):]
+    body = body[:body.index("\n}\n")]
+    for cond, ret in re.findall(r"if \((.*?)\) \{\s*return libUIUI_ge_UIHeroResourceType_(\w+);", body):
+        if ret == kind:
+            return tuple(re.findall(r'== "(\w+)"', cond))
+    raise ValueError(f"no {kind} heroes in {GALAXY_UI.name}")
+
+
+def no_resource_units():
+    """Heroes drawn with no resource bar and the tall health bar."""
+    return [u for u in resource_type_units("None") if u not in RESOURCE_SEGMENTS]
 
 HERO_ROW_FILE = "FCJH_HeroRow.StormLayout"
 
@@ -1488,6 +1522,8 @@ def heroic_icon_rect(cfg, team):
 # energy 95 -> 67 (UpdateHealthBarWidths). Ours narrow from the heroic's side: blue's from the
 # right, red's from the left.
 NARROW = 28
+# ...and the no-resource hero's big bar 103 -> 73 (#HeroUnitStatusBar_Wide / _Narrow)
+NARROW_FULL = 30
 # The heroic's icon (and its mask) pulled in on every side, cell units: at Blizzard's size the art
 # showed past the gold frame's top-left corner (Tracer's Pulse Bomb: user, 2026-10-06 13:25)
 ULT_ICON_INSET = 2
@@ -1709,16 +1745,25 @@ def heroic_panel(cfg, team_frame, i):
     t10 = "\t" * 10
     side = "Right" if blue else "Left"
     cut_ = -s(NARROW) if blue else s(NARROW)
-    def lefts(narrow):
-        hl, _, hr, _ = g["health"]
+    def lefts(narrow, full=False):
+        # full: a hero with no resource (no_resource_units) - the tall bar, the resource bar
+        # and its frame gone, as Blizzard's NoResourceTemplate
+        hl, _, hr, hb = g["health_full" if full else "health"]
         el, _, er, _ = g["energy"]
-        edge = lambda l, r: (r if blue else l) + (cut_ if narrow else 0)
-        out = "".join(f'{t10}<Action type="SetAnchor" frame="{cell}/{f}" side="{side}" relative="{cell}" pos="Min" offset="{edge(l, r)}"/>\n'
-                      for f, l, r in (("HeroStatus", hl, hr), ("HeroStatus/FCJH_Resource", el, er)))
+        cut = (-s(NARROW_FULL) if blue else s(NARROW_FULL)) if full else cut_
+        edge = lambda l, r, c_: (r if blue else l) + (c_ if narrow else 0)
+        out = "".join(f'{t10}<Action type="SetAnchor" frame="{cell}/{f}" side="{side}" relative="{cell}" pos="Min" offset="{edge(l, r, c_)}"/>\n'
+                      for f, l, r, c_ in (("HeroStatus", hl, hr, cut), ("HeroStatus/FCJH_Resource", el, er, cut_)))
+        # the far side and the bottom differ for the tall bar, so every state sets them
+        far = "Left" if blue else "Right"
+        out += (f'{t10}<Action type="SetAnchor" frame="{cell}/HeroStatus" side="{far}" relative="{cell}" pos="Min" offset="{hl if blue else hr}"/>\n'
+                f'{t10}<Action type="SetAnchor" frame="{cell}/HeroStatus" side="Bottom" relative="{cell}" pos="Min" offset="{hb}"/>\n')
+        for f in ("FCJH_Resource", "FCJH_ManaBacking"):
+            out += f'{t10}<Action type="SetProperty" frame="{cell}/HeroStatus/{f}" Alpha="{0 if full else 255}"/>\n'
         # ...and Blizzard's own art for the short bars (its ends are drawn for the icon beside
         # them): *_Narrow while the heroic shows, as UpdateHealthBarWidths does
-        n, r_ = ("_Narrow" if narrow else ""), ("" if blue else "_Right")
-        out += (f'{t10}<Action type="SetProperty" frame="{cell}/HeroStatus/HealthBar" Texture="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm{n}{r_}"/>\n'
+        n, r_, sm = ("_Narrow" if narrow else ""), ("" if blue else "_Right"), ("" if full else "_Sm")
+        out += (f'{t10}<Action type="SetProperty" frame="{cell}/HeroStatus/HealthBar" Texture="@UI/HUD_TopBar_Team_HeroFrame_HealthFill{sm}{n}{r_}"/>\n'
                 f'{t10}<Action type="SetProperty" frame="{cell}/HeroStatus/FCJH_Resource" Texture="@UI/HUD_TopBar_Team_HeroFrame_ManaFill{n}{r_}"/>\n')
         # the Vikings' three bars share the narrowed width (trackers: tools/gen.py trackers)
         if narrow:
@@ -1754,7 +1799,17 @@ def heroic_panel(cfg, team_frame, i):
               (f"{t9}{coords}\n" if flip else "") + f"{t9}<Alpha val=\"0\"/>\n") + \
         f"""\
 								<StateGroup name="FCJH_Shown">
-									<DefaultState val="No"/>
+									<DefaultState val="No"/>""" + "".join(f"""
+									<!-- {unit}: no resource, the tall bar (no_resource_units) -->
+									<State name="{unit}Yes">
+										<When type="Property" frame="{party}" Visible="true"/>
+										<When type="Property" frame="{cell}/HeroStatus" Unit="{unit}"/>
+										<Action type="SetProperty" frame="$this" Alpha="255"/>
+{lefts(True, True)}									</State>
+									<State name="{unit}No">
+										<When type="Property" frame="{cell}/HeroStatus" Unit="{unit}"/>
+										<Action type="SetProperty" frame="$this" Alpha="0"/>
+{lefts(False, True)}									</State>""" for unit in no_resource_units()) + f"""
 									<State name="Yes">
 										<When type="Property" frame="{party}" Visible="true"/>
 										<Action type="SetProperty" frame="$this" Alpha="255"/>
