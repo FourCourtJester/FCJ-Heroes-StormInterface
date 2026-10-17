@@ -2808,7 +2808,15 @@ def talent_row_lifts(cfg):
 												<!-- Blizzard's own meter here is the observer row's straight fill (it lit the gold frame
 												     as an orange border): hidden. The frame stays: heroic_panel reads it -->
 												<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
-													<Frame type="ProgressBar" name="ChargeFillProgress"><Alpha val="0"/></Frame>
+													<!-- DIAGNOSTIC (2026-10-16): Blizzard's straight meter shown, left of the badge: does the
+													     charge reach this row? (was Alpha 0) -->
+													<Frame type="ProgressBar" name="ChargeFillProgress">
+														<Anchor side="Top" relative="$parent/$parent" pos="Min" offset="0"/>
+														<Anchor side="Bottom" relative="$parent/$parent" pos="Max" offset="0"/>
+														<Anchor side="Right" relative="$parent/$parent" pos="Min" offset="-4"/>
+														<Anchor side="Left" relative="$parent/$parent" pos="Min" offset="-40"/>
+														<Unclipped val="true"/>
+													</Frame>
 												</Frame>
 												<!-- her HUD's round dial, from its own template, as Ahli's: the observer bar restyled
 												     circular never filled (user, 2026-10-16). Its ring of ticks only, over the Pulse Bomb
@@ -2823,7 +2831,8 @@ def talent_row_lifts(cfg):
 													<Height val="{dial_h}"/>
 													<RenderPriority val="1000"/>
 													<Unclipped val="true"/>
-													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="0"/></Frame>
+													<!-- DIAGNOSTIC (2026-10-16): the disc back, full: is the template dial there at all? -->
+													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Unclipped val="true"/></Frame>
 													<!-- our size restated: the inspect card sizes this template's fill for its button -->
 													<Frame type="ProgressBar" name="ChargeFillProgress">
 														<Width val="{dial_w}"/>
@@ -2860,6 +2869,17 @@ def talent_row_lifts(cfg):
 															<Key type="Bool" time="0" value="True"/>
 														</Controller>
 													</Animation>
+												</Frame>
+												<!-- DIAGNOSTIC (2026-10-16): the ring art alone, right of the badge: does it draw here? -->
+												<Frame type="Image" name="FCJH_DiagRing">
+													<Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+													<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+													<Anchor side="Left" relative="$parent" pos="Max" offset="4"/>
+													<Anchor side="Right" relative="$parent" pos="Max" offset="40"/>
+													<Texture val="@UI/Storm_UI_HUD_Tracer_Pulse_Bomb_Fill_Image"/>
+													<RenderPriority val="1000"/>
+													<Unclipped val="true"/>
+													<AcceptsMouse val="false"/>
 												</Frame>
 											</Frame>"""))
     return ("""
