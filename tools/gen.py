@@ -2750,7 +2750,7 @@ def talent_row_lifts(cfg):
     Pulse Bomb charges rather than cooling down; Blizzard shows the charge on that row
     (TracerChargeContainer: there for every hero, its meter only for one with that ability).
     Moved onto our heroic's icon as her own HUD's round dial (tracer.stormlayout's
-    TracerPulseBombChargeFrame: its fill circular, its tick ring only), not the observer
+    TracerPulseBombChargeFrame, as Ahli's: its tick ring only), not the observer
     row's straight fill, which lit the gold frame as an orange border (user, 2026-10-16).
     Seen working 2026-09-30.
     The row is the game's, and the game keeps its talent panel hidden: Blizzard's
@@ -2805,37 +2805,61 @@ def talent_row_lifts(cfg):
 														<Action type="SetProperty" frame="$this" Alpha="255"/>
 													</State>
 												</StateGroup>
+												<!-- Blizzard's own meter here is the observer row's straight fill (it lit the gold frame
+												     as an orange border): hidden. The frame stays: heroic_panel reads it -->
 												<Frame type="UnitStatusAbilCharge" name="TracerPulseBombChargeFrame">
+													<Frame type="ProgressBar" name="ChargeFillProgress"><Alpha val="0"/></Frame>
+												</Frame>
+												<!-- her HUD's round dial, from its own template, as Ahli's: the observer bar restyled
+												     circular never filled (user, 2026-10-16). Its ring of ticks only, over the Pulse Bomb
+												     icon: no dark disc (opaque it covered the badge; half see-through, as Ahli's, the ring
+												     was lost in the icon), no labels, no ready ping -->
+												<Frame type="UnitStatusAbilCharge" name="FCJH_PulseBombDial" template="Tracer/TracerPulseBombChargeButtonOverrideFrame/UnitStatusFrame0/TracerPulseBombChargeFrame">
 													{edge("Top", "$parent", "Mid", 0)}
 													{edge("Left", "$parent", "Mid", 0)}
 													{edge("Bottom", "$parent", "Mid", 0)}
 													{edge("Right", "$parent", "Mid", 0)}
 													<Width val="{dial_w}"/>
 													<Height val="{dial_h}"/>
+													<RenderPriority val="1000"/>
 													<Unclipped val="true"/>
-													<!-- the ring of ticks only, over the Pulse Bomb icon: no dark disc behind it. Opaque it
-													     covered the badge; half see-through, as Ahli's, the ring was lost in the icon (user,
-													     2026-10-16) -->
+													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="0"/></Frame>
+													<!-- our size restated: the inspect card sizes this template's fill for its button -->
 													<Frame type="ProgressBar" name="ChargeFillProgress">
-														{edge("Left", "$parent", "Min", 0)}
-														{edge("Top", "$parent", "Min", 0)}
-														{edge("Right", "$parent", "Max", 0)}
-														{edge("Bottom", "$parent", "Max", 0)}
-														<Vertical val="False"/>
-														<FillInset val="0.0"/>
-														<Circular val="True"/>
-														<CircularStart val="0"/>
-														<CircularEndOffset val="360"/>
-														<RenderPriority val="512"/>
+														<Width val="{dial_w}"/>
+														<Height val="{dial_h}"/>
+														<RenderPriority val="1000"/>
 														<Unclipped val="true"/>
 														<Frame type="Frame" name="FillImageContainer">
+															<RenderPriority val="1000"/>
 															<Frame type="Image" name="FillImage">
-																<TextureCoords top="0" left="0" bottom="1" right="1"/>
-																<Texture val="@UI/Storm_UI_HUD_Tracer_Pulse_Bomb_Fill_Image"/>
-																<TextureType layer="0" val="Circular"/>
+																<RenderPriority val="1000"/>
+																<TextureCoords top="0.01" left="0.01" bottom="0.99" right="0.99"/>
 															</Frame>
 														</Frame>
 													</Frame>
+													<Frame type="Label" name="ChargesLabel"><Alpha val="0"/></Frame>
+													<Frame type="Label" name="ChargePercentLabel"><Alpha val="0"/></Frame>
+													<Frame type="Image" name="PulseBombReadyPingImage"><Width val="0"/><Height val="0"/><Alpha val="0"/></Frame>
+													<!-- full: the template hides its fill (the HUD's ready ping shows instead), so full would
+													     read as empty. The whole ring instead, on the same events -->
+													<Frame type="Image" name="FCJH_FullRing">
+														<Anchor relative="$parent"/>
+														<Texture val="@UI/Storm_UI_HUD_Tracer_Pulse_Bomb_Fill_Image"/>
+														<TextureCoords top="0.01" left="0.01" bottom="0.99" right="0.99"/>
+														<RenderPriority val="1000"/>
+														<Visible val="false"/>
+														<Unclipped val="true"/>
+														<AcceptsMouse val="false"/>
+													</Frame>
+													<Animation name="FCJH_FullRingShown">
+														<Event event="ChargesFull" action="Restart, DirectionForward, Play"/>
+														<Event event="ChargesEmpty" action="Stop"/>
+														<Event event="CurrentChanged_1" action="Stop"/>
+														<Controller type="Visibility" end="Pause" frame="FCJH_FullRing">
+															<Key type="Bool" time="0" value="True"/>
+														</Controller>
+													</Animation>
 												</Frame>
 											</Frame>"""))
     return ("""

@@ -509,7 +509,10 @@ from their plates (docs/blizzard-fixes.md).
    are still blank until Tab (unsolved). The pane border's sides are in halves, the lower
    flipped, so the bottom half mirrors the top (seen 6804bbd: much cleaner). Tracer's plate
    dial is the gold frame's height (35 x 39), its tick ring only, with no dark disc: opaque it
-   covered the badge and bars, and half see-through (6804bbd) it was lost in the icon. Seen fine in 5c38a32: the heroic badges 6 in from the cell's end (gen
+   covered the badge and bars, and half see-through (6804bbd) it was lost in the icon. Its
+   fill never drew (6f5a93d at 29%: nothing, user): the observer bar restyled circular. Now
+   a fresh dial from her HUD's own template (`FCJH_PulseBombDial`, as Ahli's), with a whole
+   ring of our own for full charge, where the template hides its fill. Seen fine in 5c38a32: the heroic badges 6 in from the cell's end (gen
    `HEROIC_CLEAR`). The chrome's shadows are to be revisited later (user).
    **TEMPORARY:** Blizzard's kill feed is hidden for testing (FCJH_Hidden, `FCJH_KeepHidden`'s
    KillLogPanel controller; user, 2026-10-16). Take it out before release.
