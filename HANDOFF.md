@@ -521,7 +521,9 @@ from their plates (docs/blizzard-fixes.md).
    frame's height (`PULSE_DIAL_SCALE`). Seen e153492: fits the frame, the count (56, as the
    card's) left of the dial, and a 100% animation the user liked (the template's: at full it
    hides the disc and plays its ready ping). Now as the inspect card's dial (user): the disc
-   opaque, the count centred on it. Not seen yet. Seen fine in 5c38a32: the heroic badges 6 in from the cell's end (gen
+   opaque, the count centred on it. Seen 5bc2824 (29%): the count reads; the dark hexagon
+   (the disc) to go (user). Now the ring and count over the icon, the disc see-through. Not
+   seen yet. Seen fine in 5c38a32: the heroic badges 6 in from the cell's end (gen
    `HEROIC_CLEAR`). The chrome's shadows are to be revisited later (user).
    **TEMPORARY:** Blizzard's kill feed is hidden for testing (FCJH_Hidden, `FCJH_KeepHidden`'s
    KillLogPanel controller; user, 2026-10-16). Take it out before release.

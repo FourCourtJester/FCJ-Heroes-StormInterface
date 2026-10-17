@@ -754,8 +754,10 @@ RESOURCE_TABLE = [
 # Tracer's plate dial: its dark disc's alpha, so the orange ticks read over her orange icon
 # (unseen at 0, seen at 255 over a hidden icon; at 140 the ring built but didn't pop: user,
 # 2026-10-17; at 200 it still didn't read as the inspect card's dial). Opaque now, as the card's:
-# the template itself hides the disc at full charge, showing the icon (user, 2026-10-17)...
-PULSE_DIAL_DISC_ALPHA = 255
+# the template itself hides the disc at full charge, showing the icon (user, 2026-10-17). Then
+# out: with the count in the middle the dark hexagon only covered the icon (user, 2026-10-17).
+# Kept, see-through: the count is centred on it...
+PULSE_DIAL_DISC_ALPHA = 0
 # ...and its size, a share of the gold frame's height: at the full height it stood over the
 # badge's top and bottom (user, 2026-10-17)
 PULSE_DIAL_SCALE = 0.8
@@ -2822,7 +2824,7 @@ def talent_row_lifts(cfg):
 												<!-- her HUD's round dial, from its own template, as Ahli's: the observer bar restyled
 												     circular never filled (user, 2026-10-16). Its fill drew, but its orange ticks were lost
 												     in the orange Pulse Bomb icon until the dark disc was behind them (diagnostics, 57474cd):
-												     the disc (PULSE_DIAL_DISC_ALPHA), opaque as the card's; the count in the
+												     the disc see-through (PULSE_DIAL_DISC_ALPHA); the count in the
 												     middle. No percent label, no ping -->
 												<Frame type="UnitStatusAbilCharge" name="FCJH_PulseBombDial" template="Tracer/TracerPulseBombChargeButtonOverrideFrame/UnitStatusFrame0/TracerPulseBombChargeFrame">
 													{edge("Top", "$parent", "Mid", 0)}

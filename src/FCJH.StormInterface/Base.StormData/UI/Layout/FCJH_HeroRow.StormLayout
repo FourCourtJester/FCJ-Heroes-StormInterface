@@ -5812,7 +5812,7 @@
 												<!-- her HUD's round dial, from its own template, as Ahli's: the observer bar restyled
 												     circular never filled (user, 2026-10-16). Its fill drew, but its orange ticks were lost
 												     in the orange Pulse Bomb icon until the dark disc was behind them (diagnostics, 57474cd):
-												     the disc (PULSE_DIAL_DISC_ALPHA), opaque as the card's; the count in the
+												     the disc see-through (PULSE_DIAL_DISC_ALPHA); the count in the
 												     middle. No percent label, no ping -->
 												<Frame type="UnitStatusAbilCharge" name="FCJH_PulseBombDial" template="Tracer/TracerPulseBombChargeButtonOverrideFrame/UnitStatusFrame0/TracerPulseBombChargeFrame">
 													<Anchor side="Top" relative="$parent" pos="Mid" offset="0"/>
@@ -5823,7 +5823,7 @@
 													<Height val="31"/>
 													<RenderPriority val="1000"/>
 													<Unclipped val="true"/>
-													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="255"/><Unclipped val="true"/></Frame>
+													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="0"/><Unclipped val="true"/></Frame>
 													<!-- our size restated: the inspect card sizes this template's fill for its button -->
 													<Frame type="ProgressBar" name="ChargeFillProgress">
 														<Width val="28"/>
@@ -5947,7 +5947,7 @@
 												<!-- her HUD's round dial, from its own template, as Ahli's: the observer bar restyled
 												     circular never filled (user, 2026-10-16). Its fill drew, but its orange ticks were lost
 												     in the orange Pulse Bomb icon until the dark disc was behind them (diagnostics, 57474cd):
-												     the disc (PULSE_DIAL_DISC_ALPHA), opaque as the card's; the count in the
+												     the disc see-through (PULSE_DIAL_DISC_ALPHA); the count in the
 												     middle. No percent label, no ping -->
 												<Frame type="UnitStatusAbilCharge" name="FCJH_PulseBombDial" template="Tracer/TracerPulseBombChargeButtonOverrideFrame/UnitStatusFrame0/TracerPulseBombChargeFrame">
 													<Anchor side="Top" relative="$parent" pos="Mid" offset="0"/>
@@ -5958,7 +5958,7 @@
 													<Height val="31"/>
 													<RenderPriority val="1000"/>
 													<Unclipped val="true"/>
-													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="255"/><Unclipped val="true"/></Frame>
+													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="0"/><Unclipped val="true"/></Frame>
 													<!-- our size restated: the inspect card sizes this template's fill for its button -->
 													<Frame type="ProgressBar" name="ChargeFillProgress">
 														<Width val="28"/>
@@ -6082,7 +6082,7 @@
 												<!-- her HUD's round dial, from its own template, as Ahli's: the observer bar restyled
 												     circular never filled (user, 2026-10-16). Its fill drew, but its orange ticks were lost
 												     in the orange Pulse Bomb icon until the dark disc was behind them (diagnostics, 57474cd):
-												     the disc (PULSE_DIAL_DISC_ALPHA), opaque as the card's; the count in the
+												     the disc see-through (PULSE_DIAL_DISC_ALPHA); the count in the
 												     middle. No percent label, no ping -->
 												<Frame type="UnitStatusAbilCharge" name="FCJH_PulseBombDial" template="Tracer/TracerPulseBombChargeButtonOverrideFrame/UnitStatusFrame0/TracerPulseBombChargeFrame">
 													<Anchor side="Top" relative="$parent" pos="Mid" offset="0"/>
@@ -6093,7 +6093,7 @@
 													<Height val="31"/>
 													<RenderPriority val="1000"/>
 													<Unclipped val="true"/>
-													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="255"/><Unclipped val="true"/></Frame>
+													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="0"/><Unclipped val="true"/></Frame>
 													<!-- our size restated: the inspect card sizes this template's fill for its button -->
 													<Frame type="ProgressBar" name="ChargeFillProgress">
 														<Width val="28"/>
@@ -6217,7 +6217,7 @@
 												<!-- her HUD's round dial, from its own template, as Ahli's: the observer bar restyled
 												     circular never filled (user, 2026-10-16). Its fill drew, but its orange ticks were lost
 												     in the orange Pulse Bomb icon until the dark disc was behind them (diagnostics, 57474cd):
-												     the disc (PULSE_DIAL_DISC_ALPHA), opaque as the card's; the count in the
+												     the disc see-through (PULSE_DIAL_DISC_ALPHA); the count in the
 												     middle. No percent label, no ping -->
 												<Frame type="UnitStatusAbilCharge" name="FCJH_PulseBombDial" template="Tracer/TracerPulseBombChargeButtonOverrideFrame/UnitStatusFrame0/TracerPulseBombChargeFrame">
 													<Anchor side="Top" relative="$parent" pos="Mid" offset="0"/>
@@ -6228,7 +6228,7 @@
 													<Height val="31"/>
 													<RenderPriority val="1000"/>
 													<Unclipped val="true"/>
-													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="255"/><Unclipped val="true"/></Frame>
+													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="0"/><Unclipped val="true"/></Frame>
 													<!-- our size restated: the inspect card sizes this template's fill for its button -->
 													<Frame type="ProgressBar" name="ChargeFillProgress">
 														<Width val="28"/>
@@ -6352,7 +6352,7 @@
 												<!-- her HUD's round dial, from its own template, as Ahli's: the observer bar restyled
 												     circular never filled (user, 2026-10-16). Its fill drew, but its orange ticks were lost
 												     in the orange Pulse Bomb icon until the dark disc was behind them (diagnostics, 57474cd):
-												     the disc (PULSE_DIAL_DISC_ALPHA), opaque as the card's; the count in the
+												     the disc see-through (PULSE_DIAL_DISC_ALPHA); the count in the
 												     middle. No percent label, no ping -->
 												<Frame type="UnitStatusAbilCharge" name="FCJH_PulseBombDial" template="Tracer/TracerPulseBombChargeButtonOverrideFrame/UnitStatusFrame0/TracerPulseBombChargeFrame">
 													<Anchor side="Top" relative="$parent" pos="Mid" offset="0"/>
@@ -6363,7 +6363,7 @@
 													<Height val="31"/>
 													<RenderPriority val="1000"/>
 													<Unclipped val="true"/>
-													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="255"/><Unclipped val="true"/></Frame>
+													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="0"/><Unclipped val="true"/></Frame>
 													<!-- our size restated: the inspect card sizes this template's fill for its button -->
 													<Frame type="ProgressBar" name="ChargeFillProgress">
 														<Width val="28"/>
@@ -6487,7 +6487,7 @@
 												<!-- her HUD's round dial, from its own template, as Ahli's: the observer bar restyled
 												     circular never filled (user, 2026-10-16). Its fill drew, but its orange ticks were lost
 												     in the orange Pulse Bomb icon until the dark disc was behind them (diagnostics, 57474cd):
-												     the disc (PULSE_DIAL_DISC_ALPHA), opaque as the card's; the count in the
+												     the disc see-through (PULSE_DIAL_DISC_ALPHA); the count in the
 												     middle. No percent label, no ping -->
 												<Frame type="UnitStatusAbilCharge" name="FCJH_PulseBombDial" template="Tracer/TracerPulseBombChargeButtonOverrideFrame/UnitStatusFrame0/TracerPulseBombChargeFrame">
 													<Anchor side="Top" relative="$parent" pos="Mid" offset="0"/>
@@ -6498,7 +6498,7 @@
 													<Height val="31"/>
 													<RenderPriority val="1000"/>
 													<Unclipped val="true"/>
-													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="255"/><Unclipped val="true"/></Frame>
+													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="0"/><Unclipped val="true"/></Frame>
 													<!-- our size restated: the inspect card sizes this template's fill for its button -->
 													<Frame type="ProgressBar" name="ChargeFillProgress">
 														<Width val="28"/>
@@ -6622,7 +6622,7 @@
 												<!-- her HUD's round dial, from its own template, as Ahli's: the observer bar restyled
 												     circular never filled (user, 2026-10-16). Its fill drew, but its orange ticks were lost
 												     in the orange Pulse Bomb icon until the dark disc was behind them (diagnostics, 57474cd):
-												     the disc (PULSE_DIAL_DISC_ALPHA), opaque as the card's; the count in the
+												     the disc see-through (PULSE_DIAL_DISC_ALPHA); the count in the
 												     middle. No percent label, no ping -->
 												<Frame type="UnitStatusAbilCharge" name="FCJH_PulseBombDial" template="Tracer/TracerPulseBombChargeButtonOverrideFrame/UnitStatusFrame0/TracerPulseBombChargeFrame">
 													<Anchor side="Top" relative="$parent" pos="Mid" offset="0"/>
@@ -6633,7 +6633,7 @@
 													<Height val="31"/>
 													<RenderPriority val="1000"/>
 													<Unclipped val="true"/>
-													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="255"/><Unclipped val="true"/></Frame>
+													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="0"/><Unclipped val="true"/></Frame>
 													<!-- our size restated: the inspect card sizes this template's fill for its button -->
 													<Frame type="ProgressBar" name="ChargeFillProgress">
 														<Width val="28"/>
@@ -6757,7 +6757,7 @@
 												<!-- her HUD's round dial, from its own template, as Ahli's: the observer bar restyled
 												     circular never filled (user, 2026-10-16). Its fill drew, but its orange ticks were lost
 												     in the orange Pulse Bomb icon until the dark disc was behind them (diagnostics, 57474cd):
-												     the disc (PULSE_DIAL_DISC_ALPHA), opaque as the card's; the count in the
+												     the disc see-through (PULSE_DIAL_DISC_ALPHA); the count in the
 												     middle. No percent label, no ping -->
 												<Frame type="UnitStatusAbilCharge" name="FCJH_PulseBombDial" template="Tracer/TracerPulseBombChargeButtonOverrideFrame/UnitStatusFrame0/TracerPulseBombChargeFrame">
 													<Anchor side="Top" relative="$parent" pos="Mid" offset="0"/>
@@ -6768,7 +6768,7 @@
 													<Height val="31"/>
 													<RenderPriority val="1000"/>
 													<Unclipped val="true"/>
-													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="255"/><Unclipped val="true"/></Frame>
+													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="0"/><Unclipped val="true"/></Frame>
 													<!-- our size restated: the inspect card sizes this template's fill for its button -->
 													<Frame type="ProgressBar" name="ChargeFillProgress">
 														<Width val="28"/>
@@ -6892,7 +6892,7 @@
 												<!-- her HUD's round dial, from its own template, as Ahli's: the observer bar restyled
 												     circular never filled (user, 2026-10-16). Its fill drew, but its orange ticks were lost
 												     in the orange Pulse Bomb icon until the dark disc was behind them (diagnostics, 57474cd):
-												     the disc (PULSE_DIAL_DISC_ALPHA), opaque as the card's; the count in the
+												     the disc see-through (PULSE_DIAL_DISC_ALPHA); the count in the
 												     middle. No percent label, no ping -->
 												<Frame type="UnitStatusAbilCharge" name="FCJH_PulseBombDial" template="Tracer/TracerPulseBombChargeButtonOverrideFrame/UnitStatusFrame0/TracerPulseBombChargeFrame">
 													<Anchor side="Top" relative="$parent" pos="Mid" offset="0"/>
@@ -6903,7 +6903,7 @@
 													<Height val="31"/>
 													<RenderPriority val="1000"/>
 													<Unclipped val="true"/>
-													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="255"/><Unclipped val="true"/></Frame>
+													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="0"/><Unclipped val="true"/></Frame>
 													<!-- our size restated: the inspect card sizes this template's fill for its button -->
 													<Frame type="ProgressBar" name="ChargeFillProgress">
 														<Width val="28"/>
@@ -7027,7 +7027,7 @@
 												<!-- her HUD's round dial, from its own template, as Ahli's: the observer bar restyled
 												     circular never filled (user, 2026-10-16). Its fill drew, but its orange ticks were lost
 												     in the orange Pulse Bomb icon until the dark disc was behind them (diagnostics, 57474cd):
-												     the disc (PULSE_DIAL_DISC_ALPHA), opaque as the card's; the count in the
+												     the disc see-through (PULSE_DIAL_DISC_ALPHA); the count in the
 												     middle. No percent label, no ping -->
 												<Frame type="UnitStatusAbilCharge" name="FCJH_PulseBombDial" template="Tracer/TracerPulseBombChargeButtonOverrideFrame/UnitStatusFrame0/TracerPulseBombChargeFrame">
 													<Anchor side="Top" relative="$parent" pos="Mid" offset="0"/>
@@ -7038,7 +7038,7 @@
 													<Height val="31"/>
 													<RenderPriority val="1000"/>
 													<Unclipped val="true"/>
-													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="255"/><Unclipped val="true"/></Frame>
+													<Frame type="Image" name="TracerPulseBombBackgroundImage"><Alpha val="0"/><Unclipped val="true"/></Frame>
 													<!-- our size restated: the inspect card sizes this template's fill for its button -->
 													<Frame type="ProgressBar" name="ChargeFillProgress">
 														<Width val="28"/>
