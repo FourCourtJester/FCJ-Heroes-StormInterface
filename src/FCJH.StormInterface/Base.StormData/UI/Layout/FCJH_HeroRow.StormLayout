@@ -240,23 +240,25 @@
 				<Unclipped val="true"/>
 				<AcceptsMouse val="false"/>
 			</Frame>
+			<!-- FCJH_SkullBurst (plate_ring): ours, on the whole plate -->
 			<Frame type="Image" name="FCJH_SkullBurst">
-				<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-				<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-				<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-				<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
-				<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathFrame"/>
+				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="0"/>
+				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent/$parent" pos="Max" offset="0"/>
+				<Anchor side="Right"  relative="$parent/$parent" pos="Max" offset="0"/>
+				<Texture val="_Assets\Textures\FCJH_DeathBurst_1acf184c.dds"/>
 				<Alpha val="0"/>
 				<RenderPriority val="516"/>
 				<Unclipped val="true"/>
 				<AcceptsMouse val="false"/>
 			</Frame>
+			<!-- FCJH_SkullBurst2 (plate_ring): ours, on the whole plate -->
 			<Frame type="Image" name="FCJH_SkullBurst2">
-				<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-				<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-				<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-				<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
-				<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathFrame"/>
+				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="0"/>
+				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent/$parent" pos="Max" offset="0"/>
+				<Anchor side="Right"  relative="$parent/$parent" pos="Max" offset="0"/>
+				<Texture val="_Assets\Textures\FCJH_DeathBurst_1acf184c.dds"/>
 				<Alpha val="0"/>
 				<RenderPriority val="516"/>
 				<Unclipped val="true"/>

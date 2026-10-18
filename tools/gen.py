@@ -886,11 +886,12 @@ def portrait_mask(team, size, sub=4):
     return dds_bgra(w, h, b"".join(rows))
 
 
-# The plate rings (2026-10-18): ours, after Blizzard's death overlay and respawn glow
-# (HUD_TopBar_Team_HeroFrame_DeathOverlay / _RespawnFrame), whose rings are drawn for their own
-# cell's portrait at its own slant: on our plates they ringed only the portrait, ~0.65 to our
-# 0.54 (user: "does not even come close to our nameplate size"; "take inspiration from it to
-# make our own"; the overlay "not sized right at all", 13_04_58). A ring on the plate's own
+# The plate rings (2026-10-18): ours, after Blizzard's death frame, overlay and respawn glow
+# (HUD_TopBar_Team_HeroFrame_DeathFrame / _DeathOverlay / _RespawnFrame), whose rings are drawn
+# for their own cell's portrait at its own slant: on our plates they ringed only the portrait,
+# ~0.65 to our 0.54 (user: "does not even come close to our nameplate size"; "take inspiration
+# from it to make our own"; the red "not sized right at all", 13_04_58, and still, with the
+# skull, 13_30_46 - the bursts' DeathFrame). A ring on the plate's own
 # outline - the row frame's and the seams' lines, HeroCell.edge - over the whole cell, bars and
 # all: a core just inside the frame's line, fading inwards, nothing outside the plate.
 # Blue's; red's is it mirrored (SKULL_FLIPPED).
@@ -905,6 +906,9 @@ PLATE_RINGS = {
     # the death overlay: Blizzard's deep red, its wash further in (off 13_04_58)
     "DeathRing": {"core": "e8302a", "halo": "a00c0c", "at": 2.0, "core_w": 0.9,
                   "halo_a": 0.7, "halo_in": 8.0},
+    # the bursts (DeathFrame's): a darker red, washing most of the plate (off 13_30_46)
+    "DeathBurst": {"core": "c81e1e", "halo": "8c0a0a", "at": 2.0, "core_w": 1.1,
+                   "halo_a": 0.8, "halo_in": 14.0},
 }
 # The top edge's ring this much higher, units: the core sat 1 px further from the row's top line
 # than from its bottom one, the sides hugging (13_05_12; ~1.39 px a unit)
@@ -1529,18 +1533,6 @@ def death_skull(team, c):
 				<Unclipped val="true"/>
 				<AcceptsMouse val="false"/>
 			</Frame>"""
-    full = lambda name: f"""
-			<Frame type="Image" name="{name}">
-				<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-				<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-				<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-				<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
-				<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathFrame"/>
-				<Alpha val="0"/>
-				<RenderPriority val="516"/>
-				<Unclipped val="true"/>
-				<AcceptsMouse val="false"/>
-			</Frame>"""
     # Blizzard's frame is 136 x 68, centred on the 128 x 61 cell
     return f"""
 		<!-- The skull (death_skull): Blizzard's player-view death animation, scaled. The
@@ -1555,7 +1547,7 @@ def death_skull(team, c):
 			<Animation name="FCJH_SkullAnim">
 				<Event event="OnShown" action="Reset,Play" frame="$parent/HeroDeathTimeLabel"/>
 				<Event event="OnHidden" action="Reset,Stop" frame="$parent/HeroDeathTimeLabel"/>{anim}
-			</Animation>{ring("FCJH_SkullOverlay", "DeathRing", 515)}{full("FCJH_SkullBurst")}{full("FCJH_SkullBurst2")}
+			</Animation>{ring("FCJH_SkullOverlay", "DeathRing", 515)}{ring("FCJH_SkullBurst", "DeathBurst", 516)}{ring("FCJH_SkullBurst2", "DeathBurst", 516)}
 			<Frame type="Image" name="FCJH_SkullIcon">
 				<Anchor side="Top"    relative="$parent" pos="Mid" offset="-{s(5)}"/>
 				<Anchor side="Left"   relative="$parent" pos="Mid" offset="0"/>
