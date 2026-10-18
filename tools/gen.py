@@ -482,22 +482,26 @@ class HeroCell:
     # lies ~3 units past the plate's edge: under the next plate between heroes, but on the
     # row's end plates a dark strip poked ~4 px out of the row frame (user, 2026-10-18). Its
     # end comes 3 in (Blizzard's 126 -> 123, red's 2 -> 5).
+    # The bars run down to 59, not Blizzard's 53: their cell's bottom 8 units were empty under
+    # our row frame (user, 2026-10-18: fill it, rather than cut the plate and redo its slants).
+    # Health 8 -> 11 tall, mana 7 -> 10, energy 4 -> 6; mana and energy 3 lower, their outer
+    # ends 2 further along the slant (0.54 x 3), as the plate's edge goes.
     BLUE = {
-        "health_backing": (21, 36, 123, 53),    # status frame 105 wide, 2 in from the right
-        "health": (24, 38, 121, 46),            # 97 x 8, backing +2 down, 5 in from its right
-        "mana_backing": (26, 46, 127, 53),      # backing's left +5 .. right +1, bottom-aligned;
-                                                # Blizzard leaves its height to the art: 7 is ours
-        "energy": (30, 48, 125, 52),            # 95 x 4, 2 under health, 6 in from its left
+        "health_backing": (21, 36, 123, 59),    # status frame 105 wide, 2 in from the right
+        "health": (24, 38, 121, 49),            # 97 x 11, backing +2 down, 5 in from its right
+        "mana_backing": (28, 49, 127, 59),      # backing's left +7 .. right +4, bottom-aligned;
+                                                # Blizzard leaves its height to the art: 10 is ours
+        "energy": (32, 51, 125, 57),            # 93 x 6, 2 under health, 4 in from its left
         # a hero with no resource (no_resource_units): Blizzard's NoResourceTemplate, the health
-        # bar 103 x 14 across both bands, 1 in from the backing's right
-        "health_full": (22, 38, 125, 52),
+        # bar 103 x 20 across both bands, 1 in from the backing's right
+        "health_full": (22, 38, 125, 58),
     }
     RED = {
-        "health_backing": (5, 36, 107, 53),
-        "health": (8, 38, 105, 46),             # 2 in from the backing's right
-        "mana_backing": (2, 46, 102, 53),       # backing's left .. right -5
-        "energy": (4, 48, 99, 52),              # 4 left of the health bar
-        "health_full": (2, 38, 105, 52),        # 103 x 14, 2 in from the backing's right
+        "health_backing": (5, 36, 107, 59),
+        "health": (8, 38, 105, 49),             # 2 in from the backing's right
+        "mana_backing": (2, 49, 100, 59),       # backing's left .. right -7
+        "energy": (4, 51, 97, 57),              # 8 left of the health bar
+        "health_full": (2, 38, 105, 58),        # 103 x 20, 2 in from the backing's right
     }
     # Blizzard's death timer spans IconFrame +15 .. -10: centred 2.5 right of the middle
     DEATH_SHIFT = 2.5
