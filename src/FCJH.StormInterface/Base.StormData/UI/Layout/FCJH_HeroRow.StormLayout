@@ -370,7 +370,11 @@
 			<Frame type="Frame" name="ImageMaskFrame"><AlphaMaskSiblings val="false"/></Frame>
 			<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">
 				<Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm"/>
-				<Tiled val="true"/>
+				<Tiled val="true" index="0"/>
+				<Tiled val="true" index="1"/>
+				<Tiled val="true" index="2"/>
+				<Tiled val="true" index="3"/>
+				<Tiled val="true" index="4"/>
 			</Frame>
 			<Frame type="UnitStatusUnitTrackingBehavior" name="VikingTrackingElement">
 				<!-- the whole plate, not the bar strip (see the click targets) -->
@@ -391,7 +395,11 @@
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 							<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
 							<Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm"/>
-							<Tiled val="true"/>
+							<Tiled val="true" index="0"/>
+							<Tiled val="true" index="1"/>
+							<Tiled val="true" index="2"/>
+							<Tiled val="true" index="3"/>
+							<Tiled val="true" index="4"/>
 							<Unclipped val="true"/>
 						</Frame>
 						<Frame type="UnitTargetFrame" name="FCJH_Target">
@@ -416,7 +424,11 @@
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 							<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
 							<Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm"/>
-							<Tiled val="true"/>
+							<Tiled val="true" index="0"/>
+							<Tiled val="true" index="1"/>
+							<Tiled val="true" index="2"/>
+							<Tiled val="true" index="3"/>
+							<Tiled val="true" index="4"/>
 							<Unclipped val="true"/>
 						</Frame>
 						<Frame type="UnitTargetFrame" name="FCJH_Target">
@@ -441,7 +453,11 @@
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 							<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
 							<Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm"/>
-							<Tiled val="true"/>
+							<Tiled val="true" index="0"/>
+							<Tiled val="true" index="1"/>
+							<Tiled val="true" index="2"/>
+							<Tiled val="true" index="3"/>
+							<Tiled val="true" index="4"/>
 							<Unclipped val="true"/>
 						</Frame>
 						<Frame type="UnitTargetFrame" name="FCJH_Target">
@@ -464,7 +480,7 @@
 				<Width val="0"/>
 				<Frame type="UnitStatusFrame" name="TrackedUnitStatusFrame0">
 					<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-					<Frame type="UnitStatusShieldedHealthBar" name="HealthBar"><Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm"/><Tiled val="true"/></Frame>
+					<Frame type="UnitStatusShieldedHealthBar" name="HealthBar"><Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm"/><Tiled val="true" index="0"/><Tiled val="true" index="1"/><Tiled val="true" index="2"/><Tiled val="true" index="3"/><Tiled val="true" index="4"/></Frame>
 				</Frame>
 			</Frame>
 			<Frame type="Image" name="FCJH_HealthBacking">
@@ -1189,7 +1205,11 @@
 			<Frame type="Frame" name="ImageMaskFrame"><AlphaMaskSiblings val="false"/></Frame>
 			<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">
 				<Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm_Right"/>
-				<Tiled val="true"/>
+				<Tiled val="true" index="0"/>
+				<Tiled val="true" index="1"/>
+				<Tiled val="true" index="2"/>
+				<Tiled val="true" index="3"/>
+				<Tiled val="true" index="4"/>
 			</Frame>
 			<Frame type="UnitStatusUnitTrackingBehavior" name="VikingTrackingElement">
 				<!-- the whole plate, not the bar strip (see the click targets) -->
@@ -1210,7 +1230,11 @@
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 							<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
 							<Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm_Right"/>
-							<Tiled val="true"/>
+							<Tiled val="true" index="0"/>
+							<Tiled val="true" index="1"/>
+							<Tiled val="true" index="2"/>
+							<Tiled val="true" index="3"/>
+							<Tiled val="true" index="4"/>
 							<Unclipped val="true"/>
 						</Frame>
 						<Frame type="UnitTargetFrame" name="FCJH_Target">
@@ -1235,7 +1259,11 @@
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 							<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
 							<Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm_Right"/>
-							<Tiled val="true"/>
+							<Tiled val="true" index="0"/>
+							<Tiled val="true" index="1"/>
+							<Tiled val="true" index="2"/>
+							<Tiled val="true" index="3"/>
+							<Tiled val="true" index="4"/>
 							<Unclipped val="true"/>
 						</Frame>
 						<Frame type="UnitTargetFrame" name="FCJH_Target">
@@ -1260,7 +1288,11 @@
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 							<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
 							<Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm_Right"/>
-							<Tiled val="true"/>
+							<Tiled val="true" index="0"/>
+							<Tiled val="true" index="1"/>
+							<Tiled val="true" index="2"/>
+							<Tiled val="true" index="3"/>
+							<Tiled val="true" index="4"/>
 							<Unclipped val="true"/>
 						</Frame>
 						<Frame type="UnitTargetFrame" name="FCJH_Target">
@@ -1283,7 +1315,7 @@
 				<Width val="0"/>
 				<Frame type="UnitStatusFrame" name="TrackedUnitStatusFrame0">
 					<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
-					<Frame type="UnitStatusShieldedHealthBar" name="HealthBar"><Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm_Right"/><Tiled val="true"/></Frame>
+					<Frame type="UnitStatusShieldedHealthBar" name="HealthBar"><Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm_Right"/><Tiled val="true" index="0"/><Tiled val="true" index="1"/><Tiled val="true" index="2"/><Tiled val="true" index="3"/><Tiled val="true" index="4"/></Frame>
 				</Frame>
 			</Frame>
 			<Frame type="Image" name="FCJH_HealthBacking">

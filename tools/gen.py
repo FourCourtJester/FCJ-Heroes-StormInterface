@@ -1296,6 +1296,13 @@ def _anchors(rect, relative, indent):
 
 VIKING_GAP = 2   # layout units between the three Vikings' bars
 
+# Every segment of the plates' health bars tiled, as the health is (Blizzard's party frame tiles
+# its 0-2). Untiled, the shield (index 2) squeezed the whole fill art into itself: Fenix's white
+# came out with both the art's slanted ends, at half the slant, and ran past the bar's end
+# (user, 2026-10-18, 12_18_57).
+def tiled_segments(indent=""):
+    return "".join(f'{indent}<Tiled val="true" index="{i}"/>' for i in range(5))
+
 
 def trackers(team, health):
     """Blizzard's extra health bars inside HeroStatus, refitted to our bar (their templates
@@ -1306,7 +1313,7 @@ def trackers(team, health):
     w = health[2] - health[0]
     third = (w - 2 * VIKING_GAP) / 3
     bar = (f'<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">'
-           f'<Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm{suffix}"/><Tiled val="true"/></Frame>')
+           f'<Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm{suffix}"/>{tiled_segments()}</Frame>')
     # Each Viking also gets its own click target (select that Viking, centre the camera), over
     # its third of the plate at full height, above the plate's own (600). Round 1 hung it off
     # the bar-high strip and clicks landed only now and then (clipped to the strip, likely), so
@@ -1326,8 +1333,7 @@ def trackers(team, health):
 							<Anchor side="Bottom" relative="{strip}" pos="Max" offset="0"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 							<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
-							<Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm{suffix}"/>
-							<Tiled val="true"/>
+							<Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm{suffix}"/>{tiled_segments(chr(10) + chr(9) * 7)}
 							<Unclipped val="true"/>
 						</Frame>
 						<Frame type="UnitTargetFrame" name="FCJH_Target">
@@ -2335,8 +2341,7 @@ def hero_cell_template(team, c, cfg):
 			<RenderPriority val="510"/>
 			<Frame type="Frame" name="ImageMaskFrame"><AlphaMaskSiblings val="false"/></Frame>
 			<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">
-				<Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm{suffix}"/>
-				<Tiled val="true"/>
+				<Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm{suffix}"/>{tiled_segments(chr(10) + chr(9) * 4)}
 			</Frame>{trackers(team, g["health"])}{health_backing}{mana_backing}{energy}"""
     if blue:  # red inherits these unchanged
         cc_top, cc_bottom = c.cc_band

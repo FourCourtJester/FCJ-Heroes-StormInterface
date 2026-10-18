@@ -816,10 +816,15 @@ MINES_BANNER = left_banner("Mines", "MineOpenLabel", "MineOpenTimer", "Centerpie
 GOLEM_BAR = 481
 _HEALTH = (("UnitStatusShieldedHealthBar", "HealthBar", ()),
            ("UnitStatusHealthLabel", "HealthLabel", (("Label", "StatusLabel", ()),)))
+# Their health % (each bar's HealthLabel) off: Blizzard's hangs 60 past the blue bar's end and 160
+# before the red's start, and the red one floated left of our banner as "10..." (user, 2026-10-18:
+# "we can just remove it"). The bars say it.
+_GOLEM_HEALTH = (("UnitStatusShieldedHealthBar", "HealthBar", ()),
+                 ("UnitStatusHealthLabel", "HealthLabel", (("Label", "StatusLabel", (), '<Alpha val="0"/>'),)))
 GOLEM_PARTS = (("Image", "BackgroundImage", (), f'<Anchor side="Right" relative="$parent" pos="Min" offset="{GOLEM_BAR}"/>'),
                ("Image", "GolemHud", (), '<Anchor side="Right" relative="$parent/BackgroundImage" pos="Max" offset="-15"/>'),
                ("Image", "HealthBarBgTop", ()), ("Image", "HealthBarBgBottom", ()),
-               ("UnitStatusFrame", "AllyGolemHealthBar", _HEALTH), ("UnitStatusFrame", "EnemyGolemHealthBar", _HEALTH),
+               ("UnitStatusFrame", "AllyGolemHealthBar", _GOLEM_HEALTH), ("UnitStatusFrame", "EnemyGolemHealthBar", _GOLEM_HEALTH),
                ("Label", "AllySkullCounter", ()), ("Label", "EnemySkullCounter", ()),
                ("Label", "AllyGolemLabel", ()), ("Label", "EnemyGolemLabel", ()))
 
