@@ -151,8 +151,9 @@
 					<Key type="Curve" time="0.35" value="255" inout="Linear"/>
 					<Key type="Curve" time="0.351" value="50" inout="Linear"/>
 					<Key type="Curve" time="0.352" value="125" inout="Linear"/>
-					<Key type="Curve" time="0.45" value="0" inout="Linear"/>
-					<Key type="Curve" time="1.1" value="0" inout="Slow"/>
+					<Key type="Curve" time="1.35" value="125" inout="Linear"/>
+					<Key type="Curve" time="1.45" value="0" inout="Linear"/>
+					<Key type="Curve" time="1.5" value="0" inout="Slow"/>
 				</Controller>
 				<Controller type="Fade" frame="FCJH_SkullIcon" end="Pause">
 					<Key type="Curve" time="0" value="0" inout="Linear"/>
@@ -206,26 +207,22 @@
 				<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SkullOverlay" relative="true">
 					<Key type="Curve" time="0" value="-77" inout="Slow"/>
 					<Key type="Curve" time="0.35" value="0" inout="Linear"/>
-					<Key type="Curve" time="0.45" value="-39" inout="Linear"/>
-					<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
+					<Key type="Curve" time="1.5" value="0" inout="Linear"/>
 				</Controller>
 				<Controller type="Anchor" end="Pause" side="Right" frame="FCJH_SkullOverlay" relative="true">
 					<Key type="Curve" time="0" value="77" inout="Slow"/>
 					<Key type="Curve" time="0.35" value="0" inout="Linear"/>
-					<Key type="Curve" time="0.45" value="39" inout="Linear"/>
-					<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
+					<Key type="Curve" time="1.5" value="0" inout="Linear"/>
 				</Controller>
 				<Controller type="Anchor" end="Pause" side="Top" frame="FCJH_SkullOverlay" relative="true">
 					<Key type="Curve" time="0" value="-39" inout="Slow"/>
 					<Key type="Curve" time="0.35" value="0" inout="Linear"/>
-					<Key type="Curve" time="0.45" value="-19" inout="Linear"/>
-					<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
+					<Key type="Curve" time="1.5" value="0" inout="Linear"/>
 				</Controller>
 				<Controller type="Anchor" end="Pause" side="Bottom" frame="FCJH_SkullOverlay" relative="true">
 					<Key type="Curve" time="0" value="39" inout="Slow"/>
 					<Key type="Curve" time="0.35" value="0" inout="Linear"/>
-					<Key type="Curve" time="0.45" value="19" inout="Linear"/>
-					<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
+					<Key type="Curve" time="1.5" value="0" inout="Linear"/>
 				</Controller>
 			</Animation>
 			<!-- FCJH_SkullOverlay (plate_ring): ours, on the whole plate -->

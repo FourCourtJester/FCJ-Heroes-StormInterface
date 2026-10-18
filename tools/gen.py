@@ -1481,8 +1481,10 @@ SKULL_FADES = {
                         (.351, 50, "Linear"), (.352, 125, "Linear"), (.45, 0, "Linear"), (1.1, 0, "Slow")],
     "FCJH_SkullBurst2": [(0, 0, "Slow"), (.15, 20, "Linear"), (.25, 65, "Linear"), (.45, 155, "Linear"),
                          (1.1, 0, "Slow")],
+    # the red border held 1 s past Blizzard's .45 (user, 2026-10-18: "stay for like 1 second longer")
     "FCJH_SkullOverlay": [(0, 0, "Slow"), (.15, 40, "Linear"), (.25, 85, "Linear"), (.35, 255, "Linear"),
-                          (.351, 50, "Linear"), (.352, 125, "Linear"), (.45, 0, "Linear"), (1.1, 0, "Slow")],
+                          (.351, 50, "Linear"), (.352, 125, "Linear"), (1.35, 125, "Linear"), (1.45, 0, "Linear"),
+                          (1.5, 0, "Slow")],
     "FCJH_SkullIcon": [(0, 0, "Linear"), (.35, 255, "Slow,Linear"), (1.1, 0, "Slow,Linear")],
 }
 # relative anchor keys, Left side (Right is the negative; Top / Bottom are the second number)
@@ -1490,8 +1492,8 @@ SKULL_MOVES = {
     "FCJH_SkullBurst": [(0, -50, -25, "Slow"), (.35, 0, 0, "Linear"), (.45, -25, -12, "Linear"),
                         (1.1, 0, 0, "Slow,Linear")],
     "FCJH_SkullBurst2": [(0, -80, -45, "Slow"), (.35, 0, 0, "Linear"), (1.1, 0, 0, "Linear")],
-    "FCJH_SkullOverlay": [(0, -50, -25, "Slow"), (.35, 0, 0, "Linear"), (.45, -25, -12, "Linear"),
-                          (1.1, 0, 0, "Slow,Linear")],
+    # on the plate while it's held (Blizzard's swell back out came after it had gone)
+    "FCJH_SkullOverlay": [(0, -50, -25, "Slow"), (.35, 0, 0, "Linear"), (1.5, 0, 0, "Linear")],
 }
 SKULL_FLIPPED = ["FCJH_SkullOverlay", "FCJH_SkullBurst", "FCJH_SkullBurst2", "FCJH_RespawnGlow"]
 
