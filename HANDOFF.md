@@ -577,16 +577,17 @@ from their plates (docs/blizzard-fixes.md).
      bars and timers are in thirds. See item 15 too (Blizzard's three-slice Vikings plate);
    - **Death timers flash white under 5 s**, like the player view's (the same as the
      death-timer note above - find Blizzard's animation);
-   - **Ahli's death animation** - a skull animation, then the countdown (item 12);
+   - ~~**Ahli's death animation**~~ DONE (item 12);
    - **A frame round each team's row of plates**: silver-grey metallic like the top bar's
      edges, about 3 px, slanted where the plates slant, to cover the gaps and overflows
      between heroes;
    - **An intro animation for the elements, to pair with OBS** (more from the user later;
      Ahli's plates slide and fade in, above).
-12. **Ahli's death animation on the nameplate** (user, 2026-10-05: "a nice touch", not to
-    copy) - his plate does something when its hero dies: a skull animation, then the
-    countdown (user, 2026-10-16). For the art pass (item 7): study what it does, then design
-    our own.
+12. ~~**Ahli's death animation on the nameplate**~~ **DONE (user, 2026-10-18: "Seems
+    brilliant", on 8d6261f).** Blizzard's player-view skull animation (`gen.death_skull`),
+    its plate-shaped art our own (`gen.plate_ring`: Blizzard's rang only the portrait, at
+    their slant): the red border and bursts zoom onto the plate, the border held 1 s past
+    Blizzard's; then the countdown, and the gold respawn glow pulsing at the end.
 14. **Final pass: every map, every hero** (user, 2026-10-05). The last QA round, with replays
     that cover every map and every hero; the checks that need a particular hero or map collect
     here until then (no replay with them yet):
