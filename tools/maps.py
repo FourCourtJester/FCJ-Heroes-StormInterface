@@ -1954,13 +1954,17 @@ PARTS["infernal_shrines"] = {"ShrinesPanel/ShrineActiveFrame": '<Alpha val="0"/>
 # 26 over the hud, 8 past its right; the health backing (a nine-slice) from 12 in to 18 under the
 # hud, the fill 8 in at each end. Measured at 1080p (20_53_22, Blizzard's place): the bar's tip
 # 738, its top 643, its lower bracket 683 - 4 px over the image's bottom (687, worked out); the
-# portrait's art 1068-1172, centred on the hud - so its image is 127 wide, 8 past the hud each side.
+# portrait's art 1068-1172, centred on the hud. Its image is wider than the art (seen at its own
+# size, 12_15_05): ~175, the hexagon in its right part, glow room on the left. Ours held it to
+# 127 (the hud +-8, a guess), squeezing every Punisher's hexagon to ~3/4 width (user, 2026-10-18).
 # Ours as the knight's: the bar from the tip, the portrait at its outer end, the words from the
 # inner, the % from the outer; its lower bracket on the spot's bottom, as the warning's.
 PUNISHER = SHRINES + "/PunisherFrame"
 PUNISHER_HUD = (357, 468)  # the hud's sides out from the tip: its outer 10 short of the bar's end
 PUNISHER_HUD_TOP = -86     # its top from the spot's bottom: 124 tall, the bar's image 33 over its
                            # bottom and the lower bracket 5 over the image's
+PUNISHER_ART_W = 175       # the portraits' own width (12_15_05: 158 px): blue's flipped one is held
+                           # by its right, this far from its left
 PUNISHER_ICONS = tuple(f"/Punisher{k}{t}" for k in ("Arcane", "Frozen", "Mortar") for t in ("Ally", "Enemy"))
 # Blue's health backing, a flipped copy as the knight's (KNIGHT_COPIES), from 18 under the hud to
 # 12 in from the bar's end - stretched (Blizzard's a nine-slice; its own width is about this)
@@ -2006,9 +2010,10 @@ def punisher_layout(s):
     s.hold("/BackgroundImage", "Right", -BAR_TIP_IN, GOLEM_BAR - BAR_TIP_IN)   # its bottom hangs off the hud
     s.hold("/ShrineHud", "Right", *PUNISHER_HUD)
     s.anchor("/ShrineHud", "Top", s.spot, "Max", PUNISHER_HUD_TOP)
-    # the portraits: the others fill the first's box (Blizzard's), 8 past the hud each side
-    s.anchor(PUNISHER_ICONS[0], "Left", "/ShrineHud", "Min", -8)
-    s.anchor(PUNISHER_ICONS[0], "Right", "/ShrineHud", "Max", 8)
+    # the portraits: the others fill the first's box (Blizzard's), its own size, held by its right
+    # (a state can't take that anchor away): red's 8 past the hud (Blizzard's); blue's, flipped,
+    # its left 8 past the hud's left
+    s.anchor(PUNISHER_ICONS[0], "Right", "/ShrineHud", *s.pick(("Max", 8), ("Min", PUNISHER_ART_W - 8)))
     for icon in PUNISHER_ICONS:
         s.flip(icon)
     s.show("/HealthBarBG", "red")
