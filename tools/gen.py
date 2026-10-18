@@ -886,6 +886,54 @@ def portrait_mask(team, size, sub=4):
     return dds_bgra(w, h, b"".join(rows))
 
 
+# The respawn glow (2026-10-18): ours, after Blizzard's (HUD_TopBar_Team_HeroFrame_RespawnFrame),
+# whose ring is drawn for their own cell's portrait at its own slant: on our plates it ringed
+# only the portrait, ~0.65 to our 0.54 (user: "does not even come close to our nameplate
+# size"; "take inspiration from it to make our own"). A ring on the plate's own outline - the
+# row frame's and the seams' lines, HeroCell.edge - over the whole cell, bars and all: a hot
+# pale core just inside the frame's line, fading to Blizzard's orange inwards (their colours,
+# off 12_18_23), nothing outside the plate. Blue's; red's is it mirrored (SKULL_FLIPPED).
+RESPAWN_GLOW = {"core": "ffd6aa", "halo": "ff8c28",
+                "at": 2.0,          # the core's middle, units in from the plate's edge (the frame's
+                                    # line covers ~1.1 of them)
+                "core_w": 0.9,      # its half-width (a Gaussian's), units
+                "halo_a": 0.55,     # the halo's strength at the core, of full
+                "halo_in": 4.5}     # ...and how far in it fades by 1/e, units
+
+
+@functools.cache
+def respawn_glow(size=(512, 256)):
+    import math
+    w, h = size
+    c, g = HeroCell, RESPAWN_GLOW
+    edge_top = c.LEAN_PIVOT * (c.OVERLAP / c.H - c.LEAN)   # blue's left edge at y 0 (HeroCell.edge)
+    norm = math.hypot(1, c.LEAN)                           # across the slant, per unit along x
+    core, halo = (bytes.fromhex(g[k]) for k in ("core", "halo"))
+    rows = []
+    for ty in range(h):
+        y = (ty + 0.5) / h * c.H
+        left = edge_top + c.LEAN * y
+        right = left + c.W - c.OVERLAP
+        row = bytearray()
+        for tx in range(w):
+            x = (tx + 0.5) / w * c.W
+            d = min(y, c.H - y, (x - left) / norm, (right - x) / norm)   # in from the plate's edge
+            off = d - g["at"]
+            a_core = math.exp(-(off / g["core_w"]) ** 2)
+            a_halo = g["halo_a"] * (math.exp(-off / g["halo_in"]) if off > 0 else math.exp(-(off / 1.4) ** 2))
+            a = min(1.0, a_core + a_halo)
+            t = a_core / (a_core + a_halo) if a > 0 else 0
+            r_, g_, b_ = (round(hv + (cv - hv) * t) for cv, hv in zip(core, halo))
+            row += bytes((b_, g_, r_, round(255 * a)))
+        rows.append(bytes(row))
+    return dds_bgra(w, h, b"".join(rows))
+
+
+def respawn_glow_file():
+    # named by its content, as the portrait masks (textures outlive a replay reload)
+    return f"FCJH_RespawnGlow_{hashlib.sha1(respawn_glow()).hexdigest()[:8]}.dds"
+
+
 def slant_texture(team, cut, colour, alpha=255, size=(512, 32), sub=4):
     """A solid-colour parallelogram: the team's lean, cut `cut` of the width in (the slant's
     horizontal run over the bar's height, as a fraction of its width). Blue leans \\ (top edge
@@ -1279,6 +1327,7 @@ def texture_files(cfg):
     out = {TEXTURE_REL / portrait_mask_file(team, size): portrait_mask(team, size) for team in ("blue", "red")}
     # an opaque mask: replaces a Blizzard mask we don't want (there's no "none")
     out[TEXTURE_REL / "FCJH_White.dds"] = dds_bgra(4, 4, b"\xff" * 64)
+    out[TEXTURE_REL / respawn_glow_file()] = respawn_glow()
     out[TEXTURE_REL / HEAL_BORDER] = square_border(cfg["heal_popup"]["colour"])
     for file, data in slant_bars(cfg).values():
         out[TEXTURE_REL / file] = data
@@ -1430,10 +1479,6 @@ SKULL_MOVES = {
                           (1.1, 0, 0, "Slow,Linear")],
 }
 SKULL_FLIPPED = ["FCJH_SkullOverlay", "FCJH_SkullBurst", "FCJH_SkullBurst2", "FCJH_RespawnGlow"]
-# The respawn glow sits this much further in than the skull's overlay (Blizzard units, scaled
-# like the rest): Blizzard sizes it for its own thick bezel, so on our thinner frame it stood
-# proud of the plate (user, 2026-10-16)
-RESPAWN_GLOW_INSET = 4
 
 
 def death_skull(team, c):
@@ -1510,7 +1555,19 @@ def death_skull(team, c):
 				<RenderPriority val="517"/>
 				<Unclipped val="true"/>
 				<AcceptsMouse val="false"/>
-			</Frame>{inset("FCJH_RespawnGlow", "HUD_TopBar_Team_HeroFrame_RespawnFrame", 590, RESPAWN_GLOW_INSET)}
+			</Frame>
+			<!-- the respawn glow (respawn_glow): ours, on the whole plate -->
+			<Frame type="Image" name="FCJH_RespawnGlow">
+				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="0"/>
+				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent/$parent" pos="Max" offset="0"/>
+				<Anchor side="Right"  relative="$parent/$parent" pos="Max" offset="0"/>
+				<Texture val="{TEXTURE_DIR}\\{respawn_glow_file()}"/>
+				<Alpha val="0"/>
+				<RenderPriority val="590"/>
+				<Unclipped val="true"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
 		</Frame>"""
 
 

@@ -274,12 +274,13 @@
 				<Unclipped val="true"/>
 				<AcceptsMouse val="false"/>
 			</Frame>
+			<!-- the respawn glow (respawn_glow): ours, on the whole plate -->
 			<Frame type="Image" name="FCJH_RespawnGlow">
-				<Anchor side="Top"    relative="$parent" pos="Min" offset="20"/>
-				<Anchor side="Left"   relative="$parent" pos="Min" offset="19"/>
-				<Anchor side="Bottom" relative="$parent" pos="Max" offset="-20"/>
-				<Anchor side="Right"  relative="$parent" pos="Max" offset="-19"/>
-				<Texture val="@UI/HUD_TopBar_Team_HeroFrame_RespawnFrame"/>
+				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="0"/>
+				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent/$parent" pos="Max" offset="0"/>
+				<Anchor side="Right"  relative="$parent/$parent" pos="Max" offset="0"/>
+				<Texture val="_Assets\Textures\FCJH_RespawnGlow_9ed6916f.dds"/>
 				<Alpha val="0"/>
 				<RenderPriority val="590"/>
 				<Unclipped val="true"/>
