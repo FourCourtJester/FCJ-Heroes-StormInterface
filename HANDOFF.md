@@ -554,7 +554,13 @@ from their plates (docs/blizzard-fixes.md).
      95 -> 94 tall). The plates' click masks keep the old cut (hit areas only). The shadows:
      the chrome's dark band (the backplate rim ramp's `5b637f` stop) part way down each seam;
      the row frame and core chrome are now one flat silver, `[row_frame] rim` (delete it to
-     get the ramp back). Not seen yet.
+     get the ramp back). Seen 2026-10-18 (cffee7f): the portraits gone (blue) / half cut (red) -
+     a shadowed variable in portrait_mask, fixed f35dae5. Also seen on a light map: Blizzard's
+     health backing's nine-slice end poked a dark strip ~4 px out of the row frame on the end
+     plates (always there, hidden on dark maps) - pulled 3 units in (f35dae5). The Mortar
+     Punisher's head breaking out of its hexagon is Blizzard's one image (the hexagon is in
+     it; ShrineHud is an empty frame) - placement unchanged; ask the user what looked wrong.
+     Not seen yet.
    - **A ready ring for every heroic** (user, 2026-10-17): Tracer's ready ping, the expanding
      gold ring at full charge, made the user want the same whenever any heroic comes off
      cooldown. Notes in docs/polish-research.md ("A ready ring for every heroic").
