@@ -178,7 +178,7 @@ def team_bar_rects(cfg, n=5):
     shift inward - FCJH_RowPacker), so XP spans only those n plates."""
     row, px = cfg["hero_row"], 1 / Units(cfg).scale
     cell = HeroCell(cfg)
-    lean = cell.overlap / cell.h                       # the plates' slant, px across per px up
+    lean = cell.lean                                   # the plates' slant, px across per px up
     edge = ((n - 1) * cell.pitch + cell.w - cell.overlap) * px   # the row's top edge
     shift = (5 - n) * cell.pitch * px                  # blue's plates move this far inward
     top = row["top"]
@@ -191,8 +191,8 @@ def team_bar_rects(cfg, n=5):
     out = {}
     # the row's outer edges, as x at height y: blue leans \ (its top edge starts at the
     # row's left), red leans / (one overlap in)
-    blue_l = lambda y: row["blue_left"] + shift - lean * (top - y)
-    red_l = lambda y: row["red_left"] + cell.overlap * px + lean * (top - y)
+    blue_l = lambda y: row["blue_left"] + shift + cell.lean_x0 * px - lean * (top - y)
+    red_l = lambda y: row["red_left"] + (cell.overlap - cell.lean_x0) * px + lean * (top - y)
     r1 = lambda v: round(v, 1)
     out["blue_xp"] = ((r1(blue_l(xp_top)), r1(xp_top), r1(edge + lean * xp["height"]), xp["height"]), "ui")
     out["red_xp"] = ((r1(red_l(xp_bottom)), r1(xp_top), r1(edge + lean * xp["height"]), xp["height"]), "ui")
@@ -213,7 +213,7 @@ def core_chrome_texture(cfg, team):
     parallelogram: blue's top edge flush left, red's flush right (slant_texture's shapes)."""
     core, px = cfg["team_core"], 1 / Units(cfg).scale
     (x, y, w, h), _ = team_bar_rects(cfg)[f"{team}_core"]
-    run = HeroCell(cfg).overlap / HeroCell(cfg).h * h
+    run = HeroCell(cfg).lean * h
     if team == "blue":
         pts = [(x, y), (x + w - run, y), (x + w, y + h), (x + run, y + h)]
     else:
@@ -221,7 +221,13 @@ def core_chrome_texture(cfg, team):
     o = core_chrome_outset(cfg) * px
     inside = float(core.get("frame_inside", 0)) if core.get("frame_width", 0) else 0.0
     box = (x - o, y - o, w + 2 * o, h + 2 * o)
-    return _row_frame_dds(tuple(pts), box, o, inside, art_scale(cfg), tuple(cfg["top_backplate"]["rim"]))
+    return _row_frame_dds(tuple(pts), box, o, inside, art_scale(cfg), chrome_rim(cfg))
+
+
+def chrome_rim(cfg):
+    """The plates' chrome colours, top to bottom (the row frame's and the core bar's):
+    [row_frame] rim, else the top backplate's."""
+    return tuple(cfg["row_frame"].get("rim", cfg["top_backplate"]["rim"]))
 
 
 def row_frame_outset(cfg):
@@ -237,16 +243,16 @@ def row_frame_shape(cfg, team, n=5):
     n: heroes per team, as team_bar_rects. Returns (corners clockwise from top-left, rect)."""
     row, px = cfg["hero_row"], 1 / Units(cfg).scale
     cell = HeroCell(cfg)
-    lean = cell.overlap / cell.h
+    lean = cell.lean
     edge = ((n - 1) * cell.pitch + cell.w - cell.overlap) * px
     shift = (5 - n) * cell.pitch * px
     top = row["top"]
     y0 = top - cfg["team_xp"]["gap"] - cfg["team_xp"]["height"]
     y1 = top + cell.h * px
     if team == "blue":
-        left = lambda y: row["blue_left"] + shift - lean * (top - y)
+        left = lambda y: row["blue_left"] + shift + cell.lean_x0 * px - lean * (top - y)
     else:
-        left = lambda y: row["red_left"] + cell.overlap * px + lean * (top - y)
+        left = lambda y: row["red_left"] + (cell.overlap - cell.lean_x0) * px + lean * (top - y)
     pts = [(left(y0), y0), (left(y0) + edge, y0), (left(y1) + edge, y1), (left(y1), y1)]
     o = row_frame_outset(cfg)
     xs = [x for x, _ in pts]
@@ -466,6 +472,12 @@ class HeroCell:
     # The frame art's black border along each slanted edge is ~3 units wide and draws UNDER
     # the portrait; portraits stop this far short of the edge so it shows between heroes.
     BORDER = 2
+    # The slant every piece of ours follows, across per down: Blizzard's own art on the plate
+    # (the frame's dividers, the bar fills' ends, the heroic badges) measures ~0.54 (2026-10-17).
+    # Ours was OVERLAP / H (0.492), so the chrome and the portraits' cut ran off the art's lines
+    # (user, 2026-10-17). It turns on the health bar's middle (health 38..46), so the art there
+    # keeps its place; the pitch (W - OVERLAP) stays, so the plates still tile.
+    LEAN, LEAN_PIVOT = 0.54, 42
     # (left, top, right, bottom)
     BLUE = {
         "health_backing": (21, 36, 126, 53),    # status frame 105 wide, 2 in from the right
@@ -504,6 +516,9 @@ class HeroCell:
         self.w, self.h = s(self.W), s(self.H)
         self.pitch = s(self.W - self.OVERLAP)
         self.overlap = self.w - self.pitch
+        self.lean = self.LEAN
+        # blue's slanted left edge at the cell's top, from the box's left (edge())
+        self.lean_x0 = self.LEAN_PIVOT * k * (self.overlap / self.h - self.lean)
         self.portrait_top, self.portrait_bottom = s(-1), s(self.PORTRAIT_H - 1)
         self.team = {team: {part: tuple(s(v) for v in rect) for part, rect in g.items()}
                      for team, g in (("blue", self.BLUE), ("red", self.RED))}
@@ -514,6 +529,12 @@ class HeroCell:
         self.cc_mid, self.cc_half = s(self.CC_ICON_MID), s(self.CC_ICON_HALF)
         across = self.W / self.PORTRAIT_H * (self.CROP_BOTTOM - self.CROP_TOP) / self.ART_ASPECT
         self.crop = (self.CROP_TOP, round(1 - across, 3), self.CROP_BOTTOM, 1.0)
+
+    def edge(self, y):
+        """Blue's slanted left edge, x at y down the cell (both from its box's top-left). Its
+        right edge is one pitch on; red is mirrored: its right edge w - edge(y), its left
+        overlap - edge(y)."""
+        return self.lean_x0 + self.lean * y
 
 
 def dds_bgra(w, h, pixels):
@@ -649,7 +670,10 @@ def constants_layout(cfg):
     # one below, as near as it goes to each centre lying midway between the drawn minimap's side
     # and the plates' inner edge (carried up its slant above the plates) at that one's height
     lines.append("\t<!-- Tomb of the Spider Queen's Webweavers: each hexagon's centre and bottom (maps.weaver_parts) -->")
-    lean = HeroCell(cfg).overlap / HeroCell(cfg).h
+    cell = HeroCell(cfg)
+    lean = cell.lean
+    # the plates' inner edge at their bottom, outward of the row's edge (HeroCell.edge), px
+    foot = (cell.overlap - cell.edge(cell.h)) / Units(cfg).scale
     (bot_h, bot_pad), (top_h, top_pad) = maps.WEAVER_ART["Bottom"], maps.WEAVER_ART["Top"]
     low, high = maps.WEAVER_BOTTOM_PX - bot_h / 2, maps.WEAVER_TOP_PX + top_h / 2   # the end ones' centres
     ys = [low + (high - low) * i / (len(maps.WEAVER_LANES) - 1) for i in range(len(maps.WEAVER_LANES))]
@@ -659,7 +683,7 @@ def constants_layout(cfg):
         # outward from the screen's middle: + is right for red, left for blue
         sign, edge = (1, row["red_left"]) if team == "red" else (-1, row["blue_right"])
         gaps = [(sign * (mid - edge) + reach - slope * max(0, y - corner)            # minimap side
-                 + lean * (row["bottom"] - y)) / 2 for y in ys]                      # plates' edge
+                 + foot + lean * (row["bottom"] - y)) / 2 for y in ys]               # plates' edge
         start = sum(g - i * maps.WEAVER_STEP_PX for i, g in enumerate(gaps)) / len(gaps) + maps.WEAVER_OUT_PX
         for i, (lane, y) in enumerate(zip(maps.WEAVER_LANES, ys)):
             h, pad = maps.WEAVER_ART[lane]
@@ -716,7 +740,7 @@ def constants_layout(cfg):
     # outward of the cell box's centre (left on blue, right on red). 2026-09-27..10-03 they sat
     # on the box's centre; at the bigger plates that read as leaning toward the screen's middle
     # (user, 2026-10-03). Offsets from the cell's middle, per team so either side can be nudged.
-    shift = HeroCell(cfg).overlap / 2
+    shift = HeroCell(cfg).overlap / 2 - HeroCell(cfg).lean_x0
     for team, sign in (("blue", -1), ("red", 1)):
         const(name("hero", team, "popup", "l"), round(sign * shift) - u(size / 2))
         const(name("hero", team, "popup", "r"), round(sign * shift) + u(size / 2))
@@ -824,7 +848,8 @@ def portrait_mask(team, size, sub=4):
     observer's wide portrait art to its face also crops away the mask's left-edge cut (red
     portraits spilled over their neighbours). An AlphaMaskTexture spans the frame instead.
     Worked in native cell units, so it holds at any scale: the plate leans OVERLAP across
-    its full height H - blue \\ (top edge on the left), red / (top edge on the right)."""
+    its full height H - blue \\ (top edge on the left), red / (top edge on the right) - at
+    HeroCell.LEAN, turning on LEAN_PIVOT (HeroCell.edge)."""
     w, h = size
     c = HeroCell
     top, bottom = -1, c.PORTRAIT_H - 1  # the portrait frame, in cell units
@@ -833,9 +858,11 @@ def portrait_mask(team, size, sub=4):
     # (1 unit early, so the mask's soft edge lands under the backing, not a hairline below it)
     cut = c.BLUE["health_backing"][3] - 1
 
+    x0 = c.LEAN_PIVOT * (c.OVERLAP / c.H - c.LEAN)
+
     def left_edge(y):
-        down = y / c.H
-        return c.OVERLAP * (down if team == "blue" else 1 - down)
+        x = x0 + c.LEAN * y
+        return x if team == "blue" else c.OVERLAP - x
 
     rows = []
     for ty in range(h):
@@ -902,7 +929,7 @@ def top_backplate_geometry(cfg):
     left, right = hexagon[5], hexagon[2]           # the side points: where the wings meet it
     cx, cy = (left[0] + right[0]) / 2, (left[1] + right[1]) / 2
     padded = offset_polygon(hexagon, bp["padding"])
-    lean = HeroCell(cfg).overlap / HeroCell(cfg).h
+    lean = HeroCell(cfg).lean
     rise = lean * cy
     bx = cfg["element"]["blue_level"]["rect"][0]
     rx, _, rw, _ = cfg["element"]["red_level"]["rect"]
@@ -1068,7 +1095,7 @@ def row_frame_texture(cfg, team, n):
     # under the XP bar: the middle of its gap to the plates
     base = (cfg["hero_row"]["top"] - cfg["team_xp"]["gap"] / 2,) if seam else ()
     return _row_frame_dds(tuple(pts), box, float(row_frame_outset(cfg)), float(spec.get("inside", 0)),
-                          art_scale(cfg), tuple(cfg["top_backplate"]["rim"]),
+                          art_scale(cfg), chrome_rim(cfg),
                           row_frame_seams(cfg, team, n) if seam else (), seam, base)
 
 
@@ -1171,7 +1198,7 @@ def slant_bars(cfg):
     backplate), by constant name: {name: (file name, dds bytes)}. Names
     carry a content hash (textures are cached by path across replay reloads)."""
     rects_ = team_bar_rects(cfg)
-    lean = HeroCell(cfg).overlap / HeroCell(cfg).h
+    lean = HeroCell(cfg).lean
     xp, core = cfg["team_xp"], cfg["team_core"]
     out = {}
     # The bars' fills are STRETCHED to the value (seen in game, 2026-09-29: a draining core's
@@ -1488,7 +1515,7 @@ def pet_death_labels(team, c):
     # The slices are measured along the bar, but the timer sits higher up the slanted plate,
     # where each slice has shifted with the lean: left on blue (\), right on red (/). Seen in
     # game (2026-09-29): a timer just off its slice toward the plate's slanted edge.
-    lean = c.overlap / c.h
+    lean = c.lean
     shift = round(lean * ((ht + hb) / 2 - (2 + hb) / 2)) * (-1 if team == "blue" else 1)
     labels = ""
     # the bars' order on the plate is Baleog, Erik, Olaf (seen in game 2026-09-30: Olaf's
@@ -1592,14 +1619,14 @@ def fountain_rect(cfg, team):
     bottom = c.team[team]["health_backing"][1] - 1
     top = bottom - hv
     if team == "blue":
-        # the outer end is the plate's left: its edge runs (0, 0) -> (overlap, h); the slot leans
+        # the outer end is the plate's left: its edge (HeroCell.edge) leans \; the slot leans
         # \ like it, its left side (l, top) -> (l + cut, bottom). The nearer corner rules.
-        edge = lambda y: c.overlap * y / c.h
+        edge = c.edge
         left = max(edge(top), edge(bottom) - cut) + EDGE_INSET[team]
     else:
-        # the right: its edge runs (w, 0) -> (w - overlap, h); the slot leans /, its right
+        # the right: its edge, mirrored, leans /; the slot leans /, its right
         # side (r, top) -> (r - cut, bottom)
-        edge = lambda y: c.w - c.overlap * y / c.h
+        edge = lambda y: c.w - c.edge(y)
         left = min(edge(top), edge(bottom) + cut) - EDGE_INSET[team] - aw
     return (round(left - ax), round(top - ay), round(left - ax + SLOT_W * f), round(top - ay + SLOT_H * f)), f
 
@@ -1624,7 +1651,7 @@ def carry_rect(cfg, team):
     c = HeroCell(cfg)
     (l, t, r, b), f = fountain_rect(cfg, team)
     up = FOUNTAIN_H * cfg["hero_row"]["scale"] + CARRY_GAP
-    across = (c.overlap * up / c.h + CARRY_SLIDE) * (-1 if team == "blue" else 1)
+    across = (c.lean * up + CARRY_SLIDE) * (-1 if team == "blue" else 1)
     return (round(l + across), round(t - up), round(r + across), round(b - up)), f
 
 

@@ -544,6 +544,17 @@ from their plates (docs/blizzard-fixes.md).
      x 40-440, y 950-1080, shows them). Measure each, pick the one the eye follows (likely
      the portrait edge), then re-cut the frame. Also: **the chrome shadows out** (user: they
      don't land in good places).
+     Measured 2026-10-18: Blizzard's art agrees on ~0.54 (the native frame's dividers 0.55 on
+     design/ref_ingame_topbar_ults.png, the bar fills' ends 0.55-0.57, the badges 0.54-0.58);
+     only ours was off. Now one lean, `HeroCell.LEAN` 0.54, turning on the health bar's middle
+     (`LEAN_PIVOT` 42, so the bars' ends keep their place under the seams), the pitch kept:
+     the row frame, seams, XP and core bars, the portraits' mask, the fountain's and carried
+     box's edge, the pop-ups, the Vikings' timers, the backplate's wings and the Webweavers.
+     The fit scale fell 1.5507 -> 1.5459 (the steeper top corners reach further out; cells
+     95 -> 94 tall). The plates' click masks keep the old cut (hit areas only). The shadows:
+     the chrome's dark band (the backplate rim ramp's `5b637f` stop) part way down each seam;
+     the row frame and core chrome are now one flat silver, `[row_frame] rim` (delete it to
+     get the ramp back). Not seen yet.
    - **A ready ring for every heroic** (user, 2026-10-17): Tracer's ready ping, the expanding
      gold ring at full charge, made the user want the same whenever any heroic comes off
      cooldown. Notes in docs/polish-research.md ("A ready ring for every heroic").

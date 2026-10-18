@@ -402,3 +402,7 @@ seam = 3                     # a line along each slant between two plates, centr
                              # plate and 1 between: it hides the slants' rough edges), px; 0 = none.
                              # The same line runs under the XP bar, centred on its gap to the plates,
                              # so the bar is fully enclosed (user, 2026-10-16)
+# its colours, top to bottom (stops 0, .35, .6, 1), the core bar's chrome's too. One flat
+# silver: the backplate's ramp ([top_backplate] rim) put its dark band - read as a shadow -
+# part way down every seam, nowhere good (user, 2026-10-17). Delete this line to try it again.
+rim = ["dfe3ed", "dfe3ed", "dfe3ed", "dfe3ed"]
