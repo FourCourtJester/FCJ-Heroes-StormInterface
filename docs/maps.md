@@ -179,8 +179,8 @@ doubloons); Garden of Terror DONE 2026-10-12 (the seed banners, the Terrors on t
 team's side; blue's Terrors still unseen). The banner protocols' recheck PASSED on all five
 (2026-10-12). Alterac Pass DONE 2026-10-14 (everything below seen and approved in one pass). Hanamura
 Temple DONE 2026-10-16 (its split scrapped; THE GAP measured on target).
-Tomb, Warhead, Volskaya, Battlefield done 2026-10-15; Infernal Shrines DONE 2026-10-15 but
-for blue's Punisher (final pass, item 14). Sky Temple DONE 2026-10-15 (eedab7d): every map passed.
+Tomb, Warhead, Volskaya, Battlefield done 2026-10-15; Infernal Shrines DONE 2026-10-15, blue's
+Punisher too 2026-10-18 (user: "works as intended", 23ecda4). Sky Temple DONE 2026-10-15 (eedab7d): every map passed.
 Infernal's minimap on the floor with its skull-race lift, 2026-10-15 (082126f).
 **The map pass is COMPLETE (user, 2026-10-15: "That's all the real maps").** ARAM maps have no
 banners (as the user last checked). Brawls are out of scope: the user intends to ignore them.
@@ -492,7 +492,8 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    flickered: hidden (user: "lets avoid activating 'shrine is active' banner" - the objective
    markers say it; e48326a). The countdown ends without an outro, as Blizzard's (user: fine).
    Seen on 54eaed2: no flicker between the countdown and the skull race. Blue's
-   Punisher - the bots never got one - is in the final pass (14). Player views (1-8) show the
+   Punisher - the bots never got one - seen in a human replay and DONE (user, 2026-10-18: "works
+   as intended", 23ecda4). Player views (1-8) show the
    Punisher by the viewer's team (the script shows the viewer's team as Ally) - expected, logged.
    **On THE FLOOR, lifting for the skull race (user, 2026-10-15: "Houston, we have lift" /
    "And touchdown"; 082126f).** The skull race's counts and crystal cover the minimap's bottom

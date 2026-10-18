@@ -658,9 +658,10 @@ from their plates (docs/blizzard-fixes.md).
     - **Cursed Hollow, blue cursed** (docs/maps.md): the banner on blue's side, left of the map,
       ending at the map's edge, its text and timer inside the art - not yet seen (user,
       2026-10-06: red's looks great);
-    - **Infernal Shrines, blue's Punisher** (user, 2026-10-15: the bots never got one - a human
-      replay): on blue's side, mirrored - the icon at the outer end, the backing flipped, the fill
-      draining from the right, the % at the outer end (`maps.punisher_side`);
+    - ~~**Infernal Shrines, blue's Punisher**~~ DONE (user, 2026-10-18: "works as intended", on
+      23ecda4 - its hexagons at their own width since e973927): on blue's side, mirrored - the icon
+      at the outer end, the backing flipped, the fill draining from the right, the % at the outer
+      end (`maps.punisher_side`);
     - **a live custom game with observers**: the game binds Ctrl+1-8 to "Observe Player 9-16"
       (gamehotkeys.txt) - check our panes' Ctrl+1-4 still win with observer slots filled. Also
       O / Ctrl+O lock the camera to the commentator's / a referee's (their tooltips still
