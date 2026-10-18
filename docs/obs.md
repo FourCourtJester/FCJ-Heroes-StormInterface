@@ -1,5 +1,8 @@
 # OBS: the plan for after the art pass
 
+> **2026-10-18:** the top bar's design is agreed, and it changes this plan (the name plate is
+> now OBS art). See [obs-topbar-handoff.md](obs-topbar-handoff.md) first.
+
 Written 2026-10-16, after the user's "start thinking about generating assets to pair both Heroes
 and OBS overlays together" and rescoped the same day. Nothing here is built yet. This is the
 starting point for the work, not a record of it.
