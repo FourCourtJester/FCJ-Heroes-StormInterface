@@ -1968,6 +1968,29 @@ PUNISHER_COPIES = flipped_copy("FCJH_PunisherBarBG", "@UI/HUD_MapMechanic_BG_Hea
                                (("Top", "$parent/BackgroundImage", "Mid", 5),
                                 ("Left", "$parent/ShrineHud", "Max", -18),
                                 ("Right", "$parent/BackgroundImage", "Max", -12)))
+# DIAGNOSTIC (2026-10-18; out once answered): the Mortar Punisher's hexagon drew about 65 px
+# wide, the shrine's 110 (user: "roughly half the size horizontally"). A green tint over the box
+# the Mortar portrait fills (ours: the hud +-8), and the Mortar and Arcane art at their own size
+# (Blizzard's anchors: Top and Right only) above the bar - narrow there too means it's the art.
+def _punisher_diag():
+    t = T * 7
+    def image(name_, anchors, body):
+        return (f'{t}<Frame type="Image" name="{name_}">\n'
+                + "".join(f'{t}\t<Anchor side="{sd}" relative="{rel}" pos="{pos}" offset="{off}"/>\n'
+                          for sd, rel, pos, off in anchors)
+                + body + f'{t}\t<Unclipped val="true"/>\n{t}\t<RenderPriority val="514"/>\n{t}</Frame>\n')
+    box = image("FCJH_PunisherDiagBox", [(sd, "$parent/PunisherMortarEnemy", p, 0) for sd, p in
+                                         (("Top", "Min"), ("Bottom", "Max"), ("Left", "Min"), ("Right", "Max"))],
+                f'{t}\t<Texture val="{WHITE}"/>\n{t}\t<Color val="0,255,0"/>\n{t}\t<Alpha val="70"/>\n')
+    mortar = image("FCJH_PunisherDiagMortar", (("Bottom", "$parent/BackgroundImage", "Min", -10),
+                                               ("Right", "$parent/ShrineHud", "Max", 8)),
+                   f'{t}\t<Texture val="@UI/Storm_UI_MapMechanic_Shrines_PunisherMortar_Enemy"/>\n')
+    arcane = image("FCJH_PunisherDiagArcane", (("Bottom", "$parent/BackgroundImage", "Min", -10),
+                                               ("Right", "$parent/FCJH_PunisherDiagMortar", "Min", -10)),
+                   f'{t}\t<Texture val="@UI/Storm_UI_MapMechanic_Shrines_PunisherArcane_Enemy"/>\n')
+    return box + mortar + arcane
+
+
 # What Blizzard draws after the backing drawn over blue's copy too (_OVER)
 PUNISHER_PARTS = ((("Image", "BackgroundImage", ()), ("Image", "HealthBarBG", ()), ("Frame", "ShrineHud", ()))
                   + tuple(("Image", icon[1:], (), _OVER) for icon in PUNISHER_ICONS)
@@ -2278,7 +2301,7 @@ MAPS = {
             "blue": [Alert("PunisherFrame", kind="INFERNAL", box=INFERNAL_BOX, spot_only=True,
                            note="the Punisher, when it's blue's")],
             "red": [Alert("ShrineWarningFrame", kind="INFERNAL", box=INFERNAL_BOX,
-                          followers=(("PunisherFrame", 0, unclipped(PUNISHER_PARTS) + PUNISHER_COPIES + punisher_side()),),
+                          followers=(("PunisherFrame", 0, unclipped(PUNISHER_PARTS) + PUNISHER_COPIES + _punisher_diag() + punisher_side()),),
                           extra=WARNING_BANNER,
                           note="the shrine's countdown (neutral), then the Punisher on red")]}}),
     "sky_temple": Map(
