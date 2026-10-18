@@ -436,6 +436,9 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
 
 **Open, in the user's order:**
 1. **The final pass** - item 14 below: the last forms, blue's unseen banners, the odd cases.
+   - **A centering pass on every minimap** (user, 2026-10-18: "100% convinced some are still
+     off center compared to our generated UI"): each map's minimap against the rows' gap and
+     the generated chrome, measured off a screenshot per map (docs/maps.md has each map's place).
 2. **The art pass** - items 7 and 12 below, and the visual pass: the chrome backplate look to
    the plates, XP/core bars (a mid-height bevel, like the player view's core bar; the default
    UI's core bars: `design/ref_default_core_hp.png`) and the info panes (zebra rows, Heroes
