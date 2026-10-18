@@ -347,7 +347,10 @@ colour_alpha = 1.0
 fade = [[0, 0.0], [0.15, 0.0], [0.35, 0.45], [0.55, 0.85], [1, 1.0]]
 stock = ["221930", "170f20"] # the dark the colour fades to (top, bottom)
 plate = ["3a3350", "15101f"] # the hexagon's plate (top, bottom)
-rim = ["f4f6fb", "aab3cc", "5b637f", "c9d0e2"]   # chrome, top to bottom (stops 0, .35, .6, 1)
+# chrome, top to bottom (stops 0, .35, .6, 1); the row frames' and the core bars' too
+# ([row_frame]). One flat silver, the bottom rows' (user, 2026-10-18: "Replace the top chrome
+# with bright"): the ramp it had (f4f6fb, aab3cc, 5b637f, c9d0e2) read as shadowed beside them.
+rim = ["dfe3ed", "dfe3ed", "dfe3ed", "dfe3ed"]
 rim_width = 2.5
 sheen = 0.16                 # white across the top half
 hex_px = 14                  # the lattice's hexagons, width on screen
@@ -391,8 +394,8 @@ frame_inside = 1             # of which over the bar's edges (the rest outside)
 
 # A chrome frame round each team's row (user, 2026-10-16): one line round the plates and the XP
 # bar together (the XP bar's top down to the plates' bottom, both slanted ends), not the core
-# bar, no lines between heroes. In the top backplate's rim colours, top to bottom ([top_backplate]
-# rim), anti-aliased the same way; its outside corners rounded. Rows of 1-4 heroes get their own
+# bar, no lines between heroes. In the top backplate's rim colours ([top_backplate] rim, one
+# flat silver), anti-aliased the same way; its outside corners rounded. Rows of 1-4 heroes get their own
 # (FCJH_RowPacker). The part outside the plates counts against [screen] padding, so the rows sit
 # that much higher and narrower; width = 0 takes the frame away and puts them back.
 [row_frame]
@@ -402,7 +405,6 @@ seam = 3                     # a line along each slant between two plates, centr
                              # plate and 1 between: it hides the slants' rough edges), px; 0 = none.
                              # The same line runs under the XP bar, centred on its gap to the plates,
                              # so the bar is fully enclosed (user, 2026-10-16)
-# its colours, top to bottom (stops 0, .35, .6, 1), the core bar's chrome's too. One flat
-# silver: the backplate's ramp ([top_backplate] rim) put its dark band - read as a shadow -
-# part way down every seam, nowhere good (user, 2026-10-17). Delete this line to try it again.
-rim = ["dfe3ed", "dfe3ed", "dfe3ed", "dfe3ed"]
+# its colours: [top_backplate] rim's, so top and bottom can't drift apart (a `rim` here would
+# be this frame's own). Flat since 2026-10-17: the backplate's old ramp put its dark band - read
+# as a shadow - part way down every seam; the top followed 2026-10-18.

@@ -38,7 +38,7 @@ The top bar and minimap always stay.
 tournament's name, division and logo, and the game's bans, on plates the interface draws.
 Nothing on the bottom UI. Its places are `kind = "obs"` rects in `layout.toml` (§6, docs/obs.md).
 
-**Status, 2026-10-16: Phase 2 (building the default view) is all but done** - every map passed, every hero seen; the final pass, the art pass and OBS are left (§7). Phases 0
+**Status, 2026-10-18: Phase 2 (building the default view) is all but done** - every map passed, every hero seen, the polish phase under way (§7 item 7); the final pass, the art pass and OBS are left (§7). Phases 0
 (toolchain) and 1 (probing the unknowns) are done. Built, and confirmed in game unless noted:
 
 - **Hero row** — Blizzard's *in-game* top-bar cells, slanted and interlocking, scaled to fit
@@ -485,10 +485,9 @@ from their plates (docs/blizzard-fixes.md).
 **The numbered items still open** (their numbers kept; the rest are in docs/history.md):
 
 7. **The art pass**, after the functionality: Ahli's Tracer ammo bar (20 segments) and round Pulse
-   Bomb meter (the meter on the plate built 2026-10-16, not seen yet); his hero plates' intro animation (a smooth slide and fade). And the death
-   timers' end (user, 2026-10-09): in a player's view, Blizzard's own death timer flashes as
-   it comes to an end - find how (the player HUD's layout: its animation or StateGroup on the
-   respawn countdown) and give our plates' death timers the same for the observer.
+   Bomb meter (the meter on the plate built 2026-10-16, not seen yet); his hero plates' intro animation (a smooth slide and fade). ~~And the death
+   timers' end~~ DONE (user, 2026-10-18): they flash as the player view's, on Blizzard's own
+   HeroRespawnAnim keys (`gen.style_flash`).
    And the plates' carried box (gen.py `carry_box`, user 2026-10-12): Blackheart's doubloons /
    the Spider Queen's gems in the fountain's slot one step up the slant, the count over the
    icon, hidden at 0, on CARRY_MAPS only. Working and its borders now continue the fountain's
@@ -532,6 +531,17 @@ from their plates (docs/blizzard-fixes.md).
    icon's shape over the heroic while charging (25% after dfb3ffd), off at full on the template's events
    (`FCJH_ChargeDim`, gen `PULSE_DIAL_DIM_ALPHA`). Not seen yet. Seen fine in 5c38a32: the heroic badges 6 in from the cell's end (gen
    `HEROIC_CLEAR`). The chrome's shadows are to be revisited later (user).
+   **The test build of 2026-10-18, not seen yet:**
+   - the quest icons, try 4 (docs/blizzard-fixes.md, "Quest tooltips blank until Tab"):
+     Blizzard's Tab panel type of our own again (`FCJH_QuestPanel`, FCJH_InfoPane), parked off
+     the screen; each row's `BaseQuestIcon0` anchored onto our row's quest cell
+     (`FCJH_QuestCell0-9`), the rows' talents view forced on the way Blizzard's
+     StatsForceVisible does it, the shared tooltip. Check: the icons draw, their tooltips fill
+     before Tab is ever opened, their counts move, no faded portraits anywhere;
+   - the top chrome bright (user: "Replace the top chrome with bright"): `[top_backplate] rim`
+     is the bottom's flat silver, and the row frame and core bars now take that one line;
+   - the plates' bars fill the plate's bottom (1df8a76): down to 59, health 11 tall, mana 10,
+     energy 6.
    **TEMPORARY:** Blizzard's kill feed is hidden for testing (FCJH_Hidden, `FCJH_KeepHidden`'s
    KillLogPanel controller; user, 2026-10-16). Take it out before release.
 
@@ -556,8 +566,9 @@ from their plates (docs/blizzard-fixes.md).
      The fit scale fell 1.5507 -> 1.5459 (the steeper top corners reach further out; cells
      95 -> 94 tall). The plates' click masks keep the old cut (hit areas only). The shadows:
      the chrome's dark band (the backplate rim ramp's `5b637f` stop) part way down each seam;
-     the row frame and core chrome are now one flat silver, `[row_frame] rim` (delete it to
-     get the ramp back). Seen 2026-10-18 (cffee7f): the portraits gone (blue) / half cut (red) -
+     the row frame and core chrome are now one flat silver, and since 2026-10-18 the top
+     backplate's too: one `[top_backplate] rim`, which the row frame takes (the old ramp is
+     in its comment). Seen 2026-10-18 (cffee7f): the portraits gone (blue) / half cut (red) -
      a shadowed variable in portrait_mask, fixed f35dae5. Also seen on a light map: Blizzard's
      health backing's nine-slice end poked a dark strip ~4 px out of the row frame on the end
      plates (always there, hidden on dark maps) - pulled 3 units in (f35dae5). The Mortar
@@ -575,8 +586,7 @@ from their plates (docs/blizzard-fixes.md).
      when Misha dies, only her part of the portrait darkens, and her death timer sits
      centred on it. Today Misha's bar is hidden and Rexxar's runs full height; the Vikings'
      bars and timers are in thirds. See item 15 too (Blizzard's three-slice Vikings plate);
-   - **Death timers flash white under 5 s**, like the player view's (the same as the
-     death-timer note above - find Blizzard's animation);
+   - ~~**Death timers flash white under 5 s**~~ DONE (user, 2026-10-18; above);
    - ~~**Ahli's death animation**~~ DONE (item 12);
    - **A frame round each team's row of plates**: silver-grey metallic like the top bar's
      edges, about 3 px, slanted where the plates slant, to cover the gaps and overflows

@@ -56,9 +56,10 @@ detail.
   - the word-only static banners hidden;
   - every banner given an intro.
 - Tomb's Webweavers on the summoning team's side.
-- The player top bar's death and respawn animations on the plates: the skull, the respawn
-  flash and glow (test build, not seen yet).
-- A chrome frame round each team's row (test build, not seen yet).
+- The player top bar's death and respawn animations on the plates: the skull, the death
+  timer's flash and the respawn glow, in plate-shaped art of our own (Blizzard's rings only
+  the portrait). Seen and approved 2026-10-18.
+- A chrome frame round each team's row (seen 2026-10-18), one flat silver with the top bar's.
 - Tracer's, Junkrat's and Gazlowe's resource bars on the plates cut into one segment per shot
   (or scrap), as in Blizzard's own player bars (`gen.RESOURCE_SEGMENTS`). Seen 2026-10-16:
   Tracer's 10, Junkrat's 4, Gazlowe's 10.
@@ -70,12 +71,13 @@ detail.
 - The talents pane has a default-quest column between the hero and the level-1 talent:
   Blizzard's own baseline-quest icon from the player's leader panel, which the observer talents
   pane doesn't show at all - Blizzard's default pane has no space for default quests (user,
-  2026-10-16) (FCJH_InfoPane: `FCJH_BaseQuestIcon` on each row, Blizzard's 68 whole since
-  2026-10-16 so its quest ring shows). Seen 2026-10-16: the right quest per hero,
+  2026-10-16) (FCJH_InfoPane: each row's quest cell, `FCJH_QuestCell`; the icon on it Blizzard's 68
+  whole so its quest ring shows - since try 4, 2026-10-18, a leader panel's own). Seen 2026-10-16: the right quest per hero,
   but too small, its tooltip empty and its count not updating. Quest talents in the numbered
   columns count and tooltip fine for an observer (user, 2026-10-16), so the data reaches us:
   it's Blizzard's baseline-quest icon (`UnitStatusBaselineQuestIcon`) that fills only its
-  picture in observer view. Another hook to find.
+  picture in observer view. Another hook to find (the quest tooltips entry: try 4 built
+  2026-10-18, not seen).
 
 **Can't be fixed from a layout** - the last section: Towers' cannon alerts, the death recap,
 the talent picker under Ctrl, the command card for a hero's other unit, plate clicks for
@@ -135,12 +137,22 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
   and our own tooltip are gone. Seen 2026-10-16: no quest icons drew at all, and the
   panel's hidden rows leaked faded hero portraits over the pane (user). Taken out; our own
   icons are back, whole, with Blizzard's shared tooltip.
-- **Status:** unsolved (2026-10-16). Three tries failed: a primer leader panel, the icons'
-  own tooltip, and a leader panel of our own over the pane.
+- **Status:** unsolved; try 4 built 2026-10-18, not seen. Three tries failed: a primer
+  leader panel, the icons' own tooltip, and a leader panel of our own over the pane.
 - **Seen 2026-10-16 (6804bbd, user):** after opening Tab and hovering its two quest icons, both
   of our pane's quest icons show the tooltip of whichever Tab icon was hovered last. So our
   icons only show the shared `HeroBaselineQuestTooltip`, and never fill it: only the Tab
   panel's own icons write into it, on hover.
+- **Try 4 (2026-10-18, not seen yet):** a leader panel's icons again, since only they write
+  into the shared tooltip, but with what likely kept try 3's from drawing fixed. The rows'
+  icons sit in their talents view (`TalentsContainerFrame`), the tab Blizzard's `TabControl`
+  hides while another is selected; try 3 held it on with a binding, which nothing re-reads
+  once the TabControl has hidden it. Now it's held on the way Blizzard's own stats panel holds
+  its view on (`StatsForceVisible`, statsoverviewpanel.stormlayout:160: shown again 0.1 s
+  after the row, or our pane, shows). The panel is parked off the screen, so nothing of it can
+  leak, and each `BaseQuestIcon0` is anchored back onto our row's quest cell by a handle
+  (`FCJH_QuestCell0-9`), with Blizzard's shared tooltip. A risk: the engine may not draw or
+  update a panel off the screen, icons and all - if they don't show, that's the next test.
 
 ### Hogger's rage drawn as mana
 - **Blizzard's:** the target panel's per-hero resource colours (`HeroResourceStates`,
@@ -369,18 +381,23 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
     to park off screen. All four confirmed in game (user, 2026-10-16) - DONE.
 
 - **The player's death and respawn animations, on the observer plates** (test build ad48279,
-  2026-10-16; not seen yet). The player's top bar (`partyframe.stormlayout`,
+  2026-10-16; approved 2026-10-18). The player's top bar (`partyframe.stormlayout`,
   `HeroDeathAnimFrameTemplate`) plays a skull when a hero dies. In the last 5 s of the timer it
   flashes the number white and pulses a glow over the plate. The observer cells have none of it. Ours:
   - Blizzard's skull art and timings, with Ahli's handover: the number fades in about 1 s after
     the skull (`gen.death_skull`);
   - Blizzard's flash keys between the red and pale timer styles, plus the glow pulse, on the
     respawn events (`gen.style_flash`, `pet_death_bindings`). The Vikings' own timers flash too.
-  Which cell the game sends the respawn events to is still being tested (the event squares).
-- **A chrome frame round each team's row** (test build ad48279, 2026-10-16; not seen yet).
+  - Blizzard's red death overlay and bursts ring only the portrait, at their own slant, so on
+    our plates they're plate-shaped rings of our own (`gen.plate_ring`), with Blizzard's zooms
+    and fades; the red border held 1 s past Blizzard's (user, 2026-10-18).
+  - **Status:** the death animation approved (user, 2026-10-18: "Seems brilliant"), the death
+    timers' flash confirmed (user, 2026-10-18) - DONE.
+- **A chrome frame round each team's row** (test build ad48279, 2026-10-16; seen 2026-10-18).
   Blizzard's player view has a flat tray behind each row (`HUD_TopBar_Team_Backing_*`); the
   observer view has nothing. Ours is one anti-aliased line round the plates and the XP bar, in
-  the top backplate's rim colours, cut for rows of 1-5 (`gen.row_frame_texture`, `[row_frame]`).
+  the top backplate's rim colour (one flat silver for both since 2026-10-18: the top's old
+  ramp read as shadowed beside it), cut for rows of 1-5 (`gen.row_frame_texture`, `[row_frame]`).
 
 ## Known, not fixed
 
