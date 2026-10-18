@@ -478,9 +478,12 @@ class HeroCell:
     # (user, 2026-10-17). It turns on the health bar's middle (health 38..46), so the art there
     # keeps its place; the pitch (W - OVERLAP) stays, so the plates still tile.
     LEAN, LEAN_PIVOT = 0.54, 42
-    # (left, top, right, bottom)
+    # (left, top, right, bottom). The health backing's slanted end (Blizzard's nine-slice art)
+    # lies ~3 units past the plate's edge: under the next plate between heroes, but on the
+    # row's end plates a dark strip poked ~4 px out of the row frame (user, 2026-10-18). Its
+    # end comes 3 in (Blizzard's 126 -> 123, red's 2 -> 5).
     BLUE = {
-        "health_backing": (21, 36, 126, 53),    # status frame 105 wide, 2 in from the right
+        "health_backing": (21, 36, 123, 53),    # status frame 105 wide, 2 in from the right
         "health": (24, 38, 121, 46),            # 97 x 8, backing +2 down, 5 in from its right
         "mana_backing": (26, 46, 127, 53),      # backing's left +5 .. right +1, bottom-aligned;
                                                 # Blizzard leaves its height to the art: 7 is ours
@@ -490,7 +493,7 @@ class HeroCell:
         "health_full": (22, 38, 125, 52),
     }
     RED = {
-        "health_backing": (2, 36, 107, 53),
+        "health_backing": (5, 36, 107, 53),
         "health": (8, 38, 105, 46),             # 2 in from the backing's right
         "mana_backing": (2, 46, 102, 53),       # backing's left .. right -5
         "energy": (4, 48, 99, 52),              # 4 left of the health bar
@@ -858,10 +861,10 @@ def portrait_mask(team, size, sub=4):
     # (1 unit early, so the mask's soft edge lands under the backing, not a hairline below it)
     cut = c.BLUE["health_backing"][3] - 1
 
-    x0 = c.LEAN_PIVOT * (c.OVERLAP / c.H - c.LEAN)
+    edge_top = c.LEAN_PIVOT * (c.OVERLAP / c.H - c.LEAN)   # blue's left edge at y 0 (HeroCell.edge)
 
     def left_edge(y):
-        x = x0 + c.LEAN * y
+        x = edge_top + c.LEAN * y
         return x if team == "blue" else c.OVERLAP - x
 
     rows = []

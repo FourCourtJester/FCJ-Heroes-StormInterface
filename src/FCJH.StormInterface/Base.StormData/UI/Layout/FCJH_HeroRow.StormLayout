@@ -328,7 +328,7 @@
 			<Height val="0"/>
 			<TextureCoords top="0.1" left="0.543" bottom="0.65" right="1.0"/>
 			<ImageMaskTexture val="_Assets\Textures\FCJH_White.dds"/>
-			<AlphaMaskTexture val="_Assets\Textures\FCJH_Portrait_blue_c23bd0b9.dds"/>
+			<AlphaMaskTexture val="_Assets\Textures\FCJH_Portrait_blue_758f4415.dds"/>
 			<RenderPriority val="500"/>
 		</Frame>
 		<!-- The same portrait mirrored, shown over it while Abathur has a clone
@@ -343,7 +343,7 @@
 			<Texture val="{$parent/HeroPortraitImage/@Texture}"/>
 			<TextureCoords top="0.1" left="1.0" bottom="0.65" right="0.543"/>
 			<ImageMaskTexture val="_Assets\Textures\FCJH_White.dds"/>
-			<AlphaMaskTexture val="_Assets\Textures\FCJH_Portrait_blue_c23bd0b9.dds"/>
+			<AlphaMaskTexture val="_Assets\Textures\FCJH_Portrait_blue_758f4415.dds"/>
 			<Alpha val="0"/>
 			<RenderPriority val="501"/>
 			<AcceptsMouse val="false"/>
@@ -470,7 +470,7 @@
 			<Frame type="Image" name="FCJH_HealthBacking">
 				<Anchor side="Left" relative="$parent/$parent" pos="Min" offset="32"/>
 				<Anchor side="Top" relative="$parent/$parent" pos="Min" offset="56"/>
-				<Anchor side="Right" relative="$parent/$parent" pos="Min" offset="195"/>
+				<Anchor side="Right" relative="$parent/$parent" pos="Min" offset="190"/>
 				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="82"/>
 				<Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFrame"/>
 				<TextureType val="Nineslice"/>
@@ -1146,7 +1146,7 @@
 			<Height val="0"/>
 			<TextureCoords top="0.1" left="0.543" bottom="0.65" right="1.0"/>
 			<ImageMaskTexture val="_Assets\Textures\FCJH_White.dds"/>
-			<AlphaMaskTexture val="_Assets\Textures\FCJH_Portrait_red_f3e53163.dds"/>
+			<AlphaMaskTexture val="_Assets\Textures\FCJH_Portrait_red_2c38e927.dds"/>
 			<RenderPriority val="500"/>
 		</Frame>
 		<!-- The same portrait mirrored, shown over it while Abathur has a clone
@@ -1161,7 +1161,7 @@
 			<Texture val="{$parent/HeroPortraitImage/@Texture}"/>
 			<TextureCoords top="0.1" left="1.0" bottom="0.65" right="0.543"/>
 			<ImageMaskTexture val="_Assets\Textures\FCJH_White.dds"/>
-			<AlphaMaskTexture val="_Assets\Textures\FCJH_Portrait_red_f3e53163.dds"/>
+			<AlphaMaskTexture val="_Assets\Textures\FCJH_Portrait_red_2c38e927.dds"/>
 			<Alpha val="0"/>
 			<RenderPriority val="501"/>
 			<AcceptsMouse val="false"/>
@@ -1287,7 +1287,7 @@
 				</Frame>
 			</Frame>
 			<Frame type="Image" name="FCJH_HealthBacking">
-				<Anchor side="Left" relative="$parent/$parent" pos="Min" offset="3"/>
+				<Anchor side="Left" relative="$parent/$parent" pos="Min" offset="8"/>
 				<Anchor side="Top" relative="$parent/$parent" pos="Min" offset="56"/>
 				<Anchor side="Right" relative="$parent/$parent" pos="Min" offset="165"/>
 				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="82"/>
