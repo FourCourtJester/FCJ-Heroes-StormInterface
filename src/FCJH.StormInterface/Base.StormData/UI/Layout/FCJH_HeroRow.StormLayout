@@ -228,12 +228,13 @@
 					<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
 				</Controller>
 			</Animation>
+			<!-- FCJH_SkullOverlay (plate_ring): ours, on the whole plate -->
 			<Frame type="Image" name="FCJH_SkullOverlay">
-				<Anchor side="Top"    relative="$parent" pos="Min" offset="14"/>
-				<Anchor side="Left"   relative="$parent" pos="Min" offset="12"/>
-				<Anchor side="Bottom" relative="$parent" pos="Max" offset="-14"/>
-				<Anchor side="Right"  relative="$parent" pos="Max" offset="-12"/>
-				<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathOverlay"/>
+				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="0"/>
+				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent/$parent" pos="Max" offset="0"/>
+				<Anchor side="Right"  relative="$parent/$parent" pos="Max" offset="0"/>
+				<Texture val="_Assets\Textures\FCJH_DeathRing_1753dace.dds"/>
 				<Alpha val="0"/>
 				<RenderPriority val="515"/>
 				<Unclipped val="true"/>
@@ -274,13 +275,13 @@
 				<Unclipped val="true"/>
 				<AcceptsMouse val="false"/>
 			</Frame>
-			<!-- the respawn glow (respawn_glow): ours, on the whole plate -->
+			<!-- FCJH_RespawnGlow (plate_ring): ours, on the whole plate -->
 			<Frame type="Image" name="FCJH_RespawnGlow">
 				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="0"/>
 				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="0"/>
 				<Anchor side="Bottom" relative="$parent/$parent" pos="Max" offset="0"/>
 				<Anchor side="Right"  relative="$parent/$parent" pos="Max" offset="0"/>
-				<Texture val="_Assets\Textures\FCJH_RespawnGlow_9ed6916f.dds"/>
+				<Texture val="_Assets\Textures\FCJH_RespawnGlow_4f592f9f.dds"/>
 				<Alpha val="0"/>
 				<RenderPriority val="590"/>
 				<Unclipped val="true"/>

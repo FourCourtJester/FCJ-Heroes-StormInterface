@@ -886,26 +886,36 @@ def portrait_mask(team, size, sub=4):
     return dds_bgra(w, h, b"".join(rows))
 
 
-# The respawn glow (2026-10-18): ours, after Blizzard's (HUD_TopBar_Team_HeroFrame_RespawnFrame),
-# whose ring is drawn for their own cell's portrait at its own slant: on our plates it ringed
-# only the portrait, ~0.65 to our 0.54 (user: "does not even come close to our nameplate
-# size"; "take inspiration from it to make our own"). A ring on the plate's own outline - the
-# row frame's and the seams' lines, HeroCell.edge - over the whole cell, bars and all: a hot
-# pale core just inside the frame's line, fading to Blizzard's orange inwards (their colours,
-# off 12_18_23), nothing outside the plate. Blue's; red's is it mirrored (SKULL_FLIPPED).
-RESPAWN_GLOW = {"core": "ffd6aa", "halo": "ff8c28",
-                "at": 2.0,          # the core's middle, units in from the plate's edge (the frame's
-                                    # line covers ~1.1 of them)
-                "core_w": 0.9,      # its half-width (a Gaussian's), units
-                "halo_a": 0.55,     # the halo's strength at the core, of full
-                "halo_in": 4.5}     # ...and how far in it fades by 1/e, units
+# The plate rings (2026-10-18): ours, after Blizzard's death overlay and respawn glow
+# (HUD_TopBar_Team_HeroFrame_DeathOverlay / _RespawnFrame), whose rings are drawn for their own
+# cell's portrait at its own slant: on our plates they ringed only the portrait, ~0.65 to our
+# 0.54 (user: "does not even come close to our nameplate size"; "take inspiration from it to
+# make our own"; the overlay "not sized right at all", 13_04_58). A ring on the plate's own
+# outline - the row frame's and the seams' lines, HeroCell.edge - over the whole cell, bars and
+# all: a core just inside the frame's line, fading inwards, nothing outside the plate.
+# Blue's; red's is it mirrored (SKULL_FLIPPED).
+PLATE_RINGS = {
+    # the respawn glow: a hot pale core, Blizzard's orange inwards (their colours, off 12_18_23)
+    "RespawnGlow": {"core": "ffd6aa", "halo": "ff8c28",
+                    "at": 2.0,          # the core's middle, units in from the plate's edge (the
+                                        # frame's line covers ~1.1 of them)
+                    "core_w": 0.9,      # its half-width (a Gaussian's), units
+                    "halo_a": 0.55,     # the halo's strength at the core, of full
+                    "halo_in": 4.5},    # ...and how far in it fades by 1/e, units
+    # the death overlay: Blizzard's deep red, its wash further in (off 13_04_58)
+    "DeathRing": {"core": "e8302a", "halo": "a00c0c", "at": 2.0, "core_w": 0.9,
+                  "halo_a": 0.7, "halo_in": 8.0},
+}
+# The top edge's ring this much higher, units: the core sat 1 px further from the row's top line
+# than from its bottom one, the sides hugging (13_05_12; ~1.39 px a unit)
+PLATE_RING_TOP = 0.7
 
 
 @functools.cache
-def respawn_glow(size=(512, 256)):
+def plate_ring(kind, size=(512, 256)):
     import math
     w, h = size
-    c, g = HeroCell, RESPAWN_GLOW
+    c, g = HeroCell, PLATE_RINGS[kind]
     edge_top = c.LEAN_PIVOT * (c.OVERLAP / c.H - c.LEAN)   # blue's left edge at y 0 (HeroCell.edge)
     norm = math.hypot(1, c.LEAN)                           # across the slant, per unit along x
     core, halo = (bytes.fromhex(g[k]) for k in ("core", "halo"))
@@ -917,7 +927,7 @@ def respawn_glow(size=(512, 256)):
         row = bytearray()
         for tx in range(w):
             x = (tx + 0.5) / w * c.W
-            d = min(y, c.H - y, (x - left) / norm, (right - x) / norm)   # in from the plate's edge
+            d = min(y + PLATE_RING_TOP, c.H - y, (x - left) / norm, (right - x) / norm)   # in from the plate's edge
             off = d - g["at"]
             a_core = math.exp(-(off / g["core_w"]) ** 2)
             a_halo = g["halo_a"] * (math.exp(-off / g["halo_in"]) if off > 0 else math.exp(-(off / 1.4) ** 2))
@@ -929,9 +939,9 @@ def respawn_glow(size=(512, 256)):
     return dds_bgra(w, h, b"".join(rows))
 
 
-def respawn_glow_file():
+def plate_ring_file(kind):
     # named by its content, as the portrait masks (textures outlive a replay reload)
-    return f"FCJH_RespawnGlow_{hashlib.sha1(respawn_glow()).hexdigest()[:8]}.dds"
+    return f"FCJH_{kind}_{hashlib.sha1(plate_ring(kind)).hexdigest()[:8]}.dds"
 
 
 def slant_texture(team, cut, colour, alpha=255, size=(512, 32), sub=4):
@@ -1327,7 +1337,8 @@ def texture_files(cfg):
     out = {TEXTURE_REL / portrait_mask_file(team, size): portrait_mask(team, size) for team in ("blue", "red")}
     # an opaque mask: replaces a Blizzard mask we don't want (there's no "none")
     out[TEXTURE_REL / "FCJH_White.dds"] = dds_bgra(4, 4, b"\xff" * 64)
-    out[TEXTURE_REL / respawn_glow_file()] = respawn_glow()
+    for kind in PLATE_RINGS:
+        out[TEXTURE_REL / plate_ring_file(kind)] = plate_ring(kind)
     out[TEXTURE_REL / HEAL_BORDER] = square_border(cfg["heal_popup"]["colour"])
     for file, data in slant_bars(cfg).values():
         out[TEXTURE_REL / file] = data
@@ -1504,13 +1515,15 @@ def death_skull(team, c):
             anim += (f'\n{t}\t<Controller type="Anchor" end="Pause" side="{side}" frame="{name}" relative="true">'
                      + "".join(f'\n{t}\t\t<Key type="Curve" time="{key[0]}" value="{sign * s(key[pick]) or 0}" inout="{key[3]}"/>'
                                for key in keys) + f'\n{t}\t</Controller>')
-    inset = lambda name, tex, prio, more=0: f"""
+    # ours (plate_ring), on the whole plate: the cell
+    ring = lambda name, kind, prio: f"""
+			<!-- {name} (plate_ring): ours, on the whole plate -->
 			<Frame type="Image" name="{name}">
-				<Anchor side="Top"    relative="$parent" pos="Min" offset="{s(9 + more)}"/>
-				<Anchor side="Left"   relative="$parent" pos="Min" offset="{s(8 + more)}"/>
-				<Anchor side="Bottom" relative="$parent" pos="Max" offset="-{s(9 + more)}"/>
-				<Anchor side="Right"  relative="$parent" pos="Max" offset="-{s(8 + more)}"/>
-				<Texture val="@UI/{tex}"/>
+				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="0"/>
+				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent/$parent" pos="Max" offset="0"/>
+				<Anchor side="Right"  relative="$parent/$parent" pos="Max" offset="0"/>
+				<Texture val="{TEXTURE_DIR}\\{plate_ring_file(kind)}"/>
 				<Alpha val="0"/>
 				<RenderPriority val="{prio}"/>
 				<Unclipped val="true"/>
@@ -1542,7 +1555,7 @@ def death_skull(team, c):
 			<Animation name="FCJH_SkullAnim">
 				<Event event="OnShown" action="Reset,Play" frame="$parent/HeroDeathTimeLabel"/>
 				<Event event="OnHidden" action="Reset,Stop" frame="$parent/HeroDeathTimeLabel"/>{anim}
-			</Animation>{inset("FCJH_SkullOverlay", "HUD_TopBar_Team_HeroFrame_DeathOverlay", 515)}{full("FCJH_SkullBurst")}{full("FCJH_SkullBurst2")}
+			</Animation>{ring("FCJH_SkullOverlay", "DeathRing", 515)}{full("FCJH_SkullBurst")}{full("FCJH_SkullBurst2")}
 			<Frame type="Image" name="FCJH_SkullIcon">
 				<Anchor side="Top"    relative="$parent" pos="Mid" offset="-{s(5)}"/>
 				<Anchor side="Left"   relative="$parent" pos="Mid" offset="0"/>
@@ -1555,19 +1568,7 @@ def death_skull(team, c):
 				<RenderPriority val="517"/>
 				<Unclipped val="true"/>
 				<AcceptsMouse val="false"/>
-			</Frame>
-			<!-- the respawn glow (respawn_glow): ours, on the whole plate -->
-			<Frame type="Image" name="FCJH_RespawnGlow">
-				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="0"/>
-				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="0"/>
-				<Anchor side="Bottom" relative="$parent/$parent" pos="Max" offset="0"/>
-				<Anchor side="Right"  relative="$parent/$parent" pos="Max" offset="0"/>
-				<Texture val="{TEXTURE_DIR}\\{respawn_glow_file()}"/>
-				<Alpha val="0"/>
-				<RenderPriority val="590"/>
-				<Unclipped val="true"/>
-				<AcceptsMouse val="false"/>
-			</Frame>
+			</Frame>{ring("FCJH_RespawnGlow", "RespawnGlow", 590)}
 		</Frame>"""
 
 
