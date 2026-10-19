@@ -564,3 +564,10 @@ out, red's raven and count on blue's mirror (maps.tribute_extra). Plates equidis
 Webweavers on the plates' slant (0.54; they leaned 0.67). The carry box (Bay, Tomb) runs on
 from the fountain's sides again: 15 units out over its step (CARRY_LEAN), as approved - the
 0.54 plates (cffee7f) had put it a unit further, "no longer a smooth angle" (user).
+
+Confirm pass 2 (16_05_56 .. 16_10_04): Cursed Hollow's lines were Blizzard's the other way round
+(faded ends inner: a 50 px gap about ~950) - flipped as every other map's and 10 units right,
+the ravens mirrored (blue 3 in, red 2 out). Garden's panel off our midpoint (lines met ~947.5):
+the lines 13 right, blue's markers held, red's plants 17 / count 20 out to blue's mirror. Bay's
+coin numbers sat on the coin's bottom edge: 13 up. Tomb's red gem ~9 px in of blue's mirror
+(Blizzard's art, its anchors mirrored): gem 10, count 11, number 6 out. Tomb's Webweavers good.

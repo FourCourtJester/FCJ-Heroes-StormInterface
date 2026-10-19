@@ -2180,7 +2180,8 @@ MAPS = {
             "red": [Alert("ChestSpawnFrame", kind="CHEST", box=CHEST_BOX,
                           followers=(("CannonModeFrame", 0, unclipped(CANNON_PARTS) + CANNON_COPIES + cannon_side()),),
                           extra=unclipped(CHEST_PARTS),
-                          note="the chests spawning (neutral), then Blackheart's cannon on red")]}}),
+                          note="the chests spawning (neutral), then Blackheart's cannon on red")]}},
+        extra="doubloons"),
     "braxis_holdout": Map(
         "Braxis Holdout", (447, 264), file="HoldOut", minimap=(-35, 0),
         # its core swirls' outer outline at 770 / 1138, centre 954, against our midpoint 959
@@ -2246,7 +2247,8 @@ MAPS = {
                            note="the Terrors' health, when they're blue's (terror_side)")],
             "red": [Alert("EventWarningFrame", kind="SEED", box=SEED_BOX, spot_only=True,
                           note="the seed banners' spot (neutral): EventWarningFrame (and "
-                               "GatherTheSeedsFrame, hidden) hang off it; red's Terrors too")]}}),
+                               "GatherTheSeedsFrame, hidden) hang off it; red's Terrors too")]}},
+        extra="seeds"),
     "hanamura_temple": Map(
         "Hanamura Temple", (473, 287), file="HanamuraRework", minimap=(80, 0),
         # three screen-sized panels, their parts placed from the screen's right edge
@@ -2406,8 +2408,16 @@ MAPS = {
 # raven 1091-1147 (confirm pass, 2026-10-19, 15_28_26, less the 11 px it hadn't moved).
 # Both counts 4.5 px further out than blue's was, red's raven and count on blue's mirror about
 # our midpoint: red's count clears the corner by ~2 px, each count ~14 px from its raven.
+# Then (16_05_56) the ravens' skulls at 790 / 1124 against the mirror 1128: blue's 3 units in,
+# red's 2 out. And the lines: Blizzard draws Cursed Hollow's the other way round from every other
+# map's (blue's texture flipped, red's not), so each line's faded end is the inner one - blue's
+# ended at 925, red's began at 975, a 50 px gap about ~950. Flipped as the rest (Garden's, Bay's,
+# Tomb's: the full ends meet, each line ~134 px), and both 10 units right to meet at ~959; the
+# ravens and counts, which hang off them, 10 back.
 TRIBUTE_COUNT_OUT = 5                 # units, both counts outward
-TRIBUTE_RED = (9, 25)                 # units more outward, red's raven and red's count, to blue's mirror
+TRIBUTE_RED = (11, 25)                # units more outward, red's raven and red's count, to blue's mirror
+TRIBUTE_BLUE_RAVEN_IN = 3             # units, blue's raven inward
+TRIBUTE_LINES = 10                    # units, both lines right
 
 
 def tribute_extra():
@@ -2415,18 +2425,75 @@ def tribute_extra():
     frame = lambda name_, kind, sd, pos, off: (
         f'{t}\t<Frame type="{kind}" name="{name_}"><Anchor side="{sd}" relative="$parent/Background" '
         f'pos="{pos}" offset="{off}"/></Frame>\n')
+    line = lambda sd, pos, off, left, right: (
+        f'{t}\t<Frame type="Image" name="Background"><Anchor side="{sd}" relative="$parent" pos="{pos}" '
+        f'offset="{off}"/><TextureCoords top="0.0" left="{left}" bottom="1.0" right="{right}"/></Frame>\n')
     raven, count = TRIBUTE_RED
-    return (f'{t}<!-- the tribute counts, mirrored about our midpoint and clear of the map (maps.tribute_extra) -->\n'
+    k = TRIBUTE_LINES
+    return (f'{t}<!-- the tribute counts, mirrored about our midpoint and clear of the map; their lines\n'
+            f'{t}     the way round every other map\'s, meeting at our midpoint (maps.tribute_extra) -->\n'
             f'{t}<Frame type="Frame" name="Team1TributeFrame">\n'
-            + frame("TributeCounter", "Label", "Left", "Min", 100 - TRIBUTE_COUNT_OUT) +
+            + line("Right", "Max", 10 + k, "0.0", "1.0")
+            + frame("RavenIcon", "Image", "Left", "Min", -20 + TRIBUTE_BLUE_RAVEN_IN - k)
+            + frame("TributeCounter", "Label", "Left", "Min", 100 - TRIBUTE_COUNT_OUT - k) +
             f'{t}</Frame>\n'
             f'{t}<Frame type="Frame" name="Team2TributeFrame">\n'
-            + frame("RavenIcon", "Image", "Right", "Max", 20 + raven)
-            + frame("TributeCounter", "Label", "Right", "Max", -100 + TRIBUTE_COUNT_OUT + count) +
+            + line("Left", "Min", k, "1.0", "0.0")
+            + frame("RavenIcon", "Image", "Right", "Max", 20 + raven - k)
+            + frame("TributeCounter", "Label", "Right", "Max", -100 + TRIBUTE_COUNT_OUT + count - k) +
             f'{t}</Frame>\n')
 
 
-EXTRAS = {"towers": towers_extra, "skulls": skulls_extra, "tribute": tribute_extra}
+# Garden of Terror's seed counts (GardenOfTerrorPanel/SeedsFrame). Its panel isn't on our
+# midpoint: the lines met at ~947.5 (16_08_00), so both 13 units right to ~959, blue's plants,
+# count and words 13 back (blue's were fine against the plates). Red's against blue's mirror
+# were ~28 px in (plants, eyes 788 / 1103) and ~30 (counts, 818-868 / 1020-1070): less the lines'
+# 11.7 px, its plants 17 units out, its count, words and countdown 20.
+SEED_LINES = 13                       # units, both lines right
+SEED_RED = (17, 20)                   # units outward, red's plants and red's count
+
+
+def seeds_extra():
+    t = T * 6
+    k, (plant, count) = SEED_LINES, SEED_RED
+    frame = lambda name_, kind, sd, rel, pos, off: (
+        f'{t}\t<Frame type="{kind}" name="{name_}"><Anchor side="{sd}" relative="{rel}" pos="{pos}" '
+        f'offset="{off}"/></Frame>\n')
+    b1, b2 = "$parent/Team1Background", "$parent/Team2Background"
+    return (f'{t}<!-- the seed counts\' lines meeting at our midpoint, red\'s on blue\'s mirror (maps.seeds_extra) -->\n'
+            f'{t}<Frame type="Frame" name="SeedsFrame">\n'
+            + frame("Team1Background", "Image", "Right", "$parent", "Mid", 1 + k)
+            + frame("Team2Background", "Image", "Left", "$parent", "Mid", -1 + k)
+            + frame("Team1SeedBlue", "Image", "Left", b1, "Min", -5 - k)
+            + frame("Team1SeedRed", "Image", "Left", b1, "Min", -5 - k)
+            + frame("Team1SeedCounter", "Label", "Left", b1, "Min", 87 - k)
+            + frame("Team1StatusLabel", "Label", "Left", b1, "Min", 80 - k)
+            + frame("Team1CountdownLabel", "Label", "Left", b1, "Min", 25 - k)
+            + frame("Team2SeedRed", "Image", "Right", b2, "Max", 5 + plant)
+            + frame("Team2SeedBlue", "Image", "Right", b2, "Max", 5 + plant)
+            + frame("Team2SeedCounter", "Label", "Right", b2, "Max", -87 + count)
+            + frame("Team2StatusLabel", "Label", "Right", b2, "Max", -80 + count)
+            + frame("Team2CountdownLabel", "Label", "Right", b2, "Max", -25 + count) +
+            f'{t}</Frame>\n')
+
+
+# Blackheart's Bay's coins' numbers (DoubloonModeFrame Team1/Team2CountValue, the doubloons a
+# team holds): Blizzard's sit on the coin's bottom edge, 1058-1073 against the coin's face
+# ~1022-1069 (16_09_15) - "needs to move up off the floor and more into the coin" (user).
+# 13 units up: ~1046-1061.
+COIN_NUMBER_UP = 13
+
+
+def doubloons_extra():
+    t = T * 6
+    frame = lambda n: (f'{t}\t<Frame type="Label" name="Team{n}CountValue"><Anchor side="Bottom" '
+                       f'relative="$parent/Team{n}DoubloonIcon" pos="Max" offset="{-COIN_NUMBER_UP}"/></Frame>\n')
+    return (f'{t}<!-- the coins\' numbers up into the coins (maps.doubloons_extra) -->\n'
+            f'{t}<Frame type="Frame" name="DoubloonModeFrame">\n' + frame(1) + frame(2) + f'{t}</Frame>\n')
+
+
+EXTRAS = {"towers": towers_extra, "skulls": skulls_extra, "tribute": tribute_extra,
+          "seeds": seeds_extra, "doubloons": doubloons_extra}
 
 # Blizzard's map id per map: the script variable libCore_gv_mAPMapStringID, which a layout can
 # read from the match's start, on any map (id_placers, on_map; user, 2026-10-09). Where each is
@@ -2649,6 +2716,17 @@ def weaver_parts():
 
 
 PARTS["tomb_of_the_spider_queen"] = weaver_parts()
+
+# Tomb's gem counts (CryptPanel Team1/Team2SoulFrame). Blizzard's are mirrored about the panel's
+# middle, which is on ours (the lines meet at ~958), but red's drawn ~9 px in of blue's mirror
+# (16_10_04: gems 754-801 / ~1107-1156, counts 814-878 / 1030-1094; the gems' numbers centred
+# 775.5 / 1137) - "red marker isnt uniform against the nameplates like blue" (user). Red's gem 10
+# units out, its count 11, its number 6.
+GEM_RED = (10, 11, 6)
+PARTS["tomb_of_the_spider_queen"].update({
+    f"CryptPanel/Team2SoulFrame/{name}": f'<Anchor side="Right" relative="$parent/Background" pos="Max" offset="{off}"/>\n'
+    for name, off in (("SoulIconFrameTeam2:Image", 20 + GEM_RED[0]), ("SoulIconTeam2:Image", 20 + GEM_RED[0]),
+                      ("SoulCounter:Label", -70 + GEM_RED[1]), ("TeamSoulCounter:Label", GEM_RED[2]))})
 
 
 # Warhead Junction's nuke counters (Team1TerrazineFrame blue, Team2 red: each team's nukes
@@ -2873,7 +2951,7 @@ def map_file(key, at, down, bottoms, lifts):
         for team in ("blue", "red"):
             for i in range(len(cols.get(team, []))):
                 node.body += alert_frame(team, cols[team], i, at)
-    if m.extra:
+    if m.extra and not m.core:        # an older map's is in its core panel (core_panels)
         root.at(m.place[0]).body += EXTRAS[m.extra]()
     return "".join(c.xml(1, file=m.file) for c in root.children.values())
 

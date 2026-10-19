@@ -474,6 +474,11 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
      placed by its id (its `across` never applied) and its tribute counts mirrored, clear of
      the map; Sky Temple 7 px up to the floor; Tomb's Webweavers on the plates' slant; the
      carry box back on the fountain's slant. Volskaya's gap: rim or dark band? (user's call).
+   - **Confirm pass 2 (2026-10-19, 16_05_56 .. 16_10_04, built, not seen yet)** - docs/maps.md, end:
+     Cursed Hollow's ravens mirrored and its lines flipped the way round every other map's,
+     meeting at ~959 (tribute_extra); Garden's lines to ~959, red's plants and count on blue's
+     mirror (seeds_extra); Bay's coin numbers 13 up into the coins (doubloons_extra); Tomb's red
+     gem, count and number on blue's mirror (GEM_RED). Tomb's Webweavers approved.
    - **The blue/red lines under the mechanics' counts** (user, 2026-10-19): out to their
      farthest, the plates' inner ends (~752 / ~1168), "so we have most flexibility for the
      containers". Each map's panel sets its own (Blizzard's TeamHighlight-style backgrounds,
