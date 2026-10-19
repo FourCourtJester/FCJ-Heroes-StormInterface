@@ -409,7 +409,9 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    (red's centres 1109 / 1149 / 1189, blue's 805 / 765 / 725). Their health image must stay
    clipped: the script drains it by shrinking its frame (Unclipped there kept it full; fixed in
    6c52e5e, drain seen). Clicking them can't pan the camera (no click events in the script, no
-   unit behind them; the user let it go).
+   unit behind them; the user let it go). The Webweavers' banner ("Red Webweavers summoned",
+   words only) hidden (user, 2026-10-19: "it's obvious that they're summoned"): `SoulEaterFrame`
+   alpha 0 (PARTS), its place at THE GAP kept.
    **Warhead Junction (done, user 2026-10-15: "I think that's all for this map"):** id
    `Warhead Junction` (with the space) read in game. Drawn centred (no `across`); its outline's
    tip, its lowest part, 1043 -> the floor: [minimap.nudge] 22, seen at 1065 (1b0dea6). The nuke

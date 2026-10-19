@@ -488,7 +488,21 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
      squeezed into half the height, so both halves ended in the art's end cap at the middle,
      stacked "doubly as bright" (user). Now each half is a whole side clipped at the middle
      (inspect_card.py tab_border, `UpperHalf` / `LowerHalf`). Check: no bright patch midway
-     down the sides, the corners as before.
+     down the sides, the corners as before. (User, 2026-10-19: the patch is still on the build
+     they last saw; this one gets checked tonight with the map passes.)
+   - **The user's answers (2026-10-19, evening):**
+     - the top bar shrink (1284a7a): DONE, on trust ("as long as everything fits");
+     - on fire: DONE - red seen, blue and colourblind run the same code; revisit on feedback;
+     - Tracer's Pulse Bomb meter and 20-segment ammo bar: seen, fine;
+     - the carried box's coin: fine as it is; revisit only if people complain;
+     - our own on-fire marker: dropped (Blizzard's flames are cutscene models, not art we can
+       redraw);
+     - the chrome backplate look on the plates: yes, for the art pass;
+     - the plates' intro slide and fade: still to do (it doesn't exist yet);
+     - word-only map banners: gone for good (item 16, closed). Tomb's "Red/Blue Webweavers
+       summoned" hidden too (maps.py, `SoulEaterFrame` alpha 0; built, not seen yet);
+     - OBS: 3 pips a side, one hexagon in full and empty; the tournament name in a secondary
+       tab, division beside it; the ban tiles get their own pass (docs/obs-topbar-handoff.md).
 2. **The art pass** - items 7 and 12 below, and the visual pass: the chrome backplate look to
    the plates, XP/core bars (a mid-height bevel, like the player view's core bar; the default
    UI's core bars: `design/ref_default_core_hp.png`) and the info panes (zebra rows, Heroes
@@ -534,15 +548,16 @@ from their plates (docs/blizzard-fixes.md).
 
 **The numbered items still open** (their numbers kept; the rest are in docs/history.md):
 
-7. **The art pass**, after the functionality: Ahli's Tracer ammo bar (20 segments) and round Pulse
-   Bomb meter (the meter on the plate built 2026-10-16, not seen yet); his hero plates' intro animation (a smooth slide and fade). ~~And the death
+7. **The art pass**, after the functionality: ~~Ahli's Tracer ammo bar (20 segments) and round
+   Pulse Bomb meter~~ seen, fine (user, 2026-10-19); his hero plates' intro animation (a smooth
+   slide and fade) - not built yet. ~~And the death
    timers' end~~ DONE (user, 2026-10-18): they flash as the player view's, on Blizzard's own
    HeroRespawnAnim keys (`gen.style_flash`).
    And the plates' carried box (gen.py `carry_box`, user 2026-10-12): Blackheart's doubloons /
    the Spider Queen's gems in the fountain's slot one step up the slant, the count over the
    icon, hidden at 0, on CARRY_MAPS only. Working and its borders now continue the fountain's
-   (`CARRY_SLIDE = 4`, confirmed on Zul'jin, 2026-10-12); parked for the art pass - the coin is
-   a touch big for its window, and the strip could grow further up the slant.
+   (`CARRY_SLIDE = 4`, confirmed on Zul'jin, 2026-10-12). The coin a touch big for its window:
+   left as it is (user, 2026-10-19: "good enough for now", revisit if people complain).
    **The polish phase - the user's first pass (2026-10-16; "there might be more"; not all at
    once).** Research done (2026-10-16): docs/polish-research.md - feasibility, approach, tests
    and questions for each. **Test build 9720882 deployed (2026-10-16), not seen yet**, with
@@ -711,8 +726,9 @@ from their plates (docs/blizzard-fixes.md).
    out. User: "great. i think we can call that square". Final: Blizzard's box x 0.986, top
    -8.6 units, left -28.8 (blue) / -32.5 (red), clip at 52.5, on the fire events, every plate.
    **Seen on real fires (e945f98, Braxis, red, 2026-10-19):** Embers and Inferno "both look
-   good and fade out just fine". Not seen yet: blue on a real fire (no replay to hand; the same
-   code, its rim seen always-on in tests 5-10), the colourblind variant.
+   good and fade out just fine". **DONE (user, 2026-10-19):** blue and colourblind run the same
+   code, so taken as done; revisit on feedback. No on-fire marker of our own (the flames are
+   cutscene models).
    The intro waits for the user's OBS plan. The items as the user gave them:
    - **The chrome's slant against Blizzard's art** (user, 2026-10-17): the row frame's slants
      don't gel with the art's: the portraits' edges, the heroic badges, the fountain icons and
@@ -856,7 +872,11 @@ from their plates (docs/blizzard-fixes.md).
     player's view TLV's nameplate seems to be a three-slice, one per Viking, each with its own
     click handler. Worth studying for ours: how Blizzard splits one plate into three clickable
     parts (find it in JamiePhan's layouts), and whether our plates could use it.
-16. **Static banners hidden - revisit AFTER the final pass (user, 2026-10-15).** Word-only
+16. **Static banners hidden - CLOSED (user, 2026-10-19): they stay gone.** "Word-only map
+    banners that don't actually have any function other than to say that the mechanic has
+    spawned, they all need to disappear." Tomb's "Red/Blue Webweavers summoned"
+    (`SoulEaterFrame`) hidden with them (the summoner's hexagons say it). Was: revisit after the
+    final pass (user, 2026-10-15). Word-only
     banners that sit up until the objective is taken, saying what the objective markers on the
     minimap already say, are hidden (54eaed2, e48326a). Once the final pass's screenshots are in,
     look again at whether any should come back, or come back as something that counts:
@@ -868,7 +888,8 @@ from their plates (docs/blizzard-fixes.md).
       `seed_banner(False)` builds it again);
     - Sky Temple's "Capture the Temples" (`temple_banner`: the art and words faded while the
       count is hidden - the same frame as the countdown).
-    Left as they were, brief: Volskaya's 2 s point toast, Towers' 5 s tunnels notice.
+    Left as they were, brief: Volskaya's 2 s point toast (it counts), Towers' 5 s tunnels and
+    towers-upgrading notices (in the alert stack: hiding them by alpha would leave a gap).
 
 ## 8. Original brief
 

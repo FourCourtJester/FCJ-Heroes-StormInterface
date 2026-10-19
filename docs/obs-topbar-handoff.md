@@ -29,13 +29,13 @@ ban tiles.
 
 | Thing | Agreed design |
 |---|---|
-| Series score | No cell. Hexagon pips with no plate: pointy-top, r = 25.3 (80% of the band), 43.9 wide, 5 apart. The first pip's edge is 14 px off the name plate's outer slant. They fill from the name outward. Best of 5 = 3 a side, best of 7 = 4 (blue's fourth ends at ~252, clear of the kill feed and the replay panel). |
+| Series score | No cell. Hexagon pips with no plate: pointy-top, r = 25.3 (80% of the band), 43.9 wide, 5 apart. The first pip's edge is 14 px off the name plate's outer slant. They fill from the name outward. Best of 5 = 3 a side, best of 7 = 4 (blue's fourth ends at ~252, clear of the kill feed and the replay panel). One hexagon is authored, in a full and an empty state; OBS draws as many as the series needs (user, 2026-10-19: more than 3 is the operator's call). |
 | Name plate | The OBS nine-slice (below). The box is fixed: blue left 440, width 374 (top 440 → 779.8, the wing's end); red left 1106. Name text is 24 px at most and shrinks to fit 12 px inside the slants. |
 | Team logo | Optional, inside the name plate's box: a fixed 109.5 px plate at the inner end. Its rim laps the name plate's to make one seam, at top x ≈ 707. Without a logo, the name plate runs on to the wing. |
 | Level wings (interface) | 20 px shorter each. The level plates are 64 wide (were 80): blue `[820, 8, 64, 50]`, red `[1036, 8, 64, 50]`. The wings follow, via `wing_margin`. |
 | Division / game count | The tab hangs from the wing: y 63.3 → 100.3 (flush with the bans' bottom). Its outer side is the name/logo seam carried down the lean, so the slants line up. Its inner side is 5 px off Blizzard's hexagon. The tab is interface art (stock fill, 2 px rim, no top edge); OBS draws the words only, 14 px. |
-| Bans | Optional, a toggle. Three tiles, 32 px parallelograms on a 38 px pitch. They sit at y 68.3 → 100.3 (5 below the band). The innermost tile's outer x is the seam minus 5. Banned tiles get a 4 px red foot. Their size, and slanted versus square, still need a pass. |
-| Tournament | Its logo goes over Blizzard's Nexus hexagon (centre 956, 63); a hexagon mask for OBS comes later. The tournament name is dropped, and the user will say where its replacement goes. |
+| Bans | Optional, a toggle. Three tiles, 32 px parallelograms on a 38 px pitch. They sit at y 68.3 → 100.3 (5 below the band). The innermost tile's outer x is the seam minus 5. Banned tiles get a 4 px red foot. Their size, and slanted versus square, get their own pass when we build them (user, 2026-10-19). |
+| Tournament | Its logo goes over Blizzard's Nexus hexagon (centre 956, 63); a hexagon mask for OBS comes later. The tournament name is dropped from under the clock; it goes in a secondary tab, likely the tournament name on the left and the division on the right (user, 2026-10-19). The tabs are generic information panels: what goes in them is up to the operator. |
 | Font | Metronic for Blizzard Bold is a cut of Metronic Pro (Mostardesign): a style from $25, the family $329. Check the licence covers broadcast use. The mock uses Saira Semi Condensed. |
 
 ## The name plate kit
@@ -76,5 +76,4 @@ ban tiles.
      hidden, since bans are a toggle.
 3. Update `docs/obs.md`: the rule's exception, and the table.
 4. Update the canvas's Top bar and Spec boards.
-5. Settle "best of five": 3 pips is already first to 3. The user hasn't said whether they meant
-   that or 5 pips showing each game.
+5. ~~Settle "best of five"~~: 3 pips a side (user, 2026-10-19), one hexagon in full and empty.

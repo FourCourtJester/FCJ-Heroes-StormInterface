@@ -99,8 +99,9 @@ on the plates, bars and panes boards, and the game-scene board (step 3 above).
 
 ## Questions for the user, when we get there
 
-- The tournament's places: logo in the hexagon and name under the clock (above)?
-- Series score: a number, or pips (won / to win, from "best of N")?
+- ~~The tournament's places~~: logo in the hexagon; the name in a secondary tab, division
+  beside it (user, 2026-10-19; docs/obs-topbar-handoff.md).
+- ~~Series score~~: pips, 3 a side for best of 5, one hexagon full / empty (user, 2026-10-19).
 - Bans: how many a side in the format used (the rect fits three at 32 px), and portraits or
   names?
 - **Fonts for the OBS layer.** The interface uses only Blizzard's fonts, from the game. Using

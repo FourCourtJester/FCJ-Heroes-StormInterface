@@ -450,7 +450,8 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
     the screen (`maps.TOAST`; 6ff536a).
   - **Static banners hidden:** word-only banners that sit up until the objective is taken, saying
     what the minimap's markers already say (Shrine active, Collect the Tribute, Gather the seed!,
-    Capture the Temples; 54eaed2, e48326a). To revisit after the final pass (HANDOFF item 16).
+    Capture the Temples; 54eaed2, e48326a), and Tomb's "Webweavers summoned" (2026-10-19; the
+    summoner's hexagons say it). For good (user, 2026-10-19).
 - **Hero plates for observers, from the player's in-game top bar** (`gen.py HeroCell`). It's the
   player's cell art, slanted and interlocking, scaled to fit. On it:
   - **Blizzard's in-game heroic panel**: icon, ready glow, cooldown, tooltip, Tracer's charge;

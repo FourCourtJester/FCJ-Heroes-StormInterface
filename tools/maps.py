@@ -2727,6 +2727,11 @@ PARTS["tomb_of_the_spider_queen"].update({
     f"CryptPanel/Team2SoulFrame/{name}": f'<Anchor side="Right" relative="$parent/Background" pos="Max" offset="{off}"/>\n'
     for name, off in (("SoulIconFrameTeam2:Image", 20 + GEM_RED[0]), ("SoulIconTeam2:Image", 20 + GEM_RED[0]),
                       ("SoulCounter:Label", -70 + GEM_RED[1]), ("TeamSoulCounter:Label", GEM_RED[2]))})
+# "Red/Blue Webweavers summoned" (SoulEaterFrame) hidden (user, 2026-10-19: "it's obvious that
+# they're summoned" - the summoner's hexagons say it). Words only: its count label is never set by
+# the script (libmsoc.galaxy sets the status label alone). Alpha, as Infernal Shrines' "Shrine
+# active": the script shows the frame itself. Its place at THE GAP (gap_parts) is kept.
+PARTS["tomb_of_the_spider_queen"]["CryptPanel/SoulEaterFrame"] = '<Alpha val="0"/>\n'
 
 
 # Warhead Junction's nuke counters (Team1TerrazineFrame blue, Team2 red: each team's nukes
