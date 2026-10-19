@@ -629,6 +629,16 @@ from their plates (docs/blizzard-fixes.md).
    **6420bd3, seen 2026-10-19:** squares out, Blizzard's own flames (`onfire_flames` in gen.py)
    on each plate - they play for an observer ("kinda looks goofy but it did emit": red flames
    over Sgt. Hammer's plate, spilling past its top edge). Next: our own, from there.
+   **Blizzard's leader-panel glow** (`@UI/Storm_UI_InGame_Leader_OnFire_Glow`, the Tab panel's
+   on-fire art), faded in by Embers/Inferno and out by End, with a white square lit by the same
+   events: the square lit every time, the glow never read - Blizzard's template whole (002c699),
+   one image at 529 (e6fa651), additive at 700 (8e7b3e9), four strips: bare, + team fill,
+   + additive, + unclipped and pulse (11e618a). **Test 1 (1c4f33b, seen 2026-10-19):** square
+   and strips out, the glow always on, no fire logic, Blizzard's alias on each plate's left
+   half, the file itself on the right. User: "i think both are there, hard to tell"; against
+   an older shot of the same plates, a soft white mound rises from the bottom of each half.
+   So it always drew: it's just faint (near-white, mostly 10-60% opaque, over a portrait), and
+   fainter still at Embers 200 or under a team fill. Both routes load it.
    The intro waits for the user's OBS plan. The items as the user gave them:
    - **The chrome's slant against Blizzard's art** (user, 2026-10-17): the row frame's slants
      don't gel with the art's: the portraits' edges, the heroic badges, the fountain icons and
