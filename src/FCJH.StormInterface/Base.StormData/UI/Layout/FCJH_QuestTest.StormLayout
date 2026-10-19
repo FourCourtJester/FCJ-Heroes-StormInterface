@@ -8,7 +8,9 @@
 	     our tries 3 and 4 didn't: it sits in ConsoleUIContainer, on the screen; its talents
 	     view is switched on by its toggle's animation (also at load: Init, then InitEnd back),
 	     through a hidden frame the rows' visibility is bound to, not on from the start; and a
-	     second panel takes Blizzard's Tab hotkey and passes it on to Blizzard's panel. -->
+	     second panel takes Blizzard's Tab hotkey and passes it on to Blizzard's panel.
+	     Try 5 (484d4df): boxes empty. Try 6: Ahli's Handles too, on each row and quest icon,
+	     and each tooltip binds the icon's picture through its Handle, as his do. -->
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<Frame type="Frame" name="UIContainer">
 			<Frame type="Frame" name="ConsoleUIContainer">
@@ -81,63 +83,243 @@
 						<RenderPriority val="600"/>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip0A" template="StandardTooltip/BaselineTooltipTemplate">
 							<RenderPriority val="900"/>
+							<!-- Ahli's binding: the icon's picture, through its Handle -->
+							<Frame type="Image" name="FCJH_Icon">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
+								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
+								<Width val="50"/>
+								<Height val="50"/>
+								<Texture val="{$FCJH_QTestIcon0A/IconImage/@Texture}"/>
+								<RenderPriority val="901"/>
+							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip0B" template="StandardTooltip/BaselineTooltipTemplate">
 							<RenderPriority val="900"/>
+							<!-- Ahli's binding: the icon's picture, through its Handle -->
+							<Frame type="Image" name="FCJH_Icon">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
+								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
+								<Width val="50"/>
+								<Height val="50"/>
+								<Texture val="{$FCJH_QTestIcon0B/IconImage/@Texture}"/>
+								<RenderPriority val="901"/>
+							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip1A" template="StandardTooltip/BaselineTooltipTemplate">
 							<RenderPriority val="900"/>
+							<!-- Ahli's binding: the icon's picture, through its Handle -->
+							<Frame type="Image" name="FCJH_Icon">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
+								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
+								<Width val="50"/>
+								<Height val="50"/>
+								<Texture val="{$FCJH_QTestIcon1A/IconImage/@Texture}"/>
+								<RenderPriority val="901"/>
+							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip1B" template="StandardTooltip/BaselineTooltipTemplate">
 							<RenderPriority val="900"/>
+							<!-- Ahli's binding: the icon's picture, through its Handle -->
+							<Frame type="Image" name="FCJH_Icon">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
+								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
+								<Width val="50"/>
+								<Height val="50"/>
+								<Texture val="{$FCJH_QTestIcon1B/IconImage/@Texture}"/>
+								<RenderPriority val="901"/>
+							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip2A" template="StandardTooltip/BaselineTooltipTemplate">
 							<RenderPriority val="900"/>
+							<!-- Ahli's binding: the icon's picture, through its Handle -->
+							<Frame type="Image" name="FCJH_Icon">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
+								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
+								<Width val="50"/>
+								<Height val="50"/>
+								<Texture val="{$FCJH_QTestIcon2A/IconImage/@Texture}"/>
+								<RenderPriority val="901"/>
+							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip2B" template="StandardTooltip/BaselineTooltipTemplate">
 							<RenderPriority val="900"/>
+							<!-- Ahli's binding: the icon's picture, through its Handle -->
+							<Frame type="Image" name="FCJH_Icon">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
+								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
+								<Width val="50"/>
+								<Height val="50"/>
+								<Texture val="{$FCJH_QTestIcon2B/IconImage/@Texture}"/>
+								<RenderPriority val="901"/>
+							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip3A" template="StandardTooltip/BaselineTooltipTemplate">
 							<RenderPriority val="900"/>
+							<!-- Ahli's binding: the icon's picture, through its Handle -->
+							<Frame type="Image" name="FCJH_Icon">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
+								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
+								<Width val="50"/>
+								<Height val="50"/>
+								<Texture val="{$FCJH_QTestIcon3A/IconImage/@Texture}"/>
+								<RenderPriority val="901"/>
+							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip3B" template="StandardTooltip/BaselineTooltipTemplate">
 							<RenderPriority val="900"/>
+							<!-- Ahli's binding: the icon's picture, through its Handle -->
+							<Frame type="Image" name="FCJH_Icon">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
+								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
+								<Width val="50"/>
+								<Height val="50"/>
+								<Texture val="{$FCJH_QTestIcon3B/IconImage/@Texture}"/>
+								<RenderPriority val="901"/>
+							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip4A" template="StandardTooltip/BaselineTooltipTemplate">
 							<RenderPriority val="900"/>
+							<!-- Ahli's binding: the icon's picture, through its Handle -->
+							<Frame type="Image" name="FCJH_Icon">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
+								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
+								<Width val="50"/>
+								<Height val="50"/>
+								<Texture val="{$FCJH_QTestIcon4A/IconImage/@Texture}"/>
+								<RenderPriority val="901"/>
+							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip4B" template="StandardTooltip/BaselineTooltipTemplate">
 							<RenderPriority val="900"/>
+							<!-- Ahli's binding: the icon's picture, through its Handle -->
+							<Frame type="Image" name="FCJH_Icon">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
+								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
+								<Width val="50"/>
+								<Height val="50"/>
+								<Texture val="{$FCJH_QTestIcon4B/IconImage/@Texture}"/>
+								<RenderPriority val="901"/>
+							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip5A" template="StandardTooltip/BaselineTooltipTemplate">
 							<RenderPriority val="900"/>
+							<!-- Ahli's binding: the icon's picture, through its Handle -->
+							<Frame type="Image" name="FCJH_Icon">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
+								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
+								<Width val="50"/>
+								<Height val="50"/>
+								<Texture val="{$FCJH_QTestIcon5A/IconImage/@Texture}"/>
+								<RenderPriority val="901"/>
+							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip5B" template="StandardTooltip/BaselineTooltipTemplate">
 							<RenderPriority val="900"/>
+							<!-- Ahli's binding: the icon's picture, through its Handle -->
+							<Frame type="Image" name="FCJH_Icon">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
+								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
+								<Width val="50"/>
+								<Height val="50"/>
+								<Texture val="{$FCJH_QTestIcon5B/IconImage/@Texture}"/>
+								<RenderPriority val="901"/>
+							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip6A" template="StandardTooltip/BaselineTooltipTemplate">
 							<RenderPriority val="900"/>
+							<!-- Ahli's binding: the icon's picture, through its Handle -->
+							<Frame type="Image" name="FCJH_Icon">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
+								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
+								<Width val="50"/>
+								<Height val="50"/>
+								<Texture val="{$FCJH_QTestIcon6A/IconImage/@Texture}"/>
+								<RenderPriority val="901"/>
+							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip6B" template="StandardTooltip/BaselineTooltipTemplate">
 							<RenderPriority val="900"/>
+							<!-- Ahli's binding: the icon's picture, through its Handle -->
+							<Frame type="Image" name="FCJH_Icon">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
+								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
+								<Width val="50"/>
+								<Height val="50"/>
+								<Texture val="{$FCJH_QTestIcon6B/IconImage/@Texture}"/>
+								<RenderPriority val="901"/>
+							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip7A" template="StandardTooltip/BaselineTooltipTemplate">
 							<RenderPriority val="900"/>
+							<!-- Ahli's binding: the icon's picture, through its Handle -->
+							<Frame type="Image" name="FCJH_Icon">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
+								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
+								<Width val="50"/>
+								<Height val="50"/>
+								<Texture val="{$FCJH_QTestIcon7A/IconImage/@Texture}"/>
+								<RenderPriority val="901"/>
+							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip7B" template="StandardTooltip/BaselineTooltipTemplate">
 							<RenderPriority val="900"/>
+							<!-- Ahli's binding: the icon's picture, through its Handle -->
+							<Frame type="Image" name="FCJH_Icon">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
+								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
+								<Width val="50"/>
+								<Height val="50"/>
+								<Texture val="{$FCJH_QTestIcon7B/IconImage/@Texture}"/>
+								<RenderPriority val="901"/>
+							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip8A" template="StandardTooltip/BaselineTooltipTemplate">
 							<RenderPriority val="900"/>
+							<!-- Ahli's binding: the icon's picture, through its Handle -->
+							<Frame type="Image" name="FCJH_Icon">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
+								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
+								<Width val="50"/>
+								<Height val="50"/>
+								<Texture val="{$FCJH_QTestIcon8A/IconImage/@Texture}"/>
+								<RenderPriority val="901"/>
+							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip8B" template="StandardTooltip/BaselineTooltipTemplate">
 							<RenderPriority val="900"/>
+							<!-- Ahli's binding: the icon's picture, through its Handle -->
+							<Frame type="Image" name="FCJH_Icon">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
+								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
+								<Width val="50"/>
+								<Height val="50"/>
+								<Texture val="{$FCJH_QTestIcon8B/IconImage/@Texture}"/>
+								<RenderPriority val="901"/>
+							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip9A" template="StandardTooltip/BaselineTooltipTemplate">
 							<RenderPriority val="900"/>
+							<!-- Ahli's binding: the icon's picture, through its Handle -->
+							<Frame type="Image" name="FCJH_Icon">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
+								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
+								<Width val="50"/>
+								<Height val="50"/>
+								<Texture val="{$FCJH_QTestIcon9A/IconImage/@Texture}"/>
+								<RenderPriority val="901"/>
+							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip9B" template="StandardTooltip/BaselineTooltipTemplate">
 							<RenderPriority val="900"/>
+							<!-- Ahli's binding: the icon's picture, through its Handle -->
+							<Frame type="Image" name="FCJH_Icon">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
+								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
+								<Width val="50"/>
+								<Height val="50"/>
+								<Texture val="{$FCJH_QTestIcon9B/IconImage/@Texture}"/>
+								<RenderPriority val="901"/>
+							</Frame>
 						</Frame>
 						<Frame type="Frame" name="HeroLeaderPanelContainer">
 							<Visible val="true"/>
@@ -165,6 +347,7 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame0">
+									<Handle val="FCJH_QTestRow0"/>
 									<Frame type="Frame" name="StatsContainerFrame"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
 									<Frame type="Frame" name="TalentsContainerFrame">
 										<!-- Ahli's binding: on only once the toggle's animation has shown FCJH_TalentsOn -->
@@ -174,8 +357,8 @@
 												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 													<Frame type="Frame" name="QuestContainerContainerFrame">
 														<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
-															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><TooltipFrame val="FCJH_QTestTip0A"/></Frame>
-															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><TooltipFrame val="FCJH_QTestTip0B"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><TooltipFrame val="FCJH_QTestTip0A"/><Handle val="FCJH_QTestIcon0A"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><TooltipFrame val="FCJH_QTestTip0B"/><Handle val="FCJH_QTestIcon0B"/></Frame>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -184,6 +367,7 @@
 									</Frame>
 								</Frame>
 								<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame1">
+									<Handle val="FCJH_QTestRow1"/>
 									<Frame type="Frame" name="StatsContainerFrame"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
 									<Frame type="Frame" name="TalentsContainerFrame">
 										<!-- Ahli's binding: on only once the toggle's animation has shown FCJH_TalentsOn -->
@@ -193,8 +377,8 @@
 												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 													<Frame type="Frame" name="QuestContainerContainerFrame">
 														<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
-															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><TooltipFrame val="FCJH_QTestTip1A"/></Frame>
-															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><TooltipFrame val="FCJH_QTestTip1B"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><TooltipFrame val="FCJH_QTestTip1A"/><Handle val="FCJH_QTestIcon1A"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><TooltipFrame val="FCJH_QTestTip1B"/><Handle val="FCJH_QTestIcon1B"/></Frame>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -203,6 +387,7 @@
 									</Frame>
 								</Frame>
 								<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame2">
+									<Handle val="FCJH_QTestRow2"/>
 									<Frame type="Frame" name="StatsContainerFrame"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
 									<Frame type="Frame" name="TalentsContainerFrame">
 										<!-- Ahli's binding: on only once the toggle's animation has shown FCJH_TalentsOn -->
@@ -212,8 +397,8 @@
 												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 													<Frame type="Frame" name="QuestContainerContainerFrame">
 														<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
-															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><TooltipFrame val="FCJH_QTestTip2A"/></Frame>
-															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><TooltipFrame val="FCJH_QTestTip2B"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><TooltipFrame val="FCJH_QTestTip2A"/><Handle val="FCJH_QTestIcon2A"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><TooltipFrame val="FCJH_QTestTip2B"/><Handle val="FCJH_QTestIcon2B"/></Frame>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -222,6 +407,7 @@
 									</Frame>
 								</Frame>
 								<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame3">
+									<Handle val="FCJH_QTestRow3"/>
 									<Frame type="Frame" name="StatsContainerFrame"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
 									<Frame type="Frame" name="TalentsContainerFrame">
 										<!-- Ahli's binding: on only once the toggle's animation has shown FCJH_TalentsOn -->
@@ -231,8 +417,8 @@
 												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 													<Frame type="Frame" name="QuestContainerContainerFrame">
 														<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
-															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><TooltipFrame val="FCJH_QTestTip3A"/></Frame>
-															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><TooltipFrame val="FCJH_QTestTip3B"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><TooltipFrame val="FCJH_QTestTip3A"/><Handle val="FCJH_QTestIcon3A"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><TooltipFrame val="FCJH_QTestTip3B"/><Handle val="FCJH_QTestIcon3B"/></Frame>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -241,6 +427,7 @@
 									</Frame>
 								</Frame>
 								<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame4">
+									<Handle val="FCJH_QTestRow4"/>
 									<Frame type="Frame" name="StatsContainerFrame"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
 									<Frame type="Frame" name="TalentsContainerFrame">
 										<!-- Ahli's binding: on only once the toggle's animation has shown FCJH_TalentsOn -->
@@ -250,8 +437,8 @@
 												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 													<Frame type="Frame" name="QuestContainerContainerFrame">
 														<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
-															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><TooltipFrame val="FCJH_QTestTip4A"/></Frame>
-															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><TooltipFrame val="FCJH_QTestTip4B"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><TooltipFrame val="FCJH_QTestTip4A"/><Handle val="FCJH_QTestIcon4A"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><TooltipFrame val="FCJH_QTestTip4B"/><Handle val="FCJH_QTestIcon4B"/></Frame>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -260,6 +447,7 @@
 									</Frame>
 								</Frame>
 								<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame5">
+									<Handle val="FCJH_QTestRow5"/>
 									<Frame type="Frame" name="StatsContainerFrame"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
 									<Frame type="Frame" name="TalentsContainerFrame">
 										<!-- Ahli's binding: on only once the toggle's animation has shown FCJH_TalentsOn -->
@@ -269,8 +457,8 @@
 												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 													<Frame type="Frame" name="QuestContainerContainerFrame">
 														<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
-															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><TooltipFrame val="FCJH_QTestTip5A"/></Frame>
-															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><TooltipFrame val="FCJH_QTestTip5B"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><TooltipFrame val="FCJH_QTestTip5A"/><Handle val="FCJH_QTestIcon5A"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><TooltipFrame val="FCJH_QTestTip5B"/><Handle val="FCJH_QTestIcon5B"/></Frame>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -279,6 +467,7 @@
 									</Frame>
 								</Frame>
 								<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame6">
+									<Handle val="FCJH_QTestRow6"/>
 									<Frame type="Frame" name="StatsContainerFrame"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
 									<Frame type="Frame" name="TalentsContainerFrame">
 										<!-- Ahli's binding: on only once the toggle's animation has shown FCJH_TalentsOn -->
@@ -288,8 +477,8 @@
 												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 													<Frame type="Frame" name="QuestContainerContainerFrame">
 														<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
-															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><TooltipFrame val="FCJH_QTestTip6A"/></Frame>
-															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><TooltipFrame val="FCJH_QTestTip6B"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><TooltipFrame val="FCJH_QTestTip6A"/><Handle val="FCJH_QTestIcon6A"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><TooltipFrame val="FCJH_QTestTip6B"/><Handle val="FCJH_QTestIcon6B"/></Frame>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -298,6 +487,7 @@
 									</Frame>
 								</Frame>
 								<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame7">
+									<Handle val="FCJH_QTestRow7"/>
 									<Frame type="Frame" name="StatsContainerFrame"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
 									<Frame type="Frame" name="TalentsContainerFrame">
 										<!-- Ahli's binding: on only once the toggle's animation has shown FCJH_TalentsOn -->
@@ -307,8 +497,8 @@
 												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 													<Frame type="Frame" name="QuestContainerContainerFrame">
 														<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
-															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><TooltipFrame val="FCJH_QTestTip7A"/></Frame>
-															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><TooltipFrame val="FCJH_QTestTip7B"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><TooltipFrame val="FCJH_QTestTip7A"/><Handle val="FCJH_QTestIcon7A"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><TooltipFrame val="FCJH_QTestTip7B"/><Handle val="FCJH_QTestIcon7B"/></Frame>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -317,6 +507,7 @@
 									</Frame>
 								</Frame>
 								<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame8">
+									<Handle val="FCJH_QTestRow8"/>
 									<Frame type="Frame" name="StatsContainerFrame"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
 									<Frame type="Frame" name="TalentsContainerFrame">
 										<!-- Ahli's binding: on only once the toggle's animation has shown FCJH_TalentsOn -->
@@ -326,8 +517,8 @@
 												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 													<Frame type="Frame" name="QuestContainerContainerFrame">
 														<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
-															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><TooltipFrame val="FCJH_QTestTip8A"/></Frame>
-															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><TooltipFrame val="FCJH_QTestTip8B"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><TooltipFrame val="FCJH_QTestTip8A"/><Handle val="FCJH_QTestIcon8A"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><TooltipFrame val="FCJH_QTestTip8B"/><Handle val="FCJH_QTestIcon8B"/></Frame>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -336,6 +527,7 @@
 									</Frame>
 								</Frame>
 								<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame9">
+									<Handle val="FCJH_QTestRow9"/>
 									<Frame type="Frame" name="StatsContainerFrame"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
 									<Frame type="Frame" name="TalentsContainerFrame">
 										<!-- Ahli's binding: on only once the toggle's animation has shown FCJH_TalentsOn -->
@@ -345,8 +537,8 @@
 												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 													<Frame type="Frame" name="QuestContainerContainerFrame">
 														<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
-															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><TooltipFrame val="FCJH_QTestTip9A"/></Frame>
-															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><TooltipFrame val="FCJH_QTestTip9B"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><TooltipFrame val="FCJH_QTestTip9A"/><Handle val="FCJH_QTestIcon9A"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><TooltipFrame val="FCJH_QTestTip9B"/><Handle val="FCJH_QTestIcon9B"/></Frame>
 														</Frame>
 													</Frame>
 												</Frame>

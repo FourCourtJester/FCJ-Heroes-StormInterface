@@ -576,7 +576,9 @@ from their plates (docs/blizzard-fixes.md).
    level 1 too; the white line stays gone). Blue's icons on `HeroTalentTooltip` as a test:
    Murky's showed the last talent hovered, Nova's an empty box - the box doesn't matter, the
    icon must be one that writes (docs/blizzard-fixes.md). Reverted.
-   **484d4df, not seen yet:** quest tooltip try 5, Ahli's arrangement with Blizzard's art
+   **484d4df, seen 2026-10-19: failed** (boxes empty; Ahli's fill for an observer, see
+   docs/blizzard-fixes.md). **Try 6, not seen yet:** try 5 plus Ahli's Handles and a bound
+   icon picture. Was: quest tooltip try 5, Ahli's arrangement with Blizzard's art
    (`FCJH_QuestTest.StormLayout`, hand-kept TEST, Control+Shift+Q): hover its quest icons; Tab
    must still open Blizzard's own panel. The file comes out once answered.
    **TEMPORARY:** Blizzard's kill feed is hidden for testing (FCJH_Hidden, `FCJH_KeepHidden`'s
@@ -597,6 +599,9 @@ from their plates (docs/blizzard-fixes.md).
    neighbour's portrait - a "dark red" on Hogger's far left was likely a neighbour's square.
    Next: a blue hero on fire for Left (user trying another replay), then the squares out and a
    real on-fire marker from Embers/Inferno/End.
+   **6420bd3, seen 2026-10-19:** squares out, Blizzard's own flames (`onfire_flames` in gen.py)
+   on each plate - they play for an observer ("kinda looks goofy but it did emit": red flames
+   over Sgt. Hammer's plate, spilling past its top edge). Next: our own, from there.
    The intro waits for the user's OBS plan. The items as the user gave them:
    - **The chrome's slant against Blizzard's art** (user, 2026-10-17): the row frame's slants
      don't gel with the art's: the portraits' edges, the heroic badges, the fountain icons and

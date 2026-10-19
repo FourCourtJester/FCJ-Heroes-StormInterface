@@ -166,7 +166,7 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
   whichever talent was hovered last; Nova's an empty box. The tooltips are passive: an icon
   fills one only where the engine has it write on hover, and our icons (a `HeroTalentsPanel`'s)
   never write. Reverted.
-- **Try 5 (484d4df, 2026-10-19, not seen yet):** Ahli 0.75's arrangement as he has it, Blizzard's
+- **Try 5 (484d4df, 2026-10-19), failed:** Ahli 0.75's arrangement as he has it, Blizzard's
   art only (`FCJH_QuestTest`, its own test file, Control+Shift+Q). What his has that tries 3
   and 4 didn't: the leader panel sits on the screen in `ConsoleUIContainer`; its rows' talents
   view is switched on after load by the toggle's animation, through a hidden frame the rows'
@@ -174,6 +174,14 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
   and a second leader panel takes Blizzard's Tab hotkey and hands it on to Blizzard's panel.
   Each row's two quest icons have a tooltip of their own. If it fills, our talents pane
   becomes a leader panel the same way.
+  Seen (user): the panel drew, its quest icons showed and talent tooltips filled; the quest
+  boxes stayed empty. Ahli's do fill for an observer (user's screenshot: name, quest and reward
+  text; his "0 / 40" is his own label). Blizzard's `BaselineTooltipTemplate` has only the name,
+  vital, cooldown and description labels, nothing that gates them; Ahli adds the icon picture,
+  progress bar and count himself, bound through a `Handle` on each quest icon (and on each
+  row), and copies the icon's quest state onto the tooltip.
+- **Try 6 (2026-10-19, not seen yet):** try 5 plus Ahli's Handles on each row and quest icon,
+  and each tooltip binding the icon's picture through its Handle.
 
 ### Hogger's rage drawn as mana
 - **Blizzard's:** the target panel's per-hero resource colours (`HeroResourceStates`,
