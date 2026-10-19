@@ -49,8 +49,8 @@ The geometry:
   2.75 px left of centre, so the two differ (blue 794-890, red 1024-1126). `division` was
   `bracket` until 2026-10-16.
 - Blue's score stays clear of the replay panel (x 14-392).
-- The interface's own pieces between them: the level plates (`blue_level` 800, 8 / `red_level`
-  1040, 8), the talent-lead flame behind the leader's, the hexagon plate (`logo_plate` 892, 0,
+- The interface's own pieces between them: the level plates (`blue_level` 820, 8 / `red_level`
+  1036, 8, 64 wide since 2026-10-19), the talent-lead flame behind the leader's, the hexagon plate (`logo_plate` 892, 0,
   136 x 125) and the clock (906, 128).
 - **Proposed, not yet agreed (2026-10-16):** the tournament logo in the hexagon's middle (centre
   956, 63) and its name under the clock, clear of Blizzard's centre banners (y 196).

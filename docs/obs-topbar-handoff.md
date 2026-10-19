@@ -60,8 +60,8 @@ ban tiles.
 ## To build
 
 1. `layout.toml`:
-   - the level rects (above);
-   - `blue_talent_lead` / `red_talent_lead`, to the shaved wings;
+   - ~~the level rects (above)~~ and ~~`blue_talent_lead` / `red_talent_lead`, to the shaved
+     wings~~: done 2026-10-19, the wings end at 779.8 / 1140.2;
    - `blue_name` / `red_name` → `kind = "obs"`, at the box above;
    - `blue_logo` / `red_logo` inside it;
    - drop `blue_score` / `red_score`; add pip rects;

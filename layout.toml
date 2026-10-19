@@ -156,10 +156,11 @@ kind = "ui"                  # the plate is ours (the art pass); OBS draws the n
 rect = [690, 0, 64, 63.3]
 kind = "obs"
 [element.blue_level]
-rect = [800, 8, 80, 50]
+rect = [820, 8, 64, 50]      # 64 wide, was 80 (user, 2026-10-19: the OBS top bar, docs/obs-topbar-handoff.md):
+                             # the wings 20 px shorter each, their outer ends at 779.8 / 1140.2
 kind = "ui"
 [element.blue_talent_lead]
-rect = [794, 0, 92, 64]      # Blizzard's flame, behind the level plate of the team ahead
+rect = [814, 0, 76, 64]      # Blizzard's flame, behind the level plate of the team ahead (6 past it each side)
 kind = "demand"
 [element.blue_bans]
 rect = [576, 67, 108, 32]    # under the name, flush with its inner end
@@ -184,10 +185,10 @@ kind = "obs"
 
 # Top bar, red side (inside out: level, logo, name, score)
 [element.red_level]
-rect = [1040, 8, 80, 50]
+rect = [1036, 8, 64, 50]
 kind = "ui"
 [element.red_talent_lead]
-rect = [1034, 0, 92, 64]
+rect = [1030, 0, 76, 64]
 kind = "demand"
 [element.red_logo]
 rect = [1166, 0, 64, 63.3]
