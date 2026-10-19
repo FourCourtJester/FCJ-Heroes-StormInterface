@@ -229,6 +229,10 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
   - **Step 7:** each row's TalentsContainerFrame grown 60 above and below the row (middle
     unmoved; the two frames under it follow it). Whole: the clip is that chain's box, which
     can be sized to the whole screen for a far lift. Still cut: the row (PlayerFrame) clips.
+    **Seen (9c04a2f, user):** still cut. Not that frame's box.
+  - **Step 8:** every frame of the chain under the row Unclipped, icon included (3b freed only
+    the icon and its parts). Whole: clipped link by link; a far lift needs the chain all
+    Unclipped. Still cut: Unclipped can't get past the row, so the row must travel.
   - **Spazzo** (user, 2026-10-19): puts quests in his nameplates with no tooltips. He doesn't
     use Blizzard's quest icons at all: a generic UnitStatusBehaviorIcon per nameplate, pointed
     at each hero's quest-counter behaviour by a hand-kept list of ~400 entries

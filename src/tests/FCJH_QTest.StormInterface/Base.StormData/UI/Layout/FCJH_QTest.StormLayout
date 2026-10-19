@@ -62,7 +62,15 @@
      (its middle where it was, so nothing in it moves; SelectionUnitStatusPanel and
      UnitStatusFrame0 are anchored to it and grow with it). Whole now: the clip is that
      chain's box, which we can size as we like - up to the whole screen, for a far lift.
-     Still cut: it is the row itself (PlayerFrame). -->
+     Still cut: it is the row itself (PlayerFrame).
+     Seen (user, 2026-10-19, 9c04a2f): "still cut off". Not that frame's box.
+
+     Step 8, one change: every frame of the chain under the row Unclipped - TalentsContainer-
+     Frame, SelectionUnitStatusPanel, UnitStatusFrame0, HeroSelectedTalentTreeFrame,
+     QuestContainerContainerFrame, BaseQuestCenterFrame and the icon (3b freed only the icon
+     and its parts, and its ancestors may each clip). Whole now: the chain was clipped link
+     by link, and a far lift needs it all Unclipped. Still cut: Unclipped can't get past the
+     row - the row must travel. -->
 <Desc>
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<Frame type="Frame" name="UIContainer">
@@ -78,15 +86,22 @@
 						<Frame type="TabControl" name="TabControl">
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame0">
 								<Frame type="Frame" name="TalentsContainerFrame">
+									<Unclipped val="true"/>
 									<Batch val="False"/>
 									<Anchor side="Top" relative="$parent" pos="Min" offset="-60"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="60"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+										<Unclipped val="true"/>
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+											<Unclipped val="true"/>
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+												<Unclipped val="true"/>
 												<Frame type="Frame" name="QuestContainerContainerFrame">
+													<Unclipped val="true"/>
 													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
+														<Unclipped val="true"/>
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
+															<Unclipped val="true"/>
 															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 															<Anchor side="Top" relative="$parent" pos="Mid" offset="-30"/>
@@ -101,15 +116,22 @@
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame1">
 								<Frame type="Frame" name="TalentsContainerFrame">
+									<Unclipped val="true"/>
 									<Batch val="False"/>
 									<Anchor side="Top" relative="$parent" pos="Min" offset="-60"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="60"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+										<Unclipped val="true"/>
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+											<Unclipped val="true"/>
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+												<Unclipped val="true"/>
 												<Frame type="Frame" name="QuestContainerContainerFrame">
+													<Unclipped val="true"/>
 													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
+														<Unclipped val="true"/>
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
+															<Unclipped val="true"/>
 															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 															<Anchor side="Top" relative="$parent" pos="Mid" offset="-30"/>
@@ -124,15 +146,22 @@
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame2">
 								<Frame type="Frame" name="TalentsContainerFrame">
+									<Unclipped val="true"/>
 									<Batch val="False"/>
 									<Anchor side="Top" relative="$parent" pos="Min" offset="-60"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="60"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+										<Unclipped val="true"/>
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+											<Unclipped val="true"/>
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+												<Unclipped val="true"/>
 												<Frame type="Frame" name="QuestContainerContainerFrame">
+													<Unclipped val="true"/>
 													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
+														<Unclipped val="true"/>
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
+															<Unclipped val="true"/>
 															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 															<Anchor side="Top" relative="$parent" pos="Mid" offset="-30"/>
@@ -147,15 +176,22 @@
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame3">
 								<Frame type="Frame" name="TalentsContainerFrame">
+									<Unclipped val="true"/>
 									<Batch val="False"/>
 									<Anchor side="Top" relative="$parent" pos="Min" offset="-60"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="60"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+										<Unclipped val="true"/>
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+											<Unclipped val="true"/>
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+												<Unclipped val="true"/>
 												<Frame type="Frame" name="QuestContainerContainerFrame">
+													<Unclipped val="true"/>
 													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
+														<Unclipped val="true"/>
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
+															<Unclipped val="true"/>
 															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 															<Anchor side="Top" relative="$parent" pos="Mid" offset="-30"/>
@@ -170,15 +206,22 @@
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame4">
 								<Frame type="Frame" name="TalentsContainerFrame">
+									<Unclipped val="true"/>
 									<Batch val="False"/>
 									<Anchor side="Top" relative="$parent" pos="Min" offset="-60"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="60"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+										<Unclipped val="true"/>
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+											<Unclipped val="true"/>
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+												<Unclipped val="true"/>
 												<Frame type="Frame" name="QuestContainerContainerFrame">
+													<Unclipped val="true"/>
 													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
+														<Unclipped val="true"/>
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
+															<Unclipped val="true"/>
 															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 															<Anchor side="Top" relative="$parent" pos="Mid" offset="-30"/>
@@ -193,15 +236,22 @@
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame5">
 								<Frame type="Frame" name="TalentsContainerFrame">
+									<Unclipped val="true"/>
 									<Batch val="False"/>
 									<Anchor side="Top" relative="$parent" pos="Min" offset="-60"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="60"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+										<Unclipped val="true"/>
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+											<Unclipped val="true"/>
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+												<Unclipped val="true"/>
 												<Frame type="Frame" name="QuestContainerContainerFrame">
+													<Unclipped val="true"/>
 													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
+														<Unclipped val="true"/>
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
+															<Unclipped val="true"/>
 															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 															<Anchor side="Top" relative="$parent" pos="Mid" offset="-30"/>
@@ -216,15 +266,22 @@
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame6">
 								<Frame type="Frame" name="TalentsContainerFrame">
+									<Unclipped val="true"/>
 									<Batch val="False"/>
 									<Anchor side="Top" relative="$parent" pos="Min" offset="-60"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="60"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+										<Unclipped val="true"/>
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+											<Unclipped val="true"/>
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+												<Unclipped val="true"/>
 												<Frame type="Frame" name="QuestContainerContainerFrame">
+													<Unclipped val="true"/>
 													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
+														<Unclipped val="true"/>
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
+															<Unclipped val="true"/>
 															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 															<Anchor side="Top" relative="$parent" pos="Mid" offset="-30"/>
@@ -239,15 +296,22 @@
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame7">
 								<Frame type="Frame" name="TalentsContainerFrame">
+									<Unclipped val="true"/>
 									<Batch val="False"/>
 									<Anchor side="Top" relative="$parent" pos="Min" offset="-60"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="60"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+										<Unclipped val="true"/>
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+											<Unclipped val="true"/>
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+												<Unclipped val="true"/>
 												<Frame type="Frame" name="QuestContainerContainerFrame">
+													<Unclipped val="true"/>
 													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
+														<Unclipped val="true"/>
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
+															<Unclipped val="true"/>
 															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 															<Anchor side="Top" relative="$parent" pos="Mid" offset="-30"/>
@@ -262,15 +326,22 @@
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame8">
 								<Frame type="Frame" name="TalentsContainerFrame">
+									<Unclipped val="true"/>
 									<Batch val="False"/>
 									<Anchor side="Top" relative="$parent" pos="Min" offset="-60"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="60"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+										<Unclipped val="true"/>
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+											<Unclipped val="true"/>
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+												<Unclipped val="true"/>
 												<Frame type="Frame" name="QuestContainerContainerFrame">
+													<Unclipped val="true"/>
 													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
+														<Unclipped val="true"/>
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
+															<Unclipped val="true"/>
 															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 															<Anchor side="Top" relative="$parent" pos="Mid" offset="-30"/>
@@ -285,15 +356,22 @@
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame9">
 								<Frame type="Frame" name="TalentsContainerFrame">
+									<Unclipped val="true"/>
 									<Batch val="False"/>
 									<Anchor side="Top" relative="$parent" pos="Min" offset="-60"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="60"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+										<Unclipped val="true"/>
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+											<Unclipped val="true"/>
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+												<Unclipped val="true"/>
 												<Frame type="Frame" name="QuestContainerContainerFrame">
+													<Unclipped val="true"/>
 													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
+														<Unclipped val="true"/>
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
+															<Unclipped val="true"/>
 															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 															<Anchor side="Top" relative="$parent" pos="Mid" offset="-30"/>
