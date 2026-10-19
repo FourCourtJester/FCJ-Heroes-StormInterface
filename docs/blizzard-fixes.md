@@ -243,6 +243,12 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
   - **Step 10:** FCJH's `spread` (gen.py) on every frame from the row down to the icon: each
     over the whole screen, mouse and tooltips off. Fills: lifted quest icons keep tooltips
     anywhere. None: the panel above the rows must be spread too.
+    **Seen (6d04cc2, user):** no tooltips - as gen.py's talent_row_lifts already found
+    (lifted pieces give none however shown). Steps 3-10: lifting icons draws (with every
+    link Unclipped) but never gives tooltips. Move the row, not the icon.
+  - **Step 11:** back to step 2, one change: the rows moved 200 up as a block (PlayerFrame0's
+    top; the rest are chained to it), the top rows above the panel. Fill there: rows can be
+    placed on our pane. Cut or blank: the panel's box holds them; move the panel (Ahli).
   - **Spazzo** (user, 2026-10-19): puts quests in his nameplates with no tooltips. He doesn't
     use Blizzard's quest icons at all: a generic UnitStatusBehaviorIcon per nameplate, pointed
     at each hero's quest-counter behaviour by a hand-kept list of ~400 entries
