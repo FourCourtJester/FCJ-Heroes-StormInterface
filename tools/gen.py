@@ -2091,10 +2091,12 @@ def pet_death_bindings(cfg, team_frame, i):
 # TEST 8 (2026-10-19): test 5's flames scaled x 0.986 both ways (the rim 71 px tall -> 70, the
 # angles kept), its top and centre kept (rim top 9.55% down the frame; centre 44.8% across on
 # blue, 57.5% on red); the wrapper back to the portrait's height.
+# Test 8 seen (8c907de): the glow "still there" - a 2 px line at y 1048-1049 (1080p), under the
+# energy bar (its fill ends 1045). TEST 9 (2026-10-19): the flames up 2 px (1.44 units), top too.
 ONFIRE_TEST = {2: "Embers Start", 4: "Inferno Start"}
 ONFIRE_LEVELS = {"OnFireEmbers": "Embers Start", "OnFireInferno": "Inferno Start", "OnFireEnd": "Death"}
 ONFIRE_PLACE = {"Left": -28.8, "Right": -32.5}  # the frame's left, by side; test 5: -30, -34
-ONFIRE_TOP, ONFIRE_W, ONFIRE_H = -7.16, 182.4, 101.6   # test 5: -7.3, 185, 103
+ONFIRE_TOP, ONFIRE_W, ONFIRE_H = -8.6, 182.4, 101.6    # test 8: -7.16; test 5: -7.3, 185, 103
 ONFIRE_CLIP = HeroCell.PORTRAIT_H - 1                  # the wrapper's bottom
 
 
