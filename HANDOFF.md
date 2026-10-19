@@ -543,23 +543,21 @@ from their plates (docs/blizzard-fixes.md).
      rim` is the bottom's flat silver, and the row frame and core bars take that one line;
    - the plates' bars fill the plate's bottom (1df8a76): down to 59, health 11 tall, mana 10,
      energy 6. Seen: the bars' ends' angle "definitely off now. Not by much" - below.
-   **The test build of 2026-10-19, not seen yet:**
-   - **the bars' ends at the plate's lean.** Blizzard's fill art has its slanted end baked in
-     and stretches to the rect, so the taller bars stood its end near-upright (3 px of run over
-     15 against the seam's 8). Now each bar has an AlphaMaskTexture cutting only its exposed
-     end at 0.54 (gen `plate_bar_masks`; one per bar, team and width, since the bars narrow
-     while the heroic shows). Check: the bars' ends parallel to the seams, with and without the
-     heroic showing, and full health (Blizzard's other fill) the same;
-   - **the plate heroics 5 units lower** (gen `HEROIC_DROP`; user: "move down to be on the
-     baseline of the resource bar; it might poke out a bit above health bar"): about 7 px, the
-     badge's bottom on the resource bar's. Check: no dead space under it;
-   - **the hexagon's rim one width all round** (user: "The upper half is weak looking"): the
-     backplate draws the hexagon's full rim inside the wings too, not just a fine edge;
-   - **the on-fire squares big and blinking** (user: "move them to somewhere i will very
-     obviously notice them"): 22 units across the portrait, blinking 4 s, held to 20 s;
-   - **quest try 4 out**, to see if the white line goes with it. If it stays, it's from
-     somewhere else. The quest column is empty meanwhile (its cells kept, the talents still
-     one cell right).
+   **The test build of 2026-10-19 (b07a109), seen 2026-10-19:** the hexagon's rim one width all
+   round - DONE (user: "hexagon looks crisp"). The bars' ends masked to the lean - still off
+   (user), so reverted, with the heroic drop that went with them (below). Quest try 4 out - the
+   white line stayed: ten short pieces at x ~132, one per row, so a row's own piece.
+   **The test build after it, not seen yet:**
+   - **the plates' bars at Blizzard's sizes again** (user: "If we can't match the angles, we
+     should revert bar sizes so the angles match"): health 8 tall, mana 7, energy 4, the
+     no-resource bar 14, to 53 as before 1df8a76; no masks; the heroic back on the cell's
+     bottom (its foot on the resource bar's again). The cell's bottom ~10 px is empty again;
+   - **Blizzard's slot 0 on the quest cell** (`TalentTreeIcon0`, every row, FCJH_InfoPane): it
+     hangs 30 left of talent 1 (talentsoverviewpanel.stormlayout:138), so it sat under the
+     portrait until the talents moved a cell right - likely the white line. Placed on the quest
+     cell as a test: if it shows the default quest, that's our quest icon; if it's an empty box,
+     hide it;
+   - the on-fire squares big and blinking (still unread).
    **TEMPORARY:** Blizzard's kill feed is hidden for testing (FCJH_Hidden, `FCJH_KeepHidden`'s
    KillLogPanel controller; user, 2026-10-16). Take it out before release.
 

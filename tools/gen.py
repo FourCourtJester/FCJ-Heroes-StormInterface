@@ -482,26 +482,26 @@ class HeroCell:
     # lies ~3 units past the plate's edge: under the next plate between heroes, but on the
     # row's end plates a dark strip poked ~4 px out of the row frame (user, 2026-10-18). Its
     # end comes 3 in (Blizzard's 126 -> 123, red's 2 -> 5).
-    # The bars run down to 59, not Blizzard's 53: their cell's bottom 8 units were empty under
-    # our row frame (user, 2026-10-18: fill it, rather than cut the plate and redo its slants).
-    # Health 8 -> 11 tall, mana 7 -> 10, energy 4 -> 6; mana and energy 3 lower, their outer
-    # ends 2 further along the slant (0.54 x 3), as the plate's edge goes.
+    # Blizzard's bar sizes (1df8a76 ran them down to 59 to fill the cell's empty bottom, but
+    # Blizzard's fill art carries its slanted end in the texture and stretches: taller, the ends
+    # stood near-upright, and a mask cutting them to the lean didn't fix it (b07a109; user,
+    # 2026-10-19: "If we can't match the angles, we should revert bar sizes").
     BLUE = {
-        "health_backing": (21, 36, 123, 59),    # status frame 105 wide, 2 in from the right
-        "health": (24, 38, 121, 49),            # 97 x 11, backing +2 down, 5 in from its right
-        "mana_backing": (28, 49, 127, 59),      # backing's left +7 .. right +4, bottom-aligned;
-                                                # Blizzard leaves its height to the art: 10 is ours
-        "energy": (32, 51, 125, 57),            # 93 x 6, 2 under health, 4 in from its left
+        "health_backing": (21, 36, 123, 53),    # status frame 105 wide, 2 in from the right
+        "health": (24, 38, 121, 46),            # 97 x 8, backing +2 down, 5 in from its right
+        "mana_backing": (26, 46, 127, 53),      # backing's left +5 .. right +1, bottom-aligned;
+                                                # Blizzard leaves its height to the art: 7 is ours
+        "energy": (30, 48, 125, 52),            # 95 x 4, 2 under health, 6 in from its left
         # a hero with no resource (no_resource_units): Blizzard's NoResourceTemplate, the health
-        # bar 103 x 20 across both bands, 1 in from the backing's right
-        "health_full": (22, 38, 125, 58),
+        # bar 103 x 14 across both bands, 1 in from the backing's right
+        "health_full": (22, 38, 125, 52),
     }
     RED = {
-        "health_backing": (5, 36, 107, 59),
-        "health": (8, 38, 105, 49),             # 2 in from the backing's right
-        "mana_backing": (2, 49, 100, 59),       # backing's left .. right -7
-        "energy": (4, 51, 97, 57),              # 8 left of the health bar
-        "health_full": (2, 38, 105, 58),        # 103 x 20, 2 in from the backing's right
+        "health_backing": (5, 36, 107, 53),
+        "health": (8, 38, 105, 46),             # 2 in from the backing's right
+        "mana_backing": (2, 46, 102, 53),       # backing's left .. right -5
+        "energy": (4, 48, 99, 52),              # 4 left of the health bar
+        "health_full": (2, 38, 105, 52),        # 103 x 14, 2 in from the backing's right
     }
     # Blizzard's death timer spans IconFrame +15 .. -10: centred 2.5 right of the middle
     DEATH_SHIFT = 2.5
@@ -973,61 +973,6 @@ def slant_texture(team, cut, colour, alpha=255, size=(512, 32), sub=4):
     return dds_bgra(w, h, b"".join(rows))
 
 
-def slant_end_texture(team, cut, size, sub=4):
-    """A white mask cut at one end only, the bar's exposed end: blue's left (\\, top flush
-    left), red's right (/, top flush right); `cut` as slant_texture's. The other end, under the
-    next plate's seam, stays square."""
-    w, h = size
-    rows = []
-    for ty in range(h):
-        row = bytearray()
-        for tx in range(w):
-            cover = 0.0
-            for s in range(sub):
-                run = cut * (ty + (s + 0.5) / sub) / h * w
-                left, right = (run, w) if team == "blue" else (0, w - run)
-                cover += max(0.0, min(tx + 1, right) - max(tx, left))
-            row += bytes((255, 255, 255, round(255 * cover / sub)))
-        rows.append(bytes(row))
-    return dds_bgra(w, h, b"".join(rows))
-
-
-# The plates' bars (user, 2026-10-19: "The angles are definitely off now"): Blizzard's fill art
-# carries its slanted end in the texture, drawn for its own bar heights, and the art stretches
-# to the rect - at our taller bars (1df8a76) its end stood near-upright (measured 3 px of run
-# over the health bar's 15, the seam's 8). A mask on each bar cuts the exposed end at the plate's
-# lean from the art's top corner, which sits on the rect's edge. Per width: the bars narrow
-# while the heroic shows (heroic_panel), and a stretched mask would lose the lean as well.
-_PLATE_MASKS = {}
-
-
-def plate_bar_masks(cfg):
-    """{name: (file name, dds bytes)}: the plate bars' masks, by bar (health, full, energy), team
-    and width (wide, narrow)."""
-    key = id(cfg)
-    if key not in _PLATE_MASKS:
-        c, k = HeroCell(cfg), cfg["hero_row"]["scale"]
-        px = 100 / Units(cfg)(100)
-        out = {}
-        for team in ("blue", "red"):
-            for bar, part, narrow in (("health", "health", NARROW), ("full", "health_full", NARROW_FULL),
-                                      ("energy", "energy", NARROW)):
-                l, t, r, b = c.team[team][part]
-                for width, w in (("wide", r - l), ("narrow", r - l - round(narrow * k))):
-                    h = b - t
-                    data = slant_end_texture(team, c.lean * h / w, bar_texture_size(cfg, w * px, h * px))
-                    digest = hashlib.sha1(data).hexdigest()[:8]
-                    out[name("plate", "mask", bar, team, width)] = (
-                        f"FCJH_PlateMask_{bar}_{team}_{width}_{digest}.dds", data)
-        _PLATE_MASKS[key] = out
-    return _PLATE_MASKS[key]
-
-
-def plate_mask(cfg, bar, team, width):
-    """A plate bar mask's texture path, for actions (plate_bar_masks)."""
-    return f"{TEXTURE_DIR}\\{plate_bar_masks(cfg)[name('plate', 'mask', bar, team, width)][0]}"
-
-
 # Our generated art is drawn for 2560 x 1440 and scaled down at 1080p, not the other way round
 # (user, 2026-10-06): each texture is its frame's size on a 1440p screen, so it's 1:1 there and
 # drawn at 75% at 1080p - a gentle shrink that filters cleanly (the core bar's 512-wide texture
@@ -1378,7 +1323,6 @@ def slant_bars(cfg):
         data = bytes(data)
         digest = hashlib.sha1(data).hexdigest()[:8]
         out[name("plate", "hit", team)] = (f"FCJH_PlateHit_{team}_{digest}.dds", data)
-    out.update(plate_bar_masks(cfg))
     return out
 
 
@@ -1672,10 +1616,6 @@ def pet_death_labels(team, c):
 # the chrome's divider and drew over it and the next cell's bars (Tracer, Varian: user,
 # 2026-10-16; measured 3 px of divider and the bars' own 4 px gap before it).
 HEROIC_CLEAR = 6
-# ...and HEROIC_DROP below the cell's bottom: on Blizzard's edge the gold frame's foot stood
-# ~7 px over the taller bars' (1df8a76) baseline, dead space under it (user, 2026-10-19: "move
-# down to be on the baseline of the resource bar; it might poke out a bit above health bar")
-HEROIC_DROP = 5
 HEROIC_PANEL = {"blue": (128 - 48 - HEROIC_CLEAR, 48 - 3 - 38), "red": (HEROIC_CLEAR, 3)}
 
 
@@ -1691,12 +1631,12 @@ def heroic_frame_rect(cfg, team):
 
 def heroic_icon_rect(cfg, team):
     """The heroic icon's square in cell units (left, top, right, bottom): 38 x 38, at the
-    panel's left + its inset, HEROIC_DROP under the cell's bottom edge."""
+    panel's left + its inset, on the cell's bottom edge."""
     k = cfg["hero_row"]["scale"]
     s = lambda v: round(v * k)
     h = HeroCell(cfg).h
     pl, il = HEROIC_PANEL[team]
-    return s(pl + il), h - s(38 - HEROIC_DROP), s(pl + il + 38), h + s(HEROIC_DROP)
+    return s(pl + il), h - s(38), s(pl + il + 38), h
 
 
 # While it shows, Blizzard narrows the bars from the left (right edge fixed): health 97 -> 69,
@@ -1946,10 +1886,6 @@ def heroic_panel(cfg, team_frame, i):
         n, r_, sm = ("_Narrow" if narrow else ""), ("" if blue else "_Right"), ("" if full else "_Sm")
         out += (f'{t10}<Action type="SetProperty" frame="{cell}/HeroStatus/HealthBar" Texture="@UI/HUD_TopBar_Team_HeroFrame_HealthFill{sm}{n}{r_}"/>\n'
                 f'{t10}<Action type="SetProperty" frame="{cell}/HeroStatus/FCJH_Resource" Texture="@UI/HUD_TopBar_Team_HeroFrame_ManaFill{n}{r_}"/>\n')
-        # ...each cut to the plate's lean at its width (plate_bar_masks)
-        width = "narrow" if narrow else "wide"
-        out += (f'{t10}<Action type="SetProperty" frame="{cell}/HeroStatus/HealthBar" AlphaMaskTexture="{plate_mask(cfg, "full" if full else "health", team, width)}"/>\n'
-                f'{t10}<Action type="SetProperty" frame="{cell}/HeroStatus/FCJH_Resource" AlphaMaskTexture="{plate_mask(cfg, "energy", team, width)}"/>\n')
         # the Vikings' three bars share the narrowed width (trackers: tools/gen.py trackers)
         if narrow:
             hl, hr = (hl, hr + cut_) if blue else (hl + cut_, hr)
@@ -1971,7 +1907,7 @@ def heroic_panel(cfg, team_frame, i):
     return f"""
 							<!-- the heroic, Blizzard's in-game panel mirrored (tools/gen.py heroic_panel) -->
 							<Frame type="Frame" name="FCJH_HeroicPanel">
-{rect(s(pl), c.h - s(38 - HEROIC_DROP), s(pl + 48), c.h + s(HEROIC_DROP))}								<Alpha val="0"/>
+{rect(s(pl), c.h - s(38), s(pl + 48), c.h)}								<Alpha val="0"/>
 								<RenderPriority val="529"/>
 								<Unclipped val="true"/>
 								<AcceptsMouse val="false"/>
@@ -2456,7 +2392,6 @@ def hero_cell_template(team, c, cfg):
 				<Width val="0"/>
 				<Height val="0"/>
 				<Texture val="@UI/HUD_TopBar_Team_HeroFrame_ManaFill{suffix}"/>
-				<AlphaMaskTexture val="#{name("plate", "mask", "energy", team, "wide")}"/>  <!-- the plate's lean (plate_bar_masks) -->
 				<Tiled val="true"/>
 				<BarCount val="1"/>
 				<ColorStyle val="StandardEnergy" index="0"/>
@@ -2470,7 +2405,6 @@ def hero_cell_template(team, c, cfg):
 			<Frame type="Frame" name="ImageMaskFrame"><AlphaMaskSiblings val="false"/></Frame>
 			<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">
 				<Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm{suffix}"/>{tiled_segments(chr(10) + chr(9) * 4)}
-				<AlphaMaskTexture val="#{name("plate", "mask", "health", team, "wide")}"/>  <!-- the plate's lean (plate_bar_masks) -->
 			</Frame>{trackers(team, g["health"])}{health_backing}{mana_backing}{energy}"""
     if blue:  # red inherits these unchanged
         cc_top, cc_bottom = c.cc_band
