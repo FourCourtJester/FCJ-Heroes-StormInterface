@@ -120,7 +120,15 @@
      400 taller (823 to 1223; it's centred, so its top goes 200 up), and PlayerFrame0 back to
      Blizzard's +5 under the sort buttons, which go up with the box's top - so the rows sit
      about where step 12 put them, now inside the box. Murky's tooltip fills: the box is what
-     catches the mouse, and sizing it (art hidden later) puts working rows anywhere. -->
+     catches the mouse, and sizing it (art hidden later) puts working rows anywhere.
+     Seen (user, 2026-10-19, 8ceaed0): "Both have tooltips" - Murky's and Nova's. The box
+     (HeroLeaderPanelContainer's size) is what the mouse answers inside; grown over the
+     rows, every row's quest tooltip works.
+
+     Step 14, one change, the first towards our ctrl-1 pane: the panel's background (the
+     container's BackgroundImage: mask, glass blur, image) at Alpha 0. Rows over the bare
+     screen with tooltips: the art can go and the box stay. Tooltips gone: the background
+     (or the container's HitTestFrame behind it) is part of what takes the mouse. -->
 <Desc>
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<Frame type="Frame" name="UIContainer">
@@ -134,6 +142,9 @@
 					<Frame type="Frame" name="HeroLeaderPanelContainer">
 						<Visible val="true"/>
 						<Height val="1223"/>
+						<Frame type="Frame" name="BackgroundImage">
+							<Alpha val="0"/>
+						</Frame>
 						<Frame type="TabControl" name="TabControl">
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame0">
 								<Anchor side="Top" relative="$parent/StatsContainerFrame/SortButton0" pos="Max" offset="5"/>

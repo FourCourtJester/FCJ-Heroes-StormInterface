@@ -258,6 +258,10 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
     tooltips answer only inside HeroLeaderPanelContainer (Blizzard's fixed 1362x823).
   - **Step 13:** grow the box over the rows: container Height 823 to 1223 (centred, top 200
     up), PlayerFrame0 back to +5. Murky's tooltip fills: size the box, rows work anywhere.
+    **Seen (8ceaed0, user):** "Both have tooltips". **The fix's core:** quest tooltips work
+    in a copy of the leader panel wherever its box (HeroLeaderPanelContainer's Width/Height)
+    covers the rows. Move or grow the box over the rows; never move rows or icons out of it.
+  - **Step 14:** the panel's background (BackgroundImage) at Alpha 0, rows over bare screen.
   - **Spazzo** (user, 2026-10-19): puts quests in his nameplates with no tooltips. He doesn't
     use Blizzard's quest icons at all: a generic UnitStatusBehaviorIcon per nameplate, pointed
     at each hero's quest-counter behaviour by a hand-kept list of ~400 entries
