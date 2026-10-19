@@ -101,7 +101,15 @@
      to it and follow. The top rows land above the panel, the rest inside it. Rows above the
      panel draw and fill: rows can be placed onto our ctrl-1 pane. Cut at the panel's top,
      or no tooltips there: the panel's box holds the rows, and the panel itself must move
-     (Ahli's way). -->
+     (Ahli's way).
+     Seen (user, 2026-10-19, 35d160b, screenshot): the rows moved up but cut at the panel's
+     top (Uther and Murky hidden above it, Zarya half cut); Nova's row, moved but still
+     inside, "works" - a moved row keeps its quest tooltips.
+
+     Step 12, one change: each row (PlayerFrame0-9) Unclipped, as step 8 freed the icon's
+     chain. Rows above the panel drawn, tooltips filling: rows can go anywhere with working
+     quests. Still cut: the panel's own frames (TabControl, HeroLeaderPanelContainer) need
+     it too. -->
 <Desc>
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<Frame type="Frame" name="UIContainer">
@@ -117,7 +125,17 @@
 						<Frame type="TabControl" name="TabControl">
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame0">
 								<Anchor side="Top" relative="$parent/StatsContainerFrame/SortButton0" pos="Max" offset="-195"/>
+								<Unclipped val="true"/>
 							</Frame>
+							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame1"><Unclipped val="true"/></Frame>
+							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame2"><Unclipped val="true"/></Frame>
+							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame3"><Unclipped val="true"/></Frame>
+							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame4"><Unclipped val="true"/></Frame>
+							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame5"><Unclipped val="true"/></Frame>
+							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame6"><Unclipped val="true"/></Frame>
+							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame7"><Unclipped val="true"/></Frame>
+							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame8"><Unclipped val="true"/></Frame>
+							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame9"><Unclipped val="true"/></Frame>
 						</Frame>
 					</Frame>
 				</Frame>

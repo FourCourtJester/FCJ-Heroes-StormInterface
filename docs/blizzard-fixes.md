@@ -249,6 +249,10 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
   - **Step 11:** back to step 2, one change: the rows moved 200 up as a block (PlayerFrame0's
     top; the rest are chained to it), the top rows above the panel. Fill there: rows can be
     placed on our pane. Cut or blank: the panel's box holds them; move the panel (Ahli).
+    **Seen (35d160b, user, screenshot):** rows cut at the panel's top; Nova's row, moved but
+    inside, works. A moved row keeps its quest tooltips.
+  - **Step 12:** each row Unclipped. Drawn above the panel with tooltips: rows go anywhere.
+    Still cut: the panel's own frames need it too.
   - **Spazzo** (user, 2026-10-19): puts quests in his nameplates with no tooltips. He doesn't
     use Blizzard's quest icons at all: a generic UnitStatusBehaviorIcon per nameplate, pointed
     at each hero's quest-counter behaviour by a hand-kept list of ~400 entries
