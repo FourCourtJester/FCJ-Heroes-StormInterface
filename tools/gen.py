@@ -2071,9 +2071,10 @@ def pet_death_bindings(cfg, team_frame, i):
 # Test 3 (ae9319d, seen 2026-10-19): odd plates Blizzard's Left rim, even its Right, always on.
 # The Left rim on a red plate (Hogger) slants against the plate: "the criss cross pattern is at
 # odds for sure".
-# TEST 4 (2026-10-19): one plate a team, the middle (3), always on, each team its own side (blue
-# Left, red Right), the rest off, to look at without interference.
-ONFIRE_TEST = 3
+# Test 4 (dd38ce0): one plate a team, the middle (3), always on (Inferno), each team its own side
+# (blue Left, red Right), the rest off.
+# TEST 5 (2026-10-19): Embers on plate 2 of each team, Inferno on plate 4, always on, the rest off.
+ONFIRE_TEST = {2: "Embers Start", 4: "Inferno Start"}
 ONFIRE_LEVELS = {"OnFireEmbers": "Embers Start", "OnFireInferno": "Inferno Start", "OnFireEnd": "Death"}
 ONFIRE_PLACE = {"Left": -30, "Right": -34}  # the frame's left, by side
 ONFIRE_TOP, ONFIRE_W, ONFIRE_H = -7.3, 185, 103
@@ -2085,7 +2086,7 @@ def onfire_flames(cfg, blue, cell, i):
     s = lambda v: round(v * k)
     t = "\t" * 7
     team, other = ("Ally", "Enemy") if blue else ("Enemy", "Ally")
-    if ONFIRE_TEST and i != ONFIRE_TEST:
+    if ONFIRE_TEST and i not in ONFIRE_TEST:
         return ""
     side, away = ("Left", "Right") if blue else ("Right", "Left")
     left = ONFIRE_PLACE[side]
@@ -2116,7 +2117,7 @@ def onfire_flames(cfg, blue, cell, i):
 {t}\t\t\t\t<Key type="Bool" time="0" value="True"/>
 {t}\t\t\t</Controller>
 {t}\t\t\t<Controller type="Cutscene" end="Stop">{filters}
-{t}\t\t\t\t<Key type="Cutscene" time="0" action="Bookmark" bookmark="Inferno Start"/>
+{t}\t\t\t\t<Key type="Cutscene" time="0" action="Bookmark" bookmark="{ONFIRE_TEST[i]}"/>
 {t}\t\t\t\t<Key type="Cutscene" time="0" action="Play"/>
 {t}\t\t\t</Controller>
 {t}\t\t</Animation>"""
