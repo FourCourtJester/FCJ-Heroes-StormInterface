@@ -15,7 +15,14 @@
      Step 2, one change: opened as Ahli's (and all eight tries) were, not Blizzard's way. Its
      box on from load (HeroLeaderPanelContainer Visible), the toggle fading it in and sliding
      it from 4400 below (and Init / InitEnd, as Ahli's), no Show event sent. Blank: the panel
-     must be sent Show. -->
+     must be sent Show.
+     Seen (user, 2026-10-19, 5d1ae3f): on screen from load by itself, "icons still load.
+     tooltips are still attached". No Show needed.
+
+     Step 3, one change: every row's two quest icons lifted out of the panel, re-anchored in a
+     line across the top of the screen (blue's five, then red's), the panel left as it is.
+     Fills there: an icon keeps its tooltip away from its panel (the user's idea: an
+     off-screen copy, its icons lifted onto ours). -->
 <Desc>
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<Frame type="Frame" name="UIContainer">
@@ -28,6 +35,268 @@
 					<RenderPriority val="520"/>
 					<Frame type="Frame" name="HeroLeaderPanelContainer">
 						<Visible val="true"/>
+						<Frame type="TabControl" name="TabControl">
+							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame0">
+								<Frame type="Frame" name="TalentsContainerFrame">
+									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+												<Frame type="Frame" name="QuestContainerContainerFrame">
+													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
+														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
+															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
+															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="100"/>
+															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
+															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="168"/>
+														</Frame>
+														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1">
+															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
+															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="175"/>
+															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
+															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="243"/>
+														</Frame>
+													</Frame>
+												</Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+							</Frame>
+							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame1">
+								<Frame type="Frame" name="TalentsContainerFrame">
+									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+												<Frame type="Frame" name="QuestContainerContainerFrame">
+													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
+														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
+															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
+															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="270"/>
+															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
+															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="338"/>
+														</Frame>
+														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1">
+															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
+															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="345"/>
+															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
+															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="413"/>
+														</Frame>
+													</Frame>
+												</Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+							</Frame>
+							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame2">
+								<Frame type="Frame" name="TalentsContainerFrame">
+									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+												<Frame type="Frame" name="QuestContainerContainerFrame">
+													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
+														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
+															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
+															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="440"/>
+															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
+															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="508"/>
+														</Frame>
+														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1">
+															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
+															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="515"/>
+															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
+															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="583"/>
+														</Frame>
+													</Frame>
+												</Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+							</Frame>
+							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame3">
+								<Frame type="Frame" name="TalentsContainerFrame">
+									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+												<Frame type="Frame" name="QuestContainerContainerFrame">
+													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
+														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
+															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
+															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="610"/>
+															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
+															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="678"/>
+														</Frame>
+														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1">
+															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
+															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="685"/>
+															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
+															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="753"/>
+														</Frame>
+													</Frame>
+												</Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+							</Frame>
+							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame4">
+								<Frame type="Frame" name="TalentsContainerFrame">
+									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+												<Frame type="Frame" name="QuestContainerContainerFrame">
+													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
+														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
+															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
+															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="780"/>
+															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
+															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="848"/>
+														</Frame>
+														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1">
+															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
+															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="855"/>
+															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
+															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="923"/>
+														</Frame>
+													</Frame>
+												</Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+							</Frame>
+							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame5">
+								<Frame type="Frame" name="TalentsContainerFrame">
+									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+												<Frame type="Frame" name="QuestContainerContainerFrame">
+													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
+														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
+															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
+															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="950"/>
+															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
+															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1018"/>
+														</Frame>
+														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1">
+															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
+															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1025"/>
+															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
+															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1093"/>
+														</Frame>
+													</Frame>
+												</Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+							</Frame>
+							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame6">
+								<Frame type="Frame" name="TalentsContainerFrame">
+									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+												<Frame type="Frame" name="QuestContainerContainerFrame">
+													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
+														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
+															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
+															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1120"/>
+															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
+															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1188"/>
+														</Frame>
+														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1">
+															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
+															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1195"/>
+															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
+															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1263"/>
+														</Frame>
+													</Frame>
+												</Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+							</Frame>
+							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame7">
+								<Frame type="Frame" name="TalentsContainerFrame">
+									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+												<Frame type="Frame" name="QuestContainerContainerFrame">
+													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
+														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
+															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
+															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1290"/>
+															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
+															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1358"/>
+														</Frame>
+														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1">
+															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
+															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1365"/>
+															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
+															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1433"/>
+														</Frame>
+													</Frame>
+												</Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+							</Frame>
+							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame8">
+								<Frame type="Frame" name="TalentsContainerFrame">
+									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+												<Frame type="Frame" name="QuestContainerContainerFrame">
+													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
+														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
+															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
+															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1460"/>
+															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
+															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1528"/>
+														</Frame>
+														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1">
+															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
+															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1535"/>
+															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
+															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1603"/>
+														</Frame>
+													</Frame>
+												</Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+							</Frame>
+							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame9">
+								<Frame type="Frame" name="TalentsContainerFrame">
+									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+												<Frame type="Frame" name="QuestContainerContainerFrame">
+													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
+														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
+															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
+															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1630"/>
+															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
+															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1698"/>
+														</Frame>
+														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1">
+															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
+															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1705"/>
+															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
+															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1773"/>
+														</Frame>
+													</Frame>
+												</Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+							</Frame>
+						</Frame>
 					</Frame>
 				</Frame>
 				<Frame type="ToggleControl" name="FCJH_QTestToggle">

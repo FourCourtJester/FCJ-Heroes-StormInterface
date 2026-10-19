@@ -203,6 +203,11 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
   - **Step 2:** one change, opened as Ahli's and all eight tries were: its box on from load,
     the toggle fading it in and sliding it up from 4400 (with Init / InitEnd), no Show event.
     Blank: the panel must be sent Show.
+    **Seen (5d1ae3f, user):** on screen from load by itself; icons load, tooltips fill. No
+    Show needed.
+  - **Step 3:** one change, every row's two quest icons lifted out of the panel onto a line
+    across the top of the screen, the panel as it is. Fills there: an icon keeps its tooltip
+    away from its panel, so an off-screen copy can lend its icons to our pane (user's idea).
 
 ### Hogger's rage drawn as mana
 - **Blizzard's:** the target panel's per-hero resource colours (`HeroResourceStates`,
