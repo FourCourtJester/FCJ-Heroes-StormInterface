@@ -2068,11 +2068,12 @@ def pet_death_bindings(cfg, team_frame, i):
 # Test 3 seen-before (c4beaec, Inferno on Hogger: "the red outline is *mostly* good"): the top
 # ~2 px low, the right edge leaning less than the chrome's. Top: raised ~1.8 units, bottom kept
 # (top -5.5 -> -7.3, height 100 -> 103).
-# TEST 3 (2026-10-19): the right edge. The cutscene's Left folder plays the party frame's model,
-# its Right folder the _Enemy one (Blizzard's right-hand team) - a different rim. Always on
-# (Inferno), no fire logic, both teams: odd plates Left (at Blizzard's left-team place, 30 left),
-# even plates Right (34 left). Which right edge leans like the plate's?
-ONFIRE_TEST = True
+# Test 3 (ae9319d, seen 2026-10-19): odd plates Blizzard's Left rim, even its Right, always on.
+# The Left rim on a red plate (Hogger) slants against the plate: "the criss cross pattern is at
+# odds for sure".
+# TEST 4 (2026-10-19): one plate a team, the middle (3), always on, each team its own side (blue
+# Left, red Right), the rest off, to look at without interference.
+ONFIRE_TEST = 3
 ONFIRE_LEVELS = {"OnFireEmbers": "Embers Start", "OnFireInferno": "Inferno Start", "OnFireEnd": "Death"}
 ONFIRE_PLACE = {"Left": -30, "Right": -34}  # the frame's left, by side
 ONFIRE_TOP, ONFIRE_W, ONFIRE_H = -7.3, 185, 103
@@ -2084,7 +2085,9 @@ def onfire_flames(cfg, blue, cell, i):
     s = lambda v: round(v * k)
     t = "\t" * 7
     team, other = ("Ally", "Enemy") if blue else ("Enemy", "Ally")
-    side, away = ("Left", "Right") if (i % 2 if ONFIRE_TEST else blue) else ("Right", "Left")
+    if ONFIRE_TEST and i != ONFIRE_TEST:
+        return ""
+    side, away = ("Left", "Right") if blue else ("Right", "Left")
     left = ONFIRE_PLACE[side]
     filters = "".join(f'\n{t}\t\t\t\t<Key type="Cutscene" time="0" action="{act}" filter="{f}"/>'
                       for act, f in (("AddFilter", team), ("RemoveFilter", other), ("AddFilter", side),
