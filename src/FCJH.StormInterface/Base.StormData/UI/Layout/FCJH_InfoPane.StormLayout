@@ -154,8 +154,11 @@
 					     every row alike - which also un-mirrors red (Blizzard's red template anchors from the
 					     right), so every row reads portrait-first.
 					     The hero's default quest (user, 2026-10-16) takes talent 1's place, and every talent
-					     moves one cell (58) right. The cell here (FCJH_QuestCell0-9) is only a place: the
-					     quest icon was FCJH_QuestPanel's (try 4, out for now: below). -->
+					     moves one cell (58) right. Blizzard's own baseline-quest icon (the leader panel's
+					     BaseQuestIcon0), whole so its quest ring shows (user, 2026-10-16), without its
+					     talent border and background. Its tooltip is Blizzard's shared one, blank until
+					     the Tab panel has been opened, and its count doesn't update (docs/blizzard-fixes.md;
+					     back 2026-10-19 after try 4's leader panel showed nothing). -->
 					<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame0">
 						<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
@@ -166,7 +169,7 @@
 							<Height val="33"/>
 						</Frame>
 						<Frame type="PlayerHeroSelectedTalentTreeFrame" name="TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame">
-							<Frame type="Frame" name="FCJH_QuestCell">
+							<Frame type="UnitStatusBaselineQuestIcon" name="FCJH_BaseQuestIcon" template="GameStatsPanel/UnitStatusBaselineQuestIconTemplate">
 								<!-- Blizzard's 68 whole, its 40 picture (14 in) on the 40 cell at 134, 8 -->
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="120"/>
 								<Anchor side="Top"    relative="$parent" pos="Min" offset="-6"/>
@@ -174,8 +177,19 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Width val="68"/>
 								<Height val="68"/>
-								<Handle val="FCJH_QuestCell0"/>
-								<AcceptsMouse val="false"/>
+								<QuestIndex val="0"/>
+								<RenderPriority val="#RenderPriorityLevel_3"/>
+								<Frame type="Image" name="IconBackgroundImage"><Alpha val="0"/></Frame>
+								<Frame type="Image" name="IconBorderImage"><Alpha val="0"/></Frame>
+								<StateGroup name="QuestState">
+									<State name="QuestSelected"/>
+									<State name="QuestAvailable">
+										<Action type="SetProperty" frame="$this/IconImage" texture="@UI/Storm_UI_InGame_Leader_Talent_Unselected"/>
+									</State>
+									<State name="QuestNotAvailable">
+										<Action type="SetProperty" frame="$this/IconImage" visible="false"/>
+									</State>
+								</StateGroup>
 							</Frame>
 							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="192"/>
@@ -245,7 +259,7 @@
 							<Height val="33"/>
 						</Frame>
 						<Frame type="PlayerHeroSelectedTalentTreeFrame" name="TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame">
-							<Frame type="Frame" name="FCJH_QuestCell">
+							<Frame type="UnitStatusBaselineQuestIcon" name="FCJH_BaseQuestIcon" template="GameStatsPanel/UnitStatusBaselineQuestIconTemplate">
 								<!-- Blizzard's 68 whole, its 40 picture (14 in) on the 40 cell at 134, 8 -->
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="120"/>
 								<Anchor side="Top"    relative="$parent" pos="Min" offset="-6"/>
@@ -253,8 +267,19 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Width val="68"/>
 								<Height val="68"/>
-								<Handle val="FCJH_QuestCell1"/>
-								<AcceptsMouse val="false"/>
+								<QuestIndex val="0"/>
+								<RenderPriority val="#RenderPriorityLevel_3"/>
+								<Frame type="Image" name="IconBackgroundImage"><Alpha val="0"/></Frame>
+								<Frame type="Image" name="IconBorderImage"><Alpha val="0"/></Frame>
+								<StateGroup name="QuestState">
+									<State name="QuestSelected"/>
+									<State name="QuestAvailable">
+										<Action type="SetProperty" frame="$this/IconImage" texture="@UI/Storm_UI_InGame_Leader_Talent_Unselected"/>
+									</State>
+									<State name="QuestNotAvailable">
+										<Action type="SetProperty" frame="$this/IconImage" visible="false"/>
+									</State>
+								</StateGroup>
 							</Frame>
 							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="192"/>
@@ -324,7 +349,7 @@
 							<Height val="33"/>
 						</Frame>
 						<Frame type="PlayerHeroSelectedTalentTreeFrame" name="TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame">
-							<Frame type="Frame" name="FCJH_QuestCell">
+							<Frame type="UnitStatusBaselineQuestIcon" name="FCJH_BaseQuestIcon" template="GameStatsPanel/UnitStatusBaselineQuestIconTemplate">
 								<!-- Blizzard's 68 whole, its 40 picture (14 in) on the 40 cell at 134, 8 -->
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="120"/>
 								<Anchor side="Top"    relative="$parent" pos="Min" offset="-6"/>
@@ -332,8 +357,19 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Width val="68"/>
 								<Height val="68"/>
-								<Handle val="FCJH_QuestCell2"/>
-								<AcceptsMouse val="false"/>
+								<QuestIndex val="0"/>
+								<RenderPriority val="#RenderPriorityLevel_3"/>
+								<Frame type="Image" name="IconBackgroundImage"><Alpha val="0"/></Frame>
+								<Frame type="Image" name="IconBorderImage"><Alpha val="0"/></Frame>
+								<StateGroup name="QuestState">
+									<State name="QuestSelected"/>
+									<State name="QuestAvailable">
+										<Action type="SetProperty" frame="$this/IconImage" texture="@UI/Storm_UI_InGame_Leader_Talent_Unselected"/>
+									</State>
+									<State name="QuestNotAvailable">
+										<Action type="SetProperty" frame="$this/IconImage" visible="false"/>
+									</State>
+								</StateGroup>
 							</Frame>
 							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="192"/>
@@ -403,7 +439,7 @@
 							<Height val="33"/>
 						</Frame>
 						<Frame type="PlayerHeroSelectedTalentTreeFrame" name="TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame">
-							<Frame type="Frame" name="FCJH_QuestCell">
+							<Frame type="UnitStatusBaselineQuestIcon" name="FCJH_BaseQuestIcon" template="GameStatsPanel/UnitStatusBaselineQuestIconTemplate">
 								<!-- Blizzard's 68 whole, its 40 picture (14 in) on the 40 cell at 134, 8 -->
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="120"/>
 								<Anchor side="Top"    relative="$parent" pos="Min" offset="-6"/>
@@ -411,8 +447,19 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Width val="68"/>
 								<Height val="68"/>
-								<Handle val="FCJH_QuestCell3"/>
-								<AcceptsMouse val="false"/>
+								<QuestIndex val="0"/>
+								<RenderPriority val="#RenderPriorityLevel_3"/>
+								<Frame type="Image" name="IconBackgroundImage"><Alpha val="0"/></Frame>
+								<Frame type="Image" name="IconBorderImage"><Alpha val="0"/></Frame>
+								<StateGroup name="QuestState">
+									<State name="QuestSelected"/>
+									<State name="QuestAvailable">
+										<Action type="SetProperty" frame="$this/IconImage" texture="@UI/Storm_UI_InGame_Leader_Talent_Unselected"/>
+									</State>
+									<State name="QuestNotAvailable">
+										<Action type="SetProperty" frame="$this/IconImage" visible="false"/>
+									</State>
+								</StateGroup>
 							</Frame>
 							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="192"/>
@@ -482,7 +529,7 @@
 							<Height val="33"/>
 						</Frame>
 						<Frame type="PlayerHeroSelectedTalentTreeFrame" name="TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame">
-							<Frame type="Frame" name="FCJH_QuestCell">
+							<Frame type="UnitStatusBaselineQuestIcon" name="FCJH_BaseQuestIcon" template="GameStatsPanel/UnitStatusBaselineQuestIconTemplate">
 								<!-- Blizzard's 68 whole, its 40 picture (14 in) on the 40 cell at 134, 8 -->
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="120"/>
 								<Anchor side="Top"    relative="$parent" pos="Min" offset="-6"/>
@@ -490,8 +537,19 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Width val="68"/>
 								<Height val="68"/>
-								<Handle val="FCJH_QuestCell4"/>
-								<AcceptsMouse val="false"/>
+								<QuestIndex val="0"/>
+								<RenderPriority val="#RenderPriorityLevel_3"/>
+								<Frame type="Image" name="IconBackgroundImage"><Alpha val="0"/></Frame>
+								<Frame type="Image" name="IconBorderImage"><Alpha val="0"/></Frame>
+								<StateGroup name="QuestState">
+									<State name="QuestSelected"/>
+									<State name="QuestAvailable">
+										<Action type="SetProperty" frame="$this/IconImage" texture="@UI/Storm_UI_InGame_Leader_Talent_Unselected"/>
+									</State>
+									<State name="QuestNotAvailable">
+										<Action type="SetProperty" frame="$this/IconImage" visible="false"/>
+									</State>
+								</StateGroup>
 							</Frame>
 							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="192"/>
@@ -561,7 +619,7 @@
 							<Height val="33"/>
 						</Frame>
 						<Frame type="PlayerHeroSelectedTalentTreeFrame" name="TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame">
-							<Frame type="Frame" name="FCJH_QuestCell">
+							<Frame type="UnitStatusBaselineQuestIcon" name="FCJH_BaseQuestIcon" template="GameStatsPanel/UnitStatusBaselineQuestIconTemplate">
 								<!-- Blizzard's 68 whole, its 40 picture (14 in) on the 40 cell at 134, 8 -->
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="120"/>
 								<Anchor side="Top"    relative="$parent" pos="Min" offset="-6"/>
@@ -569,8 +627,19 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Width val="68"/>
 								<Height val="68"/>
-								<Handle val="FCJH_QuestCell5"/>
-								<AcceptsMouse val="false"/>
+								<QuestIndex val="0"/>
+								<RenderPriority val="#RenderPriorityLevel_3"/>
+								<Frame type="Image" name="IconBackgroundImage"><Alpha val="0"/></Frame>
+								<Frame type="Image" name="IconBorderImage"><Alpha val="0"/></Frame>
+								<StateGroup name="QuestState">
+									<State name="QuestSelected"/>
+									<State name="QuestAvailable">
+										<Action type="SetProperty" frame="$this/IconImage" texture="@UI/Storm_UI_InGame_Leader_Talent_Unselected"/>
+									</State>
+									<State name="QuestNotAvailable">
+										<Action type="SetProperty" frame="$this/IconImage" visible="false"/>
+									</State>
+								</StateGroup>
 							</Frame>
 							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="192"/>
@@ -640,7 +709,7 @@
 							<Height val="33"/>
 						</Frame>
 						<Frame type="PlayerHeroSelectedTalentTreeFrame" name="TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame">
-							<Frame type="Frame" name="FCJH_QuestCell">
+							<Frame type="UnitStatusBaselineQuestIcon" name="FCJH_BaseQuestIcon" template="GameStatsPanel/UnitStatusBaselineQuestIconTemplate">
 								<!-- Blizzard's 68 whole, its 40 picture (14 in) on the 40 cell at 134, 8 -->
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="120"/>
 								<Anchor side="Top"    relative="$parent" pos="Min" offset="-6"/>
@@ -648,8 +717,19 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Width val="68"/>
 								<Height val="68"/>
-								<Handle val="FCJH_QuestCell6"/>
-								<AcceptsMouse val="false"/>
+								<QuestIndex val="0"/>
+								<RenderPriority val="#RenderPriorityLevel_3"/>
+								<Frame type="Image" name="IconBackgroundImage"><Alpha val="0"/></Frame>
+								<Frame type="Image" name="IconBorderImage"><Alpha val="0"/></Frame>
+								<StateGroup name="QuestState">
+									<State name="QuestSelected"/>
+									<State name="QuestAvailable">
+										<Action type="SetProperty" frame="$this/IconImage" texture="@UI/Storm_UI_InGame_Leader_Talent_Unselected"/>
+									</State>
+									<State name="QuestNotAvailable">
+										<Action type="SetProperty" frame="$this/IconImage" visible="false"/>
+									</State>
+								</StateGroup>
 							</Frame>
 							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="192"/>
@@ -719,7 +799,7 @@
 							<Height val="33"/>
 						</Frame>
 						<Frame type="PlayerHeroSelectedTalentTreeFrame" name="TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame">
-							<Frame type="Frame" name="FCJH_QuestCell">
+							<Frame type="UnitStatusBaselineQuestIcon" name="FCJH_BaseQuestIcon" template="GameStatsPanel/UnitStatusBaselineQuestIconTemplate">
 								<!-- Blizzard's 68 whole, its 40 picture (14 in) on the 40 cell at 134, 8 -->
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="120"/>
 								<Anchor side="Top"    relative="$parent" pos="Min" offset="-6"/>
@@ -727,8 +807,19 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Width val="68"/>
 								<Height val="68"/>
-								<Handle val="FCJH_QuestCell7"/>
-								<AcceptsMouse val="false"/>
+								<QuestIndex val="0"/>
+								<RenderPriority val="#RenderPriorityLevel_3"/>
+								<Frame type="Image" name="IconBackgroundImage"><Alpha val="0"/></Frame>
+								<Frame type="Image" name="IconBorderImage"><Alpha val="0"/></Frame>
+								<StateGroup name="QuestState">
+									<State name="QuestSelected"/>
+									<State name="QuestAvailable">
+										<Action type="SetProperty" frame="$this/IconImage" texture="@UI/Storm_UI_InGame_Leader_Talent_Unselected"/>
+									</State>
+									<State name="QuestNotAvailable">
+										<Action type="SetProperty" frame="$this/IconImage" visible="false"/>
+									</State>
+								</StateGroup>
 							</Frame>
 							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="192"/>
@@ -798,7 +889,7 @@
 							<Height val="33"/>
 						</Frame>
 						<Frame type="PlayerHeroSelectedTalentTreeFrame" name="TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame">
-							<Frame type="Frame" name="FCJH_QuestCell">
+							<Frame type="UnitStatusBaselineQuestIcon" name="FCJH_BaseQuestIcon" template="GameStatsPanel/UnitStatusBaselineQuestIconTemplate">
 								<!-- Blizzard's 68 whole, its 40 picture (14 in) on the 40 cell at 134, 8 -->
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="120"/>
 								<Anchor side="Top"    relative="$parent" pos="Min" offset="-6"/>
@@ -806,8 +897,19 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Width val="68"/>
 								<Height val="68"/>
-								<Handle val="FCJH_QuestCell8"/>
-								<AcceptsMouse val="false"/>
+								<QuestIndex val="0"/>
+								<RenderPriority val="#RenderPriorityLevel_3"/>
+								<Frame type="Image" name="IconBackgroundImage"><Alpha val="0"/></Frame>
+								<Frame type="Image" name="IconBorderImage"><Alpha val="0"/></Frame>
+								<StateGroup name="QuestState">
+									<State name="QuestSelected"/>
+									<State name="QuestAvailable">
+										<Action type="SetProperty" frame="$this/IconImage" texture="@UI/Storm_UI_InGame_Leader_Talent_Unselected"/>
+									</State>
+									<State name="QuestNotAvailable">
+										<Action type="SetProperty" frame="$this/IconImage" visible="false"/>
+									</State>
+								</StateGroup>
 							</Frame>
 							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="192"/>
@@ -877,7 +979,7 @@
 							<Height val="33"/>
 						</Frame>
 						<Frame type="PlayerHeroSelectedTalentTreeFrame" name="TalentsContainerFrame/SelectionUnitStatusPanel/UnitStatusFrame0/HeroSelectedTalentTreeFrame">
-							<Frame type="Frame" name="FCJH_QuestCell">
+							<Frame type="UnitStatusBaselineQuestIcon" name="FCJH_BaseQuestIcon" template="GameStatsPanel/UnitStatusBaselineQuestIconTemplate">
 								<!-- Blizzard's 68 whole, its 40 picture (14 in) on the 40 cell at 134, 8 -->
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="120"/>
 								<Anchor side="Top"    relative="$parent" pos="Min" offset="-6"/>
@@ -885,8 +987,19 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Width val="68"/>
 								<Height val="68"/>
-								<Handle val="FCJH_QuestCell9"/>
-								<AcceptsMouse val="false"/>
+								<QuestIndex val="0"/>
+								<RenderPriority val="#RenderPriorityLevel_3"/>
+								<Frame type="Image" name="IconBackgroundImage"><Alpha val="0"/></Frame>
+								<Frame type="Image" name="IconBorderImage"><Alpha val="0"/></Frame>
+								<StateGroup name="QuestState">
+									<State name="QuestSelected"/>
+									<State name="QuestAvailable">
+										<Action type="SetProperty" frame="$this/IconImage" texture="@UI/Storm_UI_InGame_Leader_Talent_Unselected"/>
+									</State>
+									<State name="QuestNotAvailable">
+										<Action type="SetProperty" frame="$this/IconImage" visible="false"/>
+									</State>
+								</StateGroup>
 							</Frame>
 							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="192"/>
@@ -951,7 +1064,8 @@
 			<!-- The quest icons, try 4 (2026-10-18; the code is in 5819c62): a HeroLeaderPanel of our
 			     own parked off the screen, each row's BaseQuestIcon0 anchored onto our quest cell by its
 			     handle. No quests showed, and a faint white line ran the pane's height beside the
-			     portraits (user, 2026-10-19). Taken out to see if the line goes with it. -->
+			     portraits (user, 2026-10-19; the line was the grid's, fixed). Out: the rows' own icons
+			     are back. -->
 			<!-- Chrome: the title, over the rows, letting the mouse through to the tooltips (the
 			     title band and frame are the skin's, under the rows). -->
 			<Frame type="Frame" name="FCJH_InfoPaneChrome">

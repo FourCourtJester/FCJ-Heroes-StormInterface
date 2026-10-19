@@ -77,7 +77,7 @@ detail.
   columns count and tooltip fine for an observer (user, 2026-10-16), so the data reaches us:
   it's Blizzard's baseline-quest icon (`UnitStatusBaselineQuestIcon`) that fills only its
   picture in observer view. Another hook to find (the quest tooltips entry: try 4 failed
-  2026-10-19 and is out, so the column is empty for now).
+  2026-10-19 and is out; the rows' own icons are back, picture only).
 
 **Can't be fixed from a layout** - the last section: Towers' cannon alerts, the death recap,
 the talent picker under Ctrl, the command card for a hero's other unit, plate clicks for

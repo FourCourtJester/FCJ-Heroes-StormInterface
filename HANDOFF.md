@@ -569,6 +569,8 @@ from their plates (docs/blizzard-fixes.md).
    still shows nothing on the quest cell: Blizzard's custom row template has no slot 0. Out.
    **Not seen yet:** the bridges back on one texel column - the line from portrait to talent 1
    back, no white line.
+   - **the quest icons back** (the rows' own `FCJH_BaseQuestIcon`, as before try 4): the right
+     quest per hero, its tooltip and count still Blizzard's blank/stuck ones.
    **TEMPORARY:** Blizzard's kill feed is hidden for testing (FCJH_Hidden, `FCJH_KeepHidden`'s
    KillLogPanel controller; user, 2026-10-16). Take it out before release.
 
