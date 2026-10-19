@@ -890,6 +890,8 @@ from their plates (docs/blizzard-fixes.md).
       count is hidden - the same frame as the countdown).
     Left as they were, brief: Volskaya's 2 s point toast (it counts), Towers' 5 s tunnels and
     towers-upgrading notices (in the alert stack: hiding them by alpha would leave a gap).
+    Approved as kept (user, 2026-10-19: "they actually serve purposes"; Volskaya's and
+    Hanamura's are one shared alert).
 
 ## 8. Original brief
 
