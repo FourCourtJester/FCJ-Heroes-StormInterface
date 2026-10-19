@@ -609,7 +609,7 @@ def constants_layout(cfg):
     # ...and a map's own sides, its art drawn off-centre (maps.py across)
     for key, m in maps.MAPS.items():
         if m.across:
-            const(name("minimap", "panel", "l", key), left + u(m.across), f"{m.title}: {m.across} px right")
+            const(name("minimap", "panel", "l", key), left + u(m.across), f"{m.title}: {abs(m.across)} px {'right' if m.across > 0 else 'left'}")
             const(name("minimap", "panel", "r", key), left + MINIMAP_PANEL_W + u(m.across))
     # ...and per map (tools/maps.py): the map as drawn in the square, its bottom on the padding
     # line (the plates' bottom), nudged by [minimap.nudge]
@@ -702,7 +702,9 @@ def constants_layout(cfg):
     # the winning team's spot (maps.av_carrier): the jump, from that place to the spot
     lines.append("\t<!-- Alterac Pass's cavalry: its carrier's move from Blizzard's place to each spot (maps.av_carrier) -->")
     across, up = maps.av_neutral(u(panel_nudges(cfg).get("alterac_pass", 0)))
-    neutral = (left + MINIMAP_PANEL_W + across, minimap_bottoms(cfg)["alterac_pass"] + up)
+    # (from its own minimap, moved across: maps.on_minimap took that back off `across`)
+    neutral = (left + MINIMAP_PANEL_W + u(maps.MAPS["alterac_pass"].across) + across,
+               minimap_bottoms(cfg)["alterac_pass"] + up)
     for team in ("red", "blue"):
         ox, oy = anchor_origin(cfg, f"{team}_xp")
         (_, cy, _, _), _ = rects(cfg)[f"{team}_core"]

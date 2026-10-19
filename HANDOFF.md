@@ -443,6 +443,38 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
      (958.5 px on 14_36_51, the rows then 1 px off: red_left 1167 against blue_right 752's
      mirror 1168; now 1168, so ~959). Each map centred between our plates on its art's
      outline and its mechanic's UI markers, by its `across` (tools/maps.py).
+   - **The centering pass, built (2026-10-19, not seen yet):** every map measured by its two
+     core swirls' outer outline (one per team, placed symmetrically; the map's ends on most),
+     pixel rows through each swirl's middle, against the midpoint 959 (read 959 on the new
+     build's 15_19_31: blue 704 / red 1214 at y 965). Flood fills, mirror and half-turn fits
+     misled (terrain, point symmetry, background leaks); the camera box's border reads dark,
+     not to be taken for the outline. Shots 14_51_53 .. 15_21_14. Each map's `across` set:
+     | map | swirls' outline | centre | `across` |
+     |---|---|---|---|
+     | Alterac Pass | 782 / 1152 | 967 | -8 |
+     | Battlefield of Eternity | 775 / 1144 | 959.5 | 0 |
+     | Blackheart's Bay | 774 / 1144 | 959 | 0 |
+     | Braxis Holdout | ~770 / 1138 | 954 | 5 |
+     | Cursed Hollow | 765 / 1130 | 947.5 | 11 |
+     | Dragon Shire | 776 / 1142 | 959 | 0 |
+     | Garden of Terror | 765 / 1152 | 958.5 | 0 |
+     | Hanamura Temple | 777 / 1142 | 959.5 | 0 |
+     | Haunted Mines (top level) | 789 / 1087 | 938 | 21 |
+     | Infernal Shrines | 772 / 1148 | 960 | -1 |
+     | Sky Temple | 771 / 1159 | 965 | -6 |
+     | Tomb of the Spider Queen (at 18) | 797 / 1115 | 956 | 21 |
+     | Towers of Doom | 769 / 1153 | 961 | -2 |
+     | Volskaya Foundry | 777 / 1143 | 960 | -1 |
+     | Warhead Junction | 778 / 1130 | 954 | 5 |
+     Haunted Mines by its top level (user): its mines below drew at ~961, so now ~982.
+     Alterac's cavalry hand-off is now worked from its moved minimap (gen.py); Tomb's
+     Webweaver stack's dead space from its drawn middle 958 (WEAVER_MINIMAP_PX). The user's
+     check: the whole roster again; then the blue/red lines (below).
+   - **The blue/red lines under the mechanics' counts** (user, 2026-10-19): out to their
+     farthest, the plates' inner ends (~752 / ~1168), "so we have most flexibility for the
+     containers". Each map's panel sets its own (Blizzard's TeamHighlight-style backgrounds,
+     e.g. Mines' Team1Background / Team2Background); on the shots ~813-1107 (Warhead) to
+     ~780-1140 (Mines, Dragon Shire). Not started.
    - **The pane border's halves (2026-10-19, not seen yet):** each side was a whole nine-slice
      squeezed into half the height, so both halves ended in the art's end cap at the middle,
      stacked "doubly as bright" (user). Now each half is a whole side clipped at the middle

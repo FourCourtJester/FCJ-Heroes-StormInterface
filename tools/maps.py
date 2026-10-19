@@ -2133,6 +2133,9 @@ SCREEN = (("Top", "Min", 0), ("Bottom", "Max", 0), ("Left", "Min", 0), ("Right",
 MAPS = {
     "alterac_pass": Map(
         "Alterac Pass", (441, 316), file="AlteracMechanics",
+        # its core swirls' outer outline at 782 / 1152, centre 967, against our midpoint 959
+        # (centering pass, 2026-10-19, shot 14_58_34): 8 px left
+        across=-8,
         # its right AV_PANEL_GROW further, for red's cavalry spot (av_carrier)
         panels={"AlteracMechanicsPanel": (("Top", "Min", -25), ("Bottom", "Max", -25), ("Right", "Max", AV_PANEL_GROW))},
         place=("AlteracMechanicsPanel",),
@@ -2180,6 +2183,9 @@ MAPS = {
                           note="the chests spawning (neutral), then Blackheart's cannon on red")]}}),
     "braxis_holdout": Map(
         "Braxis Holdout", (447, 264), file="HoldOut", minimap=(-35, 0),
+        # its core swirls' outer outline at 770 / 1138, centre 954, against our midpoint 959
+        # (centering pass, 2026-10-19, shot 14_53_20): 5 px right
+        across=5,
         # its zerg HUD compacted: the dishes and their beams on the hexagons, the words in and
         # above them (PARTS: BEACON_ICONS, ZERG_WORDS); the whole HUD down by [minimap.panel_nudge].
         # Nothing of it touches the map any more: the mechanics panel no longer goes under the
@@ -2195,6 +2201,9 @@ MAPS = {
                           extra=unclipped(HOLDOUT_PARTS, 3), note="the zerg wave warning (neutral)")]}}),
     "cursed_hollow": Map(
         "Cursed Hollow", (436, 312), core="RavenCourtPanel",
+        # its core swirls' outer outline at 765 / 1130, centre 947.5, against our midpoint 959
+        # (centering pass, 2026-10-19, shot 14_52_34): 11 px right
+        across=11,
         # "Tribute spawning" ("Collect the tribute" hidden: tribute_count): one neutral banner, on red's side. Its art:
         # the hexagon pinned 20 in from the frame's top-right, the bar 481 wide ending 15 past it,
         # the count under the hexagon (measured in game, 2026-10-06). The curse banner hangs off
@@ -2258,6 +2267,9 @@ MAPS = {
         ),
     "haunted_mines": Map(
         "Haunted Mines", (433, 437), core="HauntedMinesPanel",
+        # its core swirls' outer outline at 789 / 1087 (the top level, user), centre 938, against our midpoint 959
+        # (centering pass, 2026-10-19, shot 14_55_36): 21 px right
+        across=21,
         # Its minimap holds the surface and the mines stacked: square, so at the older five's
         # shared place the mines hung off the screen. Its own place from the start, by its map
         # id (id_placers). Two views (user, 2026-10-09): at load only the surface, its bottom on
@@ -2277,6 +2289,9 @@ MAPS = {
         extra="skulls"),
     "infernal_shrines": Map(
         "Infernal Shrines", (458, 301), file="Shrines",
+        # its core swirls' outer outline at 772 / 1148, centre 960, against our midpoint 959
+        # (centering pass, 2026-10-19, shot 15_20_39): 1 px left
+        across=-1,
         panels={"ShrinesPanel": BOTTOM_RIGHT}, place=("ShrinesPanel",),
         # "A shrine is activating": the neutral banner, on red's side ("Shrine active" hidden:
         # PARTS); the Punisher in its place, on its summoner's side (punisher_side). The skull
@@ -2293,6 +2308,9 @@ MAPS = {
                           note="the shrine's countdown (neutral), then the Punisher on red")]}}),
     "sky_temple": Map(
         "Sky Temple", (437, 344), file="CapturePoints",
+        # its core swirls' outer outline at 771 / 1159, centre 965, against our midpoint 959
+        # (centering pass, 2026-10-19, shot 15_21_14): 6 px left
+        across=-6,
         panels={"CapturePointsPanel": BOTTOM_RIGHT}, place=("CapturePointsPanel",),
         # "Temples activate in": the neutral banner, on red's side ("Capture the Temples"
         # hidden: temple_banner). The temples to the gap on their own, on a bar (PARTS): on
@@ -2316,10 +2334,14 @@ MAPS = {
         # sides at ~780 and ~1098, the bottom point at ~936 against the counts' line at ~956 -
         # user: "the most lopsided map I've seen"). Only the map moves. 20 put the point ~1-2 px
         # right of the split (127c01a); 17 a touch left (5f04383); the user: "2px was probably the
-        # right call".
-        across=18),
+        # right call". The centering pass (2026-10-19, against our midpoint 959, 14_59_53): the core
+        # swirls' outer outline at 797 / 1115, centre 956 at 18: 3 more.
+        across=21),
     "towers_of_doom": Map(
         "Towers of Doom", (436, 298), file="FieldofSlaughter",
+        # its core swirls' outer outline at 769 / 1153, centre 961, against our midpoint 959
+        # (centering pass, 2026-10-19, shot 14_51_53): 2 px left
+        across=-2,
         place=("MainFoSPanel",),
         # Its strip stays on the right edge: everything a broadcast needs from it is ours now
         # (below), and what's left (town health, at the top) is drawn from the screen's top.
@@ -2341,6 +2363,9 @@ MAPS = {
         extra="towers"),
     "volskaya_foundry": Map(
         "Volskaya Foundry", (452, 314), file="VolskayaMapMechanic",
+        # its core swirls' outer outline at 777 / 1143, centre 960, against our midpoint 959
+        # (centering pass, 2026-10-19, shot 15_19_31): 1 px left
+        across=-1,
         panels={"VolskayaCapturePointPanel": STRIP}, place=("VolskayaCapturePointPanel",),
         # its two neutrals to the gap, each from Blizzard's own anchor to the minimap (they don't
         # hang off their panels). On a1f60ca: the capture point's hexagon's bottom 40 px over the
@@ -2356,6 +2381,9 @@ MAPS = {
         notes="the capture point's hex is placed from the minimap; its strip clipped it"),
     "warhead_junction": Map(
         "Warhead Junction", (460, 390), file="SCMap2", minimap=(0, 0), place=("SC2Panel",),
+        # its core swirls' outer outline at 778 / 1130, centre 954, against our midpoint 959
+        # (centering pass, 2026-10-19, shot 15_01_06): 5 px right
+        across=5,
         # its file nudges the map 30 units right in the minimap panel: back to the square's place
         fix=f'<Action type="SetAnchor" frame="{MINIMAP}/Minimap" side="Left" relative="{MINIMAP}" pos="Min" offset="0"/>',
         # the warheads' countdown, then how many are left: one neutral banner, on red's side
@@ -2552,7 +2580,7 @@ WEAVER_ART = {"Bottom": (72, 5),      # each lane's hexagon as drawn at 1080p (3
 # two edges at its height, then the straight line nearest those.
 WEAVER_BOTTOM_PX = 1071               # the gem counts' blue/red line (127c01a, Tomb's minimap at 29 down)
 WEAVER_TOP_PX = 868 + WEAVER_BOTTOM_PX - 1060   # the minimap's drawn top tip (868, 31a031d), as lowered
-WEAVER_MINIMAP_PX = (955, 158, 943, 1.05)   # Tomb's drawn minimap (6c52e5e): its middle, its side
+WEAVER_MINIMAP_PX = (958, 158, 943, 1.05)   # Tomb's drawn minimap (6c52e5e; 955 at across 18): its middle, its side
                                       # lobes' reach either way, and its sides from that height down
                                       # going in this much per px
 WEAVER_OUT_PX = 10                    # then this much further out (user, 2026-10-15, 48d775e centred:

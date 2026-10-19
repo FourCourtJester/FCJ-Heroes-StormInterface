@@ -325,8 +325,26 @@
 	<Constant name="FCJH_MINIMAP_PANEL_L" val="-219"/>
 	<Constant name="FCJH_MINIMAP_PANEL_R" val="249"/>
 	<Constant name="FCJH_MINIMAP_PANEL_BOTTOM" val="68"/>
-	<Constant name="FCJH_MINIMAP_PANEL_L_TOMB_OF_THE_SPIDER_QUEEN" val="-199"/>  <!-- Tomb of the Spider Queen: 18 px right -->
-	<Constant name="FCJH_MINIMAP_PANEL_R_TOMB_OF_THE_SPIDER_QUEEN" val="269"/>
+	<Constant name="FCJH_MINIMAP_PANEL_L_ALTERAC_PASS" val="-228"/>  <!-- Alterac Pass: 8 px left -->
+	<Constant name="FCJH_MINIMAP_PANEL_R_ALTERAC_PASS" val="240"/>
+	<Constant name="FCJH_MINIMAP_PANEL_L_BRAXIS_HOLDOUT" val="-213"/>  <!-- Braxis Holdout: 5 px right -->
+	<Constant name="FCJH_MINIMAP_PANEL_R_BRAXIS_HOLDOUT" val="255"/>
+	<Constant name="FCJH_MINIMAP_PANEL_L_CURSED_HOLLOW" val="-207"/>  <!-- Cursed Hollow: 11 px right -->
+	<Constant name="FCJH_MINIMAP_PANEL_R_CURSED_HOLLOW" val="261"/>
+	<Constant name="FCJH_MINIMAP_PANEL_L_HAUNTED_MINES" val="-196"/>  <!-- Haunted Mines: 21 px right -->
+	<Constant name="FCJH_MINIMAP_PANEL_R_HAUNTED_MINES" val="272"/>
+	<Constant name="FCJH_MINIMAP_PANEL_L_INFERNAL_SHRINES" val="-220"/>  <!-- Infernal Shrines: 1 px left -->
+	<Constant name="FCJH_MINIMAP_PANEL_R_INFERNAL_SHRINES" val="248"/>
+	<Constant name="FCJH_MINIMAP_PANEL_L_SKY_TEMPLE" val="-226"/>  <!-- Sky Temple: 6 px left -->
+	<Constant name="FCJH_MINIMAP_PANEL_R_SKY_TEMPLE" val="242"/>
+	<Constant name="FCJH_MINIMAP_PANEL_L_TOMB_OF_THE_SPIDER_QUEEN" val="-196"/>  <!-- Tomb of the Spider Queen: 21 px right -->
+	<Constant name="FCJH_MINIMAP_PANEL_R_TOMB_OF_THE_SPIDER_QUEEN" val="272"/>
+	<Constant name="FCJH_MINIMAP_PANEL_L_TOWERS_OF_DOOM" val="-221"/>  <!-- Towers of Doom: 2 px left -->
+	<Constant name="FCJH_MINIMAP_PANEL_R_TOWERS_OF_DOOM" val="247"/>
+	<Constant name="FCJH_MINIMAP_PANEL_L_VOLSKAYA_FOUNDRY" val="-220"/>  <!-- Volskaya Foundry: 1 px left -->
+	<Constant name="FCJH_MINIMAP_PANEL_R_VOLSKAYA_FOUNDRY" val="248"/>
+	<Constant name="FCJH_MINIMAP_PANEL_L_WARHEAD_JUNCTION" val="-213"/>  <!-- Warhead Junction: 5 px right -->
+	<Constant name="FCJH_MINIMAP_PANEL_R_WARHEAD_JUNCTION" val="255"/>
 	<!-- _BOTTOM_<MAP>: MinimapPanel's bottom on that map, from the screen's bottom -->
 	<Constant name="FCJH_MINIMAP_BOTTOM_ALTERAC_PASS" val="46"/>  <!-- Alterac Pass: 272 px tall -->
 	<Constant name="FCJH_MINIMAP_BOTTOM_BATTLEFIELD_OF_ETERNITY" val="85"/>  <!-- Battlefield of Eternity: 233 px tall -->
@@ -511,17 +529,17 @@
 	<Constant name="FCJH_MAP_ALERT_BLUE_B_TEMPLE_3" val="-418"/>  <!-- alert 3 in the stack, 2 up -->
 	<Constant name="FCJH_MAP_ALERT_BLUE_B_TEMPLE_4" val="-543"/>  <!-- alert 4 in the stack, 3 up -->
 	<!-- Tomb of the Spider Queen's Webweavers: each hexagon's centre and bottom (maps.weaver_parts) -->
-	<Constant name="FCJH_MAP_WEAVER_RED_BOTTOM_X" val="167"/>  <!-- 1111 px across -->
+	<Constant name="FCJH_MAP_WEAVER_RED_BOTTOM_X" val="169"/>  <!-- 1112 px across -->
 	<Constant name="FCJH_MAP_WEAVER_RED_BOTTOM_B" val="-4"/>  <!-- 1076 px down -->
-	<Constant name="FCJH_MAP_WEAVER_RED_MID_X" val="212"/>  <!-- 1151 px across -->
+	<Constant name="FCJH_MAP_WEAVER_RED_MID_X" val="213"/>  <!-- 1152 px across -->
 	<Constant name="FCJH_MAP_WEAVER_RED_MID_B" val="-67"/>  <!-- 1020 px down -->
-	<Constant name="FCJH_MAP_WEAVER_RED_TOP_X" val="256"/>  <!-- 1191 px across -->
+	<Constant name="FCJH_MAP_WEAVER_RED_TOP_X" val="258"/>  <!-- 1192 px across -->
 	<Constant name="FCJH_MAP_WEAVER_RED_TOP_B" val="-128"/>  <!-- 965 px down -->
-	<Constant name="FCJH_MAP_WEAVER_BLUE_BOTTOM_X" val="-173"/>  <!-- 804 px across -->
+	<Constant name="FCJH_MAP_WEAVER_BLUE_BOTTOM_X" val="-172"/>  <!-- 806 px across -->
 	<Constant name="FCJH_MAP_WEAVER_BLUE_BOTTOM_B" val="-4"/>  <!-- 1076 px down -->
-	<Constant name="FCJH_MAP_WEAVER_BLUE_MID_X" val="-218"/>  <!-- 764 px across -->
+	<Constant name="FCJH_MAP_WEAVER_BLUE_MID_X" val="-216"/>  <!-- 766 px across -->
 	<Constant name="FCJH_MAP_WEAVER_BLUE_MID_B" val="-67"/>  <!-- 1020 px down -->
-	<Constant name="FCJH_MAP_WEAVER_BLUE_TOP_X" val="-262"/>  <!-- 724 px across -->
+	<Constant name="FCJH_MAP_WEAVER_BLUE_TOP_X" val="-261"/>  <!-- 726 px across -->
 	<Constant name="FCJH_MAP_WEAVER_BLUE_TOP_B" val="-128"/>  <!-- 965 px down -->
 	<!-- Alterac Pass's cavalry: its carrier's move from Blizzard's place to each spot (maps.av_carrier) -->
 	<Constant name="FCJH_MAP_AV_RED_DX" val="486"/>

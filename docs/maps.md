@@ -399,7 +399,8 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    one frame for both teams, neutral) and the egg timer (`SoulCageCooldownFrame`, shown after
    the Webweavers die) at THE GAP over the minimap, as maps.py `gap_parts` (a part placed on its
    own, its panel kept to its nudge). Its art is drawn ~21 px left of its square's centre: the
-   minimap 18 px right (maps.py `across`, its panels taken back - only the map moves).
+   minimap 18 px right (maps.py `across`, its panels taken back - only the map moves); 21 since
+   the centering pass (2026-10-19, below).
    The Webweavers' hexagons (user's plan A): Blizzard's own set per team
    (`SoulEaterModeBlueFrame` / `RedFrame`, the summoner's shown) on that team's side, in the dead
    space between the drawn minimap and the plates - from the gem counts' line (1071) up the
@@ -521,3 +522,32 @@ Not recorded: whether a replay showed blue's curse; check it if one does.** What
    so the left is always the top temple. No flicker going live (the script lights all three
    and greys the dead ones in one pass). Seen: between rounds, two next, one next, live.
    Any map could get a two-view or other per-map behaviour the same way (`launch_cut`/`opens`, `on_map`).
+
+## The centering pass (2026-10-19)
+
+Every map centred on our UI's midpoint (959 px at 1080p: halfway between the rows' inner
+chrome edges, not the screen's 960), by its two core swirls' outer outline: one per team,
+placed symmetrically, the map's ends on most. Measured by pixel rows through each swirl's
+middle (the camera box's border reads as a dark line too). Each map's `across` (maps.py, px
+right; its panels taken back, only the map moves):
+
+| map | swirls' outline | centre | `across` |
+|---|---|---|---|
+| Alterac Pass | 782 / 1152 | 967 | -8 |
+| Battlefield of Eternity | 775 / 1144 | 959.5 | 0 |
+| Blackheart's Bay | 774 / 1144 | 959 | 0 |
+| Braxis Holdout | ~770 / 1138 | 954 | 5 |
+| Cursed Hollow | 765 / 1130 | 947.5 | 11 |
+| Dragon Shire | 776 / 1142 | 959 | 0 |
+| Garden of Terror | 765 / 1152 | 958.5 | 0 |
+| Hanamura Temple | 777 / 1142 | 959.5 | 0 |
+| Haunted Mines (top level) | 789 / 1087 | 938 | 21 |
+| Infernal Shrines | 772 / 1148 | 960 | -1 |
+| Sky Temple | 771 / 1159 | 965 | -6 |
+| Tomb of the Spider Queen (at 18) | 797 / 1115 | 956 | 21 |
+| Towers of Doom | 769 / 1153 | 961 | -2 |
+| Volskaya Foundry | 777 / 1143 | 960 | -1 |
+| Warhead Junction | 778 / 1130 | 954 | 5 |
+
+Haunted Mines is centred by its top level (user); its mines below drew at ~961, now ~982.
+Garden's seed counts' plants overlap the map's bottom corners; its swirls sit above them.
