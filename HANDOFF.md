@@ -561,7 +561,14 @@ from their plates (docs/blizzard-fixes.md).
    Seen afea2b1 (user): the bars stay at Blizzard's sizes for now ("We'll leave our hero bars
    like this for now"); the white line still there. It sits at the pane's 22 + the grid's
    first slice's end 124 = 131.4 px: the slice was cut at talent 1's cell edge and took a
-   sliver of its border. Now ended 2 short (122), the bridge from there. Not seen yet.
+   sliver of its border. Now ended 2 short (122), the bridge from there. Seen: still there.
+   **The test build 2696582, seen 2026-10-19:** the white line gone in every row with the grid's
+   bridges hidden (portraits hidden in rows 0/5 and moved in 1/6 changed nothing), so it was
+   the bridges: a 4-texel slice (118-122) stretched 15 times, its first texel blurred into the
+   brighter one beside it. Now one texel column (120). Slot 0, given a real icon this time,
+   still shows nothing on the quest cell: Blizzard's custom row template has no slot 0. Out.
+   **Not seen yet:** the bridges back on one texel column - the line from portrait to talent 1
+   back, no white line.
    **TEMPORARY:** Blizzard's kill feed is hidden for testing (FCJH_Hidden, `FCJH_KeepHidden`'s
    KillLogPanel controller; user, 2026-10-16). Take it out before release.
 

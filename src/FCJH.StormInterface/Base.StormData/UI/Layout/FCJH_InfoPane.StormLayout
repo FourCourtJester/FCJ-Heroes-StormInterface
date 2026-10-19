@@ -41,10 +41,8 @@
 				<!-- 2 above the first row, as Blizzard's rows sit 2 below their tile. Each team's
 				     half in two slices: up to the talent-1 cell (124), then from that cell again on,
 				     58 right. The gap between (124-182) is the default quest's column: no grid cell,
-				     just the pane's background (user, 2026-10-16). The first slice ends 2 short (122,
-				     0.1080 / 0.8920): cut at the cell's own edge, it took a sliver of the cell's border,
-				     a faint white line down every row at 131 px (user, 2026-10-19); the bridge starts
-				     there instead. -->
+				     just the pane's background (user, 2026-10-16). The first slice ends 2 short of the
+				     cell (122, 0.1080 / 0.8920), the bridge from there. -->
 				<Frame type="Image" name="FCJH_GridBlueA">
 					<Anchor side="Top"   relative="$parent/$parent/FCJH_TalentPanel/HeroTalentsPanelContainer/PlayerFrame0" pos="Min" offset="-2"/>
 					<Anchor side="Left"  relative="$parent" pos="Min" offset="0"/>
@@ -90,18 +88,19 @@
 					<AcceptsMouse val="false"/>
 				</Frame>
 				<!-- the line from the portrait to talent 1 across the quest column (user, 2026-10-16):
-				     a slice of the grid's own line (118-122, inside its dash) stretched over the gap -->
+				     one texel column of the grid's own line (120, inside its dash) stretched over the
+				     gap. Not a slice: a 4-texel one (118-122) stretched 15 times blurred its first
+				     texel into the brighter one beside it, a faint white line down every row at
+				     ~131 px (user, 2026-10-19; gone with the bridges hidden, 2696582). -->
 				<Frame type="Image" name="FCJH_GridBlueBridge">
 					<Anchor side="Top"   relative="$parent/FCJH_GridBlueA" pos="Min" offset="0"/>
 					<Anchor side="Left"  relative="$parent" pos="Min" offset="122"/>
 					<Anchor side="Right" relative="$parent" pos="Min" offset="182"/>
 					<Height val="300"/>
 					<Texture val="@UI/obs_talents_top"/>
-					<TextureCoords top="0.0" left="0.1044" bottom="5.0" right="0.1080"/>
+					<TextureCoords top="0.0" left="0.1066" bottom="5.0" right="0.1066"/>
 					<WrapUV val="True"/>
 					<RenderPriority val="450"/>
-					<!-- TEST (white line, 2026-10-19): bridge hidden -->
-					<Alpha val="0"/>
 					<AcceptsMouse val="false"/>
 				</Frame>
 				<Frame type="Image" name="FCJH_GridRedBridge">
@@ -110,11 +109,9 @@
 					<Anchor side="Right" relative="$parent" pos="Min" offset="182"/>
 					<Height val="300"/>
 					<Texture val="@UI/obs_talents_top"/>
-					<TextureCoords top="0.0" left="0.8956" bottom="5.0" right="0.8920"/>
+					<TextureCoords top="0.0" left="0.8934" bottom="5.0" right="0.8934"/>
 					<WrapUV val="True"/>
 					<RenderPriority val="450"/>
-					<!-- TEST (white line, 2026-10-19): bridge hidden -->
-					<Alpha val="0"/>
 					<AcceptsMouse val="false"/>
 				</Frame>
 			</Frame>
@@ -158,13 +155,10 @@
 					     right), so every row reads portrait-first.
 					     The hero's default quest (user, 2026-10-16) takes talent 1's place, and every talent
 					     moves one cell (58) right. The cell here (FCJH_QuestCell0-9) is only a place: the
-					     quest icon was FCJH_QuestPanel's (try 4, out for now: below). On it now, a test:
-					     Blizzard's slot 0 (TalentTreeIcon0, each row). -->
+					     quest icon was FCJH_QuestPanel's (try 4, out for now: below). -->
 					<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame0">
 						<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
-							<!-- TEST (white line, 2026-10-19): portrait hidden in rows 0 and 5 -->
-							<Alpha val="0"/>
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="11"/>
 							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
@@ -182,24 +176,6 @@
 								<Height val="68"/>
 								<Handle val="FCJH_QuestCell0"/>
 								<AcceptsMouse val="false"/>
-							</Frame>
-							<!-- Blizzard's own slot 0 (talentsoverviewpanel.stormlayout:138), right 30 left of
-							     talent 1: it sat under the portrait until the talents moved a cell right, then
-							     its empty border showed as a faint line beside the portraits (user, 2026-10-19).
-							     Test: on the quest cell, to see if it's the default quest's slot. -->
-							<!-- TEST 2 (2026-10-19): the first was a bare frame (Blizzard's custom row template
-							     has no slot 0, so nothing to draw); now with the observer icon template -->
-							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon0" template="TalentsOverviewPanel/TalentIconObserverTemplate">
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="134"/>
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="8"/>
-								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-								<Width val="40"/>
-								<Height val="40"/>
-								<Frame type="Image" name="IconImage">
-									<Anchor relative="$parent"/>
-									<ImageMaskTexture val="@UI/obs_alphaMask_talents"/>
-								</Frame>
 							</Frame>
 							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="192"/>
@@ -261,8 +237,7 @@
 					</Frame>
 					<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame1">
 						<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-							<!-- TEST (white line, 2026-10-19): portrait 20 left in rows 1 and 6 -->
-							<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="11"/>
 							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
@@ -280,24 +255,6 @@
 								<Height val="68"/>
 								<Handle val="FCJH_QuestCell1"/>
 								<AcceptsMouse val="false"/>
-							</Frame>
-							<!-- Blizzard's own slot 0 (talentsoverviewpanel.stormlayout:138), right 30 left of
-							     talent 1: it sat under the portrait until the talents moved a cell right, then
-							     its empty border showed as a faint line beside the portraits (user, 2026-10-19).
-							     Test: on the quest cell, to see if it's the default quest's slot. -->
-							<!-- TEST 2 (2026-10-19): the first was a bare frame (Blizzard's custom row template
-							     has no slot 0, so nothing to draw); now with the observer icon template -->
-							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon0" template="TalentsOverviewPanel/TalentIconObserverTemplate">
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="134"/>
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="8"/>
-								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-								<Width val="40"/>
-								<Height val="40"/>
-								<Frame type="Image" name="IconImage">
-									<Anchor relative="$parent"/>
-									<ImageMaskTexture val="@UI/obs_alphaMask_talents"/>
-								</Frame>
 							</Frame>
 							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="192"/>
@@ -378,24 +335,6 @@
 								<Handle val="FCJH_QuestCell2"/>
 								<AcceptsMouse val="false"/>
 							</Frame>
-							<!-- Blizzard's own slot 0 (talentsoverviewpanel.stormlayout:138), right 30 left of
-							     talent 1: it sat under the portrait until the talents moved a cell right, then
-							     its empty border showed as a faint line beside the portraits (user, 2026-10-19).
-							     Test: on the quest cell, to see if it's the default quest's slot. -->
-							<!-- TEST 2 (2026-10-19): the first was a bare frame (Blizzard's custom row template
-							     has no slot 0, so nothing to draw); now with the observer icon template -->
-							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon0" template="TalentsOverviewPanel/TalentIconObserverTemplate">
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="134"/>
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="8"/>
-								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-								<Width val="40"/>
-								<Height val="40"/>
-								<Frame type="Image" name="IconImage">
-									<Anchor relative="$parent"/>
-									<ImageMaskTexture val="@UI/obs_alphaMask_talents"/>
-								</Frame>
-							</Frame>
 							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="192"/>
 								<Anchor side="Top"    relative="$parent" pos="Min" offset="8"/>
@@ -474,24 +413,6 @@
 								<Height val="68"/>
 								<Handle val="FCJH_QuestCell3"/>
 								<AcceptsMouse val="false"/>
-							</Frame>
-							<!-- Blizzard's own slot 0 (talentsoverviewpanel.stormlayout:138), right 30 left of
-							     talent 1: it sat under the portrait until the talents moved a cell right, then
-							     its empty border showed as a faint line beside the portraits (user, 2026-10-19).
-							     Test: on the quest cell, to see if it's the default quest's slot. -->
-							<!-- TEST 2 (2026-10-19): the first was a bare frame (Blizzard's custom row template
-							     has no slot 0, so nothing to draw); now with the observer icon template -->
-							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon0" template="TalentsOverviewPanel/TalentIconObserverTemplate">
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="134"/>
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="8"/>
-								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-								<Width val="40"/>
-								<Height val="40"/>
-								<Frame type="Image" name="IconImage">
-									<Anchor relative="$parent"/>
-									<ImageMaskTexture val="@UI/obs_alphaMask_talents"/>
-								</Frame>
 							</Frame>
 							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="192"/>
@@ -572,24 +493,6 @@
 								<Handle val="FCJH_QuestCell4"/>
 								<AcceptsMouse val="false"/>
 							</Frame>
-							<!-- Blizzard's own slot 0 (talentsoverviewpanel.stormlayout:138), right 30 left of
-							     talent 1: it sat under the portrait until the talents moved a cell right, then
-							     its empty border showed as a faint line beside the portraits (user, 2026-10-19).
-							     Test: on the quest cell, to see if it's the default quest's slot. -->
-							<!-- TEST 2 (2026-10-19): the first was a bare frame (Blizzard's custom row template
-							     has no slot 0, so nothing to draw); now with the observer icon template -->
-							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon0" template="TalentsOverviewPanel/TalentIconObserverTemplate">
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="134"/>
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="8"/>
-								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-								<Width val="40"/>
-								<Height val="40"/>
-								<Frame type="Image" name="IconImage">
-									<Anchor relative="$parent"/>
-									<ImageMaskTexture val="@UI/obs_alphaMask_talents"/>
-								</Frame>
-							</Frame>
 							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="192"/>
 								<Anchor side="Top"    relative="$parent" pos="Min" offset="8"/>
@@ -651,8 +554,6 @@
 					<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame5">
 						<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
-							<!-- TEST (white line, 2026-10-19): portrait hidden in rows 0 and 5 -->
-							<Alpha val="0"/>
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="11"/>
 							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
@@ -670,24 +571,6 @@
 								<Height val="68"/>
 								<Handle val="FCJH_QuestCell5"/>
 								<AcceptsMouse val="false"/>
-							</Frame>
-							<!-- Blizzard's own slot 0 (talentsoverviewpanel.stormlayout:138), right 30 left of
-							     talent 1: it sat under the portrait until the talents moved a cell right, then
-							     its empty border showed as a faint line beside the portraits (user, 2026-10-19).
-							     Test: on the quest cell, to see if it's the default quest's slot. -->
-							<!-- TEST 2 (2026-10-19): the first was a bare frame (Blizzard's custom row template
-							     has no slot 0, so nothing to draw); now with the observer icon template -->
-							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon0" template="TalentsOverviewPanel/TalentIconObserverTemplate">
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="134"/>
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="8"/>
-								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-								<Width val="40"/>
-								<Height val="40"/>
-								<Frame type="Image" name="IconImage">
-									<Anchor relative="$parent"/>
-									<ImageMaskTexture val="@UI/obs_alphaMask_talents"/>
-								</Frame>
 							</Frame>
 							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="192"/>
@@ -749,8 +632,7 @@
 					</Frame>
 					<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame6">
 						<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-							<!-- TEST (white line, 2026-10-19): portrait 20 left in rows 1 and 6 -->
-							<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
 							<Anchor side="Top"    relative="$parent" pos="Min" offset="11"/>
 							<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 							<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
@@ -768,24 +650,6 @@
 								<Height val="68"/>
 								<Handle val="FCJH_QuestCell6"/>
 								<AcceptsMouse val="false"/>
-							</Frame>
-							<!-- Blizzard's own slot 0 (talentsoverviewpanel.stormlayout:138), right 30 left of
-							     talent 1: it sat under the portrait until the talents moved a cell right, then
-							     its empty border showed as a faint line beside the portraits (user, 2026-10-19).
-							     Test: on the quest cell, to see if it's the default quest's slot. -->
-							<!-- TEST 2 (2026-10-19): the first was a bare frame (Blizzard's custom row template
-							     has no slot 0, so nothing to draw); now with the observer icon template -->
-							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon0" template="TalentsOverviewPanel/TalentIconObserverTemplate">
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="134"/>
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="8"/>
-								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-								<Width val="40"/>
-								<Height val="40"/>
-								<Frame type="Image" name="IconImage">
-									<Anchor relative="$parent"/>
-									<ImageMaskTexture val="@UI/obs_alphaMask_talents"/>
-								</Frame>
 							</Frame>
 							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="192"/>
@@ -866,24 +730,6 @@
 								<Handle val="FCJH_QuestCell7"/>
 								<AcceptsMouse val="false"/>
 							</Frame>
-							<!-- Blizzard's own slot 0 (talentsoverviewpanel.stormlayout:138), right 30 left of
-							     talent 1: it sat under the portrait until the talents moved a cell right, then
-							     its empty border showed as a faint line beside the portraits (user, 2026-10-19).
-							     Test: on the quest cell, to see if it's the default quest's slot. -->
-							<!-- TEST 2 (2026-10-19): the first was a bare frame (Blizzard's custom row template
-							     has no slot 0, so nothing to draw); now with the observer icon template -->
-							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon0" template="TalentsOverviewPanel/TalentIconObserverTemplate">
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="134"/>
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="8"/>
-								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-								<Width val="40"/>
-								<Height val="40"/>
-								<Frame type="Image" name="IconImage">
-									<Anchor relative="$parent"/>
-									<ImageMaskTexture val="@UI/obs_alphaMask_talents"/>
-								</Frame>
-							</Frame>
 							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="192"/>
 								<Anchor side="Top"    relative="$parent" pos="Min" offset="8"/>
@@ -963,24 +809,6 @@
 								<Handle val="FCJH_QuestCell8"/>
 								<AcceptsMouse val="false"/>
 							</Frame>
-							<!-- Blizzard's own slot 0 (talentsoverviewpanel.stormlayout:138), right 30 left of
-							     talent 1: it sat under the portrait until the talents moved a cell right, then
-							     its empty border showed as a faint line beside the portraits (user, 2026-10-19).
-							     Test: on the quest cell, to see if it's the default quest's slot. -->
-							<!-- TEST 2 (2026-10-19): the first was a bare frame (Blizzard's custom row template
-							     has no slot 0, so nothing to draw); now with the observer icon template -->
-							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon0" template="TalentsOverviewPanel/TalentIconObserverTemplate">
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="134"/>
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="8"/>
-								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-								<Width val="40"/>
-								<Height val="40"/>
-								<Frame type="Image" name="IconImage">
-									<Anchor relative="$parent"/>
-									<ImageMaskTexture val="@UI/obs_alphaMask_talents"/>
-								</Frame>
-							</Frame>
 							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="192"/>
 								<Anchor side="Top"    relative="$parent" pos="Min" offset="8"/>
@@ -1059,24 +887,6 @@
 								<Height val="68"/>
 								<Handle val="FCJH_QuestCell9"/>
 								<AcceptsMouse val="false"/>
-							</Frame>
-							<!-- Blizzard's own slot 0 (talentsoverviewpanel.stormlayout:138), right 30 left of
-							     talent 1: it sat under the portrait until the talents moved a cell right, then
-							     its empty border showed as a faint line beside the portraits (user, 2026-10-19).
-							     Test: on the quest cell, to see if it's the default quest's slot. -->
-							<!-- TEST 2 (2026-10-19): the first was a bare frame (Blizzard's custom row template
-							     has no slot 0, so nothing to draw); now with the observer icon template -->
-							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon0" template="TalentsOverviewPanel/TalentIconObserverTemplate">
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="134"/>
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="8"/>
-								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
-								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
-								<Width val="40"/>
-								<Height val="40"/>
-								<Frame type="Image" name="IconImage">
-									<Anchor relative="$parent"/>
-									<ImageMaskTexture val="@UI/obs_alphaMask_talents"/>
-								</Frame>
 							</Frame>
 							<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="192"/>

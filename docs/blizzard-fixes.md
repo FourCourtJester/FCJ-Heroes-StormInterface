@@ -155,8 +155,12 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
   update a panel off the screen, icons and all - if they don't show, that's the next test.
 - **Try 4 seen 2026-10-19 (5819c62, user):** no quests in the talent pane at all, and a faint
   white line the pane's full height just right of the portraits (~x 131 px; one thin frame,
-  not ten icons), discolouring the red/blue row lines where it crosses. Taken out, to see if
-  the line goes with it.
+  not ten icons), discolouring the red/blue row lines where it crosses. Taken out. (The line
+  was ours, not try 4's: the grid's bridge art, fixed 2026-10-19.)
+- **Blizzard's slot 0 tried 2026-10-19:** `TalentTreeIcon0` (talentsoverviewpanel.stormlayout:138,
+  30 left of talent 1) on the quest cell, bare and then with the observer icon template:
+  nothing either time. The observer row template (`BottomPanelTalentTreeCustomTemplateBlue`)
+  has no slot 0 for the engine to fill.
 
 ### Hogger's rage drawn as mana
 - **Blizzard's:** the target panel's per-hero resource colours (`HeroResourceStates`,
