@@ -8514,8 +8514,44 @@
 								<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
 								<Alpha val="0"/>
 								<AcceptsMouse val="false"/>
-								<Frame type="Image" name="FCJH_OnFireGlow">
-									<Anchor relative="$parent"/>
+
+								<Frame type="Image" name="FCJH_OnFireGlowA">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
+									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
+									<AcceptsMouse val="false"/>
+									<RenderPriority val="700"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_OnFireGlowB">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="50"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="99"/>
+									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
+									<ColorAdjustMode val="Fill"/>
+									<AdjustmentColor val="255,33,103,245"/>
+									<AcceptsMouse val="false"/>
+									<RenderPriority val="700"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_OnFireGlowC">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="99"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="148"/>
+									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
+									<ColorAdjustMode val="Fill"/>
+									<AdjustmentColor val="255,33,103,245"/>
+									<BlendMode val="Add"/>
+									<AcceptsMouse val="false"/>
+									<RenderPriority val="700"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_OnFireGlowD">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="148"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
 									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
 									<ColorAdjustMode val="Fill"/>
 									<AdjustmentColor val="255,33,103,245"/>
@@ -8541,7 +8577,7 @@
 									<Texture val="@UI/PauseScreenDimImage"/>
 									<ColorAdjustMode val="Fill"/>
 									<AdjustmentColor val="255,255,255,255"/>
-									<RenderPriority val="700"/>
+									<RenderPriority val="701"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Animation name="FCJH_OnFireEmbers">
@@ -9137,8 +9173,44 @@
 								<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
 								<Alpha val="0"/>
 								<AcceptsMouse val="false"/>
-								<Frame type="Image" name="FCJH_OnFireGlow">
-									<Anchor relative="$parent"/>
+
+								<Frame type="Image" name="FCJH_OnFireGlowA">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
+									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
+									<AcceptsMouse val="false"/>
+									<RenderPriority val="700"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_OnFireGlowB">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="50"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="99"/>
+									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
+									<ColorAdjustMode val="Fill"/>
+									<AdjustmentColor val="255,33,103,245"/>
+									<AcceptsMouse val="false"/>
+									<RenderPriority val="700"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_OnFireGlowC">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="99"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="148"/>
+									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
+									<ColorAdjustMode val="Fill"/>
+									<AdjustmentColor val="255,33,103,245"/>
+									<BlendMode val="Add"/>
+									<AcceptsMouse val="false"/>
+									<RenderPriority val="700"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_OnFireGlowD">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="148"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
 									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
 									<ColorAdjustMode val="Fill"/>
 									<AdjustmentColor val="255,33,103,245"/>
@@ -9164,7 +9236,7 @@
 									<Texture val="@UI/PauseScreenDimImage"/>
 									<ColorAdjustMode val="Fill"/>
 									<AdjustmentColor val="255,255,255,255"/>
-									<RenderPriority val="700"/>
+									<RenderPriority val="701"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Animation name="FCJH_OnFireEmbers">
@@ -9760,8 +9832,44 @@
 								<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
 								<Alpha val="0"/>
 								<AcceptsMouse val="false"/>
-								<Frame type="Image" name="FCJH_OnFireGlow">
-									<Anchor relative="$parent"/>
+
+								<Frame type="Image" name="FCJH_OnFireGlowA">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
+									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
+									<AcceptsMouse val="false"/>
+									<RenderPriority val="700"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_OnFireGlowB">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="50"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="99"/>
+									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
+									<ColorAdjustMode val="Fill"/>
+									<AdjustmentColor val="255,33,103,245"/>
+									<AcceptsMouse val="false"/>
+									<RenderPriority val="700"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_OnFireGlowC">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="99"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="148"/>
+									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
+									<ColorAdjustMode val="Fill"/>
+									<AdjustmentColor val="255,33,103,245"/>
+									<BlendMode val="Add"/>
+									<AcceptsMouse val="false"/>
+									<RenderPriority val="700"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_OnFireGlowD">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="148"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
 									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
 									<ColorAdjustMode val="Fill"/>
 									<AdjustmentColor val="255,33,103,245"/>
@@ -9787,7 +9895,7 @@
 									<Texture val="@UI/PauseScreenDimImage"/>
 									<ColorAdjustMode val="Fill"/>
 									<AdjustmentColor val="255,255,255,255"/>
-									<RenderPriority val="700"/>
+									<RenderPriority val="701"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Animation name="FCJH_OnFireEmbers">
@@ -10383,8 +10491,44 @@
 								<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
 								<Alpha val="0"/>
 								<AcceptsMouse val="false"/>
-								<Frame type="Image" name="FCJH_OnFireGlow">
-									<Anchor relative="$parent"/>
+
+								<Frame type="Image" name="FCJH_OnFireGlowA">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
+									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
+									<AcceptsMouse val="false"/>
+									<RenderPriority val="700"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_OnFireGlowB">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="50"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="99"/>
+									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
+									<ColorAdjustMode val="Fill"/>
+									<AdjustmentColor val="255,33,103,245"/>
+									<AcceptsMouse val="false"/>
+									<RenderPriority val="700"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_OnFireGlowC">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="99"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="148"/>
+									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
+									<ColorAdjustMode val="Fill"/>
+									<AdjustmentColor val="255,33,103,245"/>
+									<BlendMode val="Add"/>
+									<AcceptsMouse val="false"/>
+									<RenderPriority val="700"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_OnFireGlowD">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="148"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
 									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
 									<ColorAdjustMode val="Fill"/>
 									<AdjustmentColor val="255,33,103,245"/>
@@ -10410,7 +10554,7 @@
 									<Texture val="@UI/PauseScreenDimImage"/>
 									<ColorAdjustMode val="Fill"/>
 									<AdjustmentColor val="255,255,255,255"/>
-									<RenderPriority val="700"/>
+									<RenderPriority val="701"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Animation name="FCJH_OnFireEmbers">
@@ -11006,8 +11150,44 @@
 								<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
 								<Alpha val="0"/>
 								<AcceptsMouse val="false"/>
-								<Frame type="Image" name="FCJH_OnFireGlow">
-									<Anchor relative="$parent"/>
+
+								<Frame type="Image" name="FCJH_OnFireGlowA">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
+									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
+									<AcceptsMouse val="false"/>
+									<RenderPriority val="700"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_OnFireGlowB">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="50"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="99"/>
+									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
+									<ColorAdjustMode val="Fill"/>
+									<AdjustmentColor val="255,33,103,245"/>
+									<AcceptsMouse val="false"/>
+									<RenderPriority val="700"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_OnFireGlowC">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="99"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="148"/>
+									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
+									<ColorAdjustMode val="Fill"/>
+									<AdjustmentColor val="255,33,103,245"/>
+									<BlendMode val="Add"/>
+									<AcceptsMouse val="false"/>
+									<RenderPriority val="700"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_OnFireGlowD">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="148"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
 									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
 									<ColorAdjustMode val="Fill"/>
 									<AdjustmentColor val="255,33,103,245"/>
@@ -11033,7 +11213,7 @@
 									<Texture val="@UI/PauseScreenDimImage"/>
 									<ColorAdjustMode val="Fill"/>
 									<AdjustmentColor val="255,255,255,255"/>
-									<RenderPriority val="700"/>
+									<RenderPriority val="701"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Animation name="FCJH_OnFireEmbers">
@@ -11631,8 +11811,44 @@
 								<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
 								<Alpha val="0"/>
 								<AcceptsMouse val="false"/>
-								<Frame type="Image" name="FCJH_OnFireGlow">
-									<Anchor relative="$parent"/>
+
+								<Frame type="Image" name="FCJH_OnFireGlowA">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
+									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
+									<AcceptsMouse val="false"/>
+									<RenderPriority val="700"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_OnFireGlowB">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="50"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="99"/>
+									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
+									<ColorAdjustMode val="Fill"/>
+									<AdjustmentColor val="255,194,40,47"/>
+									<AcceptsMouse val="false"/>
+									<RenderPriority val="700"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_OnFireGlowC">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="99"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="148"/>
+									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
+									<ColorAdjustMode val="Fill"/>
+									<AdjustmentColor val="255,194,40,47"/>
+									<BlendMode val="Add"/>
+									<AcceptsMouse val="false"/>
+									<RenderPriority val="700"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_OnFireGlowD">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="148"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
 									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
 									<ColorAdjustMode val="Fill"/>
 									<AdjustmentColor val="255,194,40,47"/>
@@ -11658,7 +11874,7 @@
 									<Texture val="@UI/PauseScreenDimImage"/>
 									<ColorAdjustMode val="Fill"/>
 									<AdjustmentColor val="255,255,255,255"/>
-									<RenderPriority val="700"/>
+									<RenderPriority val="701"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Animation name="FCJH_OnFireEmbers">
@@ -12257,8 +12473,44 @@
 								<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
 								<Alpha val="0"/>
 								<AcceptsMouse val="false"/>
-								<Frame type="Image" name="FCJH_OnFireGlow">
-									<Anchor relative="$parent"/>
+
+								<Frame type="Image" name="FCJH_OnFireGlowA">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
+									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
+									<AcceptsMouse val="false"/>
+									<RenderPriority val="700"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_OnFireGlowB">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="50"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="99"/>
+									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
+									<ColorAdjustMode val="Fill"/>
+									<AdjustmentColor val="255,194,40,47"/>
+									<AcceptsMouse val="false"/>
+									<RenderPriority val="700"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_OnFireGlowC">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="99"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="148"/>
+									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
+									<ColorAdjustMode val="Fill"/>
+									<AdjustmentColor val="255,194,40,47"/>
+									<BlendMode val="Add"/>
+									<AcceptsMouse val="false"/>
+									<RenderPriority val="700"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_OnFireGlowD">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="148"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
 									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
 									<ColorAdjustMode val="Fill"/>
 									<AdjustmentColor val="255,194,40,47"/>
@@ -12284,7 +12536,7 @@
 									<Texture val="@UI/PauseScreenDimImage"/>
 									<ColorAdjustMode val="Fill"/>
 									<AdjustmentColor val="255,255,255,255"/>
-									<RenderPriority val="700"/>
+									<RenderPriority val="701"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Animation name="FCJH_OnFireEmbers">
@@ -12883,8 +13135,44 @@
 								<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
 								<Alpha val="0"/>
 								<AcceptsMouse val="false"/>
-								<Frame type="Image" name="FCJH_OnFireGlow">
-									<Anchor relative="$parent"/>
+
+								<Frame type="Image" name="FCJH_OnFireGlowA">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
+									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
+									<AcceptsMouse val="false"/>
+									<RenderPriority val="700"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_OnFireGlowB">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="50"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="99"/>
+									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
+									<ColorAdjustMode val="Fill"/>
+									<AdjustmentColor val="255,194,40,47"/>
+									<AcceptsMouse val="false"/>
+									<RenderPriority val="700"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_OnFireGlowC">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="99"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="148"/>
+									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
+									<ColorAdjustMode val="Fill"/>
+									<AdjustmentColor val="255,194,40,47"/>
+									<BlendMode val="Add"/>
+									<AcceptsMouse val="false"/>
+									<RenderPriority val="700"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_OnFireGlowD">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="148"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
 									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
 									<ColorAdjustMode val="Fill"/>
 									<AdjustmentColor val="255,194,40,47"/>
@@ -12910,7 +13198,7 @@
 									<Texture val="@UI/PauseScreenDimImage"/>
 									<ColorAdjustMode val="Fill"/>
 									<AdjustmentColor val="255,255,255,255"/>
-									<RenderPriority val="700"/>
+									<RenderPriority val="701"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Animation name="FCJH_OnFireEmbers">
@@ -13509,8 +13797,44 @@
 								<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
 								<Alpha val="0"/>
 								<AcceptsMouse val="false"/>
-								<Frame type="Image" name="FCJH_OnFireGlow">
-									<Anchor relative="$parent"/>
+
+								<Frame type="Image" name="FCJH_OnFireGlowA">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
+									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
+									<AcceptsMouse val="false"/>
+									<RenderPriority val="700"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_OnFireGlowB">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="50"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="99"/>
+									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
+									<ColorAdjustMode val="Fill"/>
+									<AdjustmentColor val="255,194,40,47"/>
+									<AcceptsMouse val="false"/>
+									<RenderPriority val="700"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_OnFireGlowC">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="99"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="148"/>
+									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
+									<ColorAdjustMode val="Fill"/>
+									<AdjustmentColor val="255,194,40,47"/>
+									<BlendMode val="Add"/>
+									<AcceptsMouse val="false"/>
+									<RenderPriority val="700"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_OnFireGlowD">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="148"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
 									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
 									<ColorAdjustMode val="Fill"/>
 									<AdjustmentColor val="255,194,40,47"/>
@@ -13536,7 +13860,7 @@
 									<Texture val="@UI/PauseScreenDimImage"/>
 									<ColorAdjustMode val="Fill"/>
 									<AdjustmentColor val="255,255,255,255"/>
-									<RenderPriority val="700"/>
+									<RenderPriority val="701"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Animation name="FCJH_OnFireEmbers">
@@ -14135,8 +14459,44 @@
 								<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
 								<Alpha val="0"/>
 								<AcceptsMouse val="false"/>
-								<Frame type="Image" name="FCJH_OnFireGlow">
-									<Anchor relative="$parent"/>
+
+								<Frame type="Image" name="FCJH_OnFireGlowA">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
+									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
+									<AcceptsMouse val="false"/>
+									<RenderPriority val="700"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_OnFireGlowB">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="50"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="99"/>
+									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
+									<ColorAdjustMode val="Fill"/>
+									<AdjustmentColor val="255,194,40,47"/>
+									<AcceptsMouse val="false"/>
+									<RenderPriority val="700"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_OnFireGlowC">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="99"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="148"/>
+									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
+									<ColorAdjustMode val="Fill"/>
+									<AdjustmentColor val="255,194,40,47"/>
+									<BlendMode val="Add"/>
+									<AcceptsMouse val="false"/>
+									<RenderPriority val="700"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_OnFireGlowD">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="148"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
 									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
 									<ColorAdjustMode val="Fill"/>
 									<AdjustmentColor val="255,194,40,47"/>
@@ -14162,7 +14522,7 @@
 									<Texture val="@UI/PauseScreenDimImage"/>
 									<ColorAdjustMode val="Fill"/>
 									<AdjustmentColor val="255,255,255,255"/>
-									<RenderPriority val="700"/>
+									<RenderPriority val="701"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Animation name="FCJH_OnFireEmbers">

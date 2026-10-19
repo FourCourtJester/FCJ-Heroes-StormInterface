@@ -12,7 +12,11 @@
 	     Try 5 (484d4df): boxes empty. Try 6: Ahli's Handles too, on each row and quest icon,
 	     and each tooltip binds the icon's picture through its Handle, as his do: empty.
 	     Try 7: the boxes' backing set under their text (510), as his are, in place of the
-	     whole tip at 900. -->
+	     whole tip at 900: empty.
+	     Try 8: blue's rows, Ahli's quest tooltip copied child for child (his icon picture,
+	     hero portrait, label anchors, progress ring and count, and his quest state copied
+	     from the icon), Blizzard's art in place of his; red's rows, no tooltip of ours at
+	     all: Blizzard's shared one, as on Blizzard's own Tab panel. -->
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<Frame type="Frame" name="UIContainer">
 			<Frame type="Frame" name="ConsoleUIContainer">
@@ -84,15 +88,20 @@
 						<Visible val="true"/>
 						<RenderPriority val="600"/>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip0A" template="StandardTooltip/BaselineTooltipTemplate">
-							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
 							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
 							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
-							<!-- Ahli's binding: the icon's picture, through its Handle -->
-							<Frame type="Image" name="FCJH_Icon">
+							<Frame type="Image" name="HeroPortrait">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-12"/>
+								<Height val="50"/>
+								<Texture val="{$FCJH_QTestRow0/PlayerHeroIconFrame/HeroIconImage/@Texture}"/>
+								<RenderPriority val="511"/>
+							</Frame>
+							<Frame type="Image" name="IconImage">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
 								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
 								<Width val="50"/>
@@ -100,17 +109,98 @@
 								<Texture val="{$FCJH_QTestIcon0A/IconImage/@Texture}"/>
 								<RenderPriority val="511"/>
 							</Frame>
+							<Frame type="Label" name="NameLabel">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="25"/>
+								<Anchor side="Left" relative="$parent/IconImage" pos="Max" offset="0"/>
+								<Anchor side="Right" relative="$parent/HeroPortrait" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="Label" name="CooldownLabel">
+								<Anchor side="Left" relative="$parent" pos="Min" offset="31"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-30"/>
+							</Frame>
+							<Frame type="Label" name="DescriptionLabel">
+								<Anchor side="Left" relative="$parent" pos="Min" offset="31"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-30"/>
+							</Frame>
+							<Frame type="Frame" name="BottomFrame">
+								<Anchor side="Left" relative="$parent" pos="Min" offset="30"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-30"/>
+							</Frame>
+							<Frame type="Image" name="UnfilledProgressImage"><Anchor side="Top" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Left" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Right" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Bottom" relative="$parent/IconImage" pos="Mid" offset="0"/><Width val="50"/><Height val="50"/><Unclipped val="true"/><RenderPriority val="535"/><Alpha val="42"/><Texture val="@UI/Storm_UI_InGame_Tab_Screen_Progress_Bar_Background"/></Frame>
+							<Frame type="ProgressBar" name="QuestProgressBar"><Anchor side="Top" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Left" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Right" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Bottom" relative="$parent/IconImage" pos="Mid" offset="0"/><Width val="50"/><Height val="50"/>
+								<Unclipped val="true"/><RenderPriority val="536"/><Vertical val="False"/><Circular val="true"/>
+								<CircularStart val="0"/><CircularEndOffset val="360"/><FillInset val="0.0"/><Visible val="False"/>
+								<MaxValue val="{$FCJH_QTestIcon0A/QuestProgressBar/@MaxValue}"/>
+								<Value val="{$FCJH_QTestIcon0A/QuestProgressBar/@Value}"/>
+								<Frame type="Frame" name="FillImageContainer"><Anchor relative="$parent"/>
+									<Frame type="Image" name="FillImage"><Anchor relative="$parent"/><Unclipped val="true"/><TextureType val="Circular"/><RenderPriority val="536"/><Texture val="@UI/Storm_UI_InGame_Tab_Screen_Quest_Progress_Bar"/></Frame>
+								</Frame>
+							</Frame>
+							<Frame type="Image" name="QuestCompleteImage"><Anchor side="Top" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Left" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Right" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Bottom" relative="$parent/IconImage" pos="Mid" offset="0"/><Width val="50"/><Height val="50"/><Unclipped val="true"/><RenderPriority val="537"/><Visible val="False"/><Texture val="@UI/Storm_UI_InGame_Tab_Screen_QuestComplete"/></Frame>
+							<Frame type="Label" name="QuestProgressStackLabel">
+								<Anchor side="Top" relative="$parent/QuestProgressBar" pos="Max" offset="-2"/>
+								<Anchor side="Left" relative="$parent/QuestProgressBar" pos="Min" offset="0"/>
+								<Height val="20"/><Style val="Storm_LeaderTalentQuestStack"/><Visible val="false"/>
+								<RenderPriority val="538"/><Unclipped val="true"/>
+								<Text val="{$FCJH_QTestIcon0A/QuestProgressBar/@Value}"/>
+							</Frame>
+							<StateGroup name="BaselineQuestProgress">
+								<DefaultState val="NoQuest"/>
+								<State name="HasQuest">
+									<When type="Property" frame="$FCJH_QTestIcon0A" QuestProgress="QuestInProgress"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="True"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="True"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="85"/>
+								</State>
+								<State name="HasUntrackedQuest">
+									<When type="Property" frame="$FCJH_QTestIcon0A" QuestProgress="ProgressUntracked"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="True"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="85"/>
+								</State>
+								<State name="FinishedQuest">
+									<When type="Property" frame="$FCJH_QTestIcon0A" QuestProgress="FinishedQuest"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="False"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="70"/>
+								</State>
+								<State name="FinishedUnlimitedQuest">
+									<When type="Property" frame="$FCJH_QTestIcon0A" QuestProgress="FinishedUnlimitedQuest"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="True"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="85"/>
+								</State>
+								<State name="NoQuest">
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="False"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip0B" template="StandardTooltip/BaselineTooltipTemplate">
-							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
 							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
 							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
-							<!-- Ahli's binding: the icon's picture, through its Handle -->
-							<Frame type="Image" name="FCJH_Icon">
+							<Frame type="Image" name="HeroPortrait">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-12"/>
+								<Height val="50"/>
+								<Texture val="{$FCJH_QTestRow0/PlayerHeroIconFrame/HeroIconImage/@Texture}"/>
+								<RenderPriority val="511"/>
+							</Frame>
+							<Frame type="Image" name="IconImage">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
 								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
 								<Width val="50"/>
@@ -118,17 +208,98 @@
 								<Texture val="{$FCJH_QTestIcon0B/IconImage/@Texture}"/>
 								<RenderPriority val="511"/>
 							</Frame>
+							<Frame type="Label" name="NameLabel">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="25"/>
+								<Anchor side="Left" relative="$parent/IconImage" pos="Max" offset="0"/>
+								<Anchor side="Right" relative="$parent/HeroPortrait" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="Label" name="CooldownLabel">
+								<Anchor side="Left" relative="$parent" pos="Min" offset="31"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-30"/>
+							</Frame>
+							<Frame type="Label" name="DescriptionLabel">
+								<Anchor side="Left" relative="$parent" pos="Min" offset="31"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-30"/>
+							</Frame>
+							<Frame type="Frame" name="BottomFrame">
+								<Anchor side="Left" relative="$parent" pos="Min" offset="30"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-30"/>
+							</Frame>
+							<Frame type="Image" name="UnfilledProgressImage"><Anchor side="Top" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Left" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Right" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Bottom" relative="$parent/IconImage" pos="Mid" offset="0"/><Width val="50"/><Height val="50"/><Unclipped val="true"/><RenderPriority val="535"/><Alpha val="42"/><Texture val="@UI/Storm_UI_InGame_Tab_Screen_Progress_Bar_Background"/></Frame>
+							<Frame type="ProgressBar" name="QuestProgressBar"><Anchor side="Top" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Left" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Right" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Bottom" relative="$parent/IconImage" pos="Mid" offset="0"/><Width val="50"/><Height val="50"/>
+								<Unclipped val="true"/><RenderPriority val="536"/><Vertical val="False"/><Circular val="true"/>
+								<CircularStart val="0"/><CircularEndOffset val="360"/><FillInset val="0.0"/><Visible val="False"/>
+								<MaxValue val="{$FCJH_QTestIcon0B/QuestProgressBar/@MaxValue}"/>
+								<Value val="{$FCJH_QTestIcon0B/QuestProgressBar/@Value}"/>
+								<Frame type="Frame" name="FillImageContainer"><Anchor relative="$parent"/>
+									<Frame type="Image" name="FillImage"><Anchor relative="$parent"/><Unclipped val="true"/><TextureType val="Circular"/><RenderPriority val="536"/><Texture val="@UI/Storm_UI_InGame_Tab_Screen_Quest_Progress_Bar"/></Frame>
+								</Frame>
+							</Frame>
+							<Frame type="Image" name="QuestCompleteImage"><Anchor side="Top" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Left" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Right" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Bottom" relative="$parent/IconImage" pos="Mid" offset="0"/><Width val="50"/><Height val="50"/><Unclipped val="true"/><RenderPriority val="537"/><Visible val="False"/><Texture val="@UI/Storm_UI_InGame_Tab_Screen_QuestComplete"/></Frame>
+							<Frame type="Label" name="QuestProgressStackLabel">
+								<Anchor side="Top" relative="$parent/QuestProgressBar" pos="Max" offset="-2"/>
+								<Anchor side="Left" relative="$parent/QuestProgressBar" pos="Min" offset="0"/>
+								<Height val="20"/><Style val="Storm_LeaderTalentQuestStack"/><Visible val="false"/>
+								<RenderPriority val="538"/><Unclipped val="true"/>
+								<Text val="{$FCJH_QTestIcon0B/QuestProgressBar/@Value}"/>
+							</Frame>
+							<StateGroup name="BaselineQuestProgress">
+								<DefaultState val="NoQuest"/>
+								<State name="HasQuest">
+									<When type="Property" frame="$FCJH_QTestIcon0B" QuestProgress="QuestInProgress"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="True"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="True"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="85"/>
+								</State>
+								<State name="HasUntrackedQuest">
+									<When type="Property" frame="$FCJH_QTestIcon0B" QuestProgress="ProgressUntracked"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="True"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="85"/>
+								</State>
+								<State name="FinishedQuest">
+									<When type="Property" frame="$FCJH_QTestIcon0B" QuestProgress="FinishedQuest"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="False"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="70"/>
+								</State>
+								<State name="FinishedUnlimitedQuest">
+									<When type="Property" frame="$FCJH_QTestIcon0B" QuestProgress="FinishedUnlimitedQuest"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="True"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="85"/>
+								</State>
+								<State name="NoQuest">
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="False"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip1A" template="StandardTooltip/BaselineTooltipTemplate">
-							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
 							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
 							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
-							<!-- Ahli's binding: the icon's picture, through its Handle -->
-							<Frame type="Image" name="FCJH_Icon">
+							<Frame type="Image" name="HeroPortrait">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-12"/>
+								<Height val="50"/>
+								<Texture val="{$FCJH_QTestRow1/PlayerHeroIconFrame/HeroIconImage/@Texture}"/>
+								<RenderPriority val="511"/>
+							</Frame>
+							<Frame type="Image" name="IconImage">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
 								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
 								<Width val="50"/>
@@ -136,17 +307,98 @@
 								<Texture val="{$FCJH_QTestIcon1A/IconImage/@Texture}"/>
 								<RenderPriority val="511"/>
 							</Frame>
+							<Frame type="Label" name="NameLabel">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="25"/>
+								<Anchor side="Left" relative="$parent/IconImage" pos="Max" offset="0"/>
+								<Anchor side="Right" relative="$parent/HeroPortrait" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="Label" name="CooldownLabel">
+								<Anchor side="Left" relative="$parent" pos="Min" offset="31"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-30"/>
+							</Frame>
+							<Frame type="Label" name="DescriptionLabel">
+								<Anchor side="Left" relative="$parent" pos="Min" offset="31"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-30"/>
+							</Frame>
+							<Frame type="Frame" name="BottomFrame">
+								<Anchor side="Left" relative="$parent" pos="Min" offset="30"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-30"/>
+							</Frame>
+							<Frame type="Image" name="UnfilledProgressImage"><Anchor side="Top" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Left" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Right" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Bottom" relative="$parent/IconImage" pos="Mid" offset="0"/><Width val="50"/><Height val="50"/><Unclipped val="true"/><RenderPriority val="535"/><Alpha val="42"/><Texture val="@UI/Storm_UI_InGame_Tab_Screen_Progress_Bar_Background"/></Frame>
+							<Frame type="ProgressBar" name="QuestProgressBar"><Anchor side="Top" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Left" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Right" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Bottom" relative="$parent/IconImage" pos="Mid" offset="0"/><Width val="50"/><Height val="50"/>
+								<Unclipped val="true"/><RenderPriority val="536"/><Vertical val="False"/><Circular val="true"/>
+								<CircularStart val="0"/><CircularEndOffset val="360"/><FillInset val="0.0"/><Visible val="False"/>
+								<MaxValue val="{$FCJH_QTestIcon1A/QuestProgressBar/@MaxValue}"/>
+								<Value val="{$FCJH_QTestIcon1A/QuestProgressBar/@Value}"/>
+								<Frame type="Frame" name="FillImageContainer"><Anchor relative="$parent"/>
+									<Frame type="Image" name="FillImage"><Anchor relative="$parent"/><Unclipped val="true"/><TextureType val="Circular"/><RenderPriority val="536"/><Texture val="@UI/Storm_UI_InGame_Tab_Screen_Quest_Progress_Bar"/></Frame>
+								</Frame>
+							</Frame>
+							<Frame type="Image" name="QuestCompleteImage"><Anchor side="Top" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Left" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Right" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Bottom" relative="$parent/IconImage" pos="Mid" offset="0"/><Width val="50"/><Height val="50"/><Unclipped val="true"/><RenderPriority val="537"/><Visible val="False"/><Texture val="@UI/Storm_UI_InGame_Tab_Screen_QuestComplete"/></Frame>
+							<Frame type="Label" name="QuestProgressStackLabel">
+								<Anchor side="Top" relative="$parent/QuestProgressBar" pos="Max" offset="-2"/>
+								<Anchor side="Left" relative="$parent/QuestProgressBar" pos="Min" offset="0"/>
+								<Height val="20"/><Style val="Storm_LeaderTalentQuestStack"/><Visible val="false"/>
+								<RenderPriority val="538"/><Unclipped val="true"/>
+								<Text val="{$FCJH_QTestIcon1A/QuestProgressBar/@Value}"/>
+							</Frame>
+							<StateGroup name="BaselineQuestProgress">
+								<DefaultState val="NoQuest"/>
+								<State name="HasQuest">
+									<When type="Property" frame="$FCJH_QTestIcon1A" QuestProgress="QuestInProgress"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="True"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="True"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="85"/>
+								</State>
+								<State name="HasUntrackedQuest">
+									<When type="Property" frame="$FCJH_QTestIcon1A" QuestProgress="ProgressUntracked"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="True"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="85"/>
+								</State>
+								<State name="FinishedQuest">
+									<When type="Property" frame="$FCJH_QTestIcon1A" QuestProgress="FinishedQuest"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="False"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="70"/>
+								</State>
+								<State name="FinishedUnlimitedQuest">
+									<When type="Property" frame="$FCJH_QTestIcon1A" QuestProgress="FinishedUnlimitedQuest"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="True"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="85"/>
+								</State>
+								<State name="NoQuest">
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="False"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip1B" template="StandardTooltip/BaselineTooltipTemplate">
-							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
 							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
 							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
-							<!-- Ahli's binding: the icon's picture, through its Handle -->
-							<Frame type="Image" name="FCJH_Icon">
+							<Frame type="Image" name="HeroPortrait">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-12"/>
+								<Height val="50"/>
+								<Texture val="{$FCJH_QTestRow1/PlayerHeroIconFrame/HeroIconImage/@Texture}"/>
+								<RenderPriority val="511"/>
+							</Frame>
+							<Frame type="Image" name="IconImage">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
 								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
 								<Width val="50"/>
@@ -154,17 +406,98 @@
 								<Texture val="{$FCJH_QTestIcon1B/IconImage/@Texture}"/>
 								<RenderPriority val="511"/>
 							</Frame>
+							<Frame type="Label" name="NameLabel">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="25"/>
+								<Anchor side="Left" relative="$parent/IconImage" pos="Max" offset="0"/>
+								<Anchor side="Right" relative="$parent/HeroPortrait" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="Label" name="CooldownLabel">
+								<Anchor side="Left" relative="$parent" pos="Min" offset="31"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-30"/>
+							</Frame>
+							<Frame type="Label" name="DescriptionLabel">
+								<Anchor side="Left" relative="$parent" pos="Min" offset="31"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-30"/>
+							</Frame>
+							<Frame type="Frame" name="BottomFrame">
+								<Anchor side="Left" relative="$parent" pos="Min" offset="30"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-30"/>
+							</Frame>
+							<Frame type="Image" name="UnfilledProgressImage"><Anchor side="Top" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Left" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Right" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Bottom" relative="$parent/IconImage" pos="Mid" offset="0"/><Width val="50"/><Height val="50"/><Unclipped val="true"/><RenderPriority val="535"/><Alpha val="42"/><Texture val="@UI/Storm_UI_InGame_Tab_Screen_Progress_Bar_Background"/></Frame>
+							<Frame type="ProgressBar" name="QuestProgressBar"><Anchor side="Top" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Left" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Right" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Bottom" relative="$parent/IconImage" pos="Mid" offset="0"/><Width val="50"/><Height val="50"/>
+								<Unclipped val="true"/><RenderPriority val="536"/><Vertical val="False"/><Circular val="true"/>
+								<CircularStart val="0"/><CircularEndOffset val="360"/><FillInset val="0.0"/><Visible val="False"/>
+								<MaxValue val="{$FCJH_QTestIcon1B/QuestProgressBar/@MaxValue}"/>
+								<Value val="{$FCJH_QTestIcon1B/QuestProgressBar/@Value}"/>
+								<Frame type="Frame" name="FillImageContainer"><Anchor relative="$parent"/>
+									<Frame type="Image" name="FillImage"><Anchor relative="$parent"/><Unclipped val="true"/><TextureType val="Circular"/><RenderPriority val="536"/><Texture val="@UI/Storm_UI_InGame_Tab_Screen_Quest_Progress_Bar"/></Frame>
+								</Frame>
+							</Frame>
+							<Frame type="Image" name="QuestCompleteImage"><Anchor side="Top" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Left" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Right" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Bottom" relative="$parent/IconImage" pos="Mid" offset="0"/><Width val="50"/><Height val="50"/><Unclipped val="true"/><RenderPriority val="537"/><Visible val="False"/><Texture val="@UI/Storm_UI_InGame_Tab_Screen_QuestComplete"/></Frame>
+							<Frame type="Label" name="QuestProgressStackLabel">
+								<Anchor side="Top" relative="$parent/QuestProgressBar" pos="Max" offset="-2"/>
+								<Anchor side="Left" relative="$parent/QuestProgressBar" pos="Min" offset="0"/>
+								<Height val="20"/><Style val="Storm_LeaderTalentQuestStack"/><Visible val="false"/>
+								<RenderPriority val="538"/><Unclipped val="true"/>
+								<Text val="{$FCJH_QTestIcon1B/QuestProgressBar/@Value}"/>
+							</Frame>
+							<StateGroup name="BaselineQuestProgress">
+								<DefaultState val="NoQuest"/>
+								<State name="HasQuest">
+									<When type="Property" frame="$FCJH_QTestIcon1B" QuestProgress="QuestInProgress"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="True"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="True"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="85"/>
+								</State>
+								<State name="HasUntrackedQuest">
+									<When type="Property" frame="$FCJH_QTestIcon1B" QuestProgress="ProgressUntracked"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="True"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="85"/>
+								</State>
+								<State name="FinishedQuest">
+									<When type="Property" frame="$FCJH_QTestIcon1B" QuestProgress="FinishedQuest"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="False"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="70"/>
+								</State>
+								<State name="FinishedUnlimitedQuest">
+									<When type="Property" frame="$FCJH_QTestIcon1B" QuestProgress="FinishedUnlimitedQuest"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="True"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="85"/>
+								</State>
+								<State name="NoQuest">
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="False"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip2A" template="StandardTooltip/BaselineTooltipTemplate">
-							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
 							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
 							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
-							<!-- Ahli's binding: the icon's picture, through its Handle -->
-							<Frame type="Image" name="FCJH_Icon">
+							<Frame type="Image" name="HeroPortrait">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-12"/>
+								<Height val="50"/>
+								<Texture val="{$FCJH_QTestRow2/PlayerHeroIconFrame/HeroIconImage/@Texture}"/>
+								<RenderPriority val="511"/>
+							</Frame>
+							<Frame type="Image" name="IconImage">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
 								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
 								<Width val="50"/>
@@ -172,17 +505,98 @@
 								<Texture val="{$FCJH_QTestIcon2A/IconImage/@Texture}"/>
 								<RenderPriority val="511"/>
 							</Frame>
+							<Frame type="Label" name="NameLabel">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="25"/>
+								<Anchor side="Left" relative="$parent/IconImage" pos="Max" offset="0"/>
+								<Anchor side="Right" relative="$parent/HeroPortrait" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="Label" name="CooldownLabel">
+								<Anchor side="Left" relative="$parent" pos="Min" offset="31"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-30"/>
+							</Frame>
+							<Frame type="Label" name="DescriptionLabel">
+								<Anchor side="Left" relative="$parent" pos="Min" offset="31"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-30"/>
+							</Frame>
+							<Frame type="Frame" name="BottomFrame">
+								<Anchor side="Left" relative="$parent" pos="Min" offset="30"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-30"/>
+							</Frame>
+							<Frame type="Image" name="UnfilledProgressImage"><Anchor side="Top" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Left" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Right" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Bottom" relative="$parent/IconImage" pos="Mid" offset="0"/><Width val="50"/><Height val="50"/><Unclipped val="true"/><RenderPriority val="535"/><Alpha val="42"/><Texture val="@UI/Storm_UI_InGame_Tab_Screen_Progress_Bar_Background"/></Frame>
+							<Frame type="ProgressBar" name="QuestProgressBar"><Anchor side="Top" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Left" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Right" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Bottom" relative="$parent/IconImage" pos="Mid" offset="0"/><Width val="50"/><Height val="50"/>
+								<Unclipped val="true"/><RenderPriority val="536"/><Vertical val="False"/><Circular val="true"/>
+								<CircularStart val="0"/><CircularEndOffset val="360"/><FillInset val="0.0"/><Visible val="False"/>
+								<MaxValue val="{$FCJH_QTestIcon2A/QuestProgressBar/@MaxValue}"/>
+								<Value val="{$FCJH_QTestIcon2A/QuestProgressBar/@Value}"/>
+								<Frame type="Frame" name="FillImageContainer"><Anchor relative="$parent"/>
+									<Frame type="Image" name="FillImage"><Anchor relative="$parent"/><Unclipped val="true"/><TextureType val="Circular"/><RenderPriority val="536"/><Texture val="@UI/Storm_UI_InGame_Tab_Screen_Quest_Progress_Bar"/></Frame>
+								</Frame>
+							</Frame>
+							<Frame type="Image" name="QuestCompleteImage"><Anchor side="Top" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Left" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Right" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Bottom" relative="$parent/IconImage" pos="Mid" offset="0"/><Width val="50"/><Height val="50"/><Unclipped val="true"/><RenderPriority val="537"/><Visible val="False"/><Texture val="@UI/Storm_UI_InGame_Tab_Screen_QuestComplete"/></Frame>
+							<Frame type="Label" name="QuestProgressStackLabel">
+								<Anchor side="Top" relative="$parent/QuestProgressBar" pos="Max" offset="-2"/>
+								<Anchor side="Left" relative="$parent/QuestProgressBar" pos="Min" offset="0"/>
+								<Height val="20"/><Style val="Storm_LeaderTalentQuestStack"/><Visible val="false"/>
+								<RenderPriority val="538"/><Unclipped val="true"/>
+								<Text val="{$FCJH_QTestIcon2A/QuestProgressBar/@Value}"/>
+							</Frame>
+							<StateGroup name="BaselineQuestProgress">
+								<DefaultState val="NoQuest"/>
+								<State name="HasQuest">
+									<When type="Property" frame="$FCJH_QTestIcon2A" QuestProgress="QuestInProgress"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="True"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="True"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="85"/>
+								</State>
+								<State name="HasUntrackedQuest">
+									<When type="Property" frame="$FCJH_QTestIcon2A" QuestProgress="ProgressUntracked"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="True"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="85"/>
+								</State>
+								<State name="FinishedQuest">
+									<When type="Property" frame="$FCJH_QTestIcon2A" QuestProgress="FinishedQuest"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="False"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="70"/>
+								</State>
+								<State name="FinishedUnlimitedQuest">
+									<When type="Property" frame="$FCJH_QTestIcon2A" QuestProgress="FinishedUnlimitedQuest"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="True"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="85"/>
+								</State>
+								<State name="NoQuest">
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="False"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip2B" template="StandardTooltip/BaselineTooltipTemplate">
-							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
 							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
 							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
-							<!-- Ahli's binding: the icon's picture, through its Handle -->
-							<Frame type="Image" name="FCJH_Icon">
+							<Frame type="Image" name="HeroPortrait">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-12"/>
+								<Height val="50"/>
+								<Texture val="{$FCJH_QTestRow2/PlayerHeroIconFrame/HeroIconImage/@Texture}"/>
+								<RenderPriority val="511"/>
+							</Frame>
+							<Frame type="Image" name="IconImage">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
 								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
 								<Width val="50"/>
@@ -190,17 +604,98 @@
 								<Texture val="{$FCJH_QTestIcon2B/IconImage/@Texture}"/>
 								<RenderPriority val="511"/>
 							</Frame>
+							<Frame type="Label" name="NameLabel">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="25"/>
+								<Anchor side="Left" relative="$parent/IconImage" pos="Max" offset="0"/>
+								<Anchor side="Right" relative="$parent/HeroPortrait" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="Label" name="CooldownLabel">
+								<Anchor side="Left" relative="$parent" pos="Min" offset="31"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-30"/>
+							</Frame>
+							<Frame type="Label" name="DescriptionLabel">
+								<Anchor side="Left" relative="$parent" pos="Min" offset="31"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-30"/>
+							</Frame>
+							<Frame type="Frame" name="BottomFrame">
+								<Anchor side="Left" relative="$parent" pos="Min" offset="30"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-30"/>
+							</Frame>
+							<Frame type="Image" name="UnfilledProgressImage"><Anchor side="Top" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Left" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Right" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Bottom" relative="$parent/IconImage" pos="Mid" offset="0"/><Width val="50"/><Height val="50"/><Unclipped val="true"/><RenderPriority val="535"/><Alpha val="42"/><Texture val="@UI/Storm_UI_InGame_Tab_Screen_Progress_Bar_Background"/></Frame>
+							<Frame type="ProgressBar" name="QuestProgressBar"><Anchor side="Top" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Left" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Right" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Bottom" relative="$parent/IconImage" pos="Mid" offset="0"/><Width val="50"/><Height val="50"/>
+								<Unclipped val="true"/><RenderPriority val="536"/><Vertical val="False"/><Circular val="true"/>
+								<CircularStart val="0"/><CircularEndOffset val="360"/><FillInset val="0.0"/><Visible val="False"/>
+								<MaxValue val="{$FCJH_QTestIcon2B/QuestProgressBar/@MaxValue}"/>
+								<Value val="{$FCJH_QTestIcon2B/QuestProgressBar/@Value}"/>
+								<Frame type="Frame" name="FillImageContainer"><Anchor relative="$parent"/>
+									<Frame type="Image" name="FillImage"><Anchor relative="$parent"/><Unclipped val="true"/><TextureType val="Circular"/><RenderPriority val="536"/><Texture val="@UI/Storm_UI_InGame_Tab_Screen_Quest_Progress_Bar"/></Frame>
+								</Frame>
+							</Frame>
+							<Frame type="Image" name="QuestCompleteImage"><Anchor side="Top" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Left" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Right" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Bottom" relative="$parent/IconImage" pos="Mid" offset="0"/><Width val="50"/><Height val="50"/><Unclipped val="true"/><RenderPriority val="537"/><Visible val="False"/><Texture val="@UI/Storm_UI_InGame_Tab_Screen_QuestComplete"/></Frame>
+							<Frame type="Label" name="QuestProgressStackLabel">
+								<Anchor side="Top" relative="$parent/QuestProgressBar" pos="Max" offset="-2"/>
+								<Anchor side="Left" relative="$parent/QuestProgressBar" pos="Min" offset="0"/>
+								<Height val="20"/><Style val="Storm_LeaderTalentQuestStack"/><Visible val="false"/>
+								<RenderPriority val="538"/><Unclipped val="true"/>
+								<Text val="{$FCJH_QTestIcon2B/QuestProgressBar/@Value}"/>
+							</Frame>
+							<StateGroup name="BaselineQuestProgress">
+								<DefaultState val="NoQuest"/>
+								<State name="HasQuest">
+									<When type="Property" frame="$FCJH_QTestIcon2B" QuestProgress="QuestInProgress"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="True"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="True"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="85"/>
+								</State>
+								<State name="HasUntrackedQuest">
+									<When type="Property" frame="$FCJH_QTestIcon2B" QuestProgress="ProgressUntracked"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="True"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="85"/>
+								</State>
+								<State name="FinishedQuest">
+									<When type="Property" frame="$FCJH_QTestIcon2B" QuestProgress="FinishedQuest"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="False"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="70"/>
+								</State>
+								<State name="FinishedUnlimitedQuest">
+									<When type="Property" frame="$FCJH_QTestIcon2B" QuestProgress="FinishedUnlimitedQuest"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="True"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="85"/>
+								</State>
+								<State name="NoQuest">
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="False"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip3A" template="StandardTooltip/BaselineTooltipTemplate">
-							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
 							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
 							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
-							<!-- Ahli's binding: the icon's picture, through its Handle -->
-							<Frame type="Image" name="FCJH_Icon">
+							<Frame type="Image" name="HeroPortrait">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-12"/>
+								<Height val="50"/>
+								<Texture val="{$FCJH_QTestRow3/PlayerHeroIconFrame/HeroIconImage/@Texture}"/>
+								<RenderPriority val="511"/>
+							</Frame>
+							<Frame type="Image" name="IconImage">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
 								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
 								<Width val="50"/>
@@ -208,17 +703,98 @@
 								<Texture val="{$FCJH_QTestIcon3A/IconImage/@Texture}"/>
 								<RenderPriority val="511"/>
 							</Frame>
+							<Frame type="Label" name="NameLabel">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="25"/>
+								<Anchor side="Left" relative="$parent/IconImage" pos="Max" offset="0"/>
+								<Anchor side="Right" relative="$parent/HeroPortrait" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="Label" name="CooldownLabel">
+								<Anchor side="Left" relative="$parent" pos="Min" offset="31"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-30"/>
+							</Frame>
+							<Frame type="Label" name="DescriptionLabel">
+								<Anchor side="Left" relative="$parent" pos="Min" offset="31"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-30"/>
+							</Frame>
+							<Frame type="Frame" name="BottomFrame">
+								<Anchor side="Left" relative="$parent" pos="Min" offset="30"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-30"/>
+							</Frame>
+							<Frame type="Image" name="UnfilledProgressImage"><Anchor side="Top" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Left" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Right" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Bottom" relative="$parent/IconImage" pos="Mid" offset="0"/><Width val="50"/><Height val="50"/><Unclipped val="true"/><RenderPriority val="535"/><Alpha val="42"/><Texture val="@UI/Storm_UI_InGame_Tab_Screen_Progress_Bar_Background"/></Frame>
+							<Frame type="ProgressBar" name="QuestProgressBar"><Anchor side="Top" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Left" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Right" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Bottom" relative="$parent/IconImage" pos="Mid" offset="0"/><Width val="50"/><Height val="50"/>
+								<Unclipped val="true"/><RenderPriority val="536"/><Vertical val="False"/><Circular val="true"/>
+								<CircularStart val="0"/><CircularEndOffset val="360"/><FillInset val="0.0"/><Visible val="False"/>
+								<MaxValue val="{$FCJH_QTestIcon3A/QuestProgressBar/@MaxValue}"/>
+								<Value val="{$FCJH_QTestIcon3A/QuestProgressBar/@Value}"/>
+								<Frame type="Frame" name="FillImageContainer"><Anchor relative="$parent"/>
+									<Frame type="Image" name="FillImage"><Anchor relative="$parent"/><Unclipped val="true"/><TextureType val="Circular"/><RenderPriority val="536"/><Texture val="@UI/Storm_UI_InGame_Tab_Screen_Quest_Progress_Bar"/></Frame>
+								</Frame>
+							</Frame>
+							<Frame type="Image" name="QuestCompleteImage"><Anchor side="Top" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Left" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Right" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Bottom" relative="$parent/IconImage" pos="Mid" offset="0"/><Width val="50"/><Height val="50"/><Unclipped val="true"/><RenderPriority val="537"/><Visible val="False"/><Texture val="@UI/Storm_UI_InGame_Tab_Screen_QuestComplete"/></Frame>
+							<Frame type="Label" name="QuestProgressStackLabel">
+								<Anchor side="Top" relative="$parent/QuestProgressBar" pos="Max" offset="-2"/>
+								<Anchor side="Left" relative="$parent/QuestProgressBar" pos="Min" offset="0"/>
+								<Height val="20"/><Style val="Storm_LeaderTalentQuestStack"/><Visible val="false"/>
+								<RenderPriority val="538"/><Unclipped val="true"/>
+								<Text val="{$FCJH_QTestIcon3A/QuestProgressBar/@Value}"/>
+							</Frame>
+							<StateGroup name="BaselineQuestProgress">
+								<DefaultState val="NoQuest"/>
+								<State name="HasQuest">
+									<When type="Property" frame="$FCJH_QTestIcon3A" QuestProgress="QuestInProgress"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="True"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="True"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="85"/>
+								</State>
+								<State name="HasUntrackedQuest">
+									<When type="Property" frame="$FCJH_QTestIcon3A" QuestProgress="ProgressUntracked"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="True"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="85"/>
+								</State>
+								<State name="FinishedQuest">
+									<When type="Property" frame="$FCJH_QTestIcon3A" QuestProgress="FinishedQuest"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="False"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="70"/>
+								</State>
+								<State name="FinishedUnlimitedQuest">
+									<When type="Property" frame="$FCJH_QTestIcon3A" QuestProgress="FinishedUnlimitedQuest"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="True"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="85"/>
+								</State>
+								<State name="NoQuest">
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="False"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip3B" template="StandardTooltip/BaselineTooltipTemplate">
-							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
 							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
 							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
-							<!-- Ahli's binding: the icon's picture, through its Handle -->
-							<Frame type="Image" name="FCJH_Icon">
+							<Frame type="Image" name="HeroPortrait">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-12"/>
+								<Height val="50"/>
+								<Texture val="{$FCJH_QTestRow3/PlayerHeroIconFrame/HeroIconImage/@Texture}"/>
+								<RenderPriority val="511"/>
+							</Frame>
+							<Frame type="Image" name="IconImage">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
 								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
 								<Width val="50"/>
@@ -226,17 +802,98 @@
 								<Texture val="{$FCJH_QTestIcon3B/IconImage/@Texture}"/>
 								<RenderPriority val="511"/>
 							</Frame>
+							<Frame type="Label" name="NameLabel">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="25"/>
+								<Anchor side="Left" relative="$parent/IconImage" pos="Max" offset="0"/>
+								<Anchor side="Right" relative="$parent/HeroPortrait" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="Label" name="CooldownLabel">
+								<Anchor side="Left" relative="$parent" pos="Min" offset="31"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-30"/>
+							</Frame>
+							<Frame type="Label" name="DescriptionLabel">
+								<Anchor side="Left" relative="$parent" pos="Min" offset="31"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-30"/>
+							</Frame>
+							<Frame type="Frame" name="BottomFrame">
+								<Anchor side="Left" relative="$parent" pos="Min" offset="30"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-30"/>
+							</Frame>
+							<Frame type="Image" name="UnfilledProgressImage"><Anchor side="Top" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Left" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Right" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Bottom" relative="$parent/IconImage" pos="Mid" offset="0"/><Width val="50"/><Height val="50"/><Unclipped val="true"/><RenderPriority val="535"/><Alpha val="42"/><Texture val="@UI/Storm_UI_InGame_Tab_Screen_Progress_Bar_Background"/></Frame>
+							<Frame type="ProgressBar" name="QuestProgressBar"><Anchor side="Top" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Left" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Right" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Bottom" relative="$parent/IconImage" pos="Mid" offset="0"/><Width val="50"/><Height val="50"/>
+								<Unclipped val="true"/><RenderPriority val="536"/><Vertical val="False"/><Circular val="true"/>
+								<CircularStart val="0"/><CircularEndOffset val="360"/><FillInset val="0.0"/><Visible val="False"/>
+								<MaxValue val="{$FCJH_QTestIcon3B/QuestProgressBar/@MaxValue}"/>
+								<Value val="{$FCJH_QTestIcon3B/QuestProgressBar/@Value}"/>
+								<Frame type="Frame" name="FillImageContainer"><Anchor relative="$parent"/>
+									<Frame type="Image" name="FillImage"><Anchor relative="$parent"/><Unclipped val="true"/><TextureType val="Circular"/><RenderPriority val="536"/><Texture val="@UI/Storm_UI_InGame_Tab_Screen_Quest_Progress_Bar"/></Frame>
+								</Frame>
+							</Frame>
+							<Frame type="Image" name="QuestCompleteImage"><Anchor side="Top" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Left" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Right" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Bottom" relative="$parent/IconImage" pos="Mid" offset="0"/><Width val="50"/><Height val="50"/><Unclipped val="true"/><RenderPriority val="537"/><Visible val="False"/><Texture val="@UI/Storm_UI_InGame_Tab_Screen_QuestComplete"/></Frame>
+							<Frame type="Label" name="QuestProgressStackLabel">
+								<Anchor side="Top" relative="$parent/QuestProgressBar" pos="Max" offset="-2"/>
+								<Anchor side="Left" relative="$parent/QuestProgressBar" pos="Min" offset="0"/>
+								<Height val="20"/><Style val="Storm_LeaderTalentQuestStack"/><Visible val="false"/>
+								<RenderPriority val="538"/><Unclipped val="true"/>
+								<Text val="{$FCJH_QTestIcon3B/QuestProgressBar/@Value}"/>
+							</Frame>
+							<StateGroup name="BaselineQuestProgress">
+								<DefaultState val="NoQuest"/>
+								<State name="HasQuest">
+									<When type="Property" frame="$FCJH_QTestIcon3B" QuestProgress="QuestInProgress"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="True"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="True"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="85"/>
+								</State>
+								<State name="HasUntrackedQuest">
+									<When type="Property" frame="$FCJH_QTestIcon3B" QuestProgress="ProgressUntracked"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="True"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="85"/>
+								</State>
+								<State name="FinishedQuest">
+									<When type="Property" frame="$FCJH_QTestIcon3B" QuestProgress="FinishedQuest"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="False"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="70"/>
+								</State>
+								<State name="FinishedUnlimitedQuest">
+									<When type="Property" frame="$FCJH_QTestIcon3B" QuestProgress="FinishedUnlimitedQuest"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="True"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="85"/>
+								</State>
+								<State name="NoQuest">
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="False"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip4A" template="StandardTooltip/BaselineTooltipTemplate">
-							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
 							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
 							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
-							<!-- Ahli's binding: the icon's picture, through its Handle -->
-							<Frame type="Image" name="FCJH_Icon">
+							<Frame type="Image" name="HeroPortrait">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-12"/>
+								<Height val="50"/>
+								<Texture val="{$FCJH_QTestRow4/PlayerHeroIconFrame/HeroIconImage/@Texture}"/>
+								<RenderPriority val="511"/>
+							</Frame>
+							<Frame type="Image" name="IconImage">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
 								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
 								<Width val="50"/>
@@ -244,17 +901,98 @@
 								<Texture val="{$FCJH_QTestIcon4A/IconImage/@Texture}"/>
 								<RenderPriority val="511"/>
 							</Frame>
+							<Frame type="Label" name="NameLabel">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="25"/>
+								<Anchor side="Left" relative="$parent/IconImage" pos="Max" offset="0"/>
+								<Anchor side="Right" relative="$parent/HeroPortrait" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="Label" name="CooldownLabel">
+								<Anchor side="Left" relative="$parent" pos="Min" offset="31"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-30"/>
+							</Frame>
+							<Frame type="Label" name="DescriptionLabel">
+								<Anchor side="Left" relative="$parent" pos="Min" offset="31"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-30"/>
+							</Frame>
+							<Frame type="Frame" name="BottomFrame">
+								<Anchor side="Left" relative="$parent" pos="Min" offset="30"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-30"/>
+							</Frame>
+							<Frame type="Image" name="UnfilledProgressImage"><Anchor side="Top" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Left" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Right" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Bottom" relative="$parent/IconImage" pos="Mid" offset="0"/><Width val="50"/><Height val="50"/><Unclipped val="true"/><RenderPriority val="535"/><Alpha val="42"/><Texture val="@UI/Storm_UI_InGame_Tab_Screen_Progress_Bar_Background"/></Frame>
+							<Frame type="ProgressBar" name="QuestProgressBar"><Anchor side="Top" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Left" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Right" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Bottom" relative="$parent/IconImage" pos="Mid" offset="0"/><Width val="50"/><Height val="50"/>
+								<Unclipped val="true"/><RenderPriority val="536"/><Vertical val="False"/><Circular val="true"/>
+								<CircularStart val="0"/><CircularEndOffset val="360"/><FillInset val="0.0"/><Visible val="False"/>
+								<MaxValue val="{$FCJH_QTestIcon4A/QuestProgressBar/@MaxValue}"/>
+								<Value val="{$FCJH_QTestIcon4A/QuestProgressBar/@Value}"/>
+								<Frame type="Frame" name="FillImageContainer"><Anchor relative="$parent"/>
+									<Frame type="Image" name="FillImage"><Anchor relative="$parent"/><Unclipped val="true"/><TextureType val="Circular"/><RenderPriority val="536"/><Texture val="@UI/Storm_UI_InGame_Tab_Screen_Quest_Progress_Bar"/></Frame>
+								</Frame>
+							</Frame>
+							<Frame type="Image" name="QuestCompleteImage"><Anchor side="Top" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Left" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Right" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Bottom" relative="$parent/IconImage" pos="Mid" offset="0"/><Width val="50"/><Height val="50"/><Unclipped val="true"/><RenderPriority val="537"/><Visible val="False"/><Texture val="@UI/Storm_UI_InGame_Tab_Screen_QuestComplete"/></Frame>
+							<Frame type="Label" name="QuestProgressStackLabel">
+								<Anchor side="Top" relative="$parent/QuestProgressBar" pos="Max" offset="-2"/>
+								<Anchor side="Left" relative="$parent/QuestProgressBar" pos="Min" offset="0"/>
+								<Height val="20"/><Style val="Storm_LeaderTalentQuestStack"/><Visible val="false"/>
+								<RenderPriority val="538"/><Unclipped val="true"/>
+								<Text val="{$FCJH_QTestIcon4A/QuestProgressBar/@Value}"/>
+							</Frame>
+							<StateGroup name="BaselineQuestProgress">
+								<DefaultState val="NoQuest"/>
+								<State name="HasQuest">
+									<When type="Property" frame="$FCJH_QTestIcon4A" QuestProgress="QuestInProgress"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="True"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="True"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="85"/>
+								</State>
+								<State name="HasUntrackedQuest">
+									<When type="Property" frame="$FCJH_QTestIcon4A" QuestProgress="ProgressUntracked"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="True"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="85"/>
+								</State>
+								<State name="FinishedQuest">
+									<When type="Property" frame="$FCJH_QTestIcon4A" QuestProgress="FinishedQuest"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="False"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="70"/>
+								</State>
+								<State name="FinishedUnlimitedQuest">
+									<When type="Property" frame="$FCJH_QTestIcon4A" QuestProgress="FinishedUnlimitedQuest"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="True"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="85"/>
+								</State>
+								<State name="NoQuest">
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="False"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip4B" template="StandardTooltip/BaselineTooltipTemplate">
-							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
 							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
 							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
 							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
-							<!-- Ahli's binding: the icon's picture, through its Handle -->
-							<Frame type="Image" name="FCJH_Icon">
+							<Frame type="Image" name="HeroPortrait">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-12"/>
+								<Height val="50"/>
+								<Texture val="{$FCJH_QTestRow4/PlayerHeroIconFrame/HeroIconImage/@Texture}"/>
+								<RenderPriority val="511"/>
+							</Frame>
+							<Frame type="Image" name="IconImage">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
 								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
 								<Width val="50"/>
@@ -262,186 +1000,82 @@
 								<Texture val="{$FCJH_QTestIcon4B/IconImage/@Texture}"/>
 								<RenderPriority val="511"/>
 							</Frame>
-						</Frame>
-						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip5A" template="StandardTooltip/BaselineTooltipTemplate">
-							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
-							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
-							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
-							<!-- Ahli's binding: the icon's picture, through its Handle -->
-							<Frame type="Image" name="FCJH_Icon">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
-								<Width val="50"/>
-								<Height val="50"/>
-								<Texture val="{$FCJH_QTestIcon5A/IconImage/@Texture}"/>
-								<RenderPriority val="511"/>
+							<Frame type="Label" name="NameLabel">
+								<Anchor side="Top" relative="$parent" pos="Min" offset="25"/>
+								<Anchor side="Left" relative="$parent/IconImage" pos="Max" offset="0"/>
+								<Anchor side="Right" relative="$parent/HeroPortrait" pos="Min" offset="0"/>
 							</Frame>
-						</Frame>
-						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip5B" template="StandardTooltip/BaselineTooltipTemplate">
-							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
-							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
-							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
-							<!-- Ahli's binding: the icon's picture, through its Handle -->
-							<Frame type="Image" name="FCJH_Icon">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
-								<Width val="50"/>
-								<Height val="50"/>
-								<Texture val="{$FCJH_QTestIcon5B/IconImage/@Texture}"/>
-								<RenderPriority val="511"/>
+							<Frame type="Label" name="CooldownLabel">
+								<Anchor side="Left" relative="$parent" pos="Min" offset="31"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-30"/>
 							</Frame>
-						</Frame>
-						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip6A" template="StandardTooltip/BaselineTooltipTemplate">
-							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
-							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
-							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
-							<!-- Ahli's binding: the icon's picture, through its Handle -->
-							<Frame type="Image" name="FCJH_Icon">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
-								<Width val="50"/>
-								<Height val="50"/>
-								<Texture val="{$FCJH_QTestIcon6A/IconImage/@Texture}"/>
-								<RenderPriority val="511"/>
+							<Frame type="Label" name="DescriptionLabel">
+								<Anchor side="Left" relative="$parent" pos="Min" offset="31"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-30"/>
 							</Frame>
-						</Frame>
-						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip6B" template="StandardTooltip/BaselineTooltipTemplate">
-							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
-							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
-							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
-							<!-- Ahli's binding: the icon's picture, through its Handle -->
-							<Frame type="Image" name="FCJH_Icon">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
-								<Width val="50"/>
-								<Height val="50"/>
-								<Texture val="{$FCJH_QTestIcon6B/IconImage/@Texture}"/>
-								<RenderPriority val="511"/>
+							<Frame type="Frame" name="BottomFrame">
+								<Anchor side="Left" relative="$parent" pos="Min" offset="30"/>
+								<Anchor side="Right" relative="$parent" pos="Max" offset="-30"/>
 							</Frame>
-						</Frame>
-						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip7A" template="StandardTooltip/BaselineTooltipTemplate">
-							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
-							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
-							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
-							<!-- Ahli's binding: the icon's picture, through its Handle -->
-							<Frame type="Image" name="FCJH_Icon">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
-								<Width val="50"/>
-								<Height val="50"/>
-								<Texture val="{$FCJH_QTestIcon7A/IconImage/@Texture}"/>
-								<RenderPriority val="511"/>
+							<Frame type="Image" name="UnfilledProgressImage"><Anchor side="Top" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Left" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Right" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Bottom" relative="$parent/IconImage" pos="Mid" offset="0"/><Width val="50"/><Height val="50"/><Unclipped val="true"/><RenderPriority val="535"/><Alpha val="42"/><Texture val="@UI/Storm_UI_InGame_Tab_Screen_Progress_Bar_Background"/></Frame>
+							<Frame type="ProgressBar" name="QuestProgressBar"><Anchor side="Top" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Left" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Right" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Bottom" relative="$parent/IconImage" pos="Mid" offset="0"/><Width val="50"/><Height val="50"/>
+								<Unclipped val="true"/><RenderPriority val="536"/><Vertical val="False"/><Circular val="true"/>
+								<CircularStart val="0"/><CircularEndOffset val="360"/><FillInset val="0.0"/><Visible val="False"/>
+								<MaxValue val="{$FCJH_QTestIcon4B/QuestProgressBar/@MaxValue}"/>
+								<Value val="{$FCJH_QTestIcon4B/QuestProgressBar/@Value}"/>
+								<Frame type="Frame" name="FillImageContainer"><Anchor relative="$parent"/>
+									<Frame type="Image" name="FillImage"><Anchor relative="$parent"/><Unclipped val="true"/><TextureType val="Circular"/><RenderPriority val="536"/><Texture val="@UI/Storm_UI_InGame_Tab_Screen_Quest_Progress_Bar"/></Frame>
+								</Frame>
 							</Frame>
-						</Frame>
-						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip7B" template="StandardTooltip/BaselineTooltipTemplate">
-							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
-							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
-							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
-							<!-- Ahli's binding: the icon's picture, through its Handle -->
-							<Frame type="Image" name="FCJH_Icon">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
-								<Width val="50"/>
-								<Height val="50"/>
-								<Texture val="{$FCJH_QTestIcon7B/IconImage/@Texture}"/>
-								<RenderPriority val="511"/>
+							<Frame type="Image" name="QuestCompleteImage"><Anchor side="Top" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Left" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Right" relative="$parent/IconImage" pos="Mid" offset="0"/><Anchor side="Bottom" relative="$parent/IconImage" pos="Mid" offset="0"/><Width val="50"/><Height val="50"/><Unclipped val="true"/><RenderPriority val="537"/><Visible val="False"/><Texture val="@UI/Storm_UI_InGame_Tab_Screen_QuestComplete"/></Frame>
+							<Frame type="Label" name="QuestProgressStackLabel">
+								<Anchor side="Top" relative="$parent/QuestProgressBar" pos="Max" offset="-2"/>
+								<Anchor side="Left" relative="$parent/QuestProgressBar" pos="Min" offset="0"/>
+								<Height val="20"/><Style val="Storm_LeaderTalentQuestStack"/><Visible val="false"/>
+								<RenderPriority val="538"/><Unclipped val="true"/>
+								<Text val="{$FCJH_QTestIcon4B/QuestProgressBar/@Value}"/>
 							</Frame>
-						</Frame>
-						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip8A" template="StandardTooltip/BaselineTooltipTemplate">
-							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
-							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
-							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
-							<!-- Ahli's binding: the icon's picture, through its Handle -->
-							<Frame type="Image" name="FCJH_Icon">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
-								<Width val="50"/>
-								<Height val="50"/>
-								<Texture val="{$FCJH_QTestIcon8A/IconImage/@Texture}"/>
-								<RenderPriority val="511"/>
-							</Frame>
-						</Frame>
-						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip8B" template="StandardTooltip/BaselineTooltipTemplate">
-							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
-							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
-							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
-							<!-- Ahli's binding: the icon's picture, through its Handle -->
-							<Frame type="Image" name="FCJH_Icon">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
-								<Width val="50"/>
-								<Height val="50"/>
-								<Texture val="{$FCJH_QTestIcon8B/IconImage/@Texture}"/>
-								<RenderPriority val="511"/>
-							</Frame>
-						</Frame>
-						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip9A" template="StandardTooltip/BaselineTooltipTemplate">
-							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
-							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
-							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
-							<!-- Ahli's binding: the icon's picture, through its Handle -->
-							<Frame type="Image" name="FCJH_Icon">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
-								<Width val="50"/>
-								<Height val="50"/>
-								<Texture val="{$FCJH_QTestIcon9A/IconImage/@Texture}"/>
-								<RenderPriority val="511"/>
-							</Frame>
-						</Frame>
-						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip9B" template="StandardTooltip/BaselineTooltipTemplate">
-							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
-							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
-							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
-							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
-							<!-- Ahli's binding: the icon's picture, through its Handle -->
-							<Frame type="Image" name="FCJH_Icon">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="12"/>
-								<Width val="50"/>
-								<Height val="50"/>
-								<Texture val="{$FCJH_QTestIcon9B/IconImage/@Texture}"/>
-								<RenderPriority val="511"/>
-							</Frame>
+							<StateGroup name="BaselineQuestProgress">
+								<DefaultState val="NoQuest"/>
+								<State name="HasQuest">
+									<When type="Property" frame="$FCJH_QTestIcon4B" QuestProgress="QuestInProgress"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="True"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="True"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="85"/>
+								</State>
+								<State name="HasUntrackedQuest">
+									<When type="Property" frame="$FCJH_QTestIcon4B" QuestProgress="ProgressUntracked"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="True"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="85"/>
+								</State>
+								<State name="FinishedQuest">
+									<When type="Property" frame="$FCJH_QTestIcon4B" QuestProgress="FinishedQuest"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="False"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="70"/>
+								</State>
+								<State name="FinishedUnlimitedQuest">
+									<When type="Property" frame="$FCJH_QTestIcon4B" QuestProgress="FinishedUnlimitedQuest"/>
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="True"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="True"/>
+									<Action type="SetAnchor" frame="VitalLabel0" side="Top" relative="$parent" pos="Min" offset="85"/>
+								</State>
+								<State name="NoQuest">
+									<Action type="SetProperty" frame="QuestProgressBar" visible="False"/>
+									<Action type="SetProperty" frame="UnfilledProgressImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestCompleteImage" visible="False"/>
+									<Action type="SetProperty" frame="QuestProgressStackLabel" visible="False"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<Frame type="Frame" name="HeroLeaderPanelContainer">
 							<Visible val="true"/>
@@ -579,8 +1213,8 @@
 												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 													<Frame type="Frame" name="QuestContainerContainerFrame">
 														<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
-															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><TooltipFrame val="FCJH_QTestTip5A"/><Handle val="FCJH_QTestIcon5A"/></Frame>
-															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><TooltipFrame val="FCJH_QTestTip5B"/><Handle val="FCJH_QTestIcon5B"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><Handle val="FCJH_QTestIcon5A"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><Handle val="FCJH_QTestIcon5B"/></Frame>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -599,8 +1233,8 @@
 												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 													<Frame type="Frame" name="QuestContainerContainerFrame">
 														<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
-															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><TooltipFrame val="FCJH_QTestTip6A"/><Handle val="FCJH_QTestIcon6A"/></Frame>
-															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><TooltipFrame val="FCJH_QTestTip6B"/><Handle val="FCJH_QTestIcon6B"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><Handle val="FCJH_QTestIcon6A"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><Handle val="FCJH_QTestIcon6B"/></Frame>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -619,8 +1253,8 @@
 												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 													<Frame type="Frame" name="QuestContainerContainerFrame">
 														<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
-															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><TooltipFrame val="FCJH_QTestTip7A"/><Handle val="FCJH_QTestIcon7A"/></Frame>
-															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><TooltipFrame val="FCJH_QTestTip7B"/><Handle val="FCJH_QTestIcon7B"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><Handle val="FCJH_QTestIcon7A"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><Handle val="FCJH_QTestIcon7B"/></Frame>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -639,8 +1273,8 @@
 												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 													<Frame type="Frame" name="QuestContainerContainerFrame">
 														<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
-															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><TooltipFrame val="FCJH_QTestTip8A"/><Handle val="FCJH_QTestIcon8A"/></Frame>
-															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><TooltipFrame val="FCJH_QTestTip8B"/><Handle val="FCJH_QTestIcon8B"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><Handle val="FCJH_QTestIcon8A"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><Handle val="FCJH_QTestIcon8B"/></Frame>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -659,8 +1293,8 @@
 												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 													<Frame type="Frame" name="QuestContainerContainerFrame">
 														<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
-															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><TooltipFrame val="FCJH_QTestTip9A"/><Handle val="FCJH_QTestIcon9A"/></Frame>
-															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><TooltipFrame val="FCJH_QTestTip9B"/><Handle val="FCJH_QTestIcon9B"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><Handle val="FCJH_QTestIcon9A"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><Handle val="FCJH_QTestIcon9B"/></Frame>
 														</Frame>
 													</Frame>
 												</Frame>

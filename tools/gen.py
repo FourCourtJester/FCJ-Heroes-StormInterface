@@ -2067,6 +2067,12 @@ def pet_death_bindings(cfg, team_frame, i):
 ONFIRE_LEVELS = {"OnFireEmbers": 200, "OnFireInferno": 255, "OnFireEnd": 0}
 ONFIRE_PRIORITY = 700
 ONFIRE_COLOUR = {True: "255,33,103,245", False: "255,194,40,47"}     # Blizzard's 2167f5 / c2282f
+# 8e7b3e9 (additive, at 700, Embers 200): still the square only (user, 2026-10-19). TEMPORARY
+# test strips, one variable each, the plate split in four, left to right: (A) the bare texture,
+# no colour, no blend, no pulse; (B) + Blizzard's team fill; (C) + additive; (D) the glow as
+# 8e7b3e9 drew it (+ unclipped + pulse). Whichever strips light say which part kills it.
+ONFIRE_STRIPS = [("A", False, False, False), ("B", True, False, False),
+                 ("C", True, True, False), ("D", True, True, True)]
 # TEMPORARY (002c699 never showed, user 2026-10-19): a white square at the plate's top middle,
 # lit while the hero is on fire, so "no event" and "no glow drawn" tell apart. Out once seen.
 ONFIRE_DIAG = 14
@@ -2090,10 +2096,44 @@ def onfire_flames(cfg, blue, cell):
 {t}\t</Animation>"""
     fire = "".join(f'\n{t}\t\t\t<Event event="{e}" action="Reset,Play" frame="{cell}/OnFireCutsceneFrame"/>'
                    for e in ("OnFireEmbers", "OnFireInferno"))
+    strips = ""
+    for n, (name, fill, add, full) in enumerate(ONFIRE_STRIPS):
+        x0, x1 = s(c.W * n / len(ONFIRE_STRIPS)), s(c.W * (n + 1) / len(ONFIRE_STRIPS))
+        strips += f"""
+{t}\t<Frame type="Image" name="FCJH_OnFireGlow{name}">
+{t}\t\t<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+{t}\t\t<Anchor side="Left"   relative="$parent" pos="Min" offset="{x0}"/>
+{t}\t\t<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+{t}\t\t<Anchor side="Right"  relative="$parent" pos="Min" offset="{x1}"/>
+{t}\t\t<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>"""
+        if fill:
+            strips += f"""
+{t}\t\t<ColorAdjustMode val="Fill"/>
+{t}\t\t<AdjustmentColor val="{ONFIRE_COLOUR[blue]}"/>"""
+        if add:
+            strips += f"""
+{t}\t\t<BlendMode val="Add"/>"""
+        if full:
+            strips += f"""
+{t}\t\t<Unclipped val="true"/>"""
+        strips += f"""
+{t}\t\t<AcceptsMouse val="false"/>
+{t}\t\t<RenderPriority val="{ONFIRE_PRIORITY}"/>"""
+        if full:
+            strips += f"""
+{t}\t\t<Animation name="FCJH_Pulse">{fire}
+{t}\t\t\t<Controller type="Fade" end="Loop">
+{t}\t\t\t\t<Key type="Curve" time="0" value="100" inout="Linear"/>
+{t}\t\t\t\t<Key type="Curve" time="1" value="255" inout="Slow,Linear"/>
+{t}\t\t\t\t<Key type="Curve" time="2" value="100" inout="Linear"/>
+{t}\t\t\t</Controller>
+{t}\t\t</Animation>"""
+        strips += f"""
+{t}\t</Frame>"""
     mid = s(c.W / 2)
     diag = fill_image("FCJH_FireDiag", box(("Min", s(4)), ("Min", mid - ONFIRE_DIAG // 2),
                                            ("Min", s(4) + ONFIRE_DIAG), ("Min", mid + ONFIRE_DIAG // 2)),
-                      "255,255,255,255", 700, 8).rstrip("\n")
+                      "255,255,255,255", ONFIRE_PRIORITY + 1, 8).rstrip("\n")
     return f"""
 {t}<Frame type="Frame" name="FCJH_OnFire">
 {t}\t<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
@@ -2102,23 +2142,7 @@ def onfire_flames(cfg, blue, cell):
 {t}\t<Anchor side="Right"  relative="$parent" pos="Min" offset="{s(c.W)}"/>
 {t}\t<Alpha val="0"/>
 {t}\t<AcceptsMouse val="false"/>
-{t}\t<Frame type="Image" name="FCJH_OnFireGlow">
-{t}\t\t<Anchor relative="$parent"/>
-{t}\t\t<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-{t}\t\t<ColorAdjustMode val="Fill"/>
-{t}\t\t<AdjustmentColor val="{ONFIRE_COLOUR[blue]}"/>
-{t}\t\t<BlendMode val="Add"/>
-{t}\t\t<Unclipped val="true"/>
-{t}\t\t<AcceptsMouse val="false"/>
-{t}\t\t<RenderPriority val="{ONFIRE_PRIORITY}"/>
-{t}\t\t<Animation name="FCJH_Pulse">{fire}
-{t}\t\t\t<Controller type="Fade" end="Loop">
-{t}\t\t\t\t<Key type="Curve" time="0" value="100" inout="Linear"/>
-{t}\t\t\t\t<Key type="Curve" time="1" value="255" inout="Slow,Linear"/>
-{t}\t\t\t\t<Key type="Curve" time="2" value="100" inout="Linear"/>
-{t}\t\t\t</Controller>
-{t}\t\t</Animation>
-{t}\t</Frame>
+{strips}
 {diag}{anims}
 {t}</Frame>"""
 
