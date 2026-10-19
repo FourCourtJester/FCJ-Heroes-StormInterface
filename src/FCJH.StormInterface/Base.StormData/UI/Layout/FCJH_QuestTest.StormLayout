@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+	<!-- TEST (2026-10-19), hand-kept, to come out once answered: do the quest tooltips fill from
+	     a leader panel set up Ahli 0.75's way (references/AhliObs075 _LeaderPanelBottom
+	     TalentOverview, _Ahli HeroLeaderPanelHotkeyHijackFIX)? Blizzard's art only, none of his.
+	     Control+Shift+Q shows Blizzard's own Tab panel, talents view, centre screen, with each
+	     row's two default-quest icons on a tooltip of its own; hover them. What his has that
+	     our tries 3 and 4 didn't: it sits in ConsoleUIContainer, on the screen; its talents
+	     view is switched on by its toggle's animation (also at load: Init, then InitEnd back),
+	     through a hidden frame the rows' visibility is bound to, not on from the start; and a
+	     second panel takes Blizzard's Tab hotkey and passes it on to Blizzard's panel. -->
+	<Frame type="GameUI" name="GameUI" file="GameUI">
+		<Frame type="Frame" name="UIContainer">
+			<Frame type="Frame" name="ConsoleUIContainer">
+				<!-- Ahli's: a new leader panel can take the Tab hotkey; this one does, and hands it on -->
+				<Frame type="HeroLeaderPanel" name="FCJH_QTestHotkeyFix" template="HeroLeaderPanel/HeroLeaderPanelTemplate">
+					<Anchor relative="$parent"/>
+					<Frame type="Frame" name="HeroLeaderPanelContainer">
+						<Anchor side="Top"    relative="$parent" pos="Max" offset="9999"/>
+						<Anchor side="Left"   relative="$parent" pos="Max" offset="9999"/>
+						<Anchor side="Bottom" relative="$parent" pos="Max" offset="9999"/>
+						<Anchor side="Right"  relative="$parent" pos="Max" offset="9999"/>
+						<Visible val="false"/>
+						<Animation name="KeepHidden">
+							<Event event="OnShown" action="Reset,Play"/>
+							<Controller type="Visibility" end="Pause">
+								<Key type="Bool" time="0" value="false"/>
+							</Controller>
+						</Animation>
+						<Animation name="PassShow">
+							<Event event="Show" action="Play" frame="$parent"/>
+							<Controller type="Event" end="Stop" frame="$GameUI/UIContainer/FullscreenUpperContainer/HeroLeaderPanel">
+								<Key type="Event" time="0" event="Show"/>
+							</Controller>
+						</Animation>
+						<Animation name="PassHide">
+							<Event event="Hide" action="Play" frame="$parent"/>
+							<Controller type="Event" end="Stop" frame="$GameUI/UIContainer/FullscreenUpperContainer/HeroLeaderPanel">
+								<Key type="Event" time="0" event="Hide"/>
+							</Controller>
+						</Animation>
+					</Frame>
+				</Frame>
+				<Frame type="Frame" name="FCJH_QuestTest">
+					<Anchor relative="$parent"/>
+					<AcceptsMouse val="false"/>
+					<Frame type="ToggleControl" name="FCJH_QuestTestToggle">
+						<Anchor relative="$parent"/>
+						<Shortcut val="Control+Shift+Q"/>
+						<AcceptsMouse val="false"/>
+						<CollapseLayout val="true"/>
+						<Visible val="false"/>
+						<Animation name="FCJH_Show">
+							<Event event="OnShown" action="DirectionForward,Play"/>
+							<Event event="OnHidden" action="DirectionReverse,Play"/>
+							<Event event="Init" action="DirectionForward,Play"/>
+							<Event event="InitEnd" action="DirectionReverse,Play"/>
+							<Controller type="Fade" end="Pause" frame="$parent/FCJH_QuestTestPanel">
+								<Key type="Curve" time="0" value="0"/>
+								<Key type="Curve" time="0.1" value="50"/>
+								<Key type="Curve" time="0.25" value="255"/>
+							</Controller>
+							<Controller type="Anchor" end="Pause" frame="$parent/FCJH_QuestTestPanel" side="Top" relative="true">
+								<Key type="Curve" time="0" value="4400" inout="Fast"/>
+								<Key type="Curve" time="0.001" value="0" inout="Fast"/>
+							</Controller>
+							<Controller type="Anchor" end="Pause" frame="$parent/FCJH_QuestTestPanel" side="Bottom" relative="true">
+								<Key type="Curve" time="0" value="4400" inout="Fast"/>
+								<Key type="Curve" time="0.001" value="0" inout="Fast"/>
+							</Controller>
+							<Controller type="Visibility" end="Pause" frame="$parent/FCJH_QuestTestPanel/HeroLeaderPanelContainer/TabControl/FCJH_TalentsOn">
+								<Key type="Bool" time="0" value="false"/>
+								<Key type="Bool" time="0.001" value="true"/>
+								<Key type="Bool" time="0.25" value="true"/>
+							</Controller>
+						</Animation>
+					</Frame>
+					<Frame type="HeroLeaderPanel" name="FCJH_QuestTestPanel" template="HeroLeaderPanel/HeroLeaderPanelTemplate">
+						<Anchor relative="$parent"/>
+						<Visible val="true"/>
+						<RenderPriority val="600"/>
+						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip0A" template="StandardTooltip/BaselineTooltipTemplate">
+							<RenderPriority val="900"/>
+						</Frame>
+						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip0B" template="StandardTooltip/BaselineTooltipTemplate">
+							<RenderPriority val="900"/>
+						</Frame>
+						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip1A" template="StandardTooltip/BaselineTooltipTemplate">
+							<RenderPriority val="900"/>
+						</Frame>
+						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip1B" template="StandardTooltip/BaselineTooltipTemplate">
+							<RenderPriority val="900"/>
+						</Frame>
+						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip2A" template="StandardTooltip/BaselineTooltipTemplate">
+							<RenderPriority val="900"/>
+						</Frame>
+						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip2B" template="StandardTooltip/BaselineTooltipTemplate">
+							<RenderPriority val="900"/>
+						</Frame>
+						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip3A" template="StandardTooltip/BaselineTooltipTemplate">
+							<RenderPriority val="900"/>
+						</Frame>
+						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip3B" template="StandardTooltip/BaselineTooltipTemplate">
+							<RenderPriority val="900"/>
+						</Frame>
+						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip4A" template="StandardTooltip/BaselineTooltipTemplate">
+							<RenderPriority val="900"/>
+						</Frame>
+						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip4B" template="StandardTooltip/BaselineTooltipTemplate">
+							<RenderPriority val="900"/>
+						</Frame>
+						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip5A" template="StandardTooltip/BaselineTooltipTemplate">
+							<RenderPriority val="900"/>
+						</Frame>
+						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip5B" template="StandardTooltip/BaselineTooltipTemplate">
+							<RenderPriority val="900"/>
+						</Frame>
+						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip6A" template="StandardTooltip/BaselineTooltipTemplate">
+							<RenderPriority val="900"/>
+						</Frame>
+						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip6B" template="StandardTooltip/BaselineTooltipTemplate">
+							<RenderPriority val="900"/>
+						</Frame>
+						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip7A" template="StandardTooltip/BaselineTooltipTemplate">
+							<RenderPriority val="900"/>
+						</Frame>
+						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip7B" template="StandardTooltip/BaselineTooltipTemplate">
+							<RenderPriority val="900"/>
+						</Frame>
+						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip8A" template="StandardTooltip/BaselineTooltipTemplate">
+							<RenderPriority val="900"/>
+						</Frame>
+						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip8B" template="StandardTooltip/BaselineTooltipTemplate">
+							<RenderPriority val="900"/>
+						</Frame>
+						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip9A" template="StandardTooltip/BaselineTooltipTemplate">
+							<RenderPriority val="900"/>
+						</Frame>
+						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip9B" template="StandardTooltip/BaselineTooltipTemplate">
+							<RenderPriority val="900"/>
+						</Frame>
+						<Frame type="Frame" name="HeroLeaderPanelContainer">
+							<Visible val="true"/>
+							<Frame type="Frame" name="HitTestFrame"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
+							<Frame type="Frame" name="BackgroundImage"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
+							<Frame type="Frame" name="TopHexContainer"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
+							<Frame type="Frame" name="BorderContainer"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
+							<Frame type="Frame" name="BlueTeamStats"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
+							<Frame type="Frame" name="RedTeamStats"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
+							<Frame type="Frame" name="ChannelSelector"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
+							<Frame type="Image" name="HexImage"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
+							<Frame type="Button" name="CloseButton"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
+							<Frame type="Label" name="VSLabel"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
+							<Frame type="TabControl" name="TabControl">
+								<Frame type="Button" name="ShowStatsButton"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
+								<Frame type="Button" name="ShowTalentsButton"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
+								<Frame type="Button" name="ShowDeathRecapButton"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
+								<Frame type="Frame" name="StatsContainerFrame"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
+								<Frame type="Frame" name="TalentsContainerFrame"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
+								<Frame type="Button" name="ClearSortButton"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
+								<Frame type="BattleUserContextMenu" name="PlayerContextMenu"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
+								<Frame type="Frame" name="FCJH_TalentsOn">
+									<Anchor relative="$parent"/>
+									<Visible val="false"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
+								<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame0">
+									<Frame type="Frame" name="StatsContainerFrame"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
+									<Frame type="Frame" name="TalentsContainerFrame">
+										<!-- Ahli's binding: on only once the toggle's animation has shown FCJH_TalentsOn -->
+										<Visible val="{$ancestor[@type=TabControl]/FCJH_TalentsOn/@Visible}"/>
+										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+													<Frame type="Frame" name="QuestContainerContainerFrame">
+														<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><TooltipFrame val="FCJH_QTestTip0A"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><TooltipFrame val="FCJH_QTestTip0B"/></Frame>
+														</Frame>
+													</Frame>
+												</Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+								<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame1">
+									<Frame type="Frame" name="StatsContainerFrame"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
+									<Frame type="Frame" name="TalentsContainerFrame">
+										<!-- Ahli's binding: on only once the toggle's animation has shown FCJH_TalentsOn -->
+										<Visible val="{$ancestor[@type=TabControl]/FCJH_TalentsOn/@Visible}"/>
+										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+													<Frame type="Frame" name="QuestContainerContainerFrame">
+														<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><TooltipFrame val="FCJH_QTestTip1A"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><TooltipFrame val="FCJH_QTestTip1B"/></Frame>
+														</Frame>
+													</Frame>
+												</Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+								<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame2">
+									<Frame type="Frame" name="StatsContainerFrame"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
+									<Frame type="Frame" name="TalentsContainerFrame">
+										<!-- Ahli's binding: on only once the toggle's animation has shown FCJH_TalentsOn -->
+										<Visible val="{$ancestor[@type=TabControl]/FCJH_TalentsOn/@Visible}"/>
+										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+													<Frame type="Frame" name="QuestContainerContainerFrame">
+														<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><TooltipFrame val="FCJH_QTestTip2A"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><TooltipFrame val="FCJH_QTestTip2B"/></Frame>
+														</Frame>
+													</Frame>
+												</Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+								<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame3">
+									<Frame type="Frame" name="StatsContainerFrame"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
+									<Frame type="Frame" name="TalentsContainerFrame">
+										<!-- Ahli's binding: on only once the toggle's animation has shown FCJH_TalentsOn -->
+										<Visible val="{$ancestor[@type=TabControl]/FCJH_TalentsOn/@Visible}"/>
+										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+													<Frame type="Frame" name="QuestContainerContainerFrame">
+														<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><TooltipFrame val="FCJH_QTestTip3A"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><TooltipFrame val="FCJH_QTestTip3B"/></Frame>
+														</Frame>
+													</Frame>
+												</Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+								<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame4">
+									<Frame type="Frame" name="StatsContainerFrame"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
+									<Frame type="Frame" name="TalentsContainerFrame">
+										<!-- Ahli's binding: on only once the toggle's animation has shown FCJH_TalentsOn -->
+										<Visible val="{$ancestor[@type=TabControl]/FCJH_TalentsOn/@Visible}"/>
+										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+													<Frame type="Frame" name="QuestContainerContainerFrame">
+														<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><TooltipFrame val="FCJH_QTestTip4A"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><TooltipFrame val="FCJH_QTestTip4B"/></Frame>
+														</Frame>
+													</Frame>
+												</Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+								<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame5">
+									<Frame type="Frame" name="StatsContainerFrame"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
+									<Frame type="Frame" name="TalentsContainerFrame">
+										<!-- Ahli's binding: on only once the toggle's animation has shown FCJH_TalentsOn -->
+										<Visible val="{$ancestor[@type=TabControl]/FCJH_TalentsOn/@Visible}"/>
+										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+													<Frame type="Frame" name="QuestContainerContainerFrame">
+														<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><TooltipFrame val="FCJH_QTestTip5A"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><TooltipFrame val="FCJH_QTestTip5B"/></Frame>
+														</Frame>
+													</Frame>
+												</Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+								<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame6">
+									<Frame type="Frame" name="StatsContainerFrame"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
+									<Frame type="Frame" name="TalentsContainerFrame">
+										<!-- Ahli's binding: on only once the toggle's animation has shown FCJH_TalentsOn -->
+										<Visible val="{$ancestor[@type=TabControl]/FCJH_TalentsOn/@Visible}"/>
+										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+													<Frame type="Frame" name="QuestContainerContainerFrame">
+														<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><TooltipFrame val="FCJH_QTestTip6A"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><TooltipFrame val="FCJH_QTestTip6B"/></Frame>
+														</Frame>
+													</Frame>
+												</Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+								<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame7">
+									<Frame type="Frame" name="StatsContainerFrame"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
+									<Frame type="Frame" name="TalentsContainerFrame">
+										<!-- Ahli's binding: on only once the toggle's animation has shown FCJH_TalentsOn -->
+										<Visible val="{$ancestor[@type=TabControl]/FCJH_TalentsOn/@Visible}"/>
+										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+													<Frame type="Frame" name="QuestContainerContainerFrame">
+														<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><TooltipFrame val="FCJH_QTestTip7A"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><TooltipFrame val="FCJH_QTestTip7B"/></Frame>
+														</Frame>
+													</Frame>
+												</Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+								<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame8">
+									<Frame type="Frame" name="StatsContainerFrame"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
+									<Frame type="Frame" name="TalentsContainerFrame">
+										<!-- Ahli's binding: on only once the toggle's animation has shown FCJH_TalentsOn -->
+										<Visible val="{$ancestor[@type=TabControl]/FCJH_TalentsOn/@Visible}"/>
+										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+													<Frame type="Frame" name="QuestContainerContainerFrame">
+														<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><TooltipFrame val="FCJH_QTestTip8A"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><TooltipFrame val="FCJH_QTestTip8B"/></Frame>
+														</Frame>
+													</Frame>
+												</Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+								<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame9">
+									<Frame type="Frame" name="StatsContainerFrame"><Alpha val="0"/><AcceptsMouse val="false"/></Frame>
+									<Frame type="Frame" name="TalentsContainerFrame">
+										<!-- Ahli's binding: on only once the toggle's animation has shown FCJH_TalentsOn -->
+										<Visible val="{$ancestor[@type=TabControl]/FCJH_TalentsOn/@Visible}"/>
+										<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+											<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+												<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+													<Frame type="Frame" name="QuestContainerContainerFrame">
+														<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0"><TooltipFrame val="FCJH_QTestTip9A"/></Frame>
+															<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1"><TooltipFrame val="FCJH_QTestTip9B"/></Frame>
+														</Frame>
+													</Frame>
+												</Frame>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
+							</Frame>
+						</Frame>
+					</Frame>
+				</Frame>
+			</Frame>
+		</Frame>
+	</Frame>
+</Desc>
