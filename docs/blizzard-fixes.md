@@ -270,7 +270,10 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
   - **Step 17:** each row's background, portrait and names at Alpha 0; talents, quest icons
     and column numbers left. **Seen (25369e1, user):** "both show" - tooltips kept.
   - **Step 18:** the talents (each row's squares and heroic, the column numbers, "!" and glow)
-    at Alpha 0; only the quest icons left.
+    at Alpha 0; only the quest icons left. **Seen (9373f9e, user, screenshot):** "both show";
+    the portraits stayed (HeroIconImage ignores its parent's Alpha) and faint column bands
+    (each row's BGSeparatorImage1-3) too.
+  - **Step 19:** HeroIconImage, SilencedIcon and BGSeparatorImage1-3 at Alpha 0 in each row.
   - **Spazzo** (user, 2026-10-19): puts quests in his nameplates with no tooltips. He doesn't
     use Blizzard's quest icons at all: a generic UnitStatusBehaviorIcon per nameplate, pointed
     at each hero's quest-counter behaviour by a hand-kept list of ~400 entries

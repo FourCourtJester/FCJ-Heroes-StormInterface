@@ -153,7 +153,16 @@
      (HeroSelectedTalentTreeFrame/TalentTreeIcon0-7) and the heroic's (UnitStatusAbil), and
      over the rows the column numbers, the "!" and the level-10 glow (TabControl's
      TalentsContainerFrame: TalentTierLabel0-7, ButtonQuest, UltGlowImage). ButtonQuest keeps
-     its place, so the quest icons anchored to it stay put. Left: only the quest icons. -->
+     its place, so the quest icons anchored to it stay put. Left: only the quest icons.
+     Seen (user, 2026-10-19, 9373f9e, screenshot): "both show" - only the quest icons and
+     the portraits left, and faint grey bands down the columns. The portraits ignored the
+     Alpha 0 on PlayerHeroIconFrame (HeroIconImage has IgnoreParentColor and its own
+     render priority); the bands are each row's BGSeparatorImage1-3 (Blizzard's Alpha 10),
+     stacked row on row.
+
+     Step 19, one change: the leftovers at Alpha 0 - each row's HeroIconImage and
+     SilencedIcon (inside PlayerHeroIconFrame) and BGSeparatorImage1-3. Nothing but the
+     quest icons on screen. -->
 <Desc>
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<Frame type="Frame" name="UIContainer">
@@ -238,6 +247,21 @@
 								</Frame>
 								<Frame type="PlayerHeroIconFrame" name="PlayerHeroIconFrame">
 									<Alpha val="0"/>
+									<Frame type="Image" name="HeroIconImage">
+										<Alpha val="0"/>
+									</Frame>
+									<Frame type="Image" name="SilencedIcon">
+										<Alpha val="0"/>
+									</Frame>
+								</Frame>
+								<Frame type="Image" name="BGSeparatorImage1">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="BGSeparatorImage2">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="BGSeparatorImage3">
+									<Alpha val="0"/>
 								</Frame>
 								<Frame type="PlayerHeroNameFrame" name="HeroNameFrame">
 									<Alpha val="0"/>
@@ -293,6 +317,21 @@
 									<Alpha val="0"/>
 								</Frame>
 								<Frame type="PlayerHeroIconFrame" name="PlayerHeroIconFrame">
+									<Alpha val="0"/>
+									<Frame type="Image" name="HeroIconImage">
+										<Alpha val="0"/>
+									</Frame>
+									<Frame type="Image" name="SilencedIcon">
+										<Alpha val="0"/>
+									</Frame>
+								</Frame>
+								<Frame type="Image" name="BGSeparatorImage1">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="BGSeparatorImage2">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="BGSeparatorImage3">
 									<Alpha val="0"/>
 								</Frame>
 								<Frame type="PlayerHeroNameFrame" name="HeroNameFrame">
@@ -350,6 +389,21 @@
 								</Frame>
 								<Frame type="PlayerHeroIconFrame" name="PlayerHeroIconFrame">
 									<Alpha val="0"/>
+									<Frame type="Image" name="HeroIconImage">
+										<Alpha val="0"/>
+									</Frame>
+									<Frame type="Image" name="SilencedIcon">
+										<Alpha val="0"/>
+									</Frame>
+								</Frame>
+								<Frame type="Image" name="BGSeparatorImage1">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="BGSeparatorImage2">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="BGSeparatorImage3">
+									<Alpha val="0"/>
 								</Frame>
 								<Frame type="PlayerHeroNameFrame" name="HeroNameFrame">
 									<Alpha val="0"/>
@@ -405,6 +459,21 @@
 									<Alpha val="0"/>
 								</Frame>
 								<Frame type="PlayerHeroIconFrame" name="PlayerHeroIconFrame">
+									<Alpha val="0"/>
+									<Frame type="Image" name="HeroIconImage">
+										<Alpha val="0"/>
+									</Frame>
+									<Frame type="Image" name="SilencedIcon">
+										<Alpha val="0"/>
+									</Frame>
+								</Frame>
+								<Frame type="Image" name="BGSeparatorImage1">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="BGSeparatorImage2">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="BGSeparatorImage3">
 									<Alpha val="0"/>
 								</Frame>
 								<Frame type="PlayerHeroNameFrame" name="HeroNameFrame">
@@ -462,6 +531,21 @@
 								</Frame>
 								<Frame type="PlayerHeroIconFrame" name="PlayerHeroIconFrame">
 									<Alpha val="0"/>
+									<Frame type="Image" name="HeroIconImage">
+										<Alpha val="0"/>
+									</Frame>
+									<Frame type="Image" name="SilencedIcon">
+										<Alpha val="0"/>
+									</Frame>
+								</Frame>
+								<Frame type="Image" name="BGSeparatorImage1">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="BGSeparatorImage2">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="BGSeparatorImage3">
+									<Alpha val="0"/>
 								</Frame>
 								<Frame type="PlayerHeroNameFrame" name="HeroNameFrame">
 									<Alpha val="0"/>
@@ -517,6 +601,21 @@
 									<Alpha val="0"/>
 								</Frame>
 								<Frame type="PlayerHeroIconFrame" name="PlayerHeroIconFrame">
+									<Alpha val="0"/>
+									<Frame type="Image" name="HeroIconImage">
+										<Alpha val="0"/>
+									</Frame>
+									<Frame type="Image" name="SilencedIcon">
+										<Alpha val="0"/>
+									</Frame>
+								</Frame>
+								<Frame type="Image" name="BGSeparatorImage1">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="BGSeparatorImage2">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="BGSeparatorImage3">
 									<Alpha val="0"/>
 								</Frame>
 								<Frame type="PlayerHeroNameFrame" name="HeroNameFrame">
@@ -574,6 +673,21 @@
 								</Frame>
 								<Frame type="PlayerHeroIconFrame" name="PlayerHeroIconFrame">
 									<Alpha val="0"/>
+									<Frame type="Image" name="HeroIconImage">
+										<Alpha val="0"/>
+									</Frame>
+									<Frame type="Image" name="SilencedIcon">
+										<Alpha val="0"/>
+									</Frame>
+								</Frame>
+								<Frame type="Image" name="BGSeparatorImage1">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="BGSeparatorImage2">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="BGSeparatorImage3">
+									<Alpha val="0"/>
 								</Frame>
 								<Frame type="PlayerHeroNameFrame" name="HeroNameFrame">
 									<Alpha val="0"/>
@@ -629,6 +743,21 @@
 									<Alpha val="0"/>
 								</Frame>
 								<Frame type="PlayerHeroIconFrame" name="PlayerHeroIconFrame">
+									<Alpha val="0"/>
+									<Frame type="Image" name="HeroIconImage">
+										<Alpha val="0"/>
+									</Frame>
+									<Frame type="Image" name="SilencedIcon">
+										<Alpha val="0"/>
+									</Frame>
+								</Frame>
+								<Frame type="Image" name="BGSeparatorImage1">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="BGSeparatorImage2">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="BGSeparatorImage3">
 									<Alpha val="0"/>
 								</Frame>
 								<Frame type="PlayerHeroNameFrame" name="HeroNameFrame">
@@ -686,6 +815,21 @@
 								</Frame>
 								<Frame type="PlayerHeroIconFrame" name="PlayerHeroIconFrame">
 									<Alpha val="0"/>
+									<Frame type="Image" name="HeroIconImage">
+										<Alpha val="0"/>
+									</Frame>
+									<Frame type="Image" name="SilencedIcon">
+										<Alpha val="0"/>
+									</Frame>
+								</Frame>
+								<Frame type="Image" name="BGSeparatorImage1">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="BGSeparatorImage2">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="BGSeparatorImage3">
+									<Alpha val="0"/>
 								</Frame>
 								<Frame type="PlayerHeroNameFrame" name="HeroNameFrame">
 									<Alpha val="0"/>
@@ -741,6 +885,21 @@
 									<Alpha val="0"/>
 								</Frame>
 								<Frame type="PlayerHeroIconFrame" name="PlayerHeroIconFrame">
+									<Alpha val="0"/>
+									<Frame type="Image" name="HeroIconImage">
+										<Alpha val="0"/>
+									</Frame>
+									<Frame type="Image" name="SilencedIcon">
+										<Alpha val="0"/>
+									</Frame>
+								</Frame>
+								<Frame type="Image" name="BGSeparatorImage1">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="BGSeparatorImage2">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="BGSeparatorImage3">
 									<Alpha val="0"/>
 								</Frame>
 								<Frame type="PlayerHeroNameFrame" name="HeroNameFrame">
