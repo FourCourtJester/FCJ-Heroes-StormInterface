@@ -8512,95 +8512,25 @@
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Bottom" relative="$parent" pos="Min" offset="85"/>
 								<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
-								<Alpha val="0"/>
 								<AcceptsMouse val="false"/>
-
-								<Frame type="Image" name="FCJH_OnFireGlowA">
+								<Frame type="Image" name="FCJH_OnFireGlowAlias">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
-									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<AcceptsMouse val="false"/>
-									<RenderPriority val="700"/>
-								</Frame>
-								<Frame type="Image" name="FCJH_OnFireGlowB">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="50"/>
-									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 									<Anchor side="Right"  relative="$parent" pos="Min" offset="99"/>
 									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,33,103,245"/>
 									<AcceptsMouse val="false"/>
 									<RenderPriority val="700"/>
 								</Frame>
-								<Frame type="Image" name="FCJH_OnFireGlowC">
+								<Frame type="Image" name="FCJH_OnFireGlowFile">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="99"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="148"/>
-									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,33,103,245"/>
-									<BlendMode val="Add"/>
-									<AcceptsMouse val="false"/>
-									<RenderPriority val="700"/>
-								</Frame>
-								<Frame type="Image" name="FCJH_OnFireGlowD">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="148"/>
-									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 									<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
-									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,33,103,245"/>
-									<BlendMode val="Add"/>
-									<Unclipped val="true"/>
+									<Texture val="Assets\Textures\storm_ui_ingame_leader_onfire_glow.dds"/>
 									<AcceptsMouse val="false"/>
 									<RenderPriority val="700"/>
-									<Animation name="FCJH_Pulse">
-										<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/OnFireCutsceneFrame"/>
-										<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/OnFireCutsceneFrame"/>
-										<Controller type="Fade" end="Loop">
-											<Key type="Curve" time="0" value="100" inout="Linear"/>
-											<Key type="Curve" time="1" value="255" inout="Slow,Linear"/>
-											<Key type="Curve" time="2" value="100" inout="Linear"/>
-										</Controller>
-									</Animation>
 								</Frame>
-								<Frame type="Image" name="FCJH_FireDiag">
-									<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-									<Anchor side="Left" relative="$parent" pos="Min" offset="92"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="20"/>
-									<Anchor side="Right" relative="$parent" pos="Min" offset="106"/>
-									<Texture val="@UI/PauseScreenDimImage"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,255,255,255"/>
-									<RenderPriority val="701"/>
-									<AcceptsMouse val="false"/>
-								</Frame>
-								<Animation name="FCJH_OnFireEmbers">
-									<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="0"/>
-										<Key type="Curve" time="0.5" value="200"/>
-									</Controller>
-								</Animation>
-								<Animation name="FCJH_OnFireInferno">
-									<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="200"/>
-										<Key type="Curve" time="0.5" value="255"/>
-									</Controller>
-								</Animation>
-								<Animation name="FCJH_OnFireEnd">
-									<Event event="OnFireEnd" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="0"/>
-										<Key type="Curve" time="0" value="0"/>
-									</Controller>
-								</Animation>
 							</Frame>
 							<!-- the heroic, Blizzard's in-game panel mirrored (tools/gen.py heroic_panel) -->
 							<Frame type="Frame" name="FCJH_HeroicPanel">
@@ -9171,95 +9101,25 @@
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Bottom" relative="$parent" pos="Min" offset="85"/>
 								<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
-								<Alpha val="0"/>
 								<AcceptsMouse val="false"/>
-
-								<Frame type="Image" name="FCJH_OnFireGlowA">
+								<Frame type="Image" name="FCJH_OnFireGlowAlias">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
-									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<AcceptsMouse val="false"/>
-									<RenderPriority val="700"/>
-								</Frame>
-								<Frame type="Image" name="FCJH_OnFireGlowB">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="50"/>
-									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 									<Anchor side="Right"  relative="$parent" pos="Min" offset="99"/>
 									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,33,103,245"/>
 									<AcceptsMouse val="false"/>
 									<RenderPriority val="700"/>
 								</Frame>
-								<Frame type="Image" name="FCJH_OnFireGlowC">
+								<Frame type="Image" name="FCJH_OnFireGlowFile">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="99"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="148"/>
-									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,33,103,245"/>
-									<BlendMode val="Add"/>
-									<AcceptsMouse val="false"/>
-									<RenderPriority val="700"/>
-								</Frame>
-								<Frame type="Image" name="FCJH_OnFireGlowD">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="148"/>
-									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 									<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
-									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,33,103,245"/>
-									<BlendMode val="Add"/>
-									<Unclipped val="true"/>
+									<Texture val="Assets\Textures\storm_ui_ingame_leader_onfire_glow.dds"/>
 									<AcceptsMouse val="false"/>
 									<RenderPriority val="700"/>
-									<Animation name="FCJH_Pulse">
-										<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/OnFireCutsceneFrame"/>
-										<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/OnFireCutsceneFrame"/>
-										<Controller type="Fade" end="Loop">
-											<Key type="Curve" time="0" value="100" inout="Linear"/>
-											<Key type="Curve" time="1" value="255" inout="Slow,Linear"/>
-											<Key type="Curve" time="2" value="100" inout="Linear"/>
-										</Controller>
-									</Animation>
 								</Frame>
-								<Frame type="Image" name="FCJH_FireDiag">
-									<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-									<Anchor side="Left" relative="$parent" pos="Min" offset="92"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="20"/>
-									<Anchor side="Right" relative="$parent" pos="Min" offset="106"/>
-									<Texture val="@UI/PauseScreenDimImage"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,255,255,255"/>
-									<RenderPriority val="701"/>
-									<AcceptsMouse val="false"/>
-								</Frame>
-								<Animation name="FCJH_OnFireEmbers">
-									<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="0"/>
-										<Key type="Curve" time="0.5" value="200"/>
-									</Controller>
-								</Animation>
-								<Animation name="FCJH_OnFireInferno">
-									<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="200"/>
-										<Key type="Curve" time="0.5" value="255"/>
-									</Controller>
-								</Animation>
-								<Animation name="FCJH_OnFireEnd">
-									<Event event="OnFireEnd" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="0"/>
-										<Key type="Curve" time="0" value="0"/>
-									</Controller>
-								</Animation>
 							</Frame>
 							<!-- the heroic, Blizzard's in-game panel mirrored (tools/gen.py heroic_panel) -->
 							<Frame type="Frame" name="FCJH_HeroicPanel">
@@ -9830,95 +9690,25 @@
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Bottom" relative="$parent" pos="Min" offset="85"/>
 								<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
-								<Alpha val="0"/>
 								<AcceptsMouse val="false"/>
-
-								<Frame type="Image" name="FCJH_OnFireGlowA">
+								<Frame type="Image" name="FCJH_OnFireGlowAlias">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
-									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<AcceptsMouse val="false"/>
-									<RenderPriority val="700"/>
-								</Frame>
-								<Frame type="Image" name="FCJH_OnFireGlowB">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="50"/>
-									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 									<Anchor side="Right"  relative="$parent" pos="Min" offset="99"/>
 									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,33,103,245"/>
 									<AcceptsMouse val="false"/>
 									<RenderPriority val="700"/>
 								</Frame>
-								<Frame type="Image" name="FCJH_OnFireGlowC">
+								<Frame type="Image" name="FCJH_OnFireGlowFile">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="99"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="148"/>
-									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,33,103,245"/>
-									<BlendMode val="Add"/>
-									<AcceptsMouse val="false"/>
-									<RenderPriority val="700"/>
-								</Frame>
-								<Frame type="Image" name="FCJH_OnFireGlowD">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="148"/>
-									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 									<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
-									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,33,103,245"/>
-									<BlendMode val="Add"/>
-									<Unclipped val="true"/>
+									<Texture val="Assets\Textures\storm_ui_ingame_leader_onfire_glow.dds"/>
 									<AcceptsMouse val="false"/>
 									<RenderPriority val="700"/>
-									<Animation name="FCJH_Pulse">
-										<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/OnFireCutsceneFrame"/>
-										<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/OnFireCutsceneFrame"/>
-										<Controller type="Fade" end="Loop">
-											<Key type="Curve" time="0" value="100" inout="Linear"/>
-											<Key type="Curve" time="1" value="255" inout="Slow,Linear"/>
-											<Key type="Curve" time="2" value="100" inout="Linear"/>
-										</Controller>
-									</Animation>
 								</Frame>
-								<Frame type="Image" name="FCJH_FireDiag">
-									<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-									<Anchor side="Left" relative="$parent" pos="Min" offset="92"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="20"/>
-									<Anchor side="Right" relative="$parent" pos="Min" offset="106"/>
-									<Texture val="@UI/PauseScreenDimImage"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,255,255,255"/>
-									<RenderPriority val="701"/>
-									<AcceptsMouse val="false"/>
-								</Frame>
-								<Animation name="FCJH_OnFireEmbers">
-									<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="0"/>
-										<Key type="Curve" time="0.5" value="200"/>
-									</Controller>
-								</Animation>
-								<Animation name="FCJH_OnFireInferno">
-									<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="200"/>
-										<Key type="Curve" time="0.5" value="255"/>
-									</Controller>
-								</Animation>
-								<Animation name="FCJH_OnFireEnd">
-									<Event event="OnFireEnd" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="0"/>
-										<Key type="Curve" time="0" value="0"/>
-									</Controller>
-								</Animation>
 							</Frame>
 							<!-- the heroic, Blizzard's in-game panel mirrored (tools/gen.py heroic_panel) -->
 							<Frame type="Frame" name="FCJH_HeroicPanel">
@@ -10489,95 +10279,25 @@
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Bottom" relative="$parent" pos="Min" offset="85"/>
 								<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
-								<Alpha val="0"/>
 								<AcceptsMouse val="false"/>
-
-								<Frame type="Image" name="FCJH_OnFireGlowA">
+								<Frame type="Image" name="FCJH_OnFireGlowAlias">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
-									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<AcceptsMouse val="false"/>
-									<RenderPriority val="700"/>
-								</Frame>
-								<Frame type="Image" name="FCJH_OnFireGlowB">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="50"/>
-									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 									<Anchor side="Right"  relative="$parent" pos="Min" offset="99"/>
 									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,33,103,245"/>
 									<AcceptsMouse val="false"/>
 									<RenderPriority val="700"/>
 								</Frame>
-								<Frame type="Image" name="FCJH_OnFireGlowC">
+								<Frame type="Image" name="FCJH_OnFireGlowFile">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="99"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="148"/>
-									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,33,103,245"/>
-									<BlendMode val="Add"/>
-									<AcceptsMouse val="false"/>
-									<RenderPriority val="700"/>
-								</Frame>
-								<Frame type="Image" name="FCJH_OnFireGlowD">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="148"/>
-									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 									<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
-									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,33,103,245"/>
-									<BlendMode val="Add"/>
-									<Unclipped val="true"/>
+									<Texture val="Assets\Textures\storm_ui_ingame_leader_onfire_glow.dds"/>
 									<AcceptsMouse val="false"/>
 									<RenderPriority val="700"/>
-									<Animation name="FCJH_Pulse">
-										<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/OnFireCutsceneFrame"/>
-										<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/OnFireCutsceneFrame"/>
-										<Controller type="Fade" end="Loop">
-											<Key type="Curve" time="0" value="100" inout="Linear"/>
-											<Key type="Curve" time="1" value="255" inout="Slow,Linear"/>
-											<Key type="Curve" time="2" value="100" inout="Linear"/>
-										</Controller>
-									</Animation>
 								</Frame>
-								<Frame type="Image" name="FCJH_FireDiag">
-									<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-									<Anchor side="Left" relative="$parent" pos="Min" offset="92"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="20"/>
-									<Anchor side="Right" relative="$parent" pos="Min" offset="106"/>
-									<Texture val="@UI/PauseScreenDimImage"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,255,255,255"/>
-									<RenderPriority val="701"/>
-									<AcceptsMouse val="false"/>
-								</Frame>
-								<Animation name="FCJH_OnFireEmbers">
-									<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="0"/>
-										<Key type="Curve" time="0.5" value="200"/>
-									</Controller>
-								</Animation>
-								<Animation name="FCJH_OnFireInferno">
-									<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="200"/>
-										<Key type="Curve" time="0.5" value="255"/>
-									</Controller>
-								</Animation>
-								<Animation name="FCJH_OnFireEnd">
-									<Event event="OnFireEnd" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="0"/>
-										<Key type="Curve" time="0" value="0"/>
-									</Controller>
-								</Animation>
 							</Frame>
 							<!-- the heroic, Blizzard's in-game panel mirrored (tools/gen.py heroic_panel) -->
 							<Frame type="Frame" name="FCJH_HeroicPanel">
@@ -11148,95 +10868,25 @@
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Bottom" relative="$parent" pos="Min" offset="85"/>
 								<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
-								<Alpha val="0"/>
 								<AcceptsMouse val="false"/>
-
-								<Frame type="Image" name="FCJH_OnFireGlowA">
+								<Frame type="Image" name="FCJH_OnFireGlowAlias">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
-									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<AcceptsMouse val="false"/>
-									<RenderPriority val="700"/>
-								</Frame>
-								<Frame type="Image" name="FCJH_OnFireGlowB">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="50"/>
-									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 									<Anchor side="Right"  relative="$parent" pos="Min" offset="99"/>
 									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,33,103,245"/>
 									<AcceptsMouse val="false"/>
 									<RenderPriority val="700"/>
 								</Frame>
-								<Frame type="Image" name="FCJH_OnFireGlowC">
+								<Frame type="Image" name="FCJH_OnFireGlowFile">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="99"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="148"/>
-									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,33,103,245"/>
-									<BlendMode val="Add"/>
-									<AcceptsMouse val="false"/>
-									<RenderPriority val="700"/>
-								</Frame>
-								<Frame type="Image" name="FCJH_OnFireGlowD">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="148"/>
-									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 									<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
-									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,33,103,245"/>
-									<BlendMode val="Add"/>
-									<Unclipped val="true"/>
+									<Texture val="Assets\Textures\storm_ui_ingame_leader_onfire_glow.dds"/>
 									<AcceptsMouse val="false"/>
 									<RenderPriority val="700"/>
-									<Animation name="FCJH_Pulse">
-										<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/OnFireCutsceneFrame"/>
-										<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/OnFireCutsceneFrame"/>
-										<Controller type="Fade" end="Loop">
-											<Key type="Curve" time="0" value="100" inout="Linear"/>
-											<Key type="Curve" time="1" value="255" inout="Slow,Linear"/>
-											<Key type="Curve" time="2" value="100" inout="Linear"/>
-										</Controller>
-									</Animation>
 								</Frame>
-								<Frame type="Image" name="FCJH_FireDiag">
-									<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-									<Anchor side="Left" relative="$parent" pos="Min" offset="92"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="20"/>
-									<Anchor side="Right" relative="$parent" pos="Min" offset="106"/>
-									<Texture val="@UI/PauseScreenDimImage"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,255,255,255"/>
-									<RenderPriority val="701"/>
-									<AcceptsMouse val="false"/>
-								</Frame>
-								<Animation name="FCJH_OnFireEmbers">
-									<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="0"/>
-										<Key type="Curve" time="0.5" value="200"/>
-									</Controller>
-								</Animation>
-								<Animation name="FCJH_OnFireInferno">
-									<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="200"/>
-										<Key type="Curve" time="0.5" value="255"/>
-									</Controller>
-								</Animation>
-								<Animation name="FCJH_OnFireEnd">
-									<Event event="OnFireEnd" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="0"/>
-										<Key type="Curve" time="0" value="0"/>
-									</Controller>
-								</Animation>
 							</Frame>
 							<!-- the heroic, Blizzard's in-game panel mirrored (tools/gen.py heroic_panel) -->
 							<Frame type="Frame" name="FCJH_HeroicPanel">
@@ -11809,95 +11459,25 @@
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Bottom" relative="$parent" pos="Min" offset="85"/>
 								<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
-								<Alpha val="0"/>
 								<AcceptsMouse val="false"/>
-
-								<Frame type="Image" name="FCJH_OnFireGlowA">
+								<Frame type="Image" name="FCJH_OnFireGlowAlias">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
-									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<AcceptsMouse val="false"/>
-									<RenderPriority val="700"/>
-								</Frame>
-								<Frame type="Image" name="FCJH_OnFireGlowB">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="50"/>
-									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 									<Anchor side="Right"  relative="$parent" pos="Min" offset="99"/>
 									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,194,40,47"/>
 									<AcceptsMouse val="false"/>
 									<RenderPriority val="700"/>
 								</Frame>
-								<Frame type="Image" name="FCJH_OnFireGlowC">
+								<Frame type="Image" name="FCJH_OnFireGlowFile">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="99"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="148"/>
-									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,194,40,47"/>
-									<BlendMode val="Add"/>
-									<AcceptsMouse val="false"/>
-									<RenderPriority val="700"/>
-								</Frame>
-								<Frame type="Image" name="FCJH_OnFireGlowD">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="148"/>
-									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 									<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
-									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,194,40,47"/>
-									<BlendMode val="Add"/>
-									<Unclipped val="true"/>
+									<Texture val="Assets\Textures\storm_ui_ingame_leader_onfire_glow.dds"/>
 									<AcceptsMouse val="false"/>
 									<RenderPriority val="700"/>
-									<Animation name="FCJH_Pulse">
-										<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/OnFireCutsceneFrame"/>
-										<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/OnFireCutsceneFrame"/>
-										<Controller type="Fade" end="Loop">
-											<Key type="Curve" time="0" value="100" inout="Linear"/>
-											<Key type="Curve" time="1" value="255" inout="Slow,Linear"/>
-											<Key type="Curve" time="2" value="100" inout="Linear"/>
-										</Controller>
-									</Animation>
 								</Frame>
-								<Frame type="Image" name="FCJH_FireDiag">
-									<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-									<Anchor side="Left" relative="$parent" pos="Min" offset="92"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="20"/>
-									<Anchor side="Right" relative="$parent" pos="Min" offset="106"/>
-									<Texture val="@UI/PauseScreenDimImage"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,255,255,255"/>
-									<RenderPriority val="701"/>
-									<AcceptsMouse val="false"/>
-								</Frame>
-								<Animation name="FCJH_OnFireEmbers">
-									<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="0"/>
-										<Key type="Curve" time="0.5" value="200"/>
-									</Controller>
-								</Animation>
-								<Animation name="FCJH_OnFireInferno">
-									<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="200"/>
-										<Key type="Curve" time="0.5" value="255"/>
-									</Controller>
-								</Animation>
-								<Animation name="FCJH_OnFireEnd">
-									<Event event="OnFireEnd" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="0"/>
-										<Key type="Curve" time="0" value="0"/>
-									</Controller>
-								</Animation>
 							</Frame>
 							<!-- the heroic, Blizzard's in-game panel mirrored (tools/gen.py heroic_panel) -->
 							<Frame type="Frame" name="FCJH_HeroicPanel">
@@ -12471,95 +12051,25 @@
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Bottom" relative="$parent" pos="Min" offset="85"/>
 								<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
-								<Alpha val="0"/>
 								<AcceptsMouse val="false"/>
-
-								<Frame type="Image" name="FCJH_OnFireGlowA">
+								<Frame type="Image" name="FCJH_OnFireGlowAlias">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
-									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<AcceptsMouse val="false"/>
-									<RenderPriority val="700"/>
-								</Frame>
-								<Frame type="Image" name="FCJH_OnFireGlowB">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="50"/>
-									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 									<Anchor side="Right"  relative="$parent" pos="Min" offset="99"/>
 									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,194,40,47"/>
 									<AcceptsMouse val="false"/>
 									<RenderPriority val="700"/>
 								</Frame>
-								<Frame type="Image" name="FCJH_OnFireGlowC">
+								<Frame type="Image" name="FCJH_OnFireGlowFile">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="99"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="148"/>
-									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,194,40,47"/>
-									<BlendMode val="Add"/>
-									<AcceptsMouse val="false"/>
-									<RenderPriority val="700"/>
-								</Frame>
-								<Frame type="Image" name="FCJH_OnFireGlowD">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="148"/>
-									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 									<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
-									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,194,40,47"/>
-									<BlendMode val="Add"/>
-									<Unclipped val="true"/>
+									<Texture val="Assets\Textures\storm_ui_ingame_leader_onfire_glow.dds"/>
 									<AcceptsMouse val="false"/>
 									<RenderPriority val="700"/>
-									<Animation name="FCJH_Pulse">
-										<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/OnFireCutsceneFrame"/>
-										<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/OnFireCutsceneFrame"/>
-										<Controller type="Fade" end="Loop">
-											<Key type="Curve" time="0" value="100" inout="Linear"/>
-											<Key type="Curve" time="1" value="255" inout="Slow,Linear"/>
-											<Key type="Curve" time="2" value="100" inout="Linear"/>
-										</Controller>
-									</Animation>
 								</Frame>
-								<Frame type="Image" name="FCJH_FireDiag">
-									<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-									<Anchor side="Left" relative="$parent" pos="Min" offset="92"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="20"/>
-									<Anchor side="Right" relative="$parent" pos="Min" offset="106"/>
-									<Texture val="@UI/PauseScreenDimImage"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,255,255,255"/>
-									<RenderPriority val="701"/>
-									<AcceptsMouse val="false"/>
-								</Frame>
-								<Animation name="FCJH_OnFireEmbers">
-									<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="0"/>
-										<Key type="Curve" time="0.5" value="200"/>
-									</Controller>
-								</Animation>
-								<Animation name="FCJH_OnFireInferno">
-									<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="200"/>
-										<Key type="Curve" time="0.5" value="255"/>
-									</Controller>
-								</Animation>
-								<Animation name="FCJH_OnFireEnd">
-									<Event event="OnFireEnd" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="0"/>
-										<Key type="Curve" time="0" value="0"/>
-									</Controller>
-								</Animation>
 							</Frame>
 							<!-- the heroic, Blizzard's in-game panel mirrored (tools/gen.py heroic_panel) -->
 							<Frame type="Frame" name="FCJH_HeroicPanel">
@@ -13133,95 +12643,25 @@
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Bottom" relative="$parent" pos="Min" offset="85"/>
 								<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
-								<Alpha val="0"/>
 								<AcceptsMouse val="false"/>
-
-								<Frame type="Image" name="FCJH_OnFireGlowA">
+								<Frame type="Image" name="FCJH_OnFireGlowAlias">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
-									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<AcceptsMouse val="false"/>
-									<RenderPriority val="700"/>
-								</Frame>
-								<Frame type="Image" name="FCJH_OnFireGlowB">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="50"/>
-									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 									<Anchor side="Right"  relative="$parent" pos="Min" offset="99"/>
 									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,194,40,47"/>
 									<AcceptsMouse val="false"/>
 									<RenderPriority val="700"/>
 								</Frame>
-								<Frame type="Image" name="FCJH_OnFireGlowC">
+								<Frame type="Image" name="FCJH_OnFireGlowFile">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="99"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="148"/>
-									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,194,40,47"/>
-									<BlendMode val="Add"/>
-									<AcceptsMouse val="false"/>
-									<RenderPriority val="700"/>
-								</Frame>
-								<Frame type="Image" name="FCJH_OnFireGlowD">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="148"/>
-									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 									<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
-									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,194,40,47"/>
-									<BlendMode val="Add"/>
-									<Unclipped val="true"/>
+									<Texture val="Assets\Textures\storm_ui_ingame_leader_onfire_glow.dds"/>
 									<AcceptsMouse val="false"/>
 									<RenderPriority val="700"/>
-									<Animation name="FCJH_Pulse">
-										<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/OnFireCutsceneFrame"/>
-										<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/OnFireCutsceneFrame"/>
-										<Controller type="Fade" end="Loop">
-											<Key type="Curve" time="0" value="100" inout="Linear"/>
-											<Key type="Curve" time="1" value="255" inout="Slow,Linear"/>
-											<Key type="Curve" time="2" value="100" inout="Linear"/>
-										</Controller>
-									</Animation>
 								</Frame>
-								<Frame type="Image" name="FCJH_FireDiag">
-									<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-									<Anchor side="Left" relative="$parent" pos="Min" offset="92"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="20"/>
-									<Anchor side="Right" relative="$parent" pos="Min" offset="106"/>
-									<Texture val="@UI/PauseScreenDimImage"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,255,255,255"/>
-									<RenderPriority val="701"/>
-									<AcceptsMouse val="false"/>
-								</Frame>
-								<Animation name="FCJH_OnFireEmbers">
-									<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="0"/>
-										<Key type="Curve" time="0.5" value="200"/>
-									</Controller>
-								</Animation>
-								<Animation name="FCJH_OnFireInferno">
-									<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="200"/>
-										<Key type="Curve" time="0.5" value="255"/>
-									</Controller>
-								</Animation>
-								<Animation name="FCJH_OnFireEnd">
-									<Event event="OnFireEnd" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="0"/>
-										<Key type="Curve" time="0" value="0"/>
-									</Controller>
-								</Animation>
 							</Frame>
 							<!-- the heroic, Blizzard's in-game panel mirrored (tools/gen.py heroic_panel) -->
 							<Frame type="Frame" name="FCJH_HeroicPanel">
@@ -13795,95 +13235,25 @@
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Bottom" relative="$parent" pos="Min" offset="85"/>
 								<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
-								<Alpha val="0"/>
 								<AcceptsMouse val="false"/>
-
-								<Frame type="Image" name="FCJH_OnFireGlowA">
+								<Frame type="Image" name="FCJH_OnFireGlowAlias">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
-									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<AcceptsMouse val="false"/>
-									<RenderPriority val="700"/>
-								</Frame>
-								<Frame type="Image" name="FCJH_OnFireGlowB">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="50"/>
-									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 									<Anchor side="Right"  relative="$parent" pos="Min" offset="99"/>
 									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,194,40,47"/>
 									<AcceptsMouse val="false"/>
 									<RenderPriority val="700"/>
 								</Frame>
-								<Frame type="Image" name="FCJH_OnFireGlowC">
+								<Frame type="Image" name="FCJH_OnFireGlowFile">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="99"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="148"/>
-									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,194,40,47"/>
-									<BlendMode val="Add"/>
-									<AcceptsMouse val="false"/>
-									<RenderPriority val="700"/>
-								</Frame>
-								<Frame type="Image" name="FCJH_OnFireGlowD">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="148"/>
-									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 									<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
-									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,194,40,47"/>
-									<BlendMode val="Add"/>
-									<Unclipped val="true"/>
+									<Texture val="Assets\Textures\storm_ui_ingame_leader_onfire_glow.dds"/>
 									<AcceptsMouse val="false"/>
 									<RenderPriority val="700"/>
-									<Animation name="FCJH_Pulse">
-										<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/OnFireCutsceneFrame"/>
-										<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/OnFireCutsceneFrame"/>
-										<Controller type="Fade" end="Loop">
-											<Key type="Curve" time="0" value="100" inout="Linear"/>
-											<Key type="Curve" time="1" value="255" inout="Slow,Linear"/>
-											<Key type="Curve" time="2" value="100" inout="Linear"/>
-										</Controller>
-									</Animation>
 								</Frame>
-								<Frame type="Image" name="FCJH_FireDiag">
-									<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-									<Anchor side="Left" relative="$parent" pos="Min" offset="92"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="20"/>
-									<Anchor side="Right" relative="$parent" pos="Min" offset="106"/>
-									<Texture val="@UI/PauseScreenDimImage"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,255,255,255"/>
-									<RenderPriority val="701"/>
-									<AcceptsMouse val="false"/>
-								</Frame>
-								<Animation name="FCJH_OnFireEmbers">
-									<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="0"/>
-										<Key type="Curve" time="0.5" value="200"/>
-									</Controller>
-								</Animation>
-								<Animation name="FCJH_OnFireInferno">
-									<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="200"/>
-										<Key type="Curve" time="0.5" value="255"/>
-									</Controller>
-								</Animation>
-								<Animation name="FCJH_OnFireEnd">
-									<Event event="OnFireEnd" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="0"/>
-										<Key type="Curve" time="0" value="0"/>
-									</Controller>
-								</Animation>
 							</Frame>
 							<!-- the heroic, Blizzard's in-game panel mirrored (tools/gen.py heroic_panel) -->
 							<Frame type="Frame" name="FCJH_HeroicPanel">
@@ -14457,95 +13827,25 @@
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Bottom" relative="$parent" pos="Min" offset="85"/>
 								<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
-								<Alpha val="0"/>
 								<AcceptsMouse val="false"/>
-
-								<Frame type="Image" name="FCJH_OnFireGlowA">
+								<Frame type="Image" name="FCJH_OnFireGlowAlias">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="50"/>
-									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<AcceptsMouse val="false"/>
-									<RenderPriority val="700"/>
-								</Frame>
-								<Frame type="Image" name="FCJH_OnFireGlowB">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="50"/>
-									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 									<Anchor side="Right"  relative="$parent" pos="Min" offset="99"/>
 									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,194,40,47"/>
 									<AcceptsMouse val="false"/>
 									<RenderPriority val="700"/>
 								</Frame>
-								<Frame type="Image" name="FCJH_OnFireGlowC">
+								<Frame type="Image" name="FCJH_OnFireGlowFile">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="99"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="148"/>
-									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,194,40,47"/>
-									<BlendMode val="Add"/>
-									<AcceptsMouse val="false"/>
-									<RenderPriority val="700"/>
-								</Frame>
-								<Frame type="Image" name="FCJH_OnFireGlowD">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="148"/>
-									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 									<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
-									<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,194,40,47"/>
-									<BlendMode val="Add"/>
-									<Unclipped val="true"/>
+									<Texture val="Assets\Textures\storm_ui_ingame_leader_onfire_glow.dds"/>
 									<AcceptsMouse val="false"/>
 									<RenderPriority val="700"/>
-									<Animation name="FCJH_Pulse">
-										<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/OnFireCutsceneFrame"/>
-										<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/OnFireCutsceneFrame"/>
-										<Controller type="Fade" end="Loop">
-											<Key type="Curve" time="0" value="100" inout="Linear"/>
-											<Key type="Curve" time="1" value="255" inout="Slow,Linear"/>
-											<Key type="Curve" time="2" value="100" inout="Linear"/>
-										</Controller>
-									</Animation>
 								</Frame>
-								<Frame type="Image" name="FCJH_FireDiag">
-									<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-									<Anchor side="Left" relative="$parent" pos="Min" offset="92"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="20"/>
-									<Anchor side="Right" relative="$parent" pos="Min" offset="106"/>
-									<Texture val="@UI/PauseScreenDimImage"/>
-									<ColorAdjustMode val="Fill"/>
-									<AdjustmentColor val="255,255,255,255"/>
-									<RenderPriority val="701"/>
-									<AcceptsMouse val="false"/>
-								</Frame>
-								<Animation name="FCJH_OnFireEmbers">
-									<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="0"/>
-										<Key type="Curve" time="0.5" value="200"/>
-									</Controller>
-								</Animation>
-								<Animation name="FCJH_OnFireInferno">
-									<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="200"/>
-										<Key type="Curve" time="0.5" value="255"/>
-									</Controller>
-								</Animation>
-								<Animation name="FCJH_OnFireEnd">
-									<Event event="OnFireEnd" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0" value="0"/>
-										<Key type="Curve" time="0" value="0"/>
-									</Controller>
-								</Animation>
 							</Frame>
 							<!-- the heroic, Blizzard's in-game panel mirrored (tools/gen.py heroic_panel) -->
 							<Frame type="Frame" name="FCJH_HeroicPanel">

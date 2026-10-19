@@ -2054,28 +2054,20 @@ def pet_death_bindings(cfg, team_frame, i):
 # _Red, its pulse 100 -> 255 -> 100 over 2 s), over each plate's portrait. Blizzard's own top-bar
 # flames (6420bd3: SharedOnFireVFX's GameUI_OnFirePartyFrame cutscene, as partyframe places it)
 # played for an observer but spilled past the plate (user, 2026-10-19: "Kinda looks goofy but
-# it did emit"). Blizzard's template itself, placed whole (002c699), never showed: its root
-# starts Visible=false and its glow takes its height from the texture, so it's rebuilt here as
-# one image, shown by a fade as the test squares were. It plays on the party cell's events,
-# which reach an observer (the test squares, read 2026-10-19): Embers at part strength, Inferno
-# at full, End off.
-# e6fa651 drew the glow at 529, normal blend, Embers 150: the square lit, the glow didn't read
-# (user, 2026-10-19, Sgt. Hammer). The texture (156 x 64) is a soft rise from its bottom centre,
-# mostly 10-60% opaque: tinting a portrait, it vanishes. Blizzard draws glows additive (Add,
-# throughout its layouts), so ours is too; TEMPORARY at 700, the square's layer, to rule out
-# draw order, then down under the plate's chrome once seen.
-ONFIRE_LEVELS = {"OnFireEmbers": 200, "OnFireInferno": 255, "OnFireEnd": 0}
+# it did emit"). The party cell's events reach an observer: a white square faded in by
+# OnFireEmbers / OnFireInferno, out by OnFireEnd, from {cell}/OnFireCutsceneFrame, lit on fire.
+# The glow never drew with it: Blizzard's template placed whole (002c699); rebuilt as one image
+# at 529, normal blend (e6fa651); additive at 700 (8e7b3e9); four strips - bare, + team fill,
+# + additive, + unclipped and pulse (11e618a). Not even the bare strip (user, 2026-10-19).
+# The texture is fine: 156 x 64 DXT5, near-white, its alpha a soft rise from the bottom centre.
+# The fire wiring (events, fades, colours) is 11e618a's onfire_flames.
+# TEST 1 (2026-10-19): does the texture load at all? Always on, no fire logic, the plate split
+# in two: left Blizzard's alias (defined in heroesdata's assets.txt), right the file itself.
+# Both draw: our fire setup was at fault. Right only: the alias doesn't reach us. Neither: this
+# texture can't be used here.
 ONFIRE_PRIORITY = 700
-ONFIRE_COLOUR = {True: "255,33,103,245", False: "255,194,40,47"}     # Blizzard's 2167f5 / c2282f
-# 8e7b3e9 (additive, at 700, Embers 200): still the square only (user, 2026-10-19). TEMPORARY
-# test strips, one variable each, the plate split in four, left to right: (A) the bare texture,
-# no colour, no blend, no pulse; (B) + Blizzard's team fill; (C) + additive; (D) the glow as
-# 8e7b3e9 drew it (+ unclipped + pulse). Whichever strips light say which part kills it.
-ONFIRE_STRIPS = [("A", False, False, False), ("B", True, False, False),
-                 ("C", True, True, False), ("D", True, True, True)]
-# TEMPORARY (002c699 never showed, user 2026-10-19): a white square at the plate's top middle,
-# lit while the hero is on fire, so "no event" and "no glow drawn" tell apart. Out once seen.
-ONFIRE_DIAG = 14
+ONFIRE_TEST = [("Alias", "@UI/Storm_UI_InGame_Leader_OnFire_Glow"),
+               ("File", "Assets\\Textures\\storm_ui_ingame_leader_onfire_glow.dds")]
 
 
 def onfire_flames(cfg, blue, cell):
@@ -2083,67 +2075,26 @@ def onfire_flames(cfg, blue, cell):
     k = c.w / c.W
     s = lambda v: round(v * k)
     t = "\t" * 7
-    anims = ""
-    prevs = {"OnFireEmbers": 0, "OnFireInferno": ONFIRE_LEVELS["OnFireEmbers"], "OnFireEnd": 0}
-    for event, alpha in ONFIRE_LEVELS.items():
-        anims += f"""
-{t}\t<Animation name="FCJH_{event}">
-{t}\t\t<Event event="{event}" action="Reset,Play" frame="{cell}/OnFireCutsceneFrame"/>
-{t}\t\t<Controller type="Fade" end="Pause">
-{t}\t\t\t<Key type="Curve" time="0" value="{prevs[event]}"/>
-{t}\t\t\t<Key type="Curve" time="{0 if alpha == 0 else 0.5}" value="{alpha}"/>
-{t}\t\t</Controller>
-{t}\t</Animation>"""
-    fire = "".join(f'\n{t}\t\t\t<Event event="{e}" action="Reset,Play" frame="{cell}/OnFireCutsceneFrame"/>'
-                   for e in ("OnFireEmbers", "OnFireInferno"))
-    strips = ""
-    for n, (name, fill, add, full) in enumerate(ONFIRE_STRIPS):
-        x0, x1 = s(c.W * n / len(ONFIRE_STRIPS)), s(c.W * (n + 1) / len(ONFIRE_STRIPS))
-        strips += f"""
+    glows = ""
+    for n, (name, tex) in enumerate(ONFIRE_TEST):
+        x0, x1 = s(c.W * n / len(ONFIRE_TEST)), s(c.W * (n + 1) / len(ONFIRE_TEST))
+        glows += f"""
 {t}\t<Frame type="Image" name="FCJH_OnFireGlow{name}">
 {t}\t\t<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 {t}\t\t<Anchor side="Left"   relative="$parent" pos="Min" offset="{x0}"/>
 {t}\t\t<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 {t}\t\t<Anchor side="Right"  relative="$parent" pos="Min" offset="{x1}"/>
-{t}\t\t<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>"""
-        if fill:
-            strips += f"""
-{t}\t\t<ColorAdjustMode val="Fill"/>
-{t}\t\t<AdjustmentColor val="{ONFIRE_COLOUR[blue]}"/>"""
-        if add:
-            strips += f"""
-{t}\t\t<BlendMode val="Add"/>"""
-        if full:
-            strips += f"""
-{t}\t\t<Unclipped val="true"/>"""
-        strips += f"""
+{t}\t\t<Texture val="{tex}"/>
 {t}\t\t<AcceptsMouse val="false"/>
-{t}\t\t<RenderPriority val="{ONFIRE_PRIORITY}"/>"""
-        if full:
-            strips += f"""
-{t}\t\t<Animation name="FCJH_Pulse">{fire}
-{t}\t\t\t<Controller type="Fade" end="Loop">
-{t}\t\t\t\t<Key type="Curve" time="0" value="100" inout="Linear"/>
-{t}\t\t\t\t<Key type="Curve" time="1" value="255" inout="Slow,Linear"/>
-{t}\t\t\t\t<Key type="Curve" time="2" value="100" inout="Linear"/>
-{t}\t\t\t</Controller>
-{t}\t\t</Animation>"""
-        strips += f"""
+{t}\t\t<RenderPriority val="{ONFIRE_PRIORITY}"/>
 {t}\t</Frame>"""
-    mid = s(c.W / 2)
-    diag = fill_image("FCJH_FireDiag", box(("Min", s(4)), ("Min", mid - ONFIRE_DIAG // 2),
-                                           ("Min", s(4) + ONFIRE_DIAG), ("Min", mid + ONFIRE_DIAG // 2)),
-                      "255,255,255,255", ONFIRE_PRIORITY + 1, 8).rstrip("\n")
     return f"""
 {t}<Frame type="Frame" name="FCJH_OnFire">
 {t}\t<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 {t}\t<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 {t}\t<Anchor side="Bottom" relative="$parent" pos="Min" offset="{s(c.PORTRAIT_H - 1)}"/>
 {t}\t<Anchor side="Right"  relative="$parent" pos="Min" offset="{s(c.W)}"/>
-{t}\t<Alpha val="0"/>
-{t}\t<AcceptsMouse val="false"/>
-{strips}
-{diag}{anims}
+{t}\t<AcceptsMouse val="false"/>{glows}
 {t}</Frame>"""
 
 
