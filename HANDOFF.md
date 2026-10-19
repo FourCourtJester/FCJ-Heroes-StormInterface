@@ -571,6 +571,14 @@ from their plates (docs/blizzard-fixes.md).
    back, no white line.
    - **the quest icons back** (the rows' own `FCJH_BaseQuestIcon`, as before try 4): the right
      quest per hero, its tooltip and count still Blizzard's blank/stuck ones.
+   **dc32c98, seen 2026-10-19:** the quest icons' talent border back on heroes with a quest
+   (`FCJH_QuestBorder`) - DONE (user: Nova's border climbs to the top; Murky's climbs; Uther's
+   level 1 too; the white line stays gone). Blue's icons on `HeroTalentTooltip` as a test:
+   Murky's showed the last talent hovered, Nova's an empty box - the box doesn't matter, the
+   icon must be one that writes (docs/blizzard-fixes.md). Reverted.
+   **484d4df, not seen yet:** quest tooltip try 5, Ahli's arrangement with Blizzard's art
+   (`FCJH_QuestTest.StormLayout`, hand-kept TEST, Control+Shift+Q): hover its quest icons; Tab
+   must still open Blizzard's own panel. The file comes out once answered.
    **TEMPORARY:** Blizzard's kill feed is hidden for testing (FCJH_Hidden, `FCJH_KeepHidden`'s
    KillLogPanel controller; user, 2026-10-16). Take it out before release.
 
@@ -579,6 +587,16 @@ from their plates (docs/blizzard-fixes.md).
    portrait, one per event of Blizzard's on-fire frame, lit (blinking, 20 s) when it fires -
    orange Embers, red Inferno, grey End, blue Ally, dark red Enemy, light blue Left, light red
    Right. Read which ones light, then it goes.
+   **Read 2026-10-19 (dc32c98, user, a replay where red had heroes on fire):** orange, red, grey
+   and light red all lit; blue and light blue never (blue never went on fire). So Embers,
+   Inferno, End and Right reach an observer; Left should too (untested). Ally/Enemy go to the
+   hero's own team/its enemies only (uilib.galaxy libUIUI_gf_UIOnFireSetOnFireType), not
+   expected. Blizzard sends each level change (Embers/Inferno/End) together with its side
+   (Left/Right) to the same cell, yet the user saw orange on one hero and pink on the next:
+   the row of seven (10 + 26 x 7 = 188 units) is wider than a plate, so its end lands on the
+   neighbour's portrait - a "dark red" on Hogger's far left was likely a neighbour's square.
+   Next: a blue hero on fire for Left (user trying another replay), then the squares out and a
+   real on-fire marker from Embers/Inferno/End.
    The intro waits for the user's OBS plan. The items as the user gave them:
    - **The chrome's slant against Blizzard's art** (user, 2026-10-17): the row frame's slants
      don't gel with the art's: the portraits' edges, the heroic badges, the fountain icons and

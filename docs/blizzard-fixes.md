@@ -161,6 +161,19 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
   30 left of talent 1) on the quest cell, bare and then with the observer icon template:
   nothing either time. The observer row template (`BottomPanelTalentTreeCustomTemplateBlue`)
   has no slot 0 for the engine to fill.
+- **Which box doesn't matter (dc32c98, seen 2026-10-19, user):** blue's quest icons put on
+  the talents' own `HeroTalentTooltip`, red's left on the shared quest one. Murky's then showed
+  whichever talent was hovered last; Nova's an empty box. The tooltips are passive: an icon
+  fills one only where the engine has it write on hover, and our icons (a `HeroTalentsPanel`'s)
+  never write. Reverted.
+- **Try 5 (484d4df, 2026-10-19, not seen yet):** Ahli 0.75's arrangement as he has it, Blizzard's
+  art only (`FCJH_QuestTest`, its own test file, Control+Shift+Q). What his has that tries 3
+  and 4 didn't: the leader panel sits on the screen in `ConsoleUIContainer`; its rows' talents
+  view is switched on after load by the toggle's animation, through a hidden frame the rows'
+  visibility is bound to (Init, then InitEnd back, and on each show), not on from the start;
+  and a second leader panel takes Blizzard's Tab hotkey and hands it on to Blizzard's panel.
+  Each row's two quest icons have a tooltip of their own. If it fills, our talents pane
+  becomes a leader panel the same way.
 
 ### Hogger's rage drawn as mana
 - **Blizzard's:** the target panel's per-hero resource colours (`HeroResourceStates`,
