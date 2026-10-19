@@ -2059,7 +2059,13 @@ def pet_death_bindings(cfg, team_frame, i):
 # one image, shown by a fade as the test squares were. It plays on the party cell's events,
 # which reach an observer (the test squares, read 2026-10-19): Embers at part strength, Inferno
 # at full, End off.
-ONFIRE_LEVELS = {"OnFireEmbers": 150, "OnFireInferno": 255, "OnFireEnd": 0}
+# e6fa651 drew the glow at 529, normal blend, Embers 150: the square lit, the glow didn't read
+# (user, 2026-10-19, Sgt. Hammer). The texture (156 x 64) is a soft rise from its bottom centre,
+# mostly 10-60% opaque: tinting a portrait, it vanishes. Blizzard draws glows additive (Add,
+# throughout its layouts), so ours is too; TEMPORARY at 700, the square's layer, to rule out
+# draw order, then down under the plate's chrome once seen.
+ONFIRE_LEVELS = {"OnFireEmbers": 200, "OnFireInferno": 255, "OnFireEnd": 0}
+ONFIRE_PRIORITY = 700
 ONFIRE_COLOUR = {True: "255,33,103,245", False: "255,194,40,47"}     # Blizzard's 2167f5 / c2282f
 # TEMPORARY (002c699 never showed, user 2026-10-19): a white square at the plate's top middle,
 # lit while the hero is on fire, so "no event" and "no glow drawn" tell apart. Out once seen.
@@ -2101,9 +2107,10 @@ def onfire_flames(cfg, blue, cell):
 {t}\t\t<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
 {t}\t\t<ColorAdjustMode val="Fill"/>
 {t}\t\t<AdjustmentColor val="{ONFIRE_COLOUR[blue]}"/>
+{t}\t\t<BlendMode val="Add"/>
 {t}\t\t<Unclipped val="true"/>
 {t}\t\t<AcceptsMouse val="false"/>
-{t}\t\t<RenderPriority val="529"/>
+{t}\t\t<RenderPriority val="{ONFIRE_PRIORITY}"/>
 {t}\t\t<Animation name="FCJH_Pulse">{fire}
 {t}\t\t\t<Controller type="Fade" end="Loop">
 {t}\t\t\t\t<Key type="Curve" time="0" value="100" inout="Linear"/>
