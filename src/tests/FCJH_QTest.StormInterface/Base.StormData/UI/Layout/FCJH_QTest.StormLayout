@@ -47,7 +47,15 @@
      Step 5, one change: the same icons moved 30 up as well, half out of their row into the
      one above. Cut off at the row's edge: the row (or a frame its size) is what clips, so a
      lift has to take the row with it. Drawn whole over the row above: the clip is higher up,
-     and the step can be widened. -->
+     and the step can be widened.
+     Seen (user, 2026-10-19, 048e0f7, screenshot): "icons cut off at the row edge" - the half
+     in their own row drawn, the half over the row above not. The row clips.
+
+     Step 6, one change: each row's TalentsContainerFrame Batch false. It is the one frame in
+     the row Blizzard batches (Batch true, heroleaderpanel.stormlayout:1717), and a batch
+     draws only inside its own box - Spazzo's note blames baseline quests for his batching.
+     Whole now: the batch was the clip, and a lift can go far with it off. Still cut: it is
+     the row's own box (PlayerFrame), and the row must travel with the icons. -->
 <Desc>
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<Frame type="Frame" name="UIContainer">
@@ -63,6 +71,7 @@
 						<Frame type="TabControl" name="TabControl">
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame0">
 								<Frame type="Frame" name="TalentsContainerFrame">
+									<Batch val="False"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
@@ -83,6 +92,7 @@
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame1">
 								<Frame type="Frame" name="TalentsContainerFrame">
+									<Batch val="False"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
@@ -103,6 +113,7 @@
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame2">
 								<Frame type="Frame" name="TalentsContainerFrame">
+									<Batch val="False"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
@@ -123,6 +134,7 @@
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame3">
 								<Frame type="Frame" name="TalentsContainerFrame">
+									<Batch val="False"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
@@ -143,6 +155,7 @@
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame4">
 								<Frame type="Frame" name="TalentsContainerFrame">
+									<Batch val="False"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
@@ -163,6 +176,7 @@
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame5">
 								<Frame type="Frame" name="TalentsContainerFrame">
+									<Batch val="False"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
@@ -183,6 +197,7 @@
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame6">
 								<Frame type="Frame" name="TalentsContainerFrame">
+									<Batch val="False"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
@@ -203,6 +218,7 @@
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame7">
 								<Frame type="Frame" name="TalentsContainerFrame">
+									<Batch val="False"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
@@ -223,6 +239,7 @@
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame8">
 								<Frame type="Frame" name="TalentsContainerFrame">
+									<Batch val="False"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
@@ -243,6 +260,7 @@
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame9">
 								<Frame type="Frame" name="TalentsContainerFrame">
+									<Batch val="False"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
