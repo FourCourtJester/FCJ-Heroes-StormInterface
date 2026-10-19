@@ -2073,11 +2073,18 @@ def pet_death_bindings(cfg, team_frame, i):
 # odds for sure".
 # Test 4 (dd38ce0): one plate a team, the middle (3), always on (Inferno), each team its own side
 # (blue Left, red Right), the rest off.
-# TEST 5 (2026-10-19): Embers on plate 2 of each team, Inferno on plate 4, always on, the rest off.
+# Test 5 (3aa0187): Embers on plate 2 of each team, Inferno on plate 4, always on, the rest off.
+# TEST 6 (2026-10-19), test 5's plates: the fire on the face only, not the bars (user: squash the
+# flames to fit rather than cut the rim's bottom off). The rim ran ~2.5 to ~53.6 down the cell
+# (its frame -7.3 + 103 tall: the rim from 9.55% to 59.1% of it, measured on Hogger). Squashed
+# to end at 35, just over the health backing (36), its top kept: the frame 65.5 tall (x 0.636),
+# top -3.75; the wrapper clips at 36. Only the height changes, so the slanted sides stand
+# flatter (0.54 -> ~0.85 across per down) - expected, to re-tune after a look.
 ONFIRE_TEST = {2: "Embers Start", 4: "Inferno Start"}
 ONFIRE_LEVELS = {"OnFireEmbers": "Embers Start", "OnFireInferno": "Inferno Start", "OnFireEnd": "Death"}
 ONFIRE_PLACE = {"Left": -30, "Right": -34}  # the frame's left, by side
-ONFIRE_TOP, ONFIRE_W, ONFIRE_H = -7.3, 185, 103
+ONFIRE_TOP, ONFIRE_W, ONFIRE_H = -3.75, 185, 65.5   # test 5: -7.3, 185, 103
+ONFIRE_CLIP = 36                                    # the wrapper's bottom; test 5: PORTRAIT_H - 1
 
 
 def onfire_flames(cfg, blue, cell, i):
@@ -2125,7 +2132,7 @@ def onfire_flames(cfg, blue, cell, i):
 {t}<Frame type="Frame" name="FCJH_OnFire">
 {t}\t<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 {t}\t<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-{t}\t<Anchor side="Bottom" relative="$parent" pos="Min" offset="{s(c.PORTRAIT_H - 1)}"/>
+{t}\t<Anchor side="Bottom" relative="$parent" pos="Min" offset="{s(ONFIRE_CLIP)}"/>
 {t}\t<Anchor side="Right"  relative="$parent" pos="Min" offset="{s(c.W)}"/>
 {t}\t<AcceptsMouse val="false"/>
 {t}\t<Frame type="CutsceneFrame" name="FCJH_OnFireFlames" template="SharedOnFireVFX/OnFireCutsceneFrameTemplate">
