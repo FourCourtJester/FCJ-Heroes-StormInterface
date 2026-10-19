@@ -197,6 +197,12 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
   - **Step 1:** a copy of Blizzard's leader panel, untouched, placed as Blizzard's but 150
     lower, Control+Shift+Q sending it Show / Hide as Tab does Blizzard's. Fills: a copy gets the
     quest info, and our tries broke it with what they changed. Blank: a copy never does.
+    **Seen (7be15cc, user):** "a lower talents table. It has the default quests. It has
+    tooltips". A copy gets the quest info. Ahli's copy and Blizzard's Tab panel fill at the
+    same time too (user).
+  - **Step 2:** one change, opened as Ahli's and all eight tries were: its box on from load,
+    the toggle fading it in and sliding it up from 4400 (with Init / InitEnd), no Show event.
+    Blank: the panel must be sent Show.
 
 ### Hogger's rage drawn as mana
 - **Blizzard's:** the target panel's per-hero resource colours (`HeroResourceStates`,
