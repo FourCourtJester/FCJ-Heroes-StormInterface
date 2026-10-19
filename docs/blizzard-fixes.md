@@ -266,6 +266,9 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
   - **Step 15:** the container's other art (both hexagons, border, close button) at Alpha 0.
     **Seen (a8a9657, user):** "yes both show" - tooltips kept.
   - **Step 16:** the team scores (BlueTeamStats, VSLabel, RedTeamStats) at Alpha 0.
+    **Seen (0081cda, user):** "both show" - tooltips kept.
+  - **Step 17:** each row's background, portrait and names at Alpha 0; talents, quest icons
+    and column numbers left.
   - **Spazzo** (user, 2026-10-19): puts quests in his nameplates with no tooltips. He doesn't
     use Blizzard's quest icons at all: a generic UnitStatusBehaviorIcon per nameplate, pointed
     at each hero's quest-counter behaviour by a hand-kept list of ~400 entries

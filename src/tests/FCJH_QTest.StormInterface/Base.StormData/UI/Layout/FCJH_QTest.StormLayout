@@ -139,7 +139,14 @@
 
      Step 16, one change: the team scores under the rows at Alpha 0 - BlueTeamStats, VSLabel
      and RedTeamStats (children of the container). Then only the rows and the column numbers
-     are left. -->
+     are left.
+     Seen (user, 2026-10-19, 0081cda): "both show" - tooltips kept with the scores gone.
+
+     Step 17, one change: in each row, the row's own pieces at Alpha 0 - its background and
+     highlight lines (Background, BottomBorderHighlight, SelfBackground), the portrait
+     (PlayerHeroIconFrame) and the two names (HeroNameFrame, PlayerNameFrame). Left: the
+     talent squares, the quest icons and the column numbers. Tooltips still there: a row can
+     be cut down to its quest icons. -->
 <Desc>
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<Frame type="Frame" name="UIContainer">
@@ -181,16 +188,214 @@
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame0">
 								<Anchor side="Top" relative="$parent/StatsContainerFrame/SortButton0" pos="Max" offset="5"/>
 								<Unclipped val="true"/>
+								<Frame type="Image" name="Background">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="BottomBorderHighlight">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="SelfBackground">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="PlayerHeroIconFrame" name="PlayerHeroIconFrame">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="PlayerHeroNameFrame" name="HeroNameFrame">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="PlayerNameFrame" name="PlayerNameFrame">
+									<Alpha val="0"/>
+								</Frame>
 							</Frame>
-							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame1"><Unclipped val="true"/></Frame>
-							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame2"><Unclipped val="true"/></Frame>
-							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame3"><Unclipped val="true"/></Frame>
-							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame4"><Unclipped val="true"/></Frame>
-							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame5"><Unclipped val="true"/></Frame>
-							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame6"><Unclipped val="true"/></Frame>
-							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame7"><Unclipped val="true"/></Frame>
-							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame8"><Unclipped val="true"/></Frame>
-							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame9"><Unclipped val="true"/></Frame>
+							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame1">
+								<Unclipped val="true"/>
+								<Frame type="Image" name="Background">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="BottomBorderHighlight">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="SelfBackground">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="PlayerHeroIconFrame" name="PlayerHeroIconFrame">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="PlayerHeroNameFrame" name="HeroNameFrame">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="PlayerNameFrame" name="PlayerNameFrame">
+									<Alpha val="0"/>
+								</Frame>
+							</Frame>
+							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame2">
+								<Unclipped val="true"/>
+								<Frame type="Image" name="Background">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="BottomBorderHighlight">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="SelfBackground">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="PlayerHeroIconFrame" name="PlayerHeroIconFrame">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="PlayerHeroNameFrame" name="HeroNameFrame">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="PlayerNameFrame" name="PlayerNameFrame">
+									<Alpha val="0"/>
+								</Frame>
+							</Frame>
+							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame3">
+								<Unclipped val="true"/>
+								<Frame type="Image" name="Background">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="BottomBorderHighlight">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="SelfBackground">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="PlayerHeroIconFrame" name="PlayerHeroIconFrame">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="PlayerHeroNameFrame" name="HeroNameFrame">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="PlayerNameFrame" name="PlayerNameFrame">
+									<Alpha val="0"/>
+								</Frame>
+							</Frame>
+							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame4">
+								<Unclipped val="true"/>
+								<Frame type="Image" name="Background">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="BottomBorderHighlight">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="SelfBackground">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="PlayerHeroIconFrame" name="PlayerHeroIconFrame">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="PlayerHeroNameFrame" name="HeroNameFrame">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="PlayerNameFrame" name="PlayerNameFrame">
+									<Alpha val="0"/>
+								</Frame>
+							</Frame>
+							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame5">
+								<Unclipped val="true"/>
+								<Frame type="Image" name="Background">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="BottomBorderHighlight">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="SelfBackground">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="PlayerHeroIconFrame" name="PlayerHeroIconFrame">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="PlayerHeroNameFrame" name="HeroNameFrame">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="PlayerNameFrame" name="PlayerNameFrame">
+									<Alpha val="0"/>
+								</Frame>
+							</Frame>
+							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame6">
+								<Unclipped val="true"/>
+								<Frame type="Image" name="Background">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="BottomBorderHighlight">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="SelfBackground">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="PlayerHeroIconFrame" name="PlayerHeroIconFrame">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="PlayerHeroNameFrame" name="HeroNameFrame">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="PlayerNameFrame" name="PlayerNameFrame">
+									<Alpha val="0"/>
+								</Frame>
+							</Frame>
+							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame7">
+								<Unclipped val="true"/>
+								<Frame type="Image" name="Background">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="BottomBorderHighlight">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="SelfBackground">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="PlayerHeroIconFrame" name="PlayerHeroIconFrame">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="PlayerHeroNameFrame" name="HeroNameFrame">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="PlayerNameFrame" name="PlayerNameFrame">
+									<Alpha val="0"/>
+								</Frame>
+							</Frame>
+							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame8">
+								<Unclipped val="true"/>
+								<Frame type="Image" name="Background">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="BottomBorderHighlight">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="SelfBackground">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="PlayerHeroIconFrame" name="PlayerHeroIconFrame">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="PlayerHeroNameFrame" name="HeroNameFrame">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="PlayerNameFrame" name="PlayerNameFrame">
+									<Alpha val="0"/>
+								</Frame>
+							</Frame>
+							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame9">
+								<Unclipped val="true"/>
+								<Frame type="Image" name="Background">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="BottomBorderHighlight">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="SelfBackground">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="PlayerHeroIconFrame" name="PlayerHeroIconFrame">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="PlayerHeroNameFrame" name="HeroNameFrame">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="PlayerNameFrame" name="PlayerNameFrame">
+									<Alpha val="0"/>
+								</Frame>
+							</Frame>
 						</Frame>
 					</Frame>
 				</Frame>
