@@ -2045,7 +2045,7 @@ def pet_death_bindings(cfg, team_frame, i):
 										</Controller>
 									</Animation>
 								</Frame>
-							</Frame>{onfire_flames(cfg, team_frame == 'Team1HeroOverview', cell)}"""
+							</Frame>{onfire_flames(cfg, team_frame == 'Team1HeroOverview', cell, i)}"""
     return out
 
 
@@ -2061,40 +2061,74 @@ def pet_death_bindings(cfg, team_frame, i):
 # + additive, + unclipped and pulse (11e618a). Not even the bare strip (user, 2026-10-19).
 # The texture is fine: 156 x 64 DXT5, near-white, its alpha a soft rise from the bottom centre.
 # The fire wiring (events, fades, colours) is 11e618a's onfire_flames.
-# TEST 1 (2026-10-19): does the texture load at all? Always on, no fire logic, the plate split
-# in two: left Blizzard's alias (defined in heroesdata's assets.txt), right the file itself.
-# Both draw: our fire setup was at fault. Right only: the alias doesn't reach us. Neither: this
-# texture can't be used here.
-ONFIRE_PRIORITY = 700
-ONFIRE_TEST = [("Alias", "@UI/Storm_UI_InGame_Leader_OnFire_Glow"),
-               ("File", "Assets\\Textures\\storm_ui_ingame_leader_onfire_glow.dds")]
+# Test 1 (1c4f33b, seen 2026-10-19: "i think both are there, hard to tell"): the glow drew both
+# ways, faint. It always drew: too faint over a portrait.
+# TEST 2 (2026-10-19): Blizzard's flames again (the one fire that read), sized to the plate.
+# Always on (Inferno, looping, from the wrapper's OnShown - FCJH_KeepRowShown's trigger), no
+# fire logic; one variant per plate, by cell number, the same on both teams:
+#   0 Party      the top bar's flames as 6420bd3 placed them (185 x 100, Unclipped): the control
+#   1 PartyFit   the same flames in a frame the portrait's size: do they shrink with the frame?
+#   2 PartyClip  0's placement, not Unclipped, inside the portrait-sized wrapper: do they clip?
+#   3 KillLog    the kill feed's flames (GameUI_OnFireKillLog, placed by no layout of Blizzard's)
+#                in the portrait-sized frame: shaped for a strip?
+#   4 NamePlate  the overhead health bar's flames (unitstatus: 198 x 116, 34 left of and 46
+#                above its background, Unclipped)
+# Filters: the party frame's colour is Ally/Enemy plus the side (Left = Order = blue) and a role
+# filter; the kill log's Ally/Enemy only; the nameplate's a role filter only.
+ONFIRE_FIT = None          # the portrait's box
+ONFIRE_TEST = [("Party", "PartyFrame", (-30, -34, -5.5, 185, 100), True),
+               ("PartyFit", "PartyFrame", ONFIRE_FIT, True),
+               ("PartyClip", "PartyFrame", (-30, -34, -5.5, 185, 100), False),
+               ("KillLog", "KillLog", ONFIRE_FIT, True),
+               ("NamePlate", "NamePlate", (-34, -34, -46, 198, 116), True)]
 
 
-def onfire_flames(cfg, blue, cell):
+def onfire_flames(cfg, blue, cell, i):
     c = HeroCell(cfg)
     k = c.w / c.W
     s = lambda v: round(v * k)
     t = "\t" * 7
-    glows = ""
-    for n, (name, tex) in enumerate(ONFIRE_TEST):
-        x0, x1 = s(c.W * n / len(ONFIRE_TEST)), s(c.W * (n + 1) / len(ONFIRE_TEST))
-        glows += f"""
-{t}\t<Frame type="Image" name="FCJH_OnFireGlow{name}">
-{t}\t\t<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-{t}\t\t<Anchor side="Left"   relative="$parent" pos="Min" offset="{x0}"/>
-{t}\t\t<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-{t}\t\t<Anchor side="Right"  relative="$parent" pos="Min" offset="{x1}"/>
-{t}\t\t<Texture val="{tex}"/>
-{t}\t\t<AcceptsMouse val="false"/>
-{t}\t\t<RenderPriority val="{ONFIRE_PRIORITY}"/>
-{t}\t</Frame>"""
+    name, scene, place, unclipped = ONFIRE_TEST[i % len(ONFIRE_TEST)]
+    if place is ONFIRE_FIT:
+        top, left, bottom, right = 0, 0, s(c.PORTRAIT_H - 1), s(c.W)
+    else:
+        lb, lr, y, w, h = place
+        x = lb if blue else lr
+        top, left, bottom, right = s(y), s(x), s(y + h), s(x + w)
+    team, other = ("Ally", "Enemy") if blue else ("Enemy", "Ally")
+    side, away = ("Left", "Right") if blue else ("Right", "Left")
+    keys = {"PartyFrame": [("AddFilter", team), ("RemoveFilter", other), ("AddFilter", side),
+                           ("RemoveFilter", away), ("AddFilter", "Offense")],
+            "KillLog": [("AddFilter", team), ("RemoveFilter", other)],
+            "NamePlate": [("AddFilter", "Offense")]}[scene]
+    unclip = f'\n{t}\t\t<Unclipped val="true"/>' if unclipped else ""
+    filters = "".join(f'\n{t}\t\t\t\t<Key type="Cutscene" time="0" action="{act}" filter="{f}"/>'
+                      for act, f in keys)
     return f"""
 {t}<Frame type="Frame" name="FCJH_OnFire">
 {t}\t<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 {t}\t<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 {t}\t<Anchor side="Bottom" relative="$parent" pos="Min" offset="{s(c.PORTRAIT_H - 1)}"/>
 {t}\t<Anchor side="Right"  relative="$parent" pos="Min" offset="{s(c.W)}"/>
-{t}\t<AcceptsMouse val="false"/>{glows}
+{t}\t<AcceptsMouse val="false"/>
+{t}\t<Frame type="CutsceneFrame" name="FCJH_OnFire{name}" template="SharedOnFireVFX/OnFireCutsceneFrameTemplate">
+{t}\t\t<Anchor side="Top"    relative="$parent" pos="Min" offset="{top}"/>
+{t}\t\t<Anchor side="Left"   relative="$parent" pos="Min" offset="{left}"/>
+{t}\t\t<Anchor side="Bottom" relative="$parent" pos="Min" offset="{bottom}"/>
+{t}\t\t<Anchor side="Right"  relative="$parent" pos="Min" offset="{right}"/>
+{t}\t\t<File val="Cutscenes/GameUI_OnFire{scene}.StormCutscene"/>{unclip}
+{t}\t\t<AcceptsMouse val="false"/>
+{t}\t\t<Animation name="FCJH_OnFireTest">
+{t}\t\t\t<Event event="OnShown" action="Reset,Play" frame="$parent"/>
+{t}\t\t\t<Controller type="Visibility" end="Pause">
+{t}\t\t\t\t<Key type="Bool" time="0" value="True"/>
+{t}\t\t\t</Controller>
+{t}\t\t\t<Controller type="Cutscene" end="Stop">{filters}
+{t}\t\t\t\t<Key type="Cutscene" time="0" action="Bookmark" bookmark="Inferno Start"/>
+{t}\t\t\t\t<Key type="Cutscene" time="0" action="Play"/>
+{t}\t\t\t</Controller>
+{t}\t\t</Animation>
+{t}\t</Frame>
 {t}</Frame>"""
 
 
