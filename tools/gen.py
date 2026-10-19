@@ -2086,11 +2086,16 @@ def pet_death_bindings(cfg, team_frame, i):
 # 10.5 left on red; its sides lean ~0.6 - 0.8 across per down (the dividers 0.54).
 # TEST 7 (2026-10-19): widened x 1.45 (185 -> 268) and centred on the plate (frame left 30 -> 77
 # on blue, 34 -> 72 on red), height kept. Widening alone leans the sides 1.45x more.
+# Test 7 seen (73b5814): "flames look the same"; squashing dropped ("disregard the height
+# squash"): back to test 5's, shrunk ~1 px to lose the rim's glow under the resource bar.
+# TEST 8 (2026-10-19): test 5's flames scaled x 0.986 both ways (the rim 71 px tall -> 70, the
+# angles kept), its top and centre kept (rim top 9.55% down the frame; centre 44.8% across on
+# blue, 57.5% on red); the wrapper back to the portrait's height.
 ONFIRE_TEST = {2: "Embers Start", 4: "Inferno Start"}
 ONFIRE_LEVELS = {"OnFireEmbers": "Embers Start", "OnFireInferno": "Inferno Start", "OnFireEnd": "Death"}
-ONFIRE_PLACE = {"Left": -77, "Right": -72}  # the frame's left, by side; test 6: -30, -34
-ONFIRE_TOP, ONFIRE_W, ONFIRE_H = -3.75, 268, 65.5   # test 6: W 185; test 5: -7.3, 185, 103
-ONFIRE_CLIP = 36                                    # the wrapper's bottom; test 5: PORTRAIT_H - 1
+ONFIRE_PLACE = {"Left": -28.8, "Right": -32.5}  # the frame's left, by side; test 5: -30, -34
+ONFIRE_TOP, ONFIRE_W, ONFIRE_H = -7.16, 182.4, 101.6   # test 5: -7.3, 185, 103
+ONFIRE_CLIP = HeroCell.PORTRAIT_H - 1                  # the wrapper's bottom
 
 
 def onfire_flames(cfg, blue, cell, i):
