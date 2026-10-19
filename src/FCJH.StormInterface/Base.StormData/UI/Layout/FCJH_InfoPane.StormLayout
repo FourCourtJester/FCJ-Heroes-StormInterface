@@ -41,14 +41,17 @@
 				<!-- 2 above the first row, as Blizzard's rows sit 2 below their tile. Each team's
 				     half in two slices: up to the talent-1 cell (124), then from that cell again on,
 				     58 right. The gap between (124-182) is the default quest's column: no grid cell,
-				     just the pane's background (user, 2026-10-16) -->
+				     just the pane's background (user, 2026-10-16). The first slice ends 2 short (122,
+				     0.1080 / 0.8920): cut at the cell's own edge, it took a sliver of the cell's border,
+				     a faint white line down every row at 131 px (user, 2026-10-19); the bridge starts
+				     there instead. -->
 				<Frame type="Image" name="FCJH_GridBlueA">
 					<Anchor side="Top"   relative="$parent/$parent/FCJH_TalentPanel/HeroTalentsPanelContainer/PlayerFrame0" pos="Min" offset="-2"/>
 					<Anchor side="Left"  relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Right" relative="$parent" pos="Min" offset="124"/>
+					<Anchor side="Right" relative="$parent" pos="Min" offset="122"/>
 					<Height val="300"/>
 					<Texture val="@UI/obs_talents_top"/>
-					<TextureCoords top="0.0" left="0.0000" bottom="5.0" right="0.1097"/>
+					<TextureCoords top="0.0" left="0.0000" bottom="5.0" right="0.1080"/>
 					<WrapUV val="True"/>
 					<RenderPriority val="450"/>
 					<AcceptsMouse val="false"/>
@@ -67,10 +70,10 @@
 				<Frame type="Image" name="FCJH_GridRedA">
 					<Anchor side="Top"   relative="$parent/FCJH_GridBlueA" pos="Max" offset="0"/>
 					<Anchor side="Left"  relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Right" relative="$parent" pos="Min" offset="124"/>
+					<Anchor side="Right" relative="$parent" pos="Min" offset="122"/>
 					<Height val="300"/>
 					<Texture val="@UI/obs_talents_top"/>
-					<TextureCoords top="0.0" left="1.0000" bottom="5.0" right="0.8903"/>
+					<TextureCoords top="0.0" left="1.0000" bottom="5.0" right="0.8920"/>
 					<WrapUV val="True"/>
 					<RenderPriority val="450"/>
 					<AcceptsMouse val="false"/>
@@ -90,7 +93,7 @@
 				     a slice of the grid's own line (118-122, inside its dash) stretched over the gap -->
 				<Frame type="Image" name="FCJH_GridBlueBridge">
 					<Anchor side="Top"   relative="$parent/FCJH_GridBlueA" pos="Min" offset="0"/>
-					<Anchor side="Left"  relative="$parent" pos="Min" offset="124"/>
+					<Anchor side="Left"  relative="$parent" pos="Min" offset="122"/>
 					<Anchor side="Right" relative="$parent" pos="Min" offset="182"/>
 					<Height val="300"/>
 					<Texture val="@UI/obs_talents_top"/>
@@ -101,7 +104,7 @@
 				</Frame>
 				<Frame type="Image" name="FCJH_GridRedBridge">
 					<Anchor side="Top"   relative="$parent/FCJH_GridRedA" pos="Min" offset="0"/>
-					<Anchor side="Left"  relative="$parent" pos="Min" offset="124"/>
+					<Anchor side="Left"  relative="$parent" pos="Min" offset="122"/>
 					<Anchor side="Right" relative="$parent" pos="Min" offset="182"/>
 					<Height val="300"/>
 					<Texture val="@UI/obs_talents_top"/>

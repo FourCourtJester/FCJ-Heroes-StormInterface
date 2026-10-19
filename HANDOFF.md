@@ -557,7 +557,11 @@ from their plates (docs/blizzard-fixes.md).
      portrait until the talents moved a cell right - likely the white line. Placed on the quest
      cell as a test: if it shows the default quest, that's our quest icon; if it's an empty box,
      hide it;
-   - the on-fire squares big and blinking (still unread).
+   - the on-fire squares big and blinking (still unread; no on-fire replay promised).
+   Seen afea2b1 (user): the bars stay at Blizzard's sizes for now ("We'll leave our hero bars
+   like this for now"); the white line still there. It sits at the pane's 22 + the grid's
+   first slice's end 124 = 131.4 px: the slice was cut at talent 1's cell edge and took a
+   sliver of its border. Now ended 2 short (122), the bridge from there. Not seen yet.
    **TEMPORARY:** Blizzard's kill feed is hidden for testing (FCJH_Hidden, `FCJH_KeepHidden`'s
    KillLogPanel controller; user, 2026-10-16). Take it out before release.
 
