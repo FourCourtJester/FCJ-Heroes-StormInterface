@@ -109,7 +109,18 @@
      Step 12, one change: each row (PlayerFrame0-9) Unclipped, as step 8 freed the icon's
      chain. Rows above the panel drawn, tooltips filling: rows can go anywhere with working
      quests. Still cut: the panel's own frames (TabControl, HeroLeaderPanelContainer) need
-     it too. -->
+     it too.
+     Seen (user, 2026-10-19, 787f7f4, screenshot): Uther's and Murky's rows drawn above the
+     panel, Murky's quest icon filled ("0"), but "Murky's tooltip is nowhere to be seen,
+     Nova's is fine". Drawing outside the panel works; the mouse doesn't - tooltips answer
+     only inside the panel's box (HeroLeaderPanelContainer, Blizzard's fixed 1362x823, which
+     TabControl fills), as a lifted icon answers only inside its row (steps 9-10).
+
+     Step 13, one idea: grow the box over the rows, not the rows out of it. The container
+     400 taller (823 to 1223; it's centred, so its top goes 200 up), and PlayerFrame0 back to
+     Blizzard's +5 under the sort buttons, which go up with the box's top - so the rows sit
+     about where step 12 put them, now inside the box. Murky's tooltip fills: the box is what
+     catches the mouse, and sizing it (art hidden later) puts working rows anywhere. -->
 <Desc>
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<Frame type="Frame" name="UIContainer">
@@ -122,9 +133,10 @@
 					<RenderPriority val="520"/>
 					<Frame type="Frame" name="HeroLeaderPanelContainer">
 						<Visible val="true"/>
+						<Height val="1223"/>
 						<Frame type="TabControl" name="TabControl">
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame0">
-								<Anchor side="Top" relative="$parent/StatsContainerFrame/SortButton0" pos="Max" offset="-195"/>
+								<Anchor side="Top" relative="$parent/StatsContainerFrame/SortButton0" pos="Max" offset="5"/>
 								<Unclipped val="true"/>
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame1"><Unclipped val="true"/></Frame>

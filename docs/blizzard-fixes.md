@@ -253,6 +253,11 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
     inside, works. A moved row keeps its quest tooltips.
   - **Step 12:** each row Unclipped. Drawn above the panel with tooltips: rows go anywhere.
     Still cut: the panel's own frames need it too.
+    **Seen (787f7f4, user, screenshot):** Murky's row drawn above the panel, quest icon
+    filled, but no tooltip; Nova's (inside) fine. Drawing leaves the box; the mouse doesn't -
+    tooltips answer only inside HeroLeaderPanelContainer (Blizzard's fixed 1362x823).
+  - **Step 13:** grow the box over the rows: container Height 823 to 1223 (centred, top 200
+    up), PlayerFrame0 back to +5. Murky's tooltip fills: size the box, rows work anywhere.
   - **Spazzo** (user, 2026-10-19): puts quests in his nameplates with no tooltips. He doesn't
     use Blizzard's quest icons at all: a generic UnitStatusBehaviorIcon per nameplate, pointed
     at each hero's quest-counter behaviour by a hand-kept list of ~400 entries

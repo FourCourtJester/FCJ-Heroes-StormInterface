@@ -594,7 +594,9 @@ from their plates (docs/blizzard-fixes.md).
    box, §3). **Step 10** (6d04cc2): `spread` from the row to the icon - still no tooltips.
    Lifting icons is a dead end for tooltips (as `talent_row_lifts` found). **Step 11**
    (35d160b): back to step 2, the rows moved 200 up as a block - cut at the panel's top, but
-   a moved row inside it keeps its quest tooltips. **Step 12, not seen yet:** rows Unclipped. Spazzo's nameplate quests are his own per-hero behaviour icons, no tooltips (a
+   a moved row inside it keeps its quest tooltips. **Step 12** (787f7f4): rows Unclipped
+   - drawn above the panel, but no tooltips there; the mouse answers only inside the panel's
+   box. **Step 13, not seen yet:** the box (HeroLeaderPanelContainer) 400 taller instead. Spazzo's nameplate quests are his own per-hero behaviour icons, no tooltips (a
    fallback only; see blizzard-fixes).
    **TEMPORARY:** Blizzard's kill feed is hidden for testing (FCJH_Hidden, `FCJH_KeepHidden`'s
    KillLogPanel controller; user, 2026-10-16). Take it out before release.
