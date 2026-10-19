@@ -30,7 +30,16 @@
      draws only inside its parent's box, and the lifted icons sit far outside their row's
      (whose box is turned inside out besides: its right edge follows icon 1 up to the top of
      the screen, left of its own left edge). Shows now: it was clipping. Still nothing:
-     an icon can't leave its row. -->
+     an icon can't leave its row.
+     Seen (user, 2026-10-19, 9f2e09c): still no icons, and the screenshot shows the "!" column
+     empty where steps 1 and 2 had them - the override reaches the icons, they leave the
+     column, but don't draw where they land.
+
+     Step 4, one change from step 2: each row's first quest icon (the second follows it, as
+     Blizzard's does) kept in its row on Blizzard's own anchors, moved 150 left into the
+     blank after the hero's name. The lift and Unclipped of 3 / 3b gone. Shows there: an
+     icon can be moved, just not far (something above it clips). Gone again: any re-anchor
+     of a quest icon kills it. -->
 <Desc>
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<Frame type="Frame" name="UIContainer">
@@ -52,32 +61,8 @@
 												<Frame type="Frame" name="QuestContainerContainerFrame">
 													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
-															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
-															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="100"/>
-															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
-															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="168"/>
-															<Unclipped val="true"/>
-															<Frame type="Image" name="IconBackgroundImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconBorderImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="UnfilledProgressImage"><Unclipped val="true"/></Frame>
-															<Frame type="ProgressBar" name="QuestProgressBar"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="QuestCompleteImage"><Unclipped val="true"/></Frame>
-															<Frame type="Label" name="QuestProgressStackLabel"><Unclipped val="true"/></Frame>
-														</Frame>
-														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1">
-															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
-															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="175"/>
-															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
-															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="243"/>
-															<Unclipped val="true"/>
-															<Frame type="Image" name="IconBackgroundImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconBorderImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="UnfilledProgressImage"><Unclipped val="true"/></Frame>
-															<Frame type="ProgressBar" name="QuestProgressBar"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="QuestCompleteImage"><Unclipped val="true"/></Frame>
-															<Frame type="Label" name="QuestProgressStackLabel"><Unclipped val="true"/></Frame>
+															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
+															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -94,32 +79,8 @@
 												<Frame type="Frame" name="QuestContainerContainerFrame">
 													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
-															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
-															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="270"/>
-															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
-															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="338"/>
-															<Unclipped val="true"/>
-															<Frame type="Image" name="IconBackgroundImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconBorderImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="UnfilledProgressImage"><Unclipped val="true"/></Frame>
-															<Frame type="ProgressBar" name="QuestProgressBar"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="QuestCompleteImage"><Unclipped val="true"/></Frame>
-															<Frame type="Label" name="QuestProgressStackLabel"><Unclipped val="true"/></Frame>
-														</Frame>
-														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1">
-															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
-															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="345"/>
-															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
-															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="413"/>
-															<Unclipped val="true"/>
-															<Frame type="Image" name="IconBackgroundImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconBorderImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="UnfilledProgressImage"><Unclipped val="true"/></Frame>
-															<Frame type="ProgressBar" name="QuestProgressBar"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="QuestCompleteImage"><Unclipped val="true"/></Frame>
-															<Frame type="Label" name="QuestProgressStackLabel"><Unclipped val="true"/></Frame>
+															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
+															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -136,32 +97,8 @@
 												<Frame type="Frame" name="QuestContainerContainerFrame">
 													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
-															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
-															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="440"/>
-															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
-															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="508"/>
-															<Unclipped val="true"/>
-															<Frame type="Image" name="IconBackgroundImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconBorderImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="UnfilledProgressImage"><Unclipped val="true"/></Frame>
-															<Frame type="ProgressBar" name="QuestProgressBar"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="QuestCompleteImage"><Unclipped val="true"/></Frame>
-															<Frame type="Label" name="QuestProgressStackLabel"><Unclipped val="true"/></Frame>
-														</Frame>
-														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1">
-															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
-															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="515"/>
-															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
-															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="583"/>
-															<Unclipped val="true"/>
-															<Frame type="Image" name="IconBackgroundImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconBorderImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="UnfilledProgressImage"><Unclipped val="true"/></Frame>
-															<Frame type="ProgressBar" name="QuestProgressBar"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="QuestCompleteImage"><Unclipped val="true"/></Frame>
-															<Frame type="Label" name="QuestProgressStackLabel"><Unclipped val="true"/></Frame>
+															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
+															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -178,32 +115,8 @@
 												<Frame type="Frame" name="QuestContainerContainerFrame">
 													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
-															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
-															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="610"/>
-															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
-															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="678"/>
-															<Unclipped val="true"/>
-															<Frame type="Image" name="IconBackgroundImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconBorderImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="UnfilledProgressImage"><Unclipped val="true"/></Frame>
-															<Frame type="ProgressBar" name="QuestProgressBar"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="QuestCompleteImage"><Unclipped val="true"/></Frame>
-															<Frame type="Label" name="QuestProgressStackLabel"><Unclipped val="true"/></Frame>
-														</Frame>
-														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1">
-															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
-															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="685"/>
-															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
-															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="753"/>
-															<Unclipped val="true"/>
-															<Frame type="Image" name="IconBackgroundImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconBorderImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="UnfilledProgressImage"><Unclipped val="true"/></Frame>
-															<Frame type="ProgressBar" name="QuestProgressBar"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="QuestCompleteImage"><Unclipped val="true"/></Frame>
-															<Frame type="Label" name="QuestProgressStackLabel"><Unclipped val="true"/></Frame>
+															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
+															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -220,32 +133,8 @@
 												<Frame type="Frame" name="QuestContainerContainerFrame">
 													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
-															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
-															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="780"/>
-															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
-															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="848"/>
-															<Unclipped val="true"/>
-															<Frame type="Image" name="IconBackgroundImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconBorderImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="UnfilledProgressImage"><Unclipped val="true"/></Frame>
-															<Frame type="ProgressBar" name="QuestProgressBar"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="QuestCompleteImage"><Unclipped val="true"/></Frame>
-															<Frame type="Label" name="QuestProgressStackLabel"><Unclipped val="true"/></Frame>
-														</Frame>
-														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1">
-															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
-															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="855"/>
-															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
-															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="923"/>
-															<Unclipped val="true"/>
-															<Frame type="Image" name="IconBackgroundImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconBorderImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="UnfilledProgressImage"><Unclipped val="true"/></Frame>
-															<Frame type="ProgressBar" name="QuestProgressBar"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="QuestCompleteImage"><Unclipped val="true"/></Frame>
-															<Frame type="Label" name="QuestProgressStackLabel"><Unclipped val="true"/></Frame>
+															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
+															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -262,32 +151,8 @@
 												<Frame type="Frame" name="QuestContainerContainerFrame">
 													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
-															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
-															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="950"/>
-															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
-															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1018"/>
-															<Unclipped val="true"/>
-															<Frame type="Image" name="IconBackgroundImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconBorderImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="UnfilledProgressImage"><Unclipped val="true"/></Frame>
-															<Frame type="ProgressBar" name="QuestProgressBar"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="QuestCompleteImage"><Unclipped val="true"/></Frame>
-															<Frame type="Label" name="QuestProgressStackLabel"><Unclipped val="true"/></Frame>
-														</Frame>
-														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1">
-															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
-															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1025"/>
-															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
-															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1093"/>
-															<Unclipped val="true"/>
-															<Frame type="Image" name="IconBackgroundImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconBorderImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="UnfilledProgressImage"><Unclipped val="true"/></Frame>
-															<Frame type="ProgressBar" name="QuestProgressBar"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="QuestCompleteImage"><Unclipped val="true"/></Frame>
-															<Frame type="Label" name="QuestProgressStackLabel"><Unclipped val="true"/></Frame>
+															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
+															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -304,32 +169,8 @@
 												<Frame type="Frame" name="QuestContainerContainerFrame">
 													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
-															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
-															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1120"/>
-															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
-															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1188"/>
-															<Unclipped val="true"/>
-															<Frame type="Image" name="IconBackgroundImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconBorderImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="UnfilledProgressImage"><Unclipped val="true"/></Frame>
-															<Frame type="ProgressBar" name="QuestProgressBar"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="QuestCompleteImage"><Unclipped val="true"/></Frame>
-															<Frame type="Label" name="QuestProgressStackLabel"><Unclipped val="true"/></Frame>
-														</Frame>
-														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1">
-															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
-															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1195"/>
-															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
-															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1263"/>
-															<Unclipped val="true"/>
-															<Frame type="Image" name="IconBackgroundImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconBorderImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="UnfilledProgressImage"><Unclipped val="true"/></Frame>
-															<Frame type="ProgressBar" name="QuestProgressBar"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="QuestCompleteImage"><Unclipped val="true"/></Frame>
-															<Frame type="Label" name="QuestProgressStackLabel"><Unclipped val="true"/></Frame>
+															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
+															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -346,32 +187,8 @@
 												<Frame type="Frame" name="QuestContainerContainerFrame">
 													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
-															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
-															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1290"/>
-															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
-															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1358"/>
-															<Unclipped val="true"/>
-															<Frame type="Image" name="IconBackgroundImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconBorderImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="UnfilledProgressImage"><Unclipped val="true"/></Frame>
-															<Frame type="ProgressBar" name="QuestProgressBar"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="QuestCompleteImage"><Unclipped val="true"/></Frame>
-															<Frame type="Label" name="QuestProgressStackLabel"><Unclipped val="true"/></Frame>
-														</Frame>
-														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1">
-															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
-															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1365"/>
-															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
-															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1433"/>
-															<Unclipped val="true"/>
-															<Frame type="Image" name="IconBackgroundImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconBorderImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="UnfilledProgressImage"><Unclipped val="true"/></Frame>
-															<Frame type="ProgressBar" name="QuestProgressBar"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="QuestCompleteImage"><Unclipped val="true"/></Frame>
-															<Frame type="Label" name="QuestProgressStackLabel"><Unclipped val="true"/></Frame>
+															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
+															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -388,32 +205,8 @@
 												<Frame type="Frame" name="QuestContainerContainerFrame">
 													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
-															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
-															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1460"/>
-															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
-															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1528"/>
-															<Unclipped val="true"/>
-															<Frame type="Image" name="IconBackgroundImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconBorderImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="UnfilledProgressImage"><Unclipped val="true"/></Frame>
-															<Frame type="ProgressBar" name="QuestProgressBar"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="QuestCompleteImage"><Unclipped val="true"/></Frame>
-															<Frame type="Label" name="QuestProgressStackLabel"><Unclipped val="true"/></Frame>
-														</Frame>
-														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1">
-															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
-															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1535"/>
-															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
-															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1603"/>
-															<Unclipped val="true"/>
-															<Frame type="Image" name="IconBackgroundImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconBorderImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="UnfilledProgressImage"><Unclipped val="true"/></Frame>
-															<Frame type="ProgressBar" name="QuestProgressBar"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="QuestCompleteImage"><Unclipped val="true"/></Frame>
-															<Frame type="Label" name="QuestProgressStackLabel"><Unclipped val="true"/></Frame>
+															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
+															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -430,32 +223,8 @@
 												<Frame type="Frame" name="QuestContainerContainerFrame">
 													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
-															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
-															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1630"/>
-															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
-															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1698"/>
-															<Unclipped val="true"/>
-															<Frame type="Image" name="IconBackgroundImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconBorderImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="UnfilledProgressImage"><Unclipped val="true"/></Frame>
-															<Frame type="ProgressBar" name="QuestProgressBar"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="QuestCompleteImage"><Unclipped val="true"/></Frame>
-															<Frame type="Label" name="QuestProgressStackLabel"><Unclipped val="true"/></Frame>
-														</Frame>
-														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon1">
-															<Anchor side="Top"    relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="150"/>
-															<Anchor side="Left"   relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1705"/>
-															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="218"/>
-															<Anchor side="Right"  relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1773"/>
-															<Unclipped val="true"/>
-															<Frame type="Image" name="IconBackgroundImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconBorderImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="IconImage"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="UnfilledProgressImage"><Unclipped val="true"/></Frame>
-															<Frame type="ProgressBar" name="QuestProgressBar"><Unclipped val="true"/></Frame>
-															<Frame type="Image" name="QuestCompleteImage"><Unclipped val="true"/></Frame>
-															<Frame type="Label" name="QuestProgressStackLabel"><Unclipped val="true"/></Frame>
+															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
+															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 														</Frame>
 													</Frame>
 												</Frame>

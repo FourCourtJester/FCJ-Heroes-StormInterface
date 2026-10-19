@@ -212,6 +212,16 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
   - **Step 3b:** one change, the same lift with each icon and every part of it Unclipped (a
     frame draws only inside its parent's box; the row's box is also turned inside out by the
     lift). Shows: it was clipping. Still nothing: an icon can't leave its row.
+    **Seen (9f2e09c, user):** still nothing; the screenshot shows the "!" column empty, so
+    the override reaches the icons and they leave, but don't draw where they land.
+  - **Step 4:** one change from step 2: each row's first quest icon (the second follows it)
+    kept in its row on Blizzard's own anchors, 150 px left, into the blank after the name.
+    Shows: icons can move, just not far. Gone: any re-anchor of a quest icon kills it.
+  - **Spazzo** (user, 2026-10-19): puts quests in his nameplates with no tooltips. He doesn't
+    use Blizzard's quest icons at all: a generic UnitStatusBehaviorIcon per nameplate, pointed
+    at each hero's quest-counter behaviour by a hand-kept list of ~400 entries
+    (SpazzoCustomTopBarQuests.StormLayout), mouse and tooltip off. Icon and count, no text,
+    and every new or changed quest needs the list updated: a fallback only.
 
 ### Hogger's rage drawn as mana
 - **Blizzard's:** the target panel's per-hero resource colours (`HeroResourceStates`,

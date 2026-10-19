@@ -583,7 +583,10 @@ from their plates (docs/blizzard-fixes.md).
    untouched copy of Blizzard's leader panel, Control+Shift+Q. **Step 2 fills** (5d1ae3f):
    opened Ahli's way (on from load, faded and slid in), no Show event. **Step 3 blank**
    (f2696bb): the quest icons lifted out of the panel to the top of the screen don't draw.
-   **Step 3b, not seen yet:** the same lift, every part of the icons Unclipped.
+   **Step 3b blank** (9f2e09c): the same lift, Unclipped; the "!" column is left empty, so
+   the icons move but don't draw. **Step 4, not seen yet:** icons kept in their row, 150 px
+   left. Spazzo's nameplate quests are his own per-hero behaviour icons, no tooltips (a
+   fallback only; see blizzard-fixes).
    **TEMPORARY:** Blizzard's kill feed is hidden for testing (FCJH_Hidden, `FCJH_KeepHidden`'s
    KillLogPanel controller; user, 2026-10-16). Take it out before release.
 
