@@ -2204,6 +2204,10 @@ MAPS = {
         # its core swirls' outer outline at 765 / 1130, centre 947.5, against our midpoint 959
         # (centering pass, 2026-10-19, shot 14_52_34): 11 px right
         across=11,
+        # ...which only a map that moves the minimap can do: at the shared place only its
+        # panels were taken back, 11 px left (confirm pass, 2026-10-19, 15_28_26: centre still
+        # 946.5). So its own place by its id, nudged ([minimap.nudge] 20) to the shared one's height.
+        own_place=True,
         # "Tribute spawning" ("Collect the tribute" hidden: tribute_count): one neutral banner, on red's side. Its art:
         # the hexagon pinned 20 in from the frame's top-right, the bar 481 wide ending 15 past it,
         # the count under the hexagon (measured in game, 2026-10-06). The curse banner hangs off
@@ -2217,7 +2221,8 @@ MAPS = {
                                        + CURSE_RAVEN),),
                           extra=cursed_side() + tribute_count() + unclipped(TRIBUTE_PARTS),
                           note="the tribute spawning (neutral); the curse on red")]}},
-        notes="the tribute counts sit at the minimap's bottom corners"),
+        notes="the tribute counts sit at the minimap's bottom corners",
+        extra="tribute"),
     "dragon_shire": Map(
         "Dragon Shire", (434, 282), core="DragonShirePanel",
         # "Shrines activate in", then the Dragon Knight in its place: a neutral banner, on red's
@@ -2393,7 +2398,35 @@ MAPS = {
                           note="the warheads' countdown, then how many are left (neutral)")]}},
         notes="its panel is placed from the minimap already"),
 }
-EXTRAS = {"towers": towers_extra, "skulls": skulls_extra}
+# Cursed Hollow's tribute counts (RavenCourtPanel Team1/Team2TributeFrame: each team's raven
+# and its count, either side of the map's bottom). Blizzard's two aren't mirrored (red's
+# background starts 10 further right, its raven and count each sit their own way off it): with
+# the map centred (across) blue's raven 764-820 and count 839-886 px, red's count 1011-1058 -
+# over the map's lower-right corner, which reaches ~16 px further out than its lower-left - and
+# raven 1091-1147 (confirm pass, 2026-10-19, 15_28_26, less the 11 px it hadn't moved).
+# Both counts 4.5 px further out than blue's was, red's raven and count on blue's mirror about
+# our midpoint: red's count clears the corner by ~2 px, each count ~14 px from its raven.
+TRIBUTE_COUNT_OUT = 5                 # units, both counts outward
+TRIBUTE_RED = (9, 25)                 # units more outward, red's raven and red's count, to blue's mirror
+
+
+def tribute_extra():
+    t = T * 6
+    frame = lambda name_, kind, sd, pos, off: (
+        f'{t}\t<Frame type="{kind}" name="{name_}"><Anchor side="{sd}" relative="$parent/Background" '
+        f'pos="{pos}" offset="{off}"/></Frame>\n')
+    raven, count = TRIBUTE_RED
+    return (f'{t}<!-- the tribute counts, mirrored about our midpoint and clear of the map (maps.tribute_extra) -->\n'
+            f'{t}<Frame type="Frame" name="Team1TributeFrame">\n'
+            + frame("TributeCounter", "Label", "Left", "Min", 100 - TRIBUTE_COUNT_OUT) +
+            f'{t}</Frame>\n'
+            f'{t}<Frame type="Frame" name="Team2TributeFrame">\n'
+            + frame("RavenIcon", "Image", "Right", "Max", 20 + raven)
+            + frame("TributeCounter", "Label", "Right", "Max", -100 + TRIBUTE_COUNT_OUT + count) +
+            f'{t}</Frame>\n')
+
+
+EXTRAS = {"towers": towers_extra, "skulls": skulls_extra, "tribute": tribute_extra}
 
 # Blizzard's map id per map: the script variable libCore_gv_mAPMapStringID, which a layout can
 # read from the match's start, on any map (id_placers, on_map; user, 2026-10-09). Where each is
@@ -2420,6 +2453,10 @@ MAP_IDS = {
 assert set(MAP_IDS) == set(MAPS), f"MAP_IDS: every map needs its id - {set(MAPS) ^ set(MAP_IDS)}"
 # own_place is for the older maps: a newer one's panel placer moves it already (placer)
 assert not [k for k, m in MAPS.items() if m.own_place and m.place], "own_place: a map with a placer of its own"
+# a map's art moved across needs a map that moves the minimap: at the shared place only its
+# panels were taken back (Cursed Hollow, 2026-10-19)
+assert not [k for k, m in MAPS.items() if m.across and not (m.place or m.own_place)], \
+    "across: a map with a place of its own (place or own_place)"
 # a lift is played in the map's own panel, by its placer (lift)
 assert not [k for k, m in MAPS.items() if m.lifts and not (m.place and m.file)], "lifts: a map with its own panel's placer"
 # a map opening on part of its map is placed by its id, and needs what opens it
@@ -2570,7 +2607,7 @@ def intro(indent, slide=True):
 # gen.py places them (FCJH_MAP_WEAVER_<TEAM>_<LANE>_X/_B: the hexagon's centre and bottom).
 # The stack (user, 2026-10-15: "about as high as the minimap total") runs from the plates'
 # bottom up to the minimap's drawn top tip; the middle one halfway, the hexagons nesting
-# into each other a little, each WEAVER_STEP_PX further out than the one below.
+# into each other a little, each further out than the one below, on the plates' slant.
 WEAVER_ART = {"Bottom": (72, 5),      # each lane's hexagon as drawn at 1080p (31a031d): its height
               "Mid": (62, 14),        # (the top one has a point above, the bottom one a point
               "Top": (72, 14)}        # below) and its box's bottom under it
@@ -2585,8 +2622,9 @@ WEAVER_MINIMAP_PX = (958, 158, 943, 1.05)   # Tomb's drawn minimap (6c52e5e; 955
                                       # going in this much per px
 WEAVER_OUT_PX = 10                    # then this much further out (user, 2026-10-15, 48d775e centred:
                                       # "still slightly too close the minimap")
-WEAVER_STEP_PX = 40                  # each one this much further out than the one below (31a031d:
-                                      # 40 per 81 up, the plates' slant; now per ~60 up, leaning more)
+# Each one further out than the one below on the plates' slant (HeroCell.lean, gen.py), as every
+# slant of ours (user, 2026-10-19: "re-angle the webweavers" - 40 px per 60 up leaned 0.67,
+# past the plates' 0.54; 31a031d's 40 per 81 up was their slant then).
 WEAVER_LANES = ("Bottom", "Mid", "Top")   # from the stack's bottom up
 
 

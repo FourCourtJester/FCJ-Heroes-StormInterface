@@ -18,8 +18,8 @@
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<Frame type="Frame" name="UIContainer">
 			<Frame type="Frame" name="ConsoleUIContainer">
-				<!-- Older maps sharing FCJH_Minimap's place ([minimap] bottom), as the ARAM maps: Blackheart's Bay, Cursed Hollow, Dragon Shire, Garden of Terror.
-				     Placed by Blizzard's map id (tools/maps.py id_placers): Haunted Mines -->
+				<!-- Older maps sharing FCJH_Minimap's place ([minimap] bottom), as the ARAM maps: Blackheart's Bay, Dragon Shire, Garden of Terror.
+				     Placed by Blizzard's map id (tools/maps.py id_placers): Cursed Hollow, Haunted Mines -->
 				<Frame type="Frame" name="MapMechanicPanel">
 					<Frame type="Frame" name="BlackheartsBayPanel">
 						<!-- Blackheart's Bay -->
@@ -449,6 +449,14 @@
 								<Alpha val="0"/>
 							</Frame>
 						</Frame>
+						<!-- the tribute counts, mirrored about our midpoint and clear of the map (maps.tribute_extra) -->
+						<Frame type="Frame" name="Team1TributeFrame">
+							<Frame type="Label" name="TributeCounter"><Anchor side="Left" relative="$parent/Background" pos="Min" offset="95"/></Frame>
+						</Frame>
+						<Frame type="Frame" name="Team2TributeFrame">
+							<Frame type="Image" name="RavenIcon"><Anchor side="Right" relative="$parent/Background" pos="Max" offset="29"/></Frame>
+							<Frame type="Label" name="TributeCounter"><Anchor side="Right" relative="$parent/Background" pos="Max" offset="-70"/></Frame>
+						</Frame>
 					</Frame>
 					<Frame type="Frame" name="DragonShirePanel">
 						<!-- Dragon Shire -->
@@ -845,6 +853,19 @@
 		<!-- the older maps' own minimap places, from the start: Blizzard's map id (tools/maps.py id_placers) -->
 		<Frame type="DataRefFrame" name="FCJH_MapId">
 			<Argument name="GalaxyVar" val="libCore_gv_mAPMapStringID"/>
+		</Frame>
+		<Frame type="Frame" name="FCJH_MinimapPlaceCursedHollow">
+			<AcceptsMouse val="false"/>
+			<StateGroup name="FCJH_Place">
+				<DefaultState val="Other"/>
+				<State name="Placed">
+					<When type="Property" frame="$parent/FCJH_MapId" StringValue="CursedHollow"/>
+					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_L_CURSED_HOLLOW"/>
+					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_MINIMAP_PANEL_R_CURSED_HOLLOW"/>
+					<Action type="SetAnchor" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MINIMAP_BOTTOM_CURSED_HOLLOW"/>
+				</State>
+				<State name="Other"/>
+			</StateGroup>
 		</Frame>
 		<Frame type="Frame" name="FCJH_MinimapPlaceHauntedMines">
 			<Anchor relative="$parent"/>

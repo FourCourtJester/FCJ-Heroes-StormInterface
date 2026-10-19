@@ -673,8 +673,8 @@ def constants_layout(cfg):
                       f"alert {n + 1} in the stack, {n} up")
     # Tomb's Webweavers (maps.weaver_parts): each team's three hexagons between the minimap and
     # its plates, from WEAVER_BOTTOM_PX up to WEAVER_TOP_PX, the middle one's centre halfway
-    # between the others'. Across, a straight line, each one WEAVER_STEP_PX further out than the
-    # one below, as near as it goes to each centre lying midway between the drawn minimap's side
+    # between the others'. Across, a straight line on the plates' slant (lean), each one that much
+    # further out than the one below, as near as it goes to each centre lying midway between the drawn minimap's side
     # and the plates' inner edge (carried up its slant above the plates) at that one's height
     lines.append("\t<!-- Tomb of the Spider Queen's Webweavers: each hexagon's centre and bottom (maps.weaver_parts) -->")
     cell = HeroCell(cfg)
@@ -685,17 +685,18 @@ def constants_layout(cfg):
     low, high = maps.WEAVER_BOTTOM_PX - bot_h / 2, maps.WEAVER_TOP_PX + top_h / 2   # the end ones' centres
     ys = [low + (high - low) * i / (len(maps.WEAVER_LANES) - 1) for i in range(len(maps.WEAVER_LANES))]
     mid, reach, corner, slope = maps.WEAVER_MINIMAP_PX
+    step = lean * (ys[0] - ys[1])
     for team in ("red", "blue"):
         ox, oy = anchor_origin(cfg, f"{team}_xp")
         # outward from the screen's middle: + is right for red, left for blue
         sign, edge = (1, row["red_left"]) if team == "red" else (-1, row["blue_right"])
         gaps = [(sign * (mid - edge) + reach - slope * max(0, y - corner)            # minimap side
                  + foot + lean * (row["bottom"] - y)) / 2 for y in ys]               # plates' edge
-        start = sum(g - i * maps.WEAVER_STEP_PX for i, g in enumerate(gaps)) / len(gaps) + maps.WEAVER_OUT_PX
+        start = sum(g - i * step for i, g in enumerate(gaps)) / len(gaps) + maps.WEAVER_OUT_PX
         for i, (lane, y) in enumerate(zip(maps.WEAVER_LANES, ys)):
             h, pad = maps.WEAVER_ART[lane]
             b = y + h / 2 + pad
-            x = edge + sign * (start + i * maps.WEAVER_STEP_PX)
+            x = edge + sign * (start + i * step)
             const(name("map", "weaver", team, lane, "x"), u(x) - ox, f"{round(x)} px across")
             const(name("map", "weaver", team, lane, "b"), u(b) - oy, f"{round(b)} px down")
     # Alterac Pass's banner sits at Blizzard's place above the minimap, and its cavalry jumps to
@@ -1712,17 +1713,19 @@ def fountain_rect(cfg, team):
 # Hanamura defines it (hidden).
 CARRY_MAPS = ("blackhearts_bay", "tomb_of_the_spider_queen")
 CARRY_GAP = 1                    # cell units between the fountain's art and the box's above it
-CARRY_SLIDE = 4                  # ...and further out along the slant than the plate's edge lean
-                                 # puts it: its sides ran ~4 inside the fountain's, both edges,
-                                 # both teams (user's zoom of Zul'jin, 2026-10-12)
+CARRY_LEAN = 0.66                # ...and out along the slot art's own sides, across per up, so its
+                                 # sides run on from the fountain's: 15 units over the step up, as
+                                 # approved (7aba2b8: the plate's edge lean then, +4 - its sides ran
+                                 # ~4 inside the fountain's, user's zoom of Zul'jin, 2026-10-12). It
+                                 # had followed the plates' slant: at 0.54 (cffee7f) it went a unit
+                                 # further, "no longer a smooth angle" (user, 2026-10-19)
 
 
 def carry_rect(cfg, team):
-    """The carried box: the fountain's slot one step up, slid along the plate's edge."""
-    c = HeroCell(cfg)
+    """The carried box: the fountain's slot one step up, slid along its own sides."""
     (l, t, r, b), f = fountain_rect(cfg, team)
     up = FOUNTAIN_H * cfg["hero_row"]["scale"] + CARRY_GAP
-    across = (c.lean * up + CARRY_SLIDE) * (-1 if team == "blue" else 1)
+    across = CARRY_LEAN * up * (-1 if team == "blue" else 1)
     return (round(l + across), round(t - up), round(r + across), round(b - up)), f
 
 

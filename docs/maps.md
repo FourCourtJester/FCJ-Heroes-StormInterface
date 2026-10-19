@@ -551,3 +551,16 @@ right; its panels taken back, only the map moves):
 
 Haunted Mines is centred by its top level (user); its mines below drew at ~961, now ~982.
 Garden's seed counts' plants overlap the map's bottom corners; its swirls sit above them.
+
+The confirm pass (user's roster, shots 15_27_51 .. 15_40_04): every map centred on 959 but
+Cursed Hollow (946.5: unmoved - an older map at the shared place, only its panels were taken
+back; now placed by its id, `own_place`, [minimap.nudge] 20 keeping its height; an assert
+stops `across` on a map that doesn't move). On or above the floor but Sky Temple (~1071.5:
+nudge -22 -> -29). THE GAP ~10-11 on Alterac, BoE, Tomb; Hanamura ~8, Sky Temple ~8 off the
+bars (agreed); Volskaya ~17 off the hexagon's silver rim, ~10 off its dark band (question for
+the user). Markers mirrored about 959 on every map but Cursed Hollow: Blizzard's two tribute
+counts aren't mirrored, red's count sat over the map's lower-right corner - both counts 4.5 px
+out, red's raven and count on blue's mirror (maps.tribute_extra). Plates equidistant. Tomb's
+Webweavers on the plates' slant (0.54; they leaned 0.67). The carry box (Bay, Tomb) runs on
+from the fountain's sides again: 15 units out over its step (CARRY_LEAN), as approved - the
+0.54 plates (cffee7f) had put it a unit further, "no longer a smooth angle" (user).

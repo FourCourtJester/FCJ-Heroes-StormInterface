@@ -470,6 +470,10 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
      Alterac's cavalry hand-off is now worked from its moved minimap (gen.py); Tomb's
      Webweaver stack's dead space from its drawn middle 958 (WEAVER_MINIMAP_PX). The user's
      check: the whole roster again; then the blue/red lines (below).
+   - **The confirm pass (2026-10-19, built, not seen yet)** - docs/maps.md, end: Cursed Hollow
+     placed by its id (its `across` never applied) and its tribute counts mirrored, clear of
+     the map; Sky Temple 7 px up to the floor; Tomb's Webweavers on the plates' slant; the
+     carry box back on the fountain's slant. Volskaya's gap: rim or dark band? (user's call).
    - **The blue/red lines under the mechanics' counts** (user, 2026-10-19): out to their
      farthest, the plates' inner ends (~752 / ~1168), "so we have most flexibility for the
      containers". Each map's panel sets its own (Blizzard's TeamHighlight-style backgrounds,
