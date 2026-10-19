@@ -262,6 +262,8 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
     in a copy of the leader panel wherever its box (HeroLeaderPanelContainer's Width/Height)
     covers the rows. Move or grow the box over the rows; never move rows or icons out of it.
   - **Step 14:** the panel's background (BackgroundImage) at Alpha 0, rows over bare screen.
+    **Seen (53ff05f, user):** "both show" - tooltips kept.
+  - **Step 15:** the container's other art (both hexagons, border, close button) at Alpha 0.
   - **Spazzo** (user, 2026-10-19): puts quests in his nameplates with no tooltips. He doesn't
     use Blizzard's quest icons at all: a generic UnitStatusBehaviorIcon per nameplate, pointed
     at each hero's quest-counter behaviour by a hand-kept list of ~400 entries
