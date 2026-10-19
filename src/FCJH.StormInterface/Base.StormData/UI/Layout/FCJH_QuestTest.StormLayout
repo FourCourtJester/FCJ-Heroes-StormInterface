@@ -10,7 +10,9 @@
 	     through a hidden frame the rows' visibility is bound to, not on from the start; and a
 	     second panel takes Blizzard's Tab hotkey and passes it on to Blizzard's panel.
 	     Try 5 (484d4df): boxes empty. Try 6: Ahli's Handles too, on each row and quest icon,
-	     and each tooltip binds the icon's picture through its Handle, as his do. -->
+	     and each tooltip binds the icon's picture through its Handle, as his do: empty.
+	     Try 7: the boxes' backing set under their text (510), as his are, in place of the
+	     whole tip at 900. -->
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<Frame type="Frame" name="UIContainer">
 			<Frame type="Frame" name="ConsoleUIContainer">
@@ -82,7 +84,13 @@
 						<Visible val="true"/>
 						<RenderPriority val="600"/>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip0A" template="StandardTooltip/BaselineTooltipTemplate">
-							<RenderPriority val="900"/>
+							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
+							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
+							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
 							<!-- Ahli's binding: the icon's picture, through its Handle -->
 							<Frame type="Image" name="FCJH_Icon">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
@@ -90,11 +98,17 @@
 								<Width val="50"/>
 								<Height val="50"/>
 								<Texture val="{$FCJH_QTestIcon0A/IconImage/@Texture}"/>
-								<RenderPriority val="901"/>
+								<RenderPriority val="511"/>
 							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip0B" template="StandardTooltip/BaselineTooltipTemplate">
-							<RenderPriority val="900"/>
+							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
+							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
+							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
 							<!-- Ahli's binding: the icon's picture, through its Handle -->
 							<Frame type="Image" name="FCJH_Icon">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
@@ -102,11 +116,17 @@
 								<Width val="50"/>
 								<Height val="50"/>
 								<Texture val="{$FCJH_QTestIcon0B/IconImage/@Texture}"/>
-								<RenderPriority val="901"/>
+								<RenderPriority val="511"/>
 							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip1A" template="StandardTooltip/BaselineTooltipTemplate">
-							<RenderPriority val="900"/>
+							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
+							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
+							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
 							<!-- Ahli's binding: the icon's picture, through its Handle -->
 							<Frame type="Image" name="FCJH_Icon">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
@@ -114,11 +134,17 @@
 								<Width val="50"/>
 								<Height val="50"/>
 								<Texture val="{$FCJH_QTestIcon1A/IconImage/@Texture}"/>
-								<RenderPriority val="901"/>
+								<RenderPriority val="511"/>
 							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip1B" template="StandardTooltip/BaselineTooltipTemplate">
-							<RenderPriority val="900"/>
+							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
+							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
+							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
 							<!-- Ahli's binding: the icon's picture, through its Handle -->
 							<Frame type="Image" name="FCJH_Icon">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
@@ -126,11 +152,17 @@
 								<Width val="50"/>
 								<Height val="50"/>
 								<Texture val="{$FCJH_QTestIcon1B/IconImage/@Texture}"/>
-								<RenderPriority val="901"/>
+								<RenderPriority val="511"/>
 							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip2A" template="StandardTooltip/BaselineTooltipTemplate">
-							<RenderPriority val="900"/>
+							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
+							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
+							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
 							<!-- Ahli's binding: the icon's picture, through its Handle -->
 							<Frame type="Image" name="FCJH_Icon">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
@@ -138,11 +170,17 @@
 								<Width val="50"/>
 								<Height val="50"/>
 								<Texture val="{$FCJH_QTestIcon2A/IconImage/@Texture}"/>
-								<RenderPriority val="901"/>
+								<RenderPriority val="511"/>
 							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip2B" template="StandardTooltip/BaselineTooltipTemplate">
-							<RenderPriority val="900"/>
+							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
+							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
+							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
 							<!-- Ahli's binding: the icon's picture, through its Handle -->
 							<Frame type="Image" name="FCJH_Icon">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
@@ -150,11 +188,17 @@
 								<Width val="50"/>
 								<Height val="50"/>
 								<Texture val="{$FCJH_QTestIcon2B/IconImage/@Texture}"/>
-								<RenderPriority val="901"/>
+								<RenderPriority val="511"/>
 							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip3A" template="StandardTooltip/BaselineTooltipTemplate">
-							<RenderPriority val="900"/>
+							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
+							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
+							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
 							<!-- Ahli's binding: the icon's picture, through its Handle -->
 							<Frame type="Image" name="FCJH_Icon">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
@@ -162,11 +206,17 @@
 								<Width val="50"/>
 								<Height val="50"/>
 								<Texture val="{$FCJH_QTestIcon3A/IconImage/@Texture}"/>
-								<RenderPriority val="901"/>
+								<RenderPriority val="511"/>
 							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip3B" template="StandardTooltip/BaselineTooltipTemplate">
-							<RenderPriority val="900"/>
+							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
+							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
+							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
 							<!-- Ahli's binding: the icon's picture, through its Handle -->
 							<Frame type="Image" name="FCJH_Icon">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
@@ -174,11 +224,17 @@
 								<Width val="50"/>
 								<Height val="50"/>
 								<Texture val="{$FCJH_QTestIcon3B/IconImage/@Texture}"/>
-								<RenderPriority val="901"/>
+								<RenderPriority val="511"/>
 							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip4A" template="StandardTooltip/BaselineTooltipTemplate">
-							<RenderPriority val="900"/>
+							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
+							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
+							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
 							<!-- Ahli's binding: the icon's picture, through its Handle -->
 							<Frame type="Image" name="FCJH_Icon">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
@@ -186,11 +242,17 @@
 								<Width val="50"/>
 								<Height val="50"/>
 								<Texture val="{$FCJH_QTestIcon4A/IconImage/@Texture}"/>
-								<RenderPriority val="901"/>
+								<RenderPriority val="511"/>
 							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip4B" template="StandardTooltip/BaselineTooltipTemplate">
-							<RenderPriority val="900"/>
+							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
+							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
+							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
 							<!-- Ahli's binding: the icon's picture, through its Handle -->
 							<Frame type="Image" name="FCJH_Icon">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
@@ -198,11 +260,17 @@
 								<Width val="50"/>
 								<Height val="50"/>
 								<Texture val="{$FCJH_QTestIcon4B/IconImage/@Texture}"/>
-								<RenderPriority val="901"/>
+								<RenderPriority val="511"/>
 							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip5A" template="StandardTooltip/BaselineTooltipTemplate">
-							<RenderPriority val="900"/>
+							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
+							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
+							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
 							<!-- Ahli's binding: the icon's picture, through its Handle -->
 							<Frame type="Image" name="FCJH_Icon">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
@@ -210,11 +278,17 @@
 								<Width val="50"/>
 								<Height val="50"/>
 								<Texture val="{$FCJH_QTestIcon5A/IconImage/@Texture}"/>
-								<RenderPriority val="901"/>
+								<RenderPriority val="511"/>
 							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip5B" template="StandardTooltip/BaselineTooltipTemplate">
-							<RenderPriority val="900"/>
+							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
+							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
+							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
 							<!-- Ahli's binding: the icon's picture, through its Handle -->
 							<Frame type="Image" name="FCJH_Icon">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
@@ -222,11 +296,17 @@
 								<Width val="50"/>
 								<Height val="50"/>
 								<Texture val="{$FCJH_QTestIcon5B/IconImage/@Texture}"/>
-								<RenderPriority val="901"/>
+								<RenderPriority val="511"/>
 							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip6A" template="StandardTooltip/BaselineTooltipTemplate">
-							<RenderPriority val="900"/>
+							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
+							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
+							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
 							<!-- Ahli's binding: the icon's picture, through its Handle -->
 							<Frame type="Image" name="FCJH_Icon">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
@@ -234,11 +314,17 @@
 								<Width val="50"/>
 								<Height val="50"/>
 								<Texture val="{$FCJH_QTestIcon6A/IconImage/@Texture}"/>
-								<RenderPriority val="901"/>
+								<RenderPriority val="511"/>
 							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip6B" template="StandardTooltip/BaselineTooltipTemplate">
-							<RenderPriority val="900"/>
+							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
+							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
+							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
 							<!-- Ahli's binding: the icon's picture, through its Handle -->
 							<Frame type="Image" name="FCJH_Icon">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
@@ -246,11 +332,17 @@
 								<Width val="50"/>
 								<Height val="50"/>
 								<Texture val="{$FCJH_QTestIcon6B/IconImage/@Texture}"/>
-								<RenderPriority val="901"/>
+								<RenderPriority val="511"/>
 							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip7A" template="StandardTooltip/BaselineTooltipTemplate">
-							<RenderPriority val="900"/>
+							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
+							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
+							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
 							<!-- Ahli's binding: the icon's picture, through its Handle -->
 							<Frame type="Image" name="FCJH_Icon">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
@@ -258,11 +350,17 @@
 								<Width val="50"/>
 								<Height val="50"/>
 								<Texture val="{$FCJH_QTestIcon7A/IconImage/@Texture}"/>
-								<RenderPriority val="901"/>
+								<RenderPriority val="511"/>
 							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip7B" template="StandardTooltip/BaselineTooltipTemplate">
-							<RenderPriority val="900"/>
+							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
+							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
+							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
 							<!-- Ahli's binding: the icon's picture, through its Handle -->
 							<Frame type="Image" name="FCJH_Icon">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
@@ -270,11 +368,17 @@
 								<Width val="50"/>
 								<Height val="50"/>
 								<Texture val="{$FCJH_QTestIcon7B/IconImage/@Texture}"/>
-								<RenderPriority val="901"/>
+								<RenderPriority val="511"/>
 							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip8A" template="StandardTooltip/BaselineTooltipTemplate">
-							<RenderPriority val="900"/>
+							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
+							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
+							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
 							<!-- Ahli's binding: the icon's picture, through its Handle -->
 							<Frame type="Image" name="FCJH_Icon">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
@@ -282,11 +386,17 @@
 								<Width val="50"/>
 								<Height val="50"/>
 								<Texture val="{$FCJH_QTestIcon8A/IconImage/@Texture}"/>
-								<RenderPriority val="901"/>
+								<RenderPriority val="511"/>
 							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip8B" template="StandardTooltip/BaselineTooltipTemplate">
-							<RenderPriority val="900"/>
+							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
+							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
+							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
 							<!-- Ahli's binding: the icon's picture, through its Handle -->
 							<Frame type="Image" name="FCJH_Icon">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
@@ -294,11 +404,17 @@
 								<Width val="50"/>
 								<Height val="50"/>
 								<Texture val="{$FCJH_QTestIcon8B/IconImage/@Texture}"/>
-								<RenderPriority val="901"/>
+								<RenderPriority val="511"/>
 							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip9A" template="StandardTooltip/BaselineTooltipTemplate">
-							<RenderPriority val="900"/>
+							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
+							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
+							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
 							<!-- Ahli's binding: the icon's picture, through its Handle -->
 							<Frame type="Image" name="FCJH_Icon">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
@@ -306,11 +422,17 @@
 								<Width val="50"/>
 								<Height val="50"/>
 								<Texture val="{$FCJH_QTestIcon9A/IconImage/@Texture}"/>
-								<RenderPriority val="901"/>
+								<RenderPriority val="511"/>
 							</Frame>
 						</Frame>
 						<Frame type="BaselineQuestTooltip" name="FCJH_QTestTip9B" template="StandardTooltip/BaselineTooltipTemplate">
-							<RenderPriority val="900"/>
+							<!-- try 7, Ahli's: the box's backing under the text (510), not the tip on top -->
+							<Frame type="Image" name="BackgroundColorImage"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BackgroundGradientImage"><RenderPriority val="510"/></Frame>
+							<Frame type="BlurFrame" name="BlurBackground"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="BottomBorder"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TipGradient"><RenderPriority val="510"/></Frame>
+							<Frame type="Image" name="TopBorder"><RenderPriority val="510"/></Frame>
 							<!-- Ahli's binding: the icon's picture, through its Handle -->
 							<Frame type="Image" name="FCJH_Icon">
 								<Anchor side="Top" relative="$parent" pos="Min" offset="12"/>
@@ -318,7 +440,7 @@
 								<Width val="50"/>
 								<Height val="50"/>
 								<Texture val="{$FCJH_QTestIcon9B/IconImage/@Texture}"/>
-								<RenderPriority val="901"/>
+								<RenderPriority val="511"/>
 							</Frame>
 						</Frame>
 						<Frame type="Frame" name="HeroLeaderPanelContainer">
