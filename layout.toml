@@ -294,7 +294,7 @@ kind = "ui"
 # bars) that far from the screen's sides, and their bottom edge that far from its bottom.
 scale = "fit"
 blue_right = 752             # where blue's row ends (cell 5's right)
-red_left = 1167              # cell 6; cells 7-0 follow to the right
+red_left = 1168              # cell 6; cells 7-0 follow to the right (blue_right's mirror about 960; 1167 until 2026-10-19)
 talent_popup_size = 40       # the pop-ups' square (talent icon, heal plus), straddling the cell's top edge; shows ~42 px with its border, as the talents pane's squares (user, 2026-10-02; was 44)
 
 # Talent pop-ups (tools/gen.py talent_popups): the talent a player just picked, in the talent

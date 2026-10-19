@@ -439,6 +439,15 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
    - **A centering pass on every minimap** (user, 2026-10-18: "100% convinced some are still
      off center compared to our generated UI"): each map's minimap against the rows' gap and
      the generated chrome, measured off a screenshot per map (docs/maps.md has each map's place).
+     The method (user, 2026-10-19): "midpoint" is our UI's, the rows' inner chrome edges
+     (958.5 px on 14_36_51, the rows then 1 px off: red_left 1167 against blue_right 752's
+     mirror 1168; now 1168, so ~959). Each map centred between our plates on its art's
+     outline and its mechanic's UI markers, by its `across` (tools/maps.py).
+   - **The pane border's halves (2026-10-19, not seen yet):** each side was a whole nine-slice
+     squeezed into half the height, so both halves ended in the art's end cap at the middle,
+     stacked "doubly as bright" (user). Now each half is a whole side clipped at the middle
+     (inspect_card.py tab_border, `UpperHalf` / `LowerHalf`). Check: no bright patch midway
+     down the sides, the corners as before.
 2. **The art pass** - items 7 and 12 below, and the visual pass: the chrome backplate look to
    the plates, XP/core bars (a mid-height bevel, like the player view's core bar; the default
    UI's core bars: `design/ref_default_core_hp.png`) and the info panes (zebra rows, Heroes
