@@ -39,7 +39,15 @@
      Blizzard's does) kept in its row on Blizzard's own anchors, moved 150 left into the
      blank after the hero's name. The lift and Unclipped of 3 / 3b gone. Shows there: an
      icon can be moved, just not far (something above it clips). Gone again: any re-anchor
-     of a quest icon kills it. -->
+     of a quest icon kills it.
+     Seen (user, 2026-10-19, 58476c4): "icons came back, but tooltips had a hard time staying
+     active" / "they did fill out correctly though". An icon moved within its row draws and
+     fills.
+
+     Step 5, one change: the same icons moved 30 up as well, half out of their row into the
+     one above. Cut off at the row's edge: the row (or a frame its size) is what clips, so a
+     lift has to take the row with it. Drawn whole over the row above: the clip is higher up,
+     and the step can be widened. -->
 <Desc>
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<Frame type="Frame" name="UIContainer">
@@ -63,6 +71,8 @@
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
 															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
+															<Anchor side="Top" relative="$parent" pos="Mid" offset="-30"/>
+															<Anchor side="Bottom" relative="$parent" pos="Mid" offset="-30"/>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -81,6 +91,8 @@
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
 															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
+															<Anchor side="Top" relative="$parent" pos="Mid" offset="-30"/>
+															<Anchor side="Bottom" relative="$parent" pos="Mid" offset="-30"/>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -99,6 +111,8 @@
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
 															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
+															<Anchor side="Top" relative="$parent" pos="Mid" offset="-30"/>
+															<Anchor side="Bottom" relative="$parent" pos="Mid" offset="-30"/>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -117,6 +131,8 @@
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
 															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
+															<Anchor side="Top" relative="$parent" pos="Mid" offset="-30"/>
+															<Anchor side="Bottom" relative="$parent" pos="Mid" offset="-30"/>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -135,6 +151,8 @@
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
 															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
+															<Anchor side="Top" relative="$parent" pos="Mid" offset="-30"/>
+															<Anchor side="Bottom" relative="$parent" pos="Mid" offset="-30"/>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -153,6 +171,8 @@
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
 															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
+															<Anchor side="Top" relative="$parent" pos="Mid" offset="-30"/>
+															<Anchor side="Bottom" relative="$parent" pos="Mid" offset="-30"/>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -171,6 +191,8 @@
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
 															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
+															<Anchor side="Top" relative="$parent" pos="Mid" offset="-30"/>
+															<Anchor side="Bottom" relative="$parent" pos="Mid" offset="-30"/>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -189,6 +211,8 @@
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
 															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
+															<Anchor side="Top" relative="$parent" pos="Mid" offset="-30"/>
+															<Anchor side="Bottom" relative="$parent" pos="Mid" offset="-30"/>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -207,6 +231,8 @@
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
 															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
+															<Anchor side="Top" relative="$parent" pos="Mid" offset="-30"/>
+															<Anchor side="Bottom" relative="$parent" pos="Mid" offset="-30"/>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -225,6 +251,8 @@
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
 															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
 															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
+															<Anchor side="Top" relative="$parent" pos="Mid" offset="-30"/>
+															<Anchor side="Bottom" relative="$parent" pos="Mid" offset="-30"/>
 														</Frame>
 													</Frame>
 												</Frame>

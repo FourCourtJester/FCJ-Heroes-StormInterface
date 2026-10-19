@@ -217,6 +217,10 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
   - **Step 4:** one change from step 2: each row's first quest icon (the second follows it)
     kept in its row on Blizzard's own anchors, 150 px left, into the blank after the name.
     Shows: icons can move, just not far. Gone: any re-anchor of a quest icon kills it.
+    **Seen (58476c4, user):** icons back, tooltips fill correctly, though they had a hard time
+    staying up. A quest icon moved within its row keeps working.
+  - **Step 5:** the same, moved 30 up as well, half into the row above. Cut at the row's
+    edge: the row clips, so a lift must take the row along. Whole: the clip is higher up.
   - **Spazzo** (user, 2026-10-19): puts quests in his nameplates with no tooltips. He doesn't
     use Blizzard's quest icons at all: a generic UnitStatusBehaviorIcon per nameplate, pointed
     at each hero's quest-counter behaviour by a hand-kept list of ~400 entries
