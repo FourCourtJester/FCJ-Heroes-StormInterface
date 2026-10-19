@@ -134,7 +134,12 @@
 
      Step 15, one change: the rest of the container's own art at Alpha 0 - the hexagon on top
      (TopHexContainer), the hexagon at the bottom (HexImage), the border (BorderContainer)
-     and the close button. Tooltips still there: the panel's frame can all go. -->
+     and the close button. Tooltips still there: the panel's frame can all go.
+     Seen (user, 2026-10-19, a8a9657): "yes both show" - tooltips kept with all the frame gone.
+
+     Step 16, one change: the team scores under the rows at Alpha 0 - BlueTeamStats, VSLabel
+     and RedTeamStats (children of the container). Then only the rows and the column numbers
+     are left. -->
 <Desc>
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<Frame type="Frame" name="UIContainer">
@@ -161,6 +166,15 @@
 							<Alpha val="0"/>
 						</Frame>
 						<Frame type="Button" name="CloseButton">
+							<Alpha val="0"/>
+						</Frame>
+						<Frame type="Frame" name="BlueTeamStats">
+							<Alpha val="0"/>
+						</Frame>
+						<Frame type="Label" name="VSLabel">
+							<Alpha val="0"/>
+						</Frame>
+						<Frame type="Frame" name="RedTeamStats">
 							<Alpha val="0"/>
 						</Frame>
 						<Frame type="TabControl" name="TabControl">

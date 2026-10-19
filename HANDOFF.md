@@ -598,8 +598,9 @@ from their plates (docs/blizzard-fixes.md).
    - drawn above the panel, but no tooltips there; the mouse answers only inside the panel's
    box. **Step 13** (8ceaed0): the box (HeroLeaderPanelContainer) 400 taller instead -
    **every row's quest tooltip works** where the box covers it. **Step 14** (53ff05f): the
-   panel's background at Alpha 0 - tooltips kept. **Step 15, not seen yet:** the hexagons,
-   border and close button at Alpha 0 too. Spazzo's nameplate quests are his own per-hero behaviour icons, no tooltips (a
+   panel's background at Alpha 0 - tooltips kept. **Step 15** (a8a9657): the hexagons,
+   border and close button at Alpha 0 too - tooltips kept. **Step 16, not seen yet:** the
+   team scores at Alpha 0. Spazzo's nameplate quests are his own per-hero behaviour icons, no tooltips (a
    fallback only; see blizzard-fixes).
    **TEMPORARY:** Blizzard's kill feed is hidden for testing (FCJH_Hidden, `FCJH_KeepHidden`'s
    KillLogPanel controller; user, 2026-10-16). Take it out before release.
