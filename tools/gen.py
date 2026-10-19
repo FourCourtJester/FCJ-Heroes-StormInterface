@@ -2080,10 +2080,16 @@ def pet_death_bindings(cfg, team_frame, i):
 # to end at 35, just over the health backing (36), its top kept: the frame 65.5 tall (x 0.636),
 # top -3.75; the wrapper clips at 36. Only the height changes, so the slanted sides stand
 # flatter (0.54 -> ~0.85 across per down) - expected, to re-tune after a look.
+# Test 6 seen (5c63562): "height looks good, just needs some widening now; even the angles look
+# like they might be okay". Measured (Inferno, y 986): the rim 87 px wide on blue, 91 on red,
+# the plate's dividers 137 / 136 apart; the rim's centre 10.7 px right of the plate's on blue,
+# 10.5 left on red; its sides lean ~0.6 - 0.8 across per down (the dividers 0.54).
+# TEST 7 (2026-10-19): widened x 1.45 (185 -> 268) and centred on the plate (frame left 30 -> 77
+# on blue, 34 -> 72 on red), height kept. Widening alone leans the sides 1.45x more.
 ONFIRE_TEST = {2: "Embers Start", 4: "Inferno Start"}
 ONFIRE_LEVELS = {"OnFireEmbers": "Embers Start", "OnFireInferno": "Inferno Start", "OnFireEnd": "Death"}
-ONFIRE_PLACE = {"Left": -30, "Right": -34}  # the frame's left, by side
-ONFIRE_TOP, ONFIRE_W, ONFIRE_H = -3.75, 185, 65.5   # test 5: -7.3, 185, 103
+ONFIRE_PLACE = {"Left": -77, "Right": -72}  # the frame's left, by side; test 6: -30, -34
+ONFIRE_TOP, ONFIRE_W, ONFIRE_H = -3.75, 268, 65.5   # test 6: W 185; test 5: -7.3, 185, 103
 ONFIRE_CLIP = 36                                    # the wrapper's bottom; test 5: PORTRAIT_H - 1
 
 
