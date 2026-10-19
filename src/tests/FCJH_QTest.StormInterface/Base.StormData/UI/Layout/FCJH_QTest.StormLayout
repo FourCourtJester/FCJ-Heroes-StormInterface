@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- TEST interface, quest tooltips rebuilt one piece at a time (user, 2026-10-19: "lets go step
+     by step, one interface at a time, until we can find *SOME* kind of change"). Deployed as
+     FCJH_QTest.StormInterface beside FCJH; none of FCJH's files are in it.
+
+     Step 1: a copy of Blizzard's own leader panel (the Tab panel, whose quest tooltips fill),
+     untouched: Blizzard's template, placed as Blizzard places its own (gameui.stormlayout:913),
+     only 150 lower so it can be told from Blizzard's. Control+Shift+Q sends it Show / Hide,
+     as Tab does Blizzard's. Its Talents tab, then hover a quest icon:
+       - fills: a copy gets the quest info, so our earlier tries broke it with what they changed
+       - blank: a copy doesn't, whatever is done to it -->
+<Desc>
+	<Frame type="GameUI" name="GameUI" file="GameUI">
+		<Frame type="Frame" name="UIContainer">
+			<Frame type="Frame" name="ConsoleUIContainer">
+				<Frame type="HeroLeaderPanel" name="FCJH_QTestPanel" template="HeroLeaderPanel/HeroLeaderPanelTemplate">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="150"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Bottom" relative="$parent" pos="Max" offset="150"/>
+					<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
+					<RenderPriority val="520"/>
+				</Frame>
+				<Frame type="ToggleControl" name="FCJH_QTestToggle">
+					<Anchor relative="$parent"/>
+					<Shortcut val="Control+Shift+Q"/>
+					<AcceptsMouse val="false"/>
+					<CollapseLayout val="true"/>
+					<Visible val="false"/>
+					<Animation name="FCJH_PassShow">
+						<Event event="OnShown" action="Reset,Play"/>
+						<Controller type="Event" end="Stop" frame="$parent/FCJH_QTestPanel">
+							<Key type="Event" time="0" event="Show"/>
+						</Controller>
+					</Animation>
+					<Animation name="FCJH_PassHide">
+						<Event event="OnHidden" action="Reset,Play"/>
+						<Controller type="Event" end="Stop" frame="$parent/FCJH_QTestPanel">
+							<Key type="Event" time="0" event="Hide"/>
+						</Controller>
+					</Animation>
+				</Frame>
+			</Frame>
+		</Frame>
+	</Frame>
+</Desc>

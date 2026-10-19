@@ -180,8 +180,23 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
   vital, cooldown and description labels, nothing that gates them; Ahli adds the icon picture,
   progress bar and count himself, bound through a `Handle` on each quest icon (and on each
   row), and copies the icon's quest state onto the tooltip.
-- **Try 6 (2026-10-19, not seen yet):** try 5 plus Ahli's Handles on each row and quest icon,
+- **Try 6 (2026-10-19), failed:** try 5 plus Ahli's Handles on each row and quest icon,
   and each tooltip binding the icon's picture through its Handle.
+- **Try 7 (5748790), failed:** the boxes' backing under their text at 510, as Ahli's are, in
+  place of the whole tip at 900.
+- **Try 8 (11e618a), failed:** blue's rows Ahli's quest tooltip copied child for child (icon
+  picture, hero portrait, label anchors, progress ring and count, his quest state copied from
+  the icon), Blizzard's art in place of his; red's rows no tooltip of ours, Blizzard's shared
+  one. Both empty: the box opens at `BaselineTooltipTemplate`'s 450 x 450 with no text written,
+  so it's the icons' side, not the box. Nothing of ours overrides tooltips globally (only the
+  minimap's, a different box).
+- **Scrapped, rebuilt one piece at a time (user, 2026-10-19):** each try changed several things
+  at once, so none could say which part breaks it. Now a separate test interface,
+  `FCJH_QTest.StormInterface` (src/tests/, none of FCJH's files in it), one change per build.
+  `FCJH_QuestTest` is gone from FCJH.
+  - **Step 1:** a copy of Blizzard's leader panel, untouched, placed as Blizzard's but 150
+    lower, Control+Shift+Q sending it Show / Hide as Tab does Blizzard's. Fills: a copy gets the
+    quest info, and our tries broke it with what they changed. Blank: a copy never does.
 
 ### Hogger's rage drawn as mana
 - **Blizzard's:** the target panel's per-hero resource colours (`HeroResourceStates`,

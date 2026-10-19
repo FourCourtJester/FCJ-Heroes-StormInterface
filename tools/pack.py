@@ -23,6 +23,8 @@ write until the lock releases.
     python tools/pack.py --no-deploy
     python tools/pack.py --release               # dist/v0.1.0/FCJH.StormInterface
     python tools/pack.py --release --deploy
+    python tools/pack.py src/tests/FCJH_QTest.StormInterface --name FCJH_QTest.StormInterface --wait
+                                                 # a test interface, deployed beside FCJH
 """
 
 import argparse
@@ -84,10 +86,18 @@ def stage(cfg, source, profile):
         probes = sorted(DEV_LAYOUTS.glob("*.StormLayout")) if DEV_LAYOUTS.is_dir() else []
         for probe in probes:
             shutil.copy(probe, layout_dir / probe.name)
-        order = gen.layout_order(source / gen.LAYOUT_REL, extra=[p.name for p in probes] + [gen.DEV_FILE])
+        extra = [p.name for p in probes] + [gen.DEV_FILE]
+        if source == DEFAULT_SOURCE:
+            order = gen.layout_order(source / gen.LAYOUT_REL, extra=extra)
+            name = "FCJH"
+        else:
+            # a test interface (src/tests/): its own layouts only, none of FCJH's
+            order = sorted(p.name for p in (source / gen.LAYOUT_REL).glob("*.StormLayout")
+                           if p.name != gen.INDEX_FILE) + extra
+            name = source.name.split(".")[0]
         commit = git("rev-parse", "--short", "HEAD") or "nogit"
         dirty = "+" if git("status", "--porcelain", "--", *RELEASE_PATHS) else ""
-        stamp = f"FCJH DEV {cfg['meta']['version']} {commit}{dirty} {datetime.now():%H:%M:%S}"
+        stamp = f"{name} DEV {cfg['meta']['version']} {commit}{dirty} {datetime.now():%H:%M:%S}"
         (layout_dir / gen.DEV_FILE).write_text(gen.dev_layout(cfg, stamp), encoding="utf-8", newline="\n")
         (layout_dir / gen.INDEX_FILE).write_text(gen.desc_index(order), encoding="utf-8", newline="\n")
         print(f"stamp: {stamp}")

@@ -576,11 +576,11 @@ from their plates (docs/blizzard-fixes.md).
    level 1 too; the white line stays gone). Blue's icons on `HeroTalentTooltip` as a test:
    Murky's showed the last talent hovered, Nova's an empty box - the box doesn't matter, the
    icon must be one that writes (docs/blizzard-fixes.md). Reverted.
-   **484d4df, seen 2026-10-19: failed** (boxes empty; Ahli's fill for an observer, see
-   docs/blizzard-fixes.md). **Try 6, not seen yet:** try 5 plus Ahli's Handles and a bound
-   icon picture. Was: quest tooltip try 5, Ahli's arrangement with Blizzard's art
-   (`FCJH_QuestTest.StormLayout`, hand-kept TEST, Control+Shift+Q): hover its quest icons; Tab
-   must still open Blizzard's own panel. The file comes out once answered.
+   **Quest tooltips, tries 5-8 failed** (2026-10-19; docs/blizzard-fixes.md). Scrapped: rebuilt
+   one piece at a time in a separate test interface, `src/tests/FCJH_QTest.StormInterface`
+   (`python tools/pack.py src/tests/FCJH_QTest.StormInterface --name FCJH_QTest.StormInterface --wait`),
+   one change per build; `FCJH_QuestTest` is out of FCJH. **Step 1, not seen yet:** an
+   untouched copy of Blizzard's leader panel, Control+Shift+Q.
    **TEMPORARY:** Blizzard's kill feed is hidden for testing (FCJH_Hidden, `FCJH_KeepHidden`'s
    KillLogPanel controller; user, 2026-10-16). Take it out before release.
 
