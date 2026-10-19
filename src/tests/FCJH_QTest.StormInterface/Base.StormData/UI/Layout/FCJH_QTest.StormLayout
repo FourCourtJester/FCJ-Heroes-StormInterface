@@ -146,7 +146,14 @@
      highlight lines (Background, BottomBorderHighlight, SelfBackground), the portrait
      (PlayerHeroIconFrame) and the two names (HeroNameFrame, PlayerNameFrame). Left: the
      talent squares, the quest icons and the column numbers. Tooltips still there: a row can
-     be cut down to its quest icons. -->
+     be cut down to its quest icons.
+     Seen (user, 2026-10-19, 25369e1): "both show" - tooltips kept.
+
+     Step 18, one change: the talents at Alpha 0 - in each row the eight talent squares
+     (HeroSelectedTalentTreeFrame/TalentTreeIcon0-7) and the heroic's (UnitStatusAbil), and
+     over the rows the column numbers, the "!" and the level-10 glow (TabControl's
+     TalentsContainerFrame: TalentTierLabel0-7, ButtonQuest, UltGlowImage). ButtonQuest keeps
+     its place, so the quest icons anchored to it stay put. Left: only the quest icons. -->
 <Desc>
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<Frame type="Frame" name="UIContainer">
@@ -185,6 +192,38 @@
 							<Alpha val="0"/>
 						</Frame>
 						<Frame type="TabControl" name="TabControl">
+							<Frame type="Frame" name="TalentsContainerFrame">
+								<Frame type="Label" name="TalentTierLabel0">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Label" name="TalentTierLabel1">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Label" name="TalentTierLabel2">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Label" name="TalentTierLabel3">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Label" name="TalentTierLabel4">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Label" name="TalentTierLabel5">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Label" name="TalentTierLabel6">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Label" name="TalentTierLabel7">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Button" name="ButtonQuest">
+									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Image" name="UltGlowImage">
+									<Alpha val="0"/>
+								</Frame>
+							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame0">
 								<Anchor side="Top" relative="$parent/StatsContainerFrame/SortButton0" pos="Max" offset="5"/>
 								<Unclipped val="true"/>
@@ -205,6 +244,41 @@
 								</Frame>
 								<Frame type="PlayerNameFrame" name="PlayerNameFrame">
 									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Frame" name="TalentsContainerFrame">
+									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon0">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7">
+													<Alpha val="0"/>
+												</Frame>
+											</Frame>
+											<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil">
+												<Alpha val="0"/>
+											</Frame>
+										</Frame>
+									</Frame>
 								</Frame>
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame1">
@@ -227,6 +301,41 @@
 								<Frame type="PlayerNameFrame" name="PlayerNameFrame">
 									<Alpha val="0"/>
 								</Frame>
+								<Frame type="Frame" name="TalentsContainerFrame">
+									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon0">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7">
+													<Alpha val="0"/>
+												</Frame>
+											</Frame>
+											<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil">
+												<Alpha val="0"/>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame2">
 								<Unclipped val="true"/>
@@ -247,6 +356,41 @@
 								</Frame>
 								<Frame type="PlayerNameFrame" name="PlayerNameFrame">
 									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Frame" name="TalentsContainerFrame">
+									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon0">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7">
+													<Alpha val="0"/>
+												</Frame>
+											</Frame>
+											<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil">
+												<Alpha val="0"/>
+											</Frame>
+										</Frame>
+									</Frame>
 								</Frame>
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame3">
@@ -269,6 +413,41 @@
 								<Frame type="PlayerNameFrame" name="PlayerNameFrame">
 									<Alpha val="0"/>
 								</Frame>
+								<Frame type="Frame" name="TalentsContainerFrame">
+									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon0">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7">
+													<Alpha val="0"/>
+												</Frame>
+											</Frame>
+											<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil">
+												<Alpha val="0"/>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame4">
 								<Unclipped val="true"/>
@@ -289,6 +468,41 @@
 								</Frame>
 								<Frame type="PlayerNameFrame" name="PlayerNameFrame">
 									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Frame" name="TalentsContainerFrame">
+									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon0">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7">
+													<Alpha val="0"/>
+												</Frame>
+											</Frame>
+											<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil">
+												<Alpha val="0"/>
+											</Frame>
+										</Frame>
+									</Frame>
 								</Frame>
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame5">
@@ -311,6 +525,41 @@
 								<Frame type="PlayerNameFrame" name="PlayerNameFrame">
 									<Alpha val="0"/>
 								</Frame>
+								<Frame type="Frame" name="TalentsContainerFrame">
+									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon0">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7">
+													<Alpha val="0"/>
+												</Frame>
+											</Frame>
+											<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil">
+												<Alpha val="0"/>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame6">
 								<Unclipped val="true"/>
@@ -331,6 +580,41 @@
 								</Frame>
 								<Frame type="PlayerNameFrame" name="PlayerNameFrame">
 									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Frame" name="TalentsContainerFrame">
+									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon0">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7">
+													<Alpha val="0"/>
+												</Frame>
+											</Frame>
+											<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil">
+												<Alpha val="0"/>
+											</Frame>
+										</Frame>
+									</Frame>
 								</Frame>
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame7">
@@ -353,6 +637,41 @@
 								<Frame type="PlayerNameFrame" name="PlayerNameFrame">
 									<Alpha val="0"/>
 								</Frame>
+								<Frame type="Frame" name="TalentsContainerFrame">
+									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon0">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7">
+													<Alpha val="0"/>
+												</Frame>
+											</Frame>
+											<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil">
+												<Alpha val="0"/>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame8">
 								<Unclipped val="true"/>
@@ -374,6 +693,41 @@
 								<Frame type="PlayerNameFrame" name="PlayerNameFrame">
 									<Alpha val="0"/>
 								</Frame>
+								<Frame type="Frame" name="TalentsContainerFrame">
+									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon0">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7">
+													<Alpha val="0"/>
+												</Frame>
+											</Frame>
+											<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil">
+												<Alpha val="0"/>
+											</Frame>
+										</Frame>
+									</Frame>
+								</Frame>
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame9">
 								<Unclipped val="true"/>
@@ -394,6 +748,41 @@
 								</Frame>
 								<Frame type="PlayerNameFrame" name="PlayerNameFrame">
 									<Alpha val="0"/>
+								</Frame>
+								<Frame type="Frame" name="TalentsContainerFrame">
+									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
+										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
+											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon0">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon1">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon2">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon3">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon4">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon5">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon6">
+													<Alpha val="0"/>
+												</Frame>
+												<Frame type="UnitStatusTalentIcon" name="TalentTreeIcon7">
+													<Alpha val="0"/>
+												</Frame>
+											</Frame>
+											<Frame type="UnitStatusAbilIcon" name="UnitStatusAbil">
+												<Alpha val="0"/>
+											</Frame>
+										</Frame>
+									</Frame>
 								</Frame>
 							</Frame>
 						</Frame>

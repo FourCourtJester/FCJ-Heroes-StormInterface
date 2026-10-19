@@ -600,8 +600,9 @@ from their plates (docs/blizzard-fixes.md).
    **every row's quest tooltip works** where the box covers it. **Step 14** (53ff05f): the
    panel's background at Alpha 0 - tooltips kept. **Step 15** (a8a9657): the hexagons,
    border and close button at Alpha 0 too - tooltips kept. **Step 16** (0081cda): the
-   team scores at Alpha 0 - tooltips kept. **Step 17, not seen yet:** each row's background,
-   portrait and names at Alpha 0. Spazzo's nameplate quests are his own per-hero behaviour icons, no tooltips (a
+   team scores at Alpha 0 - tooltips kept. **Step 17** (25369e1): each row's background,
+   portrait and names at Alpha 0 - tooltips kept. **Step 18, not seen yet:** the talents
+   and column numbers too, only the quest icons left. Spazzo's nameplate quests are his own per-hero behaviour icons, no tooltips (a
    fallback only; see blizzard-fixes).
    **TEMPORARY:** Blizzard's kill feed is hidden for testing (FCJH_Hidden, `FCJH_KeepHidden`'s
    KillLogPanel controller; user, 2026-10-16). Take it out before release.
