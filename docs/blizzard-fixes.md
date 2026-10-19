@@ -276,14 +276,14 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
   - **Step 19:** HeroIconImage, SilencedIcon and BGSeparatorImage1-3 at Alpha 0 in each row.
     **Seen (8579d61, user):** "yes, both. nothing else visible" - the panel cut down to its
     quest icons, tooltips filling with no Tab.
-  - **Into FCJH (2026-10-19, not seen yet):** the ctrl-1 talents pane gets that cut-down copy
+  - **Into FCJH (2026-10-19, 96c8996) - FIXED:** the ctrl-1 talents pane gets that cut-down copy
     (`FCJH_QuestPanel`, FCJH_InfoPane): its box is our pane, each of its rows sits on our row
     of the same number (handles `FCJH_TalentRow0-9`), its first quest icon on our quest cell
     (`FCJH_QuestCell0-9`, our old icon's place), the icon's chain Unclipped. The rest at Alpha 0
     and deaf to the mouse (the tab, sort and close buttons too, so a stray click can't flip
     its tab). It sits under our talents and over the skin, so our talents take the mouse first.
-    Our own quest icons are gone. To check: the tooltips fill without Tab; each icon on its own
-    hero's row (both panels number their rows alike, untested); our talent tooltips still work.
+    Our own quest icons are gone. **Seen (user, 2026-10-19):** "you did it mate" - the quest
+    tooltips fill without Tab on the ctrl-1 pane.
   - **Spazzo** (user, 2026-10-19): puts quests in his nameplates with no tooltips. He doesn't
     use Blizzard's quest icons at all: a generic UnitStatusBehaviorIcon per nameplate, pointed
     at each hero's quest-counter behaviour by a hand-kept list of ~400 entries

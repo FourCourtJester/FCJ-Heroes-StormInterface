@@ -603,11 +603,10 @@ from their plates (docs/blizzard-fixes.md).
    team scores at Alpha 0 - tooltips kept. **Step 17** (25369e1): each row's background,
    portrait and names at Alpha 0 - tooltips kept. **Step 18** (9373f9e): the talents
    and column numbers too - tooltips kept; portraits and faint column bands stayed. **Step
-   19** (8579d61): those at Alpha 0 too - "yes, both. nothing else visible". **Into FCJH, not
-   seen yet:** the cut-down copy on the ctrl-1 talents pane (`FCJH_QuestPanel`), its rows on
+   19** (8579d61): those at Alpha 0 too - "yes, both. nothing else visible". **Into FCJH - DONE**
+   (96c8996, user, 2026-10-19: "you did it mate"): the cut-down copy on the ctrl-1 talents pane (`FCJH_QuestPanel`), its rows on
    ours by handle (`FCJH_TalentRow0-9`), its icons on our quest cells (`FCJH_QuestCell0-9`);
-   our own quest icons gone. Check: tooltips fill without Tab, icons on the right heroes,
-   our talent tooltips still work. Spazzo's nameplate quests are his own per-hero behaviour icons, no tooltips (a
+   our own quest icons gone; the quest tooltips fill without Tab. Spazzo's nameplate quests are his own per-hero behaviour icons, no tooltips (a
    fallback only; see blizzard-fixes).
    **TEMPORARY:** Blizzard's kill feed is hidden for testing (FCJH_Hidden, `FCJH_KeepHidden`'s
    KillLogPanel controller; user, 2026-10-16). Take it out before release.
