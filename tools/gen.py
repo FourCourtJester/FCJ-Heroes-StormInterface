@@ -2049,18 +2049,21 @@ def pet_death_bindings(cfg, team_frame, i):
     return out
 
 
-# On fire: Blizzard's leader-panel glow (heroleaderpanel.stormlayout OnFireAnimTemplate: the
-# Tab panel's on-fire stat, @UI/Storm_UI_InGame_Leader_OnFire_Glow pulsing, sparkles rising,
-# team colour from its SetBlue / SetRed events), kept inside the plate. Blizzard's own top-bar
+# On fire: Blizzard's leader-panel glow (@UI/Storm_UI_InGame_Leader_OnFire_Glow, the Tab panel's
+# on-fire stat: heroleaderpanel.stormlayout OnFireAnimTemplate, its colours OnFireColor_Blue /
+# _Red, its pulse 100 -> 255 -> 100 over 2 s), over each plate's portrait. Blizzard's own top-bar
 # flames (6420bd3: SharedOnFireVFX's GameUI_OnFirePartyFrame cutscene, as partyframe places it)
 # played for an observer but spilled past the plate (user, 2026-10-19: "Kinda looks goofy but
-# it did emit"). It plays on the party cell's events, which reach an observer (the test squares,
-# read 2026-10-19): Embers at part strength, Inferno at full, End off. The template
-# draws its glow 40 units past each side of its frame, its base on the frame's bottom: our frame
-# sits 40 in from each side of the cell, its bottom on the portrait's, so the glow spans the
-# cell and rises over the portrait.
+# it did emit"). Blizzard's template itself, placed whole (002c699), never showed: its root
+# starts Visible=false and its glow takes its height from the texture, so it's rebuilt here as
+# one image, shown by a fade as the test squares were. It plays on the party cell's events,
+# which reach an observer (the test squares, read 2026-10-19): Embers at part strength, Inferno
+# at full, End off.
 ONFIRE_LEVELS = {"OnFireEmbers": 150, "OnFireInferno": 255, "OnFireEnd": 0}
-ONFIRE_SPILL = 40               # OnFireAnimTemplate's OnFireBg: Left -40, Right +40
+ONFIRE_COLOUR = {True: "255,33,103,245", False: "255,194,40,47"}     # Blizzard's 2167f5 / c2282f
+# TEMPORARY (002c699 never showed, user 2026-10-19): a white square at the plate's top middle,
+# lit while the hero is on fire, so "no event" and "no glow drawn" tell apart. Out once seen.
+ONFIRE_DIAG = 14
 
 
 def onfire_flames(cfg, blue, cell):
@@ -2069,38 +2072,47 @@ def onfire_flames(cfg, blue, cell):
     s = lambda v: round(v * k)
     t = "\t" * 7
     anims = ""
+    prevs = {"OnFireEmbers": 0, "OnFireInferno": ONFIRE_LEVELS["OnFireEmbers"], "OnFireEnd": 0}
     for event, alpha in ONFIRE_LEVELS.items():
-        end = event == "OnFireEnd"
-        vis = (f'\n{t}\t\t\t<Key type="Bool" time="0" value="False"/>' if end
-               else f'\n{t}\t\t\t<Key type="Bool" time="0" value="True"/>')
-        colour = "" if end else f"""
-{t}\t\t<Controller type="Event" end="Pause" frame="OnFireAnim">
-{t}\t\t\t<Key type="Event" time="0" event="{'SetBlue' if blue else 'SetRed'}"/>
-{t}\t\t</Controller>"""
         anims += f"""
 {t}\t<Animation name="FCJH_{event}">
 {t}\t\t<Event event="{event}" action="Reset,Play" frame="{cell}/OnFireCutsceneFrame"/>
-{t}\t\t<Controller type="Visibility" end="Pause" frame="OnFireAnim">{vis}
-{t}\t\t</Controller>
 {t}\t\t<Controller type="Fade" end="Pause">
-{t}\t\t\t<Key type="Curve" time="0" value="{{prev}}"/>
-{t}\t\t\t<Key type="Curve" time="0.5" value="{alpha}"/>
-{t}\t\t</Controller>{colour}
+{t}\t\t\t<Key type="Curve" time="0" value="{prevs[event]}"/>
+{t}\t\t\t<Key type="Curve" time="{0 if alpha == 0 else 0.5}" value="{alpha}"/>
+{t}\t\t</Controller>
 {t}\t</Animation>"""
-    # Embers fades in from nothing, Inferno up from Embers; End switches off at once
-    for prev in (0, ONFIRE_LEVELS["OnFireEmbers"], 0):
-        anims = anims.replace("{prev}", str(prev), 1)
+    fire = "".join(f'\n{t}\t\t\t<Event event="{e}" action="Reset,Play" frame="{cell}/OnFireCutsceneFrame"/>'
+                   for e in ("OnFireEmbers", "OnFireInferno"))
+    mid = s(c.W / 2)
+    diag = fill_image("FCJH_FireDiag", box(("Min", s(4)), ("Min", mid - ONFIRE_DIAG // 2),
+                                           ("Min", s(4) + ONFIRE_DIAG), ("Min", mid + ONFIRE_DIAG // 2)),
+                      "255,255,255,255", 700, 8).rstrip("\n")
     return f"""
 {t}<Frame type="Frame" name="FCJH_OnFire">
 {t}\t<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-{t}\t<Anchor side="Left"   relative="$parent" pos="Min" offset="{ONFIRE_SPILL}"/>
+{t}\t<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 {t}\t<Anchor side="Bottom" relative="$parent" pos="Min" offset="{s(c.PORTRAIT_H - 1)}"/>
-{t}\t<Anchor side="Right"  relative="$parent" pos="Min" offset="{s(c.W) - ONFIRE_SPILL}"/>
+{t}\t<Anchor side="Right"  relative="$parent" pos="Min" offset="{s(c.W)}"/>
+{t}\t<Alpha val="0"/>
 {t}\t<AcceptsMouse val="false"/>
-{t}\t<RenderPriority val="528"/>
-{t}\t<Frame type="Frame" name="OnFireAnim" template="HeroLeaderPanel/OnFireAnimTemplate">
+{t}\t<Frame type="Image" name="FCJH_OnFireGlow">
 {t}\t\t<Anchor relative="$parent"/>
-{t}\t</Frame>{anims}
+{t}\t\t<Texture val="@UI/Storm_UI_InGame_Leader_OnFire_Glow"/>
+{t}\t\t<ColorAdjustMode val="Fill"/>
+{t}\t\t<AdjustmentColor val="{ONFIRE_COLOUR[blue]}"/>
+{t}\t\t<Unclipped val="true"/>
+{t}\t\t<AcceptsMouse val="false"/>
+{t}\t\t<RenderPriority val="529"/>
+{t}\t\t<Animation name="FCJH_Pulse">{fire}
+{t}\t\t\t<Controller type="Fade" end="Loop">
+{t}\t\t\t\t<Key type="Curve" time="0" value="100" inout="Linear"/>
+{t}\t\t\t\t<Key type="Curve" time="1" value="255" inout="Slow,Linear"/>
+{t}\t\t\t\t<Key type="Curve" time="2" value="100" inout="Linear"/>
+{t}\t\t\t</Controller>
+{t}\t\t</Animation>
+{t}\t</Frame>
+{diag}{anims}
 {t}</Frame>"""
 
 
