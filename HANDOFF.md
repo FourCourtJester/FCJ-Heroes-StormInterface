@@ -660,7 +660,9 @@ from their plates (docs/blizzard-fixes.md).
    cut off at the clip, not the rim's edge; clipping at 52.5 units (68486eb, y ~1046) took it
    out. User: "great. i think we can call that square". Final: Blizzard's box x 0.986, top
    -8.6 units, left -28.8 (blue) / -32.5 (red), clip at 52.5, on the fire events, every plate.
-   Not seen yet: blue/red on a real fire, Embers, End going out, the colourblind variant.
+   **Seen on real fires (e945f98, Braxis, red, 2026-10-19):** Embers and Inferno "both look
+   good and fade out just fine". Not seen yet: blue on a real fire (no replay to hand; the same
+   code, its rim seen always-on in tests 5-10), the colourblind variant.
    The intro waits for the user's OBS plan. The items as the user gave them:
    - **The chrome's slant against Blizzard's art** (user, 2026-10-17): the row frame's slants
      don't gel with the art's: the portraits' edges, the heroic badges, the fountain icons and
