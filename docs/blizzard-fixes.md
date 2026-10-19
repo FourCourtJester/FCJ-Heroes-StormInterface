@@ -233,6 +233,11 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
   - **Step 8:** every frame of the chain under the row Unclipped, icon included (3b freed only
     the icon and its parts). Whole: clipped link by link; a far lift needs the chain all
     Unclipped. Still cut: Unclipped can't get past the row, so the row must travel.
+    **Seen (270d4a4, user, screenshot):** drawn whole across the row line. Each frame of the
+    chain clips its children; Unclipped on every link (not just the icon) frees them.
+  - **Step 9:** step 3's far lift again, chain freed: icons re-anchored to the screen, a line
+    above the panel. Fills: icons can go anywhere. Cut at the panel: the frames above the row
+    clip too.
   - **Spazzo** (user, 2026-10-19): puts quests in his nameplates with no tooltips. He doesn't
     use Blizzard's quest icons at all: a generic UnitStatusBehaviorIcon per nameplate, pointed
     at each hero's quest-counter behaviour by a hand-kept list of ~400 entries

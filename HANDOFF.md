@@ -588,8 +588,9 @@ from their plates (docs/blizzard-fixes.md).
    left, draw and fill (tooltips a little hard to keep up). **Step 5** (048e0f7): also 30
    up, cut at the row's edge - the row clips. **Step 6** (ad64c31): the row's batched
    TalentsContainerFrame un-batched - still cut. **Step 7** (9c04a2f): that frame grown 60
-   above and below the row - still cut. **Step 8, not seen yet:** the whole chain under the
-   row Unclipped. Spazzo's nameplate quests are his own per-hero behaviour icons, no tooltips (a
+   above and below the row - still cut. **Step 8 draws whole** (270d4a4): the whole chain
+   under the row Unclipped - each link clips, every one must be freed. **Step 9, not seen
+   yet:** the far lift again, to a line above the panel. Spazzo's nameplate quests are his own per-hero behaviour icons, no tooltips (a
    fallback only; see blizzard-fixes).
    **TEMPORARY:** Blizzard's kill feed is hidden for testing (FCJH_Hidden, `FCJH_KeepHidden`'s
    KillLogPanel controller; user, 2026-10-16). Take it out before release.

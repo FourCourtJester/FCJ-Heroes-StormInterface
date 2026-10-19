@@ -70,7 +70,15 @@
      QuestContainerContainerFrame, BaseQuestCenterFrame and the icon (3b freed only the icon
      and its parts, and its ancestors may each clip). Whole now: the chain was clipped link
      by link, and a far lift needs it all Unclipped. Still cut: Unclipped can't get past the
-     row - the row must travel. -->
+     row - the row must travel.
+     Seen (user, 2026-10-19, 270d4a4, screenshot): "that worked" - the icons drawn whole
+     across the row line. Clipped link by link; Unclipped all the way down frees them.
+
+     Step 9, one change: step 3's far lift again with the chain freed - each row's first
+     quest icon (the second follows it) re-anchored to the screen, a line above the panel
+     220 down, blue's five then red's. Shows and fills: icons can go anywhere, and our
+     ctrl-1 pane can borrow them. Cut at the panel's edge: the frames above the row
+     (PlayerFrame, TabControl, HeroLeaderPanelContainer) clip too. -->
 <Desc>
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<Frame type="Frame" name="UIContainer">
@@ -102,10 +110,10 @@
 														<Unclipped val="true"/>
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
 															<Unclipped val="true"/>
-															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
-															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
-															<Anchor side="Top" relative="$parent" pos="Mid" offset="-30"/>
-															<Anchor side="Bottom" relative="$parent" pos="Mid" offset="-30"/>
+															<Anchor side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="220"/>
+															<Anchor side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="100"/>
+															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="288"/>
+															<Anchor side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="168"/>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -132,10 +140,10 @@
 														<Unclipped val="true"/>
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
 															<Unclipped val="true"/>
-															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
-															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
-															<Anchor side="Top" relative="$parent" pos="Mid" offset="-30"/>
-															<Anchor side="Bottom" relative="$parent" pos="Mid" offset="-30"/>
+															<Anchor side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="220"/>
+															<Anchor side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="270"/>
+															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="288"/>
+															<Anchor side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="338"/>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -162,10 +170,10 @@
 														<Unclipped val="true"/>
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
 															<Unclipped val="true"/>
-															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
-															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
-															<Anchor side="Top" relative="$parent" pos="Mid" offset="-30"/>
-															<Anchor side="Bottom" relative="$parent" pos="Mid" offset="-30"/>
+															<Anchor side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="220"/>
+															<Anchor side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="440"/>
+															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="288"/>
+															<Anchor side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="508"/>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -192,10 +200,10 @@
 														<Unclipped val="true"/>
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
 															<Unclipped val="true"/>
-															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
-															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
-															<Anchor side="Top" relative="$parent" pos="Mid" offset="-30"/>
-															<Anchor side="Bottom" relative="$parent" pos="Mid" offset="-30"/>
+															<Anchor side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="220"/>
+															<Anchor side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="610"/>
+															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="288"/>
+															<Anchor side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="678"/>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -222,10 +230,10 @@
 														<Unclipped val="true"/>
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
 															<Unclipped val="true"/>
-															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
-															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
-															<Anchor side="Top" relative="$parent" pos="Mid" offset="-30"/>
-															<Anchor side="Bottom" relative="$parent" pos="Mid" offset="-30"/>
+															<Anchor side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="220"/>
+															<Anchor side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="780"/>
+															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="288"/>
+															<Anchor side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="848"/>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -252,10 +260,10 @@
 														<Unclipped val="true"/>
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
 															<Unclipped val="true"/>
-															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
-															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
-															<Anchor side="Top" relative="$parent" pos="Mid" offset="-30"/>
-															<Anchor side="Bottom" relative="$parent" pos="Mid" offset="-30"/>
+															<Anchor side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="220"/>
+															<Anchor side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="950"/>
+															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="288"/>
+															<Anchor side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1018"/>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -282,10 +290,10 @@
 														<Unclipped val="true"/>
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
 															<Unclipped val="true"/>
-															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
-															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
-															<Anchor side="Top" relative="$parent" pos="Mid" offset="-30"/>
-															<Anchor side="Bottom" relative="$parent" pos="Mid" offset="-30"/>
+															<Anchor side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="220"/>
+															<Anchor side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1120"/>
+															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="288"/>
+															<Anchor side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1188"/>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -312,10 +320,10 @@
 														<Unclipped val="true"/>
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
 															<Unclipped val="true"/>
-															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
-															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
-															<Anchor side="Top" relative="$parent" pos="Mid" offset="-30"/>
-															<Anchor side="Bottom" relative="$parent" pos="Mid" offset="-30"/>
+															<Anchor side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="220"/>
+															<Anchor side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1290"/>
+															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="288"/>
+															<Anchor side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1358"/>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -342,10 +350,10 @@
 														<Unclipped val="true"/>
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
 															<Unclipped val="true"/>
-															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
-															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
-															<Anchor side="Top" relative="$parent" pos="Mid" offset="-30"/>
-															<Anchor side="Bottom" relative="$parent" pos="Mid" offset="-30"/>
+															<Anchor side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="220"/>
+															<Anchor side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1460"/>
+															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="288"/>
+															<Anchor side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1528"/>
 														</Frame>
 													</Frame>
 												</Frame>
@@ -372,10 +380,10 @@
 														<Unclipped val="true"/>
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
 															<Unclipped val="true"/>
-															<Anchor side="Left" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
-															<Anchor side="Right" relative="$ancestor[@type=TabControl]/TalentsContainerFrame/ButtonQuest" pos="Mid" offset="-150"/>
-															<Anchor side="Top" relative="$parent" pos="Mid" offset="-30"/>
-															<Anchor side="Bottom" relative="$parent" pos="Mid" offset="-30"/>
+															<Anchor side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="220"/>
+															<Anchor side="Left" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1630"/>
+															<Anchor side="Bottom" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="288"/>
+															<Anchor side="Right" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="1698"/>
 														</Frame>
 													</Frame>
 												</Frame>
