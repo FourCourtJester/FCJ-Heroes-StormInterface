@@ -2049,58 +2049,58 @@ def pet_death_bindings(cfg, team_frame, i):
     return out
 
 
-# On fire: Blizzard's own flames (the in-game top bar's, partyframe.stormlayout
-# OnFireCutsceneFrame: SharedOnFireVFX's template playing GameUI_OnFirePartyFrame), in a frame of
-# our own on the plate. The party cell's own can't be moved here: the game hides the in-game top
-# bar for an observer. Ours plays on the party cell's events, which do reach an observer (the
-# test squares, read 2026-10-19: Embers, Inferno, End, and the side, Left/Right). The colour
-# comes from the cutscene's Ally/Enemy filters, sent only to the hero's own team / its enemies,
-# so an observer gets neither: we set them, Ally (blue's flames) on blue and Enemy on red, with
-# the side Blizzard gives each (Left = Order = blue). Placed as Blizzard places it on the
-# IconFrame (the cell's glass, top 0): 185 x 100 units, 30 left of the cell (red 34), centred 14
-# below its middle - Blizzard's flames are wider than a plate, by design.
-ONFIRE_LEVELS = {"OnFireEmbers": "Embers Start", "OnFireInferno": "Inferno Start", "OnFireEnd": "Death"}
+# On fire: Blizzard's leader-panel glow (heroleaderpanel.stormlayout OnFireAnimTemplate: the
+# Tab panel's on-fire stat, @UI/Storm_UI_InGame_Leader_OnFire_Glow pulsing, sparkles rising,
+# team colour from its SetBlue / SetRed events), kept inside the plate. Blizzard's own top-bar
+# flames (6420bd3: SharedOnFireVFX's GameUI_OnFirePartyFrame cutscene, as partyframe places it)
+# played for an observer but spilled past the plate (user, 2026-10-19: "Kinda looks goofy but
+# it did emit"). It plays on the party cell's events, which reach an observer (the test squares,
+# read 2026-10-19): Embers at part strength, Inferno at full, End off. The template
+# draws its glow 40 units past each side of its frame, its base on the frame's bottom: our frame
+# sits 40 in from each side of the cell, its bottom on the portrait's, so the glow spans the
+# cell and rises over the portrait.
+ONFIRE_LEVELS = {"OnFireEmbers": 150, "OnFireInferno": 255, "OnFireEnd": 0}
+ONFIRE_SPILL = 40               # OnFireAnimTemplate's OnFireBg: Left -40, Right +40
 
 
 def onfire_flames(cfg, blue, cell):
     c = HeroCell(cfg)
     k = c.w / c.W
     s = lambda v: round(v * k)
-    mid = c.H / 2 + 14
-    left = -30 if blue else -34
-    colour, other = ("Ally", "Enemy") if blue else ("Enemy", "Ally")
-    side, away = ("Left", "Right") if blue else ("Right", "Left")
     t = "\t" * 7
-    filters = (f'\n{t}\t\t\t<Key type="Cutscene" time="0" action="AddFilter" filter="{colour}"/>'
-               f'\n{t}\t\t\t<Key type="Cutscene" time="0" action="RemoveFilter" filter="{other}"/>'
-               f'\n{t}\t\t\t<Key type="Cutscene" time="0" action="AddFilter" filter="{side}"/>'
-               f'\n{t}\t\t\t<Key type="Cutscene" time="0" action="RemoveFilter" filter="{away}"/>'
-               f'\n{t}\t\t\t<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>')
     anims = ""
-    for event, bookmark in ONFIRE_LEVELS.items():
+    for event, alpha in ONFIRE_LEVELS.items():
         end = event == "OnFireEnd"
-        vis = (f'\n{t}\t\t\t<Key type="Bool" time="5.0" value="False"/>' if end
+        vis = (f'\n{t}\t\t\t<Key type="Bool" time="0" value="False"/>' if end
                else f'\n{t}\t\t\t<Key type="Bool" time="0" value="True"/>')
+        colour = "" if end else f"""
+{t}\t\t<Controller type="Event" end="Pause" frame="OnFireAnim">
+{t}\t\t\t<Key type="Event" time="0" event="{'SetBlue' if blue else 'SetRed'}"/>
+{t}\t\t</Controller>"""
         anims += f"""
 {t}\t<Animation name="FCJH_{event}">
 {t}\t\t<Event event="{event}" action="Reset,Play" frame="{cell}/OnFireCutsceneFrame"/>
-{t}\t\t<Controller type="Visibility" end="Pause">{vis}
+{t}\t\t<Controller type="Visibility" end="Pause" frame="OnFireAnim">{vis}
 {t}\t\t</Controller>
-{t}\t\t<Controller type="Cutscene" end="Stop">{"" if end else filters}
-{t}\t\t\t<Key type="Cutscene" time="0" action="Bookmark" bookmark="{bookmark}"/>
-{t}\t\t\t<Key type="Cutscene" time="0" action="Play"/>
-{t}\t\t</Controller>
+{t}\t\t<Controller type="Fade" end="Pause">
+{t}\t\t\t<Key type="Curve" time="0" value="{{prev}}"/>
+{t}\t\t\t<Key type="Curve" time="0.5" value="{alpha}"/>
+{t}\t\t</Controller>{colour}
 {t}\t</Animation>"""
+    # Embers fades in from nothing, Inferno up from Embers; End switches off at once
+    for prev in (0, ONFIRE_LEVELS["OnFireEmbers"], 0):
+        anims = anims.replace("{prev}", str(prev), 1)
     return f"""
-{t}<Frame type="CutsceneFrame" name="FCJH_OnFire" template="SharedOnFireVFX/OnFireCutsceneFrameTemplate">
-{t}\t<Anchor side="Top"    relative="$parent" pos="Min" offset="{s(mid - 50)}"/>
-{t}\t<Anchor side="Left"   relative="$parent" pos="Min" offset="{s(left)}"/>
-{t}\t<Anchor side="Bottom" relative="$parent" pos="Min" offset="{s(mid + 50)}"/>
-{t}\t<Anchor side="Right"  relative="$parent" pos="Min" offset="{s(left + 185)}"/>
-{t}\t<File val="Cutscenes/GameUI_OnFirePartyFrame.StormCutscene"/>
-{t}\t<Unclipped val="true"/>
+{t}<Frame type="Frame" name="FCJH_OnFire">
+{t}\t<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+{t}\t<Anchor side="Left"   relative="$parent" pos="Min" offset="{ONFIRE_SPILL}"/>
+{t}\t<Anchor side="Bottom" relative="$parent" pos="Min" offset="{s(c.PORTRAIT_H - 1)}"/>
+{t}\t<Anchor side="Right"  relative="$parent" pos="Min" offset="{s(c.W) - ONFIRE_SPILL}"/>
 {t}\t<AcceptsMouse val="false"/>
-{t}\t<RenderPriority val="528"/>{anims}
+{t}\t<RenderPriority val="528"/>
+{t}\t<Frame type="Frame" name="OnFireAnim" template="HeroLeaderPanel/OnFireAnimTemplate">
+{t}\t\t<Anchor relative="$parent"/>
+{t}\t</Frame>{anims}
 {t}</Frame>"""
 
 
