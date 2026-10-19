@@ -8507,206 +8507,53 @@
 									</Animation>
 								</Frame>
 							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag0">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="10"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="32"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,140,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
+							<Frame type="CutsceneFrame" name="FCJH_OnFire" template="SharedOnFireVFX/OnFireCutsceneFrameTemplate">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-9"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="-46"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="146"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="240"/>
+								<File val="Cutscenes/GameUI_OnFirePartyFrame.StormCutscene"/>
 								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
+								<AcceptsMouse val="false"/>
+								<RenderPriority val="528"/>
+								<Animation name="FCJH_OnFireEmbers">
 									<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Visibility" end="Pause">
+										<Key type="Bool" time="0" value="True"/>
+									</Controller>
+									<Controller type="Cutscene" end="Stop">
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Ally"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Enemy"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Left"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Right"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
+										<Key type="Cutscene" time="0" action="Bookmark" bookmark="Embers Start"/>
+										<Key type="Cutscene" time="0" action="Play"/>
 									</Controller>
 								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag1">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="36"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="58"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,0,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
+								<Animation name="FCJH_OnFireInferno">
 									<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Visibility" end="Pause">
+										<Key type="Bool" time="0" value="True"/>
+									</Controller>
+									<Controller type="Cutscene" end="Stop">
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Ally"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Enemy"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Left"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Right"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
+										<Key type="Cutscene" time="0" action="Bookmark" bookmark="Inferno Start"/>
+										<Key type="Cutscene" time="0" action="Play"/>
 									</Controller>
 								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag2">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="62"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="84"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,128,128,128"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
+								<Animation name="FCJH_OnFireEnd">
 									<Event event="OnFireEnd" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Visibility" end="Pause">
+										<Key type="Bool" time="5.0" value="False"/>
 									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag3">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="88"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="110"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,90,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireAlly" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag4">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="114"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="136"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,120,0,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireEnemy" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag5">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="140"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="162"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,140,210,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireLeft" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag6">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="166"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="188"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,160,160"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireRight" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Cutscene" end="Stop">
+										<Key type="Cutscene" time="0" action="Bookmark" bookmark="Death"/>
+										<Key type="Cutscene" time="0" action="Play"/>
 									</Controller>
 								</Animation>
 							</Frame>
@@ -9274,206 +9121,53 @@
 									</Animation>
 								</Frame>
 							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag0">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="10"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="32"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,140,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
+							<Frame type="CutsceneFrame" name="FCJH_OnFire" template="SharedOnFireVFX/OnFireCutsceneFrameTemplate">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-9"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="-46"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="146"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="240"/>
+								<File val="Cutscenes/GameUI_OnFirePartyFrame.StormCutscene"/>
 								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
+								<AcceptsMouse val="false"/>
+								<RenderPriority val="528"/>
+								<Animation name="FCJH_OnFireEmbers">
 									<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Visibility" end="Pause">
+										<Key type="Bool" time="0" value="True"/>
+									</Controller>
+									<Controller type="Cutscene" end="Stop">
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Ally"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Enemy"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Left"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Right"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
+										<Key type="Cutscene" time="0" action="Bookmark" bookmark="Embers Start"/>
+										<Key type="Cutscene" time="0" action="Play"/>
 									</Controller>
 								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag1">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="36"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="58"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,0,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
+								<Animation name="FCJH_OnFireInferno">
 									<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Visibility" end="Pause">
+										<Key type="Bool" time="0" value="True"/>
+									</Controller>
+									<Controller type="Cutscene" end="Stop">
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Ally"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Enemy"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Left"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Right"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
+										<Key type="Cutscene" time="0" action="Bookmark" bookmark="Inferno Start"/>
+										<Key type="Cutscene" time="0" action="Play"/>
 									</Controller>
 								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag2">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="62"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="84"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,128,128,128"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
+								<Animation name="FCJH_OnFireEnd">
 									<Event event="OnFireEnd" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Visibility" end="Pause">
+										<Key type="Bool" time="5.0" value="False"/>
 									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag3">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="88"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="110"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,90,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireAlly" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag4">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="114"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="136"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,120,0,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireEnemy" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag5">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="140"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="162"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,140,210,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireLeft" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag6">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="166"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="188"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,160,160"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireRight" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Cutscene" end="Stop">
+										<Key type="Cutscene" time="0" action="Bookmark" bookmark="Death"/>
+										<Key type="Cutscene" time="0" action="Play"/>
 									</Controller>
 								</Animation>
 							</Frame>
@@ -10041,206 +9735,53 @@
 									</Animation>
 								</Frame>
 							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag0">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="10"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="32"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,140,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
+							<Frame type="CutsceneFrame" name="FCJH_OnFire" template="SharedOnFireVFX/OnFireCutsceneFrameTemplate">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-9"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="-46"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="146"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="240"/>
+								<File val="Cutscenes/GameUI_OnFirePartyFrame.StormCutscene"/>
 								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
+								<AcceptsMouse val="false"/>
+								<RenderPriority val="528"/>
+								<Animation name="FCJH_OnFireEmbers">
 									<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Visibility" end="Pause">
+										<Key type="Bool" time="0" value="True"/>
+									</Controller>
+									<Controller type="Cutscene" end="Stop">
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Ally"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Enemy"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Left"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Right"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
+										<Key type="Cutscene" time="0" action="Bookmark" bookmark="Embers Start"/>
+										<Key type="Cutscene" time="0" action="Play"/>
 									</Controller>
 								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag1">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="36"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="58"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,0,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
+								<Animation name="FCJH_OnFireInferno">
 									<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Visibility" end="Pause">
+										<Key type="Bool" time="0" value="True"/>
+									</Controller>
+									<Controller type="Cutscene" end="Stop">
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Ally"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Enemy"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Left"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Right"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
+										<Key type="Cutscene" time="0" action="Bookmark" bookmark="Inferno Start"/>
+										<Key type="Cutscene" time="0" action="Play"/>
 									</Controller>
 								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag2">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="62"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="84"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,128,128,128"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
+								<Animation name="FCJH_OnFireEnd">
 									<Event event="OnFireEnd" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Visibility" end="Pause">
+										<Key type="Bool" time="5.0" value="False"/>
 									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag3">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="88"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="110"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,90,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireAlly" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag4">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="114"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="136"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,120,0,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireEnemy" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag5">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="140"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="162"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,140,210,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireLeft" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag6">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="166"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="188"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,160,160"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireRight" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Cutscene" end="Stop">
+										<Key type="Cutscene" time="0" action="Bookmark" bookmark="Death"/>
+										<Key type="Cutscene" time="0" action="Play"/>
 									</Controller>
 								</Animation>
 							</Frame>
@@ -10808,206 +10349,53 @@
 									</Animation>
 								</Frame>
 							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag0">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="10"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="32"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,140,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
+							<Frame type="CutsceneFrame" name="FCJH_OnFire" template="SharedOnFireVFX/OnFireCutsceneFrameTemplate">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-9"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="-46"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="146"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="240"/>
+								<File val="Cutscenes/GameUI_OnFirePartyFrame.StormCutscene"/>
 								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
+								<AcceptsMouse val="false"/>
+								<RenderPriority val="528"/>
+								<Animation name="FCJH_OnFireEmbers">
 									<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Visibility" end="Pause">
+										<Key type="Bool" time="0" value="True"/>
+									</Controller>
+									<Controller type="Cutscene" end="Stop">
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Ally"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Enemy"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Left"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Right"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
+										<Key type="Cutscene" time="0" action="Bookmark" bookmark="Embers Start"/>
+										<Key type="Cutscene" time="0" action="Play"/>
 									</Controller>
 								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag1">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="36"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="58"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,0,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
+								<Animation name="FCJH_OnFireInferno">
 									<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Visibility" end="Pause">
+										<Key type="Bool" time="0" value="True"/>
+									</Controller>
+									<Controller type="Cutscene" end="Stop">
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Ally"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Enemy"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Left"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Right"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
+										<Key type="Cutscene" time="0" action="Bookmark" bookmark="Inferno Start"/>
+										<Key type="Cutscene" time="0" action="Play"/>
 									</Controller>
 								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag2">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="62"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="84"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,128,128,128"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
+								<Animation name="FCJH_OnFireEnd">
 									<Event event="OnFireEnd" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Visibility" end="Pause">
+										<Key type="Bool" time="5.0" value="False"/>
 									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag3">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="88"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="110"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,90,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireAlly" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag4">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="114"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="136"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,120,0,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireEnemy" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag5">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="140"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="162"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,140,210,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireLeft" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag6">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="166"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="188"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,160,160"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireRight" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Cutscene" end="Stop">
+										<Key type="Cutscene" time="0" action="Bookmark" bookmark="Death"/>
+										<Key type="Cutscene" time="0" action="Play"/>
 									</Controller>
 								</Animation>
 							</Frame>
@@ -11575,206 +10963,53 @@
 									</Animation>
 								</Frame>
 							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag0">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="10"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="32"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,140,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
+							<Frame type="CutsceneFrame" name="FCJH_OnFire" template="SharedOnFireVFX/OnFireCutsceneFrameTemplate">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-9"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="-46"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="146"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="240"/>
+								<File val="Cutscenes/GameUI_OnFirePartyFrame.StormCutscene"/>
 								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
+								<AcceptsMouse val="false"/>
+								<RenderPriority val="528"/>
+								<Animation name="FCJH_OnFireEmbers">
 									<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Visibility" end="Pause">
+										<Key type="Bool" time="0" value="True"/>
+									</Controller>
+									<Controller type="Cutscene" end="Stop">
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Ally"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Enemy"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Left"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Right"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
+										<Key type="Cutscene" time="0" action="Bookmark" bookmark="Embers Start"/>
+										<Key type="Cutscene" time="0" action="Play"/>
 									</Controller>
 								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag1">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="36"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="58"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,0,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
+								<Animation name="FCJH_OnFireInferno">
 									<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Visibility" end="Pause">
+										<Key type="Bool" time="0" value="True"/>
+									</Controller>
+									<Controller type="Cutscene" end="Stop">
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Ally"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Enemy"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Left"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Right"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
+										<Key type="Cutscene" time="0" action="Bookmark" bookmark="Inferno Start"/>
+										<Key type="Cutscene" time="0" action="Play"/>
 									</Controller>
 								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag2">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="62"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="84"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,128,128,128"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
+								<Animation name="FCJH_OnFireEnd">
 									<Event event="OnFireEnd" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Visibility" end="Pause">
+										<Key type="Bool" time="5.0" value="False"/>
 									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag3">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="88"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="110"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,90,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireAlly" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag4">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="114"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="136"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,120,0,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireEnemy" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag5">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="140"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="162"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,140,210,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireLeft" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag6">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="166"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="188"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,160,160"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireRight" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Cutscene" end="Stop">
+										<Key type="Cutscene" time="0" action="Bookmark" bookmark="Death"/>
+										<Key type="Cutscene" time="0" action="Play"/>
 									</Controller>
 								</Animation>
 							</Frame>
@@ -12344,206 +11579,53 @@
 									</Animation>
 								</Frame>
 							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag0">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="10"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="32"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,140,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
+							<Frame type="CutsceneFrame" name="FCJH_OnFire" template="SharedOnFireVFX/OnFireCutsceneFrameTemplate">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-9"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="-53"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="146"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="234"/>
+								<File val="Cutscenes/GameUI_OnFirePartyFrame.StormCutscene"/>
 								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
+								<AcceptsMouse val="false"/>
+								<RenderPriority val="528"/>
+								<Animation name="FCJH_OnFireEmbers">
 									<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Visibility" end="Pause">
+										<Key type="Bool" time="0" value="True"/>
+									</Controller>
+									<Controller type="Cutscene" end="Stop">
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Enemy"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Ally"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Right"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Left"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
+										<Key type="Cutscene" time="0" action="Bookmark" bookmark="Embers Start"/>
+										<Key type="Cutscene" time="0" action="Play"/>
 									</Controller>
 								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag1">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="36"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="58"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,0,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
+								<Animation name="FCJH_OnFireInferno">
 									<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Visibility" end="Pause">
+										<Key type="Bool" time="0" value="True"/>
+									</Controller>
+									<Controller type="Cutscene" end="Stop">
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Enemy"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Ally"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Right"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Left"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
+										<Key type="Cutscene" time="0" action="Bookmark" bookmark="Inferno Start"/>
+										<Key type="Cutscene" time="0" action="Play"/>
 									</Controller>
 								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag2">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="62"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="84"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,128,128,128"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
+								<Animation name="FCJH_OnFireEnd">
 									<Event event="OnFireEnd" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Visibility" end="Pause">
+										<Key type="Bool" time="5.0" value="False"/>
 									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag3">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="88"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="110"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,90,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireAlly" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag4">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="114"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="136"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,120,0,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireEnemy" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag5">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="140"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="162"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,140,210,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireLeft" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag6">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="166"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="188"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,160,160"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireRight" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Cutscene" end="Stop">
+										<Key type="Cutscene" time="0" action="Bookmark" bookmark="Death"/>
+										<Key type="Cutscene" time="0" action="Play"/>
 									</Controller>
 								</Animation>
 							</Frame>
@@ -13114,206 +12196,53 @@
 									</Animation>
 								</Frame>
 							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag0">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="10"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="32"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,140,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
+							<Frame type="CutsceneFrame" name="FCJH_OnFire" template="SharedOnFireVFX/OnFireCutsceneFrameTemplate">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-9"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="-53"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="146"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="234"/>
+								<File val="Cutscenes/GameUI_OnFirePartyFrame.StormCutscene"/>
 								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
+								<AcceptsMouse val="false"/>
+								<RenderPriority val="528"/>
+								<Animation name="FCJH_OnFireEmbers">
 									<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Visibility" end="Pause">
+										<Key type="Bool" time="0" value="True"/>
+									</Controller>
+									<Controller type="Cutscene" end="Stop">
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Enemy"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Ally"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Right"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Left"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
+										<Key type="Cutscene" time="0" action="Bookmark" bookmark="Embers Start"/>
+										<Key type="Cutscene" time="0" action="Play"/>
 									</Controller>
 								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag1">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="36"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="58"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,0,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
+								<Animation name="FCJH_OnFireInferno">
 									<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Visibility" end="Pause">
+										<Key type="Bool" time="0" value="True"/>
+									</Controller>
+									<Controller type="Cutscene" end="Stop">
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Enemy"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Ally"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Right"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Left"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
+										<Key type="Cutscene" time="0" action="Bookmark" bookmark="Inferno Start"/>
+										<Key type="Cutscene" time="0" action="Play"/>
 									</Controller>
 								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag2">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="62"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="84"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,128,128,128"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
+								<Animation name="FCJH_OnFireEnd">
 									<Event event="OnFireEnd" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Visibility" end="Pause">
+										<Key type="Bool" time="5.0" value="False"/>
 									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag3">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="88"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="110"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,90,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireAlly" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag4">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="114"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="136"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,120,0,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireEnemy" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag5">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="140"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="162"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,140,210,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireLeft" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag6">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="166"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="188"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,160,160"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireRight" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Cutscene" end="Stop">
+										<Key type="Cutscene" time="0" action="Bookmark" bookmark="Death"/>
+										<Key type="Cutscene" time="0" action="Play"/>
 									</Controller>
 								</Animation>
 							</Frame>
@@ -13884,206 +12813,53 @@
 									</Animation>
 								</Frame>
 							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag0">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="10"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="32"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,140,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
+							<Frame type="CutsceneFrame" name="FCJH_OnFire" template="SharedOnFireVFX/OnFireCutsceneFrameTemplate">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-9"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="-53"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="146"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="234"/>
+								<File val="Cutscenes/GameUI_OnFirePartyFrame.StormCutscene"/>
 								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
+								<AcceptsMouse val="false"/>
+								<RenderPriority val="528"/>
+								<Animation name="FCJH_OnFireEmbers">
 									<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Visibility" end="Pause">
+										<Key type="Bool" time="0" value="True"/>
+									</Controller>
+									<Controller type="Cutscene" end="Stop">
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Enemy"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Ally"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Right"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Left"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
+										<Key type="Cutscene" time="0" action="Bookmark" bookmark="Embers Start"/>
+										<Key type="Cutscene" time="0" action="Play"/>
 									</Controller>
 								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag1">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="36"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="58"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,0,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
+								<Animation name="FCJH_OnFireInferno">
 									<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Visibility" end="Pause">
+										<Key type="Bool" time="0" value="True"/>
+									</Controller>
+									<Controller type="Cutscene" end="Stop">
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Enemy"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Ally"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Right"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Left"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
+										<Key type="Cutscene" time="0" action="Bookmark" bookmark="Inferno Start"/>
+										<Key type="Cutscene" time="0" action="Play"/>
 									</Controller>
 								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag2">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="62"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="84"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,128,128,128"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
+								<Animation name="FCJH_OnFireEnd">
 									<Event event="OnFireEnd" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Visibility" end="Pause">
+										<Key type="Bool" time="5.0" value="False"/>
 									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag3">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="88"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="110"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,90,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireAlly" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag4">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="114"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="136"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,120,0,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireEnemy" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag5">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="140"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="162"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,140,210,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireLeft" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag6">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="166"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="188"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,160,160"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireRight" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Cutscene" end="Stop">
+										<Key type="Cutscene" time="0" action="Bookmark" bookmark="Death"/>
+										<Key type="Cutscene" time="0" action="Play"/>
 									</Controller>
 								</Animation>
 							</Frame>
@@ -14654,206 +13430,53 @@
 									</Animation>
 								</Frame>
 							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag0">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="10"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="32"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,140,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
+							<Frame type="CutsceneFrame" name="FCJH_OnFire" template="SharedOnFireVFX/OnFireCutsceneFrameTemplate">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-9"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="-53"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="146"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="234"/>
+								<File val="Cutscenes/GameUI_OnFirePartyFrame.StormCutscene"/>
 								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
+								<AcceptsMouse val="false"/>
+								<RenderPriority val="528"/>
+								<Animation name="FCJH_OnFireEmbers">
 									<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Visibility" end="Pause">
+										<Key type="Bool" time="0" value="True"/>
+									</Controller>
+									<Controller type="Cutscene" end="Stop">
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Enemy"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Ally"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Right"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Left"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
+										<Key type="Cutscene" time="0" action="Bookmark" bookmark="Embers Start"/>
+										<Key type="Cutscene" time="0" action="Play"/>
 									</Controller>
 								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag1">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="36"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="58"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,0,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
+								<Animation name="FCJH_OnFireInferno">
 									<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Visibility" end="Pause">
+										<Key type="Bool" time="0" value="True"/>
+									</Controller>
+									<Controller type="Cutscene" end="Stop">
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Enemy"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Ally"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Right"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Left"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
+										<Key type="Cutscene" time="0" action="Bookmark" bookmark="Inferno Start"/>
+										<Key type="Cutscene" time="0" action="Play"/>
 									</Controller>
 								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag2">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="62"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="84"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,128,128,128"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
+								<Animation name="FCJH_OnFireEnd">
 									<Event event="OnFireEnd" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Visibility" end="Pause">
+										<Key type="Bool" time="5.0" value="False"/>
 									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag3">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="88"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="110"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,90,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireAlly" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag4">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="114"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="136"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,120,0,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireEnemy" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag5">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="140"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="162"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,140,210,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireLeft" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag6">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="166"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="188"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,160,160"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireRight" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Cutscene" end="Stop">
+										<Key type="Cutscene" time="0" action="Bookmark" bookmark="Death"/>
+										<Key type="Cutscene" time="0" action="Play"/>
 									</Controller>
 								</Animation>
 							</Frame>
@@ -15424,206 +14047,53 @@
 									</Animation>
 								</Frame>
 							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag0">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="10"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="32"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,140,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
+							<Frame type="CutsceneFrame" name="FCJH_OnFire" template="SharedOnFireVFX/OnFireCutsceneFrameTemplate">
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="-9"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="-53"/>
+								<Anchor side="Bottom" relative="$parent" pos="Min" offset="146"/>
+								<Anchor side="Right"  relative="$parent" pos="Min" offset="234"/>
+								<File val="Cutscenes/GameUI_OnFirePartyFrame.StormCutscene"/>
 								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
+								<AcceptsMouse val="false"/>
+								<RenderPriority val="528"/>
+								<Animation name="FCJH_OnFireEmbers">
 									<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Visibility" end="Pause">
+										<Key type="Bool" time="0" value="True"/>
+									</Controller>
+									<Controller type="Cutscene" end="Stop">
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Enemy"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Ally"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Right"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Left"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
+										<Key type="Cutscene" time="0" action="Bookmark" bookmark="Embers Start"/>
+										<Key type="Cutscene" time="0" action="Play"/>
 									</Controller>
 								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag1">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="36"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="58"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,0,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
+								<Animation name="FCJH_OnFireInferno">
 									<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Visibility" end="Pause">
+										<Key type="Bool" time="0" value="True"/>
+									</Controller>
+									<Controller type="Cutscene" end="Stop">
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Enemy"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Ally"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Right"/>
+										<Key type="Cutscene" time="0" action="RemoveFilter" filter="Left"/>
+										<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
+										<Key type="Cutscene" time="0" action="Bookmark" bookmark="Inferno Start"/>
+										<Key type="Cutscene" time="0" action="Play"/>
 									</Controller>
 								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag2">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="62"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="84"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,128,128,128"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
+								<Animation name="FCJH_OnFireEnd">
 									<Event event="OnFireEnd" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Visibility" end="Pause">
+										<Key type="Bool" time="5.0" value="False"/>
 									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag3">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="88"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="110"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,0,90,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireAlly" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag4">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="114"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="136"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,120,0,0"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireEnemy" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag5">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="140"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="162"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,140,210,255"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireLeft" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
-									</Controller>
-								</Animation>
-							</Frame>
-							<Frame type="Image" name="FCJH_FireDiag6">
-								<Anchor side="Top" relative="$parent" pos="Min" offset="6"/>
-								<Anchor side="Left" relative="$parent" pos="Min" offset="166"/>
-								<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-								<Anchor side="Right" relative="$parent" pos="Min" offset="188"/>
-								<Texture val="@UI/PauseScreenDimImage"/>
-								<ColorAdjustMode val="Fill"/>
-								<AdjustmentColor val="255,255,160,160"/>
-								<RenderPriority val="700"/>
-								<AcceptsMouse val="false"/>
-								<Alpha val="0"/>
-								<Unclipped val="true"/>
-								<Animation name="FCJH_Seen">
-									<Event event="OnFireRight" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/OnFireCutsceneFrame"/>
-									<Controller type="Fade" end="Pause">
-										<Key type="Curve" time="0.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="0.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="2.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="3.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="3.5" value="0" inout="Linear"/>
-										<Key type="Curve" time="4.0" value="255" inout="Linear"/>
-										<Key type="Curve" time="20" value="255" inout="Linear"/>
-										<Key type="Curve" time="20.01" value="0" inout="Linear"/>
+									<Controller type="Cutscene" end="Stop">
+										<Key type="Cutscene" time="0" action="Bookmark" bookmark="Death"/>
+										<Key type="Cutscene" time="0" action="Play"/>
 									</Controller>
 								</Animation>
 							</Frame>

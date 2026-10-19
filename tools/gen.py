@@ -1987,7 +1987,7 @@ def heroic_panel(cfg, team_frame, i):
 """
 
 
-def pet_death_bindings(team_frame, i):
+def pet_death_bindings(cfg, team_frame, i):
     """Per cell: our per-unit death timers show the hidden party frame's matching label (same
     team and cell), and the plate's own timer steps aside while any Viking's shows."""
     cell = f"{PARTY}/{team_frame}/HeroOverview{i}"
@@ -2045,50 +2045,63 @@ def pet_death_bindings(team_frame, i):
 										</Controller>
 									</Animation>
 								</Frame>
-							</Frame>{onfire_diagnostics(cell)}"""
+							</Frame>{onfire_flames(cfg, team_frame == 'Team1HeroOverview', cell)}"""
     return out
 
 
-# Test build (2026-10-16), kept until a replay where someone was surely on fire (user: shelved
-# till then): one square per on-fire event across the plate's portrait, each lit when it
-# arrives. Made big and blinking, then held 20 s (user, 2026-10-19: "move them to somewhere i
-# will very obviously notice them"): at 10 units for 6 s along the top they went unseen. Blizzard sends these to the party cell's OnFireCutsceneFrame (uilib.galaxy
-# libUIUI_gf_UIOnFireSetOnFireType/Level): the levels, Left (Order, blue) / Right (Chaos, red)
-# to everyone; Ally / Enemy only to the hero's allies / enemies, so an observer may see neither.
-# The respawn, hearthstone and split-portrait squares above them are answered and gone
-# (2026-10-16): the respawn events reach the party cell only; the hearthstone's go to the
-# hero's team only (docs/blizzard-fixes.md); the split portraits draw white for observers.
-ONFIRE_DIAGNOSTICS = [
-    ("255,255,140,0", [("OnFireEmbers", "fire")]),                              # orange
-    ("255,255,0,0", [("OnFireInferno", "fire")]),                               # red
-    ("255,128,128,128", [("OnFireEnd", "fire")]),                               # grey
-    ("255,0,90,255", [("OnFireAlly", "fire")]),                                 # blue
-    ("255,120,0,0", [("OnFireEnemy", "fire")]),                                 # dark red
-    ("255,140,210,255", [("OnFireLeft", "fire")]),                              # light blue
-    ("255,255,160,160", [("OnFireRight", "fire")]),                             # light red
-]
+# On fire: Blizzard's own flames (the in-game top bar's, partyframe.stormlayout
+# OnFireCutsceneFrame: SharedOnFireVFX's template playing GameUI_OnFirePartyFrame), in a frame of
+# our own on the plate. The party cell's own can't be moved here: the game hides the in-game top
+# bar for an observer. Ours plays on the party cell's events, which do reach an observer (the
+# test squares, read 2026-10-19: Embers, Inferno, End, and the side, Left/Right). The colour
+# comes from the cutscene's Ally/Enemy filters, sent only to the hero's own team / its enemies,
+# so an observer gets neither: we set them, Ally (blue's flames) on blue and Enemy on red, with
+# the side Blizzard gives each (Left = Order = blue). Placed as Blizzard places it on the
+# IconFrame (the cell's glass, top 0): 185 x 100 units, 30 left of the cell (red 34), centred 14
+# below its middle - Blizzard's flames are wider than a plate, by design.
+ONFIRE_LEVELS = {"OnFireEmbers": "Embers Start", "OnFireInferno": "Inferno Start", "OnFireEnd": "Death"}
 
 
-def onfire_diagnostics(cell):
-    out = ""
-    src_frame = {"fire": f"{cell}/OnFireCutsceneFrame"}
-    squares = [("FCJH_FireDiag", 6, j, sq) for j, sq in enumerate(ONFIRE_DIAGNOSTICS)]
-    size, pitch = 22, 26
-    blink = "".join(f'\n\t\t\t\t\t\t\t\t\t\t<Key type="Curve" time="{t / 2}" value="{0 if t % 2 else 255}" inout="Linear"/>'
-                    for t in range(9))
-    for prefix, top, j, (colour, events) in squares:
-        x = 10 + pitch * j
-        evs = "".join(f'\n\t\t\t\t\t\t\t\t\t<Event event="{e}" action="Reset,Play" frame="{src_frame[src]}"/>'
-                      for e, src in events)
-        extra = (f'\n\t\t\t\t\t\t\t\t<Alpha val="0"/>\n\t\t\t\t\t\t\t\t<Unclipped val="true"/>'
-                 f'\n\t\t\t\t\t\t\t\t<Animation name="FCJH_Seen">{evs}'
-                 '\n\t\t\t\t\t\t\t\t\t<Controller type="Fade" end="Pause">' + blink +
-                 '\n\t\t\t\t\t\t\t\t\t\t<Key type="Curve" time="20" value="255" inout="Linear"/>'
-                 '\n\t\t\t\t\t\t\t\t\t\t<Key type="Curve" time="20.01" value="0" inout="Linear"/>'
-                 '\n\t\t\t\t\t\t\t\t\t</Controller>\n\t\t\t\t\t\t\t\t</Animation>')
-        out += "\n" + fill_image(f"{prefix}{j}", box(("Min", top), ("Min", x), ("Min", top + size), ("Min", x + size)),
-                                  colour, 700, 7, extra).rstrip("\n")
-    return out
+def onfire_flames(cfg, blue, cell):
+    c = HeroCell(cfg)
+    k = c.w / c.W
+    s = lambda v: round(v * k)
+    mid = c.H / 2 + 14
+    left = -30 if blue else -34
+    colour, other = ("Ally", "Enemy") if blue else ("Enemy", "Ally")
+    side, away = ("Left", "Right") if blue else ("Right", "Left")
+    t = "\t" * 7
+    filters = (f'\n{t}\t\t\t<Key type="Cutscene" time="0" action="AddFilter" filter="{colour}"/>'
+               f'\n{t}\t\t\t<Key type="Cutscene" time="0" action="RemoveFilter" filter="{other}"/>'
+               f'\n{t}\t\t\t<Key type="Cutscene" time="0" action="AddFilter" filter="{side}"/>'
+               f'\n{t}\t\t\t<Key type="Cutscene" time="0" action="RemoveFilter" filter="{away}"/>'
+               f'\n{t}\t\t\t<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>')
+    anims = ""
+    for event, bookmark in ONFIRE_LEVELS.items():
+        end = event == "OnFireEnd"
+        vis = (f'\n{t}\t\t\t<Key type="Bool" time="5.0" value="False"/>' if end
+               else f'\n{t}\t\t\t<Key type="Bool" time="0" value="True"/>')
+        anims += f"""
+{t}\t<Animation name="FCJH_{event}">
+{t}\t\t<Event event="{event}" action="Reset,Play" frame="{cell}/OnFireCutsceneFrame"/>
+{t}\t\t<Controller type="Visibility" end="Pause">{vis}
+{t}\t\t</Controller>
+{t}\t\t<Controller type="Cutscene" end="Stop">{"" if end else filters}
+{t}\t\t\t<Key type="Cutscene" time="0" action="Bookmark" bookmark="{bookmark}"/>
+{t}\t\t\t<Key type="Cutscene" time="0" action="Play"/>
+{t}\t\t</Controller>
+{t}\t</Animation>"""
+    return f"""
+{t}<Frame type="CutsceneFrame" name="FCJH_OnFire" template="SharedOnFireVFX/OnFireCutsceneFrameTemplate">
+{t}\t<Anchor side="Top"    relative="$parent" pos="Min" offset="{s(mid - 50)}"/>
+{t}\t<Anchor side="Left"   relative="$parent" pos="Min" offset="{s(left)}"/>
+{t}\t<Anchor side="Bottom" relative="$parent" pos="Min" offset="{s(mid + 50)}"/>
+{t}\t<Anchor side="Right"  relative="$parent" pos="Min" offset="{s(left + 185)}"/>
+{t}\t<File val="Cutscenes/GameUI_OnFirePartyFrame.StormCutscene"/>
+{t}\t<Unclipped val="true"/>
+{t}\t<AcceptsMouse val="false"/>
+{t}\t<RenderPriority val="528"/>{anims}
+{t}</Frame>"""
 
 
 def health_sensor(cfg):
@@ -3239,7 +3252,7 @@ def hero_row_layout(cfg):
             # flipping it - the inner cell's portrait then spilled over the outer cell's bars.
             prio = 506 - i if blue else 500 + i
             inner.append(f'''						<Frame type="Frame" name="HeroOverview{i}" template="FCJH_HeroRow/{"FCJH_HeroCell" if blue else "FCJH_HeroCellRed"}">{anchor_xml(cfg, f"hero_{slot}", 7)}
-							<RenderPriority val="{prio}"/>{pet_death_bindings(team, i)}{heroic_panel(cfg, team, i)}
+							<RenderPriority val="{prio}"/>{pet_death_bindings(cfg, team, i)}{heroic_panel(cfg, team, i)}
 						</Frame>''')
         cells.append(f'\t\t\t\t\t<Frame type="Frame" name="{team}">\n' + "\n".join(inner) + '\n\t\t\t\t\t</Frame>')
 
