@@ -639,6 +639,16 @@ from their plates (docs/blizzard-fixes.md).
    an older shot of the same plates, a soft white mound rises from the bottom of each half.
    So it always drew: it's just faint (near-white, mostly 10-60% opaque, over a portrait), and
    fainter still at Embers 200 or under a team fill. Both routes load it.
+   **Test 2 (0c9803c, seen 2026-10-19; user: "ill just let you figure this one out"):**
+   Blizzard's flames back, always on (Inferno), one variant per plate, left to right on both
+   teams. All drew, team colours right where they have them: (1) the top-bar flames shrunk to
+   the portrait - thin wisps over the face; (2) the same at Blizzard's size, NOT Unclipped,
+   in a portrait-sized parent - clipped: a team-coloured rim round the portrait, flames inside
+   (so a parent does cut a cutscene off); (3) the kill feed's flames - a white hexagon, no
+   use; (4) the overhead bar's - big, orange on both teams, spilling well above; (5) 6420bd3's
+   control - spills. **Chosen: (2)**, on every plate, back on the fire events (Embers/Inferno
+   bookmarks, End plays Blizzard's dying-out then hides at 5 s). Not seen yet: check on a hero
+   on fire - the rim and flames show, stay on the portrait, and go out on End.
    The intro waits for the user's OBS plan. The items as the user gave them:
    - **The chrome's slant against Blizzard's art** (user, 2026-10-17): the row frame's slants
      don't gel with the art's: the portraits' edges, the heroic badges, the fountain icons and

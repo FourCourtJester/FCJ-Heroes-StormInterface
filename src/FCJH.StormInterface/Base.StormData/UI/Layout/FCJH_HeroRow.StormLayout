@@ -8513,16 +8513,30 @@
 								<Anchor side="Bottom" relative="$parent" pos="Min" offset="85"/>
 								<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
 								<AcceptsMouse val="false"/>
-								<Frame type="CutsceneFrame" name="FCJH_OnFirePartyFit" template="SharedOnFireVFX/OnFireCutsceneFrameTemplate">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="85"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
+								<Frame type="CutsceneFrame" name="FCJH_OnFireFlames" template="SharedOnFireVFX/OnFireCutsceneFrameTemplate">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="-9"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="-46"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="146"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="240"/>
 									<File val="Cutscenes/GameUI_OnFirePartyFrame.StormCutscene"/>
-									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
-									<Animation name="FCJH_OnFireTest">
-										<Event event="OnShown" action="Reset,Play" frame="$parent"/>
+									<Animation name="FCJH_OnFireEmbers">
+										<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/OnFireCutsceneFrame"/>
+										<Controller type="Visibility" end="Pause">
+											<Key type="Bool" time="0" value="True"/>
+										</Controller>
+										<Controller type="Cutscene" end="Stop">
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Ally"/>
+											<Key type="Cutscene" time="0" action="RemoveFilter" filter="Enemy"/>
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Left"/>
+											<Key type="Cutscene" time="0" action="RemoveFilter" filter="Right"/>
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
+											<Key type="Cutscene" time="0" action="Bookmark" bookmark="Embers Start"/>
+											<Key type="Cutscene" time="0" action="Play"/>
+										</Controller>
+									</Animation>
+									<Animation name="FCJH_OnFireInferno">
+										<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/OnFireCutsceneFrame"/>
 										<Controller type="Visibility" end="Pause">
 											<Key type="Bool" time="0" value="True"/>
 										</Controller>
@@ -8533,6 +8547,16 @@
 											<Key type="Cutscene" time="0" action="RemoveFilter" filter="Right"/>
 											<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
 											<Key type="Cutscene" time="0" action="Bookmark" bookmark="Inferno Start"/>
+											<Key type="Cutscene" time="0" action="Play"/>
+										</Controller>
+									</Animation>
+									<Animation name="FCJH_OnFireEnd">
+										<Event event="OnFireEnd" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/OnFireCutsceneFrame"/>
+										<Controller type="Visibility" end="Pause">
+											<Key type="Bool" time="5.0" value="False"/>
+										</Controller>
+										<Controller type="Cutscene" end="Stop">
+											<Key type="Cutscene" time="0" action="Bookmark" bookmark="Death"/>
 											<Key type="Cutscene" time="0" action="Play"/>
 										</Controller>
 									</Animation>
@@ -9108,15 +9132,30 @@
 								<Anchor side="Bottom" relative="$parent" pos="Min" offset="85"/>
 								<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
 								<AcceptsMouse val="false"/>
-								<Frame type="CutsceneFrame" name="FCJH_OnFirePartyClip" template="SharedOnFireVFX/OnFireCutsceneFrameTemplate">
+								<Frame type="CutsceneFrame" name="FCJH_OnFireFlames" template="SharedOnFireVFX/OnFireCutsceneFrameTemplate">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="-9"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="-46"/>
 									<Anchor side="Bottom" relative="$parent" pos="Min" offset="146"/>
 									<Anchor side="Right"  relative="$parent" pos="Min" offset="240"/>
 									<File val="Cutscenes/GameUI_OnFirePartyFrame.StormCutscene"/>
 									<AcceptsMouse val="false"/>
-									<Animation name="FCJH_OnFireTest">
-										<Event event="OnShown" action="Reset,Play" frame="$parent"/>
+									<Animation name="FCJH_OnFireEmbers">
+										<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/OnFireCutsceneFrame"/>
+										<Controller type="Visibility" end="Pause">
+											<Key type="Bool" time="0" value="True"/>
+										</Controller>
+										<Controller type="Cutscene" end="Stop">
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Ally"/>
+											<Key type="Cutscene" time="0" action="RemoveFilter" filter="Enemy"/>
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Left"/>
+											<Key type="Cutscene" time="0" action="RemoveFilter" filter="Right"/>
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
+											<Key type="Cutscene" time="0" action="Bookmark" bookmark="Embers Start"/>
+											<Key type="Cutscene" time="0" action="Play"/>
+										</Controller>
+									</Animation>
+									<Animation name="FCJH_OnFireInferno">
+										<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/OnFireCutsceneFrame"/>
 										<Controller type="Visibility" end="Pause">
 											<Key type="Bool" time="0" value="True"/>
 										</Controller>
@@ -9127,6 +9166,16 @@
 											<Key type="Cutscene" time="0" action="RemoveFilter" filter="Right"/>
 											<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
 											<Key type="Cutscene" time="0" action="Bookmark" bookmark="Inferno Start"/>
+											<Key type="Cutscene" time="0" action="Play"/>
+										</Controller>
+									</Animation>
+									<Animation name="FCJH_OnFireEnd">
+										<Event event="OnFireEnd" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/OnFireCutsceneFrame"/>
+										<Controller type="Visibility" end="Pause">
+											<Key type="Bool" time="5.0" value="False"/>
+										</Controller>
+										<Controller type="Cutscene" end="Stop">
+											<Key type="Cutscene" time="0" action="Bookmark" bookmark="Death"/>
 											<Key type="Cutscene" time="0" action="Play"/>
 										</Controller>
 									</Animation>
@@ -9702,23 +9751,50 @@
 								<Anchor side="Bottom" relative="$parent" pos="Min" offset="85"/>
 								<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
 								<AcceptsMouse val="false"/>
-								<Frame type="CutsceneFrame" name="FCJH_OnFireKillLog" template="SharedOnFireVFX/OnFireCutsceneFrameTemplate">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="85"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
-									<File val="Cutscenes/GameUI_OnFireKillLog.StormCutscene"/>
-									<Unclipped val="true"/>
+								<Frame type="CutsceneFrame" name="FCJH_OnFireFlames" template="SharedOnFireVFX/OnFireCutsceneFrameTemplate">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="-9"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="-46"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="146"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="240"/>
+									<File val="Cutscenes/GameUI_OnFirePartyFrame.StormCutscene"/>
 									<AcceptsMouse val="false"/>
-									<Animation name="FCJH_OnFireTest">
-										<Event event="OnShown" action="Reset,Play" frame="$parent"/>
+									<Animation name="FCJH_OnFireEmbers">
+										<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/OnFireCutsceneFrame"/>
 										<Controller type="Visibility" end="Pause">
 											<Key type="Bool" time="0" value="True"/>
 										</Controller>
 										<Controller type="Cutscene" end="Stop">
 											<Key type="Cutscene" time="0" action="AddFilter" filter="Ally"/>
 											<Key type="Cutscene" time="0" action="RemoveFilter" filter="Enemy"/>
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Left"/>
+											<Key type="Cutscene" time="0" action="RemoveFilter" filter="Right"/>
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
+											<Key type="Cutscene" time="0" action="Bookmark" bookmark="Embers Start"/>
+											<Key type="Cutscene" time="0" action="Play"/>
+										</Controller>
+									</Animation>
+									<Animation name="FCJH_OnFireInferno">
+										<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/OnFireCutsceneFrame"/>
+										<Controller type="Visibility" end="Pause">
+											<Key type="Bool" time="0" value="True"/>
+										</Controller>
+										<Controller type="Cutscene" end="Stop">
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Ally"/>
+											<Key type="Cutscene" time="0" action="RemoveFilter" filter="Enemy"/>
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Left"/>
+											<Key type="Cutscene" time="0" action="RemoveFilter" filter="Right"/>
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
 											<Key type="Cutscene" time="0" action="Bookmark" bookmark="Inferno Start"/>
+											<Key type="Cutscene" time="0" action="Play"/>
+										</Controller>
+									</Animation>
+									<Animation name="FCJH_OnFireEnd">
+										<Event event="OnFireEnd" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/OnFireCutsceneFrame"/>
+										<Controller type="Visibility" end="Pause">
+											<Key type="Bool" time="5.0" value="False"/>
+										</Controller>
+										<Controller type="Cutscene" end="Stop">
+											<Key type="Cutscene" time="0" action="Bookmark" bookmark="Death"/>
 											<Key type="Cutscene" time="0" action="Play"/>
 										</Controller>
 									</Animation>
@@ -10294,22 +10370,50 @@
 								<Anchor side="Bottom" relative="$parent" pos="Min" offset="85"/>
 								<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
 								<AcceptsMouse val="false"/>
-								<Frame type="CutsceneFrame" name="FCJH_OnFireNamePlate" template="SharedOnFireVFX/OnFireCutsceneFrameTemplate">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="-71"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="-53"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="108"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="254"/>
-									<File val="Cutscenes/GameUI_OnFireNamePlate.StormCutscene"/>
-									<Unclipped val="true"/>
+								<Frame type="CutsceneFrame" name="FCJH_OnFireFlames" template="SharedOnFireVFX/OnFireCutsceneFrameTemplate">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="-9"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="-46"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="146"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="240"/>
+									<File val="Cutscenes/GameUI_OnFirePartyFrame.StormCutscene"/>
 									<AcceptsMouse val="false"/>
-									<Animation name="FCJH_OnFireTest">
-										<Event event="OnShown" action="Reset,Play" frame="$parent"/>
+									<Animation name="FCJH_OnFireEmbers">
+										<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/OnFireCutsceneFrame"/>
 										<Controller type="Visibility" end="Pause">
 											<Key type="Bool" time="0" value="True"/>
 										</Controller>
 										<Controller type="Cutscene" end="Stop">
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Ally"/>
+											<Key type="Cutscene" time="0" action="RemoveFilter" filter="Enemy"/>
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Left"/>
+											<Key type="Cutscene" time="0" action="RemoveFilter" filter="Right"/>
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
+											<Key type="Cutscene" time="0" action="Bookmark" bookmark="Embers Start"/>
+											<Key type="Cutscene" time="0" action="Play"/>
+										</Controller>
+									</Animation>
+									<Animation name="FCJH_OnFireInferno">
+										<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/OnFireCutsceneFrame"/>
+										<Controller type="Visibility" end="Pause">
+											<Key type="Bool" time="0" value="True"/>
+										</Controller>
+										<Controller type="Cutscene" end="Stop">
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Ally"/>
+											<Key type="Cutscene" time="0" action="RemoveFilter" filter="Enemy"/>
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Left"/>
+											<Key type="Cutscene" time="0" action="RemoveFilter" filter="Right"/>
 											<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
 											<Key type="Cutscene" time="0" action="Bookmark" bookmark="Inferno Start"/>
+											<Key type="Cutscene" time="0" action="Play"/>
+										</Controller>
+									</Animation>
+									<Animation name="FCJH_OnFireEnd">
+										<Event event="OnFireEnd" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/OnFireCutsceneFrame"/>
+										<Controller type="Visibility" end="Pause">
+											<Key type="Bool" time="5.0" value="False"/>
+										</Controller>
+										<Controller type="Cutscene" end="Stop">
+											<Key type="Cutscene" time="0" action="Bookmark" bookmark="Death"/>
 											<Key type="Cutscene" time="0" action="Play"/>
 										</Controller>
 									</Animation>
@@ -10885,16 +10989,30 @@
 								<Anchor side="Bottom" relative="$parent" pos="Min" offset="85"/>
 								<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
 								<AcceptsMouse val="false"/>
-								<Frame type="CutsceneFrame" name="FCJH_OnFireParty" template="SharedOnFireVFX/OnFireCutsceneFrameTemplate">
+								<Frame type="CutsceneFrame" name="FCJH_OnFireFlames" template="SharedOnFireVFX/OnFireCutsceneFrameTemplate">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="-9"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="-46"/>
 									<Anchor side="Bottom" relative="$parent" pos="Min" offset="146"/>
 									<Anchor side="Right"  relative="$parent" pos="Min" offset="240"/>
 									<File val="Cutscenes/GameUI_OnFirePartyFrame.StormCutscene"/>
-									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
-									<Animation name="FCJH_OnFireTest">
-										<Event event="OnShown" action="Reset,Play" frame="$parent"/>
+									<Animation name="FCJH_OnFireEmbers">
+										<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/OnFireCutsceneFrame"/>
+										<Controller type="Visibility" end="Pause">
+											<Key type="Bool" time="0" value="True"/>
+										</Controller>
+										<Controller type="Cutscene" end="Stop">
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Ally"/>
+											<Key type="Cutscene" time="0" action="RemoveFilter" filter="Enemy"/>
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Left"/>
+											<Key type="Cutscene" time="0" action="RemoveFilter" filter="Right"/>
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
+											<Key type="Cutscene" time="0" action="Bookmark" bookmark="Embers Start"/>
+											<Key type="Cutscene" time="0" action="Play"/>
+										</Controller>
+									</Animation>
+									<Animation name="FCJH_OnFireInferno">
+										<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/OnFireCutsceneFrame"/>
 										<Controller type="Visibility" end="Pause">
 											<Key type="Bool" time="0" value="True"/>
 										</Controller>
@@ -10905,6 +11023,16 @@
 											<Key type="Cutscene" time="0" action="RemoveFilter" filter="Right"/>
 											<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
 											<Key type="Cutscene" time="0" action="Bookmark" bookmark="Inferno Start"/>
+											<Key type="Cutscene" time="0" action="Play"/>
+										</Controller>
+									</Animation>
+									<Animation name="FCJH_OnFireEnd">
+										<Event event="OnFireEnd" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/OnFireCutsceneFrame"/>
+										<Controller type="Visibility" end="Pause">
+											<Key type="Bool" time="5.0" value="False"/>
+										</Controller>
+										<Controller type="Cutscene" end="Stop">
+											<Key type="Cutscene" time="0" action="Bookmark" bookmark="Death"/>
 											<Key type="Cutscene" time="0" action="Play"/>
 										</Controller>
 									</Animation>
@@ -11482,16 +11610,30 @@
 								<Anchor side="Bottom" relative="$parent" pos="Min" offset="85"/>
 								<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
 								<AcceptsMouse val="false"/>
-								<Frame type="CutsceneFrame" name="FCJH_OnFirePartyFit" template="SharedOnFireVFX/OnFireCutsceneFrameTemplate">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="85"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
+								<Frame type="CutsceneFrame" name="FCJH_OnFireFlames" template="SharedOnFireVFX/OnFireCutsceneFrameTemplate">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="-9"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="-53"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="146"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="234"/>
 									<File val="Cutscenes/GameUI_OnFirePartyFrame.StormCutscene"/>
-									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
-									<Animation name="FCJH_OnFireTest">
-										<Event event="OnShown" action="Reset,Play" frame="$parent"/>
+									<Animation name="FCJH_OnFireEmbers">
+										<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/OnFireCutsceneFrame"/>
+										<Controller type="Visibility" end="Pause">
+											<Key type="Bool" time="0" value="True"/>
+										</Controller>
+										<Controller type="Cutscene" end="Stop">
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Enemy"/>
+											<Key type="Cutscene" time="0" action="RemoveFilter" filter="Ally"/>
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Right"/>
+											<Key type="Cutscene" time="0" action="RemoveFilter" filter="Left"/>
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
+											<Key type="Cutscene" time="0" action="Bookmark" bookmark="Embers Start"/>
+											<Key type="Cutscene" time="0" action="Play"/>
+										</Controller>
+									</Animation>
+									<Animation name="FCJH_OnFireInferno">
+										<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/OnFireCutsceneFrame"/>
 										<Controller type="Visibility" end="Pause">
 											<Key type="Bool" time="0" value="True"/>
 										</Controller>
@@ -11502,6 +11644,16 @@
 											<Key type="Cutscene" time="0" action="RemoveFilter" filter="Left"/>
 											<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
 											<Key type="Cutscene" time="0" action="Bookmark" bookmark="Inferno Start"/>
+											<Key type="Cutscene" time="0" action="Play"/>
+										</Controller>
+									</Animation>
+									<Animation name="FCJH_OnFireEnd">
+										<Event event="OnFireEnd" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/OnFireCutsceneFrame"/>
+										<Controller type="Visibility" end="Pause">
+											<Key type="Bool" time="5.0" value="False"/>
+										</Controller>
+										<Controller type="Cutscene" end="Stop">
+											<Key type="Cutscene" time="0" action="Bookmark" bookmark="Death"/>
 											<Key type="Cutscene" time="0" action="Play"/>
 										</Controller>
 									</Animation>
@@ -12080,15 +12232,30 @@
 								<Anchor side="Bottom" relative="$parent" pos="Min" offset="85"/>
 								<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
 								<AcceptsMouse val="false"/>
-								<Frame type="CutsceneFrame" name="FCJH_OnFirePartyClip" template="SharedOnFireVFX/OnFireCutsceneFrameTemplate">
+								<Frame type="CutsceneFrame" name="FCJH_OnFireFlames" template="SharedOnFireVFX/OnFireCutsceneFrameTemplate">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="-9"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="-53"/>
 									<Anchor side="Bottom" relative="$parent" pos="Min" offset="146"/>
 									<Anchor side="Right"  relative="$parent" pos="Min" offset="234"/>
 									<File val="Cutscenes/GameUI_OnFirePartyFrame.StormCutscene"/>
 									<AcceptsMouse val="false"/>
-									<Animation name="FCJH_OnFireTest">
-										<Event event="OnShown" action="Reset,Play" frame="$parent"/>
+									<Animation name="FCJH_OnFireEmbers">
+										<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/OnFireCutsceneFrame"/>
+										<Controller type="Visibility" end="Pause">
+											<Key type="Bool" time="0" value="True"/>
+										</Controller>
+										<Controller type="Cutscene" end="Stop">
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Enemy"/>
+											<Key type="Cutscene" time="0" action="RemoveFilter" filter="Ally"/>
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Right"/>
+											<Key type="Cutscene" time="0" action="RemoveFilter" filter="Left"/>
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
+											<Key type="Cutscene" time="0" action="Bookmark" bookmark="Embers Start"/>
+											<Key type="Cutscene" time="0" action="Play"/>
+										</Controller>
+									</Animation>
+									<Animation name="FCJH_OnFireInferno">
+										<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/OnFireCutsceneFrame"/>
 										<Controller type="Visibility" end="Pause">
 											<Key type="Bool" time="0" value="True"/>
 										</Controller>
@@ -12099,6 +12266,16 @@
 											<Key type="Cutscene" time="0" action="RemoveFilter" filter="Left"/>
 											<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
 											<Key type="Cutscene" time="0" action="Bookmark" bookmark="Inferno Start"/>
+											<Key type="Cutscene" time="0" action="Play"/>
+										</Controller>
+									</Animation>
+									<Animation name="FCJH_OnFireEnd">
+										<Event event="OnFireEnd" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/OnFireCutsceneFrame"/>
+										<Controller type="Visibility" end="Pause">
+											<Key type="Bool" time="5.0" value="False"/>
+										</Controller>
+										<Controller type="Cutscene" end="Stop">
+											<Key type="Cutscene" time="0" action="Bookmark" bookmark="Death"/>
 											<Key type="Cutscene" time="0" action="Play"/>
 										</Controller>
 									</Animation>
@@ -12677,23 +12854,50 @@
 								<Anchor side="Bottom" relative="$parent" pos="Min" offset="85"/>
 								<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
 								<AcceptsMouse val="false"/>
-								<Frame type="CutsceneFrame" name="FCJH_OnFireKillLog" template="SharedOnFireVFX/OnFireCutsceneFrameTemplate">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="85"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
-									<File val="Cutscenes/GameUI_OnFireKillLog.StormCutscene"/>
-									<Unclipped val="true"/>
+								<Frame type="CutsceneFrame" name="FCJH_OnFireFlames" template="SharedOnFireVFX/OnFireCutsceneFrameTemplate">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="-9"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="-53"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="146"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="234"/>
+									<File val="Cutscenes/GameUI_OnFirePartyFrame.StormCutscene"/>
 									<AcceptsMouse val="false"/>
-									<Animation name="FCJH_OnFireTest">
-										<Event event="OnShown" action="Reset,Play" frame="$parent"/>
+									<Animation name="FCJH_OnFireEmbers">
+										<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/OnFireCutsceneFrame"/>
 										<Controller type="Visibility" end="Pause">
 											<Key type="Bool" time="0" value="True"/>
 										</Controller>
 										<Controller type="Cutscene" end="Stop">
 											<Key type="Cutscene" time="0" action="AddFilter" filter="Enemy"/>
 											<Key type="Cutscene" time="0" action="RemoveFilter" filter="Ally"/>
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Right"/>
+											<Key type="Cutscene" time="0" action="RemoveFilter" filter="Left"/>
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
+											<Key type="Cutscene" time="0" action="Bookmark" bookmark="Embers Start"/>
+											<Key type="Cutscene" time="0" action="Play"/>
+										</Controller>
+									</Animation>
+									<Animation name="FCJH_OnFireInferno">
+										<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/OnFireCutsceneFrame"/>
+										<Controller type="Visibility" end="Pause">
+											<Key type="Bool" time="0" value="True"/>
+										</Controller>
+										<Controller type="Cutscene" end="Stop">
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Enemy"/>
+											<Key type="Cutscene" time="0" action="RemoveFilter" filter="Ally"/>
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Right"/>
+											<Key type="Cutscene" time="0" action="RemoveFilter" filter="Left"/>
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
 											<Key type="Cutscene" time="0" action="Bookmark" bookmark="Inferno Start"/>
+											<Key type="Cutscene" time="0" action="Play"/>
+										</Controller>
+									</Animation>
+									<Animation name="FCJH_OnFireEnd">
+										<Event event="OnFireEnd" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/OnFireCutsceneFrame"/>
+										<Controller type="Visibility" end="Pause">
+											<Key type="Bool" time="5.0" value="False"/>
+										</Controller>
+										<Controller type="Cutscene" end="Stop">
+											<Key type="Cutscene" time="0" action="Bookmark" bookmark="Death"/>
 											<Key type="Cutscene" time="0" action="Play"/>
 										</Controller>
 									</Animation>
@@ -13272,22 +13476,50 @@
 								<Anchor side="Bottom" relative="$parent" pos="Min" offset="85"/>
 								<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
 								<AcceptsMouse val="false"/>
-								<Frame type="CutsceneFrame" name="FCJH_OnFireNamePlate" template="SharedOnFireVFX/OnFireCutsceneFrameTemplate">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="-71"/>
+								<Frame type="CutsceneFrame" name="FCJH_OnFireFlames" template="SharedOnFireVFX/OnFireCutsceneFrameTemplate">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="-9"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="-53"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="108"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="254"/>
-									<File val="Cutscenes/GameUI_OnFireNamePlate.StormCutscene"/>
-									<Unclipped val="true"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="146"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="234"/>
+									<File val="Cutscenes/GameUI_OnFirePartyFrame.StormCutscene"/>
 									<AcceptsMouse val="false"/>
-									<Animation name="FCJH_OnFireTest">
-										<Event event="OnShown" action="Reset,Play" frame="$parent"/>
+									<Animation name="FCJH_OnFireEmbers">
+										<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/OnFireCutsceneFrame"/>
 										<Controller type="Visibility" end="Pause">
 											<Key type="Bool" time="0" value="True"/>
 										</Controller>
 										<Controller type="Cutscene" end="Stop">
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Enemy"/>
+											<Key type="Cutscene" time="0" action="RemoveFilter" filter="Ally"/>
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Right"/>
+											<Key type="Cutscene" time="0" action="RemoveFilter" filter="Left"/>
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
+											<Key type="Cutscene" time="0" action="Bookmark" bookmark="Embers Start"/>
+											<Key type="Cutscene" time="0" action="Play"/>
+										</Controller>
+									</Animation>
+									<Animation name="FCJH_OnFireInferno">
+										<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/OnFireCutsceneFrame"/>
+										<Controller type="Visibility" end="Pause">
+											<Key type="Bool" time="0" value="True"/>
+										</Controller>
+										<Controller type="Cutscene" end="Stop">
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Enemy"/>
+											<Key type="Cutscene" time="0" action="RemoveFilter" filter="Ally"/>
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Right"/>
+											<Key type="Cutscene" time="0" action="RemoveFilter" filter="Left"/>
 											<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
 											<Key type="Cutscene" time="0" action="Bookmark" bookmark="Inferno Start"/>
+											<Key type="Cutscene" time="0" action="Play"/>
+										</Controller>
+									</Animation>
+									<Animation name="FCJH_OnFireEnd">
+										<Event event="OnFireEnd" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/OnFireCutsceneFrame"/>
+										<Controller type="Visibility" end="Pause">
+											<Key type="Bool" time="5.0" value="False"/>
+										</Controller>
+										<Controller type="Cutscene" end="Stop">
+											<Key type="Cutscene" time="0" action="Bookmark" bookmark="Death"/>
 											<Key type="Cutscene" time="0" action="Play"/>
 										</Controller>
 									</Animation>
@@ -13866,16 +14098,30 @@
 								<Anchor side="Bottom" relative="$parent" pos="Min" offset="85"/>
 								<Anchor side="Right"  relative="$parent" pos="Min" offset="198"/>
 								<AcceptsMouse val="false"/>
-								<Frame type="CutsceneFrame" name="FCJH_OnFireParty" template="SharedOnFireVFX/OnFireCutsceneFrameTemplate">
+								<Frame type="CutsceneFrame" name="FCJH_OnFireFlames" template="SharedOnFireVFX/OnFireCutsceneFrameTemplate">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="-9"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="-53"/>
 									<Anchor side="Bottom" relative="$parent" pos="Min" offset="146"/>
 									<Anchor side="Right"  relative="$parent" pos="Min" offset="234"/>
 									<File val="Cutscenes/GameUI_OnFirePartyFrame.StormCutscene"/>
-									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
-									<Animation name="FCJH_OnFireTest">
-										<Event event="OnShown" action="Reset,Play" frame="$parent"/>
+									<Animation name="FCJH_OnFireEmbers">
+										<Event event="OnFireEmbers" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/OnFireCutsceneFrame"/>
+										<Controller type="Visibility" end="Pause">
+											<Key type="Bool" time="0" value="True"/>
+										</Controller>
+										<Controller type="Cutscene" end="Stop">
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Enemy"/>
+											<Key type="Cutscene" time="0" action="RemoveFilter" filter="Ally"/>
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Right"/>
+											<Key type="Cutscene" time="0" action="RemoveFilter" filter="Left"/>
+											<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
+											<Key type="Cutscene" time="0" action="Bookmark" bookmark="Embers Start"/>
+											<Key type="Cutscene" time="0" action="Play"/>
+										</Controller>
+									</Animation>
+									<Animation name="FCJH_OnFireInferno">
+										<Event event="OnFireInferno" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/OnFireCutsceneFrame"/>
 										<Controller type="Visibility" end="Pause">
 											<Key type="Bool" time="0" value="True"/>
 										</Controller>
@@ -13886,6 +14132,16 @@
 											<Key type="Cutscene" time="0" action="RemoveFilter" filter="Left"/>
 											<Key type="Cutscene" time="0" action="AddFilter" filter="Offense"/>
 											<Key type="Cutscene" time="0" action="Bookmark" bookmark="Inferno Start"/>
+											<Key type="Cutscene" time="0" action="Play"/>
+										</Controller>
+									</Animation>
+									<Animation name="FCJH_OnFireEnd">
+										<Event event="OnFireEnd" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/OnFireCutsceneFrame"/>
+										<Controller type="Visibility" end="Pause">
+											<Key type="Bool" time="5.0" value="False"/>
+										</Controller>
+										<Controller type="Cutscene" end="Stop">
+											<Key type="Cutscene" time="0" action="Bookmark" bookmark="Death"/>
 											<Key type="Cutscene" time="0" action="Play"/>
 										</Controller>
 									</Animation>
