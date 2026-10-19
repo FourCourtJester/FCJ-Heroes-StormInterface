@@ -973,6 +973,61 @@ def slant_texture(team, cut, colour, alpha=255, size=(512, 32), sub=4):
     return dds_bgra(w, h, b"".join(rows))
 
 
+def slant_end_texture(team, cut, size, sub=4):
+    """A white mask cut at one end only, the bar's exposed end: blue's left (\\, top flush
+    left), red's right (/, top flush right); `cut` as slant_texture's. The other end, under the
+    next plate's seam, stays square."""
+    w, h = size
+    rows = []
+    for ty in range(h):
+        row = bytearray()
+        for tx in range(w):
+            cover = 0.0
+            for s in range(sub):
+                run = cut * (ty + (s + 0.5) / sub) / h * w
+                left, right = (run, w) if team == "blue" else (0, w - run)
+                cover += max(0.0, min(tx + 1, right) - max(tx, left))
+            row += bytes((255, 255, 255, round(255 * cover / sub)))
+        rows.append(bytes(row))
+    return dds_bgra(w, h, b"".join(rows))
+
+
+# The plates' bars (user, 2026-10-19: "The angles are definitely off now"): Blizzard's fill art
+# carries its slanted end in the texture, drawn for its own bar heights, and the art stretches
+# to the rect - at our taller bars (1df8a76) its end stood near-upright (measured 3 px of run
+# over the health bar's 15, the seam's 8). A mask on each bar cuts the exposed end at the plate's
+# lean from the art's top corner, which sits on the rect's edge. Per width: the bars narrow
+# while the heroic shows (heroic_panel), and a stretched mask would lose the lean as well.
+_PLATE_MASKS = {}
+
+
+def plate_bar_masks(cfg):
+    """{name: (file name, dds bytes)}: the plate bars' masks, by bar (health, full, energy), team
+    and width (wide, narrow)."""
+    key = id(cfg)
+    if key not in _PLATE_MASKS:
+        c, k = HeroCell(cfg), cfg["hero_row"]["scale"]
+        px = 100 / Units(cfg)(100)
+        out = {}
+        for team in ("blue", "red"):
+            for bar, part, narrow in (("health", "health", NARROW), ("full", "health_full", NARROW_FULL),
+                                      ("energy", "energy", NARROW)):
+                l, t, r, b = c.team[team][part]
+                for width, w in (("wide", r - l), ("narrow", r - l - round(narrow * k))):
+                    h = b - t
+                    data = slant_end_texture(team, c.lean * h / w, bar_texture_size(cfg, w * px, h * px))
+                    digest = hashlib.sha1(data).hexdigest()[:8]
+                    out[name("plate", "mask", bar, team, width)] = (
+                        f"FCJH_PlateMask_{bar}_{team}_{width}_{digest}.dds", data)
+        _PLATE_MASKS[key] = out
+    return _PLATE_MASKS[key]
+
+
+def plate_mask(cfg, bar, team, width):
+    """A plate bar mask's texture path, for actions (plate_bar_masks)."""
+    return f"{TEXTURE_DIR}\\{plate_bar_masks(cfg)[name('plate', 'mask', bar, team, width)][0]}"
+
+
 # Our generated art is drawn for 2560 x 1440 and scaled down at 1080p, not the other way round
 # (user, 2026-10-06): each texture is its frame's size on a 1440p screen, so it's 1:1 there and
 # drawn at 75% at 1080p - a gentle shrink that filters cleanly (the core bar's 512-wide texture
@@ -1127,11 +1182,15 @@ def top_backplate_texture(cfg):
                 c = mix(c, team[side], .22 * bp["lattice"] * f)
                 c = mix(c, line[side], bp["lattice"] * f * outline)
             c = mix(c, (1, 1, 1), sheen)
-            # the hexagon's neutral plate, with a fine light edge
+            # the hexagon's neutral plate
             pc = clamp(0.5 - dh * k)
             if pc > 0:
                 c = mix(c, plate_c, pc)
-                c = mix(c, chrome[0][1], .6 * clamp(1 - abs(dh)))
+            # ...and the rim the whole way round it: below the band it's the outline's, but
+            # inside the wings its upper half had only a fine light edge, which read weak beside
+            # the bright lower half (user, 2026-10-19: "unify the width of the chrome all the way
+            # around the hexagon")
+            rim = max(rim, clamp((rim_half - abs(dh)) * k + 0.5))
             # the chrome rim, over everything, half outside the shape
             a = cover + rim * (1 - cover)
             c = mix(c, rim_c, rim / a if a else 0)
@@ -1319,6 +1378,7 @@ def slant_bars(cfg):
         data = bytes(data)
         digest = hashlib.sha1(data).hexdigest()[:8]
         out[name("plate", "hit", team)] = (f"FCJH_PlateHit_{team}_{digest}.dds", data)
+    out.update(plate_bar_masks(cfg))
     return out
 
 
@@ -1612,6 +1672,10 @@ def pet_death_labels(team, c):
 # the chrome's divider and drew over it and the next cell's bars (Tracer, Varian: user,
 # 2026-10-16; measured 3 px of divider and the bars' own 4 px gap before it).
 HEROIC_CLEAR = 6
+# ...and HEROIC_DROP below the cell's bottom: on Blizzard's edge the gold frame's foot stood
+# ~7 px over the taller bars' (1df8a76) baseline, dead space under it (user, 2026-10-19: "move
+# down to be on the baseline of the resource bar; it might poke out a bit above health bar")
+HEROIC_DROP = 5
 HEROIC_PANEL = {"blue": (128 - 48 - HEROIC_CLEAR, 48 - 3 - 38), "red": (HEROIC_CLEAR, 3)}
 
 
@@ -1627,12 +1691,12 @@ def heroic_frame_rect(cfg, team):
 
 def heroic_icon_rect(cfg, team):
     """The heroic icon's square in cell units (left, top, right, bottom): 38 x 38, at the
-    panel's left + its inset, on the cell's bottom edge."""
+    panel's left + its inset, HEROIC_DROP under the cell's bottom edge."""
     k = cfg["hero_row"]["scale"]
     s = lambda v: round(v * k)
     h = HeroCell(cfg).h
     pl, il = HEROIC_PANEL[team]
-    return s(pl + il), h - s(38), s(pl + il + 38), h
+    return s(pl + il), h - s(38 - HEROIC_DROP), s(pl + il + 38), h + s(HEROIC_DROP)
 
 
 # While it shows, Blizzard narrows the bars from the left (right edge fixed): health 97 -> 69,
@@ -1882,6 +1946,10 @@ def heroic_panel(cfg, team_frame, i):
         n, r_, sm = ("_Narrow" if narrow else ""), ("" if blue else "_Right"), ("" if full else "_Sm")
         out += (f'{t10}<Action type="SetProperty" frame="{cell}/HeroStatus/HealthBar" Texture="@UI/HUD_TopBar_Team_HeroFrame_HealthFill{sm}{n}{r_}"/>\n'
                 f'{t10}<Action type="SetProperty" frame="{cell}/HeroStatus/FCJH_Resource" Texture="@UI/HUD_TopBar_Team_HeroFrame_ManaFill{n}{r_}"/>\n')
+        # ...each cut to the plate's lean at its width (plate_bar_masks)
+        width = "narrow" if narrow else "wide"
+        out += (f'{t10}<Action type="SetProperty" frame="{cell}/HeroStatus/HealthBar" AlphaMaskTexture="{plate_mask(cfg, "full" if full else "health", team, width)}"/>\n'
+                f'{t10}<Action type="SetProperty" frame="{cell}/HeroStatus/FCJH_Resource" AlphaMaskTexture="{plate_mask(cfg, "energy", team, width)}"/>\n')
         # the Vikings' three bars share the narrowed width (trackers: tools/gen.py trackers)
         if narrow:
             hl, hr = (hl, hr + cut_) if blue else (hl + cut_, hr)
@@ -1903,7 +1971,7 @@ def heroic_panel(cfg, team_frame, i):
     return f"""
 							<!-- the heroic, Blizzard's in-game panel mirrored (tools/gen.py heroic_panel) -->
 							<Frame type="Frame" name="FCJH_HeroicPanel">
-{rect(s(pl), c.h - s(38), s(pl + 48), c.h)}								<Alpha val="0"/>
+{rect(s(pl), c.h - s(38 - HEROIC_DROP), s(pl + 48), c.h + s(HEROIC_DROP))}								<Alpha val="0"/>
 								<RenderPriority val="529"/>
 								<Unclipped val="true"/>
 								<AcceptsMouse val="false"/>
@@ -2046,8 +2114,9 @@ def pet_death_bindings(team_frame, i):
 
 
 # Test build (2026-10-16), kept until a replay where someone was surely on fire (user: shelved
-# till then): one square per on-fire event along the plate's top, each lit for 6 s when it
-# arrives. Blizzard sends these to the party cell's OnFireCutsceneFrame (uilib.galaxy
+# till then): one square per on-fire event across the plate's portrait, each lit when it
+# arrives. Made big and blinking, then held 20 s (user, 2026-10-19: "move them to somewhere i
+# will very obviously notice them"): at 10 units for 6 s along the top they went unseen. Blizzard sends these to the party cell's OnFireCutsceneFrame (uilib.galaxy
 # libUIUI_gf_UIOnFireSetOnFireType/Level): the levels, Left (Order, blue) / Right (Chaos, red)
 # to everyone; Ally / Enemy only to the hero's allies / enemies, so an observer may see neither.
 # The respawn, hearthstone and split-portrait squares above them are answered and gone
@@ -2067,19 +2136,21 @@ ONFIRE_DIAGNOSTICS = [
 def onfire_diagnostics(cell):
     out = ""
     src_frame = {"fire": f"{cell}/OnFireCutsceneFrame"}
-    squares = [("FCJH_FireDiag", 18, j, sq) for j, sq in enumerate(ONFIRE_DIAGNOSTICS)]
+    squares = [("FCJH_FireDiag", 6, j, sq) for j, sq in enumerate(ONFIRE_DIAGNOSTICS)]
+    size, pitch = 22, 26
+    blink = "".join(f'\n\t\t\t\t\t\t\t\t\t\t<Key type="Curve" time="{t / 2}" value="{0 if t % 2 else 255}" inout="Linear"/>'
+                    for t in range(9))
     for prefix, top, j, (colour, events) in squares:
-        x = 40 + 14 * j
+        x = 10 + pitch * j
         evs = "".join(f'\n\t\t\t\t\t\t\t\t\t<Event event="{e}" action="Reset,Play" frame="{src_frame[src]}"/>'
                       for e, src in events)
         extra = (f'\n\t\t\t\t\t\t\t\t<Alpha val="0"/>\n\t\t\t\t\t\t\t\t<Unclipped val="true"/>'
                  f'\n\t\t\t\t\t\t\t\t<Animation name="FCJH_Seen">{evs}'
-                 '\n\t\t\t\t\t\t\t\t\t<Controller type="Fade" end="Pause">'
-                 '\n\t\t\t\t\t\t\t\t\t\t<Key type="Curve" time="0" value="255" inout="Linear"/>'
-                 '\n\t\t\t\t\t\t\t\t\t\t<Key type="Curve" time="6" value="255" inout="Linear"/>'
-                 '\n\t\t\t\t\t\t\t\t\t\t<Key type="Curve" time="6.01" value="0" inout="Linear"/>'
+                 '\n\t\t\t\t\t\t\t\t\t<Controller type="Fade" end="Pause">' + blink +
+                 '\n\t\t\t\t\t\t\t\t\t\t<Key type="Curve" time="20" value="255" inout="Linear"/>'
+                 '\n\t\t\t\t\t\t\t\t\t\t<Key type="Curve" time="20.01" value="0" inout="Linear"/>'
                  '\n\t\t\t\t\t\t\t\t\t</Controller>\n\t\t\t\t\t\t\t\t</Animation>')
-        out += "\n" + fill_image(f"{prefix}{j}", box(("Min", top), ("Min", x), ("Min", top + 10), ("Min", x + 10)),
+        out += "\n" + fill_image(f"{prefix}{j}", box(("Min", top), ("Min", x), ("Min", top + size), ("Min", x + size)),
                                   colour, 700, 7, extra).rstrip("\n")
     return out
 
@@ -2385,6 +2456,7 @@ def hero_cell_template(team, c, cfg):
 				<Width val="0"/>
 				<Height val="0"/>
 				<Texture val="@UI/HUD_TopBar_Team_HeroFrame_ManaFill{suffix}"/>
+				<AlphaMaskTexture val="#{name("plate", "mask", "energy", team, "wide")}"/>  <!-- the plate's lean (plate_bar_masks) -->
 				<Tiled val="true"/>
 				<BarCount val="1"/>
 				<ColorStyle val="StandardEnergy" index="0"/>
@@ -2398,6 +2470,7 @@ def hero_cell_template(team, c, cfg):
 			<Frame type="Frame" name="ImageMaskFrame"><AlphaMaskSiblings val="false"/></Frame>
 			<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">
 				<Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm{suffix}"/>{tiled_segments(chr(10) + chr(9) * 4)}
+				<AlphaMaskTexture val="#{name("plate", "mask", "health", team, "wide")}"/>  <!-- the plate's lean (plate_bar_masks) -->
 			</Frame>{trackers(team, g["health"])}{health_backing}{mana_backing}{energy}"""
     if blue:  # red inherits these unchanged
         cc_top, cc_bottom = c.cc_band

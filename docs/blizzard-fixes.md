@@ -76,8 +76,8 @@ detail.
   but too small, its tooltip empty and its count not updating. Quest talents in the numbered
   columns count and tooltip fine for an observer (user, 2026-10-16), so the data reaches us:
   it's Blizzard's baseline-quest icon (`UnitStatusBaselineQuestIcon`) that fills only its
-  picture in observer view. Another hook to find (the quest tooltips entry: try 4 built
-  2026-10-18, not seen).
+  picture in observer view. Another hook to find (the quest tooltips entry: try 4 failed
+  2026-10-19 and is out, so the column is empty for now).
 
 **Can't be fixed from a layout** - the last section: Towers' cannon alerts, the death recap,
 the talent picker under Ctrl, the command card for a hero's other unit, plate clicks for
@@ -137,8 +137,8 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
   and our own tooltip are gone. Seen 2026-10-16: no quest icons drew at all, and the
   panel's hidden rows leaked faded hero portraits over the pane (user). Taken out; our own
   icons are back, whole, with Blizzard's shared tooltip.
-- **Status:** unsolved; try 4 built 2026-10-18, not seen. Three tries failed: a primer
-  leader panel, the icons' own tooltip, and a leader panel of our own over the pane.
+- **Status:** unsolved. Four tries failed: a primer leader panel, the icons' own tooltip, a
+  leader panel of our own over the pane, and the same parked off the screen (try 4).
 - **Seen 2026-10-16 (6804bbd, user):** after opening Tab and hovering its two quest icons, both
   of our pane's quest icons show the tooltip of whichever Tab icon was hovered last. So our
   icons only show the shared `HeroBaselineQuestTooltip`, and never fill it: only the Tab
@@ -153,6 +153,10 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
   leak, and each `BaseQuestIcon0` is anchored back onto our row's quest cell by a handle
   (`FCJH_QuestCell0-9`), with Blizzard's shared tooltip. A risk: the engine may not draw or
   update a panel off the screen, icons and all - if they don't show, that's the next test.
+- **Try 4 seen 2026-10-19 (5819c62, user):** no quests in the talent pane at all, and a faint
+  white line the pane's full height just right of the portraits (~x 131 px; one thin frame,
+  not ten icons), discolouring the red/blue row lines where it crosses. Taken out, to see if
+  the line goes with it.
 
 ### Hogger's rage drawn as mana
 - **Blizzard's:** the target panel's per-hero resource colours (`HeroResourceStates`,

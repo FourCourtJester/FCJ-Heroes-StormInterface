@@ -529,24 +529,45 @@ from their plates (docs/blizzard-fixes.md).
    fades and grows it), and the user wants it kept; the tick ring barely shows over the art.
    Now no tick ring: the count, hidden at 0 (a Text StateGroup), and a 20% black dim in the
    icon's shape over the heroic while charging (25% after dfb3ffd), off at full on the template's events
-   (`FCJH_ChargeDim`, gen `PULSE_DIAL_DIM_ALPHA`). Not seen yet. Seen fine in 5c38a32: the heroic badges 6 in from the cell's end (gen
+   (`FCJH_ChargeDim`, gen `PULSE_DIAL_DIM_ALPHA`). **DONE (user, 2026-10-19, on 5819c62):
+   dim until ready, gone at 100; the count right, gone at 0.** Seen fine in 5c38a32: the heroic badges 6 in from the cell's end (gen
    `HEROIC_CLEAR`). The chrome's shadows are to be revisited later (user).
-   **The test build of 2026-10-18, not seen yet:**
+   **The test build of 2026-10-18 (5819c62), seen 2026-10-19:**
    - the quest icons, try 4 (docs/blizzard-fixes.md, "Quest tooltips blank until Tab"):
      Blizzard's Tab panel type of our own again (`FCJH_QuestPanel`, FCJH_InfoPane), parked off
      the screen; each row's `BaseQuestIcon0` anchored onto our row's quest cell
-     (`FCJH_QuestCell0-9`), the rows' talents view forced on the way Blizzard's
-     StatsForceVisible does it, the shared tooltip. Check: the icons draw, their tooltips fill
-     before Tab is ever opened, their counts move, no faded portraits anywhere;
-   - the top chrome bright (user: "Replace the top chrome with bright"): `[top_backplate] rim`
-     is the bottom's flat silver, and the row frame and core bars now take that one line;
+     (`FCJH_QuestCell0-9`). **FAILED:** no quests showed in the talent pane, and a faint white
+     line ran the pane's height just right of the portraits (~x 131 px), discolouring the
+     red/blue row lines where it crossed. Taken out (the code is in 5819c62);
+   - ~~the top chrome bright~~ DONE (user: "Bright top bar chrome is good"): `[top_backplate]
+     rim` is the bottom's flat silver, and the row frame and core bars take that one line;
    - the plates' bars fill the plate's bottom (1df8a76): down to 59, health 11 tall, mana 10,
-     energy 6.
+     energy 6. Seen: the bars' ends' angle "definitely off now. Not by much" - below.
+   **The test build of 2026-10-19, not seen yet:**
+   - **the bars' ends at the plate's lean.** Blizzard's fill art has its slanted end baked in
+     and stretches to the rect, so the taller bars stood its end near-upright (3 px of run over
+     15 against the seam's 8). Now each bar has an AlphaMaskTexture cutting only its exposed
+     end at 0.54 (gen `plate_bar_masks`; one per bar, team and width, since the bars narrow
+     while the heroic shows). Check: the bars' ends parallel to the seams, with and without the
+     heroic showing, and full health (Blizzard's other fill) the same;
+   - **the plate heroics 5 units lower** (gen `HEROIC_DROP`; user: "move down to be on the
+     baseline of the resource bar; it might poke out a bit above health bar"): about 7 px, the
+     badge's bottom on the resource bar's. Check: no dead space under it;
+   - **the hexagon's rim one width all round** (user: "The upper half is weak looking"): the
+     backplate draws the hexagon's full rim inside the wings too, not just a fine edge;
+   - **the on-fire squares big and blinking** (user: "move them to somewhere i will very
+     obviously notice them"): 22 units across the portrait, blinking 4 s, held to 20 s;
+   - **quest try 4 out**, to see if the white line goes with it. If it stays, it's from
+     somewhere else. The quest column is empty meanwhile (its cells kept, the talents still
+     one cell right).
    **TEMPORARY:** Blizzard's kill feed is hidden for testing (FCJH_Hidden, `FCJH_KeepHidden`'s
    KillLogPanel controller; user, 2026-10-16). Take it out before release.
 
    Diagnostics: the respawn, hearthstone and portrait ones are read and gone (2026-10-16);
-   `onfire_diagnostics` stays until a known on-fire replay.
+   `onfire_diagnostics` stays until a known on-fire replay: seven squares over each plate's
+   portrait, one per event of Blizzard's on-fire frame, lit (blinking, 20 s) when it fires -
+   orange Embers, red Inferno, grey End, blue Ally, dark red Enemy, light blue Left, light red
+   Right. Read which ones light, then it goes.
    The intro waits for the user's OBS plan. The items as the user gave them:
    - **The chrome's slant against Blizzard's art** (user, 2026-10-17): the row frame's slants
      don't gel with the art's: the portraits' edges, the heroic badges, the fountain icons and
@@ -573,8 +594,9 @@ from their plates (docs/blizzard-fixes.md).
      health backing's nine-slice end poked a dark strip ~4 px out of the row frame on the end
      plates (always there, hidden on dark maps) - pulled 3 units in (f35dae5). The Mortar
      Punisher's head breaking out of its hexagon is Blizzard's one image (the hexagon is in
-     it; ShrineHud is an empty frame) - placement unchanged; ask the user what looked wrong.
-     Not seen yet.
+     it; ShrineHud is an empty frame) - placement unchanged. **DONE (user, 2026-10-19: "No more
+     lingering questions about punishers and hexagons").** The lean: seen right on the chrome;
+     the bars' ends drifted with the taller bars (masked 2026-10-19, above).
    - **A ready ring for every heroic** (user, 2026-10-17): Tracer's ready ping, the expanding
      gold ring at full charge, made the user want the same whenever any heroic comes off
      cooldown. Notes in docs/polish-research.md ("A ready ring for every heroic").
@@ -587,7 +609,8 @@ from their plates (docs/blizzard-fixes.md).
      centred on it. Today Misha's bar is hidden and Rexxar's runs full height; the Vikings'
      bars and timers are in thirds. See item 15 too (Blizzard's three-slice Vikings plate);
    - ~~**Death timers flash white under 5 s**~~ DONE (user, 2026-10-18; above);
-   - ~~**Ahli's death animation**~~ DONE (item 12);
+   - ~~**Ahli's death animation**~~ DONE (item 12; seen again 2026-10-19: the skull, red ring,
+     flashing count and gold rim at 5 all good);
    - **A frame round each team's row of plates**: silver-grey metallic like the top bar's
      edges, about 3 px, slanted where the plates slant, to cover the gaps and overflows
      between heroes;
@@ -669,7 +692,8 @@ from their plates (docs/blizzard-fixes.md).
     - **Cursed Hollow, blue cursed** (docs/maps.md): the banner on blue's side, left of the map,
       ending at the map's edge, its text and timer inside the art - not yet seen (user,
       2026-10-06: red's looks great);
-    - ~~**Infernal Shrines, blue's Punisher**~~ DONE (user, 2026-10-18: "works as intended", on
+    - ~~**Infernal Shrines, blue's Punisher**~~ DONE (user, 2026-10-18: "works as intended", and
+      2026-10-19: "Blue punishers are seen", on
       23ecda4 - its hexagons at their own width since e973927): on blue's side, mirrored - the icon
       at the outer end, the backing flipped, the fill draining from the right, the % at the outer
       end (`maps.punisher_side`);
