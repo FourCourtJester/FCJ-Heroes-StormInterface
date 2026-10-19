@@ -2045,7 +2045,7 @@ def pet_death_bindings(cfg, team_frame, i):
 										</Controller>
 									</Animation>
 								</Frame>
-							</Frame>{onfire_flames(cfg, team_frame == 'Team1HeroOverview', cell)}"""
+							</Frame>{onfire_flames(cfg, team_frame == 'Team1HeroOverview', cell, i)}"""
     return out
 
 
@@ -2065,19 +2065,27 @@ def pet_death_bindings(cfg, team_frame, i):
 # these flames clipped to the portrait read as a team-coloured rim with flames inside - chosen;
 # shrunk to the portrait, thin wisps; the kill feed's (GameUI_OnFireKillLog), a white hexagon;
 # the overhead bar's (GameUI_OnFireNamePlate), big, orange on both teams, spilling.
+# Test 3 seen-before (c4beaec, Inferno on Hogger: "the red outline is *mostly* good"): the top
+# ~2 px low, the right edge leaning less than the chrome's. Top: raised ~1.8 units, bottom kept
+# (top -5.5 -> -7.3, height 100 -> 103).
+# TEST 3 (2026-10-19): the right edge. The cutscene's Left folder plays the party frame's model,
+# its Right folder the _Enemy one (Blizzard's right-hand team) - a different rim. Always on
+# (Inferno), no fire logic, both teams: odd plates Left (at Blizzard's left-team place, 30 left),
+# even plates Right (34 left). Which right edge leans like the plate's?
+ONFIRE_TEST = True
 ONFIRE_LEVELS = {"OnFireEmbers": "Embers Start", "OnFireInferno": "Inferno Start", "OnFireEnd": "Death"}
-ONFIRE_PLACE = {True: -30, False: -34}      # the frame's left, blue / red
-ONFIRE_TOP, ONFIRE_W, ONFIRE_H = -5.5, 185, 100
+ONFIRE_PLACE = {"Left": -30, "Right": -34}  # the frame's left, by side
+ONFIRE_TOP, ONFIRE_W, ONFIRE_H = -7.3, 185, 103
 
 
-def onfire_flames(cfg, blue, cell):
+def onfire_flames(cfg, blue, cell, i):
     c = HeroCell(cfg)
     k = c.w / c.W
     s = lambda v: round(v * k)
     t = "\t" * 7
-    left = ONFIRE_PLACE[blue]
     team, other = ("Ally", "Enemy") if blue else ("Enemy", "Ally")
-    side, away = ("Left", "Right") if blue else ("Right", "Left")
+    side, away = ("Left", "Right") if (i % 2 if ONFIRE_TEST else blue) else ("Right", "Left")
+    left = ONFIRE_PLACE[side]
     filters = "".join(f'\n{t}\t\t\t\t<Key type="Cutscene" time="0" action="{act}" filter="{f}"/>'
                       for act, f in (("AddFilter", team), ("RemoveFilter", other), ("AddFilter", side),
                                      ("RemoveFilter", away), ("AddFilter", "Offense")))
@@ -2094,6 +2102,18 @@ def onfire_flames(cfg, blue, cell):
 {t}\t\t\t</Controller>
 {t}\t\t\t<Controller type="Cutscene" end="Stop">{"" if end else filters}
 {t}\t\t\t\t<Key type="Cutscene" time="0" action="Bookmark" bookmark="{bookmark}"/>
+{t}\t\t\t\t<Key type="Cutscene" time="0" action="Play"/>
+{t}\t\t\t</Controller>
+{t}\t\t</Animation>"""
+    if ONFIRE_TEST:     # always on, from the wrapper's OnShown (FCJH_KeepRowShown's trigger)
+        anims = f"""
+{t}\t\t<Animation name="FCJH_OnFireTest">
+{t}\t\t\t<Event event="OnShown" action="Reset,Play" frame="$parent"/>
+{t}\t\t\t<Controller type="Visibility" end="Pause">
+{t}\t\t\t\t<Key type="Bool" time="0" value="True"/>
+{t}\t\t\t</Controller>
+{t}\t\t\t<Controller type="Cutscene" end="Stop">{filters}
+{t}\t\t\t\t<Key type="Cutscene" time="0" action="Bookmark" bookmark="Inferno Start"/>
 {t}\t\t\t\t<Key type="Cutscene" time="0" action="Play"/>
 {t}\t\t\t</Controller>
 {t}\t\t</Animation>"""
