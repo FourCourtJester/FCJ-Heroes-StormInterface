@@ -162,7 +162,10 @@
 
      Step 19, one change: the leftovers at Alpha 0 - each row's HeroIconImage and
      SilencedIcon (inside PlayerHeroIconFrame) and BGSeparatorImage1-3. Nothing but the
-     quest icons on screen. -->
+     quest icons on screen.
+     Seen (user, 2026-10-19, 8579d61): "yes, both. nothing else visible". Done: a leader
+     panel cut down to its quest icons keeps their tooltips, no Tab. Taken into FCJH's ctrl-1
+     talents pane (FCJH_InfoPane, FCJH_QuestPanel). -->
 <Desc>
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<Frame type="Frame" name="UIContainer">
