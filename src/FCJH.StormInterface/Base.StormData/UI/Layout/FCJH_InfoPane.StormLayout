@@ -156,7 +156,7 @@
 					     The hero's default quest (user, 2026-10-16) takes talent 1's place, and every talent
 					     moves one cell (58) right. Blizzard's own baseline-quest icon (the leader panel's
 					     BaseQuestIcon0), whole so its quest ring shows (user, 2026-10-16), without its
-					     talent border and background. Its tooltip is Blizzard's shared one, blank until
+					     background; its talent border only when the hero has a quest (FCJH_QuestBorder). Its tooltip is Blizzard's shared one, blank until
 					     the Tab panel has been opened, and its count doesn't update (docs/blizzard-fixes.md;
 					     back 2026-10-19 after try 4's leader panel showed nothing). -->
 					<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame0">
@@ -178,8 +178,12 @@
 								<Width val="68"/>
 								<Height val="68"/>
 								<QuestIndex val="0"/>
+								<!-- TEST (2026-10-19): blue rows on the talents' tooltip, red on the shared quest one -->
+								<TooltipFrame val="HeroTalentTooltip"/>
 								<RenderPriority val="#RenderPriorityLevel_3"/>
 								<Frame type="Image" name="IconBackgroundImage"><Alpha val="0"/></Frame>
+								<!-- the border Blizzard's progress ring fills, on heroes with a quest only (user,
+								     2026-10-19: without it Murky's fill was a loose bar); none for the rest -->
 								<Frame type="Image" name="IconBorderImage"><Alpha val="0"/></Frame>
 								<StateGroup name="QuestState">
 									<State name="QuestSelected"/>
@@ -188,6 +192,28 @@
 									</State>
 									<State name="QuestNotAvailable">
 										<Action type="SetProperty" frame="$this/IconImage" visible="false"/>
+									</State>
+								</StateGroup>
+								<StateGroup name="FCJH_QuestBorder">
+									<DefaultState val="FCJH_NoQuest"/>
+									<State name="FCJH_InProgress">
+										<When type="Property" frame="$this" QuestProgress="QuestInProgress"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_Untracked">
+										<When type="Property" frame="$this" QuestProgress="ProgressUntracked"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_Finished">
+										<When type="Property" frame="$this" QuestProgress="FinishedQuest"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_FinishedUnlimited">
+										<When type="Property" frame="$this" QuestProgress="FinishedUnlimitedQuest"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_NoQuest">
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="0"/>
 									</State>
 								</StateGroup>
 							</Frame>
@@ -268,8 +294,12 @@
 								<Width val="68"/>
 								<Height val="68"/>
 								<QuestIndex val="0"/>
+								<!-- TEST (2026-10-19): blue rows on the talents' tooltip, red on the shared quest one -->
+								<TooltipFrame val="HeroTalentTooltip"/>
 								<RenderPriority val="#RenderPriorityLevel_3"/>
 								<Frame type="Image" name="IconBackgroundImage"><Alpha val="0"/></Frame>
+								<!-- the border Blizzard's progress ring fills, on heroes with a quest only (user,
+								     2026-10-19: without it Murky's fill was a loose bar); none for the rest -->
 								<Frame type="Image" name="IconBorderImage"><Alpha val="0"/></Frame>
 								<StateGroup name="QuestState">
 									<State name="QuestSelected"/>
@@ -278,6 +308,28 @@
 									</State>
 									<State name="QuestNotAvailable">
 										<Action type="SetProperty" frame="$this/IconImage" visible="false"/>
+									</State>
+								</StateGroup>
+								<StateGroup name="FCJH_QuestBorder">
+									<DefaultState val="FCJH_NoQuest"/>
+									<State name="FCJH_InProgress">
+										<When type="Property" frame="$this" QuestProgress="QuestInProgress"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_Untracked">
+										<When type="Property" frame="$this" QuestProgress="ProgressUntracked"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_Finished">
+										<When type="Property" frame="$this" QuestProgress="FinishedQuest"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_FinishedUnlimited">
+										<When type="Property" frame="$this" QuestProgress="FinishedUnlimitedQuest"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_NoQuest">
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="0"/>
 									</State>
 								</StateGroup>
 							</Frame>
@@ -358,8 +410,12 @@
 								<Width val="68"/>
 								<Height val="68"/>
 								<QuestIndex val="0"/>
+								<!-- TEST (2026-10-19): blue rows on the talents' tooltip, red on the shared quest one -->
+								<TooltipFrame val="HeroTalentTooltip"/>
 								<RenderPriority val="#RenderPriorityLevel_3"/>
 								<Frame type="Image" name="IconBackgroundImage"><Alpha val="0"/></Frame>
+								<!-- the border Blizzard's progress ring fills, on heroes with a quest only (user,
+								     2026-10-19: without it Murky's fill was a loose bar); none for the rest -->
 								<Frame type="Image" name="IconBorderImage"><Alpha val="0"/></Frame>
 								<StateGroup name="QuestState">
 									<State name="QuestSelected"/>
@@ -368,6 +424,28 @@
 									</State>
 									<State name="QuestNotAvailable">
 										<Action type="SetProperty" frame="$this/IconImage" visible="false"/>
+									</State>
+								</StateGroup>
+								<StateGroup name="FCJH_QuestBorder">
+									<DefaultState val="FCJH_NoQuest"/>
+									<State name="FCJH_InProgress">
+										<When type="Property" frame="$this" QuestProgress="QuestInProgress"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_Untracked">
+										<When type="Property" frame="$this" QuestProgress="ProgressUntracked"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_Finished">
+										<When type="Property" frame="$this" QuestProgress="FinishedQuest"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_FinishedUnlimited">
+										<When type="Property" frame="$this" QuestProgress="FinishedUnlimitedQuest"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_NoQuest">
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="0"/>
 									</State>
 								</StateGroup>
 							</Frame>
@@ -448,8 +526,12 @@
 								<Width val="68"/>
 								<Height val="68"/>
 								<QuestIndex val="0"/>
+								<!-- TEST (2026-10-19): blue rows on the talents' tooltip, red on the shared quest one -->
+								<TooltipFrame val="HeroTalentTooltip"/>
 								<RenderPriority val="#RenderPriorityLevel_3"/>
 								<Frame type="Image" name="IconBackgroundImage"><Alpha val="0"/></Frame>
+								<!-- the border Blizzard's progress ring fills, on heroes with a quest only (user,
+								     2026-10-19: without it Murky's fill was a loose bar); none for the rest -->
 								<Frame type="Image" name="IconBorderImage"><Alpha val="0"/></Frame>
 								<StateGroup name="QuestState">
 									<State name="QuestSelected"/>
@@ -458,6 +540,28 @@
 									</State>
 									<State name="QuestNotAvailable">
 										<Action type="SetProperty" frame="$this/IconImage" visible="false"/>
+									</State>
+								</StateGroup>
+								<StateGroup name="FCJH_QuestBorder">
+									<DefaultState val="FCJH_NoQuest"/>
+									<State name="FCJH_InProgress">
+										<When type="Property" frame="$this" QuestProgress="QuestInProgress"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_Untracked">
+										<When type="Property" frame="$this" QuestProgress="ProgressUntracked"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_Finished">
+										<When type="Property" frame="$this" QuestProgress="FinishedQuest"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_FinishedUnlimited">
+										<When type="Property" frame="$this" QuestProgress="FinishedUnlimitedQuest"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_NoQuest">
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="0"/>
 									</State>
 								</StateGroup>
 							</Frame>
@@ -538,8 +642,12 @@
 								<Width val="68"/>
 								<Height val="68"/>
 								<QuestIndex val="0"/>
+								<!-- TEST (2026-10-19): blue rows on the talents' tooltip, red on the shared quest one -->
+								<TooltipFrame val="HeroTalentTooltip"/>
 								<RenderPriority val="#RenderPriorityLevel_3"/>
 								<Frame type="Image" name="IconBackgroundImage"><Alpha val="0"/></Frame>
+								<!-- the border Blizzard's progress ring fills, on heroes with a quest only (user,
+								     2026-10-19: without it Murky's fill was a loose bar); none for the rest -->
 								<Frame type="Image" name="IconBorderImage"><Alpha val="0"/></Frame>
 								<StateGroup name="QuestState">
 									<State name="QuestSelected"/>
@@ -548,6 +656,28 @@
 									</State>
 									<State name="QuestNotAvailable">
 										<Action type="SetProperty" frame="$this/IconImage" visible="false"/>
+									</State>
+								</StateGroup>
+								<StateGroup name="FCJH_QuestBorder">
+									<DefaultState val="FCJH_NoQuest"/>
+									<State name="FCJH_InProgress">
+										<When type="Property" frame="$this" QuestProgress="QuestInProgress"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_Untracked">
+										<When type="Property" frame="$this" QuestProgress="ProgressUntracked"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_Finished">
+										<When type="Property" frame="$this" QuestProgress="FinishedQuest"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_FinishedUnlimited">
+										<When type="Property" frame="$this" QuestProgress="FinishedUnlimitedQuest"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_NoQuest">
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="0"/>
 									</State>
 								</StateGroup>
 							</Frame>
@@ -630,6 +760,8 @@
 								<QuestIndex val="0"/>
 								<RenderPriority val="#RenderPriorityLevel_3"/>
 								<Frame type="Image" name="IconBackgroundImage"><Alpha val="0"/></Frame>
+								<!-- the border Blizzard's progress ring fills, on heroes with a quest only (user,
+								     2026-10-19: without it Murky's fill was a loose bar); none for the rest -->
 								<Frame type="Image" name="IconBorderImage"><Alpha val="0"/></Frame>
 								<StateGroup name="QuestState">
 									<State name="QuestSelected"/>
@@ -638,6 +770,28 @@
 									</State>
 									<State name="QuestNotAvailable">
 										<Action type="SetProperty" frame="$this/IconImage" visible="false"/>
+									</State>
+								</StateGroup>
+								<StateGroup name="FCJH_QuestBorder">
+									<DefaultState val="FCJH_NoQuest"/>
+									<State name="FCJH_InProgress">
+										<When type="Property" frame="$this" QuestProgress="QuestInProgress"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_Untracked">
+										<When type="Property" frame="$this" QuestProgress="ProgressUntracked"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_Finished">
+										<When type="Property" frame="$this" QuestProgress="FinishedQuest"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_FinishedUnlimited">
+										<When type="Property" frame="$this" QuestProgress="FinishedUnlimitedQuest"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_NoQuest">
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="0"/>
 									</State>
 								</StateGroup>
 							</Frame>
@@ -720,6 +874,8 @@
 								<QuestIndex val="0"/>
 								<RenderPriority val="#RenderPriorityLevel_3"/>
 								<Frame type="Image" name="IconBackgroundImage"><Alpha val="0"/></Frame>
+								<!-- the border Blizzard's progress ring fills, on heroes with a quest only (user,
+								     2026-10-19: without it Murky's fill was a loose bar); none for the rest -->
 								<Frame type="Image" name="IconBorderImage"><Alpha val="0"/></Frame>
 								<StateGroup name="QuestState">
 									<State name="QuestSelected"/>
@@ -728,6 +884,28 @@
 									</State>
 									<State name="QuestNotAvailable">
 										<Action type="SetProperty" frame="$this/IconImage" visible="false"/>
+									</State>
+								</StateGroup>
+								<StateGroup name="FCJH_QuestBorder">
+									<DefaultState val="FCJH_NoQuest"/>
+									<State name="FCJH_InProgress">
+										<When type="Property" frame="$this" QuestProgress="QuestInProgress"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_Untracked">
+										<When type="Property" frame="$this" QuestProgress="ProgressUntracked"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_Finished">
+										<When type="Property" frame="$this" QuestProgress="FinishedQuest"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_FinishedUnlimited">
+										<When type="Property" frame="$this" QuestProgress="FinishedUnlimitedQuest"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_NoQuest">
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="0"/>
 									</State>
 								</StateGroup>
 							</Frame>
@@ -810,6 +988,8 @@
 								<QuestIndex val="0"/>
 								<RenderPriority val="#RenderPriorityLevel_3"/>
 								<Frame type="Image" name="IconBackgroundImage"><Alpha val="0"/></Frame>
+								<!-- the border Blizzard's progress ring fills, on heroes with a quest only (user,
+								     2026-10-19: without it Murky's fill was a loose bar); none for the rest -->
 								<Frame type="Image" name="IconBorderImage"><Alpha val="0"/></Frame>
 								<StateGroup name="QuestState">
 									<State name="QuestSelected"/>
@@ -818,6 +998,28 @@
 									</State>
 									<State name="QuestNotAvailable">
 										<Action type="SetProperty" frame="$this/IconImage" visible="false"/>
+									</State>
+								</StateGroup>
+								<StateGroup name="FCJH_QuestBorder">
+									<DefaultState val="FCJH_NoQuest"/>
+									<State name="FCJH_InProgress">
+										<When type="Property" frame="$this" QuestProgress="QuestInProgress"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_Untracked">
+										<When type="Property" frame="$this" QuestProgress="ProgressUntracked"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_Finished">
+										<When type="Property" frame="$this" QuestProgress="FinishedQuest"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_FinishedUnlimited">
+										<When type="Property" frame="$this" QuestProgress="FinishedUnlimitedQuest"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_NoQuest">
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="0"/>
 									</State>
 								</StateGroup>
 							</Frame>
@@ -900,6 +1102,8 @@
 								<QuestIndex val="0"/>
 								<RenderPriority val="#RenderPriorityLevel_3"/>
 								<Frame type="Image" name="IconBackgroundImage"><Alpha val="0"/></Frame>
+								<!-- the border Blizzard's progress ring fills, on heroes with a quest only (user,
+								     2026-10-19: without it Murky's fill was a loose bar); none for the rest -->
 								<Frame type="Image" name="IconBorderImage"><Alpha val="0"/></Frame>
 								<StateGroup name="QuestState">
 									<State name="QuestSelected"/>
@@ -908,6 +1112,28 @@
 									</State>
 									<State name="QuestNotAvailable">
 										<Action type="SetProperty" frame="$this/IconImage" visible="false"/>
+									</State>
+								</StateGroup>
+								<StateGroup name="FCJH_QuestBorder">
+									<DefaultState val="FCJH_NoQuest"/>
+									<State name="FCJH_InProgress">
+										<When type="Property" frame="$this" QuestProgress="QuestInProgress"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_Untracked">
+										<When type="Property" frame="$this" QuestProgress="ProgressUntracked"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_Finished">
+										<When type="Property" frame="$this" QuestProgress="FinishedQuest"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_FinishedUnlimited">
+										<When type="Property" frame="$this" QuestProgress="FinishedUnlimitedQuest"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_NoQuest">
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="0"/>
 									</State>
 								</StateGroup>
 							</Frame>
@@ -990,6 +1216,8 @@
 								<QuestIndex val="0"/>
 								<RenderPriority val="#RenderPriorityLevel_3"/>
 								<Frame type="Image" name="IconBackgroundImage"><Alpha val="0"/></Frame>
+								<!-- the border Blizzard's progress ring fills, on heroes with a quest only (user,
+								     2026-10-19: without it Murky's fill was a loose bar); none for the rest -->
 								<Frame type="Image" name="IconBorderImage"><Alpha val="0"/></Frame>
 								<StateGroup name="QuestState">
 									<State name="QuestSelected"/>
@@ -998,6 +1226,28 @@
 									</State>
 									<State name="QuestNotAvailable">
 										<Action type="SetProperty" frame="$this/IconImage" visible="false"/>
+									</State>
+								</StateGroup>
+								<StateGroup name="FCJH_QuestBorder">
+									<DefaultState val="FCJH_NoQuest"/>
+									<State name="FCJH_InProgress">
+										<When type="Property" frame="$this" QuestProgress="QuestInProgress"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_Untracked">
+										<When type="Property" frame="$this" QuestProgress="ProgressUntracked"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_Finished">
+										<When type="Property" frame="$this" QuestProgress="FinishedQuest"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_FinishedUnlimited">
+										<When type="Property" frame="$this" QuestProgress="FinishedUnlimitedQuest"/>
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="255"/>
+									</State>
+									<State name="FCJH_NoQuest">
+										<Action type="SetProperty" frame="$this/IconBorderImage" alpha="0"/>
 									</State>
 								</StateGroup>
 							</Frame>
