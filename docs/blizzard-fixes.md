@@ -225,6 +225,10 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
   - **Step 6:** each row's TalentsContainerFrame Batch false (the one batched frame in the
     row, heroleaderpanel.stormlayout:1717; a batch draws only inside its box). Whole: the
     batch was the clip. Still cut: the row's own box, so the row must travel.
+    **Seen (ad64c31, user):** still cut. Not the batch.
+  - **Step 7:** each row's TalentsContainerFrame grown 60 above and below the row (middle
+    unmoved; the two frames under it follow it). Whole: the clip is that chain's box, which
+    can be sized to the whole screen for a far lift. Still cut: the row (PlayerFrame) clips.
   - **Spazzo** (user, 2026-10-19): puts quests in his nameplates with no tooltips. He doesn't
     use Blizzard's quest icons at all: a generic UnitStatusBehaviorIcon per nameplate, pointed
     at each hero's quest-counter behaviour by a hand-kept list of ~400 entries

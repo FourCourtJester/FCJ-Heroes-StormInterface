@@ -55,7 +55,14 @@
      the row Blizzard batches (Batch true, heroleaderpanel.stormlayout:1717), and a batch
      draws only inside its own box - Spazzo's note blames baseline quests for his batching.
      Whole now: the batch was the clip, and a lift can go far with it off. Still cut: it is
-     the row's own box (PlayerFrame), and the row must travel with the icons. -->
+     the row's own box (PlayerFrame), and the row must travel with the icons.
+     Seen (user, 2026-10-19, ad64c31): "still cut off". Not the batch.
+
+     Step 7, one change: each row's TalentsContainerFrame grown 60 above and 60 below the row
+     (its middle where it was, so nothing in it moves; SelectionUnitStatusPanel and
+     UnitStatusFrame0 are anchored to it and grow with it). Whole now: the clip is that
+     chain's box, which we can size as we like - up to the whole screen, for a far lift.
+     Still cut: it is the row itself (PlayerFrame). -->
 <Desc>
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<Frame type="Frame" name="UIContainer">
@@ -72,6 +79,8 @@
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame0">
 								<Frame type="Frame" name="TalentsContainerFrame">
 									<Batch val="False"/>
+									<Anchor side="Top" relative="$parent" pos="Min" offset="-60"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="60"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
@@ -93,6 +102,8 @@
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame1">
 								<Frame type="Frame" name="TalentsContainerFrame">
 									<Batch val="False"/>
+									<Anchor side="Top" relative="$parent" pos="Min" offset="-60"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="60"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
@@ -114,6 +125,8 @@
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame2">
 								<Frame type="Frame" name="TalentsContainerFrame">
 									<Batch val="False"/>
+									<Anchor side="Top" relative="$parent" pos="Min" offset="-60"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="60"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
@@ -135,6 +148,8 @@
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame3">
 								<Frame type="Frame" name="TalentsContainerFrame">
 									<Batch val="False"/>
+									<Anchor side="Top" relative="$parent" pos="Min" offset="-60"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="60"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
@@ -156,6 +171,8 @@
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame4">
 								<Frame type="Frame" name="TalentsContainerFrame">
 									<Batch val="False"/>
+									<Anchor side="Top" relative="$parent" pos="Min" offset="-60"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="60"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
@@ -177,6 +194,8 @@
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame5">
 								<Frame type="Frame" name="TalentsContainerFrame">
 									<Batch val="False"/>
+									<Anchor side="Top" relative="$parent" pos="Min" offset="-60"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="60"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
@@ -198,6 +217,8 @@
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame6">
 								<Frame type="Frame" name="TalentsContainerFrame">
 									<Batch val="False"/>
+									<Anchor side="Top" relative="$parent" pos="Min" offset="-60"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="60"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
@@ -219,6 +240,8 @@
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame7">
 								<Frame type="Frame" name="TalentsContainerFrame">
 									<Batch val="False"/>
+									<Anchor side="Top" relative="$parent" pos="Min" offset="-60"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="60"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
@@ -240,6 +263,8 @@
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame8">
 								<Frame type="Frame" name="TalentsContainerFrame">
 									<Batch val="False"/>
+									<Anchor side="Top" relative="$parent" pos="Min" offset="-60"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="60"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
@@ -261,6 +286,8 @@
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame9">
 								<Frame type="Frame" name="TalentsContainerFrame">
 									<Batch val="False"/>
+									<Anchor side="Top" relative="$parent" pos="Min" offset="-60"/>
+									<Anchor side="Bottom" relative="$parent" pos="Max" offset="60"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
