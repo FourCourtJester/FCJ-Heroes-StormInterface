@@ -78,7 +78,19 @@
      quest icon (the second follows it) re-anchored to the screen, a line above the panel
      220 down, blue's five then red's. Shows and fills: icons can go anywhere, and our
      ctrl-1 pane can borrow them. Cut at the panel's edge: the frames above the row
-     (PlayerFrame, TabControl, HeroLeaderPanelContainer) clip too. -->
+     (PlayerFrame, TabControl, HeroLeaderPanelContainer) clip too.
+     Seen (user, 2026-10-19, c104af4, screenshot): the icons drawn on the line above the
+     panel, but "tooltips dont seem to show up anymore". Known (HANDOFF section 3): an icon
+     outside its player's box gives no tooltip - drawing and the mouse are checked apart.
+
+     Step 10, one change: FCJH's spread (tools/gen.py, as the talent row's lifted pieces have
+     it) on every frame from the row down to the icon - PlayerFrame, TalentsContainerFrame,
+     SelectionUnitStatusPanel, UnitStatusFrame0, HeroSelectedTalentTreeFrame,
+     QuestContainerContainerFrame, BaseQuestCenterFrame: each stretched over the whole screen,
+     mouse and tooltips off, so a lifted icon is inside every box above it. The rows' other
+     contents will be thrown about (test only). Fills now: lifted quest icons can keep their
+     tooltips anywhere. Still none: the panel above the rows (TabControl,
+     HeroLeaderPanelContainer) must be spread too. -->
 <Desc>
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<Frame type="Frame" name="UIContainer">
@@ -93,21 +105,61 @@
 						<Visible val="true"/>
 						<Frame type="TabControl" name="TabControl">
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame0">
+								<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+								<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+								<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+								<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+								<AcceptsMouse val="false"/>
+								<AcceptsMouseTooltip val="false"/>
 								<Frame type="Frame" name="TalentsContainerFrame">
 									<Unclipped val="true"/>
+									<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+									<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+									<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+									<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+									<AcceptsMouse val="false"/>
+									<AcceptsMouseTooltip val="false"/>
 									<Batch val="False"/>
-									<Anchor side="Top" relative="$parent" pos="Min" offset="-60"/>
-									<Anchor side="Bottom" relative="$parent" pos="Max" offset="60"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Unclipped val="true"/>
+										<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+										<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+										<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+										<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+										<AcceptsMouse val="false"/>
+										<AcceptsMouseTooltip val="false"/>
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Unclipped val="true"/>
+											<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+											<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+											<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+											<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+											<AcceptsMouse val="false"/>
+											<AcceptsMouseTooltip val="false"/>
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 												<Unclipped val="true"/>
+												<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+												<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+												<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+												<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+												<AcceptsMouse val="false"/>
+												<AcceptsMouseTooltip val="false"/>
 												<Frame type="Frame" name="QuestContainerContainerFrame">
 													<Unclipped val="true"/>
+													<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+													<AcceptsMouse val="false"/>
+													<AcceptsMouseTooltip val="false"/>
 													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
 														<Unclipped val="true"/>
+														<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+														<AcceptsMouse val="false"/>
+														<AcceptsMouseTooltip val="false"/>
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
 															<Unclipped val="true"/>
 															<Anchor side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="220"/>
@@ -123,21 +175,61 @@
 								</Frame>
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame1">
+								<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+								<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+								<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+								<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+								<AcceptsMouse val="false"/>
+								<AcceptsMouseTooltip val="false"/>
 								<Frame type="Frame" name="TalentsContainerFrame">
 									<Unclipped val="true"/>
+									<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+									<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+									<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+									<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+									<AcceptsMouse val="false"/>
+									<AcceptsMouseTooltip val="false"/>
 									<Batch val="False"/>
-									<Anchor side="Top" relative="$parent" pos="Min" offset="-60"/>
-									<Anchor side="Bottom" relative="$parent" pos="Max" offset="60"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Unclipped val="true"/>
+										<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+										<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+										<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+										<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+										<AcceptsMouse val="false"/>
+										<AcceptsMouseTooltip val="false"/>
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Unclipped val="true"/>
+											<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+											<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+											<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+											<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+											<AcceptsMouse val="false"/>
+											<AcceptsMouseTooltip val="false"/>
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 												<Unclipped val="true"/>
+												<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+												<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+												<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+												<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+												<AcceptsMouse val="false"/>
+												<AcceptsMouseTooltip val="false"/>
 												<Frame type="Frame" name="QuestContainerContainerFrame">
 													<Unclipped val="true"/>
+													<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+													<AcceptsMouse val="false"/>
+													<AcceptsMouseTooltip val="false"/>
 													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
 														<Unclipped val="true"/>
+														<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+														<AcceptsMouse val="false"/>
+														<AcceptsMouseTooltip val="false"/>
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
 															<Unclipped val="true"/>
 															<Anchor side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="220"/>
@@ -153,21 +245,61 @@
 								</Frame>
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame2">
+								<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+								<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+								<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+								<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+								<AcceptsMouse val="false"/>
+								<AcceptsMouseTooltip val="false"/>
 								<Frame type="Frame" name="TalentsContainerFrame">
 									<Unclipped val="true"/>
+									<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+									<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+									<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+									<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+									<AcceptsMouse val="false"/>
+									<AcceptsMouseTooltip val="false"/>
 									<Batch val="False"/>
-									<Anchor side="Top" relative="$parent" pos="Min" offset="-60"/>
-									<Anchor side="Bottom" relative="$parent" pos="Max" offset="60"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Unclipped val="true"/>
+										<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+										<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+										<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+										<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+										<AcceptsMouse val="false"/>
+										<AcceptsMouseTooltip val="false"/>
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Unclipped val="true"/>
+											<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+											<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+											<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+											<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+											<AcceptsMouse val="false"/>
+											<AcceptsMouseTooltip val="false"/>
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 												<Unclipped val="true"/>
+												<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+												<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+												<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+												<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+												<AcceptsMouse val="false"/>
+												<AcceptsMouseTooltip val="false"/>
 												<Frame type="Frame" name="QuestContainerContainerFrame">
 													<Unclipped val="true"/>
+													<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+													<AcceptsMouse val="false"/>
+													<AcceptsMouseTooltip val="false"/>
 													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
 														<Unclipped val="true"/>
+														<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+														<AcceptsMouse val="false"/>
+														<AcceptsMouseTooltip val="false"/>
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
 															<Unclipped val="true"/>
 															<Anchor side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="220"/>
@@ -183,21 +315,61 @@
 								</Frame>
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame3">
+								<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+								<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+								<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+								<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+								<AcceptsMouse val="false"/>
+								<AcceptsMouseTooltip val="false"/>
 								<Frame type="Frame" name="TalentsContainerFrame">
 									<Unclipped val="true"/>
+									<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+									<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+									<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+									<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+									<AcceptsMouse val="false"/>
+									<AcceptsMouseTooltip val="false"/>
 									<Batch val="False"/>
-									<Anchor side="Top" relative="$parent" pos="Min" offset="-60"/>
-									<Anchor side="Bottom" relative="$parent" pos="Max" offset="60"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Unclipped val="true"/>
+										<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+										<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+										<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+										<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+										<AcceptsMouse val="false"/>
+										<AcceptsMouseTooltip val="false"/>
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Unclipped val="true"/>
+											<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+											<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+											<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+											<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+											<AcceptsMouse val="false"/>
+											<AcceptsMouseTooltip val="false"/>
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 												<Unclipped val="true"/>
+												<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+												<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+												<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+												<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+												<AcceptsMouse val="false"/>
+												<AcceptsMouseTooltip val="false"/>
 												<Frame type="Frame" name="QuestContainerContainerFrame">
 													<Unclipped val="true"/>
+													<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+													<AcceptsMouse val="false"/>
+													<AcceptsMouseTooltip val="false"/>
 													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
 														<Unclipped val="true"/>
+														<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+														<AcceptsMouse val="false"/>
+														<AcceptsMouseTooltip val="false"/>
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
 															<Unclipped val="true"/>
 															<Anchor side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="220"/>
@@ -213,21 +385,61 @@
 								</Frame>
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame4">
+								<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+								<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+								<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+								<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+								<AcceptsMouse val="false"/>
+								<AcceptsMouseTooltip val="false"/>
 								<Frame type="Frame" name="TalentsContainerFrame">
 									<Unclipped val="true"/>
+									<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+									<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+									<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+									<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+									<AcceptsMouse val="false"/>
+									<AcceptsMouseTooltip val="false"/>
 									<Batch val="False"/>
-									<Anchor side="Top" relative="$parent" pos="Min" offset="-60"/>
-									<Anchor side="Bottom" relative="$parent" pos="Max" offset="60"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Unclipped val="true"/>
+										<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+										<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+										<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+										<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+										<AcceptsMouse val="false"/>
+										<AcceptsMouseTooltip val="false"/>
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Unclipped val="true"/>
+											<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+											<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+											<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+											<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+											<AcceptsMouse val="false"/>
+											<AcceptsMouseTooltip val="false"/>
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 												<Unclipped val="true"/>
+												<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+												<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+												<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+												<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+												<AcceptsMouse val="false"/>
+												<AcceptsMouseTooltip val="false"/>
 												<Frame type="Frame" name="QuestContainerContainerFrame">
 													<Unclipped val="true"/>
+													<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+													<AcceptsMouse val="false"/>
+													<AcceptsMouseTooltip val="false"/>
 													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
 														<Unclipped val="true"/>
+														<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+														<AcceptsMouse val="false"/>
+														<AcceptsMouseTooltip val="false"/>
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
 															<Unclipped val="true"/>
 															<Anchor side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="220"/>
@@ -243,21 +455,61 @@
 								</Frame>
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame5">
+								<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+								<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+								<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+								<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+								<AcceptsMouse val="false"/>
+								<AcceptsMouseTooltip val="false"/>
 								<Frame type="Frame" name="TalentsContainerFrame">
 									<Unclipped val="true"/>
+									<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+									<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+									<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+									<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+									<AcceptsMouse val="false"/>
+									<AcceptsMouseTooltip val="false"/>
 									<Batch val="False"/>
-									<Anchor side="Top" relative="$parent" pos="Min" offset="-60"/>
-									<Anchor side="Bottom" relative="$parent" pos="Max" offset="60"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Unclipped val="true"/>
+										<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+										<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+										<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+										<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+										<AcceptsMouse val="false"/>
+										<AcceptsMouseTooltip val="false"/>
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Unclipped val="true"/>
+											<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+											<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+											<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+											<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+											<AcceptsMouse val="false"/>
+											<AcceptsMouseTooltip val="false"/>
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 												<Unclipped val="true"/>
+												<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+												<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+												<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+												<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+												<AcceptsMouse val="false"/>
+												<AcceptsMouseTooltip val="false"/>
 												<Frame type="Frame" name="QuestContainerContainerFrame">
 													<Unclipped val="true"/>
+													<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+													<AcceptsMouse val="false"/>
+													<AcceptsMouseTooltip val="false"/>
 													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
 														<Unclipped val="true"/>
+														<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+														<AcceptsMouse val="false"/>
+														<AcceptsMouseTooltip val="false"/>
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
 															<Unclipped val="true"/>
 															<Anchor side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="220"/>
@@ -273,21 +525,61 @@
 								</Frame>
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame6">
+								<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+								<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+								<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+								<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+								<AcceptsMouse val="false"/>
+								<AcceptsMouseTooltip val="false"/>
 								<Frame type="Frame" name="TalentsContainerFrame">
 									<Unclipped val="true"/>
+									<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+									<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+									<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+									<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+									<AcceptsMouse val="false"/>
+									<AcceptsMouseTooltip val="false"/>
 									<Batch val="False"/>
-									<Anchor side="Top" relative="$parent" pos="Min" offset="-60"/>
-									<Anchor side="Bottom" relative="$parent" pos="Max" offset="60"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Unclipped val="true"/>
+										<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+										<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+										<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+										<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+										<AcceptsMouse val="false"/>
+										<AcceptsMouseTooltip val="false"/>
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Unclipped val="true"/>
+											<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+											<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+											<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+											<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+											<AcceptsMouse val="false"/>
+											<AcceptsMouseTooltip val="false"/>
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 												<Unclipped val="true"/>
+												<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+												<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+												<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+												<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+												<AcceptsMouse val="false"/>
+												<AcceptsMouseTooltip val="false"/>
 												<Frame type="Frame" name="QuestContainerContainerFrame">
 													<Unclipped val="true"/>
+													<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+													<AcceptsMouse val="false"/>
+													<AcceptsMouseTooltip val="false"/>
 													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
 														<Unclipped val="true"/>
+														<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+														<AcceptsMouse val="false"/>
+														<AcceptsMouseTooltip val="false"/>
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
 															<Unclipped val="true"/>
 															<Anchor side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="220"/>
@@ -303,21 +595,61 @@
 								</Frame>
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame7">
+								<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+								<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+								<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+								<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+								<AcceptsMouse val="false"/>
+								<AcceptsMouseTooltip val="false"/>
 								<Frame type="Frame" name="TalentsContainerFrame">
 									<Unclipped val="true"/>
+									<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+									<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+									<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+									<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+									<AcceptsMouse val="false"/>
+									<AcceptsMouseTooltip val="false"/>
 									<Batch val="False"/>
-									<Anchor side="Top" relative="$parent" pos="Min" offset="-60"/>
-									<Anchor side="Bottom" relative="$parent" pos="Max" offset="60"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Unclipped val="true"/>
+										<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+										<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+										<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+										<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+										<AcceptsMouse val="false"/>
+										<AcceptsMouseTooltip val="false"/>
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Unclipped val="true"/>
+											<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+											<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+											<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+											<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+											<AcceptsMouse val="false"/>
+											<AcceptsMouseTooltip val="false"/>
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 												<Unclipped val="true"/>
+												<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+												<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+												<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+												<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+												<AcceptsMouse val="false"/>
+												<AcceptsMouseTooltip val="false"/>
 												<Frame type="Frame" name="QuestContainerContainerFrame">
 													<Unclipped val="true"/>
+													<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+													<AcceptsMouse val="false"/>
+													<AcceptsMouseTooltip val="false"/>
 													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
 														<Unclipped val="true"/>
+														<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+														<AcceptsMouse val="false"/>
+														<AcceptsMouseTooltip val="false"/>
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
 															<Unclipped val="true"/>
 															<Anchor side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="220"/>
@@ -333,21 +665,61 @@
 								</Frame>
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame8">
+								<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+								<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+								<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+								<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+								<AcceptsMouse val="false"/>
+								<AcceptsMouseTooltip val="false"/>
 								<Frame type="Frame" name="TalentsContainerFrame">
 									<Unclipped val="true"/>
+									<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+									<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+									<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+									<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+									<AcceptsMouse val="false"/>
+									<AcceptsMouseTooltip val="false"/>
 									<Batch val="False"/>
-									<Anchor side="Top" relative="$parent" pos="Min" offset="-60"/>
-									<Anchor side="Bottom" relative="$parent" pos="Max" offset="60"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Unclipped val="true"/>
+										<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+										<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+										<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+										<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+										<AcceptsMouse val="false"/>
+										<AcceptsMouseTooltip val="false"/>
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Unclipped val="true"/>
+											<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+											<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+											<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+											<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+											<AcceptsMouse val="false"/>
+											<AcceptsMouseTooltip val="false"/>
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 												<Unclipped val="true"/>
+												<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+												<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+												<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+												<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+												<AcceptsMouse val="false"/>
+												<AcceptsMouseTooltip val="false"/>
 												<Frame type="Frame" name="QuestContainerContainerFrame">
 													<Unclipped val="true"/>
+													<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+													<AcceptsMouse val="false"/>
+													<AcceptsMouseTooltip val="false"/>
 													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
 														<Unclipped val="true"/>
+														<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+														<AcceptsMouse val="false"/>
+														<AcceptsMouseTooltip val="false"/>
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
 															<Unclipped val="true"/>
 															<Anchor side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="220"/>
@@ -363,21 +735,61 @@
 								</Frame>
 							</Frame>
 							<Frame type="HeroLeaderPanelPlayerFrame" name="PlayerFrame9">
+								<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+								<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+								<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+								<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+								<AcceptsMouse val="false"/>
+								<AcceptsMouseTooltip val="false"/>
 								<Frame type="Frame" name="TalentsContainerFrame">
 									<Unclipped val="true"/>
+									<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+									<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+									<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+									<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+									<AcceptsMouse val="false"/>
+									<AcceptsMouseTooltip val="false"/>
 									<Batch val="False"/>
-									<Anchor side="Top" relative="$parent" pos="Min" offset="-60"/>
-									<Anchor side="Bottom" relative="$parent" pos="Max" offset="60"/>
 									<Frame type="SelectionUnitStatusPanel" name="SelectionUnitStatusPanel">
 										<Unclipped val="true"/>
+										<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+										<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+										<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+										<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+										<AcceptsMouse val="false"/>
+										<AcceptsMouseTooltip val="false"/>
 										<Frame type="UnitStatusFrame" name="UnitStatusFrame0">
 											<Unclipped val="true"/>
+											<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+											<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+											<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+											<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+											<AcceptsMouse val="false"/>
+											<AcceptsMouseTooltip val="false"/>
 											<Frame type="PlayerHeroSelectedTalentTreeFrame" name="HeroSelectedTalentTreeFrame">
 												<Unclipped val="true"/>
+												<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+												<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+												<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+												<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+												<AcceptsMouse val="false"/>
+												<AcceptsMouseTooltip val="false"/>
 												<Frame type="Frame" name="QuestContainerContainerFrame">
 													<Unclipped val="true"/>
+													<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+													<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+													<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+													<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+													<AcceptsMouse val="false"/>
+													<AcceptsMouseTooltip val="false"/>
 													<Frame type="ParentCenteredFrame" name="BaseQuestCenterFrame">
 														<Unclipped val="true"/>
+														<Anchor side="Left" relative="$GameUI" pos="Min" offset="0"/>
+														<Anchor side="Top" relative="$GameUI" pos="Min" offset="0"/>
+														<Anchor side="Right" relative="$GameUI" pos="Max" offset="0"/>
+														<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="0"/>
+														<AcceptsMouse val="false"/>
+														<AcceptsMouseTooltip val="false"/>
 														<Frame type="UnitStatusBaselineQuestIcon" name="BaseQuestIcon0">
 															<Unclipped val="true"/>
 															<Anchor side="Top" relative="$GameUI/UIContainer/ConsoleUIContainer" pos="Min" offset="220"/>

@@ -238,6 +238,11 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
   - **Step 9:** step 3's far lift again, chain freed: icons re-anchored to the screen, a line
     above the panel. Fills: icons can go anywhere. Cut at the panel: the frames above the row
     clip too.
+    **Seen (c104af4, user, screenshot):** drawn there, but no tooltips. As HANDOFF section 3
+    has it: an icon outside its player's box gives no tooltip (drawing and mouse apart).
+  - **Step 10:** FCJH's `spread` (gen.py) on every frame from the row down to the icon: each
+    over the whole screen, mouse and tooltips off. Fills: lifted quest icons keep tooltips
+    anywhere. None: the panel above the rows must be spread too.
   - **Spazzo** (user, 2026-10-19): puts quests in his nameplates with no tooltips. He doesn't
     use Blizzard's quest icons at all: a generic UnitStatusBehaviorIcon per nameplate, pointed
     at each hero's quest-counter behaviour by a hand-kept list of ~400 entries
