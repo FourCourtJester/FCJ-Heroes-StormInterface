@@ -2045,72 +2045,41 @@ def pet_death_bindings(cfg, team_frame, i):
 										</Controller>
 									</Animation>
 								</Frame>
-							</Frame>{onfire_flames(cfg, team_frame == 'Team1HeroOverview', cell, i)}"""
+							</Frame>{onfire_flames(cfg, team_frame == 'Team1HeroOverview', cell)}"""
     return out
 
 
 # On fire: Blizzard's own top-bar flames (partyframe.stormlayout OnFireCutsceneFrame:
-# SharedOnFireVFX's template playing GameUI_OnFirePartyFrame) at Blizzard's size and place, cut
-# off at the portrait by a portrait-sized parent (they're not Unclipped). The party cell's own
-# can't be moved here: the game hides the in-game top bar for an observer. Ours plays on the
-# party cell's events, which do reach an observer (squares, read 2026-10-19): Embers, Inferno,
-# End and the side (Left/Right). The colour comes from the cutscene's Ally/Enemy filters, sent
-# only to the hero's own team / its enemies, so an observer gets neither: we set them, Ally
-# (blue's flames) on blue, Enemy on red, with the side Blizzard gives each (Left = Order = blue).
-# Placed as Blizzard places it on the IconFrame: 185 x 100 units, 30 left of the cell (red 34),
-# 5.5 above its top.
-# History (HANDOFF §7): the flames Unclipped (6420bd3) spilled past the plate ("kinda looks
-# goofy but it did emit"); the Tab panel's glow (002c699 - 11e618a) drew but too faint to read
-# over a portrait (1c4f33b). Test 2 (0c9803c, seen 2026-10-19), always on, one variant a plate:
-# these flames clipped to the portrait read as a team-coloured rim with flames inside - chosen;
-# shrunk to the portrait, thin wisps; the kill feed's (GameUI_OnFireKillLog), a white hexagon;
-# the overhead bar's (GameUI_OnFireNamePlate), big, orange on both teams, spilling.
-# Test 3 seen-before (c4beaec, Inferno on Hogger: "the red outline is *mostly* good"): the top
-# ~2 px low, the right edge leaning less than the chrome's. Top: raised ~1.8 units, bottom kept
-# (top -5.5 -> -7.3, height 100 -> 103).
-# Test 3 (ae9319d, seen 2026-10-19): odd plates Blizzard's Left rim, even its Right, always on.
-# The Left rim on a red plate (Hogger) slants against the plate: "the criss cross pattern is at
-# odds for sure".
-# Test 4 (dd38ce0): one plate a team, the middle (3), always on (Inferno), each team its own side
-# (blue Left, red Right), the rest off.
-# Test 5 (3aa0187): Embers on plate 2 of each team, Inferno on plate 4, always on, the rest off.
-# TEST 6 (2026-10-19), test 5's plates: the fire on the face only, not the bars (user: squash the
-# flames to fit rather than cut the rim's bottom off). The rim ran ~2.5 to ~53.6 down the cell
-# (its frame -7.3 + 103 tall: the rim from 9.55% to 59.1% of it, measured on Hogger). Squashed
-# to end at 35, just over the health backing (36), its top kept: the frame 65.5 tall (x 0.636),
-# top -3.75; the wrapper clips at 36. Only the height changes, so the slanted sides stand
-# flatter (0.54 -> ~0.85 across per down) - expected, to re-tune after a look.
-# Test 6 seen (5c63562): "height looks good, just needs some widening now; even the angles look
-# like they might be okay". Measured (Inferno, y 986): the rim 87 px wide on blue, 91 on red,
-# the plate's dividers 137 / 136 apart; the rim's centre 10.7 px right of the plate's on blue,
-# 10.5 left on red; its sides lean ~0.6 - 0.8 across per down (the dividers 0.54).
-# TEST 7 (2026-10-19): widened x 1.45 (185 -> 268) and centred on the plate (frame left 30 -> 77
-# on blue, 34 -> 72 on red), height kept. Widening alone leans the sides 1.45x more.
-# Test 7 seen (73b5814): "flames look the same"; squashing dropped ("disregard the height
-# squash"): back to test 5's, shrunk ~1 px to lose the rim's glow under the resource bar.
-# TEST 8 (2026-10-19): test 5's flames scaled x 0.986 both ways (the rim 71 px tall -> 70, the
-# angles kept), its top and centre kept (rim top 9.55% down the frame; centre 44.8% across on
-# blue, 57.5% on red); the wrapper back to the portrait's height.
-# Test 8 seen (8c907de): the glow "still there" - a 2 px line at y 1048-1049 (1080p), under the
-# energy bar (its fill ends 1045). TEST 9 (2026-10-19): the flames up 2 px (1.44 units), top too.
-# Test 9 seen (54d5d72): the line still at 1048-1049 - the rim's glow running on down, cut off
-# at the wrapper's bottom (55 units, y 1050), not the rim's own edge. TEST 10 (2026-10-19): the
-# wrapper clips at 52.5 (y ~1046, the dark gap under the energy bar's fill, which ends 1045).
-ONFIRE_TEST = {2: "Embers Start", 4: "Inferno Start"}
+# SharedOnFireVFX's template playing GameUI_OnFirePartyFrame), cut off by a portrait-sized parent
+# (they're not Unclipped): a team-coloured rim round the portrait with flames inside. The party
+# cell's own can't be moved here: the game hides the in-game top bar for an observer. Ours plays
+# on the party cell's events, which do reach an observer (squares, read 2026-10-19): Embers,
+# Inferno and End. The colour comes from the cutscene's Ally/Enemy filters, sent only to the
+# hero's own team / its enemies, so an observer gets neither: we set them, Ally (blue's flames)
+# on blue, Enemy on red. The side filter picks the rim's model: Left (Blizzard's left-hand team)
+# plays Storm_UI_Hud_PartyFrame_OnFire, Right its _Enemy mirror; each team takes its own side, or
+# the rim slants against the plate. The rim is one 3D model: its box can be moved, stretched and
+# clipped, never skewed or its sides placed apart.
+# Fitted by eye, 2026-10-19 (user: "i think we can call that square"): Blizzard's IconFrame box
+# (185 x 100 units, 30 left of the cell, red 34, 5.5 above it) shrunk x 0.986 about the rim's top
+# and centre, raised to put the rim's top on the plate's, and clipped at 52.5 down - the dark gap
+# under the energy bar - to cut off the rim's glow, which ran on under the bars.
+# History (HANDOFF §7): Unclipped (6420bd3) it spilled past the plate; the Tab panel's glow
+# (002c699 - 11e618a) drew, too faint over a portrait; test 2 (0c9803c) picked these flames
+# clipped over the shrunk ones, the kill feed's and the overhead bar's; squashing them onto the
+# face (5c63562) and widening (73b5814) were tried and dropped.
 ONFIRE_LEVELS = {"OnFireEmbers": "Embers Start", "OnFireInferno": "Inferno Start", "OnFireEnd": "Death"}
-ONFIRE_PLACE = {"Left": -28.8, "Right": -32.5}  # the frame's left, by side; test 5: -30, -34
-ONFIRE_TOP, ONFIRE_W, ONFIRE_H = -8.6, 182.4, 101.6    # test 8: -7.16; test 5: -7.3, 185, 103
-ONFIRE_CLIP = 52.5                                     # the wrapper's bottom; test 9: 55
+ONFIRE_PLACE = {"Left": -28.8, "Right": -32.5}  # the flames' left, by side
+ONFIRE_TOP, ONFIRE_W, ONFIRE_H = -8.6, 182.4, 101.6
+ONFIRE_CLIP = 52.5                              # the clipping parent's bottom
 
 
-def onfire_flames(cfg, blue, cell, i):
+def onfire_flames(cfg, blue, cell):
     c = HeroCell(cfg)
     k = c.w / c.W
     s = lambda v: round(v * k)
     t = "\t" * 7
     team, other = ("Ally", "Enemy") if blue else ("Enemy", "Ally")
-    if ONFIRE_TEST and i not in ONFIRE_TEST:
-        return ""
     side, away = ("Left", "Right") if blue else ("Right", "Left")
     left = ONFIRE_PLACE[side]
     filters = "".join(f'\n{t}\t\t\t\t<Key type="Cutscene" time="0" action="{act}" filter="{f}"/>'
@@ -2129,18 +2098,6 @@ def onfire_flames(cfg, blue, cell, i):
 {t}\t\t\t</Controller>
 {t}\t\t\t<Controller type="Cutscene" end="Stop">{"" if end else filters}
 {t}\t\t\t\t<Key type="Cutscene" time="0" action="Bookmark" bookmark="{bookmark}"/>
-{t}\t\t\t\t<Key type="Cutscene" time="0" action="Play"/>
-{t}\t\t\t</Controller>
-{t}\t\t</Animation>"""
-    if ONFIRE_TEST:     # always on, from the wrapper's OnShown (FCJH_KeepRowShown's trigger)
-        anims = f"""
-{t}\t\t<Animation name="FCJH_OnFireTest">
-{t}\t\t\t<Event event="OnShown" action="Reset,Play" frame="$parent"/>
-{t}\t\t\t<Controller type="Visibility" end="Pause">
-{t}\t\t\t\t<Key type="Bool" time="0" value="True"/>
-{t}\t\t\t</Controller>
-{t}\t\t\t<Controller type="Cutscene" end="Stop">{filters}
-{t}\t\t\t\t<Key type="Cutscene" time="0" action="Bookmark" bookmark="{ONFIRE_TEST[i]}"/>
 {t}\t\t\t\t<Key type="Cutscene" time="0" action="Play"/>
 {t}\t\t\t</Controller>
 {t}\t\t</Animation>"""

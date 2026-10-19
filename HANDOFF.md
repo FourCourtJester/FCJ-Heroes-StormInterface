@@ -647,8 +647,20 @@ from their plates (docs/blizzard-fixes.md).
    (so a parent does cut a cutscene off); (3) the kill feed's flames - a white hexagon, no
    use; (4) the overhead bar's - big, orange on both teams, spilling well above; (5) 6420bd3's
    control - spills. **Chosen: (2)**, on every plate, back on the fire events (Embers/Inferno
-   bookmarks, End plays Blizzard's dying-out then hides at 5 s). Not seen yet: check on a hero
-   on fire - the rim and flames show, stay on the portrait, and go out on End.
+   bookmarks, End plays Blizzard's dying-out then hides at 5 s).
+   **Fitting it (c4beaec - 68486eb, all seen 2026-10-19).** Inferno on Hogger: "the red outline
+   is *mostly* good" - the top ~2 px low, the right edge off the plate's slant. Odd/even plates
+   on the cutscene's Left / Right side filters (ae9319d): they're two models, Left
+   (Storm_UI_Hud_PartyFrame_OnFire) for Blizzard's left team, Right (its _Enemy mirror) for the
+   right; the wrong one slants against the plate ("the criss cross pattern is at odds"), so each
+   team takes its own. Squashed onto the face only (5c63562): "height looks good"; widened x 1.45
+   (73b5814): "flames look the same" - the rim is one 3D model, no separate sides to place, so
+   both were dropped. Back to Blizzard's box, shrunk ~1 px (8c907de) and raised 2 px (54d5d72):
+   a 2 px glow line under the energy bar stayed put at 1048-1049 - the glow running on down,
+   cut off at the clip, not the rim's edge; clipping at 52.5 units (68486eb, y ~1046) took it
+   out. User: "great. i think we can call that square". Final: Blizzard's box x 0.986, top
+   -8.6 units, left -28.8 (blue) / -32.5 (red), clip at 52.5, on the fire events, every plate.
+   Not seen yet: blue/red on a real fire, Embers, End going out, the colourblind variant.
    The intro waits for the user's OBS plan. The items as the user gave them:
    - **The chrome's slant against Blizzard's art** (user, 2026-10-17): the row frame's slants
      don't gel with the art's: the portraits' edges, the heroic badges, the fountain icons and
