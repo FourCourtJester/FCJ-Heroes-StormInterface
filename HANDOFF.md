@@ -581,8 +581,9 @@ from their plates (docs/blizzard-fixes.md).
    (`python tools/pack.py src/tests/FCJH_QTest.StormInterface --name FCJH_QTest.StormInterface --wait`),
    one change per build; `FCJH_QuestTest` is out of FCJH. **Step 1 fills** (7be15cc): an
    untouched copy of Blizzard's leader panel, Control+Shift+Q. **Step 2 fills** (5d1ae3f):
-   opened Ahli's way (on from load, faded and slid in), no Show event. **Step 3, not seen
-   yet:** the quest icons lifted out of the panel to the top of the screen.
+   opened Ahli's way (on from load, faded and slid in), no Show event. **Step 3 blank**
+   (f2696bb): the quest icons lifted out of the panel to the top of the screen don't draw.
+   **Step 3b, not seen yet:** the same lift, every part of the icons Unclipped.
    **TEMPORARY:** Blizzard's kill feed is hidden for testing (FCJH_Hidden, `FCJH_KeepHidden`'s
    KillLogPanel controller; user, 2026-10-16). Take it out before release.
 

@@ -208,6 +208,10 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
   - **Step 3:** one change, every row's two quest icons lifted out of the panel onto a line
     across the top of the screen, the panel as it is. Fills there: an icon keeps its tooltip
     away from its panel, so an off-screen copy can lend its icons to our pane (user's idea).
+    **Seen (f2696bb, user):** no icons at all, no tooltips react - as tries 3 and 4.
+  - **Step 3b:** one change, the same lift with each icon and every part of it Unclipped (a
+    frame draws only inside its parent's box; the row's box is also turned inside out by the
+    lift). Shows: it was clipping. Still nothing: an icon can't leave its row.
 
 ### Hogger's rage drawn as mana
 - **Blizzard's:** the target panel's per-hero resource colours (`HeroResourceStates`,
