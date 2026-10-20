@@ -1769,7 +1769,9 @@ def slot_mask(team, size, sub=4):
 # colours off 23_16_14.
 FOUNTAIN_ICON = {"edge": "201a78", "middle": "3a34d2",   # the ground: its rim, its middle
                  "cross": "9a9eff", "glow": "6464f0",    # the cross and its glow
-                 "arms": (20, 18), "thick": 5.5,         # the cross: across, down; its arms' width
+                 "arms": (14.25, 12.25), "thick": 5.5,   # the cross: across, down; its arms' width
+                                                         # (20, 18) "a little stretched": 2 px in at
+                                                         # each end (user, 23_25_09)
                  "glow_w": 1.8}                          # the glow's reach outside it (a Gaussian's)
 
 
@@ -1852,6 +1854,9 @@ def fountain_rect(cfg, team):
 # maps (CARRY_MAPS, by the map id): D.Va's script moves the stack between pilot and mech, and
 # Hanamura defines it (hidden).
 CARRY_MAPS = ("blackhearts_bay", "tomb_of_the_spider_queen")
+CARRY_ICONS = {   # MapMechanicStack's InfoIcon: core's (the Bay's), Tomb's map mod's
+    "blackhearts_bay": "Assets\\Textures\\storm_ui_ingame_icons_doubloon.dds",
+    "tomb_of_the_spider_queen": "Assets\\Textures\\HUD_MapMechanic_SpiderQueen_Nameplate_Soul.dds"}
 CARRY_GAP = 1                    # cell units between the fountain's art and the box's above it
 CARRY_LEAN = SLOT_LEAN           # ...and out along the slot art's own sides, across per up, so its
                                  # sides run on from the fountain's: 15 units over the step up, as
@@ -1875,41 +1880,96 @@ def carry_rect(cfg, team):
 
 
 def carry_box(cfg, team, mask, slot_coords, near, far):
-    """The carried box in a plate's HeroStatus (carry_rect): the fountain's slot and mask, the
-    behaviour's own icon in it, its count over it in the fountain's countdown style. Red's
+    """The carried box in a plate's HeroStatus (carry_rect): ours, as the fountain - its mask,
+    backdrop and frame, the map's own icon (CARRY_ICONS) - with Blizzard's behaviour icon under
+    it only as the sensor: it's there while the hero carries, and lends its count. Red's
     inherits blue's and restates only what's mirrored."""
     (l, t, r, b), f = carry_rect(cfg, team)
     u = lambda v: round(v * f)
     bx0, by0, bx1, by1 = MASK_BOX
-    iside = SLOT_ICON[2]
+    ix, iy, iside = SLOT_ICON
     anchors = "".join(f'\n\t\t\t\t<Anchor side="{sd}"{" " * (6 - len(sd))} relative="$parent/$parent" pos="Min" offset="{v}"/>'
                       for sd, v in (("Top", t), ("Left", l), ("Bottom", b), ("Right", r)))
     count = (f'<Anchor side="Left"   relative="$parent" pos="Min" offset="{u(near)}"/>\n'
              f'\t\t\t\t\t\t<Anchor side="Right"  relative="$parent" pos="Max" offset="-{u(far)}"/>')
     if team != "blue":
         return f"""
-			<Frame type="UnitStatusBehaviorIcon" name="FCJH_Carry">{anchors}
+			<Frame type="Frame" name="FCJH_Carry">{anchors}
+				<Frame type="Frame" name="ImageMaskContainer"><AlphaMaskTexture val="{mask}"/></Frame>
+				<Frame type="Image" name="IconImageBg">{slot_coords}</Frame>
+			</Frame>
+			<Frame type="UnitStatusBehaviorIcon" name="FCJH_CarrySensor">
 				<Frame type="BehaviorIcon" name="BehaviorIcon">
-					<Frame type="Frame" name="ImageMaskContainer"><AlphaMaskTexture val="{mask}"/></Frame>
-					<Frame type="Image" name="IconImageBg">{slot_coords}</Frame>
 					<Frame type="Label" name="StackLabel">
 						{count}
 					</Frame>
 				</Frame>
 			</Frame>"""
+    icons = "".join(f"""
+					<Frame type="Image" name="FCJH_Icon_{k}">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="{u(iy - by0)}"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="{u(ix - bx0)}"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="{u(iy + iside - by0)}"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="{u(ix + iside - bx0)}"/>
+						<Texture val="{CARRY_ICONS[k]}"/>
+						<Alpha val="0"/>
+						<RenderPriority val="526"/>
+						<Unclipped val="true"/>
+						<AcceptsMouse val="false"/>
+					</Frame>""" for k in CARRY_MAPS)
     hidden = "".join(f'\n\t\t\t\t\t<Frame type="{ty}" name="{nm}"><Visible val="false"/><Alpha val="0"/></Frame>'
-                     for ty, nm in (("ProgressBar", "QuestProgressBar"), ("ProgressBar", "CooldownBar"),
+                     for ty, nm in (("Frame", "ImageMaskContainer"), ("Image", "IconImageBg"),
+                                    ("ProgressBar", "QuestProgressBar"), ("ProgressBar", "CooldownBar"),
                                     ("Image", "BGFlashImage"), ("Label", "BuffLabel")))
-    shown = "".join(f'\n\t\t\t\t\t<State name="{k}">{maps.on_map(k)}'
-                    f'<Action type="SetProperty" frame="$parent/FCJH_Carry" Alpha="255"/></State>' for k in CARRY_MAPS)
+    shown = "".join(f'''
+					<State name="{k}">
+						<When type="Property" frame="$parent/FCJH_CarrySensor" Visible="true"/>
+						{maps.on_map(k)}
+						<Action type="SetProperty" frame="$parent/FCJH_Carry" Alpha="255"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Carry/ImageMaskContainer/FCJH_Icon_{k}" Alpha="255"/>
+					</State>''' for k in CARRY_MAPS)
     return f"""
 			<!-- What the hero carries (user, 2026-10-12): Blizzard's map stack - doubloons, the
 			     Spider Queen's gems - in the fountain's slot one step up the slant, the count over
-			     its icon; shown from 1 (carry_rect, CARRY_MAPS) -->
-			<Frame type="UnitStatusBehaviorIcon" name="FCJH_Carry">{anchors}
-				<Behavior val="MapMechanicStack"/>
+			     its icon; shown from 1 (carry_rect, CARRY_MAPS). Ours, as the fountain: in
+			     Blizzard's behaviour icon template the icon wandered off its box (~40 px on, on
+			     both teams) and the backdrop never showed (23_16_14, 23_25_09) -->
+			<Frame type="Frame" name="FCJH_Carry">{anchors}
 				<Alpha val="0"/>
 				<RenderPriority val="525"/>
+				<Unclipped val="true"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="ImageMaskContainer">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="{u(by0)}"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="{u(bx0)}"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="{u(by1)}"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="{u(bx1)}"/>
+					<AlphaMaskTexture val="{mask}"/>
+					<Unclipped val="true"/>
+					<Frame type="Image" name="FCJH_Backdrop">
+						<Anchor relative="$parent"/>
+						<Texture val="{WHITE}"/>
+						<Color val="{FOUNTAIN_BACKDROP}"/>
+						<RenderPriority val="525"/>
+						<Unclipped val="true"/>
+						<AcceptsMouse val="false"/>
+					</Frame>{icons}
+				</Frame>
+				<Frame type="Image" name="IconImageBg">
+					<Anchor relative="$parent"/>
+					<Texture val="{TEXTURE_DIR}\\{slot_files(cfg)["frame"][0]}"/>
+					{slot_coords}
+					<RenderPriority val="527"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+			</Frame>
+			<!-- ...and Blizzard's map stack icon on it: there while the hero carries; its own
+			     pictures off, it lends the box its count (as the fountain's sensor its countdown) -->
+			<Frame type="UnitStatusBehaviorIcon" name="FCJH_CarrySensor">
+				<Anchor relative="$parent/FCJH_Carry"/>
+				<Behavior val="MapMechanicStack"/>
+				<RenderPriority val="531"/>
 				<Unclipped val="true"/>
 				<AcceptsMouse val="false"/>
 				<AcceptsMouseTooltip val="false"/>
@@ -1917,50 +1977,20 @@ def carry_box(cfg, team, mask, slot_coords, near, far):
 					<Anchor relative="$parent"/>
 					<MinStackCountDisplayed val="1"/>
 					<AcceptsMouse val="false"/>
-					<AcceptsMouseTooltip val="false"/>
-					<Frame type="Frame" name="ImageMaskContainer">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="{u(by0)}"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="{u(bx0)}"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="{u(by1)}"/>
-						<Anchor side="Right"  relative="$parent" pos="Min" offset="{u(bx1)}"/>
-						<AlphaMaskTexture val="{mask}"/>
-						<Unclipped val="true"/>
-						<Frame type="Image" name="FCJH_Backdrop">
-							<Anchor relative="$parent"/>
-							<Texture val="{WHITE}"/>
-							<Color val="{FOUNTAIN_BACKDROP}"/>
-							<RenderPriority val="525"/>
-							<Unclipped val="true"/>
-							<AcceptsMouse val="false"/>
-						</Frame>
-						<!-- the template centres it in the mask's box; its 45 in 40 overhung it (the
-						     fountain). Over the portrait: at the template's 512 (and the backdrop at
-						     511) both were under it, Blizzard's slot art hiding the gap (23_16_14) -->
-						<Frame type="Image" name="IconImage">
-							<Width val="{u(iside)}"/>
-							<Height val="{u(iside)}"/>
-							<RenderPriority val="526"/>
-							<Unclipped val="true"/>
-						</Frame>
-					</Frame>
-					<Frame type="Image" name="IconImageBg">
-						<Anchor relative="$parent"/>
-						<Texture val="{TEXTURE_DIR}\\{slot_files(cfg)["frame"][0]}"/>
-						{slot_coords}
-						<RenderPriority val="527"/>
-						<Unclipped val="true"/>
-					</Frame>
+					<AcceptsMouseTooltip val="false"/>{hidden}
 					<Frame type="Label" name="StackLabel">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="{u(2)}"/>
 						{count}
 						<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 						<Style val="FCJH_FountainCooldown"/>
 						<Options val="NoWrapping | ScaleToPreventTruncation"/>
+						<RenderPriority val="531"/>
 						<Unclipped val="true"/>
-					</Frame>{hidden}
+					</Frame>
 				</Frame>
 			</Frame>
-			<!-- ...shown on CARRY_MAPS only, by the map id: a group in a frame that's always shown -->
+			<!-- ...shown while it's there on CARRY_MAPS only, by the map id: a group in a frame
+			     that's always shown -->
 			<Frame type="Frame" name="FCJH_CarryGate">
 				<Anchor relative="$parent"/>
 				<AcceptsMouse val="false"/>

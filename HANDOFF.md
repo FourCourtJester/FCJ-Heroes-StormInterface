@@ -445,7 +445,14 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
    the way down, CARRY_LEAN = the slot's, so its sides run straight on. 23_16_14: the masking was
    uneven (Blizzard's square HealingWell icon reached the rim on one side only), so now our own
    `fountain_icon` fills the slot (Blizzard's blue, its pale cross upright, not italic); the carry
-   box's backdrop and icon were under the portrait (511/512), now 525/526/527); the multi-unit nameplate slicing (item 15: the Vikings, Rexxar and Misha);
+   box's backdrop and icon were under the portrait (511/512), now 525/526/527). 23_25_09: still
+   no backdrop, and in Blizzard's behaviour icon template the icon wandered ~40 px off its box
+   (red's off the screen's edge), so the carry box is ours too, built as the fountain: our mask,
+   backdrop and frame, the map's own icon (`CARRY_ICONS`, the behaviour's InfoIcon per map), and
+   Blizzard's behaviour icon only as the sensor and the count (`FCJH_CarrySensor`). The plus 2 px
+   in at each end ("a little stretched"). Open: the row's outer slanted edge leaves ~1-1.5 px
+   more black by the outer plate's fountain than a seam does (outline `inside` 1 vs the seam's
+   1.5) - `inside = 1.5` would match, the user's call); the multi-unit nameplate slicing (item 15: the Vikings, Rexxar and Misha);
    a pass on the number-heavy panes. The chrome is done as far as the user knows.
    - **A centering pass on every minimap** (user, 2026-10-18: "100% convinced some are still
      off center compared to our generated UI"): each map's minimap against the rows' gap and

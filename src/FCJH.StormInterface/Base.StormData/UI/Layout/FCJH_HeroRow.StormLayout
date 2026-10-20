@@ -639,7 +639,7 @@
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="3"/>
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="24"/>
 						<Anchor side="Right"  relative="$parent" pos="Min" offset="42"/>
-						<Texture val="_Assets\Textures\FCJH_FountainIcon_46428dfa.dds"/>
+						<Texture val="_Assets\Textures\FCJH_FountainIcon_4908e697.dds"/>
 						<RenderPriority val="526"/>
 						<Unclipped val="true"/>
 						<AcceptsMouse val="false"/>
@@ -790,15 +790,71 @@
 			</StateGroup>
 			<!-- What the hero carries (user, 2026-10-12): Blizzard's map stack - doubloons, the
 			     Spider Queen's gems - in the fountain's slot one step up the slant, the count over
-			     its icon; shown from 1 (carry_rect, CARRY_MAPS) -->
-			<Frame type="UnitStatusBehaviorIcon" name="FCJH_Carry">
+			     its icon; shown from 1 (carry_rect, CARRY_MAPS). Ours, as the fountain: in
+			     Blizzard's behaviour icon template the icon wandered off its box (~40 px on, on
+			     both teams) and the backdrop never showed (23_16_14, 23_25_09) -->
+			<Frame type="Frame" name="FCJH_Carry">
 				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="8"/>
 				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="4"/>
 				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="34"/>
 				<Anchor side="Right"  relative="$parent/$parent" pos="Min" offset="49"/>
-				<Behavior val="MapMechanicStack"/>
 				<Alpha val="0"/>
 				<RenderPriority val="525"/>
+				<Unclipped val="true"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Frame" name="ImageMaskContainer">
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="45"/>
+					<AlphaMaskTexture val="_Assets\Textures\FCJH_SlotMask_blue_ff8ce7f5.dds"/>
+					<Unclipped val="true"/>
+					<Frame type="Image" name="FCJH_Backdrop">
+						<Anchor relative="$parent"/>
+						<Texture val="_Assets\Textures\FCJH_White.dds"/>
+						<Color val="42,24,70"/>
+						<RenderPriority val="525"/>
+						<Unclipped val="true"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
+					<Frame type="Image" name="FCJH_Icon_blackhearts_bay">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="9"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="36"/>
+						<Texture val="Assets\Textures\storm_ui_ingame_icons_doubloon.dds"/>
+						<Alpha val="0"/>
+						<RenderPriority val="526"/>
+						<Unclipped val="true"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
+					<Frame type="Image" name="FCJH_Icon_tomb_of_the_spider_queen">
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="9"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="36"/>
+						<Texture val="Assets\Textures\HUD_MapMechanic_SpiderQueen_Nameplate_Soul.dds"/>
+						<Alpha val="0"/>
+						<RenderPriority val="526"/>
+						<Unclipped val="true"/>
+						<AcceptsMouse val="false"/>
+					</Frame>
+				</Frame>
+				<Frame type="Image" name="IconImageBg">
+					<Anchor relative="$parent"/>
+					<Texture val="_Assets\Textures\FCJH_SlotFrame_42350095.dds"/>
+					<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>
+					<RenderPriority val="527"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+			</Frame>
+			<!-- ...and Blizzard's map stack icon on it: there while the hero carries; its own
+			     pictures off, it lends the box its count (as the fountain's sensor its countdown) -->
+			<Frame type="UnitStatusBehaviorIcon" name="FCJH_CarrySensor">
+				<Anchor relative="$parent/FCJH_Carry"/>
+				<Behavior val="MapMechanicStack"/>
+				<RenderPriority val="531"/>
 				<Unclipped val="true"/>
 				<AcceptsMouse val="false"/>
 				<AcceptsMouseTooltip val="false"/>
@@ -807,38 +863,12 @@
 					<MinStackCountDisplayed val="1"/>
 					<AcceptsMouse val="false"/>
 					<AcceptsMouseTooltip val="false"/>
-					<Frame type="Frame" name="ImageMaskContainer">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-						<Anchor side="Right"  relative="$parent" pos="Min" offset="45"/>
-						<AlphaMaskTexture val="_Assets\Textures\FCJH_SlotMask_blue_ff8ce7f5.dds"/>
-						<Unclipped val="true"/>
-						<Frame type="Image" name="FCJH_Backdrop">
-							<Anchor relative="$parent"/>
-							<Texture val="_Assets\Textures\FCJH_White.dds"/>
-							<Color val="42,24,70"/>
-							<RenderPriority val="525"/>
-							<Unclipped val="true"/>
-							<AcceptsMouse val="false"/>
-						</Frame>
-						<!-- the template centres it in the mask's box; its 45 in 40 overhung it (the
-						     fountain). Over the portrait: at the template's 512 (and the backdrop at
-						     511) both were under it, Blizzard's slot art hiding the gap (23_16_14) -->
-						<Frame type="Image" name="IconImage">
-							<Width val="28"/>
-							<Height val="28"/>
-							<RenderPriority val="526"/>
-							<Unclipped val="true"/>
-						</Frame>
-					</Frame>
-					<Frame type="Image" name="IconImageBg">
-						<Anchor relative="$parent"/>
-						<Texture val="_Assets\Textures\FCJH_SlotFrame_42350095.dds"/>
-						<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>
-						<RenderPriority val="527"/>
-						<Unclipped val="true"/>
-					</Frame>
+					<Frame type="Frame" name="ImageMaskContainer"><Visible val="false"/><Alpha val="0"/></Frame>
+					<Frame type="Image" name="IconImageBg"><Visible val="false"/><Alpha val="0"/></Frame>
+					<Frame type="ProgressBar" name="QuestProgressBar"><Visible val="false"/><Alpha val="0"/></Frame>
+					<Frame type="ProgressBar" name="CooldownBar"><Visible val="false"/><Alpha val="0"/></Frame>
+					<Frame type="Image" name="BGFlashImage"><Visible val="false"/><Alpha val="0"/></Frame>
+					<Frame type="Label" name="BuffLabel"><Visible val="false"/><Alpha val="0"/></Frame>
 					<Frame type="Label" name="StackLabel">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="2"/>
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="5"/>
@@ -846,22 +876,30 @@
 						<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
 						<Style val="FCJH_FountainCooldown"/>
 						<Options val="NoWrapping | ScaleToPreventTruncation"/>
+						<RenderPriority val="531"/>
 						<Unclipped val="true"/>
 					</Frame>
-					<Frame type="ProgressBar" name="QuestProgressBar"><Visible val="false"/><Alpha val="0"/></Frame>
-					<Frame type="ProgressBar" name="CooldownBar"><Visible val="false"/><Alpha val="0"/></Frame>
-					<Frame type="Image" name="BGFlashImage"><Visible val="false"/><Alpha val="0"/></Frame>
-					<Frame type="Label" name="BuffLabel"><Visible val="false"/><Alpha val="0"/></Frame>
 				</Frame>
 			</Frame>
-			<!-- ...shown on CARRY_MAPS only, by the map id: a group in a frame that's always shown -->
+			<!-- ...shown while it's there on CARRY_MAPS only, by the map id: a group in a frame
+			     that's always shown -->
 			<Frame type="Frame" name="FCJH_CarryGate">
 				<Anchor relative="$parent"/>
 				<AcceptsMouse val="false"/>
 				<StateGroup name="FCJH_CarryMaps">
 					<DefaultState val="Off"/>
-					<State name="blackhearts_bay"><When type="Property" frame="$GameUI/FCJH_MapId" StringValue="BlackheartsBay"/><Action type="SetProperty" frame="$parent/FCJH_Carry" Alpha="255"/></State>
-					<State name="tomb_of_the_spider_queen"><When type="Property" frame="$GameUI/FCJH_MapId" StringValue="Crypts"/><Action type="SetProperty" frame="$parent/FCJH_Carry" Alpha="255"/></State>
+					<State name="blackhearts_bay">
+						<When type="Property" frame="$parent/FCJH_CarrySensor" Visible="true"/>
+						<When type="Property" frame="$GameUI/FCJH_MapId" StringValue="BlackheartsBay"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Carry" Alpha="255"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Carry/ImageMaskContainer/FCJH_Icon_blackhearts_bay" Alpha="255"/>
+					</State>
+					<State name="tomb_of_the_spider_queen">
+						<When type="Property" frame="$parent/FCJH_CarrySensor" Visible="true"/>
+						<When type="Property" frame="$GameUI/FCJH_MapId" StringValue="Crypts"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Carry" Alpha="255"/>
+						<Action type="SetProperty" frame="$parent/FCJH_Carry/ImageMaskContainer/FCJH_Icon_tomb_of_the_spider_queen" Alpha="255"/>
+					</State>
 					<State name="Off"><Action type="SetProperty" frame="$parent/FCJH_Carry" Alpha="0"/></State>
 				</StateGroup>
 			</Frame>
@@ -1383,14 +1421,16 @@
 					</Frame>
 				</Frame>
 			</Frame>
-			<Frame type="UnitStatusBehaviorIcon" name="FCJH_Carry">
+			<Frame type="Frame" name="FCJH_Carry">
 				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="8"/>
 				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="148"/>
 				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="34"/>
 				<Anchor side="Right"  relative="$parent/$parent" pos="Min" offset="193"/>
+				<Frame type="Frame" name="ImageMaskContainer"><AlphaMaskTexture val="_Assets\Textures\FCJH_SlotMask_red_8c1682f3.dds"/></Frame>
+				<Frame type="Image" name="IconImageBg"><TextureCoords top="0.0" left="0.0" bottom="1.0" right="1.0"/></Frame>
+			</Frame>
+			<Frame type="UnitStatusBehaviorIcon" name="FCJH_CarrySensor">
 				<Frame type="BehaviorIcon" name="BehaviorIcon">
-					<Frame type="Frame" name="ImageMaskContainer"><AlphaMaskTexture val="_Assets\Textures\FCJH_SlotMask_red_8c1682f3.dds"/></Frame>
-					<Frame type="Image" name="IconImageBg"><TextureCoords top="0.0" left="0.0" bottom="1.0" right="1.0"/></Frame>
 					<Frame type="Label" name="StackLabel">
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="7"/>
 						<Anchor side="Right"  relative="$parent" pos="Max" offset="-5"/>
