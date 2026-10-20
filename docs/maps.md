@@ -590,3 +590,5 @@ lines met at ~955.4 (outer ends 777 / 1133) under a map centred ~958.75: both li
 everything hanging off them 4 back (GEM_LINES). The carry box (gen.py CARRY_LEAN 0.56, was 0.66):
 ~1 px off the plate's edge on both teams against the fountain's 3-5.
 Cursed Hollow done (user, on 25e67ef).
+22_19_37: Tomb's line fudge good. The fountain icons differ left to right: blue is masked by the
+heroic's Ult_Bg, red by Blizzard's buff mask (a mask can't be mirrored), since 2026-10-06.

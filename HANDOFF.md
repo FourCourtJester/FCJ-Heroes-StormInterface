@@ -493,6 +493,9 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
      numbers held (GEM_LINES). The carry box (Bay, Tomb) "bleeds into the chrome" on both
      teams (~1 px off the edge): CARRY_LEAN 0.66 -> 0.56, 2 units in (~3 px, the fountain's top).
      Cursed Hollow: DONE (user, 2026-10-19, on 25e67ef).
+     Seen good (22_19_37): Tomb's line fudge. The fountain icons differ left to right: the
+     masks (blue the heroic's Ult_Bg, red Blizzard's buff mask; a mask can't be mirrored), not
+     this pass. Slot angles and the icon wait on our own cut (user's call: accept or cut).
    - **The blue/red lines under the mechanics' counts** (user, 2026-10-19): out to their
      farthest, the plates' inner ends (~752 / ~1168), "so we have most flexibility for the
      containers". Each map's panel sets its own (Blizzard's TeamHighlight-style backgrounds,
