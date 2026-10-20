@@ -436,10 +436,10 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
 
 **Open, in the user's order:**
 1. **The final pass** - item 14 below. The forms and blue's banners are done, the odd cases
-   ignored (user, 2026-10-19: "nothing right now is broken that I'm aware of"). Left: the
-   blue/red lines out to their farthest, the kill feed back on, a live game with observers,
+   ignored (user, 2026-10-19: "nothing right now is broken that I'm aware of"); the blue/red
+   lines are final as they are (user, 2026-10-19). Left: the kill feed back on, a live game with observers,
    a non-16:9 window.
-   **The user's list of what's left (2026-10-19):** our own angled fountain / map-mechanic
+   **The user's list of what's left (2026-10-19; the slicing tomorrow):** our own angled fountain / map-mechanic
    container borders; the multi-unit nameplate slicing (item 15: the Vikings, Rexxar and Misha);
    a pass on the number-heavy panes. The chrome is done as far as the user knows.
    - **A centering pass on every minimap** (user, 2026-10-18: "100% convinced some are still
@@ -508,7 +508,7 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
      farthest, the plates' inner ends (~752 / ~1168), "so we have most flexibility for the
      containers". Each map's panel sets its own (Blizzard's TeamHighlight-style backgrounds,
      e.g. Mines' Team1Background / Team2Background); on the shots ~813-1107 (Warhead) to
-     ~780-1140 (Mines, Dragon Shire). Not started: evaluated on the final pass (user, 2026-10-19).
+     ~780-1140 (Mines, Dragon Shire). FINAL as they are (user, 2026-10-19): not extended.
    - **Left of the map questions (user, 2026-10-19):** Volskaya's gap (the user checks it), then
      one last map-centric QA round, which finalises the minimap centering.
    - **THE GAP from the backplate (user, 2026-10-19):** a neutral banner's backplate bottom 10 px
