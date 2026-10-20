@@ -581,3 +581,11 @@ Tomb's numbers "inherit the same floor" as Bay's (bottoms 1066-1067 against 1061
 (GEM_NUMBER_UP), and centred on their vials' glass (~780 / ~1140; GEM_NUMBER_IN). The carry box
 and fountain: the plate's edge 0.54, Blizzard's slot art ~0.6; red's sat 2 px further off its
 edge than blue's (EDGE_INSET 2.5, was 4.5).
+
+Confirm pass 4 (22_10_41 .. 22_12_10): Tomb's numbers good. Cursed Hollow's blue line hadn't moved
+at all (ends 788 / 945 on both builds): Blizzard's Team1TributeFrame clips it at its right edge,
+red's frame's left (~949.5), so pass 2's +10 and pass 3's +13 were both hidden. Unclipped now,
+its end at red's start (Right Max 10, as Blizzard's), the raven and count held (-17 / 95). Tomb's
+lines met at ~955.4 (outer ends 777 / 1133) under a map centred ~958.75: both lines 4 units right,
+everything hanging off them 4 back (GEM_LINES). The carry box (gen.py CARRY_LEAN 0.56, was 0.66):
+~1 px off the plate's edge on both teams against the fountain's 3-5.

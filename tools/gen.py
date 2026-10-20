@@ -1717,12 +1717,15 @@ def fountain_rect(cfg, team):
 # Hanamura defines it (hidden).
 CARRY_MAPS = ("blackhearts_bay", "tomb_of_the_spider_queen")
 CARRY_GAP = 1                    # cell units between the fountain's art and the box's above it
-CARRY_LEAN = 0.66                # ...and out along the slot art's own sides, across per up, so its
+CARRY_LEAN = 0.56                # ...and out along the slot art's own sides, across per up, so its
                                  # sides run on from the fountain's: 15 units over the step up, as
                                  # approved (7aba2b8: the plate's edge lean then, +4 - its sides ran
                                  # ~4 inside the fountain's, user's zoom of Zul'jin, 2026-10-12). It
                                  # had followed the plates' slant: at 0.54 (cffee7f) it went a unit
-                                 # further, "no longer a smooth angle" (user, 2026-10-19)
+                                 # further, "no longer a smooth angle" (user, 2026-10-19). At 0.66
+                                 # (22_12_10) its gap to the plate's edge ~1 px on both teams, the
+                                 # fountain's 3-5: it "bleeds into the chrome" (user). 0.56: 2 units
+                                 # in, ~3 px - the fountain's top; the sides step ~2 units
 
 
 def carry_rect(cfg, team):

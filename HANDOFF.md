@@ -486,6 +486,12 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
      fountain and carry box 2 units nearer the plate's edge (EDGE_INSET 4.5 -> 2.5, blue's gap).
      Blizzard's slot art leans ~0.6, not 0.54: the gap still grows ~2 px down the two boxes -
      the art pass's to recut (our own slot frame at 0.54).
+   - **Confirm pass 4 (2026-10-19, 22_10_41 .. 22_12_10, built, not seen yet)** - docs/maps.md, end.
+     Seen good: Tomb's numbers. Cursed Hollow's blue line never moved: clipped by its own frame
+     at ~949.5 (every move since pass 2 hidden); now Unclipped, ending at red's start. Tomb's
+     lines met at ~955 under a map centred ~958.75: both 4 units right, the gems, counts and
+     numbers held (GEM_LINES). The carry box (Bay, Tomb) "bleeds into the chrome" on both
+     teams (~1 px off the edge): CARRY_LEAN 0.66 -> 0.56, 2 units in (~3 px, the fountain's top).
    - **The blue/red lines under the mechanics' counts** (user, 2026-10-19): out to their
      farthest, the plates' inner ends (~752 / ~1168), "so we have most flexibility for the
      containers". Each map's panel sets its own (Blizzard's TeamHighlight-style backgrounds,

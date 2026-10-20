@@ -457,12 +457,12 @@
 						<!-- the tribute counts, mirrored about our midpoint and clear of the map; their lines
 						     the way round every other map's, meeting at our midpoint (maps.tribute_extra) -->
 						<Frame type="Frame" name="Team1TributeFrame">
-							<Frame type="Image" name="Background"><Anchor side="Right" relative="$parent" pos="Max" offset="33"/><TextureCoords top="0.0" left="0.0" bottom="1.0" right="1.0"/></Frame>
-							<Frame type="Image" name="RavenIcon"><Anchor side="Left" relative="$parent/Background" pos="Min" offset="-40"/></Frame>
-							<Frame type="Label" name="TributeCounter"><Anchor side="Left" relative="$parent/Background" pos="Min" offset="72"/></Frame>
+							<Frame type="Image" name="Background"><Anchor side="Right" relative="$parent" pos="Max" offset="10"/><TextureCoords top="0.0" left="0.0" bottom="1.0" right="1.0"/><Unclipped val="true"/></Frame>
+							<Frame type="Image" name="RavenIcon"><Anchor side="Left" relative="$parent/Background" pos="Min" offset="-17"/></Frame>
+							<Frame type="Label" name="TributeCounter"><Anchor side="Left" relative="$parent/Background" pos="Min" offset="95"/></Frame>
 						</Frame>
 						<Frame type="Frame" name="Team2TributeFrame">
-							<Frame type="Image" name="Background"><Anchor side="Left" relative="$parent" pos="Min" offset="10"/><TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/></Frame>
+							<Frame type="Image" name="Background"><Anchor side="Left" relative="$parent" pos="Min" offset="10"/><TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/><Unclipped val="true"/></Frame>
 							<Frame type="Image" name="RavenIcon"><Anchor side="Right" relative="$parent/Background" pos="Max" offset="21"/></Frame>
 							<Frame type="Label" name="TributeCounter"><Anchor side="Right" relative="$parent/Background" pos="Max" offset="-80"/></Frame>
 						</Frame>
@@ -2347,25 +2347,40 @@
 				</Frame>
 			</Frame>
 		</Frame>
-		<Frame type="Frame" name="Team2SoulFrame">
-			<Frame type="Image" name="SoulIconFrameTeam2">
-				<Anchor side="Right" relative="$parent/Background" pos="Max" offset="30"/>
+		<Frame type="Frame" name="Team1SoulFrame">
+			<Frame type="Image" name="Background">
+				<Anchor side="Right" relative="$parent" pos="Mid" offset="5"/>
 			</Frame>
-			<Frame type="Image" name="SoulIconTeam2">
-				<Anchor side="Right" relative="$parent/Background" pos="Max" offset="30"/>
+			<Frame type="Image" name="SoulIconFrameTeam1">
+				<Anchor side="Left" relative="$parent/Background" pos="Min" offset="-24"/>
+			</Frame>
+			<Frame type="Image" name="SoulIconTeam1">
+				<Anchor side="Left" relative="$parent/Background" pos="Min" offset="-24"/>
 			</Frame>
 			<Frame type="Label" name="SoulCounter">
-				<Anchor side="Right" relative="$parent/Background" pos="Max" offset="-59"/>
+				<Anchor side="Left" relative="$parent/Background" pos="Min" offset="66"/>
 			</Frame>
 			<Frame type="Label" name="TeamSoulCounter">
 				<Anchor side="Bottom" relative="$parent/Background" pos="Mid" offset="-2"/>
-				<Anchor side="Right" relative="$parent/Background" pos="Max" offset="4"/>
+				<Anchor side="Left" relative="$parent/Background" pos="Min" offset="8"/>
 			</Frame>
 		</Frame>
-		<Frame type="Frame" name="Team1SoulFrame">
+		<Frame type="Frame" name="Team2SoulFrame">
+			<Frame type="Image" name="Background">
+				<Anchor side="Left" relative="$parent" pos="Mid" offset="3"/>
+			</Frame>
+			<Frame type="Image" name="SoulIconFrameTeam2">
+				<Anchor side="Right" relative="$parent/Background" pos="Max" offset="26"/>
+			</Frame>
+			<Frame type="Image" name="SoulIconTeam2">
+				<Anchor side="Right" relative="$parent/Background" pos="Max" offset="26"/>
+			</Frame>
+			<Frame type="Label" name="SoulCounter">
+				<Anchor side="Right" relative="$parent/Background" pos="Max" offset="-63"/>
+			</Frame>
 			<Frame type="Label" name="TeamSoulCounter">
 				<Anchor side="Bottom" relative="$parent/Background" pos="Mid" offset="-2"/>
-				<Anchor side="Left" relative="$parent/Background" pos="Min" offset="12"/>
+				<Anchor side="Right" relative="$parent/Background" pos="Max" offset="0"/>
 			</Frame>
 		</Frame>
 	</Frame>

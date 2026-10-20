@@ -2415,12 +2415,16 @@ MAPS = {
 # Tomb's: the full ends meet, each line ~134 px), and both 10 units right to meet at ~959; the
 # ravens and counts, which hang off them, 10 back. Then (21_57_37) blue's full end at 945, red's
 # at ~958: blue's line 13 units further in ("extend the blue/red just a tad", user), its raven
-# and count 13 back - the faded end goes on under the raven.
+# and count 13 back - the faded end goes on under the raven. Seen (22_10_41): no change at all -
+# blue's line is clipped by its own frame (Team1TributeFrame, whose right edge is red's frame's
+# left, ~949.5): every move past it since confirm pass 2 was hidden. Now Unclipped, it ends where
+# red's starts (10 units past that edge, as Blizzard's 10 meant): 23 back from 33, its raven and
+# count 23 on, so they hold.
 TRIBUTE_COUNT_OUT = 5                 # units, both counts outward
 TRIBUTE_RED = (11, 25)                # units more outward, red's raven and red's count, to blue's mirror
 TRIBUTE_BLUE_RAVEN_IN = 3             # units, blue's raven inward
 TRIBUTE_LINES = 10                    # units, both lines right
-TRIBUTE_BLUE_LINE = 13                # units, blue's line further right again (in)
+TRIBUTE_BLUE_LINE = -10               # units, blue's line back: it ends at red's start (k past the edge)
 
 
 def tribute_extra():
@@ -2430,7 +2434,8 @@ def tribute_extra():
         f'pos="{pos}" offset="{off}"/></Frame>\n')
     line = lambda sd, pos, off, left, right: (
         f'{t}\t<Frame type="Image" name="Background"><Anchor side="{sd}" relative="$parent" pos="{pos}" '
-        f'offset="{off}"/><TextureCoords top="0.0" left="{left}" bottom="1.0" right="{right}"/></Frame>\n')
+        f'offset="{off}"/><TextureCoords top="0.0" left="{left}" bottom="1.0" right="{right}"/>'
+        f'<Unclipped val="true"/></Frame>\n')
     raven, count = TRIBUTE_RED
     k = TRIBUTE_LINES
     return (f'{t}<!-- the tribute counts, mirrored about our midpoint and clear of the map; their lines\n'
@@ -2732,10 +2737,25 @@ PARTS["tomb_of_the_spider_queen"] = weaver_parts()
 # 775.5 / 1137) - "red marker isnt uniform against the nameplates like blue" (user). Red's gem 10
 # units out, its count 11, its number 6.
 GEM_RED = (10, 11, 6)
+# Their lines (each SoulFrame's Background) met at ~955.4, their outer ends 777 / 1133 (22_12_10),
+# under a map centred on ~958.75 - "if the map is now visually centered ... fudge the blue line a
+# few px" (user, 2026-10-19): both lines 4 units right, and all that hangs off them (the gems,
+# counts and numbers) 4 back, so only the lines move.
+GEM_LINES = 4
+PARTS["tomb_of_the_spider_queen"].update({
+    "CryptPanel/Team1SoulFrame/Background:Image":
+        f'<Anchor side="Right" relative="$parent" pos="Mid" offset="{1 + GEM_LINES}"/>\n',
+    "CryptPanel/Team2SoulFrame/Background:Image":
+        f'<Anchor side="Left" relative="$parent" pos="Mid" offset="{-1 + GEM_LINES}"/>\n'})
+PARTS["tomb_of_the_spider_queen"].update({
+    f"CryptPanel/Team1SoulFrame/{name}": f'<Anchor side="Left" relative="$parent/Background" pos="Min" offset="{off}"/>\n'
+    for name, off in (("SoulIconFrameTeam1:Image", -20 - GEM_LINES), ("SoulIconTeam1:Image", -20 - GEM_LINES),
+                      ("SoulCounter:Label", 70 - GEM_LINES))})
 PARTS["tomb_of_the_spider_queen"].update({
     f"CryptPanel/Team2SoulFrame/{name}": f'<Anchor side="Right" relative="$parent/Background" pos="Max" offset="{off}"/>\n'
-    for name, off in (("SoulIconFrameTeam2:Image", 20 + GEM_RED[0]), ("SoulIconTeam2:Image", 20 + GEM_RED[0]),
-                      ("SoulCounter:Label", -70 + GEM_RED[1]))})
+    for name, off in (("SoulIconFrameTeam2:Image", 20 + GEM_RED[0] - GEM_LINES),
+                      ("SoulIconTeam2:Image", 20 + GEM_RED[0] - GEM_LINES),
+                      ("SoulCounter:Label", -70 + GEM_RED[1] - GEM_LINES))})
 # The gems' numbers (TeamSoulCounter, centred labels): "Tomb and Blackheart's should try to inherit
 # the same floor for current mechanic counts, and both should be centered within their respective
 # icons" (user, 2026-10-19). On 22_00_17 their bottoms at 1066-1067 against Bay's 1061: 6 units
@@ -2743,8 +2763,8 @@ PARTS["tomb_of_the_spider_queen"].update({
 # units right, red's 2 left (of GEM_RED's 6).
 GEM_NUMBER_UP = 6
 GEM_NUMBER_IN = (6, -2)               # units across, blue's and red's
-for team, side, pos, off in ((1, "Left", "Min", 6 + GEM_NUMBER_IN[0]),
-                             (2, "Right", "Max", GEM_RED[2] + GEM_NUMBER_IN[1])):
+for team, side, pos, off in ((1, "Left", "Min", 6 + GEM_NUMBER_IN[0] - GEM_LINES),
+                             (2, "Right", "Max", GEM_RED[2] + GEM_NUMBER_IN[1] - GEM_LINES)):
     PARTS["tomb_of_the_spider_queen"][f"CryptPanel/Team{team}SoulFrame/TeamSoulCounter:Label"] = (
         f'<Anchor side="Bottom" relative="$parent/Background" pos="Mid" offset="{4 - GEM_NUMBER_UP}"/>\n'
         f'<Anchor side="{side}" relative="$parent/Background" pos="{pos}" offset="{off}"/>\n')
