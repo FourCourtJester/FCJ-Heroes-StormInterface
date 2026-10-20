@@ -461,7 +461,8 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
    fountain's border (it was ~2 px of black above it). Then both 1 px down (flush with the portrait's
    bottom) and 1 px in (red's `EDGE_INSET` 5; blue's lean does it, but plate 2 snaps back), 23_58_11.
    Still: blue's black reads denser than red's (summed darkness ~1.45 vs ~1.08 px; blue's line 2-3 px
-   wide, red's 3) - edge to edge equal. Open: the
+   wide, red's 3) - edge to edge ~0.15 px more on blue (00_03_02). Left as is: "all square" (user,
+   2026-10-20; blue's `fountain_gap` ~1.3 would even it if it's ever raised). Open: the
    multi-unit nameplate slicing (item 15: the Vikings, Rexxar and Misha);
    a pass on the number-heavy panes. The chrome is done as far as the user knows.
    - **A centering pass on every minimap** (user, 2026-10-18: "100% convinced some are still
