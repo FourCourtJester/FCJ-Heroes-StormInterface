@@ -1712,7 +1712,7 @@ def slot_art_sizes(cfg):
     """The slot frame's and mask's textures at their size on a 1440p screen, texels."""
     f = fountain_rect(cfg, "blue")[1]
     texels = lambda v: math.ceil(v * f / Units(cfg).scale * art_scale(cfg))
-    return {"frame": (texels(SLOT_W), texels(SLOT_H)),
+    return {"frame": (texels(SLOT_W), texels(SLOT_H)), "icon": (texels(SLOT_ART[2]), texels(SLOT_ART[3])),
             "mask": (texels(MASK_BOX[2] - MASK_BOX[0]), texels(MASK_BOX[3] - MASK_BOX[1]))}
 
 
@@ -1762,13 +1762,60 @@ def slot_mask(team, size, sub=4):
     return dds_bgra(w, h, b"".join(rows))
 
 
+# Our fountain icon (2026-10-19): Blizzard's (Storm_UI_Ingame_HealingWell_Active) is square, so in
+# the wide slanted slot it filled one side to the rim and left the other on the backdrop - "the mask
+# just isn't the same on both sides" (user, 23_16_14). Ours fills the slot art's whole box (the mask
+# cuts it): Blizzard's blue, brighter round the middle, and its pale cross, upright. Slot units;
+# colours off 23_16_14.
+FOUNTAIN_ICON = {"edge": "201a78", "middle": "3a34d2",   # the ground: its rim, its middle
+                 "cross": "9a9eff", "glow": "6464f0",    # the cross and its glow
+                 "arms": (20, 18), "thick": 5.5,         # the cross: across, down; its arms' width
+                 "glow_w": 1.8}                          # the glow's reach outside it (a Gaussian's)
+
+
+@functools.cache
+def fountain_icon(size, sub=4):
+    """Our fountain icon over the slot art's box (SLOT_ART): the ground and the cross."""
+    w, h = size
+    g = FOUNTAIN_ICON
+    edge, middle, cross, glow = (bytes.fromhex(g[k]) for k in ("edge", "middle", "cross", "glow"))
+    ax, ay, aw, ah = SLOT_ART
+    cx, cy = ax + aw / 2, ay + ah / 2
+    (across, down), half = g["arms"], g["thick"] / 2
+
+    def outside(x, y, hw, hh):   # how far (x, y) is outside a box centred on the middle
+        dx, dy = max(0.0, abs(x - cx) - hw), max(0.0, abs(y - cy) - hh)
+        return math.hypot(dx, dy)
+
+    mix = lambda a, b, t: [p + (q - p) * t for p, q in zip(a, b)]
+    rows = []
+    for ty in range(h):
+        row = bytearray()
+        for tx in range(w):
+            rgb = [0.0, 0.0, 0.0]
+            for sy in range(sub):
+                for sx in range(sub):
+                    x = ax + (tx + (sx + 0.5) / sub) / w * aw
+                    y = ay + (ty + (sy + 0.5) / sub) / h * ah
+                    r = min(1.0, math.hypot((x - cx) / (aw / 2), (y - cy) / (ah / 2)))
+                    c = mix(middle, edge, r)
+                    d = min(outside(x, y, across / 2, half), outside(x, y, half, down / 2))
+                    c = mix(c, glow, 0.7 * math.exp(-(d / g["glow_w"]) ** 2)) if d > 0 else list(cross)
+                    rgb = [v + q for v, q in zip(rgb, c)]
+            r_, g_, b_ = (round(v / sub ** 2) for v in rgb)
+            row += bytes((b_, g_, r_, 255))
+        rows.append(bytes(row))
+    return dds_bgra(w, h, b"".join(rows))
+
+
 def slot_files(cfg):
-    """{texture name: data}: the frame, then blue's and red's masks (named by content)."""
+    """{texture name: data}: the frame, blue's and red's masks, the fountain icon (named by
+    content)."""
     sz = slot_art_sizes(cfg)
-    name = lambda kind, data: f"FCJH_Slot{kind}_{hashlib.sha1(data).hexdigest()[:8]}.dds"
-    out = {"frame": slot_frame(sz["frame"])}
-    out.update({team: slot_mask(team, sz["mask"]) for team in ("blue", "red")})
-    return {k: (name("Frame" if k == "frame" else f"Mask_{k}", v), v) for k, v in out.items()}
+    name = lambda kind, data: f"FCJH_{kind}_{hashlib.sha1(data).hexdigest()[:8]}.dds"
+    out = {"frame": ("SlotFrame", slot_frame(sz["frame"])), "icon": ("FountainIcon", fountain_icon(sz["icon"]))}
+    out.update({team: (f"SlotMask_{team}", slot_mask(team, sz["mask"])) for team in ("blue", "red")})
+    return {k: (name(kind, v), v) for k, (kind, v) in out.items()}
 
 
 def fountain_rect(cfg, team):
@@ -1834,7 +1881,7 @@ def carry_box(cfg, team, mask, slot_coords, near, far):
     (l, t, r, b), f = carry_rect(cfg, team)
     u = lambda v: round(v * f)
     bx0, by0, bx1, by1 = MASK_BOX
-    ix, iy, iside = SLOT_ICON
+    iside = SLOT_ICON[2]
     anchors = "".join(f'\n\t\t\t\t<Anchor side="{sd}"{" " * (6 - len(sd))} relative="$parent/$parent" pos="Min" offset="{v}"/>'
                       for sd, v in (("Top", t), ("Left", l), ("Bottom", b), ("Right", r)))
     count = (f'<Anchor side="Left"   relative="$parent" pos="Min" offset="{u(near)}"/>\n'
@@ -1882,16 +1929,17 @@ def carry_box(cfg, team, mask, slot_coords, near, far):
 							<Anchor relative="$parent"/>
 							<Texture val="{WHITE}"/>
 							<Color val="{FOUNTAIN_BACKDROP}"/>
-							<RenderPriority val="511"/>
+							<RenderPriority val="525"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
 						</Frame>
-						<!-- inside the mask's box: the template's 45 in 40 overhangs it (the fountain) -->
+						<!-- the template centres it in the mask's box; its 45 in 40 overhung it (the
+						     fountain). Over the portrait: at the template's 512 (and the backdrop at
+						     511) both were under it, Blizzard's slot art hiding the gap (23_16_14) -->
 						<Frame type="Image" name="IconImage">
-							<Anchor side="Top"    relative="$parent" pos="Min" offset="{u(iy - by0)}"/>
-							<Anchor side="Left"   relative="$parent" pos="Min" offset="{u(ix - bx0)}"/>
-							<Anchor side="Bottom" relative="$parent" pos="Min" offset="{u(iy + iside - by0)}"/>
-							<Anchor side="Right"  relative="$parent" pos="Min" offset="{u(ix + iside - bx0)}"/>
+							<Width val="{u(iside)}"/>
+							<Height val="{u(iside)}"/>
+							<RenderPriority val="526"/>
 							<Unclipped val="true"/>
 						</Frame>
 					</Frame>
@@ -1899,6 +1947,7 @@ def carry_box(cfg, team, mask, slot_coords, near, far):
 						<Anchor relative="$parent"/>
 						<Texture val="{TEXTURE_DIR}\\{slot_files(cfg)["frame"][0]}"/>
 						{slot_coords}
+						<RenderPriority val="527"/>
 						<Unclipped val="true"/>
 					</Frame>
 					<Frame type="Label" name="StackLabel">
@@ -2627,7 +2676,7 @@ def hero_cell_template(team, c, cfg):
 				<Anchor side="Right"  relative="$parent/$parent" pos="Min" offset="{fr}"/>"""
     u = lambda v: round(v * f)
     bx0, by0, bx1, by1 = MASK_BOX
-    ix, iy, iside = SLOT_ICON
+    ax, ay, aw, ah = SLOT_ART
     # the icon's mask and the slot's frame: ours (slot_files), a mask per team
     slot = slot_files(cfg)
     mask = f"{TEXTURE_DIR}\\{slot[team][0]}"
@@ -2667,16 +2716,15 @@ def hero_cell_template(team, c, cfg):
 						<Unclipped val="true"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
-					<!-- inside the mask's box: drawn past it (45 in 40, as on the inspect card), the
-					     overhang went unmasked - a thin purple line (user, 2026-10-06 13:16) -->
+					<!-- ours (fountain_icon) over the slot art's box, inside the mask's: drawn past it
+					     (45 in 40, as on the inspect card), the overhang went unmasked - a thin
+					     purple line (user, 2026-10-06 13:16) -->
 					<Frame type="Image" name="IconImage">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="{u(iy - by0)}"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="{u(ix - bx0)}"/>
-						<Anchor side="Bottom" relative="$parent" pos="Min" offset="{u(iy + iside - by0)}"/>
-						<Anchor side="Right"  relative="$parent" pos="Min" offset="{u(ix + iside - bx0)}"/>
-						<Texture val="@UI/Storm_UI_Ingame_HealingWell_Active"/>
-						<!-- the middle of the art only, as on the inspect card -->
-						<TextureCoords top="0.2" left="0.2" bottom="0.8" right="0.8"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="{u(ay - by0)}"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="{u(ax - bx0)}"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="{u(ay + ah - by0)}"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="{u(ax + aw - bx0)}"/>
+						<Texture val="{TEXTURE_DIR}\\{slot["icon"][0]}"/>
 						<RenderPriority val="526"/>
 						<Unclipped val="true"/>
 						<AcceptsMouse val="false"/>

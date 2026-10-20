@@ -442,8 +442,10 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
    **The user's list of what's left (2026-10-19; the slicing tomorrow):** our own angled fountain / map-mechanic
    container borders (BUILT 2026-10-19, to check: `slot_frame` / `slot_mask` at 0.54, a mask
    drawn per team; the fountain and the carry box both; EDGE_INSET +2 for ~2.5 px to the edge all
-   the way down, CARRY_LEAN = the slot's, so its sides run straight on; our own fountain icon only
-   if the masking needs it); the multi-unit nameplate slicing (item 15: the Vikings, Rexxar and Misha);
+   the way down, CARRY_LEAN = the slot's, so its sides run straight on. 23_16_14: the masking was
+   uneven (Blizzard's square HealingWell icon reached the rim on one side only), so now our own
+   `fountain_icon` fills the slot (Blizzard's blue, its pale cross upright, not italic); the carry
+   box's backdrop and icon were under the portrait (511/512), now 525/526/527); the multi-unit nameplate slicing (item 15: the Vikings, Rexxar and Misha);
    a pass on the number-heavy panes. The chrome is done as far as the user knows.
    - **A centering pass on every minimap** (user, 2026-10-18: "100% convinced some are still
      off center compared to our generated UI"): each map's minimap against the rows' gap and
