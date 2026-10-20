@@ -1170,20 +1170,25 @@ def row_frame_texture(cfg, team, n):
     seam = float(spec.get("seam", 0)) if spec.get("width", 0) else 0.0
     # under the XP bar: the middle of its gap to the plates
     base = (cfg["hero_row"]["top"] - cfg["team_xp"]["gap"] / 2,) if seam else ()
-    return _row_frame_dds(tuple(pts), box, float(row_frame_outset(cfg)), float(spec.get("inside", 0)),
+    inside = float(spec.get("inside", 0))
+    return _row_frame_dds(tuple(pts), box, float(row_frame_outset(cfg)), inside,
                           art_scale(cfg), chrome_rim(cfg),
-                          row_frame_seams(cfg, team, n) if seam else (), seam, base)
+                          row_frame_seams(cfg, team, n) if seam else (), seam, base,
+                          float(spec.get("end_inside", inside)))
 
 
 @functools.lru_cache(maxsize=None)
-def _row_frame_dds(pts, box, outset, inside, k, rim, seams=(), seam=0.0, rules=()):
+def _row_frame_dds(pts, box, outset, inside, k, rim, seams=(), seam=0.0, rules=(), end_inside=None):
     """row_frame_texture's drawing (cached: the textures are asked for several times a run).
     The distance outside is the true one, so the outside corners come out rounded: a mitred
     corner (convex_sdf's) on the plates' sharp slant pokes out about twice the width. Each
     edge of the line ramps over one texel inside it, so the anti-aliasing stays in the rect.
     seams: lines ((top x, y), (bottom x, y)), `seam` px wide centred on each, cut flat at
-    their ends' heights; rules: heights of lines straight across, `seam` px wide too. Only the
-    bands along the outline, the seams and the rules are worked out; the rest is clear."""
+    their ends' heights; rules: heights of lines straight across, `seam` px wide too.
+    end_inside: how far the line reaches over the plates along the row's two slanted ends
+    (`inside` elsewhere); the outer side and the outset stay. Only the bands along the outline,
+    the seams and the rules are worked out; the rest is clear."""
+    end_inside = inside if end_inside is None else end_inside
     x0, y0, bw, bh = box
     w, h = round(bw * k), round(bh * k)
     n = len(pts)
@@ -1197,6 +1202,13 @@ def _row_frame_dds(pts, box, outset, inside, k, rim, seams=(), seam=0.0, rules=(
             nx, ny = -nx, -ny
         planes.append((nx, ny, nx * x1 + ny * y1))
         segs.append((x1, y1, x2 - x1, y2 - y1, ln * ln))
+
+    # the inner side's distance: the slanted ends' planes (edges 1 and 3: TR-BR, BL-TL) moved
+    # in by the difference, so the line reaches end_inside over the plates there
+    grow = tuple(end_inside - inside if i % 2 else 0.0 for i in range(n))
+
+    def dist_in(x, y):
+        return max(nx * x + ny * y - c + g for (nx, ny, c), g in zip(planes, grow))
 
     def dist(x, y):
         d = max(nx * x + ny * y - c for nx, ny, c in planes)
@@ -1229,7 +1241,7 @@ def _row_frame_dds(pts, box, outset, inside, k, rim, seams=(), seam=0.0, rules=(
 
     (ax, top), (_, _), (_, bottom), (bx, _) = pts[0], pts[1], pts[2], pts[3]
     edge = pts[1][0] - pts[0][0]
-    reach = outset + inside + 2 / k
+    reach = outset + max(inside, end_inside) + 2 / k
     span = lambda a, b: (max(0, int((a - x0) * k)), min(w, int((b - x0) * k) + 1))
     rows = []
     for ty in range(h):
@@ -1247,7 +1259,7 @@ def _row_frame_dds(pts, box, outset, inside, k, rim, seams=(), seam=0.0, rules=(
             for tx in range(a, b):
                 x = x0 + (tx + 0.5) / k
                 d = dist(x, y)
-                cover = clamp((outset - d) * k) * clamp((d + inside) * k)
+                cover = clamp((outset - d) * k) * clamp(((dist_in(x, y) if d < 0 else d) + inside) * k)
                 if d < 0:
                     for at, perp in here:
                         cover = max(cover, clamp((half - abs(x - at(y)) * perp) * k))

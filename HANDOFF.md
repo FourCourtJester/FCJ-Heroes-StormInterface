@@ -450,9 +450,12 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
    (red's off the screen's edge), so the carry box is ours too, built as the fountain: our mask,
    backdrop and frame, the map's own icon (`CARRY_ICONS`, the behaviour's InfoIcon per map), and
    Blizzard's behaviour icon only as the sensor and the count (`FCJH_CarrySensor`). The plus 2 px
-   in at each end ("a little stretched"). Open: the row's outer slanted edge leaves ~1-1.5 px
-   more black by the outer plate's fountain than a seam does (outline `inside` 1 vs the seam's
-   1.5) - `inside = 1.5` would match, the user's call); the multi-unit nameplate slicing (item 15: the Vikings, Rexxar and Misha);
+   in at each end ("a little stretched"). The row's outer slanted ends left ~1-1.5 px more
+   black by the outer plates' fountains than a seam does (outline `inside` 1 vs the seam's 1.5;
+   user, 23_25_09): `[row_frame] end_inside = 1.5` now takes the line 1.5 px over the plates
+   along the two ends only (`inside = 1.5` throughout moved the outset and with it every XP,
+   core and inspect constant, so rejected) - to check on red hero 5 and blue hero 1. Open: the
+   multi-unit nameplate slicing (item 15: the Vikings, Rexxar and Misha);
    a pass on the number-heavy panes. The chrome is done as far as the user knows.
    - **A centering pass on every minimap** (user, 2026-10-18: "100% convinced some are still
      off center compared to our generated UI"): each map's minimap against the rows' gap and
