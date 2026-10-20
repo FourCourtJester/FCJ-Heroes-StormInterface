@@ -508,13 +508,14 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
    - **THE GAP from the backplate (user, 2026-10-19):** a neutral banner's backplate bottom 10 px
      over the map's top tip, not its hexagon; exceptions (single-banner morphs, art against the
      grain) by eye. Volskaya: the toast 17 px down (its backplate 27 px off on 22_28_11); the
-     capture point stays by its hexagon (22_29_08, "positioned correctly"). Built, not seen yet.
+     capture point stays by its hexagon (22_29_08, "positioned correctly"). Seen good on 87fa94f.
      The other maps get checked against it in the QA round.
    - **The last map QA round (2026-10-19, 22_33_04 .. 22_49_28, on 0cea729):** nothing obvious
      (user); every minimap centred (Cursed Hollow 777.5 / 1140.5). By the backplate rule: Braxis
      fine (~12); Volskaya's capture point and Hanamura's payload exceptions (single morphing
      banners); Dragon Shire has no neutral banner; Alterac 13 px down (23 -> 10), Battlefield 11
-     down (21 -> 10; maps.py `above`). Built, not seen yet; Volskaya's toast still unseen.
+     down (21 -> 10; maps.py `above`). Seen on 87fa94f: Alterac, Battlefield and Volskaya's toast
+     good - DONE (user, 2026-10-19). The map QA round is closed.
    - **The pane border's halves (2026-10-19): DONE, seen good on pass 3 (21_57_37 ..).** each side was a whole nine-slice
      squeezed into half the height, so both halves ended in the art's end cap at the middle,
      stacked "doubly as bright" (user). Now each half is a whole side clipped at the middle

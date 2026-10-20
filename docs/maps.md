@@ -604,3 +604,4 @@ centred on 959. By the backplate: Braxis ~12, fine; Volskaya's capture point and
 are exceptions (single morphing banners, user); Dragon Shire has no neutral banner. Alterac's bars
 774.8 over the tip 797.8 (23 px): 13 down, its cavalry spot held by gen. Battlefield's box 818.4
 over 839.8 (21 px): 11 down.
+Seen on 87fa94f: Alterac, Battlefield and Volskaya's toast good. DONE (user, 2026-10-19).
