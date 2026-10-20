@@ -437,7 +437,7 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
 **Open, in the user's order:**
 1. **The final pass** - item 14 below. The forms and blue's banners are done, the odd cases
    ignored (user, 2026-10-19: "nothing right now is broken that I'm aware of"); the blue/red
-   lines are final as they are (user, 2026-10-19). Left: the kill feed back on, a live game with observers,
+   lines are final as they are (user, 2026-10-19). Left: a live game with observers (the kill feed is back on, 2026-10-20),
    a non-16:9 window.
    **The user's list of what's left (2026-10-19; the slicing tomorrow):** our own angled fountain / map-mechanic
    container borders (BUILT 2026-10-19, to check: `slot_frame` / `slot_mask` at 0.54, a mask
@@ -736,12 +736,12 @@ from their plates (docs/blizzard-fixes.md).
    ours by handle (`FCJH_TalentRow0-9`), its icons on our quest cells (`FCJH_QuestCell0-9`);
    our own quest icons gone; the quest tooltips fill without Tab. Spazzo's nameplate quests are his own per-hero behaviour icons, no tooltips (a
    fallback only; see blizzard-fixes).
-   **TEMPORARY:** Blizzard's kill feed is hidden for testing (FCJH_Hidden, `FCJH_KeepHidden`'s
-   KillLogPanel controller; user, 2026-10-16). It stays off until the final pass (user,
-   2026-10-19); take it out before release.
+   Blizzard's kill feed was hidden for testing 2026-10-16..20 (FCJH_Hidden, a KillLogPanel
+   controller in `FCJH_KeepHidden`); back on for the volunteer test build (user, 2026-10-20).
+   It was hidden because its portraits read as ours under the panes - one for the testers.
 
    Diagnostics: the respawn, hearthstone and portrait ones are read and gone (2026-10-16);
-   `onfire_diagnostics` stays until a known on-fire replay: seven squares over each plate's
+   `onfire_diagnostics` (gone since: read 2026-10-19, below) - seven squares over each plate's
    portrait, one per event of Blizzard's on-fire frame, lit (blinking, 20 s) when it fires -
    orange Embers, red Inferno, grey End, blue Ally, dark red Enemy, light blue Left, light red
    Right. Read which ones light, then it goes.
