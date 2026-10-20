@@ -589,3 +589,4 @@ its end at red's start (Right Max 10, as Blizzard's), the raven and count held (
 lines met at ~955.4 (outer ends 777 / 1133) under a map centred ~958.75: both lines 4 units right,
 everything hanging off them 4 back (GEM_LINES). The carry box (gen.py CARRY_LEAN 0.56, was 0.66):
 ~1 px off the plate's edge on both teams against the fountain's 3-5.
+Cursed Hollow done (user, on 25e67ef).
