@@ -598,3 +598,9 @@ over the map's top tip; Blizzard's banners evolved, so the single-banner morphs 
 grain are exceptions. Volskaya (22_28_11 / 22_29_08): the toast's backplate ended 784 over the tip
 811 (27 px; its hexagon 9.5): 17 px down (gap_parts 27 at 28). The capture point stays by its
 hexagon, approved. The rest of the roster checked in the last QA round.
+
+The last map QA round (22_33_04 .. 22_49_28, on 0cea729): nothing obvious (user); every minimap
+centred on 959. By the backplate: Braxis ~12, fine; Volskaya's capture point and Hanamura's payload
+are exceptions (single morphing banners, user); Dragon Shire has no neutral banner. Alterac's bars
+774.8 over the tip 797.8 (23 px): 13 down, its cavalry spot held by gen. Battlefield's box 818.4
+over 839.8 (21 px): 11 down.

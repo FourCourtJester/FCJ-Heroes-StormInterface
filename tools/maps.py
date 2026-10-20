@@ -2140,8 +2140,10 @@ MAPS = {
         panels={"AlteracMechanicsPanel": (("Top", "Min", -25), ("Bottom", "Max", -25), ("Right", "Max", AV_PANEL_GROW))},
         place=("AlteracMechanicsPanel",),
         # THE GAP: the cage's hexagon on the map's top tip (797 px both) with the panel 10 px
-        # lower (user, 2026-10-13: "move down the neutral banner ... by about 10px"; b6e0e68)
-        above=(0, 10),
+        # lower (user, 2026-10-13: "move down the neutral banner ... by about 10px"; b6e0e68).
+        # By its backplate since (user, 2026-10-19): the bars' bottom 774.8 over the tip 797.8 on
+        # 22_39_55, 23 px at no move
+        above=(23, 0),
         # the prisoners, the cage fight and the cavalry: one frame, on a carrier (av_carrier) at
         # Blizzard's place above the minimap; the cavalry on these spots
         team={"AlteracMechanicsPanel": {
@@ -2158,8 +2160,10 @@ MAPS = {
         panels={"BossDuelPanel": (("Bottom", "Max", 0), ("Right", "Max", 9))}, place=("BossDuelPanel",),
         # The fight above the minimap. THE GAP: its portraits' hexagons (the health numbers, 19
         # lower, hang either side of the map's tip). 793 px over the map's top tip 825 (13_48_52,
-        # the numbers 812; 14_29_30: the hexagons 811, the box's bottom edge 799, the numbers 830)
-        above=(32, 0),
+        # the numbers 812; 14_29_30: the hexagons 811, the box's bottom edge 799, the numbers 830).
+        # By its backplate since (user, 2026-10-19): the box's bottom 818.4 over the tip 839.8 on
+        # 22_46_06, 21 px at the 22 px move
+        above=(21, 22),
         # "Immortals spawning": the neutral banner, on red's side; the winner's Immortal pushing
         # in its place, on its team's side, mirrored on blue's (lane_side)
         team={"BossDuelPanel": {
