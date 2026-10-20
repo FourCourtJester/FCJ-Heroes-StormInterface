@@ -458,7 +458,10 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
    both teams' outer two plates ~1 px more): the plates are 135.9 px apart, so each fountain rounds to
    another whole pixel; `fountain_lines` lays each slanted line beside a fountain `[row_frame] fountain_gap`
    (1.5) px from that fountain as drawn (`drawn`). The carry box down a rim (`CARRY_RIMS`) so it shares the
-   fountain's border (it was ~2 px of black above it). Open: the
+   fountain's border (it was ~2 px of black above it). Then both 1 px down (flush with the portrait's
+   bottom) and 1 px in (red's `EDGE_INSET` 5; blue's lean does it, but plate 2 snaps back), 23_58_11.
+   Still: blue's black reads denser than red's (summed darkness ~1.45 vs ~1.08 px; blue's line 2-3 px
+   wide, red's 3) - edge to edge equal. Open: the
    multi-unit nameplate slicing (item 15: the Vikings, Rexxar and Misha);
    a pass on the number-heavy panes. The chrome is done as far as the user knows.
    - **A centering pass on every minimap** (user, 2026-10-18: "100% convinced some are still

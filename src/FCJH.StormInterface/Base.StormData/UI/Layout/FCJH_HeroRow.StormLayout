@@ -607,10 +607,10 @@
 			     seconds left. On the health bar's top edge at the plate's outer end, against its
 			     edge (fountain_rect). -->
 			<Frame type="Frame" name="FCJH_Fountain">
-				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="31"/>
-				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="16"/>
-				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="57"/>
-				<Anchor side="Right"  relative="$parent/$parent" pos="Min" offset="61"/>
+				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="32"/>
+				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="17"/>
+				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="58"/>
+				<Anchor side="Right"  relative="$parent/$parent" pos="Min" offset="62"/>
 				<RenderPriority val="525"/>
 				<Unclipped val="true"/>
 				<AcceptsMouse val="false"/>
@@ -794,10 +794,10 @@
 			     Blizzard's behaviour icon template the icon wandered off its box (~40 px on, on
 			     both teams) and the backdrop never showed (23_16_14, 23_25_09) -->
 			<Frame type="Frame" name="FCJH_Carry">
-				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="12"/>
-				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="6"/>
-				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="38"/>
-				<Anchor side="Right"  relative="$parent/$parent" pos="Min" offset="51"/>
+				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="13"/>
+				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="7"/>
+				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="39"/>
+				<Anchor side="Right"  relative="$parent/$parent" pos="Min" offset="52"/>
 				<Alpha val="0"/>
 				<RenderPriority val="525"/>
 				<Unclipped val="true"/>
@@ -1406,10 +1406,10 @@
 				<Unclipped val="true"/>
 			</Frame>
 			<Frame type="Frame" name="FCJH_Fountain">
-				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="31"/>
-				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="136"/>
-				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="57"/>
-				<Anchor side="Right"  relative="$parent/$parent" pos="Min" offset="181"/>
+				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="32"/>
+				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="135"/>
+				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="58"/>
+				<Anchor side="Right"  relative="$parent/$parent" pos="Min" offset="180"/>
 				<Frame type="Frame" name="ImageMaskContainer"><AlphaMaskTexture val="_Assets\Textures\FCJH_SlotMask_red_8c1682f3.dds"/></Frame>
 				<Frame type="Image" name="IconImageBg"><TextureCoords top="0.0" left="0.0" bottom="1.0" right="1.0"/></Frame>
 			</Frame>
@@ -1422,10 +1422,10 @@
 				</Frame>
 			</Frame>
 			<Frame type="Frame" name="FCJH_Carry">
-				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="12"/>
-				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="146"/>
-				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="38"/>
-				<Anchor side="Right"  relative="$parent/$parent" pos="Min" offset="191"/>
+				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="13"/>
+				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="145"/>
+				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="39"/>
+				<Anchor side="Right"  relative="$parent/$parent" pos="Min" offset="190"/>
 				<Frame type="Frame" name="ImageMaskContainer"><AlphaMaskTexture val="_Assets\Textures\FCJH_SlotMask_red_8c1682f3.dds"/></Frame>
 				<Frame type="Image" name="IconImageBg"><TextureCoords top="0.0" left="0.0" bottom="1.0" right="1.0"/></Frame>
 			</Frame>
@@ -1471,7 +1471,7 @@
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/FCJH_BlueRowFrame" side="Left" relative="$GameUI" pos="Mid" offset="-440"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/FCJH_BlueRowFrame" side="Right" relative="$GameUI" pos="Mid" offset="-228"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/FCJH_BlueRowFrame" Alpha="255"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/FCJH_BlueRowFrame" Texture="_Assets\Textures\FCJH_RowFrame_blue_n1_eb6e530e.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/FCJH_BlueRowFrame" Texture="_Assets\Textures\FCJH_RowFrame_blue_n1_d0c64e39.dds"/>
 				</State>
 				<State name="Heroes2">
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2" Visible="true"/>
@@ -1492,7 +1492,7 @@
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/FCJH_BlueRowFrame" side="Left" relative="$GameUI" pos="Mid" offset="-591"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/FCJH_BlueRowFrame" side="Right" relative="$GameUI" pos="Mid" offset="-228"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/FCJH_BlueRowFrame" Alpha="255"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/FCJH_BlueRowFrame" Texture="_Assets\Textures\FCJH_RowFrame_blue_n2_faaf0612.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/FCJH_BlueRowFrame" Texture="_Assets\Textures\FCJH_RowFrame_blue_n2_4bdb29cb.dds"/>
 				</State>
 				<State name="Heroes3">
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3" Visible="true"/>
@@ -1515,7 +1515,7 @@
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/FCJH_BlueRowFrame" side="Left" relative="$GameUI" pos="Mid" offset="-742"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/FCJH_BlueRowFrame" side="Right" relative="$GameUI" pos="Mid" offset="-228"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/FCJH_BlueRowFrame" Alpha="255"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/FCJH_BlueRowFrame" Texture="_Assets\Textures\FCJH_RowFrame_blue_n3_3ea91197.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/FCJH_BlueRowFrame" Texture="_Assets\Textures\FCJH_RowFrame_blue_n3_5d8ec4f1.dds"/>
 				</State>
 				<State name="Heroes4">
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4" Visible="true"/>
@@ -1540,7 +1540,7 @@
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/FCJH_BlueRowFrame" side="Left" relative="$GameUI" pos="Mid" offset="-893"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/FCJH_BlueRowFrame" side="Right" relative="$GameUI" pos="Mid" offset="-228"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/FCJH_BlueRowFrame" Alpha="255"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/FCJH_BlueRowFrame" Texture="_Assets\Textures\FCJH_RowFrame_blue_n4_cfaf0bee.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/FCJH_BlueRowFrame" Texture="_Assets\Textures\FCJH_RowFrame_blue_n4_43485a93.dds"/>
 				</State>
 				<State name="Heroes5">
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5" Visible="true"/>
@@ -1566,7 +1566,7 @@
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/FCJH_BlueRowFrame" side="Left" relative="$GameUI" pos="Mid" offset="-1044"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/FCJH_BlueRowFrame" side="Right" relative="$GameUI" pos="Mid" offset="-228"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/FCJH_BlueRowFrame" Alpha="255"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/FCJH_BlueRowFrame" Texture="_Assets\Textures\FCJH_RowFrame_blue_n5_1a9e525b.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/FCJH_BlueRowFrame" Texture="_Assets\Textures\FCJH_RowFrame_blue_n5_aa3d792b.dds"/>
 				</State>
 			</StateGroup>
 			<StateGroup name="FCJH_RedCount">
@@ -1592,7 +1592,7 @@
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/FCJH_RedRowFrame" side="Left" relative="$GameUI" pos="Mid" offset="227"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/FCJH_RedRowFrame" side="Right" relative="$GameUI" pos="Mid" offset="439"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/FCJH_RedRowFrame" Alpha="255"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/FCJH_RedRowFrame" Texture="_Assets\Textures\FCJH_RowFrame_red_n1_45e05cc0.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/FCJH_RedRowFrame" Texture="_Assets\Textures\FCJH_RowFrame_red_n1_28b54612.dds"/>
 				</State>
 				<State name="Heroes2">
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2" Visible="true"/>
@@ -1609,7 +1609,7 @@
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/FCJH_RedRowFrame" side="Left" relative="$GameUI" pos="Mid" offset="227"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/FCJH_RedRowFrame" side="Right" relative="$GameUI" pos="Mid" offset="590"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/FCJH_RedRowFrame" Alpha="255"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/FCJH_RedRowFrame" Texture="_Assets\Textures\FCJH_RowFrame_red_n2_8a13c42a.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/FCJH_RedRowFrame" Texture="_Assets\Textures\FCJH_RowFrame_red_n2_28b77084.dds"/>
 				</State>
 				<State name="Heroes3">
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3" Visible="true"/>
@@ -1626,7 +1626,7 @@
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/FCJH_RedRowFrame" side="Left" relative="$GameUI" pos="Mid" offset="227"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/FCJH_RedRowFrame" side="Right" relative="$GameUI" pos="Mid" offset="741"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/FCJH_RedRowFrame" Alpha="255"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/FCJH_RedRowFrame" Texture="_Assets\Textures\FCJH_RowFrame_red_n3_4ddd9c6f.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/FCJH_RedRowFrame" Texture="_Assets\Textures\FCJH_RowFrame_red_n3_e36e9cb2.dds"/>
 				</State>
 				<State name="Heroes4">
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4" Visible="true"/>
@@ -1643,7 +1643,7 @@
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/FCJH_RedRowFrame" side="Left" relative="$GameUI" pos="Mid" offset="227"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/FCJH_RedRowFrame" side="Right" relative="$GameUI" pos="Mid" offset="892"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/FCJH_RedRowFrame" Alpha="255"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/FCJH_RedRowFrame" Texture="_Assets\Textures\FCJH_RowFrame_red_n4_994a33c0.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/FCJH_RedRowFrame" Texture="_Assets\Textures\FCJH_RowFrame_red_n4_480ea8dc.dds"/>
 				</State>
 				<State name="Heroes5">
 					<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5" Visible="true"/>
@@ -1659,7 +1659,7 @@
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/FCJH_RedRowFrame" side="Left" relative="$GameUI" pos="Mid" offset="227"/>
 					<Action type="SetAnchor" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/FCJH_RedRowFrame" side="Right" relative="$GameUI" pos="Mid" offset="1043"/>
 					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/FCJH_RedRowFrame" Alpha="255"/>
-					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/FCJH_RedRowFrame" Texture="_Assets\Textures\FCJH_RowFrame_red_n5_00aeaa2b.dds"/>
+					<Action type="SetProperty" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/FCJH_RedRowFrame" Texture="_Assets\Textures\FCJH_RowFrame_red_n5_756ac5f8.dds"/>
 				</State>
 			</StateGroup>
 		</Frame>

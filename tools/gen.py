@@ -1752,7 +1752,10 @@ MASK_INSET = 2                   # ...pulled in on every side on the plate: at f
 FOUNTAIN_H = 14                  # the slot art's visible height on the plate, native cell units
                                  # (20.6, the heroic's size, was too big: user, 2026-10-06)
 EDGE_INSET = {"blue": 4,         # its slanted side, in from the plate's edge (cell units): red's
-              "red": 4.5}       # edge art sits ~2 px further in (it rode the border: user, 13:23).
+              "red": 5}         # edge art sits ~2 px further in (it rode the border: user, 13:23).
+                                 # Red 4.5 until 23_58_11: down 1 (fountain_rect) it rounded back,
+                                 # 5 takes it the 1 px in blue's lean gives it (user: "1px over
+                                 # inward too"; blue's plate 2 snaps back, 18 put three 2 px in).
                                  # 4.5 until 2026-10-19: red's black gap to the edge 3-6 px against
                                  # blue's 1-2 (22_00_17, "the amount of black space", user); then
                                  # 2 / 2.5 on Blizzard's art (leaning ~0.6), the gap 2 px at the top,
@@ -1900,9 +1903,10 @@ def fountain_rect(cfg, team):
     f = hv / SLOT_ART[3]                         # cell units per slot unit
     ax, ay, aw, _ = (v * f for v in SLOT_ART)
     cut = SLOT_LEAN * hv
-    # on the health bar's black outline: the backing's top, 1 up (on the bar itself it sat over
-    # the outline, 3-4 px low: user, 2026-10-06 13:25)
-    bottom = c.team[team]["health_backing"][1] - 1
+    # on the health bar's black outline: the backing's top (on the bar itself it sat over the
+    # outline, 3-4 px low: user, 2026-10-06 13:25; 1 up until 23_58_11, 1 px short of the
+    # portrait's bottom: user). Down the edge moves it in by the lean, blue ~1 px
+    bottom = c.team[team]["health_backing"][1]
     top = bottom - hv
     if team == "blue":
         # the outer end is the plate's left: its edge (HeroCell.edge) leans \; the slot leans
