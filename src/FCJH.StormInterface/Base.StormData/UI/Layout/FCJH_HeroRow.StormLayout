@@ -616,10 +616,10 @@
 				<AcceptsMouse val="false"/>
 				<Frame type="Frame" name="ImageMaskContainer">
 					<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-					<Anchor side="Left"   relative="$parent" pos="Min" offset="9"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 					<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
-					<Anchor side="Right"  relative="$parent" pos="Min" offset="36"/>
-					<AlphaMaskTexture val="@UI/HUD_TopBar_Team_HeroFrame_Ult_Bg"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="45"/>
+					<AlphaMaskTexture val="_Assets\Textures\FCJH_SlotMask_blue_ff8ce7f5.dds"/>
 					<Unclipped val="true"/>
 					<!-- a dark purple backdrop, in the same mask; it keeps its colour on cooldown -->
 					<Frame type="Image" name="FCJH_Backdrop">
@@ -631,10 +631,13 @@
 						<Unclipped val="true"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
-					<!-- exactly the mask's box: drawn bigger (45 in 40, as on the inspect card), the
+					<!-- inside the mask's box: drawn past it (45 in 40, as on the inspect card), the
 					     overhang went unmasked - a thin purple line (user, 2026-10-06 13:16) -->
 					<Frame type="Image" name="IconImage">
-						<Anchor relative="$parent"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="9"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="36"/>
 						<Texture val="@UI/Storm_UI_Ingame_HealingWell_Active"/>
 						<!-- the middle of the art only, as on the inspect card -->
 						<TextureCoords top="0.2" left="0.2" bottom="0.8" right="0.8"/>
@@ -645,7 +648,7 @@
 				</Frame>
 				<Frame type="Image" name="IconImageBg">
 					<Anchor relative="$parent"/>
-					<Texture val="@UI/Storm_UI_InGame_Buff_Background"/>
+					<Texture val="_Assets\Textures\FCJH_SlotFrame_42350095.dds"/>
 					<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>
 					<RenderPriority val="527"/>
 					<Unclipped val="true"/>
@@ -791,9 +794,9 @@
 			     its icon; shown from 1 (carry_rect, CARRY_MAPS) -->
 			<Frame type="UnitStatusBehaviorIcon" name="FCJH_Carry">
 				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="8"/>
-				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="3"/>
+				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="4"/>
 				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="34"/>
-				<Anchor side="Right"  relative="$parent/$parent" pos="Min" offset="48"/>
+				<Anchor side="Right"  relative="$parent/$parent" pos="Min" offset="49"/>
 				<Behavior val="MapMechanicStack"/>
 				<Alpha val="0"/>
 				<RenderPriority val="525"/>
@@ -807,10 +810,10 @@
 					<AcceptsMouseTooltip val="false"/>
 					<Frame type="Frame" name="ImageMaskContainer">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="9"/>
-						<Width val="28"/>
-						<Height val="28"/>
-						<AlphaMaskTexture val="@UI/HUD_TopBar_Team_HeroFrame_Ult_Bg"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="45"/>
+						<AlphaMaskTexture val="_Assets\Textures\FCJH_SlotMask_blue_ff8ce7f5.dds"/>
 						<Unclipped val="true"/>
 						<Frame type="Image" name="FCJH_Backdrop">
 							<Anchor relative="$parent"/>
@@ -820,15 +823,18 @@
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
 						</Frame>
-						<!-- the mask's size exactly: the template's 45 in 40 overhangs it (the fountain) -->
+						<!-- inside the mask's box: the template's 45 in 40 overhangs it (the fountain) -->
 						<Frame type="Image" name="IconImage">
-							<Width val="28"/>
-							<Height val="28"/>
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="9"/>
+							<Anchor side="Bottom" relative="$parent" pos="Min" offset="28"/>
+							<Anchor side="Right"  relative="$parent" pos="Min" offset="36"/>
 							<Unclipped val="true"/>
 						</Frame>
 					</Frame>
 					<Frame type="Image" name="IconImageBg">
 						<Anchor relative="$parent"/>
+						<Texture val="_Assets\Textures\FCJH_SlotFrame_42350095.dds"/>
 						<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>
 						<Unclipped val="true"/>
 					</Frame>
@@ -1365,7 +1371,7 @@
 				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="136"/>
 				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="57"/>
 				<Anchor side="Right"  relative="$parent/$parent" pos="Min" offset="181"/>
-				<Frame type="Frame" name="ImageMaskContainer"><AlphaMaskTexture val="@UI/Storm_UI_InGame_Buff_IconMask"/></Frame>
+				<Frame type="Frame" name="ImageMaskContainer"><AlphaMaskTexture val="_Assets\Textures\FCJH_SlotMask_red_8c1682f3.dds"/></Frame>
 				<Frame type="Image" name="IconImageBg"><TextureCoords top="0.0" left="0.0" bottom="1.0" right="1.0"/></Frame>
 			</Frame>
 			<Frame type="UnitStatusBehaviorIcon" name="FCJH_FountainSensor">
@@ -1378,11 +1384,11 @@
 			</Frame>
 			<Frame type="UnitStatusBehaviorIcon" name="FCJH_Carry">
 				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="8"/>
-				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="149"/>
+				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="148"/>
 				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="34"/>
-				<Anchor side="Right"  relative="$parent/$parent" pos="Min" offset="194"/>
+				<Anchor side="Right"  relative="$parent/$parent" pos="Min" offset="193"/>
 				<Frame type="BehaviorIcon" name="BehaviorIcon">
-					<Frame type="Frame" name="ImageMaskContainer"><AlphaMaskTexture val="@UI/Storm_UI_InGame_Buff_IconMask"/></Frame>
+					<Frame type="Frame" name="ImageMaskContainer"><AlphaMaskTexture val="_Assets\Textures\FCJH_SlotMask_red_8c1682f3.dds"/></Frame>
 					<Frame type="Image" name="IconImageBg"><TextureCoords top="0.0" left="0.0" bottom="1.0" right="1.0"/></Frame>
 					<Frame type="Label" name="StackLabel">
 						<Anchor side="Left"   relative="$parent" pos="Min" offset="7"/>

@@ -45,7 +45,7 @@ Nothing on the bottom UI. Its places are `kind = "obs"` rects in `layout.toml` (
   the screen's 20 px padding (`[hero_row] scale = "fit"`, 1.5561): portrait, health,
   resource bar in Blizzard's per-hero colours, CC text and icon, death timers (per-Viking
   ones in each third), Viking bars in thirds, Rexxar's bar full height (Misha's hidden),
-  the **fountain** (the inspect card's: Blizzard's buff slot leaning with the plate, dark
+  the **fountain** (after the inspect card's buff slot, our own frame and mask at the plate's lean, dark
   purple backdrop, bright when ready, dimmed with its countdown on cooldown; on the health
   bar's black outline at the plate's OUTER end - blue left, red right; `fountain_rect`),
   Abathur clone marker, and Blizzard's in-game heroic panel at the plate's INNER end (blue
@@ -440,7 +440,10 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
    lines are final as they are (user, 2026-10-19). Left: the kill feed back on, a live game with observers,
    a non-16:9 window.
    **The user's list of what's left (2026-10-19; the slicing tomorrow):** our own angled fountain / map-mechanic
-   container borders; the multi-unit nameplate slicing (item 15: the Vikings, Rexxar and Misha);
+   container borders (BUILT 2026-10-19, to check: `slot_frame` / `slot_mask` at 0.54, a mask
+   drawn per team; the fountain and the carry box both; EDGE_INSET +2 for ~2.5 px to the edge all
+   the way down, CARRY_LEAN = the slot's, so its sides run straight on; our own fountain icon only
+   if the masking needs it); the multi-unit nameplate slicing (item 15: the Vikings, Rexxar and Misha);
    a pass on the number-heavy panes. The chrome is done as far as the user knows.
    - **A centering pass on every minimap** (user, 2026-10-18: "100% convinced some are still
      off center compared to our generated UI"): each map's minimap against the rows' gap and
@@ -542,8 +545,7 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
      - OBS: 3 pips a side, one hexagon in full and empty; the tournament name in a secondary
        tab, division beside it; the ban tiles get their own pass (docs/obs-topbar-handoff.md).
 2. **The art pass** - items 7 and 12 below, and the visual pass: the chrome backplate look to
-   the plates, our own fountain/carry slot (a frame at 0.54, a mask mirrored per team: Blizzard's
-   leans ~0.6, its masks differ by team), XP/core bars (a mid-height bevel, like the player view's core bar; the default
+   the plates, our own fountain/carry slot (built 2026-10-19, item 1), XP/core bars (a mid-height bevel, like the player view's core bar; the default
    UI's core bars: `design/ref_default_core_hp.png`) and the info panes (zebra rows, Heroes
    palette; the numbers panes need a better visual - docs/history.md item 1). The canvas draws
    the build as it is (`design/canvas_gen.py`); the art pass designs over those boards.

@@ -1357,6 +1357,8 @@ def texture_files(cfg):
     out[TEXTURE_REL / HEAL_BORDER] = square_border(cfg["heal_popup"]["colour"])
     for file, data in slant_bars(cfg).values():
         out[TEXTURE_REL / file] = data
+    for file, data in slot_files(cfg).values():
+        out[TEXTURE_REL / file] = data
     # blue's Dragon Knight health bar, cut to the mirrored lean (maps.knight_mask)
     out[TEXTURE_REL / maps.KNIGHT_MASK_FILE] = dds_bgra(*maps.KNIGHT_MASK)
     return out
@@ -1657,9 +1659,12 @@ HEROIC_ART = {"blue": ("HUD_TopBar_Team_HeroFrame_Ult_Bg", "HUD_TopBar_Team_Hero
                       "HUD_TopBar_Team_HeroFrame_Ult_ProgressFill_Right")}
 
 # The fountain on the plate (user, 2026-10-06, drawn on the canvas first): the inspect card's
-# fountain - Blizzard's buff slot (58 x 34, the icon in its slanted mask) on a dark purple
-# backdrop, bright when ready; on cooldown the art dims under its countdown, the frame stays lit.
-# Blizzard's slot leans / (as the red plates); blue's is mirrored. It stands on the health bar's
+# fountain - a slot after Blizzard's buff slot (58 x 34, the icon in its slanted mask) on a dark
+# purple backdrop, bright when ready; on cooldown the art dims under its countdown, the frame
+# stays lit. Since 2026-10-19 the frame and mask are ours (slot_frame, slot_mask), cut at the
+# plates' own lean: Blizzard's leaned ~0.6 to our 0.54, so the gap to the plate's edge grew down
+# the box, and its two masks (one per team - a mask can't be mirrored) differed. The frame leans
+# / (as the red plates); blue's is mirrored. It stands on the health bar's
 # black outline at the plate's OUTER end (blue left, red right), its slanted side against the
 # plate's edge - the heroics are at the inner ends.
 # (Tried and dropped, 2026-10-06: Blizzard's fountain token - drawn near-upright, it leaned with
@@ -1667,19 +1672,103 @@ HEROIC_ART = {"blue": ("HUD_TopBar_Team_HeroFrame_Ult_Bg", "HUD_TopBar_Team_Hero
 # slants never quite met.)
 SLOT_W, SLOT_H = 58, 34          # Blizzard's buff slot (inspect_card BUFF_W, BUFF_H)
 SLOT_ART = (4, 3, 50, 28)        # the slot art's visible part in it: inset x, y, width, height
-SLOT_LEAN = 0.45                 # ...and its slant, across per down (measured in game, 2026-10-05)
+SLOT_LEAN = HeroCell.LEAN        # ...and its slant, across per down: the plates' (ours since
+                                 # 2026-10-19; Blizzard's art measured 0.45-0.6)
 SLOT_MASK = (9, -2, 40, 40)      # the icon's mask square in the slot (inspect_card): left, top, w, h
 MASK_INSET = 2                   # ...pulled in on every side on the plate: at full size the icon
                                  # showed a pixel past the slot's frame (user, 2026-10-06 13:12)
 FOUNTAIN_H = 14                  # the slot art's visible height on the plate, native cell units
                                  # (20.6, the heroic's size, was too big: user, 2026-10-06)
-EDGE_INSET = {"blue": 2,         # its slanted side, in from the plate's edge (cell units): red's
-              "red": 2.5}       # edge art sits ~2 px further in (it rode the border: user, 13:23).
+EDGE_INSET = {"blue": 4,         # its slanted side, in from the plate's edge (cell units): red's
+              "red": 4.5}       # edge art sits ~2 px further in (it rode the border: user, 13:23).
                                  # 4.5 until 2026-10-19: red's black gap to the edge 3-6 px against
-                                 # blue's 1-2 (22_00_17, "the amount of black space", user). The slot
-                                 # art itself leans ~0.6, not the plates' 0.54 - Blizzard's; the gap
-                                 # still grows ~2 px down the two boxes until the art pass recuts it
+                                 # blue's 1-2 (22_00_17, "the amount of black space", user); then
+                                 # 2 / 2.5 on Blizzard's art (leaning ~0.6), the gap 2 px at the top,
+                                 # 3-3.5 at the bottom (22_49_28). Ours leans the plates' 0.54: at
+                                 # 2 / 2.5 it sat 0.7 px off the edge, so +2 - ~2.5 px all the way
 FOUNTAIN_BACKDROP = "42,24,70"   # dark purple behind the art: bare, it was easy to lose (user)
+# Our slot's frame (slot_frame), in slot units across its slanted sides (~0.7 px a unit at 1080p):
+# Blizzard's, off 22_49_28 - a muted lavender rim ~2 px, a dark line ~1 px inside it
+SLOT_RIM, SLOT_RIM_COLOUR = 2.9, "4e4882"
+SLOT_LINE, SLOT_LINE_COLOUR = 1.4, "0a0832"
+SLOT_ICON = (SLOT_MASK[0] + MASK_INSET, SLOT_MASK[1] + MASK_INSET,   # the icon's square in the slot
+             SLOT_MASK[2] - 2 * MASK_INSET)                           # (left, top, side), as before
+# the mask's box: the slot and the icon both inside it - an icon past its mask's frame is drawn
+# unmasked (the purple line, 2026-10-06)
+MASK_BOX = (0, min(0, SLOT_ICON[1]), SLOT_W, max(SLOT_H, SLOT_ICON[1] + SLOT_ICON[2]))
+
+
+def slot_inside(x, y):
+    """How far (x, y), slot units, is inside the slot art's parallelogram, across its sides
+    (negative outside). Red's: it leans / - its top edge flush right."""
+    ax, ay, aw, ah = SLOT_ART
+    cut = SLOT_LEAN * ah
+    left = ax + cut * (ay + ah - y) / ah
+    norm = math.hypot(1, SLOT_LEAN)
+    return min((x - left) / norm, (left + aw - cut - x) / norm, y - ay, ay + ah - y)
+
+
+def slot_art_sizes(cfg):
+    """The slot frame's and mask's textures at their size on a 1440p screen, texels."""
+    f = fountain_rect(cfg, "blue")[1]
+    texels = lambda v: math.ceil(v * f / Units(cfg).scale * art_scale(cfg))
+    return {"frame": (texels(SLOT_W), texels(SLOT_H)),
+            "mask": (texels(MASK_BOX[2] - MASK_BOX[0]), texels(MASK_BOX[3] - MASK_BOX[1]))}
+
+
+@functools.cache
+def slot_frame(size, sub=4):
+    """The slot's frame over its whole box (SLOT_W x SLOT_H), red's lean (blue mirrors it):
+    the rim, the dark line inside it, clear within (the masked icon shows through)."""
+    w, h = size
+    bands = ((SLOT_RIM, bytes.fromhex(SLOT_RIM_COLOUR)), (SLOT_RIM + SLOT_LINE, bytes.fromhex(SLOT_LINE_COLOUR)))
+    rows = []
+    for ty in range(h):
+        row = bytearray()
+        for tx in range(w):
+            n, rgb = 0, [0, 0, 0]
+            for sy in range(sub):
+                for sx in range(sub):
+                    d = slot_inside((tx + (sx + 0.5) / sub) / w * SLOT_W, (ty + (sy + 0.5) / sub) / h * SLOT_H)
+                    colour = next((c for edge, c in bands if 0 <= d < edge), None)
+                    if colour:
+                        n += 1
+                        rgb = [v + c for v, c in zip(rgb, colour)]
+            r, g, b = (round(v / n) if n else 0 for v in rgb)
+            row += bytes((b, g, r, round(255 * n / sub ** 2)))
+        rows.append(bytes(row))
+    return dds_bgra(w, h, b"".join(rows))
+
+
+@functools.cache
+def slot_mask(team, size, sub=4):
+    """The icon's mask over MASK_BOX: the parallelogram to the middle of the rim (the rim covers
+    its edge). Blue's mirrored, drawn - a mask can't be mirrored by TextureCoords."""
+    w, h = size
+    x0, y0, x1, y1 = MASK_BOX
+    rows = []
+    for ty in range(h):
+        row = bytearray()
+        for tx in range(w):
+            n = 0
+            for sy in range(sub):
+                for sx in range(sub):
+                    x = x0 + (tx + (sx + 0.5) / sub) / w * (x1 - x0)
+                    y = y0 + (ty + (sy + 0.5) / sub) / h * (y1 - y0)
+                    n += slot_inside(SLOT_W - x if team == "blue" else x, y) >= SLOT_RIM / 2
+            a = round(255 * n / sub ** 2)
+            row += bytes((a, a, a, a))
+        rows.append(bytes(row))
+    return dds_bgra(w, h, b"".join(rows))
+
+
+def slot_files(cfg):
+    """{texture name: data}: the frame, then blue's and red's masks (named by content)."""
+    sz = slot_art_sizes(cfg)
+    name = lambda kind, data: f"FCJH_Slot{kind}_{hashlib.sha1(data).hexdigest()[:8]}.dds"
+    out = {"frame": slot_frame(sz["frame"])}
+    out.update({team: slot_mask(team, sz["mask"]) for team in ("blue", "red")})
+    return {k: (name("Frame" if k == "frame" else f"Mask_{k}", v), v) for k, v in out.items()}
 
 
 def fountain_rect(cfg, team):
@@ -1717,7 +1806,7 @@ def fountain_rect(cfg, team):
 # Hanamura defines it (hidden).
 CARRY_MAPS = ("blackhearts_bay", "tomb_of_the_spider_queen")
 CARRY_GAP = 1                    # cell units between the fountain's art and the box's above it
-CARRY_LEAN = 0.56                # ...and out along the slot art's own sides, across per up, so its
+CARRY_LEAN = SLOT_LEAN           # ...and out along the slot art's own sides, across per up, so its
                                  # sides run on from the fountain's: 15 units over the step up, as
                                  # approved (7aba2b8: the plate's edge lean then, +4 - its sides ran
                                  # ~4 inside the fountain's, user's zoom of Zul'jin, 2026-10-12). It
@@ -1725,7 +1814,9 @@ CARRY_LEAN = 0.56                # ...and out along the slot art's own sides, ac
                                  # further, "no longer a smooth angle" (user, 2026-10-19). At 0.66
                                  # (22_12_10) its gap to the plate's edge ~1 px on both teams, the
                                  # fountain's 3-5: it "bleeds into the chrome" (user). 0.56: 2 units
-                                 # in, ~3 px - the fountain's top; the sides step ~2 units
+                                 # in, ~3 px - the fountain's top; the sides step ~2 units.
+                                 # All on Blizzard's art at ~0.6; ours leans the plates' 0.54, so
+                                 # its sides run straight on from the fountain's (2026-10-19)
 
 
 def carry_rect(cfg, team):
@@ -1742,8 +1833,8 @@ def carry_box(cfg, team, mask, slot_coords, near, far):
     inherits blue's and restates only what's mirrored."""
     (l, t, r, b), f = carry_rect(cfg, team)
     u = lambda v: round(v * f)
-    mx, my, mw, mh = SLOT_MASK
-    mx, my, mw, mh = mx + MASK_INSET, my + MASK_INSET, mw - 2 * MASK_INSET, mh - 2 * MASK_INSET
+    bx0, by0, bx1, by1 = MASK_BOX
+    ix, iy, iside = SLOT_ICON
     anchors = "".join(f'\n\t\t\t\t<Anchor side="{sd}"{" " * (6 - len(sd))} relative="$parent/$parent" pos="Min" offset="{v}"/>'
                       for sd, v in (("Top", t), ("Left", l), ("Bottom", b), ("Right", r)))
     count = (f'<Anchor side="Left"   relative="$parent" pos="Min" offset="{u(near)}"/>\n'
@@ -1781,10 +1872,10 @@ def carry_box(cfg, team, mask, slot_coords, near, far):
 					<AcceptsMouse val="false"/>
 					<AcceptsMouseTooltip val="false"/>
 					<Frame type="Frame" name="ImageMaskContainer">
-						<Anchor side="Top"    relative="$parent" pos="Min" offset="{u(my)}"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="{u(mx)}"/>
-						<Width val="{u(mw)}"/>
-						<Height val="{u(mh)}"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="{u(by0)}"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="{u(bx0)}"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="{u(by1)}"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="{u(bx1)}"/>
 						<AlphaMaskTexture val="{mask}"/>
 						<Unclipped val="true"/>
 						<Frame type="Image" name="FCJH_Backdrop">
@@ -1795,15 +1886,18 @@ def carry_box(cfg, team, mask, slot_coords, near, far):
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
 						</Frame>
-						<!-- the mask's size exactly: the template's 45 in 40 overhangs it (the fountain) -->
+						<!-- inside the mask's box: the template's 45 in 40 overhangs it (the fountain) -->
 						<Frame type="Image" name="IconImage">
-							<Width val="{u(mw)}"/>
-							<Height val="{u(mh)}"/>
+							<Anchor side="Top"    relative="$parent" pos="Min" offset="{u(iy - by0)}"/>
+							<Anchor side="Left"   relative="$parent" pos="Min" offset="{u(ix - bx0)}"/>
+							<Anchor side="Bottom" relative="$parent" pos="Min" offset="{u(iy + iside - by0)}"/>
+							<Anchor side="Right"  relative="$parent" pos="Min" offset="{u(ix + iside - bx0)}"/>
 							<Unclipped val="true"/>
 						</Frame>
 					</Frame>
 					<Frame type="Image" name="IconImageBg">
 						<Anchor relative="$parent"/>
+						<Texture val="{TEXTURE_DIR}\\{slot_files(cfg)["frame"][0]}"/>
 						{slot_coords}
 						<Unclipped val="true"/>
 					</Frame>
@@ -2532,11 +2626,11 @@ def hero_cell_template(team, c, cfg):
 				<Anchor side="Bottom" relative="$parent/$parent" pos="Min" offset="{fb}"/>
 				<Anchor side="Right"  relative="$parent/$parent" pos="Min" offset="{fr}"/>"""
     u = lambda v: round(v * f)
-    mx, my, mw, mh = SLOT_MASK
-    mx, my, mw, mh = mx + MASK_INSET, my + MASK_INSET, mw - 2 * MASK_INSET, mh - 2 * MASK_INSET
-    # the icon's mask: Blizzard's buff mask leans / (red); blue's is the heroic icon's own mask,
-    # which leans \ like blue's plates (a mask can't be mirrored the way an image can)
-    mask = "@UI/HUD_TopBar_Team_HeroFrame_Ult_Bg" if blue else "@UI/Storm_UI_InGame_Buff_IconMask"
+    bx0, by0, bx1, by1 = MASK_BOX
+    ix, iy, iside = SLOT_ICON
+    # the icon's mask and the slot's frame: ours (slot_files), a mask per team
+    slot = slot_files(cfg)
+    mask = f"{TEXTURE_DIR}\\{slot[team][0]}"
     # the slot's frame art, mirrored on blue
     slot_coords = '<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>' if blue else \
         '<TextureCoords top="0.0" left="0.0" bottom="1.0" right="1.0"/>'
@@ -2557,10 +2651,10 @@ def hero_cell_template(team, c, cfg):
 				<Unclipped val="true"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Frame" name="ImageMaskContainer">
-					<Anchor side="Top"    relative="$parent" pos="Min" offset="{u(my)}"/>
-					<Anchor side="Left"   relative="$parent" pos="Min" offset="{u(mx)}"/>
-					<Anchor side="Bottom" relative="$parent" pos="Min" offset="{u(my + mh)}"/>
-					<Anchor side="Right"  relative="$parent" pos="Min" offset="{u(mx + mw)}"/>
+					<Anchor side="Top"    relative="$parent" pos="Min" offset="{u(by0)}"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="{u(bx0)}"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="{u(by1)}"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="{u(bx1)}"/>
 					<AlphaMaskTexture val="{mask}"/>
 					<Unclipped val="true"/>
 					<!-- a dark purple backdrop, in the same mask; it keeps its colour on cooldown -->
@@ -2573,10 +2667,13 @@ def hero_cell_template(team, c, cfg):
 						<Unclipped val="true"/>
 						<AcceptsMouse val="false"/>
 					</Frame>
-					<!-- exactly the mask's box: drawn bigger (45 in 40, as on the inspect card), the
+					<!-- inside the mask's box: drawn past it (45 in 40, as on the inspect card), the
 					     overhang went unmasked - a thin purple line (user, 2026-10-06 13:16) -->
 					<Frame type="Image" name="IconImage">
-						<Anchor relative="$parent"/>
+						<Anchor side="Top"    relative="$parent" pos="Min" offset="{u(iy - by0)}"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="{u(ix - bx0)}"/>
+						<Anchor side="Bottom" relative="$parent" pos="Min" offset="{u(iy + iside - by0)}"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="{u(ix + iside - bx0)}"/>
 						<Texture val="@UI/Storm_UI_Ingame_HealingWell_Active"/>
 						<!-- the middle of the art only, as on the inspect card -->
 						<TextureCoords top="0.2" left="0.2" bottom="0.8" right="0.8"/>
@@ -2587,7 +2684,7 @@ def hero_cell_template(team, c, cfg):
 				</Frame>
 				<Frame type="Image" name="IconImageBg">
 					<Anchor relative="$parent"/>
-					<Texture val="@UI/Storm_UI_InGame_Buff_Background"/>
+					<Texture val="{TEXTURE_DIR}\\{slot["frame"][0]}"/>
 					{slot_coords}
 					<RenderPriority val="527"/>
 					<Unclipped val="true"/>
