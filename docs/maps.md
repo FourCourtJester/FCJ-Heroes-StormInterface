@@ -592,3 +592,9 @@ everything hanging off them 4 back (GEM_LINES). The carry box (gen.py CARRY_LEAN
 Cursed Hollow done (user, on 25e67ef).
 22_19_37: Tomb's line fudge good. The fountain icons differ left to right: blue is masked by the
 heroic's Ult_Bg, red by Blizzard's buff mask (a mask can't be mirrored), since 2026-10-06.
+
+THE GAP from the backplate (user, 2026-10-19): the banner's backplate bottom, not its hexagon, 10 px
+over the map's top tip; Blizzard's banners evolved, so the single-banner morphs and art against the
+grain are exceptions. Volskaya (22_28_11 / 22_29_08): the toast's backplate ended 784 over the tip
+811 (27 px; its hexagon 9.5): 17 px down (gap_parts 27 at 28). The capture point stays by its
+hexagon, approved. The rest of the roster checked in the last QA round.

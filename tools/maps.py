@@ -2376,9 +2376,12 @@ MAPS = {
         panels={"VolskayaCapturePointPanel": STRIP}, place=("VolskayaCapturePointPanel",),
         # its two neutrals to the gap, each from Blizzard's own anchor to the minimap (they don't
         # hang off their panels). On a1f60ca: the capture point's hexagon's bottom 40 px over the
-        # map's top tip (803); the toast's lowest part, its hexagon, 765
+        # map's top tip (803); the toast's lowest part, its hexagon, 765. The toast by its
+        # backplate since (user, 2026-10-19: the banner's backplate, not its hexagon, 10 over the
+        # tip): on 22_28_11 its bottom 784 against the tip 811, 27 px at the 28 px move. The
+        # capture point stays by its hexagon - its bars sit high on it (user: "positioned correctly")
         gap_parts={"VolskayaCapturePointPanel/CenterHex:Image": (40, 0, (MINIMAP_SQUARE, "Min", 75)),
-                   "VolskayaToastContainer": (38, 0, ("$parent/$parent/MinimapPanel", "Min", 80))},
+                   "VolskayaToastContainer": (27, 28, ("$parent/$parent/MinimapPanel", "Min", 80))},
         # the robot (robot_frame, PARTS): a team banner on these spots
         team={"VolskayaCapturePointPanel": {
             "red": [Alert("VolskayaRobotHealthSlideout", kind="ROBOT", box=ROBOT_BOX, spot_only=True,

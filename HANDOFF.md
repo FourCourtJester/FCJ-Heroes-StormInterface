@@ -505,6 +505,11 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
      ~780-1140 (Mines, Dragon Shire). Not started: evaluated on the final pass (user, 2026-10-19).
    - **Left of the map questions (user, 2026-10-19):** Volskaya's gap (the user checks it), then
      one last map-centric QA round, which finalises the minimap centering.
+   - **THE GAP from the backplate (user, 2026-10-19):** a neutral banner's backplate bottom 10 px
+     over the map's top tip, not its hexagon; exceptions (single-banner morphs, art against the
+     grain) by eye. Volskaya: the toast 17 px down (its backplate 27 px off on 22_28_11); the
+     capture point stays by its hexagon (22_29_08, "positioned correctly"). Built, not seen yet.
+     The other maps get checked against it in the QA round.
    - **The pane border's halves (2026-10-19): DONE, seen good on pass 3 (21_57_37 ..).** each side was a whole nine-slice
      squeezed into half the height, so both halves ended in the art's end cap at the middle,
      stacked "doubly as bright" (user). Now each half is a whole side clipped at the middle
