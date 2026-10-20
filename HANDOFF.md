@@ -495,13 +495,16 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
      Cursed Hollow: DONE (user, 2026-10-19, on 25e67ef).
      Seen good (22_19_37): Tomb's line fudge. The fountain icons differ left to right: the
      masks (blue the heroic's Ult_Bg, red Blizzard's buff mask; a mask can't be mirrored), not
-     this pass. Slot angles and the icon: ACCEPTED as they are (user, 2026-10-19); our own cut
+     this pass. The carry box's gap at CARRY_LEAN 0.56: ACCEPTED for now (user, 2026-10-19).
+     Slot angles and the icon: ACCEPTED as they are (user, 2026-10-19); our own cut
      (a slot frame at 0.54, a mask mirrored per team) goes to the art pass.
    - **The blue/red lines under the mechanics' counts** (user, 2026-10-19): out to their
      farthest, the plates' inner ends (~752 / ~1168), "so we have most flexibility for the
      containers". Each map's panel sets its own (Blizzard's TeamHighlight-style backgrounds,
      e.g. Mines' Team1Background / Team2Background); on the shots ~813-1107 (Warhead) to
-     ~780-1140 (Mines, Dragon Shire). Not started.
+     ~780-1140 (Mines, Dragon Shire). Not started: evaluated on the final pass (user, 2026-10-19).
+   - **Left of the map questions (user, 2026-10-19):** Volskaya's gap (the user checks it), then
+     one last map-centric QA round, which finalises the minimap centering.
    - **The pane border's halves (2026-10-19): DONE, seen good on pass 3 (21_57_37 ..).** each side was a whole nine-slice
      squeezed into half the height, so both halves ended in the art's end cap at the middle,
      stacked "doubly as bright" (user). Now each half is a whole side clipped at the middle
@@ -532,7 +535,8 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
    them, are marked **A show-off shot** in docs/blizzard-fixes.md's "Made" list (first:
    Abathur's clone on the inspect card).
 - Also open: rewinding a replay upsets pop-ups and latches (final polish - the product
-  is for live games); rows with fewer than five heroes (a 3v3 or 1v1 replay).
+  is for live games); rows with fewer than five heroes (a 3v3 or 1v1 replay). Both IGNORED
+  (user, 2026-10-19).
 - **To do (user, 2026-10-16):** a pass on the panes and the inspect card to make them
   Heroes-like (Blizzard's menu panel: blur, translucency, chrome border), and a colour, font
   and art pass on the numbers panes (docs/polish-research.md, "Decisions from the question round").
@@ -661,7 +665,8 @@ from their plates (docs/blizzard-fixes.md).
    Murky's showed the last talent hovered, Nova's an empty box - the box doesn't matter, the
    icon must be one that writes (docs/blizzard-fixes.md). Reverted.
    **Quest tooltips, tries 5-8 failed** (2026-10-19; docs/blizzard-fixes.md). Scrapped: rebuilt
-   one piece at a time in a separate test interface, `src/tests/FCJH_QTest.StormInterface`
+   one piece at a time in a separate test interface, `src/tests/FCJH_QTest.StormInterface` (deleted
+   2026-10-19, user: it never ships; in git before that)
    (`python tools/pack.py src/tests/FCJH_QTest.StormInterface --name FCJH_QTest.StormInterface --wait`),
    one change per build; `FCJH_QuestTest` is out of FCJH. **Step 1 fills** (7be15cc): an
    untouched copy of Blizzard's leader panel, Control+Shift+Q. **Step 2 fills** (5d1ae3f):
@@ -693,7 +698,8 @@ from their plates (docs/blizzard-fixes.md).
    our own quest icons gone; the quest tooltips fill without Tab. Spazzo's nameplate quests are his own per-hero behaviour icons, no tooltips (a
    fallback only; see blizzard-fixes).
    **TEMPORARY:** Blizzard's kill feed is hidden for testing (FCJH_Hidden, `FCJH_KeepHidden`'s
-   KillLogPanel controller; user, 2026-10-16). Take it out before release.
+   KillLogPanel controller; user, 2026-10-16). It stays off until the final pass (user,
+   2026-10-19); take it out before release.
 
    Diagnostics: the respawn, hearthstone and portrait ones are read and gone (2026-10-16);
    `onfire_diagnostics` stays until a known on-fire replay: seven squares over each plate's
@@ -866,7 +872,7 @@ from their plates (docs/blizzard-fixes.md).
     - **the D.Va and Viking guesses** in `inspect_card.ALSO` SEEN (user, 2026-10-16): D.Va's pilot
       and mech, and each Viking (Olaf, Baleog, Erik), get the tall card - the player, the
       talents, each Viking's own health;
-    - **rows with fewer than five heroes** (a 3v3 or 1v1 replay);
+    - ~~**rows with fewer than five heroes** (a 3v3 or 1v1 replay)~~: ignored (user, 2026-10-19);
     - **every map**: the map objectives, the minimap per map (docs/maps.md; the jitter is solved -
       map id, 2026-10-09; every map id read in game by 2026-10-15);
     - **Cursed Hollow, blue cursed** (docs/maps.md): the banner on blue's side, left of the map,
