@@ -479,14 +479,14 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
      meeting at ~959 (tribute_extra); Garden's lines to ~959, red's plants and count on blue's
      mirror (seeds_extra); Bay's coin numbers 13 up into the coins (doubloons_extra); Tomb's red
      gem, count and number on blue's mirror (GEM_RED). Tomb's Webweavers approved.
-   - **Confirm pass 3 (2026-10-19, 21_57_37 .. 22_00_17, built, not seen yet)** - docs/maps.md,
+   - **Confirm pass 3 (2026-10-19, 21_57_37 .. 22_00_17, seen on pass 4)** - docs/maps.md,
      end. Seen good: Garden, Tomb's Webweavers (angles; the banner gone), the pane border (no
      bright patch). Built: Cursed Hollow's blue line 13 units further in; Bay's coin numbers
      centred on their coins; Tomb's numbers centred on their vials and 6 up to Bay's floor; red's
      fountain and carry box 2 units nearer the plate's edge (EDGE_INSET 4.5 -> 2.5, blue's gap).
      Blizzard's slot art leans ~0.6, not 0.54: the gap still grows ~2 px down the two boxes -
      the art pass's to recut (our own slot frame at 0.54).
-   - **Confirm pass 4 (2026-10-19, 22_10_41 .. 22_12_10, built, not seen yet)** - docs/maps.md, end.
+   - **Confirm pass 4 (2026-10-19, 22_10_41 .. 22_12_10, seen 22_19_37; the carry box not yet)** - docs/maps.md, end.
      Seen good: Tomb's numbers. Cursed Hollow's blue line never moved: clipped by its own frame
      at ~949.5 (every move since pass 2 hidden); now Unclipped, ending at red's start. Tomb's
      lines met at ~955 under a map centred ~958.75: both 4 units right, the gems, counts and
@@ -495,13 +495,14 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
      Cursed Hollow: DONE (user, 2026-10-19, on 25e67ef).
      Seen good (22_19_37): Tomb's line fudge. The fountain icons differ left to right: the
      masks (blue the heroic's Ult_Bg, red Blizzard's buff mask; a mask can't be mirrored), not
-     this pass. Slot angles and the icon wait on our own cut (user's call: accept or cut).
+     this pass. Slot angles and the icon: ACCEPTED as they are (user, 2026-10-19); our own cut
+     (a slot frame at 0.54, a mask mirrored per team) goes to the art pass.
    - **The blue/red lines under the mechanics' counts** (user, 2026-10-19): out to their
      farthest, the plates' inner ends (~752 / ~1168), "so we have most flexibility for the
      containers". Each map's panel sets its own (Blizzard's TeamHighlight-style backgrounds,
      e.g. Mines' Team1Background / Team2Background); on the shots ~813-1107 (Warhead) to
      ~780-1140 (Mines, Dragon Shire). Not started.
-   - **The pane border's halves (2026-10-19, not seen yet):** each side was a whole nine-slice
+   - **The pane border's halves (2026-10-19): DONE, seen good on pass 3 (21_57_37 ..).** each side was a whole nine-slice
      squeezed into half the height, so both halves ended in the art's end cap at the middle,
      stacked "doubly as bright" (user). Now each half is a whole side clipped at the middle
      (inspect_card.py tab_border, `UpperHalf` / `LowerHalf`). Check: no bright patch midway
@@ -517,11 +518,12 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
      - the chrome backplate look on the plates: yes, for the art pass;
      - the plates' intro slide and fade: still to do (it doesn't exist yet);
      - word-only map banners: gone for good (item 16, closed). Tomb's "Red/Blue Webweavers
-       summoned" hidden too (maps.py, `SoulEaterFrame` alpha 0; built, not seen yet);
+       summoned" hidden too (maps.py, `SoulEaterFrame` alpha 0; seen gone on pass 3);
      - OBS: 3 pips a side, one hexagon in full and empty; the tournament name in a secondary
        tab, division beside it; the ban tiles get their own pass (docs/obs-topbar-handoff.md).
 2. **The art pass** - items 7 and 12 below, and the visual pass: the chrome backplate look to
-   the plates, XP/core bars (a mid-height bevel, like the player view's core bar; the default
+   the plates, our own fountain/carry slot (a frame at 0.54, a mask mirrored per team: Blizzard's
+   leans ~0.6, its masks differ by team), XP/core bars (a mid-height bevel, like the player view's core bar; the default
    UI's core bars: `design/ref_default_core_hp.png`) and the info panes (zebra rows, Heroes
    palette; the numbers panes need a better visual - docs/history.md item 1). The canvas draws
    the build as it is (`design/canvas_gen.py`); the art pass designs over those boards.
