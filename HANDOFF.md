@@ -435,7 +435,13 @@ Blizzard and what we added is in [docs/blizzard-fixes.md](docs/blizzard-fixes.md
 generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [docs/obs.md](docs/obs.md).
 
 **Open, in the user's order:**
-1. **The final pass** - item 14 below: the last forms, blue's unseen banners, the odd cases.
+1. **The final pass** - item 14 below. The forms and blue's banners are done, the odd cases
+   ignored (user, 2026-10-19: "nothing right now is broken that I'm aware of"). Left: the
+   blue/red lines out to their farthest, the kill feed back on, a live game with observers,
+   a non-16:9 window.
+   **The user's list of what's left (2026-10-19):** our own angled fountain / map-mechanic
+   container borders; the multi-unit nameplate slicing (item 15: the Vikings, Rexxar and Misha);
+   a pass on the number-heavy panes. The chrome is done as far as the user knows.
    - **A centering pass on every minimap** (user, 2026-10-18: "100% convinced some are still
      off center compared to our generated UI"): each map's minimap against the rows' gap and
      the generated chrome, measured off a screenshot per map (docs/maps.md has each map's place).
