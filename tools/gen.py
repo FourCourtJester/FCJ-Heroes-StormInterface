@@ -1674,7 +1674,11 @@ MASK_INSET = 2                   # ...pulled in on every side on the plate: at f
 FOUNTAIN_H = 14                  # the slot art's visible height on the plate, native cell units
                                  # (20.6, the heroic's size, was too big: user, 2026-10-06)
 EDGE_INSET = {"blue": 2,         # its slanted side, in from the plate's edge (cell units): red's
-              "red": 4.5}       # edge art sits ~2 px further in (it rode the border: user, 13:23)
+              "red": 2.5}       # edge art sits ~2 px further in (it rode the border: user, 13:23).
+                                 # 4.5 until 2026-10-19: red's black gap to the edge 3-6 px against
+                                 # blue's 1-2 (22_00_17, "the amount of black space", user). The slot
+                                 # art itself leans ~0.6, not the plates' 0.54 - Blizzard's; the gap
+                                 # still grows ~2 px down the two boxes until the art pass recuts it
 FOUNTAIN_BACKDROP = "42,24,70"   # dark purple behind the art: bare, it was easy to lose (user)
 
 

@@ -479,6 +479,13 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
      meeting at ~959 (tribute_extra); Garden's lines to ~959, red's plants and count on blue's
      mirror (seeds_extra); Bay's coin numbers 13 up into the coins (doubloons_extra); Tomb's red
      gem, count and number on blue's mirror (GEM_RED). Tomb's Webweavers approved.
+   - **Confirm pass 3 (2026-10-19, 21_57_37 .. 22_00_17, built, not seen yet)** - docs/maps.md,
+     end. Seen good: Garden, Tomb's Webweavers (angles; the banner gone), the pane border (no
+     bright patch). Built: Cursed Hollow's blue line 13 units further in; Bay's coin numbers
+     centred on their coins; Tomb's numbers centred on their vials and 6 up to Bay's floor; red's
+     fountain and carry box 2 units nearer the plate's edge (EDGE_INSET 4.5 -> 2.5, blue's gap).
+     Blizzard's slot art leans ~0.6, not 0.54: the gap still grows ~2 px down the two boxes -
+     the art pass's to recut (our own slot frame at 0.54).
    - **The blue/red lines under the mechanics' counts** (user, 2026-10-19): out to their
      farthest, the plates' inner ends (~752 / ~1168), "so we have most flexibility for the
      containers". Each map's panel sets its own (Blizzard's TeamHighlight-style backgrounds,

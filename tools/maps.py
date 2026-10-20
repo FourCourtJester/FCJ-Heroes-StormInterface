@@ -2413,11 +2413,14 @@ MAPS = {
 # map's (blue's texture flipped, red's not), so each line's faded end is the inner one - blue's
 # ended at 925, red's began at 975, a 50 px gap about ~950. Flipped as the rest (Garden's, Bay's,
 # Tomb's: the full ends meet, each line ~134 px), and both 10 units right to meet at ~959; the
-# ravens and counts, which hang off them, 10 back.
+# ravens and counts, which hang off them, 10 back. Then (21_57_37) blue's full end at 945, red's
+# at ~958: blue's line 13 units further in ("extend the blue/red just a tad", user), its raven
+# and count 13 back - the faded end goes on under the raven.
 TRIBUTE_COUNT_OUT = 5                 # units, both counts outward
 TRIBUTE_RED = (11, 25)                # units more outward, red's raven and red's count, to blue's mirror
 TRIBUTE_BLUE_RAVEN_IN = 3             # units, blue's raven inward
 TRIBUTE_LINES = 10                    # units, both lines right
+TRIBUTE_BLUE_LINE = 13                # units, blue's line further right again (in)
 
 
 def tribute_extra():
@@ -2433,9 +2436,9 @@ def tribute_extra():
     return (f'{t}<!-- the tribute counts, mirrored about our midpoint and clear of the map; their lines\n'
             f'{t}     the way round every other map\'s, meeting at our midpoint (maps.tribute_extra) -->\n'
             f'{t}<Frame type="Frame" name="Team1TributeFrame">\n'
-            + line("Right", "Max", 10 + k, "0.0", "1.0")
-            + frame("RavenIcon", "Image", "Left", "Min", -20 + TRIBUTE_BLUE_RAVEN_IN - k)
-            + frame("TributeCounter", "Label", "Left", "Min", 100 - TRIBUTE_COUNT_OUT - k) +
+            + line("Right", "Max", 10 + k + TRIBUTE_BLUE_LINE, "0.0", "1.0")
+            + frame("RavenIcon", "Image", "Left", "Min", -20 + TRIBUTE_BLUE_RAVEN_IN - k - TRIBUTE_BLUE_LINE)
+            + frame("TributeCounter", "Label", "Left", "Min", 100 - TRIBUTE_COUNT_OUT - k - TRIBUTE_BLUE_LINE) +
             f'{t}</Frame>\n'
             f'{t}<Frame type="Frame" name="Team2TributeFrame">\n'
             + line("Left", "Min", k, "1.0", "0.0")
@@ -2480,15 +2483,21 @@ def seeds_extra():
 # Blackheart's Bay's coins' numbers (DoubloonModeFrame Team1/Team2CountValue, the doubloons a
 # team holds): Blizzard's sit on the coin's bottom edge, 1058-1073 against the coin's face
 # ~1022-1069 (16_09_15) - "needs to move up off the floor and more into the coin" (user).
-# 13 units up: ~1046-1061.
+# 13 units up: ~1046-1061 (21_59_18: "the verticals are fine", user). Across, "center the current
+# counts horizontally within their coins": the coins' rings 747.5-795 / 1124-1171 (centres 771 /
+# 1147.5), the numbers (centred labels) at 774 / 1144 - blue's 3 units left, red's 4 right.
 COIN_NUMBER_UP = 13
+COIN_NUMBER_IN = (-3, 4)              # units across, blue's and red's
 
 
 def doubloons_extra():
     t = T * 6
+    across = {1: ("Left", -21 + COIN_NUMBER_IN[0]), 2: ("Right", 24 + COIN_NUMBER_IN[1])}
     frame = lambda n: (f'{t}\t<Frame type="Label" name="Team{n}CountValue"><Anchor side="Bottom" '
-                       f'relative="$parent/Team{n}DoubloonIcon" pos="Max" offset="{-COIN_NUMBER_UP}"/></Frame>\n')
-    return (f'{t}<!-- the coins\' numbers up into the coins (maps.doubloons_extra) -->\n'
+                       f'relative="$parent/Team{n}DoubloonIcon" pos="Max" offset="{-COIN_NUMBER_UP}"/>'
+                       f'<Anchor side="{across[n][0]}" relative="$parent/Team{n}DoubloonIcon" pos="Mid" '
+                       f'offset="{across[n][1]}"/></Frame>\n')
+    return (f'{t}<!-- the coins\' numbers up into the coins, centred on them (maps.doubloons_extra) -->\n'
             f'{t}<Frame type="Frame" name="DoubloonModeFrame">\n' + frame(1) + frame(2) + f'{t}</Frame>\n')
 
 
@@ -2726,7 +2735,19 @@ GEM_RED = (10, 11, 6)
 PARTS["tomb_of_the_spider_queen"].update({
     f"CryptPanel/Team2SoulFrame/{name}": f'<Anchor side="Right" relative="$parent/Background" pos="Max" offset="{off}"/>\n'
     for name, off in (("SoulIconFrameTeam2:Image", 20 + GEM_RED[0]), ("SoulIconTeam2:Image", 20 + GEM_RED[0]),
-                      ("SoulCounter:Label", -70 + GEM_RED[1]), ("TeamSoulCounter:Label", GEM_RED[2]))})
+                      ("SoulCounter:Label", -70 + GEM_RED[1]))})
+# The gems' numbers (TeamSoulCounter, centred labels): "Tomb and Blackheart's should try to inherit
+# the same floor for current mechanic counts, and both should be centered within their respective
+# icons" (user, 2026-10-19). On 22_00_17 their bottoms at 1066-1067 against Bay's 1061: 6 units
+# up. Across, the vials' glass centred ~780 / ~1140, the numbers at 775.5 / 1142.5: blue's 6
+# units right, red's 2 left (of GEM_RED's 6).
+GEM_NUMBER_UP = 6
+GEM_NUMBER_IN = (6, -2)               # units across, blue's and red's
+for team, side, pos, off in ((1, "Left", "Min", 6 + GEM_NUMBER_IN[0]),
+                             (2, "Right", "Max", GEM_RED[2] + GEM_NUMBER_IN[1])):
+    PARTS["tomb_of_the_spider_queen"][f"CryptPanel/Team{team}SoulFrame/TeamSoulCounter:Label"] = (
+        f'<Anchor side="Bottom" relative="$parent/Background" pos="Mid" offset="{4 - GEM_NUMBER_UP}"/>\n'
+        f'<Anchor side="{side}" relative="$parent/Background" pos="{pos}" offset="{off}"/>\n')
 # "Red/Blue Webweavers summoned" (SoulEaterFrame) hidden (user, 2026-10-19: "it's obvious that
 # they're summoned" - the summoner's hexagons say it). Words only: its count label is never set by
 # the script (libmsoc.galaxy sets the status label alone). Alpha, as Infernal Shrines' "Shrine

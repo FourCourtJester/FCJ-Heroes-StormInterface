@@ -573,3 +573,11 @@ the ravens mirrored (blue 3 in, red 2 out). Garden's panel off our midpoint (lin
 the lines 13 right, blue's markers held, red's plants 17 / count 20 out to blue's mirror. Bay's
 coin numbers sat on the coin's bottom edge: 13 up. Tomb's red gem ~9 px in of blue's mirror
 (Blizzard's art, its anchors mirrored): gem 10, count 11, number 6 out. Tomb's Webweavers good.
+
+Confirm pass 3 (21_57_37 .. 22_00_17): Garden good. Cursed Hollow's lines a gap of 11 (blue's full
+end 945, red's ~958): blue's line 13 units in, its raven and count 13 back (TRIBUTE_BLUE_LINE).
+Bay's numbers 3 / 4 units off their coins' centres (771 / 1147.5): centred (COIN_NUMBER_IN).
+Tomb's numbers "inherit the same floor" as Bay's (bottoms 1066-1067 against 1061): 6 up
+(GEM_NUMBER_UP), and centred on their vials' glass (~780 / ~1140; GEM_NUMBER_IN). The carry box
+and fountain: the plate's edge 0.54, Blizzard's slot art ~0.6; red's sat 2 px further off its
+edge than blue's (EDGE_INSET 2.5, was 4.5).
