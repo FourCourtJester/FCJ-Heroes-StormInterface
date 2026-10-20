@@ -408,6 +408,10 @@ end_inside = 1.5             # ...but along the row's two slanted ends: as the s
                              # outer plates' fountains sit as far from the ends as the others from
                              # their seams (at 1, ~1-1.5 px more black there: user, 23_25_09). The
                              # outset stays, so nothing stacked on the frame moves
+fountain_gap = 1.5           # the black between each slanted line and its plate's fountain frame,
+                             # px across the slant, as the game draws them: each line beside a
+                             # fountain follows it (fountain_lines; at the exact places both teams'
+                             # outer two plates had ~1 px more than the other three: 23_42_43)
 seam = 3                     # a line along each slant between two plates, centred on it (1 px of each
                              # plate and 1 between: it hides the slants' rough edges), px; 0 = none.
                              # The same line runs under the XP bar, centred on its gap to the plates,

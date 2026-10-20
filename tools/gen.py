@@ -1171,10 +1171,70 @@ def row_frame_texture(cfg, team, n):
     # under the XP bar: the middle of its gap to the plates
     base = (cfg["hero_row"]["top"] - cfg["team_xp"]["gap"] / 2,) if seam else ()
     inside = float(spec.get("inside", 0))
+    # each slanted line beside a fountain laid where the game draws that fountain (fountain_lines)
+    seams = row_frame_seams(cfg, team, n) if seam else ()
+    if seam and spec.get("fountain_gap") is not None:
+        pts, seams = fountain_lines(cfg, team, n, pts, box, seams, seam / 2, float(spec.get("end_inside", inside)))
     return _row_frame_dds(tuple(pts), box, float(row_frame_outset(cfg)), inside,
-                          art_scale(cfg), chrome_rim(cfg),
-                          row_frame_seams(cfg, team, n) if seam else (), seam, base,
+                          art_scale(cfg), chrome_rim(cfg), seams, seam, base,
                           float(spec.get("end_inside", inside)))
+
+
+def drawn(cfg, v, offset=0, axis=0):
+    """Where the game draws a rects' px value (axis 0 x, 1 y) on the rows - anchored, as all the
+    rows' pieces are, to the screen's bottom-centre by whole-unit constants - `offset` more
+    units in (a piece on it): its constant run from the exact point (the constants are offsets
+    from it rounded), then the whole pixel, .5 rounding down (23_42_43, the plates' fountains)."""
+    u = Units(cfg)
+    pos = POS[BOTTOM_CENTRE[axis]]
+    size = (cfg["screen"]["width"], cfg["screen"]["height"])[axis]
+    at = size * pos + (u(v) - round(screen_units(cfg)[axis] * pos) + offset) / u.scale
+    return math.ceil(round(at, 6) - 0.5)
+
+
+def fountain_lines(cfg, team, n, pts, box, seams, half, end_half):
+    """The row frame's slanted lines beside the fountains moved so each lies [row_frame]
+    fountain_gap px across the slant from its fountain's frame, as the game draws both: the
+    plates are 135.9 px apart, so each fountain lands on another fraction of a pixel, and the
+    frame's own texture lands ~1 px off and 1 px wider (its constants and pixels rounded). At
+    the exact places blue's outer two plates and red's had ~1 px more black by the fountain than
+    the other three (23_42_43, the user's "blackspace"; the teams the same).
+    Blue's fountains are at their plates' left: plate i's line the outer end (i = 0) or seam
+    i - 1; red's at the right: seam i, or the outer end (the last). The inner ends have none.
+    Returns pts and seams, moved."""
+    row, cell, px = cfg["hero_row"], HeroCell(cfg), 1 / Units(cfg).scale
+    gap = float(cfg["row_frame"]["fountain_gap"])
+    across = math.hypot(1, cell.lean)                  # across the slant -> along a row
+    (l, t, r, b), _ = fountain_rect(cfg, team)
+    ax, ay, aw, ah = SLOT_ART
+    cut = SLOT_LEAN * ah
+    # the art's bottom corner on the line's side, slot units (slot_inside: red's leans /, blue's
+    # mirrored); the line's side of the plate: blue's left, red's right
+    corner = SLOT_W - ax - aw + cut if team == "blue" else ax + aw - cut
+    side = -1 if team == "blue" else 1
+    # the texture's rect as drawn, and drawn -> its own px
+    bx, by, bw, bh = box
+    tl, tr = drawn(cfg, bx), drawn(cfg, bx + bw)
+    tt, tb = drawn(cfg, by, axis=1), drawn(cfg, by + bh, axis=1)
+    left = row["blue_left"] + (5 - n) * cell.pitch * px if team == "blue" else row["red_left"]
+    at = lambda line, y: line[0][0] + (line[1][0] - line[0][0]) * (y - line[0][1]) / (line[1][1] - line[0][1])
+    ends = (0, 3) if team == "blue" else (1, 2)
+    lines = [(pts[ends[0]], pts[ends[1]])] + list(seams) if team == "blue" else list(seams) + [(pts[1], pts[2])]
+    moves = []
+    for i, line in enumerate(lines[:n]):
+        c = round(left + i * cell.pitch * px, 1)          # as rects' hero_ cells
+        fl, fr = drawn(cfg, c, l), drawn(cfg, c, r)
+        ft, fb = drawn(cfg, row["top"], t, 1), drawn(cfg, row["top"], b, 1)
+        x = fl + corner / SLOT_W * (fr - fl)
+        y = ft + (ay + ah) / SLOT_H * (fb - ft)
+        w = end_half if i == (0 if team == "blue" else n - 1) else half   # the outer end's, or a seam's
+        x += side * (gap + w) * across                    # the line's middle, as drawn
+        x, y = bx + (x - tl) * bw / (tr - tl), by + (y - tt) * bh / (tb - tt)   # in the texture's px
+        moves.append(x - at(line, y))
+    end = moves.pop(0) if team == "blue" else moves.pop()
+    pts = [(x + end, y) if k in ends else (x, y) for k, (x, y) in enumerate(pts)]
+    seams = tuple(((x1 + d, y1), (x2 + d, y2)) for ((x1, y1), (x2, y2)), d in zip(seams, moves))
+    return pts, seams
 
 
 @functools.lru_cache(maxsize=None)
@@ -1869,7 +1929,9 @@ CARRY_MAPS = ("blackhearts_bay", "tomb_of_the_spider_queen")
 CARRY_ICONS = {   # MapMechanicStack's InfoIcon: core's (the Bay's), Tomb's map mod's
     "blackhearts_bay": "Assets\\Textures\\storm_ui_ingame_icons_doubloon.dds",
     "tomb_of_the_spider_queen": "Assets\\Textures\\HUD_MapMechanic_SpiderQueen_Nameplate_Soul.dds"}
-CARRY_GAP = 1                    # cell units between the fountain's art and the box's above it
+CARRY_RIMS = 1                   # its art's bottom this many rims (SLOT_RIM) into the fountain's: one,
+                                 # so the two share a border (user, 23_42_43; until then 1 cell unit
+                                 # apart, ~2 px of black between the rims)
 CARRY_LEAN = SLOT_LEAN           # ...and out along the slot art's own sides, across per up, so its
                                  # sides run on from the fountain's: 15 units over the step up, as
                                  # approved (7aba2b8: the plate's edge lean then, +4 - its sides ran
@@ -1886,7 +1948,7 @@ CARRY_LEAN = SLOT_LEAN           # ...and out along the slot art's own sides, ac
 def carry_rect(cfg, team):
     """The carried box: the fountain's slot one step up, slid along its own sides."""
     (l, t, r, b), f = fountain_rect(cfg, team)
-    up = FOUNTAIN_H * cfg["hero_row"]["scale"] + CARRY_GAP
+    up = FOUNTAIN_H * cfg["hero_row"]["scale"] - CARRY_RIMS * SLOT_RIM * f
     across = CARRY_LEAN * up * (-1 if team == "blue" else 1)
     return (round(l + across), round(t - up), round(r + across), round(b - up)), f
 

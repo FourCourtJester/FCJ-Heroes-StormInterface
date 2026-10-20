@@ -454,7 +454,11 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
    black by the outer plates' fountains than a seam does (outline `inside` 1 vs the seam's 1.5;
    user, 23_25_09): `[row_frame] end_inside = 1.5` now takes the line 1.5 px over the plates
    along the two ends only (`inside = 1.5` throughout moved the outset and with it every XP,
-   core and inspect constant, so rejected) - to check on red hero 5 and blue hero 1. Open: the
+   core and inspect constant, so rejected). The rest was pixel snapping (23_42_43, measured: the teams equal,
+   both teams' outer two plates ~1 px more): the plates are 135.9 px apart, so each fountain rounds to
+   another whole pixel; `fountain_lines` lays each slanted line beside a fountain `[row_frame] fountain_gap`
+   (1.5) px from that fountain as drawn (`drawn`). The carry box down a rim (`CARRY_RIMS`) so it shares the
+   fountain's border (it was ~2 px of black above it). Open: the
    multi-unit nameplate slicing (item 15: the Vikings, Rexxar and Misha);
    a pass on the number-heavy panes. The chrome is done as far as the user knows.
    - **A centering pass on every minimap** (user, 2026-10-18: "100% convinced some are still
