@@ -2678,14 +2678,17 @@ def slice_rings(cfg, team_frame, i):
                        for tm, v in FLASH_KEYS[:-1]) + f'\n{t}\t\t\t<Key type="Curve" time="5.01" value="0" inout="Linear"/>'
         # Misha's: none while Rexxar is dead, even if she died first (user, 2026-10-21: "remove
         # all of her effects for that specific death duration of Rexxar"; Blizzard's: his own
-        # death plays the plate's). His death hides her frame and stops it all, and her glow
-        # stops when he respawns; her death state isn't gated on his, so his respawn while
-        # her timer still shows can't replay her burst.
+        # death plays the plate's). His death hides her frame and stops it all; her death
+        # state isn't gated on his, so his respawn while her timer still shows can't replay
+        # her burst. Shown only while her own timer is: HeroAlmostRespawnedPet came after
+        # they'd both respawned and glowed her slice 5 s on (user, 2026-10-21: "Rexxar needs
+        # to become a cancel trigger for dead Misha's").
         rexxar = "" if unit != "Misha" else f"""
 {t}\t<StateGroup name="FCJH_RexxarDead">
 {t}\t\t<DefaultState val="No"/>
 {t}\t\t<State name="Yes"><When type="Property" frame="{party}/HeroDeathTimeLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_SliceAlive"/></State>
-{t}\t\t<State name="No"><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+{t}\t\t<State name="Shown"><When type="Property" frame="{party}/{SLICE_DEATH[unit]}" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+{t}\t\t<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
 {t}\t</StateGroup>"""
         stop = f'\n{t}\t\t<Event event="HeroRespawned{"" if ev == "Pet" else ev}" action="Reset,Stop" frame="{party}"/>'
         image = lambda name, kind, prio: f"""

@@ -9318,7 +9318,8 @@
 								<StateGroup name="FCJH_RexxarDead">
 									<DefaultState val="No"/>
 									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/HeroDeathTimeLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_SliceAlive"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Shown"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/HeroDeathTimePetLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
 								</StateGroup>
 								<Animation name="FCJH_SliceDeathAnim">
 									<Event event="FCJH_SliceDead" action="Reset,Play" frame="$this"/>
@@ -11014,7 +11015,8 @@
 								<StateGroup name="FCJH_RexxarDead">
 									<DefaultState val="No"/>
 									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/HeroDeathTimeLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_SliceAlive"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Shown"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/HeroDeathTimePetLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
 								</StateGroup>
 								<Animation name="FCJH_SliceDeathAnim">
 									<Event event="FCJH_SliceDead" action="Reset,Play" frame="$this"/>
@@ -12710,7 +12712,8 @@
 								<StateGroup name="FCJH_RexxarDead">
 									<DefaultState val="No"/>
 									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/HeroDeathTimeLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_SliceAlive"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Shown"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/HeroDeathTimePetLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
 								</StateGroup>
 								<Animation name="FCJH_SliceDeathAnim">
 									<Event event="FCJH_SliceDead" action="Reset,Play" frame="$this"/>
@@ -14406,7 +14409,8 @@
 								<StateGroup name="FCJH_RexxarDead">
 									<DefaultState val="No"/>
 									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/HeroDeathTimeLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_SliceAlive"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Shown"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/HeroDeathTimePetLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
 								</StateGroup>
 								<Animation name="FCJH_SliceDeathAnim">
 									<Event event="FCJH_SliceDead" action="Reset,Play" frame="$this"/>
@@ -16102,7 +16106,8 @@
 								<StateGroup name="FCJH_RexxarDead">
 									<DefaultState val="No"/>
 									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/HeroDeathTimeLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_SliceAlive"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Shown"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/HeroDeathTimePetLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
 								</StateGroup>
 								<Animation name="FCJH_SliceDeathAnim">
 									<Event event="FCJH_SliceDead" action="Reset,Play" frame="$this"/>
@@ -17812,7 +17817,8 @@
 								<StateGroup name="FCJH_RexxarDead">
 									<DefaultState val="No"/>
 									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/HeroDeathTimeLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_SliceAlive"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Shown"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/HeroDeathTimePetLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
 								</StateGroup>
 								<Animation name="FCJH_SliceDeathAnim">
 									<Event event="FCJH_SliceDead" action="Reset,Play" frame="$this"/>
@@ -19527,7 +19533,8 @@
 								<StateGroup name="FCJH_RexxarDead">
 									<DefaultState val="No"/>
 									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/HeroDeathTimeLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_SliceAlive"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Shown"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/HeroDeathTimePetLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
 								</StateGroup>
 								<Animation name="FCJH_SliceDeathAnim">
 									<Event event="FCJH_SliceDead" action="Reset,Play" frame="$this"/>
@@ -21242,7 +21249,8 @@
 								<StateGroup name="FCJH_RexxarDead">
 									<DefaultState val="No"/>
 									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/HeroDeathTimeLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_SliceAlive"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Shown"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/HeroDeathTimePetLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
 								</StateGroup>
 								<Animation name="FCJH_SliceDeathAnim">
 									<Event event="FCJH_SliceDead" action="Reset,Play" frame="$this"/>
@@ -22957,7 +22965,8 @@
 								<StateGroup name="FCJH_RexxarDead">
 									<DefaultState val="No"/>
 									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/HeroDeathTimeLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_SliceAlive"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Shown"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/HeroDeathTimePetLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
 								</StateGroup>
 								<Animation name="FCJH_SliceDeathAnim">
 									<Event event="FCJH_SliceDead" action="Reset,Play" frame="$this"/>
@@ -24672,7 +24681,8 @@
 								<StateGroup name="FCJH_RexxarDead">
 									<DefaultState val="No"/>
 									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/HeroDeathTimeLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_SliceAlive"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Shown"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/HeroDeathTimePetLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
 								</StateGroup>
 								<Animation name="FCJH_SliceDeathAnim">
 									<Event event="FCJH_SliceDead" action="Reset,Play" frame="$this"/>
