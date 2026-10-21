@@ -1503,6 +1503,7 @@ def viking_span(c, team):
 VIKING_MARGIN = 4
 # The masks' slanted ends feathered over this many texels: Blizzard's fills end on a dim,
 # anti-aliased pixel, ours stepped hard (user, 2026-10-21, 15_26_42); theirs fades over ~2 px.
+# In game it made no visible difference (15_35_58): the far end's softness comes from a separator.
 VIKING_SOFT = 3
 
 
@@ -1582,7 +1583,7 @@ def trackers(team, health):
 							<RenderPriority val="610"/>
 						</Frame>
 					</Frame>""" for i in range(3))
-    # the separators over the seams, the bar's height (placed by heroic_panel's lefts, which
+    # the separators over the seams and Erik's far end, the bar's height (placed by heroic_panel's lefts, which
     # also shows them for the Vikings only: hidden, the tracker may not be)
     top = round((HeroCell.BLUE["health_full"][1] - VIKING_SEP_TOP) / (HeroCell.BLUE["health_full"][3] - VIKING_SEP_TOP), 4)
     sep_coords = (f'<TextureCoords top="{top}" left="0.0" bottom="1.0" right="1.0"/>' if team == "blue" else
@@ -1599,7 +1600,7 @@ def trackers(team, health):
 					<RenderPriority val="600"/>
 					<Unclipped val="true"/>
 					<AcceptsMouse val="false"/>
-				</Frame>""" for n in (1, 2))
+				</Frame>""" for n in (1, 2, 3))
     return f"""
 			<Frame type="UnitStatusUnitTrackingBehavior" name="VikingTrackingElement">
 				<!-- the whole plate, not the bar strip (see the click targets) -->
@@ -2274,10 +2275,15 @@ def heroic_panel(cfg, team_frame, i):
             out += (f'{t10}<Action type="SetAnchor" frame="{f}" side="Left" relative="{cell}" pos="Min" offset="{round(left - VIKING_MARGIN)}"/>\n'
                     f'{t10}<Action type="SetAnchor" frame="{f}" side="Right" relative="{cell}" pos="Min" offset="{round(right + VIKING_MARGIN)}"/>\n'
                     f'{t10}<Action type="SetProperty" frame="{f}/HealthBar" AlphaMaskTexture="{mask}"/>\n')
-        # Blizzard's separator over each seam, its line at the bar's middle on the seam
+        # Blizzard's separator over each seam, its line at the bar's middle on the seam - and
+        # a third over the far end, on the mask's edge: the game draws an AlphaMaskTexture's
+        # edge hard however it's feathered, so the one end with no separator on it stepped where
+        # the separators' own anti-aliased lines read soft (user, 2026-10-21, 15_35_58)
+        run = HeroCell.LEAN * (hb - g["health_full" if full else "health"][1])
+        far_end = hl + run / 2 if blue else hr - run / 2
         line = s(VIKING_SEP_LINE if blue else VIKING_SEP_W - VIKING_SEP_LINE)
-        for n in (1, 2):
-            x = round(seams[n - 1]) - line
+        for n, at in zip((1, 2, 3), (*seams, far_end)):
+            x = round(at) - line
             f = f"{cell}/HeroStatus/VikingTrackingElement/FCJH_BarSeparator{n}"
             out += (f'{t10}<Action type="SetAnchor" frame="{f}" side="Left" relative="{cell}" pos="Min" offset="{x}"/>\n'
                     f'{t10}<Action type="SetAnchor" frame="{f}" side="Right" relative="{cell}" pos="Min" offset="{x + s(VIKING_SEP_W)}"/>\n'
