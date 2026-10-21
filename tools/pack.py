@@ -23,6 +23,8 @@ write until the lock releases.
     python tools/pack.py --no-deploy
     python tools/pack.py --release               # dist/v1.0.0/FCJH.StormInterface
     python tools/pack.py --release --deploy
+    python tools/pack.py --release --no-generate --no-validate
+                                                 # GitHub's release build: no references/
     python tools/pack.py src/tests/Test.StormInterface --name Test.StormInterface --wait
                                                  # a test interface, deployed beside FCJH
 """
@@ -137,6 +139,8 @@ def main():
     parser.add_argument("--name", default=NAME, help=f"deployed filename (default {NAME})")
     parser.add_argument("--wait", action="store_true", help="retry a locked write until it succeeds")
     parser.add_argument("--no-validate", action="store_true", help="skip tools/validate.py")
+    parser.add_argument("--no-generate", action="store_true",
+                        help="pack src/ as committed, without tools/gen.py (CI: no references/)")
     args = parser.parse_args()
 
     source = args.source.resolve()
@@ -144,7 +148,7 @@ def main():
     profile = "release" if args.release else "dev"
 
     # 1. generate
-    if source == DEFAULT_SOURCE:
+    if source == DEFAULT_SOURCE and not args.no_generate:
         for rel in gen.write(cfg, source):
             print(f"generated: {rel.as_posix()}")
 

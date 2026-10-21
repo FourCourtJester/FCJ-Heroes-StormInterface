@@ -1,7 +1,8 @@
 # A release per version tag: push `v1.0.1` (matching layout.toml's [meta] version) and this
 # builds the interface from that commit, compressed (tools/pack.py --release), and publishes
-# it as the release's one file. Validation needs Blizzard's UI extract (references/, not in
-# the repo), so it runs locally before tagging, not here.
+# it as the release's one file. Generation and validation need Blizzard's UI extract
+# (references/, not in the repo), so they run locally before tagging; here the committed
+# src/ is packed as it is.
 name: Release
 
 on:
@@ -31,7 +32,7 @@ jobs:
           echo "VERSION=$version" >> "$GITHUB_ENV"
 
       - name: Build
-        run: python tools/pack.py --release --no-validate
+        run: python tools/pack.py --release --no-generate --no-validate
 
       - name: Publish
         env:
