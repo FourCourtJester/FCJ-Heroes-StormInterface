@@ -1489,9 +1489,21 @@ def viking_span(c, team):
     return left - run / 2, right + run / 2
 
 
+# Each bar's frame runs this far (units) past its mask's slant at both ends, the mask padded to
+# match: Blizzard's fill art has its own short, near-upright ends, and where one stood outside
+# the slant it was the edge - with its bright rim - on Erik's top rows, ragged against the mask's
+# (user, 2026-10-21, 15_16_37; the other ends hide under the separators). Padded, the art's ends
+# fall in the margin. (The fill's 0 and 100% move out with it: 10% reads ~7%.)
+VIKING_MARGIN = 2
+
+
 @functools.cache
 def _viking_masks(team, w, h, size):
-    data = slant_texture(team, HeroCell.LEAN * h / w, "ffffff", size=size)
+    tw, th = size
+    pad = round(VIKING_MARGIN / (w + 2 * VIKING_MARGIN) * tw)
+    inner = slant_texture(team, HeroCell.LEAN * h / w, "ffffff", size=(tw - 2 * pad, th))[128:]
+    edge, row = b"\0" * 4 * pad, 4 * (tw - 2 * pad)
+    data = dds_bgra(tw, th, b"".join(edge + inner[y * row:(y + 1) * row] + edge for y in range(th)))
     return data, hashlib.sha1(data).hexdigest()[:8]
 
 
@@ -1508,7 +1520,7 @@ def viking_masks(cfg):
         for narrow in (False, True):
             w = hr - hl - (round(NARROW_FULL * k) if narrow else 0)
             (l, r), = viking_bars(0, w, hb - ht)[0][:1]
-            data, digest = _viking_masks(team, r - l, hb - ht, bar_texture_size(cfg, r - l, hb - ht))
+            data, digest = _viking_masks(team, r - l, hb - ht, bar_texture_size(cfg, r - l + 2 * VIKING_MARGIN, hb - ht))
             out[team, narrow] = (f"FCJH_VikingMask_{team}{'_narrow' if narrow else ''}_{digest}.dds", data)
     return out
 
@@ -2250,8 +2262,8 @@ def heroic_panel(cfg, team_frame, i):
         for v in range(3):
             left, right = bars_[VIKING_SLOT[VIKING_FRAMES[v]]]
             f = f"{cell}/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame{v}"
-            out += (f'{t10}<Action type="SetAnchor" frame="{f}" side="Left" relative="{cell}" pos="Min" offset="{round(left)}"/>\n'
-                    f'{t10}<Action type="SetAnchor" frame="{f}" side="Right" relative="{cell}" pos="Min" offset="{round(right)}"/>\n'
+            out += (f'{t10}<Action type="SetAnchor" frame="{f}" side="Left" relative="{cell}" pos="Min" offset="{round(left - VIKING_MARGIN)}"/>\n'
+                    f'{t10}<Action type="SetAnchor" frame="{f}" side="Right" relative="{cell}" pos="Min" offset="{round(right + VIKING_MARGIN)}"/>\n'
                     f'{t10}<Action type="SetProperty" frame="{f}/HealthBar" AlphaMaskTexture="{mask}"/>\n')
         # Blizzard's separator over each seam, its line at the bar's middle on the seam
         line = s(VIKING_SEP_LINE if blue else VIKING_SEP_W - VIKING_SEP_LINE)
