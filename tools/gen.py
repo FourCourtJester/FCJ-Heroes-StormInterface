@@ -1433,6 +1433,8 @@ def texture_files(cfg):
         out[TEXTURE_REL / file] = data
     for file, data in slot_files(cfg).values():
         out[TEXTURE_REL / file] = data
+    for file, data in viking_masks(cfg).values():
+        out[TEXTURE_REL / file] = data
     # blue's Dragon Knight health bar, cut to the mirrored lean (maps.knight_mask)
     out[TEXTURE_REL / maps.KNIGHT_MASK_FILE] = dds_bgra(*maps.KNIGHT_MASK)
     return out
@@ -1450,8 +1452,44 @@ VIKINGS = "HeroLostVikingsController"
 # slant the seperators"), the same art as the portrait's dividers, cropped to the bar's rows:
 # the gaps were upright. VIKING_SEP_LINE: the art's line, x at the bar's middle row (art row
 # 43 = cell row 45 - its frame starts at 2; measured, 26.0 of 32; red's mirrored, 6).
-VIKING_GAP = 0   # layout units between the three Vikings' bars
 VIKING_SEP_LINE, VIKING_SEP_W, VIKING_SEP_TOP = 26, 32, 2
+
+
+def viking_bars(hl, hr, h):
+    """The Vikings' three bars across hl..hr, each a parallelogram at the plates' lean: their
+    frames overlap by the slant's run, so a mask cut to the lean (viking_masks) leaves
+    neighbours meeting along one slanted line (under the separator) and the outer ends slanted
+    as the plate's. Side by side upright, the thirds squeezed Blizzard's whole-bar art and its
+    slant into a third: the ends stood near-upright and Olaf's spilled past the plate's edge
+    (user, 2026-10-21, 14_55_47). Returns [(left, right)] by slot, and each seam's x at the
+    bar's middle row."""
+    run = HeroCell.LEAN * h
+    step = (hr - hl - run) / 3
+    bars = [(hl + k * step, hl + (k + 1) * step + run) for k in range(3)]
+    return bars, [hl + k * step + run / 2 for k in (1, 2)]
+
+
+@functools.cache
+def _viking_masks(team, w, h, size):
+    data = slant_texture(team, HeroCell.LEAN * h / w, "ffffff", size=size)
+    return data, hashlib.sha1(data).hexdigest()[:8]
+
+
+def viking_masks(cfg):
+    """The masks for viking_bars' frames, by (team, narrow): (file, dds bytes). A mask spans
+    its frame and its cut is a share of the width, so the bars narrowed for the heroic need
+    their own."""
+    c = HeroCell(cfg)
+    k = cfg["hero_row"]["scale"]
+    out = {}
+    for team in ("blue", "red"):
+        hl, ht, hr, hb = c.team[team]["health_full"]
+        for narrow in (False, True):
+            w = hr - hl - (round(NARROW_FULL * k) if narrow else 0)
+            (l, r), = viking_bars(0, w, hb - ht)[0][:1]
+            data, digest = _viking_masks(team, r - l, hb - ht, bar_texture_size(cfg, r - l, hb - ht))
+            out[team, narrow] = (f"FCJH_VikingMask_{team}{'_narrow' if narrow else ''}_{digest}.dds", data)
+    return out
 
 # Every segment of the plates' health bars tiled, as the health is (Blizzard's party frame tiles
 # its 0-2). Untiled, the shield (index 2) squeezed the whole fill art into itself: Fenix's white
@@ -1467,9 +1505,8 @@ def trackers(team, health):
     is up), and the three Vikings side by side, a third of the bar each (Blizzard hides the
     main bar for them). Same fill art as the main bar."""
     suffix = "" if team == "blue" else "_Right"
-    w = health[2] - health[0]
-    third = (w - 2 * VIKING_GAP) / 3
-    bar = (f'<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">'
+    bars_, _ = viking_bars(health[0], health[2], health[3] - health[1])
+    bar =(f'<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">'
            f'<Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm{suffix}"/>{tiled_segments()}</Frame>')
     # Each Viking also gets its own click target (select that Viking, centre the camera), over
     # its third of the plate at full height, above the plate's own (600). Round 1 hung it off
@@ -1482,8 +1519,8 @@ def trackers(team, health):
 					<Frame type="UnitStatusFrame" name="TrackedUnitStatusFrame{i}">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 						<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-						<Anchor side="Left"   relative="$parent" pos="Min" offset="{round(hl + VIKING_SLOT[VIKING_FRAMES[i]] * (third + VIKING_GAP))}"/>
-						<Anchor side="Right"  relative="$parent" pos="Min" offset="{round(hl + VIKING_SLOT[VIKING_FRAMES[i]] * (third + VIKING_GAP) + third)}"/>
+						<Anchor side="Left"   relative="$parent" pos="Min" offset="{round(bars_[VIKING_SLOT[VIKING_FRAMES[i]]][0])}"/>
+						<Anchor side="Right"  relative="$parent" pos="Min" offset="{round(bars_[VIKING_SLOT[VIKING_FRAMES[i]]][1])}"/>
 						<Unclipped val="true"/>
 						<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">
 							<Anchor side="Top"    relative="{strip}" pos="Min" offset="0"/>
@@ -1686,7 +1723,11 @@ def pet_death_labels(team, c):
     died. Blizzard's in-game top bar (the hidden party frame) has one per Viking and one for
     Misha; hero_row_layout binds each of ours to its cell there (pet_death_bindings)."""
     hl, ht, hr, hb = c.team[team]["health"]
-    third = (hr - hl - 2 * VIKING_GAP) / 3
+    # each on its bar as drawn (viking_bars), measured along the bar's middle row: from the
+    # bar's slanted end to the first seam, seam to seam, and on to the far end
+    _, seams = viking_bars(hl, hr, hb - ht)
+    third = seams[1] - seams[0]
+    hl = seams[0] - third
     # The slices are measured along the bar, but the timer sits higher up the slanted plate,
     # where each slice has shifted with the lean: left on blue (\), right on red (/). Seen in
     # game (2026-09-29): a timer just off its slice toward the plate's slanted edge.
@@ -1695,7 +1736,7 @@ def pet_death_labels(team, c):
     labels = ""
     # each timer on its Viking's third (VIKING_SLOT)
     for viking, i in VIKING_SLOT.items():
-        left = round(hl + i * (third + VIKING_GAP)) + shift
+        left = round(hl + i * third) + shift
         labels += f"""
 		<Frame type="Label" name="FCJH_Death{viking}">
 			<Anchor side="Top"    relative="$parent" pos="Min" offset="2"/>
@@ -2178,18 +2219,22 @@ def heroic_panel(cfg, team_frame, i):
         out += (f'{t10}<Action type="SetProperty" frame="{cell}/HeroStatus/HealthBar" Texture="@UI/HUD_TopBar_Team_HeroFrame_HealthFill{sm}{n}{r_}"/>\n'
                 f'{t10}<Action type="SetProperty" frame="{cell}/HeroStatus/FCJH_Resource" Texture="@UI/HUD_TopBar_Team_HeroFrame_ManaFill{n}{r_}"/>\n')
         # the Vikings' three bars share the narrowed width (trackers: tools/gen.py trackers)
+        # (narrowed by the bar's own cut: NARROW_FULL for the tall bar, as HeroStatus above),
+        # each a slanted bar (viking_bars), its mask swapped for the width
         if narrow:
-            hl, hr = (hl, hr + cut_) if blue else (hl + cut_, hr)
-        third = (hr - hl - 2 * VIKING_GAP) / 3
+            hl, hr = (hl, hr + cut) if blue else (hl + cut, hr)
+        bars_, seams = viking_bars(hl, hr, hb - g["health_full" if full else "health"][1])
+        mask = f"{TEXTURE_DIR}\\{viking_masks(cfg)[team, narrow][0]}"
         for v in range(3):
-            left = hl + VIKING_SLOT[VIKING_FRAMES[v]] * (third + VIKING_GAP)
+            left, right = bars_[VIKING_SLOT[VIKING_FRAMES[v]]]
             f = f"{cell}/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame{v}"
             out += (f'{t10}<Action type="SetAnchor" frame="{f}" side="Left" relative="{cell}" pos="Min" offset="{round(left)}"/>\n'
-                    f'{t10}<Action type="SetAnchor" frame="{f}" side="Right" relative="{cell}" pos="Min" offset="{round(left + third)}"/>\n')
+                    f'{t10}<Action type="SetAnchor" frame="{f}" side="Right" relative="{cell}" pos="Min" offset="{round(right)}"/>\n'
+                    f'{t10}<Action type="SetProperty" frame="{f}/HealthBar" AlphaMaskTexture="{mask}"/>\n')
         # Blizzard's separator over each seam, its line at the bar's middle on the seam
         line = s(VIKING_SEP_LINE if blue else VIKING_SEP_W - VIKING_SEP_LINE)
         for n in (1, 2):
-            x = round(hl + n * (third + VIKING_GAP) - VIKING_GAP / 2) - line
+            x = round(seams[n - 1]) - line
             f = f"{cell}/HeroStatus/VikingTrackingElement/FCJH_BarSeparator{n}"
             out += (f'{t10}<Action type="SetAnchor" frame="{f}" side="Left" relative="{cell}" pos="Min" offset="{x}"/>\n'
                     f'{t10}<Action type="SetAnchor" frame="{f}" side="Right" relative="{cell}" pos="Min" offset="{x + s(VIKING_SEP_W)}"/>\n'
