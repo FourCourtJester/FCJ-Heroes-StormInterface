@@ -926,20 +926,31 @@ PLATE_RING_TOP = 0.7
 
 @functools.cache
 def plate_ring(kind, size=(512, 256)):
+    c = HeroCell
+    return _ring(kind, lambda y: (plate_edge(y), plate_edge(y) + c.W - c.OVERLAP), 0, c.W, size)
+
+
+def plate_edge(y):
+    """Blue's slanted left edge, native units (HeroCell.edge)."""
+    c = HeroCell
+    return c.LEAN_PIVOT * (c.OVERLAP / c.H - c.LEAN) + c.LEAN * y
+
+
+def _ring(kind, bounds, x0, x1, size):
+    """A ring (PLATE_RINGS[kind]) just inside the slanted strip bounds(y) = (left, right), over
+    native x0..x1 and the cell's height."""
     import math
     w, h = size
     c, g = HeroCell, PLATE_RINGS[kind]
-    edge_top = c.LEAN_PIVOT * (c.OVERLAP / c.H - c.LEAN)   # blue's left edge at y 0 (HeroCell.edge)
     norm = math.hypot(1, c.LEAN)                           # across the slant, per unit along x
     core, halo = (bytes.fromhex(g[k]) for k in ("core", "halo"))
     rows = []
     for ty in range(h):
         y = (ty + 0.5) / h * c.H
-        left = edge_top + c.LEAN * y
-        right = left + c.W - c.OVERLAP
+        left, right = bounds(y)
         row = bytearray()
         for tx in range(w):
-            x = (tx + 0.5) / w * c.W
+            x = x0 + (tx + 0.5) / w * (x1 - x0)
             d = min(y + PLATE_RING_TOP, c.H - y, (x - left) / norm, (right - x) / norm)   # in from the plate's edge
             off = d - g["at"]
             a_core = math.exp(-(off / g["core_w"]) ** 2)
@@ -955,6 +966,43 @@ def plate_ring(kind, size=(512, 256)):
 def plate_ring_file(kind):
     # named by its content, as the portrait masks (textures outlive a replay reload)
     return f"FCJH_{kind}_{hashlib.sha1(plate_ring(kind)).hexdigest()[:8]}.dds"
+
+
+# The slice rings (2026-10-21): the plate rings for one Viking's or Misha's slice of the plate
+# (user: "the rings dont do anything for vikings"; "adapt these to TLV/Misha"). Blue's slots
+# 0-2, from the left: the plate's edge or the portrait's divider (slice_overlay's FCJH_Divider2
+# and 3, whose lines the bars' seams follow) on each side; red's slot n is blue's 2 - n
+# mirrored. Each texture spans its slot's box only, SLICE_RING_RES texels a unit.
+SLICE_RING_RES = 3
+
+
+def slice_lines():
+    """Blue's four slanted lines across the plate, native x at y: its left edge, the two
+    dividers, its right edge. A divider's line sits VIKING_SEP_LINE into its 32-wide art at the
+    bar's middle row (cell row 45), the frames 32 from the left and 64 from the right."""
+    c = HeroCell
+    div = lambda at: (lambda y: at + c.LEAN * (y - 45))
+    return [plate_edge, div(32 + VIKING_SEP_LINE), div(c.W - 64 + VIKING_SEP_LINE),
+            lambda y: plate_edge(y) + c.W - c.OVERLAP]
+
+
+def slice_ring_box(slot, k):
+    """Blue slot's frame, cell units from the cell's left: (left, right), its box's widest."""
+    import math
+    lines = slice_lines()
+    return math.floor(lines[slot](0) * k), math.ceil(lines[slot + 1](HeroCell.H) * k)
+
+
+@functools.cache
+def slice_ring(kind, slot, k):
+    lines = slice_lines()
+    l, r = slice_ring_box(slot, k)
+    size = (round((r - l) / k * SLICE_RING_RES), HeroCell.H * SLICE_RING_RES)
+    return _ring(kind, lambda y: (lines[slot](y), lines[slot + 1](y)), l / k, r / k, size)
+
+
+def slice_ring_file(kind, slot, k):
+    return f"FCJH_{kind}_s{slot}_{hashlib.sha1(slice_ring(kind, slot, k)).hexdigest()[:8]}.dds"
 
 
 def slant_texture(team, cut, colour, alpha=255, size=(512, 32), sub=4):
@@ -1428,6 +1476,9 @@ def texture_files(cfg):
     out[TEXTURE_REL / "FCJH_White.dds"] = dds_bgra(4, 4, b"\xff" * 64)
     for kind in PLATE_RINGS:
         out[TEXTURE_REL / plate_ring_file(kind)] = plate_ring(kind)
+        for slot in range(3):
+            k = cfg["hero_row"]["scale"]
+            out[TEXTURE_REL / slice_ring_file(kind, slot, k)] = slice_ring(kind, slot, k)
     out[TEXTURE_REL / HEAL_BORDER] = square_border(cfg["heal_popup"]["colour"])
     for file, data in slant_bars(cfg).values():
         out[TEXTURE_REL / file] = data
@@ -2571,7 +2622,88 @@ def pet_death_bindings(cfg, team_frame, i):
 										</Controller>
 									</Animation>
 								</Frame>
-							</Frame>{onfire_flames(cfg, team_frame == 'Team1HeroOverview', cell)}"""
+							</Frame>{onfire_flames(cfg, team_frame == 'Team1HeroOverview', cell)}{slice_rings(cfg, team_frame, i)}"""
+    return out
+
+
+# each slice's slot from the left (slice_ring), and the party cell's events that start and
+# stop its respawn glow: the Vikings' HeroAlmostRespawnedHero1-3 / HeroRespawnedHero1-3,
+# Misha's HeroAlmostRespawnedPet (Blizzard sends no HeroRespawnedPet: her timer hiding stops it)
+SLICE_RINGS = {"Olaf": (0, "Hero1"), "Baleog": (1, "Hero2"), "Erik": (2, "Hero3"), "Misha": (2, "Pet")}
+
+
+def slice_rings(cfg, team_frame, i):
+    """Per cell: the plate's death ring, bursts and respawn glow (death_skull) on one Viking's
+    or Misha's slice, played off that unit's own timer in the hidden party cell, as Blizzard's
+    player bar plays a small death frame per slice (partyframe HeroAllyDeathAnimMulti1_a-c,
+    HeroAllyDeathAnimPet1: a state on the timer's Visible sends the event). Only those heroes
+    have the timers, so nothing else plays them."""
+    c = HeroCell(cfg)
+    k = cfg["hero_row"]["scale"]
+    blue = team_frame == "Team1HeroOverview"
+    party = f"{PARTY}/{team_frame}/HeroOverview{i}"
+    t = "\t" * 7
+    coords = "" if blue else f'\n{t}\t\t<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>'
+    out = ""
+    for unit, (slot, ev) in SLICE_RINGS.items():
+        tex = slot if blue else 2 - slot        # red's slot is blue's mirrored
+        l, r = slice_ring_box(tex, k)
+        if not blue:
+            l, r = c.w - r, c.w - l
+        # the bursts' snap in, across scaled to the slice (the plate's moves are for the cell)
+        across = (r - l) / c.w
+        anim = ""
+        for name, keys in SKULL_FADES.items():
+            if name == "FCJH_SkullIcon":
+                continue
+            anim += f'\n{t}\t\t<Controller type="Fade" frame="{name.replace("Skull", "Slice")}" end="Pause">' + "".join(
+                f'\n{t}\t\t\t<Key type="Curve" time="{tm}" value="{v}" inout="{io}"/>' for tm, v, io in keys) \
+                + f'\n{t}\t\t</Controller>'
+        for name, keys in SKULL_MOVES.items():
+            for side, pick, sign, f in (("Left", 1, 1, across), ("Right", 1, -1, across), ("Top", 2, 1, 1), ("Bottom", 2, -1, 1)):
+                anim += (f'\n{t}\t\t<Controller type="Anchor" end="Pause" side="{side}" frame="{name.replace("Skull", "Slice")}" relative="true">'
+                         + "".join(f'\n{t}\t\t\t<Key type="Curve" time="{key[0]}" value="{sign * round(key[pick] * k * f) or 0}" inout="{key[3]}"/>'
+                                   for key in keys) + f'\n{t}\t\t</Controller>')
+        glow = "".join(f'\n{t}\t\t\t<Key type="Curve" time="{tm}" value="{255 if v else 0}" inout="Linear"/>'
+                       for tm, v in FLASH_KEYS[:-1]) + f'\n{t}\t\t\t<Key type="Curve" time="5.01" value="0" inout="Linear"/>'
+        # Misha's only while Rexxar lives (Blizzard's: his own death plays the plate's)
+        rexxar = (f'<When type="Property" frame="{party}/HeroDeathTimeLabel" Visible="false"/>'
+                  if unit == "Misha" else "")
+        stop = "" if ev == "Pet" else f'\n{t}\t\t<Event event="HeroRespawned{ev}" action="Reset,Stop" frame="{party}"/>'
+        image = lambda name, kind, prio: f"""
+{t}\t<Frame type="Image" name="{name}">
+{t}\t\t<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+{t}\t\t<Anchor side="Left"   relative="$parent" pos="Min" offset="{l}"/>
+{t}\t\t<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+{t}\t\t<Anchor side="Right"  relative="$parent" pos="Min" offset="{r}"/>
+{t}\t\t<Texture val="{TEXTURE_DIR}\\{slice_ring_file(kind, tex, k)}"/>{coords}
+{t}\t\t<Alpha val="0"/>
+{t}\t\t<RenderPriority val="{prio}"/>
+{t}\t\t<Unclipped val="true"/>
+{t}\t\t<AcceptsMouse val="false"/>
+{t}\t</Frame>"""
+        out += f"""
+{t}<!-- {unit}'s slice rings (tools/gen.py slice_rings) -->
+{t}<Frame type="Frame" name="FCJH_SliceRing{unit}">
+{t}\t<Anchor relative="$parent"/>
+{t}\t<Unclipped val="true"/>
+{t}\t<AcceptsMouse val="false"/>
+{t}\t<StateGroup name="FCJH_Dead">
+{t}\t\t<DefaultState val="Alive"/>
+{t}\t\t<State name="Dead"><When type="Property" frame="{party}/{SLICE_DEATH[unit]}" Visible="true"/>{rexxar}<Action type="SendEvent" frame="$this" event="FCJH_SliceDead"/></State>
+{t}\t\t<State name="Alive"><Action type="SendEvent" frame="$this" event="FCJH_SliceAlive"/></State>
+{t}\t</StateGroup>
+{t}\t<Animation name="FCJH_SliceDeathAnim">
+{t}\t\t<Event event="FCJH_SliceDead" action="Reset,Play" frame="$this"/>
+{t}\t\t<Event event="FCJH_SliceAlive" action="Reset,Stop" frame="$this"/>{anim}
+{t}\t</Animation>
+{t}\t<Animation name="FCJH_SlicePulse">
+{t}\t\t<Event event="HeroAlmostRespawned{ev}" action="Reset,Play" frame="{party}"/>{stop}
+{t}\t\t<Event event="FCJH_SliceAlive" action="Reset,Stop" frame="$this"/>
+{t}\t\t<Controller type="Fade" frame="FCJH_SliceGlow" end="Pause">{glow}
+{t}\t\t</Controller>
+{t}\t</Animation>{image("FCJH_SliceOverlay", "DeathRing", 515)}{image("FCJH_SliceBurst", "DeathBurst", 516)}{image("FCJH_SliceBurst2", "DeathBurst", 516)}{image("FCJH_SliceGlow", "RespawnGlow", 590)}
+{t}</Frame>"""
     return out
 
 
