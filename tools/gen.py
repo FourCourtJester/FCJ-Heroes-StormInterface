@@ -1469,6 +1469,26 @@ def viking_bars(hl, hr, h):
     return bars, [hl + k * step + run / 2 for k in (1, 2)]
 
 
+# The bars' outer ends, units in from the plate's seams at the bar's middle row: (the heroic's
+# side - red's left, blue's right; the far side). Off Blizzard's health_full
+# rect, Olaf's end ran ~3 px past red's left seam and Erik's sat ~1 px short (user, 2026-10-21,
+# 15_11_52, measured): red's left end just inside its seam's line, as Blizzard's own fills.
+VIKING_END_INSET = (1.1, 5.6)
+
+
+def viking_span(c, team):
+    """The Vikings' bars' frames' outer ends (viking_bars' hl, hr) in cell units: their middle
+    row VIKING_END_INSET in from the plate's seams (HeroCell.edge)."""
+    _, ht, _, hb = c.team[team]["health_full"]
+    y = (ht + hb) / 2
+    run = HeroCell.LEAN * (hb - ht)
+    if team == "blue":
+        left, right = c.edge(y) + VIKING_END_INSET[1], c.edge(y) + c.pitch - VIKING_END_INSET[0]
+    else:
+        left, right = c.overlap - c.edge(y) + VIKING_END_INSET[0], c.w - c.edge(y) - VIKING_END_INSET[1]
+    return left - run / 2, right + run / 2
+
+
 @functools.cache
 def _viking_masks(team, w, h, size):
     data = slant_texture(team, HeroCell.LEAN * h / w, "ffffff", size=size)
@@ -1483,7 +1503,8 @@ def viking_masks(cfg):
     k = cfg["hero_row"]["scale"]
     out = {}
     for team in ("blue", "red"):
-        hl, ht, hr, hb = c.team[team]["health_full"]
+        _, ht, _, hb = c.team[team]["health_full"]
+        hl, hr = viking_span(c, team)
         for narrow in (False, True):
             w = hr - hl - (round(NARROW_FULL * k) if narrow else 0)
             (l, r), = viking_bars(0, w, hb - ht)[0][:1]
@@ -2221,6 +2242,7 @@ def heroic_panel(cfg, team_frame, i):
         # the Vikings' three bars share the narrowed width (trackers: tools/gen.py trackers)
         # (narrowed by the bar's own cut: NARROW_FULL for the tall bar, as HeroStatus above),
         # each a slanted bar (viking_bars), its mask swapped for the width
+        hl, hr = viking_span(c, team)
         if narrow:
             hl, hr = (hl, hr + cut) if blue else (hl + cut, hr)
         bars_, seams = viking_bars(hl, hr, hb - g["health_full" if full else "health"][1])
