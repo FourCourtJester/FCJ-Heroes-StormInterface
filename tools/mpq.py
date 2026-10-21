@@ -3,11 +3,13 @@ Minimal MPQ archive reader/writer for .StormInterface files.
 
 A .StormInterface is an MPQ archive. The Java builder writes format version 3
 (the 208-byte "MPQ v4" header); this writes the original format version 0
-("MPQ v1"): a 32-byte header, the files stored raw, then the hash and block
-tables, each encrypted with a fixed key.
+("MPQ v1"): a 32-byte header, the files, then the hash and block tables, each
+encrypted with a fixed key.
 
-Writing is uncompressed only. Reading also handles zlib/bzip2 sectors, enough
-to open archives made by other tools for comparison.
+Files are written raw, or with compress=True (the release) zlib-compressed sector
+by sector - as Spazzo's v40 is (format 0, 4 KB sectors, mask 0x02 on every
+sector), which the game loads. Reading also handles bzip2 sectors and single-unit
+files (Ahli's), enough to open archives made by other tools for comparison.
 
 CLI:
     python tools/mpq.py list    <archive>
@@ -95,12 +97,28 @@ BLOCK_TABLE_KEY = hash_string("(block table)", HASH_FILE_KEY)
 
 # ------------------------------------------------------------------ writing
 
-def write_mpq(files, sector_shift=3, listfile=True):
+def _compress(data, sector_size):
+    """A file's sectors zlib-compressed behind their offset table (offsets from the file's
+    start, one past the last), each sector raw where compressing doesn't shrink it - the
+    reader tells them apart by size. None if the whole comes out no smaller than raw."""
+    chunks = []
+    for i in range(0, len(data), sector_size):
+        raw = data[i : i + sector_size]
+        packed = b"\x02" + zlib.compress(raw, 9)
+        chunks.append(packed if len(packed) < len(raw) else raw)
+    offsets = [4 * (len(chunks) + 1)]
+    for c in chunks:
+        offsets.append(offsets[-1] + len(c))
+    out = struct.pack(f"<{len(offsets)}I", *offsets) + b"".join(chunks)
+    return out if len(out) < len(data) else None
+
+
+def write_mpq(files, sector_shift=3, listfile=True, compress=False):
     """Build an MPQ v1 archive from {archive path: bytes}. Returns the archive bytes.
 
     Paths use backslashes inside the archive; forward slashes are converted.
-    Files are stored uncompressed and unencrypted, so no sector offset table
-    is needed - the data is simply contiguous.
+    Unencrypted. Raw, files need no sector offset table - the data is simply
+    contiguous; with compress, each file that shrinks is stored by sectors (_compress).
     """
     entries = {name.replace("/", "\\"): data for name, data in files.items()}
     if listfile:
@@ -115,8 +133,10 @@ def write_mpq(files, sector_shift=3, listfile=True):
     header_size = 32
     blocks = []
     for name, data in entries.items():
-        blocks.append((header_size + len(body), len(data), len(data), FILE_EXISTS))
-        body += data
+        packed = _compress(data, 512 << sector_shift) if compress and data else None
+        stored, flags = (packed, FILE_EXISTS | FILE_COMPRESS) if packed else (data, FILE_EXISTS)
+        blocks.append((header_size + len(body), len(stored), len(data), flags))
+        body += stored
 
     hash_table = [(HASH_EMPTY, HASH_EMPTY, 0xFFFF, 0xFFFF, HASH_EMPTY)] * hash_size
     for block_index, name in enumerate(entries):

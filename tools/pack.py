@@ -175,9 +175,11 @@ def main():
         print("XML does not parse - the game would silently ignore the whole interface:")
         print("\n".join(f"  {b}" for b in bad))
         return 1
-    archive = mpq.write_mpq(files)
+    # the release compressed (zlib by sector, as Spazzo's); dev raw, quicker to write
+    archive = mpq.write_mpq(files, compress=args.release)
     verify_roundtrip(archive, files)
-    print(f"{profile}: {len(files)} files, {len(archive)} bytes, MPQ v1, round-trip OK")
+    kind = "compressed" if args.release else "raw"
+    print(f"{profile}: {len(files)} files, {len(archive)} bytes, MPQ v1 {kind}, round-trip OK")
 
     if args.release:
         out = DIST / f"v{cfg['meta']['version']}" / NAME

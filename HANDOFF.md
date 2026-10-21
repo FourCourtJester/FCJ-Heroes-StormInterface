@@ -120,7 +120,11 @@ One command: **generate → stage → validate → pack → deploy.**
 each box in its legend colour was removed 2026-10-05). `--release` is exactly what `src/` holds: it refuses
 while `src/`, `layout.toml` or `tools/` have uncommitted changes, so every release is
 reproducible from its commit, and writes `dist/v<version>/FCJH.StormInterface`
-(`--deploy` to also install it). GitHub releases ship that file.
+(`--deploy` to also install it), zlib-compressed by sector as Spazzo's is (10.7 -> ~1 MB; dev
+stays raw). GitHub releases ship that file and nothing else of ours: push a tag `v<version>`
+(it must match `[meta] version`) and `.github/workflows/release.yml` builds it from the tag
+with `--no-validate` (the JamiePhan extract isn't in the repo, so validate locally first) and
+publishes it. GitHub adds its own source zips to every release; they can't be removed.
 
 ### Tools
 

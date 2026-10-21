@@ -1,0 +1,41 @@
+# A release per version tag: push `v1.0.1` (matching layout.toml's [meta] version) and this
+# builds the interface from that commit, compressed (tools/pack.py --release), and publishes
+# it as the release's one file. Validation needs Blizzard's UI extract (references/, not in
+# the repo), so it runs locally before tagging, not here.
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Tag matches the version
+        run: |
+          version=$(python -c "import tomllib; print(tomllib.load(open('layout.toml', 'rb'))['meta']['version'])")
+          if [ "$GITHUB_REF_NAME" != "v$version" ]; then
+            echo "tag $GITHUB_REF_NAME, but layout.toml says $version"
+            exit 1
+          fi
+          echo "VERSION=$version" >> "$GITHUB_ENV"
+
+      - name: Build
+        run: python tools/pack.py --release --no-validate
+
+      - name: Publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" "dist/v$VERSION/FCJH.StormInterface" \
+            --title "FCJH $VERSION" --generate-notes
