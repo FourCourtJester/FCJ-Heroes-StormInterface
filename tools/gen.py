@@ -1475,8 +1475,10 @@ def viking_bars(hl, hr, h):
 # rect, Olaf's end ran ~3 px past red's left seam and Erik's sat ~1 px short (user, 2026-10-21,
 # 15_11_52, measured): red's left end just inside its seam's line, as Blizzard's own fills.
 # The far side 1.2 more (15_26_42): Erik's end left 2-3 dark px before the seam where Blizzard's
-# fills leave 3-4, and the thinner gap showed up the steps.
-VIKING_END_INSET = (1.1, 6.8)
+# fills leave 3-4, and the thinner gap showed up the steps. Then 1.5 more (15_30_32): below the
+# top rows his end didn't move at all - the plate's dark border along the seam was cutting it,
+# hard, over the mask's edge - so the mask's feathered edge now ends clear of the border.
+VIKING_END_INSET = (1.1, 8.3)
 
 
 def viking_span(c, team):
@@ -1496,11 +1498,12 @@ def viking_span(c, team):
 # match: Blizzard's fill art has its own short, near-upright ends, and where one stood outside
 # the slant it was the edge - with its bright rim - on Erik's top rows, ragged against the mask's
 # (user, 2026-10-21, 15_16_37; the other ends hide under the separators). Padded, the art's ends
-# fall in the margin. (The fill's 0 and 100% move out with it: 10% reads ~7%.)
-VIKING_MARGIN = 2
+# fall in the margin. (The fill's 0 and 100% move out with it: 10% reads ~7%.) 4, not 2: at 2,
+# moved in, the art's near-upright end cut a notch from Erik's top corner (user, 15_30_32, "a bite").
+VIKING_MARGIN = 4
 # The masks' slanted ends feathered over this many texels: Blizzard's fills end on a dim,
-# anti-aliased pixel, ours stepped hard (user, 2026-10-21, 15_26_42).
-VIKING_SOFT = 1.5
+# anti-aliased pixel, ours stepped hard (user, 2026-10-21, 15_26_42); theirs fades over ~2 px.
+VIKING_SOFT = 3
 
 
 @functools.cache
