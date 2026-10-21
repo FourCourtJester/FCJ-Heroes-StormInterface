@@ -823,8 +823,10 @@ def resource_type_units(kind):
 
 
 def no_resource_units():
-    """Heroes drawn with no resource bar and the tall health bar."""
-    return [u for u in resource_type_units("None") if u not in RESOURCE_SEGMENTS]
+    """Heroes drawn with no resource bar and the tall health bar. The Vikings too (user,
+    2026-10-21: "why do they have resource bars?"): uilib gives their controller a resource
+    type, but none of them has one; Blizzard's player bar draws them bars only."""
+    return [u for u in resource_type_units("None") if u not in RESOURCE_SEGMENTS] + [VIKINGS]
 
 HERO_ROW_FILE = "FCJH_HeroRow.StormLayout"
 
@@ -1443,7 +1445,13 @@ def _anchors(rect, relative, indent):
                    for side, v in sides if v is not None)
 
 
-VIKING_GAP = 2   # layout units between the three Vikings' bars
+VIKINGS = "HeroLostVikingsController"
+# The Vikings' three bars meet under Blizzard's slanted separator (user, 2026-10-21: "we should
+# slant the seperators"), the same art as the portrait's dividers, cropped to the bar's rows:
+# the gaps were upright. VIKING_SEP_LINE: the art's line, x at the bar's middle row (art row
+# 43 = cell row 45 - its frame starts at 2; measured, 26.0 of 32; red's mirrored, 6).
+VIKING_GAP = 0   # layout units between the three Vikings' bars
+VIKING_SEP_LINE, VIKING_SEP_W, VIKING_SEP_TOP = 26, 32, 2
 
 # Every segment of the plates' health bars tiled, as the health is (Blizzard's party frame tiles
 # its 0-2). Untiled, the shield (index 2) squeezed the whole fill art into itself: Fenix's white
@@ -1482,7 +1490,7 @@ def trackers(team, health):
 							<Anchor side="Bottom" relative="{strip}" pos="Max" offset="0"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 							<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
-							<Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm{suffix}"/>{tiled_segments(chr(10) + chr(9) * 7)}
+							<Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill{suffix}"/>{tiled_segments(chr(10) + chr(9) * 7)}
 							<Unclipped val="true"/>
 						</Frame>
 						<Frame type="UnitTargetFrame" name="FCJH_Target">
@@ -1495,6 +1503,24 @@ def trackers(team, health):
 							<RenderPriority val="610"/>
 						</Frame>
 					</Frame>""" for i in range(3))
+    # the separators over the seams, the bar's height (placed by heroic_panel's lefts, which
+    # also shows them for the Vikings only: hidden, the tracker may not be)
+    top = round((HeroCell.BLUE["health_full"][1] - VIKING_SEP_TOP) / (HeroCell.BLUE["health_full"][3] - VIKING_SEP_TOP), 4)
+    sep_coords = (f'<TextureCoords top="{top}" left="0.0" bottom="1.0" right="1.0"/>' if team == "blue" else
+                  f'<TextureCoords top="{top}" left="1.0" bottom="1.0" right="0.0"/>')
+    separators = "".join(f"""
+				<Frame type="Image" name="FCJH_BarSeparator{n}">
+					<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="0"/>
+					<Anchor side="Bottom" relative="$parent/$parent" pos="Max" offset="0"/>
+					<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Right"  relative="$parent" pos="Min" offset="0"/>
+					<Texture val="@UI/HUD_TopBar_Team_HeroFrame_Separator"/>
+					{sep_coords}
+					<Alpha val="0"/>
+					<RenderPriority val="600"/>
+					<Unclipped val="true"/>
+					<AcceptsMouse val="false"/>
+				</Frame>""" for n in (1, 2))
     return f"""
 			<Frame type="UnitStatusUnitTrackingBehavior" name="VikingTrackingElement">
 				<!-- the whole plate, not the bar strip (see the click targets) -->
@@ -1502,7 +1528,7 @@ def trackers(team, health):
 				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="0"/>
 				<Anchor side="Bottom" relative="$parent/$parent" pos="Max" offset="0"/>
 				<Anchor side="Right"  relative="$parent/$parent" pos="Max" offset="0"/>
-				<Unclipped val="true"/>{vikings}
+				<Unclipped val="true"/>{vikings}{separators}
 			</Frame>
 			<!-- Misha's bar: not shown (user, 2026-09-30 - she can't be selected, and it adds
 			     little); HeightOverride below keeps Rexxar's bar full height -->
@@ -2131,7 +2157,7 @@ def heroic_panel(cfg, team_frame, i):
     t10 = "\t" * 10
     side = "Right" if blue else "Left"
     cut_ = -s(NARROW) if blue else s(NARROW)
-    def lefts(narrow, full=False):
+    def lefts(narrow, full=False, vikings=False):
         # full: a hero with no resource (no_resource_units) - the tall bar, the resource bar
         # and its frame gone, as Blizzard's NoResourceTemplate
         hl, _, hr, hb = g["health_full" if full else "health"]
@@ -2160,6 +2186,14 @@ def heroic_panel(cfg, team_frame, i):
             f = f"{cell}/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame{v}"
             out += (f'{t10}<Action type="SetAnchor" frame="{f}" side="Left" relative="{cell}" pos="Min" offset="{round(left)}"/>\n'
                     f'{t10}<Action type="SetAnchor" frame="{f}" side="Right" relative="{cell}" pos="Min" offset="{round(left + third)}"/>\n')
+        # Blizzard's separator over each seam, its line at the bar's middle on the seam
+        line = s(VIKING_SEP_LINE if blue else VIKING_SEP_W - VIKING_SEP_LINE)
+        for n in (1, 2):
+            x = round(hl + n * (third + VIKING_GAP) - VIKING_GAP / 2) - line
+            f = f"{cell}/HeroStatus/VikingTrackingElement/FCJH_BarSeparator{n}"
+            out += (f'{t10}<Action type="SetAnchor" frame="{f}" side="Left" relative="{cell}" pos="Min" offset="{x}"/>\n'
+                    f'{t10}<Action type="SetAnchor" frame="{f}" side="Right" relative="{cell}" pos="Min" offset="{x + s(VIKING_SEP_W)}"/>\n'
+                    f'{t10}<Action type="SetProperty" frame="{f}" Alpha="{255 if vikings else 0}"/>\n')
         return out
     watch = lambda frame_: f'{party}/{frame_}'
     # the cooldown states: which count shows (every state sets them all), and the icon dimmed
@@ -2191,11 +2225,11 @@ def heroic_panel(cfg, team_frame, i):
 										<When type="Property" frame="{party}" Visible="true"/>
 										<When type="Property" frame="{cell}/HeroStatus" Unit="{unit}"/>
 										<Action type="SetProperty" frame="$this" Alpha="255"/>
-{lefts(True, True)}									</State>
+{lefts(True, True, unit == VIKINGS)}									</State>
 									<State name="{unit}No">
 										<When type="Property" frame="{cell}/HeroStatus" Unit="{unit}"/>
 										<Action type="SetProperty" frame="$this" Alpha="0"/>
-{lefts(False, True)}									</State>""" for unit in no_resource_units()) + f"""
+{lefts(False, True, unit == VIKINGS)}									</State>""" for unit in no_resource_units()) + f"""
 									<State name="Yes">
 										<When type="Property" frame="{party}" Visible="true"/>
 										<Action type="SetProperty" frame="$this" Alpha="255"/>
@@ -2261,7 +2295,7 @@ def heroic_panel(cfg, team_frame, i):
 # (unit, slice texture, red's frame shift) per slice, and which dividers show.
 PARTYFRAME_ART = "Assets\\Textures\\storm_ui_ingame_partyframe_"
 SLICES = {
-    "HeroLostVikingsController": ([("Olaf", "lostvikings_olaf", -62), ("Baleog", "lostvikings_baelog", 0),
+    VIKINGS: ([("Olaf", "lostvikings_olaf", -62), ("Baleog", "lostvikings_baelog", 0),
                                    ("Erik", "lostvikings_eric", 65)], (True, True)),
     "HeroRexxar": ([("Rexxar", "rexxar", -31), ("Misha", "rexxar_misha", 65), None], (False, True)),
 }
@@ -2299,16 +2333,28 @@ def slice_overlay(cfg, team_frame, i):
     def grey(n, unit):
         """The slice's death look: its own timer, or Rexxar's. Not the Vikings' main timer: it
         shows for any one Viking's death, and greyed all three (seen in game 2026-10-21).
-        Desaturated only; Colorize on top posterized the art (same screenshot)."""
-        on = '<Action type="SetProperty" frame="$this" Desaturated="true"/>'
-        off = '<Action type="SetProperty" frame="$this" Desaturated="false"/>'
-        own = "".join(f'\n{t}\t\t\t<State name="{u}Dead"><When type="Property" frame="{party}/{SLICE_DEATH[u]}" Visible="true"/>{on}</State>'
+        Blizzard's own look, as every other dead portrait (partyframe DesaturateOnDeath: Colorize
+        white, alpha 180); Desaturated alone came out far paler than Tracer's beside it (user,
+        2026-10-21, 14_43_54). A dead Viking's bar hides too: at 0 its fill left a sliver."""
+        on = ('<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>'
+              '<Action type="SetProperty" frame="$this" Alpha="180"/>')
+        # the third slice's alpha left to its state's revert: Rexxar hides it (FCJH_Hero)
+        off = ('<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>'
+               + ('<Action type="SetProperty" frame="$this" Alpha="255"/>' if n < 2 else ""))
+        vikings = SLICES[VIKINGS][0]
+        bar = f"{cell}/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame{VIKING_FRAMES.index(vikings[n][0])}/HealthBar"
+        hide = lambda a: f'<Action type="SetProperty" frame="{bar}" Alpha="{a}"/>'
+        own = "".join(f'\n{t}\t\t\t<State name="{u}Dead"><When type="Property" frame="{party}/{SLICE_DEATH[u]}" Visible="true"/>'
+                      f'{on}{hide(0) if u in VIKING_SLOT else ""}</State>'
                       for u in sorted({sl[n][0] for sl, _ in SLICES.values() if sl[n]} & SLICE_DEATH.keys()))
+        # Rexxar's death greys his slice and Misha's (Blizzard's MasterDead), not the spare third
+        hero_dead = "" if n == 2 else (
+            f'\n{t}\t\t\t<State name="HeroDead"><When type="Property" frame="{cell}/HeroStatus" Unit="HeroRexxar"/>'
+            f'<When type="Property" frame="$parent/$parent/HeroDeathTimeLabel" Visible="true"/>{on}</State>')
         return f"""
 {t}\t\t<StateGroup name="FCJH_Dead">
-{t}\t\t\t<DefaultState val="Alive"/>{own}
-{t}\t\t\t<State name="HeroDead"><When type="Property" frame="{cell}/HeroStatus" Unit="HeroRexxar"/><When type="Property" frame="$parent/$parent/HeroDeathTimeLabel" Visible="true"/>{on}</State>
-{t}\t\t\t<State name="Alive">{off}</State>
+{t}\t\t\t<DefaultState val="Alive"/>{own}{hero_dead}
+{t}\t\t\t<State name="Alive">{off}{hide(255)}</State>
 {t}\t\t</StateGroup>"""
 
     slices = "".join(f"""
@@ -2319,6 +2365,7 @@ def slice_overlay(cfg, team_frame, i):
 {t}\t\t<Anchor side="Bottom" relative="$parent" pos="Min" offset="{s(cut)}"/>
 {t}\t\t{slice_coords}
 {t}\t\t<ImageMaskTexture val="@UI/HUD_TopBar_Team_HeroFrame_Mask"/>
+{t}\t\t<AdjustmentColor val="ffffff"/>
 {t}\t\t<RenderPriority val="{502 + n}"/>
 {t}\t\t<Unclipped val="true"/>
 {t}\t\t<AcceptsMouse val="false"/>{grey(n, None)}
@@ -2694,6 +2741,12 @@ def heal_popups(cfg):
 					</Animation>
 					<StateGroup name="FCJH_Heal">
 						<DefaultState val="Hold"/>
+						<!-- never for the Vikings: the sensor reads the plate's one unit, their
+						     controller, not each Viking's bar (user, 2026-10-21) -->
+						<State name="Vikings">
+							<When type="Property" frame="{cell}/HeroStatus" Unit="{VIKINGS}"/>
+							<Action type="SetProperty" frame="FCJH_Armed" visible="false"/>
+						</State>
 						<State name="Died">
 							<When type="Property" frame="{cell}/HeroDeathTimeLabel" visible="true"/>
 							<Action type="SetProperty" frame="FCJH_Armed" visible="true"/>

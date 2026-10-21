@@ -19,10 +19,12 @@
 	     overflowed the shorter bar a heroic leaves (2026-09-30) -->
 	<Style name="FCJH_CCText" template="HeaderExtendedTemplate" height="14" textcolor="ffffff" hjustify="Center" vjustify="Middle" fontflags="Outline" styleflags="!Shadow"/>
 	<!-- Per-Viking / Misha death timer: Blizzard's pet timer, centred both ways in its slice
-	     of the plate (Blizzard's own isn't centred there) -->
-	<Style name="FCJH_PetDeathTimer" template="Storm_TopBar_DeathTimer_Pet" hjustify="Center" vjustify="Middle"/>
-	<!-- the per-Viking timers' respawn flash: Blizzard's small pale style, kept centred -->
-	<Style name="FCJH_PetDeathTimer_Respawn" template="Storm_TopBar_DeathTimer_Respawn_Sm" hjustify="Center" vjustify="Middle"/>
+	     of the plate (Blizzard's own isn't centred there); 22, not the pet's 16, now each
+	     Viking has a portrait slice of their own (user, 2026-10-21: "a bit bigger") -->
+	<Style name="FCJH_PetDeathTimer" template="Storm_TopBar_DeathTimer_Pet" height="22" hjustify="Center" vjustify="Middle"/>
+	<!-- the per-Viking timers' respawn flash: Blizzard's small pale style, kept centred, at
+	     the timer's size -->
+	<Style name="FCJH_PetDeathTimer_Respawn" template="Storm_TopBar_DeathTimer_Respawn_Sm" height="22" hjustify="Center" vjustify="Middle"/>
 	<!-- Plate heroic token: the "?" before the pick, and the cooldown seconds over the icon -->
 	<Style name="FCJH_HeroicMark" template="HeaderExtendedTemplate" height="18" textcolor="e7c8ff" hjustify="Center" vjustify="Middle" fontflags="Outline" styleflags="!Shadow"/>
 	<Style name="FCJH_HeroicCooldown" template="HeaderExtendedTemplate" height="15" textcolor="ffffff" hjustify="Center" vjustify="Middle" fontflags="Outline" styleflags="!Shadow"/>
