@@ -1523,7 +1523,10 @@ def trackers(team, health):
 PET_TIMERS = {"Olaf": "HeroDeathTimeVikingOlafLabel", "Baleog": "HeroDeathTimeVikingBaleogLabel",
               "Erik": "HeroDeathTimeVikingErikLabel"}
 PARTY = "$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel"
-VIKING_SLOT = {"Baleog": 0, "Erik": 1, "Olaf": 2}   # which third of the plate each Viking's bar is
+# which third of the plate each Viking's bar is: the slices' order, Olaf, Baleog, Erik, on both
+# teams (2026-10-21; Baleog, Erik, Olaf until then, for the generic art - user: "the portraits
+# dont align anymore")
+VIKING_SLOT = {"Olaf": 0, "Baleog": 1, "Erik": 2}
 # Blizzard's VikingTrackingElement orders its TrackedUnitStatusFrame0-2 Olaf, Baleog, Erik (seen in
 # game 2026-09-30: a 40% Baleog showed in the middle third); each goes to its Viking's slot
 VIKING_FRAMES = ["Olaf", "Baleog", "Erik"]
@@ -1664,8 +1667,7 @@ def pet_death_labels(team, c):
     lean = c.lean
     shift = round(lean * ((ht + hb) / 2 - (2 + hb) / 2)) * (-1 if team == "blue" else 1)
     labels = ""
-    # the bars' order on the plate is Baleog, Erik, Olaf (seen in game 2026-09-30: Olaf's
-    # timer had landed on the first slice, Baleog's bar)
+    # each timer on its Viking's third (VIKING_SLOT)
     for viking, i in VIKING_SLOT.items():
         left = round(hl + i * (third + VIKING_GAP)) + shift
         labels += f"""
@@ -2285,17 +2287,17 @@ def slice_overlay(cfg, team_frame, i):
     t = "\t" * 8
 
     def grey(n, unit):
-        """The slice's death look: its own timer, or the hero's (Rexxar, or every Viking down)."""
-        on = (f'<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>'
-              f'<Action type="SetProperty" frame="$this" Desaturated="true"/>')
-        off = (f'<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>'
-               f'<Action type="SetProperty" frame="$this" Desaturated="false"/>')
+        """The slice's death look: its own timer, or Rexxar's. Not the Vikings' main timer: it
+        shows for any one Viking's death, and greyed all three (seen in game 2026-10-21).
+        Desaturated only; Colorize on top posterized the art (same screenshot)."""
+        on = '<Action type="SetProperty" frame="$this" Desaturated="true"/>'
+        off = '<Action type="SetProperty" frame="$this" Desaturated="false"/>'
         own = "".join(f'\n{t}\t\t\t<State name="{u}Dead"><When type="Property" frame="{party}/{SLICE_DEATH[u]}" Visible="true"/>{on}</State>'
                       for u in sorted({sl[n][0] for sl, _ in SLICES.values() if sl[n]} & SLICE_DEATH.keys()))
         return f"""
 {t}\t\t<StateGroup name="FCJH_Dead">
 {t}\t\t\t<DefaultState val="Alive"/>{own}
-{t}\t\t\t<State name="HeroDead"><When type="Property" frame="$parent/$parent/HeroDeathTimeLabel" Visible="true"/>{on}</State>
+{t}\t\t\t<State name="HeroDead"><When type="Property" frame="{cell}/HeroStatus" Unit="HeroRexxar"/><When type="Property" frame="$parent/$parent/HeroDeathTimeLabel" Visible="true"/>{on}</State>
 {t}\t\t\t<State name="Alive">{off}</State>
 {t}\t\t</StateGroup>"""
 
@@ -2307,7 +2309,6 @@ def slice_overlay(cfg, team_frame, i):
 {t}\t\t<Anchor side="Bottom" relative="$parent" pos="Min" offset="{c.portrait_bottom}"/>
 {t}\t\t{coords}
 {t}\t\t<ImageMaskTexture val="@UI/HUD_TopBar_Team_HeroFrame_Mask"/>
-{t}\t\t<AdjustmentColor val="255,120,120,120"/>
 {t}\t\t<RenderPriority val="{502 + n}"/>
 {t}\t\t<Unclipped val="true"/>
 {t}\t\t<AcceptsMouse val="false"/>{grey(n, None)}
