@@ -936,9 +936,9 @@ def plate_edge(y):
     return c.LEAN_PIVOT * (c.OVERLAP / c.H - c.LEAN) + c.LEAN * y
 
 
-def _ring(kind, bounds, x0, x1, size):
+def _ring(kind, bounds, x0, x1, size, bottom=HeroCell.H):
     """A ring (PLATE_RINGS[kind]) just inside the slanted strip bounds(y) = (left, right), over
-    native x0..x1 and the cell's height."""
+    native x0..x1 and the cell's top down to bottom."""
     import math
     w, h = size
     c, g = HeroCell, PLATE_RINGS[kind]
@@ -946,12 +946,12 @@ def _ring(kind, bounds, x0, x1, size):
     core, halo = (bytes.fromhex(g[k]) for k in ("core", "halo"))
     rows = []
     for ty in range(h):
-        y = (ty + 0.5) / h * c.H
+        y = (ty + 0.5) / h * bottom
         left, right = bounds(y)
         row = bytearray()
         for tx in range(w):
             x = x0 + (tx + 0.5) / w * (x1 - x0)
-            d = min(y + PLATE_RING_TOP, c.H - y, (x - left) / norm, (right - x) / norm)   # in from the plate's edge
+            d = min(y + PLATE_RING_TOP, bottom - y, (x - left) / norm, (right - x) / norm)   # in from the plate's edge
             off = d - g["at"]
             a_core = math.exp(-(off / g["core_w"]) ** 2)
             a_halo = g["halo_a"] * (math.exp(-off / g["halo_in"]) if off > 0 else math.exp(-(off / 1.4) ** 2))
@@ -974,6 +974,9 @@ def plate_ring_file(kind):
 # and 3, whose lines the bars' seams follow) on each side; red's slot n is blue's 2 - n
 # mirrored. Each texture spans its slot's box only, SLICE_RING_RES texels a unit.
 SLICE_RING_RES = 3
+# ...and the portrait's slice only, down to the bar backing's top (HeroCell health_backing):
+# the whole plate's height dwarfed the Vikings' small faces (user, 2026-10-21)
+SLICE_RING_BOTTOM = 36
 
 
 def slice_lines():
@@ -990,15 +993,15 @@ def slice_ring_box(slot, k):
     """Blue slot's frame, cell units from the cell's left: (left, right), its box's widest."""
     import math
     lines = slice_lines()
-    return math.floor(lines[slot](0) * k), math.ceil(lines[slot + 1](HeroCell.H) * k)
+    return math.floor(lines[slot](0) * k), math.ceil(lines[slot + 1](SLICE_RING_BOTTOM) * k)
 
 
 @functools.cache
 def slice_ring(kind, slot, k):
     lines = slice_lines()
     l, r = slice_ring_box(slot, k)
-    size = (round((r - l) / k * SLICE_RING_RES), HeroCell.H * SLICE_RING_RES)
-    return _ring(kind, lambda y: (lines[slot](y), lines[slot + 1](y)), l / k, r / k, size)
+    size = (round((r - l) / k * SLICE_RING_RES), SLICE_RING_BOTTOM * SLICE_RING_RES)
+    return _ring(kind, lambda y: (lines[slot](y), lines[slot + 1](y)), l / k, r / k, size, SLICE_RING_BOTTOM)
 
 
 def slice_ring_file(kind, slot, k):
@@ -2650,8 +2653,8 @@ def slice_rings(cfg, team_frame, i):
         l, r = slice_ring_box(tex, k)
         if not blue:
             l, r = c.w - r, c.w - l
-        # the bursts' snap in, across scaled to the slice (the plate's moves are for the cell)
-        across = (r - l) / c.w
+        # the bursts' snap in, scaled to the slice (the plate's moves are for the cell)
+        across, down = (r - l) / c.w, SLICE_RING_BOTTOM / HeroCell.H
         anim = ""
         for name, keys in SKULL_FADES.items():
             if name == "FCJH_SkullIcon":
@@ -2660,21 +2663,29 @@ def slice_rings(cfg, team_frame, i):
                 f'\n{t}\t\t\t<Key type="Curve" time="{tm}" value="{v}" inout="{io}"/>' for tm, v, io in keys) \
                 + f'\n{t}\t\t</Controller>'
         for name, keys in SKULL_MOVES.items():
-            for side, pick, sign, f in (("Left", 1, 1, across), ("Right", 1, -1, across), ("Top", 2, 1, 1), ("Bottom", 2, -1, 1)):
+            for side, pick, sign, f in (("Left", 1, 1, across), ("Right", 1, -1, across), ("Top", 2, 1, down), ("Bottom", 2, -1, down)):
                 anim += (f'\n{t}\t\t<Controller type="Anchor" end="Pause" side="{side}" frame="{name.replace("Skull", "Slice")}" relative="true">'
                          + "".join(f'\n{t}\t\t\t<Key type="Curve" time="{key[0]}" value="{sign * round(key[pick] * k * f) or 0}" inout="{key[3]}"/>'
                                    for key in keys) + f'\n{t}\t\t</Controller>')
         glow = "".join(f'\n{t}\t\t\t<Key type="Curve" time="{tm}" value="{255 if v else 0}" inout="Linear"/>'
                        for tm, v in FLASH_KEYS[:-1]) + f'\n{t}\t\t\t<Key type="Curve" time="5.01" value="0" inout="Linear"/>'
-        # Misha's only while Rexxar lives (Blizzard's: his own death plays the plate's)
-        rexxar = (f'<When type="Property" frame="{party}/HeroDeathTimeLabel" Visible="false"/>'
-                  if unit == "Misha" else "")
-        stop = "" if ev == "Pet" else f'\n{t}\t\t<Event event="HeroRespawned{ev}" action="Reset,Stop" frame="{party}"/>'
+        # Misha's: none while Rexxar is dead, even if she died first (user, 2026-10-21: "remove
+        # all of her effects for that specific death duration of Rexxar"; Blizzard's: his own
+        # death plays the plate's). His death hides her frame and stops it all, and her glow
+        # stops when he respawns; her death state isn't gated on his, so his respawn while
+        # her timer still shows can't replay her burst.
+        rexxar = "" if unit != "Misha" else f"""
+{t}\t<StateGroup name="FCJH_RexxarDead">
+{t}\t\t<DefaultState val="No"/>
+{t}\t\t<State name="Yes"><When type="Property" frame="{party}/HeroDeathTimeLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_SliceAlive"/></State>
+{t}\t\t<State name="No"><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+{t}\t</StateGroup>"""
+        stop = f'\n{t}\t\t<Event event="HeroRespawned{"" if ev == "Pet" else ev}" action="Reset,Stop" frame="{party}"/>'
         image = lambda name, kind, prio: f"""
 {t}\t<Frame type="Image" name="{name}">
 {t}\t\t<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 {t}\t\t<Anchor side="Left"   relative="$parent" pos="Min" offset="{l}"/>
-{t}\t\t<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
+{t}\t\t<Anchor side="Bottom" relative="$parent" pos="Min" offset="{round(SLICE_RING_BOTTOM * k)}"/>
 {t}\t\t<Anchor side="Right"  relative="$parent" pos="Min" offset="{r}"/>
 {t}\t\t<Texture val="{TEXTURE_DIR}\\{slice_ring_file(kind, tex, k)}"/>{coords}
 {t}\t\t<Alpha val="0"/>
@@ -2690,9 +2701,9 @@ def slice_rings(cfg, team_frame, i):
 {t}\t<AcceptsMouse val="false"/>
 {t}\t<StateGroup name="FCJH_Dead">
 {t}\t\t<DefaultState val="Alive"/>
-{t}\t\t<State name="Dead"><When type="Property" frame="{party}/{SLICE_DEATH[unit]}" Visible="true"/>{rexxar}<Action type="SendEvent" frame="$this" event="FCJH_SliceDead"/></State>
+{t}\t\t<State name="Dead"><When type="Property" frame="{party}/{SLICE_DEATH[unit]}" Visible="true"/><Action type="SendEvent" frame="$this" event="FCJH_SliceDead"/></State>
 {t}\t\t<State name="Alive"><Action type="SendEvent" frame="$this" event="FCJH_SliceAlive"/></State>
-{t}\t</StateGroup>
+{t}\t</StateGroup>{rexxar}
 {t}\t<Animation name="FCJH_SliceDeathAnim">
 {t}\t\t<Event event="FCJH_SliceDead" action="Reset,Play" frame="$this"/>
 {t}\t\t<Event event="FCJH_SliceAlive" action="Reset,Stop" frame="$this"/>{anim}
