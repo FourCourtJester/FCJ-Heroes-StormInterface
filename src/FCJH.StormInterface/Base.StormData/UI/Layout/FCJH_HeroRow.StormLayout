@@ -8528,9 +8528,18 @@
 								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/HeroDeathTimeVikingOlafLabel/@Text}"/>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/HeroDeathTimeVikingOlafLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/HeroDeathTimeVikingOlafLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
 								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time=".7" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.2" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1"/>
 									<Event event="HeroRespawnedHero1" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1"/>
@@ -8561,9 +8570,18 @@
 								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/HeroDeathTimeVikingBaleogLabel/@Text}"/>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/HeroDeathTimeVikingBaleogLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/HeroDeathTimeVikingBaleogLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
 								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time=".7" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.2" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1"/>
 									<Event event="HeroRespawnedHero2" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1"/>
@@ -8594,9 +8612,18 @@
 								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/HeroDeathTimeVikingErikLabel/@Text}"/>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/HeroDeathTimeVikingErikLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/HeroDeathTimeVikingErikLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
 								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time=".7" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.2" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1"/>
 									<Event event="HeroRespawnedHero3" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1"/>
@@ -8905,10 +8932,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="38"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="38"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -9093,10 +9120,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="90"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="90"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -9281,10 +9308,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="138"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="138"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -9475,10 +9502,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="138"/>
+									<Anchor side="Top" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left" relative="$parent" pos="Min" offset="138"/>
 									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="138"/>
+									<Anchor side="Right" relative="$parent" pos="Min" offset="138"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -10225,9 +10252,18 @@
 								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/HeroDeathTimeVikingOlafLabel/@Text}"/>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/HeroDeathTimeVikingOlafLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/HeroDeathTimeVikingOlafLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
 								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time=".7" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.2" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2"/>
 									<Event event="HeroRespawnedHero1" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2"/>
@@ -10258,9 +10294,18 @@
 								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/HeroDeathTimeVikingBaleogLabel/@Text}"/>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/HeroDeathTimeVikingBaleogLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/HeroDeathTimeVikingBaleogLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
 								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time=".7" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.2" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2"/>
 									<Event event="HeroRespawnedHero2" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2"/>
@@ -10291,9 +10336,18 @@
 								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/HeroDeathTimeVikingErikLabel/@Text}"/>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/HeroDeathTimeVikingErikLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/HeroDeathTimeVikingErikLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
 								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time=".7" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.2" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2"/>
 									<Event event="HeroRespawnedHero3" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2"/>
@@ -10602,10 +10656,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="38"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="38"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -10790,10 +10844,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="90"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="90"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -10978,10 +11032,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="138"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="138"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -11172,10 +11226,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="138"/>
+									<Anchor side="Top" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left" relative="$parent" pos="Min" offset="138"/>
 									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="138"/>
+									<Anchor side="Right" relative="$parent" pos="Min" offset="138"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -11922,9 +11976,18 @@
 								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/HeroDeathTimeVikingOlafLabel/@Text}"/>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/HeroDeathTimeVikingOlafLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/HeroDeathTimeVikingOlafLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
 								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time=".7" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.2" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3"/>
 									<Event event="HeroRespawnedHero1" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3"/>
@@ -11955,9 +12018,18 @@
 								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/HeroDeathTimeVikingBaleogLabel/@Text}"/>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/HeroDeathTimeVikingBaleogLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/HeroDeathTimeVikingBaleogLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
 								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time=".7" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.2" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3"/>
 									<Event event="HeroRespawnedHero2" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3"/>
@@ -11988,9 +12060,18 @@
 								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/HeroDeathTimeVikingErikLabel/@Text}"/>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/HeroDeathTimeVikingErikLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/HeroDeathTimeVikingErikLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
 								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time=".7" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.2" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3"/>
 									<Event event="HeroRespawnedHero3" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3"/>
@@ -12299,10 +12380,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="38"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="38"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -12487,10 +12568,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="90"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="90"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -12675,10 +12756,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="138"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="138"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -12869,10 +12950,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="138"/>
+									<Anchor side="Top" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left" relative="$parent" pos="Min" offset="138"/>
 									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="138"/>
+									<Anchor side="Right" relative="$parent" pos="Min" offset="138"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -13619,9 +13700,18 @@
 								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/HeroDeathTimeVikingOlafLabel/@Text}"/>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/HeroDeathTimeVikingOlafLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/HeroDeathTimeVikingOlafLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
 								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time=".7" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.2" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4"/>
 									<Event event="HeroRespawnedHero1" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4"/>
@@ -13652,9 +13742,18 @@
 								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/HeroDeathTimeVikingBaleogLabel/@Text}"/>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/HeroDeathTimeVikingBaleogLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/HeroDeathTimeVikingBaleogLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
 								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time=".7" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.2" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4"/>
 									<Event event="HeroRespawnedHero2" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4"/>
@@ -13685,9 +13784,18 @@
 								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/HeroDeathTimeVikingErikLabel/@Text}"/>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/HeroDeathTimeVikingErikLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/HeroDeathTimeVikingErikLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
 								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time=".7" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.2" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4"/>
 									<Event event="HeroRespawnedHero3" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4"/>
@@ -13996,10 +14104,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="38"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="38"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -14184,10 +14292,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="90"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="90"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -14372,10 +14480,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="138"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="138"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -14566,10 +14674,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="138"/>
+									<Anchor side="Top" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left" relative="$parent" pos="Min" offset="138"/>
 									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="138"/>
+									<Anchor side="Right" relative="$parent" pos="Min" offset="138"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -15316,9 +15424,18 @@
 								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/HeroDeathTimeVikingOlafLabel/@Text}"/>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/HeroDeathTimeVikingOlafLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/HeroDeathTimeVikingOlafLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
 								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time=".7" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.2" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5"/>
 									<Event event="HeroRespawnedHero1" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5"/>
@@ -15349,9 +15466,18 @@
 								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/HeroDeathTimeVikingBaleogLabel/@Text}"/>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/HeroDeathTimeVikingBaleogLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/HeroDeathTimeVikingBaleogLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
 								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time=".7" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.2" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5"/>
 									<Event event="HeroRespawnedHero2" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5"/>
@@ -15382,9 +15508,18 @@
 								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/HeroDeathTimeVikingErikLabel/@Text}"/>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/HeroDeathTimeVikingErikLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/HeroDeathTimeVikingErikLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
 								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time=".7" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.2" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5"/>
 									<Event event="HeroRespawnedHero3" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5"/>
@@ -15693,10 +15828,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="38"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="38"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -15881,10 +16016,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="90"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="90"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -16069,10 +16204,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="138"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="138"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -16263,10 +16398,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="138"/>
+									<Anchor side="Top" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left" relative="$parent" pos="Min" offset="138"/>
 									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="138"/>
+									<Anchor side="Right" relative="$parent" pos="Min" offset="138"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -17015,9 +17150,18 @@
 								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/HeroDeathTimeVikingOlafLabel/@Text}"/>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/HeroDeathTimeVikingOlafLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/HeroDeathTimeVikingOlafLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
 								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time=".7" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.2" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1"/>
 									<Event event="HeroRespawnedHero1" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1"/>
@@ -17048,9 +17192,18 @@
 								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/HeroDeathTimeVikingBaleogLabel/@Text}"/>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/HeroDeathTimeVikingBaleogLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/HeroDeathTimeVikingBaleogLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
 								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time=".7" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.2" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1"/>
 									<Event event="HeroRespawnedHero2" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1"/>
@@ -17081,9 +17234,18 @@
 								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/HeroDeathTimeVikingErikLabel/@Text}"/>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/HeroDeathTimeVikingErikLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/HeroDeathTimeVikingErikLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
 								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time=".7" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.2" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1"/>
 									<Event event="HeroRespawnedHero3" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1"/>
@@ -17395,10 +17557,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="60"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="60"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -17587,10 +17749,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="108"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="108"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -17779,10 +17941,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="160"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="160"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -17977,10 +18139,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="160"/>
+									<Anchor side="Top" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left" relative="$parent" pos="Min" offset="160"/>
 									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="160"/>
+									<Anchor side="Right" relative="$parent" pos="Min" offset="160"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -18731,9 +18893,18 @@
 								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/HeroDeathTimeVikingOlafLabel/@Text}"/>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/HeroDeathTimeVikingOlafLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/HeroDeathTimeVikingOlafLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
 								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time=".7" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.2" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2"/>
 									<Event event="HeroRespawnedHero1" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2"/>
@@ -18764,9 +18935,18 @@
 								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/HeroDeathTimeVikingBaleogLabel/@Text}"/>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/HeroDeathTimeVikingBaleogLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/HeroDeathTimeVikingBaleogLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
 								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time=".7" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.2" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2"/>
 									<Event event="HeroRespawnedHero2" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2"/>
@@ -18797,9 +18977,18 @@
 								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/HeroDeathTimeVikingErikLabel/@Text}"/>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/HeroDeathTimeVikingErikLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/HeroDeathTimeVikingErikLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
 								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time=".7" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.2" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2"/>
 									<Event event="HeroRespawnedHero3" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2"/>
@@ -19111,10 +19300,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="60"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="60"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -19303,10 +19492,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="108"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="108"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -19495,10 +19684,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="160"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="160"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -19693,10 +19882,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="160"/>
+									<Anchor side="Top" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left" relative="$parent" pos="Min" offset="160"/>
 									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="160"/>
+									<Anchor side="Right" relative="$parent" pos="Min" offset="160"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -20447,9 +20636,18 @@
 								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/HeroDeathTimeVikingOlafLabel/@Text}"/>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/HeroDeathTimeVikingOlafLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/HeroDeathTimeVikingOlafLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
 								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time=".7" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.2" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3"/>
 									<Event event="HeroRespawnedHero1" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3"/>
@@ -20480,9 +20678,18 @@
 								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/HeroDeathTimeVikingBaleogLabel/@Text}"/>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/HeroDeathTimeVikingBaleogLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/HeroDeathTimeVikingBaleogLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
 								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time=".7" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.2" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3"/>
 									<Event event="HeroRespawnedHero2" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3"/>
@@ -20513,9 +20720,18 @@
 								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/HeroDeathTimeVikingErikLabel/@Text}"/>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/HeroDeathTimeVikingErikLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/HeroDeathTimeVikingErikLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
 								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time=".7" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.2" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3"/>
 									<Event event="HeroRespawnedHero3" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3"/>
@@ -20827,10 +21043,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="60"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="60"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -21019,10 +21235,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="108"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="108"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -21211,10 +21427,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="160"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="160"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -21409,10 +21625,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="160"/>
+									<Anchor side="Top" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left" relative="$parent" pos="Min" offset="160"/>
 									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="160"/>
+									<Anchor side="Right" relative="$parent" pos="Min" offset="160"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -22163,9 +22379,18 @@
 								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/HeroDeathTimeVikingOlafLabel/@Text}"/>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/HeroDeathTimeVikingOlafLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/HeroDeathTimeVikingOlafLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
 								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time=".7" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.2" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4"/>
 									<Event event="HeroRespawnedHero1" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4"/>
@@ -22196,9 +22421,18 @@
 								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/HeroDeathTimeVikingBaleogLabel/@Text}"/>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/HeroDeathTimeVikingBaleogLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/HeroDeathTimeVikingBaleogLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
 								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time=".7" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.2" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4"/>
 									<Event event="HeroRespawnedHero2" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4"/>
@@ -22229,9 +22463,18 @@
 								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/HeroDeathTimeVikingErikLabel/@Text}"/>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/HeroDeathTimeVikingErikLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/HeroDeathTimeVikingErikLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
 								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time=".7" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.2" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4"/>
 									<Event event="HeroRespawnedHero3" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4"/>
@@ -22543,10 +22786,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="60"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="60"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -22735,10 +22978,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="108"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="108"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -22927,10 +23170,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="160"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="160"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -23125,10 +23368,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="160"/>
+									<Anchor side="Top" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left" relative="$parent" pos="Min" offset="160"/>
 									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="160"/>
+									<Anchor side="Right" relative="$parent" pos="Min" offset="160"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -23879,9 +24122,18 @@
 								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/HeroDeathTimeVikingOlafLabel/@Text}"/>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/HeroDeathTimeVikingOlafLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/HeroDeathTimeVikingOlafLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
 								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time=".7" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.2" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero1" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5"/>
 									<Event event="HeroRespawnedHero1" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5"/>
@@ -23912,9 +24164,18 @@
 								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/HeroDeathTimeVikingBaleogLabel/@Text}"/>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/HeroDeathTimeVikingBaleogLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/HeroDeathTimeVikingBaleogLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
 								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time=".7" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.2" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero2" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5"/>
 									<Event event="HeroRespawnedHero2" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5"/>
@@ -23945,9 +24206,18 @@
 								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/HeroDeathTimeVikingErikLabel/@Text}"/>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/HeroDeathTimeVikingErikLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/HeroDeathTimeVikingErikLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
 								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time=".7" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.2" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
 								<Animation name="FCJH_RespawnFlash">
 									<Event event="HeroAlmostRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5"/>
 									<Event event="HeroRespawnedHero3" action="Reset,Stop" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5"/>
@@ -24259,10 +24529,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="60"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="60"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathOlaf" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -24451,10 +24721,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="108"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="108"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathBaleog" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -24643,10 +24913,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="160"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="160"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathErik" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -24841,10 +25111,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="160"/>
+									<Anchor side="Top" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left" relative="$parent" pos="Min" offset="160"/>
 									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="160"/>
+									<Anchor side="Right" relative="$parent" pos="Min" offset="160"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>

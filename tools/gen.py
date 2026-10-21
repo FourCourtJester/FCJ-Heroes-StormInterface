@@ -2576,14 +2576,25 @@ def pet_death_bindings(cfg, team_frame, i):
     for n, (ours, theirs) in enumerate(PET_TIMERS.items(), start=1):   # Olaf Hero1, Baleog 2, Erik 3
         flash = style_flash("FCJH_RespawnFlash", "$this", "FCJH_PetDeathTimer", "FCJH_PetDeathTimer_Respawn",
                             [(f"HeroAlmostRespawnedHero{n}", cell)], [(f"HeroRespawnedHero{n}", cell)], t)
+        # faded in after the slice's skull, as the plate's (FCJH_Handover): they showed at once,
+        # over the skull (user, 2026-10-21: "not delaying the death timer from spawning")
         out += f"""
 							<Frame type="Label" name="FCJH_Death{ours}">
 								<Text val="{{{cell}/{theirs}/@Text}}"/>
 								<StateGroup name="FCJH_Shown">
 									<DefaultState val="No"/>
-									<State name="Yes"><When type="Property" frame="{cell}/{theirs}" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
-								</StateGroup>{flash}
+									<State name="Yes"><When type="Property" frame="{cell}/{theirs}" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
+								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time=".7" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.2" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>{flash}
 							</Frame>"""
     # the plate's own timer (FCJH_DeathTime, a copy of Blizzard's hidden one) and the skull
     # step aside while any Viking's shows
@@ -2662,6 +2673,14 @@ def slice_rings(cfg, team_frame, i):
         sy = SLICE_RING_BOTTOM / 2 - SLICE_SKULL_UP
         sx = (lines[tex](sy) + lines[tex + 1](sy)) / 2
         sx, sy = round((sx if blue else HeroCell.W - sx) * k), round(sy * k)
+        # a Viking's on their own timer (pet_death_labels), which fades in as it goes, as the
+        # plate's skull is on the plate's (user, 2026-10-21: "its not positioned the same on a
+        # tri slice"); Misha has no timer of her own, so hers stays on her portrait
+        anchors = lambda rel, pos, x, y: "".join(
+            f'\n{t}\t\t<Anchor side="{side}" relative="{rel}" pos="{pos}" offset="{o}"/>'
+            for side, o in (("Top", y), ("Left", x), ("Bottom", y), ("Right", x)))
+        skull = (anchors("$parent", "Min", sx, sy) if unit not in PET_TIMERS
+                 else anchors(f"$parent/$parent/FCJH_Death{unit}", "Mid", 0, 0))
         # the bursts' snap in, scaled to the slice (the plate's moves are for the cell)
         across, down = (r - l) / c.w, SLICE_RING_BOTTOM / HeroCell.H
         anim = ""
@@ -2724,11 +2743,7 @@ def slice_rings(cfg, team_frame, i):
 {t}\t\t<Controller type="Fade" frame="FCJH_SliceGlow" end="Pause">{glow}
 {t}\t\t</Controller>
 {t}\t</Animation>{image("FCJH_SliceOverlay", "DeathRing", 515)}{image("FCJH_SliceBurst", "DeathBurst", 516)}{image("FCJH_SliceBurst2", "DeathBurst", 516)}
-{t}\t<Frame type="Image" name="FCJH_SliceIcon">
-{t}\t\t<Anchor side="Top"    relative="$parent" pos="Min" offset="{sy}"/>
-{t}\t\t<Anchor side="Left"   relative="$parent" pos="Min" offset="{sx}"/>
-{t}\t\t<Anchor side="Bottom" relative="$parent" pos="Min" offset="{sy}"/>
-{t}\t\t<Anchor side="Right"  relative="$parent" pos="Min" offset="{sx}"/>
+{t}\t<Frame type="Image" name="FCJH_SliceIcon">{skull}
 {t}\t\t<Width val="{round(SLICE_SKULL_W * k)}"/>
 {t}\t\t<Height val="{round(SLICE_SKULL_H * k)}"/>
 {t}\t\t<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
