@@ -13,7 +13,8 @@ Profiles:
   dev (default)  the build stamp (and any src/dev/ layouts), deployed as FCJH.StormInterface
   --release      exactly what src/ holds; refuses if src/, layout.toml or tools/ have
                  uncommitted changes, so every release is reproducible from its commit;
-                 written to dist/v<version>/, deployed only with --deploy
+                 written to dist/v<version>/ as "FCJ v<version>.StormInterface",
+                 deployed (under that name) only with --deploy
 
 Heroes locks the deployed file only while a replay or match is open. At the main menu it
 can be overwritten, and reopening a replay loads the new build. --wait retries a locked
@@ -21,7 +22,7 @@ write until the lock releases.
 
     python tools/pack.py --wait                  # the everyday loop
     python tools/pack.py --no-deploy
-    python tools/pack.py --release               # dist/v1.0.0/FCJH.StormInterface
+    python tools/pack.py --release               # dist/v1.0.1/FCJ v1.0.1.StormInterface
     python tools/pack.py --release --deploy
     python tools/pack.py --release --no-generate --no-validate
                                                  # GitHub's release build: no references/
@@ -49,6 +50,8 @@ BUILD = REPO / "build"
 DIST = REPO / "dist"
 INTERFACES = Path.home() / "OneDrive" / "Documents" / "Heroes of the Storm" / "Interfaces"
 NAME = "FCJH.StormInterface"
+# the release under its official name, in Ahli's style ("AhliObs 0.75"; spaces load fine)
+RELEASE_NAME = "FCJ v{version}.StormInterface"
 
 XML_SUFFIXES = (".StormLayout", ".StormStyle", ".StormComponents")
 RELEASE_PATHS = ["src", "layout.toml", "tools"]
@@ -136,7 +139,7 @@ def main():
     parser.add_argument("--release", action="store_true", help="release profile (see above)")
     parser.add_argument("--deploy", action="store_true", help="with --release: also deploy")
     parser.add_argument("--no-deploy", action="store_true")
-    parser.add_argument("--name", default=NAME, help=f"deployed filename (default {NAME})")
+    parser.add_argument("--name", help=f"deployed filename (default {NAME}, a release its own)")
     parser.add_argument("--wait", action="store_true", help="retry a locked write until it succeeds")
     parser.add_argument("--no-validate", action="store_true", help="skip tools/validate.py")
     parser.add_argument("--no-generate", action="store_true",
@@ -186,7 +189,8 @@ def main():
     print(f"{profile}: {len(files)} files, {len(archive)} bytes, MPQ v1 {kind}, round-trip OK")
 
     if args.release:
-        out = DIST / f"v{cfg['meta']['version']}" / NAME
+        version = cfg["meta"]["version"]
+        out = DIST / f"v{version}" / RELEASE_NAME.format(version=version)
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_bytes(archive)
         print(f"release: {out.relative_to(REPO).as_posix()}  (commit {git('rev-parse', '--short', 'HEAD')})")
@@ -196,7 +200,7 @@ def main():
         return 0
 
     # 5. deploy
-    dest = INTERFACES / args.name
+    dest = INTERFACES / (args.name or (out.name if args.release else NAME))
     if not deploy(archive, dest, args.wait):
         return 1
     print(f"deployed: {dest}")

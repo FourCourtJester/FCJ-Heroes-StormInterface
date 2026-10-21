@@ -38,5 +38,5 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "$GITHUB_REF_NAME" "dist/v$VERSION/FCJH.StormInterface" \
-            --title "FCJH $VERSION" --generate-notes
+          gh release create "$GITHUB_REF_NAME" "dist/v$VERSION/FCJ v$VERSION.StormInterface" \
+            --title "FCJ v$VERSION" --generate-notes

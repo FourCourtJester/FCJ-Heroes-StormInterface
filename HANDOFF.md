@@ -434,13 +434,12 @@ https://github.com/FourCourtJester/FCJ-Heroes-StormInterface (public; pushed in
 batches, when the user says; `.github/FUNDING.yml` for the Sponsor button: GitHub Sponsors
 and Ko-fi).
 
-**TO DO: an official release filename (user, 2026-10-21): "FCJ v1.x.y"** in place of
-`FCJH.StormInterface` (pack.py's `NAME`; the release workflow's attach path). To settle
-first: if the game lists interfaces by filename (to check), a versioned name means each update lands
-beside the old one and the caster re-picks it in Options (a fixed name overwrites in place);
-spaces work (Ahli releases as `AhliObs 0.75.StormInterface`, which loads; Spazzo's is
-`SpazzoObsv40`), so "FCJ 1.0.0" in Ahli's style is fine; dev stays `FCJH.StormInterface` so the
-everyday loop keeps overwriting one file.
+**The official release filename (user, 2026-10-21): `FCJ v<version>.StormInterface`**
+(pack.py's `RELEASE_NAME`, from 1.0.1; 1.0.0 shipped as `FCJH.StormInterface`), in Ahli's
+style (`AhliObs 0.75`; spaces load fine, Spazzo's is `SpazzoObsv40`). `--release --deploy`
+installs it under that name, beside the dev build's `FCJH.StormInterface`, which keeps its
+fixed name so the everyday loop overwrites one file. Still to see: whether a new version's
+file means casters re-pick the interface in Options.
 
 **The road to release (user, 2026-10-16): "We're done maps. We're almost done heroes."** Warhead's
 nuke counters closed the maps (e966a07). Left, in order: the last few heroes, then a final
