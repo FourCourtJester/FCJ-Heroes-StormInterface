@@ -123,8 +123,10 @@ reproducible from its commit, and writes `dist/v<version>/FCJH.StormInterface`
 (`--deploy` to also install it), zlib-compressed by sector as Spazzo's is (10.7 -> ~1 MB; dev
 stays raw). GitHub releases ship that file and nothing else of ours: push a tag `v<version>`
 (it must match `[meta] version`) and `.github/workflows/release.yml` builds it from the tag
-with `--no-validate` (the JamiePhan extract isn't in the repo, so validate locally first) and
-publishes it. GitHub adds its own source zips to every release; they can't be removed.
+with `--no-generate --no-validate` (gen and validate need the JamiePhan extract, which isn't in
+the repo, so run both locally first: the committed `src/` is what ships) and publishes it.
+`.gitattributes` checks `src/` out LF on every clone, so GitHub's build is byte for byte the
+local `--release` (checked from a fresh clone, 2026-10-21). GitHub adds its own source zips to every release; they can't be removed.
 
 ### Tools
 
