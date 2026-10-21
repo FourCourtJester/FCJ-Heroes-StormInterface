@@ -855,9 +855,12 @@ from their plates (docs/blizzard-fixes.md).
      (`slice_overlay`); the Vikings' three bars slanted and masked (`viking_bars`,
      `viking_masks`, `viking_span`), Blizzard's separator on each seam and the far end (a mask's
      edge draws hard in game however it's feathered); the slice diagnostics are gone. Misha's
-     bar stays hidden, Rexxar's full height. **Left:** per-slice death and respawn rings
-     (`HeroAlmostRespawnedHero{n}` / `HeroRespawnedHero{n}` on the party cell; the plate rings
-     today ring the whole cell), the Vikings' embers/fire untested, Misha's death. See item 15;
+     bar stays hidden, Rexxar's full height. **The Vikings' per-slice rings DONE (user,
+     2026-10-21, ed32947: "TLV looks great"):** the plate's death ring, bursts and respawn glow
+     on each Viking's portrait slice only, down to the bar backing (`slice_rings`,
+     `slice_ring`), off their own party-cell timers and `HeroAlmostRespawnedHero{n}`.
+     **Left:** Misha's (same build, `FCJH_SliceRingMisha`, hidden while Rexxar is dead) -
+     "something flashed", the user is digging in; the Vikings' embers/fire untested. See item 15;
    - ~~**Death timers flash white under 5 s**~~ DONE (user, 2026-10-18; above);
    - ~~**Ahli's death animation**~~ DONE (item 12; seen again 2026-10-19: the skull, red ring,
      flashing count and gold rim at 5 all good);

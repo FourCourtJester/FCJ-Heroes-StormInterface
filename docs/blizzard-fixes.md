@@ -468,7 +468,12 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
     over the far end. The Vikings get the tall bar with no resource bar, and no heal pop-up (one
     health reading for three units). Found on the way: an `AlphaMaskTexture`'s edge draws hard
     however the mask is feathered, so the far end needed Blizzard's separator to read soft.
-  - **Status:** seen and approved in game (user, 2026-10-21, e101687).
+  - **Death and respawn:** the observer cell has one death animation for the whole plate, and
+    a single Viking's death never plays it. Each Viking now gets the plate's death ring, bursts
+    and respawn glow on their own portrait slice (`gen.slice_rings`), played off their own
+    timer, as Blizzard's player bar does per slice.
+  - **Status:** seen and approved in game (user, 2026-10-21: portraits and bars e101687, the
+    Vikings' rings ed32947). Misha's rings are built, still being checked.
 - **Talent pop-ups:** the talent just picked pops up on its hero's plate, for every hero.
 - **A heal pop-up:** a green plus when a hero drops to 25% health (once per dip; gone after
   about 4 s, at death or above 30%). Blizzard's critical-health element doesn't run in observer
