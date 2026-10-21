@@ -2567,6 +2567,9 @@ def slice_overlay(cfg, team_frame, i):
 {t[:-1]}</Frame>"""
 
 
+VIKING_TIMER_HOLD = 1.5
+
+
 def pet_death_bindings(cfg, team_frame, i):
     """Per cell: our per-unit death timers show the hidden party frame's matching label (same
     team and cell), and the plate's own timer steps aside while any Viking's shows."""
@@ -2577,7 +2580,8 @@ def pet_death_bindings(cfg, team_frame, i):
         flash = style_flash("FCJH_RespawnFlash", "$this", "FCJH_PetDeathTimer", "FCJH_PetDeathTimer_Respawn",
                             [(f"HeroAlmostRespawnedHero{n}", cell)], [(f"HeroRespawnedHero{n}", cell)], t)
         # faded in after the slice's skull, as the plate's (FCJH_Handover): they showed at once,
-        # over the skull (user, 2026-10-21: "not delaying the death timer from spawning")
+        # over the skull (user, 2026-10-21: "not delaying the death timer from spawning"), and
+        # held VIKING_TIMER_HOLD (user: "Delay the number by like 1.5 seconds from appearing")
         out += f"""
 							<Frame type="Label" name="FCJH_Death{ours}">
 								<Text val="{{{cell}/{theirs}/@Text}}"/>
@@ -2591,8 +2595,8 @@ def pet_death_bindings(cfg, team_frame, i):
 									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
 									<Controller type="Fade" end="Pause">
 										<Key type="Curve" time="0" value="0" inout="Linear"/>
-										<Key type="Curve" time=".7" value="0" inout="Linear"/>
-										<Key type="Curve" time="1.2" value="255" inout="Linear"/>
+										<Key type="Curve" time="{VIKING_TIMER_HOLD}" value="0" inout="Linear"/>
+										<Key type="Curve" time="{VIKING_TIMER_HOLD + .5}" value="255" inout="Linear"/>
 									</Controller>
 								</Animation>{flash}
 							</Frame>"""
@@ -2748,7 +2752,7 @@ def slice_rings(cfg, team_frame, i):
 {t}\t\t<Height val="{round(SLICE_SKULL_H * k)}"/>
 {t}\t\t<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
 {t}\t\t<Alpha val="0"/>
-{t}\t\t<RenderPriority val="517"/>
+{t}\t\t<RenderPriority val="522"/>
 {t}\t\t<Unclipped val="true"/>
 {t}\t\t<AcceptsMouse val="false"/>
 {t}\t</Frame>{image("FCJH_SliceGlow", "RespawnGlow", 590)}
