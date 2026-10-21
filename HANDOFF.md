@@ -438,7 +438,8 @@ and Ko-fi).
 `FCJH.StormInterface` (pack.py's `NAME`; the release workflow's attach path). To settle
 first: if the game lists interfaces by filename (to check), a versioned name means each update lands
 beside the old one and the caster re-picks it in Options (a fixed name overwrites in place);
-spaces in the name are untested in game; dev stays `FCJH.StormInterface` so the
+spaces work (Ahli releases as `AhliObs 0.75.StormInterface`, which loads; Spazzo's is
+`SpazzoObsv40`), so "FCJ 1.0.0" in Ahli's style is fine; dev stays `FCJH.StormInterface` so the
 everyday loop keeps overwriting one file.
 
 **The road to release (user, 2026-10-16): "We're done maps. We're almost done heroes."** Warhead's
