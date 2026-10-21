@@ -21,7 +21,7 @@ write until the lock releases.
 
     python tools/pack.py --wait                  # the everyday loop
     python tools/pack.py --no-deploy
-    python tools/pack.py --release               # dist/v0.1.0/FCJH.StormInterface
+    python tools/pack.py --release               # dist/v1.0.0/FCJH.StormInterface
     python tools/pack.py --release --deploy
     python tools/pack.py src/tests/Test.StormInterface --name Test.StormInterface --wait
                                                  # a test interface, deployed beside FCJH

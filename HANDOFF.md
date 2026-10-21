@@ -420,6 +420,14 @@ land on whole pixels at 1080p (`inspect_card.line`), so at 1440p they may come o
 
 ## 7. What's next
 
+**1.0 (user, 2026-10-21).** A test build went to volunteers 2026-10-20 (v0.1.0, b28ee86, the
+kill feed back on); their feedback is 1.0.x for a while - `[meta] version` 1.0.0, a patch
+number per fix batch, each one a `pack.py --release` from a commit. Work is on `main` (its
+history is python-toolchain's, which stays as it was). GitHub:
+https://github.com/FourCourtJester/FCJ-Heroes-StormInterface (private for now; pushed in
+batches, when the user says; `.github/FUNDING.yml` for the Sponsor button: GitHub Sponsors
+and Ko-fi).
+
 **The road to release (user, 2026-10-16): "We're done maps. We're almost done heroes."** Warhead's
 nuke counters closed the maps (e966a07). Left, in order: the last few heroes, then a final
 visual polish, then screenshots of everything for posting.
