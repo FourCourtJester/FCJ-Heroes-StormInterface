@@ -2250,6 +2250,141 @@ def heroic_panel(cfg, team_frame, i):
 """
 
 
+# Multi-unit portraits (2026-10-21): Blizzard's player top bar splits the Lost Vikings' and
+# Rexxar's portraits into slices, one per unit, but its script textures them for the players
+# only (uilib SetVikingFrame / SetPetFrame: PlayerGroupActive) - observers get the generic art.
+# Each slice's art is a whole 128 x 56 cell with only that slice drawn (extracted, user), so
+# ours stack in the portrait's frame as Blizzard's left-hand images do; red mirrors them and
+# shifts each frame as Blizzard's _R template does (PortraitSpecialCases, PortraitPetSpecialCase).
+# (unit, slice texture, red's frame shift) per slice, and which dividers show.
+PARTYFRAME_ART = "Assets\\Textures\\storm_ui_ingame_partyframe_"
+SLICES = {
+    "HeroLostVikingsController": ([("Olaf", "lostvikings_olaf", -62), ("Baleog", "lostvikings_baelog", 0),
+                                   ("Erik", "lostvikings_eric", 65)], (True, True)),
+    "HeroRexxar": ([("Rexxar", "rexxar", -31), ("Misha", "rexxar_misha", 65), None], (False, True)),
+}
+# each slice's own death timer in the hidden party cell (its portraits darken on these)
+SLICE_DEATH = {"Olaf": "HeroDeathTimeVikingOlafLabel", "Baleog": "HeroDeathTimeVikingBaleogLabel",
+               "Erik": "HeroDeathTimeVikingErikLabel", "Misha": "HeroDeathTimePetLabel"}
+
+
+def slice_overlay(cfg, team_frame, i):
+    """Per cell: Blizzard's player-bar slices over our portrait for the Vikings and Rexxar +
+    Misha (SLICES), each greyed while its own unit is dead, with Blizzard's dividers between.
+    DIAGNOSTIC squares above the plate: green Vikings, cyan Rexxar (the unit checks), yellow
+    Misha's timer showing, white the party cell's second portrait shown."""
+    c = HeroCell(cfg)
+    k = c.w / c.W
+    s = lambda v: round(v * k)
+    blue = team_frame == "Team1HeroOverview"
+    cell = f"{OVERVIEW}/{team_frame}/HeroOverview{i}"
+    party = f"{PARTY}/{team_frame}/HeroOverview{i}"
+    box = f"{cell}/FCJH_Slices"
+    coords = '<TextureCoords top="0.0" left="0.0" bottom="1.0" right="1.0"/>' if blue else \
+        '<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>'
+    t = "\t" * 8
+
+    def grey(n, unit):
+        """The slice's death look: its own timer, or the hero's (Rexxar, or every Viking down)."""
+        on = (f'<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>'
+              f'<Action type="SetProperty" frame="$this" Desaturated="true"/>')
+        off = (f'<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>'
+               f'<Action type="SetProperty" frame="$this" Desaturated="false"/>')
+        own = "".join(f'\n{t}\t\t\t<State name="{u}Dead"><When type="Property" frame="{party}/{SLICE_DEATH[u]}" Visible="true"/>{on}</State>'
+                      for u in sorted({sl[n][0] for sl, _ in SLICES.values() if sl[n]} & SLICE_DEATH.keys()))
+        return f"""
+{t}\t\t<StateGroup name="FCJH_Dead">
+{t}\t\t\t<DefaultState val="Alive"/>{own}
+{t}\t\t\t<State name="HeroDead"><When type="Property" frame="$parent/$parent/HeroDeathTimeLabel" Visible="true"/>{on}</State>
+{t}\t\t\t<State name="Alive">{off}</State>
+{t}\t\t</StateGroup>"""
+
+    slices = "".join(f"""
+{t}\t<Frame type="Image" name="FCJH_Slice{n + 1}">
+{t}\t\t<Anchor side="Top"    relative="$parent" pos="Min" offset="{c.portrait_top}"/>
+{t}\t\t<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+{t}\t\t<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
+{t}\t\t<Anchor side="Bottom" relative="$parent" pos="Min" offset="{c.portrait_bottom}"/>
+{t}\t\t{coords}
+{t}\t\t<ImageMaskTexture val="@UI/HUD_TopBar_Team_HeroFrame_Mask"/>
+{t}\t\t<AdjustmentColor val="255,120,120,120"/>
+{t}\t\t<RenderPriority val="{502 + n}"/>
+{t}\t\t<Unclipped val="true"/>
+{t}\t\t<AcceptsMouse val="false"/>{grey(n, None)}
+{t}\t</Frame>""" for n in range(3))
+    dividers = "".join(f"""
+{t}\t<Frame type="Image" name="FCJH_Divider{d}">
+{t}\t\t<Anchor side="Top"    relative="$parent" pos="Min" offset="{s(2)}"/>
+{t}\t\t<Anchor side="Left"   relative="$parent" pos="{pos}" offset="{s(left)}"/>
+{t}\t\t<Anchor side="Bottom" relative="$parent" pos="Min" offset="{s(52)}"/>
+{t}\t\t<Anchor side="Right"  relative="$parent" pos="{pos}" offset="{s(left + 32)}"/>
+{t}\t\t<Texture val="@UI/HUD_TopBar_Team_HeroFrame_Separator"/>
+{t}\t\t{coords}
+{t}\t\t<RenderPriority val="504"/>
+{t}\t\t<Unclipped val="true"/>
+{t}\t\t<AcceptsMouse val="false"/>
+{t}\t</Frame>""" for d, pos, left in ((2, "Min", 32), (3, "Max", -64)))
+
+    def state(unit):
+        parts, (div2, div3) = SLICES[unit]
+        acts = f'<Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SetProperty" frame="{cell}/HeroPortraitImage" Alpha="0"/>'
+        for n, sl in enumerate(parts):
+            f = f"$this/FCJH_Slice{n + 1}"
+            if not sl:
+                acts += f'<Action type="SetProperty" frame="{f}" Alpha="0"/>'
+                continue
+            _, art, shift = sl
+            acts += (f'<Action type="SetProperty" frame="{f}" Alpha="255"/>'
+                     f'<Action type="SetProperty" frame="{f}" Texture="{PARTYFRAME_ART}{art}.dds"/>')
+            if not blue:
+                # by path: relative="$this" doesn't name the group's frame in a SetAnchor (rule 36)
+                acts += (f'<Action type="SetAnchor" frame="{box}/FCJH_Slice{n + 1}" side="Left" relative="{box}" pos="Min" offset="{s(shift)}"/>'
+                         f'<Action type="SetAnchor" frame="{box}/FCJH_Slice{n + 1}" side="Right" relative="{box}" pos="Max" offset="{s(shift)}"/>')
+        for d, on in ((2, div2), (3, div3)):
+            acts += f'<Action type="SetProperty" frame="$this/FCJH_Divider{d}" Alpha="{255 if on else 0}"/>'
+        name = "Vikings" if unit == "HeroLostVikingsController" else "Rexxar"
+        return f'\n{t}\t\t<State name="{name}"><When type="Property" frame="{cell}/HeroStatus" Unit="{unit}"/>{acts}</State>'
+
+    def square(n, colour, when):
+        return f"""
+{t}\t<Frame type="Image" name="FCJH_DiagSlice{n}">
+{t}\t\t<Anchor side="Top"  relative="$parent" pos="Min" offset="-{s(16)}"/>
+{t}\t\t<Anchor side="Left" relative="$parent" pos="Min" offset="{s(30 + 18 * n)}"/>
+{t}\t\t<Width val="{s(14)}"/>
+{t}\t\t<Height val="{s(14)}"/>
+{t}\t\t<Texture val="@UI/PauseScreenDimImage"/>
+{t}\t\t<ColorAdjustMode val="Fill"/>
+{t}\t\t<AdjustmentColor val="{colour}"/>
+{t}\t\t<Alpha val="0"/>
+{t}\t\t<IgnoreParentAlpha val="true"/>
+{t}\t\t<RenderPriority val="999"/>
+{t}\t\t<Unclipped val="true"/>
+{t}\t\t<AcceptsMouse val="false"/>
+{t}\t\t<StateGroup name="FCJH_Diag">
+{t}\t\t\t<DefaultState val="Off"/>
+{t}\t\t\t<State name="On">{when}<Action type="SetProperty" frame="$this" Alpha="255"/></State>
+{t}\t\t\t<State name="Off"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
+{t}\t\t</StateGroup>
+{t}\t</Frame>"""
+    diag = (square(0, "255,0,255,0", f'<When type="Property" frame="{cell}/HeroStatus" Unit="HeroLostVikingsController"/>')
+            + square(1, "255,0,255,255", f'<When type="Property" frame="{cell}/HeroStatus" Unit="HeroRexxar"/>')
+            + square(2, "255,255,255,0", f'<When type="Property" frame="{party}/HeroDeathTimePetLabel" Visible="true"/>')
+            + square(3, "255,255,255,255", f'<When type="Property" frame="{party}/HeroPortraitImage2" Visible="true"/>'))
+    return f"""
+{t[:-1]}<!-- the multi-unit slices (tools/gen.py slice_overlay) -->
+{t[:-1]}<Frame type="Frame" name="FCJH_Slices">
+{t}<Anchor relative="$parent"/>
+{t}<Alpha val="0"/>
+{t}<RenderPriority val="502"/>
+{t}<Unclipped val="true"/>
+{t}<AcceptsMouse val="false"/>{slices}{dividers}{diag}
+{t}<StateGroup name="FCJH_Hero">
+{t}\t<DefaultState val="None"/>{state("HeroLostVikingsController")}{state("HeroRexxar")}
+{t}\t<State name="None"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SetProperty" frame="{cell}/HeroPortraitImage" Alpha="255"/></State>
+{t}</StateGroup>
+{t[:-1]}</Frame>"""
+
+
 def pet_death_bindings(cfg, team_frame, i):
     """Per cell: our per-unit death timers show the hidden party frame's matching label (same
     team and cell), and the plate's own timer steps aside while any Viking's shows."""
@@ -3532,7 +3667,7 @@ def hero_row_layout(cfg):
             # flipping it - the inner cell's portrait then spilled over the outer cell's bars.
             prio = 506 - i if blue else 500 + i
             inner.append(f'''						<Frame type="Frame" name="HeroOverview{i}" template="FCJH_HeroRow/{"FCJH_HeroCell" if blue else "FCJH_HeroCellRed"}">{anchor_xml(cfg, f"hero_{slot}", 7)}
-							<RenderPriority val="{prio}"/>{pet_death_bindings(cfg, team, i)}{heroic_panel(cfg, team, i)}
+							<RenderPriority val="{prio}"/>{pet_death_bindings(cfg, team, i)}{slice_overlay(cfg, team, i)}{heroic_panel(cfg, team, i)}
 						</Frame>''')
         cells.append(f'\t\t\t\t\t<Frame type="Frame" name="{team}">\n' + "\n".join(inner) + '\n\t\t\t\t\t</Frame>')
 
