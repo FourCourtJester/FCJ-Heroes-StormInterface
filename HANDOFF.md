@@ -430,9 +430,16 @@ land on whole pixels at 1080p (`inspect_card.line`), so at 1440p they may come o
 kill feed back on); their feedback is 1.0.x for a while - `[meta] version` 1.0.0, a patch
 number per fix batch, each one a `pack.py --release` from a commit. Work is on `main` (its
 history is python-toolchain's, which stays as it was). GitHub:
-https://github.com/FourCourtJester/FCJ-Heroes-StormInterface (private for now; pushed in
+https://github.com/FourCourtJester/FCJ-Heroes-StormInterface (public; pushed in
 batches, when the user says; `.github/FUNDING.yml` for the Sponsor button: GitHub Sponsors
 and Ko-fi).
+
+**TO DO: an official release filename (user, 2026-10-21): "FCJ v1.x.y"** in place of
+`FCJH.StormInterface` (pack.py's `NAME`; the release workflow's attach path). To settle
+first: if the game lists interfaces by filename (to check), a versioned name means each update lands
+beside the old one and the caster re-picks it in Options (a fixed name overwrites in place);
+spaces in the name are untested in game; dev stays `FCJH.StormInterface` so the
+everyday loop keeps overwriting one file.
 
 **The road to release (user, 2026-10-16): "We're done maps. We're almost done heroes."** Warhead's
 nuke counters closed the maps (e966a07). Left, in order: the last few heroes, then a final
