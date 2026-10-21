@@ -957,11 +957,10 @@ def plate_ring_file(kind):
     return f"FCJH_{kind}_{hashlib.sha1(plate_ring(kind)).hexdigest()[:8]}.dds"
 
 
-def slant_texture(team, cut, colour, alpha=255, size=(512, 32), sub=4, soft=0):
+def slant_texture(team, cut, colour, alpha=255, size=(512, 32), sub=4):
     """A solid-colour parallelogram: the team's lean, cut `cut` of the width in (the slant's
     horizontal run over the bar's height, as a fraction of its width). Blue leans \\ (top edge
-    flush left), red / (top edge flush right). `soft` widens each texel's coverage box by that
-    many texels, feathering the slanted ends."""
+    flush left), red / (top edge flush right)."""
     w, h = size
     r, g, b = bytes.fromhex(colour)
     rows = []
@@ -973,8 +972,8 @@ def slant_texture(team, cut, colour, alpha=255, size=(512, 32), sub=4, soft=0):
                 down = (ty + (s + 0.5) / sub) / h          # 0 at the top, 1 at the bottom
                 shift = cut * (down if team == "blue" else 1 - down)
                 left, right = shift * w, (1 - cut + shift) * w
-                cover += max(0.0, min(tx + 1 + soft / 2, right) - max(tx - soft / 2, left))
-            row += bytes((b, g, r, round(alpha * cover / sub / (1 + soft))))
+                cover += max(0.0, min(tx + 1, right) - max(tx, left))
+            row += bytes((b, g, r, round(alpha * cover / sub)))
         rows.append(bytes(row))
     return dds_bgra(w, h, b"".join(rows))
 
@@ -1501,17 +1500,13 @@ def viking_span(c, team):
 # fall in the margin. (The fill's 0 and 100% move out with it: 10% reads ~7%.) 4, not 2: at 2,
 # moved in, the art's near-upright end cut a notch from Erik's top corner (user, 15_30_32, "a bite").
 VIKING_MARGIN = 4
-# The masks' slanted ends feathered over this many texels: Blizzard's fills end on a dim,
-# anti-aliased pixel, ours stepped hard (user, 2026-10-21, 15_26_42); theirs fades over ~2 px.
-# In game it made no visible difference (15_35_58): the far end's softness comes from a separator.
-VIKING_SOFT = 3
 
 
 @functools.cache
 def _viking_masks(team, w, h, size):
     tw, th = size
     pad = round(VIKING_MARGIN / (w + 2 * VIKING_MARGIN) * tw)
-    inner = slant_texture(team, HeroCell.LEAN * h / w, "ffffff", size=(tw - 2 * pad, th), soft=VIKING_SOFT)[128:]
+    inner = slant_texture(team, HeroCell.LEAN * h / w, "ffffff", size=(tw - 2 * pad, th))[128:]
     edge, row = b"\0" * 4 * pad, 4 * (tw - 2 * pad)
     data = dds_bgra(tw, th, b"".join(edge + inner[y * row:(y + 1) * row] + edge for y in range(th)))
     return data, hashlib.sha1(data).hexdigest()[:8]
@@ -2276,9 +2271,10 @@ def heroic_panel(cfg, team_frame, i):
                     f'{t10}<Action type="SetAnchor" frame="{f}" side="Right" relative="{cell}" pos="Min" offset="{round(right + VIKING_MARGIN)}"/>\n'
                     f'{t10}<Action type="SetProperty" frame="{f}/HealthBar" AlphaMaskTexture="{mask}"/>\n')
         # Blizzard's separator over each seam, its line at the bar's middle on the seam - and
-        # a third over the far end, on the mask's edge: the game draws an AlphaMaskTexture's
-        # edge hard however it's feathered, so the one end with no separator on it stepped where
-        # the separators' own anti-aliased lines read soft (user, 2026-10-21, 15_35_58)
+        # a third over the far end, on the mask's edge: the one end with no separator on it
+        # stepped where the separators' anti-aliased lines read soft (user, 2026-10-21,
+        # 15_35_58). Feathering the mask instead (1.5, then 3 texels) didn't soften it, and its
+        # faint tail bled past this separator's line (15_38_53), so the mask's edge is hard.
         run = HeroCell.LEAN * (hb - g["health_full" if full else "health"][1])
         far_end = hl + run / 2 if blue else hr - run / 2
         line = s(VIKING_SEP_LINE if blue else VIKING_SEP_W - VIKING_SEP_LINE)
