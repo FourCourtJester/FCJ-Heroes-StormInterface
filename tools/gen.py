@@ -957,10 +957,11 @@ def plate_ring_file(kind):
     return f"FCJH_{kind}_{hashlib.sha1(plate_ring(kind)).hexdigest()[:8]}.dds"
 
 
-def slant_texture(team, cut, colour, alpha=255, size=(512, 32), sub=4):
+def slant_texture(team, cut, colour, alpha=255, size=(512, 32), sub=4, soft=0):
     """A solid-colour parallelogram: the team's lean, cut `cut` of the width in (the slant's
     horizontal run over the bar's height, as a fraction of its width). Blue leans \\ (top edge
-    flush left), red / (top edge flush right)."""
+    flush left), red / (top edge flush right). `soft` widens each texel's coverage box by that
+    many texels, feathering the slanted ends."""
     w, h = size
     r, g, b = bytes.fromhex(colour)
     rows = []
@@ -972,8 +973,8 @@ def slant_texture(team, cut, colour, alpha=255, size=(512, 32), sub=4):
                 down = (ty + (s + 0.5) / sub) / h          # 0 at the top, 1 at the bottom
                 shift = cut * (down if team == "blue" else 1 - down)
                 left, right = shift * w, (1 - cut + shift) * w
-                cover += max(0.0, min(tx + 1, right) - max(tx, left))
-            row += bytes((b, g, r, round(alpha * cover / sub)))
+                cover += max(0.0, min(tx + 1 + soft / 2, right) - max(tx - soft / 2, left))
+            row += bytes((b, g, r, round(alpha * cover / sub / (1 + soft))))
         rows.append(bytes(row))
     return dds_bgra(w, h, b"".join(rows))
 
@@ -1473,7 +1474,9 @@ def viking_bars(hl, hr, h):
 # side - red's left, blue's right; the far side). Off Blizzard's health_full
 # rect, Olaf's end ran ~3 px past red's left seam and Erik's sat ~1 px short (user, 2026-10-21,
 # 15_11_52, measured): red's left end just inside its seam's line, as Blizzard's own fills.
-VIKING_END_INSET = (1.1, 5.6)
+# The far side 1.2 more (15_26_42): Erik's end left 2-3 dark px before the seam where Blizzard's
+# fills leave 3-4, and the thinner gap showed up the steps.
+VIKING_END_INSET = (1.1, 6.8)
 
 
 def viking_span(c, team):
@@ -1495,13 +1498,16 @@ def viking_span(c, team):
 # (user, 2026-10-21, 15_16_37; the other ends hide under the separators). Padded, the art's ends
 # fall in the margin. (The fill's 0 and 100% move out with it: 10% reads ~7%.)
 VIKING_MARGIN = 2
+# The masks' slanted ends feathered over this many texels: Blizzard's fills end on a dim,
+# anti-aliased pixel, ours stepped hard (user, 2026-10-21, 15_26_42).
+VIKING_SOFT = 1.5
 
 
 @functools.cache
 def _viking_masks(team, w, h, size):
     tw, th = size
     pad = round(VIKING_MARGIN / (w + 2 * VIKING_MARGIN) * tw)
-    inner = slant_texture(team, HeroCell.LEAN * h / w, "ffffff", size=(tw - 2 * pad, th))[128:]
+    inner = slant_texture(team, HeroCell.LEAN * h / w, "ffffff", size=(tw - 2 * pad, th), soft=VIKING_SOFT)[128:]
     edge, row = b"\0" * 4 * pad, 4 * (tw - 2 * pad)
     data = dds_bgra(tw, th, b"".join(edge + inner[y * row:(y + 1) * row] + edge for y in range(th)))
     return data, hashlib.sha1(data).hexdigest()[:8]
@@ -2385,9 +2391,7 @@ SLICE_DEATH = {"Olaf": "HeroDeathTimeVikingOlafLabel", "Baleog": "HeroDeathTimeV
 
 def slice_overlay(cfg, team_frame, i):
     """Per cell: Blizzard's player-bar slices over our portrait for the Vikings and Rexxar +
-    Misha (SLICES), each greyed while its own unit is dead, with Blizzard's dividers between.
-    DIAGNOSTIC squares above the plate: green Vikings, cyan Rexxar (the unit checks), yellow
-    Misha's timer showing, white the party cell's second portrait shown."""
+    Misha (SLICES), each greyed while its own unit is dead, with Blizzard's dividers between."""
     c = HeroCell(cfg)
     k = c.w / c.W
     s = lambda v: round(v * k)
@@ -2487,31 +2491,6 @@ def slice_overlay(cfg, team_frame, i):
                      f'<Action type="SetAnchor" frame="{hold}" side="Right" relative="{cell}" pos="Max" offset="{x}"/>')
         return f'\n{t}\t\t<State name="{name}"><When type="Property" frame="{cell}/HeroStatus" Unit="{unit}"/>{acts}</State>'
 
-    def square(n, colour, when):
-        return f"""
-{t}\t<Frame type="Image" name="FCJH_DiagSlice{n}">
-{t}\t\t<Anchor side="Top"  relative="$parent" pos="Min" offset="-{s(16)}"/>
-{t}\t\t<Anchor side="Left" relative="$parent" pos="Min" offset="{s(30 + 18 * n)}"/>
-{t}\t\t<Width val="{s(14)}"/>
-{t}\t\t<Height val="{s(14)}"/>
-{t}\t\t<Texture val="@UI/PauseScreenDimImage"/>
-{t}\t\t<ColorAdjustMode val="Fill"/>
-{t}\t\t<AdjustmentColor val="{colour}"/>
-{t}\t\t<Alpha val="0"/>
-{t}\t\t<IgnoreParentAlpha val="true"/>
-{t}\t\t<RenderPriority val="999"/>
-{t}\t\t<Unclipped val="true"/>
-{t}\t\t<AcceptsMouse val="false"/>
-{t}\t\t<StateGroup name="FCJH_Diag">
-{t}\t\t\t<DefaultState val="Off"/>
-{t}\t\t\t<State name="On">{when}<Action type="SetProperty" frame="$this" Alpha="255"/></State>
-{t}\t\t\t<State name="Off"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
-{t}\t\t</StateGroup>
-{t}\t</Frame>"""
-    diag = (square(0, "255,0,255,0", f'<When type="Property" frame="{cell}/HeroStatus" Unit="HeroLostVikingsController"/>')
-            + square(1, "255,0,255,255", f'<When type="Property" frame="{cell}/HeroStatus" Unit="HeroRexxar"/>')
-            + square(2, "255,255,255,0", f'<When type="Property" frame="{party}/HeroDeathTimePetLabel" Visible="true"/>')
-            + square(3, "255,255,255,255", f'<When type="Property" frame="{party}/HeroPortraitImage2" Visible="true"/>'))
     return f"""
 {t[:-1]}<!-- the multi-unit slices (tools/gen.py slice_overlay) -->
 {t[:-1]}<Frame type="Frame" name="FCJH_Slices">
@@ -2519,7 +2498,7 @@ def slice_overlay(cfg, team_frame, i):
 {t}<Alpha val="0"/>
 {t}<RenderPriority val="502"/>
 {t}<Unclipped val="true"/>
-{t}<AcceptsMouse val="false"/>{slices}{dividers}{diag}
+{t}<AcceptsMouse val="false"/>{slices}{dividers}
 {t}<StateGroup name="FCJH_Hero">
 {t}\t<DefaultState val="None"/>{state("HeroLostVikingsController")}{state("HeroRexxar")}
 {t}\t<State name="None"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SetProperty" frame="{cell}/HeroPortraitImage" Alpha="255"/></State>
