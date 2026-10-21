@@ -2633,6 +2633,11 @@ def pet_death_bindings(cfg, team_frame, i):
 # stop its respawn glow: the Vikings' HeroAlmostRespawnedHero1-3 / HeroRespawnedHero1-3,
 # Misha's HeroAlmostRespawnedPet (Blizzard sends no HeroRespawnedPet: her timer hiding stops it)
 SLICE_RINGS = {"Olaf": (0, "Hero1"), "Baleog": (1, "Hero2"), "Erik": (2, "Hero3"), "Misha": (2, "Pet")}
+# ...and each slice's skull: Blizzard's per-slice one (partyframe HeroDeathAnimFrameXSmallTemplate's
+# HeroDeathIconImage, 30 x 34, 2 above its frame's middle), centred on the slice's portrait -
+# the plate's skull stays hidden for a Viking's death (user, 2026-10-21: "the skulls dont seem
+# to be triggering for TLV")
+SLICE_SKULL_W, SLICE_SKULL_H, SLICE_SKULL_UP = 30, 34, 2
 
 
 def slice_rings(cfg, team_frame, i):
@@ -2653,12 +2658,14 @@ def slice_rings(cfg, team_frame, i):
         l, r = slice_ring_box(tex, k)
         if not blue:
             l, r = c.w - r, c.w - l
+        lines = slice_lines()
+        sy = SLICE_RING_BOTTOM / 2 - SLICE_SKULL_UP
+        sx = (lines[tex](sy) + lines[tex + 1](sy)) / 2
+        sx, sy = round((sx if blue else HeroCell.W - sx) * k), round(sy * k)
         # the bursts' snap in, scaled to the slice (the plate's moves are for the cell)
         across, down = (r - l) / c.w, SLICE_RING_BOTTOM / HeroCell.H
         anim = ""
         for name, keys in SKULL_FADES.items():
-            if name == "FCJH_SkullIcon":
-                continue
             anim += f'\n{t}\t\t<Controller type="Fade" frame="{name.replace("Skull", "Slice")}" end="Pause">' + "".join(
                 f'\n{t}\t\t\t<Key type="Curve" time="{tm}" value="{v}" inout="{io}"/>' for tm, v, io in keys) \
                 + f'\n{t}\t\t</Controller>'
@@ -2713,7 +2720,20 @@ def slice_rings(cfg, team_frame, i):
 {t}\t\t<Event event="FCJH_SliceAlive" action="Reset,Stop" frame="$this"/>
 {t}\t\t<Controller type="Fade" frame="FCJH_SliceGlow" end="Pause">{glow}
 {t}\t\t</Controller>
-{t}\t</Animation>{image("FCJH_SliceOverlay", "DeathRing", 515)}{image("FCJH_SliceBurst", "DeathBurst", 516)}{image("FCJH_SliceBurst2", "DeathBurst", 516)}{image("FCJH_SliceGlow", "RespawnGlow", 590)}
+{t}\t</Animation>{image("FCJH_SliceOverlay", "DeathRing", 515)}{image("FCJH_SliceBurst", "DeathBurst", 516)}{image("FCJH_SliceBurst2", "DeathBurst", 516)}
+{t}\t<Frame type="Image" name="FCJH_SliceIcon">
+{t}\t\t<Anchor side="Top"    relative="$parent" pos="Min" offset="{sy}"/>
+{t}\t\t<Anchor side="Left"   relative="$parent" pos="Min" offset="{sx}"/>
+{t}\t\t<Anchor side="Bottom" relative="$parent" pos="Min" offset="{sy}"/>
+{t}\t\t<Anchor side="Right"  relative="$parent" pos="Min" offset="{sx}"/>
+{t}\t\t<Width val="{round(SLICE_SKULL_W * k)}"/>
+{t}\t\t<Height val="{round(SLICE_SKULL_H * k)}"/>
+{t}\t\t<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+{t}\t\t<Alpha val="0"/>
+{t}\t\t<RenderPriority val="517"/>
+{t}\t\t<Unclipped val="true"/>
+{t}\t\t<AcceptsMouse val="false"/>
+{t}\t</Frame>{image("FCJH_SliceGlow", "RespawnGlow", 590)}
 {t}</Frame>"""
     return out
 

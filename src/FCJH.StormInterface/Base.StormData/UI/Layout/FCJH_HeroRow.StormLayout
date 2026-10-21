@@ -8782,6 +8782,11 @@
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
 									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
+									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-34" inout="Slow"/>
 										<Key type="Curve" time="0.35" value="0" inout="Linear"/>
@@ -8899,6 +8904,19 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="38"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="38"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
 								<Frame type="Image" name="FCJH_SliceGlow">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="-4"/>
@@ -8951,6 +8969,11 @@
 										<Key type="Curve" time="1.35" value="125" inout="Linear"/>
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
+									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
 									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-31" inout="Slow"/>
@@ -9069,6 +9092,19 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="90"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="90"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
 								<Frame type="Image" name="FCJH_SliceGlow">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="52"/>
@@ -9121,6 +9157,11 @@
 										<Key type="Curve" time="1.35" value="125" inout="Linear"/>
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
+									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
 									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-30" inout="Slow"/>
@@ -9239,6 +9280,19 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="138"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="138"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
 								<Frame type="Image" name="FCJH_SliceGlow">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="101"/>
@@ -9296,6 +9350,11 @@
 										<Key type="Curve" time="1.35" value="125" inout="Linear"/>
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
+									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
 									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-30" inout="Slow"/>
@@ -9411,6 +9470,19 @@
 									<Texture val="_Assets\Textures\FCJH_DeathBurst_s2_03fb0842.dds"/>
 									<Alpha val="0"/>
 									<RenderPriority val="516"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="138"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="138"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
@@ -10406,6 +10478,11 @@
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
 									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
+									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-34" inout="Slow"/>
 										<Key type="Curve" time="0.35" value="0" inout="Linear"/>
@@ -10523,6 +10600,19 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="38"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="38"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
 								<Frame type="Image" name="FCJH_SliceGlow">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="-4"/>
@@ -10575,6 +10665,11 @@
 										<Key type="Curve" time="1.35" value="125" inout="Linear"/>
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
+									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
 									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-31" inout="Slow"/>
@@ -10693,6 +10788,19 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="90"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="90"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
 								<Frame type="Image" name="FCJH_SliceGlow">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="52"/>
@@ -10745,6 +10853,11 @@
 										<Key type="Curve" time="1.35" value="125" inout="Linear"/>
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
+									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
 									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-30" inout="Slow"/>
@@ -10863,6 +10976,19 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="138"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="138"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
 								<Frame type="Image" name="FCJH_SliceGlow">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="101"/>
@@ -10920,6 +11046,11 @@
 										<Key type="Curve" time="1.35" value="125" inout="Linear"/>
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
+									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
 									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-30" inout="Slow"/>
@@ -11035,6 +11166,19 @@
 									<Texture val="_Assets\Textures\FCJH_DeathBurst_s2_03fb0842.dds"/>
 									<Alpha val="0"/>
 									<RenderPriority val="516"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="138"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="138"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
@@ -12030,6 +12174,11 @@
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
 									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
+									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-34" inout="Slow"/>
 										<Key type="Curve" time="0.35" value="0" inout="Linear"/>
@@ -12147,6 +12296,19 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="38"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="38"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
 								<Frame type="Image" name="FCJH_SliceGlow">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="-4"/>
@@ -12199,6 +12361,11 @@
 										<Key type="Curve" time="1.35" value="125" inout="Linear"/>
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
+									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
 									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-31" inout="Slow"/>
@@ -12317,6 +12484,19 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="90"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="90"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
 								<Frame type="Image" name="FCJH_SliceGlow">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="52"/>
@@ -12369,6 +12549,11 @@
 										<Key type="Curve" time="1.35" value="125" inout="Linear"/>
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
+									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
 									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-30" inout="Slow"/>
@@ -12487,6 +12672,19 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="138"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="138"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
 								<Frame type="Image" name="FCJH_SliceGlow">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="101"/>
@@ -12544,6 +12742,11 @@
 										<Key type="Curve" time="1.35" value="125" inout="Linear"/>
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
+									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
 									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-30" inout="Slow"/>
@@ -12659,6 +12862,19 @@
 									<Texture val="_Assets\Textures\FCJH_DeathBurst_s2_03fb0842.dds"/>
 									<Alpha val="0"/>
 									<RenderPriority val="516"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="138"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="138"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
@@ -13654,6 +13870,11 @@
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
 									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
+									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-34" inout="Slow"/>
 										<Key type="Curve" time="0.35" value="0" inout="Linear"/>
@@ -13771,6 +13992,19 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="38"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="38"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
 								<Frame type="Image" name="FCJH_SliceGlow">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="-4"/>
@@ -13823,6 +14057,11 @@
 										<Key type="Curve" time="1.35" value="125" inout="Linear"/>
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
+									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
 									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-31" inout="Slow"/>
@@ -13941,6 +14180,19 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="90"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="90"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
 								<Frame type="Image" name="FCJH_SliceGlow">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="52"/>
@@ -13993,6 +14245,11 @@
 										<Key type="Curve" time="1.35" value="125" inout="Linear"/>
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
+									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
 									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-30" inout="Slow"/>
@@ -14111,6 +14368,19 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="138"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="138"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
 								<Frame type="Image" name="FCJH_SliceGlow">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="101"/>
@@ -14168,6 +14438,11 @@
 										<Key type="Curve" time="1.35" value="125" inout="Linear"/>
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
+									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
 									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-30" inout="Slow"/>
@@ -14283,6 +14558,19 @@
 									<Texture val="_Assets\Textures\FCJH_DeathBurst_s2_03fb0842.dds"/>
 									<Alpha val="0"/>
 									<RenderPriority val="516"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="138"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="138"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
@@ -15278,6 +15566,11 @@
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
 									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
+									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-34" inout="Slow"/>
 										<Key type="Curve" time="0.35" value="0" inout="Linear"/>
@@ -15395,6 +15688,19 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="38"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="38"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
 								<Frame type="Image" name="FCJH_SliceGlow">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="-4"/>
@@ -15447,6 +15753,11 @@
 										<Key type="Curve" time="1.35" value="125" inout="Linear"/>
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
+									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
 									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-31" inout="Slow"/>
@@ -15565,6 +15876,19 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="90"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="90"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
 								<Frame type="Image" name="FCJH_SliceGlow">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="52"/>
@@ -15617,6 +15941,11 @@
 										<Key type="Curve" time="1.35" value="125" inout="Linear"/>
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
+									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
 									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-30" inout="Slow"/>
@@ -15735,6 +16064,19 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="138"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="138"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
 								<Frame type="Image" name="FCJH_SliceGlow">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="101"/>
@@ -15792,6 +16134,11 @@
 										<Key type="Curve" time="1.35" value="125" inout="Linear"/>
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
+									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
 									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-30" inout="Slow"/>
@@ -15907,6 +16254,19 @@
 									<Texture val="_Assets\Textures\FCJH_DeathBurst_s2_03fb0842.dds"/>
 									<Alpha val="0"/>
 									<RenderPriority val="516"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="138"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="138"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
@@ -16904,6 +17264,11 @@
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
 									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
+									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-30" inout="Slow"/>
 										<Key type="Curve" time="0.35" value="0" inout="Linear"/>
@@ -17024,6 +17389,19 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="60"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="60"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
 								<Frame type="Image" name="FCJH_SliceGlow">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="19"/>
@@ -17077,6 +17455,11 @@
 										<Key type="Curve" time="1.35" value="125" inout="Linear"/>
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
+									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
 									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-31" inout="Slow"/>
@@ -17198,6 +17581,19 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="108"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="108"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
 								<Frame type="Image" name="FCJH_SliceGlow">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="66"/>
@@ -17251,6 +17647,11 @@
 										<Key type="Curve" time="1.35" value="125" inout="Linear"/>
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
+									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
 									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-34" inout="Slow"/>
@@ -17372,6 +17773,19 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="160"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="160"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
 								<Frame type="Image" name="FCJH_SliceGlow">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="115"/>
@@ -17430,6 +17844,11 @@
 										<Key type="Curve" time="1.35" value="125" inout="Linear"/>
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
+									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
 									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-34" inout="Slow"/>
@@ -17548,6 +17967,19 @@
 									<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>
 									<Alpha val="0"/>
 									<RenderPriority val="516"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="160"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="160"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
@@ -18547,6 +18979,11 @@
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
 									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
+									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-30" inout="Slow"/>
 										<Key type="Curve" time="0.35" value="0" inout="Linear"/>
@@ -18667,6 +19104,19 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="60"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="60"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
 								<Frame type="Image" name="FCJH_SliceGlow">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="19"/>
@@ -18720,6 +19170,11 @@
 										<Key type="Curve" time="1.35" value="125" inout="Linear"/>
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
+									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
 									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-31" inout="Slow"/>
@@ -18841,6 +19296,19 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="108"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="108"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
 								<Frame type="Image" name="FCJH_SliceGlow">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="66"/>
@@ -18894,6 +19362,11 @@
 										<Key type="Curve" time="1.35" value="125" inout="Linear"/>
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
+									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
 									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-34" inout="Slow"/>
@@ -19015,6 +19488,19 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="160"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="160"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
 								<Frame type="Image" name="FCJH_SliceGlow">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="115"/>
@@ -19073,6 +19559,11 @@
 										<Key type="Curve" time="1.35" value="125" inout="Linear"/>
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
+									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
 									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-34" inout="Slow"/>
@@ -19191,6 +19682,19 @@
 									<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>
 									<Alpha val="0"/>
 									<RenderPriority val="516"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="160"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="160"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
@@ -20190,6 +20694,11 @@
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
 									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
+									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-30" inout="Slow"/>
 										<Key type="Curve" time="0.35" value="0" inout="Linear"/>
@@ -20310,6 +20819,19 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="60"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="60"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
 								<Frame type="Image" name="FCJH_SliceGlow">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="19"/>
@@ -20363,6 +20885,11 @@
 										<Key type="Curve" time="1.35" value="125" inout="Linear"/>
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
+									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
 									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-31" inout="Slow"/>
@@ -20484,6 +21011,19 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="108"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="108"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
 								<Frame type="Image" name="FCJH_SliceGlow">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="66"/>
@@ -20537,6 +21077,11 @@
 										<Key type="Curve" time="1.35" value="125" inout="Linear"/>
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
+									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
 									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-34" inout="Slow"/>
@@ -20658,6 +21203,19 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="160"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="160"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
 								<Frame type="Image" name="FCJH_SliceGlow">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="115"/>
@@ -20716,6 +21274,11 @@
 										<Key type="Curve" time="1.35" value="125" inout="Linear"/>
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
+									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
 									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-34" inout="Slow"/>
@@ -20834,6 +21397,19 @@
 									<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>
 									<Alpha val="0"/>
 									<RenderPriority val="516"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="160"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="160"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
@@ -21833,6 +22409,11 @@
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
 									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
+									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-30" inout="Slow"/>
 										<Key type="Curve" time="0.35" value="0" inout="Linear"/>
@@ -21953,6 +22534,19 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="60"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="60"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
 								<Frame type="Image" name="FCJH_SliceGlow">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="19"/>
@@ -22006,6 +22600,11 @@
 										<Key type="Curve" time="1.35" value="125" inout="Linear"/>
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
+									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
 									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-31" inout="Slow"/>
@@ -22127,6 +22726,19 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="108"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="108"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
 								<Frame type="Image" name="FCJH_SliceGlow">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="66"/>
@@ -22180,6 +22792,11 @@
 										<Key type="Curve" time="1.35" value="125" inout="Linear"/>
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
+									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
 									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-34" inout="Slow"/>
@@ -22301,6 +22918,19 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="160"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="160"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
 								<Frame type="Image" name="FCJH_SliceGlow">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="115"/>
@@ -22359,6 +22989,11 @@
 										<Key type="Curve" time="1.35" value="125" inout="Linear"/>
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
+									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
 									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-34" inout="Slow"/>
@@ -22477,6 +23112,19 @@
 									<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>
 									<Alpha val="0"/>
 									<RenderPriority val="516"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="160"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="160"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
@@ -23476,6 +24124,11 @@
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
 									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
+									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-30" inout="Slow"/>
 										<Key type="Curve" time="0.35" value="0" inout="Linear"/>
@@ -23596,6 +24249,19 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="60"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="60"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
 								<Frame type="Image" name="FCJH_SliceGlow">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="19"/>
@@ -23649,6 +24315,11 @@
 										<Key type="Curve" time="1.35" value="125" inout="Linear"/>
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
+									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
 									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-31" inout="Slow"/>
@@ -23770,6 +24441,19 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="108"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="108"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
 								<Frame type="Image" name="FCJH_SliceGlow">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="66"/>
@@ -23823,6 +24507,11 @@
 										<Key type="Curve" time="1.35" value="125" inout="Linear"/>
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
+									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
 									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-34" inout="Slow"/>
@@ -23944,6 +24633,19 @@
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="160"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="160"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
 								<Frame type="Image" name="FCJH_SliceGlow">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 									<Anchor side="Left"   relative="$parent" pos="Min" offset="115"/>
@@ -24002,6 +24704,11 @@
 										<Key type="Curve" time="1.35" value="125" inout="Linear"/>
 										<Key type="Curve" time="1.45" value="0" inout="Linear"/>
 										<Key type="Curve" time="1.5" value="0" inout="Slow"/>
+									</Controller>
+									<Controller type="Fade" frame="FCJH_SliceIcon" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="0.35" value="255" inout="Slow,Linear"/>
+										<Key type="Curve" time="1.1" value="0" inout="Slow,Linear"/>
 									</Controller>
 									<Controller type="Anchor" end="Pause" side="Left" frame="FCJH_SliceBurst" relative="true">
 										<Key type="Curve" time="0" value="-34" inout="Slow"/>
@@ -24120,6 +24827,19 @@
 									<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>
 									<Alpha val="0"/>
 									<RenderPriority val="516"/>
+									<Unclipped val="true"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
+								<Frame type="Image" name="FCJH_SliceIcon">
+									<Anchor side="Top"    relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="160"/>
+									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="160"/>
+									<Width val="46"/>
+									<Height val="53"/>
+									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
+									<Alpha val="0"/>
+									<RenderPriority val="517"/>
 									<Unclipped val="true"/>
 									<AcceptsMouse val="false"/>
 								</Frame>
