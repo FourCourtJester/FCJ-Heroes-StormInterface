@@ -2284,6 +2284,16 @@ def slice_overlay(cfg, team_frame, i):
     box = f"{cell}/FCJH_Slices"
     coords = '<TextureCoords top="0.0" left="0.0" bottom="1.0" right="1.0"/>' if blue else \
         '<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>'
+    # the slices stop where the bar backing does, as the portrait's mask (portrait_mask): the
+    # art's last rows showed as a line under the Vikings' resource bar (user, 2026-10-21) - the
+    # frame cut short and the art cropped to match, so it keeps its scale
+    cut = HeroCell.BLUE["health_backing"][3] - 1
+    v = round((cut + 1) / HeroCell.PORTRAIT_H, 4)
+    slice_coords = coords.replace('bottom="1.0"', f'bottom="{v}"')
+    # Rexxar's timer on his own slice, not the plate's middle (user, 2026-10-21: "looks a bit
+    # wierd"): his slice's centre at the timer's height sits 16 left of the plate's, both teams
+    # (measured from the art: blue 16..79 of 16..111, red mirrored and shifted 18..81 of 17..112)
+    rexxar_timer = -16
     t = "\t" * 8
 
     def grey(n, unit):
@@ -2306,8 +2316,8 @@ def slice_overlay(cfg, team_frame, i):
 {t}\t\t<Anchor side="Top"    relative="$parent" pos="Min" offset="{c.portrait_top}"/>
 {t}\t\t<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 {t}\t\t<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
-{t}\t\t<Anchor side="Bottom" relative="$parent" pos="Min" offset="{c.portrait_bottom}"/>
-{t}\t\t{coords}
+{t}\t\t<Anchor side="Bottom" relative="$parent" pos="Min" offset="{s(cut)}"/>
+{t}\t\t{slice_coords}
 {t}\t\t<ImageMaskTexture val="@UI/HUD_TopBar_Team_HeroFrame_Mask"/>
 {t}\t\t<RenderPriority val="{502 + n}"/>
 {t}\t\t<Unclipped val="true"/>
@@ -2344,6 +2354,11 @@ def slice_overlay(cfg, team_frame, i):
         for d, on in ((2, div2), (3, div3)):
             acts += f'<Action type="SetProperty" frame="$this/FCJH_Divider{d}" Alpha="{255 if on else 0}"/>'
         name = "Vikings" if unit == "HeroLostVikingsController" else "Rexxar"
+        if name == "Rexxar":
+            hold = f"{cell}/FCJH_DeathTimeHold"
+            x = c.death_shift + s(rexxar_timer)
+            acts += (f'<Action type="SetAnchor" frame="{hold}" side="Left" relative="{cell}" pos="Min" offset="{x}"/>'
+                     f'<Action type="SetAnchor" frame="{hold}" side="Right" relative="{cell}" pos="Max" offset="{x}"/>')
         return f'\n{t}\t\t<State name="{name}"><When type="Property" frame="{cell}/HeroStatus" Unit="{unit}"/>{acts}</State>'
 
     def square(n, colour, when):
