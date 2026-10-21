@@ -1476,8 +1476,10 @@ def viking_bars(hl, hr, h):
 # The far side 1.2 more (15_26_42): Erik's end left 2-3 dark px before the seam where Blizzard's
 # fills leave 3-4, and the thinner gap showed up the steps. Then 1.5 more (15_30_32): below the
 # top rows his end didn't move at all - the plate's dark border along the seam was cutting it,
-# hard, over the mask's edge - so the mask's feathered edge now ends clear of the border.
-VIKING_END_INSET = (1.1, 8.3)
+# hard, over the mask's edge - so the mask's feathered edge now ends clear of the border. Then,
+# with a separator on the far end (viking_bars' lefts), 3.1 back out (15_41_40, measured): its
+# fill's half-way point ~7 px from the plate's white seam where Blizzard's sit ~4.5.
+VIKING_END_INSET = (1.1, 5.2)
 
 
 def viking_span(c, team):
