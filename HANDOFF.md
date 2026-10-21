@@ -850,10 +850,14 @@ from their plates (docs/blizzard-fixes.md).
      plates feel far more polished than the observer's; find out what we can copy (the
      player HUD's layouts in JamiePhan - their animations and StateGroups);
    - **Split plates for heroes with more than one unit** (Rexxar and Misha, the Lost
-     Vikings). The player's top bar slices their boxes much better than the observer view:
-     when Misha dies, only her part of the portrait darkens, and her death timer sits
-     centred on it. Today Misha's bar is hidden and Rexxar's runs full height; the Vikings'
-     bars and timers are in thirds. See item 15 too (Blizzard's three-slice Vikings plate);
+     Vikings). **Portraits and bars DONE (user, 2026-10-21, e101687: "i think we're good").**
+     Blizzard's player-bar slices over the portrait, each greyed while its unit is dead
+     (`slice_overlay`); the Vikings' three bars slanted and masked (`viking_bars`,
+     `viking_masks`, `viking_span`), Blizzard's separator on each seam and the far end (a mask's
+     edge draws hard in game however it's feathered); the slice diagnostics are gone. Misha's
+     bar stays hidden, Rexxar's full height. **Left:** per-slice death and respawn rings
+     (`HeroAlmostRespawnedHero{n}` / `HeroRespawnedHero{n}` on the party cell; the plate rings
+     today ring the whole cell), the Vikings' embers/fire untested, Misha's death. See item 15;
    - ~~**Death timers flash white under 5 s**~~ DONE (user, 2026-10-18; above);
    - ~~**Ahli's death animation**~~ DONE (item 12; seen again 2026-10-19: the skull, red ring,
      flashing count and gold rim at 5 all good);
