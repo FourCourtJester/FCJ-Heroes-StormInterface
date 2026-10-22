@@ -1676,9 +1676,11 @@ def trackers(team, health):
 
 
 # Misha's timer (HeroDeathTimePetLabel) too was mirrored at first; dropped 2026-09-30 (user):
-# with no portrait of her own to sit on, it just overhung Rexxar's bar
+# with no portrait of her own to sit on, it just overhung Rexxar's bar. Back since she has her
+# slice (user, 2026-10-21: "lets add it back in"): PET_TIMER_MISHA, on her slice's third.
 PET_TIMERS = {"Olaf": "HeroDeathTimeVikingOlafLabel", "Baleog": "HeroDeathTimeVikingBaleogLabel",
               "Erik": "HeroDeathTimeVikingErikLabel"}
+PET_TIMER_MISHA = "HeroDeathTimePetLabel"
 PARTY = "$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel"
 # which third of the plate each Viking's bar is: the slices' order, Olaf, Baleog, Erik, on both
 # teams (2026-10-21; Baleog, Erik, Olaf until then, for the generic art - user: "the portraits
@@ -1825,16 +1827,15 @@ def pet_death_labels(team, c):
     # The slices are measured along the bar, but the timer sits higher up the slanted plate,
     # where each slice has shifted with the lean: left on blue (\), right on red (/). Seen in
     # game (2026-09-29): a timer just off its slice toward the plate's slanted edge.
-    # Centred on the portrait slice, where Misha's skull is (slice_rings: 2 above the slice's
-    # middle), not on the plate as the one-unit plates' (theirs hide their bars when dead;
+    # Centred on the portrait slice (2 above its middle, Blizzard's skull's), not on the plate as the one-unit plates' (theirs hide their bars when dead;
     # a Viking's bar stays, so the timer and its skull sat low - user, 2026-10-21)
     k = c.w / c.W
     mid = round((SLICE_RING_BOTTOM / 2 - SLICE_SKULL_UP) * k)
     lean = c.lean
     shift = round(lean * ((ht + hb) / 2 - mid)) * (-1 if team == "blue" else 1)
     labels = ""
-    # each timer on its Viking's third (VIKING_SLOT)
-    for viking, i in VIKING_SLOT.items():
+    # each timer on its Viking's third (VIKING_SLOT), Misha's on hers
+    for viking, i in {**VIKING_SLOT, "Misha": SLICE_RINGS["Misha"][0]}.items():
         left = round(hl + i * third) + shift
         labels += f"""
 		<Frame type="Label" name="FCJH_Death{viking}">
@@ -2581,9 +2582,17 @@ def pet_death_bindings(cfg, team_frame, i):
     cell = f"{PARTY}/{team_frame}/HeroOverview{i}"
     t = "\t" * 8
     out = ""
-    for n, (ours, theirs) in enumerate(PET_TIMERS.items(), start=1):   # Olaf Hero1, Baleog 2, Erik 3
+    timers = [(ours, theirs, f"HeroAlmostRespawnedHero{n}", (f"HeroRespawnedHero{n}", cell))
+              for n, (ours, theirs) in enumerate(PET_TIMERS.items(), start=1)]   # Olaf Hero1, Baleog 2, Erik 3
+    # Misha's: no HeroRespawnedPet, so her flash stops as her timer hides; none while Rexxar is
+    # dead, as the rest of hers (slice_rings)
+    timers.append(("Misha", PET_TIMER_MISHA, "HeroAlmostRespawnedPet", ("FCJH_TimerOut", "$this")))
+    for ours, theirs, almost, stop in timers:
         flash = style_flash("FCJH_RespawnFlash", "$this", "FCJH_PetDeathTimer", "FCJH_PetDeathTimer_Respawn",
-                            [(f"HeroAlmostRespawnedHero{n}", cell)], [(f"HeroRespawnedHero{n}", cell)], t)
+                            [(almost, cell)], [stop], t)
+        rexxar = "" if ours != "Misha" else (
+            f'\n\t\t\t\t\t\t\t\t\t<State name="Rexxar"><When type="Property" frame="{cell}/HeroDeathTimeLabel" Visible="true"/>'
+            '<Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>')
         # faded in after the slice's skull, as the plate's (FCJH_Handover): they showed at once,
         # over the skull (user, 2026-10-21: "not delaying the death timer from spawning"), and
         # held VIKING_TIMER_HOLD (user: "Delay the number by like 1.5 seconds from appearing")
@@ -2591,7 +2600,7 @@ def pet_death_bindings(cfg, team_frame, i):
 							<Frame type="Label" name="FCJH_Death{ours}">
 								<Text val="{{{cell}/{theirs}/@Text}}"/>
 								<StateGroup name="FCJH_Shown">
-									<DefaultState val="No"/>
+									<DefaultState val="No"/>{rexxar}
 									<State name="Yes"><When type="Property" frame="{cell}/{theirs}" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
 									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
 								</StateGroup>
@@ -2678,18 +2687,12 @@ def slice_rings(cfg, team_frame, i):
         l, r = slice_ring_box(tex, k)
         if not blue:
             l, r = c.w - r, c.w - l
-        lines = slice_lines()
-        sy = SLICE_RING_BOTTOM / 2 - SLICE_SKULL_UP
-        sx = (lines[tex](sy) + lines[tex + 1](sy)) / 2
-        sx, sy = round((sx if blue else HeroCell.W - sx) * k), round(sy * k)
-        # a Viking's on their own timer (pet_death_labels), which fades in as it goes, as the
+        # the skull on the unit's own timer (pet_death_labels), which fades in as it goes, as the
         # plate's skull is on the plate's (user, 2026-10-21: "its not positioned the same on a
-        # tri slice"); Misha has no timer of her own, so hers stays on her portrait
-        anchors = lambda rel, pos, x, y: "".join(
-            f'\n{t}\t\t<Anchor side="{side}" relative="{rel}" pos="{pos}" offset="{o}"/>'
-            for side, o in (("Top", y), ("Left", x), ("Bottom", y), ("Right", x)))
-        skull = (anchors("$parent", "Min", sx, sy) if unit not in PET_TIMERS
-                 else anchors(f"$parent/$parent/FCJH_Death{unit}", "Mid", 0, 0))
+        # tri slice")
+        skull = "".join(
+            f'\n{t}\t\t<Anchor side="{side}" relative="$parent/$parent/FCJH_Death{unit}" pos="Mid" offset="0"/>'
+            for side in ("Top", "Left", "Bottom", "Right"))
         # the bursts' snap in, scaled to the slice (the plate's moves are for the cell)
         across, down = (r - l) / c.w, SLICE_RING_BOTTOM / HeroCell.H
         anim = ""

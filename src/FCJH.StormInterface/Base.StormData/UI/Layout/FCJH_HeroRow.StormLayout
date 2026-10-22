@@ -320,6 +320,17 @@
 			<Unclipped val="true"/>
 			<AcceptsMouse val="false"/>
 		</Frame>
+		<Frame type="Label" name="FCJH_DeathMisha">
+			<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+			<Anchor side="Left"   relative="$parent" pos="Min" offset="114"/>
+			<Anchor side="Bottom" relative="$parent" pos="Min" offset="50"/>
+			<Anchor side="Right"  relative="$parent" pos="Min" offset="162"/>
+			<Style val="FCJH_PetDeathTimer"/>
+			<Alpha val="0"/>
+			<RenderPriority val="521"/>
+			<Unclipped val="true"/>
+			<AcceptsMouse val="false"/>
+		</Frame>
 		<Frame type="Image" name="HeroPortraitImage">
 			<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>
 			<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
@@ -1225,6 +1236,17 @@
 			<AcceptsMouse val="false"/>
 		</Frame>
 		<Frame type="Label" name="FCJH_DeathErik">
+			<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+			<Anchor side="Left"   relative="$parent" pos="Min" offset="133"/>
+			<Anchor side="Bottom" relative="$parent" pos="Min" offset="50"/>
+			<Anchor side="Right"  relative="$parent" pos="Min" offset="181"/>
+			<Style val="FCJH_PetDeathTimer"/>
+			<Alpha val="0"/>
+			<RenderPriority val="521"/>
+			<Unclipped val="true"/>
+			<AcceptsMouse val="false"/>
+		</Frame>
+		<Frame type="Label" name="FCJH_DeathMisha">
 			<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 			<Anchor side="Left"   relative="$parent" pos="Min" offset="133"/>
 			<Anchor side="Bottom" relative="$parent" pos="Min" offset="50"/>
@@ -8650,6 +8672,49 @@
 									</Controller>
 								</Animation>
 							</Frame>
+							<Frame type="Label" name="FCJH_DeathMisha">
+								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/HeroDeathTimePetLabel/@Text}"/>
+								<StateGroup name="FCJH_Shown">
+									<DefaultState val="No"/>
+									<State name="Rexxar"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/HeroDeathTimeLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1/HeroDeathTimePetLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
+								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
+										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
+								<Animation name="FCJH_RespawnFlash">
+									<Event event="HeroAlmostRespawnedPet" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview1"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
+										<Key type="Curve" time="0" value="1"/>
+										<Key type="Curve" time="0.5" value="0"/>
+										<Key type="Curve" time="1" value="1"/>
+										<Key type="Curve" time="1.5" value="0"/>
+										<Key type="Curve" time="2" value="1"/>
+										<Key type="Curve" time="2.5" value="0"/>
+										<Key type="Curve" time="3" value="1"/>
+										<Key type="Curve" time="3.5" value="0"/>
+										<Key type="Curve" time="4" value="1"/>
+										<Key type="Curve" time="4.5" value="0"/>
+										<Key type="Curve" time="5" value="1"/>
+										<Key type="Curve" time="5.01" value="1"/>
+									</Controller>
+								</Animation>
+								<Animation name="FCJH_RespawnFlashClear">
+									<Event event="FCJH_TimerOut" action="Reset,Play" frame="$this"/>
+									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
+										<Key type="Curve" time="0" value="0"/>
+										<Key type="Curve" time=".01" value="0"/>
+									</Controller>
+								</Animation>
+							</Frame>
 							<Frame type="Frame" name="FCJH_VikingDeathWatch">
 								<Anchor relative="$parent"/>
 								<AcceptsMouse val="false"/>
@@ -9502,10 +9567,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left" relative="$parent" pos="Min" offset="138"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right" relative="$parent" pos="Min" offset="138"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -10374,6 +10439,49 @@
 									</Controller>
 								</Animation>
 							</Frame>
+							<Frame type="Label" name="FCJH_DeathMisha">
+								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/HeroDeathTimePetLabel/@Text}"/>
+								<StateGroup name="FCJH_Shown">
+									<DefaultState val="No"/>
+									<State name="Rexxar"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/HeroDeathTimeLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2/HeroDeathTimePetLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
+								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
+										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
+								<Animation name="FCJH_RespawnFlash">
+									<Event event="HeroAlmostRespawnedPet" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview2"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
+										<Key type="Curve" time="0" value="1"/>
+										<Key type="Curve" time="0.5" value="0"/>
+										<Key type="Curve" time="1" value="1"/>
+										<Key type="Curve" time="1.5" value="0"/>
+										<Key type="Curve" time="2" value="1"/>
+										<Key type="Curve" time="2.5" value="0"/>
+										<Key type="Curve" time="3" value="1"/>
+										<Key type="Curve" time="3.5" value="0"/>
+										<Key type="Curve" time="4" value="1"/>
+										<Key type="Curve" time="4.5" value="0"/>
+										<Key type="Curve" time="5" value="1"/>
+										<Key type="Curve" time="5.01" value="1"/>
+									</Controller>
+								</Animation>
+								<Animation name="FCJH_RespawnFlashClear">
+									<Event event="FCJH_TimerOut" action="Reset,Play" frame="$this"/>
+									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
+										<Key type="Curve" time="0" value="0"/>
+										<Key type="Curve" time=".01" value="0"/>
+									</Controller>
+								</Animation>
+							</Frame>
 							<Frame type="Frame" name="FCJH_VikingDeathWatch">
 								<Anchor relative="$parent"/>
 								<AcceptsMouse val="false"/>
@@ -11226,10 +11334,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left" relative="$parent" pos="Min" offset="138"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right" relative="$parent" pos="Min" offset="138"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -12098,6 +12206,49 @@
 									</Controller>
 								</Animation>
 							</Frame>
+							<Frame type="Label" name="FCJH_DeathMisha">
+								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/HeroDeathTimePetLabel/@Text}"/>
+								<StateGroup name="FCJH_Shown">
+									<DefaultState val="No"/>
+									<State name="Rexxar"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/HeroDeathTimeLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3/HeroDeathTimePetLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
+								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
+										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
+								<Animation name="FCJH_RespawnFlash">
+									<Event event="HeroAlmostRespawnedPet" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview3"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
+										<Key type="Curve" time="0" value="1"/>
+										<Key type="Curve" time="0.5" value="0"/>
+										<Key type="Curve" time="1" value="1"/>
+										<Key type="Curve" time="1.5" value="0"/>
+										<Key type="Curve" time="2" value="1"/>
+										<Key type="Curve" time="2.5" value="0"/>
+										<Key type="Curve" time="3" value="1"/>
+										<Key type="Curve" time="3.5" value="0"/>
+										<Key type="Curve" time="4" value="1"/>
+										<Key type="Curve" time="4.5" value="0"/>
+										<Key type="Curve" time="5" value="1"/>
+										<Key type="Curve" time="5.01" value="1"/>
+									</Controller>
+								</Animation>
+								<Animation name="FCJH_RespawnFlashClear">
+									<Event event="FCJH_TimerOut" action="Reset,Play" frame="$this"/>
+									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
+										<Key type="Curve" time="0" value="0"/>
+										<Key type="Curve" time=".01" value="0"/>
+									</Controller>
+								</Animation>
+							</Frame>
 							<Frame type="Frame" name="FCJH_VikingDeathWatch">
 								<Anchor relative="$parent"/>
 								<AcceptsMouse val="false"/>
@@ -12950,10 +13101,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left" relative="$parent" pos="Min" offset="138"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right" relative="$parent" pos="Min" offset="138"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -13822,6 +13973,49 @@
 									</Controller>
 								</Animation>
 							</Frame>
+							<Frame type="Label" name="FCJH_DeathMisha">
+								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/HeroDeathTimePetLabel/@Text}"/>
+								<StateGroup name="FCJH_Shown">
+									<DefaultState val="No"/>
+									<State name="Rexxar"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/HeroDeathTimeLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4/HeroDeathTimePetLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
+								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
+										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
+								<Animation name="FCJH_RespawnFlash">
+									<Event event="HeroAlmostRespawnedPet" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview4"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
+										<Key type="Curve" time="0" value="1"/>
+										<Key type="Curve" time="0.5" value="0"/>
+										<Key type="Curve" time="1" value="1"/>
+										<Key type="Curve" time="1.5" value="0"/>
+										<Key type="Curve" time="2" value="1"/>
+										<Key type="Curve" time="2.5" value="0"/>
+										<Key type="Curve" time="3" value="1"/>
+										<Key type="Curve" time="3.5" value="0"/>
+										<Key type="Curve" time="4" value="1"/>
+										<Key type="Curve" time="4.5" value="0"/>
+										<Key type="Curve" time="5" value="1"/>
+										<Key type="Curve" time="5.01" value="1"/>
+									</Controller>
+								</Animation>
+								<Animation name="FCJH_RespawnFlashClear">
+									<Event event="FCJH_TimerOut" action="Reset,Play" frame="$this"/>
+									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
+										<Key type="Curve" time="0" value="0"/>
+										<Key type="Curve" time=".01" value="0"/>
+									</Controller>
+								</Animation>
+							</Frame>
 							<Frame type="Frame" name="FCJH_VikingDeathWatch">
 								<Anchor relative="$parent"/>
 								<AcceptsMouse val="false"/>
@@ -14674,10 +14868,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left" relative="$parent" pos="Min" offset="138"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right" relative="$parent" pos="Min" offset="138"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -15546,6 +15740,49 @@
 									</Controller>
 								</Animation>
 							</Frame>
+							<Frame type="Label" name="FCJH_DeathMisha">
+								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/HeroDeathTimePetLabel/@Text}"/>
+								<StateGroup name="FCJH_Shown">
+									<DefaultState val="No"/>
+									<State name="Rexxar"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/HeroDeathTimeLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5/HeroDeathTimePetLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
+								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
+										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
+								<Animation name="FCJH_RespawnFlash">
+									<Event event="HeroAlmostRespawnedPet" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1HeroOverview/HeroOverview5"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
+										<Key type="Curve" time="0" value="1"/>
+										<Key type="Curve" time="0.5" value="0"/>
+										<Key type="Curve" time="1" value="1"/>
+										<Key type="Curve" time="1.5" value="0"/>
+										<Key type="Curve" time="2" value="1"/>
+										<Key type="Curve" time="2.5" value="0"/>
+										<Key type="Curve" time="3" value="1"/>
+										<Key type="Curve" time="3.5" value="0"/>
+										<Key type="Curve" time="4" value="1"/>
+										<Key type="Curve" time="4.5" value="0"/>
+										<Key type="Curve" time="5" value="1"/>
+										<Key type="Curve" time="5.01" value="1"/>
+									</Controller>
+								</Animation>
+								<Animation name="FCJH_RespawnFlashClear">
+									<Event event="FCJH_TimerOut" action="Reset,Play" frame="$this"/>
+									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
+										<Key type="Curve" time="0" value="0"/>
+										<Key type="Curve" time=".01" value="0"/>
+									</Controller>
+								</Animation>
+							</Frame>
 							<Frame type="Frame" name="FCJH_VikingDeathWatch">
 								<Anchor relative="$parent"/>
 								<AcceptsMouse val="false"/>
@@ -16398,10 +16635,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left" relative="$parent" pos="Min" offset="138"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right" relative="$parent" pos="Min" offset="138"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -17266,6 +17503,49 @@
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
 									<Event event="HeroRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1"/>
+									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
+										<Key type="Curve" time="0" value="0"/>
+										<Key type="Curve" time=".01" value="0"/>
+									</Controller>
+								</Animation>
+							</Frame>
+							<Frame type="Label" name="FCJH_DeathMisha">
+								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/HeroDeathTimePetLabel/@Text}"/>
+								<StateGroup name="FCJH_Shown">
+									<DefaultState val="No"/>
+									<State name="Rexxar"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/HeroDeathTimeLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1/HeroDeathTimePetLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
+								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
+										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
+								<Animation name="FCJH_RespawnFlash">
+									<Event event="HeroAlmostRespawnedPet" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview1"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
+										<Key type="Curve" time="0" value="1"/>
+										<Key type="Curve" time="0.5" value="0"/>
+										<Key type="Curve" time="1" value="1"/>
+										<Key type="Curve" time="1.5" value="0"/>
+										<Key type="Curve" time="2" value="1"/>
+										<Key type="Curve" time="2.5" value="0"/>
+										<Key type="Curve" time="3" value="1"/>
+										<Key type="Curve" time="3.5" value="0"/>
+										<Key type="Curve" time="4" value="1"/>
+										<Key type="Curve" time="4.5" value="0"/>
+										<Key type="Curve" time="5" value="1"/>
+										<Key type="Curve" time="5.01" value="1"/>
+									</Controller>
+								</Animation>
+								<Animation name="FCJH_RespawnFlashClear">
+									<Event event="FCJH_TimerOut" action="Reset,Play" frame="$this"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
 										<Key type="Curve" time="0" value="0"/>
 										<Key type="Curve" time=".01" value="0"/>
@@ -18139,10 +18419,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left" relative="$parent" pos="Min" offset="160"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right" relative="$parent" pos="Min" offset="160"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -19009,6 +19289,49 @@
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
 									<Event event="HeroRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2"/>
+									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
+										<Key type="Curve" time="0" value="0"/>
+										<Key type="Curve" time=".01" value="0"/>
+									</Controller>
+								</Animation>
+							</Frame>
+							<Frame type="Label" name="FCJH_DeathMisha">
+								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/HeroDeathTimePetLabel/@Text}"/>
+								<StateGroup name="FCJH_Shown">
+									<DefaultState val="No"/>
+									<State name="Rexxar"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/HeroDeathTimeLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2/HeroDeathTimePetLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
+								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
+										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
+								<Animation name="FCJH_RespawnFlash">
+									<Event event="HeroAlmostRespawnedPet" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview2"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
+										<Key type="Curve" time="0" value="1"/>
+										<Key type="Curve" time="0.5" value="0"/>
+										<Key type="Curve" time="1" value="1"/>
+										<Key type="Curve" time="1.5" value="0"/>
+										<Key type="Curve" time="2" value="1"/>
+										<Key type="Curve" time="2.5" value="0"/>
+										<Key type="Curve" time="3" value="1"/>
+										<Key type="Curve" time="3.5" value="0"/>
+										<Key type="Curve" time="4" value="1"/>
+										<Key type="Curve" time="4.5" value="0"/>
+										<Key type="Curve" time="5" value="1"/>
+										<Key type="Curve" time="5.01" value="1"/>
+									</Controller>
+								</Animation>
+								<Animation name="FCJH_RespawnFlashClear">
+									<Event event="FCJH_TimerOut" action="Reset,Play" frame="$this"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
 										<Key type="Curve" time="0" value="0"/>
 										<Key type="Curve" time=".01" value="0"/>
@@ -19882,10 +20205,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left" relative="$parent" pos="Min" offset="160"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right" relative="$parent" pos="Min" offset="160"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -20752,6 +21075,49 @@
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
 									<Event event="HeroRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3"/>
+									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
+										<Key type="Curve" time="0" value="0"/>
+										<Key type="Curve" time=".01" value="0"/>
+									</Controller>
+								</Animation>
+							</Frame>
+							<Frame type="Label" name="FCJH_DeathMisha">
+								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/HeroDeathTimePetLabel/@Text}"/>
+								<StateGroup name="FCJH_Shown">
+									<DefaultState val="No"/>
+									<State name="Rexxar"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/HeroDeathTimeLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3/HeroDeathTimePetLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
+								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
+										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
+								<Animation name="FCJH_RespawnFlash">
+									<Event event="HeroAlmostRespawnedPet" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview3"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
+										<Key type="Curve" time="0" value="1"/>
+										<Key type="Curve" time="0.5" value="0"/>
+										<Key type="Curve" time="1" value="1"/>
+										<Key type="Curve" time="1.5" value="0"/>
+										<Key type="Curve" time="2" value="1"/>
+										<Key type="Curve" time="2.5" value="0"/>
+										<Key type="Curve" time="3" value="1"/>
+										<Key type="Curve" time="3.5" value="0"/>
+										<Key type="Curve" time="4" value="1"/>
+										<Key type="Curve" time="4.5" value="0"/>
+										<Key type="Curve" time="5" value="1"/>
+										<Key type="Curve" time="5.01" value="1"/>
+									</Controller>
+								</Animation>
+								<Animation name="FCJH_RespawnFlashClear">
+									<Event event="FCJH_TimerOut" action="Reset,Play" frame="$this"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
 										<Key type="Curve" time="0" value="0"/>
 										<Key type="Curve" time=".01" value="0"/>
@@ -21625,10 +21991,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left" relative="$parent" pos="Min" offset="160"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right" relative="$parent" pos="Min" offset="160"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -22495,6 +22861,49 @@
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
 									<Event event="HeroRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4"/>
+									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
+										<Key type="Curve" time="0" value="0"/>
+										<Key type="Curve" time=".01" value="0"/>
+									</Controller>
+								</Animation>
+							</Frame>
+							<Frame type="Label" name="FCJH_DeathMisha">
+								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/HeroDeathTimePetLabel/@Text}"/>
+								<StateGroup name="FCJH_Shown">
+									<DefaultState val="No"/>
+									<State name="Rexxar"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/HeroDeathTimeLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4/HeroDeathTimePetLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
+								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
+										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
+								<Animation name="FCJH_RespawnFlash">
+									<Event event="HeroAlmostRespawnedPet" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview4"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
+										<Key type="Curve" time="0" value="1"/>
+										<Key type="Curve" time="0.5" value="0"/>
+										<Key type="Curve" time="1" value="1"/>
+										<Key type="Curve" time="1.5" value="0"/>
+										<Key type="Curve" time="2" value="1"/>
+										<Key type="Curve" time="2.5" value="0"/>
+										<Key type="Curve" time="3" value="1"/>
+										<Key type="Curve" time="3.5" value="0"/>
+										<Key type="Curve" time="4" value="1"/>
+										<Key type="Curve" time="4.5" value="0"/>
+										<Key type="Curve" time="5" value="1"/>
+										<Key type="Curve" time="5.01" value="1"/>
+									</Controller>
+								</Animation>
+								<Animation name="FCJH_RespawnFlashClear">
+									<Event event="FCJH_TimerOut" action="Reset,Play" frame="$this"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
 										<Key type="Curve" time="0" value="0"/>
 										<Key type="Curve" time=".01" value="0"/>
@@ -23368,10 +23777,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left" relative="$parent" pos="Min" offset="160"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right" relative="$parent" pos="Min" offset="160"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
@@ -24238,6 +24647,49 @@
 								</Animation>
 								<Animation name="FCJH_RespawnFlashClear">
 									<Event event="HeroRespawnedHero3" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5"/>
+									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
+										<Key type="Curve" time="0" value="0"/>
+										<Key type="Curve" time=".01" value="0"/>
+									</Controller>
+								</Animation>
+							</Frame>
+							<Frame type="Label" name="FCJH_DeathMisha">
+								<Text val="{$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/HeroDeathTimePetLabel/@Text}"/>
+								<StateGroup name="FCJH_Shown">
+									<DefaultState val="No"/>
+									<State name="Rexxar"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/HeroDeathTimeLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
+									<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5/HeroDeathTimePetLabel" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SendEvent" frame="$this" event="FCJH_TimerIn"/></State>
+									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SendEvent" frame="$this" event="FCJH_TimerOut"/></State>
+								</StateGroup>
+								<Animation name="FCJH_Handover">
+									<Event event="FCJH_TimerIn" action="Reset,Play" frame="$this"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Fade" end="Pause">
+										<Key type="Curve" time="0" value="0" inout="Linear"/>
+										<Key type="Curve" time="1.5" value="0" inout="Linear"/>
+										<Key type="Curve" time="2.0" value="255" inout="Linear"/>
+									</Controller>
+								</Animation>
+								<Animation name="FCJH_RespawnFlash">
+									<Event event="HeroAlmostRespawnedPet" action="Reset,Play" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2HeroOverview/HeroOverview5"/>
+									<Event event="FCJH_TimerOut" action="Reset,Stop" frame="$this"/>
+									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer_Respawn">
+										<Key type="Curve" time="0" value="1"/>
+										<Key type="Curve" time="0.5" value="0"/>
+										<Key type="Curve" time="1" value="1"/>
+										<Key type="Curve" time="1.5" value="0"/>
+										<Key type="Curve" time="2" value="1"/>
+										<Key type="Curve" time="2.5" value="0"/>
+										<Key type="Curve" time="3" value="1"/>
+										<Key type="Curve" time="3.5" value="0"/>
+										<Key type="Curve" time="4" value="1"/>
+										<Key type="Curve" time="4.5" value="0"/>
+										<Key type="Curve" time="5" value="1"/>
+										<Key type="Curve" time="5.01" value="1"/>
+									</Controller>
+								</Animation>
+								<Animation name="FCJH_RespawnFlashClear">
+									<Event event="FCJH_TimerOut" action="Reset,Play" frame="$this"/>
 									<Controller type="Style" end="Pause" style1="FCJH_PetDeathTimer" style2="FCJH_PetDeathTimer">
 										<Key type="Curve" time="0" value="0"/>
 										<Key type="Curve" time=".01" value="0"/>
@@ -25111,10 +25563,10 @@
 									<AcceptsMouse val="false"/>
 								</Frame>
 								<Frame type="Image" name="FCJH_SliceIcon">
-									<Anchor side="Top" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Left" relative="$parent" pos="Min" offset="160"/>
-									<Anchor side="Bottom" relative="$parent" pos="Min" offset="25"/>
-									<Anchor side="Right" relative="$parent" pos="Min" offset="160"/>
+									<Anchor side="Top" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
+									<Anchor side="Left" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
+									<Anchor side="Bottom" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
+									<Anchor side="Right" relative="$parent/$parent/FCJH_DeathMisha" pos="Mid" offset="0"/>
 									<Width val="46"/>
 									<Height val="53"/>
 									<Texture val="@UI/HUD_TopBar_Team_HeroFrame_DeathIcon"/>
