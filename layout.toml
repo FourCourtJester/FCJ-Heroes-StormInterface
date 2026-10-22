@@ -134,27 +134,15 @@ warhead_junction = 0
 #       "demand" on demand, or temporary
 # ---------------------------------------------------------------------------
 
-# Top bar, blue side (outside in: score, name, logo, level). Red mirrors blue about x 960.
-# OBS pass (user, 2026-09-30):
-# - the top row (score, name, logo) is one band, the height of the level labels' backplate
-#   wings: the top edge to y 63.3 (the hexagon's side points), so their art matches it;
-# - logos are 8 px clear of the wings' slanted outer ends (762.4 / 1157.7 on the top edge);
-#   blue's score stays clear of the replay panel (x 14-392, its art 20-386);
-# - the second row: bans under each name; division (blue) and game count (red) under the
-#   level labels, as wide as their wing's bottom edge (blue 794-890, red 1024-1126: Blizzard's
-#   hexagon sits 2.75 px left of the screen's centre, so the wings differ).
+# Top bar, blue side (inside out: level, logo, name, score). Red mirrors blue about x 960.
 # OBS draws data only, never art (user, 2026-10-16): team names, logos, series score, the
-# tournament's name, division and logo, and the game's bans. Every plate and frame they sit
-# on is the interface's (the art pass).
-[element.blue_score]
-rect = [400, 0, 64, 63.3]
-kind = "obs"
-[element.blue_name]
-rect = [470, 0, 214, 63.3]
-kind = "ui"                  # the plate is ours (the art pass); OBS draws the name on it
-[element.blue_logo]
-rect = [690, 0, 64, 63.3]
-kind = "obs"
+# tournament's name, division and logo, and the game's bans - with one exception, the name
+# plate, which is OBS's own art because only OBS knows whether a tournament has team logos
+# (2026-10-18, docs/obs-topbar-handoff.md). The whole OBS band - the name and logo plates,
+# the score pips, the ban tiles and the division / game tabs - is worked out from [top_bar]
+# by tools/gen.py (top_bar_rects), so it can't drift from the level wings it meets; those
+# places are in the constants as "obs" like the rest. Everything under the band's data that
+# the interface draws - the tabs, the empty ban tiles - comes with the art pass.
 [element.blue_level]
 rect = [820, 8, 64, 50]      # 64 wide, was 80 (user, 2026-10-19: the OBS top bar, docs/obs-topbar-handoff.md):
                              # the wings 20 px shorter each, their outer ends at 779.8 / 1140.2
@@ -162,12 +150,6 @@ kind = "ui"
 [element.blue_talent_lead]
 rect = [814, 0, 76, 64]      # Blizzard's flame, behind the level plate of the team ahead (6 past it each side)
 kind = "demand"
-[element.blue_bans]
-rect = [576, 67, 108, 32]    # under the name, flush with its inner end
-kind = "obs"
-[element.division]
-rect = [794, 67, 96, 24]     # under blue's wing: the division, and the bracket stage if it fits
-kind = "obs"
 
 # Top bar, centre
 [element.logo_plate]
@@ -177,10 +159,10 @@ kind = "ui"
 rect = [906, 128, 108, 32]
 kind = "ui"
 [element.event_logo]
-rect = [922, 32, 68, 62]     # the tournament's logo, in the hexagon's middle (its centre 956, 63)
-kind = "obs"
-[element.event_name]
-rect = [810, 164, 300, 24]   # the tournament's name, under the clock (proposed, 2026-10-16)
+rect = [922, 32, 68, 62]     # the tournament's logo, in the hexagon's middle (its centre 956, 63);
+                             # event_mask.png masks it to the hexagon. The tournament's NAME has
+                             # left the clock: it goes in a tab of its own, still to settle
+                             # (user, 2026-10-19; docs/obs-topbar-handoff.md)
 kind = "obs"
 
 # Top bar, red side (inside out: level, logo, name, score)
@@ -190,21 +172,6 @@ kind = "ui"
 [element.red_talent_lead]
 rect = [1030, 0, 76, 64]
 kind = "demand"
-[element.red_logo]
-rect = [1166, 0, 64, 63.3]
-kind = "obs"
-[element.red_name]
-rect = [1236, 0, 214, 63.3]
-kind = "ui"
-[element.red_score]
-rect = [1456, 0, 64, 63.3]
-kind = "obs"
-[element.red_bans]
-rect = [1236, 67, 108, 32]
-kind = "obs"
-[element.game_count]
-rect = [1024, 67, 102, 24]   # under red's wing
-kind = "obs"
 
 # Around the edges
 [element.replay]
@@ -358,6 +325,41 @@ rim_width = 2.5
 sheen = 0.16                 # white across the top half
 hex_px = 14                  # the lattice's hexagons, width on screen
 lattice = 0.6                # the lattice's strength
+
+# The OBS band along the top edge (docs/obs-topbar-handoff.md, agreed 2026-10-18): the team
+# name plates with their logo plates, the series score's pips, the ban tiles and the division
+# / game tabs. tools/gen.py (top_bar_rects) works every box out from the numbers here, so the
+# interface's places and the OBS layer's can't drift apart: the band's inner end meets the
+# level wings' outer ends, the name and logo plates share one seam, and the tabs hang off
+# Blizzard's hexagon. Red mirrors blue about the screen's middle - except the two tabs, whose
+# inner sides follow the hexagon, which sits 2.75 px left of it.
+[top_bar]
+height = 63.3                # the band, from the top edge: the level wings' height (the
+                             # hexagon's side points), so the art matches them
+name_left = 440              # blue's name plate, its outer end along the band's top edge. The
+                             # box runs from there to the wing's end, the lean taking its
+                             # bottom edge 34.2 px further in (so 440 -> 779.8 along the top)
+seam = 707                   # where the name plate's rim and the logo plate's coincide, along
+                             # the top edge: the logo plate is the band's inner 109.5 px, and
+                             # with no logo the name plate runs on to the wing
+pips = 4                     # the most pips a side (a best of 7); OBS draws as many as the
+                             # series needs (user, 2026-10-19: more than 3 is the operator's call)
+pip_band = 0.8               # a pip's hexagon, pointy-topped: this much of the band's height
+pip_gap = 5                  # between two pips
+pip_off_name = 14            # the first pip, off the name plate's outer slant. They fill from
+                             # the name outward
+bans = 3                     # ban tiles a side (optional: a toggle)
+ban_tile = 32                # a tile, px across the band's top edge and px tall (it leans with
+                             # the plates, so its bottom edge is 17.3 px further in)
+ban_pitch = 38               # between two tiles
+ban_drop = 5                 # the tiles' top, below the band
+ban_inset = 5                # the innermost tile, in from the seam carried down the lean
+tab_clear = 5                # the division / game tabs' inner sides, off Blizzard's hexagon.
+                             # They hang from the band to the ban tiles' bottom (y 100.3), and
+                             # their outer sides are the seam carried down, so the slants line up
+tab_rim = 2                  # the tabs' chrome line, drawn INSIDE the shape and on three sides
+                             # only - along the top the band's own rim closes them. 2, as the
+                             # approved mock drew it, not the band's 2.5 ([top_backplate] rim_width)
 
 # Bars stacked on each hero row, placed by tools/gen.py from [hero_row] so they follow it.
 # Both are cut to the plates' slant: their ends continue the row's slanted outer edges.

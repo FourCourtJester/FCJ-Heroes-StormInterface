@@ -12,7 +12,8 @@
 	       - team levels moved up to the top edge (blue_level, red_level) on our backplate
 	         (FCJH_TopBackplate, one texture: chrome-rimmed wings with the team colours
 	         strongest at their outer ends, and a plate round the hexagon - layout.toml
-	         [top_backplate]); the division and game count (OBS) sit under them
+	         [top_backplate]); the division and game tabs hang under them (FCJH_DivisionTab,
+	         FCJH_GameTab: our art, OBS's words - layout.toml [top_bar])
 	       - towers / kills counters parked (the icons beside them were backplate art)
 	       - team XP: on each hero row's top edge, the full width of that edge; core health on
 	         top of it at the row's inner end (blue_xp, red_xp, blue_core, red_core: placed by
@@ -39,6 +40,35 @@
 							<Anchor side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_TOP_BACKPLATE_R"/>
 							<Texture val="#FCJH_TOP_BACKPLATE"/>
 							<RenderPriority val="490"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+
+						<!-- The division and game tabs, hung under the level wings (layout.toml
+						     [top_bar], drawn by tools/gen.py top_bar_tab_texture; the whole band is
+						     docs/obs-topbar-handoff.md). The art is ours - the stock dark the
+						     backplate fades to, with a chrome line down both sides and along the
+						     bottom and none across the top - and the words are OBS's: they are
+						     generic information panels, and what goes in them is the operator's
+						     call. Under the backplate (485), so the wing's own rim closes each tab's
+						     top edge. They show whether or not OBS is running. -->
+						<Frame type="Image" name="FCJH_DivisionTab">
+							<Anchor side="Top" relative="$GameUI" pos="Min" offset="#FCJH_DIVISION_T"/>
+							<Anchor side="Left" relative="$GameUI" pos="Mid" offset="#FCJH_DIVISION_L"/>
+							<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_DIVISION_B"/>
+							<Anchor side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_DIVISION_R"/>
+							<Texture val="#FCJH_DIVISION_TAB"/>
+							<RenderPriority val="485"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<Frame type="Image" name="FCJH_GameTab">
+							<Anchor side="Top" relative="$GameUI" pos="Min" offset="#FCJH_GAME_COUNT_T"/>
+							<Anchor side="Left" relative="$GameUI" pos="Mid" offset="#FCJH_GAME_COUNT_L"/>
+							<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_GAME_COUNT_B"/>
+							<Anchor side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_GAME_COUNT_R"/>
+							<Texture val="#FCJH_GAME_COUNT_TAB"/>
+							<RenderPriority val="485"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
 						</Frame>

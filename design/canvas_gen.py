@@ -12,6 +12,7 @@ Then publish them to the canvas, https://claude.ai/artifact/6MmAcxcKjfAAprCN3oc3
 (root design/canvas). Stock.dc.html is not written: it annotates the stock UI.
 """
 import json
+import math
 import re
 import subprocess
 import sys
@@ -175,6 +176,13 @@ def plate(team, x0, y0, z, st, uid):
     rect = lambda r, fill, frac=1.0, right=False, extra="": (
         f'<rect x="{round(box(r)[0] + (1 - frac) * (box(r)[2] - box(r)[0]) * right, 1)}" y="{round(box(r)[1], 1)}" '
         f'width="{round((box(r)[2] - box(r)[0]) * frac, 1)}" height="{round(box(r)[3] - box(r)[1], 1)}" fill="{fill}"{extra}></rect>')
+    def leaned(mid0, mid1, t, bot, fill):
+        """A bar at the plates' lean, mid0..mid1 across its MIDDLE row (cell units): blue's
+        bottom edge sits half the slant's run further in, red's the other way."""
+        half = (1 if team == "blue" else -1) * gen.HeroCell.LEAN * (bot - t) / 2
+        p = [(mid0 - half, t), (mid1 - half, t), (mid1 + half, bot), (mid0 + half, bot)]
+        return f'<polygon points="{pts([(x0 + a * k, y0 + b * k) for a, b in p])}" fill="{fill}"></polygon>'
+
     heroic = st.get("heroic")
     dead = st.get("dead")
     narrow = rnarrow = 0                    # (the bars below are already narrowed)
@@ -193,10 +201,15 @@ def plate(team, x0, y0, z, st, uid):
     out.append(rect(g["health_backing"], "#0b0c14"))
     out.append(rect(g["mana_backing"], "#0b0c14"))
     if st.get("vikings"):
-        third = (hr - hl - narrow - 2 * gen.VIKING_GAP) / 3
-        for slot, frac in enumerate(st["vikings"]):
-            vl = hl + narrow + slot * (third + gen.VIKING_GAP)
-            out.append(rect((vl, ht, vl + third, hb), HP[team], frac))
+        # three bars at the plates' lean, meeting along one slanted line (gen.viking_bars):
+        # each one's middle row runs step wide, the mask taking half the slant's run off
+        # either end of its frame
+        vl, vr = gen.viking_span(CELL, team)
+        bars, _ = gen.viking_bars(vl, vr, hb - ht)
+        run = gen.HeroCell.LEAN * (hb - ht)
+        for (bl, br), frac in zip(bars, st["vikings"]):
+            mid0, mid1 = bl + run / 2, br - run / 2
+            out.append(leaned(mid0, mid0 + (mid1 - mid0) * frac, ht, hb, HP[team]))
     elif st.get("rexxar"):   # Blizzard's HeightOverride: Rexxar's bar runs full height (Misha's bar gone)
         out.append(rect((hl + narrow, ht, hr, eb), HP[team], st.get("hp", 1.0)))
     else:
@@ -551,7 +564,7 @@ def event_logo_svg():
             f'<text x="{f1(cx)}" y="{f1(cy + 11)}" text-anchor="middle" fill="#F7C08A" font-family="Barlow Condensed, sans-serif" font-weight="600" font-size="12" letter-spacing="1">LOGO</text>')
 
 
-BANS = 3     # bans a side, as the canvas draws them: three slots fill [element.*_bans], square
+BANS = CFG["top_bar"]["bans"]   # bans a side ([top_bar]); the slots fill *_bans, drawn square
 
 
 def ban_slots(team):
@@ -561,6 +574,39 @@ def ban_slots(team):
                    for i in range(BANS))
 
 
+def tabs_svg():
+    """The division and game tabs as the interface draws them (gen.top_bar_tab_texture): the
+    stock dark the backplate fades to, a chrome line down both sides and along the bottom, and
+    none across the top, where the band's own rim closes them."""
+    g = gen.top_bar_geometry(CFG)
+    bp = CFG["top_backplate"]
+    out = [f'<svg width="1920" height="140" viewBox="0 0 1920 140" style="position: absolute; left: 0; top: 0;" aria-label="The division and game tabs">']
+    for team in ("blue", "red"):
+        p0, p1, p2, p3 = g["tabs"][team]["poly"]
+        pt = lambda q: f"{f1(q[0])},{f1(q[1])}"
+        out.append(f'<polygon points="{" ".join(pt(q) for q in (p0, p1, p2, p3))}" fill="#{bp["stock"][1]}" fill-opacity=".9"/>')
+        out.append(f'<polyline points="{" ".join(pt(q) for q in (p1, p2, p3, p0))}" fill="none" stroke="#{bp["rim"][0]}" '
+                   f'stroke-width="{CFG["top_bar"]["tab_rim"]}" stroke-linejoin="round"/>')
+    out.append('</svg>\n')
+    return "".join(out)
+
+
+def score_pips(team, wins):
+    """The series score: hexagon pips, no plate, filled from the name outward (gen's
+    top_bar_geometry; a best of 5 here, so three a side of the four [top_bar] keeps room for)."""
+    g = gen.top_bar_geometry(CFG)
+    r = g["pip"]["r"]
+    out = []
+    for i, (cx, cy) in enumerate(g["pips"][team][:3]):
+        pts = " ".join(f"{cx + r * math.cos(math.radians(30 + 60 * k)):.1f},{cy + r * math.sin(math.radians(30 + 60 * k)):.1f}"
+                       for k in range(6))
+        fill = COL[team]["line"] if i < wins else "none"
+        out.append(f'<svg width="1920" height="{f1(g["height"])}" viewBox="0 0 1920 {f1(g["height"])}" '
+                   f'style="position: absolute; left: 0; top: 0;" aria-label="Series score pip">'
+                   f'<polygon points="{pts}" fill="{fill}" fill-opacity="{1 if i < wins else 0}" stroke="#F7C08A" stroke-width="2"/></svg>\n')
+    return "".join(out)
+
+
 def top_bar(levels=("12", "9")):
     """The top bar as built: our backplate texture, Blizzard's hexagon, level numbers and clock;
     and OBS's data, stand-ins in orange. OBS draws data only, never art (user, 2026-10-16): team
@@ -568,14 +614,16 @@ def top_bar(levels=("12", "9")):
     plates under them are the interface's (white: the name plates; the rest come with the art
     pass)."""
     b = []
-    for team, score in (("blue", "1"), ("red", "2")):
-        b.append(at(f"{team}_score", "ob t", f'<span style="font-size: 34px; {GAME}">{score}</span>', CENTRE))
-        b.append(at(f"{team}_name", "ui t", '<span style="font-size: 22px; color: #F7C08A;">Team name</span>', CENTRE))
+    for team, wins in (("blue", 1), ("red", 2)):
+        b.append(score_pips(team, wins))
+        b.append(at(f"{team}_name", "ob t", '<span style="font-size: 22px;">Team name</span>', CENTRE))
         b.append(at(f"{team}_logo", "ob t", '<span style="font-size: 12px;">Logo</span>', CENTRE))
         b.append(ban_slots(team))
-    b.append(at("division", "ob t", '<span style="font-size: 12px;">Division 1</span>', CENTRE))
-    b.append(at("game_count", "ob t", '<span style="font-size: 12px;">Game 3 of 5</span>', CENTRE))
-    b.append(at("event_name", "ob t", '<span style="font-size: 14px;">Tournament name</span>', CENTRE))
+    b.append(tabs_svg())
+    for stem, words in (("division", "Division 1"), ("game_count", "Game 3 of 5")):
+        x, y = gen.top_bar_geometry(CFG)["tabs"]["blue" if stem == "division" else "red"]["text"]
+        b.append(f'<div class="t" style="position: absolute; left: {f1(x - 80)}px; top: {f1(y - 9)}px; width: 160px; '
+                 f'{CENTRE} font-size: 12px; color: #F7C08A;">{words}</div>\n')
     x, y, w, h = R["top_backplate"]
     b.append(f'<img src="{BACKPLATE}" alt="Our top bar backplate texture, as built" style="position: absolute; left: {x}px; top: {y}px; width: {w}px; height: {h}px;">\n')
     b.append(f'<svg width="1920" height="140" viewBox="0 0 1920 140" style="position: absolute; left: 0; top: 0;" aria-label="Blizzard\'s centre hexagon">{hexagon_svg()}</svg>\n')
@@ -763,7 +811,8 @@ def plate_board():
     # --- special cases (2x)
     cy_ = 2490
     b.append(heading(48, cy_ - 150, "Special plates",
-                     f"Lost Vikings: three bars in thirds, {gen.VIKING_GAP} units apart (Baleog, Erik, Olaf), each with its own death timer. "
+                     f"Lost Vikings: three bars across the health bar, each cut to the plates' lean so neighbours meet on one slanted line "
+                     f"under a separator (Baleog, Erik, Olaf), each with its own death timer. "
                      "Rexxar: Blizzard's full-height bar, no Misha bar or timer. Abathur's clone: the Ultimate Evolution icon in the CC spot and CLONE on the bar.", 1600))
     specials = [("Lost Vikings", {"label": "VIKINGS", "vikings": (1.0, 0.45, 0.8), "mp": 0}),
                 ("Rexxar", {"label": "REXXAR", "rexxar": True, "hp": 0.7}),
@@ -858,12 +907,15 @@ def obs_areas():
     """The OBS areas' rects and the logos' clearance from the wings, for the top bar board."""
     geo = gen.top_backplate_geometry(CFG)
     r = lambda k: f"{R[k][0]}, {R[k][1]} · {R[k][2]} × {R[k][3]}"
-    lx, ly, lw, _ = R["blue_logo"]
-    gap = round(geo["ends"][0] + LEAN * ly - (lx + lw), 1)       # the wing's slanted end at the logo's top
-    return (f"Blue, outside in: score {r('blue_score')}, name {r('blue_name')}, logo {r('blue_logo')} ({gap} px clear of the wing). "
-            f"The top row is the wings' height. Second row: bans under the name, {r('blue_bans')}, {BANS} slots; division {r('division')} and game count "
-            f"{r('game_count')} under the wings, each as wide as its wing's bottom edge. Red mirrors blue about x 960. The tournament: "
-            f"its logo in the hexagon's middle, {r('event_logo')}; its name under the clock, {r('event_name')} (proposed).")
+    g = gen.top_bar_geometry(CFG)
+    return (f"Blue, outside in: the score's pips {r('blue_pips')} (a best of 7's four, {CFG['top_bar']['pip_off_name']} px off the name and "
+            f"{CFG['top_bar']['pip_gap']} apart, filled from the name outward), the name plate {r('blue_name')} with its logo plate {r('blue_logo')} "
+            f"lapping the inner end so the two rims make one seam at x {f1(g['seam'])}. The band is the wings' height and its inner end is the wing's "
+            f"({f1(geo['ends'][0])} along the top edge). Second row: bans under the name, {r('blue_bans')}, {BANS} tiles at the plates' lean; the division "
+            f"tab {r('division')} and the game tab {r('game_count')} hung from the band to the tiles' bottom, their outer sides the seam carried down and "
+            f"their inner sides {CFG['top_bar']['tab_clear']} px off Blizzard's hexagon. Red mirrors blue about x 960 - except the two tabs, which follow "
+            f"the hexagon, 2.75 px left of it. The tournament's logo goes in the hexagon's middle, {r('event_logo')}; its name has left the clock for a tab "
+            f"of its own, still to settle. Every box from layout.toml [top_bar] (gen.top_bar_geometry), so the interface and the OBS layer can't drift apart.")
 
 
 def topbar_board():
@@ -1054,15 +1106,17 @@ def spec_board():
         ("Top bar backplate", f"{gen.TOP_BACKPLATE_SIZE[0]} × {gen.TOP_BACKPLATE_SIZE[1]} texture at x {R['top_backplate'][0]}", "game", "Variant C, chrome. The look the rest of the UI follows"),
         ("Team levels + flame", f"{xs('blue_level')} at x {R['blue_level'][0]} / {R['red_level'][0]}", "game", "Blizzard's numbers; the talent-lead flame works"),
         ("Hexagon, clock", "Blizzard's places", "game", "Towers and kills removed"),
-        ("Name plates", f"{obs('blue_name')} / {f1(R['red_name'][0])}", "unk", "Ours, in the art pass; OBS draws the name on them"),
+        ("Name plates", f"{obs('blue_name')} / {f1(R['red_name'][0])}", "obs", "OBS's own art, the one exception: only OBS knows whether a tournament has logos. Without OBS, no name plates"),
         ("Team names", "On the name plates", "obs", "Data only: OBS never draws art (user, 2026-10-16)"),
-        ("Team logos", f"{obs('blue_logo')} / {f1(R['red_logo'][0])}", "obs", "8 px clear of the wings' ends"),
-        ("Series score", f"{obs('blue_score')} / {f1(R['red_score'][0])}", "obs", "A number or pips: to decide"),
-        ("Bans", f"{obs('blue_bans')} / {f1(R['red_bans'][0])}", "obs", f"The game's bans, {BANS} slots a side, under the name"),
-        ("Tournament logo", f"{obs('event_logo')}, the hexagon's middle", "obs", "Over Blizzard's hexagon"),
-        ("Tournament name", f"{obs('event_name')}, under the clock", "obs", "Proposed 2026-10-16"),
-        ("Division", f"{obs('division')}, under blue's wing", "obs", "With the bracket stage if it fits"),
-        ("Game count", f"{obs('game_count')}, under red's wing", "obs", "Game N of M"),
+        ("Team logos", f"{obs('blue_logo')} / {f1(R['red_logo'][0])}", "obs", "A logo plate lapping the name plate's inner end, one seam between them"),
+        ("Series score", f"{obs('blue_pips')} / {f1(R['red_pips'][0])}", "obs", "Hexagon pips, no plate: 2 a side in a Bo3, 3 in a Bo5, 4 in a Bo7, filled from the name outward"),
+        ("Bans", f"{obs('blue_bans')} / {f1(R['red_bans'][0])}", "obs", f"The game's bans, {BANS} tiles a side under the name, at the plates' lean. Optional: a toggle"),
+        ("Division + game tabs", f"{obs('division')} / {obs('game_count')}", "built", "Our art (gen.top_bar_tab_texture): stock fill, a chrome line down the sides and along the bottom, none across the top. OBS writes the words"),
+        ("Ban tiles", "Under each name, the band's second row", "unk", "Interface art, still to build: the empty tiles, and a way to hide them - their size and shape get their own pass"),
+        ("Tournament logo", f"{obs('event_logo')}, the hexagon's middle", "obs", "Over Blizzard's hexagon, masked to it (event_mask.png)"),
+        ("Tournament name", "A tab of its own", "unk", "It has left the clock; where exactly is still to settle (user, 2026-10-19)"),
+        ("Division", f"{obs('division')}, hung from blue's wing", "obs", "With the bracket stage if it fits. A generic panel: what goes in it is the operator's call"),
+        ("Game count", f"{obs('game_count')}, hung from red's wing", "obs", "Game N of M"),
         ("Kill feed", "Blizzard's own, top-left", "game", "Not moved: its rows grow rightward, so multi-kills ran off a right-hand feed"),
         ("Replay controls", f"{R['replay'][0]}, {R['replay'][1]} · {xs('replay')}, top-right", "game", f"{key('replay')} slides them out, leaving a tab flush in the corner. Replays only"),
         ("Operator keys", " · ".join(key(k) for k, _ in TOGGLES), "game", "The replay box, chat, the inspect card, player names. None a Blizzard key (validate.py checks)"),

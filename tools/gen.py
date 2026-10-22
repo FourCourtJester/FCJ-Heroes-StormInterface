@@ -159,6 +159,7 @@ def rects(cfg):
             out[f"hero_{slot}"] = ((round(left + i * cell.pitch * px, 1), row["top"],
                                     round(cell.w * px, 1), round(cell.h * px, 1)), "ui")
     out.update(team_bar_rects(cfg))
+    out.update(top_bar_rects(cfg))
     for team in ("blue", "red"):
         out[f"{team}_row_frame"] = (row_frame_shape(cfg, team)[1], "ui")
     out["top_backplate"] = (top_backplate_geometry(cfg)["box"], "ui")
@@ -199,6 +200,37 @@ def team_bar_rects(cfg, n=5):
     out["red_xp"] = ((r1(red_l(xp_bottom)), r1(xp_top), r1(edge + lean * xp["height"]), xp["height"]), "ui")
     out["blue_core"] = ((r1(blue_l(core_bottom) + edge - core_w), r1(core_top), r1(core_w), r1(core_h)), "ui")
     out["red_core"] = ((r1(red_l(core_bottom)), r1(core_top), r1(core_w), r1(core_h)), "ui")
+    return out
+
+
+def top_bar_rects(cfg):
+    """The OBS band's places along the top edge ([top_bar], top_bar_geometry): the name and
+    logo plates, the score pips, the ban tiles and the division / game tabs. Each one is a
+    bounding box, as layout.toml's rects are - the plates and the tiles lean with the hero
+    plates, and the tabs' inner sides follow Blizzard's hexagon, so the shapes themselves are
+    top_bar_geometry's. All "obs": OBS draws the data, and the name plate's art with it."""
+    g = top_bar_geometry(cfg)
+    r1 = lambda v: round(float(v), 1)
+    out = {}
+    for team in ("blue", "red"):
+        for key in ("name", "logo"):
+            x, y, w, h = g[key][team]
+            out[f"{team}_{key}"] = ((r1(x), r1(y), r1(w), r1(h)), "obs")
+        # the pips: the box round every hexagon a best of 7 would draw
+        cx = [x for x, _ in g["pips"][team]]
+        cy = g["pips"][team][0][1]
+        pw, ph = g["pip"]["w"], g["pip"]["h"]
+        out[f"{team}_pips"] = ((r1(min(cx) - pw / 2), r1(cy - ph / 2),
+                                r1(max(cx) - min(cx) + pw), r1(ph)), "obs")
+        # the ban tiles: the span along their top edge, as the hand-written rect was
+        top, bot = g["ban_rows"]
+        xs = [x for tile in g["bans"][team] for x, y in tile if y == top]
+        out[f"{team}_bans"] = ((r1(min(xs)), r1(top), r1(max(xs) - min(xs)), r1(bot - top)), "obs")
+    for team, stem in (("blue", "division"), ("red", "game_count")):
+        poly = g["tabs"][team]["poly"]
+        x0, x1 = min(x for x, _ in poly), max(x for x, _ in poly)
+        y0, y1 = min(y for _, y in poly), max(y for _, y in poly)
+        out[stem] = ((r1(x0), r1(y0), r1(x1 - x0), r1(y1 - y0)), "obs")
     return out
 
 
@@ -285,8 +317,8 @@ TOP_CENTRE, BOTTOM_CENTRE, TOP_LEFT, TOP_RIGHT = ("Mid", "Min"), ("Mid", "Max"),
 ANCHORS = {
     # the top bar sits on Blizzard's hexagon, centred on the top edge; the team levels on our
     # backplate. The OBS boxes go with it (the OBS package draws them from layout.toml's px).
-    **{s: TOP_CENTRE for s in ("top_backplate", "logo_plate", "clock", "blue_score", "blue_name", "blue_logo",
-                               "blue_bans", "division", "event_logo", "event_name", "red_score", "red_name", "red_logo", "red_bans",
+    **{s: TOP_CENTRE for s in ("top_backplate", "logo_plate", "clock", "blue_pips", "blue_name", "blue_logo",
+                               "blue_bans", "division", "event_logo", "red_pips", "red_name", "red_logo", "red_bans",
                                "game_count", "centre_banners")},
     **{s: "top_backplate" for s in ("blue_level", "red_level", "blue_talent_lead", "red_talent_lead")},
     # the rows sit either side of the minimap, bottom-centre, and so does all that's on them:
@@ -1066,6 +1098,64 @@ def top_backplate_geometry(cfg):
             "box": (round(cx - w / 2), 0, w, h), "ends": (lb - rise, rb + rise)}
 
 
+def top_bar_geometry(cfg):
+    """The OBS band along the top edge in screen px ([top_bar], docs/obs-topbar-handoff.md),
+    all of it worked out from those few numbers so the interface's places and the OBS layer's
+    can't drift apart: the name plate and the logo plate that laps its inner end (boxes
+    bounding a parallelogram at the hero plates' lean, their top edges running to the level
+    wing's outer end), the score pips' centres, and the ban tiles and the division / game
+    tabs as polygons. Red mirrors blue, except the tabs: their inner sides follow Blizzard's
+    hexagon, which sits 2.75 px left of the screen's middle, so the two differ."""
+    tb, bp = cfg["top_bar"], cfg["top_backplate"]
+    geo = top_backplate_geometry(cfg)
+    lean = HeroCell(cfg).lean
+    h, seam = tb["height"], tb["seam"]
+    end = geo["ends"][0]                        # the wing's outer end, along the top edge
+    mirror = lambda x: cfg["screen"]["width"] - x
+    down = lambda x, y: x + lean * y            # a lean line's x, y px down the screen
+
+    def para(x0, x1, y0, y1):
+        """A cell at the plates' lean, its top edge x0..x1 at y0."""
+        run = lean * (y1 - y0)
+        return [(x0, y0), (x1, y0), (x1 + run, y1), (x0 + run, y1)]
+
+    out = {"height": h, "lean": lean, "slant": lean * h, "seam": seam, "ends": geo["ends"]}
+    # the name plate, and the logo plate lapping its inner end so the two rims make one seam
+    for key, x in (("name", tb["name_left"]), ("logo", seam - bp["rim_width"])):
+        w = end - x + lean * h
+        out[key] = {"blue": (x, 0.0, w, h), "red": (mirror(x + w), 0.0, w, h)}
+    # the score: hexagon pips, no plate, pointy-topped so a row packs side to side, filling
+    # from the name outward
+    r = tb["pip_band"] * h / 2
+    pw = r * 3 ** .5
+    cy = h / 2 - 1                              # the band's middle, a px up: the names' line
+    edge = down(tb["name_left"], cy - r / 2)    # the name's outer slant, level with the pip's corner
+    cx = [edge - tb["pip_off_name"] - pw / 2 - k * (pw + tb["pip_gap"]) for k in range(tb["pips"])]
+    out["pip"] = {"r": r, "w": pw, "h": 2 * r}
+    out["pips"] = {"blue": [(x, cy) for x in cx], "red": [(mirror(x), cy) for x in cx]}
+    # the ban tiles under the name, the innermost in from the seam carried down the lean
+    top = h + tb["ban_drop"]
+    bot = top + tb["ban_tile"]
+    inner = down(seam, top) - tb["ban_inset"]
+    tiles = [para(inner - k * tb["ban_pitch"] - tb["ban_tile"], inner - k * tb["ban_pitch"], top, bot)
+             for k in range(tb["bans"])]
+    out["bans"] = {"blue": tiles, "red": [[(mirror(x), y) for x, y in t] for t in tiles]}
+    out["ban_rows"] = (top, bot)
+    # the tabs hung from the wings, down to the ban tiles' bottom: the outer side is the
+    # name/logo seam carried down the lean, so the slants line up; the inner side follows
+    # Blizzard's hexagon's lower side, tab_clear px off it
+    hexagon = geo["hexagon"]
+    out["tabs"] = {}
+    for team, off, (p, q) in (("blue", -1, (hexagon[5], hexagon[4])),
+                              ("red", 1, (hexagon[2], hexagon[3]))):
+        slope = (q[0] - p[0]) / (q[1] - p[1])
+        hexx = lambda y, p=p, slope=slope, off=off: p[0] + (y - p[1]) * slope + off * tb["tab_clear"]
+        outer = (lambda y: down(seam, y)) if team == "blue" else (lambda y: mirror(down(seam, y)))
+        poly = [(outer(h), h), (hexx(h), h), (hexx(bot), bot), (outer(bot), bot)]
+        out["tabs"][team] = {"poly": poly, "text": (sum(x for x, _ in poly) / 4, (h + bot) / 2)}
+    return out
+
+
 def offset_polygon(pts, d):
     """Grow a convex polygon outward by d px."""
     import math
@@ -1197,6 +1287,56 @@ def top_backplate_texture(cfg):
             a = cover + rim * (1 - cover)
             c = mix(c, rim_c, rim / a if a else 0)
             row += bytes(round(v * 255) for v in (c[2], c[1], c[0], a))
+        rows.append(bytes(row))
+    return dds_bgra(w, h, b"".join(rows))
+
+
+TAB_RIM_RUN = 8.0    # px the tab's two sides are carried up past its frame, so the rim it
+                     # draws along its edges never runs along the top (the band closes it)
+
+
+def top_bar_tab_texture(cfg, team):
+    """The division (blue) / game count (red) tab hung under the level wing ([top_bar],
+    docs/obs-topbar-handoff.md), drawn for its own frame at ART_HEIGHT: the stock dark the
+    backplate fades to, carrying on the backplate's vertical ramp so the two can't part
+    company, and a tab_rim chrome line inside the shape. The line runs down the two sides and
+    along the bottom but never across the top, where the band's own rim closes it - the sides
+    are carried TAB_RIM_RUN px up past the frame, so that edge falls outside the texture.
+    OBS writes the words on it; the art is ours."""
+    bp, tb = cfg["top_backplate"], cfg["top_bar"]
+    stem = "division" if team == "blue" else "game_count"
+    (bx, by, bw, bh), _ = top_bar_rects(cfg)[stem]
+    k = art_scale(cfg)
+    w, h = round(bw * k), round(bh * k)
+    p0, p1, p2, p3 = top_bar_geometry(cfg)["tabs"][team]["poly"]   # outer top, inner top, inner bottom, outer bottom
+    up = lambda a, b: (a[0] - TAB_RIM_RUN * (b[0] - a[0]) / (b[1] - a[1]), a[1] - TAB_RIM_RUN)
+    sd = convex_sdf([up(p0, p3), up(p1, p2), p2, p3])
+    rgb = lambda hx: tuple(int(hx[i:i + 2], 16) / 255 for i in (0, 2, 4))
+    mix = lambda a, b, t: tuple(q + (r - q) * t for q, r in zip(a, b))
+    clamp = lambda v: 0.0 if v < 0 else 1.0 if v > 1 else v
+    stock = [rgb(c) for c in bp["stock"]]
+    chrome = list(zip((0, .35, .6, 1), (rgb(c) for c in bp["rim"])))
+    bottom = max(y for _, y in top_backplate_geometry(cfg)["padded"])   # the backplate's ramp
+    def ramp(stops, t):
+        for (o1, c1), (o2, c2) in zip(stops, stops[1:]):
+            if t <= o2:
+                return mix(c1, c2, (t - o1) / (o2 - o1))
+        return stops[-1][1]
+    rim_w = tb["tab_rim"]
+    rows = []
+    for ty in range(h):
+        y = by + (ty + 0.5) / k
+        vt = clamp(y / bottom)
+        base, rim_c = mix(*stock, vt), ramp(chrome, vt)
+        row = bytearray()
+        for tx in range(w):
+            d = sd(bx + (tx + 0.5) / k, y)
+            cover = clamp(0.5 - d * k)
+            if cover <= 0:
+                row += b"\0\0\0\0"
+                continue
+            c = mix(base, rim_c, cover * clamp((rim_w + d) * k + 0.5))
+            row += bytes(round(v * 255) for v in (c[2], c[1], c[0], cover))
         rows.append(bytes(row))
     return dds_bgra(w, h, b"".join(rows))
 
@@ -1437,6 +1577,11 @@ def slant_bars(cfg):
     data = top_backplate_texture(cfg)
     digest = hashlib.sha1(data).hexdigest()[:8]
     out[name("top", "backplate")] = (f"FCJH_TopBackplate_{digest}.dds", data)
+    # the division and game tabs hung under the wings ([top_bar]): ours to draw, OBS's to fill
+    for team, stem in (("blue", "division"), ("red", "game_count")):
+        data = top_bar_tab_texture(cfg, team)
+        digest = hashlib.sha1(data).hexdigest()[:8]
+        out[name(stem, "tab")] = (f"FCJH_Tab_{stem}_{digest}.dds", data)
     cell = HeroCell(cfg)
     # the plate's own shape, as the click target's hit-test texture: plates overlap along the
     # slant, and a square click area sent clicks on one plate's corner to its neighbour
@@ -4563,9 +4708,9 @@ def layout_order(layout_dir, extra=(), generated=None):
 # Exempt from [screen] padding: the top bar, centred on the top edge; Blizzard's minimap,
 # whose square hangs off the bottom by design ([minimap] bottom); and Blizzard's kill feed,
 # left where Blizzard puts it.
-PADDING_EXEMPT = {"blue_score", "blue_name", "blue_logo", "blue_level", "blue_talent_lead", "blue_bans",
+PADDING_EXEMPT = {"blue_pips", "blue_name", "blue_logo", "blue_level", "blue_talent_lead", "blue_bans",
                   "division", "logo_plate", "clock", "red_level", "red_talent_lead", "red_logo", "red_name",
-                  "red_score", "red_bans", "game_count", "top_backplate", "minimap", "kill_feed",
+                  "red_pips", "red_bans", "game_count", "top_backplate", "minimap", "kill_feed",
                   # the replay box's tab sits flush in the top-right corner; the box itself
                   # keeps the padding (user, 2026-10-16)
                   "replay_collapsed"}
