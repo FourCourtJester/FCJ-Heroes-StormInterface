@@ -28,6 +28,8 @@ import math
 from dataclasses import dataclass, field
 from itertools import combinations
 
+import words
+
 T = "\t"
 
 SCREEN_H = 1200          # layout units: the game's screen is always this tall
@@ -164,8 +166,8 @@ TOWN_SPLITS = 7          # the towns each side holds: 0v6 .. 6v0
 
 def town_alert(team, template, text):
     return Alert(f"FCJH_{team.capitalize()}Town", template=template, extra=(
-        f'{T*3}<Frame type="Label" name="NotificationLabel"><Text val="{text}"/></Frame>\n'
-        f'{T*3}<Frame type="Label" name="NotificationTargetLabel"><Text val="a town"/></Frame>\n'
+        f'{T*3}<Frame type="Label" name="NotificationLabel"><Text val="{words.ref(text)}"/></Frame>\n'
+        f'{T*3}<Frame type="Label" name="NotificationTargetLabel"><Text val="{words.ref("a town")}"/></Frame>\n'
         f'{T*3}<!-- gone after 5 s, as Blizzard\'s (its script waits 5 s, then hides it) -->\n'
         + timer(3)),
         note="ours, which team took a town (towers_extra)")
@@ -1574,7 +1576,7 @@ def camp_words(i):
     frame = f"AlteracMechanicsPanel/NotificationFrame{i}"
     states = "".join(
         f'\t<State name="Event{event}"><When type="AnimationState" EventID="{event}"/>'
-        f'<Action type="SetProperty" frame="$this/FCJH_CampText" Text="{ours}"/>'
+        f'<Action type="SetProperty" frame="$this/FCJH_CampText" Text="{words.ref(ours)}"/>'
         f'<Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{{$GameUI/{colour}/@Color}}"/>'
         f'<Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{{$GameUI/{colour}/@Color}}"/></State>\n'
         for event, (ours, colour) in CAMP_WORDS.items())

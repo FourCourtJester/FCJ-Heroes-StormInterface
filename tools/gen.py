@@ -33,6 +33,7 @@ from pathlib import Path
 
 import inspect_card
 import maps
+import words
 
 REPO = Path(__file__).resolve().parent.parent
 CONFIG = REPO / "layout.toml"
@@ -3511,8 +3512,9 @@ def hero_cell_template(team, c, cfg):
 				<Anchor side="Left"   relative="$parent" pos="Min" offset="-{CC_TEXT_OVERHANG}"/>
 				<Anchor side="Bottom" relative="$parent" pos="Max" offset="{CC_TEXT_OVERHANG}"/>
 				<Anchor side="Right"  relative="$parent" pos="Max" offset="{CC_TEXT_OVERHANG}"/>
-				<Text val="CLONE"/>
+				<Text val="{words.ref("CLONE")}"/>
 				<Style val="FCJH_CCText"/>
+				<Options val="NoWrapping | ScaleToPreventTruncation"/>
 				<Alpha val="0"/>
 				<RenderPriority val="531"/>
 				<Unclipped val="true"/>
@@ -4296,7 +4298,8 @@ def team_header(team_id, colour, title_style, value_style, name, top, height, pl
                ("Max", "#FCJH_INFO_PANE_BORDER_NEG"))
     out = fill_image(f"FCJH_{name.capitalize()}Band", band, colour, 602, indent)
     out += (f'{t}<Frame type="Label" name="FCJH_{name.capitalize()}Name">\n' + at(STAT_MARGIN, STAT_FIRST_COLUMN) +
-            f'{t}\t<Style val="{title_style}"/>\n{t}\t<Text val="{name.upper()}"/>\n'
+            f'{t}\t<Style val="{title_style}"/>\n{t}\t<Text val="{words.ref(name.upper())}"/>\n'
+            f'{t}\t<Options val="NoWrapping | ScaleToPreventTruncation"/>\n'
             f'{t}\t<RenderPriority val="610"/>\n{t}\t<AcceptsMouse val="false"/>\n{t}</Frame>\n')
     for i, (_, _, _, cx, w, total) in enumerate(placed):
         out += (f'{t}<Frame type="TeamScoreValueFrame" name="FCJH_{name.capitalize()}Total{i}">\n' +
@@ -4344,7 +4347,7 @@ def pane_chrome(title, placed, geometry, indent=3):
     out = f'{t}<Frame type="Frame" name="FCJH_Chrome">\n' + PANE(indent + 1) + \
         f'{t}\t<RenderPriority val="600"/>\n{t}\t<AcceptsMouse val="false"/>\n'
     out += (f'{t}\t<Frame type="Label" name="FCJH_Title">\n' + band(indent + 2) +
-            f'{t}\t\t<Style val="ObsBar_MatchTimer"/>\n{t}\t\t<Text val="{title}"/>\n'
+            f'{t}\t\t<Style val="ObsBar_MatchTimer"/>\n{t}\t\t<Text val="{words.ref(title)}"/>\n'
             f'{t}\t\t<RenderPriority val="610"/>\n{t}\t\t<AcceptsMouse val="false"/>\n{t}\t</Frame>\n')
     for i, (_, _, text, x, w, _) in enumerate(placed):
         out += (f'{t}\t<Frame type="Label" name="FCJH_Heading{i}">\n'
@@ -4352,7 +4355,7 @@ def pane_chrome(title, placed, geometry, indent=3):
                 f'{t}\t\t<Anchor side="Left"  relative="$parent" pos="Min" offset="{x}"/>\n'
                 f'{t}\t\t<Anchor side="Right" relative="$parent" pos="Min" offset="{x + w}"/>\n'
                 f'{t}\t\t<Height val="#FCJH_INFO_PANE_HEADER_H"/>\n'
-                f'{t}\t\t<Style val="FCJH_StatHeading"/>\n{t}\t\t<Text val="{text}"/>\n'
+                f'{t}\t\t<Style val="FCJH_StatHeading"/>\n{t}\t\t<Text val="{words.ref(text)}"/>\n'
                 f'{t}\t\t<Options val="NoWrapping | ScaleToPreventTruncation"/>\n'
                 f'{t}\t\t<RenderPriority val="610"/>\n{t}\t\t<AcceptsMouse val="false"/>\n{t}\t</Frame>\n')
     for (name, team_id, colour, title_style, value_style), top in zip(TEAMS, geometry["team_tops"]):
@@ -4583,15 +4586,17 @@ def check_padding(cfg):
         raise SystemExit(f"closer to the screen's edge than [screen] padding = {pad} px: " + "; ".join(close))
 
 
-LOCALES = ("deDE", "enUS", "esES", "esMX", "frFR", "itIT", "koKR", "plPL", "ptBR", "ruRU", "zhCN", "zhTW")
+LOCALES = words.LOCALES
 
 
 def game_strings(locale):
     """Our own strings, in one language's GameStrings.txt: the heroic tooltip's header (Tracer's
-    heroic; the same in every language - it composes the game's own) and the vehicle words."""
+    heroic; the same in every language - it composes the game's own), the vehicle words and the
+    rest of our words (tools/words.py)."""
     lines = ["DocInfo/DescLong=", "DocInfo/DescShort=", "DocInfo/Name=",
              'FCJH/HeroicTip=<s val="@@StandardTooltipHeader">%name%</s><n/>%desc%',
-             *(f"FCJH/Vehicle/{name}={words[locale]}" for _, name, words in VEHICLE_WORDS)]
+             *(f"FCJH/Vehicle/{name}={by_loc[locale]}" for _, name, by_loc in VEHICLE_WORDS),
+             *(f"FCJH/{key}={row[locale]}" for key, row in words.WORDS.items())]
     return "\ufeff" + "".join(line + "\n" for line in lines)
 
 

@@ -1449,10 +1449,10 @@
 			<Anchor side="Right" relative="$parent/FCJH_CampSlot1" pos="Max" offset="0"/>
 			<StateGroup name="FCJH_CampWords">
 				<DefaultState val="None"/>
-				<State name="Event12"><When type="AnimationState" EventID="12"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="Alliance capturing Horde camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamOrderColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamOrderColors/@Color}"/></State>
-				<State name="Event21"><When type="AnimationState" EventID="21"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="Horde capturing Alliance camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamChaosColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamChaosColors/@Color}"/></State>
-				<State name="Event11"><When type="AnimationState" EventID="11"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="Alliance retook their camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamOrderColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamOrderColors/@Color}"/></State>
-				<State name="Event22"><When type="AnimationState" EventID="22"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="Horde retook their camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamChaosColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamChaosColors/@Color}"/></State>
+				<State name="Event12"><When type="AnimationState" EventID="12"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="@FCJH/Alterac/AllianceCapturing"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamOrderColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamOrderColors/@Color}"/></State>
+				<State name="Event21"><When type="AnimationState" EventID="21"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="@FCJH/Alterac/HordeCapturing"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamChaosColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamChaosColors/@Color}"/></State>
+				<State name="Event11"><When type="AnimationState" EventID="11"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="@FCJH/Alterac/AllianceRetook"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamOrderColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamOrderColors/@Color}"/></State>
+				<State name="Event22"><When type="AnimationState" EventID="22"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="@FCJH/Alterac/HordeRetook"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamChaosColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamChaosColors/@Color}"/></State>
 				<State name="None"/>
 			</StateGroup>
 			<Frame type="Label" name="NotificationLabel">
@@ -1476,10 +1476,10 @@
 			<Anchor side="Right" relative="$parent/FCJH_CampSlot2" pos="Max" offset="0"/>
 			<StateGroup name="FCJH_CampWords">
 				<DefaultState val="None"/>
-				<State name="Event12"><When type="AnimationState" EventID="12"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="Alliance capturing Horde camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamOrderColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamOrderColors/@Color}"/></State>
-				<State name="Event21"><When type="AnimationState" EventID="21"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="Horde capturing Alliance camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamChaosColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamChaosColors/@Color}"/></State>
-				<State name="Event11"><When type="AnimationState" EventID="11"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="Alliance retook their camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamOrderColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamOrderColors/@Color}"/></State>
-				<State name="Event22"><When type="AnimationState" EventID="22"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="Horde retook their camp"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamChaosColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamChaosColors/@Color}"/></State>
+				<State name="Event12"><When type="AnimationState" EventID="12"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="@FCJH/Alterac/AllianceCapturing"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamOrderColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamOrderColors/@Color}"/></State>
+				<State name="Event21"><When type="AnimationState" EventID="21"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="@FCJH/Alterac/HordeCapturing"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamChaosColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamChaosColors/@Color}"/></State>
+				<State name="Event11"><When type="AnimationState" EventID="11"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="@FCJH/Alterac/AllianceRetook"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamOrderColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamOrderColors/@Color}"/></State>
+				<State name="Event22"><When type="AnimationState" EventID="22"/><Action type="SetProperty" frame="$this/FCJH_CampText" Text="@FCJH/Alterac/HordeRetook"/><Action type="SetProperty" frame="$this/FCJH_CampText" DarkAdjustColor="{$GameUI/TeamChaosColors/@Color}"/><Action type="SetProperty" frame="$this/FCJH_CampText" GlowColor="{$GameUI/TeamChaosColors/@Color}"/></State>
 				<State name="None"/>
 			</StateGroup>
 			<Frame type="Label" name="NotificationLabel">
@@ -2727,8 +2727,8 @@
 				<Anchor side="Right" relative="$parent" pos="Max" offset="-10"/>
 				<Anchor side="Left"  relative="$parent/NotificationLabel" pos="Min" offset="-129"/>
 			</Frame>
-			<Frame type="Label" name="NotificationLabel"><Text val="Blue team captured"/></Frame>
-			<Frame type="Label" name="NotificationTargetLabel"><Text val="a town"/></Frame>
+			<Frame type="Label" name="NotificationLabel"><Text val="@FCJH/Towers/Blue"/></Frame>
+			<Frame type="Label" name="NotificationTargetLabel"><Text val="@FCJH/Towers/Town"/></Frame>
 			<!-- gone after 5 s, as Blizzard's (its script waits 5 s, then hides it) -->
 			<Animation name="FCJH_Timer">
 				<Event event="Show" action="Restart,Play"/>
@@ -2796,8 +2796,8 @@
 				<State name="OverNecro"><When type="Property" frame="$parent/NecroNotificationFrame" Visible="true"/><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B_2"/></State>
 				<State name="Bottom"><Action type="SetAnchor" frame="$this" side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_MAP_ALERT_RED_B"/></State>
 			</StateGroup>
-			<Frame type="Label" name="NotificationLabel"><Text val="Red team captured"/></Frame>
-			<Frame type="Label" name="NotificationTargetLabel"><Text val="a town"/></Frame>
+			<Frame type="Label" name="NotificationLabel"><Text val="@FCJH/Towers/Red"/></Frame>
+			<Frame type="Label" name="NotificationTargetLabel"><Text val="@FCJH/Towers/Town"/></Frame>
 			<!-- gone after 5 s, as Blizzard's (its script waits 5 s, then hides it) -->
 			<Animation name="FCJH_Timer">
 				<Event event="Show" action="Restart,Play"/>

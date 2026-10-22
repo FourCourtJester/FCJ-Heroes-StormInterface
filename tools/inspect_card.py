@@ -24,6 +24,8 @@ What the rounds established (the file's comments carry the detail):
 from functools import lru_cache
 from pathlib import Path
 
+import words
+
 T = "\t"
 
 # Pane-local layout, in layout units. One padding, PAD, between every section and the next and
@@ -599,17 +601,18 @@ def card():
     chrome.append(blizzard_skin())
     # no buffs or abilities heading (user, 2026-10-05): their pictures say what they are
     for text, top in (("TALENTS", TAL_LABEL), ("STATS", STATS_LABEL)):
-        chrome.append(label(f"FCJH_Section{text.capitalize()}", top, M, top + 15, -M, "FCJH_InspectSection", text, 3, "Max"))
+        chrome.append(label(f"FCJH_Section{text.capitalize()}", top, M, top + 15, -M, "FCJH_InspectSection",
+                            words.ref(text), 3, "Max"))
     # Abathur's clone (the gate's Clone state): its heading, the Ultimate Evolution icon and what
     # it is, where the talents go - the clone has no talents of its own (2026-10-16)
     chrome.append(f'{T*3}<Frame type="Frame" name="FCJH_CloneNote">\n{T*4}<Anchor relative="$parent"/>\n'
                   f'{T*4}<Visible val="false"/>\n{T*4}<AcceptsMouse val="false"/>\n'
-                  + label("FCJH_CloneHead", TAL_LABEL, M, TAL_LABEL + 15, -M, "FCJH_InspectSection", "CLONE", 4, "Max")
+                  + label("FCJH_CloneHead", TAL_LABEL, M, TAL_LABEL + 15, -M, "FCJH_InspectSection", words.ref("CLONE"), 4, "Max")
                   + f'{T*4}<Frame type="Image" name="FCJH_CloneIcon">\n'
                   + rect(TAL, M, TAL + TAL_SIZE, M + TAL_SIZE, i=5)
                   + f'{T*5}<Texture val="{CLONE_ICON}"/>\n{T*5}<AcceptsMouse val="false"/>\n{T*4}</Frame>\n'
                   + label("FCJH_CloneWhat", TAL, M + TAL_SIZE + PAD, TAL + TAL_SIZE, -M, "FCJH_InspectSub",
-                          "Abathur's Ultimate Evolution: no talents", 4, "Max")
+                          words.ref("Abathur's Ultimate Evolution: no talents"), 4, "Max")
                   + f'{T*3}</Frame>\n')
     stat_frames = "".join(
         f'{T*6}<Frame type="TargetInfoStatFrame" name="{n}">\n'
@@ -1081,7 +1084,7 @@ def unit_team():
         + f'{T*5}</Frame>\n')
     band = NAME_BAND - SHIFT
     names = "".join(label(f"FCJH_Team{side}", band + NAME_DROP, M, band + NAME_H + NAME_DROP, -M, "FCJH_InspectSub",
-                          text, 5, "Max", f'{T*6}<Alpha val="0"/>\n')
+                          words.ref(text), 5, "Max", f'{T*6}<Alpha val="0"/>\n')
                     for side, _, _, text in SIDES)
     to = lambda pick: "".join(f'<Action type="SetProperty" frame="$this/{kind}{side}" Alpha="{255 if side == pick else 0}"/>'
                               for side, _, _, _ in SIDES for kind in ("FCJH_UnitEdge/FCJH_Side", "FCJH_UnitTeam/FCJH_Team"))

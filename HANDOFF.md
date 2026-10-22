@@ -441,6 +441,17 @@ installs it under that name, beside the dev build's `FCJH.StormInterface`, which
 fixed name so the everyday loop overwrites one file. Still to see: whether a new version's
 file means casters re-pick the interface in Options.
 
+**Every word of ours in every language (1.0.1, 2026-10-21; user: "lets flesh out the
+translations").** Our own on-screen words live in `tools/words.py` (`WORDS`, keyed
+`FCJH/<key>`; code keeps the English and asks `words.ref(english)` for the key), which gen.py
+writes into each language's GameStrings: the inspect card's heads, team line and clone note,
+CLONE, the stats panes' titles, column heads and team bands, the replay tab, Towers' town
+alert, Alterac's camp alerts. Blizzard's own words wherever the game has them (the key beside
+each); the Towers, Alterac and clone-note sentences are put together by hand from Blizzard's
+names, **for a native speaker to check** (marked HAND). Labels shrink to fit
+(ScaleToPreventTruncation), so long words fit; unseen in game outside English. A new word:
+add it to `WORDS`, use `words.ref`.
+
 **The road to release (user, 2026-10-16): "We're done maps. We're almost done heroes."** Warhead's
 nuke counters closed the maps (e966a07). Left, in order: the last few heroes, then a final
 visual polish, then screenshots of everything for posting.

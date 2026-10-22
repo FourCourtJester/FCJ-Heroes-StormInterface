@@ -351,7 +351,7 @@
 				<Anchor side="Bottom" relative="$parent" pos="Min" offset="419"/>
 				<Anchor side="Right"  relative="$parent" pos="Max" offset="-15"/>
 				<Style val="FCJH_InspectSection"/>
-				<Text val="TALENTS"/>
+				<Text val="@FCJH/Inspect/Talents"/>
 				<Options val="NoWrapping | ScaleToPreventTruncation"/>
 				<AcceptsMouse val="false"/>
 			</Frame>
@@ -361,7 +361,7 @@
 				<Anchor side="Bottom" relative="$parent" pos="Min" offset="497"/>
 				<Anchor side="Right"  relative="$parent" pos="Max" offset="-15"/>
 				<Style val="FCJH_InspectSection"/>
-				<Text val="STATS"/>
+				<Text val="@FCJH/Inspect/Stats"/>
 				<Options val="NoWrapping | ScaleToPreventTruncation"/>
 				<AcceptsMouse val="false"/>
 			</Frame>
@@ -375,7 +375,7 @@
 					<Anchor side="Bottom" relative="$parent" pos="Min" offset="419"/>
 					<Anchor side="Right"  relative="$parent" pos="Max" offset="-15"/>
 					<Style val="FCJH_InspectSection"/>
-					<Text val="CLONE"/>
+					<Text val="@FCJH/Clone"/>
 					<Options val="NoWrapping | ScaleToPreventTruncation"/>
 					<AcceptsMouse val="false"/>
 				</Frame>
@@ -393,7 +393,7 @@
 					<Anchor side="Bottom" relative="$parent" pos="Min" offset="456"/>
 					<Anchor side="Right"  relative="$parent" pos="Max" offset="-15"/>
 					<Style val="FCJH_InspectSub"/>
-					<Text val="Abathur's Ultimate Evolution: no talents"/>
+					<Text val="@FCJH/Inspect/CloneNote"/>
 					<Options val="NoWrapping | ScaleToPreventTruncation"/>
 					<AcceptsMouse val="false"/>
 				</Frame>
@@ -691,7 +691,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="62"/>
 						<Anchor side="Right"  relative="$parent" pos="Max" offset="-15"/>
 						<Style val="FCJH_InspectSub"/>
-						<Text val="BLUE TEAM"/>
+						<Text val="@FCJH/Inspect/Blue"/>
 						<Options val="NoWrapping | ScaleToPreventTruncation"/>
 						<AcceptsMouse val="false"/>
 						<Alpha val="0"/>
@@ -702,7 +702,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="62"/>
 						<Anchor side="Right"  relative="$parent" pos="Max" offset="-15"/>
 						<Style val="FCJH_InspectSub"/>
-						<Text val="RED TEAM"/>
+						<Text val="@FCJH/Inspect/Red"/>
 						<Options val="NoWrapping | ScaleToPreventTruncation"/>
 						<AcceptsMouse val="false"/>
 						<Alpha val="0"/>
@@ -713,7 +713,7 @@
 						<Anchor side="Bottom" relative="$parent" pos="Min" offset="62"/>
 						<Anchor side="Right"  relative="$parent" pos="Max" offset="-15"/>
 						<Style val="FCJH_InspectSub"/>
-						<Text val="NEUTRAL"/>
+						<Text val="@FCJH/Inspect/Neutral"/>
 						<Options val="NoWrapping | ScaleToPreventTruncation"/>
 						<AcceptsMouse val="false"/>
 						<Alpha val="0"/>
