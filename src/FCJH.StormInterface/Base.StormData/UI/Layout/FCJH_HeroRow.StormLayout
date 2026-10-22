@@ -790,7 +790,7 @@
 						<When type="Property" frame="$GameUI/FCJH_MapId" StringValue="DragonShire"/>
 						<Action type="SetProperty" frame="$this" Alpha="255"/>
 						<Action type="SetProperty" frame="$parent/FCJH_CCText" Alpha="0"/>
-						<Action type="SetProperty" frame="$parent/FCJH_VehicleText" Text="KNIGHT"/>
+						<Action type="SetProperty" frame="$parent/FCJH_VehicleText" Text="@FCJH/Vehicle/Knight"/>
 						<Action type="SetProperty" frame="$parent/FCJH_VehicleText" Alpha="255"/>
 					</State>
 					<State name="Vehicle1">
@@ -801,7 +801,7 @@
 						<When type="Property" frame="$GameUI/FCJH_MapId" StringValue="Volskaya"/>
 						<Action type="SetProperty" frame="$this" Alpha="255"/>
 						<Action type="SetProperty" frame="$parent/FCJH_CCText" Alpha="0"/>
-						<Action type="SetProperty" frame="$parent/FCJH_VehicleText" Text="PROTECTOR"/>
+						<Action type="SetProperty" frame="$parent/FCJH_VehicleText" Text="@FCJH/Vehicle/Protector"/>
 						<Action type="SetProperty" frame="$parent/FCJH_VehicleText" Alpha="255"/>
 					</State>
 					<State name="Vehicle2">
@@ -811,7 +811,7 @@
 						<When type="Property" frame="$parent/FCJH_Vehicle/FCJH_Driving" Visible="true"/>
 						<Action type="SetProperty" frame="$this" Alpha="255"/>
 						<Action type="SetProperty" frame="$parent/FCJH_CCText" Alpha="0"/>
-						<Action type="SetProperty" frame="$parent/FCJH_VehicleText" Text="TERROR"/>
+						<Action type="SetProperty" frame="$parent/FCJH_VehicleText" Text="@FCJH/Vehicle/Terror"/>
 						<Action type="SetProperty" frame="$parent/FCJH_VehicleText" Alpha="255"/>
 					</State>
 					<State name="CC">

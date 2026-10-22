@@ -619,7 +619,8 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
     gunner too: the sensor can't tell the seats apart), TERROR (any other vehicle, so Garden
     classic too, its map id unseen) - Blizzard's names cut short (user: "Knight" and
     "Protector" is probably our best bet with "Terror"). gen.py `VEHICLE_WORDS`; Blizzard's
-    stasis icon stays in the portrait. English only; GameStrings if it's ever translated.
+    stasis icon stays in the portrait. In every language, from Blizzard's own names there
+    (user: "We *should* translate them"); gen.py now writes our GameStrings (`game_strings`).
   - D.Va: a "PILOT" status on her plate while she's out of the mech - any status effect
     overrides it, and it goes when she's back in the mech.
 - **Vikings' and Misha's timers and skulls (2026-10-21, user: "Vikings look brilliant"):**

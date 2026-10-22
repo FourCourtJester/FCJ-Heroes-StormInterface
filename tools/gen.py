@@ -1661,10 +1661,26 @@ def seat_portrait():
 
 
 # The word in place of STASIS while a hero drives (FCJH_VehicleText), by map: Blizzard's own
-# vehicle names, cut short (user, 2026-10-21) - the Dragon Knight, the Triglav Protector (its
-# gunner too: the sensor can't tell the seats apart), the Garden Terror. The last has no map: any
-# other vehicle is the Garden's, so Garden of Terror classic (its map id unseen) reads it too.
-VEHICLE_WORDS = [("dragon_shire", "KNIGHT"), ("volskaya_foundry", "PROTECTOR"), (None, "TERROR")]
+# vehicle names (Unit/Name/VehicleDragon, VolskayaVehicle, VehiclePlantHorror in each language),
+# cut to the noun (user, 2026-10-21: "Knight" and "Protector" is probably our best bet with
+# "Terror"), in capitals as Blizzard's CC words are - the Dragon Knight, the Triglav Protector (its
+# gunner too: the sensor can't tell the seats apart; French calls it the Triglav's pilot), the
+# Garden Terror. The last has no map: any other vehicle is the Garden's, so Garden of Terror
+# classic (its map id unseen) reads it too. Each is FCJH/Vehicle/<name> in our GameStrings.
+VEHICLE_WORDS = [
+    ("dragon_shire", "Knight", {
+        "deDE": "RITTER", "enUS": "KNIGHT", "esES": "CABALLERO", "esMX": "CABALLERO", "frFR": "CHEVALIER",
+        "itIT": "CAVALIERE", "koKR": "기사", "plPL": "RYCERZ", "ptBR": "CAVALEIRO", "ruRU": "РЫЦАРЬ",
+        "zhCN": "骑士", "zhTW": "騎士"}),
+    ("volskaya_foundry", "Protector", {
+        "deDE": "PROTEKTOR", "enUS": "PROTECTOR", "esES": "PROTECTOR", "esMX": "PROTECTOR", "frFR": "PILOTE",
+        "itIT": "PROTETTORE", "koKR": "수호자", "plPL": "PROTEKTOR", "ptBR": "PROTETOR", "ruRU": "ЗАЩИТНИК",
+        "zhCN": "保护者", "zhTW": "保衛者"}),
+    (None, "Terror", {
+        "deDE": "UNGEHEUER", "enUS": "TERROR", "esES": "TERROR", "esMX": "TERROR", "frFR": "TERREUR",
+        "itIT": "TERRORE", "koKR": "공포", "plPL": "KOSZMAR", "ptBR": "TERROR", "ruRU": "УЖАС",
+        "zhCN": "恐魔", "zhTW": "懼魔"}),
+]
 
 
 def vehicle_words():
@@ -1680,10 +1696,10 @@ def vehicle_words():
         + (f'{t}\t{maps.on_map(key)}' if key else "")
         + f'{t}\t<Action type="SetProperty" frame="$this" Alpha="255"/>'
         f'{t}\t<Action type="SetProperty" frame="$parent/FCJH_CCText" Alpha="0"/>'
-        f'{t}\t<Action type="SetProperty" frame="$parent/FCJH_VehicleText" Text="{word}"/>'
+        f'{t}\t<Action type="SetProperty" frame="$parent/FCJH_VehicleText" Text="@FCJH/Vehicle/{word}"/>'
         f'{t}\t<Action type="SetProperty" frame="$parent/FCJH_VehicleText" Alpha="255"/>'
         f'{t}</State>'
-        for i, (key, word) in enumerate(VEHICLE_WORDS))
+        for i, (key, word, _) in enumerate(VEHICLE_WORDS))
 
 
 def trackers(team, health):
@@ -4567,6 +4583,18 @@ def check_padding(cfg):
         raise SystemExit(f"closer to the screen's edge than [screen] padding = {pad} px: " + "; ".join(close))
 
 
+LOCALES = ("deDE", "enUS", "esES", "esMX", "frFR", "itIT", "koKR", "plPL", "ptBR", "ruRU", "zhCN", "zhTW")
+
+
+def game_strings(locale):
+    """Our own strings, in one language's GameStrings.txt: the heroic tooltip's header (Tracer's
+    heroic; the same in every language - it composes the game's own) and the vehicle words."""
+    lines = ["DocInfo/DescLong=", "DocInfo/DescShort=", "DocInfo/Name=",
+             'FCJH/HeroicTip=<s val="@@StandardTooltipHeader">%name%</s><n/>%desc%',
+             *(f"FCJH/Vehicle/{name}={words[locale]}" for _, name, words in VEHICLE_WORDS)]
+    return "\ufeff" + "".join(line + "\n" for line in lines)
+
+
 def committed_files(cfg, source=SOURCE):
     """{path under source: bytes} for every generated file that lives in the repo."""
     layout_dir = source / LAYOUT_REL
@@ -4597,7 +4625,7 @@ def committed_files(cfg, source=SOURCE):
                                              for k, v in minimap_launch(cfg).items()},
                                             minimap_lifts(cfg)),
         LAYOUT_REL / INDEX_FILE: desc_index(layout_order(layout_dir, generated=GENERATED_LAYOUTS)),
-    }
+    } | {Path(f"{loc}.StormData/LocalizedData/GameStrings.txt"): game_strings(loc) for loc in LOCALES}
     return {rel: text.encode("utf-8") for rel, text in texts.items()} | texture_files(cfg)
 
 
