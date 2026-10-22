@@ -601,9 +601,19 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
   Heroes-like (Blizzard's menu panel: blur, translucency, chrome border), and a colour, font
   and art pass on the numbers panes (docs/polish-research.md, "Decisions from the question round").
 - **Ideas to come back to (user, 2026-10-21):**
-  - Dragon Shire: a graphic for whoever is controlling the Dragon Knight.
+  - Dragon Shire: a graphic for whoever is controlling the Dragon Knight. **First pass built
+    (2026-10-21), for the user's evaluation:** Volskaya's pilot seat over the knight's bar,
+    beside the dragon's head (as our Volskaya seats beside the robot), in the knight's team colour,
+    the driver's face from their cell's own portrait (`maps.knight_pilot`). Who's driving: each
+    cell's `FCJH_Vehicle` sensor (gen.py; Blizzard's UsingVehicle behaviour, Ahli's recipe).
+    Placement is from screenshots (PILOT_OUT, PILOT_UP) - unseen. Not yet: a Viking driving
+    (their cell's HeroStatus follows one Viking; Ahli has a sensor per Viking).
   - D.Va: a "PILOT" status on her plate while she's out of the mech - any status effect
     overrides it, and it goes when she's back in the mech.
+- **Vikings' and Misha's timers and skulls (2026-10-21, user: "Vikings look brilliant"):**
+  each on its portrait slice's middle, 1 unit low (digits sit high in a label's box), the
+  skull on the number, the number held 1.5 s then faded in. Misha's number is back, on her
+  slice (dropped 2026-09-30), hidden while Rexxar is dead.
 - **Parked:** blue's curse mirror (unseen; item 14).
 - **Later:** extract the toolchain into its own repo for open-sourcing (user, 2026-10-09) -
   [docs/generator.md](docs/generator.md) says what it is, [docs/extraction-plan.md](docs/extraction-plan.md)

@@ -417,6 +417,11 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
   one is built but not seen yet.
   Limit: in a player view (1-8) the script shows the viewer's team as Ally, so there the
   Punisher goes by the viewer's team, not the summoner's.
+- **Dragon Shire: who's driving the Dragon Knight.** Blizzard's knight banner says nothing
+  about its pilot (Volskaya's robot shows its seats). Ours puts Volskaya's pilot seat beside
+  the dragon's head, in the knight's team colour, with the driver's face in it, read from
+  each plate's UsingVehicle behaviour (`maps.knight_pilot`; 2026-10-21, first pass, unseen).
+  Ahli's UI did it first, with his own art list per hero; ours uses the plate's own portrait.
 - **Sky Temple: only the temples that matter.** Blizzard's three temple discs sit on the
   minimap's bottom half all game, greyed between rounds, with no mark on the ones about to
   activate but a countdown label. Ours sit above the minimap on a backing bar, shown only during

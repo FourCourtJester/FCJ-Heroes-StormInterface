@@ -3179,6 +3179,20 @@ def hero_cell_template(team, c, cfg):
 				<VisibleToEnemy val="true"/>
 				<Unclipped val="true"/>
 			</Frame>
+			<!-- Driving: Blizzard's UsingVehicle behaviour on this cell's hero (the Dragon Knight,
+			     Volskaya's robot) shows FCJH_Driving while it lasts - Ahli's sensor. Read by the
+			     knight's pilot seat (maps.py knight_pilot). -->
+			<Frame type="UnitStatusBehaviorAnim" name="FCJH_Vehicle">
+				<Behavior val="UsingVehicle"/>
+				<Frame type="Frame" name="FCJH_Driving"><Visible val="false"/></Frame>
+				<Animation name="FCJH_VehicleEntered">
+					<Event event="BehaviorCreate" action="Reset,Play"/>
+					<Event event="BehaviorDestroy" action="Reset,Stop"/>
+					<Controller type="Visibility" end="Pause" frame="FCJH_Driving">
+						<Key type="Bool" time="0" value="True"/>
+					</Controller>
+				</Animation>
+			</Frame>
 			<!-- The text sits across the health bar (HeroStatus is the bar's rect), centred on it
 			     both ways; the box reaches past the bar above and below, so the text can be taller
 			     than the bar, but not sideways: UNSTOPPABLE ran under the heroic icon (2026-09-30),
