@@ -574,23 +574,6 @@ def ban_slots(team):
                    for i in range(BANS))
 
 
-def tabs_svg():
-    """The division and game tabs as the interface draws them (gen.top_bar_tab_texture): the
-    stock dark the backplate fades to, a chrome line down both sides and along the bottom, and
-    none across the top, where the band's own rim closes them."""
-    g = gen.top_bar_geometry(CFG)
-    bp = CFG["top_backplate"]
-    out = [f'<svg width="1920" height="140" viewBox="0 0 1920 140" style="position: absolute; left: 0; top: 0;" aria-label="The division and game tabs">']
-    for team in ("blue", "red"):
-        p0, p1, p2, p3 = g["tabs"][team]["poly"]
-        pt = lambda q: f"{f1(q[0])},{f1(q[1])}"
-        out.append(f'<polygon points="{" ".join(pt(q) for q in (p0, p1, p2, p3))}" fill="#{bp["stock"][1]}" fill-opacity=".9"/>')
-        out.append(f'<polyline points="{" ".join(pt(q) for q in (p1, p2, p3, p0))}" fill="none" stroke="#{bp["rim"][0]}" '
-                   f'stroke-width="{CFG["top_bar"]["tab_rim"]}" stroke-linejoin="round"/>')
-    out.append('</svg>\n')
-    return "".join(out)
-
-
 def score_pips(team, wins):
     """The series score: hexagon pips, no plate, filled from the name outward (gen's
     top_bar_geometry; a best of 5 here, so three a side of the four [top_bar] keeps room for)."""
@@ -619,11 +602,8 @@ def top_bar(levels=("12", "9")):
         b.append(at(f"{team}_name", "ob t", '<span style="font-size: 22px;">Team name</span>', CENTRE))
         b.append(at(f"{team}_logo", "ob t", '<span style="font-size: 12px;">Logo</span>', CENTRE))
         b.append(ban_slots(team))
-    b.append(tabs_svg())
-    for stem, words in (("division", "Division 1"), ("game_count", "Game 3 of 5")):
-        x, y = gen.top_bar_geometry(CFG)["tabs"]["blue" if stem == "division" else "red"]["text"]
-        b.append(f'<div class="t" style="position: absolute; left: {f1(x - 80)}px; top: {f1(y - 9)}px; width: 160px; '
-                 f'{CENTRE} font-size: 12px; color: #F7C08A;">{words}</div>\n')
+    b.append(at("division", "ob t", '<span style="font-size: 12px;">Division 1</span>', CENTRE))
+    b.append(at("game_count", "ob t", '<span style="font-size: 12px;">Game 3 of 5</span>', CENTRE))
     x, y, w, h = R["top_backplate"]
     b.append(f'<img src="{BACKPLATE}" alt="Our top bar backplate texture, as built" style="position: absolute; left: {x}px; top: {y}px; width: {w}px; height: {h}px;">\n')
     b.append(f'<svg width="1920" height="140" viewBox="0 0 1920 140" style="position: absolute; left: 0; top: 0;" aria-label="Blizzard\'s centre hexagon">{hexagon_svg()}</svg>\n')
@@ -1111,8 +1091,7 @@ def spec_board():
         ("Team logos", f"{obs('blue_logo')} / {f1(R['red_logo'][0])}", "obs", "A logo plate lapping the name plate's inner end, one seam between them"),
         ("Series score", f"{obs('blue_pips')} / {f1(R['red_pips'][0])}", "obs", "Hexagon pips, no plate: 2 a side in a Bo3, 3 in a Bo5, 4 in a Bo7, filled from the name outward"),
         ("Bans", f"{obs('blue_bans')} / {f1(R['red_bans'][0])}", "obs", f"The game's bans, {BANS} tiles a side under the name, at the plates' lean. Optional: a toggle"),
-        ("Division + game tabs", f"{obs('division')} / {obs('game_count')}", "built", "Our art (gen.top_bar_tab_texture): stock fill, a chrome line down the sides and along the bottom, none across the top. OBS writes the words"),
-        ("Ban tiles", "Under each name, the band's second row", "unk", "Interface art, still to build: the empty tiles, and a way to hide them - their size and shape get their own pass"),
+        ("The band's own plates", "The tabs, the ban tiles, the name plates", "obs", "None of them drawn in game (user, 2026-10-22): the interface must be usable without OBS, so a plate nothing may fill stays out of the build. They belong to the OBS layer"),
         ("Tournament logo", f"{obs('event_logo')}, the hexagon's middle", "obs", "Over Blizzard's hexagon, masked to it (event_mask.png)"),
         ("Tournament name", "A tab of its own", "unk", "It has left the clock; where exactly is still to settle (user, 2026-10-19)"),
         ("Division", f"{obs('division')}, hung from blue's wing", "obs", "With the bracket stage if it fits. A generic panel: what goes in it is the operator's call"),

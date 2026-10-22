@@ -357,9 +357,6 @@ ban_inset = 5                # the innermost tile, in from the seam carried down
 tab_clear = 5                # the division / game tabs' inner sides, off Blizzard's hexagon.
                              # They hang from the band to the ban tiles' bottom (y 100.3), and
                              # their outer sides are the seam carried down, so the slants line up
-tab_rim = 2                  # the tabs' chrome line, drawn INSIDE the shape and on three sides
-                             # only - along the top the band's own rim closes them. 2, as the
-                             # approved mock drew it, not the band's 2.5 ([top_backplate] rim_width)
 
 # Bars stacked on each hero row, placed by tools/gen.py from [hero_row] so they follow it.
 # Both are cut to the plates' slant: their ends continue the row's slanted outer edges.

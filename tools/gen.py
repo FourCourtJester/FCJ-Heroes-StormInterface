@@ -1291,56 +1291,6 @@ def top_backplate_texture(cfg):
     return dds_bgra(w, h, b"".join(rows))
 
 
-TAB_RIM_RUN = 8.0    # px the tab's two sides are carried up past its frame, so the rim it
-                     # draws along its edges never runs along the top (the band closes it)
-
-
-def top_bar_tab_texture(cfg, team):
-    """The division (blue) / game count (red) tab hung under the level wing ([top_bar],
-    docs/obs-topbar-handoff.md), drawn for its own frame at ART_HEIGHT: the stock dark the
-    backplate fades to, carrying on the backplate's vertical ramp so the two can't part
-    company, and a tab_rim chrome line inside the shape. The line runs down the two sides and
-    along the bottom but never across the top, where the band's own rim closes it - the sides
-    are carried TAB_RIM_RUN px up past the frame, so that edge falls outside the texture.
-    OBS writes the words on it; the art is ours."""
-    bp, tb = cfg["top_backplate"], cfg["top_bar"]
-    stem = "division" if team == "blue" else "game_count"
-    (bx, by, bw, bh), _ = top_bar_rects(cfg)[stem]
-    k = art_scale(cfg)
-    w, h = round(bw * k), round(bh * k)
-    p0, p1, p2, p3 = top_bar_geometry(cfg)["tabs"][team]["poly"]   # outer top, inner top, inner bottom, outer bottom
-    up = lambda a, b: (a[0] - TAB_RIM_RUN * (b[0] - a[0]) / (b[1] - a[1]), a[1] - TAB_RIM_RUN)
-    sd = convex_sdf([up(p0, p3), up(p1, p2), p2, p3])
-    rgb = lambda hx: tuple(int(hx[i:i + 2], 16) / 255 for i in (0, 2, 4))
-    mix = lambda a, b, t: tuple(q + (r - q) * t for q, r in zip(a, b))
-    clamp = lambda v: 0.0 if v < 0 else 1.0 if v > 1 else v
-    stock = [rgb(c) for c in bp["stock"]]
-    chrome = list(zip((0, .35, .6, 1), (rgb(c) for c in bp["rim"])))
-    bottom = max(y for _, y in top_backplate_geometry(cfg)["padded"])   # the backplate's ramp
-    def ramp(stops, t):
-        for (o1, c1), (o2, c2) in zip(stops, stops[1:]):
-            if t <= o2:
-                return mix(c1, c2, (t - o1) / (o2 - o1))
-        return stops[-1][1]
-    rim_w = tb["tab_rim"]
-    rows = []
-    for ty in range(h):
-        y = by + (ty + 0.5) / k
-        vt = clamp(y / bottom)
-        base, rim_c = mix(*stock, vt), ramp(chrome, vt)
-        row = bytearray()
-        for tx in range(w):
-            d = sd(bx + (tx + 0.5) / k, y)
-            cover = clamp(0.5 - d * k)
-            if cover <= 0:
-                row += b"\0\0\0\0"
-                continue
-            c = mix(base, rim_c, cover * clamp((rim_w + d) * k + 0.5))
-            row += bytes(round(v * 255) for v in (c[2], c[1], c[0], cover))
-        rows.append(bytes(row))
-    return dds_bgra(w, h, b"".join(rows))
-
-
 def row_frame_seams(cfg, team, n=5):
     """The slants between neighbouring plates ([row_frame] seam), screen px: ((x, y) at the
     plates' top, (x, y) at their bottom) for each of the n - 1. Each is the row's outer
@@ -1577,11 +1527,6 @@ def slant_bars(cfg):
     data = top_backplate_texture(cfg)
     digest = hashlib.sha1(data).hexdigest()[:8]
     out[name("top", "backplate")] = (f"FCJH_TopBackplate_{digest}.dds", data)
-    # the division and game tabs hung under the wings ([top_bar]): ours to draw, OBS's to fill
-    for team, stem in (("blue", "division"), ("red", "game_count")):
-        data = top_bar_tab_texture(cfg, team)
-        digest = hashlib.sha1(data).hexdigest()[:8]
-        out[name(stem, "tab")] = (f"FCJH_Tab_{stem}_{digest}.dds", data)
     cell = HeroCell(cfg)
     # the plate's own shape, as the click target's hit-test texture: plates overlap along the
     # slant, and a square click area sent clicks on one plate's corner to its neighbour

@@ -560,17 +560,6 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
   observer view has nothing. Ours is one anti-aliased line round the plates and the XP bar, in
   the top backplate's rim colour (one flat silver for both since 2026-10-18: the top's old
   ramp read as shadowed beside it), cut for rows of 1-5 (`gen.row_frame_texture`, `[row_frame]`).
-- **Somewhere to put the tournament's own information** (2026-10-22). Blizzard's observer bar
-  has no place for anything a broadcast knows and the game doesn't - what division this is,
-  which game of the series. The space under each level wing held its towers and kills
-  counters, which we park. Ours hangs a tab there from each wing: our art - the stock dark the
-  backplate fades to, a chrome line down both sides and along the bottom, none across the top
-  where the band's own rim closes it - with its outer side the name/logo seam carried down the
-  plates' lean, so the slants line up, and its inner side 5 px off Blizzard's hexagon (which
-  sits 2.75 px left of centre, so the two tabs differ). OBS writes the words; they are generic
-  information panels, and what goes in them is the operator's call
-  (`gen.top_bar_tab_texture`, `[top_bar]`, `FCJH_DivisionTab` / `FCJH_GameTab`). Built
-  2026-10-22, not seen in game yet.
 
 ## Known, not fixed
 

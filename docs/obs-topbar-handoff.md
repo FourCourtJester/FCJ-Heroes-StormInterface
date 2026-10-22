@@ -3,20 +3,30 @@
 The one file for the OBS work: the rule, the agreed top bar, every generated graphic and number,
 what to build and in what order. Agreed 2026-10-18 after three mock passes (user: "Yes thats
 great"), settled further 2026-10-19, gathered here 2026-10-21. The band's **places** are in the
-build since 2026-10-22 (layout.toml `[top_bar]`, "To build" item 1), and the division and game
-tabs are drawn (item 2); the ban tiles are the art still open.
+build since 2026-10-22 (layout.toml `[top_bar]`, "To build" item 1); **none of its art is, and
+none of it will be** - the plates are OBS's, so the interface stays usable without it (the
+rule, 2026-10-22).
 [obs.md](obs.md) is the earlier plan, kept for its history; where they differ, this file wins.
 
 ## The rule
 
 **OBS draws data only** (user, 2026-10-16): only what the game can't know. That's the team
 names and logos, the series score, the tournament's name, division and logo, and the game's
-bans. **Nothing goes on the bottom part of the UI.** Every plate under that data is the
-interface's, with one exception:
+bans. **Nothing goes on the bottom part of the UI.**
 
-**The team name plate is OBS art** (2026-10-18). Only OBS knows whether a tournament has team
-logos, and the plate's shape depends on it. With no OBS running, the interface shows no name
-plates: just the level wings, the tabs and the ban tiles.
+**And OBS draws the plates under it too** (user, 2026-10-22: "the interface needs to be usable
+without OBS, so building in-game art for OBS elements when we can't guarantee any will draw
+upon them is not useful"). The name plates, the division and game tabs and the ban tiles are
+all the OBS layer's art. The interface keeps their **places** - layout.toml `[top_bar]`,
+`gen.top_bar_geometry` - so the two line up exactly, and draws none of them: with no OBS
+running the top bar is the level wings, Blizzard's hexagon and the clock, and nothing hangs
+off them. That is the point: a plate nothing may ever fill is a plate in the way.
+
+This overrules the earlier split, where everything but the name plate was the interface's
+(the name plate's own reason, 2026-10-18, still holds: only OBS knows whether a tournament has
+team logos, and the plate's shape depends on it). The two tabs were built in game on
+2026-10-22 and taken straight back out (18dcde6, then reverted) - the geometry they were drawn
+from is what stays.
 
 Why the data stays outside the `.StormInterface`: a team swap would otherwise mean rebuilding
 and reselecting an interface mid-broadcast. The interface can't see OBS, so there's no
@@ -48,7 +58,7 @@ D = 0.54 × 63.3, is 34.18.
 | Name plate | OBS's nine-slice (below). The box is fixed: blue left 440, width 374 (its top runs 440 → 779.8, the wing's end); red left 1106. The name is 24 px at most and shrinks to fit 12 px inside the slants. |
 | Team logo | Optional, inside the name plate's box: a fixed 109.5 px plate at the inner end. Its rim laps the name plate's to make one seam, at top x ≈ 707. The mark is 46 px. Without a logo, the name plate runs on to the wing. |
 | Level wings (interface) | 20 px shorter each. The level plates are 64 wide: blue `[820, 8, 64, 50]`, red `[1036, 8, 64, 50]` (done 2026-10-19; the wings end at 779.8 / 1140.2). |
-| Division / game count | A tab hung from the wing, y 63.3 → 100.3 (flush with the bans' bottom). Its outer side is the name/logo seam carried down the lean, so the slants line up; its inner side is 5 px off Blizzard's hexagon. The tab is interface art (stock fill, 2 px rim, no top edge); OBS writes the words only, 14 px, centred at (825.2, 81.8) blue and (1091.6, 81.8) red. The tabs are generic information panels: what goes in them is the operator's call. |
+| Division / game count | A tab hung from the wing, y 63.3 → 100.3 (flush with the bans' bottom). Its outer side is the name/logo seam carried down the lean, so the slants line up; its inner side is 5 px off Blizzard's hexagon. The tab is OBS's art, as the rest of the band is since 2026-10-22 (stock fill, 2 px rim, no top edge - it was the interface's until then); its words are 14 px, centred at (825.2, 81.8) blue and (1091.6, 81.8) red. The tabs are generic information panels: what goes in them is the operator's call. |
 | Bans | Optional, a toggle. Three tiles a side, 32 px parallelograms on a 38 px pitch, the band's lean, y 68.3 → 100.3 (5 below the band). The innermost tile's outer x is the seam minus 5 (blue's top 706.9 → 738.9). A banned hero's portrait is desaturated, with a 4 px red foot. Size, and slanted versus square, get their own pass when built (user, 2026-10-19). |
 | Tournament | Its logo goes over Blizzard's Nexus hexagon (centre 957.25, 63.3); `event_mask.png` masks it to that hexagon. The tournament name leaves the clock: it goes in a secondary tab, likely the name on the left and the division on the right (user, 2026-10-19). |
 | Font | The mock uses Saira Semi Condensed (Google Fonts, open). Blizzard's in-game font, Metronic for Blizzard Bold, is a cut of Metronic Pro (Mostardesign): a style from $25, the family $329; check the licence covers broadcast use before using it. |
@@ -133,21 +143,13 @@ change to `layout.toml` moves both. The plan, to be decided when we start:
    hexagon isn't centred), and `event_logo` as it was. Gone: `blue_score` / `red_score` (the
    pips have no plate) and `event_name` (the name has left the clock). Checked: every number
    `mock_pass3.py` writes is unchanged, so the agreed design is exactly what the build holds.
-2. Interface art:
-   - our name plate frames: there were none to drop, as it turns out - the plates were never
-     drawn, only reserved;
-   - **the division and game tabs: built 2026-10-22, not seen in game yet.**
-     `gen.top_bar_tab_texture` draws one per side for its own frame at 1440p - the stock dark
-     the backplate fades to, carrying on the backplate's vertical ramp, and a `[top_bar]`
-     `tab_rim` (2 px) chrome line inside the shape, down both sides and along the bottom. None
-     across the top: the two sides are carried 8 px up past the frame (`TAB_RIM_RUN`) so that
-     edge falls outside the texture and the band's own rim closes it. `FCJH_DivisionTab` /
-     `FCJH_GameTab` in FCJH_TopBar.StormLayout, anchored by the `division` / `game_count`
-     constants, RenderPriority 485 (under the backplate's 490). They show with or without OBS;
-     the words are OBS's;
-   - **still to build:** the empty ban tiles, after settling their size and shape (user,
-     2026-10-19); they need a way to hide, since bans are a toggle. Their polygons are already
-     in the geometry (`top_bar_geometry`'s `bans`), so only the art and the hiding are open.
+2. **Interface art: none** (user, 2026-10-22; see the rule). The band is OBS's to draw, the
+   interface's only part in it is the places. For the record, what this item used to hold:
+   our own name plate frames (there were none to drop - the plates were never drawn, only
+   reserved), the division and game tabs (built 2026-10-22, reverted the same day) and the
+   empty ban tiles with a way to hide them. The ban tiles' size and shape still want their
+   pass (user, 2026-10-19) - now a question for the OBS layer, and their polygons are already
+   in the geometry (`top_bar_geometry`'s `bans`).
 3. `tools/obs.py` and the live layer (above).
 4. The canvas: the Top bar and Spec boards, and a game-scene board with the OBS layer in place.
 5. A live custom game with the OBS layer on, at 1080p, checking every place against `guide.png`.

@@ -88,9 +88,10 @@ Nothing on the bottom UI. Its places are `kind = "obs"` rects in `layout.toml` (
 Not yet: the OBS graphics package and the visual pass that takes the chrome look of
 the top bar to the plates, bars and panes. The OBS band's **places** are in the build since
 2026-10-22 - layout.toml `[top_bar]`, every box derived by gen's `top_bar_geometry`, so the
-interface and the OBS layer can't drift apart - and the division and game tabs are drawn
-(`top_bar_tab_texture`; built 2026-10-22, not seen in game yet). The ban tiles are the band's
-last piece of art, and their size and shape need a pass first.
+interface and the OBS layer can't drift apart - and **none of its art is ours to draw**: the
+name plates, the division and game tabs and the ban tiles all belong to the OBS layer, so the
+interface stays usable without it (user, 2026-10-22; the tabs were built in game that day and
+reverted the same day). docs/obs-topbar-handoff.md has the rule.
 §7 has the open list.
 
 ---
