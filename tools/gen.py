@@ -1827,10 +1827,12 @@ def pet_death_labels(team, c):
     # The slices are measured along the bar, but the timer sits higher up the slanted plate,
     # where each slice has shifted with the lean: left on blue (\), right on red (/). Seen in
     # game (2026-09-29): a timer just off its slice toward the plate's slanted edge.
-    # Centred on the portrait slice (2 above its middle, Blizzard's skull's), not on the plate as the one-unit plates' (theirs hide their bars when dead;
-    # a Viking's bar stays, so the timer and its skull sat low - user, 2026-10-21)
+    # Centred on the portrait slice, not on the plate as the one-unit plates' (theirs hide their bars when dead;
+    # a Viking's bar stays, so the timer and its skull sat low - user, 2026-10-21). 1 below its
+    # middle: digits sit high in a label's box, and 2 above (Blizzard's skull's) read high
+    # (user, 2026-10-21: "just a tad high")
     k = c.w / c.W
-    mid = round((SLICE_RING_BOTTOM / 2 - SLICE_SKULL_UP) * k)
+    mid = round((SLICE_RING_BOTTOM / 2 + 1) * k)
     lean = c.lean
     shift = round(lean * ((ht + hb) / 2 - mid)) * (-1 if team == "blue" else 1)
     labels = ""
@@ -2666,7 +2668,7 @@ SLICE_RINGS = {"Olaf": (0, "Hero1"), "Baleog": (1, "Hero2"), "Erik": (2, "Hero3"
 # HeroDeathIconImage, 30 x 34, 2 above its frame's middle), centred on the slice's portrait -
 # the plate's skull stays hidden for a Viking's death (user, 2026-10-21: "the skulls dont seem
 # to be triggering for TLV")
-SLICE_SKULL_W, SLICE_SKULL_H, SLICE_SKULL_UP = 30, 34, 2
+SLICE_SKULL_W, SLICE_SKULL_H = 30, 34
 
 
 def slice_rings(cfg, team_frame, i):
