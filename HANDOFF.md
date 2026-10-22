@@ -604,10 +604,15 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
   - Dragon Shire: a graphic for whoever is controlling the Dragon Knight. **First pass built
     (2026-10-21), for the user's evaluation:** Volskaya's pilot seat over the knight's bar,
     beside the dragon's head (as our Volskaya seats beside the robot), in the knight's team colour,
-    the driver's face from their cell's own portrait (`maps.knight_pilot`). Who's driving: each
-    cell's `FCJH_Vehicle` sensor (gen.py; Blizzard's UsingVehicle behaviour, Ahli's recipe).
-    Placement is from screenshots (PILOT_OUT, PILOT_UP) - unseen. Not yet: a Viking driving
-    (their cell's HeroStatus follows one Viking; Ahli has a sensor per Viking).
+    the driver's face in it (`maps.knight_pilot`). Who's driving: each
+    cell's `FCJH_Vehicle` sensor (gen.py `vehicle_sensor`; Blizzard's UsingVehicle behaviour,
+    Ahli's recipe), one more per Viking. Seen in game: placement and sensor work; the face,
+    cropped from the plate's wide art, did not ("Crop didnt go well"). **Second pass:**
+    Blizzard's own seat portrait, as its Volskaya seats show (libvlsk's SetPilotPortrait via
+    uilib's KillLogGetPortraitPathforUnit): the hero's square `ui_targetportrait_hero_*`, each
+    Viking their own, in Blizzard's mask. A script picks it there; ours is a per-hero table
+    (gen.py `SEAT_PORTRAITS`, from Jamie Phan's hero data and Ahli's list) - **a new hero needs
+    adding to it.**
   - D.Va: a "PILOT" status on her plate while she's out of the mech - any status effect
     overrides it, and it goes when she's back in the mech.
 - **Vikings' and Misha's timers and skulls (2026-10-21, user: "Vikings look brilliant"):**

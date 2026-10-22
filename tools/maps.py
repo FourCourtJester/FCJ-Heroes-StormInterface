@@ -1117,20 +1117,24 @@ def knight_layout(s):
 # The knight's pilot (user, 2026-10-21: Ahli shows whoever boards it, in Volskaya's art):
 # Volskaya's pilot seat over the bar's outer end, beside the dragon's head, as our Volskaya
 # seats sit beside the robot (robot_layout) - its border in the knight's team colour, the
-# driver's portrait in it. Who's driving: each cell's FCJH_Vehicle (gen.py; Blizzard's
-# UsingVehicle on the cell's hero); the portrait is that cell's own art, cropped to the face.
+# driver's portrait in it. Who's driving: each cell's FCJH_Vehicle (gen.py vehicle_sensor;
+# Blizzard's UsingVehicle, Ahli's recipe), a Viking's too; the portrait is Blizzard's square one,
+# as on its Volskaya seats (gen.py seat_portrait).
 OVERVIEW = "$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel"   # gen.OVERVIEW
 PILOT_CELLS = tuple(f"{OVERVIEW}/Team{t}HeroOverview/HeroOverview{i}" for t in (1, 2) for i in range(1, 6))
 PILOT_SEAT, PILOT_FACE = 72, 55   # Blizzard's seat and portrait (VolskayaRobotHealthSlideout)
 PILOT_OUT = 360      # the seat's outer side out from the tip: the dragon's jaw ~359 (1080p, 2026-10-21)
 PILOT_UP = 14        # its bottom under the bar image's top: its hexagon ~7 over the bar's backing,
                      # as the robot's seats over theirs
-PILOT_FACE_CROP = 'top="0.05" left="0.67" bottom="0.7" right="0.91"'   # a square on the cell art's face
-PILOT_MASK = "Assets\\Textures\\storm_ui_hud_volskaya_mech_portrait_mask.dds"   # Ahli's, on this map
+PILOT_MASK = "Assets\\Textures\\hud_Bar_DeathStun_IconMask.dds"   # Blizzard's, on its seats' portraits
 
 
 def driving(cell):
-    return f'<When type="Property" frame="{cell}/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/>'
+    """A cell's driving sensors (gen.py vehicle_sensor), one When each: its hero's, and each
+    Viking's (HeroStatus follows only one of them)."""
+    status = f"{cell}/HeroStatus"
+    return [f'<When type="Property" frame="{f}/FCJH_Vehicle/FCJH_Driving" Visible="true"/>'
+            for f in (status, *(f"{status}/VikingTrackingElement/TrackedUnitStatusFrame{i}" for i in range(3)))]
 
 
 def knight_pilot(depth=7):
@@ -1143,21 +1147,21 @@ def knight_pilot(depth=7):
     faces = "".join(
         f'{t}\t<Frame type="Image" name="FCJH_PilotFace{n}">\n{mid}'
         f'{t}\t\t<Width val="{PILOT_FACE}"/>\n{t}\t\t<Height val="{PILOT_FACE}"/>\n'
-        f'{t}\t\t<Texture val="{{{cell}/HeroPortraitImage/@Texture}}"/>\n'
-        f'{t}\t\t<TextureCoords {PILOT_FACE_CROP}/>\n'
+        f'{t}\t\t<Texture val="{{{cell}/HeroStatus/FCJH_SeatPortrait/@Texture}}"/>\n'
         f'{t}\t\t<ImageMaskTexture val="{PILOT_MASK}"/>\n'
         f'{t}\t\t<Alpha val="0"/>\n'
         f'{t}\t\t<StateGroup name="FCJH_Driving">\n{t}\t\t\t<DefaultState val="No"/>\n'
-        f'{t}\t\t\t<State name="Yes">{driving(cell)}{alpha(255)}</State>\n'
-        f'{t}\t\t\t<State name="No">{alpha(0)}</State>\n{t}\t\t</StateGroup>\n'
+        + "".join(f'{t}\t\t\t<State name="Yes{k}">{when}{alpha(255)}</State>\n'
+                  for k, when in enumerate(driving(cell)))
+        + f'{t}\t\t\t<State name="No">{alpha(0)}</State>\n{t}\t\t</StateGroup>\n'
         f'{t}\t</Frame>\n' for n, cell in enumerate(PILOT_CELLS))
     return (f'{t}<Frame type="Frame" name="FCJH_Pilot">\n'
             f'{t}\t<Anchor side="Bottom" relative="$parent/BackgroundImage" pos="Min" offset="{PILOT_UP}"/>\n'
             f'{t}\t<Width val="{PILOT_SEAT}"/>\n{t}\t<Height val="{PILOT_SEAT}"/>\n'
             f'{t}\t<Unclipped val="true"/>\n{t}\t<Alpha val="0"/>\n'
             f'{t}\t<StateGroup name="FCJH_Driving">\n{t}\t\t<DefaultState val="No"/>\n'
-            + "".join(f'{t}\t\t<State name="Yes{n}">{driving(cell)}{alpha(255)}</State>\n'
-                      for n, cell in enumerate(PILOT_CELLS))
+            + "".join(f'{t}\t\t<State name="Yes{n}_{k}">{when}{alpha(255)}</State>\n'
+                      for n, cell in enumerate(PILOT_CELLS) for k, when in enumerate(driving(cell)))
             + f'{t}\t\t<State name="No">{alpha(0)}</State>\n{t}\t</StateGroup>\n'
             + faces
             + f'{t}\t<Frame type="Image" name="FCJH_PilotSeat">\n'

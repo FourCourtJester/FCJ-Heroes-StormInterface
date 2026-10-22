@@ -414,6 +414,17 @@
 							<Tiled val="true" index="4"/>
 							<Unclipped val="true"/>
 						</Frame>
+						<Frame type="UnitStatusBehaviorAnim" name="FCJH_Vehicle">
+							<Behavior val="UsingVehicle"/>
+							<Frame type="Frame" name="FCJH_Driving"><Visible val="false"/></Frame>
+							<Animation name="FCJH_VehicleEntered">
+								<Event event="BehaviorCreate" action="Reset,Play"/>
+								<Event event="BehaviorDestroy" action="Reset,Stop"/>
+								<Controller type="Visibility" end="Pause" frame="FCJH_Driving">
+									<Key type="Bool" time="0" value="True"/>
+								</Controller>
+							</Animation>
+						</Frame>
 						<Frame type="UnitTargetFrame" name="FCJH_Target">
 							<Anchor relative="$parent"/>
 							<AllowTargeting val="false"/>
@@ -443,6 +454,17 @@
 							<Tiled val="true" index="4"/>
 							<Unclipped val="true"/>
 						</Frame>
+						<Frame type="UnitStatusBehaviorAnim" name="FCJH_Vehicle">
+							<Behavior val="UsingVehicle"/>
+							<Frame type="Frame" name="FCJH_Driving"><Visible val="false"/></Frame>
+							<Animation name="FCJH_VehicleEntered">
+								<Event event="BehaviorCreate" action="Reset,Play"/>
+								<Event event="BehaviorDestroy" action="Reset,Stop"/>
+								<Controller type="Visibility" end="Pause" frame="FCJH_Driving">
+									<Key type="Bool" time="0" value="True"/>
+								</Controller>
+							</Animation>
+						</Frame>
 						<Frame type="UnitTargetFrame" name="FCJH_Target">
 							<Anchor relative="$parent"/>
 							<AllowTargeting val="false"/>
@@ -471,6 +493,17 @@
 							<Tiled val="true" index="3"/>
 							<Tiled val="true" index="4"/>
 							<Unclipped val="true"/>
+						</Frame>
+						<Frame type="UnitStatusBehaviorAnim" name="FCJH_Vehicle">
+							<Behavior val="UsingVehicle"/>
+							<Frame type="Frame" name="FCJH_Driving"><Visible val="false"/></Frame>
+							<Animation name="FCJH_VehicleEntered">
+								<Event event="BehaviorCreate" action="Reset,Play"/>
+								<Event event="BehaviorDestroy" action="Reset,Stop"/>
+								<Controller type="Visibility" end="Pause" frame="FCJH_Driving">
+									<Key type="Bool" time="0" value="True"/>
+								</Controller>
+							</Animation>
 						</Frame>
 						<Frame type="UnitTargetFrame" name="FCJH_Target">
 							<Anchor relative="$parent"/>
@@ -585,9 +618,6 @@
 				<VisibleToEnemy val="true"/>
 				<Unclipped val="true"/>
 			</Frame>
-			<!-- Driving: Blizzard's UsingVehicle behaviour on this cell's hero (the Dragon Knight,
-			     Volskaya's robot) shows FCJH_Driving while it lasts - Ahli's sensor. Read by the
-			     knight's pilot seat (maps.py knight_pilot). -->
 			<Frame type="UnitStatusBehaviorAnim" name="FCJH_Vehicle">
 				<Behavior val="UsingVehicle"/>
 				<Frame type="Frame" name="FCJH_Driving"><Visible val="false"/></Frame>
@@ -598,6 +628,111 @@
 						<Key type="Bool" time="0" value="True"/>
 					</Controller>
 				</Animation>
+			</Frame>
+			<Frame type="Image" name="FCJH_SeatPortrait">
+				<Width val="0"/>
+				<Height val="0"/>
+				<Alpha val="0"/>
+				<AcceptsMouse val="false"/>
+				<StateGroup name="FCJH_Driver">
+					<DefaultState val="None"/>
+					<State name="Olaf"><When type="Property" frame="$parent/VikingTrackingElement/TrackedUnitStatusFrame0/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_olaf.dds"/></State>
+					<State name="Baleog"><When type="Property" frame="$parent/VikingTrackingElement/TrackedUnitStatusFrame1/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_baelog.dds"/></State>
+					<State name="Erik"><When type="Property" frame="$parent/VikingTrackingElement/TrackedUnitStatusFrame2/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_erik.dds"/></State>
+					<State name="Abathur"><When type="Property" frame="$parent" Unit="HeroAbathur"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_abathur.dds"/></State>
+					<State name="Alarak"><When type="Property" frame="$parent" Unit="HeroAlarak"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_alarak.dds"/></State>
+					<State name="Alexstrasza"><When type="Property" frame="$parent" Unit="HeroAlexstrasza"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_alexstrasza.dds"/></State>
+					<State name="Amazon"><When type="Property" frame="$parent" Unit="HeroAmazon"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_d2amazonf.dds"/></State>
+					<State name="Ana"><When type="Property" frame="$parent" Unit="HeroAna"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_ana.dds"/></State>
+					<State name="Anduin"><When type="Property" frame="$parent" Unit="HeroAnduin"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_anduin.dds"/></State>
+					<State name="Anubarak"><When type="Property" frame="$parent" Unit="HeroAnubarak"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_anubarak.dds"/></State>
+					<State name="Artanis"><When type="Property" frame="$parent" Unit="HeroArtanis"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_artanis.dds"/></State>
+					<State name="Arthas"><When type="Property" frame="$parent" Unit="HeroArthas"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_arthas.dds"/></State>
+					<State name="Auriel"><When type="Property" frame="$parent" Unit="HeroAuriel"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_auriel.dds"/></State>
+					<State name="Azmodan"><When type="Property" frame="$parent" Unit="HeroAzmodan"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_azmodan.dds"/></State>
+					<State name="Barbarian"><When type="Property" frame="$parent" Unit="HeroBarbarian"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_barbarian.dds"/></State>
+					<State name="Butcher"><When type="Property" frame="$parent" Unit="HeroButcher"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_butcher.dds"/></State>
+					<State name="Chen"><When type="Property" frame="$parent" Unit="HeroChen"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_chen.dds"/></State>
+					<State name="Cho"><When type="Property" frame="$parent" Unit="HeroCho"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_cho.dds"/></State>
+					<State name="Chromie"><When type="Property" frame="$parent" Unit="HeroChromie"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_chromie.dds"/></State>
+					<State name="Crusader"><When type="Property" frame="$parent" Unit="HeroCrusader"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_johanna.dds"/></State>
+					<State name="DVaMech"><When type="Property" frame="$parent" Unit="HeroDVaMech"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_dva_mech.dds"/></State>
+					<State name="DVaPilot"><When type="Property" frame="$parent" Unit="HeroDVaPilot"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_dva.dds"/></State>
+					<State name="Deathwing"><When type="Property" frame="$parent" Unit="HeroDeathwing"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_deathwing.dds"/></State>
+					<State name="Deckard"><When type="Property" frame="$parent" Unit="HeroDeckard"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_deckard.dds"/></State>
+					<State name="Dehaka"><When type="Property" frame="$parent" Unit="HeroDehaka"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_dehaka.dds"/></State>
+					<State name="DemonHunter"><When type="Property" frame="$parent" Unit="HeroDemonHunter"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_demonhunter.dds"/></State>
+					<State name="Diablo"><When type="Property" frame="$parent" Unit="HeroDiablo"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_diablo.dds"/></State>
+					<State name="Dryad"><When type="Property" frame="$parent" Unit="HeroDryad"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_lunara.dds"/></State>
+					<State name="FaerieDragon"><When type="Property" frame="$parent" Unit="HeroFaerieDragon"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_faeriedragon.dds"/></State>
+					<State name="Falstad"><When type="Property" frame="$parent" Unit="HeroFalstad"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_falstad.dds"/></State>
+					<State name="Fenix"><When type="Property" frame="$parent" Unit="HeroFenix"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_fenix.dds"/></State>
+					<State name="Firebat"><When type="Property" frame="$parent" Unit="HeroFirebat"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_firebat.dds"/></State>
+					<State name="Gall"><When type="Property" frame="$parent" Unit="HeroGall"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_gall.dds"/></State>
+					<State name="Garrosh"><When type="Property" frame="$parent" Unit="HeroGarrosh"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_garrosh.dds"/></State>
+					<State name="Genji"><When type="Property" frame="$parent" Unit="HeroGenji"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_genji.dds"/></State>
+					<State name="Greymane"><When type="Property" frame="$parent" Unit="HeroGreymane"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_genngreymane.dds"/></State>
+					<State name="GreymaneWorgen"><When type="Property" frame="$parent" Unit="HeroGreymaneWorgen"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_pairedswap_genngreymane.dds"/></State>
+					<State name="Guldan"><When type="Property" frame="$parent" Unit="HeroGuldan"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_guldan.dds"/></State>
+					<State name="Hanzo"><When type="Property" frame="$parent" Unit="HeroHanzo"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_hanzo.dds"/></State>
+					<State name="Hogger"><When type="Property" frame="$parent" Unit="HeroHogger"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_hogger.dds"/></State>
+					<State name="Illidan"><When type="Property" frame="$parent" Unit="HeroIllidan"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_illidan.dds"/></State>
+					<State name="Imperius"><When type="Property" frame="$parent" Unit="HeroImperius"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_imperius.dds"/></State>
+					<State name="Jaina"><When type="Property" frame="$parent" Unit="HeroJaina"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_jaina.dds"/></State>
+					<State name="Junkrat"><When type="Property" frame="$parent" Unit="HeroJunkrat"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_junkrat.dds"/></State>
+					<State name="Kaelthas"><When type="Property" frame="$parent" Unit="HeroKaelthas"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_kaelthas.dds"/></State>
+					<State name="KelThuzad"><When type="Property" frame="$parent" Unit="HeroKelThuzad"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_kelthuzad.dds"/></State>
+					<State name="Kerrigan"><When type="Property" frame="$parent" Unit="HeroKerrigan"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_kerrigan.dds"/></State>
+					<State name="L90ETC"><When type="Property" frame="$parent" Unit="HeroL90ETC"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_l90etc.dds"/></State>
+					<State name="Leoric"><When type="Property" frame="$parent" Unit="HeroLeoric"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_leoric.dds"/></State>
+					<State name="LiLi"><When type="Property" frame="$parent" Unit="HeroLiLi"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_lili.dds"/></State>
+					<State name="Lucio"><When type="Property" frame="$parent" Unit="HeroLucio"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_lucio.dds"/></State>
+					<State name="Maiev"><When type="Property" frame="$parent" Unit="HeroMaiev"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_maiev.dds"/></State>
+					<State name="MalGanis"><When type="Property" frame="$parent" Unit="HeroMalGanis"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_malganis.dds"/></State>
+					<State name="Malfurion"><When type="Property" frame="$parent" Unit="HeroMalfurion"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_malfurion.dds"/></State>
+					<State name="Malthael"><When type="Property" frame="$parent" Unit="HeroMalthael"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_malthael.dds"/></State>
+					<State name="Medic"><When type="Property" frame="$parent" Unit="HeroMedic"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_medic.dds"/></State>
+					<State name="Medivh"><When type="Property" frame="$parent" Unit="HeroMedivh"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_medivh.dds"/></State>
+					<State name="MeiOW"><When type="Property" frame="$parent" Unit="HeroMeiOW"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_mei.dds"/></State>
+					<State name="Mephisto"><When type="Property" frame="$parent" Unit="HeroMephisto"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_mephisto.dds"/></State>
+					<State name="Monk"><When type="Property" frame="$parent" Unit="HeroMonk"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_monk.dds"/></State>
+					<State name="Muradin"><When type="Property" frame="$parent" Unit="HeroMuradin"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_muradin.dds"/></State>
+					<State name="Murky"><When type="Property" frame="$parent" Unit="HeroMurky"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_murky.dds"/></State>
+					<State name="Necromancer"><When type="Property" frame="$parent" Unit="HeroNecromancer"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_necromancer.dds"/></State>
+					<State name="NexusHunter"><When type="Property" frame="$parent" Unit="HeroNexusHunter"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_nexus2.dds"/></State>
+					<State name="Nova"><When type="Property" frame="$parent" Unit="HeroNova"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_nova.dds"/></State>
+					<State name="Orphea"><When type="Property" frame="$parent" Unit="HeroOrphea"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_orphea.dds"/></State>
+					<State name="Probius"><When type="Property" frame="$parent" Unit="HeroProbius"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_probius.dds"/></State>
+					<State name="Ragnaros"><When type="Property" frame="$parent" Unit="HeroRagnaros"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_ragnaros.dds"/></State>
+					<State name="Raynor"><When type="Property" frame="$parent" Unit="HeroRaynor"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_raynor.dds"/></State>
+					<State name="Rehgar"><When type="Property" frame="$parent" Unit="HeroRehgar"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_rehgar.dds"/></State>
+					<State name="Rexxar"><When type="Property" frame="$parent" Unit="HeroRexxar"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_rexxar.dds"/></State>
+					<State name="Samuro"><When type="Property" frame="$parent" Unit="HeroSamuro"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_samuro.dds"/></State>
+					<State name="SgtHammer"><When type="Property" frame="$parent" Unit="HeroSgtHammer"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_sgthammer.dds"/></State>
+					<State name="Stitches"><When type="Property" frame="$parent" Unit="HeroStitches"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_stitches.dds"/></State>
+					<State name="Stukov"><When type="Property" frame="$parent" Unit="HeroStukov"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_stukov.dds"/></State>
+					<State name="Sylvanas"><When type="Property" frame="$parent" Unit="HeroSylvanas"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_sylvanas.dds"/></State>
+					<State name="Tassadar"><When type="Property" frame="$parent" Unit="HeroTassadar"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_tassadar.dds"/></State>
+					<State name="Thrall"><When type="Property" frame="$parent" Unit="HeroThrall"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_thrall.dds"/></State>
+					<State name="Tinker"><When type="Property" frame="$parent" Unit="HeroTinker"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_gazlowe.dds"/></State>
+					<State name="Tracer"><When type="Property" frame="$parent" Unit="HeroTracer"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_tracer.dds"/></State>
+					<State name="Tychus"><When type="Property" frame="$parent" Unit="HeroTychus"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_tychus.dds"/></State>
+					<State name="Tyrael"><When type="Property" frame="$parent" Unit="HeroTyrael"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_tyrael.dds"/></State>
+					<State name="Tyrande"><When type="Property" frame="$parent" Unit="HeroTyrande"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_tyrande.dds"/></State>
+					<State name="Uther"><When type="Property" frame="$parent" Unit="HeroUther"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_uther.dds"/></State>
+					<State name="Valeera"><When type="Property" frame="$parent" Unit="HeroValeera"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_valeera.dds"/></State>
+					<State name="Varian"><When type="Property" frame="$parent" Unit="HeroVarian"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_varian.dds"/></State>
+					<State name="Whitemane"><When type="Property" frame="$parent" Unit="HeroWhitemane"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_whitemane.dds"/></State>
+					<State name="WitchDoctor"><When type="Property" frame="$parent" Unit="HeroWitchDoctor"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_witchdoctor.dds"/></State>
+					<State name="Wizard"><When type="Property" frame="$parent" Unit="HeroWizard"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_wizard.dds"/></State>
+					<State name="Xalatath"><When type="Property" frame="$parent" Unit="HeroXalatath"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_xalatath.dds"/></State>
+					<State name="Yrel"><When type="Property" frame="$parent" Unit="HeroYrel"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_yrel.dds"/></State>
+					<State name="Zagara"><When type="Property" frame="$parent" Unit="HeroZagara"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_zagara.dds"/></State>
+					<State name="Zarya"><When type="Property" frame="$parent" Unit="HeroZarya"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_zarya.dds"/></State>
+					<State name="Zeratul"><When type="Property" frame="$parent" Unit="HeroZeratul"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_zeratul.dds"/></State>
+					<State name="Zuljin"><When type="Property" frame="$parent" Unit="HeroZuljin"/><Action type="SetProperty" frame="$this" Texture="Assets\Textures\ui_targetportrait_hero_zuljin.dds"/></State>
+					<State name="None"/>
+				</StateGroup>
 			</Frame>
 			<!-- The text sits across the health bar (HeroStatus is the bar's rect), centred on it
 			     both ways; the box reaches past the bar above and below, so the text can be taller
@@ -1355,6 +1490,17 @@
 							<Tiled val="true" index="4"/>
 							<Unclipped val="true"/>
 						</Frame>
+						<Frame type="UnitStatusBehaviorAnim" name="FCJH_Vehicle">
+							<Behavior val="UsingVehicle"/>
+							<Frame type="Frame" name="FCJH_Driving"><Visible val="false"/></Frame>
+							<Animation name="FCJH_VehicleEntered">
+								<Event event="BehaviorCreate" action="Reset,Play"/>
+								<Event event="BehaviorDestroy" action="Reset,Stop"/>
+								<Controller type="Visibility" end="Pause" frame="FCJH_Driving">
+									<Key type="Bool" time="0" value="True"/>
+								</Controller>
+							</Animation>
+						</Frame>
 						<Frame type="UnitTargetFrame" name="FCJH_Target">
 							<Anchor relative="$parent"/>
 							<AllowTargeting val="false"/>
@@ -1384,6 +1530,17 @@
 							<Tiled val="true" index="4"/>
 							<Unclipped val="true"/>
 						</Frame>
+						<Frame type="UnitStatusBehaviorAnim" name="FCJH_Vehicle">
+							<Behavior val="UsingVehicle"/>
+							<Frame type="Frame" name="FCJH_Driving"><Visible val="false"/></Frame>
+							<Animation name="FCJH_VehicleEntered">
+								<Event event="BehaviorCreate" action="Reset,Play"/>
+								<Event event="BehaviorDestroy" action="Reset,Stop"/>
+								<Controller type="Visibility" end="Pause" frame="FCJH_Driving">
+									<Key type="Bool" time="0" value="True"/>
+								</Controller>
+							</Animation>
+						</Frame>
 						<Frame type="UnitTargetFrame" name="FCJH_Target">
 							<Anchor relative="$parent"/>
 							<AllowTargeting val="false"/>
@@ -1412,6 +1569,17 @@
 							<Tiled val="true" index="3"/>
 							<Tiled val="true" index="4"/>
 							<Unclipped val="true"/>
+						</Frame>
+						<Frame type="UnitStatusBehaviorAnim" name="FCJH_Vehicle">
+							<Behavior val="UsingVehicle"/>
+							<Frame type="Frame" name="FCJH_Driving"><Visible val="false"/></Frame>
+							<Animation name="FCJH_VehicleEntered">
+								<Event event="BehaviorCreate" action="Reset,Play"/>
+								<Event event="BehaviorDestroy" action="Reset,Stop"/>
+								<Controller type="Visibility" end="Pause" frame="FCJH_Driving">
+									<Key type="Bool" time="0" value="True"/>
+								</Controller>
+							</Animation>
 						</Frame>
 						<Frame type="UnitTargetFrame" name="FCJH_Target">
 							<Anchor relative="$parent"/>

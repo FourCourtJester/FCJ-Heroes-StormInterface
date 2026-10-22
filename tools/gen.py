@@ -1502,6 +1502,37 @@ def _anchors(rect, relative, indent):
 
 
 VIKINGS = "HeroLostVikingsController"
+# Each hero's square target portrait (Assets\Textures\ui_targetportrait_hero_<name>.dds), by unit
+# (Hero<key>): the picture Blizzard's Volskaya seats show (libvlsk SetPilotPortrait, via uilib's
+# KillLogGetPortraitPathforUnit: the hero's Portrait, D.Va's mech and each Viking their own). Read
+# from Jamie Phan's hero data (CActorUnit HeroIcon) and Ahli's in-game list (2026-10-21); a new
+# hero needs adding here. The Vikings are SEAT_VIKINGS, by which of them drives.
+SEAT_PORTRAITS = {
+    "Abathur": "abathur", "Alarak": "alarak", "Alexstrasza": "alexstrasza", "Amazon": "d2amazonf",
+    "Ana": "ana", "Anduin": "anduin", "Anubarak": "anubarak", "Artanis": "artanis", "Arthas": "arthas",
+    "Auriel": "auriel", "Azmodan": "azmodan", "Barbarian": "barbarian", "Butcher": "butcher",
+    "Chen": "chen", "Cho": "cho", "Chromie": "chromie", "Crusader": "johanna", "DVaMech": "dva_mech",
+    "DVaPilot": "dva", "Deathwing": "deathwing", "Deckard": "deckard", "Dehaka": "dehaka",
+    "DemonHunter": "demonhunter", "Diablo": "diablo", "Dryad": "lunara",
+    "FaerieDragon": "faeriedragon", "Falstad": "falstad", "Fenix": "fenix", "Firebat": "firebat",
+    "Gall": "gall", "Garrosh": "garrosh", "Genji": "genji", "Greymane": "genngreymane",
+    "GreymaneWorgen": "pairedswap_genngreymane", "Guldan": "guldan", "Hanzo": "hanzo",
+    "Hogger": "hogger", "Illidan": "illidan", "Imperius": "imperius", "Jaina": "jaina",
+    "Junkrat": "junkrat", "Kaelthas": "kaelthas", "KelThuzad": "kelthuzad", "Kerrigan": "kerrigan",
+    "L90ETC": "l90etc", "Leoric": "leoric", "LiLi": "lili", "Lucio": "lucio", "Maiev": "maiev",
+    "MalGanis": "malganis", "Malfurion": "malfurion", "Malthael": "malthael", "Medic": "medic",
+    "Medivh": "medivh", "MeiOW": "mei", "Mephisto": "mephisto", "Monk": "monk", "Muradin": "muradin",
+    "Murky": "murky", "Necromancer": "necromancer", "NexusHunter": "nexus2", "Nova": "nova",
+    "Orphea": "orphea", "Probius": "probius", "Ragnaros": "ragnaros", "Raynor": "raynor",
+    "Rehgar": "rehgar", "Rexxar": "rexxar", "Samuro": "samuro", "SgtHammer": "sgthammer",
+    "Stitches": "stitches", "Stukov": "stukov", "Sylvanas": "sylvanas", "Tassadar": "tassadar",
+    "Thrall": "thrall", "Tinker": "gazlowe", "Tracer": "tracer", "Tychus": "tychus",
+    "Tyrael": "tyrael", "Tyrande": "tyrande", "Uther": "uther", "Valeera": "valeera",
+    "Varian": "varian", "Whitemane": "whitemane", "WitchDoctor": "witchdoctor", "Wizard": "wizard",
+    "Xalatath": "xalatath", "Yrel": "yrel", "Zagara": "zagara", "Zarya": "zarya", "Zeratul": "zeratul",
+    "Zuljin": "zuljin",
+}
+SEAT_VIKINGS = {"Olaf": "olaf", "Baleog": "baelog", "Erik": "erik"}
 # The Vikings' three bars meet under Blizzard's slanted separator (user, 2026-10-21: "we should
 # slant the seperators"), the same art as the portrait's dividers, cropped to the bar's rows:
 # the gaps were upright. VIKING_SEP_LINE: the art's line, x at the bar's middle row (art row
@@ -1593,6 +1624,42 @@ def tiled_segments(indent=""):
     return "".join(f'{indent}<Tiled val="true" index="{i}"/>' for i in range(5))
 
 
+def vehicle_sensor(indent):
+    """Driving: Blizzard's UsingVehicle behaviour on this frame's unit (the Dragon Knight, Volskaya's
+    robot) shows FCJH_Vehicle/FCJH_Driving while it lasts - Ahli's sensor. Read by the knight's
+    pilot seat (maps.py knight_pilot)."""
+    t = "\n" + indent
+    return (f'{t}<Frame type="UnitStatusBehaviorAnim" name="FCJH_Vehicle">'
+            f'{t}\t<Behavior val="UsingVehicle"/>'
+            f'{t}\t<Frame type="Frame" name="FCJH_Driving"><Visible val="false"/></Frame>'
+            f'{t}\t<Animation name="FCJH_VehicleEntered">'
+            f'{t}\t\t<Event event="BehaviorCreate" action="Reset,Play"/>'
+            f'{t}\t\t<Event event="BehaviorDestroy" action="Reset,Stop"/>'
+            f'{t}\t\t<Controller type="Visibility" end="Pause" frame="FCJH_Driving">'
+            f'{t}\t\t\t<Key type="Bool" time="0" value="True"/>'
+            f'{t}\t\t</Controller>'
+            f'{t}\t</Animation>'
+            f'{t}</Frame>')
+
+
+def seat_portrait():
+    """The driver's face for the knight's pilot seat (maps.py knight_pilot binds its texture):
+    Blizzard's square target portrait, as its Volskaya seats show - a Viking's own when one of
+    them drives (each Viking's frame has its own sensor; HeroStatus follows only one)."""
+    t = "\n" + "\t" * 3
+    tex = lambda name: f'<Action type="SetProperty" frame="$this" Texture="Assets\\Textures\\ui_targetportrait_hero_{name}.dds"/>'
+    vikings = "".join(
+        f'{t}\t\t<State name="{v}"><When type="Property" frame="$parent/VikingTrackingElement/'
+        f'TrackedUnitStatusFrame{i}/FCJH_Vehicle/FCJH_Driving" Visible="true"/>{tex(SEAT_VIKINGS[v])}</State>'
+        for i, v in enumerate(VIKING_FRAMES))
+    heroes = "".join(f'{t}\t\t<State name="{u}"><When type="Property" frame="$parent" Unit="Hero{u}"/>{tex(n)}</State>'
+                     for u, n in SEAT_PORTRAITS.items())
+    return (f'{t}<Frame type="Image" name="FCJH_SeatPortrait">'
+            f'{t}\t<Width val="0"/>{t}\t<Height val="0"/>{t}\t<Alpha val="0"/>{t}\t<AcceptsMouse val="false"/>'
+            f'{t}\t<StateGroup name="FCJH_Driver">{t}\t\t<DefaultState val="None"/>{vikings}{heroes}'
+            f'{t}\t\t<State name="None"/>{t}\t</StateGroup>{t}</Frame>')
+
+
 def trackers(team, health):
     """Blizzard's extra health bars inside HeroStatus, refitted to our bar (their templates
     assume the stock 134 x 6 box): Misha under Rexxar's bar (Blizzard halves his bar when she
@@ -1623,7 +1690,7 @@ def trackers(team, health):
 							<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
 							<Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill{suffix}"/>{tiled_segments(chr(10) + chr(9) * 7)}
 							<Unclipped val="true"/>
-						</Frame>
+						</Frame>{vehicle_sensor(chr(9) * 6)}
 						<Frame type="UnitTargetFrame" name="FCJH_Target">
 							<Anchor relative="$parent"/>
 							<AllowTargeting val="false"/>
@@ -3178,21 +3245,7 @@ def hero_cell_template(team, c, cfg):
 				<VisibleToAlly val="true"/>
 				<VisibleToEnemy val="true"/>
 				<Unclipped val="true"/>
-			</Frame>
-			<!-- Driving: Blizzard's UsingVehicle behaviour on this cell's hero (the Dragon Knight,
-			     Volskaya's robot) shows FCJH_Driving while it lasts - Ahli's sensor. Read by the
-			     knight's pilot seat (maps.py knight_pilot). -->
-			<Frame type="UnitStatusBehaviorAnim" name="FCJH_Vehicle">
-				<Behavior val="UsingVehicle"/>
-				<Frame type="Frame" name="FCJH_Driving"><Visible val="false"/></Frame>
-				<Animation name="FCJH_VehicleEntered">
-					<Event event="BehaviorCreate" action="Reset,Play"/>
-					<Event event="BehaviorDestroy" action="Reset,Stop"/>
-					<Controller type="Visibility" end="Pause" frame="FCJH_Driving">
-						<Key type="Bool" time="0" value="True"/>
-					</Controller>
-				</Animation>
-			</Frame>
+			</Frame>{vehicle_sensor(chr(9) * 3)}{seat_portrait()}
 			<!-- The text sits across the health bar (HeroStatus is the bar's rect), centred on it
 			     both ways; the box reaches past the bar above and below, so the text can be taller
 			     than the bar, but not sideways: UNSTOPPABLE ran under the heroic icon (2026-09-30),

@@ -648,16 +648,46 @@
 								<Alpha val="0"/>
 								<StateGroup name="FCJH_Driving">
 									<DefaultState val="No"/>
-									<State name="Yes0"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="Yes1"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="Yes2"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="Yes3"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="Yes4"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="Yes5"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="Yes6"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="Yes7"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="Yes8"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
-									<State name="Yes9"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes0_0"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes0_1"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame0/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes0_2"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame1/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes0_3"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame2/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes1_0"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes1_1"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame0/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes1_2"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame1/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes1_3"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame2/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes2_0"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes2_1"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame0/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes2_2"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame1/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes2_3"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame2/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes3_0"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes3_1"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame0/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes3_2"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame1/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes3_3"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame2/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes4_0"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes4_1"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame0/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes4_2"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame1/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes4_3"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame2/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes5_0"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes5_1"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame0/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes5_2"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame1/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes5_3"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame2/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes6_0"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes6_1"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame0/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes6_2"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame1/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes6_3"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame2/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes7_0"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes7_1"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame0/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes7_2"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame1/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes7_3"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame2/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes8_0"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes8_1"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame0/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes8_2"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame1/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes8_3"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame2/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes9_0"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes9_1"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame0/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes9_2"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame1/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+									<State name="Yes9_3"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame2/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
 									<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
 								</StateGroup>
 								<Frame type="Image" name="FCJH_PilotFace0">
@@ -667,13 +697,15 @@
 									<Anchor side="Right"  relative="$parent" pos="Mid" offset="0"/>
 									<Width val="55"/>
 									<Height val="55"/>
-									<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroPortraitImage/@Texture}"/>
-									<TextureCoords top="0.05" left="0.67" bottom="0.7" right="0.91"/>
-									<ImageMaskTexture val="Assets\Textures\storm_ui_hud_volskaya_mech_portrait_mask.dds"/>
+									<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus/FCJH_SeatPortrait/@Texture}"/>
+									<ImageMaskTexture val="Assets\Textures\hud_Bar_DeathStun_IconMask.dds"/>
 									<Alpha val="0"/>
 									<StateGroup name="FCJH_Driving">
 										<DefaultState val="No"/>
-										<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes0"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes1"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame0/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes2"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame1/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes3"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame2/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
 										<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
 									</StateGroup>
 								</Frame>
@@ -684,13 +716,15 @@
 									<Anchor side="Right"  relative="$parent" pos="Mid" offset="0"/>
 									<Width val="55"/>
 									<Height val="55"/>
-									<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroPortraitImage/@Texture}"/>
-									<TextureCoords top="0.05" left="0.67" bottom="0.7" right="0.91"/>
-									<ImageMaskTexture val="Assets\Textures\storm_ui_hud_volskaya_mech_portrait_mask.dds"/>
+									<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus/FCJH_SeatPortrait/@Texture}"/>
+									<ImageMaskTexture val="Assets\Textures\hud_Bar_DeathStun_IconMask.dds"/>
 									<Alpha val="0"/>
 									<StateGroup name="FCJH_Driving">
 										<DefaultState val="No"/>
-										<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes0"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes1"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame0/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes2"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame1/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes3"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview2/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame2/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
 										<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
 									</StateGroup>
 								</Frame>
@@ -701,13 +735,15 @@
 									<Anchor side="Right"  relative="$parent" pos="Mid" offset="0"/>
 									<Width val="55"/>
 									<Height val="55"/>
-									<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroPortraitImage/@Texture}"/>
-									<TextureCoords top="0.05" left="0.67" bottom="0.7" right="0.91"/>
-									<ImageMaskTexture val="Assets\Textures\storm_ui_hud_volskaya_mech_portrait_mask.dds"/>
+									<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus/FCJH_SeatPortrait/@Texture}"/>
+									<ImageMaskTexture val="Assets\Textures\hud_Bar_DeathStun_IconMask.dds"/>
 									<Alpha val="0"/>
 									<StateGroup name="FCJH_Driving">
 										<DefaultState val="No"/>
-										<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes0"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes1"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame0/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes2"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame1/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes3"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview3/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame2/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
 										<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
 									</StateGroup>
 								</Frame>
@@ -718,13 +754,15 @@
 									<Anchor side="Right"  relative="$parent" pos="Mid" offset="0"/>
 									<Width val="55"/>
 									<Height val="55"/>
-									<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroPortraitImage/@Texture}"/>
-									<TextureCoords top="0.05" left="0.67" bottom="0.7" right="0.91"/>
-									<ImageMaskTexture val="Assets\Textures\storm_ui_hud_volskaya_mech_portrait_mask.dds"/>
+									<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus/FCJH_SeatPortrait/@Texture}"/>
+									<ImageMaskTexture val="Assets\Textures\hud_Bar_DeathStun_IconMask.dds"/>
 									<Alpha val="0"/>
 									<StateGroup name="FCJH_Driving">
 										<DefaultState val="No"/>
-										<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes0"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes1"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame0/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes2"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame1/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes3"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview4/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame2/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
 										<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
 									</StateGroup>
 								</Frame>
@@ -735,13 +773,15 @@
 									<Anchor side="Right"  relative="$parent" pos="Mid" offset="0"/>
 									<Width val="55"/>
 									<Height val="55"/>
-									<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroPortraitImage/@Texture}"/>
-									<TextureCoords top="0.05" left="0.67" bottom="0.7" right="0.91"/>
-									<ImageMaskTexture val="Assets\Textures\storm_ui_hud_volskaya_mech_portrait_mask.dds"/>
+									<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus/FCJH_SeatPortrait/@Texture}"/>
+									<ImageMaskTexture val="Assets\Textures\hud_Bar_DeathStun_IconMask.dds"/>
 									<Alpha val="0"/>
 									<StateGroup name="FCJH_Driving">
 										<DefaultState val="No"/>
-										<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes0"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes1"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame0/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes2"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame1/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes3"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview5/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame2/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
 										<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
 									</StateGroup>
 								</Frame>
@@ -752,13 +792,15 @@
 									<Anchor side="Right"  relative="$parent" pos="Mid" offset="0"/>
 									<Width val="55"/>
 									<Height val="55"/>
-									<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroPortraitImage/@Texture}"/>
-									<TextureCoords top="0.05" left="0.67" bottom="0.7" right="0.91"/>
-									<ImageMaskTexture val="Assets\Textures\storm_ui_hud_volskaya_mech_portrait_mask.dds"/>
+									<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus/FCJH_SeatPortrait/@Texture}"/>
+									<ImageMaskTexture val="Assets\Textures\hud_Bar_DeathStun_IconMask.dds"/>
 									<Alpha val="0"/>
 									<StateGroup name="FCJH_Driving">
 										<DefaultState val="No"/>
-										<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes0"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes1"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame0/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes2"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame1/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes3"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame2/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
 										<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
 									</StateGroup>
 								</Frame>
@@ -769,13 +811,15 @@
 									<Anchor side="Right"  relative="$parent" pos="Mid" offset="0"/>
 									<Width val="55"/>
 									<Height val="55"/>
-									<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroPortraitImage/@Texture}"/>
-									<TextureCoords top="0.05" left="0.67" bottom="0.7" right="0.91"/>
-									<ImageMaskTexture val="Assets\Textures\storm_ui_hud_volskaya_mech_portrait_mask.dds"/>
+									<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus/FCJH_SeatPortrait/@Texture}"/>
+									<ImageMaskTexture val="Assets\Textures\hud_Bar_DeathStun_IconMask.dds"/>
 									<Alpha val="0"/>
 									<StateGroup name="FCJH_Driving">
 										<DefaultState val="No"/>
-										<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes0"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes1"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame0/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes2"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame1/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes3"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview2/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame2/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
 										<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
 									</StateGroup>
 								</Frame>
@@ -786,13 +830,15 @@
 									<Anchor side="Right"  relative="$parent" pos="Mid" offset="0"/>
 									<Width val="55"/>
 									<Height val="55"/>
-									<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroPortraitImage/@Texture}"/>
-									<TextureCoords top="0.05" left="0.67" bottom="0.7" right="0.91"/>
-									<ImageMaskTexture val="Assets\Textures\storm_ui_hud_volskaya_mech_portrait_mask.dds"/>
+									<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus/FCJH_SeatPortrait/@Texture}"/>
+									<ImageMaskTexture val="Assets\Textures\hud_Bar_DeathStun_IconMask.dds"/>
 									<Alpha val="0"/>
 									<StateGroup name="FCJH_Driving">
 										<DefaultState val="No"/>
-										<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes0"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes1"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame0/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes2"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame1/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes3"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview3/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame2/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
 										<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
 									</StateGroup>
 								</Frame>
@@ -803,13 +849,15 @@
 									<Anchor side="Right"  relative="$parent" pos="Mid" offset="0"/>
 									<Width val="55"/>
 									<Height val="55"/>
-									<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroPortraitImage/@Texture}"/>
-									<TextureCoords top="0.05" left="0.67" bottom="0.7" right="0.91"/>
-									<ImageMaskTexture val="Assets\Textures\storm_ui_hud_volskaya_mech_portrait_mask.dds"/>
+									<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus/FCJH_SeatPortrait/@Texture}"/>
+									<ImageMaskTexture val="Assets\Textures\hud_Bar_DeathStun_IconMask.dds"/>
 									<Alpha val="0"/>
 									<StateGroup name="FCJH_Driving">
 										<DefaultState val="No"/>
-										<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes0"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes1"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame0/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes2"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame1/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes3"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview4/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame2/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
 										<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
 									</StateGroup>
 								</Frame>
@@ -820,13 +868,15 @@
 									<Anchor side="Right"  relative="$parent" pos="Mid" offset="0"/>
 									<Width val="55"/>
 									<Height val="55"/>
-									<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroPortraitImage/@Texture}"/>
-									<TextureCoords top="0.05" left="0.67" bottom="0.7" right="0.91"/>
-									<ImageMaskTexture val="Assets\Textures\storm_ui_hud_volskaya_mech_portrait_mask.dds"/>
+									<Texture val="{$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus/FCJH_SeatPortrait/@Texture}"/>
+									<ImageMaskTexture val="Assets\Textures\hud_Bar_DeathStun_IconMask.dds"/>
 									<Alpha val="0"/>
 									<StateGroup name="FCJH_Driving">
 										<DefaultState val="No"/>
-										<State name="Yes"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes0"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes1"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame0/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes2"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame1/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
+										<State name="Yes3"><When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview5/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame2/FCJH_Vehicle/FCJH_Driving" Visible="true"/><Action type="SetProperty" frame="$this" Alpha="255"/></State>
 										<State name="No"><Action type="SetProperty" frame="$this" Alpha="0"/></State>
 									</StateGroup>
 								</Frame>
