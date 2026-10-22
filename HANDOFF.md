@@ -600,6 +600,10 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
 - **To do (user, 2026-10-16):** a pass on the panes and the inspect card to make them
   Heroes-like (Blizzard's menu panel: blur, translucency, chrome border), and a colour, font
   and art pass on the numbers panes (docs/polish-research.md, "Decisions from the question round").
+- **Ideas to come back to (user, 2026-10-21):**
+  - Dragon Shire: a graphic for whoever is controlling the Dragon Knight.
+  - D.Va: a "PILOT" status on her plate while she's out of the mech - any status effect
+    overrides it, and it goes when she's back in the mech.
 - **Parked:** blue's curse mirror (unseen; item 14).
 - **Later:** extract the toolchain into its own repo for open-sourcing (user, 2026-10-09) -
   [docs/generator.md](docs/generator.md) says what it is, [docs/extraction-plan.md](docs/extraction-plan.md)
