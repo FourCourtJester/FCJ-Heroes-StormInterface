@@ -1,0 +1,18 @@
+/*
+ * Styling is Tailwind: write classes in your components rather than rules here.
+ * New to it? Start at https://tailwindcss.com/docs/styling-with-utility-classes
+ */
+@import 'tailwindcss';
+@import '@single-studio/core/styles.css';
+
+/* Tailwind only scans files it knows about, and the framework's components live in
+   node_modules. Without this their classes get stripped from the build. */
+@source '../../node_modules/@single-studio/core/dist';
+
+/* Shared CSS goes here, or in a file imported above -- an `@import` has to come
+   before any rule. CSS only one graphic uses is better imported from that graphic,
+   so it ships with it rather than with every other source. */
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Your own CSS goes below.
+   ───────────────────────────────────────────────────────────────────────────── */

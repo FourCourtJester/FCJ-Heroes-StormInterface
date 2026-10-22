@@ -30,7 +30,7 @@ Warnings (legal, but has cost us builds before):
   - #Constant used inside a longer value (only whole values substitute)
   - a layout in the source that DescIndex does not include
 
-    python tools/validate.py                  # validates src/FCJH.StormInterface
+    python tools/validate.py                  # validates interface/FCJH.StormInterface
     python tools/validate.py <interface-dir>
     python tools/validate.py --show GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1
 """
@@ -43,7 +43,7 @@ import xml.parsers.expat
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
-DEFAULT_SOURCE = REPO / "src" / "FCJH.StormInterface"
+DEFAULT_SOURCE = REPO / "interface" / "FCJH.StormInterface"
 MODS = REPO / "references" / "JamiePhan" / "mods"
 BASE_MODS = ["core.stormmod", "heroesdata.stormmod"]
 

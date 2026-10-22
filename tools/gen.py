@@ -1,7 +1,7 @@
 """
 Generate layouts from layout.toml.
 
-Committed output (written into src/, reviewed like any other file):
+Committed output (written into interface/, reviewed like any other file):
   FCJH_Constants.StormLayout   every layout.toml number, converted to layout units
   FCJH_HeroRow.StormLayout     the plates, heroic panels, pop-ups and row packer
   FCJH_StatPanes.StormLayout   the three stat info panes
@@ -37,7 +37,7 @@ import words
 
 REPO = Path(__file__).resolve().parent.parent
 CONFIG = REPO / "layout.toml"
-SOURCE = REPO / "src" / "FCJH.StormInterface"
+SOURCE = REPO / "interface" / "FCJH.StormInterface"
 LAYOUT_REL = Path("Base.StormData") / "UI" / "Layout"
 
 CONSTANTS_FILE = "FCJH_Constants.StormLayout"
@@ -4791,14 +4791,21 @@ def main():
     parser.add_argument("--check", action="store_true", help="fail if generated files are stale")
     args = parser.parse_args()
     cfg = load_config()
+    import obs          # here, not at the top: obs imports gen for the geometry
     if args.check:
         bad = stale(cfg)
         for rel in bad:
             print(f"stale: {rel.as_posix()} (run python tools/gen.py)")
-        return 1 if bad else 0
+        bad_obs = obs.stale(cfg)
+        for rel in bad_obs:
+            print(f"stale: studio/src/generated/{rel.as_posix()} (run python tools/gen.py)")
+        return 1 if bad or bad_obs else 0
     changed = write(cfg)
     print("\n".join(f"{'wrote' if (SOURCE / rel).exists() else 'removed'} {rel.as_posix()}"
                     for rel in changed) or "generated files up to date")
+    # the broadcast graphics (tools/obs.py): the same numbers, drawn for the studio
+    print("\n".join(f"wrote studio/src/generated/{rel.as_posix()}" for rel in obs.write(cfg))
+          or "studio/src/generated/ up to date")
     return 0
 
 

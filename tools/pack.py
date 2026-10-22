@@ -2,16 +2,16 @@
 Build the interface: generate, stage, validate, pack, deploy.
 
   1. generate  tools/gen.py rewrites the committed generated layouts from layout.toml
-  2. stage     src/FCJH.StormInterface is copied to build/<profile>/; a dev build adds
-               the build stamp and src/dev/ layouts
+  2. stage     interface/FCJH.StormInterface is copied to build/<profile>/; a dev build
+               adds the build stamp and interface/dev/ layouts
                (experiments and probes) there, and only there
   3. validate  tools/validate.py on the staged tree; an error stops the build
   4. pack      the staged tree becomes an MPQ v1 archive, read back and checked
   5. deploy    written to the Heroes Interfaces folder
 
 Profiles:
-  dev (default)  the build stamp (and any src/dev/ layouts), deployed as FCJH.StormInterface
-  --release      exactly what src/ holds; refuses if src/, layout.toml or tools/ have
+  dev (default)  the build stamp (and any interface/dev/ layouts), deployed as FCJH.StormInterface
+  --release      exactly what interface/ holds; refuses if interface/, layout.toml or tools/ have
                  uncommitted changes, so every release is reproducible from its commit;
                  written to dist/v<version>/ as "FCJ v<version>.StormInterface",
                  deployed (under that name) only with --deploy
@@ -26,7 +26,7 @@ write until the lock releases.
     python tools/pack.py --release --deploy
     python tools/pack.py --release --no-generate --no-validate
                                                  # GitHub's release build: no references/
-    python tools/pack.py src/tests/Test.StormInterface --name Test.StormInterface --wait
+    python tools/pack.py interface/tests/Test.StormInterface --name Test.StormInterface --wait
                                                  # a test interface, deployed beside FCJH
 """
 
@@ -45,7 +45,7 @@ import validate
 
 REPO = Path(__file__).resolve().parent.parent
 DEFAULT_SOURCE = gen.SOURCE
-DEV_LAYOUTS = REPO / "src" / "dev"
+DEV_LAYOUTS = REPO / "interface" / "dev"
 BUILD = REPO / "build"
 DIST = REPO / "dist"
 INTERFACES = Path.home() / "OneDrive" / "Documents" / "Heroes of the Storm" / "Interfaces"
@@ -54,7 +54,7 @@ NAME = "FCJH.StormInterface"
 RELEASE_NAME = "FCJ v{version}.StormInterface"
 
 XML_SUFFIXES = (".StormLayout", ".StormStyle", ".StormComponents")
-RELEASE_PATHS = ["src", "layout.toml", "tools"]
+RELEASE_PATHS = ["interface", "layout.toml", "tools"]
 
 
 def git(*args):
@@ -87,7 +87,7 @@ def stage(cfg, source, profile):
     shutil.copytree(source, staged)
     if profile == "dev":
         layout_dir = staged / gen.LAYOUT_REL
-        # src/dev/*.StormLayout: dev-only layouts (experiments, probes). Committed, never shipped.
+        # interface/dev/*.StormLayout: dev-only layouts (experiments, probes). Committed, never shipped.
         probes = sorted(DEV_LAYOUTS.glob("*.StormLayout")) if DEV_LAYOUTS.is_dir() else []
         for probe in probes:
             shutil.copy(probe, layout_dir / probe.name)
@@ -96,7 +96,7 @@ def stage(cfg, source, profile):
             order = gen.layout_order(source / gen.LAYOUT_REL, extra=extra)
             name = "FCJH"
         else:
-            # a test interface (src/tests/): its own layouts only, none of FCJH's
+            # a test interface (interface/tests/): its own layouts only, none of FCJH's
             order = sorted(p.name for p in (source / gen.LAYOUT_REL).glob("*.StormLayout")
                            if p.name != gen.INDEX_FILE) + extra
             name = source.name.split(".")[0]
@@ -143,7 +143,7 @@ def main():
     parser.add_argument("--wait", action="store_true", help="retry a locked write until it succeeds")
     parser.add_argument("--no-validate", action="store_true", help="skip tools/validate.py")
     parser.add_argument("--no-generate", action="store_true",
-                        help="pack src/ as committed, without tools/gen.py (CI: no references/)")
+                        help="pack interface/ as committed, without tools/gen.py (CI: no references/)")
     args = parser.parse_args()
 
     source = args.source.resolve()
@@ -154,6 +154,10 @@ def main():
     if source == DEFAULT_SOURCE and not args.no_generate:
         for rel in gen.write(cfg, source):
             print(f"generated: {rel.as_posix()}")
+        # the broadcast graphics come from the same numbers, so they keep up with the interface
+        import obs
+        for rel in obs.write(cfg):
+            print(f"generated: studio/src/generated/{rel.as_posix()}")
 
     if args.release:
         dirty = git("status", "--porcelain", "--", *RELEASE_PATHS)

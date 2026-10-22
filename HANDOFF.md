@@ -85,8 +85,13 @@ Nothing on the bottom UI. Its places are `kind = "obs"` rects in `layout.toml` (
   (1-8 keys), not when following from a plate click - as in Ahli's and Spazzo's UIs (§3;
   confirmed 2026-10-06).
 
-Not yet: the OBS graphics package and the visual pass that takes the chrome look of
-the top bar to the plates, bars and panes. The OBS band's **places** are in the build since
+Not yet: the visual pass that takes the chrome look of the top bar to the plates, bars and
+panes. **The broadcast graphics are their own vein of this repo** (2026-10-22): `studio/` is a
+[Single Studio](https://github.com/FourCourtJester/Single-Studio) app - an operator's board in
+an OBS dock, a browser source per graphic - and `tools/obs.py` writes its parts and numbers
+into `studio/src/generated/` from the same `layout.toml` the interface comes from. The top
+bar's source and board are written; **nothing of it has been built or run yet** (no Node on
+this machine), let alone seen in OBS. The OBS band's **places** are in the build since
 2026-10-22 - layout.toml `[top_bar]`, every box derived by gen's `top_bar_geometry`, so the
 interface and the OBS layer can't drift apart - and **none of its art is ours to draw**: the
 name plates, the division and game tabs and the ban tiles all belong to the OBS layer, so the
@@ -104,8 +109,10 @@ python tools/pack.py --wait
 
 One command: **generate → stage → validate → pack → deploy.**
 
-1. **generate** — `tools/gen.py` rewrites the committed generated layouts from `layout.toml`
-2. **stage** — `src/FCJH.StormInterface/` is copied to `build/<profile>/`. A dev build adds
+1. **generate** — `tools/gen.py` rewrites the committed generated layouts from `layout.toml`,
+   and `tools/obs.py` the broadcast studio's parts under `studio/src/generated/` (one set of
+   numbers, both halves; `gen.py --check` fails on either being stale)
+2. **stage** — `interface/FCJH.StormInterface/` is copied to `build/<profile>/`. A dev build adds
    the build stamp there, and only there (the wireframe overlay was removed 2026-10-05)
 3. **validate** — `tools/validate.py` on the staged tree; an error stops the build
 4. **pack** — an uncompressed MPQ v1 archive, read back and compared file by file
@@ -123,15 +130,15 @@ One command: **generate → stage → validate → pack → deploy.**
 
 **Profiles.** Dev (the default) shows a build stamp — `FCJH DEV <version> <commit>[+] <time>`,
 `+` meaning uncommitted changes — and nothing else (the wireframe overlay that tinted
-each box in its legend colour was removed 2026-10-05). `--release` is exactly what `src/` holds: it refuses
-while `src/`, `layout.toml` or `tools/` have uncommitted changes, so every release is
+each box in its legend colour was removed 2026-10-05). `--release` is exactly what `interface/` holds: it refuses
+while `interface/`, `layout.toml` or `tools/` have uncommitted changes, so every release is
 reproducible from its commit, and writes `dist/v<version>/FCJH.StormInterface`
 (`--deploy` to also install it), zlib-compressed by sector as Spazzo's is (10.7 -> ~1 MB; dev
 stays raw; a compressed release loads a replay fine, user 2026-10-21). GitHub releases ship that file and nothing else of ours: push a tag `v<version>`
 (it must match `[meta] version`) and `.github/workflows/release.yml` builds it from the tag
 with `--no-generate --no-validate` (gen and validate need the JamiePhan extract, which isn't in
-the repo, so run both locally first: the committed `src/` is what ships) and publishes it.
-`.gitattributes` checks `src/` out LF on every clone, so GitHub's build is byte for byte the
+the repo, so run both locally first: the committed `interface/` is what ships) and publishes it.
+`.gitattributes` checks `interface/` out LF on every clone, so GitHub's build is byte for byte the
 local `--release` (checked from a fresh clone, 2026-10-21). GitHub adds its own source zips to every release; they can't be removed.
 
 ### Tools
@@ -140,7 +147,7 @@ local `--release` (checked from a fresh clone, 2026-10-21). GitHub adds its own 
 |---|---|
 | `python tools/pack.py --wait` | The loop above |
 | `python tools/gen.py [--check]` | Regenerate; `--check` fails if a generated file is stale or hand-edited |
-| `python tools/validate.py [--show <frame path>]` | Validate `src/`; `--show` prints the merged tree under any frame |
+| `python tools/validate.py [--show <frame path>]` | Validate `interface/`; `--show` prints the merged tree under any frame |
 | `python tools/test_validate.py` | 19 validator tests against the build 50 fixture |
 | `python tools/mpq.py list\|extract <archive>` | Inspect any archive, including Ahli's and Spazzo's |
 | `python tools/make_test_ui.py` | Smoke test: a magenta box as `FCJHTest.StormInterface`, to tell "packer broke" from "layout broke" |
@@ -167,7 +174,7 @@ layout.toml                                  every placement number and look set
 tools/gen.py                                 turns it into layouts and textures
 tools/inspect_card.py                        the inspect card (reads hero data from JamiePhan)
 tools/maps.py                                each battleground: minimap place, panel, team alerts
-src/FCJH.StormInterface/                     the archive's file tree, one to one
+interface/FCJH.StormInterface/                     the archive's file tree, one to one
   Base.StormData/UI/Layout/
     DescIndex.StormLayout                    GENERATED — every layout, constants first
     FCJH_Constants.StormLayout               GENERATED — layout.toml in layout units
@@ -178,7 +185,7 @@ src/FCJH.StormInterface/                     the archive's file tree, one to one
     FCJH_*.StormLayout                       hand-written, one per concern (top bar, hidden
                                              HUD, talents pane, kill feed, minimap, replay)
   _Assets/Textures/FCJH_*.dds                GENERATED — slanted bars, masks, the top backplate
-src/dev/                                     dev-only layouts (none now; packed into dev builds only)
+interface/dev/                                     dev-only layouts (none now; packed into dev builds only)
 ```
 
 - **Layout units are not pixels.** The game lays out on a 1200-unit-tall grid, so at 1080p
@@ -471,6 +478,35 @@ Finished work is out of this file: the map system and the map pass, map by map, 
 [docs/history.md](docs/history.md) (its item numbers are the old §7's). What we fixed for
 Blizzard and what we added is in [docs/blizzard-fixes.md](docs/blizzard-fixes.md); the
 generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [docs/obs.md](docs/obs.md).
+
+**The three-vein reorganisation (2026-10-22), on its own branch - NOT on `main` and not
+finished.** The repo now holds three veins: the interface (`interface/`, was `src/`), the
+broadcast graphics (`studio/`, a Single Studio app) and the generator that writes both
+(`tools/`), joined at `layout.toml`. The user's call (2026-10-22): one repo, three veins,
+"give people the different avenues of accessing the parts they want" - a release for the
+`.StormInterface`, Pages for the board, the folder for anyone who wants the files.
+
+*Done and checked:* the rename and its sweep (`gen.py`, `pack.py`, `validate.py`,
+`.gitattributes`, `release.yml`, the docs), and the interface loop end to end - `gen --check`
+clean, validator 0 errors, 19 tests, `pack.py` built and deployed. `tools/obs.py` writes
+`studio/src/generated/` and `gen.py --check` fails if it is stale.
+
+*Written but never run:* the studio. `studio/src/sources/TopBar.jsx` and its four control
+panels, `.github/workflows/pages.yml`. **There is no Node on this machine**, so `npm install`
+and `npm run build` have never run and the React is unverified.
+
+**To resume, before merging:**
+1. Install Node 22+, then `cd studio && npm install && npm run build` - the first real build.
+2. `npm run dev`, open the board, check the top bar source against `src/generated/guide.png`.
+3. Test outputs: the board driven with real team names, logos, a series score, bans.
+4. See it in OBS - the board in a custom browser dock, the source over a game capture. Nothing
+   has been in OBS at all.
+5. Switch Pages to "GitHub Actions" (Settings -> Pages) before the first push to `main`.
+6. Then merge.
+
+*Known gaps:* nothing fills the studio's image library with hero portraits (90-odd) for the
+bans; the ban tiles' size and shape were never settled; the font is fetched from Google Fonts
+at load.
 
 **Open, in the user's order:**
 1. **The final pass** - item 14 below. The forms and blue's banners are done, the odd cases
@@ -769,9 +805,9 @@ from their plates (docs/blizzard-fixes.md).
    Murky's showed the last talent hovered, Nova's an empty box - the box doesn't matter, the
    icon must be one that writes (docs/blizzard-fixes.md). Reverted.
    **Quest tooltips, tries 5-8 failed** (2026-10-19; docs/blizzard-fixes.md). Scrapped: rebuilt
-   one piece at a time in a separate test interface, `src/tests/FCJH_QTest.StormInterface` (deleted
+   one piece at a time in a separate test interface, `interface/tests/FCJH_QTest.StormInterface` (deleted
    2026-10-19, user: it never ships; in git before that)
-   (`python tools/pack.py src/tests/FCJH_QTest.StormInterface --name FCJH_QTest.StormInterface --wait`),
+   (`python tools/pack.py interface/tests/FCJH_QTest.StormInterface --name FCJH_QTest.StormInterface --wait`),
    one change per build; `FCJH_QuestTest` is out of FCJH. **Step 1 fills** (7be15cc): an
    untouched copy of Blizzard's leader panel, Control+Shift+Q. **Step 2 fills** (5d1ae3f):
    opened Ahli's way (on from load, faded and slid in), no Show event. **Step 3 blank**

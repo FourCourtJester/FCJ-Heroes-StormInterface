@@ -1,6 +1,7 @@
 # External reference repos (not part of this project)
 references/*
 !references/.gitkeep
+!references/README.md
 
 # Python bytecode
 __pycache__/
@@ -8,3 +9,9 @@ __pycache__/
 # Build output
 build/
 dist/
+
+# The broadcast studio (studio/): installed and built, never committed
+node_modules/
+studio/dist/
+.env
+.env.local
