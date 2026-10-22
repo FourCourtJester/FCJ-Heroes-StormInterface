@@ -1825,17 +1825,22 @@ def pet_death_labels(team, c):
     # The slices are measured along the bar, but the timer sits higher up the slanted plate,
     # where each slice has shifted with the lean: left on blue (\), right on red (/). Seen in
     # game (2026-09-29): a timer just off its slice toward the plate's slanted edge.
+    # Centred on the portrait slice, where Misha's skull is (slice_rings: 2 above the slice's
+    # middle), not on the plate as the one-unit plates' (theirs hide their bars when dead;
+    # a Viking's bar stays, so the timer and its skull sat low - user, 2026-10-21)
+    k = c.w / c.W
+    mid = round((SLICE_RING_BOTTOM / 2 - SLICE_SKULL_UP) * k)
     lean = c.lean
-    shift = round(lean * ((ht + hb) / 2 - (2 + hb) / 2)) * (-1 if team == "blue" else 1)
+    shift = round(lean * ((ht + hb) / 2 - mid)) * (-1 if team == "blue" else 1)
     labels = ""
     # each timer on its Viking's third (VIKING_SLOT)
     for viking, i in VIKING_SLOT.items():
         left = round(hl + i * third) + shift
         labels += f"""
 		<Frame type="Label" name="FCJH_Death{viking}">
-			<Anchor side="Top"    relative="$parent" pos="Min" offset="2"/>
+			<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 			<Anchor side="Left"   relative="$parent" pos="Min" offset="{left}"/>
-			<Anchor side="Bottom" relative="$parent" pos="Min" offset="{hb}"/>
+			<Anchor side="Bottom" relative="$parent" pos="Min" offset="{2 * mid}"/>
 			<Anchor side="Right"  relative="$parent" pos="Min" offset="{round(left + third)}"/>
 			<Style val="FCJH_PetDeathTimer"/>
 			<Alpha val="0"/>
