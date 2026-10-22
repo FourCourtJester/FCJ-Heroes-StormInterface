@@ -1,79 +1,144 @@
-# OBS top bar: the agreed design, ready to build
+# OBS: everything for the build
 
-Written 2026-10-18, after three mock passes the user signed off ("Yes thats great"). Nothing
-here is built into the interface yet. This is the fast track for doing that. It supersedes the
-top-bar parts of [obs.md](obs.md) where they differ.
+The one file for the OBS work: the rule, the agreed top bar, every generated graphic and number,
+what to build and in what order. Agreed 2026-10-18 after three mock passes (user: "Yes thats
+great"), settled further 2026-10-19, gathered here 2026-10-21. Nothing here is built into the
+interface yet. [obs.md](obs.md) is the earlier plan, kept for its history; where they differ,
+this file wins.
 
-## Where the design lives
+## The rule
 
-Everything in `design/obs/` is untracked, the same as `design/canvas/`.
+**OBS draws data only** (user, 2026-10-16): only what the game can't know. That's the team
+names and logos, the series score, the tournament's name, division and logo, and the game's
+bans. **Nothing goes on the bottom part of the UI.** Every plate under that data is the
+interface's, with one exception:
 
-- `design/obs/mock_pass3.py` makes everything else: run it with `python -I`. It needs Chrome
-  and the screenshot `Screenshot2026-10-18 13_30_46.jpg`.
-- `pass3.png` and `pass3.html`: the approved mock.
-- `kit/`: the name plate as a web component, ready for OBS:
-  - `namebar.css`: its header has the markup;
-  - `frame_blue.svg`, `frame_red.svg`;
-  - `lattice_blue.svg`, `lattice_red.svg`.
+**The team name plate is OBS art** (2026-10-18). Only OBS knows whether a tournament has team
+logos, and the plate's shape depends on it. With no OBS running, the interface shows no name
+plates: just the level wings, the tabs and the ban tiles.
 
-All numbers are screen px at 1080p. Red mirrors blue about x 960. The lean is
-`HeroCell.lean` = 0.54, and the band is 63.3 tall. The slant's run across the band,
+Why the data stays outside the `.StormInterface`: a team swap would otherwise mean rebuilding
+and reselecting an interface mid-broadcast. The interface can't see OBS, so there's no
+in-game fallback for a missing name.
+
+**The resolution is locked.** Frames anchor to the screen, so a different resolution moves the
+plates out from under the OBS layer. Every number here is screen px at 1920 × 1080. Any 16:9
+screen gets the same layout scaled (1200 layout units tall), so a 1440p capture takes every
+number × 4/3. A non-16:9 window is untested (docs/history.md item 4).
+
+## The geometry
+
+Red mirrors blue about x 960. The lean is `HeroCell.lean` = 0.54 across per px down, and the
+band (the top row) is 63.3 tall, the level wings' height. The slant's run across the band,
 D = 0.54 × 63.3, is 34.18.
-
-## What changed from obs.md
-
-**The rule changes.** The team name plate is now OBS art, not the interface's. This is the
-one exception to "OBS draws data only": only OBS knows whether a tournament has team logos.
-With no OBS running, the interface shows no name plates, just the wings, the tabs and the
-ban tiles.
 
 | Thing | Agreed design |
 |---|---|
-| Series score | No cell. Hexagon pips with no plate: pointy-top, r = 25.3 (80% of the band), 43.9 wide, 5 apart. The first pip's edge is 14 px off the name plate's outer slant. They fill from the name outward. Best of 5 = 3 a side, best of 7 = 4 (blue's fourth ends at ~252, clear of the kill feed and the replay panel). One hexagon is authored, in a full and an empty state; OBS draws as many as the series needs (user, 2026-10-19: more than 3 is the operator's call). |
-| Name plate | The OBS nine-slice (below). The box is fixed: blue left 440, width 374 (top 440 → 779.8, the wing's end); red left 1106. Name text is 24 px at most and shrinks to fit 12 px inside the slants. |
-| Team logo | Optional, inside the name plate's box: a fixed 109.5 px plate at the inner end. Its rim laps the name plate's to make one seam, at top x ≈ 707. Without a logo, the name plate runs on to the wing. |
-| Level wings (interface) | 20 px shorter each. The level plates are 64 wide (were 80): blue `[820, 8, 64, 50]`, red `[1036, 8, 64, 50]`. The wings follow, via `wing_margin`. |
-| Division / game count | The tab hangs from the wing: y 63.3 → 100.3 (flush with the bans' bottom). Its outer side is the name/logo seam carried down the lean, so the slants line up. Its inner side is 5 px off Blizzard's hexagon. The tab is interface art (stock fill, 2 px rim, no top edge); OBS draws the words only, 14 px. |
-| Bans | Optional, a toggle. Three tiles, 32 px parallelograms on a 38 px pitch. They sit at y 68.3 → 100.3 (5 below the band). The innermost tile's outer x is the seam minus 5. Banned tiles get a 4 px red foot. Their size, and slanted versus square, get their own pass when we build them (user, 2026-10-19). |
-| Tournament | Its logo goes over Blizzard's Nexus hexagon (centre 956, 63); a hexagon mask for OBS comes later. The tournament name is dropped from under the clock; it goes in a secondary tab, likely the tournament name on the left and the division on the right (user, 2026-10-19). The tabs are generic information panels: what goes in them is up to the operator. |
-| Font | Metronic for Blizzard Bold is a cut of Metronic Pro (Mostardesign): a style from $25, the family $329. Check the licence covers broadcast use. The mock uses Saira Semi Condensed. |
+| Series score | No cell. Hexagon pips with no plate: pointy-top, r = 25.3 (80% of the band), 43.9 wide, 5 apart, centred at y 30.65. The first pip's edge is 14 px off the name plate's outer slant. They fill from the name outward. Best of 3 = 2 a side, best of 5 = 3, best of 7 = 4 (blue's fourth ends at ~245, clear of the kill feed and the replay panel at x 14–392). One hexagon, in full and empty states; OBS draws as many as the series needs (user, 2026-10-19: more than 3 is the operator's call). Blue's centres: 413.8, 364.9, 316.1, 267.2. |
+| Name plate | OBS's nine-slice (below). The box is fixed: blue left 440, width 374 (its top runs 440 → 779.8, the wing's end); red left 1106. The name is 24 px at most and shrinks to fit 12 px inside the slants. |
+| Team logo | Optional, inside the name plate's box: a fixed 109.5 px plate at the inner end. Its rim laps the name plate's to make one seam, at top x ≈ 707. The mark is 46 px. Without a logo, the name plate runs on to the wing. |
+| Level wings (interface) | 20 px shorter each. The level plates are 64 wide: blue `[820, 8, 64, 50]`, red `[1036, 8, 64, 50]` (done 2026-10-19; the wings end at 779.8 / 1140.2). |
+| Division / game count | A tab hung from the wing, y 63.3 → 100.3 (flush with the bans' bottom). Its outer side is the name/logo seam carried down the lean, so the slants line up; its inner side is 5 px off Blizzard's hexagon. The tab is interface art (stock fill, 2 px rim, no top edge); OBS writes the words only, 14 px, centred at (825.2, 81.8) blue and (1091.6, 81.8) red. The tabs are generic information panels: what goes in them is the operator's call. |
+| Bans | Optional, a toggle. Three tiles a side, 32 px parallelograms on a 38 px pitch, the band's lean, y 68.3 → 100.3 (5 below the band). The innermost tile's outer x is the seam minus 5 (blue's top 706.9 → 738.9). A banned hero's portrait is desaturated, with a 4 px red foot. Size, and slanted versus square, get their own pass when built (user, 2026-10-19). |
+| Tournament | Its logo goes over Blizzard's Nexus hexagon (centre 957.25, 63.3); `event_mask.png` masks it to that hexagon. The tournament name leaves the clock: it goes in a secondary tab, likely the name on the left and the division on the right (user, 2026-10-19). |
+| Font | The mock uses Saira Semi Condensed (Google Fonts, open). Blizzard's in-game font, Metronic for Blizzard Bold, is a cut of Metronic Pro (Mostardesign): a style from $25, the family $329; check the licence covers broadcast use before using it. |
 
-## The name plate kit
+## The graphics
 
-- **Frame (nine-slice).** `frame_<team>.svg` is 100 × 63.3: a 40 px cap, a 20 px stretch
-  and a 40 px cap. It holds only the rim (2.5 px inside), the sheen (the top half) and the
-  team line (y 58.3–61.3, inset 3). CSS applies it with
-  `border-image: … 0 40 fill / 0 40px / stretch`.
-- **Behind the frame**, as CSS on `.fcjh-band`:
-  - a clip-path parallelogram;
-  - the base `#3b2d52 → #2a1f3c` (top to bottom);
-  - the team glow along the band, from the inner end to the outer:
-    .92 / .58 at 22% / .32 at 50% / .58 at 80% / .95;
+All generated by **`design/obs/mock_pass3.py`** (run `python -I design/obs/mock_pass3.py`) from
+`layout.toml`, gen's backplate geometry and the numbers above. Edit the script, never its
+output. It needs Chrome (`C:\Program Files\Google\Chrome\Application\chrome.exe`) to render
+the mock PNG. The game screenshot it first cropped from is gone; it reuses the crops it saved
+(`bg_top.png`, `ban0–5.png`).
+
+**`design/obs/` is untracked**, like `design/canvas/`: it's only on this machine.
+
+### `design/obs/kit/`: the parts for OBS
+
+| File | What it is |
+|---|---|
+| `topbar.json` | **Every number in this file, as data**: the band, colours, name plate boxes, logo plate, pip centres for each side (index 0 nearest the name), ban tile polygons (index 0 innermost), tab polygons and text centres, the event hexagon. The thing to build the OBS layer from. |
+| `namebar.css` | The name plate as a web component for a browser source. Its header comment has the markup: one `.fcjh-band` per team, a `.fcjh-name`, and a `.fcjh-logo` left out when there's no logo. |
+| `frame_blue.svg`, `frame_red.svg` | The name plate's frame, a nine-slice, 100 × 63.3: 40 px cap, 20 px stretch, 40 px cap. Only the rim (2.5 px in), the sheen (top half) and the team line (y 58.3–61.3, inset 3). |
+| `lattice_blue.svg`, `lattice_red.svg` | The hex lattice behind the plate, as the backplate's. |
+| `pip_blue.svg`, `pip_red.svg` | A won score pip: team colour, rim, a soft shadow and a highlight. 53.9 × 60.6 with a 5 px pad for the shadow, so the hexagon's centre is the SVG's centre. |
+| `pip_empty.svg` | A pip not yet won: dark at 60%, rim and shadow. |
+| `event_mask.png` | Blizzard's hexagon, white, on a clear 1920 × 1080 sheet: an OBS image mask for the tournament logo. |
+| `guide.png` | Every place above as an orange outline on a clear 1920 × 1080 sheet (name plates, logo plates, Bo7's four pips a side, ban tiles, tabs, the hexagon). Put it on top while lining up a scene, hide it after. |
+
+### `design/obs/`: the mocks
+
+- `pass3.png`, `pass3.html`: the approved mock (pass 3), with the nine-slice explained and the
+  plate at several widths.
+- `pass2.*`, `firstpass.*`: the earlier passes, for the record.
+- `backplate.png`: the interface's top backplate as built, from gen.
+- `bg_top.png`: the game's top 200 px at 1080p (2026-10-18, before the wings were shortened).
+- `ban0–5.png`: hero portrait stand-ins for the ban tiles.
+
+## The name plate kit, in detail
+
+- **Frame.** CSS applies it with `border-image: url(frame_<team>.svg) 0 40 fill / 0 40px / stretch`.
+- **Behind the frame**, CSS on `.fcjh-band`:
+  - a clip-path parallelogram (top 0 → width − D, bottom D → width);
+  - the base `#3b2d52 → #2a1f3c`, top to bottom;
+  - the team glow along the band, inner end to outer: .92 / .58 at 22% / .32 at 50% / .58 at
+    80% / .95;
   - the lattice in `::before`, masked .7 / .25 / .4.
 
-  The outer end was lit to just under the wing's outer edge: brightness ~157 against ~170
-  for blue, ~124 against ~130 for red.
-- **Logo.** `.fcjh-logo` is `flex: 0 0 109.5px` with a -36.68 px margin on its inner side
-  (D + rim), so the two rims coincide. It has a dark window, rgba(13,10,20,.5), inset 5 px
-  along and 6 px top and bottom, and the mark is 46 px. Leave the div out when there's no logo.
+  The outer end is lit to just under the wing's outer edge: brightness ~157 against ~170 for
+  blue, ~124 against ~130 for red.
+- **Logo.** `.fcjh-logo` is `flex: 0 0 109.5px` with a −36.68 px margin on its inner side
+  (D + rim), so the two rims coincide. Its dark window, rgba(13,10,20,.5), is inset 5 px along
+  and 6 px top and bottom.
+- **Colours.** Blue `#5cbcec`, red `#e75c79` (the plates' health colours), rim `#dfe3ed`,
+  stock `#221930 → #170f20`, dark `#0d0a14`, the name in Blizzard's light cyan
+  `#cbe8ff → #ffffff`, tab text `#cbe8ff`, the banned foot `#c8323c`.
+
+## The live layer (proposed)
+
+**OBS's layer comes from the same numbers as the interface**, so they can't drift apart; a
+change to `layout.toml` moves both. The plan, to be decided when we start:
+
+- **A browser source** (recommended): one generated HTML page at 1920 × 1080, transparent, every
+  piece at its place from `topbar.json`, filled from one small `match.json` the operator edits
+  between games: names, logo files, series score and format, bans, tournament name, division
+  and logo, game N of M. One source, positioned once, and it can animate a score change. Ban
+  portraits from images the operator drops in a folder.
+- **Or an OBS scene collection** (JSON import), an image or text source per place, text "read
+  from file". Native OBS, but its file format needs checking against the version in use.
+- Either way, `mock_pass3.py`'s kit code moves into `tools/obs.py`, run by gen, writing an
+  `obs/` folder, so the kit regenerates with the interface.
+- The aim is a **whole OBS scene collection**, other scenes too: see the questions.
 
 ## To build
 
 1. `layout.toml`:
-   - ~~the level rects (above)~~ and ~~`blue_talent_lead` / `red_talent_lead`, to the shaved
-     wings~~: done 2026-10-19, the wings end at 779.8 / 1140.2;
-   - `blue_name` / `red_name` → `kind = "obs"`, at the box above;
-   - `blue_logo` / `red_logo` inside it;
+   - `blue_name` / `red_name` → `kind = "obs"`, at the boxes above;
+   - `blue_logo` / `red_logo` inside them;
    - drop `blue_score` / `red_score`; add pip rects;
-   - `blue_bans` / `red_bans`, `division` and `game_count`, to the numbers above;
+   - `blue_bans` / `red_bans`, `division` and `game_count` to the numbers above;
    - drop `event_name`.
 
-   Then check that the wings regenerate to end at ~779.8 / 1140.2.
+   The old rects still there (2026-10-21): blue_score `[400,0,64,63.3]`, blue_name
+   `[470,0,214,63.3]`, blue_logo `[690,0,64,63.3]`, blue_bans `[576,67,108,32]`, division
+   `[794,67,96,24]`, game_count `[1024,67,102,24]`, event_logo `[922,32,68,62]`, event_name
+   `[810,164,300,24]`, and red's mirrors. `mock_pass3.py` adjusts the name and logo in code
+   (the name +20 and 30 outward, so 440; the logo +20, so 710) until they change.
 2. Interface art:
    - drop our name plate frames;
    - add the division and game tabs;
-   - add the empty ban tiles. Settle their size and shape first, and they need a way to be
-     hidden, since bans are a toggle.
-3. Update `docs/obs.md`: the rule's exception, and the table.
-4. Update the canvas's Top bar and Spec boards.
-5. ~~Settle "best of five"~~: 3 pips a side (user, 2026-10-19), one hexagon in full and empty.
+   - add the empty ban tiles, after settling their size and shape; they need a way to hide,
+     since bans are a toggle.
+3. `tools/obs.py` and the live layer (above).
+4. The canvas: the Top bar and Spec boards, and a game-scene board with the OBS layer in place.
+5. A live custom game with the OBS layer on, at 1080p, checking every place against `guide.png`.
+
+## Open questions
+
+- Bans: how many a side in the format used (the tiles fit three), and portraits or names?
+- Fonts: Saira Semi Condensed (open), Barlow Condensed (the canvas's), or Metronic if the
+  licence allows.
+- The other scenes (draft, break, post-game) are wholly OBS. Do they share these assets? The
+  interface may play no part in the draft at all; worth a look in a live custom game.
+- Whether any observer frame still holds the draft's bans once the game is on. If one does,
+  the interface could draw them itself, as game data.
