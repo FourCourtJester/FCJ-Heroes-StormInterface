@@ -612,7 +612,14 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
     uilib's KillLogGetPortraitPathforUnit): the hero's square `ui_targetportrait_hero_*`, each
     Viking their own, in Blizzard's mask. A script picks it there; ours is a per-hero table
     (gen.py `SEAT_PORTRAITS`, from Jamie Phan's hero data and Ahli's list) - **a new hero needs
-    adding to it.**
+    adding to it.** Seen in game on red (Genji, Ana): "looks good!". Not yet seen: a blue
+    driver, a Viking driving.
+  - A driver's plate read "STASIS" (UsingVehicle's parent is StormStasisRemoved). **Built
+    (2026-10-21), unseen:** the vehicle's word in its place, by map - KNIGHT, PROTECTOR (its
+    gunner too: the sensor can't tell the seats apart), TERROR (any other vehicle, so Garden
+    classic too, its map id unseen) - Blizzard's names cut short (user: "Knight" and
+    "Protector" is probably our best bet with "Terror"). gen.py `VEHICLE_WORDS`; Blizzard's
+    stasis icon stays in the portrait. English only; GameStrings if it's ever translated.
   - D.Va: a "PILOT" status on her plate while she's out of the mech - any status effect
     overrides it, and it goes when she's back in the mech.
 - **Vikings' and Misha's timers and skulls (2026-10-21, user: "Vikings look brilliant"):**

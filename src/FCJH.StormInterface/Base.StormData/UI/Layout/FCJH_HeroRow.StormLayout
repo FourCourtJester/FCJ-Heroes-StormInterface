@@ -750,6 +750,21 @@
 				<Unclipped val="true"/>
 				<AcceptsMouse val="false"/>
 			</Frame>
+			<!-- In its place while this cell's hero drives (FCJH_Vehicle): the vehicle's word, not
+			     Blizzard's STASIS (UsingVehicle's parent is StormStasisRemoved). Its word is set by
+			     FCJH_WhenCC, by the map (user, 2026-10-21). -->
+			<Frame type="Label" name="FCJH_VehicleText">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="-20"/>
+				<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent" pos="Max" offset="20"/>
+				<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
+				<Style val="FCJH_CCText"/>
+				<Options val="NoWrapping | ScaleToPreventTruncation"/>
+				<Alpha val="0"/>
+				<RenderPriority val="530"/>
+				<Unclipped val="true"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
 			<!-- ...and its icon, mirrored the same way, centred in the portrait. Shown only while
 			     Blizzard's own ICON is (not merely the element): when a CC ends, Blizzard's
 			     NoState hides its icon and label but the element stays up for its ~1 s fade, and
@@ -767,16 +782,50 @@
 				<AcceptsMouse val="false"/>
 				<StateGroup name="FCJH_WhenCC">
 					<DefaultState val="None"/>
+					<State name="Vehicle0">
+						<When type="Property" frame="$parent/FCJH_CC" Visible="true"/>
+						<When type="Property" frame="$parent/FCJH_CC/DebuffIconLeft" Visible="true"/>
+						<When type="Property" frame="$parent/FCJH_CloneSensor" Visible="false"/>
+						<When type="Property" frame="$parent/FCJH_Vehicle/FCJH_Driving" Visible="true"/>
+						<When type="Property" frame="$GameUI/FCJH_MapId" StringValue="DragonShire"/>
+						<Action type="SetProperty" frame="$this" Alpha="255"/>
+						<Action type="SetProperty" frame="$parent/FCJH_CCText" Alpha="0"/>
+						<Action type="SetProperty" frame="$parent/FCJH_VehicleText" Text="KNIGHT"/>
+						<Action type="SetProperty" frame="$parent/FCJH_VehicleText" Alpha="255"/>
+					</State>
+					<State name="Vehicle1">
+						<When type="Property" frame="$parent/FCJH_CC" Visible="true"/>
+						<When type="Property" frame="$parent/FCJH_CC/DebuffIconLeft" Visible="true"/>
+						<When type="Property" frame="$parent/FCJH_CloneSensor" Visible="false"/>
+						<When type="Property" frame="$parent/FCJH_Vehicle/FCJH_Driving" Visible="true"/>
+						<When type="Property" frame="$GameUI/FCJH_MapId" StringValue="Volskaya"/>
+						<Action type="SetProperty" frame="$this" Alpha="255"/>
+						<Action type="SetProperty" frame="$parent/FCJH_CCText" Alpha="0"/>
+						<Action type="SetProperty" frame="$parent/FCJH_VehicleText" Text="PROTECTOR"/>
+						<Action type="SetProperty" frame="$parent/FCJH_VehicleText" Alpha="255"/>
+					</State>
+					<State name="Vehicle2">
+						<When type="Property" frame="$parent/FCJH_CC" Visible="true"/>
+						<When type="Property" frame="$parent/FCJH_CC/DebuffIconLeft" Visible="true"/>
+						<When type="Property" frame="$parent/FCJH_CloneSensor" Visible="false"/>
+						<When type="Property" frame="$parent/FCJH_Vehicle/FCJH_Driving" Visible="true"/>
+						<Action type="SetProperty" frame="$this" Alpha="255"/>
+						<Action type="SetProperty" frame="$parent/FCJH_CCText" Alpha="0"/>
+						<Action type="SetProperty" frame="$parent/FCJH_VehicleText" Text="TERROR"/>
+						<Action type="SetProperty" frame="$parent/FCJH_VehicleText" Alpha="255"/>
+					</State>
 					<State name="CC">
 						<When type="Property" frame="$parent/FCJH_CC" Visible="true"/>
 						<When type="Property" frame="$parent/FCJH_CC/DebuffIconLeft" Visible="true"/>
 						<When type="Property" frame="$parent/FCJH_CloneSensor" Visible="false"/>
 						<Action type="SetProperty" frame="$this" Alpha="255"/>
 						<Action type="SetProperty" frame="$parent/FCJH_CCText" Alpha="255"/>
+						<Action type="SetProperty" frame="$parent/FCJH_VehicleText" Alpha="0"/>
 					</State>
 					<State name="None">
 						<Action type="SetProperty" frame="$this" Alpha="0"/>
 						<Action type="SetProperty" frame="$parent/FCJH_CCText" Alpha="0"/>
+						<Action type="SetProperty" frame="$parent/FCJH_VehicleText" Alpha="0"/>
 					</State>
 				</StateGroup>
 			</Frame>

@@ -1660,6 +1660,32 @@ def seat_portrait():
             f'{t}\t\t<State name="None"/>{t}\t</StateGroup>{t}</Frame>')
 
 
+# The word in place of STASIS while a hero drives (FCJH_VehicleText), by map: Blizzard's own
+# vehicle names, cut short (user, 2026-10-21) - the Dragon Knight, the Triglav Protector (its
+# gunner too: the sensor can't tell the seats apart), the Garden Terror. The last has no map: any
+# other vehicle is the Garden's, so Garden of Terror classic (its map id unseen) reads it too.
+VEHICLE_WORDS = [("dragon_shire", "KNIGHT"), ("volskaya_foundry", "PROTECTOR"), (None, "TERROR")]
+
+
+def vehicle_words():
+    """FCJH_WhenCC's states (in FCJH_CCIcon) while this cell's hero drives: Blizzard's CC as
+    ever, with its icon, but our vehicle word over the bar instead of its STASIS."""
+    t = "\n" + "\t" * 5
+    return "".join(
+        f'{t}<State name="Vehicle{i}">'
+        f'{t}\t<When type="Property" frame="$parent/FCJH_CC" Visible="true"/>'
+        f'{t}\t<When type="Property" frame="$parent/FCJH_CC/DebuffIconLeft" Visible="true"/>'
+        f'{t}\t<When type="Property" frame="$parent/FCJH_CloneSensor" Visible="false"/>'
+        f'{t}\t<When type="Property" frame="$parent/FCJH_Vehicle/FCJH_Driving" Visible="true"/>'
+        + (f'{t}\t{maps.on_map(key)}' if key else "")
+        + f'{t}\t<Action type="SetProperty" frame="$this" Alpha="255"/>'
+        f'{t}\t<Action type="SetProperty" frame="$parent/FCJH_CCText" Alpha="0"/>'
+        f'{t}\t<Action type="SetProperty" frame="$parent/FCJH_VehicleText" Text="{word}"/>'
+        f'{t}\t<Action type="SetProperty" frame="$parent/FCJH_VehicleText" Alpha="255"/>'
+        f'{t}</State>'
+        for i, (key, word) in enumerate(VEHICLE_WORDS))
+
+
 def trackers(team, health):
     """Blizzard's extra health bars inside HeroStatus, refitted to our bar (their templates
     assume the stock 134 x 6 box): Misha under Rexxar's bar (Blizzard halves his bar when she
@@ -3262,6 +3288,21 @@ def hero_cell_template(team, c, cfg):
 				<Unclipped val="true"/>
 				<AcceptsMouse val="false"/>
 			</Frame>
+			<!-- In its place while this cell's hero drives (FCJH_Vehicle): the vehicle's word, not
+			     Blizzard's STASIS (UsingVehicle's parent is StormStasisRemoved). Its word is set by
+			     FCJH_WhenCC, by the map (user, 2026-10-21). -->
+			<Frame type="Label" name="FCJH_VehicleText">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="-{CC_TEXT_OVERHANG}"/>
+				<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Bottom" relative="$parent" pos="Max" offset="{CC_TEXT_OVERHANG}"/>
+				<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
+				<Style val="FCJH_CCText"/>
+				<Options val="NoWrapping | ScaleToPreventTruncation"/>
+				<Alpha val="0"/>
+				<RenderPriority val="530"/>
+				<Unclipped val="true"/>
+				<AcceptsMouse val="false"/>
+			</Frame>
 			<!-- ...and its icon, mirrored the same way, centred in the portrait. Shown only while
 			     Blizzard's own ICON is (not merely the element): when a CC ends, Blizzard's
 			     NoState hides its icon and label but the element stays up for its ~1 s fade, and
@@ -3278,17 +3319,19 @@ def hero_cell_template(team, c, cfg):
 				<Unclipped val="true"/>
 				<AcceptsMouse val="false"/>
 				<StateGroup name="FCJH_WhenCC">
-					<DefaultState val="None"/>
+					<DefaultState val="None"/>{vehicle_words()}
 					<State name="CC">
 						<When type="Property" frame="$parent/FCJH_CC" Visible="true"/>
 						<When type="Property" frame="$parent/FCJH_CC/DebuffIconLeft" Visible="true"/>
 						<When type="Property" frame="$parent/FCJH_CloneSensor" Visible="false"/>
 						<Action type="SetProperty" frame="$this" Alpha="255"/>
 						<Action type="SetProperty" frame="$parent/FCJH_CCText" Alpha="255"/>
+						<Action type="SetProperty" frame="$parent/FCJH_VehicleText" Alpha="0"/>
 					</State>
 					<State name="None">
 						<Action type="SetProperty" frame="$this" Alpha="0"/>
 						<Action type="SetProperty" frame="$parent/FCJH_CCText" Alpha="0"/>
+						<Action type="SetProperty" frame="$parent/FCJH_VehicleText" Alpha="0"/>
 					</State>
 				</StateGroup>
 			</Frame>"""

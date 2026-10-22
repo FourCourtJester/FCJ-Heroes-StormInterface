@@ -423,6 +423,9 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
   each plate's UsingVehicle behaviour (`maps.knight_pilot`; 2026-10-21). The face is the one
   Blizzard's Volskaya seats show (each Viking their own); there a script picks it, so ours
   keeps a per-hero list, as Ahli's UI (which did it first) does.
+- **A vehicle's driver isn't stunned.** Blizzard's plate shows a hero in a vehicle as
+  "STASIS" (the vehicle behaviour counts as one). Ours names the vehicle instead: KNIGHT on
+  Dragon Shire, PROTECTOR on Volskaya, TERROR in the Garden (2026-10-21).
 - **Sky Temple: only the temples that matter.** Blizzard's three temple discs sit on the
   minimap's bottom half all game, greyed between rounds, with no mark on the ones about to
   activate but a countdown label. Ours sit above the minimap on a backing bar, shown only during
