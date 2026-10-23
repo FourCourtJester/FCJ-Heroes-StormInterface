@@ -539,7 +539,7 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
 
 **Publishing, one channel per intent (user, 2026-10-23: "As long as we have it all
 seperated out into their intents"):** Pages serves the OBS studio; Releases serve the
-`.StormInterface` files; a markdown API folder for other developers comes later. README.md's
+`.StormInterface` files; a markdown API folder for other developers comes later. docs/development.md's
 "Where each is published" table. **1.0.2 shipped 2026-10-23:** three-veins merged to `main` (PR #1, merge commit ea6f493),
 tag `v1.0.2`, the release built by CI (1,269,328 bytes, as the local `--release`; GitHub
 names the asset `FCJ.v1.0.2.StormInterface`, dots for spaces, as it did 1.0.1's). **Pages

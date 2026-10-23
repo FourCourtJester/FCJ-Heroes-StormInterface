@@ -1,106 +1,114 @@
-# FCJH — FourCourtJester Heroes observer interface
+# FCJ Heroes
 
-A custom `.StormInterface` observer overlay for Heroes of the Storm, for esports and
-broadcast use: the ten heroes along the bottom around the minimap, a slim two-line top bar
-whose branding regions are left empty for OBS, and on-demand info panes. With the broadcast
-graphics that fill those regions, drawn from the same numbers.
+A free observer interface for Heroes of the Storm, made for casting and tournament
+broadcasts, plus the broadcast graphics that go with it.
 
-**Three veins, one repo:**
+All ten heroes sit along the bottom of the screen around the minimap, and a slim top bar
+leaves most of the screen for the game. Info panes with the match's numbers open on demand,
+and Blizzard's ability tooltips stay available when you inspect a hero. It uses Blizzard's
+own fonts and art, so it looks at home in the game.
 
-| Vein | Where | What it makes |
-|---|---|---|
-| **The interface** | `interface/` | `FCJ v<version>.StormInterface`, the file casters select in Heroes. Shipped as a GitHub release, per version tag |
-| **The broadcast graphics** | `studio/` | A [Single Studio](https://github.com/FourCourtJester/Single-Studio) app: an operator's board in an OBS dock and a browser source per graphic. Published to GitHub Pages on every push that touches it |
-| **The generator** | `tools/` | Python that writes both from `layout.toml` — the interface's layouts and textures, and the studio's parts and numbers |
+**What are you here for?**
 
-**Where each is published - one channel, one job:**
-
-| Channel | Serves | Nothing else |
-|---|---|---|
-| **GitHub Releases** | The `.StormInterface` file, one per version tag `v<version>` (`.github/workflows/release.yml`) | No studio build, no docs |
-| **GitHub Pages** | The OBS studio: the operator's board and its browser sources (`.github/workflows/pages.yml`, on pushes to `main` that touch `studio/`) | No interface file |
-| **An API folder** *(planned)* | Markdown for other developers, read in the repo | - |
-
-They are one repo because they are one set of numbers. `layout.toml` places the hero plates
-*and* the broadcast's name plates; `python tools/gen.py` writes both halves, and `--check`
-fails if either has gone stale. Nothing has to be kept in step by hand.
-
-**Start with [HANDOFF.md](HANDOFF.md)** — current state, the dev loop, the rules learned the
-hard way, and what's next. The agreed design is a canvas of to-scale wireframes:
-https://claude.ai/artifact/6MmAcxcKjfAAprCN3oc3ZK
-
-## Quick start
-
-Requires Python 3.11+ (standard library only). The studio also needs Node 22+, but only to
-develop it: Pages builds it in CI, and the interface's loop below never touches it.
-
-```
-python tools/pack.py --wait
-```
-
-Generates, validates, packs and deploys a dev build to the Heroes `Interfaces` folder.
-Select it by setting `observerinterface=` and `replayinterface=` to `FCJH.StormInterface`
-in **both** `Variables.txt` files (see HANDOFF §5), with Heroes closed.
-
-Launch Heroes from the Battle.net app and open a replay from the in-game Replays tab.
-After a rebuild, leave the replay and reopen it — no client restart needed.
-
-To move or resize anything, change its pixels in `layout.toml` and rebuild.
-
-`python tools/pack.py --release` builds the shipping file, `dist/v<version>/FCJ v<version>.StormInterface`,
-from committed sources only.
-
-| Path | What |
+| I want to... | Go to |
 |---|---|
-| `layout.toml` | Every placement, in screen pixels at 1920×1080, from the wireframe |
-| `interface/FCJH.StormInterface/` | Interface source; the archive's file tree, one to one |
-| `studio/` | The broadcast graphics; `studio/README.md` is its own start |
-| `studio/src/generated/` | Written by `tools/obs.py`, never by hand |
-| `tools/obs.py` | The broadcast parts and numbers from `layout.toml` |
-| `tools/pack.py` | Generate, stage, validate, pack, deploy (dev or `--release`) |
-| `tools/gen.py` | Generated layouts and textures from `layout.toml`; `--check` for staleness |
-| `tools/inspect_card.py` | The inspect card, written by `gen.py` (reads hero data from JamiePhan) |
-| `tools/validate.py` | Check layouts against Blizzard's base UI; `--show <frame>` prints the merged tree |
-| `tools/test_validate.py` | Validator tests, against the archived build 50 in `tests/fixtures/` |
-| `tools/mpq.py` | MPQ reader/writer; `list` / `extract` any archive |
-| `tools/make_test_ui.py` | Smoke test: a minimal Python-authored interface |
-| `design/wireframes/` | PNG exports of the wireframe boards |
+| **Watch or cast games with the interface** | [The interface](#the-interface) |
+| **Run a broadcast in OBS** | [The broadcast studio](#the-broadcast-studio) |
+| **Change it, build it, or build on it** | [For developers](#for-developers) |
 
-## Base UI reference
+---
 
-`references/JamiePhan` — shallow clone of
-[jamiephan/HeroesOfTheStorm_Gamedata](https://github.com/jamiephan/HeroesOfTheStorm_Gamedata),
-an automated extract of Heroes game data (xml, txt, galaxy, `.StormLayout`, `.StormStyle`).
-Currently at game version **2.57.0.98304**. Refresh with:
+## The interface
 
-```
-git -C references/JamiePhan pull --depth 1
-```
+The `.StormInterface` file you load in Heroes, for watching replays and observing live games.
 
-Note: the repo's stated 4-hourly automation appeared stalled as of August 2026 (last commit
-2026-07-24), but it was still one patch ahead of the local client extraction under
-`references/Galaxy-Observer-UI-HeroesFix/baseUI`.
+### Install
 
-`references/` is gitignored, and [references/README.md](references/README.md) is what
-arrives there instead: the one extract the tools need, the interfaces this project was
-read off, and CascView for pulling art straight out of the installed client.
+1. Download the latest `.StormInterface` file from
+   **[Releases](https://github.com/FourCourtJester/FCJ-Heroes-StormInterface/releases/latest)**.
+2. Put it in `Documents\Heroes of the Storm\Interfaces\`. Make the `Interfaces` folder if
+   it isn't there.
+3. **Close Heroes.** It rewrites its settings when it exits, so edits made while it runs
+   are lost.
+4. Heroes keeps its settings in **two** `Variables.txt` files, and both need changing:
+   - `Documents\Heroes of the Storm\Variables.txt`
+   - `Documents\Heroes of the Storm\Accounts\<your account number>\Variables.txt`
 
-## References
+   In each, set these two lines to the file's exact name, extension included. Add the lines
+   if they aren't there:
+   ```
+   observerinterface=FCJ.v1.0.2.StormInterface
+   replayinterface=FCJ.v1.0.2.StormInterface
+   ```
+5. Start Heroes and open a replay, or observe a game.
 
-- **Galaxy Observer UI for Heroes** by *Spazzo* —
-  https://github.com/spazzo966/Galaxy-Observer-UI-HeroesFix (fork of Ahli's builder; source
-  of the MPQEditor used to cross-check our archives)
-- **AhliObs** by *Ahli* (MIT) and **SpazzoObs** — mature observer interfaces, unpacked under
-  `references/`, for "how does anyone do X"
+**If it stops loading:** opening a replay from an older patch can make Heroes forget your
+choice. Check both `Variables.txt` files again.
 
-## Directories
+It's laid out for **1920 × 1080**. Its labels come in every language Heroes ships.
 
-Interface files:
-```
-C:\Users\highb\OneDrive\Documents\Heroes of the Storm\Interfaces
-```
+### Hotkeys
 
-StarCraft II Map Editor:
-```
-C:\Program Files (x86)\StarCraft II\StarCraft II Editor_x64.exe
-```
+| Key | What it does |
+|---|---|
+| `Ctrl+1` | Talents pane |
+| `Ctrl+2` | Kills, deaths and damage |
+| `Ctrl+3` | Healing |
+| `Ctrl+4` | Siege |
+| `Ctrl+Shift+I` | Show or hide the inspect card (the selected hero) |
+| `Ctrl+Shift+N` | Show or hide player names over the heroes |
+| `Ctrl+Shift+C` | Show or hide chat |
+| `Ctrl+Shift+R` | Show or hide the replay controls |
+
+Only one pane is open at a time: opening one closes whichever is open.
+
+---
+
+## The broadcast studio
+
+Graphics for streaming the game in OBS: team names, logos and the series score over the top
+bar, plus a standby screen, webcam frames and a matchup band. It's an
+[operator's board](https://fourcourtjester.github.io/FCJ-Heroes-StormInterface/#/) that
+runs in your browser. No install and no server.
+
+1. In OBS, add the board as a custom browser dock (**Docks → Custom Browser Docks**) with
+   this address:
+   `https://fourcourtjester.github.io/FCJ-Heroes-StormInterface/#/`
+2. The board's menu lists every graphic's browser-source address, each with a copy button.
+   Add the ones you want as **Browser** sources at 1920 × 1080.
+3. Fill in the teams and the tournament on the board. The graphics update live.
+
+Run the board in OBS on the machine that streams. Your show's data and images are stored
+there.
+
+The graphics line up with the interface's top bar, so use the two together. The details are
+in [studio/README.md](studio/README.md).
+
+---
+
+## For developers
+
+Everything technical is in **[docs/development.md](docs/development.md)**: how the repo fits
+together, building and releasing the interface, running the studio, and the tools.
+
+- [HANDOFF.md](HANDOFF.md): where the project stands, and the rules learned the hard way
+- [AGENTS.md](AGENTS.md): working notes for AI coding agents
+- [docs/generator.md](docs/generator.md): a guide to the Python generator that builds the
+  interface
+
+---
+
+## Credits
+
+- **[Ahli](https://github.com/Ahli/Galaxy-Observer-UI)** (AhliObs) and **[Spazzo](https://github.com/spazzo966/Galaxy-Observer-UI-HeroesFix)**
+  (SpazzoObs): the observer interfaces this one learned from.
+- **[Jamie Phan](https://github.com/jamiephan/HeroesOfTheStorm_Gamedata)**: the extracted
+  game data every layout is checked against.
+- Heroes of the Storm, its art and its fonts belong to Blizzard Entertainment. This is a fan
+  project, not made or endorsed by Blizzard.
+
+If it's useful to you, you can support it through
+[GitHub Sponsors](https://github.com/sponsors/FourCourtJester) or
+[Ko-fi](https://ko-fi.com/fourcourtjester).
+
+MIT licence. See [LICENSE](LICENSE).
