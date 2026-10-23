@@ -19,7 +19,9 @@ touches this folder, so the live board is at
 
 Both halves are drawn from one file. `layout.toml` holds the numbers the game UI is
 built from, and `tools/obs.py` turns the same numbers into `src/generated/` here:
-`topbar.json`, the name plate's CSS, and the parts as SVG. A nudge to the interface
+the numbers as JSON (`topbar.json`, `standby.json`, `webcam.json`) and the parts as
+SVG and PNG - pictures and numbers only; every rule and every piece of markup is
+written by hand here. A nudge to the interface
 moves the broadcast graphics with it, in the same commit, and `python tools/gen.py
 --check` fails if either has gone stale.
 
@@ -144,7 +146,8 @@ started.
 
 ## Still open
 
-- **Nothing has been seen in OBS yet**, only measured in a browser.
+- **Testing**: the user tests in OBS at 1080p, the broadcast's settings; Claude checks
+  in a browser at 1920 x 1080.
 - **Ban portraits**: the pickers offer whatever is in the studio's image library, and
   nothing fills that library with hero portraits — 90-odd of them — yet.
 - **The ban tiles' size and shape** were never settled: slanted as they are, or square.
@@ -156,14 +159,6 @@ started.
   named `slides` on the library files the lot in one motion. Note that **files are added
   on the machine running OBS**: a picture dropped on a producer's laptop has bytes that
   live only there, and the slideshow leaves those out rather than playing a blank.
-- **The standby screen's other backdrop** — this source transparent, with an OBS Media
-  Source running a trailer behind it — is not built. It is the same furniture over
-  nothing: the field on `.fcjh-standby` comes off, and the slideshow with it.
-- **The series is not on the standby band.** The old board had a strip under the
-  containers — wins, "best of N", wins — and the show already carries all three
-  (`series.pips`, `blue.wins`, `red.wins`). It was left out because it was not asked
-  for; the gap under the containers is where it would go.
-- **A third camera.** One and two are covered; a guest making three has no layout.
 - **The other scenes** — draft, post-game — are not started, but both have their
   reference shot measured:
 

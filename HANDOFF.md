@@ -123,9 +123,10 @@ because OBS cannot move the cameras underneath them in step.
 **`docs/single-studio-reports.md`** is a running log of framework behaviour we had to work
 around, for filing upstream against Single Studio. Three entries so far, all measured.
 
-**Nothing since da0b1a9 is committed** - the standby screen, both webcam sources, the 0.13.0
-upgrade and the board changes are all uncommitted on `three-veins`. Nothing has been seen in
-OBS yet: every check so far has been in a browser at 1920x1080.
+**`three-veins` is the next version's deploy** (user, 2026-10-23). It holds everything on
+`main` (it branched from main's head, c92648b) and isn't on origin yet: the push failed.
+**Testing (2026-10-23):** the user tests in OBS, at 1080p, the broadcast's settings;
+Claude checks in a browser at 1920x1080.
 
 §7 has the interface's open list; the broadcast half's is at the end of `studio/README.md`.
 
@@ -525,7 +526,7 @@ clean, validator 0 errors, 19 tests, `pack.py` built and deployed. `tools/obs.py
 and builds clean, and both halves were driven in a browser - the board writes, the graphic
 draws, and the pips, bands and tabs land within 0.04 px of `topbar.json`. The source is
 `studio/src/sources/Game.jsx` (`#/source/game`), named for the scene rather than the top bar.
-**Still not seen in OBS itself**, and `npm run dev` could not be checked here (see below).
+`npm run dev` could not be checked here (see below). Since 2026-10-23 the user tests in OBS.
 
 **To resume, before merging:**
 1. ~~Install Node, build it~~ - done. `npm run build` is clean; `npm run preview` serves it.
@@ -536,8 +537,7 @@ draws, and the pips, bands and tabs land within 0.04 px of `topbar.json`. The so
    Chrome before anyone trusts the dev loop.
 3. Test outputs: driven with names, a series score and the tabs' words; logos and bans still
    want the image library filling (no hero portraits anywhere yet).
-4. See it in OBS - the board in a custom browser dock, the source over a game capture. Nothing
-   has been in OBS at all.
+4. ~~See it in OBS~~ - the user tests in OBS at 1080p (2026-10-23).
 5. Switch Pages to "GitHub Actions" (Settings -> Pages) before the first push to `main`.
 6. Then merge.
 

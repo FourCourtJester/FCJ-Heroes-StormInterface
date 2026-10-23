@@ -153,9 +153,8 @@ portraits (from the studio's image library, so no file paths), and the board its
 with hero portraits yet - 90-odd of them - and that is the one piece of content the broadcast
 needs that this repo does not produce.
 
-**Unbuilt.** There is no Node on the machine this was written on, so the app has never been
-installed, built or run; the generated parts and numbers are checked, the React around them is
-not. Pages would be its first real build.
+**Built and run** since 2026-10-22 (`npm run dev --prefix studio`); the user tests it in OBS at
+1080p, the broadcast's settings (2026-10-23).
 
 ## To build
 
@@ -183,7 +182,7 @@ not. Pages would be its first real build.
 4. The canvas: the Top bar and Spec boards (done 2026-10-22), and a game-scene board with the
    OBS layer in place (open).
 5. **A live custom game with the OBS layer on, at 1080p, checking every place against
-   `src/generated/guide.png`.** Nothing here has been seen in OBS, or built at all.
+   `src/generated/guide.png`.** The user tests in OBS at 1080p (2026-10-23).
 
 ## Open questions
 
