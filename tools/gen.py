@@ -4553,7 +4553,7 @@ def stat_value(frame, score, team, indent):
     if frame not in STAT_NO_UNDERLINE:
         # the leader's cell, softly lit in the team colour. It answers the same best-value
         # events as Blizzard's underline, so it works on columns that never had one (XP)
-        colour = "70,90,150,255" if team == "blue" else "70,255,90,110"
+        colour = "90,90,150,255" if team == "blue" else "90,255,90,110"
         underline += (
             f'{t}\t<Frame type="Image" name="FCJH_Lead">\n'
             f'{t}\t\t<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>\n'
@@ -4563,6 +4563,7 @@ def stat_value(frame, score, team, indent):
             f'{t}\t\t<Texture val="@UI/PauseScreenDimImage"/>\n'
             f'{t}\t\t<ColorAdjustMode val="Fill"/>\n{t}\t\t<AdjustmentColor val="{colour}"/>\n'
             f'{t}\t\t<Visible val="false"/>\n{t}\t\t<Unclipped val="true"/>\n{t}\t\t<AcceptsMouse val="false"/>\n'
+            f'{t}\t\t<IgnoreParentColor val="true"/>  <!-- else the row\'s team colour darkens it to grey (2026-10-23) -->\n'
             f'{t}\t\t<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->\n'
             f'{t}\t\t<Animation name="FCJH_ShowLead">\n'
             f'{t}\t\t\t<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>\n'

@@ -708,6 +708,12 @@ at load.
      in German and French: "KILLBETEILIGUNGEN"). Siege became **Minion Damage** (Blizzard's
      `MinionDamage`, siege less structures; Siege counted the structures twice beside the
      structures column). If the user meant merc camps, Blizzard's `CreepDamage` is that score.
+     Checked against Tab (`Screenshot2026-10-23 12_48_34`): XP matches all ten; Minion +
+     Structures is Tab's Siege for five, short for the rest by what Siege also counts - laning
+     mercs and summons (StormDamage's score array: Abathur's locusts, Misha). Red's structures
+     read 0 all game; Tab's Siege leaves red at most 3,691 outside minions, so it is likely
+     real (to re-check on a replay where red pushes). The leader box was the IgnoreParentColor
+     bug too (grey-brown, `Screenshot2026-10-23 12_47_40`); it says it now, a little stronger.
 3. **Screenshots of everything for posting**, then **the OBS overlay** to pair with the
    interface (docs/obs.md). Per-map shots: docs/maps.md. Show-off shots, with how to stage
    them, are marked **A show-off shot** in docs/blizzard-fixes.md's "Made" list (first:
