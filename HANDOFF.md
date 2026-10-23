@@ -515,10 +515,14 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
 **Publishing, one channel per intent (user, 2026-10-23: "As long as we have it all
 seperated out into their intents"):** Pages serves the OBS studio; Releases serve the
 `.StormInterface` files; a markdown API folder for other developers comes later. README.md's
-"Where each is published" table. Three-veins goes to `main` by PR, then the tag `v1.0.2`.
+"Where each is published" table. **1.0.2 shipped 2026-10-23:** three-veins merged to `main` (PR #1, merge commit ea6f493),
+tag `v1.0.2`, the release built by CI (1,269,328 bytes, as the local `--release`; GitHub
+names the asset `FCJ.v1.0.2.StormInterface`, dots for spaces, as it did 1.0.1's). **Pages
+was still "Deploy from a branch"** - it served the README through Jekyll; to switch to
+"GitHub Actions" and re-run the Pages workflow (it has `workflow_dispatch`).
 
-**The three-vein reorganisation (2026-10-22), on its own branch - NOT on `main` and not
-finished.** The repo now holds three veins: the interface (`interface/`, was `src/`), the
+**The three-vein reorganisation (2026-10-22), on `main` since 1.0.2 (2026-10-23); the
+studio's list below is still open.** The repo now holds three veins: the interface (`interface/`, was `src/`), the
 broadcast graphics (`studio/`, a Single Studio app) and the generator that writes both
 (`tools/`), joined at `layout.toml`. The user's call (2026-10-22): one repo, three veins,
 "give people the different avenues of accessing the parts they want" - a release for the
@@ -545,8 +549,8 @@ draws, and the pips, bands and tabs land within 0.04 px of `topbar.json`. The so
 3. Test outputs: driven with names, a series score and the tabs' words; logos and bans still
    want the image library filling (no hero portraits anywhere yet).
 4. ~~See it in OBS~~ - the user tests in OBS at 1080p (2026-10-23).
-5. Switch Pages to "GitHub Actions" (Settings -> Pages) before the first push to `main`.
-6. Then merge.
+5. Switch Pages to "GitHub Actions" (Settings -> Pages) - still to do; the merge went first.
+6. ~~Then merge~~ - merged 2026-10-23 (PR #1).
 
 *Known gaps:* nothing fills the studio's image library with hero portraits (90-odd) for the
 bans; the ban tiles' size and shape were never settled; the font is fetched from Google Fonts
