@@ -4556,34 +4556,21 @@ def stat_value(frame, score, team, indent):
     t = "\t" * indent
     underline = ""
     if frame in STAT_UNDERLINED or frame in STAT_NO_UNDERLINE:
-        # Blizzard's best-value underline: off everywhere (user, 2026-09-29: a soft highlight
-        # instead - FCJH_Lead below; none on deaths, where "best" means most)
+        # Blizzard's best-value underline: off everywhere (user, 2026-09-29; gold numbers
+        # instead, below; none on deaths, where "best" means most)
         underline = f'{t}\t<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>\n'
     if frame not in STAT_NO_UNDERLINE:
-        # the leader's cell, softly lit in the team colour. It answers the same best-value
-        # events as Blizzard's underline, so it works on columns that never had one (XP)
-        colour = "90,90,150,255" if team == "blue" else "90,255,90,110"
-        underline += (
-            f'{t}\t<Frame type="Image" name="FCJH_Lead">\n'
-            f'{t}\t\t<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>\n'
-            f'{t}\t\t<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>\n'
-            f'{t}\t\t<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>\n'
-            f'{t}\t\t<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>\n'
-            f'{t}\t\t<Texture val="@UI/PauseScreenDimImage"/>\n'
-            f'{t}\t\t<ColorAdjustMode val="Fill"/>\n{t}\t\t<AdjustmentColor val="{colour}"/>\n'
-            f'{t}\t\t<Visible val="false"/>\n{t}\t\t<Unclipped val="true"/>\n{t}\t\t<AcceptsMouse val="false"/>\n'
-            f'{t}\t\t<IgnoreParentColor val="true"/>  <!-- else the row\'s team colour darkens it to grey (2026-10-23) -->\n'
-            f'{t}\t\t<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->\n'
-            f'{t}\t\t<Animation name="FCJH_ShowLead">\n'
-            f'{t}\t\t\t<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>\n'
-            f'{t}\t\t\t<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>\n'
-            f'{t}\t\t\t<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>\n'
-            f'{t}\t\t</Animation>\n'
-            f'{t}\t\t<Animation name="FCJH_HideLead">\n'
-            f'{t}\t\t\t<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>\n'
-            f'{t}\t\t\t<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>\n'
-            f'{t}\t\t\t<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>\n'
-            f'{t}\t\t</Animation>\n{t}\t</Frame>\n')
+        # the leader's number in Blizzard's gold, not a lit box (user, 2026-10-23: "just use a
+        # yellow/gold color to indicate they're leading"). The same best-value events and Style
+        # swap Blizzard's own label uses, so it works on columns that never had an underline (XP)
+        normal = f"FCJH_StatValue_{team.capitalize()}"
+        for name, events, style in (("FCJH_ShowLead", ("AllyBestValue", "EnemyBestValue"), "FCJH_StatValue_Lead"),
+                                    ("FCJH_HideLead", ("AllyNotBestValue", "EnemyNotBestValue"), normal)):
+            underline += (f'{t}\t<Animation name="{name}">\n' +
+                          "".join(f'{t}\t\t<Event event="{e}" action="Reset,Play"/>\n' for e in events) +
+                          f'{t}\t\t<Controller type="Style" end="Pause" frame="FCJH_Value" style1="{style}" style2="{style}">\n'
+                          f'{t}\t\t\t<Key type="Curve" time="0.00" value="1.0" inout="Linear,Auto"/>\n'
+                          f'{t}\t\t</Controller>\n{t}\t</Animation>\n')
     return (f'{t}<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0">\n'
             f'{t}\t<Visible val="true"/>\n'
             f'{t}\t<ScoreValueLink val="{score}"/>\n'
@@ -4594,7 +4581,6 @@ def stat_value(frame, score, team, indent):
             f'{t}\t\t<Text val="{{$parent/Label/@Text}}"/>\n'
             f'{t}\t\t<Style val="FCJH_StatValue_{team.capitalize()}"/>\n'
             f'{t}\t\t<IgnoreParentColor val="true"/>  <!-- as Blizzard\'s Label: else the row\'s team colour multiplies into ours (2026-10-23) -->\n'
-            f'{t}\t\t<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->\n'
             f'{t}\t\t<Options val="NoWrapping | ScaleToPreventTruncation"/>\n'
             f'{t}\t\t<AcceptsMouse val="false"/>\n'
             f'{t}\t</Frame>\n' + underline +

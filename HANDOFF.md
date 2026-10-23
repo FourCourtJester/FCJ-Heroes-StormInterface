@@ -742,6 +742,10 @@ at load.
      column 4 units after it (STAT_PORTRAIT_GAP); STAT_TEAM_GAP 0, so red's band follows
      blue's last stripe. Stats panes 496 -> 455 units. Last change of this pass; the user
      re-evaluates.
+     **Leaders in gold (user, 2026-10-23: "Instead of a highlighted area for column leaders,
+     how about we just use a yellow/gold color"):** the FCJH_Lead box is gone; the leader's
+     number swaps to FCJH_StatValue_Lead (Blizzard's ColorGold, fed600) on the best-value
+     events, by the Style controller Blizzard's own label uses. A try - the user judges it.
 3. **Screenshots of everything for posting**, then **the OBS overlay** to pair with the
    interface (docs/obs.md). Per-map shots: docs/maps.md. Show-off shots, with how to stage
    them, are marked **A show-off shot** in docs/blizzard-fixes.md's "Made" list (first:
