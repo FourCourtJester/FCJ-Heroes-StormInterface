@@ -36,8 +36,7 @@ python tools/pack.py --wait
 ```
 
 Generates, validates, packs and deploys a dev build to the Heroes `Interfaces` folder.
-Select it by setting `observerinterface=` and `replayinterface=` to `FCJH.StormInterface`
-in **both** `Variables.txt` files (see HANDOFF §5), with Heroes closed.
+Pick `FCJH.StormInterface` from the interface drop-down in the game's options.
 
 Launch Heroes from the Battle.net app and open a replay from the in-game Replays tab.
 After a rebuild, leave the replay and reopen it — no client restart needed.

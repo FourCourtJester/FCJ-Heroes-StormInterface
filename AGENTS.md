@@ -40,7 +40,7 @@ python tools/pack.py --wait           # dev build, deployed to the game's Interf
 ```
 
 HANDOFF §2 is the loop in full and §5 the game's traps (the interface locked while a replay
-is open, out-of-patch replays dropping the selection, two `Variables.txt` files). The user
+is open, out-of-patch replays dropping the selection). The user
 tests in game and in OBS at 1080p; an agent can only check the studio in a browser, so say
 so rather than claiming something works on air.
 
