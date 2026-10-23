@@ -679,6 +679,9 @@ at load.
    UI's core bars: `design/ref_default_core_hp.png`) and the info panes (zebra rows, Heroes
    palette; the numbers panes need a better visual - docs/history.md item 1). The canvas draws
    the build as it is (`design/canvas_gen.py`); the art pass designs over those boards.
+   **Parked (user, 2026-10-23: "Keep them on the list, but we wont do anything about them
+   now"):** the chrome backplate look on the bottom hero plates, and the plates' intro slide
+   and fade (Ahli's). Both are interface items, not OBS.
    **First pass built (2026-10-23), for the user to see in game:**
    - **Bevels:** the XP and core fills are lit from above as Blizzard's core bar - a light lip,
      a ramp down with a soft step at mid-height, a dark foot (gen.py `bevel_texture`,
