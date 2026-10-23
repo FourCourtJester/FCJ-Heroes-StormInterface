@@ -482,8 +482,8 @@ and Ko-fi).
 (pack.py's `RELEASE_NAME`, from 1.0.1; 1.0.0 shipped as `FCJH.StormInterface`), in Ahli's
 style (`AhliObs 0.75`; spaces load fine, Spazzo's is `SpazzoObsv40`). `--release --deploy`
 installs it under that name, beside the dev build's `FCJH.StormInterface`, which keeps its
-fixed name so the everyday loop overwrites one file. Still to see: whether a new version's
-file means casters re-pick the interface in Options.
+fixed name so the everyday loop overwrites one file. **Settled (user, 2026-10-23):** releases
+keep this naming (FCJ vX).
 
 **Every word of ours in every language (1.0.1, 2026-10-21; user: "lets flesh out the
 translations").** Our own on-screen words live in `tools/words.py` (`WORDS`, keyed
@@ -659,9 +659,8 @@ at load.
    - **The pane border's halves (2026-10-19): DONE, seen good on pass 3 (21_57_37 ..).** each side was a whole nine-slice
      squeezed into half the height, so both halves ended in the art's end cap at the middle,
      stacked "doubly as bright" (user). Now each half is a whole side clipped at the middle
-     (inspect_card.py tab_border, `UpperHalf` / `LowerHalf`). Check: no bright patch midway
-     down the sides, the corners as before. (User, 2026-10-19: the patch is still on the build
-     they last saw; this one gets checked tonight with the map passes.)
+     (inspect_card.py tab_border, `UpperHalf` / `LowerHalf`). Closed (user, 2026-10-23): no
+     bright patch seen on the inspect card either.
    - **The user's answers (2026-10-19, evening):**
      - the top bar shrink (1284a7a): DONE, on trust ("as long as everything fits");
      - on fire: DONE - red seen, blue and colourblind run the same code; revisit on feedback;
@@ -704,8 +703,8 @@ at load.
     (gen.py `SEAT_PORTRAITS`, from Jamie Phan's hero data and Ahli's list) - **a new hero needs
     adding to it.** Seen in game on red (Genji, Ana): "looks good!". Not yet seen: a blue
     driver, a Viking driving.
-  - A driver's plate read "STASIS" (UsingVehicle's parent is StormStasisRemoved). **Built
-    (2026-10-21), unseen:** the vehicle's word in its place, by map - KNIGHT, PROTECTOR (its
+  - A driver's plate read "STASIS" (UsingVehicle's parent is StormStasisRemoved). **DONE
+    (user, 2026-10-23: "KNIGHT / PROTECTOR / TERROR is confirmed"):** the vehicle's word in its place, by map - KNIGHT, PROTECTOR (its
     gunner too: the sensor can't tell the seats apart), TERROR (any other vehicle, so Garden
     classic too, its map id unseen) - Blizzard's names cut short (user: "Knight" and
     "Protector" is probably our best bet with "Terror"). gen.py `VEHICLE_WORDS`; Blizzard's
@@ -718,9 +717,9 @@ at load.
   skull on the number, the number held 1.5 s then faded in. Misha's number is back, on her
   slice (dropped 2026-09-30), hidden while Rexxar is dead.
 - **Parked:** blue's curse mirror (unseen; item 14).
-- **Later:** extract the toolchain into its own repo for open-sourcing (user, 2026-10-09) -
-  [docs/generator.md](docs/generator.md) says what it is, [docs/extraction-plan.md](docs/extraction-plan.md)
-  how to split it out.
+- ~~**Later:** extract the toolchain into its own repo~~ **Dropped (user, 2026-10-23):** the
+  three veins keep the toolchain here (`tools/`); [docs/extraction-plan.md](docs/extraction-plan.md)
+  is kept for the record.
 - **Study Ahli's other panels** (user watched a broadcast on his UI, 2026-10-03) - not to
   replace ours, but for implementation tricks and visuals:
   - his custom inspect (`_BottomLeft`) and his custom panes - talents, XP and the rest
@@ -731,7 +730,8 @@ at load.
     that opens it is wired in `gameui.stormlayout` ~734). Spazzo ships a fix for its
     alignment (`references/Spazzo/.../RecapAlignmentFix.StormLayout`); Ahli hides its
     buttons inside his leader panel. Worth a feature of ours: a death recap on demand.
-  - **quests** (checked 2026-10-03): Ahli's talent pane has two kinds. (a) A column for a
+  - **quests** (checked 2026-10-03) - **DONE (user, 2026-10-23):** quest progress shows on
+    our talents pane and the inspect card. Ahli's talent pane has two kinds. (a) A column for a
     hero's BASELINE quests (the trait kind, not a talent pick): two slots, `BaseQuestIcon0/1`
     (`UnitStatusBaselineQuestIcon`) in a `ParentCenteredFrame`, so one quest sits centred and
     two sit side by side - straight from Blizzard's own leader panel (`heroleaderpanel`
@@ -976,8 +976,8 @@ from their plates (docs/blizzard-fixes.md).
      2026-10-21, ed32947: "TLV looks great"):** the plate's death ring, bursts and respawn glow
      on each Viking's portrait slice only, down to the bar backing (`slice_rings`,
      `slice_ring`), off their own party-cell timers and `HeroAlmostRespawnedHero{n}`.
-     **Left:** Misha's (same build, `FCJH_SliceRingMisha`, hidden while Rexxar is dead) -
-     "something flashed", the user is digging in; the Vikings' embers/fire untested. See item 15;
+     **Misha's DONE too (user, 2026-10-23: "Misha's and TLV's death rings are good now")**
+     (`FCJH_SliceRingMisha`, hidden while Rexxar is dead). See item 15;
    - ~~**Death timers flash white under 5 s**~~ DONE (user, 2026-10-18; above);
    - ~~**Ahli's death animation**~~ DONE (item 12; seen again 2026-10-19: the skull, red ring,
      flashing count and gold rim at 5 all good);
