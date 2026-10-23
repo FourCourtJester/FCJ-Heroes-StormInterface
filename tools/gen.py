@@ -765,6 +765,10 @@ def constants_layout(cfg):
     edges, tab_h = anchor_edges(cfg, "info_pane"), u(pane["title_height"]) - CLOSE_INSET - 2
     const(name("info", "pane", "close", "t"), edges["t"] + CLOSE_INSET)
     const(name("info", "pane", "close", "r"), edges["r"] - CLOSE_INSET)
+    # the stats panes (Ctrl+2-4) are narrower: only as wide as their columns (stat_geometry)
+    stat_r = edges["l"] + stat_geometry(cfg)["width"]
+    const(name("stat", "pane", "r"), stat_r)
+    const(name("stat", "pane", "close", "r"), stat_r - CLOSE_INSET)
     const(name("info", "pane", "close", "w"), round(tab_h * 60 / 38))
     const(name("info", "pane", "close", "h"), tab_h)
     const(name("info", "pane", "border"), max(1, u(pane["border"])))
@@ -4305,35 +4309,44 @@ SCORE_COLUMNS = ["SoloKillScoreValueFrame", "AssistsScoreValueFrame", "DeathsSco
                  "SiegeDamageScoreValueFrame", "HeroDamageScoreValueFrame",
                  "HealingScoreValueFrame", "DamageTakenScoreValueFrame",
                  "ExperienceScoreValueFrame"]
-# (key, title, [(column frame, score value, heading, width share, team total)])
-# The columns share the row right of the portrait by their width share (a count takes 1, a
-# big number 2). The team total is the score a TeamScoreValueFrame sums for the team band;
-# usually the column's own, but Blizzard counts team kills as TeamTakedowns.
+# (key, title, [(column frame, score value, heading, width, team total)])
+# A column's width is the widest number it shows (STAT_WIDTHS). The team total is the score
+# a TeamScoreValueFrame sums for the team band; usually the column's own, but Blizzard counts
+# team kills as TeamTakedowns. Blizzard's SiegeDamage is structures AND minions (its tooltip:
+# "dealt to enemy Structures and Minions"), so beside STRUCTURES the structures pane shows
+# MinionDamage - siege less structures (user, 2026-10-23).
 STAT_PANES = [
     ("kda", "KDA  ·  HERO DAMAGE", [
-        ("SoloKillScoreValueFrame", "SoloKill", "K", 1, "TeamTakedowns"),
-        ("DeathsScoreValueFrame", "Deaths", "D", 1, "Deaths"),
-        ("AssistsScoreValueFrame", "Assists", "A", 1, "Assists"),
-        ("HeroDamageScoreValueFrame", "HeroDamage", "HERO DMG", 2, "HeroDamage")]),
+        ("SoloKillScoreValueFrame", "SoloKill", "KILLS", "count", "TeamTakedowns"),
+        ("DeathsScoreValueFrame", "Deaths", "DEATHS", "count", "Deaths"),
+        ("AssistsScoreValueFrame", "Assists", "ASSISTS", "count", "Assists"),
+        ("HeroDamageScoreValueFrame", "HeroDamage", "HERO DMG", "big", "HeroDamage")]),
     ("healing", "HEALING  ·  SHIELDING", [
-        ("DamageTakenScoreValueFrame", "SelfHealing", "SELF", 2, "SelfHealing"),
-        ("HealingScoreValueFrame", "Healing", "HEALING", 2, "Healing"),
-        ("SiegeDamageScoreValueFrame", "ProtectionGivenToAllies", "SHIELDING", 2, "ProtectionGivenToAllies")]),
+        ("DamageTakenScoreValueFrame", "SelfHealing", "SELF", "big", "SelfHealing"),
+        ("HealingScoreValueFrame", "Healing", "HEALING", "big", "Healing"),
+        ("SiegeDamageScoreValueFrame", "ProtectionGivenToAllies", "SHIELDING", "big", "ProtectionGivenToAllies")]),
     ("structures", "STRUCTURES  ·  EXPERIENCE", [
-        ("SiegeDamageScoreValueFrame", "SiegeDamage", "SIEGE", 2, "SiegeDamage"),
-        ("HeroDamageScoreValueFrame", "StructureDamage", "STRUCTURES", 2, "StructureDamage"),
-        ("ExperienceScoreValueFrame", "ExperienceContribution", "XP", 2, "ExperienceContribution")]),
+        ("SiegeDamageScoreValueFrame", "MinionDamage", "MINION DMG", "big", "MinionDamage"),
+        ("HeroDamageScoreValueFrame", "StructureDamage", "STRUCTURES", "big", "StructureDamage"),
+        ("ExperienceScoreValueFrame", "ExperienceContribution", "XP", "big", "ExperienceContribution")]),
 ]
+# Column widths, layout units (1 unit = 0.9 px at 1080p), measured off the build in game
+# (Screenshot2026-10-23 12_30_35): a digit advances ~12 px in the numbers' font, a point or
+# comma ~1 px more ink. A count is at most XX.YY ("12.75", ~48 px, 53 units; nobody reaches
+# three digits of kills); a big number at most XXX,XXX ("103,794" in the team totals' font
+# measured 72 px, 80 units; nobody reaches a million). Past that, ScaleToPreventTruncation.
+STAT_WIDTHS = {"count": 60, "big": 84}
+STAT_GAP = 24                # the least room between columns, and after the portrait
+STAT_HEADING_CLEAR = 4       # a heading may run left into the gap before its column, to here
 # Every info pane, in hotkey order: (key, container). Only one shows at a time.
 INFO_PANES = [("talents", "Pane_Talents")] + [(k, f"Pane_{k.capitalize()}") for k, _, _ in STAT_PANES]
 STAT_ROW_H, STAT_TEAM_GAP = 40, 8        # Blizzard's rows are 40 units tall
 STAT_ROW_W = 565                         # Blizzard's slot width
 # The table's margins match the talents pane's: the portrait (90 wide) sits 23 in from the
 # left, so the last number ends 23 short of the right edge. Numbers are right-aligned in
-# columns 48 units wide per width share (a count's "12", a total's "126,660"). The team
-# name spans the portrait's width. The rows spread out to fill the pane's height, less the
-# bottom pad.
-STAT_MARGIN, STAT_PORTRAIT_W, STAT_SHARE_W, STAT_BOTTOM_PAD = 23, 90, 48, 14
+# their columns (STAT_WIDTHS). The team name spans the portrait's width. The rows spread out
+# to fill the pane's height, less the bottom pad.
+STAT_MARGIN, STAT_PORTRAIT_W, STAT_BOTTOM_PAD = 23, 90, 14
 STAT_FIRST_COLUMN = STAT_MARGIN + STAT_PORTRAIT_W
 # Columns whose ScoreValueFrame0 carries Blizzard's best-value underline (statsoverviewpanel
 # ScoreValueFrameHighlightAnimation_*). Kept, re-centred - except on deaths, where "best"
@@ -4366,8 +4379,10 @@ def box(top, left, bottom, right, relative="$parent"):
         for side, (p, o) in zip(("Top", "Left", "Bottom", "Right"), (top, left, bottom, right)))
 
 
+# The stats panes' box: the info pane's, but only as wide as their columns need (stat_geometry
+# width; user, 2026-10-23: "shave off some space on Ctrl2-4"). The talents pane keeps the full box.
 PANE = box(("Min", "#FCJH_INFO_PANE_T"), ("Min", "#FCJH_INFO_PANE_L"),
-           ("Min", "#FCJH_INFO_PANE_B"), ("Min", "#FCJH_INFO_PANE_R"))
+           ("Min", "#FCJH_INFO_PANE_B"), ("Min", "#FCJH_STAT_PANE_R"))
 
 
 
@@ -4444,7 +4459,7 @@ def close_button(container, indent=3):
     t = "\t" * indent
     return f'''{t}<Frame type="Button" name="FCJH_Close" template="StandardTemplates/SmallPanelCloseButtonTemplate">
 {t}	<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_CLOSE_T"/>
-{t}	<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_CLOSE_R"/>
+{t}	<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_STAT_PANE_CLOSE_R"/>
 {t}	<Width val="#FCJH_INFO_PANE_CLOSE_W"/>
 {t}	<Height val="#FCJH_INFO_PANE_CLOSE_H"/>
 {t}	<RenderPriority val="650"/>
@@ -4469,10 +4484,13 @@ def pane_chrome(title, placed, geometry, indent=3):
     out += (f'{t}\t<Frame type="Label" name="FCJH_Title">\n' + band(indent + 2) +
             f'{t}\t\t<Style val="ObsBar_MatchTimer"/>\n{t}\t\t<Text val="{words.ref(title)}"/>\n'
             f'{t}\t\t<RenderPriority val="610"/>\n{t}\t\t<AcceptsMouse val="false"/>\n{t}\t</Frame>\n')
-    for i, (_, _, text, x, w, _) in enumerate(placed):
+    # a heading is right-aligned over its numbers, free to run left into the gap before them
+    # ("ASSISTS" and "STRUCTURES" are wider than their columns' numbers)
+    lefts = [STAT_FIRST_COLUMN] + [x + w for _, _, _, x, w, _ in placed[:-1]]
+    for i, ((_, _, text, x, w, _), left) in enumerate(zip(placed, lefts)):
         out += (f'{t}\t<Frame type="Label" name="FCJH_Heading{i}">\n'
                 f'{t}\t\t<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>\n'
-                f'{t}\t\t<Anchor side="Left"  relative="$parent" pos="Min" offset="{x}"/>\n'
+                f'{t}\t\t<Anchor side="Left"  relative="$parent" pos="Min" offset="{left + STAT_HEADING_CLEAR}"/>\n'
                 f'{t}\t\t<Anchor side="Right" relative="$parent" pos="Min" offset="{x + w}"/>\n'
                 f'{t}\t\t<Height val="#FCJH_INFO_PANE_HEADER_H"/>\n'
                 f'{t}\t\t<Style val="FCJH_StatHeading"/>\n{t}\t\t<Text val="{words.ref(text)}"/>\n'
@@ -4500,17 +4518,20 @@ def stat_geometry(cfg):
     red_band = blue_band + team_h + 5 * step + STAT_TEAM_GAP
     row_tops = [blue_band + team_h + i * step for i in range(5)] + \
                [red_band + team_h + i * step for i in range(5)]
+    # as wide as the widest pane's columns at STAT_GAP apart, so switching panes keeps the box
+    width = min(width, max(STAT_FIRST_COLUMN + sum(STAT_WIDTHS[c[3]] + STAT_GAP for c in columns) + STAT_MARGIN
+                           for _, _, columns in STAT_PANES))
     return {"title": title, "team_h": team_h, "team_tops": (blue_band, red_band), "row_tops": row_tops,
-            "columns": (STAT_MARGIN + STAT_PORTRAIT_W, width - STAT_MARGIN)}
+            "width": width, "columns": (STAT_FIRST_COLUMN, width - STAT_MARGIN)}
 
 
 def place_columns(columns, span):
-    """Columns sized to their numbers (STAT_SHARE_W per width share), right-aligned, with the
-    spare room shared out as equal gaps: one after the portrait, one between each pair of
-    columns. So the last number ends exactly on the right margin, the same distance in as
-    the portrait is from the left edge."""
+    """Columns sized to their numbers (STAT_WIDTHS), right-aligned, with the spare room shared
+    out as equal gaps: one after the portrait, one between each pair of columns. So the last
+    number ends exactly on the right margin, the same distance in as the portrait is from the
+    left edge."""
     left, right = span
-    widths = [share * STAT_SHARE_W for _, _, _, share, _ in columns]
+    widths = [STAT_WIDTHS[kind] for _, _, _, kind, _ in columns]
     gap = (right - left - sum(widths)) / len(columns)
     placed, x = [], left
     for (frame, score, heading, _, total), w in zip(columns, widths):

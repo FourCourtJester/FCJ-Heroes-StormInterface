@@ -35,7 +35,7 @@ S = lambda v: round(v * ROW["scale"])          # Blizzard's native cell units ->
 NARROW = S(gen.NARROW)                         # the bars narrow this much while the heroic shows
 LEAN = CELL.overlap / CELL.h                   # the plates' slant, across per down
 FG = {t: gen.fountain_rect(CFG, t) for t in ("blue", "red")}   # the plate fountain: (box, scale)
-STAMP = subprocess.run(["git", "-C", str(REPO), "log", "-1", "--format=%h %cs", "--", "tools", "layout.toml", "src"],   # the last commit that changed the build
+STAMP = subprocess.run(["git", "-C", str(REPO), "log", "-1", "--format=%h %cs", "--", "tools", "layout.toml", "interface"],   # the last commit that changed the build
                        capture_output=True, text=True).stdout.strip()
 
 # Uploaded to the canvas (Artifact asset store)
@@ -61,7 +61,7 @@ GOLD = "#E8B84A"
 
 def font_styles():
     """Our font styles (FontStyles.StormStyle): {name: (px, colour)}. Heights are layout units."""
-    text = (REPO / "src" / "FCJH.StormInterface" / "Base.StormData" / "UI" / "FontStyles.StormStyle").read_text(encoding="utf-8")
+    text = (REPO / "interface" / "FCJH.StormInterface" / "Base.StormData" / "UI" / "FontStyles.StormStyle").read_text(encoding="utf-8")
     out = {}
     for m in re.finditer(r'<Style name="(\w+)"([^>]*)/>', text):
         h = re.search(r'height="(\d+)"', m.group(2))
@@ -431,7 +431,8 @@ def stats_pane(key):
     placed = gen.place_columns(columns, g["columns"])
     tb, tr, rows = DEMO[key]
     head_px, head_col = FONTS["FCJH_StatHeading"]
-    out = [f'<div style="{PANE_CSS}">', title_band(title.replace("  ", " "))]
+    sw = u(g["width"])                      # the stats panes are narrower than the talents pane
+    out = [f'<div style="{PANE_CSS.replace(f"width: {PANE_W}px", f"width: {sw}px")}">', title_band(title.replace("  ", " "), sw)]
     lbl = f"position: absolute; display: flex; align-items: center; justify-content: flex-end; {GAME}"
     for (_, _, name, x, w, _) in placed:
         out.append(f'<div style="{lbl} left: {u(x)}px; top: {u(g["title"])}px; width: {u(w)}px; height: {u(g["team_tops"][0] - g["title"])}px; '
@@ -439,7 +440,7 @@ def stats_pane(key):
     for t, team in enumerate(("blue", "red")):
         band_c = gen.TEAMS[t][2].split(",")
         y = g["team_tops"][t]
-        out.append(f'<div style="{abs_box(0, u(y), PANE_W, u(g["team_h"]))} background: rgba({",".join(band_c[1:])},{int(band_c[0]) / 255:.2f});"></div>')
+        out.append(f'<div style="{abs_box(0, u(y), sw, u(g["team_h"]))} background: rgba({",".join(band_c[1:])},{int(band_c[0]) / 255:.2f});"></div>')
         tp, tc = FONTS[f"FCJH_StatTeam_{team.capitalize()}"]
         out.append(f'<div style="{lbl} justify-content: flex-start; left: {u(gen.STAT_MARGIN)}px; top: {u(y)}px; height: {u(g["team_h"])}px; '
                    f'font-size: {tp}px; font-weight: 600; letter-spacing: .06em; color: {tc};">{team.upper()}</div>')
@@ -842,7 +843,9 @@ def panes_board():
     b.append(f'<div class="s" style="position: absolute; left: 590px; top: 790px; width: 1576px; font-size: 15px; color: #C9CAD6;">'
              f'Title {CFG["info_pane"]["title_height"]} px, headings {CFG["info_pane"]["header_height"]} px, team bands {CFG["info_pane"]["team_height"]} px. '
              f'Rows {u(gen.STAT_ROW_H)} px tall, {u(gap)} px apart, spread to fill the box so switching panes never resizes it. '
-             f'Numbers right-aligned in columns {u(gen.STAT_SHARE_W)} px per share (a count 1, a big number 2); the spare room is shared as equal gaps, '
+             f'Numbers right-aligned in columns sized to the widest number: {u(gen.STAT_WIDTHS["count"])} px for a count (XX.YY), '
+             f'{u(gen.STAT_WIDTHS["big"])} px for a big number (XXX,XXX), at least {u(gen.STAT_GAP)} px apart; the stats panes are {u(g["width"])} px wide '
+             f'(the widest one\'s need) and the spare room in the others is shared as equal gaps, '
              f'so the last column ends {u(gen.STAT_MARGIN)} px from the edge, like the portrait on the left.</div>\n')
     return page("Info panes, as built", w, h, "".join(b)), (w, h)
 

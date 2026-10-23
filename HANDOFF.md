@@ -699,6 +699,15 @@ at load.
      talents pane keeps Blizzard's observer grid. Not yet: the score screen's shaded column
      groups (Blizzard's `BGSeparatorImage1-3`, which our rows hide), the
      leaders' glow in place of our lit box.
+   - **The stats panes narrowed (user, 2026-10-23: "The column widths are a bit too
+     generous").** Columns are sized to the widest number, not shares of the box: a count is
+     60 units (XX.YY, about 48 px in the value font), a big number 84 (XXX,XXX in the totals
+     font), at least 24 apart (gen.py `STAT_WIDTHS`, `STAT_GAP`). The three stats panes are 496
+     units (446 px, from 546), the KDA pane's need; the talents pane keeps the full box.
+     Headings may run left into the gap. K/D/A are Blizzard's Kills/Deaths/Assists now (long
+     in German and French: "KILLBETEILIGUNGEN"). Siege became **Minion Damage** (Blizzard's
+     `MinionDamage`, siege less structures; Siege counted the structures twice beside the
+     structures column). If the user meant merc camps, Blizzard's `CreepDamage` is that score.
 3. **Screenshots of everything for posting**, then **the OBS overlay** to pair with the
    interface (docs/obs.md). Per-map shots: docs/maps.md. Show-off shots, with how to stage
    them, are marked **A show-off shot** in docs/blizzard-fixes.md's "Made" list (first:

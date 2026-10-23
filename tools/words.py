@@ -35,8 +35,9 @@ HEALING = _row("Heilung", "Healing", "Curación", "Sanación", "Soins", "Cure", 
                "Исцеление", "治疗量", "治療")
 SHIELDING = _row("Schilde", "Shielding", "Escudo", "Protección", "Protections", "Protezione", "방지", "Osłanianie",
                  "Proteção", "Щиты", "护盾吸收量", "護盾")
-SIEGE = _row("Diener- und Gebäudeschaden", "Siege Damage", "Daño de asedio", "Daño de asedio", "Dégâts de siège",
-             "Danni da assedio", "공성 피해", "Zniszczenia", "Dano de Cerco", "Осадный урон", "攻城伤害", "攻城傷害")
+MINION_DAMAGE = _row("Dienerschaden", "Minion Damage", "Daño a esbirros", "Daño infligido a esbirros",
+                     "Dégâts aux serviteurs", "Danni ai servitori", "돌격병 피해", "Obrażenia stronników",
+                     "Dano de Tropa", "Урон по воинам", "小兵伤害", "小兵傷害")
 STRUCTURES = _row("Gebäudeschaden", "Structures", "Daño a estructuras", "Daño infligido a estructuras",
                   "Dégâts aux bâtiments", "Danni alle strutture", "구조물 피해", "Obrażenia budowli",
                   "Dano de Estrutura", "Урон по строениям", "建筑伤害", "建築傷害")
@@ -73,20 +74,23 @@ WORDS = {
         "{ue} de Abathur: sin talentos", "{ue} d'Abathur : aucun talent", "{ue} di Abathur: nessun talento",
         "아바투르의 {ue}: 특성 없음", "{ue} Abatura: brak talentów", "{ue} de Abathur: sem talentos",
         "{ue} Абатура: нет талантов", "阿巴瑟的{ue}：无天赋", "阿巴瑟的{ue}：無天賦").items()},
-    # the stats panes: titles, column heads (K/D/A kept but in Chinese and Korean, Blizzard's
-    # Kills/Deaths/Assists there), the team bands (UI/TeamColor02, 01; Blizzard's team names in
-    # Chinese and Korean, where the colour alone isn't a team's name)
+    # the stats panes: titles, column heads (Blizzard's Kills/Deaths/Assists), the team bands
+    # (UI/TeamColor02, 01; Blizzard's team names in Chinese and Korean, where the colour alone
+    # isn't a team's name)
     "Stats/KdaTitle": _join({loc: "KDA" for loc in LOCALES}, _upper(HERO_DAMAGE)),
     "Stats/HealingTitle": _join(_upper(HEALING), _upper(SHIELDING)),
     "Stats/StructuresTitle": _join(_upper(STRUCTURES), _upper(EXPERIENCE)),
-    "Stats/K": _row("K", "K", "K", "K", "K", "K", "처치", "K", "K", "K", "击杀", "擊殺"),
-    "Stats/D": _row("D", "D", "D", "D", "D", "D", "죽음", "D", "D", "D", "阵亡", "死亡"),
-    "Stats/A": _row("A", "A", "A", "A", "A", "A", "지원", "A", "A", "A", "助攻", "助攻"),
+    "Stats/Kills": _upper(_row("Kills", "Kills", "Asesinatos", "Derribos", "tués", "Uccisioni", "처치", "Zabici",
+                               "Abates", "Убийства", "击杀", "擊殺")),
+    "Stats/Deaths": _upper(_row("Tode", "Deaths", "Muertes", "Muertes", "morts", "Morti", "죽음", "Zgony", "Mortes",
+                                "Смерти", "阵亡", "死亡")),
+    "Stats/Assists": _upper(_row("Killbeteiligungen", "Assists", "Asistencias", "Asistencias", "contributions",
+                                 "Assist", "지원", "Asysty", "Assistências", "Содействия", "助攻", "助攻")),
     "Stats/HeroDamage": _upper(HERO_DAMAGE) | {"enUS": "HERO DMG"},
     "Stats/Self": _upper(SELF_HEALING) | {"enUS": "SELF"},
     "Stats/Healing": _upper(HEALING),
     "Stats/Shielding": _upper(SHIELDING),
-    "Stats/Siege": _upper(SIEGE) | {"enUS": "SIEGE"},
+    "Stats/MinionDamage": _upper(MINION_DAMAGE) | {"enUS": "MINION DMG"},
     "Stats/Structures": _upper(STRUCTURES),
     # UI/PartyPanel/BonusExperience
     "Stats/XP": _row("EP", "XP", "EXP", "PE", "EXP", "PE", "XP", "PD", "EXP", "ОПЫТ", "XP", "經驗值"),

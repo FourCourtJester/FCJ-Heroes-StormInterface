@@ -20,13 +20,13 @@
 				<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
 				<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_L"/>
 				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_B"/>
-				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
+				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_STAT_PANE_R"/>
 			</Frame>
 			<Frame type="Frame" name="FCJH_RowStripes">
 				<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
 				<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_L"/>
 				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_B"/>
-				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
+				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_STAT_PANE_R"/>
 				<RenderPriority val="450"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Image" name="FCJH_Stripe0">
@@ -254,7 +254,7 @@
 				<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
 				<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_L"/>
 				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_B"/>
-				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
+				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_STAT_PANE_R"/>
 				<Width val="0"/>
 				<Height val="0"/>
 				<Visible val="true"/>
@@ -309,9 +309,9 @@
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="SoloKillScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="171"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="137"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="219"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="197"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -356,9 +356,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="276"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="221"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="324"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="281"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -381,9 +381,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="382"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="305"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="430"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="365"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -428,9 +428,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="488"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="389"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="584"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="473"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -502,9 +502,9 @@
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="SoloKillScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="171"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="137"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="219"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="197"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -549,9 +549,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="276"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="221"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="324"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="281"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -574,9 +574,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="382"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="305"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="430"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="365"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -621,9 +621,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="488"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="389"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="584"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="473"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -695,9 +695,9 @@
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="SoloKillScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="171"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="137"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="219"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="197"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -742,9 +742,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="276"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="221"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="324"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="281"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -767,9 +767,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="382"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="305"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="430"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="365"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -814,9 +814,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="488"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="389"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="584"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="473"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -888,9 +888,9 @@
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="SoloKillScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="171"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="137"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="219"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="197"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -935,9 +935,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="276"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="221"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="324"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="281"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -960,9 +960,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="382"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="305"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="430"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="365"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -1007,9 +1007,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="488"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="389"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="584"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="473"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -1081,9 +1081,9 @@
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="SoloKillScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="171"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="137"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="219"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="197"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -1128,9 +1128,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="276"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="221"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="324"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="281"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -1153,9 +1153,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="382"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="305"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="430"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="365"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -1200,9 +1200,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="488"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="389"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="584"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="473"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -1274,9 +1274,9 @@
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="SoloKillScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="171"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="137"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="219"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="197"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -1321,9 +1321,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="276"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="221"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="324"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="281"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -1346,9 +1346,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="382"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="305"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="430"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="365"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -1393,9 +1393,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="488"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="389"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="584"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="473"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -1467,9 +1467,9 @@
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="SoloKillScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="171"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="137"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="219"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="197"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -1514,9 +1514,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="276"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="221"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="324"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="281"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -1539,9 +1539,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="382"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="305"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="430"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="365"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -1586,9 +1586,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="488"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="389"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="584"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="473"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -1660,9 +1660,9 @@
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="SoloKillScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="171"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="137"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="219"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="197"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -1707,9 +1707,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="276"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="221"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="324"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="281"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -1732,9 +1732,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="382"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="305"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="430"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="365"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -1779,9 +1779,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="488"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="389"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="584"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="473"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -1853,9 +1853,9 @@
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="SoloKillScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="171"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="137"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="219"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="197"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -1900,9 +1900,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="276"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="221"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="324"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="281"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -1925,9 +1925,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="382"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="305"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="430"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="365"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -1972,9 +1972,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="488"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="389"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="584"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="473"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -2046,9 +2046,9 @@
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="SoloKillScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="171"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="137"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="219"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="197"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -2093,9 +2093,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="DeathsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="276"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="221"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="324"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="281"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -2118,9 +2118,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="AssistsScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="382"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="305"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="430"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="365"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -2165,9 +2165,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="488"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="389"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="584"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="473"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -2220,7 +2220,7 @@
 				<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
 				<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_L"/>
 				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_B"/>
-				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
+				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_STAT_PANE_R"/>
 				<RenderPriority val="600"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Label" name="FCJH_Title">
@@ -2235,41 +2235,41 @@
 				</Frame>
 				<Frame type="Label" name="FCJH_Heading0">
 					<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
-					<Anchor side="Left"  relative="$parent" pos="Min" offset="171"/>
-					<Anchor side="Right" relative="$parent" pos="Min" offset="219"/>
+					<Anchor side="Left"  relative="$parent" pos="Min" offset="117"/>
+					<Anchor side="Right" relative="$parent" pos="Min" offset="197"/>
 					<Height val="#FCJH_INFO_PANE_HEADER_H"/>
 					<Style val="FCJH_StatHeading"/>
-					<Text val="@FCJH/Stats/K"/>
+					<Text val="@FCJH/Stats/Kills"/>
 					<Options val="NoWrapping | ScaleToPreventTruncation"/>
 					<RenderPriority val="610"/>
 					<AcceptsMouse val="false"/>
 				</Frame>
 				<Frame type="Label" name="FCJH_Heading1">
 					<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
-					<Anchor side="Left"  relative="$parent" pos="Min" offset="276"/>
-					<Anchor side="Right" relative="$parent" pos="Min" offset="324"/>
+					<Anchor side="Left"  relative="$parent" pos="Min" offset="201"/>
+					<Anchor side="Right" relative="$parent" pos="Min" offset="281"/>
 					<Height val="#FCJH_INFO_PANE_HEADER_H"/>
 					<Style val="FCJH_StatHeading"/>
-					<Text val="@FCJH/Stats/D"/>
+					<Text val="@FCJH/Stats/Deaths"/>
 					<Options val="NoWrapping | ScaleToPreventTruncation"/>
 					<RenderPriority val="610"/>
 					<AcceptsMouse val="false"/>
 				</Frame>
 				<Frame type="Label" name="FCJH_Heading2">
 					<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
-					<Anchor side="Left"  relative="$parent" pos="Min" offset="382"/>
-					<Anchor side="Right" relative="$parent" pos="Min" offset="430"/>
+					<Anchor side="Left"  relative="$parent" pos="Min" offset="285"/>
+					<Anchor side="Right" relative="$parent" pos="Min" offset="365"/>
 					<Height val="#FCJH_INFO_PANE_HEADER_H"/>
 					<Style val="FCJH_StatHeading"/>
-					<Text val="@FCJH/Stats/A"/>
+					<Text val="@FCJH/Stats/Assists"/>
 					<Options val="NoWrapping | ScaleToPreventTruncation"/>
 					<RenderPriority val="610"/>
 					<AcceptsMouse val="false"/>
 				</Frame>
 				<Frame type="Label" name="FCJH_Heading3">
 					<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
-					<Anchor side="Left"  relative="$parent" pos="Min" offset="488"/>
-					<Anchor side="Right" relative="$parent" pos="Min" offset="584"/>
+					<Anchor side="Left"  relative="$parent" pos="Min" offset="369"/>
+					<Anchor side="Right" relative="$parent" pos="Min" offset="473"/>
 					<Height val="#FCJH_INFO_PANE_HEADER_H"/>
 					<Style val="FCJH_StatHeading"/>
 					<Text val="@FCJH/Stats/HeroDamage"/>
@@ -2301,9 +2301,9 @@
 				</Frame>
 				<Frame type="TeamScoreValueFrame" name="FCJH_BlueTotal0">
 					<Anchor side="Top" relative="$parent" pos="Min" offset="53"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="171"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="137"/>
 					<Anchor side="Bottom" relative="$parent" pos="Min" offset="80"/>
-					<Anchor side="Right" relative="$parent" pos="Min" offset="219"/>
+					<Anchor side="Right" relative="$parent" pos="Min" offset="197"/>
 					<ScoreValueLink val="TeamTakedowns"/>
 					<TeamId val="0"/>
 					<RenderPriority val="610"/>
@@ -2316,9 +2316,9 @@
 				</Frame>
 				<Frame type="TeamScoreValueFrame" name="FCJH_BlueTotal1">
 					<Anchor side="Top" relative="$parent" pos="Min" offset="53"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="276"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="221"/>
 					<Anchor side="Bottom" relative="$parent" pos="Min" offset="80"/>
-					<Anchor side="Right" relative="$parent" pos="Min" offset="324"/>
+					<Anchor side="Right" relative="$parent" pos="Min" offset="281"/>
 					<ScoreValueLink val="Deaths"/>
 					<TeamId val="0"/>
 					<RenderPriority val="610"/>
@@ -2331,9 +2331,9 @@
 				</Frame>
 				<Frame type="TeamScoreValueFrame" name="FCJH_BlueTotal2">
 					<Anchor side="Top" relative="$parent" pos="Min" offset="53"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="382"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="305"/>
 					<Anchor side="Bottom" relative="$parent" pos="Min" offset="80"/>
-					<Anchor side="Right" relative="$parent" pos="Min" offset="430"/>
+					<Anchor side="Right" relative="$parent" pos="Min" offset="365"/>
 					<ScoreValueLink val="Assists"/>
 					<TeamId val="0"/>
 					<RenderPriority val="610"/>
@@ -2346,9 +2346,9 @@
 				</Frame>
 				<Frame type="TeamScoreValueFrame" name="FCJH_BlueTotal3">
 					<Anchor side="Top" relative="$parent" pos="Min" offset="53"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="488"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="389"/>
 					<Anchor side="Bottom" relative="$parent" pos="Min" offset="80"/>
-					<Anchor side="Right" relative="$parent" pos="Min" offset="584"/>
+					<Anchor side="Right" relative="$parent" pos="Min" offset="473"/>
 					<ScoreValueLink val="HeroDamage"/>
 					<TeamId val="0"/>
 					<RenderPriority val="610"/>
@@ -2383,9 +2383,9 @@
 				</Frame>
 				<Frame type="TeamScoreValueFrame" name="FCJH_RedTotal0">
 					<Anchor side="Top" relative="$parent" pos="Min" offset="348"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="171"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="137"/>
 					<Anchor side="Bottom" relative="$parent" pos="Min" offset="375"/>
-					<Anchor side="Right" relative="$parent" pos="Min" offset="219"/>
+					<Anchor side="Right" relative="$parent" pos="Min" offset="197"/>
 					<ScoreValueLink val="TeamTakedowns"/>
 					<TeamId val="1"/>
 					<RenderPriority val="610"/>
@@ -2398,9 +2398,9 @@
 				</Frame>
 				<Frame type="TeamScoreValueFrame" name="FCJH_RedTotal1">
 					<Anchor side="Top" relative="$parent" pos="Min" offset="348"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="276"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="221"/>
 					<Anchor side="Bottom" relative="$parent" pos="Min" offset="375"/>
-					<Anchor side="Right" relative="$parent" pos="Min" offset="324"/>
+					<Anchor side="Right" relative="$parent" pos="Min" offset="281"/>
 					<ScoreValueLink val="Deaths"/>
 					<TeamId val="1"/>
 					<RenderPriority val="610"/>
@@ -2413,9 +2413,9 @@
 				</Frame>
 				<Frame type="TeamScoreValueFrame" name="FCJH_RedTotal2">
 					<Anchor side="Top" relative="$parent" pos="Min" offset="348"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="382"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="305"/>
 					<Anchor side="Bottom" relative="$parent" pos="Min" offset="375"/>
-					<Anchor side="Right" relative="$parent" pos="Min" offset="430"/>
+					<Anchor side="Right" relative="$parent" pos="Min" offset="365"/>
 					<ScoreValueLink val="Assists"/>
 					<TeamId val="1"/>
 					<RenderPriority val="610"/>
@@ -2428,9 +2428,9 @@
 				</Frame>
 				<Frame type="TeamScoreValueFrame" name="FCJH_RedTotal3">
 					<Anchor side="Top" relative="$parent" pos="Min" offset="348"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="488"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="389"/>
 					<Anchor side="Bottom" relative="$parent" pos="Min" offset="375"/>
-					<Anchor side="Right" relative="$parent" pos="Min" offset="584"/>
+					<Anchor side="Right" relative="$parent" pos="Min" offset="473"/>
 					<ScoreValueLink val="HeroDamage"/>
 					<TeamId val="1"/>
 					<RenderPriority val="610"/>
@@ -2444,7 +2444,7 @@
 			</Frame>
 			<Frame type="Button" name="FCJH_Close" template="StandardTemplates/SmallPanelCloseButtonTemplate">
 				<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_CLOSE_T"/>
-				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_CLOSE_R"/>
+				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_STAT_PANE_CLOSE_R"/>
 				<Width val="#FCJH_INFO_PANE_CLOSE_W"/>
 				<Height val="#FCJH_INFO_PANE_CLOSE_H"/>
 				<RenderPriority val="650"/>
@@ -2466,13 +2466,13 @@
 				<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
 				<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_L"/>
 				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_B"/>
-				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
+				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_STAT_PANE_R"/>
 			</Frame>
 			<Frame type="Frame" name="FCJH_RowStripes">
 				<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
 				<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_L"/>
 				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_B"/>
-				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
+				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_STAT_PANE_R"/>
 				<RenderPriority val="450"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Image" name="FCJH_Stripe0">
@@ -2700,7 +2700,7 @@
 				<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
 				<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_L"/>
 				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_B"/>
-				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
+				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_STAT_PANE_R"/>
 				<Width val="0"/>
 				<Height val="0"/>
 				<Visible val="true"/>
@@ -2756,9 +2756,9 @@
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="174"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="149"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="270"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="233"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -2804,9 +2804,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="331"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="269"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="427"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="353"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -2852,9 +2852,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="488"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="389"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="584"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="473"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -2927,9 +2927,9 @@
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="174"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="149"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="270"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="233"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -2975,9 +2975,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="331"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="269"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="427"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="353"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -3023,9 +3023,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="488"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="389"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="584"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="473"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -3098,9 +3098,9 @@
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="174"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="149"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="270"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="233"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -3146,9 +3146,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="331"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="269"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="427"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="353"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -3194,9 +3194,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="488"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="389"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="584"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="473"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -3269,9 +3269,9 @@
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="174"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="149"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="270"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="233"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -3317,9 +3317,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="331"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="269"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="427"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="353"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -3365,9 +3365,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="488"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="389"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="584"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="473"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -3440,9 +3440,9 @@
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="174"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="149"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="270"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="233"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -3488,9 +3488,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="331"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="269"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="427"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="353"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -3536,9 +3536,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="488"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="389"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="584"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="473"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -3611,9 +3611,9 @@
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="174"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="149"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="270"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="233"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -3659,9 +3659,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="331"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="269"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="427"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="353"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -3707,9 +3707,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="488"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="389"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="584"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="473"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -3782,9 +3782,9 @@
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="174"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="149"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="270"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="233"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -3830,9 +3830,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="331"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="269"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="427"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="353"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -3878,9 +3878,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="488"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="389"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="584"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="473"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -3953,9 +3953,9 @@
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="174"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="149"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="270"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="233"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -4001,9 +4001,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="331"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="269"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="427"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="353"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -4049,9 +4049,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="488"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="389"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="584"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="473"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -4124,9 +4124,9 @@
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="174"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="149"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="270"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="233"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -4172,9 +4172,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="331"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="269"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="427"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="353"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -4220,9 +4220,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="488"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="389"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="584"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="473"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -4295,9 +4295,9 @@
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="174"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="149"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="270"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="233"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -4343,9 +4343,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HealingScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="331"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="269"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="427"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="353"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -4391,9 +4391,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="488"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="389"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="584"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="473"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -4446,7 +4446,7 @@
 				<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
 				<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_L"/>
 				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_B"/>
-				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
+				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_STAT_PANE_R"/>
 				<RenderPriority val="600"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Label" name="FCJH_Title">
@@ -4461,8 +4461,8 @@
 				</Frame>
 				<Frame type="Label" name="FCJH_Heading0">
 					<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
-					<Anchor side="Left"  relative="$parent" pos="Min" offset="174"/>
-					<Anchor side="Right" relative="$parent" pos="Min" offset="270"/>
+					<Anchor side="Left"  relative="$parent" pos="Min" offset="117"/>
+					<Anchor side="Right" relative="$parent" pos="Min" offset="233"/>
 					<Height val="#FCJH_INFO_PANE_HEADER_H"/>
 					<Style val="FCJH_StatHeading"/>
 					<Text val="@FCJH/Stats/Self"/>
@@ -4472,8 +4472,8 @@
 				</Frame>
 				<Frame type="Label" name="FCJH_Heading1">
 					<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
-					<Anchor side="Left"  relative="$parent" pos="Min" offset="331"/>
-					<Anchor side="Right" relative="$parent" pos="Min" offset="427"/>
+					<Anchor side="Left"  relative="$parent" pos="Min" offset="237"/>
+					<Anchor side="Right" relative="$parent" pos="Min" offset="353"/>
 					<Height val="#FCJH_INFO_PANE_HEADER_H"/>
 					<Style val="FCJH_StatHeading"/>
 					<Text val="@FCJH/Stats/Healing"/>
@@ -4483,8 +4483,8 @@
 				</Frame>
 				<Frame type="Label" name="FCJH_Heading2">
 					<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
-					<Anchor side="Left"  relative="$parent" pos="Min" offset="488"/>
-					<Anchor side="Right" relative="$parent" pos="Min" offset="584"/>
+					<Anchor side="Left"  relative="$parent" pos="Min" offset="357"/>
+					<Anchor side="Right" relative="$parent" pos="Min" offset="473"/>
 					<Height val="#FCJH_INFO_PANE_HEADER_H"/>
 					<Style val="FCJH_StatHeading"/>
 					<Text val="@FCJH/Stats/Shielding"/>
@@ -4516,9 +4516,9 @@
 				</Frame>
 				<Frame type="TeamScoreValueFrame" name="FCJH_BlueTotal0">
 					<Anchor side="Top" relative="$parent" pos="Min" offset="53"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="174"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="149"/>
 					<Anchor side="Bottom" relative="$parent" pos="Min" offset="80"/>
-					<Anchor side="Right" relative="$parent" pos="Min" offset="270"/>
+					<Anchor side="Right" relative="$parent" pos="Min" offset="233"/>
 					<ScoreValueLink val="SelfHealing"/>
 					<TeamId val="0"/>
 					<RenderPriority val="610"/>
@@ -4531,9 +4531,9 @@
 				</Frame>
 				<Frame type="TeamScoreValueFrame" name="FCJH_BlueTotal1">
 					<Anchor side="Top" relative="$parent" pos="Min" offset="53"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="331"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="269"/>
 					<Anchor side="Bottom" relative="$parent" pos="Min" offset="80"/>
-					<Anchor side="Right" relative="$parent" pos="Min" offset="427"/>
+					<Anchor side="Right" relative="$parent" pos="Min" offset="353"/>
 					<ScoreValueLink val="Healing"/>
 					<TeamId val="0"/>
 					<RenderPriority val="610"/>
@@ -4546,9 +4546,9 @@
 				</Frame>
 				<Frame type="TeamScoreValueFrame" name="FCJH_BlueTotal2">
 					<Anchor side="Top" relative="$parent" pos="Min" offset="53"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="488"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="389"/>
 					<Anchor side="Bottom" relative="$parent" pos="Min" offset="80"/>
-					<Anchor side="Right" relative="$parent" pos="Min" offset="584"/>
+					<Anchor side="Right" relative="$parent" pos="Min" offset="473"/>
 					<ScoreValueLink val="ProtectionGivenToAllies"/>
 					<TeamId val="0"/>
 					<RenderPriority val="610"/>
@@ -4583,9 +4583,9 @@
 				</Frame>
 				<Frame type="TeamScoreValueFrame" name="FCJH_RedTotal0">
 					<Anchor side="Top" relative="$parent" pos="Min" offset="348"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="174"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="149"/>
 					<Anchor side="Bottom" relative="$parent" pos="Min" offset="375"/>
-					<Anchor side="Right" relative="$parent" pos="Min" offset="270"/>
+					<Anchor side="Right" relative="$parent" pos="Min" offset="233"/>
 					<ScoreValueLink val="SelfHealing"/>
 					<TeamId val="1"/>
 					<RenderPriority val="610"/>
@@ -4598,9 +4598,9 @@
 				</Frame>
 				<Frame type="TeamScoreValueFrame" name="FCJH_RedTotal1">
 					<Anchor side="Top" relative="$parent" pos="Min" offset="348"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="331"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="269"/>
 					<Anchor side="Bottom" relative="$parent" pos="Min" offset="375"/>
-					<Anchor side="Right" relative="$parent" pos="Min" offset="427"/>
+					<Anchor side="Right" relative="$parent" pos="Min" offset="353"/>
 					<ScoreValueLink val="Healing"/>
 					<TeamId val="1"/>
 					<RenderPriority val="610"/>
@@ -4613,9 +4613,9 @@
 				</Frame>
 				<Frame type="TeamScoreValueFrame" name="FCJH_RedTotal2">
 					<Anchor side="Top" relative="$parent" pos="Min" offset="348"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="488"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="389"/>
 					<Anchor side="Bottom" relative="$parent" pos="Min" offset="375"/>
-					<Anchor side="Right" relative="$parent" pos="Min" offset="584"/>
+					<Anchor side="Right" relative="$parent" pos="Min" offset="473"/>
 					<ScoreValueLink val="ProtectionGivenToAllies"/>
 					<TeamId val="1"/>
 					<RenderPriority val="610"/>
@@ -4629,7 +4629,7 @@
 			</Frame>
 			<Frame type="Button" name="FCJH_Close" template="StandardTemplates/SmallPanelCloseButtonTemplate">
 				<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_CLOSE_T"/>
-				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_CLOSE_R"/>
+				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_STAT_PANE_CLOSE_R"/>
 				<Width val="#FCJH_INFO_PANE_CLOSE_W"/>
 				<Height val="#FCJH_INFO_PANE_CLOSE_H"/>
 				<RenderPriority val="650"/>
@@ -4651,13 +4651,13 @@
 				<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
 				<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_L"/>
 				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_B"/>
-				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
+				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_STAT_PANE_R"/>
 			</Frame>
 			<Frame type="Frame" name="FCJH_RowStripes">
 				<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
 				<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_L"/>
 				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_B"/>
-				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
+				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_STAT_PANE_R"/>
 				<RenderPriority val="450"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Image" name="FCJH_Stripe0">
@@ -4885,7 +4885,7 @@
 				<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
 				<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_L"/>
 				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_B"/>
-				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
+				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_STAT_PANE_R"/>
 				<Width val="0"/>
 				<Height val="0"/>
 				<Visible val="true"/>
@@ -4941,15 +4941,15 @@
 								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="174"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="149"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="270"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="233"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
 									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0">
 										<Visible val="true"/>
-										<ScoreValueLink val="SiegeDamage"/>
+										<ScoreValueLink val="MinionDamage"/>
 										<UseDashForZero val="false"/>
 										<Frame type="Label" name="Label"><Alpha val="0"/></Frame>
 										<Frame type="Label" name="FCJH_Value">
@@ -4989,9 +4989,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="331"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="269"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="427"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="353"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -5037,9 +5037,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="488"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="389"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="584"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="473"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -5111,15 +5111,15 @@
 								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="174"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="149"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="270"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="233"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
 									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0">
 										<Visible val="true"/>
-										<ScoreValueLink val="SiegeDamage"/>
+										<ScoreValueLink val="MinionDamage"/>
 										<UseDashForZero val="false"/>
 										<Frame type="Label" name="Label"><Alpha val="0"/></Frame>
 										<Frame type="Label" name="FCJH_Value">
@@ -5159,9 +5159,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="331"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="269"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="427"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="353"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -5207,9 +5207,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="488"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="389"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="584"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="473"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -5281,15 +5281,15 @@
 								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="174"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="149"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="270"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="233"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
 									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0">
 										<Visible val="true"/>
-										<ScoreValueLink val="SiegeDamage"/>
+										<ScoreValueLink val="MinionDamage"/>
 										<UseDashForZero val="false"/>
 										<Frame type="Label" name="Label"><Alpha val="0"/></Frame>
 										<Frame type="Label" name="FCJH_Value">
@@ -5329,9 +5329,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="331"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="269"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="427"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="353"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -5377,9 +5377,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="488"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="389"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="584"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="473"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -5451,15 +5451,15 @@
 								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="174"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="149"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="270"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="233"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
 									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0">
 										<Visible val="true"/>
-										<ScoreValueLink val="SiegeDamage"/>
+										<ScoreValueLink val="MinionDamage"/>
 										<UseDashForZero val="false"/>
 										<Frame type="Label" name="Label"><Alpha val="0"/></Frame>
 										<Frame type="Label" name="FCJH_Value">
@@ -5499,9 +5499,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="331"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="269"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="427"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="353"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -5547,9 +5547,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="488"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="389"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="584"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="473"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -5621,15 +5621,15 @@
 								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="174"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="149"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="270"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="233"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
 									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0">
 										<Visible val="true"/>
-										<ScoreValueLink val="SiegeDamage"/>
+										<ScoreValueLink val="MinionDamage"/>
 										<UseDashForZero val="false"/>
 										<Frame type="Label" name="Label"><Alpha val="0"/></Frame>
 										<Frame type="Label" name="FCJH_Value">
@@ -5669,9 +5669,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="331"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="269"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="427"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="353"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -5717,9 +5717,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="488"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="389"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="584"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="473"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -5791,15 +5791,15 @@
 								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="174"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="149"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="270"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="233"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
 									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0">
 										<Visible val="true"/>
-										<ScoreValueLink val="SiegeDamage"/>
+										<ScoreValueLink val="MinionDamage"/>
 										<UseDashForZero val="false"/>
 										<Frame type="Label" name="Label"><Alpha val="0"/></Frame>
 										<Frame type="Label" name="FCJH_Value">
@@ -5839,9 +5839,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="331"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="269"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="427"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="353"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -5887,9 +5887,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="488"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="389"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="584"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="473"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -5961,15 +5961,15 @@
 								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="174"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="149"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="270"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="233"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
 									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0">
 										<Visible val="true"/>
-										<ScoreValueLink val="SiegeDamage"/>
+										<ScoreValueLink val="MinionDamage"/>
 										<UseDashForZero val="false"/>
 										<Frame type="Label" name="Label"><Alpha val="0"/></Frame>
 										<Frame type="Label" name="FCJH_Value">
@@ -6009,9 +6009,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="331"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="269"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="427"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="353"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -6057,9 +6057,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="488"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="389"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="584"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="473"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -6131,15 +6131,15 @@
 								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="174"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="149"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="270"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="233"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
 									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0">
 										<Visible val="true"/>
-										<ScoreValueLink val="SiegeDamage"/>
+										<ScoreValueLink val="MinionDamage"/>
 										<UseDashForZero val="false"/>
 										<Frame type="Label" name="Label"><Alpha val="0"/></Frame>
 										<Frame type="Label" name="FCJH_Value">
@@ -6179,9 +6179,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="331"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="269"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="427"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="353"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -6227,9 +6227,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="488"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="389"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="584"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="473"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -6301,15 +6301,15 @@
 								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="174"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="149"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="270"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="233"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
 									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0">
 										<Visible val="true"/>
-										<ScoreValueLink val="SiegeDamage"/>
+										<ScoreValueLink val="MinionDamage"/>
 										<UseDashForZero val="false"/>
 										<Frame type="Label" name="Label"><Alpha val="0"/></Frame>
 										<Frame type="Label" name="FCJH_Value">
@@ -6349,9 +6349,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="331"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="269"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="427"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="353"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -6397,9 +6397,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="488"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="389"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="584"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="473"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -6471,15 +6471,15 @@
 								<Frame type="PlayerScoreValueFrame" name="DamageTakenScoreValueFrame"><Alpha val="0"/></Frame>
 								<Frame type="PlayerScoreValueFrame" name="SiegeDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="174"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="149"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="270"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="233"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
 									<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0">
 										<Visible val="true"/>
-										<ScoreValueLink val="SiegeDamage"/>
+										<ScoreValueLink val="MinionDamage"/>
 										<UseDashForZero val="false"/>
 										<Frame type="Label" name="Label"><Alpha val="0"/></Frame>
 										<Frame type="Label" name="FCJH_Value">
@@ -6519,9 +6519,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="HeroDamageScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="331"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="269"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="427"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="353"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -6567,9 +6567,9 @@
 								</Frame>
 								<Frame type="PlayerScoreValueFrame" name="ExperienceScoreValueFrame">
 									<Anchor side="Top"    relative="$parent" pos="Min" offset="12"/>
-									<Anchor side="Left"   relative="$parent" pos="Min" offset="488"/>
+									<Anchor side="Left"   relative="$parent" pos="Min" offset="389"/>
 									<Anchor side="Bottom" relative="$parent" pos="Max" offset="0"/>
-									<Anchor side="Right"  relative="$parent" pos="Min" offset="584"/>
+									<Anchor side="Right"  relative="$parent" pos="Min" offset="473"/>
 									<Width val="0"/>
 									<Visible val="true"/>
 									<Alpha val="255"/>
@@ -6621,7 +6621,7 @@
 				<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
 				<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_L"/>
 				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_B"/>
-				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
+				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_STAT_PANE_R"/>
 				<RenderPriority val="600"/>
 				<AcceptsMouse val="false"/>
 				<Frame type="Label" name="FCJH_Title">
@@ -6636,19 +6636,19 @@
 				</Frame>
 				<Frame type="Label" name="FCJH_Heading0">
 					<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
-					<Anchor side="Left"  relative="$parent" pos="Min" offset="174"/>
-					<Anchor side="Right" relative="$parent" pos="Min" offset="270"/>
+					<Anchor side="Left"  relative="$parent" pos="Min" offset="117"/>
+					<Anchor side="Right" relative="$parent" pos="Min" offset="233"/>
 					<Height val="#FCJH_INFO_PANE_HEADER_H"/>
 					<Style val="FCJH_StatHeading"/>
-					<Text val="@FCJH/Stats/Siege"/>
+					<Text val="@FCJH/Stats/MinionDamage"/>
 					<Options val="NoWrapping | ScaleToPreventTruncation"/>
 					<RenderPriority val="610"/>
 					<AcceptsMouse val="false"/>
 				</Frame>
 				<Frame type="Label" name="FCJH_Heading1">
 					<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
-					<Anchor side="Left"  relative="$parent" pos="Min" offset="331"/>
-					<Anchor side="Right" relative="$parent" pos="Min" offset="427"/>
+					<Anchor side="Left"  relative="$parent" pos="Min" offset="237"/>
+					<Anchor side="Right" relative="$parent" pos="Min" offset="353"/>
 					<Height val="#FCJH_INFO_PANE_HEADER_H"/>
 					<Style val="FCJH_StatHeading"/>
 					<Text val="@FCJH/Stats/Structures"/>
@@ -6658,8 +6658,8 @@
 				</Frame>
 				<Frame type="Label" name="FCJH_Heading2">
 					<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>
-					<Anchor side="Left"  relative="$parent" pos="Min" offset="488"/>
-					<Anchor side="Right" relative="$parent" pos="Min" offset="584"/>
+					<Anchor side="Left"  relative="$parent" pos="Min" offset="357"/>
+					<Anchor side="Right" relative="$parent" pos="Min" offset="473"/>
 					<Height val="#FCJH_INFO_PANE_HEADER_H"/>
 					<Style val="FCJH_StatHeading"/>
 					<Text val="@FCJH/Stats/XP"/>
@@ -6691,10 +6691,10 @@
 				</Frame>
 				<Frame type="TeamScoreValueFrame" name="FCJH_BlueTotal0">
 					<Anchor side="Top" relative="$parent" pos="Min" offset="53"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="174"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="149"/>
 					<Anchor side="Bottom" relative="$parent" pos="Min" offset="80"/>
-					<Anchor side="Right" relative="$parent" pos="Min" offset="270"/>
-					<ScoreValueLink val="SiegeDamage"/>
+					<Anchor side="Right" relative="$parent" pos="Min" offset="233"/>
+					<ScoreValueLink val="MinionDamage"/>
 					<TeamId val="0"/>
 					<RenderPriority val="610"/>
 					<AcceptsMouse val="false"/>
@@ -6706,9 +6706,9 @@
 				</Frame>
 				<Frame type="TeamScoreValueFrame" name="FCJH_BlueTotal1">
 					<Anchor side="Top" relative="$parent" pos="Min" offset="53"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="331"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="269"/>
 					<Anchor side="Bottom" relative="$parent" pos="Min" offset="80"/>
-					<Anchor side="Right" relative="$parent" pos="Min" offset="427"/>
+					<Anchor side="Right" relative="$parent" pos="Min" offset="353"/>
 					<ScoreValueLink val="StructureDamage"/>
 					<TeamId val="0"/>
 					<RenderPriority val="610"/>
@@ -6721,9 +6721,9 @@
 				</Frame>
 				<Frame type="TeamScoreValueFrame" name="FCJH_BlueTotal2">
 					<Anchor side="Top" relative="$parent" pos="Min" offset="53"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="488"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="389"/>
 					<Anchor side="Bottom" relative="$parent" pos="Min" offset="80"/>
-					<Anchor side="Right" relative="$parent" pos="Min" offset="584"/>
+					<Anchor side="Right" relative="$parent" pos="Min" offset="473"/>
 					<ScoreValueLink val="ExperienceContribution"/>
 					<TeamId val="0"/>
 					<RenderPriority val="610"/>
@@ -6758,10 +6758,10 @@
 				</Frame>
 				<Frame type="TeamScoreValueFrame" name="FCJH_RedTotal0">
 					<Anchor side="Top" relative="$parent" pos="Min" offset="348"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="174"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="149"/>
 					<Anchor side="Bottom" relative="$parent" pos="Min" offset="375"/>
-					<Anchor side="Right" relative="$parent" pos="Min" offset="270"/>
-					<ScoreValueLink val="SiegeDamage"/>
+					<Anchor side="Right" relative="$parent" pos="Min" offset="233"/>
+					<ScoreValueLink val="MinionDamage"/>
 					<TeamId val="1"/>
 					<RenderPriority val="610"/>
 					<AcceptsMouse val="false"/>
@@ -6773,9 +6773,9 @@
 				</Frame>
 				<Frame type="TeamScoreValueFrame" name="FCJH_RedTotal1">
 					<Anchor side="Top" relative="$parent" pos="Min" offset="348"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="331"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="269"/>
 					<Anchor side="Bottom" relative="$parent" pos="Min" offset="375"/>
-					<Anchor side="Right" relative="$parent" pos="Min" offset="427"/>
+					<Anchor side="Right" relative="$parent" pos="Min" offset="353"/>
 					<ScoreValueLink val="StructureDamage"/>
 					<TeamId val="1"/>
 					<RenderPriority val="610"/>
@@ -6788,9 +6788,9 @@
 				</Frame>
 				<Frame type="TeamScoreValueFrame" name="FCJH_RedTotal2">
 					<Anchor side="Top" relative="$parent" pos="Min" offset="348"/>
-					<Anchor side="Left" relative="$parent" pos="Min" offset="488"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="389"/>
 					<Anchor side="Bottom" relative="$parent" pos="Min" offset="375"/>
-					<Anchor side="Right" relative="$parent" pos="Min" offset="584"/>
+					<Anchor side="Right" relative="$parent" pos="Min" offset="473"/>
 					<ScoreValueLink val="ExperienceContribution"/>
 					<TeamId val="1"/>
 					<RenderPriority val="610"/>
@@ -6804,7 +6804,7 @@
 			</Frame>
 			<Frame type="Button" name="FCJH_Close" template="StandardTemplates/SmallPanelCloseButtonTemplate">
 				<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_CLOSE_T"/>
-				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_CLOSE_R"/>
+				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_STAT_PANE_CLOSE_R"/>
 				<Width val="#FCJH_INFO_PANE_CLOSE_W"/>
 				<Height val="#FCJH_INFO_PANE_CLOSE_H"/>
 				<RenderPriority val="650"/>
