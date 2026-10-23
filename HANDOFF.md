@@ -518,8 +518,8 @@ seperated out into their intents"):** Pages serves the OBS studio; Releases serv
 "Where each is published" table. **1.0.2 shipped 2026-10-23:** three-veins merged to `main` (PR #1, merge commit ea6f493),
 tag `v1.0.2`, the release built by CI (1,269,328 bytes, as the local `--release`; GitHub
 names the asset `FCJ.v1.0.2.StormInterface`, dots for spaces, as it did 1.0.1's). **Pages
-was still "Deploy from a branch"** - it served the README through Jekyll; to switch to
-"GitHub Actions" and re-run the Pages workflow (it has `workflow_dispatch`).
+was still "Deploy from a branch"** - it served the README through Jekyll; the user switched it to
+"GitHub Actions" and re-ran the Pages workflow (18:03 UTC): the site now serves the studio.
 
 **The three-vein reorganisation (2026-10-22), on `main` since 1.0.2 (2026-10-23); the
 studio's list below is still open.** The repo now holds three veins: the interface (`interface/`, was `src/`), the
@@ -549,7 +549,7 @@ draws, and the pips, bands and tabs land within 0.04 px of `topbar.json`. The so
 3. Test outputs: driven with names, a series score and the tabs' words; logos and bans still
    want the image library filling (no hero portraits anywhere yet).
 4. ~~See it in OBS~~ - the user tests in OBS at 1080p (2026-10-23).
-5. Switch Pages to "GitHub Actions" (Settings -> Pages) - still to do; the merge went first.
+5. ~~Switch Pages to "GitHub Actions"~~ - done 2026-10-23, after the merge.
 6. ~~Then merge~~ - merged 2026-10-23 (PR #1).
 
 *Known gaps:* nothing fills the studio's image library with hero portraits (90-odd) for the
