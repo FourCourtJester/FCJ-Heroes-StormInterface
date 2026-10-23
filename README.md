@@ -28,7 +28,7 @@ The `.StormInterface` file you load in Heroes, for watching replays and observin
    **[Releases](https://github.com/FourCourtJester/FCJ-Heroes-StormInterface/releases/latest)**.
 2. Put it in `Documents\Heroes of the Storm\Interfaces\`. Make the `Interfaces` folder if
    it isn't there.
-3. In Heroes, pick it from the interface drop-down in the game's options.
+3. In Heroes, pick it from the interface drop-down under **Settings → Observer**.
 4. Open a replay, or observe a game.
 
 It's laid out for **1920 × 1080**. Its labels come in every language Heroes ships.

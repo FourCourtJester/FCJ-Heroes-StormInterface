@@ -481,6 +481,10 @@ https://github.com/FourCourtJester/FCJ-Heroes-StormInterface (public; pushed in
 batches, when the user says; `.github/FUNDING.yml` for the Sponsor button: GitHub Sponsors
 and Ko-fi).
 
+**To confirm (user, tonight of 2026-10-23): the interface drop-down is under Settings ->
+Observer** ("I think") - README's install step 3 and docs/development.md say so; correct both
+if not.
+
 **For 1.0.3: explore Blizzard's XP Contribution numbers (user, 2026-10-23: "make a note to
 explore it for v1.0.3").** Player view's top-bar hover popup splits each team's XP by source:
 Heroes, Mercenaries, Minions, Passive, Structures, Total. The popup is
