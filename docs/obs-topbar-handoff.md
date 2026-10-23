@@ -57,7 +57,7 @@ D = 0.54 × 63.3, is 34.18.
 | Thing | Agreed design |
 |---|---|
 | Series score | No cell. Hexagon pips with no plate: pointy-top, r = 25.3 (80% of the band), 43.9 wide, 5 apart, centred at y 30.65. The first pip's edge is 14 px off the name plate's outer slant. They fill from the name outward. Best of 3 = 2 a side, best of 5 = 3, best of 7 = 4 (blue's fourth ends at ~245, clear of the kill feed and the replay panel at x 14–392). One hexagon, in full and empty states; OBS draws as many as the series needs (user, 2026-10-19: more than 3 is the operator's call). Blue's centres: 413.8, 364.9, 316.1, 267.2. |
-| Name plate | OBS's nine-slice (below). The box is fixed: blue left 440, width 374 (its top runs 440 → 779.8, the wing's end); red left 1106. The name is 24 px at most and shrinks to fit 12 px inside the slants. |
+| Name plate | OBS's nine-slice (below). The box is fixed: blue left 440, width 374 (its top runs 440 → 779.8, the wing's end); red left 1106. The name is 24 px at most and shrinks to fit the upright rectangle the slanted plate contains - the slant's run (34.18 px) in from each side, so a letter stops exactly where an edge starts leaning. It was "12 px inside the slants" until 2026-10-22, when the upright-rectangle rule replaced that clearance: the 12 was measured off the top edge in the first mock, before there was a rule, and adding it to the slant was double-counting. |
 | Team logo | Optional, inside the name plate's box: a fixed 109.5 px plate at the inner end. Its rim laps the name plate's to make one seam, at top x ≈ 707. The mark is 46 px. Without a logo, the name plate runs on to the wing. |
 | Level wings (interface) | 20 px shorter each. The level plates are 64 wide: blue `[820, 8, 64, 50]`, red `[1036, 8, 64, 50]` (done 2026-10-19; the wings end at 779.8 / 1140.2). |
 | Division / game count | A tab hung from the wing, y 63.3 → 100.3 (flush with the bans' bottom). Its outer side is the name/logo seam carried down the lean, so the slants line up; its inner side is 5 px off Blizzard's hexagon. The tab is OBS's art, as the rest of the band is since 2026-10-22 (stock fill, 2 px rim, no top edge - it was the interface's until then); its words are 14 px, centred at (825.2, 81.8) blue and (1091.6, 81.8) red. The tabs are generic information panels: what goes in them is the operator's call. |
@@ -85,7 +85,7 @@ the crops it saved (`bg_top.png`, `ban0–5.png`) now the screenshot is gone.
 | File | What it is |
 |---|---|
 | `topbar.json` | **Every number in this file, as data**: the band, colours, name plate boxes, logo plate, pip centres for each side (index 0 nearest the name), ban tile polygons (index 0 innermost), tab polygons and text centres, the event hexagon. The thing to build the OBS layer from. |
-| `namebar.css` | The name plate as a web component for a browser source. Its header comment has the markup: one `.fcjh-band` per team, a `.fcjh-name`, and a `.fcjh-logo` left out when there's no logo. |
+| *(no stylesheet)* | The name plate's CSS was generated here until 2026-10-22. **The generator emits pictures and numbers, nothing else** - `/studio` owns the whole broadcast package, so the rules live in `studio/src/sources/game.css`, hand-written, reading these numbers as custom properties. Its header has the markup it expects. |
 | `frame_blue.svg`, `frame_red.svg` | The name plate's frame, a nine-slice, 100 × 63.3: 40 px cap, 20 px stretch, 40 px cap. Only the rim (2.5 px in), the sheen (top half) and the team line (y 58.3–61.3, inset 3). |
 | `lattice_blue.svg`, `lattice_red.svg` | The hex lattice behind the plate, as the backplate's. |
 | `pip_blue.svg`, `pip_red.svg` | A won score pip: team colour, rim, a soft shadow and a highlight. 53.9 × 60.6 with a 5 px pad for the shadow, so the hexagon's centre is the SVG's centre. |
@@ -130,13 +130,18 @@ repo's `studio/` folder - the user's own framework, and the reason none of what 
 hand-rolled: an operator's board that runs in an OBS custom browser dock, one browser source
 per graphic, state shared by path name, no server. `studio/README.md` is its own start.
 
-- `studio/src/sources/TopBar.jsx` is the browser source: 1920 x 1080, over the game capture,
-  every piece placed from `src/generated/topbar.json`.
-- `studio/src/control/panels/` is the board: teams (name, logo), series (pips a side, each
-  team's wins), bans (three pickers a side) and the tournament (the two tabs' words, the logo).
-- `tools/obs.py` writes `studio/src/generated/` - `topbar.json`, the name plate's CSS and the
-  parts as SVG and PNG. Vite resolves the CSS's own `url()`s and hands the components hashed
-  URLs, so nothing in there knows where it is served from.
+- `studio/src/sources/Game.jsx` is the browser source (`#/source/game`): 1920 x 1080, over the
+  game capture, every piece placed from `src/generated/topbar.json`. Named for the scene, not
+  for the top bar, because anything else that belongs over a live match goes in it.
+- `studio/src/control/panels/` is the board: teams (each side's name, logo and games won, with
+  the series above them and Swap sides under), bans (three pickers a side), the tournament (the
+  two tabs' words, the logo), and options - the pieces not every broadcast uses. A toggle there
+  takes its whole graphic off rather than leaving an empty plate on air: no bans means no tiles,
+  not six empty slots.
+- `tools/obs.py` writes `studio/src/generated/` - `topbar.json` and the parts as SVG and PNG,
+  and **nothing else** (user, 2026-10-22: pictures and numbers only, `/studio` owns the rest).
+  `studio/src/sources/game.css` is hand-written and takes every measurement from `topbar.json`
+  as a custom property, so a number still has exactly one home.
 
 The framework's own components do most of the work, and each replaced something that had been
 hand-written the day before: `Variable fit` the name's shrink-to-fit, `Tally` the score pips

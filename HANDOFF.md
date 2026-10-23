@@ -34,9 +34,13 @@ pop-up). **There is no fight mode** (user, 2026-10-16: the spec has moved past i
 default view is the old fight-mode cluster, and the operator's toggles hide what needs hiding.
 The top bar and minimap always stay.
 
-**OBS draws data only, never art** (user, 2026-10-16): team names, logos, series score, the
-tournament's name, division and logo, and the game's bans, on plates the interface draws.
-Nothing on the bottom UI. Its places are `kind = "obs"` rects in `layout.toml` (§6, docs/obs.md).
+**OBS draws the data AND the plates under it** (user, 2026-10-22, superseding "data only,
+never art" of 2026-10-16): team names, logos, series score, the tournament's name, division
+and logo, and the game's bans. Nothing on the bottom UI. The interface keeps only the
+**places** - `kind = "obs"` rects in `layout.toml` (§6, docs/obs.md) - so with no OBS running
+the top bar is the level wings, Blizzard's hexagon and the clock, and nothing hangs off them
+empty. That is why the division and game tabs were built in game on 2026-10-22 and reverted
+the same day.
 
 **Status, 2026-10-18: Phase 2 (building the default view) is all but done** - every map passed, every hero seen, the polish phase under way (§7 item 7); the final pass, the art pass and OBS are left (§7). Phases 0
 (toolchain) and 1 (probing the unknowns) are done. Built, and confirmed in game unless noted:
@@ -90,14 +94,40 @@ panes. **The broadcast graphics are their own vein of this repo** (2026-10-22): 
 [Single Studio](https://github.com/FourCourtJester/Single-Studio) app - an operator's board in
 an OBS dock, a browser source per graphic - and `tools/obs.py` writes its parts and numbers
 into `studio/src/generated/` from the same `layout.toml` the interface comes from. The top
-bar's source and board are written; **nothing of it has been built or run yet** (no Node on
-this machine), let alone seen in OBS. The OBS band's **places** are in the build since
-2026-10-22 - layout.toml `[top_bar]`, every box derived by gen's `top_bar_geometry`, so the
-interface and the OBS layer can't drift apart - and **none of its art is ours to draw**: the
-name plates, the division and game tabs and the ban tiles all belong to the OBS layer, so the
-interface stays usable without it (user, 2026-10-22; the tabs were built in game that day and
-reverted the same day). docs/obs-topbar-handoff.md has the rule.
-§7 has the open list.
+OBS band's **places** are in the build since 2026-10-22 - layout.toml `[top_bar]`, every box
+derived by gen's `top_bar_geometry`, so the interface and the OBS layer can't drift apart.
+docs/obs-topbar-handoff.md has the rule.
+
+**The studio builds and runs (2026-10-23).** Node is installed; `npm run dev --prefix studio`
+serves the board and every graphic. It is on **Single Studio 0.13.0** (core and
+provider-supabase), which is additive on the control side - nothing of ours broke. Four
+browser sources now:
+
+| | |
+|---|---|
+| `#/source/game` | the top bar over a live match |
+| `#/source/standby` | between games: a drifting slideshow, the "coming up next" band, a countdown bug |
+| `#/source/webcams` | two camera frames, borders only |
+| `#/source/webcam-solo` | the same frame once, centred |
+
+The standby band and the webcam frames are rebuilt from the user's own 2018 NGS broadcast
+(`C:\FourCourtJester\Broadcasts\Heroes`) - its composition, this kit's language. The
+operator's board is five collapsible panels, folded on load.
+
+**`studio/README.md` is the detail** - every scene, every number, how a camera and its OBS
+mask go together, and what is still open. Read it before touching `studio/`. Two rules there
+that cost time to learn: `/studio` owns the whole broadcast package (`tools/obs.py` may write
+pictures and a numbers JSON and nothing else), and nothing in the webcam sources may animate,
+because OBS cannot move the cameras underneath them in step.
+
+**`docs/single-studio-reports.md`** is a running log of framework behaviour we had to work
+around, for filing upstream against Single Studio. Three entries so far, all measured.
+
+**Nothing since da0b1a9 is committed** - the standby screen, both webcam sources, the 0.13.0
+upgrade and the board changes are all uncommitted on `three-veins`. Nothing has been seen in
+OBS yet: every check so far has been in a browser at 1920x1080.
+
+§7 has the interface's open list; the broadcast half's is at the end of `studio/README.md`.
 
 ---
 
@@ -491,14 +521,21 @@ broadcast graphics (`studio/`, a Single Studio app) and the generator that write
 clean, validator 0 errors, 19 tests, `pack.py` built and deployed. `tools/obs.py` writes
 `studio/src/generated/` and `gen.py --check` fails if it is stale.
 
-*Written but never run:* the studio. `studio/src/sources/TopBar.jsx` and its four control
-panels, `.github/workflows/pages.yml`. **There is no Node on this machine**, so `npm install`
-and `npm run build` have never run and the React is unverified.
+*Built and run (2026-10-22, later the same day):* Node 24.22.1 went on, the studio installs
+and builds clean, and both halves were driven in a browser - the board writes, the graphic
+draws, and the pips, bands and tabs land within 0.04 px of `topbar.json`. The source is
+`studio/src/sources/Game.jsx` (`#/source/game`), named for the scene rather than the top bar.
+**Still not seen in OBS itself**, and `npm run dev` could not be checked here (see below).
 
 **To resume, before merging:**
-1. Install Node 22+, then `cd studio && npm install && npm run build` - the first real build.
-2. `npm run dev`, open the board, check the top bar source against `src/generated/guide.png`.
-3. Test outputs: the board driven with real team names, logos, a series score, bans.
+1. ~~Install Node, build it~~ - done. `npm run build` is clean; `npm run preview` serves it.
+2. **`npm run dev` is unverified**: in the agent's embedded browser it fails with "Failed to
+   fetch a worker script" (the SharedWorker that holds all state), so sources render nothing.
+   The production build on `npm run preview` is clean in the same browser, so it looks like a
+   dev-mode plus embedded-Chromium problem rather than the app - but it wants checking in real
+   Chrome before anyone trusts the dev loop.
+3. Test outputs: driven with names, a series score and the tabs' words; logos and bans still
+   want the image library filling (no hero portraits anywhere yet).
 4. See it in OBS - the board in a custom browser dock, the source over a game capture. Nothing
    has been in OBS at all.
 5. Switch Pages to "GitHub Actions" (Settings -> Pages) before the first push to `main`.

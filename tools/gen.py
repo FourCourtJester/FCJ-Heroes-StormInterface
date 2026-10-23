@@ -1109,8 +1109,15 @@ def top_bar_geometry(cfg):
     tb, bp = cfg["top_bar"], cfg["top_backplate"]
     geo = top_backplate_geometry(cfg)
     lean = HeroCell(cfg).lean
-    h, seam = tb["height"], tb["seam"]
-    end = geo["ends"][0]                        # the wing's outer end, along the top edge
+    h = tb["height"]
+    # the band sits [top_bar] `outward` px further out than its geometric place, each side away
+    # from the middle, so its inner end meets the level wing's chrome instead of running under
+    # it - the interface draws that chrome centred on the wing's edge, so half of it falls on
+    # the band's ground. Shifting the wing's end, the name's outer edge and the seam together
+    # moves the whole band and everything hung off it without changing a single width.
+    shift = tb.get("outward", 0)
+    seam = tb["seam"] - shift
+    end = geo["ends"][0] - shift                  # the wing's outer end, along the top edge
     mirror = lambda x: cfg["screen"]["width"] - x
     down = lambda x, y: x + lean * y            # a lean line's x, y px down the screen
 
@@ -1121,7 +1128,7 @@ def top_bar_geometry(cfg):
 
     out = {"height": h, "lean": lean, "slant": lean * h, "seam": seam, "ends": geo["ends"]}
     # the name plate, and the logo plate lapping its inner end so the two rims make one seam
-    for key, x in (("name", tb["name_left"]), ("logo", seam - bp["rim_width"])):
+    for key, x in (("name", tb["name_left"] - shift), ("logo", seam - bp["rim_width"])):
         w = end - x + lean * h
         out[key] = {"blue": (x, 0.0, w, h), "red": (mirror(x + w), 0.0, w, h)}
     # the score: hexagon pips, no plate, pointy-topped so a row packs side to side, filling
@@ -1129,7 +1136,7 @@ def top_bar_geometry(cfg):
     r = tb["pip_band"] * h / 2
     pw = r * 3 ** .5
     cy = h / 2 - 1                              # the band's middle, a px up: the names' line
-    edge = down(tb["name_left"], cy - r / 2)    # the name's outer slant, level with the pip's corner
+    edge = down(tb["name_left"] - shift, cy - r / 2)   # the name's outer slant, level with the pip's corner
     cx = [edge - tb["pip_off_name"] - pw / 2 - k * (pw + tb["pip_gap"]) for k in range(tb["pips"])]
     out["pip"] = {"r": r, "w": pw, "h": 2 * r}
     out["pips"] = {"blue": [(x, cy) for x in cx], "red": [(mirror(x), cy) for x in cx]}
@@ -4804,8 +4811,11 @@ def main():
     print("\n".join(f"{'wrote' if (SOURCE / rel).exists() else 'removed'} {rel.as_posix()}"
                     for rel in changed) or "generated files up to date")
     # the broadcast graphics (tools/obs.py): the same numbers, drawn for the studio
-    print("\n".join(f"wrote studio/src/generated/{rel.as_posix()}" for rel in obs.write(cfg))
-          or "studio/src/generated/ up to date")
+    # obs.py writes to two places now - src/generated for the page, public/masks for the
+    # files a broadcaster downloads - so say where each one actually went
+    print("\n".join("wrote " + (obs.OUT / rel).resolve().relative_to(REPO).as_posix()
+                    for rel in obs.write(cfg))
+          or "the studio's generated files are up to date")
     return 0
 
 

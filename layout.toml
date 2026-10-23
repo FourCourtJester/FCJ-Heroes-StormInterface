@@ -354,9 +354,94 @@ ban_tile = 32                # a tile, px across the band's top edge and px tall
 ban_pitch = 38               # between two tiles
 ban_drop = 5                 # the tiles' top, below the band
 ban_inset = 5                # the innermost tile, in from the seam carried down the lean
+outward = 1                  # the whole OBS band sits this far outside its geometric place,
+                             # each side away from the middle. The interface draws its chrome
+                             # CENTRED on the level wing's edge, so half of it (1.25 px) falls
+                             # outside the wing - on the band's ground. Without this the band's
+                             # inner end runs under that chrome (user, 2026-10-22: "nudge blue
+                             # left 1px and red right 1px"). Everything hung off the band moves
+                             # with it: the logo plate, the seam, the pips, the ban tiles and
+                             # the tabs' outer sides. The tabs' inner sides stay on the hexagon,
+                             # so the two tabs grow by this much instead of moving
 tab_clear = 5                # the division / game tabs' inner sides, off Blizzard's hexagon.
                              # They hang from the band to the ban tiles' bottom (y 100.3), and
                              # their outer sides are the seam carried down, so the slants line up
+
+# The standby screen's "coming up next" band: the browser source between games
+# (studio/src/sources/Standby.jsx). OBS-only, like [top_bar] - the interface draws none of it.
+# The composition is the old NGS board (C:\FourCourtJester\Broadcasts\Heroes,
+# apollo/scenes/scene-afk, 2018): two team containers meeting in the middle, a message board
+# behind them, a logo arm at each screen edge. Its places, this kit's language - our lean, rim,
+# lattice and team colours instead of its 45 degree chevrons and flat navy.
+[standby]
+band = 215                   # the whole assembly, up from the bottom edge of the screen
+team_w = 576                 # a team's container, and
+team_h = 130                 # ...its height. Both ends come to a point at HALF height - the
+                             # plates' lean, carried over from the game band - so the two lean
+                             # into each other across the middle
+team_inset = 331             # a container's outer end, in from its own side of the screen.
+                             # With the width, that leaves 106 px in the middle for the VS
+team_bottom = 34             # the container's bottom edge, up from the bottom of the screen
+team_cap = 44                # its nine-slice caps: wide enough to hold the point (lean *
+                             # team_h / 2 = 35.1 px) with room for the rim inside it
+plate_w = 686                # the message board behind them, carrying the line of text
+plate_h = 156                # ...pointed the same way, but in plain smoke: it recedes, and the
+plate_bottom = 59            # containers are the furniture (as the old board had it)
+plate_text = 37              # the message, cap height. It sits in the board's top edge, the
+                             # containers covering the rest
+arm_w = 576                  # a logo arm, flush to its own screen edge
+arm_h = 103
+arm_bottom = 53
+arm_over = 170               # how far an arm hangs off its own edge of the screen. The old
+                             # board did this (apollo .logos left:-170) and it is what leaves a
+                             # gap between the arm and the message board: butted up against it
+                             # the three read as one letterbox bar across the bottom
+arm_pad = 10                 # clear air between a logo and every edge of its arm - the
+                             # screen edge, the top and bottom, and the diagonal. The logo
+                             # takes whatever is left and is centred in it, rather than
+                             # being a fixed width that could touch (user, 2026-10-23)
+bug_w = 566                  # the countdown, hanging from the TOP edge of the screen, where
+bug_h = 59                   # the old broadcast's timer bug hung (apollo/scenes/bug-timer)
+smoke = 0.5                  # how black the message board and the arms are over the slideshow
+bug_smoke = 0.25             # the bug is lighter: it sits over the picture, not under the band
+
+# The webcam frames: a browser source of BORDERS, not of video (studio/src/sources/Webcams.jsx).
+# OBS puts each camera underneath and this draws the frame and the name over it, which is the
+# way round that lets a camera be moved and scaled without re-cutting any art (user, 2026-10-22).
+# The windows are cut at the plates' angle, so they are not rectangles and OBS cannot crop to
+# them on its own - tools/obs.py writes a mask per side for its Image Mask/Blend filter.
+#
+# They hang in the standby screen's free middle, between the countdown bug and the band, so the
+# two sources stack in OBS without either moving.
+[webcam]
+w = 848                      # a cam window. Grown by about the 40 px asked for (user,
+h = 477                      # 2026-10-23) and still exactly 16:9, which is what every camera
+                             # and capture card gives. 848 x 477 is the nearest exact pair
+                             # above 800 x 450; 832 x 468 is the nearest below. Both numbers
+                             # have to stay whole: the OBS mask is a PNG drawn at this size
+gap = 80                     # between the two windows
+chamfer = 0.25               # the cut corner, measured DOWN as a FRACTION of the window's
+                             # height; its width is the plates' lean over that run. A fraction
+                             # and not a length, so every window is the same SHAPE whatever
+                             # its size - which is what lets one mask serve them all, scaled
+                             # in OBS (user, 2026-10-23). The angle survives either way, both
+                             # boxes being 16:9, but only similar shapes survive a resize.
+                             # A full parallelogram would slant far enough to lose most of a
+                             # face, which is why this is a chamfer and not a lean
+rim = 4                      # the chrome line round a window. Thicker than the plates' 2.5,
+                             # because this one is read across a whole screen
+plate_h = 56                 # the name bar under a window: the band's message board at its
+plate_gap = 14               # own size - smoke, pointed ends, no chrome of its own
+plate_pad = 22               # the name and the handle, in from the bar's points
+plate_smoke = 0.8            # how black a name bar is. Darker than the standby band's 0.5,
+                             # and the two match on screen BECAUSE of it: the band sits at the
+                             # bottom, under the full weight of that screen's vignette, and
+                             # these sit mid-screen where it has barely begun. Same alpha
+                             # would read two different depths (user, 2026-10-23)
+solo_w = 1024                # the one-camera layout: a single window, centred, bigger because
+solo_h = 576                 # it has the screen to itself. 16:9 exactly, like the pair
+name = 30                    # the commentator's name, cap height
+social = 20                  # ...and their handle, under the same bar at the other end
 
 # Bars stacked on each hero row, placed by tools/gen.py from [hero_row] so they follow it.
 # Both are cut to the plates' slant: their ends continue the row's slanted outer edges.
