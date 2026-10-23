@@ -4314,22 +4314,22 @@ SCORE_COLUMNS = ["SoloKillScoreValueFrame", "AssistsScoreValueFrame", "DeathsSco
 # a TeamScoreValueFrame sums for the team band: the column's own. Not TeamTakedowns, which
 # Blizzard credits to the DEAD player's team (gamelib.galaxy, "TeamTakedowns" on
 # AlliedPlayerGroupOfPlayer(lv_deadPlayer)) - blue's band showed red's kills
-# (Screenshot2026-10-23 12_52_52). Blizzard's SiegeDamage is structures AND minions (its tooltip:
-# "dealt to enemy Structures and Minions"), so beside STRUCTURES the structures pane shows
-# MinionDamage - siege less structures (user, 2026-10-23).
+# (Screenshot2026-10-23 12_52_52). Siege is Blizzard's whole SiegeDamage, as Tab shows it: its
+# parts don't add up (MinionDamage misses mercs, summons and some heroes' abilities, and a
+# layout can't subtract), so no split (user, 2026-10-23: "Drop shielding, and the
+# minion/structure split"). No shielding: Blizzard reports ProtectionGivenToAllies only at
+# game over; shields count in Healing during the game.
 STAT_PANES = [
     ("kda", "KDA  ·  HERO DAMAGE", [
         ("SoloKillScoreValueFrame", "SoloKill", "KILLS", "count", "SoloKill"),
         ("DeathsScoreValueFrame", "Deaths", "DEATHS", "count", "Deaths"),
         ("AssistsScoreValueFrame", "Assists", "ASSISTS", "count", "Assists"),
         ("HeroDamageScoreValueFrame", "HeroDamage", "HERO DMG", "big", "HeroDamage")]),
-    ("healing", "HEALING  ·  SHIELDING", [
+    ("healing", "SELF HEALING  ·  HEALING", [
         ("DamageTakenScoreValueFrame", "SelfHealing", "SELF", "big", "SelfHealing"),
-        ("HealingScoreValueFrame", "Healing", "HEALING", "big", "Healing"),
-        ("SiegeDamageScoreValueFrame", "ProtectionGivenToAllies", "SHIELDING", "big", "ProtectionGivenToAllies")]),
-    ("structures", "STRUCTURES  ·  EXPERIENCE", [
-        ("SiegeDamageScoreValueFrame", "MinionDamage", "MINION DMG", "big", "MinionDamage"),
-        ("HeroDamageScoreValueFrame", "StructureDamage", "STRUCTURES", "big", "StructureDamage"),
+        ("HealingScoreValueFrame", "Healing", "HEALING", "big", "Healing")]),
+    ("siege", "SIEGE DAMAGE  ·  EXPERIENCE", [
+        ("SiegeDamageScoreValueFrame", "SiegeDamage", "SIEGE DMG", "big", "SiegeDamage"),
         ("ExperienceScoreValueFrame", "ExperienceContribution", "XP", "big", "ExperienceContribution")]),
 ]
 # Column widths, layout units (1 unit = 0.9 px at 1080p), measured off the build in game
@@ -4487,7 +4487,7 @@ def pane_chrome(title, placed, geometry, indent=3):
             f'{t}\t\t<Style val="ObsBar_MatchTimer"/>\n{t}\t\t<Text val="{words.ref(title)}"/>\n'
             f'{t}\t\t<RenderPriority val="610"/>\n{t}\t\t<AcceptsMouse val="false"/>\n{t}\t</Frame>\n')
     # a heading is right-aligned over its numbers, free to run left into the gap before them
-    # ("ASSISTS" and "STRUCTURES" are wider than their columns' numbers)
+    # ("ASSISTS" is wider than its column's numbers)
     lefts = [STAT_FIRST_COLUMN] + [x + w for _, _, _, x, w, _ in placed[:-1]]
     for i, ((_, _, text, x, w, _), left) in enumerate(zip(placed, lefts)):
         out += (f'{t}\t<Frame type="Label" name="FCJH_Heading{i}">\n'
@@ -4701,7 +4701,7 @@ def stat_pane(key, title, columns, geometry, stripes=None):
 def stat_panes_layout(cfg):
     geometry = stat_geometry(cfg)
     return XML_DECL + "<Desc>\n" + GENERATED + '''
-	<!-- Info panes: KDA, healing, structures (layout.toml [info_pane]). One box shared by all
+	<!-- Info panes: KDA, healing, siege (layout.toml [info_pane]). One box shared by all
 	     four info panes (talents' is FCJH_InfoPane); one hotkey each; all start hidden, and
 	     opening one closes the others. Each stats pane is our own copy of Blizzard's
 	     observer stats panel - the engine fills it, as it does our talents pane - with its

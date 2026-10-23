@@ -722,8 +722,14 @@ at load.
      Not ours: the healing bands read 1-2 under the rows' sum (Healing is a fixed-point score,
      the rows round each value). Dead live: **SHIELDING** - Blizzard reports
      ProtectionGivenToAllies only at game over (gamelib.galaxy EventBasedAwardsDataReport);
-     shields count in Healing during the game (Medivh's 6,569). Its replacement is the user's
-     call.
+     shields count in Healing during the game (Medivh's 6,569).
+     **Then dropped (user, 2026-10-23: "Drop shielding, and the minion/structure split, and
+     i'll re-evaluate"):** Ctrl+3 is SELF HEALING · HEALING, two columns; Ctrl+4 is SIEGE
+     DAMAGE · EXPERIENCE - Blizzard's whole SiegeDamage, Tab's number. The split can't be made
+     right: MinionDamage misses mercs, summons and some heroes' own siege (Johanna, Hanzo,
+     Gul'dan tag SiegeDamage only), a layout can't subtract, and an interface can't change
+     game data. The pane key is `siege` now (layout.toml [info_pane] hotkeys). The two-column panes keep the
+     shared width, so their gaps are wide - for the user to re-evaluate.
 3. **Screenshots of everything for posting**, then **the OBS overlay** to pair with the
    interface (docs/obs.md). Per-map shots: docs/maps.md. Show-off shots, with how to stage
    them, are marked **A show-off shot** in docs/blizzard-fixes.md's "Made" list (first:

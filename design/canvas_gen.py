@@ -414,13 +414,13 @@ DEMO = {   # stand-in numbers
     "kda": (["1", "1", "0", "13,660"], ["0", "0", "2", "13,572"],
             [["0", "0", "0", "1,532"], ["0", "0", "0", "2,252"], ["0", "0", "0", "6,130"], ["0", "1", "0", "2,787"], ["0", "0", "0", "959"],
              ["0", "0", "0", "2,117"], ["0", "0", "0", "3,767"], ["1", "0", "0", "2,789"], ["0", "0", "1", "1,913"], ["0", "0", "1", "2,986"]]),
-    "healing": (["6,402", "18,220", "4,915"], ["5,871", "16,004", "7,330"],
-                [["1,210", "0", "480"], ["2,004", "0", "0"], ["640", "18,220", "4,435"], ["1,988", "0", "0"], ["560", "0", "0"],
-                 ["1,002", "0", "2,210"], ["2,410", "16,004", "5,120"], ["980", "0", "0"], ["1,112", "0", "0"], ["367", "0", "0"]]),
-    "structures": (["41,230", "12,480", "18,904"], ["38,771", "9,960", "17,322"],
-                   [["6,120", "1,840", "3,410"], ["9,870", "3,210", "4,002"], ["4,410", "900", "3,115"], ["12,006", "4,480", "4,870"],
-                    ["8,824", "2,050", "3,507"], ["7,302", "1,010", "3,221"], ["10,580", "3,900", "3,788"], ["5,114", "1,200", "3,366"],
-                    ["9,640", "2,650", "3,519"], ["6,135", "1,200", "3,428"]]),
+    "healing": (["6,402", "18,220"], ["5,871", "16,004"],
+                [["1,210", "0"], ["2,004", "0"], ["640", "18,220"], ["1,988", "0"], ["560", "0"],
+                 ["1,002", "0"], ["2,410", "16,004"], ["980", "0"], ["1,112", "0"], ["367", "0"]]),
+    "siege": (["53,710", "18,904"], ["48,731", "17,322"],
+              [["7,960", "3,410"], ["13,080", "4,002"], ["5,310", "3,115"], ["16,486", "4,870"],
+               ["10,874", "3,507"], ["8,312", "3,221"], ["14,480", "3,788"], ["6,314", "3,366"],
+               ["12,290", "3,519"], ["7,335", "3,428"]]),
 }
 
 
@@ -641,7 +641,7 @@ def main_board():
     b.append(f'<div style="position: absolute; left: {PANE_X}px; top: {PANE_Y}px;">' + stats_pane("kda") + '</div>\n')
     ix, iy, iw, ih = R["inspect"]
     b.append(f'<div class="dem" style="left: {ix}px; top: {iy}px; width: {iw}px; height: {ih}px; background: transparent;"></div>\n')
-    b.append(f'<div class="chip s" style="left: {PANE_X + PANE_W + 12}px; top: {PANE_Y + 90}px; width: 270px;">Info pane · {PANE_W} × {PANE_H} · Ctrl+1 talents, 2 KDA, 3 healing, 4 structures (KDA shown)</div>\n')
+    b.append(f'<div class="chip s" style="left: {PANE_X + PANE_W + 12}px; top: {PANE_Y + 90}px; width: 270px;">Info pane · {PANE_W} × {PANE_H} · Ctrl+1 talents, 2 KDA, 3 healing, 4 siege (KDA shown)</div>\n')
     b.append(f'<div class="chip s" style="left: {ix + iw + 12}px; top: {iy + ih - 120}px; width: 300px; border: 1px solid #6FD3D3;">Teal: the inspect card, {iw} × {ih}, while a unit is selected (same left column; bottom at y {iy + ih})</div>\n')
     b.append(at("map_objectives", "dem", '<div class="t" style="font-size: 14px;">Map objectives · per map, at THE GAP (Maps board)</div>', CENTRE))
     mm = CFG["minimap"]
@@ -832,7 +832,7 @@ def panes_board():
                 f"At {PANE_X}, {PANE_Y}. One pane at a time, Ctrl+1-4; the X closes it. Stats panes from tools/gen.py (stat_geometry, place_columns); "
                 f"numbers are stand-ins. Build {STAMP}.", 2100)]
     panes = [("TALENTS · Ctrl+1", talents_pane()), ("KDA · Ctrl+2", stats_pane("kda")),
-             ("HEALING · Ctrl+3", stats_pane("healing")), ("STRUCTURES · Ctrl+4", stats_pane("structures"))]
+             ("HEALING · Ctrl+3", stats_pane("healing")), ("SIEGE · Ctrl+4", stats_pane("siege"))]
     for i, (label, html) in enumerate(panes):
         x = 48 + i * 542
         b.append(f'<div class="t" style="position: absolute; left: {x}px; top: 150px; font-size: 18px; color: #F2C94C;">{label}</div>\n')
@@ -1102,7 +1102,7 @@ def spec_board():
         ("Kill feed", "Blizzard's own, top-left", "game", "Not moved: its rows grow rightward, so multi-kills ran off a right-hand feed"),
         ("Replay controls", f"{R['replay'][0]}, {R['replay'][1]} · {xs('replay')}, top-right", "game", f"{key('replay')} slides them out, leaving a tab flush in the corner. Replays only"),
         ("Operator keys", " · ".join(key(k) for k, _ in TOGGLES), "game", "The replay box, chat, the inspect card, player names. None a Blizzard key (validate.py checks)"),
-        ("Info panes", f"{PANE_X}, {PANE_Y} · {PANE_W} × {PANE_H}", "game", "Ctrl+1-4: talents, KDA + hero dmg, healing, structures + XP. One at a time"),
+        ("Info panes", f"{PANE_X}, {PANE_Y} · {PANE_W} × {PANE_H}", "game", "Ctrl+1-4: talents, KDA + hero dmg, healing, siege + XP. One at a time"),
         ("Inspect card", f"{R['inspect'][0]}, {R['inspect'][1]} · {xs('inspect')}", "game", f"Shows when Blizzard's small inspector would. Anything not a hero gets a short card. {key('inspect')} slides it off left"),
         ("Blizzard's small inspector", "Parked off screen", "game", "Never shows; its visibility drives our card"),
         ("Player HUD", "Hidden", "game", "Ctrl+5 is Blizzard's observe-player key"),

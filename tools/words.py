@@ -29,18 +29,12 @@ HERO_DAMAGE = _row("Heldenschaden", "Hero Damage", "Daño a héroes", "Daño de 
                    "Danni a eroi", "영웅 피해", "Obrażenia", "Dano de Herói", "Урон по героям", "英雄伤害", "英雄傷害")
 SELF_HEALING = _row("Selbstheilung", "Self Healing", "Autosanación", "Autosanación", "Soins personnels",
                     "Cure su se stessi", "자신 치유", "Samoleczenie", "Autocura", "Оздоровление", "自我治疗", "治療自己")
-# the halves of Healing's "Healing/Shielding" (French has one word, "Soutien": its PublishName
-# Soins, and ProtectionGivenToAllies' Protections)
+# Healing's "Healing/Shielding", the first half (French has one word, "Soutien": its
+# PublishName Soins)
 HEALING = _row("Heilung", "Healing", "Curación", "Sanación", "Soins", "Cure", "치유", "Leczenie", "Cura",
                "Исцеление", "治疗量", "治療")
-SHIELDING = _row("Schilde", "Shielding", "Escudo", "Protección", "Protections", "Protezione", "방지", "Osłanianie",
-                 "Proteção", "Щиты", "护盾吸收量", "護盾")
-MINION_DAMAGE = _row("Dienerschaden", "Minion Damage", "Daño a esbirros", "Daño infligido a esbirros",
-                     "Dégâts aux serviteurs", "Danni ai servitori", "돌격병 피해", "Obrażenia stronników",
-                     "Dano de Tropa", "Урон по воинам", "小兵伤害", "小兵傷害")
-STRUCTURES = _row("Gebäudeschaden", "Structures", "Daño a estructuras", "Daño infligido a estructuras",
-                  "Dégâts aux bâtiments", "Danni alle strutture", "구조물 피해", "Obrażenia budowli",
-                  "Dano de Estrutura", "Урон по строениям", "建筑伤害", "建築傷害")
+SIEGE = _row("Diener- und Gebäudeschaden", "Siege Damage", "Daño de asedio", "Daño de asedio", "Dégâts de siège",
+             "Danni da assedio", "공성 피해", "Zniszczenia", "Dano de Cerco", "Осадный урон", "攻城伤害", "攻城傷害")
 EXPERIENCE = _row("Erfahrung", "Experience", "Experiencia", "Experiencia", "Expérience", "Esperienza", "경험치",
                   "Doświadczenie", "Experiência", "Опыт", "经验值", "經驗值")   # UI/ScoreScreen/TotalExperience
 # UI/HeroLeaderPanel/BlueTeam, RedTeam; Race/Name/Neut
@@ -78,8 +72,8 @@ WORDS = {
     # (UI/TeamColor02, 01; Blizzard's team names in Chinese and Korean, where the colour alone
     # isn't a team's name)
     "Stats/KdaTitle": _join({loc: "KDA" for loc in LOCALES}, _upper(HERO_DAMAGE)),
-    "Stats/HealingTitle": _join(_upper(HEALING), _upper(SHIELDING)),
-    "Stats/StructuresTitle": _join(_upper(STRUCTURES), _upper(EXPERIENCE)),
+    "Stats/HealingTitle": _join(_upper(SELF_HEALING), _upper(HEALING)),
+    "Stats/SiegeTitle": _join(_upper(SIEGE), _upper(EXPERIENCE)),
     "Stats/Kills": _upper(_row("Kills", "Kills", "Asesinatos", "Derribos", "tués", "Uccisioni", "처치", "Zabici",
                                "Abates", "Убийства", "击杀", "擊殺")),
     "Stats/Deaths": _upper(_row("Tode", "Deaths", "Muertes", "Muertes", "morts", "Morti", "죽음", "Zgony", "Mortes",
@@ -89,9 +83,7 @@ WORDS = {
     "Stats/HeroDamage": _upper(HERO_DAMAGE) | {"enUS": "HERO DMG"},
     "Stats/Self": _upper(SELF_HEALING) | {"enUS": "SELF"},
     "Stats/Healing": _upper(HEALING),
-    "Stats/Shielding": _upper(SHIELDING),
-    "Stats/MinionDamage": _upper(MINION_DAMAGE) | {"enUS": "MINION DMG"},
-    "Stats/Structures": _upper(STRUCTURES),
+    "Stats/Siege": _upper(SIEGE) | {"enUS": "SIEGE DMG"},
     # UI/PartyPanel/BonusExperience
     "Stats/XP": _row("EP", "XP", "EXP", "PE", "EXP", "PE", "XP", "PD", "EXP", "ОПЫТ", "XP", "經驗值"),
     "Stats/Blue": _row("BLAU", "BLUE", "AZUL", "AZUL", "BLEU", "BLU", "파랑팀", "NIEBIESKI", "AZUL", "СИНИЙ",
