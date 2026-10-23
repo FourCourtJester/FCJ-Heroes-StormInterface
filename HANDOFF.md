@@ -766,6 +766,10 @@ at load.
      texels tall and their rows wrap into each other - the top row's tip cut upright, a tail
      off the bottom row past the slant. The masks are now ours (gen.py `plate_bar_masks`):
      the plates' lean at 1440p size, as the Vikings', one per bar, team and narrow state.
+     **Round 3 (user, 13_44_48: "quite jagged... Only Vikings doenst have the jaggedness"):**
+     the Vikings' margin too - the health and resource bars' frames run PLATE_MARGIN (4) past
+     the slant at both ends, the masks padded clear to match (gen.py `padded_slant_mask`).
+     The fill's 0 and 100% move out with it, as the Vikings'.
 3. **Screenshots of everything for posting**, then **the OBS overlay** to pair with the
    interface (docs/obs.md). Per-map shots: docs/maps.md. Show-off shots, with how to stage
    them, are marked **A show-off shot** in docs/blizzard-fixes.md's "Made" list (first:

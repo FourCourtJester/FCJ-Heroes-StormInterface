@@ -1714,10 +1714,16 @@ def viking_span(c, team):
 # fall in the margin. (The fill's 0 and 100% move out with it: 10% reads ~7%.) 4, not 2: at 2,
 # moved in, the art's near-upright end cut a notch from Erik's top corner (user, 15_30_32, "a bite").
 VIKING_MARGIN = 4
+# The plates' own bars the same (plate_bar_masks): their masks' slants on the frames' edges
+# stepped in game, the Vikings' padded ones didn't (user, 2026-10-23, 13_44_48: "Only Vikings
+# doenst have the jaggedness").
+PLATE_MARGIN = VIKING_MARGIN
 
 
 @functools.cache
-def _viking_masks(team, w, h, size):
+def padded_slant_mask(team, w, h, size):
+    """A slant_texture mask for a bar w x h (units) whose frame runs VIKING_MARGIN past it at
+    both ends: the slant drawn inside, clear columns either side. (dds bytes, digest)"""
     tw, th = size
     pad = round(VIKING_MARGIN / (w + 2 * VIKING_MARGIN) * tw)
     inner = slant_texture(team, HeroCell.LEAN * h / w, "ffffff", size=(tw - 2 * pad, th))[128:]
@@ -1739,7 +1745,7 @@ def viking_masks(cfg):
         for narrow in (False, True):
             w = hr - hl - (round(NARROW_FULL * k) if narrow else 0)
             (l, r), = viking_bars(0, w, hb - ht)[0][:1]
-            data, digest = _viking_masks(team, r - l, hb - ht, bar_texture_size(cfg, r - l + 2 * VIKING_MARGIN, hb - ht))
+            data, digest = padded_slant_mask(team, r - l, hb - ht, bar_texture_size(cfg, r - l + 2 * VIKING_MARGIN, hb - ht))
             out[team, narrow] = (f"FCJH_VikingMask_{team}{'_narrow' if narrow else ''}_{digest}.dds", data)
     return out
 
@@ -1748,7 +1754,8 @@ def plate_bar_masks(cfg):
     (file, dds bytes). Ours at the plates' lean and 1440p size, not Blizzard's fill art: that is
     8 (4 for mana) texels tall, and the mask's rows wrap into each other - the top row's tip
     cut upright, a tail off the bottom row past the slant (user, 2026-10-23, 13_35_43: "mask
-    damage"). A mask spans its frame, so the narrowed bars need their own."""
+    damage"). A mask spans its frame, so the narrowed bars need their own; each frame runs
+    PLATE_MARGIN past its bar at both ends and its mask is padded to match, as the Vikings'."""
     c = HeroCell(cfg)
     k = cfg["hero_row"]["scale"]
     out = {}
@@ -1757,8 +1764,7 @@ def plate_bar_masks(cfg):
             l, t, r, b = c.team[team][bar]
             for narrow in (False, True):
                 w = r - l - (round((NARROW_FULL if bar == "health_full" else NARROW) * k) if narrow else 0)
-                data = slant_texture(team, HeroCell.LEAN * (b - t) / w, "ffffff", size=bar_texture_size(cfg, w, b - t))
-                digest = hashlib.sha1(data).hexdigest()[:8]
+                data, digest = padded_slant_mask(team, w, b - t, bar_texture_size(cfg, w + 2 * PLATE_MARGIN, b - t))
                 out[team, bar, narrow] = (f"FCJH_PlateMask_{team}_{bar}{'_narrow' if narrow else ''}_{digest}.dds", data)
     return out
 
@@ -2579,7 +2585,8 @@ def heroic_panel(cfg, team_frame, i):
         cut = (-s(NARROW_FULL) if blue else s(NARROW_FULL)) if full else cut_
         edge = lambda l, r, c_: (r if blue else l) + (c_ if narrow else 0)
         out = "".join(f'{t10}<Action type="SetAnchor" frame="{cell}/{f}" side="{side}" relative="{cell}" pos="Min" offset="{edge(l, r, c_)}"/>\n'
-                      for f, l, r, c_ in (("HeroStatus", hl, hr, cut), ("HeroStatus/FCJH_Resource", el, er, cut_)))
+                      for f, l, r, c_ in (("HeroStatus", hl, hr, cut),
+                                          ("HeroStatus/FCJH_Resource", el - PLATE_MARGIN, er + PLATE_MARGIN, cut_)))
         # the far side and the bottom differ for the tall bar, so every state sets them
         far = "Left" if blue else "Right"
         out += (f'{t10}<Action type="SetAnchor" frame="{cell}/HeroStatus" side="{far}" relative="{cell}" pos="Min" offset="{hl if blue else hr}"/>\n'
@@ -3410,11 +3417,12 @@ def hero_cell_template(team, c, cfg):
 				<AcceptsMouse val="false"/>
 			</Frame>"""
     hb, mb = g["health_backing"], g["mana_backing"]
+    margined = lambda rect: (rect[0] - PLATE_MARGIN, rect[1], rect[2] + PLATE_MARGIN, rect[3])
     size = '<Width val="0"/>\n\t\t\t\t<Height val="0"/>\n\t\t\t\t'
     health_backing = backing("FCJH_HealthBacking", "HUD_TopBar_Team_HeroFrame_HealthFrame", hb, size)
     mana_backing = backing("FCJH_ManaBacking", "HUD_TopBar_Team_HeroFrame_ManaFrame", mb, size)
     energy = f"""
-			<Frame type="UnitStatusEnergyBar" name="FCJH_Resource">{_anchors(g["energy"], cell, chr(9) * 4)}
+			<Frame type="UnitStatusEnergyBar" name="FCJH_Resource">{_anchors(margined(g["energy"]), cell, chr(9) * 4)}
 				<Width val="0"/>
 				<Height val="0"/>
 				<Texture val="{PLATE_FILL}"/>
@@ -3431,8 +3439,12 @@ def hero_cell_template(team, c, cfg):
 			<RenderPriority val="510"/>
 			<Frame type="Frame" name="ImageMaskFrame"><AlphaMaskSiblings val="false"/></Frame>
 			<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Left"   relative="$parent" pos="Min" offset="{-PLATE_MARGIN}"/>
+				<Anchor side="Right"  relative="$parent" pos="Max" offset="{PLATE_MARGIN}"/>
 				<Texture val="{PLATE_FILL}"/>
 				<AlphaMaskTexture val="{plate_mask(cfg, team, "health")}"/>{tiled_segments(chr(10) + chr(9) * 4)}
+				<Unclipped val="true"/>
 			</Frame>{trackers(team, g["health"], cfg)}{health_backing}{mana_backing}{energy}"""
     if blue:  # red inherits these unchanged
         cc_top, cc_bottom = c.cc_band
