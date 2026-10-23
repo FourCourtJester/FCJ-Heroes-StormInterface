@@ -496,6 +496,15 @@ ones in observer mode, and whether the observer UI builds `PartyFramePanel` at a
 Reuse Blizzard's popup if it can be reparented. The same sources reach score values
 (`ExperienceFromTakedowns` etc.) only at game end.
 
+**For 1.0.3 too: the inspect card on its team's side (a suggestion, user, 2026-10-23: "blue
+where it is now, red for a mirror across the way").** A blue hero's card stays at
+`[element.inspect]` (left column, above blue's row); a red hero's mirrors it on the right
+edge, above red's row. To work out: what signal moves it - the card's edge colour is already
+picked by team (blue, red, `neutral_colour`), so that same switch may be able to drive the
+anchors - and where a neutral unit's card goes (left, as now, unless told otherwise). Check the
+mirror against the replay box (top-right) and red's map alerts, which the replay box was
+once narrowed to clear; the `--check`/validate overlap checks should catch a collision.
+
 **The official release filename (user, 2026-10-21): `FCJ v<version>.StormInterface`**
 (pack.py's `RELEASE_NAME`, from 1.0.1; 1.0.0 shipped as `FCJH.StormInterface`), in Ahli's
 style (`AhliObs 0.75`; spaces load fine, Spazzo's is `SpazzoObsv40`). `--release --deploy`
