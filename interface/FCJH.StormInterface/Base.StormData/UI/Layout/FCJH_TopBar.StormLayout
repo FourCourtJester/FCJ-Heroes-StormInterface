@@ -155,6 +155,7 @@
 							<Frame type="UnitStatusVeterancyBar" name="XPBar">
 								<Texture val="#FCJH_XP_FILL_BLUE"/>
 								<AlphaMaskTexture val="#FCJH_XP_MASK_BLUE"/>  <!-- and on the bar itself (the sibling mask alone didn't cut it in game) -->
+								<Tiled val="false" index="0"/>  <!-- stretched, so the fill's bevel keeps the bar's height -->
 							</Frame>
 						</Frame>
 						<Frame type="TeamVeterancyUnitStatusFrame" name="Team2XPUnitStatusFrame">
@@ -176,13 +177,14 @@
 							<Frame type="UnitStatusVeterancyBar" name="XPBar">
 								<Texture val="#FCJH_XP_FILL_RED"/>
 								<AlphaMaskTexture val="#FCJH_XP_MASK_RED"/>  <!-- and on the bar itself (the sibling mask alone didn't cut it in game) -->
+								<Tiled val="false" index="0"/>  <!-- stretched, so the fill's bevel keeps the bar's height -->
 							</Frame>
 						</Frame>
 
 						<!-- Core health: blue anchors by its right edge, red by its left (Blizzard's
 						     own sides); the fixed 300 x 100 frame keeps its size. Blizzard's
 						     backing art off; our slanted track under the bar, the bar's
-						     fill swapped for plain team colour (untiled, untinted), all cut to the
+						     fill swapped for our team colour (untiled, untinted; bevelled, [bar_bevel]), all cut to the
 						     slant by FCJH_CoreMask. Its own chrome line round it on top
 						     (FCJH_CoreChrome, [team_core] frame_width), a child so it shows only
 						     when Blizzard shows the core. The track and the sibling mask sit in a

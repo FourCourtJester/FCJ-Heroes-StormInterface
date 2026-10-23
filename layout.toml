@@ -237,6 +237,17 @@ team_height = 24             # each team's band (name + team totals) above its f
 # opening one closes whichever is open. Ctrl+1-4 (user, 2026-10-05): Blizzard's own panes on
 # Ctrl+1 / Ctrl+2 have their keys taken away (FCJH_Hidden), as Ahli does.
 hotkeys = { talents = "Control+1", kda = "Control+2", healing = "Control+3", structures = "Control+4" }
+# The numbers panes' rows (KDA, healing, structures; user, 2026-10-23: "zebra rows, Heroes
+# palette"): a stripe behind every row in its team's tint, the two shades alternating, and a
+# thin line in the team colour under each, as Blizzard's score screen. The stripes butt
+# together, each row centred in its own. Colours are "alpha,r,g,b" over the pane's skin; the
+# talents pane keeps Blizzard's observer grid. Take the table out for no stripes.
+[info_pane.rows]
+blue = ["215,18,36,84", "215,30,56,124"]     # first row's shade, then the next's: opaque enough to read over a bright map
+red = ["215,46,10,44", "215,66,18,62"]
+blue_line = "190,58,96,184"
+red_line = "190,128,40,92"
+line = 2                     # units, along each stripe's bottom
 [element.centre_banners]
 rect = [640, 196, 640, 78]   # Blizzard's; untouched, may shift on y
 kind = "ui"
@@ -453,6 +464,19 @@ gap = 1                      # between the bar and the plates' top edge (tight: 
 colour = "9a6cff"            # the fill, both teams (hex RGB)
 track_colour = "0b0c14"      # the empty part
 track_alpha = 220
+
+# The XP and core bars' fills, bevelled as Blizzard's core bar (design/ref_default_core_hp.png;
+# gen.py bevel_texture): lit from above, a soft step at mid-height. Brightness is x the bar's
+# colour; lip and foot are texels at 1440p (1 texel ~ 0.75 px at 1080p). Take the table out
+# for flat fills.
+[bar_bevel]
+top = 1.00                   # brightness at the top (the colour itself: 3f8cff and ff4a5e are full in one channel)...
+bottom = 0.78                # ...falling to this at the bottom
+step = 0.06                  # and dropping this much more below mid-height: the bevel
+lip = 1                      # a light line along the top
+lip_white = 0.35             # its mix toward white
+foot = 1                     # a dark line along the bottom
+foot_dark = 0.45             # its brightness
 
 # A team's map alerts: stacked on its side of the minimap, on its plates' inner end (tools/maps.py).
 [map_alerts]

@@ -22,6 +22,234 @@
 				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_B"/>
 				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
 			</Frame>
+			<Frame type="Frame" name="FCJH_RowStripes">
+				<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
+				<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_L"/>
+				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_B"/>
+				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
+				<RenderPriority val="450"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Image" name="FCJH_Stripe0">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="80"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="132"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="215,18,36,84"/>
+					<RenderPriority val="1"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_StripeLine0">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="130"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="132"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="190,58,96,184"/>
+					<RenderPriority val="2"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Stripe1">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="132"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="184"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="215,30,56,124"/>
+					<RenderPriority val="1"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_StripeLine1">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="182"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="184"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="190,58,96,184"/>
+					<RenderPriority val="2"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Stripe2">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="184"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="236"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="215,18,36,84"/>
+					<RenderPriority val="1"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_StripeLine2">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="234"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="236"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="190,58,96,184"/>
+					<RenderPriority val="2"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Stripe3">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="236"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="288"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="215,30,56,124"/>
+					<RenderPriority val="1"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_StripeLine3">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="286"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="288"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="190,58,96,184"/>
+					<RenderPriority val="2"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Stripe4">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="288"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="340"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="215,18,36,84"/>
+					<RenderPriority val="1"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_StripeLine4">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="338"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="340"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="190,58,96,184"/>
+					<RenderPriority val="2"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Stripe5">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="375"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="427"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="215,46,10,44"/>
+					<RenderPriority val="1"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_StripeLine5">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="425"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="427"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="190,128,40,92"/>
+					<RenderPriority val="2"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Stripe6">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="427"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="479"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="215,66,18,62"/>
+					<RenderPriority val="1"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_StripeLine6">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="477"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="479"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="190,128,40,92"/>
+					<RenderPriority val="2"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Stripe7">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="479"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="531"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="215,46,10,44"/>
+					<RenderPriority val="1"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_StripeLine7">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="529"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="531"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="190,128,40,92"/>
+					<RenderPriority val="2"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Stripe8">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="531"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="583"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="215,66,18,62"/>
+					<RenderPriority val="1"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_StripeLine8">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="581"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="583"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="190,128,40,92"/>
+					<RenderPriority val="2"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Stripe9">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="583"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="635"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="215,46,10,44"/>
+					<RenderPriority val="1"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_StripeLine9">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="633"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="635"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="190,128,40,92"/>
+					<RenderPriority val="2"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+			</Frame>
 			<Frame type="HeroLeaderPanel" name="FCJH_Stats" template="StatsOverviewPanel/StatsOverviewPanelTemplate/StatsOverviewBottomPanel">
 				<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
 				<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_L"/>
@@ -2098,7 +2326,7 @@
 					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
 					<Texture val="@UI/PauseScreenDimImage"/>
 					<ColorAdjustMode val="Fill"/>
-					<AdjustmentColor val="200,120,20,32"/>
+					<AdjustmentColor val="200,112,22,64"/>
 					<RenderPriority val="602"/>
 					<AcceptsMouse val="false"/>
 				</Frame>
@@ -2199,6 +2427,234 @@
 				<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_L"/>
 				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_B"/>
 				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
+			</Frame>
+			<Frame type="Frame" name="FCJH_RowStripes">
+				<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
+				<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_L"/>
+				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_B"/>
+				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
+				<RenderPriority val="450"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Image" name="FCJH_Stripe0">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="80"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="132"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="215,18,36,84"/>
+					<RenderPriority val="1"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_StripeLine0">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="130"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="132"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="190,58,96,184"/>
+					<RenderPriority val="2"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Stripe1">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="132"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="184"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="215,30,56,124"/>
+					<RenderPriority val="1"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_StripeLine1">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="182"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="184"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="190,58,96,184"/>
+					<RenderPriority val="2"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Stripe2">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="184"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="236"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="215,18,36,84"/>
+					<RenderPriority val="1"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_StripeLine2">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="234"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="236"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="190,58,96,184"/>
+					<RenderPriority val="2"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Stripe3">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="236"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="288"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="215,30,56,124"/>
+					<RenderPriority val="1"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_StripeLine3">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="286"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="288"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="190,58,96,184"/>
+					<RenderPriority val="2"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Stripe4">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="288"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="340"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="215,18,36,84"/>
+					<RenderPriority val="1"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_StripeLine4">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="338"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="340"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="190,58,96,184"/>
+					<RenderPriority val="2"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Stripe5">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="375"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="427"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="215,46,10,44"/>
+					<RenderPriority val="1"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_StripeLine5">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="425"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="427"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="190,128,40,92"/>
+					<RenderPriority val="2"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Stripe6">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="427"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="479"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="215,66,18,62"/>
+					<RenderPriority val="1"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_StripeLine6">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="477"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="479"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="190,128,40,92"/>
+					<RenderPriority val="2"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Stripe7">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="479"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="531"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="215,46,10,44"/>
+					<RenderPriority val="1"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_StripeLine7">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="529"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="531"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="190,128,40,92"/>
+					<RenderPriority val="2"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Stripe8">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="531"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="583"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="215,66,18,62"/>
+					<RenderPriority val="1"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_StripeLine8">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="581"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="583"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="190,128,40,92"/>
+					<RenderPriority val="2"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Stripe9">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="583"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="635"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="215,46,10,44"/>
+					<RenderPriority val="1"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_StripeLine9">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="633"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="635"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="190,128,40,92"/>
+					<RenderPriority val="2"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
 			</Frame>
 			<Frame type="HeroLeaderPanel" name="FCJH_Stats" template="StatsOverviewPanel/StatsOverviewPanelTemplate/StatsOverviewBottomPanel">
 				<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
@@ -4040,7 +4496,7 @@
 					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
 					<Texture val="@UI/PauseScreenDimImage"/>
 					<ColorAdjustMode val="Fill"/>
-					<AdjustmentColor val="200,120,20,32"/>
+					<AdjustmentColor val="200,112,22,64"/>
 					<RenderPriority val="602"/>
 					<AcceptsMouse val="false"/>
 				</Frame>
@@ -4126,6 +4582,234 @@
 				<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_L"/>
 				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_B"/>
 				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
+			</Frame>
+			<Frame type="Frame" name="FCJH_RowStripes">
+				<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
+				<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_L"/>
+				<Anchor side="Bottom" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_B"/>
+				<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_R"/>
+				<RenderPriority val="450"/>
+				<AcceptsMouse val="false"/>
+				<Frame type="Image" name="FCJH_Stripe0">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="80"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="132"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="215,18,36,84"/>
+					<RenderPriority val="1"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_StripeLine0">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="130"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="132"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="190,58,96,184"/>
+					<RenderPriority val="2"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Stripe1">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="132"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="184"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="215,30,56,124"/>
+					<RenderPriority val="1"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_StripeLine1">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="182"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="184"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="190,58,96,184"/>
+					<RenderPriority val="2"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Stripe2">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="184"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="236"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="215,18,36,84"/>
+					<RenderPriority val="1"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_StripeLine2">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="234"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="236"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="190,58,96,184"/>
+					<RenderPriority val="2"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Stripe3">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="236"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="288"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="215,30,56,124"/>
+					<RenderPriority val="1"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_StripeLine3">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="286"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="288"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="190,58,96,184"/>
+					<RenderPriority val="2"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Stripe4">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="288"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="340"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="215,18,36,84"/>
+					<RenderPriority val="1"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_StripeLine4">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="338"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="340"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="190,58,96,184"/>
+					<RenderPriority val="2"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Stripe5">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="375"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="427"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="215,46,10,44"/>
+					<RenderPriority val="1"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_StripeLine5">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="425"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="427"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="190,128,40,92"/>
+					<RenderPriority val="2"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Stripe6">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="427"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="479"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="215,66,18,62"/>
+					<RenderPriority val="1"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_StripeLine6">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="477"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="479"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="190,128,40,92"/>
+					<RenderPriority val="2"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Stripe7">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="479"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="531"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="215,46,10,44"/>
+					<RenderPriority val="1"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_StripeLine7">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="529"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="531"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="190,128,40,92"/>
+					<RenderPriority val="2"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Stripe8">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="531"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="583"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="215,66,18,62"/>
+					<RenderPriority val="1"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_StripeLine8">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="581"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="583"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="190,128,40,92"/>
+					<RenderPriority val="2"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_Stripe9">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="583"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="635"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="215,46,10,44"/>
+					<RenderPriority val="1"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
+				<Frame type="Image" name="FCJH_StripeLine9">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="633"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
+					<Anchor side="Bottom" relative="$parent" pos="Min" offset="635"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
+					<Texture val="@UI/PauseScreenDimImage"/>
+					<ColorAdjustMode val="Fill"/>
+					<AdjustmentColor val="190,128,40,92"/>
+					<RenderPriority val="2"/>
+					<AcceptsMouse val="false"/>
+				</Frame>
 			</Frame>
 			<Frame type="HeroLeaderPanel" name="FCJH_Stats" template="StatsOverviewPanel/StatsOverviewPanelTemplate/StatsOverviewBottomPanel">
 				<Anchor side="Top" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_T"/>
@@ -5957,7 +6641,7 @@
 					<Anchor side="Right" relative="$parent" pos="Max" offset="#FCJH_INFO_PANE_BORDER_NEG"/>
 					<Texture val="@UI/PauseScreenDimImage"/>
 					<ColorAdjustMode val="Fill"/>
-					<AdjustmentColor val="200,120,20,32"/>
+					<AdjustmentColor val="200,112,22,64"/>
 					<RenderPriority val="602"/>
 					<AcceptsMouse val="false"/>
 				</Frame>

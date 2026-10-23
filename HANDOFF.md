@@ -679,6 +679,20 @@ at load.
    UI's core bars: `design/ref_default_core_hp.png`) and the info panes (zebra rows, Heroes
    palette; the numbers panes need a better visual - docs/history.md item 1). The canvas draws
    the build as it is (`design/canvas_gen.py`); the art pass designs over those boards.
+   **First pass built (2026-10-23), for the user to see in game:**
+   - **Bevels:** the XP and core fills are lit from above as Blizzard's core bar - a light lip,
+     a ramp down with a soft step at mid-height, a dark foot (gen.py `bevel_texture`,
+     layout.toml `[bar_bevel]`). The fills stretch only across, so the shade holds at any
+     value; the XP bar now says `Tiled false` too, as the core bar did.
+   - **The numbers panes' rows:** a stripe behind every row in its team's tint, two shades
+     alternating, a thin team-colour line under each - Blizzard's score screen
+     (`Screenshot2026-10-22 21_27_16`) - from layout.toml `[info_pane.rows]` (gen.py
+     `row_stripes`), opaque enough to read over a bright map. Red's team band moved from crimson
+     toward that screen's maroon; the numbers lightened to its tints (FontStyles `FCJH_StatValue_*`
+     9cbcf4 / eda4b8: full team colour read dark on dark, `Screenshot2026-10-23 12_24_59`). The
+     talents pane keeps Blizzard's observer grid. Not yet: the score screen's shaded column
+     groups (Blizzard's `BGSeparatorImage1-3`, which our rows hide), the
+     leaders' glow in place of our lit box.
 3. **Screenshots of everything for posting**, then **the OBS overlay** to pair with the
    interface (docs/obs.md). Per-map shots: docs/maps.md. Show-off shots, with how to stage
    them, are marked **A show-off shot** in docs/blizzard-fixes.md's "Made" list (first:

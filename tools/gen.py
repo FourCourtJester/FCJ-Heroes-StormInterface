@@ -1482,6 +1482,27 @@ def _row_frame_dds(pts, box, outset, inside, k, rim, seams=(), seam=0.0, rules=(
     return dds_bgra(w, h, b"".join(rows))
 
 
+def bevel_texture(colour, h, bevel, w=4):
+    """A bar's fill with Blizzard's bevel ([bar_bevel]; their core bar,
+    design/ref_default_core_hp.png): the colour lit from above - a light lip along the top,
+    a ramp down through a soft step at mid-height, a dark foot along the bottom. h is the
+    texture's height in texels (bar_texture_size); the fill is stretched only across (its
+    length follows the value), so a top-to-bottom shade survives at any value."""
+    r, g, b = bytes.fromhex(colour)
+    lip, foot = bevel["lip"], bevel["foot"]
+    rows = []
+    for ty in range(h):
+        down = (ty + 0.5) / h                                  # 0 at the top, 1 at the bottom
+        k = bevel["top"] + (bevel["bottom"] - bevel["top"]) * down - (bevel["step"] if down > 0.5 else 0)
+        c = [min(255.0, v * k) for v in (r, g, b)]
+        if ty < lip:                                           # the lip: toward white
+            c = [v + (255 - v) * bevel["lip_white"] for v in c]
+        if ty >= h - foot:                                     # the foot: toward black
+            c = [v * bevel["foot_dark"] for v in c]
+        rows.append(bytes((round(c[2]), round(c[1]), round(c[0]), 255)) * w)
+    return dds_bgra(w, h, b"".join(rows))
+
+
 def bar_texture_size(cfg, w, h):
     """A slanted bar texture at its size on a 1440p screen (w x h: layout.toml px; ART_HEIGHT).
     Our DDS files carry no mipmaps, so a texture drawn much smaller than it is gets sampled
@@ -1501,7 +1522,7 @@ def slant_bars(cfg):
     xp, core = cfg["team_xp"], cfg["team_core"]
     out = {}
     # The bars' fills are STRETCHED to the value (seen in game, 2026-09-29: a draining core's
-    # slanted ends squashed toward vertical), so a fill is a plain block of colour and the
+    # slanted ends squashed toward vertical), so a fill is upright (bevelled top to bottom) and the
     # slant comes from a mask over the bar (mask frames, AlphaMaskSiblings). Tracks don't
     # move, so they keep the slant in their own texture.
     for team in ("blue", "red"):
@@ -1509,7 +1530,9 @@ def slant_bars(cfg):
             (_, _, w, h), _ = rects_[f"{team}_{bar}"]
             cut = lean * h / w
             size = bar_texture_size(cfg, w, h)
-            for part, data in (("fill", slant_texture(team, 0, fill, size=(32, 32))),
+            fill_data = (bevel_texture(fill, size[1], cfg["bar_bevel"]) if cfg.get("bar_bevel")
+                         else slant_texture(team, 0, fill, size=(32, 32)))
+            for part, data in (("fill", fill_data),
                                ("track", slant_texture(team, cut, spec["track_colour"], spec["track_alpha"], size=size)),
                                ("mask", slant_texture(team, cut, "ffffff", size=size))):
                 digest = hashlib.sha1(data).hexdigest()[:8]
@@ -4321,7 +4344,7 @@ STAT_NO_UNDERLINE = {"DeathsScoreValueFrame"}
 # TeamScoreValueFrame TeamId: 0 blue, 1 red (Blizzard's top bar counts blue's kills as
 # TeamId 1's deaths). Team band colours, and the totals' styles, per team.
 TEAMS = [("blue", 0, "200,20,52,120", "FCJH_StatTeam_Blue", "FCJH_StatTotal_Blue"),
-         ("red", 1, "200,120,20,32", "FCJH_StatTeam_Red", "FCJH_StatTotal_Red")]
+         ("red", 1, "200,112,22,64", "FCJH_StatTeam_Red", "FCJH_StatTotal_Red")]   # toward the score screen's maroon (2026-10-23)
 
 
 def fill_image(name, anchors, colour, prio, indent, extra=""):
@@ -4546,7 +4569,32 @@ def stat_value(frame, score, team, indent):
             f'{t}</Frame>\n')
 
 
-def stat_pane(key, title, columns, geometry):
+def row_stripes(stripes, geometry, indent=3):
+    """The zebra under a numbers pane's rows ([info_pane.rows]): a stripe per row, border to
+    border, the team's two shades alternating, a line in the team colour along its bottom.
+    Each stripe is the row's pitch tall and starts at the row's top, so the stripes butt
+    together and the row's content (portrait 10-43, numbers 12-40 of its 52) sits centred.
+    Under the rows (RenderPriority 450; the rows are 500) and over the skin."""
+    if not stripes:
+        return ""
+    t = "\t" * indent
+    tops = geometry["row_tops"]
+    pitch = tops[1] - tops[0]
+    line = stripes.get("line", 0)
+    out = f'{t}<Frame type="Frame" name="FCJH_RowStripes">\n' + PANE(indent + 1) + \
+        f'{t}\t<RenderPriority val="450"/>\n{t}\t<AcceptsMouse val="false"/>\n'
+    for i, top in enumerate(tops):
+        team = "blue" if i < 5 else "red"
+        at = lambda y0, y1: box(("Min", str(y0)), ("Min", "#FCJH_INFO_PANE_BORDER"), ("Min", str(y1)),
+                                ("Max", "#FCJH_INFO_PANE_BORDER_NEG"))
+        out += fill_image(f"FCJH_Stripe{i}", at(top, top + pitch), stripes[team][i % 5 % 2], 1, indent + 1)
+        if line:
+            out += fill_image(f"FCJH_StripeLine{i}", at(top + pitch - line, top + pitch),
+                              stripes[f"{team}_line"], 2, indent + 1)
+    return out + f'{t}</Frame>\n'
+
+
+def stat_pane(key, title, columns, geometry, stripes=None):
     container = f"Pane_{key.capitalize()}"
     placed = place_columns(columns, geometry["columns"])
     used = {p[0] for p in placed}
@@ -4601,8 +4649,8 @@ def stat_pane(key, title, columns, geometry):
 			<Visible val="false"/>
 			<AcceptsMouse val="false"/>
 			<Frame type="Frame" name="FCJH_Skin" template="FCJH_Constants/FCJH_PaneSkin">
-''' + PANE(4) + f'''			</Frame>
-			<Frame type="HeroLeaderPanel" name="FCJH_Stats" template="StatsOverviewPanel/StatsOverviewPanelTemplate/StatsOverviewBottomPanel">
+''' + PANE(4) + '''			</Frame>
+''' + row_stripes(stripes, geometry) + f'''			<Frame type="HeroLeaderPanel" name="FCJH_Stats" template="StatsOverviewPanel/StatsOverviewPanelTemplate/StatsOverviewBottomPanel">
 {PANE(4)}				<Width val="0"/>
 				<Height val="0"/>
 				<Visible val="true"/>
@@ -4636,7 +4684,7 @@ def stat_panes_layout(cfg):
 	     down: title, column headings, blue band (team totals), blue rows, red band, red rows;
 	     every row portrait-first. Chrome drawn over the rows lets the mouse through. -->
 	<Frame type="GameUI" name="GameUI" file="GameUI">
-''' + "".join(stat_pane(*p, geometry) for p in STAT_PANES) + '''
+''' + "".join(stat_pane(*p, geometry, cfg["info_pane"].get("rows")) for p in STAT_PANES) + '''
 		<!-- The hotkeys, all four panes (talents included) -->
 ''' + "".join(pane_toggle(k, c) for k, c in INFO_PANES) + '''	</Frame>
 </Desc>
