@@ -1616,6 +1616,8 @@ def texture_files(cfg):
         out[TEXTURE_REL / file] = data
     for file, data in plate_bar_masks(cfg).values():
         out[TEXTURE_REL / file] = data
+    file, data = plate_fill_texture()
+    out[TEXTURE_REL / file] = data
     # blue's Dragon Knight health bar, cut to the mirrored lean (maps.knight_mask)
     out[TEXTURE_REL / maps.KNIGHT_MASK_FILE] = dds_bgra(*maps.KNIGHT_MASK)
     return out
@@ -1782,8 +1784,21 @@ def plate_mask(cfg, team, bar, narrow=False):
 # blizzard has some available bevels specifically for health and mana, lets do it"; revert to
 # 27500be if it looks bad). It is 11 rows, so it stretches (index 0 untiled) rather than tile,
 # and its shape is a mask (plate_bar_masks).
-#
-PLATE_FILL = "@UI/HealthBar"
+# Ours, from its rows (UI_HealthBar_Bar_01: every column alike), the ramp toned down: each row's
+# distance below white x PLATE_BEVEL, the lit top kept and the dark rows lifted (user,
+# 2026-10-23: "tone down the bevel by about 10%? It's too much of a stretch from the top to
+# bottom").
+BLIZZARD_HEALTHBAR_ROWS = (255, 245, 231, 214, 195, 177, 160, 147, 139, 141, 198)
+PLATE_BEVEL = 0.9
+
+
+def plate_fill_texture():
+    rows = [round(255 - PLATE_BEVEL * (255 - v)) for v in BLIZZARD_HEALTHBAR_ROWS]
+    data = dds_bgra(16, len(rows), b"".join(bytes((v, v, v, 255)) * 16 for v in rows))
+    return f"FCJH_PlateFill_{hashlib.sha1(data).hexdigest()[:8]}.dds", data
+
+
+PLATE_FILL = f"{TEXTURE_DIR}\\{plate_fill_texture()[0]}"
 
 
 def tiled_segments(indent=""):

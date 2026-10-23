@@ -749,7 +749,8 @@ at load.
      events, by the Style controller Blizzard's own label uses.
      **The numbers panes are DONE (user, 2026-10-23, 78644dc: "I think I can work with this.
      Let's mark these off the list then").**
-   - **Plate bevels - A TRY; IF IT LOOKS BAD, REVERT TO 27500be (user, 2026-10-23: "Make a
+   - **Plate bevels - mask work DONE (user, 2026-10-23, 3a7a84c: "Looks good. We'll mark
+     that as mask work"); revert point was 27500be (user, 2026-10-23: "Make a
      note that if it looks bad, we'll revert to this state, but yeah, if blizzard has some
      available bevels specifically for health and mana, lets do it").** Blizzard's top-bar
      fills carry next to no bevel (HealthFill: a 1-texel white lip top and bottom over a faint
@@ -770,6 +771,9 @@ at load.
      the Vikings' margin too - the health and resource bars' frames run PLATE_MARGIN (4) past
      the slant at both ends, the masks padded clear to match (gen.py `padded_slant_mask`).
      The fill's 0 and 100% move out with it, as the Vikings'.
+     **Then toned 10% (user: "too much of a stretch from the top to bottom"):** PLATE_FILL is
+     now ours, Blizzard's rows (`BLIZZARD_HEALTHBAR_ROWS`) with each row's distance below
+     white x `PLATE_BEVEL` 0.9 - the lit top kept, the darkest row 8b -> 97.
 3. **Screenshots of everything for posting**, then **the OBS overlay** to pair with the
    interface (docs/obs.md). Per-map shots: docs/maps.md. Show-off shots, with how to stage
    them, are marked **A show-off shot** in docs/blizzard-fixes.md's "Made" list (first:
