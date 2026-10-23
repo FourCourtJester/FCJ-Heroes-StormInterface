@@ -749,6 +749,19 @@ at load.
      events, by the Style controller Blizzard's own label uses.
      **The numbers panes are DONE (user, 2026-10-23, 78644dc: "I think I can work with this.
      Let's mark these off the list then").**
+   - **Plate bevels - A TRY; IF IT LOOKS BAD, REVERT TO 27500be (user, 2026-10-23: "Make a
+     note that if it looks bad, we'll revert to this state, but yeah, if blizzard has some
+     available bevels specifically for health and mana, lets do it").** Blizzard's top-bar
+     fills carry next to no bevel (HealthFill: a 1-texel white lip top and bottom over a faint
+     e1-f5 ramp; ManaFill: a 4-row db-f8 ramp). The one bevelled bar fill in the client is
+     `UI/HealthBar` (UI_HealthBar_Bar_01, 16 x 11 greyscale: ff at the top ramping to 8b, a
+     c6 foot; no Heroes layout uses it). No mana-specific bevel exists in what's extracted
+     (Probius's EnergyBar art isn't in references/CASCView), so the one fill serves both:
+     gen.py `PLATE_FILL` on the health bar, the resource bar, the Vikings and Misha, stretched
+     (`Tiled` false on index 0 - tiled, its 11 rows would cut off in the 8-tall bar and repeat
+     in the 14-tall one), with Blizzard's own fill variant (HealthFill{_Sm}{_Narrow}{_Right},
+     ManaFill{_Narrow}{_Right}) as its AlphaMaskTexture for the slanted ends. Expect the bars
+     a shade darker (the ramp averages ~0.75 against the old ~0.92).
 3. **Screenshots of everything for posting**, then **the OBS overlay** to pair with the
    interface (docs/obs.md). Per-map shots: docs/maps.md. Show-off shots, with how to stage
    them, are marked **A show-off shot** in docs/blizzard-fixes.md's "Made" list (first:
