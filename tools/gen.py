@@ -4523,8 +4523,13 @@ def stat_geometry(cfg):
     # as wide as the widest pane's columns at STAT_GAP apart, so switching panes keeps the box
     width = min(width, max(STAT_FIRST_COLUMN + sum(STAT_WIDTHS[c[3]] + STAT_GAP for c in columns) + STAT_MARGIN
                            for _, _, columns in STAT_PANES))
+    # the portrait fills its stripe from the top down to the accent line, as Tab's do (user,
+    # 2026-10-23: "Tab has taller portraits seperated out by their bottom accent lines"), at
+    # Blizzard's 100:56 picture uncropped (heroleaderpanel's HeroIconImage)
+    portrait_h = step - pane.get("rows", {}).get("line", 0)
+    portrait = (min(STAT_PORTRAIT_W, round(portrait_h * 100 / 56)), portrait_h)
     return {"title": title, "team_h": team_h, "team_tops": (blue_band, red_band), "row_tops": row_tops,
-            "width": width, "columns": (STAT_FIRST_COLUMN, width - STAT_MARGIN)}
+            "width": width, "columns": (STAT_FIRST_COLUMN, width - STAT_MARGIN), "portrait": portrait}
 
 
 def place_columns(columns, span):
@@ -4598,7 +4603,7 @@ def row_stripes(stripes, geometry, indent=3):
     """The zebra under a numbers pane's rows ([info_pane.rows]): a stripe per row, border to
     border, the team's two shades alternating, a line in the team colour along its bottom.
     Each stripe is the row's pitch tall and starts at the row's top, so the stripes butt
-    together and the row's content (portrait 10-43, numbers 12-40 of its 52) sits centred.
+    together and the row's numbers (12-40 of its 52) sit centred; the portrait fills it to the line.
     Under the rows (RenderPriority 450; the rows are 500) and over the skin."""
     if not stripes:
         return ""
@@ -4621,6 +4626,7 @@ def row_stripes(stripes, geometry, indent=3):
 
 def stat_pane(key, title, columns, geometry, stripes=None):
     container = f"Pane_{key.capitalize()}"
+    portrait_w, portrait_h = geometry["portrait"]
     placed = place_columns(columns, geometry["columns"])
     used = {p[0] for p in placed}
     rows = []
@@ -4649,12 +4655,19 @@ def stat_pane(key, title, columns, geometry, stripes=None):
 							<Anchor side="Right"  relative="$parent" pos="Min" offset="{STAT_ROW_W}"/>
 							<Width val="0"/>
 							<Height val="0"/>
-							<!-- every row portrait-first (Blizzard mirrors red): blue's hero icon spot -->
+							<!-- every row portrait-first (Blizzard mirrors red), the stripe's full height:
+							     Tab's picture, uncropped and faded on the right by Tab's mask -->
 							<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="10"/>
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="{STAT_MARGIN}"/>
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Width val="{portrait_w}"/>
+								<Height val="{portrait_h}"/>
+								<Frame type="Image" name="HeroIconImage">
+									<TextureCoords top="0" left="0" bottom="1" right="1"/>
+									<ImageMaskTexture val="@UI/Storm_UI_InGame_Leader_ScoreInset_PortraitFade"/>
+								</Frame>
 							</Frame>
 							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<!-- Blizzard's shaded boxes behind groups of columns -->

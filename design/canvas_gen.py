@@ -451,7 +451,7 @@ def stats_pane(key):
     for i, y in enumerate(g["row_tops"]):
         team = "blue" if i < 5 else "red"
         vp, vc = FONTS[f"FCJH_StatValue_{team.capitalize()}"]
-        out.append(portrait(u(gen.STAT_MARGIN), u(y + 10), team, f"{(i + 1) % 10}"))
+        out.append(portrait(u(gen.STAT_MARGIN), u(y), team, f"{(i + 1) % 10}", *map(u, g["portrait"])))
         for (_, _, _, x, w, _), v in zip(placed, rows[i]):
             out.append(f'<div style="{lbl} left: {u(x)}px; top: {u(y + 12)}px; width: {u(w)}px; height: {u(gen.STAT_ROW_H - 12)}px; '
                        f'font-size: {vp}px; font-weight: 600; color: {vc};">{v}</div>')

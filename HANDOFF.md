@@ -730,6 +730,11 @@ at load.
      Gul'dan tag SiegeDamage only), a layout can't subtract, and an interface can't change
      game data. The pane key is `siege` now (layout.toml [info_pane] hotkeys). The two-column panes keep the
      shared width, so their gaps are wide - for the user to re-evaluate.
+     **Portraits as tall as the stripe (user, 2026-10-23: "Tab has taller portraits seperated
+     out by their bottom accent lines"):** the numbers panes' portraits fill each stripe from
+     its top to the accent line (50 units, 89 wide at Blizzard's 100:56), uncropped, with
+     Tab's right-edge fade (Storm_UI_InGame_Leader_ScoreInset_PortraitFade). Was the talent
+     pane's 90 x 33 crop at row offset 10. Geometry: stat_geometry()["portrait"].
 3. **Screenshots of everything for posting**, then **the OBS overlay** to pair with the
    interface (docs/obs.md). Per-map shots: docs/maps.md. Show-off shots, with how to stage
    them, are marked **A show-off shot** in docs/blizzard-fixes.md's "Made" list (first:

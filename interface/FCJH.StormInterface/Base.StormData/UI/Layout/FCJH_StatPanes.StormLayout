@@ -290,12 +290,19 @@
 							<Anchor side="Right"  relative="$parent" pos="Min" offset="565"/>
 							<Width val="0"/>
 							<Height val="0"/>
-							<!-- every row portrait-first (Blizzard mirrors red): blue's hero icon spot -->
+							<!-- every row portrait-first (Blizzard mirrors red), the stripe's full height:
+							     Tab's picture, uncropped and faded on the right by Tab's mask -->
 							<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="10"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Width val="89"/>
+								<Height val="50"/>
+								<Frame type="Image" name="HeroIconImage">
+									<TextureCoords top="0" left="0" bottom="1" right="1"/>
+									<ImageMaskTexture val="@UI/Storm_UI_InGame_Leader_ScoreInset_PortraitFade"/>
+								</Frame>
 							</Frame>
 							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<!-- Blizzard's shaded boxes behind groups of columns -->
@@ -486,12 +493,19 @@
 							<Anchor side="Right"  relative="$parent" pos="Min" offset="565"/>
 							<Width val="0"/>
 							<Height val="0"/>
-							<!-- every row portrait-first (Blizzard mirrors red): blue's hero icon spot -->
+							<!-- every row portrait-first (Blizzard mirrors red), the stripe's full height:
+							     Tab's picture, uncropped and faded on the right by Tab's mask -->
 							<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="10"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Width val="89"/>
+								<Height val="50"/>
+								<Frame type="Image" name="HeroIconImage">
+									<TextureCoords top="0" left="0" bottom="1" right="1"/>
+									<ImageMaskTexture val="@UI/Storm_UI_InGame_Leader_ScoreInset_PortraitFade"/>
+								</Frame>
 							</Frame>
 							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<!-- Blizzard's shaded boxes behind groups of columns -->
@@ -682,12 +696,19 @@
 							<Anchor side="Right"  relative="$parent" pos="Min" offset="565"/>
 							<Width val="0"/>
 							<Height val="0"/>
-							<!-- every row portrait-first (Blizzard mirrors red): blue's hero icon spot -->
+							<!-- every row portrait-first (Blizzard mirrors red), the stripe's full height:
+							     Tab's picture, uncropped and faded on the right by Tab's mask -->
 							<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="10"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Width val="89"/>
+								<Height val="50"/>
+								<Frame type="Image" name="HeroIconImage">
+									<TextureCoords top="0" left="0" bottom="1" right="1"/>
+									<ImageMaskTexture val="@UI/Storm_UI_InGame_Leader_ScoreInset_PortraitFade"/>
+								</Frame>
 							</Frame>
 							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<!-- Blizzard's shaded boxes behind groups of columns -->
@@ -878,12 +899,19 @@
 							<Anchor side="Right"  relative="$parent" pos="Min" offset="565"/>
 							<Width val="0"/>
 							<Height val="0"/>
-							<!-- every row portrait-first (Blizzard mirrors red): blue's hero icon spot -->
+							<!-- every row portrait-first (Blizzard mirrors red), the stripe's full height:
+							     Tab's picture, uncropped and faded on the right by Tab's mask -->
 							<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="10"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Width val="89"/>
+								<Height val="50"/>
+								<Frame type="Image" name="HeroIconImage">
+									<TextureCoords top="0" left="0" bottom="1" right="1"/>
+									<ImageMaskTexture val="@UI/Storm_UI_InGame_Leader_ScoreInset_PortraitFade"/>
+								</Frame>
 							</Frame>
 							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<!-- Blizzard's shaded boxes behind groups of columns -->
@@ -1074,12 +1102,19 @@
 							<Anchor side="Right"  relative="$parent" pos="Min" offset="565"/>
 							<Width val="0"/>
 							<Height val="0"/>
-							<!-- every row portrait-first (Blizzard mirrors red): blue's hero icon spot -->
+							<!-- every row portrait-first (Blizzard mirrors red), the stripe's full height:
+							     Tab's picture, uncropped and faded on the right by Tab's mask -->
 							<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="10"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Width val="89"/>
+								<Height val="50"/>
+								<Frame type="Image" name="HeroIconImage">
+									<TextureCoords top="0" left="0" bottom="1" right="1"/>
+									<ImageMaskTexture val="@UI/Storm_UI_InGame_Leader_ScoreInset_PortraitFade"/>
+								</Frame>
 							</Frame>
 							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<!-- Blizzard's shaded boxes behind groups of columns -->
@@ -1270,12 +1305,19 @@
 							<Anchor side="Right"  relative="$parent" pos="Min" offset="565"/>
 							<Width val="0"/>
 							<Height val="0"/>
-							<!-- every row portrait-first (Blizzard mirrors red): blue's hero icon spot -->
+							<!-- every row portrait-first (Blizzard mirrors red), the stripe's full height:
+							     Tab's picture, uncropped and faded on the right by Tab's mask -->
 							<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="10"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Width val="89"/>
+								<Height val="50"/>
+								<Frame type="Image" name="HeroIconImage">
+									<TextureCoords top="0" left="0" bottom="1" right="1"/>
+									<ImageMaskTexture val="@UI/Storm_UI_InGame_Leader_ScoreInset_PortraitFade"/>
+								</Frame>
 							</Frame>
 							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<!-- Blizzard's shaded boxes behind groups of columns -->
@@ -1466,12 +1508,19 @@
 							<Anchor side="Right"  relative="$parent" pos="Min" offset="565"/>
 							<Width val="0"/>
 							<Height val="0"/>
-							<!-- every row portrait-first (Blizzard mirrors red): blue's hero icon spot -->
+							<!-- every row portrait-first (Blizzard mirrors red), the stripe's full height:
+							     Tab's picture, uncropped and faded on the right by Tab's mask -->
 							<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="10"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Width val="89"/>
+								<Height val="50"/>
+								<Frame type="Image" name="HeroIconImage">
+									<TextureCoords top="0" left="0" bottom="1" right="1"/>
+									<ImageMaskTexture val="@UI/Storm_UI_InGame_Leader_ScoreInset_PortraitFade"/>
+								</Frame>
 							</Frame>
 							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<!-- Blizzard's shaded boxes behind groups of columns -->
@@ -1662,12 +1711,19 @@
 							<Anchor side="Right"  relative="$parent" pos="Min" offset="565"/>
 							<Width val="0"/>
 							<Height val="0"/>
-							<!-- every row portrait-first (Blizzard mirrors red): blue's hero icon spot -->
+							<!-- every row portrait-first (Blizzard mirrors red), the stripe's full height:
+							     Tab's picture, uncropped and faded on the right by Tab's mask -->
 							<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="10"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Width val="89"/>
+								<Height val="50"/>
+								<Frame type="Image" name="HeroIconImage">
+									<TextureCoords top="0" left="0" bottom="1" right="1"/>
+									<ImageMaskTexture val="@UI/Storm_UI_InGame_Leader_ScoreInset_PortraitFade"/>
+								</Frame>
 							</Frame>
 							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<!-- Blizzard's shaded boxes behind groups of columns -->
@@ -1858,12 +1914,19 @@
 							<Anchor side="Right"  relative="$parent" pos="Min" offset="565"/>
 							<Width val="0"/>
 							<Height val="0"/>
-							<!-- every row portrait-first (Blizzard mirrors red): blue's hero icon spot -->
+							<!-- every row portrait-first (Blizzard mirrors red), the stripe's full height:
+							     Tab's picture, uncropped and faded on the right by Tab's mask -->
 							<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="10"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Width val="89"/>
+								<Height val="50"/>
+								<Frame type="Image" name="HeroIconImage">
+									<TextureCoords top="0" left="0" bottom="1" right="1"/>
+									<ImageMaskTexture val="@UI/Storm_UI_InGame_Leader_ScoreInset_PortraitFade"/>
+								</Frame>
 							</Frame>
 							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<!-- Blizzard's shaded boxes behind groups of columns -->
@@ -2054,12 +2117,19 @@
 							<Anchor side="Right"  relative="$parent" pos="Min" offset="565"/>
 							<Width val="0"/>
 							<Height val="0"/>
-							<!-- every row portrait-first (Blizzard mirrors red): blue's hero icon spot -->
+							<!-- every row portrait-first (Blizzard mirrors red), the stripe's full height:
+							     Tab's picture, uncropped and faded on the right by Tab's mask -->
 							<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="10"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Width val="89"/>
+								<Height val="50"/>
+								<Frame type="Image" name="HeroIconImage">
+									<TextureCoords top="0" left="0" bottom="1" right="1"/>
+									<ImageMaskTexture val="@UI/Storm_UI_InGame_Leader_ScoreInset_PortraitFade"/>
+								</Frame>
 							</Frame>
 							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<!-- Blizzard's shaded boxes behind groups of columns -->
@@ -2766,12 +2836,19 @@
 							<Anchor side="Right"  relative="$parent" pos="Min" offset="565"/>
 							<Width val="0"/>
 							<Height val="0"/>
-							<!-- every row portrait-first (Blizzard mirrors red): blue's hero icon spot -->
+							<!-- every row portrait-first (Blizzard mirrors red), the stripe's full height:
+							     Tab's picture, uncropped and faded on the right by Tab's mask -->
 							<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="10"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Width val="89"/>
+								<Height val="50"/>
+								<Frame type="Image" name="HeroIconImage">
+									<TextureCoords top="0" left="0" bottom="1" right="1"/>
+									<ImageMaskTexture val="@UI/Storm_UI_InGame_Leader_ScoreInset_PortraitFade"/>
+								</Frame>
 							</Frame>
 							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<!-- Blizzard's shaded boxes behind groups of columns -->
@@ -2892,12 +2969,19 @@
 							<Anchor side="Right"  relative="$parent" pos="Min" offset="565"/>
 							<Width val="0"/>
 							<Height val="0"/>
-							<!-- every row portrait-first (Blizzard mirrors red): blue's hero icon spot -->
+							<!-- every row portrait-first (Blizzard mirrors red), the stripe's full height:
+							     Tab's picture, uncropped and faded on the right by Tab's mask -->
 							<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="10"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Width val="89"/>
+								<Height val="50"/>
+								<Frame type="Image" name="HeroIconImage">
+									<TextureCoords top="0" left="0" bottom="1" right="1"/>
+									<ImageMaskTexture val="@UI/Storm_UI_InGame_Leader_ScoreInset_PortraitFade"/>
+								</Frame>
 							</Frame>
 							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<!-- Blizzard's shaded boxes behind groups of columns -->
@@ -3018,12 +3102,19 @@
 							<Anchor side="Right"  relative="$parent" pos="Min" offset="565"/>
 							<Width val="0"/>
 							<Height val="0"/>
-							<!-- every row portrait-first (Blizzard mirrors red): blue's hero icon spot -->
+							<!-- every row portrait-first (Blizzard mirrors red), the stripe's full height:
+							     Tab's picture, uncropped and faded on the right by Tab's mask -->
 							<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="10"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Width val="89"/>
+								<Height val="50"/>
+								<Frame type="Image" name="HeroIconImage">
+									<TextureCoords top="0" left="0" bottom="1" right="1"/>
+									<ImageMaskTexture val="@UI/Storm_UI_InGame_Leader_ScoreInset_PortraitFade"/>
+								</Frame>
 							</Frame>
 							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<!-- Blizzard's shaded boxes behind groups of columns -->
@@ -3144,12 +3235,19 @@
 							<Anchor side="Right"  relative="$parent" pos="Min" offset="565"/>
 							<Width val="0"/>
 							<Height val="0"/>
-							<!-- every row portrait-first (Blizzard mirrors red): blue's hero icon spot -->
+							<!-- every row portrait-first (Blizzard mirrors red), the stripe's full height:
+							     Tab's picture, uncropped and faded on the right by Tab's mask -->
 							<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="10"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Width val="89"/>
+								<Height val="50"/>
+								<Frame type="Image" name="HeroIconImage">
+									<TextureCoords top="0" left="0" bottom="1" right="1"/>
+									<ImageMaskTexture val="@UI/Storm_UI_InGame_Leader_ScoreInset_PortraitFade"/>
+								</Frame>
 							</Frame>
 							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<!-- Blizzard's shaded boxes behind groups of columns -->
@@ -3270,12 +3368,19 @@
 							<Anchor side="Right"  relative="$parent" pos="Min" offset="565"/>
 							<Width val="0"/>
 							<Height val="0"/>
-							<!-- every row portrait-first (Blizzard mirrors red): blue's hero icon spot -->
+							<!-- every row portrait-first (Blizzard mirrors red), the stripe's full height:
+							     Tab's picture, uncropped and faded on the right by Tab's mask -->
 							<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="10"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Width val="89"/>
+								<Height val="50"/>
+								<Frame type="Image" name="HeroIconImage">
+									<TextureCoords top="0" left="0" bottom="1" right="1"/>
+									<ImageMaskTexture val="@UI/Storm_UI_InGame_Leader_ScoreInset_PortraitFade"/>
+								</Frame>
 							</Frame>
 							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<!-- Blizzard's shaded boxes behind groups of columns -->
@@ -3396,12 +3501,19 @@
 							<Anchor side="Right"  relative="$parent" pos="Min" offset="565"/>
 							<Width val="0"/>
 							<Height val="0"/>
-							<!-- every row portrait-first (Blizzard mirrors red): blue's hero icon spot -->
+							<!-- every row portrait-first (Blizzard mirrors red), the stripe's full height:
+							     Tab's picture, uncropped and faded on the right by Tab's mask -->
 							<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="10"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Width val="89"/>
+								<Height val="50"/>
+								<Frame type="Image" name="HeroIconImage">
+									<TextureCoords top="0" left="0" bottom="1" right="1"/>
+									<ImageMaskTexture val="@UI/Storm_UI_InGame_Leader_ScoreInset_PortraitFade"/>
+								</Frame>
 							</Frame>
 							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<!-- Blizzard's shaded boxes behind groups of columns -->
@@ -3522,12 +3634,19 @@
 							<Anchor side="Right"  relative="$parent" pos="Min" offset="565"/>
 							<Width val="0"/>
 							<Height val="0"/>
-							<!-- every row portrait-first (Blizzard mirrors red): blue's hero icon spot -->
+							<!-- every row portrait-first (Blizzard mirrors red), the stripe's full height:
+							     Tab's picture, uncropped and faded on the right by Tab's mask -->
 							<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="10"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Width val="89"/>
+								<Height val="50"/>
+								<Frame type="Image" name="HeroIconImage">
+									<TextureCoords top="0" left="0" bottom="1" right="1"/>
+									<ImageMaskTexture val="@UI/Storm_UI_InGame_Leader_ScoreInset_PortraitFade"/>
+								</Frame>
 							</Frame>
 							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<!-- Blizzard's shaded boxes behind groups of columns -->
@@ -3648,12 +3767,19 @@
 							<Anchor side="Right"  relative="$parent" pos="Min" offset="565"/>
 							<Width val="0"/>
 							<Height val="0"/>
-							<!-- every row portrait-first (Blizzard mirrors red): blue's hero icon spot -->
+							<!-- every row portrait-first (Blizzard mirrors red), the stripe's full height:
+							     Tab's picture, uncropped and faded on the right by Tab's mask -->
 							<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="10"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Width val="89"/>
+								<Height val="50"/>
+								<Frame type="Image" name="HeroIconImage">
+									<TextureCoords top="0" left="0" bottom="1" right="1"/>
+									<ImageMaskTexture val="@UI/Storm_UI_InGame_Leader_ScoreInset_PortraitFade"/>
+								</Frame>
 							</Frame>
 							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<!-- Blizzard's shaded boxes behind groups of columns -->
@@ -3774,12 +3900,19 @@
 							<Anchor side="Right"  relative="$parent" pos="Min" offset="565"/>
 							<Width val="0"/>
 							<Height val="0"/>
-							<!-- every row portrait-first (Blizzard mirrors red): blue's hero icon spot -->
+							<!-- every row portrait-first (Blizzard mirrors red), the stripe's full height:
+							     Tab's picture, uncropped and faded on the right by Tab's mask -->
 							<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="10"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Width val="89"/>
+								<Height val="50"/>
+								<Frame type="Image" name="HeroIconImage">
+									<TextureCoords top="0" left="0" bottom="1" right="1"/>
+									<ImageMaskTexture val="@UI/Storm_UI_InGame_Leader_ScoreInset_PortraitFade"/>
+								</Frame>
 							</Frame>
 							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<!-- Blizzard's shaded boxes behind groups of columns -->
@@ -3900,12 +4033,19 @@
 							<Anchor side="Right"  relative="$parent" pos="Min" offset="565"/>
 							<Width val="0"/>
 							<Height val="0"/>
-							<!-- every row portrait-first (Blizzard mirrors red): blue's hero icon spot -->
+							<!-- every row portrait-first (Blizzard mirrors red), the stripe's full height:
+							     Tab's picture, uncropped and faded on the right by Tab's mask -->
 							<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="10"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Width val="89"/>
+								<Height val="50"/>
+								<Frame type="Image" name="HeroIconImage">
+									<TextureCoords top="0" left="0" bottom="1" right="1"/>
+									<ImageMaskTexture val="@UI/Storm_UI_InGame_Leader_ScoreInset_PortraitFade"/>
+								</Frame>
 							</Frame>
 							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<!-- Blizzard's shaded boxes behind groups of columns -->
@@ -4460,12 +4600,19 @@
 							<Anchor side="Right"  relative="$parent" pos="Min" offset="565"/>
 							<Width val="0"/>
 							<Height val="0"/>
-							<!-- every row portrait-first (Blizzard mirrors red): blue's hero icon spot -->
+							<!-- every row portrait-first (Blizzard mirrors red), the stripe's full height:
+							     Tab's picture, uncropped and faded on the right by Tab's mask -->
 							<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="10"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Width val="89"/>
+								<Height val="50"/>
+								<Frame type="Image" name="HeroIconImage">
+									<TextureCoords top="0" left="0" bottom="1" right="1"/>
+									<ImageMaskTexture val="@UI/Storm_UI_InGame_Leader_ScoreInset_PortraitFade"/>
+								</Frame>
 							</Frame>
 							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<!-- Blizzard's shaded boxes behind groups of columns -->
@@ -4585,12 +4732,19 @@
 							<Anchor side="Right"  relative="$parent" pos="Min" offset="565"/>
 							<Width val="0"/>
 							<Height val="0"/>
-							<!-- every row portrait-first (Blizzard mirrors red): blue's hero icon spot -->
+							<!-- every row portrait-first (Blizzard mirrors red), the stripe's full height:
+							     Tab's picture, uncropped and faded on the right by Tab's mask -->
 							<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="10"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Width val="89"/>
+								<Height val="50"/>
+								<Frame type="Image" name="HeroIconImage">
+									<TextureCoords top="0" left="0" bottom="1" right="1"/>
+									<ImageMaskTexture val="@UI/Storm_UI_InGame_Leader_ScoreInset_PortraitFade"/>
+								</Frame>
 							</Frame>
 							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<!-- Blizzard's shaded boxes behind groups of columns -->
@@ -4710,12 +4864,19 @@
 							<Anchor side="Right"  relative="$parent" pos="Min" offset="565"/>
 							<Width val="0"/>
 							<Height val="0"/>
-							<!-- every row portrait-first (Blizzard mirrors red): blue's hero icon spot -->
+							<!-- every row portrait-first (Blizzard mirrors red), the stripe's full height:
+							     Tab's picture, uncropped and faded on the right by Tab's mask -->
 							<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="10"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Width val="89"/>
+								<Height val="50"/>
+								<Frame type="Image" name="HeroIconImage">
+									<TextureCoords top="0" left="0" bottom="1" right="1"/>
+									<ImageMaskTexture val="@UI/Storm_UI_InGame_Leader_ScoreInset_PortraitFade"/>
+								</Frame>
 							</Frame>
 							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<!-- Blizzard's shaded boxes behind groups of columns -->
@@ -4835,12 +4996,19 @@
 							<Anchor side="Right"  relative="$parent" pos="Min" offset="565"/>
 							<Width val="0"/>
 							<Height val="0"/>
-							<!-- every row portrait-first (Blizzard mirrors red): blue's hero icon spot -->
+							<!-- every row portrait-first (Blizzard mirrors red), the stripe's full height:
+							     Tab's picture, uncropped and faded on the right by Tab's mask -->
 							<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="10"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Width val="89"/>
+								<Height val="50"/>
+								<Frame type="Image" name="HeroIconImage">
+									<TextureCoords top="0" left="0" bottom="1" right="1"/>
+									<ImageMaskTexture val="@UI/Storm_UI_InGame_Leader_ScoreInset_PortraitFade"/>
+								</Frame>
 							</Frame>
 							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<!-- Blizzard's shaded boxes behind groups of columns -->
@@ -4960,12 +5128,19 @@
 							<Anchor side="Right"  relative="$parent" pos="Min" offset="565"/>
 							<Width val="0"/>
 							<Height val="0"/>
-							<!-- every row portrait-first (Blizzard mirrors red): blue's hero icon spot -->
+							<!-- every row portrait-first (Blizzard mirrors red), the stripe's full height:
+							     Tab's picture, uncropped and faded on the right by Tab's mask -->
 							<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="10"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Width val="89"/>
+								<Height val="50"/>
+								<Frame type="Image" name="HeroIconImage">
+									<TextureCoords top="0" left="0" bottom="1" right="1"/>
+									<ImageMaskTexture val="@UI/Storm_UI_InGame_Leader_ScoreInset_PortraitFade"/>
+								</Frame>
 							</Frame>
 							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<!-- Blizzard's shaded boxes behind groups of columns -->
@@ -5085,12 +5260,19 @@
 							<Anchor side="Right"  relative="$parent" pos="Min" offset="565"/>
 							<Width val="0"/>
 							<Height val="0"/>
-							<!-- every row portrait-first (Blizzard mirrors red): blue's hero icon spot -->
+							<!-- every row portrait-first (Blizzard mirrors red), the stripe's full height:
+							     Tab's picture, uncropped and faded on the right by Tab's mask -->
 							<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="10"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Width val="89"/>
+								<Height val="50"/>
+								<Frame type="Image" name="HeroIconImage">
+									<TextureCoords top="0" left="0" bottom="1" right="1"/>
+									<ImageMaskTexture val="@UI/Storm_UI_InGame_Leader_ScoreInset_PortraitFade"/>
+								</Frame>
 							</Frame>
 							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<!-- Blizzard's shaded boxes behind groups of columns -->
@@ -5210,12 +5392,19 @@
 							<Anchor side="Right"  relative="$parent" pos="Min" offset="565"/>
 							<Width val="0"/>
 							<Height val="0"/>
-							<!-- every row portrait-first (Blizzard mirrors red): blue's hero icon spot -->
+							<!-- every row portrait-first (Blizzard mirrors red), the stripe's full height:
+							     Tab's picture, uncropped and faded on the right by Tab's mask -->
 							<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="10"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Width val="89"/>
+								<Height val="50"/>
+								<Frame type="Image" name="HeroIconImage">
+									<TextureCoords top="0" left="0" bottom="1" right="1"/>
+									<ImageMaskTexture val="@UI/Storm_UI_InGame_Leader_ScoreInset_PortraitFade"/>
+								</Frame>
 							</Frame>
 							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<!-- Blizzard's shaded boxes behind groups of columns -->
@@ -5335,12 +5524,19 @@
 							<Anchor side="Right"  relative="$parent" pos="Min" offset="565"/>
 							<Width val="0"/>
 							<Height val="0"/>
-							<!-- every row portrait-first (Blizzard mirrors red): blue's hero icon spot -->
+							<!-- every row portrait-first (Blizzard mirrors red), the stripe's full height:
+							     Tab's picture, uncropped and faded on the right by Tab's mask -->
 							<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="10"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Width val="89"/>
+								<Height val="50"/>
+								<Frame type="Image" name="HeroIconImage">
+									<TextureCoords top="0" left="0" bottom="1" right="1"/>
+									<ImageMaskTexture val="@UI/Storm_UI_InGame_Leader_ScoreInset_PortraitFade"/>
+								</Frame>
 							</Frame>
 							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<!-- Blizzard's shaded boxes behind groups of columns -->
@@ -5460,12 +5656,19 @@
 							<Anchor side="Right"  relative="$parent" pos="Min" offset="565"/>
 							<Width val="0"/>
 							<Height val="0"/>
-							<!-- every row portrait-first (Blizzard mirrors red): blue's hero icon spot -->
+							<!-- every row portrait-first (Blizzard mirrors red), the stripe's full height:
+							     Tab's picture, uncropped and faded on the right by Tab's mask -->
 							<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="10"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Width val="89"/>
+								<Height val="50"/>
+								<Frame type="Image" name="HeroIconImage">
+									<TextureCoords top="0" left="0" bottom="1" right="1"/>
+									<ImageMaskTexture val="@UI/Storm_UI_InGame_Leader_ScoreInset_PortraitFade"/>
+								</Frame>
 							</Frame>
 							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<!-- Blizzard's shaded boxes behind groups of columns -->
@@ -5585,12 +5788,19 @@
 							<Anchor side="Right"  relative="$parent" pos="Min" offset="565"/>
 							<Width val="0"/>
 							<Height val="0"/>
-							<!-- every row portrait-first (Blizzard mirrors red): blue's hero icon spot -->
+							<!-- every row portrait-first (Blizzard mirrors red), the stripe's full height:
+							     Tab's picture, uncropped and faded on the right by Tab's mask -->
 							<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="10"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 								<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Width val="89"/>
+								<Height val="50"/>
+								<Frame type="Image" name="HeroIconImage">
+									<TextureCoords top="0" left="0" bottom="1" right="1"/>
+									<ImageMaskTexture val="@UI/Storm_UI_InGame_Leader_ScoreInset_PortraitFade"/>
+								</Frame>
 							</Frame>
 							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<!-- Blizzard's shaded boxes behind groups of columns -->
