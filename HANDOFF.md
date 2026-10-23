@@ -762,6 +762,10 @@ at load.
      in the 14-tall one), with Blizzard's own fill variant (HealthFill{_Sm}{_Narrow}{_Right},
      ManaFill{_Narrow}{_Right}) as its AlphaMaskTexture for the slanted ends. Expect the bars
      a shade darker (the ramp averages ~0.75 against the old ~0.92).
+     **Round 2 (user, 13_35_43: "mask damage"):** Blizzard's fills as masks are 8 (mana 4)
+     texels tall and their rows wrap into each other - the top row's tip cut upright, a tail
+     off the bottom row past the slant. The masks are now ours (gen.py `plate_bar_masks`):
+     the plates' lean at 1440p size, as the Vikings', one per bar, team and narrow state.
 3. **Screenshots of everything for posting**, then **the OBS overlay** to pair with the
    interface (docs/obs.md). Per-map shots: docs/maps.md. Show-off shots, with how to stage
    them, are marked **A show-off shot** in docs/blizzard-fixes.md's "Made" list (first:

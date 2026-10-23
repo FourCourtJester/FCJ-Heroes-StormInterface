@@ -1614,6 +1614,8 @@ def texture_files(cfg):
         out[TEXTURE_REL / file] = data
     for file, data in viking_masks(cfg).values():
         out[TEXTURE_REL / file] = data
+    for file, data in plate_bar_masks(cfg).values():
+        out[TEXTURE_REL / file] = data
     # blue's Dragon Knight health bar, cut to the mirrored lean (maps.knight_mask)
     out[TEXTURE_REL / maps.KNIGHT_MASK_FILE] = dds_bgra(*maps.KNIGHT_MASK)
     return out
@@ -1741,6 +1743,30 @@ def viking_masks(cfg):
             out[team, narrow] = (f"FCJH_VikingMask_{team}{'_narrow' if narrow else ''}_{digest}.dds", data)
     return out
 
+def plate_bar_masks(cfg):
+    """PLATE_FILL's masks, by (team, bar, narrow), bar "health" / "health_full" / "energy":
+    (file, dds bytes). Ours at the plates' lean and 1440p size, not Blizzard's fill art: that is
+    8 (4 for mana) texels tall, and the mask's rows wrap into each other - the top row's tip
+    cut upright, a tail off the bottom row past the slant (user, 2026-10-23, 13_35_43: "mask
+    damage"). A mask spans its frame, so the narrowed bars need their own."""
+    c = HeroCell(cfg)
+    k = cfg["hero_row"]["scale"]
+    out = {}
+    for team in ("blue", "red"):
+        for bar in ("health", "health_full", "energy"):
+            l, t, r, b = c.team[team][bar]
+            for narrow in (False, True):
+                w = r - l - (round((NARROW_FULL if bar == "health_full" else NARROW) * k) if narrow else 0)
+                data = slant_texture(team, HeroCell.LEAN * (b - t) / w, "ffffff", size=bar_texture_size(cfg, w, b - t))
+                digest = hashlib.sha1(data).hexdigest()[:8]
+                out[team, bar, narrow] = (f"FCJH_PlateMask_{team}_{bar}{'_narrow' if narrow else ''}_{digest}.dds", data)
+    return out
+
+
+def plate_mask(cfg, team, bar, narrow=False):
+    return f"{TEXTURE_DIR}\\{plate_bar_masks(cfg)[team, bar, narrow][0]}"
+
+
 # Every segment of the plates' health bars tiled, as the health is (Blizzard's party frame tiles
 # its 0-2). Untiled, the shield (index 2) squeezed the whole fill art into itself: Fenix's white
 # came out with both the art's slanted ends, at half the slant, and ran past the bar's end
@@ -1748,7 +1774,9 @@ def viking_masks(cfg):
 # The plates' fills: Blizzard's bevelled UI/HealthBar (lit top, dark ramp, lit foot), tinted
 # as before, with the shape of Blizzard's own top-bar fill as its mask (user, 2026-10-23: "if
 # blizzard has some available bevels specifically for health and mana, lets do it"; revert to
-# 27500be if it looks bad). It is 11 rows, so it stretches (index 0 untiled) rather than tile.
+# 27500be if it looks bad). It is 11 rows, so it stretches (index 0 untiled) rather than tile,
+# and its shape is a mask (plate_bar_masks).
+#
 PLATE_FILL = "@UI/HealthBar"
 
 
@@ -1835,7 +1863,7 @@ def vehicle_words():
         for i, (key, word, _) in enumerate(VEHICLE_WORDS))
 
 
-def trackers(team, health):
+def trackers(team, health, cfg):
     """Blizzard's extra health bars inside HeroStatus, refitted to our bar (their templates
     assume the stock 134 x 6 box): Misha under Rexxar's bar (Blizzard halves his bar when she
     is up), and the three Vikings side by side, a third of the bar each (Blizzard hides the
@@ -1843,7 +1871,7 @@ def trackers(team, health):
     suffix = "" if team == "blue" else "_Right"
     bars_, _ = viking_bars(health[0], health[2], health[3] - health[1])
     bar =(f'<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">'
-           f'<Texture val="{PLATE_FILL}"/><AlphaMaskTexture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm{suffix}"/>'
+           f'<Texture val="{PLATE_FILL}"/><AlphaMaskTexture val="{plate_mask(cfg, team, "health")}"/>'
            f'{tiled_segments()}</Frame>')
     # Each Viking also gets its own click target (select that Viking, centre the camera), over
     # its third of the plate at full height, above the plate's own (600). Round 1 hung it off
@@ -2558,12 +2586,11 @@ def heroic_panel(cfg, team_frame, i):
                 f'{t10}<Action type="SetAnchor" frame="{cell}/HeroStatus" side="Bottom" relative="{cell}" pos="Min" offset="{hb}"/>\n')
         for f in ("FCJH_Resource", "FCJH_ManaBacking"):
             out += f'{t10}<Action type="SetProperty" frame="{cell}/HeroStatus/{f}" Alpha="{0 if full else 255}"/>\n'
-        # ...and Blizzard's own art's shape for the short bars (its ends are drawn for the icon
-        # beside them): *_Narrow while the heroic shows, as UpdateHealthBarWidths does - as the
-        # masks over PLATE_FILL
-        n, r_, sm = ("_Narrow" if narrow else ""), ("" if blue else "_Right"), ("" if full else "_Sm")
-        out += (f'{t10}<Action type="SetProperty" frame="{cell}/HeroStatus/HealthBar" AlphaMaskTexture="@UI/HUD_TopBar_Team_HeroFrame_HealthFill{sm}{n}{r_}"/>\n'
-                f'{t10}<Action type="SetProperty" frame="{cell}/HeroStatus/FCJH_Resource" AlphaMaskTexture="@UI/HUD_TopBar_Team_HeroFrame_ManaFill{n}{r_}"/>\n')
+        # ...and the masks over PLATE_FILL for the short bars, while the heroic shows (Blizzard
+        # swaps to its *_Narrow art there, as UpdateHealthBarWidths does)
+        health_mask = plate_mask(cfg, team, "health_full" if full else "health", narrow)
+        out += (f'{t10}<Action type="SetProperty" frame="{cell}/HeroStatus/HealthBar" AlphaMaskTexture="{health_mask}"/>\n'
+                f'{t10}<Action type="SetProperty" frame="{cell}/HeroStatus/FCJH_Resource" AlphaMaskTexture="{plate_mask(cfg, team, "energy", narrow)}"/>\n')
         # the Vikings' three bars share the narrowed width (trackers: tools/gen.py trackers)
         # (narrowed by the bar's own cut: NARROW_FULL for the tall bar, as HeroStatus above),
         # each a slanted bar (viking_bars), its mask swapped for the width
@@ -3391,7 +3418,7 @@ def hero_cell_template(team, c, cfg):
 				<Width val="0"/>
 				<Height val="0"/>
 				<Texture val="{PLATE_FILL}"/>
-				<AlphaMaskTexture val="@UI/HUD_TopBar_Team_HeroFrame_ManaFill{suffix}"/>
+				<AlphaMaskTexture val="{plate_mask(cfg, team, "energy")}"/>
 				<Tiled val="false"/>
 				<BarCount val="1"/>
 				<ColorStyle val="StandardEnergy" index="0"/>
@@ -3405,8 +3432,8 @@ def hero_cell_template(team, c, cfg):
 			<Frame type="Frame" name="ImageMaskFrame"><AlphaMaskSiblings val="false"/></Frame>
 			<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">
 				<Texture val="{PLATE_FILL}"/>
-				<AlphaMaskTexture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm{suffix}"/>{tiled_segments(chr(10) + chr(9) * 4)}
-			</Frame>{trackers(team, g["health"])}{health_backing}{mana_backing}{energy}"""
+				<AlphaMaskTexture val="{plate_mask(cfg, team, "health")}"/>{tiled_segments(chr(10) + chr(9) * 4)}
+			</Frame>{trackers(team, g["health"], cfg)}{health_backing}{mana_backing}{energy}"""
     if blue:  # red inherits these unchanged
         cc_top, cc_bottom = c.cc_band
         health += f"""
