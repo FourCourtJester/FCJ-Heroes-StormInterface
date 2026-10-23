@@ -1,7 +1,7 @@
 """
 Generate layouts from layout.toml.
 
-Committed output (written into src/, reviewed like any other file):
+Committed output (written into interface/, reviewed like any other file):
   FCJH_Constants.StormLayout   every layout.toml number, converted to layout units
   FCJH_HeroRow.StormLayout     the plates, heroic panels, pop-ups and row packer
   FCJH_StatPanes.StormLayout   the three stat info panes
@@ -37,7 +37,7 @@ import words
 
 REPO = Path(__file__).resolve().parent.parent
 CONFIG = REPO / "layout.toml"
-SOURCE = REPO / "src" / "FCJH.StormInterface"
+SOURCE = REPO / "interface" / "FCJH.StormInterface"
 LAYOUT_REL = Path("Base.StormData") / "UI" / "Layout"
 
 CONSTANTS_FILE = "FCJH_Constants.StormLayout"
@@ -159,6 +159,7 @@ def rects(cfg):
             out[f"hero_{slot}"] = ((round(left + i * cell.pitch * px, 1), row["top"],
                                     round(cell.w * px, 1), round(cell.h * px, 1)), "ui")
     out.update(team_bar_rects(cfg))
+    out.update(top_bar_rects(cfg))
     for team in ("blue", "red"):
         out[f"{team}_row_frame"] = (row_frame_shape(cfg, team)[1], "ui")
     out["top_backplate"] = (top_backplate_geometry(cfg)["box"], "ui")
@@ -199,6 +200,37 @@ def team_bar_rects(cfg, n=5):
     out["red_xp"] = ((r1(red_l(xp_bottom)), r1(xp_top), r1(edge + lean * xp["height"]), xp["height"]), "ui")
     out["blue_core"] = ((r1(blue_l(core_bottom) + edge - core_w), r1(core_top), r1(core_w), r1(core_h)), "ui")
     out["red_core"] = ((r1(red_l(core_bottom)), r1(core_top), r1(core_w), r1(core_h)), "ui")
+    return out
+
+
+def top_bar_rects(cfg):
+    """The OBS band's places along the top edge ([top_bar], top_bar_geometry): the name and
+    logo plates, the score pips, the ban tiles and the division / game tabs. Each one is a
+    bounding box, as layout.toml's rects are - the plates and the tiles lean with the hero
+    plates, and the tabs' inner sides follow Blizzard's hexagon, so the shapes themselves are
+    top_bar_geometry's. All "obs": OBS draws the data, and the name plate's art with it."""
+    g = top_bar_geometry(cfg)
+    r1 = lambda v: round(float(v), 1)
+    out = {}
+    for team in ("blue", "red"):
+        for key in ("name", "logo"):
+            x, y, w, h = g[key][team]
+            out[f"{team}_{key}"] = ((r1(x), r1(y), r1(w), r1(h)), "obs")
+        # the pips: the box round every hexagon a best of 7 would draw
+        cx = [x for x, _ in g["pips"][team]]
+        cy = g["pips"][team][0][1]
+        pw, ph = g["pip"]["w"], g["pip"]["h"]
+        out[f"{team}_pips"] = ((r1(min(cx) - pw / 2), r1(cy - ph / 2),
+                                r1(max(cx) - min(cx) + pw), r1(ph)), "obs")
+        # the ban tiles: the span along their top edge, as the hand-written rect was
+        top, bot = g["ban_rows"]
+        xs = [x for tile in g["bans"][team] for x, y in tile if y == top]
+        out[f"{team}_bans"] = ((r1(min(xs)), r1(top), r1(max(xs) - min(xs)), r1(bot - top)), "obs")
+    for team, stem in (("blue", "division"), ("red", "game_count")):
+        poly = g["tabs"][team]["poly"]
+        x0, x1 = min(x for x, _ in poly), max(x for x, _ in poly)
+        y0, y1 = min(y for _, y in poly), max(y for _, y in poly)
+        out[stem] = ((r1(x0), r1(y0), r1(x1 - x0), r1(y1 - y0)), "obs")
     return out
 
 
@@ -285,8 +317,8 @@ TOP_CENTRE, BOTTOM_CENTRE, TOP_LEFT, TOP_RIGHT = ("Mid", "Min"), ("Mid", "Max"),
 ANCHORS = {
     # the top bar sits on Blizzard's hexagon, centred on the top edge; the team levels on our
     # backplate. The OBS boxes go with it (the OBS package draws them from layout.toml's px).
-    **{s: TOP_CENTRE for s in ("top_backplate", "logo_plate", "clock", "blue_score", "blue_name", "blue_logo",
-                               "blue_bans", "division", "event_logo", "event_name", "red_score", "red_name", "red_logo", "red_bans",
+    **{s: TOP_CENTRE for s in ("top_backplate", "logo_plate", "clock", "blue_pips", "blue_name", "blue_logo",
+                               "blue_bans", "division", "event_logo", "red_pips", "red_name", "red_logo", "red_bans",
                                "game_count", "centre_banners")},
     **{s: "top_backplate" for s in ("blue_level", "red_level", "blue_talent_lead", "red_talent_lead")},
     # the rows sit either side of the minimap, bottom-centre, and so does all that's on them:
@@ -733,6 +765,10 @@ def constants_layout(cfg):
     edges, tab_h = anchor_edges(cfg, "info_pane"), u(pane["title_height"]) - CLOSE_INSET - 2
     const(name("info", "pane", "close", "t"), edges["t"] + CLOSE_INSET)
     const(name("info", "pane", "close", "r"), edges["r"] - CLOSE_INSET)
+    # the stats panes (Ctrl+2-4) are narrower: only as wide as their columns (stat_geometry)
+    stat_r = edges["l"] + stat_geometry(cfg)["width"]
+    const(name("stat", "pane", "r"), stat_r)
+    const(name("stat", "pane", "close", "r"), stat_r - CLOSE_INSET)
     const(name("info", "pane", "close", "w"), round(tab_h * 60 / 38))
     const(name("info", "pane", "close", "h"), tab_h)
     const(name("info", "pane", "border"), max(1, u(pane["border"])))
@@ -1066,6 +1102,71 @@ def top_backplate_geometry(cfg):
             "box": (round(cx - w / 2), 0, w, h), "ends": (lb - rise, rb + rise)}
 
 
+def top_bar_geometry(cfg):
+    """The OBS band along the top edge in screen px ([top_bar], docs/obs-topbar-handoff.md),
+    all of it worked out from those few numbers so the interface's places and the OBS layer's
+    can't drift apart: the name plate and the logo plate that laps its inner end (boxes
+    bounding a parallelogram at the hero plates' lean, their top edges running to the level
+    wing's outer end), the score pips' centres, and the ban tiles and the division / game
+    tabs as polygons. Red mirrors blue, except the tabs: their inner sides follow Blizzard's
+    hexagon, which sits 2.75 px left of the screen's middle, so the two differ."""
+    tb, bp = cfg["top_bar"], cfg["top_backplate"]
+    geo = top_backplate_geometry(cfg)
+    lean = HeroCell(cfg).lean
+    h = tb["height"]
+    # the band sits [top_bar] `outward` px further out than its geometric place, each side away
+    # from the middle, so its inner end meets the level wing's chrome instead of running under
+    # it - the interface draws that chrome centred on the wing's edge, so half of it falls on
+    # the band's ground. Shifting the wing's end, the name's outer edge and the seam together
+    # moves the whole band and everything hung off it without changing a single width.
+    shift = tb.get("outward", 0)
+    seam = tb["seam"] - shift
+    end = geo["ends"][0] - shift                  # the wing's outer end, along the top edge
+    mirror = lambda x: cfg["screen"]["width"] - x
+    down = lambda x, y: x + lean * y            # a lean line's x, y px down the screen
+
+    def para(x0, x1, y0, y1):
+        """A cell at the plates' lean, its top edge x0..x1 at y0."""
+        run = lean * (y1 - y0)
+        return [(x0, y0), (x1, y0), (x1 + run, y1), (x0 + run, y1)]
+
+    out = {"height": h, "lean": lean, "slant": lean * h, "seam": seam, "ends": geo["ends"]}
+    # the name plate, and the logo plate lapping its inner end so the two rims make one seam
+    for key, x in (("name", tb["name_left"] - shift), ("logo", seam - bp["rim_width"])):
+        w = end - x + lean * h
+        out[key] = {"blue": (x, 0.0, w, h), "red": (mirror(x + w), 0.0, w, h)}
+    # the score: hexagon pips, no plate, pointy-topped so a row packs side to side, filling
+    # from the name outward
+    r = tb["pip_band"] * h / 2
+    pw = r * 3 ** .5
+    cy = h / 2 - 1                              # the band's middle, a px up: the names' line
+    edge = down(tb["name_left"] - shift, cy - r / 2)   # the name's outer slant, level with the pip's corner
+    cx = [edge - tb["pip_off_name"] - pw / 2 - k * (pw + tb["pip_gap"]) for k in range(tb["pips"])]
+    out["pip"] = {"r": r, "w": pw, "h": 2 * r}
+    out["pips"] = {"blue": [(x, cy) for x in cx], "red": [(mirror(x), cy) for x in cx]}
+    # the ban tiles under the name, the innermost in from the seam carried down the lean
+    top = h + tb["ban_drop"]
+    bot = top + tb["ban_tile"]
+    inner = down(seam, top) - tb["ban_inset"]
+    tiles = [para(inner - k * tb["ban_pitch"] - tb["ban_tile"], inner - k * tb["ban_pitch"], top, bot)
+             for k in range(tb["bans"])]
+    out["bans"] = {"blue": tiles, "red": [[(mirror(x), y) for x, y in t] for t in tiles]}
+    out["ban_rows"] = (top, bot)
+    # the tabs hung from the wings, down to the ban tiles' bottom: the outer side is the
+    # name/logo seam carried down the lean, so the slants line up; the inner side follows
+    # Blizzard's hexagon's lower side, tab_clear px off it
+    hexagon = geo["hexagon"]
+    out["tabs"] = {}
+    for team, off, (p, q) in (("blue", -1, (hexagon[5], hexagon[4])),
+                              ("red", 1, (hexagon[2], hexagon[3]))):
+        slope = (q[0] - p[0]) / (q[1] - p[1])
+        hexx = lambda y, p=p, slope=slope, off=off: p[0] + (y - p[1]) * slope + off * tb["tab_clear"]
+        outer = (lambda y: down(seam, y)) if team == "blue" else (lambda y: mirror(down(seam, y)))
+        poly = [(outer(h), h), (hexx(h), h), (hexx(bot), bot), (outer(bot), bot)]
+        out["tabs"][team] = {"poly": poly, "text": (sum(x for x, _ in poly) / 4, (h + bot) / 2)}
+    return out
+
+
 def offset_polygon(pts, d):
     """Grow a convex polygon outward by d px."""
     import math
@@ -1385,6 +1486,27 @@ def _row_frame_dds(pts, box, outset, inside, k, rim, seams=(), seam=0.0, rules=(
     return dds_bgra(w, h, b"".join(rows))
 
 
+def bevel_texture(colour, h, bevel, w=4):
+    """A bar's fill with Blizzard's bevel ([bar_bevel]; their core bar,
+    design/ref_default_core_hp.png): the colour lit from above - a light lip along the top,
+    a ramp down through a soft step at mid-height, a dark foot along the bottom. h is the
+    texture's height in texels (bar_texture_size); the fill is stretched only across (its
+    length follows the value), so a top-to-bottom shade survives at any value."""
+    r, g, b = bytes.fromhex(colour)
+    lip, foot = bevel["lip"], bevel["foot"]
+    rows = []
+    for ty in range(h):
+        down = (ty + 0.5) / h                                  # 0 at the top, 1 at the bottom
+        k = bevel["top"] + (bevel["bottom"] - bevel["top"]) * down - (bevel["step"] if down > 0.5 else 0)
+        c = [min(255.0, v * k) for v in (r, g, b)]
+        if ty < lip:                                           # the lip: toward white
+            c = [v + (255 - v) * bevel["lip_white"] for v in c]
+        if ty >= h - foot:                                     # the foot: toward black
+            c = [v * bevel["foot_dark"] for v in c]
+        rows.append(bytes((round(c[2]), round(c[1]), round(c[0]), 255)) * w)
+    return dds_bgra(w, h, b"".join(rows))
+
+
 def bar_texture_size(cfg, w, h):
     """A slanted bar texture at its size on a 1440p screen (w x h: layout.toml px; ART_HEIGHT).
     Our DDS files carry no mipmaps, so a texture drawn much smaller than it is gets sampled
@@ -1404,7 +1526,7 @@ def slant_bars(cfg):
     xp, core = cfg["team_xp"], cfg["team_core"]
     out = {}
     # The bars' fills are STRETCHED to the value (seen in game, 2026-09-29: a draining core's
-    # slanted ends squashed toward vertical), so a fill is a plain block of colour and the
+    # slanted ends squashed toward vertical), so a fill is upright (bevelled top to bottom) and the
     # slant comes from a mask over the bar (mask frames, AlphaMaskSiblings). Tracks don't
     # move, so they keep the slant in their own texture.
     for team in ("blue", "red"):
@@ -1412,7 +1534,9 @@ def slant_bars(cfg):
             (_, _, w, h), _ = rects_[f"{team}_{bar}"]
             cut = lean * h / w
             size = bar_texture_size(cfg, w, h)
-            for part, data in (("fill", slant_texture(team, 0, fill, size=(32, 32))),
+            fill_data = (bevel_texture(fill, size[1], cfg["bar_bevel"]) if cfg.get("bar_bevel")
+                         else slant_texture(team, 0, fill, size=(32, 32)))
+            for part, data in (("fill", fill_data),
                                ("track", slant_texture(team, cut, spec["track_colour"], spec["track_alpha"], size=size)),
                                ("mask", slant_texture(team, cut, "ffffff", size=size))):
                 digest = hashlib.sha1(data).hexdigest()[:8]
@@ -1490,6 +1614,10 @@ def texture_files(cfg):
         out[TEXTURE_REL / file] = data
     for file, data in viking_masks(cfg).values():
         out[TEXTURE_REL / file] = data
+    for file, data in plate_bar_masks(cfg).values():
+        out[TEXTURE_REL / file] = data
+    file, data = plate_fill_texture()
+    out[TEXTURE_REL / file] = data
     # blue's Dragon Knight health bar, cut to the mirrored lean (maps.knight_mask)
     out[TEXTURE_REL / maps.KNIGHT_MASK_FILE] = dds_bgra(*maps.KNIGHT_MASK)
     return out
@@ -1588,10 +1716,16 @@ def viking_span(c, team):
 # fall in the margin. (The fill's 0 and 100% move out with it: 10% reads ~7%.) 4, not 2: at 2,
 # moved in, the art's near-upright end cut a notch from Erik's top corner (user, 15_30_32, "a bite").
 VIKING_MARGIN = 4
+# The plates' own bars the same (plate_bar_masks): their masks' slants on the frames' edges
+# stepped in game, the Vikings' padded ones didn't (user, 2026-10-23, 13_44_48: "Only Vikings
+# doenst have the jaggedness").
+PLATE_MARGIN = VIKING_MARGIN
 
 
 @functools.cache
-def _viking_masks(team, w, h, size):
+def padded_slant_mask(team, w, h, size):
+    """A slant_texture mask for a bar w x h (units) whose frame runs VIKING_MARGIN past it at
+    both ends: the slant drawn inside, clear columns either side. (dds bytes, digest)"""
     tw, th = size
     pad = round(VIKING_MARGIN / (w + 2 * VIKING_MARGIN) * tw)
     inner = slant_texture(team, HeroCell.LEAN * h / w, "ffffff", size=(tw - 2 * pad, th))[128:]
@@ -1613,16 +1747,63 @@ def viking_masks(cfg):
         for narrow in (False, True):
             w = hr - hl - (round(NARROW_FULL * k) if narrow else 0)
             (l, r), = viking_bars(0, w, hb - ht)[0][:1]
-            data, digest = _viking_masks(team, r - l, hb - ht, bar_texture_size(cfg, r - l + 2 * VIKING_MARGIN, hb - ht))
+            data, digest = padded_slant_mask(team, r - l, hb - ht, bar_texture_size(cfg, r - l + 2 * VIKING_MARGIN, hb - ht))
             out[team, narrow] = (f"FCJH_VikingMask_{team}{'_narrow' if narrow else ''}_{digest}.dds", data)
     return out
+
+def plate_bar_masks(cfg):
+    """PLATE_FILL's masks, by (team, bar, narrow), bar "health" / "health_full" / "energy":
+    (file, dds bytes). Ours at the plates' lean and 1440p size, not Blizzard's fill art: that is
+    8 (4 for mana) texels tall, and the mask's rows wrap into each other - the top row's tip
+    cut upright, a tail off the bottom row past the slant (user, 2026-10-23, 13_35_43: "mask
+    damage"). A mask spans its frame, so the narrowed bars need their own; each frame runs
+    PLATE_MARGIN past its bar at both ends and its mask is padded to match, as the Vikings'."""
+    c = HeroCell(cfg)
+    k = cfg["hero_row"]["scale"]
+    out = {}
+    for team in ("blue", "red"):
+        for bar in ("health", "health_full", "energy"):
+            l, t, r, b = c.team[team][bar]
+            for narrow in (False, True):
+                w = r - l - (round((NARROW_FULL if bar == "health_full" else NARROW) * k) if narrow else 0)
+                data, digest = padded_slant_mask(team, w, b - t, bar_texture_size(cfg, w + 2 * PLATE_MARGIN, b - t))
+                out[team, bar, narrow] = (f"FCJH_PlateMask_{team}_{bar}{'_narrow' if narrow else ''}_{digest}.dds", data)
+    return out
+
+
+def plate_mask(cfg, team, bar, narrow=False):
+    return f"{TEXTURE_DIR}\\{plate_bar_masks(cfg)[team, bar, narrow][0]}"
+
 
 # Every segment of the plates' health bars tiled, as the health is (Blizzard's party frame tiles
 # its 0-2). Untiled, the shield (index 2) squeezed the whole fill art into itself: Fenix's white
 # came out with both the art's slanted ends, at half the slant, and ran past the bar's end
 # (user, 2026-10-18, 12_18_57).
+# The plates' fills: Blizzard's bevelled UI/HealthBar (lit top, dark ramp, lit foot), tinted
+# as before, with the shape of Blizzard's own top-bar fill as its mask (user, 2026-10-23: "if
+# blizzard has some available bevels specifically for health and mana, lets do it"; revert to
+# 27500be if it looks bad). It is 11 rows, so it stretches (index 0 untiled) rather than tile,
+# and its shape is a mask (plate_bar_masks).
+# Ours, from its rows (UI_HealthBar_Bar_01: every column alike), the ramp toned down: each row's
+# distance below white x PLATE_BEVEL, the lit top kept and the dark rows lifted (user,
+# 2026-10-23: "tone down the bevel by about 10%? It's too much of a stretch from the top to
+# bottom").
+BLIZZARD_HEALTHBAR_ROWS = (255, 245, 231, 214, 195, 177, 160, 147, 139, 141, 198)
+PLATE_BEVEL = 0.9
+
+
+def plate_fill_texture():
+    rows = [round(255 - PLATE_BEVEL * (255 - v)) for v in BLIZZARD_HEALTHBAR_ROWS]
+    data = dds_bgra(16, len(rows), b"".join(bytes((v, v, v, 255)) * 16 for v in rows))
+    return f"FCJH_PlateFill_{hashlib.sha1(data).hexdigest()[:8]}.dds", data
+
+
+PLATE_FILL = f"{TEXTURE_DIR}\\{plate_fill_texture()[0]}"
+
+
 def tiled_segments(indent=""):
-    return "".join(f'{indent}<Tiled val="true" index="{i}"/>' for i in range(5))
+    return (f'{indent}<Tiled val="false" index="0"/>' +
+            "".join(f'{indent}<Tiled val="true" index="{i}"/>' for i in range(1, 5)))
 
 
 def vehicle_sensor(indent):
@@ -1703,7 +1884,7 @@ def vehicle_words():
         for i, (key, word, _) in enumerate(VEHICLE_WORDS))
 
 
-def trackers(team, health):
+def trackers(team, health, cfg):
     """Blizzard's extra health bars inside HeroStatus, refitted to our bar (their templates
     assume the stock 134 x 6 box): Misha under Rexxar's bar (Blizzard halves his bar when she
     is up), and the three Vikings side by side, a third of the bar each (Blizzard hides the
@@ -1711,7 +1892,8 @@ def trackers(team, health):
     suffix = "" if team == "blue" else "_Right"
     bars_, _ = viking_bars(health[0], health[2], health[3] - health[1])
     bar =(f'<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">'
-           f'<Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm{suffix}"/>{tiled_segments()}</Frame>')
+           f'<Texture val="{PLATE_FILL}"/><AlphaMaskTexture val="{plate_mask(cfg, team, "health")}"/>'
+           f'{tiled_segments()}</Frame>')
     # Each Viking also gets its own click target (select that Viking, centre the camera), over
     # its third of the plate at full height, above the plate's own (600). Round 1 hung it off
     # the bar-high strip and clicks landed only now and then (clipped to the strip, likely), so
@@ -1731,7 +1913,7 @@ def trackers(team, health):
 							<Anchor side="Bottom" relative="{strip}" pos="Max" offset="0"/>
 							<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 							<Anchor side="Right"  relative="$parent" pos="Max" offset="0"/>
-							<Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill{suffix}"/>{tiled_segments(chr(10) + chr(9) * 7)}
+							<Texture val="{PLATE_FILL}"/>{tiled_segments(chr(10) + chr(9) * 7)}
 							<Unclipped val="true"/>
 						</Frame>{vehicle_sensor(chr(9) * 6)}
 						<Frame type="UnitTargetFrame" name="FCJH_Target">
@@ -2418,18 +2600,19 @@ def heroic_panel(cfg, team_frame, i):
         cut = (-s(NARROW_FULL) if blue else s(NARROW_FULL)) if full else cut_
         edge = lambda l, r, c_: (r if blue else l) + (c_ if narrow else 0)
         out = "".join(f'{t10}<Action type="SetAnchor" frame="{cell}/{f}" side="{side}" relative="{cell}" pos="Min" offset="{edge(l, r, c_)}"/>\n'
-                      for f, l, r, c_ in (("HeroStatus", hl, hr, cut), ("HeroStatus/FCJH_Resource", el, er, cut_)))
+                      for f, l, r, c_ in (("HeroStatus", hl, hr, cut),
+                                          ("HeroStatus/FCJH_Resource", el - PLATE_MARGIN, er + PLATE_MARGIN, cut_)))
         # the far side and the bottom differ for the tall bar, so every state sets them
         far = "Left" if blue else "Right"
         out += (f'{t10}<Action type="SetAnchor" frame="{cell}/HeroStatus" side="{far}" relative="{cell}" pos="Min" offset="{hl if blue else hr}"/>\n'
                 f'{t10}<Action type="SetAnchor" frame="{cell}/HeroStatus" side="Bottom" relative="{cell}" pos="Min" offset="{hb}"/>\n')
         for f in ("FCJH_Resource", "FCJH_ManaBacking"):
             out += f'{t10}<Action type="SetProperty" frame="{cell}/HeroStatus/{f}" Alpha="{0 if full else 255}"/>\n'
-        # ...and Blizzard's own art for the short bars (its ends are drawn for the icon beside
-        # them): *_Narrow while the heroic shows, as UpdateHealthBarWidths does
-        n, r_, sm = ("_Narrow" if narrow else ""), ("" if blue else "_Right"), ("" if full else "_Sm")
-        out += (f'{t10}<Action type="SetProperty" frame="{cell}/HeroStatus/HealthBar" Texture="@UI/HUD_TopBar_Team_HeroFrame_HealthFill{sm}{n}{r_}"/>\n'
-                f'{t10}<Action type="SetProperty" frame="{cell}/HeroStatus/FCJH_Resource" Texture="@UI/HUD_TopBar_Team_HeroFrame_ManaFill{n}{r_}"/>\n')
+        # ...and the masks over PLATE_FILL for the short bars, while the heroic shows (Blizzard
+        # swaps to its *_Narrow art there, as UpdateHealthBarWidths does)
+        health_mask = plate_mask(cfg, team, "health_full" if full else "health", narrow)
+        out += (f'{t10}<Action type="SetProperty" frame="{cell}/HeroStatus/HealthBar" AlphaMaskTexture="{health_mask}"/>\n'
+                f'{t10}<Action type="SetProperty" frame="{cell}/HeroStatus/FCJH_Resource" AlphaMaskTexture="{plate_mask(cfg, team, "energy", narrow)}"/>\n')
         # the Vikings' three bars share the narrowed width (trackers: tools/gen.py trackers)
         # (narrowed by the bar's own cut: NARROW_FULL for the tall bar, as HeroStatus above),
         # each a slanted bar (viking_bars), its mask swapped for the width
@@ -3249,15 +3432,17 @@ def hero_cell_template(team, c, cfg):
 				<AcceptsMouse val="false"/>
 			</Frame>"""
     hb, mb = g["health_backing"], g["mana_backing"]
+    margined = lambda rect: (rect[0] - PLATE_MARGIN, rect[1], rect[2] + PLATE_MARGIN, rect[3])
     size = '<Width val="0"/>\n\t\t\t\t<Height val="0"/>\n\t\t\t\t'
     health_backing = backing("FCJH_HealthBacking", "HUD_TopBar_Team_HeroFrame_HealthFrame", hb, size)
     mana_backing = backing("FCJH_ManaBacking", "HUD_TopBar_Team_HeroFrame_ManaFrame", mb, size)
     energy = f"""
-			<Frame type="UnitStatusEnergyBar" name="FCJH_Resource">{_anchors(g["energy"], cell, chr(9) * 4)}
+			<Frame type="UnitStatusEnergyBar" name="FCJH_Resource">{_anchors(margined(g["energy"]), cell, chr(9) * 4)}
 				<Width val="0"/>
 				<Height val="0"/>
-				<Texture val="@UI/HUD_TopBar_Team_HeroFrame_ManaFill{suffix}"/>
-				<Tiled val="true"/>
+				<Texture val="{PLATE_FILL}"/>
+				<AlphaMaskTexture val="{plate_mask(cfg, team, "energy")}"/>
+				<Tiled val="false"/>
 				<BarCount val="1"/>
 				<ColorStyle val="StandardEnergy" index="0"/>
 				<Unclipped val="true"/>
@@ -3269,8 +3454,13 @@ def hero_cell_template(team, c, cfg):
 			<RenderPriority val="510"/>
 			<Frame type="Frame" name="ImageMaskFrame"><AlphaMaskSiblings val="false"/></Frame>
 			<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">
-				<Texture val="@UI/HUD_TopBar_Team_HeroFrame_HealthFill_Sm{suffix}"/>{tiled_segments(chr(10) + chr(9) * 4)}
-			</Frame>{trackers(team, g["health"])}{health_backing}{mana_backing}{energy}"""
+				<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+				<Anchor side="Left"   relative="$parent" pos="Min" offset="{-PLATE_MARGIN}"/>
+				<Anchor side="Right"  relative="$parent" pos="Max" offset="{PLATE_MARGIN}"/>
+				<Texture val="{PLATE_FILL}"/>
+				<AlphaMaskTexture val="{plate_mask(cfg, team, "health")}"/>{tiled_segments(chr(10) + chr(9) * 4)}
+				<Unclipped val="true"/>
+			</Frame>{trackers(team, g["health"], cfg)}{health_backing}{mana_backing}{energy}"""
     if blue:  # red inherits these unchanged
         cc_top, cc_bottom = c.cc_band
         health += f"""
@@ -4185,36 +4375,48 @@ SCORE_COLUMNS = ["SoloKillScoreValueFrame", "AssistsScoreValueFrame", "DeathsSco
                  "SiegeDamageScoreValueFrame", "HeroDamageScoreValueFrame",
                  "HealingScoreValueFrame", "DamageTakenScoreValueFrame",
                  "ExperienceScoreValueFrame"]
-# (key, title, [(column frame, score value, heading, width share, team total)])
-# The columns share the row right of the portrait by their width share (a count takes 1, a
-# big number 2). The team total is the score a TeamScoreValueFrame sums for the team band;
-# usually the column's own, but Blizzard counts team kills as TeamTakedowns.
+# (key, title, [(column frame, score value, heading, width, team total)])
+# A column's width is the widest number it shows (STAT_WIDTHS). The team total is the score
+# a TeamScoreValueFrame sums for the team band: the column's own. Not TeamTakedowns, which
+# Blizzard credits to the DEAD player's team (gamelib.galaxy, "TeamTakedowns" on
+# AlliedPlayerGroupOfPlayer(lv_deadPlayer)) - blue's band showed red's kills
+# (Screenshot2026-10-23 12_52_52). Siege is Blizzard's whole SiegeDamage, as Tab shows it: its
+# parts don't add up (MinionDamage misses mercs, summons and some heroes' abilities, and a
+# layout can't subtract), so no split (user, 2026-10-23: "Drop shielding, and the
+# minion/structure split"). No shielding: Blizzard reports ProtectionGivenToAllies only at
+# game over; shields count in Healing during the game.
 STAT_PANES = [
     ("kda", "KDA  ·  HERO DAMAGE", [
-        ("SoloKillScoreValueFrame", "SoloKill", "K", 1, "TeamTakedowns"),
-        ("DeathsScoreValueFrame", "Deaths", "D", 1, "Deaths"),
-        ("AssistsScoreValueFrame", "Assists", "A", 1, "Assists"),
-        ("HeroDamageScoreValueFrame", "HeroDamage", "HERO DMG", 2, "HeroDamage")]),
-    ("healing", "HEALING  ·  SHIELDING", [
-        ("DamageTakenScoreValueFrame", "SelfHealing", "SELF", 2, "SelfHealing"),
-        ("HealingScoreValueFrame", "Healing", "HEALING", 2, "Healing"),
-        ("SiegeDamageScoreValueFrame", "ProtectionGivenToAllies", "SHIELDING", 2, "ProtectionGivenToAllies")]),
-    ("structures", "STRUCTURES  ·  EXPERIENCE", [
-        ("SiegeDamageScoreValueFrame", "SiegeDamage", "SIEGE", 2, "SiegeDamage"),
-        ("HeroDamageScoreValueFrame", "StructureDamage", "STRUCTURES", 2, "StructureDamage"),
-        ("ExperienceScoreValueFrame", "ExperienceContribution", "XP", 2, "ExperienceContribution")]),
+        ("SoloKillScoreValueFrame", "SoloKill", "KILLS", "count", "SoloKill"),
+        ("DeathsScoreValueFrame", "Deaths", "DEATHS", "count", "Deaths"),
+        ("AssistsScoreValueFrame", "Assists", "ASSISTS", "count", "Assists"),
+        ("HeroDamageScoreValueFrame", "HeroDamage", "HERO DMG", "big", "HeroDamage")]),
+    ("healing", "SELF HEALING  ·  HEALING", [
+        ("DamageTakenScoreValueFrame", "SelfHealing", "SELF", "big", "SelfHealing"),
+        ("HealingScoreValueFrame", "Healing", "HEALING", "big", "Healing")]),
+    ("siege", "SIEGE DAMAGE  ·  EXPERIENCE", [
+        ("SiegeDamageScoreValueFrame", "SiegeDamage", "SIEGE DMG", "big", "SiegeDamage"),
+        ("ExperienceScoreValueFrame", "ExperienceContribution", "XP", "big", "ExperienceContribution")]),
 ]
+# Column widths, layout units (1 unit = 0.9 px at 1080p), measured off the build in game
+# (Screenshot2026-10-23 12_30_35): a digit advances ~12 px in the numbers' font, a point or
+# comma ~1 px more ink. A count is at most XX.YY ("12.75", ~48 px, 53 units; nobody reaches
+# three digits of kills); a big number at most XXX,XXX ("103,794" in the team totals' font
+# measured 72 px, 80 units; nobody reaches a million). Past that, ScaleToPreventTruncation.
+STAT_WIDTHS = {"count": 60, "big": 84}
+STAT_GAP = 24                # the least room between columns, and after the portrait
+STAT_HEADING_CLEAR = 4       # a heading may run left into the gap before its column, to here
 # Every info pane, in hotkey order: (key, container). Only one shows at a time.
 INFO_PANES = [("talents", "Pane_Talents")] + [(k, f"Pane_{k.capitalize()}") for k, _, _ in STAT_PANES]
-STAT_ROW_H, STAT_TEAM_GAP = 40, 8        # Blizzard's rows are 40 units tall
+STAT_ROW_H, STAT_TEAM_GAP = 40, 0        # Blizzard's rows are 40 units tall; red's band follows blue's
+                                         # last stripe (user, 2026-10-23: "a row of emptiness ... we can remove that too")
 STAT_ROW_W = 565                         # Blizzard's slot width
-# The table's margins match the talents pane's: the portrait (90 wide) sits 23 in from the
-# left, so the last number ends 23 short of the right edge. Numbers are right-aligned in
-# columns 48 units wide per width share (a count's "12", a total's "126,660"). The team
-# name spans the portrait's width. The rows spread out to fill the pane's height, less the
-# bottom pad.
-STAT_MARGIN, STAT_PORTRAIT_W, STAT_SHARE_W, STAT_BOTTOM_PAD = 23, 90, 48, 14
-STAT_FIRST_COLUMN = STAT_MARGIN + STAT_PORTRAIT_W
+# The portrait sits on the pane's left border, the first column STAT_PORTRAIT_GAP after it,
+# and the last number ends STAT_MARGIN short of the right edge (user, 2026-10-23: "Anchor the
+# portraits to the left edge / Remove some of the whitespace the portraits have"). Numbers
+# are right-aligned in their columns (STAT_WIDTHS). The rows spread out to fill the pane's
+# height, less the bottom pad.
+STAT_MARGIN, STAT_PORTRAIT_W, STAT_PORTRAIT_GAP, STAT_BOTTOM_PAD = 23, 90, 4, 14
 # Columns whose ScoreValueFrame0 carries Blizzard's best-value underline (statsoverviewpanel
 # ScoreValueFrameHighlightAnimation_*). Kept, re-centred - except on deaths, where "best"
 # means most.
@@ -4223,8 +4425,8 @@ STAT_UNDERLINED = {"DamageTakenScoreValueFrame", "SiegeDamageScoreValueFrame",
 STAT_NO_UNDERLINE = {"DeathsScoreValueFrame"}
 # TeamScoreValueFrame TeamId: 0 blue, 1 red (Blizzard's top bar counts blue's kills as
 # TeamId 1's deaths). Team band colours, and the totals' styles, per team.
-TEAMS = [("blue", 0, "200,20,52,120", "FCJH_StatTeam_Blue", "FCJH_StatTotal_Blue"),
-         ("red", 1, "200,120,20,32", "FCJH_StatTeam_Red", "FCJH_StatTotal_Red")]
+TEAMS = [("blue", 0, "200,20,52,120", "FCJH_StatTotal_Blue"),
+         ("red", 1, "200,112,22,64", "FCJH_StatTotal_Red")]   # toward the score screen's maroon (2026-10-23)
 
 
 def fill_image(name, anchors, colour, prio, indent, extra=""):
@@ -4246,8 +4448,10 @@ def box(top, left, bottom, right, relative="$parent"):
         for side, (p, o) in zip(("Top", "Left", "Bottom", "Right"), (top, left, bottom, right)))
 
 
+# The stats panes' box: the info pane's, but only as wide as their columns need (stat_geometry
+# width; user, 2026-10-23: "shave off some space on Ctrl2-4"). The talents pane keeps the full box.
 PANE = box(("Min", "#FCJH_INFO_PANE_T"), ("Min", "#FCJH_INFO_PANE_L"),
-           ("Min", "#FCJH_INFO_PANE_B"), ("Min", "#FCJH_INFO_PANE_R"))
+           ("Min", "#FCJH_INFO_PANE_B"), ("Min", "#FCJH_STAT_PANE_R"))
 
 
 
@@ -4290,17 +4494,14 @@ def pane_toggle(key, container):
 '''
 
 
-def team_header(team_id, colour, title_style, value_style, name, top, height, placed, indent):
-    """A team band: the team's name over the portraits, its totals under each column."""
+def team_header(team_id, colour, value_style, name, top, height, placed, indent):
+    """A team band: the team's totals under each column. No name: the colour says it (user,
+    2026-10-23: "Remove BLUE/RED from the headers")."""
     t = "\t" * indent
     at = lambda l, r: box(("Min", str(top)), ("Min", str(l)), ("Min", str(top + height)), ("Min", str(r)))(indent + 1)
     band = box(("Min", str(top)), ("Min", "#FCJH_INFO_PANE_BORDER"), ("Min", str(top + height)),
                ("Max", "#FCJH_INFO_PANE_BORDER_NEG"))
     out = fill_image(f"FCJH_{name.capitalize()}Band", band, colour, 602, indent)
-    out += (f'{t}<Frame type="Label" name="FCJH_{name.capitalize()}Name">\n' + at(STAT_MARGIN, STAT_FIRST_COLUMN) +
-            f'{t}\t<Style val="{title_style}"/>\n{t}\t<Text val="{words.ref(name.upper())}"/>\n'
-            f'{t}\t<Options val="NoWrapping | ScaleToPreventTruncation"/>\n'
-            f'{t}\t<RenderPriority val="610"/>\n{t}\t<AcceptsMouse val="false"/>\n{t}</Frame>\n')
     for i, (_, _, _, cx, w, total) in enumerate(placed):
         out += (f'{t}<Frame type="TeamScoreValueFrame" name="FCJH_{name.capitalize()}Total{i}">\n' +
                 at(cx, cx + w) +
@@ -4324,7 +4525,7 @@ def close_button(container, indent=3):
     t = "\t" * indent
     return f'''{t}<Frame type="Button" name="FCJH_Close" template="StandardTemplates/SmallPanelCloseButtonTemplate">
 {t}	<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_CLOSE_T"/>
-{t}	<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_CLOSE_R"/>
+{t}	<Anchor side="Right" relative="$parent" pos="Min" offset="#FCJH_STAT_PANE_CLOSE_R"/>
 {t}	<Width val="#FCJH_INFO_PANE_CLOSE_W"/>
 {t}	<Height val="#FCJH_INFO_PANE_CLOSE_H"/>
 {t}	<RenderPriority val="650"/>
@@ -4349,17 +4550,20 @@ def pane_chrome(title, placed, geometry, indent=3):
     out += (f'{t}\t<Frame type="Label" name="FCJH_Title">\n' + band(indent + 2) +
             f'{t}\t\t<Style val="ObsBar_MatchTimer"/>\n{t}\t\t<Text val="{words.ref(title)}"/>\n'
             f'{t}\t\t<RenderPriority val="610"/>\n{t}\t\t<AcceptsMouse val="false"/>\n{t}\t</Frame>\n')
-    for i, (_, _, text, x, w, _) in enumerate(placed):
+    # a heading is right-aligned over its numbers, free to run left into the gap before them
+    # ("ASSISTS" is wider than its column's numbers)
+    lefts = [geometry["columns"][0] - STAT_PORTRAIT_GAP] + [x + w for _, _, _, x, w, _ in placed[:-1]]
+    for i, ((_, _, text, x, w, _), left) in enumerate(zip(placed, lefts)):
         out += (f'{t}\t<Frame type="Label" name="FCJH_Heading{i}">\n'
                 f'{t}\t\t<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>\n'
-                f'{t}\t\t<Anchor side="Left"  relative="$parent" pos="Min" offset="{x}"/>\n'
+                f'{t}\t\t<Anchor side="Left"  relative="$parent" pos="Min" offset="{left + STAT_HEADING_CLEAR}"/>\n'
                 f'{t}\t\t<Anchor side="Right" relative="$parent" pos="Min" offset="{x + w}"/>\n'
                 f'{t}\t\t<Height val="#FCJH_INFO_PANE_HEADER_H"/>\n'
                 f'{t}\t\t<Style val="FCJH_StatHeading"/>\n{t}\t\t<Text val="{words.ref(text)}"/>\n'
                 f'{t}\t\t<Options val="NoWrapping | ScaleToPreventTruncation"/>\n'
                 f'{t}\t\t<RenderPriority val="610"/>\n{t}\t\t<AcceptsMouse val="false"/>\n{t}\t</Frame>\n')
-    for (name, team_id, colour, title_style, value_style), top in zip(TEAMS, geometry["team_tops"]):
-        out += team_header(team_id, colour, title_style, value_style, name, top,
+    for (name, team_id, colour, value_style), top in zip(TEAMS, geometry["team_tops"]):
+        out += team_header(team_id, colour, value_style, name, top,
                            geometry["team_h"], placed, indent + 1)
     return out + f'{t}</Frame>\n'
 
@@ -4380,21 +4584,33 @@ def stat_geometry(cfg):
     red_band = blue_band + team_h + 5 * step + STAT_TEAM_GAP
     row_tops = [blue_band + team_h + i * step for i in range(5)] + \
                [red_band + team_h + i * step for i in range(5)]
+    # as wide as the widest pane's columns at STAT_GAP apart, so switching panes keeps the box
+    border = max(1, u(pane["border"]))
+    first = border + STAT_PORTRAIT_W + STAT_PORTRAIT_GAP
+    width = min(width, max(first + sum(STAT_WIDTHS[c[3]] + STAT_GAP for c in columns) - STAT_GAP + STAT_MARGIN
+                           for _, _, columns in STAT_PANES))
+    # the portrait fills its stripe from the top down to the accent line, as Tab's do (user,
+    # 2026-10-23: "Tab has taller portraits seperated out by their bottom accent lines"), at
+    # Blizzard's 100:56 picture uncropped (heroleaderpanel's HeroIconImage)
+    portrait_h = step - pane.get("rows", {}).get("line", 0)
+    portrait = (min(STAT_PORTRAIT_W, round(portrait_h * 100 / 56)), portrait_h)
     return {"title": title, "team_h": team_h, "team_tops": (blue_band, red_band), "row_tops": row_tops,
-            "columns": (STAT_MARGIN + STAT_PORTRAIT_W, width - STAT_MARGIN)}
+            "width": width, "columns": (first, width - STAT_MARGIN), "portrait": portrait,
+            "border": border}
 
 
 def place_columns(columns, span):
-    """Columns sized to their numbers (STAT_SHARE_W per width share), right-aligned, with the
-    spare room shared out as equal gaps: one after the portrait, one between each pair of
-    columns. So the last number ends exactly on the right margin, the same distance in as
-    the portrait is from the left edge."""
+    """Columns sized to their numbers (STAT_WIDTHS), right-aligned, the first just after the
+    portrait (span starts there) and the rest STAT_GAP apart; a narrower pane's spare room is
+    shared out equally among those gaps, the portrait's included. So the last number ends
+    exactly on the right margin."""
     left, right = span
-    widths = [share * STAT_SHARE_W for _, _, _, share, _ in columns]
-    gap = (right - left - sum(widths)) / len(columns)
+    widths = [STAT_WIDTHS[kind] for _, _, _, kind, _ in columns]
+    gaps = [0] + [STAT_GAP] * (len(columns) - 1)
+    spare = (right - left - sum(widths) - sum(gaps)) / len(columns)
     placed, x = [], left
-    for (frame, score, heading, _, total), w in zip(columns, widths):
-        x += gap
+    for (frame, score, heading, _, total), w, gap in zip(columns, widths, gaps):
+        x += gap + spare
         placed.append((frame, score, heading, round(x), w, total))
         x += w
     return placed
@@ -4406,33 +4622,21 @@ def stat_value(frame, score, team, indent):
     t = "\t" * indent
     underline = ""
     if frame in STAT_UNDERLINED or frame in STAT_NO_UNDERLINE:
-        # Blizzard's best-value underline: off everywhere (user, 2026-09-29: a soft highlight
-        # instead - FCJH_Lead below; none on deaths, where "best" means most)
+        # Blizzard's best-value underline: off everywhere (user, 2026-09-29; gold numbers
+        # instead, below; none on deaths, where "best" means most)
         underline = f'{t}\t<Frame type="Image" name="HighlightImage"><Alpha val="0"/></Frame>\n'
     if frame not in STAT_NO_UNDERLINE:
-        # the leader's cell, softly lit in the team colour. It answers the same best-value
-        # events as Blizzard's underline, so it works on columns that never had one (XP)
-        colour = "70,90,150,255" if team == "blue" else "70,255,90,110"
-        underline += (
-            f'{t}\t<Frame type="Image" name="FCJH_Lead">\n'
-            f'{t}\t\t<Anchor side="Top"    relative="$parent" pos="Min" offset="-2"/>\n'
-            f'{t}\t\t<Anchor side="Left"   relative="$parent" pos="Min" offset="-6"/>\n'
-            f'{t}\t\t<Anchor side="Bottom" relative="$parent" pos="Max" offset="2"/>\n'
-            f'{t}\t\t<Anchor side="Right"  relative="$parent" pos="Max" offset="6"/>\n'
-            f'{t}\t\t<Texture val="@UI/PauseScreenDimImage"/>\n'
-            f'{t}\t\t<ColorAdjustMode val="Fill"/>\n{t}\t\t<AdjustmentColor val="{colour}"/>\n'
-            f'{t}\t\t<Visible val="false"/>\n{t}\t\t<Unclipped val="true"/>\n{t}\t\t<AcceptsMouse val="false"/>\n'
-            f'{t}\t\t<RenderPriority val="400"/>  <!-- under the number (round 1 drew over it) -->\n'
-            f'{t}\t\t<Animation name="FCJH_ShowLead">\n'
-            f'{t}\t\t\t<Event event="AllyBestValue" action="Reset,Play" frame="$parent"/>\n'
-            f'{t}\t\t\t<Event event="EnemyBestValue" action="Reset,Play" frame="$parent"/>\n'
-            f'{t}\t\t\t<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="True"/></Controller>\n'
-            f'{t}\t\t</Animation>\n'
-            f'{t}\t\t<Animation name="FCJH_HideLead">\n'
-            f'{t}\t\t\t<Event event="AllyNotBestValue" action="Reset,Play" frame="$parent"/>\n'
-            f'{t}\t\t\t<Event event="EnemyNotBestValue" action="Reset,Play" frame="$parent"/>\n'
-            f'{t}\t\t\t<Controller type="Property" property="Visible" end="Pause"><Key type="Property" time="0" value="False"/></Controller>\n'
-            f'{t}\t\t</Animation>\n{t}\t</Frame>\n')
+        # the leader's number in Blizzard's gold, not a lit box (user, 2026-10-23: "just use a
+        # yellow/gold color to indicate they're leading"). The same best-value events and Style
+        # swap Blizzard's own label uses, so it works on columns that never had an underline (XP)
+        normal = f"FCJH_StatValue_{team.capitalize()}"
+        for name, events, style in (("FCJH_ShowLead", ("AllyBestValue", "EnemyBestValue"), "FCJH_StatValue_Lead"),
+                                    ("FCJH_HideLead", ("AllyNotBestValue", "EnemyNotBestValue"), normal)):
+            underline += (f'{t}\t<Animation name="{name}">\n' +
+                          "".join(f'{t}\t\t<Event event="{e}" action="Reset,Play"/>\n' for e in events) +
+                          f'{t}\t\t<Controller type="Style" end="Pause" frame="FCJH_Value" style1="{style}" style2="{style}">\n'
+                          f'{t}\t\t\t<Key type="Curve" time="0.00" value="1.0" inout="Linear,Auto"/>\n'
+                          f'{t}\t\t</Controller>\n{t}\t</Animation>\n')
     return (f'{t}<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0">\n'
             f'{t}\t<Visible val="true"/>\n'
             f'{t}\t<ScoreValueLink val="{score}"/>\n'
@@ -4442,15 +4646,41 @@ def stat_value(frame, score, team, indent):
             f'{t}\t\t<Anchor relative="$parent"/>\n'
             f'{t}\t\t<Text val="{{$parent/Label/@Text}}"/>\n'
             f'{t}\t\t<Style val="FCJH_StatValue_{team.capitalize()}"/>\n'
-            f'{t}\t\t<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->\n'
+            f'{t}\t\t<IgnoreParentColor val="true"/>  <!-- as Blizzard\'s Label: else the row\'s team colour multiplies into ours (2026-10-23) -->\n'
             f'{t}\t\t<Options val="NoWrapping | ScaleToPreventTruncation"/>\n'
             f'{t}\t\t<AcceptsMouse val="false"/>\n'
             f'{t}\t</Frame>\n' + underline +
             f'{t}</Frame>\n')
 
 
-def stat_pane(key, title, columns, geometry):
+def row_stripes(stripes, geometry, indent=3):
+    """The zebra under a numbers pane's rows ([info_pane.rows]): a stripe per row, border to
+    border, the team's two shades alternating, a line in the team colour along its bottom.
+    Each stripe is the row's pitch tall and starts at the row's top, so the stripes butt
+    together and the row's numbers (12-40 of its 52) sit centred; the portrait fills it to the line.
+    Under the rows (RenderPriority 450; the rows are 500) and over the skin."""
+    if not stripes:
+        return ""
+    t = "\t" * indent
+    tops = geometry["row_tops"]
+    pitch = tops[1] - tops[0]
+    line = stripes.get("line", 0)
+    out = f'{t}<Frame type="Frame" name="FCJH_RowStripes">\n' + PANE(indent + 1) + \
+        f'{t}\t<RenderPriority val="450"/>\n{t}\t<AcceptsMouse val="false"/>\n'
+    for i, top in enumerate(tops):
+        team = "blue" if i < 5 else "red"
+        at = lambda y0, y1: box(("Min", str(y0)), ("Min", "#FCJH_INFO_PANE_BORDER"), ("Min", str(y1)),
+                                ("Max", "#FCJH_INFO_PANE_BORDER_NEG"))
+        out += fill_image(f"FCJH_Stripe{i}", at(top, top + pitch), stripes[team][i % 5 % 2], 1, indent + 1)
+        if line:
+            out += fill_image(f"FCJH_StripeLine{i}", at(top + pitch - line, top + pitch),
+                              stripes[f"{team}_line"], 2, indent + 1)
+    return out + f'{t}</Frame>\n'
+
+
+def stat_pane(key, title, columns, geometry, stripes=None):
     container = f"Pane_{key.capitalize()}"
+    portrait_w, portrait_h = geometry["portrait"]
     placed = place_columns(columns, geometry["columns"])
     used = {p[0] for p in placed}
     rows = []
@@ -4479,12 +4709,19 @@ def stat_pane(key, title, columns, geometry):
 							<Anchor side="Right"  relative="$parent" pos="Min" offset="{STAT_ROW_W}"/>
 							<Width val="0"/>
 							<Height val="0"/>
-							<!-- every row portrait-first (Blizzard mirrors red): blue's hero icon spot -->
+							<!-- every row portrait-first (Blizzard mirrors red), the stripe's full height:
+							     Tab's picture, uncropped and faded on the right by Tab's mask -->
 							<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
-								<Anchor side="Top"    relative="$parent" pos="Min" offset="10"/>
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="23"/>
+								<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
+								<Width val="{portrait_w}"/>
+								<Height val="{portrait_h}"/>
+								<Frame type="Image" name="HeroIconImage">
+									<TextureCoords top="0" left="0" bottom="1" right="1"/>
+									<ImageMaskTexture val="@UI/Storm_UI_InGame_Leader_ScoreInset_PortraitFade"/>
+								</Frame>
 							</Frame>
 							<Frame type="BattleUserVoiceFrame" name="VoiceFrame"><Alpha val="0"/></Frame>
 							<!-- Blizzard's shaded boxes behind groups of columns -->
@@ -4504,8 +4741,8 @@ def stat_pane(key, title, columns, geometry):
 			<Visible val="false"/>
 			<AcceptsMouse val="false"/>
 			<Frame type="Frame" name="FCJH_Skin" template="FCJH_Constants/FCJH_PaneSkin">
-''' + PANE(4) + f'''			</Frame>
-			<Frame type="HeroLeaderPanel" name="FCJH_Stats" template="StatsOverviewPanel/StatsOverviewPanelTemplate/StatsOverviewBottomPanel">
+''' + PANE(4) + '''			</Frame>
+''' + row_stripes(stripes, geometry) + f'''			<Frame type="HeroLeaderPanel" name="FCJH_Stats" template="StatsOverviewPanel/StatsOverviewPanelTemplate/StatsOverviewBottomPanel">
 {PANE(4)}				<Width val="0"/>
 				<Height val="0"/>
 				<Visible val="true"/>
@@ -4531,7 +4768,7 @@ def stat_pane(key, title, columns, geometry):
 def stat_panes_layout(cfg):
     geometry = stat_geometry(cfg)
     return XML_DECL + "<Desc>\n" + GENERATED + '''
-	<!-- Info panes: KDA, healing, structures (layout.toml [info_pane]). One box shared by all
+	<!-- Info panes: KDA, healing, siege (layout.toml [info_pane]). One box shared by all
 	     four info panes (talents' is FCJH_InfoPane); one hotkey each; all start hidden, and
 	     opening one closes the others. Each stats pane is our own copy of Blizzard's
 	     observer stats panel - the engine fills it, as it does our talents pane - with its
@@ -4539,7 +4776,7 @@ def stat_panes_layout(cfg):
 	     down: title, column headings, blue band (team totals), blue rows, red band, red rows;
 	     every row portrait-first. Chrome drawn over the rows lets the mouse through. -->
 	<Frame type="GameUI" name="GameUI" file="GameUI">
-''' + "".join(stat_pane(*p, geometry) for p in STAT_PANES) + '''
+''' + "".join(stat_pane(*p, geometry, cfg["info_pane"].get("rows")) for p in STAT_PANES) + '''
 		<!-- The hotkeys, all four panes (talents included) -->
 ''' + "".join(pane_toggle(k, c) for k, c in INFO_PANES) + '''	</Frame>
 </Desc>
@@ -4563,9 +4800,9 @@ def layout_order(layout_dir, extra=(), generated=None):
 # Exempt from [screen] padding: the top bar, centred on the top edge; Blizzard's minimap,
 # whose square hangs off the bottom by design ([minimap] bottom); and Blizzard's kill feed,
 # left where Blizzard puts it.
-PADDING_EXEMPT = {"blue_score", "blue_name", "blue_logo", "blue_level", "blue_talent_lead", "blue_bans",
+PADDING_EXEMPT = {"blue_pips", "blue_name", "blue_logo", "blue_level", "blue_talent_lead", "blue_bans",
                   "division", "logo_plate", "clock", "red_level", "red_talent_lead", "red_logo", "red_name",
-                  "red_score", "red_bans", "game_count", "top_backplate", "minimap", "kill_feed",
+                  "red_pips", "red_bans", "game_count", "top_backplate", "minimap", "kill_feed",
                   # the replay box's tab sits flush in the top-right corner; the box itself
                   # keeps the padding (user, 2026-10-16)
                   "replay_collapsed"}
@@ -4701,14 +4938,24 @@ def main():
     parser.add_argument("--check", action="store_true", help="fail if generated files are stale")
     args = parser.parse_args()
     cfg = load_config()
+    import obs          # here, not at the top: obs imports gen for the geometry
     if args.check:
         bad = stale(cfg)
         for rel in bad:
             print(f"stale: {rel.as_posix()} (run python tools/gen.py)")
-        return 1 if bad else 0
+        bad_obs = obs.stale(cfg)
+        for rel in bad_obs:
+            print(f"stale: studio/src/generated/{rel.as_posix()} (run python tools/gen.py)")
+        return 1 if bad or bad_obs else 0
     changed = write(cfg)
     print("\n".join(f"{'wrote' if (SOURCE / rel).exists() else 'removed'} {rel.as_posix()}"
                     for rel in changed) or "generated files up to date")
+    # the broadcast graphics (tools/obs.py): the same numbers, drawn for the studio
+    # obs.py writes to two places now - src/generated for the page, public/masks for the
+    # files a broadcaster downloads - so say where each one actually went
+    print("\n".join("wrote " + (obs.OUT / rel).resolve().relative_to(REPO).as_posix()
+                    for rel in obs.write(cfg))
+          or "the studio's generated files are up to date")
     return 0
 
 

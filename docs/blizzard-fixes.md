@@ -192,7 +192,7 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
   minimap's, a different box).
 - **Scrapped, rebuilt one piece at a time (user, 2026-10-19):** each try changed several things
   at once, so none could say which part breaks it. Now a separate test interface,
-  `FCJH_QTest.StormInterface` (src/tests/, none of FCJH's files in it), one change per build.
+  `FCJH_QTest.StormInterface` (interface/tests/, none of FCJH's files in it), one change per build.
   `FCJH_QuestTest` is gone from FCJH.
   - **Step 1:** a copy of Blizzard's leader panel, untouched, placed as Blizzard's but 150
     lower, Control+Shift+Q sending it Show / Hide as Tab does Blizzard's. Fills: a copy gets the

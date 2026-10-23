@@ -53,7 +53,7 @@ The other commands:
 |---|---|
 | `python tools/gen.py` | Rewrites the generated files and lists what changed. |
 | `python tools/gen.py --check` | Exits 1 if a generated file is stale or was edited by hand. |
-| `python tools/validate.py [dir]` | Validates an interface tree (default `src/FCJH.StormInterface`). |
+| `python tools/validate.py [dir]` | Validates an interface tree (default `interface/FCJH.StormInterface`). |
 | `python tools/validate.py --show <frame path>` | Prints a frame as the game would merge it: Blizzard's definition, every template and override applied. Run it before guessing what a frame is anchored to. |
 | `python tools/pack.py --no-deploy` | Builds without installing. |
 | `python tools/pack.py --release [--deploy]` | Builds the release (below). |
@@ -65,9 +65,9 @@ The other commands:
 **Profiles.**
 - **Dev** (the default) adds a build stamp on screen, top left: `FCJH DEV <version> <commit>[+] <time>`.
   The `+` means uncommitted changes. A stale stamp means the game is showing a cached build.
-  Any `src/dev/*.StormLayout` (experiments, probes) is added too. None of this is ever committed
-  into `src/` or shipped.
-- **`--release`** is exactly what `src/` holds. It refuses while `src/`, `layout.toml` or
+  Any `interface/dev/*.StormLayout` (experiments, probes) is added too. None of this is ever committed
+  into `interface/` or shipped.
+- **`--release`** is exactly what `interface/` holds. It refuses while `interface/`, `layout.toml` or
   `tools/` have uncommitted changes, so every release can be rebuilt from its commit. It writes
   `dist/v<version>/FCJH.StormInterface`, and installs it only with `--deploy`. Releases ship
   that file.
@@ -80,7 +80,7 @@ The other commands:
 | `tools/gen.py` | The design: how the plates, bars, panes and top bar are built from those numbers. Also the shared machinery (units, constants, textures, the generated-files bookkeeping). |
 | `tools/maps.py` | Each battleground: its minimap's place, its objective panel's parts, its banners. Measured art sizes are kept here, beside their reasons. |
 | `tools/inspect_card.py` | The inspect card, including what it reads from the game data (hero units, forms, command-card slots, resource names). |
-| `src/FCJH.StormInterface/.../FCJH_*.StormLayout` (the non-generated ones) | Hand-written XML for one-off structure: the top bar, the hidden HUD, the talents pane, the minimap, the replay box, the toggles. They map one to one onto Blizzard's files. |
+| `interface/FCJH.StormInterface/.../FCJH_*.StormLayout` (the non-generated ones) | Hand-written XML for one-off structure: the top bar, the hidden HUD, the talents pane, the minimap, the replay box, the toggles. They map one to one onto Blizzard's files. |
 
 The rule of thumb: **Python for anything arithmetic or repetitive, hand-written XML for
 one-off structure.** The user of FCJH never edits XML at all; they change `layout.toml`, or
@@ -88,7 +88,7 @@ describe the effect wanted.
 
 ## What it produces
 
-In `src/FCJH.StormInterface/` (committed, each generated file headed "GENERATED ... Do not
+In `interface/FCJH.StormInterface/` (committed, each generated file headed "GENERATED ... Do not
 edit by hand"):
 
 - **`FCJH_Constants.StormLayout`**: every `layout.toml` rect as layout-unit constants,

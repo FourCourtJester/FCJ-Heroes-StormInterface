@@ -12,6 +12,7 @@ Then publish them to the canvas, https://claude.ai/artifact/6MmAcxcKjfAAprCN3oc3
 (root design/canvas). Stock.dc.html is not written: it annotates the stock UI.
 """
 import json
+import math
 import re
 import subprocess
 import sys
@@ -34,7 +35,7 @@ S = lambda v: round(v * ROW["scale"])          # Blizzard's native cell units ->
 NARROW = S(gen.NARROW)                         # the bars narrow this much while the heroic shows
 LEAN = CELL.overlap / CELL.h                   # the plates' slant, across per down
 FG = {t: gen.fountain_rect(CFG, t) for t in ("blue", "red")}   # the plate fountain: (box, scale)
-STAMP = subprocess.run(["git", "-C", str(REPO), "log", "-1", "--format=%h %cs", "--", "tools", "layout.toml", "src"],   # the last commit that changed the build
+STAMP = subprocess.run(["git", "-C", str(REPO), "log", "-1", "--format=%h %cs", "--", "tools", "layout.toml", "interface"],   # the last commit that changed the build
                        capture_output=True, text=True).stdout.strip()
 
 # Uploaded to the canvas (Artifact asset store)
@@ -60,7 +61,7 @@ GOLD = "#E8B84A"
 
 def font_styles():
     """Our font styles (FontStyles.StormStyle): {name: (px, colour)}. Heights are layout units."""
-    text = (REPO / "src" / "FCJH.StormInterface" / "Base.StormData" / "UI" / "FontStyles.StormStyle").read_text(encoding="utf-8")
+    text = (REPO / "interface" / "FCJH.StormInterface" / "Base.StormData" / "UI" / "FontStyles.StormStyle").read_text(encoding="utf-8")
     out = {}
     for m in re.finditer(r'<Style name="(\w+)"([^>]*)/>', text):
         h = re.search(r'height="(\d+)"', m.group(2))
@@ -175,6 +176,13 @@ def plate(team, x0, y0, z, st, uid):
     rect = lambda r, fill, frac=1.0, right=False, extra="": (
         f'<rect x="{round(box(r)[0] + (1 - frac) * (box(r)[2] - box(r)[0]) * right, 1)}" y="{round(box(r)[1], 1)}" '
         f'width="{round((box(r)[2] - box(r)[0]) * frac, 1)}" height="{round(box(r)[3] - box(r)[1], 1)}" fill="{fill}"{extra}></rect>')
+    def leaned(mid0, mid1, t, bot, fill):
+        """A bar at the plates' lean, mid0..mid1 across its MIDDLE row (cell units): blue's
+        bottom edge sits half the slant's run further in, red's the other way."""
+        half = (1 if team == "blue" else -1) * gen.HeroCell.LEAN * (bot - t) / 2
+        p = [(mid0 - half, t), (mid1 - half, t), (mid1 + half, bot), (mid0 + half, bot)]
+        return f'<polygon points="{pts([(x0 + a * k, y0 + b * k) for a, b in p])}" fill="{fill}"></polygon>'
+
     heroic = st.get("heroic")
     dead = st.get("dead")
     narrow = rnarrow = 0                    # (the bars below are already narrowed)
@@ -193,10 +201,15 @@ def plate(team, x0, y0, z, st, uid):
     out.append(rect(g["health_backing"], "#0b0c14"))
     out.append(rect(g["mana_backing"], "#0b0c14"))
     if st.get("vikings"):
-        third = (hr - hl - narrow - 2 * gen.VIKING_GAP) / 3
-        for slot, frac in enumerate(st["vikings"]):
-            vl = hl + narrow + slot * (third + gen.VIKING_GAP)
-            out.append(rect((vl, ht, vl + third, hb), HP[team], frac))
+        # three bars at the plates' lean, meeting along one slanted line (gen.viking_bars):
+        # each one's middle row runs step wide, the mask taking half the slant's run off
+        # either end of its frame
+        vl, vr = gen.viking_span(CELL, team)
+        bars, _ = gen.viking_bars(vl, vr, hb - ht)
+        run = gen.HeroCell.LEAN * (hb - ht)
+        for (bl, br), frac in zip(bars, st["vikings"]):
+            mid0, mid1 = bl + run / 2, br - run / 2
+            out.append(leaned(mid0, mid0 + (mid1 - mid0) * frac, ht, hb, HP[team]))
     elif st.get("rexxar"):   # Blizzard's HeightOverride: Rexxar's bar runs full height (Misha's bar gone)
         out.append(rect((hl + narrow, ht, hr, eb), HP[team], st.get("hp", 1.0)))
     else:
@@ -401,13 +414,13 @@ DEMO = {   # stand-in numbers
     "kda": (["1", "1", "0", "13,660"], ["0", "0", "2", "13,572"],
             [["0", "0", "0", "1,532"], ["0", "0", "0", "2,252"], ["0", "0", "0", "6,130"], ["0", "1", "0", "2,787"], ["0", "0", "0", "959"],
              ["0", "0", "0", "2,117"], ["0", "0", "0", "3,767"], ["1", "0", "0", "2,789"], ["0", "0", "1", "1,913"], ["0", "0", "1", "2,986"]]),
-    "healing": (["6,402", "18,220", "4,915"], ["5,871", "16,004", "7,330"],
-                [["1,210", "0", "480"], ["2,004", "0", "0"], ["640", "18,220", "4,435"], ["1,988", "0", "0"], ["560", "0", "0"],
-                 ["1,002", "0", "2,210"], ["2,410", "16,004", "5,120"], ["980", "0", "0"], ["1,112", "0", "0"], ["367", "0", "0"]]),
-    "structures": (["41,230", "12,480", "18,904"], ["38,771", "9,960", "17,322"],
-                   [["6,120", "1,840", "3,410"], ["9,870", "3,210", "4,002"], ["4,410", "900", "3,115"], ["12,006", "4,480", "4,870"],
-                    ["8,824", "2,050", "3,507"], ["7,302", "1,010", "3,221"], ["10,580", "3,900", "3,788"], ["5,114", "1,200", "3,366"],
-                    ["9,640", "2,650", "3,519"], ["6,135", "1,200", "3,428"]]),
+    "healing": (["6,402", "18,220"], ["5,871", "16,004"],
+                [["1,210", "0"], ["2,004", "0"], ["640", "18,220"], ["1,988", "0"], ["560", "0"],
+                 ["1,002", "0"], ["2,410", "16,004"], ["980", "0"], ["1,112", "0"], ["367", "0"]]),
+    "siege": (["53,710", "18,904"], ["48,731", "17,322"],
+              [["7,960", "3,410"], ["13,080", "4,002"], ["5,310", "3,115"], ["16,486", "4,870"],
+               ["10,874", "3,507"], ["8,312", "3,221"], ["14,480", "3,788"], ["6,314", "3,366"],
+               ["12,290", "3,519"], ["7,335", "3,428"]]),
 }
 
 
@@ -418,7 +431,8 @@ def stats_pane(key):
     placed = gen.place_columns(columns, g["columns"])
     tb, tr, rows = DEMO[key]
     head_px, head_col = FONTS["FCJH_StatHeading"]
-    out = [f'<div style="{PANE_CSS}">', title_band(title.replace("  ", " "))]
+    sw = u(g["width"])                      # the stats panes are narrower than the talents pane
+    out = [f'<div style="{PANE_CSS.replace(f"width: {PANE_W}px", f"width: {sw}px")}">', title_band(title.replace("  ", " "), sw)]
     lbl = f"position: absolute; display: flex; align-items: center; justify-content: flex-end; {GAME}"
     for (_, _, name, x, w, _) in placed:
         out.append(f'<div style="{lbl} left: {u(x)}px; top: {u(g["title"])}px; width: {u(w)}px; height: {u(g["team_tops"][0] - g["title"])}px; '
@@ -426,10 +440,7 @@ def stats_pane(key):
     for t, team in enumerate(("blue", "red")):
         band_c = gen.TEAMS[t][2].split(",")
         y = g["team_tops"][t]
-        out.append(f'<div style="{abs_box(0, u(y), PANE_W, u(g["team_h"]))} background: rgba({",".join(band_c[1:])},{int(band_c[0]) / 255:.2f});"></div>')
-        tp, tc = FONTS[f"FCJH_StatTeam_{team.capitalize()}"]
-        out.append(f'<div style="{lbl} justify-content: flex-start; left: {u(gen.STAT_MARGIN)}px; top: {u(y)}px; height: {u(g["team_h"])}px; '
-                   f'font-size: {tp}px; font-weight: 600; letter-spacing: .06em; color: {tc};">{team.upper()}</div>')
+        out.append(f'<div style="{abs_box(0, u(y), sw, u(g["team_h"]))} background: rgba({",".join(band_c[1:])},{int(band_c[0]) / 255:.2f});"></div>')
         vp, vc = FONTS[f"FCJH_StatTotal_{team.capitalize()}"]
         for (_, _, _, x, w, _), v in zip(placed, (tb, tr)[t]):
             out.append(f'<div style="{lbl} left: {u(x)}px; top: {u(y)}px; width: {u(w)}px; height: {u(g["team_h"])}px; '
@@ -437,7 +448,7 @@ def stats_pane(key):
     for i, y in enumerate(g["row_tops"]):
         team = "blue" if i < 5 else "red"
         vp, vc = FONTS[f"FCJH_StatValue_{team.capitalize()}"]
-        out.append(portrait(u(gen.STAT_MARGIN), u(y + 10), team, f"{(i + 1) % 10}"))
+        out.append(portrait(u(g["border"]), u(y), team, f"{(i + 1) % 10}", *map(u, g["portrait"])))
         for (_, _, _, x, w, _), v in zip(placed, rows[i]):
             out.append(f'<div style="{lbl} left: {u(x)}px; top: {u(y + 12)}px; width: {u(w)}px; height: {u(gen.STAT_ROW_H - 12)}px; '
                        f'font-size: {vp}px; font-weight: 600; color: {vc};">{v}</div>')
@@ -551,7 +562,7 @@ def event_logo_svg():
             f'<text x="{f1(cx)}" y="{f1(cy + 11)}" text-anchor="middle" fill="#F7C08A" font-family="Barlow Condensed, sans-serif" font-weight="600" font-size="12" letter-spacing="1">LOGO</text>')
 
 
-BANS = 3     # bans a side, as the canvas draws them: three slots fill [element.*_bans], square
+BANS = CFG["top_bar"]["bans"]   # bans a side ([top_bar]); the slots fill *_bans, drawn square
 
 
 def ban_slots(team):
@@ -561,6 +572,22 @@ def ban_slots(team):
                    for i in range(BANS))
 
 
+def score_pips(team, wins):
+    """The series score: hexagon pips, no plate, filled from the name outward (gen's
+    top_bar_geometry; a best of 5 here, so three a side of the four [top_bar] keeps room for)."""
+    g = gen.top_bar_geometry(CFG)
+    r = g["pip"]["r"]
+    out = []
+    for i, (cx, cy) in enumerate(g["pips"][team][:3]):
+        pts = " ".join(f"{cx + r * math.cos(math.radians(30 + 60 * k)):.1f},{cy + r * math.sin(math.radians(30 + 60 * k)):.1f}"
+                       for k in range(6))
+        fill = COL[team]["line"] if i < wins else "none"
+        out.append(f'<svg width="1920" height="{f1(g["height"])}" viewBox="0 0 1920 {f1(g["height"])}" '
+                   f'style="position: absolute; left: 0; top: 0;" aria-label="Series score pip">'
+                   f'<polygon points="{pts}" fill="{fill}" fill-opacity="{1 if i < wins else 0}" stroke="#F7C08A" stroke-width="2"/></svg>\n')
+    return "".join(out)
+
+
 def top_bar(levels=("12", "9")):
     """The top bar as built: our backplate texture, Blizzard's hexagon, level numbers and clock;
     and OBS's data, stand-ins in orange. OBS draws data only, never art (user, 2026-10-16): team
@@ -568,14 +595,13 @@ def top_bar(levels=("12", "9")):
     plates under them are the interface's (white: the name plates; the rest come with the art
     pass)."""
     b = []
-    for team, score in (("blue", "1"), ("red", "2")):
-        b.append(at(f"{team}_score", "ob t", f'<span style="font-size: 34px; {GAME}">{score}</span>', CENTRE))
-        b.append(at(f"{team}_name", "ui t", '<span style="font-size: 22px; color: #F7C08A;">Team name</span>', CENTRE))
+    for team, wins in (("blue", 1), ("red", 2)):
+        b.append(score_pips(team, wins))
+        b.append(at(f"{team}_name", "ob t", '<span style="font-size: 22px;">Team name</span>', CENTRE))
         b.append(at(f"{team}_logo", "ob t", '<span style="font-size: 12px;">Logo</span>', CENTRE))
         b.append(ban_slots(team))
     b.append(at("division", "ob t", '<span style="font-size: 12px;">Division 1</span>', CENTRE))
     b.append(at("game_count", "ob t", '<span style="font-size: 12px;">Game 3 of 5</span>', CENTRE))
-    b.append(at("event_name", "ob t", '<span style="font-size: 14px;">Tournament name</span>', CENTRE))
     x, y, w, h = R["top_backplate"]
     b.append(f'<img src="{BACKPLATE}" alt="Our top bar backplate texture, as built" style="position: absolute; left: {x}px; top: {y}px; width: {w}px; height: {h}px;">\n')
     b.append(f'<svg width="1920" height="140" viewBox="0 0 1920 140" style="position: absolute; left: 0; top: 0;" aria-label="Blizzard\'s centre hexagon">{hexagon_svg()}</svg>\n')
@@ -612,7 +638,7 @@ def main_board():
     b.append(f'<div style="position: absolute; left: {PANE_X}px; top: {PANE_Y}px;">' + stats_pane("kda") + '</div>\n')
     ix, iy, iw, ih = R["inspect"]
     b.append(f'<div class="dem" style="left: {ix}px; top: {iy}px; width: {iw}px; height: {ih}px; background: transparent;"></div>\n')
-    b.append(f'<div class="chip s" style="left: {PANE_X + PANE_W + 12}px; top: {PANE_Y + 90}px; width: 270px;">Info pane · {PANE_W} × {PANE_H} · Ctrl+1 talents, 2 KDA, 3 healing, 4 structures (KDA shown)</div>\n')
+    b.append(f'<div class="chip s" style="left: {PANE_X + PANE_W + 12}px; top: {PANE_Y + 90}px; width: 270px;">Info pane · {PANE_W} × {PANE_H} · Ctrl+1 talents, 2 KDA, 3 healing, 4 siege (KDA shown)</div>\n')
     b.append(f'<div class="chip s" style="left: {ix + iw + 12}px; top: {iy + ih - 120}px; width: 300px; border: 1px solid #6FD3D3;">Teal: the inspect card, {iw} × {ih}, while a unit is selected (same left column; bottom at y {iy + ih})</div>\n')
     b.append(at("map_objectives", "dem", '<div class="t" style="font-size: 14px;">Map objectives · per map, at THE GAP (Maps board)</div>', CENTRE))
     mm = CFG["minimap"]
@@ -763,7 +789,8 @@ def plate_board():
     # --- special cases (2x)
     cy_ = 2490
     b.append(heading(48, cy_ - 150, "Special plates",
-                     f"Lost Vikings: three bars in thirds, {gen.VIKING_GAP} units apart (Baleog, Erik, Olaf), each with its own death timer. "
+                     f"Lost Vikings: three bars across the health bar, each cut to the plates' lean so neighbours meet on one slanted line "
+                     f"under a separator (Baleog, Erik, Olaf), each with its own death timer. "
                      "Rexxar: Blizzard's full-height bar, no Misha bar or timer. Abathur's clone: the Ultimate Evolution icon in the CC spot and CLONE on the bar.", 1600))
     specials = [("Lost Vikings", {"label": "VIKINGS", "vikings": (1.0, 0.45, 0.8), "mp": 0}),
                 ("Rexxar", {"label": "REXXAR", "rexxar": True, "hp": 0.7}),
@@ -802,7 +829,7 @@ def panes_board():
                 f"At {PANE_X}, {PANE_Y}. One pane at a time, Ctrl+1-4; the X closes it. Stats panes from tools/gen.py (stat_geometry, place_columns); "
                 f"numbers are stand-ins. Build {STAMP}.", 2100)]
     panes = [("TALENTS · Ctrl+1", talents_pane()), ("KDA · Ctrl+2", stats_pane("kda")),
-             ("HEALING · Ctrl+3", stats_pane("healing")), ("STRUCTURES · Ctrl+4", stats_pane("structures"))]
+             ("HEALING · Ctrl+3", stats_pane("healing")), ("SIEGE · Ctrl+4", stats_pane("siege"))]
     for i, (label, html) in enumerate(panes):
         x = 48 + i * 542
         b.append(f'<div class="t" style="position: absolute; left: {x}px; top: 150px; font-size: 18px; color: #F2C94C;">{label}</div>\n')
@@ -813,8 +840,10 @@ def panes_board():
     b.append(f'<div class="s" style="position: absolute; left: 590px; top: 790px; width: 1576px; font-size: 15px; color: #C9CAD6;">'
              f'Title {CFG["info_pane"]["title_height"]} px, headings {CFG["info_pane"]["header_height"]} px, team bands {CFG["info_pane"]["team_height"]} px. '
              f'Rows {u(gen.STAT_ROW_H)} px tall, {u(gap)} px apart, spread to fill the box so switching panes never resizes it. '
-             f'Numbers right-aligned in columns {u(gen.STAT_SHARE_W)} px per share (a count 1, a big number 2); the spare room is shared as equal gaps, '
-             f'so the last column ends {u(gen.STAT_MARGIN)} px from the edge, like the portrait on the left.</div>\n')
+             f'Numbers right-aligned in columns sized to the widest number: {u(gen.STAT_WIDTHS["count"])} px for a count (XX.YY), '
+             f'{u(gen.STAT_WIDTHS["big"])} px for a big number (XXX,XXX), at least {u(gen.STAT_GAP)} px apart; the stats panes are {u(g["width"])} px wide '
+             f'(the widest one\'s need) and the spare room in the others is shared as equal gaps, '
+             f'so the last column ends {u(gen.STAT_MARGIN)} px from the edge; the portrait sits on the left border.</div>\n')
     return page("Info panes, as built", w, h, "".join(b)), (w, h)
 
 
@@ -858,12 +887,15 @@ def obs_areas():
     """The OBS areas' rects and the logos' clearance from the wings, for the top bar board."""
     geo = gen.top_backplate_geometry(CFG)
     r = lambda k: f"{R[k][0]}, {R[k][1]} · {R[k][2]} × {R[k][3]}"
-    lx, ly, lw, _ = R["blue_logo"]
-    gap = round(geo["ends"][0] + LEAN * ly - (lx + lw), 1)       # the wing's slanted end at the logo's top
-    return (f"Blue, outside in: score {r('blue_score')}, name {r('blue_name')}, logo {r('blue_logo')} ({gap} px clear of the wing). "
-            f"The top row is the wings' height. Second row: bans under the name, {r('blue_bans')}, {BANS} slots; division {r('division')} and game count "
-            f"{r('game_count')} under the wings, each as wide as its wing's bottom edge. Red mirrors blue about x 960. The tournament: "
-            f"its logo in the hexagon's middle, {r('event_logo')}; its name under the clock, {r('event_name')} (proposed).")
+    g = gen.top_bar_geometry(CFG)
+    return (f"Blue, outside in: the score's pips {r('blue_pips')} (a best of 7's four, {CFG['top_bar']['pip_off_name']} px off the name and "
+            f"{CFG['top_bar']['pip_gap']} apart, filled from the name outward), the name plate {r('blue_name')} with its logo plate {r('blue_logo')} "
+            f"lapping the inner end so the two rims make one seam at x {f1(g['seam'])}. The band is the wings' height and its inner end is the wing's "
+            f"({f1(geo['ends'][0])} along the top edge). Second row: bans under the name, {r('blue_bans')}, {BANS} tiles at the plates' lean; the division "
+            f"tab {r('division')} and the game tab {r('game_count')} hung from the band to the tiles' bottom, their outer sides the seam carried down and "
+            f"their inner sides {CFG['top_bar']['tab_clear']} px off Blizzard's hexagon. Red mirrors blue about x 960 - except the two tabs, which follow "
+            f"the hexagon, 2.75 px left of it. The tournament's logo goes in the hexagon's middle, {r('event_logo')}; its name has left the clock for a tab "
+            f"of its own, still to settle. Every box from layout.toml [top_bar] (gen.top_bar_geometry), so the interface and the OBS layer can't drift apart.")
 
 
 def topbar_board():
@@ -963,7 +995,7 @@ def visual_board():
     b.append('<div style="display: flex; flex-direction: column; gap: 12px;"><div class="t" style="font-size: 20px; color: #F2C94C;">Colour, today</div>' + "".join(colours) +
              '<div class="s" style="font-size: 14px; color: #FFB3B6; margin-top: 4px;">Still four blues and four reds: health/backplate, pane numbers, bands, core. The backplate already took the health bars\' pair.</div></div>\n')
     styles = [("FCJH_StatHeading", "COLUMN HEADING"), ("FCJH_StatValue_Blue", "2,252 · value"), ("FCJH_StatTotal_Blue", "13,660 · team total, glow"),
-              ("FCJH_StatTeam_Blue", "BLUE · team band"), ("FCJH_CCText", "STUNNED · CC text, outlined"), ("FCJH_HeroicCooldown", "37 · cooldown"),
+              ("FCJH_CCText", "STUNNED · CC text, outlined"), ("FCJH_HeroicCooldown", "37 · cooldown"),
               ("FCJH_InspectName", "Auriel · inspect name"), ("FCJH_InspectSub", "PLAYER · inspect sub"), ("FCJH_InspectSection", "ABILITIES · section"),
               ("FCJH_InspectTier", "20 · tier level")]
     type_rows = [f'<div style="{GAME} font-size: {sv(n)[0]}px; font-weight: 600; color: {sv(n)[1] if sv(n)[1] not in ("#ffffff", None) else "#FAF9F5"};">{s} · {sv(n)[0]} px</div>' for n, s in styles]
@@ -1054,19 +1086,20 @@ def spec_board():
         ("Top bar backplate", f"{gen.TOP_BACKPLATE_SIZE[0]} × {gen.TOP_BACKPLATE_SIZE[1]} texture at x {R['top_backplate'][0]}", "game", "Variant C, chrome. The look the rest of the UI follows"),
         ("Team levels + flame", f"{xs('blue_level')} at x {R['blue_level'][0]} / {R['red_level'][0]}", "game", "Blizzard's numbers; the talent-lead flame works"),
         ("Hexagon, clock", "Blizzard's places", "game", "Towers and kills removed"),
-        ("Name plates", f"{obs('blue_name')} / {f1(R['red_name'][0])}", "unk", "Ours, in the art pass; OBS draws the name on them"),
+        ("Name plates", f"{obs('blue_name')} / {f1(R['red_name'][0])}", "obs", "OBS's own art, the one exception: only OBS knows whether a tournament has logos. Without OBS, no name plates"),
         ("Team names", "On the name plates", "obs", "Data only: OBS never draws art (user, 2026-10-16)"),
-        ("Team logos", f"{obs('blue_logo')} / {f1(R['red_logo'][0])}", "obs", "8 px clear of the wings' ends"),
-        ("Series score", f"{obs('blue_score')} / {f1(R['red_score'][0])}", "obs", "A number or pips: to decide"),
-        ("Bans", f"{obs('blue_bans')} / {f1(R['red_bans'][0])}", "obs", f"The game's bans, {BANS} slots a side, under the name"),
-        ("Tournament logo", f"{obs('event_logo')}, the hexagon's middle", "obs", "Over Blizzard's hexagon"),
-        ("Tournament name", f"{obs('event_name')}, under the clock", "obs", "Proposed 2026-10-16"),
-        ("Division", f"{obs('division')}, under blue's wing", "obs", "With the bracket stage if it fits"),
-        ("Game count", f"{obs('game_count')}, under red's wing", "obs", "Game N of M"),
+        ("Team logos", f"{obs('blue_logo')} / {f1(R['red_logo'][0])}", "obs", "A logo plate lapping the name plate's inner end, one seam between them"),
+        ("Series score", f"{obs('blue_pips')} / {f1(R['red_pips'][0])}", "obs", "Hexagon pips, no plate: 2 a side in a Bo3, 3 in a Bo5, 4 in a Bo7, filled from the name outward"),
+        ("Bans", f"{obs('blue_bans')} / {f1(R['red_bans'][0])}", "obs", f"The game's bans, {BANS} tiles a side under the name, at the plates' lean. Optional: a toggle"),
+        ("The band's own plates", "The tabs, the ban tiles, the name plates", "obs", "None of them drawn in game (user, 2026-10-22): the interface must be usable without OBS, so a plate nothing may fill stays out of the build. They belong to the OBS layer"),
+        ("Tournament logo", f"{obs('event_logo')}, the hexagon's middle", "obs", "Over Blizzard's hexagon, masked to it (event_mask.png)"),
+        ("Tournament name", "A tab of its own", "unk", "It has left the clock; where exactly is still to settle (user, 2026-10-19)"),
+        ("Division", f"{obs('division')}, hung from blue's wing", "obs", "With the bracket stage if it fits. A generic panel: what goes in it is the operator's call"),
+        ("Game count", f"{obs('game_count')}, hung from red's wing", "obs", "Game N of M"),
         ("Kill feed", "Blizzard's own, top-left", "game", "Not moved: its rows grow rightward, so multi-kills ran off a right-hand feed"),
         ("Replay controls", f"{R['replay'][0]}, {R['replay'][1]} · {xs('replay')}, top-right", "game", f"{key('replay')} slides them out, leaving a tab flush in the corner. Replays only"),
         ("Operator keys", " · ".join(key(k) for k, _ in TOGGLES), "game", "The replay box, chat, the inspect card, player names. None a Blizzard key (validate.py checks)"),
-        ("Info panes", f"{PANE_X}, {PANE_Y} · {PANE_W} × {PANE_H}", "game", "Ctrl+1-4: talents, KDA + hero dmg, healing, structures + XP. One at a time"),
+        ("Info panes", f"{PANE_X}, {PANE_Y} · {PANE_W} × {PANE_H}", "game", "Ctrl+1-4: talents, KDA + hero dmg, healing, siege + XP. One at a time"),
         ("Inspect card", f"{R['inspect'][0]}, {R['inspect'][1]} · {xs('inspect')}", "game", f"Shows when Blizzard's small inspector would. Anything not a hero gets a short card. {key('inspect')} slides it off left"),
         ("Blizzard's small inspector", "Parked off screen", "game", "Never shows; its visibility drives our card"),
         ("Player HUD", "Hidden", "game", "Ctrl+5 is Blizzard's observe-player key"),

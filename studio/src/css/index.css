@@ -1,0 +1,109 @@
+/*
+ * Styling is Tailwind: write classes in your components rather than rules here.
+ * New to it? Start at https://tailwindcss.com/docs/styling-with-utility-classes
+ */
+@import 'tailwindcss';
+@import '@single-studio/core/styles.css';
+
+/* Tailwind only scans files it knows about, and the framework's components live in
+   node_modules. Without this their classes get stripped from the build. */
+@source '../../node_modules/@single-studio/core/dist';
+
+/* Shared CSS goes here, or in a file imported above -- an `@import` has to come
+   before any rule. CSS only one graphic uses is better imported from that graphic,
+   so it ships with it rather than with every other source. */
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Your own CSS goes below.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* The board goes side by side one breakpoint earlier than the framework does.
+   `.ss-row` stacks its controls one per line and shares the line from 48rem (768px) up,
+   which it does by swapping two custom properties: the flex basis every control starts
+   from, and the label-height drop that keeps an unlabelled control - a switch, a button -
+   level with its neighbours' inputs rather than with their labels. Both have to move
+   together or a Row going horizontal at one width starts aligning properly at another.
+
+   40rem (640px) here, because the dock this runs in is narrow and 768 was leaving a lot
+   of air on a board that is mostly two-up (user, 2026-10-23).
+
+   Unlayered on purpose. The framework puts its own rules in `@layer components` so that
+   a studio's plain CSS wins whatever the source order says - this is the way in it
+   leaves open, not a specificity fight. */
+@media (min-width: 40rem) {
+  .ss-row {
+    --ss-basis: 0%;
+    --ss-label-offset: 1.25rem;
+  }
+}
+
+/* One padding, at every width.
+   The framework re-pads the whole board at 640px - the panels, the page around them, the gap
+   between them and the sticky header - through Tailwind utilities baked into its markup
+   (`p-3 sm:p-4` and friends). It is not new in 0.13.0; 0.12.0 carries the same classes, and it
+   only became visible here once the panels folded and the board got short enough to notice.
+
+   Nobody asked for it, so it is pinned (user, 2026-10-23). The values are the ones from 640 up,
+   which is what the board has been looked at in - so the narrow end stops being tighter rather
+   than the wide end getting tighter. Two numbers to change if that is the wrong way round.
+
+   Unlayered, because these are utilities: `@layer utilities` beats `@layer components`, and
+   unlayered CSS beats both. `.ss-control > main` is structural because that element carries no
+   class of its own - see docs/single-studio-reports.md, which asks upstream for a hook and for
+   these to be custom properties the way `.ss-row`'s already are. */
+.ss-control {
+  --fcjh-panel-pad: 1rem;
+  --fcjh-bar-pad-y: 0.75rem;
+}
+
+.ss-panel {
+  padding: var(--fcjh-panel-pad);
+}
+
+.ss-control > main {
+  padding: var(--fcjh-panel-pad);
+  gap: var(--fcjh-panel-pad);
+}
+
+.ss-control-bar {
+  padding: var(--fcjh-bar-pad-y) var(--fcjh-panel-pad);
+}
+
+/* The image picker is a fixed, compact width.
+   Left alone its dropdown is as wide as the longest key in the library, because that is how a
+   <select> sizes itself - so the control grew every time an asset was added, and on a 640px
+   board it was already wider than the team name beside it. With `col-auto` on the cell, which
+   refuses to shrink, a realistically long key ("northwind-esports-primary-logo-2026") squeezed
+   the name field to 25px. Measured, not guessed.
+
+   The preview is what identifies the image; the key beside it is a convenience, so it gets a
+   glimpse and the chevron rather than its full length (user, 2026-10-23). One number: 4.5rem
+   is ~148px of picker and ~243px of name at 640. Drop it to 2.5rem for the preview, the arrow
+   and nothing else.
+
+   So the control scales, and is only CAPPED where the line is tight (user, 2026-10-23):
+
+     under 40rem   one control per line - it fills it, which is the framework's own default
+                   and wants no rule at all
+     40 - 48rem    sharing a line with a name that needs the room: scales, up to the cap
+     48rem and up  enough line for everyone: scales with whatever its share is, no cap
+
+   A max-width and not a width, which is the whole difference from the first attempt: pinned
+   to a size it sat at 72px in a 534px row, wasting the line the other way round.
+
+   This is a stand-in for the rule that should exist, which is a cap on `col-auto` itself -
+   the cause is the sizing MODE, not the width (user, 2026-10-23). A studio cannot write that
+   one: `sm:col-auto` puts the class on the element at every width while its flex rule only
+   applies above the breakpoint, so matching the class would cap the control on the lines
+   where it has to fill. docs/single-studio-reports.md asks for it upstream. The cost of the
+   stand-in is a row of two pickers, which has room to spare and gets capped anyway. */
+@media (min-width: 40rem) and (max-width: 47.9375rem) {
+  .ss-image-picker {
+    max-width: var(--fcjh-picker-max);
+  }
+}
+
+.ss-control {
+  /* the whole control - preview, dropdown and magnifier - at its tightest */
+  --fcjh-picker-max: 9.25rem;
+}

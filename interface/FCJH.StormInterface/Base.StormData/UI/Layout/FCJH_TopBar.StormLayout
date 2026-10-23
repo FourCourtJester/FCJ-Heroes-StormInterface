@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+	<!-- Top bar, first pass: strip Blizzard's observer top bar down to what we keep, and move
+	     the per-team pieces that now belong with the hero rows at the bottom.
+
+	     Blizzard's backplate is ONE image (TopBarBacking, @UI/obs_bar_middle_bg: the wings,
+	     level plates and the towers/kills tray under the clock). The hexagon is a separate
+	     overlay on top of it (TopBarLogoOverlay, @UI/obs_bar_middle_logo). So:
+	       - backplate hidden with Alpha 0, NOT parked: the level labels, XP bars, core frames,
+	         and both hero containers all anchor to it - parking it drags them off-screen
+	       - hexagon and clock left as they are, now floating on their own
+	       - team levels moved up to the top edge (blue_level, red_level) on our backplate
+	         (FCJH_TopBackplate, one texture: chrome-rimmed wings with the team colours
+	         strongest at their outer ends, and a plate round the hexagon - layout.toml
+	         [top_backplate]); the division and game tabs' places are under them, drawn by OBS
+	         and nothing without it (layout.toml [top_bar])
+	       - towers / kills counters parked (the icons beside them were backplate art)
+	       - team XP: on each hero row's top edge, the full width of that edge; core health on
+	         top of it at the row's inner end (blue_xp, red_xp, blue_core, red_core: placed by
+	         tools/gen.py from [team_xp] / [team_core]). Both are cut to the plates' slant: our
+	         parallelogram textures for the tracks; the fills are plain colour cut by a
+	         mask (FCJH_XPMask / FCJH_CoreMask), because the engine stretches a fill to its
+	         value and a slanted fill texture squashes as the bar drains (FCJH_XP_* / FCJH_CORE_*).
+	         Blizzard's frame art around both is hidden, and the XP fill art (a thin glowing
+	         line drawn for a 156 x 17 box) replaced. The core bar keeps Blizzard's size and
+	         its show-when-needed logic. -->
+	<Frame type="GameUI" name="GameUI" file="GameUI">
+		<Frame type="Frame" name="UIContainer">
+			<Frame type="Frame" name="FullscreenUpperContainer">
+				<Frame type="Frame" name="ObserverHeroOverviewPanel">
+					<Frame type="Frame" name="ObserverTopPanel">
+						<Frame type="Image" name="TopBarBacking"><Alpha val="0"/></Frame>
+
+						<!-- Team levels: on the top edge, on our backplate. The texture is drawn 1:1 at
+						     1080p and centred on Blizzard's hexagon, which sits on top of it (600). -->
+						<Frame type="Image" name="FCJH_TopBackplate">
+							<Anchor side="Top" relative="$GameUI" pos="Min" offset="#FCJH_TOP_BACKPLATE_T"/>
+							<Anchor side="Left" relative="$GameUI" pos="Mid" offset="#FCJH_TOP_BACKPLATE_L"/>
+							<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_TOP_BACKPLATE_B"/>
+							<Anchor side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_TOP_BACKPLATE_R"/>
+							<Texture val="#FCJH_TOP_BACKPLATE"/>
+							<RenderPriority val="490"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<!-- The talent-advantage flame (2026-09-29). The observer bar never
+						     had one; Blizzard's player top bar does (PartyFrame TeamLevelInfo), and the
+						     engine shows it there while a team is a talent tier ahead. That party frame
+						     exists (hidden) for observers too, so ours copies its flame and shows it
+						     (by Alpha, like the fountain marker) whenever theirs is showing. -->
+						<Frame type="Frame" name="FCJH_BlueAdvantage" template="PartyFrame/TeamLevelInfoTemplate/TeamTalentAdvantageFrame">
+							<Anchor side="Bottom" relative="$parent/Team1LevelLabel" pos="Max" offset="0"/>
+							<Anchor side="Left"   relative="$parent/Team1LevelLabel" pos="Mid" offset="-2"/>
+							<Anchor side="Right"  relative="$parent/Team1LevelLabel" pos="Mid" offset="-2"/>
+							<Visible val="true"/>
+							<Alpha val="0"/>
+							<RenderPriority val="495"/>
+							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_Ahead">
+								<DefaultState val="No"/>
+								<State name="Yes">
+									<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1LevelInfo/TeamTalentAdvantageFrame" Visible="true"/>
+									<Action type="SetProperty" frame="$this" Alpha="255"/>
+									<Action type="SendEvent" frame="$this" event="SetBlue"/>
+								</State>
+								<State name="No">
+									<Action type="SetProperty" frame="$this" Alpha="0"/>
+								</State>
+							</StateGroup>
+						</Frame>
+						<Frame type="Label" name="Team1LevelLabel">
+							<RenderPriority val="500"/>
+							<Anchor side="Top" relative="$parent/FCJH_TopBackplate" pos="Min" offset="#FCJH_BLUE_LEVEL_T"/>
+							<Anchor side="Left" relative="$parent/FCJH_TopBackplate" pos="Min" offset="#FCJH_BLUE_LEVEL_L"/>
+							<Anchor side="Bottom" relative="$parent/FCJH_TopBackplate" pos="Min" offset="#FCJH_BLUE_LEVEL_B"/>
+							<Anchor side="Right" relative="$parent/FCJH_TopBackplate" pos="Min" offset="#FCJH_BLUE_LEVEL_R"/>
+							<Width val="0"/>
+							<Unclipped val="true"/>
+						</Frame>
+						<!-- The talent-advantage flame (2026-09-29). The observer bar never
+						     had one; Blizzard's player top bar does (PartyFrame TeamLevelInfo), and the
+						     engine shows it there while a team is a talent tier ahead. That party frame
+						     exists (hidden) for observers too, so ours copies its flame and shows it
+						     (by Alpha, like the fountain marker) whenever theirs is showing. -->
+						<Frame type="Frame" name="FCJH_RedAdvantage" template="PartyFrame/TeamLevelInfoTemplate_R/TeamTalentAdvantageFrame">
+							<Anchor side="Bottom" relative="$parent/Team2LevelLabel" pos="Max" offset="0"/>
+							<Anchor side="Left"   relative="$parent/Team2LevelLabel" pos="Mid" offset="-2"/>
+							<Anchor side="Right"  relative="$parent/Team2LevelLabel" pos="Mid" offset="-2"/>
+							<Visible val="true"/>
+							<Alpha val="0"/>
+							<RenderPriority val="495"/>
+							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_Ahead">
+								<DefaultState val="No"/>
+								<State name="Yes">
+									<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2LevelInfo/TeamTalentAdvantageFrame" Visible="true"/>
+									<Action type="SetProperty" frame="$this" Alpha="255"/>
+									<Action type="SendEvent" frame="$this" event="SetRed"/>
+								</State>
+								<State name="No">
+									<Action type="SetProperty" frame="$this" Alpha="0"/>
+								</State>
+							</StateGroup>
+						</Frame>
+						<Frame type="Label" name="Team2LevelLabel">
+							<RenderPriority val="500"/>
+							<Anchor side="Top" relative="$parent/FCJH_TopBackplate" pos="Min" offset="#FCJH_RED_LEVEL_T"/>
+							<Anchor side="Left" relative="$parent/FCJH_TopBackplate" pos="Min" offset="#FCJH_RED_LEVEL_L"/>
+							<Anchor side="Bottom" relative="$parent/FCJH_TopBackplate" pos="Min" offset="#FCJH_RED_LEVEL_B"/>
+							<Anchor side="Right" relative="$parent/FCJH_TopBackplate" pos="Min" offset="#FCJH_RED_LEVEL_R"/>
+							<Width val="0"/>
+							<Unclipped val="true"/>
+						</Frame>
+
+						<!-- Team XP -->
+						<Frame type="Image" name="Team1XPUnitStatusFrameBgImage"><Alpha val="0"/></Frame>
+						<Frame type="Image" name="Team2XPUnitStatusFrameBgImage"><Alpha val="0"/></Frame>
+						<Frame type="Image" name="FCJH_BlueXPTrack">
+							<Anchor side="Top"    relative="$GameUI" pos="Max" offset="#FCJH_BLUE_XP_T"/>
+							<Anchor side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_BLUE_XP_L"/>
+							<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_BLUE_XP_B"/>
+							<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_BLUE_XP_R"/>
+							<Texture val="#FCJH_XP_TRACK_BLUE"/>
+							<RenderPriority val="100"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<Frame type="Image" name="FCJH_RedXPTrack">
+							<Anchor side="Top"    relative="$GameUI" pos="Max" offset="#FCJH_RED_XP_T"/>
+							<Anchor side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_RED_XP_L"/>
+							<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_RED_XP_B"/>
+							<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_RED_XP_R"/>
+							<Texture val="#FCJH_XP_TRACK_RED"/>
+							<RenderPriority val="100"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<!-- The row frames live in Team1/Team2HeroOverview (below), over the plates -->
+						<Frame type="TeamVeterancyUnitStatusFrame" name="Team1XPUnitStatusFrame">
+							<Anchor side="Top"    relative="$GameUI" pos="Max" offset="#FCJH_BLUE_XP_T"/>
+							<Anchor side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_BLUE_XP_L"/>
+							<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_BLUE_XP_B"/>
+							<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_BLUE_XP_R"/>
+							<Width val="0"/>
+							<Height val="0"/>
+							<Unclipped val="true"/>
+							<!-- the slant: a mask over the bar (the fill stretches, so it's plain colour) -->
+							<Frame type="Frame" name="FCJH_XPMask">
+								<Anchor relative="$parent"/>
+								<AlphaMaskTexture val="#FCJH_XP_MASK_BLUE"/>
+								<AlphaMaskSiblings val="true"/>
+								<RenderPriority val="1"/>  <!-- as Blizzard's own bar mask (HeroStatus ImageMaskFrame) -->
+								<AcceptsMouse val="false"/>
+							</Frame>
+							<Frame type="UnitStatusVeterancyBar" name="XPBar">
+								<Texture val="#FCJH_XP_FILL_BLUE"/>
+								<AlphaMaskTexture val="#FCJH_XP_MASK_BLUE"/>  <!-- and on the bar itself (the sibling mask alone didn't cut it in game) -->
+								<Tiled val="false" index="0"/>  <!-- stretched, so the fill's bevel keeps the bar's height -->
+							</Frame>
+						</Frame>
+						<Frame type="TeamVeterancyUnitStatusFrame" name="Team2XPUnitStatusFrame">
+							<Anchor side="Top"    relative="$GameUI" pos="Max" offset="#FCJH_RED_XP_T"/>
+							<Anchor side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_RED_XP_L"/>
+							<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_RED_XP_B"/>
+							<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_RED_XP_R"/>
+							<Width val="0"/>
+							<Height val="0"/>
+							<Unclipped val="true"/>
+							<!-- the slant: a mask over the bar (the fill stretches, so it's plain colour) -->
+							<Frame type="Frame" name="FCJH_XPMask">
+								<Anchor relative="$parent"/>
+								<AlphaMaskTexture val="#FCJH_XP_MASK_RED"/>
+								<AlphaMaskSiblings val="true"/>
+								<RenderPriority val="1"/>  <!-- as Blizzard's own bar mask (HeroStatus ImageMaskFrame) -->
+								<AcceptsMouse val="false"/>
+							</Frame>
+							<Frame type="UnitStatusVeterancyBar" name="XPBar">
+								<Texture val="#FCJH_XP_FILL_RED"/>
+								<AlphaMaskTexture val="#FCJH_XP_MASK_RED"/>  <!-- and on the bar itself (the sibling mask alone didn't cut it in game) -->
+								<Tiled val="false" index="0"/>  <!-- stretched, so the fill's bevel keeps the bar's height -->
+							</Frame>
+						</Frame>
+
+						<!-- Core health: blue anchors by its right edge, red by its left (Blizzard's
+						     own sides); the fixed 300 x 100 frame keeps its size. Blizzard's
+						     backing art off; our slanted track under the bar, the bar's
+						     fill swapped for our team colour (untiled, untinted; bevelled, [bar_bevel]), all cut to the
+						     slant by FCJH_CoreMask. Its own chrome line round it on top
+						     (FCJH_CoreChrome, [team_core] frame_width), a child so it shows only
+						     when Blizzard shows the core. The track and the sibling mask sit in a
+						     box of their own (FCJH_CoreTrackBox) so the mask can't reach the chrome
+						     (it never cut the bar either: the bar carries its own mask). -->
+						<Frame type="UnitStatusFrame" name="Team1CoreUnitStatus">
+							<Anchor side="Top"   relative="$GameUI" pos="Max" offset="#FCJH_BLUE_CORE_FRAME_T"/>
+							<Anchor side="Right" relative="$GameUI" pos="Mid" offset="#FCJH_BLUE_CORE_FRAME_R"/>
+							<Unclipped val="true"/>
+							<Frame type="UnitStatusElement" name="HealthBarBackingBlue">
+								<Frame type="Image" name="Image"><Alpha val="0"/></Frame>
+							</Frame>
+							<Frame type="Frame" name="FCJH_CoreTrackBox">
+								<Anchor relative="$parent/HealthBar"/>
+								<RenderPriority val="100"/>
+								<AcceptsMouse val="false"/>
+								<Frame type="Image" name="FCJH_CoreTrack">
+									<Anchor relative="$parent"/>
+									<Texture val="#FCJH_CORE_TRACK_BLUE"/>
+									<RenderPriority val="100"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
+								<Frame type="Frame" name="FCJH_CoreMask">
+									<Anchor relative="$parent"/>
+									<AlphaMaskTexture val="#FCJH_CORE_MASK_BLUE"/>
+									<AlphaMaskSiblings val="true"/>
+									<RenderPriority val="1"/>  <!-- as Blizzard's own bar mask (HeroStatus ImageMaskFrame) -->
+									<AcceptsMouse val="false"/>
+								</Frame>
+							</Frame>
+							<Frame type="Image" name="FCJH_CoreChrome">
+								<Anchor side="Top" relative="$parent/HealthBar" pos="Min" offset="#FCJH_CORE_CHROME_TL"/>
+								<Anchor side="Left" relative="$parent/HealthBar" pos="Min" offset="#FCJH_CORE_CHROME_TL"/>
+								<Anchor side="Bottom" relative="$parent/HealthBar" pos="Max" offset="#FCJH_CORE_CHROME_BR"/>
+								<Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="#FCJH_CORE_CHROME_BR"/>
+								<Texture val="#FCJH_CORE_CHROME_BLUE"/>
+								<RenderPriority val="520"/>  <!-- over the bar's fill -->
+								<AcceptsMouse val="false"/>
+							</Frame>
+							<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">
+								<Texture val="#FCJH_CORE_FILL_BLUE"/>
+								<AlphaMaskTexture val="#FCJH_CORE_MASK_BLUE"/>
+								<ColorStyle val="AllWhite" index="0"/>
+								<Tiled val="false" index="0"/>
+							</Frame>
+						</Frame>
+						<Frame type="UnitStatusFrame" name="Team2CoreUnitStatus">
+							<Anchor side="Top"  relative="$GameUI" pos="Max" offset="#FCJH_RED_CORE_FRAME_T"/>
+							<Anchor side="Left" relative="$GameUI" pos="Mid" offset="#FCJH_RED_CORE_FRAME_L"/>
+							<Unclipped val="true"/>
+							<Frame type="UnitStatusElement" name="HealthBarBackingRed">
+								<Frame type="Image" name="ImageUnmirrored"><Alpha val="0"/></Frame>
+							</Frame>
+							<Frame type="Frame" name="FCJH_CoreTrackBox">
+								<Anchor relative="$parent/HealthBar"/>
+								<RenderPriority val="100"/>
+								<AcceptsMouse val="false"/>
+								<Frame type="Image" name="FCJH_CoreTrack">
+									<Anchor relative="$parent"/>
+									<Texture val="#FCJH_CORE_TRACK_RED"/>
+									<RenderPriority val="100"/>
+									<AcceptsMouse val="false"/>
+								</Frame>
+								<Frame type="Frame" name="FCJH_CoreMask">
+									<Anchor relative="$parent"/>
+									<AlphaMaskTexture val="#FCJH_CORE_MASK_RED"/>
+									<AlphaMaskSiblings val="true"/>
+									<RenderPriority val="1"/>  <!-- as Blizzard's own bar mask (HeroStatus ImageMaskFrame) -->
+									<AcceptsMouse val="false"/>
+								</Frame>
+							</Frame>
+							<Frame type="Image" name="FCJH_CoreChrome">
+								<Anchor side="Top" relative="$parent/HealthBar" pos="Min" offset="#FCJH_CORE_CHROME_TL"/>
+								<Anchor side="Left" relative="$parent/HealthBar" pos="Min" offset="#FCJH_CORE_CHROME_TL"/>
+								<Anchor side="Bottom" relative="$parent/HealthBar" pos="Max" offset="#FCJH_CORE_CHROME_BR"/>
+								<Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="#FCJH_CORE_CHROME_BR"/>
+								<Texture val="#FCJH_CORE_CHROME_RED"/>
+								<RenderPriority val="520"/>  <!-- over the bar's fill -->
+								<AcceptsMouse val="false"/>
+							</Frame>
+							<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">
+								<Texture val="#FCJH_CORE_FILL_RED"/>
+								<AlphaMaskTexture val="#FCJH_CORE_MASK_RED"/>
+								<ColorStyle val="AllWhite" index="0"/>
+								<Tiled val="false" index="0"/>
+							</Frame>
+						</Frame>
+					</Frame>
+
+					<!-- Towers and kills; and the row frames: a chrome line round each team's plates and
+					     XP bar ([row_frame]; tools/gen.py row_frame_texture). FCJH_RowPacker moves and
+					     swaps them for rows of 1-4. Here, not in ObserverTopPanel, since RenderPriority
+					     orders siblings only: ObserverTopPanel (200) draws under the team overviews, so
+					     the chrome there sat under every plate (user, 2026-10-16). At 520 they're over
+					     the cells (HeroOverview1-5, 501-505). -->
+					<Frame type="Frame" name="Team1HeroOverview">
+						<Frame type="Image" name="FCJH_BlueRowFrame">
+							<Anchor side="Top"    relative="$GameUI" pos="Max" offset="#FCJH_BLUE_ROW_FRAME_T"/>
+							<Anchor side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_BLUE_ROW_FRAME_L"/>
+							<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_BLUE_ROW_FRAME_B"/>
+							<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_BLUE_ROW_FRAME_R"/>
+							<Texture val="#FCJH_ROW_FRAME_BLUE"/>
+							<RenderPriority val="520"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<Frame type="Label" name="TownsRemainingValueLabel" template="FCJH_HeroRow/FCJH_Parked"/>
+						<Frame type="TeamScoreValueFrame" name="TeamKillsValueFrame" template="FCJH_HeroRow/FCJH_Parked"/>
+					</Frame>
+					<Frame type="Frame" name="Team2HeroOverview">
+						<Frame type="Image" name="FCJH_RedRowFrame">
+							<Anchor side="Top"    relative="$GameUI" pos="Max" offset="#FCJH_RED_ROW_FRAME_T"/>
+							<Anchor side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_RED_ROW_FRAME_L"/>
+							<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_RED_ROW_FRAME_B"/>
+							<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_RED_ROW_FRAME_R"/>
+							<Texture val="#FCJH_ROW_FRAME_RED"/>
+							<RenderPriority val="520"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
+						<Frame type="Label" name="TownsRemainingValueLabel" template="FCJH_HeroRow/FCJH_Parked"/>
+						<Frame type="TeamScoreValueFrame" name="TeamKillsValueFrame" template="FCJH_HeroRow/FCJH_Parked"/>
+					</Frame>
+				</Frame>
+			</Frame>
+		</Frame>
+	</Frame>
+</Desc>

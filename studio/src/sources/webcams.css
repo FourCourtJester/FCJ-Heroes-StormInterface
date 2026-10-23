@@ -1,0 +1,188 @@
+/* The webcam frames. Hand-written and owned here; tools/obs.py draws the chrome and the OBS
+   masks, and ../generated/webcam.json carries the numbers Webcams.jsx feeds in.
+
+   This source is TRANSPARENT by design - it is borders over other people's pictures. Nothing
+   in here may paint a background across the screen, or it will hide the standby screen it is
+   meant to sit on and the cameras it is meant to frame. */
+
+.fcjh-cams {
+  position: relative;
+  width: var(--screen-w);
+  height: var(--screen-h);
+  font-family: 'Saira Semi Condensed', sans-serif;
+}
+
+/* ── a cam ─────────────────────────────────────────────────────────────────────────────
+   The box is the window; the name bar hangs off its bottom edge. Three placements: the pair,
+   and the single centred window the one-camera source uses. */
+.fcjh-cam {
+  position: absolute;
+  top: var(--cam-top);
+  width: var(--cam-w);
+  height: var(--cam-h);
+}
+
+.fcjh-cam.left {
+  left: var(--cam-left);
+}
+
+.fcjh-cam.right {
+  left: var(--cam-right);
+}
+
+.fcjh-cam.solo {
+  top: var(--solo-top);
+  left: var(--solo-left);
+  width: var(--solo-w);
+  height: var(--solo-h);
+}
+
+/* the pair's frame, stretched: an SVG scales without loss, and every window is the same
+   shape, so there is no second file to keep in step */
+.fcjh-cam.solo .fcjh-cam-window {
+  background-image: url('../generated/cam_frame_left.svg');
+}
+
+/* The chrome, at its own size - background-size 100% 100% rather than `cover`, so the art is
+   drawn at exactly the size it was generated for and the line stays the width it was drawn.
+   The middle is empty on purpose: that is where the camera shows through. */
+.fcjh-cam-window {
+  position: absolute;
+  inset: 0;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.fcjh-cam.left .fcjh-cam-window {
+  background-image: url('../generated/cam_frame_left.svg');
+}
+
+.fcjh-cam.right .fcjh-cam-window {
+  background-image: url('../generated/cam_frame_right.svg');
+}
+
+/* ── the name bar ──────────────────────────────────────────────────────────────────────
+   The band's message board at its own size: pointed ends at half height, plain smoke, no
+   chrome of its own - the window above it carries that. Name at one end, handle at the
+   other, because they are two different things and a centred pair of them reads as one.
+
+   The pair mirrors: names to the OUTER edges of the screen, handles to the inner ones (user,
+   2026-10-23), so the two names sit at the far ends and frame the screen rather than both
+   drifting left. Only the right-hand bar needs saying - it reverses, and the name being the
+   first child in the markup still reads first to a screen reader. */
+.fcjh-cam-plate {
+  position: absolute;
+  left: 0;
+  top: calc(100% + var(--plate-gap));
+  width: 100%;
+  height: var(--plate-h);
+  box-sizing: border-box;
+  padding: 0 calc(var(--plate-point) + var(--plate-pad));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  clip-path: polygon(
+    var(--plate-point) 0,
+    calc(100% - var(--plate-point)) 0,
+    100% 50%,
+    calc(100% - var(--plate-point)) 100%,
+    var(--plate-point) 100%,
+    0 50%
+  );
+  /* darker than the standby band's smoke, which is what makes the two MATCH rather than
+     differ: that band sits at the bottom of its screen under the full weight of the
+     vignette, and these sit mid-screen where it has barely started. The same alpha read as
+     two different depths (user, 2026-10-23). */
+  background: rgb(0 0 0 / var(--plate-smoke));
+}
+
+.fcjh-cam.right .fcjh-cam-plate {
+  flex-direction: row-reverse;
+}
+
+.fcjh-cam-plate > * {
+  position: relative;
+  flex: 0 1 auto;
+  min-width: 0;
+  white-space: nowrap;
+  -webkit-text-stroke: 3px #000;
+  paint-order: stroke fill;
+}
+
+.fcjh-cam-plate .who {
+  font-size: var(--name);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.fcjh-cam-plate .at {
+  font-size: var(--social);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--text);
+  -webkit-text-stroke-width: 2px;
+}
+
+/* ── the screenshot fill ───────────────────────────────────────────────────────────────
+   Only with `?fill` on the URL. There is no camera behind this source in a browser, so the
+   windows are holes and the frames photograph as outlines on nothing; this puts a flat colour
+   in them for stills. Never on air - it would cover the camera.
+
+   The clip is in percentages, which works for every window because they are all 16:9 and the
+   chamfer is a fraction of the box: the solo window is the pair's enlarged, so one pair of
+   percentages cuts any of them. The same fact is why one OBS mask serves them all. */
+.fcjh-cams.fill .fcjh-cam-window::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--fill);
+}
+
+.fcjh-cams.fill .fcjh-cam.left .fcjh-cam-window::before,
+.fcjh-cams.fill .fcjh-cam.solo .fcjh-cam-window::before {
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--chamfer-pw)) 0,
+    100% var(--chamfer-ph),
+    100% 100%,
+    var(--chamfer-pw) 100%,
+    0 calc(100% - var(--chamfer-ph))
+  );
+}
+
+.fcjh-cams.fill .fcjh-cam.right .fcjh-cam-window::before {
+  clip-path: polygon(
+    var(--chamfer-pw) 0,
+    100% 0,
+    100% calc(100% - var(--chamfer-ph)),
+    calc(100% - var(--chamfer-pw)) 100%,
+    0 100%,
+    0 var(--chamfer-ph)
+  );
+}
+
+.fcjh-cams.fill .fcjh-cam.left {
+  --fill: linear-gradient(145deg, #2f4668, #1a2438);
+}
+
+.fcjh-cams.fill .fcjh-cam.right {
+  --fill: linear-gradient(145deg, #5e3347, #2c1a24);
+}
+
+.fcjh-cams.fill .fcjh-cam.solo {
+  --fill: linear-gradient(145deg, #34405c, #1c2230);
+}
+
+/* ── no entrance ───────────────────────────────────────────────────────────────────────
+   Deliberately none, and it should stay that way. These frames have to line up with camera
+   sources sitting underneath them in OBS, and OBS cannot move those in step - so anything
+   that slides a frame slides it off its camera, and the drift is visible on air for as long
+   as the motion lasts (user, 2026-10-23). A frame that is where the camera is, from the
+   first frame, is worth more than an arrival.
+
+   The same goes for anything added later: a name bar may fade, because it sits over the
+   smoke rather than over the picture, but nothing here may move. */

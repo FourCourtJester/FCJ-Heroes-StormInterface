@@ -421,6 +421,6 @@ Built for tonight: the seams, the core's own frame, the quest column and the amm
     `GlassBlur`: BlurAmount .8, RenderType HDR, Visible `#IngameBlur`), and the border loads in
     game (the in-game tooltips use it). Not yet tried in observer mode.
   - Decided 2026-10-16 (user): the Try Me panel's look, which replaced the menu-border test.
-  - The numbers panes also need a colour, font and art pass. Candidates (parked 2026-10-05):
+  - DONE 2026-10-23 (78644dc: zebra rows, gold leaders; HANDOFF §7 item 2). ~~The numbers panes also need a colour, font and art pass.~~ Candidates (parked 2026-10-05):
     Blizzard's `obs_stats_top` grid (1130 wide, like the talents grid) and the
     `obs_stats_leader_blue/red` underlines; styles in FontStyles.StormStyle (`FCJH_Stat*`).

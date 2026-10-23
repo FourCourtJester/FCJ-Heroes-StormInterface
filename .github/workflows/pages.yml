@@ -1,0 +1,81 @@
+# Publish the broadcast studio to GitHub Pages.
+#
+# This repo holds three veins: the StormInterface (interface/), the broadcast graphics
+# (studio/) and the generator that writes both (tools/). Only the studio is a web app,
+# so it is what Pages serves - the board lands at
+# https://<you>.github.io/<this-repo>/#/, which is the URL pasted into an OBS custom
+# browser dock, and the one every invite link is built from.
+#
+# Switch Pages to "GitHub Actions" as its source under Settings -> Pages.
+#
+# The generated parts under studio/src/generated/ are committed, so this never runs
+# tools/obs.py: generating needs Blizzard's UI extract, which is not in the repo. That
+# is the same reason release.yml packs the committed interface/ as it stands.
+name: Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - studio/**
+      - .github/workflows/pages.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  # deploy-pages authenticates with OIDC rather than a stored secret.
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      # npm because it is already there. This studio is an ordinary Vite app with
+      # no workspace protocol and no linking, so it installs with whichever manager
+      # you prefer -- swap these two lines for pnpm or yarn and nothing else here
+      # changes. npm is the default only because it ships with Node and needs no
+      # setup step.
+      #
+      # `npm install` rather than `npm ci`, and that is for the first push rather
+      # than every one after it. A repository made from this template has no
+      # lockfile until somebody installs and commits one, and `npm ci` fails outright
+      # when there is nothing to install from -- so the very first deploy would fail,
+      # on a project nobody had touched yet, for a reason that reads like a broken
+      # template. `npm install` honours a lockfile when there is one and writes one
+      # when there is not.
+      #
+      # No `cache:` on setup-node for the same reason: it needs a lockfile to hash
+      # and fails the step without one. A first deploy that works is worth more than
+      # the seconds it saves.
+      - run: npm install
+        working-directory: studio
+      - run: npm run build
+        working-directory: studio
+
+      # `base: './'` in vite.config.js is what makes this work under a repo
+      # subpath. Nothing here has to know what the repo is called, and the same
+      # artifact would serve from a custom domain or straight off a disk.
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: studio/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v5

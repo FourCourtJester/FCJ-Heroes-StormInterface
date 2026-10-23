@@ -34,9 +34,13 @@ pop-up). **There is no fight mode** (user, 2026-10-16: the spec has moved past i
 default view is the old fight-mode cluster, and the operator's toggles hide what needs hiding.
 The top bar and minimap always stay.
 
-**OBS draws data only, never art** (user, 2026-10-16): team names, logos, series score, the
-tournament's name, division and logo, and the game's bans, on plates the interface draws.
-Nothing on the bottom UI. Its places are `kind = "obs"` rects in `layout.toml` (§6, docs/obs.md).
+**OBS draws the data AND the plates under it** (user, 2026-10-22, superseding "data only,
+never art" of 2026-10-16): team names, logos, series score, the tournament's name, division
+and logo, and the game's bans. Nothing on the bottom UI. The interface keeps only the
+**places** - `kind = "obs"` rects in `layout.toml` (§6, docs/obs.md) - so with no OBS running
+the top bar is the level wings, Blizzard's hexagon and the clock, and nothing hangs off them
+empty. That is why the division and game tabs were built in game on 2026-10-22 and reverted
+the same day.
 
 **Status, 2026-10-18: Phase 2 (building the default view) is all but done** - every map passed, every hero seen, the polish phase under way (§7 item 7); the final pass, the art pass and OBS are left (§7). Phases 0
 (toolchain) and 1 (probing the unknowns) are done. Built, and confirmed in game unless noted:
@@ -85,8 +89,46 @@ Nothing on the bottom UI. Its places are `kind = "obs"` rects in `layout.toml` (
   (1-8 keys), not when following from a plate click - as in Ahli's and Spazzo's UIs (§3;
   confirmed 2026-10-06).
 
-Not yet: the OBS graphics package and the visual pass that takes the chrome look of
-the top bar to the plates, bars and panes. §7 has the open list.
+Not yet: the visual pass that takes the chrome look of the top bar to the plates, bars and
+panes. **The broadcast graphics are their own vein of this repo** (2026-10-22): `studio/` is a
+[Single Studio](https://github.com/FourCourtJester/Single-Studio) app - an operator's board in
+an OBS dock, a browser source per graphic - and `tools/obs.py` writes its parts and numbers
+into `studio/src/generated/` from the same `layout.toml` the interface comes from. The top
+OBS band's **places** are in the build since 2026-10-22 - layout.toml `[top_bar]`, every box
+derived by gen's `top_bar_geometry`, so the interface and the OBS layer can't drift apart.
+docs/obs-topbar-handoff.md has the rule.
+
+**The studio builds and runs (2026-10-23).** Node is installed; `npm run dev --prefix studio`
+serves the board and every graphic. It is on **Single Studio 0.13.0** (core and
+provider-supabase), which is additive on the control side - nothing of ours broke. Four
+browser sources now:
+
+| | |
+|---|---|
+| `#/source/game` | the top bar over a live match |
+| `#/source/standby` | between games: a drifting slideshow, the "coming up next" band, a countdown bug |
+| `#/source/webcams` | two camera frames, borders only |
+| `#/source/webcam-solo` | the same frame once, centred |
+
+The standby band and the webcam frames are rebuilt from the user's own 2018 NGS broadcast
+(`C:\FourCourtJester\Broadcasts\Heroes`) - its composition, this kit's language. The
+operator's board is five collapsible panels, folded on load.
+
+**`studio/README.md` is the detail** - every scene, every number, how a camera and its OBS
+mask go together, and what is still open. Read it before touching `studio/`. Two rules there
+that cost time to learn: `/studio` owns the whole broadcast package (`tools/obs.py` may write
+pictures and a numbers JSON and nothing else), and nothing in the webcam sources may animate,
+because OBS cannot move the cameras underneath them in step.
+
+**`docs/single-studio-reports.md`** is a running log of framework behaviour we had to work
+around, for filing upstream against Single Studio. Three entries so far, all measured.
+
+**`three-veins` is the next version's deploy** (user, 2026-10-23). It holds everything on
+`main` (it branched from main's head, c92648b) and isn't on origin yet: the push failed.
+**Testing (2026-10-23):** the user tests in OBS, at 1080p, the broadcast's settings;
+Claude checks in a browser at 1920x1080.
+
+§7 has the interface's open list; the broadcast half's is at the end of `studio/README.md`.
 
 ---
 
@@ -98,8 +140,10 @@ python tools/pack.py --wait
 
 One command: **generate → stage → validate → pack → deploy.**
 
-1. **generate** — `tools/gen.py` rewrites the committed generated layouts from `layout.toml`
-2. **stage** — `src/FCJH.StormInterface/` is copied to `build/<profile>/`. A dev build adds
+1. **generate** — `tools/gen.py` rewrites the committed generated layouts from `layout.toml`,
+   and `tools/obs.py` the broadcast studio's parts under `studio/src/generated/` (one set of
+   numbers, both halves; `gen.py --check` fails on either being stale)
+2. **stage** — `interface/FCJH.StormInterface/` is copied to `build/<profile>/`. A dev build adds
    the build stamp there, and only there (the wireframe overlay was removed 2026-10-05)
 3. **validate** — `tools/validate.py` on the staged tree; an error stops the build
 4. **pack** — an uncompressed MPQ v1 archive, read back and compared file by file
@@ -117,15 +161,15 @@ One command: **generate → stage → validate → pack → deploy.**
 
 **Profiles.** Dev (the default) shows a build stamp — `FCJH DEV <version> <commit>[+] <time>`,
 `+` meaning uncommitted changes — and nothing else (the wireframe overlay that tinted
-each box in its legend colour was removed 2026-10-05). `--release` is exactly what `src/` holds: it refuses
-while `src/`, `layout.toml` or `tools/` have uncommitted changes, so every release is
+each box in its legend colour was removed 2026-10-05). `--release` is exactly what `interface/` holds: it refuses
+while `interface/`, `layout.toml` or `tools/` have uncommitted changes, so every release is
 reproducible from its commit, and writes `dist/v<version>/FCJH.StormInterface`
 (`--deploy` to also install it), zlib-compressed by sector as Spazzo's is (10.7 -> ~1 MB; dev
 stays raw; a compressed release loads a replay fine, user 2026-10-21). GitHub releases ship that file and nothing else of ours: push a tag `v<version>`
 (it must match `[meta] version`) and `.github/workflows/release.yml` builds it from the tag
 with `--no-generate --no-validate` (gen and validate need the JamiePhan extract, which isn't in
-the repo, so run both locally first: the committed `src/` is what ships) and publishes it.
-`.gitattributes` checks `src/` out LF on every clone, so GitHub's build is byte for byte the
+the repo, so run both locally first: the committed `interface/` is what ships) and publishes it.
+`.gitattributes` checks `interface/` out LF on every clone, so GitHub's build is byte for byte the
 local `--release` (checked from a fresh clone, 2026-10-21). GitHub adds its own source zips to every release; they can't be removed.
 
 ### Tools
@@ -134,7 +178,7 @@ local `--release` (checked from a fresh clone, 2026-10-21). GitHub adds its own 
 |---|---|
 | `python tools/pack.py --wait` | The loop above |
 | `python tools/gen.py [--check]` | Regenerate; `--check` fails if a generated file is stale or hand-edited |
-| `python tools/validate.py [--show <frame path>]` | Validate `src/`; `--show` prints the merged tree under any frame |
+| `python tools/validate.py [--show <frame path>]` | Validate `interface/`; `--show` prints the merged tree under any frame |
 | `python tools/test_validate.py` | 19 validator tests against the build 50 fixture |
 | `python tools/mpq.py list\|extract <archive>` | Inspect any archive, including Ahli's and Spazzo's |
 | `python tools/make_test_ui.py` | Smoke test: a magenta box as `FCJHTest.StormInterface`, to tell "packer broke" from "layout broke" |
@@ -161,7 +205,7 @@ layout.toml                                  every placement number and look set
 tools/gen.py                                 turns it into layouts and textures
 tools/inspect_card.py                        the inspect card (reads hero data from JamiePhan)
 tools/maps.py                                each battleground: minimap place, panel, team alerts
-src/FCJH.StormInterface/                     the archive's file tree, one to one
+interface/FCJH.StormInterface/                     the archive's file tree, one to one
   Base.StormData/UI/Layout/
     DescIndex.StormLayout                    GENERATED — every layout, constants first
     FCJH_Constants.StormLayout               GENERATED — layout.toml in layout units
@@ -172,7 +216,7 @@ src/FCJH.StormInterface/                     the archive's file tree, one to one
     FCJH_*.StormLayout                       hand-written, one per concern (top bar, hidden
                                              HUD, talents pane, kill feed, minimap, replay)
   _Assets/Textures/FCJH_*.dds                GENERATED — slanted bars, masks, the top backplate
-src/dev/                                     dev-only layouts (none now; packed into dev builds only)
+interface/dev/                                     dev-only layouts (none now; packed into dev builds only)
 ```
 
 - **Layout units are not pixels.** The game lays out on a 1200-unit-tall grid, so at 1080p
@@ -427,7 +471,9 @@ land on whole pixels at 1080p (`inspect_card.line`), so at 1440p they may come o
 ## 7. What's next
 
 **1.0 (user, 2026-10-21).** A test build went to volunteers 2026-10-20 (v0.1.0, b28ee86, the
-kill feed back on); their feedback is 1.0.x for a while - `[meta] version` 1.0.0, now 1.0.1 (the translations), a patch
+kill feed back on); their feedback is 1.0.x for a while - `[meta] version` 1.0.0, 1.0.1 (the translations), now 1.0.2 (the art pass: bevelled
+plates, the numbers panes - user, 2026-10-23: "Let's prepare for a new interface release
+with this"), a patch
 number per fix batch, each one a `pack.py --release` from a commit. Work is on `main` (its
 history is python-toolchain's, which stays as it was). GitHub:
 https://github.com/FourCourtJester/FCJ-Heroes-StormInterface (public; pushed in
@@ -438,8 +484,8 @@ and Ko-fi).
 (pack.py's `RELEASE_NAME`, from 1.0.1; 1.0.0 shipped as `FCJH.StormInterface`), in Ahli's
 style (`AhliObs 0.75`; spaces load fine, Spazzo's is `SpazzoObsv40`). `--release --deploy`
 installs it under that name, beside the dev build's `FCJH.StormInterface`, which keeps its
-fixed name so the everyday loop overwrites one file. Still to see: whether a new version's
-file means casters re-pick the interface in Options.
+fixed name so the everyday loop overwrites one file. **Settled (user, 2026-10-23):** releases
+keep this naming (FCJ vX).
 
 **Every word of ours in every language (1.0.1, 2026-10-21; user: "lets flesh out the
 translations").** Our own on-screen words live in `tools/words.py` (`WORDS`, keyed
@@ -465,6 +511,46 @@ Finished work is out of this file: the map system and the map pass, map by map, 
 [docs/history.md](docs/history.md) (its item numbers are the old §7's). What we fixed for
 Blizzard and what we added is in [docs/blizzard-fixes.md](docs/blizzard-fixes.md); the
 generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [docs/obs.md](docs/obs.md).
+
+**Publishing, one channel per intent (user, 2026-10-23: "As long as we have it all
+seperated out into their intents"):** Pages serves the OBS studio; Releases serve the
+`.StormInterface` files; a markdown API folder for other developers comes later. README.md's
+"Where each is published" table. Three-veins goes to `main` by PR, then the tag `v1.0.2`.
+
+**The three-vein reorganisation (2026-10-22), on its own branch - NOT on `main` and not
+finished.** The repo now holds three veins: the interface (`interface/`, was `src/`), the
+broadcast graphics (`studio/`, a Single Studio app) and the generator that writes both
+(`tools/`), joined at `layout.toml`. The user's call (2026-10-22): one repo, three veins,
+"give people the different avenues of accessing the parts they want" - a release for the
+`.StormInterface`, Pages for the board, the folder for anyone who wants the files.
+
+*Done and checked:* the rename and its sweep (`gen.py`, `pack.py`, `validate.py`,
+`.gitattributes`, `release.yml`, the docs), and the interface loop end to end - `gen --check`
+clean, validator 0 errors, 19 tests, `pack.py` built and deployed. `tools/obs.py` writes
+`studio/src/generated/` and `gen.py --check` fails if it is stale.
+
+*Built and run (2026-10-22, later the same day):* Node 24.22.1 went on, the studio installs
+and builds clean, and both halves were driven in a browser - the board writes, the graphic
+draws, and the pips, bands and tabs land within 0.04 px of `topbar.json`. The source is
+`studio/src/sources/Game.jsx` (`#/source/game`), named for the scene rather than the top bar.
+`npm run dev` could not be checked here (see below). Since 2026-10-23 the user tests in OBS.
+
+**To resume, before merging:**
+1. ~~Install Node, build it~~ - done. `npm run build` is clean; `npm run preview` serves it.
+2. **`npm run dev` is unverified**: in the agent's embedded browser it fails with "Failed to
+   fetch a worker script" (the SharedWorker that holds all state), so sources render nothing.
+   The production build on `npm run preview` is clean in the same browser, so it looks like a
+   dev-mode plus embedded-Chromium problem rather than the app - but it wants checking in real
+   Chrome before anyone trusts the dev loop.
+3. Test outputs: driven with names, a series score and the tabs' words; logos and bans still
+   want the image library filling (no hero portraits anywhere yet).
+4. ~~See it in OBS~~ - the user tests in OBS at 1080p (2026-10-23).
+5. Switch Pages to "GitHub Actions" (Settings -> Pages) before the first push to `main`.
+6. Then merge.
+
+*Known gaps:* nothing fills the studio's image library with hero portraits (90-odd) for the
+bans; the ban tiles' size and shape were never settled; the font is fetched from Google Fonts
+at load.
 
 **Open, in the user's order:**
 1. **The final pass** - item 14 below. The forms and blue's banners are done, the odd cases
@@ -580,9 +666,8 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
    - **The pane border's halves (2026-10-19): DONE, seen good on pass 3 (21_57_37 ..).** each side was a whole nine-slice
      squeezed into half the height, so both halves ended in the art's end cap at the middle,
      stacked "doubly as bright" (user). Now each half is a whole side clipped at the middle
-     (inspect_card.py tab_border, `UpperHalf` / `LowerHalf`). Check: no bright patch midway
-     down the sides, the corners as before. (User, 2026-10-19: the patch is still on the build
-     they last saw; this one gets checked tonight with the map passes.)
+     (inspect_card.py tab_border, `UpperHalf` / `LowerHalf`). Closed (user, 2026-10-23): no
+     bright patch seen on the inspect card either.
    - **The user's answers (2026-10-19, evening):**
      - the top bar shrink (1284a7a): DONE, on trust ("as long as everything fits");
      - on fire: DONE - red seen, blue and colourblind run the same code; revisit on feedback;
@@ -598,9 +683,107 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
        tab, division beside it; the ban tiles get their own pass (docs/obs-topbar-handoff.md).
 2. **The art pass** - items 7 and 12 below, and the visual pass: the chrome backplate look to
    the plates, our own fountain/carry slot (built 2026-10-19, item 1), XP/core bars (a mid-height bevel, like the player view's core bar; the default
-   UI's core bars: `design/ref_default_core_hp.png`) and the info panes (zebra rows, Heroes
-   palette; the numbers panes need a better visual - docs/history.md item 1). The canvas draws
+   UI's core bars: `design/ref_default_core_hp.png`) and ~~the info panes (zebra rows, Heroes
+   palette; the numbers panes need a better visual - docs/history.md item 1)~~ - **the numbers
+   panes DONE (user, 2026-10-23, 78644dc: "I think I can work with this")**. The canvas draws
    the build as it is (`design/canvas_gen.py`); the art pass designs over those boards.
+   **Parked (user, 2026-10-23: "Keep them on the list, but we wont do anything about them
+   now"):** the chrome backplate look on the bottom hero plates, and the plates' intro slide
+   and fade (Ahli's). Both are interface items, not OBS.
+   **First pass built (2026-10-23), for the user to see in game:**
+   - **Bevels:** the XP and core fills are lit from above as Blizzard's core bar - a light lip,
+     a ramp down with a soft step at mid-height, a dark foot (gen.py `bevel_texture`,
+     layout.toml `[bar_bevel]`). The fills stretch only across, so the shade holds at any
+     value; the XP bar now says `Tiled false` too, as the core bar did.
+   - **The numbers panes' rows:** a stripe behind every row in its team's tint, two shades
+     alternating, a thin team-colour line under each - Blizzard's score screen
+     (`Screenshot2026-10-22 21_27_16`) - from layout.toml `[info_pane.rows]` (gen.py
+     `row_stripes`), opaque enough to read over a bright map. Red's team band moved from crimson
+     toward that screen's maroon; the numbers lightened to its tints (FontStyles `FCJH_StatValue_*`
+     9cbcf4 / eda4b8: full team colour read dark on dark, `Screenshot2026-10-23 12_24_59`).
+     Those tints first showed as dark blue and red (`Screenshot2026-10-23 12_30_35`): the row's
+     team colour multiplies into a label that doesn't say `IgnoreParentColor`, as Blizzard's own
+     score label does. Ours does now. Seen in game: the bevels on both bars, the stripes. The
+     talents pane keeps Blizzard's observer grid. ~~Not yet: the score screen's shaded column
+     groups (Blizzard's `BGSeparatorImage1-3`, which our rows hide), the
+     leaders' glow in place of our lit box.~~ Not needed: gold leaders (below) closed it.
+   - **The stats panes narrowed (user, 2026-10-23: "The column widths are a bit too
+     generous").** Columns are sized to the widest number, not shares of the box: a count is
+     60 units (XX.YY, about 48 px in the value font), a big number 84 (XXX,XXX in the totals
+     font), at least 24 apart (gen.py `STAT_WIDTHS`, `STAT_GAP`). The three stats panes are 496
+     units (446 px, from 546), the KDA pane's need; the talents pane keeps the full box.
+     Headings may run left into the gap. K/D/A are Blizzard's Kills/Deaths/Assists now (long
+     in German and French: "KILLBETEILIGUNGEN"). Siege became **Minion Damage** (Blizzard's
+     `MinionDamage`, siege less structures; Siege counted the structures twice beside the
+     structures column). If the user meant merc camps, Blizzard's `CreepDamage` is that score.
+     Checked against Tab (`Screenshot2026-10-23 12_48_34`): XP matches all ten; Minion +
+     Structures is Tab's Siege for five, short for the rest by what Siege also counts - laning
+     mercs and summons (StormDamage's score array: Abathur's locusts, Misha). Red's structures
+     read 0 all game; Tab's Siege leaves red at most 3,691 outside minions, so it is likely
+     real (to re-check on a replay where red pushes). The leader box was the IgnoreParentColor
+     bug too (grey-brown, `Screenshot2026-10-23 12_47_40`); it says it now, a little stronger.
+     Second replay against Tab (`Screenshot2026-10-23 12_52_23`, `12_52_44`, `12_52_52`):
+     every player's K/D/A, hero damage, self healing, healing, minions + structures (less
+     mercs and summons, as above), XP and every leader box match; red's structures are not 0
+     there. Wrong, fixed: the KILLS band read the other team's kills - it summed
+     TeamTakedowns, which Blizzard credits to the dead player's team; it sums the kills now.
+     Not ours: the healing bands read 1-2 under the rows' sum (Healing is a fixed-point score,
+     the rows round each value). Dead live: **SHIELDING** - Blizzard reports
+     ProtectionGivenToAllies only at game over (gamelib.galaxy EventBasedAwardsDataReport);
+     shields count in Healing during the game (Medivh's 6,569).
+     **Then dropped (user, 2026-10-23: "Drop shielding, and the minion/structure split, and
+     i'll re-evaluate"):** Ctrl+3 is SELF HEALING · HEALING, two columns; Ctrl+4 is SIEGE
+     DAMAGE · EXPERIENCE - Blizzard's whole SiegeDamage, Tab's number. The split can't be made
+     right: MinionDamage misses mercs, summons and some heroes' own siege (Johanna, Hanzo,
+     Gul'dan tag SiegeDamage only), a layout can't subtract, and an interface can't change
+     game data. The pane key is `siege` now (layout.toml [info_pane] hotkeys). The two-column panes keep the
+     shared width, so their gaps are wide - re-evaluated with the tightening below: fine.
+     **Portraits as tall as the stripe (user, 2026-10-23: "Tab has taller portraits seperated
+     out by their bottom accent lines"):** the numbers panes' portraits fill each stripe from
+     its top to the accent line (50 units, 89 wide at Blizzard's 100:56), uncropped, with
+     Tab's right-edge fade (Storm_UI_InGame_Leader_ScoreInset_PortraitFade). Was the talent
+     pane's 90 x 33 crop at row offset 10. Geometry: stat_geometry()["portrait"].
+     **Tightened (user, 2026-10-23: "Remove BLUE/RED from the headers / Anchor the portraits
+     to the left edge / Remove some of the whitespace the portraits have", and "a row of
+     emptiness from the end of blue list to the start of red header"):** no team names in
+     the bands (FCJH_StatTeam_* styles gone); the portrait sits on the left border, the first
+     column 4 units after it (STAT_PORTRAIT_GAP); STAT_TEAM_GAP 0, so red's band follows
+     blue's last stripe. Stats panes 496 -> 455 units. Last change of this pass; the user
+     re-evaluates.
+     **Leaders in gold (user, 2026-10-23: "Instead of a highlighted area for column leaders,
+     how about we just use a yellow/gold color"):** the FCJH_Lead box is gone; the leader's
+     number swaps to FCJH_StatValue_Lead (Blizzard's ColorGold, fed600) on the best-value
+     events, by the Style controller Blizzard's own label uses.
+     **The numbers panes are DONE (user, 2026-10-23, 78644dc: "I think I can work with this.
+     Let's mark these off the list then").**
+   - **Plate bevels - DONE (user, 2026-10-23, d8b21f2: "Great. Mark that off then!"); the
+     mask work too (3a7a84c: "Looks good. We'll mark that as mask work"). Every alternate
+     resource (Brew, Fury, D.Va, Deathwing, Rage; segmented or not) is FCJH_Resource's
+     ColorStyle over the one PLATE_FILL, so it carries the bevel and mask. Revert point was
+     27500be (user, 2026-10-23: "Make a
+     note that if it looks bad, we'll revert to this state, but yeah, if blizzard has some
+     available bevels specifically for health and mana, lets do it").** Blizzard's top-bar
+     fills carry next to no bevel (HealthFill: a 1-texel white lip top and bottom over a faint
+     e1-f5 ramp; ManaFill: a 4-row db-f8 ramp). The one bevelled bar fill in the client is
+     `UI/HealthBar` (UI_HealthBar_Bar_01, 16 x 11 greyscale: ff at the top ramping to 8b, a
+     c6 foot; no Heroes layout uses it). No mana-specific bevel exists in what's extracted
+     (Probius's EnergyBar art isn't in references/CASCView), so the one fill serves both:
+     gen.py `PLATE_FILL` on the health bar, the resource bar, the Vikings and Misha, stretched
+     (`Tiled` false on index 0 - tiled, its 11 rows would cut off in the 8-tall bar and repeat
+     in the 14-tall one), with Blizzard's own fill variant (HealthFill{_Sm}{_Narrow}{_Right},
+     ManaFill{_Narrow}{_Right}) as its AlphaMaskTexture for the slanted ends. Expect the bars
+     a shade darker (the ramp averages ~0.75 against the old ~0.92).
+     **Round 2 (user, 13_35_43: "mask damage"):** Blizzard's fills as masks are 8 (mana 4)
+     texels tall and their rows wrap into each other - the top row's tip cut upright, a tail
+     off the bottom row past the slant. The masks are now ours (gen.py `plate_bar_masks`):
+     the plates' lean at 1440p size, as the Vikings', one per bar, team and narrow state.
+     **Round 3 (user, 13_44_48: "quite jagged... Only Vikings doenst have the jaggedness"):**
+     the Vikings' margin too - the health and resource bars' frames run PLATE_MARGIN (4) past
+     the slant at both ends, the masks padded clear to match (gen.py `padded_slant_mask`).
+     The fill's 0 and 100% move out with it, as the Vikings'.
+     **Then toned 10% (user: "too much of a stretch from the top to bottom"):** PLATE_FILL is
+     now ours, Blizzard's rows (`BLIZZARD_HEALTHBAR_ROWS`) with each row's distance below
+     white x `PLATE_BEVEL` 0.9 - the lit top kept, the darkest row 8b -> 97.
 3. **Screenshots of everything for posting**, then **the OBS overlay** to pair with the
    interface (docs/obs.md). Per-map shots: docs/maps.md. Show-off shots, with how to stage
    them, are marked **A show-off shot** in docs/blizzard-fixes.md's "Made" list (first:
@@ -609,8 +792,9 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
   is for live games); rows with fewer than five heroes (a 3v3 or 1v1 replay). Both IGNORED
   (user, 2026-10-19).
 - **To do (user, 2026-10-16):** a pass on the panes and the inspect card to make them
-  Heroes-like (Blizzard's menu panel: blur, translucency, chrome border), and a colour, font
-  and art pass on the numbers panes (docs/polish-research.md, "Decisions from the question round").
+  Heroes-like (Blizzard's menu panel: blur, translucency, chrome border), and ~~a colour, font
+  and art pass on the numbers panes~~ (DONE 2026-10-23, 78644dc) (docs/polish-research.md,
+  "Decisions from the question round").
 - **Ideas to come back to (user, 2026-10-21):**
   - Dragon Shire: a graphic for whoever is controlling the Dragon Knight. **First pass built
     (2026-10-21), for the user's evaluation:** Volskaya's pilot seat over the knight's bar,
@@ -625,8 +809,8 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
     (gen.py `SEAT_PORTRAITS`, from Jamie Phan's hero data and Ahli's list) - **a new hero needs
     adding to it.** Seen in game on red (Genji, Ana): "looks good!". Not yet seen: a blue
     driver, a Viking driving.
-  - A driver's plate read "STASIS" (UsingVehicle's parent is StormStasisRemoved). **Built
-    (2026-10-21), unseen:** the vehicle's word in its place, by map - KNIGHT, PROTECTOR (its
+  - A driver's plate read "STASIS" (UsingVehicle's parent is StormStasisRemoved). **DONE
+    (user, 2026-10-23: "KNIGHT / PROTECTOR / TERROR is confirmed"):** the vehicle's word in its place, by map - KNIGHT, PROTECTOR (its
     gunner too: the sensor can't tell the seats apart), TERROR (any other vehicle, so Garden
     classic too, its map id unseen) - Blizzard's names cut short (user: "Knight" and
     "Protector" is probably our best bet with "Terror"). gen.py `VEHICLE_WORDS`; Blizzard's
@@ -639,9 +823,9 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
   skull on the number, the number held 1.5 s then faded in. Misha's number is back, on her
   slice (dropped 2026-09-30), hidden while Rexxar is dead.
 - **Parked:** blue's curse mirror (unseen; item 14).
-- **Later:** extract the toolchain into its own repo for open-sourcing (user, 2026-10-09) -
-  [docs/generator.md](docs/generator.md) says what it is, [docs/extraction-plan.md](docs/extraction-plan.md)
-  how to split it out.
+- ~~**Later:** extract the toolchain into its own repo~~ **Dropped (user, 2026-10-23):** the
+  three veins keep the toolchain here (`tools/`); [docs/extraction-plan.md](docs/extraction-plan.md)
+  is kept for the record.
 - **Study Ahli's other panels** (user watched a broadcast on his UI, 2026-10-03) - not to
   replace ours, but for implementation tricks and visuals:
   - his custom inspect (`_BottomLeft`) and his custom panes - talents, XP and the rest
@@ -652,7 +836,8 @@ generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [doc
     that opens it is wired in `gameui.stormlayout` ~734). Spazzo ships a fix for its
     alignment (`references/Spazzo/.../RecapAlignmentFix.StormLayout`); Ahli hides its
     buttons inside his leader panel. Worth a feature of ours: a death recap on demand.
-  - **quests** (checked 2026-10-03): Ahli's talent pane has two kinds. (a) A column for a
+  - **quests** (checked 2026-10-03) - **DONE (user, 2026-10-23):** quest progress shows on
+    our talents pane and the inspect card. Ahli's talent pane has two kinds. (a) A column for a
     hero's BASELINE quests (the trait kind, not a talent pick): two slots, `BaseQuestIcon0/1`
     (`UnitStatusBaselineQuestIcon`) in a `ParentCenteredFrame`, so one quest sits centred and
     two sit side by side - straight from Blizzard's own leader panel (`heroleaderpanel`
@@ -763,9 +948,9 @@ from their plates (docs/blizzard-fixes.md).
    Murky's showed the last talent hovered, Nova's an empty box - the box doesn't matter, the
    icon must be one that writes (docs/blizzard-fixes.md). Reverted.
    **Quest tooltips, tries 5-8 failed** (2026-10-19; docs/blizzard-fixes.md). Scrapped: rebuilt
-   one piece at a time in a separate test interface, `src/tests/FCJH_QTest.StormInterface` (deleted
+   one piece at a time in a separate test interface, `interface/tests/FCJH_QTest.StormInterface` (deleted
    2026-10-19, user: it never ships; in git before that)
-   (`python tools/pack.py src/tests/FCJH_QTest.StormInterface --name FCJH_QTest.StormInterface --wait`),
+   (`python tools/pack.py interface/tests/FCJH_QTest.StormInterface --name FCJH_QTest.StormInterface --wait`),
    one change per build; `FCJH_QuestTest` is out of FCJH. **Step 1 fills** (7be15cc): an
    untouched copy of Blizzard's leader panel, Control+Shift+Q. **Step 2 fills** (5d1ae3f):
    opened Ahli's way (on from load, faded and slid in), no Show event. **Step 3 blank**
@@ -897,8 +1082,8 @@ from their plates (docs/blizzard-fixes.md).
      2026-10-21, ed32947: "TLV looks great"):** the plate's death ring, bursts and respawn glow
      on each Viking's portrait slice only, down to the bar backing (`slice_rings`,
      `slice_ring`), off their own party-cell timers and `HeroAlmostRespawnedHero{n}`.
-     **Left:** Misha's (same build, `FCJH_SliceRingMisha`, hidden while Rexxar is dead) -
-     "something flashed", the user is digging in; the Vikings' embers/fire untested. See item 15;
+     **Misha's DONE too (user, 2026-10-23: "Misha's and TLV's death rings are good now")**
+     (`FCJH_SliceRingMisha`, hidden while Rexxar is dead). See item 15;
    - ~~**Death timers flash white under 5 s**~~ DONE (user, 2026-10-18; above);
    - ~~**Ahli's death animation**~~ DONE (item 12; seen again 2026-10-19: the skull, red ring,
      flashing count and gold rim at 5 all good);

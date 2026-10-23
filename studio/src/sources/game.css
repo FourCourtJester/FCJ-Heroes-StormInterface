@@ -1,0 +1,552 @@
+/* The game scene's own styling. Hand-written and owned here: tools/obs.py generates the
+   pictures and the numbers, and nothing else (2026-10-22).
+ *
+ * Every measurement comes from ../generated/topbar.json, set as custom properties on the
+ * elements by Game.jsx. Nothing in this file has a number baked into it that the interface
+ * also depends on - if a value looks like geometry, it is a var, and it came from layout.toml.
+ *
+ * The markup this expects, per team:
+ *
+ *   <div class="fcjh-band blue">
+ *     <div class="fcjh-name"><span>TEAM NAME</span></div>
+ *     <div class="fcjh-logo"><img class="mark" src="logo.png"></div>
+ *   </div>
+ *
+ * Leave .fcjh-logo out and the name plate runs on to the level wing, which is the tournament
+ * with no team logos.
+ *
+ * Variables Game.jsx sets on .fcjh-band:
+ *   --team-rgb   the side's colour as "r g b", for rgb(... / alpha)
+ *   --logo-clip  the logo plate's parallelogram, in the plate's own box
+ * ...and on the scene root:
+ *   --band-h --slant --cap --text-inset --logo-w --logo-lap
+ */
+
+/* ── the scene ─────────────────────────────────────────────────────────────────────────
+   The page a browser source fills, and the layers inside it. A toggle's layer is the whole
+   page on purpose: the framework animates it, and a transform on a smaller box would become
+   the containing block for everything absolutely placed inside it. */
+.fcjh-scene {
+  position: relative;
+  width: var(--scene-w);
+  height: var(--scene-h);
+}
+
+.fcjh-scene .fcjh-layer {
+  position: absolute;
+  inset: 0;
+}
+
+/* everything placed from the generated numbers is absolute; the numbers themselves arrive as
+   left/top/width/height on the element, and nothing else does */
+.fcjh-band,
+.fcjh-scene .fcjh-pips,
+.fcjh-ban,
+.fcjh-tab,
+.fcjh-event {
+  position: absolute;
+}
+
+/* Depth, stated rather than left to the order things happen to be written in: the tournament's
+   logo over everything, the tabs under everything, the bands between - which is also what the
+   entrance needs, since the pips and the plates emerge from behind the band (user, 2026-10-22).
+
+   Everything that carries a z-index in this file is positioned, which is what lets z-index
+   apply at all: it is ignored on a static element, and the pieces then stack by document
+   order instead (user, 2026-10-22). A flex item is the one exception the spec makes, and the
+   name's text was living on that exception - correct, but it would have stopped stacking the
+   day its plate stopped being a flex container, so it is pinned too. */
+.fcjh-tab-layer {
+  z-index: 0;
+}
+
+.fcjh-scene .fcjh-pips {
+  z-index: 1;
+}
+
+.fcjh-band {
+  z-index: 2;
+}
+
+.fcjh-layer,
+.fcjh-event {
+  z-index: 3;
+}
+
+/* ── the band ──────────────────────────────────────────────────────────────────────────
+   One plate per team. The dark fill, the team glow and the lattice live here rather than in
+   the frame, so they stretch to any width without distorting and run on under the name and
+   the logo as one surface. */
+.fcjh-band {
+  top: 0;
+  height: var(--band-h);
+  display: flex;
+  isolation: isolate;
+  /* no surface of its own any more: each plate carries its own, so the two can arrive
+     separately. What the band still does is MASK - its clip is the boundary a plate slides
+     out from, which is the level wing's edge (user, 2026-10-22) */
+}
+
+/* the plates lean with the hero cells: blue's bottom edge sits a slant's run further in,
+   red's the other way */
+.fcjh-band.blue {
+  --glow-to: left;
+  clip-path: polygon(0 0, calc(100% - var(--slant)) 0, 100% 100%, var(--slant) 100%);
+}
+
+.fcjh-band.red {
+  --glow-to: right;
+  flex-direction: row-reverse;
+  clip-path: polygon(var(--slant) 0, 100% 0, calc(100% - var(--slant)) 100%, 0 100%);
+}
+
+.fcjh-band.blue {
+  --lattice: url('../generated/lattice_blue.svg');
+  --lattice-fade: linear-gradient(to left, rgb(0 0 0 / 0.7), rgb(0 0 0 / 0.25) 50%, rgb(0 0 0 / 0.4));
+}
+
+.fcjh-band.red {
+  --lattice: url('../generated/lattice_red.svg');
+  --lattice-fade: linear-gradient(to right, rgb(0 0 0 / 0.7), rgb(0 0 0 / 0.25) 50%, rgb(0 0 0 / 0.4));
+}
+
+/* ── the two plates on it ──────────────────────────────────────────────────────────────
+   The name takes what the logo leaves. The logo laps back over the name by the slant plus a
+   rim so the two rims land on each other and read as one seam. */
+.fcjh-name,
+.fcjh-logo {
+  position: relative;
+  height: 100%;
+  isolation: isolate;
+  background:
+    linear-gradient(
+      to var(--glow-to),
+      rgb(var(--team-rgb) / 0.92) 0%,
+      rgb(var(--team-rgb) / 0.58) 22%,
+      rgb(var(--team-rgb) / 0.32) 50%,
+      rgb(var(--team-rgb) / 0.58) 80%,
+      rgb(var(--team-rgb) / 0.95) 100%
+    ),
+    linear-gradient(#3b2d52, #2a1f3c);
+}
+
+/* each plate is its own parallelogram, cut the way the band used to cut the pair of them */
+.blue .fcjh-name,
+.blue .fcjh-logo {
+  clip-path: polygon(0 0, calc(100% - var(--slant)) 0, 100% 100%, var(--slant) 100%);
+}
+
+.red .fcjh-name,
+.red .fcjh-logo {
+  clip-path: polygon(var(--slant) 0, 100% 0, calc(100% - var(--slant)) 100%, 0 100%);
+}
+
+.fcjh-name::before,
+.fcjh-logo::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--lattice);
+  -webkit-mask-image: var(--lattice-fade);
+  mask-image: var(--lattice-fade);
+}
+
+.fcjh-name {
+  flex: 1 1 0;
+  min-width: 0;
+  /* the name's own box: centred at the plate's mid-height and inside the upright rectangle
+     the slanted plate contains - the slant's run each side, so a letter stops exactly where
+     an edge starts leaning. border-box because the
+     plate takes what the logo leaves - with content-box the padding would add to that width
+     and the plate would overrun the seam. */
+  box-sizing: border-box;
+  padding: 0 var(--slant);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fcjh-logo {
+  flex: 0 0 var(--logo-w);
+}
+
+.blue .fcjh-logo {
+  margin-left: calc(-1 * var(--logo-lap));
+}
+
+.red .fcjh-logo {
+  margin-right: calc(-1 * var(--logo-lap));
+}
+
+/* the nine-slice frame over each plate: slanted caps that hold their shape, a middle that
+   stretches. `fill` paints the source's middle too, which is where the sheen and the team
+   line come from - so this sits over the plate, and anything that must read on top of it
+   needs a z-index above 1. */
+.fcjh-name::after,
+.fcjh-logo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-style: solid;
+  border-width: 0 var(--cap);
+  border-image-slice: 0 var(--cap-n) fill;
+  border-image-width: 0 var(--cap);
+  border-image-repeat: stretch;
+  pointer-events: none;
+}
+
+/* the frames are generated art; referenced here rather than passed in as a variable, because
+   Vite inlines these SVGs as data URIs and an unquoted url() of one does not parse */
+.blue .fcjh-name::after {
+  border-image-source: url('../generated/frame_blue.svg');
+}
+
+.red .fcjh-name::after {
+  border-image-source: url('../generated/frame_red.svg');
+}
+
+/* the logo plate takes the same frame without the team line: a bar of team colour under a
+   team's own logo says nothing the logo doesn't */
+.blue .fcjh-logo::after {
+  border-image-source: url('../generated/frame_logo_blue.svg');
+}
+
+.red .fcjh-logo::after {
+  border-image-source: url('../generated/frame_logo_red.svg');
+}
+
+/* ── the name ──────────────────────────────────────────────────────────────────────────
+   Above the frame, or the frame's sheen would wash over the text and its team line would cut
+   the descenders. Whatever Variable renders as its root is the element here, so it is pinned
+   `relative` rather than trusting it to arrive positioned: a flex item does honour z-index
+   without being positioned, but that is the plate's doing and not this element's, and the
+   stacking should not quietly depend on the plate staying a flex container.
+
+   flex: none so it keeps its natural width: `fit` measures that against this box to decide
+   how far to shrink, and a stretched item would measure as the box itself. */
+.fcjh-name > * {
+  position: relative;
+  z-index: 2;
+  flex: none;
+}
+
+.fcjh-name span {
+  font: 700 24px/1 'Saira Semi Condensed', sans-serif;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #e4f3ff;
+  -webkit-text-stroke: 3px #000;
+  paint-order: stroke fill;
+  white-space: nowrap;
+  margin-top: 2px;
+}
+
+/* ── the logo ──────────────────────────────────────────────────────────────────────────
+   A logo is assumed square. It is drawn as wide as the plate and centred on it, so it fills
+   the plate edge to edge and loses only the top and bottom of the square; the plate's own
+   clip-path cuts it to the parallelogram. No z-index, so the frame keeps its chrome and
+   sheen over the picture.
+
+   `.mark` is the picture itself - Image puts className on its own <img>. The box is the
+   plate and `cover` does the scaling, which is why nothing here has to fight the
+   `max-h-full max-w-full` it ships with: those cap at 100%, and 100% is what we ask for.
+   Only `object-contain` needs beating, and two classes outspecify one. `display: block`
+   because an <img> is inline and would otherwise sit on a baseline with a gap beneath. */
+.fcjh-logo .mark {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── the score pips ────────────────────────────────────────────────────────────────────
+   Each pip's SVG carries a pad around the hexagon so its drop shadow has room, but the
+   design's gap is between the HEXAGONS - so two neighbouring SVGs overlap by that pad. A
+   flex `gap` cannot overlap, a negative margin can.
+
+   The two `.fcjh-scene` rules below are deliberately that specific: Tally ships with
+   `inline-flex` and `gap-1` of its own, and these have to win without an !important. */
+.fcjh-scene .fcjh-pips {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+/* index 0 is the pip nearest the name, so the row grows away from it */
+.fcjh-scene .fcjh-pips.blue {
+  flex-direction: row-reverse;
+}
+
+.fcjh-scene .fcjh-pips.red {
+  flex-direction: row;
+}
+
+.fcjh-pip {
+  margin-inline: var(--pip-margin, 0);
+  flex: none;
+}
+
+/* ── the ban tiles ─────────────────────────────────────────────────────────────────────
+   The empty tile is the art; a picked hero's portrait is cut to the same parallelogram and
+   greyed, with the banned foot along the bottom. An empty tile is a slot a draft can fill. */
+.fcjh-ban {
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.fcjh-ban.blue {
+  background-image: url('../generated/ban_blue.svg');
+}
+
+.fcjh-ban.red {
+  background-image: url('../generated/ban_red.svg');
+}
+
+.fcjh-ban-art {
+  position: absolute;
+  inset: 0;
+}
+
+.fcjh-ban.blue .fcjh-ban-art {
+  clip-path: var(--ban-clip-blue);
+}
+
+.fcjh-ban.red .fcjh-ban-art {
+  clip-path: var(--ban-clip-red);
+}
+
+.fcjh-ban-art img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) brightness(0.72);
+}
+
+.fcjh-ban-foot {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 4px;
+  background: var(--banned-foot);
+}
+
+/* ── the tabs ──────────────────────────────────────────────────────────────────────────
+   Our art, the operator's words, and they grow with them. What is fixed is each tab's INNER
+   edge - the one 5 px off Blizzard's hexagon - so a longer word pushes the tab outward, away
+   from the middle of the screen, and the pair are held to one width by the page (Game.jsx).
+
+   The art is three slices, not a stretched picture: `--tab-cap` px at each end hold the two
+   slants and the middle between them stretches. The two sides lean differently, one with the
+   plates and one with the hexagon, so each cap carries its own - which is why the padding
+   either side is not symmetric either. */
+/* the tabs' own mask. Paint order is not enough for these: a tab reaches well past the band's
+   inner end - the division tab runs to 908.9 where the band stops at 813 - and that stretch
+   hangs over the interface's level wing, which is in the game capture and not ours to paint
+   over. So the strip they live in starts at the band's bottom edge and hides anything above
+   it, and a tab waiting to come down is cut away entirely. */
+.fcjh-tab-layer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: var(--band-h);
+  height: var(--tab-h);
+  overflow: hidden;
+}
+
+.fcjh-tab {
+  top: 0;
+  height: var(--tab-h);
+  width: var(--tab-w, auto);
+  box-sizing: border-box;
+  padding-left: var(--words-l);
+  padding-right: var(--words-r);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fcjh-tab.division {
+  right: var(--tab-anchor);
+}
+
+.fcjh-tab.game {
+  left: var(--tab-anchor);
+}
+
+/* the art, under the words: `fill` paints the stretched middle as well as the caps */
+.fcjh-tab::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-style: solid;
+  border-width: 0 var(--tab-cap);
+  border-image-slice: 0 var(--tab-cap-n) fill;
+  border-image-width: 0 var(--tab-cap);
+  border-image-repeat: stretch;
+  pointer-events: none;
+}
+
+.fcjh-tab.division::after {
+  border-image-source: url('../generated/tab_division.svg');
+}
+
+.fcjh-tab.game::after {
+  border-image-source: url('../generated/tab_game.svg');
+}
+
+.fcjh-tab-words {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  font-size: var(--tab-font);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tab-text);
+  text-shadow: 0 1px 2px #000;
+  white-space: nowrap;
+}
+
+/* natural width, so the page can measure the words without the tab's own width feeding back
+   into the measurement */
+.fcjh-tab-words > * {
+  flex: none;
+}
+
+/* ── the tournament's logo ─────────────────────────────────────────────────────────────
+   Fills Blizzard's hexagon and is cut to it, rather than sitting inside it with the plate
+   showing round the edges. */
+.fcjh-event {
+  clip-path: var(--event-clip);
+}
+
+.fcjh-event img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── the entrance ──────────────────────────────────────────────────────────────────────
+   The scene plays itself in when it loads. That is the whole trigger: OBS is set to shut the
+   source down when its scene is not visible, so coming back to the game scene mounts this
+   afresh - and Scene renders nothing until the show's values have arrived, so the sequence
+   starts when there is something to show rather than on an empty page (user, 2026-10-22).
+
+   Order: the tournament's logo fades, then each team's logo slides out from under the level
+   wing, then the name out from under the logo, then the pips out from under the name, then
+   the tabs drop out from under the band. Everything slides OUTWARD, away from the middle, so
+   `--out` is the direction this side travels: -1 on blue, +1 on red.
+
+   Nothing here needs a mask of its own. A plate sliding out is hidden by the band's clip; the
+   pips and the tabs are hidden because the band is painted over them (Game.jsx orders them
+   under it). */
+.fcjh-scene {
+  --enter: 670ms;
+  --enter-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* held at the first frame - which `both` makes the start of the slide - until the show's
+   values have arrived (Game.jsx useReady), so the sequence never plays over an empty bar */
+.fcjh-scene:not(.ready) .fcjh-event,
+.fcjh-scene:not(.ready) .fcjh-logo,
+.fcjh-scene:not(.ready) .fcjh-name,
+.fcjh-scene:not(.ready) .fcjh-pips,
+.fcjh-scene:not(.ready) .fcjh-tab {
+  animation-play-state: paused;
+}
+
+.fcjh-band.blue {
+  --out: -1;
+}
+
+.fcjh-band.red {
+  --out: 1;
+}
+
+@keyframes fcjh-enter-x {
+  from {
+    transform: translateX(var(--from));
+  }
+}
+
+@keyframes fcjh-enter-y {
+  from {
+    transform: translateY(var(--from));
+  }
+}
+
+@keyframes fcjh-enter-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+/* the pips' own: everything else is hidden by a clip or by the band on top of it, but the
+   pips are only covered - so they carry their own invisibility until their turn comes */
+@keyframes fcjh-enter-x-fade {
+  from {
+    transform: translateX(var(--from));
+    opacity: 0;
+  }
+}
+
+/* the tournament's logo, first */
+.fcjh-event {
+  animation: fcjh-enter-fade var(--enter) var(--enter-ease) both;
+  animation-delay: 250ms;
+}
+
+/* then the team logos, out from under the wing by their own width */
+.fcjh-logo {
+  --from: calc(var(--out) * -1 * var(--logo-w));
+  animation: fcjh-enter-x var(--enter) var(--enter-ease) both;
+  animation-delay: 450ms;
+}
+
+/* then the names, out from under the logos - or from the wing when there is no logo, which is
+   the same travel and the same mask */
+.fcjh-name {
+  --from: calc(var(--out) * -1 * var(--band-w));
+  animation: fcjh-enter-x var(--enter) var(--enter-ease) both;
+  animation-delay: 650ms;
+}
+
+/* then the pips, out from under the name. Unlike the plates these are a sibling of the band
+   rather than a child of it, so nothing clips them - they are simply covered. The band's
+   lower edge leans away though, so travelling their own width alone would leave the outermost
+   pip showing in the triangle under that slant: they go a slant's run further. */
+.fcjh-scene .fcjh-pips {
+  /* the row's own width, the band's slant, and 2 px over. The slant is because the band's
+     lower edge leans away and the pips sit almost its full height, so clearing the width
+     alone still leaves half a pixel of the outermost pip showing under that lean; the 2 px
+     is slack, and it is spent behind the band where nothing can see it. A length rather
+     than `100%`: a percentage inside this multiplication invalidates the transform outright
+     and the pips never move at all. */
+  --from: calc(var(--out) * -1 * (var(--pip-row-w) + var(--slant) + 2px));
+  animation: fcjh-enter-x-fade var(--enter) var(--enter-ease) both;
+  animation-delay: 850ms;
+}
+
+.fcjh-pips.blue {
+  --out: -1;
+}
+
+.fcjh-pips.red {
+  --out: 1;
+}
+
+/* and the tabs, down from under the band */
+.fcjh-tab {
+  --from: -100%;
+  animation: fcjh-enter-y var(--enter) var(--enter-ease) both;
+  animation-delay: 1050ms;
+}

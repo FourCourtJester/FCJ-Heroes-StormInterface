@@ -2,7 +2,28 @@
 
 A custom `.StormInterface` observer overlay for Heroes of the Storm, for esports and
 broadcast use: the ten heroes along the bottom around the minimap, a slim two-line top bar
-whose branding regions are left empty for OBS, and on-demand info panes.
+whose branding regions are left empty for OBS, and on-demand info panes. With the broadcast
+graphics that fill those regions, drawn from the same numbers.
+
+**Three veins, one repo:**
+
+| Vein | Where | What it makes |
+|---|---|---|
+| **The interface** | `interface/` | `FCJ v<version>.StormInterface`, the file casters select in Heroes. Shipped as a GitHub release, per version tag |
+| **The broadcast graphics** | `studio/` | A [Single Studio](https://github.com/FourCourtJester/Single-Studio) app: an operator's board in an OBS dock and a browser source per graphic. Published to GitHub Pages on every push that touches it |
+| **The generator** | `tools/` | Python that writes both from `layout.toml` — the interface's layouts and textures, and the studio's parts and numbers |
+
+**Where each is published - one channel, one job:**
+
+| Channel | Serves | Nothing else |
+|---|---|---|
+| **GitHub Releases** | The `.StormInterface` file, one per version tag `v<version>` (`.github/workflows/release.yml`) | No studio build, no docs |
+| **GitHub Pages** | The OBS studio: the operator's board and its browser sources (`.github/workflows/pages.yml`, on pushes to `main` that touch `studio/`) | No interface file |
+| **An API folder** *(planned)* | Markdown for other developers, read in the repo | - |
+
+They are one repo because they are one set of numbers. `layout.toml` places the hero plates
+*and* the broadcast's name plates; `python tools/gen.py` writes both halves, and `--check`
+fails if either has gone stale. Nothing has to be kept in step by hand.
 
 **Start with [HANDOFF.md](HANDOFF.md)** — current state, the dev loop, the rules learned the
 hard way, and what's next. The agreed design is a canvas of to-scale wireframes:
@@ -10,7 +31,8 @@ https://claude.ai/artifact/6MmAcxcKjfAAprCN3oc3ZK
 
 ## Quick start
 
-Requires Python 3.11+ (standard library only).
+Requires Python 3.11+ (standard library only). The studio also needs Node 22+, but only to
+develop it: Pages builds it in CI, and the interface's loop below never touches it.
 
 ```
 python tools/pack.py --wait
@@ -25,13 +47,16 @@ After a rebuild, leave the replay and reopen it — no client restart needed.
 
 To move or resize anything, change its pixels in `layout.toml` and rebuild.
 
-`python tools/pack.py --release` builds the shipping file, `dist/v<version>/FCJH.StormInterface`,
+`python tools/pack.py --release` builds the shipping file, `dist/v<version>/FCJ v<version>.StormInterface`,
 from committed sources only.
 
 | Path | What |
 |---|---|
 | `layout.toml` | Every placement, in screen pixels at 1920×1080, from the wireframe |
-| `src/FCJH.StormInterface/` | Interface source; the archive's file tree, one to one |
+| `interface/FCJH.StormInterface/` | Interface source; the archive's file tree, one to one |
+| `studio/` | The broadcast graphics; `studio/README.md` is its own start |
+| `studio/src/generated/` | Written by `tools/obs.py`, never by hand |
+| `tools/obs.py` | The broadcast parts and numbers from `layout.toml` |
 | `tools/pack.py` | Generate, stage, validate, pack, deploy (dev or `--release`) |
 | `tools/gen.py` | Generated layouts and textures from `layout.toml`; `--check` for staleness |
 | `tools/inspect_card.py` | The inspect card, written by `gen.py` (reads hero data from JamiePhan) |
@@ -56,7 +81,9 @@ Note: the repo's stated 4-hourly automation appeared stalled as of August 2026 (
 2026-07-24), but it was still one patch ahead of the local client extraction under
 `references/Galaxy-Observer-UI-HeroesFix/baseUI`.
 
-`references/` is gitignored.
+`references/` is gitignored, and [references/README.md](references/README.md) is what
+arrives there instead: the one extract the tools need, the interfaces this project was
+read off, and CascView for pulling art straight out of the installed client.
 
 ## References
 

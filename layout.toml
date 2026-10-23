@@ -11,7 +11,7 @@
 
 [meta]
 name = "FCJH"
-version = "1.0.1"
+version = "1.0.2"
 
 [screen]
 width = 1920
@@ -134,27 +134,15 @@ warhead_junction = 0
 #       "demand" on demand, or temporary
 # ---------------------------------------------------------------------------
 
-# Top bar, blue side (outside in: score, name, logo, level). Red mirrors blue about x 960.
-# OBS pass (user, 2026-09-30):
-# - the top row (score, name, logo) is one band, the height of the level labels' backplate
-#   wings: the top edge to y 63.3 (the hexagon's side points), so their art matches it;
-# - logos are 8 px clear of the wings' slanted outer ends (762.4 / 1157.7 on the top edge);
-#   blue's score stays clear of the replay panel (x 14-392, its art 20-386);
-# - the second row: bans under each name; division (blue) and game count (red) under the
-#   level labels, as wide as their wing's bottom edge (blue 794-890, red 1024-1126: Blizzard's
-#   hexagon sits 2.75 px left of the screen's centre, so the wings differ).
+# Top bar, blue side (inside out: level, logo, name, score). Red mirrors blue about x 960.
 # OBS draws data only, never art (user, 2026-10-16): team names, logos, series score, the
-# tournament's name, division and logo, and the game's bans. Every plate and frame they sit
-# on is the interface's (the art pass).
-[element.blue_score]
-rect = [400, 0, 64, 63.3]
-kind = "obs"
-[element.blue_name]
-rect = [470, 0, 214, 63.3]
-kind = "ui"                  # the plate is ours (the art pass); OBS draws the name on it
-[element.blue_logo]
-rect = [690, 0, 64, 63.3]
-kind = "obs"
+# tournament's name, division and logo, and the game's bans - with one exception, the name
+# plate, which is OBS's own art because only OBS knows whether a tournament has team logos
+# (2026-10-18, docs/obs-topbar-handoff.md). The whole OBS band - the name and logo plates,
+# the score pips, the ban tiles and the division / game tabs - is worked out from [top_bar]
+# by tools/gen.py (top_bar_rects), so it can't drift from the level wings it meets; those
+# places are in the constants as "obs" like the rest. Everything under the band's data that
+# the interface draws - the tabs, the empty ban tiles - comes with the art pass.
 [element.blue_level]
 rect = [820, 8, 64, 50]      # 64 wide, was 80 (user, 2026-10-19: the OBS top bar, docs/obs-topbar-handoff.md):
                              # the wings 20 px shorter each, their outer ends at 779.8 / 1140.2
@@ -162,12 +150,6 @@ kind = "ui"
 [element.blue_talent_lead]
 rect = [814, 0, 76, 64]      # Blizzard's flame, behind the level plate of the team ahead (6 past it each side)
 kind = "demand"
-[element.blue_bans]
-rect = [576, 67, 108, 32]    # under the name, flush with its inner end
-kind = "obs"
-[element.division]
-rect = [794, 67, 96, 24]     # under blue's wing: the division, and the bracket stage if it fits
-kind = "obs"
 
 # Top bar, centre
 [element.logo_plate]
@@ -177,10 +159,10 @@ kind = "ui"
 rect = [906, 128, 108, 32]
 kind = "ui"
 [element.event_logo]
-rect = [922, 32, 68, 62]     # the tournament's logo, in the hexagon's middle (its centre 956, 63)
-kind = "obs"
-[element.event_name]
-rect = [810, 164, 300, 24]   # the tournament's name, under the clock (proposed, 2026-10-16)
+rect = [922, 32, 68, 62]     # the tournament's logo, in the hexagon's middle (its centre 956, 63);
+                             # event_mask.png masks it to the hexagon. The tournament's NAME has
+                             # left the clock: it goes in a tab of its own, still to settle
+                             # (user, 2026-10-19; docs/obs-topbar-handoff.md)
 kind = "obs"
 
 # Top bar, red side (inside out: level, logo, name, score)
@@ -190,21 +172,6 @@ kind = "ui"
 [element.red_talent_lead]
 rect = [1030, 0, 76, 64]
 kind = "demand"
-[element.red_logo]
-rect = [1166, 0, 64, 63.3]
-kind = "obs"
-[element.red_name]
-rect = [1236, 0, 214, 63.3]
-kind = "ui"
-[element.red_score]
-rect = [1456, 0, 64, 63.3]
-kind = "obs"
-[element.red_bans]
-rect = [1236, 67, 108, 32]
-kind = "obs"
-[element.game_count]
-rect = [1024, 67, 102, 24]   # under red's wing
-kind = "obs"
 
 # Around the edges
 [element.replay]
@@ -269,7 +236,18 @@ team_height = 24             # each team's band (name + team totals) above its f
 # Each pane has its own hotkey and starts hidden; they share the one info_pane box, and
 # opening one closes whichever is open. Ctrl+1-4 (user, 2026-10-05): Blizzard's own panes on
 # Ctrl+1 / Ctrl+2 have their keys taken away (FCJH_Hidden), as Ahli does.
-hotkeys = { talents = "Control+1", kda = "Control+2", healing = "Control+3", structures = "Control+4" }
+hotkeys = { talents = "Control+1", kda = "Control+2", healing = "Control+3", siege = "Control+4" }
+# The numbers panes' rows (KDA, healing, siege; user, 2026-10-23: "zebra rows, Heroes
+# palette"): a stripe behind every row in its team's tint, the two shades alternating, and a
+# thin line in the team colour under each, as Blizzard's score screen. The stripes butt
+# together, each row centred in its own. Colours are "alpha,r,g,b" over the pane's skin; the
+# talents pane keeps Blizzard's observer grid. Take the table out for no stripes.
+[info_pane.rows]
+blue = ["215,18,36,84", "215,30,56,124"]     # first row's shade, then the next's: opaque enough to read over a bright map
+red = ["215,46,10,44", "215,66,18,62"]
+blue_line = "190,58,96,184"
+red_line = "190,128,40,92"
+line = 2                     # units, along each stripe's bottom
 [element.centre_banners]
 rect = [640, 196, 640, 78]   # Blizzard's; untouched, may shift on y
 kind = "ui"
@@ -359,6 +337,123 @@ sheen = 0.16                 # white across the top half
 hex_px = 14                  # the lattice's hexagons, width on screen
 lattice = 0.6                # the lattice's strength
 
+# The OBS band along the top edge (docs/obs-topbar-handoff.md, agreed 2026-10-18): the team
+# name plates with their logo plates, the series score's pips, the ban tiles and the division
+# / game tabs. tools/gen.py (top_bar_rects) works every box out from the numbers here, so the
+# interface's places and the OBS layer's can't drift apart: the band's inner end meets the
+# level wings' outer ends, the name and logo plates share one seam, and the tabs hang off
+# Blizzard's hexagon. Red mirrors blue about the screen's middle - except the two tabs, whose
+# inner sides follow the hexagon, which sits 2.75 px left of it.
+[top_bar]
+height = 63.3                # the band, from the top edge: the level wings' height (the
+                             # hexagon's side points), so the art matches them
+name_left = 440              # blue's name plate, its outer end along the band's top edge. The
+                             # box runs from there to the wing's end, the lean taking its
+                             # bottom edge 34.2 px further in (so 440 -> 779.8 along the top)
+seam = 707                   # where the name plate's rim and the logo plate's coincide, along
+                             # the top edge: the logo plate is the band's inner 109.5 px, and
+                             # with no logo the name plate runs on to the wing
+pips = 4                     # the most pips a side (a best of 7); OBS draws as many as the
+                             # series needs (user, 2026-10-19: more than 3 is the operator's call)
+pip_band = 0.8               # a pip's hexagon, pointy-topped: this much of the band's height
+pip_gap = 5                  # between two pips
+pip_off_name = 14            # the first pip, off the name plate's outer slant. They fill from
+                             # the name outward
+bans = 3                     # ban tiles a side (optional: a toggle)
+ban_tile = 32                # a tile, px across the band's top edge and px tall (it leans with
+                             # the plates, so its bottom edge is 17.3 px further in)
+ban_pitch = 38               # between two tiles
+ban_drop = 5                 # the tiles' top, below the band
+ban_inset = 5                # the innermost tile, in from the seam carried down the lean
+outward = 1                  # the whole OBS band sits this far outside its geometric place,
+                             # each side away from the middle. The interface draws its chrome
+                             # CENTRED on the level wing's edge, so half of it (1.25 px) falls
+                             # outside the wing - on the band's ground. Without this the band's
+                             # inner end runs under that chrome (user, 2026-10-22: "nudge blue
+                             # left 1px and red right 1px"). Everything hung off the band moves
+                             # with it: the logo plate, the seam, the pips, the ban tiles and
+                             # the tabs' outer sides. The tabs' inner sides stay on the hexagon,
+                             # so the two tabs grow by this much instead of moving
+tab_clear = 5                # the division / game tabs' inner sides, off Blizzard's hexagon.
+                             # They hang from the band to the ban tiles' bottom (y 100.3), and
+                             # their outer sides are the seam carried down, so the slants line up
+
+# The standby screen's "coming up next" band: the browser source between games
+# (studio/src/sources/Standby.jsx). OBS-only, like [top_bar] - the interface draws none of it.
+# The composition is the old NGS board (C:\FourCourtJester\Broadcasts\Heroes,
+# apollo/scenes/scene-afk, 2018): two team containers meeting in the middle, a message board
+# behind them, a logo arm at each screen edge. Its places, this kit's language - our lean, rim,
+# lattice and team colours instead of its 45 degree chevrons and flat navy.
+[standby]
+band = 215                   # the whole assembly, up from the bottom edge of the screen
+team_w = 576                 # a team's container, and
+team_h = 130                 # ...its height. Both ends come to a point at HALF height - the
+                             # plates' lean, carried over from the game band - so the two lean
+                             # into each other across the middle
+team_inset = 331             # a container's outer end, in from its own side of the screen.
+                             # With the width, that leaves 106 px in the middle for the VS
+team_bottom = 34             # the container's bottom edge, up from the bottom of the screen
+team_cap = 44                # its nine-slice caps: wide enough to hold the point (lean *
+                             # team_h / 2 = 35.1 px) with room for the rim inside it
+plate_w = 686                # the message board behind them, carrying the line of text
+plate_h = 156                # ...pointed the same way, but in plain smoke: it recedes, and the
+plate_bottom = 59            # containers are the furniture (as the old board had it)
+plate_text = 37              # the message, cap height. It sits in the board's top edge, the
+                             # containers covering the rest
+arm_w = 576                  # a logo arm, flush to its own screen edge
+arm_h = 103
+arm_bottom = 53
+arm_over = 170               # how far an arm hangs off its own edge of the screen. The old
+                             # board did this (apollo .logos left:-170) and it is what leaves a
+                             # gap between the arm and the message board: butted up against it
+                             # the three read as one letterbox bar across the bottom
+arm_pad = 10                 # clear air between a logo and every edge of its arm - the
+                             # screen edge, the top and bottom, and the diagonal. The logo
+                             # takes whatever is left and is centred in it, rather than
+                             # being a fixed width that could touch (user, 2026-10-23)
+bug_w = 566                  # the countdown, hanging from the TOP edge of the screen, where
+bug_h = 59                   # the old broadcast's timer bug hung (apollo/scenes/bug-timer)
+smoke = 0.5                  # how black the message board and the arms are over the slideshow
+bug_smoke = 0.25             # the bug is lighter: it sits over the picture, not under the band
+
+# The webcam frames: a browser source of BORDERS, not of video (studio/src/sources/Webcams.jsx).
+# OBS puts each camera underneath and this draws the frame and the name over it, which is the
+# way round that lets a camera be moved and scaled without re-cutting any art (user, 2026-10-22).
+# The windows are cut at the plates' angle, so they are not rectangles and OBS cannot crop to
+# them on its own - tools/obs.py writes a mask per side for its Image Mask/Blend filter.
+#
+# They hang in the standby screen's free middle, between the countdown bug and the band, so the
+# two sources stack in OBS without either moving.
+[webcam]
+w = 848                      # a cam window. Grown by about the 40 px asked for (user,
+h = 477                      # 2026-10-23) and still exactly 16:9, which is what every camera
+                             # and capture card gives. 848 x 477 is the nearest exact pair
+                             # above 800 x 450; 832 x 468 is the nearest below. Both numbers
+                             # have to stay whole: the OBS mask is a PNG drawn at this size
+gap = 80                     # between the two windows
+chamfer = 0.25               # the cut corner, measured DOWN as a FRACTION of the window's
+                             # height; its width is the plates' lean over that run. A fraction
+                             # and not a length, so every window is the same SHAPE whatever
+                             # its size - which is what lets one mask serve them all, scaled
+                             # in OBS (user, 2026-10-23). The angle survives either way, both
+                             # boxes being 16:9, but only similar shapes survive a resize.
+                             # A full parallelogram would slant far enough to lose most of a
+                             # face, which is why this is a chamfer and not a lean
+rim = 4                      # the chrome line round a window. Thicker than the plates' 2.5,
+                             # because this one is read across a whole screen
+plate_h = 56                 # the name bar under a window: the band's message board at its
+plate_gap = 14               # own size - smoke, pointed ends, no chrome of its own
+plate_pad = 22               # the name and the handle, in from the bar's points
+plate_smoke = 0.8            # how black a name bar is. Darker than the standby band's 0.5,
+                             # and the two match on screen BECAUSE of it: the band sits at the
+                             # bottom, under the full weight of that screen's vignette, and
+                             # these sit mid-screen where it has barely begun. Same alpha
+                             # would read two different depths (user, 2026-10-23)
+solo_w = 1024                # the one-camera layout: a single window, centred, bigger because
+solo_h = 576                 # it has the screen to itself. 16:9 exactly, like the pair
+name = 30                    # the commentator's name, cap height
+social = 20                  # ...and their handle, under the same bar at the other end
+
 # Bars stacked on each hero row, placed by tools/gen.py from [hero_row] so they follow it.
 # Both are cut to the plates' slant: their ends continue the row's slanted outer edges.
 
@@ -369,6 +464,19 @@ gap = 1                      # between the bar and the plates' top edge (tight: 
 colour = "9a6cff"            # the fill, both teams (hex RGB)
 track_colour = "0b0c14"      # the empty part
 track_alpha = 220
+
+# The XP and core bars' fills, bevelled as Blizzard's core bar (design/ref_default_core_hp.png;
+# gen.py bevel_texture): lit from above, a soft step at mid-height. Brightness is x the bar's
+# colour; lip and foot are texels at 1440p (1 texel ~ 0.75 px at 1080p). Take the table out
+# for flat fills.
+[bar_bevel]
+top = 1.00                   # brightness at the top (the colour itself: 3f8cff and ff4a5e are full in one channel)...
+bottom = 0.78                # ...falling to this at the bottom
+step = 0.06                  # and dropping this much more below mid-height: the bevel
+lip = 1                      # a light line along the top
+lip_white = 0.35             # its mix toward white
+foot = 1                     # a dark line along the bottom
+foot_dark = 0.45             # its brightness
 
 # A team's map alerts: stacked on its side of the minimap, on its plates' inner end (tools/maps.py).
 [map_alerts]

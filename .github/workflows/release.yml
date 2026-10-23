@@ -2,7 +2,7 @@
 # builds the interface from that commit, compressed (tools/pack.py --release), and publishes
 # it as the release's one file. Generation and validation need Blizzard's UI extract
 # (references/, not in the repo), so they run locally before tagging; here the committed
-# src/ is packed as it is.
+# interface/ is packed as it is.
 name: Release
 
 on:
