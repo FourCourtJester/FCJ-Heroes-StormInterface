@@ -692,7 +692,10 @@ at load.
      (`Screenshot2026-10-22 21_27_16`) - from layout.toml `[info_pane.rows]` (gen.py
      `row_stripes`), opaque enough to read over a bright map. Red's team band moved from crimson
      toward that screen's maroon; the numbers lightened to its tints (FontStyles `FCJH_StatValue_*`
-     9cbcf4 / eda4b8: full team colour read dark on dark, `Screenshot2026-10-23 12_24_59`). The
+     9cbcf4 / eda4b8: full team colour read dark on dark, `Screenshot2026-10-23 12_24_59`).
+     Those tints first showed as dark blue and red (`Screenshot2026-10-23 12_30_35`): the row's
+     team colour multiplies into a label that doesn't say `IgnoreParentColor`, as Blizzard's own
+     score label does. Ours does now. Seen in game: the bevels on both bars, the stripes. The
      talents pane keeps Blizzard's observer grid. Not yet: the score screen's shaded column
      groups (Blizzard's `BGSeparatorImage1-3`, which our rows hide), the
      leaders' glow in place of our lit box.

@@ -4562,6 +4562,7 @@ def stat_value(frame, score, team, indent):
             f'{t}\t\t<Anchor relative="$parent"/>\n'
             f'{t}\t\t<Text val="{{$parent/Label/@Text}}"/>\n'
             f'{t}\t\t<Style val="FCJH_StatValue_{team.capitalize()}"/>\n'
+            f'{t}\t\t<IgnoreParentColor val="true"/>  <!-- as Blizzard\'s Label: else the row\'s team colour multiplies into ours (2026-10-23) -->\n'
             f'{t}\t\t<RenderPriority val="620"/>  <!-- over the leader highlight (FCJH_Lead) -->\n'
             f'{t}\t\t<Options val="NoWrapping | ScaleToPreventTruncation"/>\n'
             f'{t}\t\t<AcceptsMouse val="false"/>\n'
