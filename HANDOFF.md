@@ -714,6 +714,16 @@ at load.
      read 0 all game; Tab's Siege leaves red at most 3,691 outside minions, so it is likely
      real (to re-check on a replay where red pushes). The leader box was the IgnoreParentColor
      bug too (grey-brown, `Screenshot2026-10-23 12_47_40`); it says it now, a little stronger.
+     Second replay against Tab (`Screenshot2026-10-23 12_52_23`, `12_52_44`, `12_52_52`):
+     every player's K/D/A, hero damage, self healing, healing, minions + structures (less
+     mercs and summons, as above), XP and every leader box match; red's structures are not 0
+     there. Wrong, fixed: the KILLS band read the other team's kills - it summed
+     TeamTakedowns, which Blizzard credits to the dead player's team; it sums the kills now.
+     Not ours: the healing bands read 1-2 under the rows' sum (Healing is a fixed-point score,
+     the rows round each value). Dead live: **SHIELDING** - Blizzard reports
+     ProtectionGivenToAllies only at game over (gamelib.galaxy EventBasedAwardsDataReport);
+     shields count in Healing during the game (Medivh's 6,569). Its replacement is the user's
+     call.
 3. **Screenshots of everything for posting**, then **the OBS overlay** to pair with the
    interface (docs/obs.md). Per-map shots: docs/maps.md. Show-off shots, with how to stage
    them, are marked **A show-off shot** in docs/blizzard-fixes.md's "Made" list (first:

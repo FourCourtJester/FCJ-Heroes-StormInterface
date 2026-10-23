@@ -4311,13 +4311,15 @@ SCORE_COLUMNS = ["SoloKillScoreValueFrame", "AssistsScoreValueFrame", "DeathsSco
                  "ExperienceScoreValueFrame"]
 # (key, title, [(column frame, score value, heading, width, team total)])
 # A column's width is the widest number it shows (STAT_WIDTHS). The team total is the score
-# a TeamScoreValueFrame sums for the team band; usually the column's own, but Blizzard counts
-# team kills as TeamTakedowns. Blizzard's SiegeDamage is structures AND minions (its tooltip:
+# a TeamScoreValueFrame sums for the team band: the column's own. Not TeamTakedowns, which
+# Blizzard credits to the DEAD player's team (gamelib.galaxy, "TeamTakedowns" on
+# AlliedPlayerGroupOfPlayer(lv_deadPlayer)) - blue's band showed red's kills
+# (Screenshot2026-10-23 12_52_52). Blizzard's SiegeDamage is structures AND minions (its tooltip:
 # "dealt to enemy Structures and Minions"), so beside STRUCTURES the structures pane shows
 # MinionDamage - siege less structures (user, 2026-10-23).
 STAT_PANES = [
     ("kda", "KDA  ·  HERO DAMAGE", [
-        ("SoloKillScoreValueFrame", "SoloKill", "KILLS", "count", "TeamTakedowns"),
+        ("SoloKillScoreValueFrame", "SoloKill", "KILLS", "count", "SoloKill"),
         ("DeathsScoreValueFrame", "Deaths", "DEATHS", "count", "Deaths"),
         ("AssistsScoreValueFrame", "Assists", "ASSISTS", "count", "Assists"),
         ("HeroDamageScoreValueFrame", "HeroDamage", "HERO DMG", "big", "HeroDamage")]),
