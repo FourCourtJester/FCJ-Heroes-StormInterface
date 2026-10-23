@@ -471,7 +471,9 @@ land on whole pixels at 1080p (`inspect_card.line`), so at 1440p they may come o
 ## 7. What's next
 
 **1.0 (user, 2026-10-21).** A test build went to volunteers 2026-10-20 (v0.1.0, b28ee86, the
-kill feed back on); their feedback is 1.0.x for a while - `[meta] version` 1.0.0, now 1.0.1 (the translations), a patch
+kill feed back on); their feedback is 1.0.x for a while - `[meta] version` 1.0.0, 1.0.1 (the translations), now 1.0.2 (the art pass: bevelled
+plates, the numbers panes - user, 2026-10-23: "Let's prepare for a new interface release
+with this"), a patch
 number per fix batch, each one a `pack.py --release` from a commit. Work is on `main` (its
 history is python-toolchain's, which stays as it was). GitHub:
 https://github.com/FourCourtJester/FCJ-Heroes-StormInterface (public; pushed in
@@ -749,8 +751,11 @@ at load.
      events, by the Style controller Blizzard's own label uses.
      **The numbers panes are DONE (user, 2026-10-23, 78644dc: "I think I can work with this.
      Let's mark these off the list then").**
-   - **Plate bevels - mask work DONE (user, 2026-10-23, 3a7a84c: "Looks good. We'll mark
-     that as mask work"); revert point was 27500be (user, 2026-10-23: "Make a
+   - **Plate bevels - DONE (user, 2026-10-23, d8b21f2: "Great. Mark that off then!"); the
+     mask work too (3a7a84c: "Looks good. We'll mark that as mask work"). Every alternate
+     resource (Brew, Fury, D.Va, Deathwing, Rage; segmented or not) is FCJH_Resource's
+     ColorStyle over the one PLATE_FILL, so it carries the bevel and mask. Revert point was
+     27500be (user, 2026-10-23: "Make a
      note that if it looks bad, we'll revert to this state, but yeah, if blizzard has some
      available bevels specifically for health and mana, lets do it").** Blizzard's top-bar
      fills carry next to no bevel (HealthFill: a 1-texel white lip top and bottom over a faint
