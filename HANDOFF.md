@@ -735,6 +735,13 @@ at load.
      its top to the accent line (50 units, 89 wide at Blizzard's 100:56), uncropped, with
      Tab's right-edge fade (Storm_UI_InGame_Leader_ScoreInset_PortraitFade). Was the talent
      pane's 90 x 33 crop at row offset 10. Geometry: stat_geometry()["portrait"].
+     **Tightened (user, 2026-10-23: "Remove BLUE/RED from the headers / Anchor the portraits
+     to the left edge / Remove some of the whitespace the portraits have", and "a row of
+     emptiness from the end of blue list to the start of red header"):** no team names in
+     the bands (FCJH_StatTeam_* styles gone); the portrait sits on the left border, the first
+     column 4 units after it (STAT_PORTRAIT_GAP); STAT_TEAM_GAP 0, so red's band follows
+     blue's last stripe. Stats panes 496 -> 455 units. Last change of this pass; the user
+     re-evaluates.
 3. **Screenshots of everything for posting**, then **the OBS overlay** to pair with the
    interface (docs/obs.md). Per-map shots: docs/maps.md. Show-off shots, with how to stage
    them, are marked **A show-off shot** in docs/blizzard-fixes.md's "Made" list (first:

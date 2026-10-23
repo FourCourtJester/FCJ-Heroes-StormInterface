@@ -441,9 +441,6 @@ def stats_pane(key):
         band_c = gen.TEAMS[t][2].split(",")
         y = g["team_tops"][t]
         out.append(f'<div style="{abs_box(0, u(y), sw, u(g["team_h"]))} background: rgba({",".join(band_c[1:])},{int(band_c[0]) / 255:.2f});"></div>')
-        tp, tc = FONTS[f"FCJH_StatTeam_{team.capitalize()}"]
-        out.append(f'<div style="{lbl} justify-content: flex-start; left: {u(gen.STAT_MARGIN)}px; top: {u(y)}px; height: {u(g["team_h"])}px; '
-                   f'font-size: {tp}px; font-weight: 600; letter-spacing: .06em; color: {tc};">{team.upper()}</div>')
         vp, vc = FONTS[f"FCJH_StatTotal_{team.capitalize()}"]
         for (_, _, _, x, w, _), v in zip(placed, (tb, tr)[t]):
             out.append(f'<div style="{lbl} left: {u(x)}px; top: {u(y)}px; width: {u(w)}px; height: {u(g["team_h"])}px; '
@@ -451,7 +448,7 @@ def stats_pane(key):
     for i, y in enumerate(g["row_tops"]):
         team = "blue" if i < 5 else "red"
         vp, vc = FONTS[f"FCJH_StatValue_{team.capitalize()}"]
-        out.append(portrait(u(gen.STAT_MARGIN), u(y), team, f"{(i + 1) % 10}", *map(u, g["portrait"])))
+        out.append(portrait(u(g["border"]), u(y), team, f"{(i + 1) % 10}", *map(u, g["portrait"])))
         for (_, _, _, x, w, _), v in zip(placed, rows[i]):
             out.append(f'<div style="{lbl} left: {u(x)}px; top: {u(y + 12)}px; width: {u(w)}px; height: {u(gen.STAT_ROW_H - 12)}px; '
                        f'font-size: {vp}px; font-weight: 600; color: {vc};">{v}</div>')
@@ -846,7 +843,7 @@ def panes_board():
              f'Numbers right-aligned in columns sized to the widest number: {u(gen.STAT_WIDTHS["count"])} px for a count (XX.YY), '
              f'{u(gen.STAT_WIDTHS["big"])} px for a big number (XXX,XXX), at least {u(gen.STAT_GAP)} px apart; the stats panes are {u(g["width"])} px wide '
              f'(the widest one\'s need) and the spare room in the others is shared as equal gaps, '
-             f'so the last column ends {u(gen.STAT_MARGIN)} px from the edge, like the portrait on the left.</div>\n')
+             f'so the last column ends {u(gen.STAT_MARGIN)} px from the edge; the portrait sits on the left border.</div>\n')
     return page("Info panes, as built", w, h, "".join(b)), (w, h)
 
 
@@ -998,7 +995,7 @@ def visual_board():
     b.append('<div style="display: flex; flex-direction: column; gap: 12px;"><div class="t" style="font-size: 20px; color: #F2C94C;">Colour, today</div>' + "".join(colours) +
              '<div class="s" style="font-size: 14px; color: #FFB3B6; margin-top: 4px;">Still four blues and four reds: health/backplate, pane numbers, bands, core. The backplate already took the health bars\' pair.</div></div>\n')
     styles = [("FCJH_StatHeading", "COLUMN HEADING"), ("FCJH_StatValue_Blue", "2,252 · value"), ("FCJH_StatTotal_Blue", "13,660 · team total, glow"),
-              ("FCJH_StatTeam_Blue", "BLUE · team band"), ("FCJH_CCText", "STUNNED · CC text, outlined"), ("FCJH_HeroicCooldown", "37 · cooldown"),
+              ("FCJH_CCText", "STUNNED · CC text, outlined"), ("FCJH_HeroicCooldown", "37 · cooldown"),
               ("FCJH_InspectName", "Auriel · inspect name"), ("FCJH_InspectSub", "PLAYER · inspect sub"), ("FCJH_InspectSection", "ABILITIES · section"),
               ("FCJH_InspectTier", "20 · tier level")]
     type_rows = [f'<div style="{GAME} font-size: {sv(n)[0]}px; font-weight: 600; color: {sv(n)[1] if sv(n)[1] not in ("#ffffff", None) else "#FAF9F5"};">{s} · {sv(n)[0]} px</div>' for n, s in styles]

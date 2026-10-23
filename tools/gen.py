@@ -4342,14 +4342,15 @@ STAT_GAP = 24                # the least room between columns, and after the por
 STAT_HEADING_CLEAR = 4       # a heading may run left into the gap before its column, to here
 # Every info pane, in hotkey order: (key, container). Only one shows at a time.
 INFO_PANES = [("talents", "Pane_Talents")] + [(k, f"Pane_{k.capitalize()}") for k, _, _ in STAT_PANES]
-STAT_ROW_H, STAT_TEAM_GAP = 40, 8        # Blizzard's rows are 40 units tall
+STAT_ROW_H, STAT_TEAM_GAP = 40, 0        # Blizzard's rows are 40 units tall; red's band follows blue's
+                                         # last stripe (user, 2026-10-23: "a row of emptiness ... we can remove that too")
 STAT_ROW_W = 565                         # Blizzard's slot width
-# The table's margins match the talents pane's: the portrait (90 wide) sits 23 in from the
-# left, so the last number ends 23 short of the right edge. Numbers are right-aligned in
-# their columns (STAT_WIDTHS). The team name spans the portrait's width. The rows spread out
-# to fill the pane's height, less the bottom pad.
-STAT_MARGIN, STAT_PORTRAIT_W, STAT_BOTTOM_PAD = 23, 90, 14
-STAT_FIRST_COLUMN = STAT_MARGIN + STAT_PORTRAIT_W
+# The portrait sits on the pane's left border, the first column STAT_PORTRAIT_GAP after it,
+# and the last number ends STAT_MARGIN short of the right edge (user, 2026-10-23: "Anchor the
+# portraits to the left edge / Remove some of the whitespace the portraits have"). Numbers
+# are right-aligned in their columns (STAT_WIDTHS). The rows spread out to fill the pane's
+# height, less the bottom pad.
+STAT_MARGIN, STAT_PORTRAIT_W, STAT_PORTRAIT_GAP, STAT_BOTTOM_PAD = 23, 90, 4, 14
 # Columns whose ScoreValueFrame0 carries Blizzard's best-value underline (statsoverviewpanel
 # ScoreValueFrameHighlightAnimation_*). Kept, re-centred - except on deaths, where "best"
 # means most.
@@ -4358,8 +4359,8 @@ STAT_UNDERLINED = {"DamageTakenScoreValueFrame", "SiegeDamageScoreValueFrame",
 STAT_NO_UNDERLINE = {"DeathsScoreValueFrame"}
 # TeamScoreValueFrame TeamId: 0 blue, 1 red (Blizzard's top bar counts blue's kills as
 # TeamId 1's deaths). Team band colours, and the totals' styles, per team.
-TEAMS = [("blue", 0, "200,20,52,120", "FCJH_StatTeam_Blue", "FCJH_StatTotal_Blue"),
-         ("red", 1, "200,112,22,64", "FCJH_StatTeam_Red", "FCJH_StatTotal_Red")]   # toward the score screen's maroon (2026-10-23)
+TEAMS = [("blue", 0, "200,20,52,120", "FCJH_StatTotal_Blue"),
+         ("red", 1, "200,112,22,64", "FCJH_StatTotal_Red")]   # toward the score screen's maroon (2026-10-23)
 
 
 def fill_image(name, anchors, colour, prio, indent, extra=""):
@@ -4427,17 +4428,14 @@ def pane_toggle(key, container):
 '''
 
 
-def team_header(team_id, colour, title_style, value_style, name, top, height, placed, indent):
-    """A team band: the team's name over the portraits, its totals under each column."""
+def team_header(team_id, colour, value_style, name, top, height, placed, indent):
+    """A team band: the team's totals under each column. No name: the colour says it (user,
+    2026-10-23: "Remove BLUE/RED from the headers")."""
     t = "\t" * indent
     at = lambda l, r: box(("Min", str(top)), ("Min", str(l)), ("Min", str(top + height)), ("Min", str(r)))(indent + 1)
     band = box(("Min", str(top)), ("Min", "#FCJH_INFO_PANE_BORDER"), ("Min", str(top + height)),
                ("Max", "#FCJH_INFO_PANE_BORDER_NEG"))
     out = fill_image(f"FCJH_{name.capitalize()}Band", band, colour, 602, indent)
-    out += (f'{t}<Frame type="Label" name="FCJH_{name.capitalize()}Name">\n' + at(STAT_MARGIN, STAT_FIRST_COLUMN) +
-            f'{t}\t<Style val="{title_style}"/>\n{t}\t<Text val="{words.ref(name.upper())}"/>\n'
-            f'{t}\t<Options val="NoWrapping | ScaleToPreventTruncation"/>\n'
-            f'{t}\t<RenderPriority val="610"/>\n{t}\t<AcceptsMouse val="false"/>\n{t}</Frame>\n')
     for i, (_, _, _, cx, w, total) in enumerate(placed):
         out += (f'{t}<Frame type="TeamScoreValueFrame" name="FCJH_{name.capitalize()}Total{i}">\n' +
                 at(cx, cx + w) +
@@ -4488,7 +4486,7 @@ def pane_chrome(title, placed, geometry, indent=3):
             f'{t}\t\t<RenderPriority val="610"/>\n{t}\t\t<AcceptsMouse val="false"/>\n{t}\t</Frame>\n')
     # a heading is right-aligned over its numbers, free to run left into the gap before them
     # ("ASSISTS" is wider than its column's numbers)
-    lefts = [STAT_FIRST_COLUMN] + [x + w for _, _, _, x, w, _ in placed[:-1]]
+    lefts = [geometry["columns"][0] - STAT_PORTRAIT_GAP] + [x + w for _, _, _, x, w, _ in placed[:-1]]
     for i, ((_, _, text, x, w, _), left) in enumerate(zip(placed, lefts)):
         out += (f'{t}\t<Frame type="Label" name="FCJH_Heading{i}">\n'
                 f'{t}\t\t<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>\n'
@@ -4498,8 +4496,8 @@ def pane_chrome(title, placed, geometry, indent=3):
                 f'{t}\t\t<Style val="FCJH_StatHeading"/>\n{t}\t\t<Text val="{words.ref(text)}"/>\n'
                 f'{t}\t\t<Options val="NoWrapping | ScaleToPreventTruncation"/>\n'
                 f'{t}\t\t<RenderPriority val="610"/>\n{t}\t\t<AcceptsMouse val="false"/>\n{t}\t</Frame>\n')
-    for (name, team_id, colour, title_style, value_style), top in zip(TEAMS, geometry["team_tops"]):
-        out += team_header(team_id, colour, title_style, value_style, name, top,
+    for (name, team_id, colour, value_style), top in zip(TEAMS, geometry["team_tops"]):
+        out += team_header(team_id, colour, value_style, name, top,
                            geometry["team_h"], placed, indent + 1)
     return out + f'{t}</Frame>\n'
 
@@ -4521,7 +4519,9 @@ def stat_geometry(cfg):
     row_tops = [blue_band + team_h + i * step for i in range(5)] + \
                [red_band + team_h + i * step for i in range(5)]
     # as wide as the widest pane's columns at STAT_GAP apart, so switching panes keeps the box
-    width = min(width, max(STAT_FIRST_COLUMN + sum(STAT_WIDTHS[c[3]] + STAT_GAP for c in columns) + STAT_MARGIN
+    border = max(1, u(pane["border"]))
+    first = border + STAT_PORTRAIT_W + STAT_PORTRAIT_GAP
+    width = min(width, max(first + sum(STAT_WIDTHS[c[3]] + STAT_GAP for c in columns) - STAT_GAP + STAT_MARGIN
                            for _, _, columns in STAT_PANES))
     # the portrait fills its stripe from the top down to the accent line, as Tab's do (user,
     # 2026-10-23: "Tab has taller portraits seperated out by their bottom accent lines"), at
@@ -4529,20 +4529,22 @@ def stat_geometry(cfg):
     portrait_h = step - pane.get("rows", {}).get("line", 0)
     portrait = (min(STAT_PORTRAIT_W, round(portrait_h * 100 / 56)), portrait_h)
     return {"title": title, "team_h": team_h, "team_tops": (blue_band, red_band), "row_tops": row_tops,
-            "width": width, "columns": (STAT_FIRST_COLUMN, width - STAT_MARGIN), "portrait": portrait}
+            "width": width, "columns": (first, width - STAT_MARGIN), "portrait": portrait,
+            "border": border}
 
 
 def place_columns(columns, span):
-    """Columns sized to their numbers (STAT_WIDTHS), right-aligned, with the spare room shared
-    out as equal gaps: one after the portrait, one between each pair of columns. So the last
-    number ends exactly on the right margin, the same distance in as the portrait is from the
-    left edge."""
+    """Columns sized to their numbers (STAT_WIDTHS), right-aligned, the first just after the
+    portrait (span starts there) and the rest STAT_GAP apart; a narrower pane's spare room is
+    shared out equally among those gaps, the portrait's included. So the last number ends
+    exactly on the right margin."""
     left, right = span
     widths = [STAT_WIDTHS[kind] for _, _, _, kind, _ in columns]
-    gap = (right - left - sum(widths)) / len(columns)
+    gaps = [0] + [STAT_GAP] * (len(columns) - 1)
+    spare = (right - left - sum(widths) - sum(gaps)) / len(columns)
     placed, x = [], left
-    for (frame, score, heading, _, total), w in zip(columns, widths):
-        x += gap
+    for (frame, score, heading, _, total), w, gap in zip(columns, widths, gaps):
+        x += gap + spare
         placed.append((frame, score, heading, round(x), w, total))
         x += w
     return placed
@@ -4659,7 +4661,7 @@ def stat_pane(key, title, columns, geometry, stripes=None):
 							     Tab's picture, uncropped and faded on the right by Tab's mask -->
 							<Frame type="PlayerHeroIconFrame" name="CustomPlayerHeroIconFrame">
 								<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
-								<Anchor side="Left"   relative="$parent" pos="Min" offset="{STAT_MARGIN}"/>
+								<Anchor side="Left"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_BORDER"/>
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Anchor side="Right"  relative="$this" pos="Min" offset="0"/>
 								<Width val="{portrait_w}"/>
