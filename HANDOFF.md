@@ -123,8 +123,9 @@ because OBS cannot move the cameras underneath them in step.
 **`docs/single-studio-reports.md`** is a running log of framework behaviour we had to work
 around, for filing upstream against Single Studio. Three entries so far, all measured.
 
-**`three-veins` is the next version's deploy** (user, 2026-10-23). It holds everything on
-`main` (it branched from main's head, c92648b) and isn't on origin yet: the push failed.
+**`three-veins` shipped as 1.0.2** (2026-10-23): pushed, merged to `main` by PR #1 (merge
+ea6f493) and released by CI. The broadcast half is on `main` and on Pages; the branch is
+spent, and the next broadcast work starts from `main`.
 **Testing (2026-10-23):** the user tests in OBS, at 1080p, the broadcast's settings;
 Claude checks in a browser at 1920x1080.
 
@@ -479,6 +480,21 @@ history is python-toolchain's, which stays as it was). GitHub:
 https://github.com/FourCourtJester/FCJ-Heroes-StormInterface (public; pushed in
 batches, when the user says; `.github/FUNDING.yml` for the Sponsor button: GitHub Sponsors
 and Ko-fi).
+
+**For 1.0.3: explore Blizzard's XP Contribution numbers (user, 2026-10-23: "make a note to
+explore it for v1.0.3").** Player view's top-bar hover popup splits each team's XP by source:
+Heroes, Mercenaries, Minions, Passive, Structures, Total. The popup is
+`PartyFrame/XPContributionPopup` (core `partyframe.stormlayout:2869`; an older copy at
+`topbar.stormlayout:300`). Its numbers are hidden labels,
+`PartyFrameTopPanel/Team<1|2>XPInfoFrame/PropertyBindLabels/<Hero|Mercenary|Minion|Passive|Structure|Total>AmountLabel`
+under `UIContainer/ConsoleUIContainer/PartyFramePanel`, which the popup copies with
+`{.../@Text}`. Trigger `libUIUI_gt_UIPartyFrameXPContributionPercentage` (uilib.galaxy:15611)
+writes them every 3 s **to `PlayerGroupAll()`, so observers' clients get them**. Observers
+never see the popup only because `PartyFramePanel` is hidden for all at start and shown per
+player (uilib.galaxy:6234). To find out: whether our own labels can bind to those hidden
+ones in observer mode, and whether the observer UI builds `PartyFramePanel` at all.
+Reuse Blizzard's popup if it can be reparented. The same sources reach score values
+(`ExperienceFromTakedowns` etc.) only at game end.
 
 **The official release filename (user, 2026-10-21): `FCJ v<version>.StormInterface`**
 (pack.py's `RELEASE_NAME`, from 1.0.1; 1.0.0 shipped as `FCJH.StormInterface`), in Ahli's
