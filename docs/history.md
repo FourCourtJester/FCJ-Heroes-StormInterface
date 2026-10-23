@@ -73,7 +73,7 @@ Blizzard's icon places and sizes (`inspect_card.talent_tips`).
      the left, red's mirrored) behind its rows, 2 above the first row as Blizzard hangs it;
      portraits and talents fitted into its boxes (heroic tiers 4 and 7 at 46). The pane's box
      didn't change.
-   - **Later: the numbers panes (KDA, healing, structures) need a better visual** - fine for
+   - **DONE 2026-10-23 (78644dc, HANDOFF §7 item 2):** ~~Later: the numbers panes (KDA, healing, structures) need a better visual~~ - fine for
      now (user). Their colour pass for both teams goes with it. Blizzard's stats grid art
      (`obs_stats_top`: a portrait box and five column cells per row, blue left, red right)
      and the leader underlines (`obs_stats_leader_blue/red`) are candidates (seen on a dev art board

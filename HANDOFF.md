@@ -676,8 +676,9 @@ at load.
        tab, division beside it; the ban tiles get their own pass (docs/obs-topbar-handoff.md).
 2. **The art pass** - items 7 and 12 below, and the visual pass: the chrome backplate look to
    the plates, our own fountain/carry slot (built 2026-10-19, item 1), XP/core bars (a mid-height bevel, like the player view's core bar; the default
-   UI's core bars: `design/ref_default_core_hp.png`) and the info panes (zebra rows, Heroes
-   palette; the numbers panes need a better visual - docs/history.md item 1). The canvas draws
+   UI's core bars: `design/ref_default_core_hp.png`) and ~~the info panes (zebra rows, Heroes
+   palette; the numbers panes need a better visual - docs/history.md item 1)~~ - **the numbers
+   panes DONE (user, 2026-10-23, 78644dc: "I think I can work with this")**. The canvas draws
    the build as it is (`design/canvas_gen.py`); the art pass designs over those boards.
    **Parked (user, 2026-10-23: "Keep them on the list, but we wont do anything about them
    now"):** the chrome backplate look on the bottom hero plates, and the plates' intro slide
@@ -696,9 +697,9 @@ at load.
      Those tints first showed as dark blue and red (`Screenshot2026-10-23 12_30_35`): the row's
      team colour multiplies into a label that doesn't say `IgnoreParentColor`, as Blizzard's own
      score label does. Ours does now. Seen in game: the bevels on both bars, the stripes. The
-     talents pane keeps Blizzard's observer grid. Not yet: the score screen's shaded column
+     talents pane keeps Blizzard's observer grid. ~~Not yet: the score screen's shaded column
      groups (Blizzard's `BGSeparatorImage1-3`, which our rows hide), the
-     leaders' glow in place of our lit box.
+     leaders' glow in place of our lit box.~~ Not needed: gold leaders (below) closed it.
    - **The stats panes narrowed (user, 2026-10-23: "The column widths are a bit too
      generous").** Columns are sized to the widest number, not shares of the box: a count is
      60 units (XX.YY, about 48 px in the value font), a big number 84 (XXX,XXX in the totals
@@ -729,7 +730,7 @@ at load.
      right: MinionDamage misses mercs, summons and some heroes' own siege (Johanna, Hanzo,
      Gul'dan tag SiegeDamage only), a layout can't subtract, and an interface can't change
      game data. The pane key is `siege` now (layout.toml [info_pane] hotkeys). The two-column panes keep the
-     shared width, so their gaps are wide - for the user to re-evaluate.
+     shared width, so their gaps are wide - re-evaluated with the tightening below: fine.
      **Portraits as tall as the stripe (user, 2026-10-23: "Tab has taller portraits seperated
      out by their bottom accent lines"):** the numbers panes' portraits fill each stripe from
      its top to the accent line (50 units, 89 wide at Blizzard's 100:56), uncropped, with
@@ -745,7 +746,9 @@ at load.
      **Leaders in gold (user, 2026-10-23: "Instead of a highlighted area for column leaders,
      how about we just use a yellow/gold color"):** the FCJH_Lead box is gone; the leader's
      number swaps to FCJH_StatValue_Lead (Blizzard's ColorGold, fed600) on the best-value
-     events, by the Style controller Blizzard's own label uses. A try - the user judges it.
+     events, by the Style controller Blizzard's own label uses.
+     **The numbers panes are DONE (user, 2026-10-23, 78644dc: "I think I can work with this.
+     Let's mark these off the list then").**
 3. **Screenshots of everything for posting**, then **the OBS overlay** to pair with the
    interface (docs/obs.md). Per-map shots: docs/maps.md. Show-off shots, with how to stage
    them, are marked **A show-off shot** in docs/blizzard-fixes.md's "Made" list (first:
@@ -754,8 +757,9 @@ at load.
   is for live games); rows with fewer than five heroes (a 3v3 or 1v1 replay). Both IGNORED
   (user, 2026-10-19).
 - **To do (user, 2026-10-16):** a pass on the panes and the inspect card to make them
-  Heroes-like (Blizzard's menu panel: blur, translucency, chrome border), and a colour, font
-  and art pass on the numbers panes (docs/polish-research.md, "Decisions from the question round").
+  Heroes-like (Blizzard's menu panel: blur, translucency, chrome border), and ~~a colour, font
+  and art pass on the numbers panes~~ (DONE 2026-10-23, 78644dc) (docs/polish-research.md,
+  "Decisions from the question round").
 - **Ideas to come back to (user, 2026-10-21):**
   - Dragon Shire: a graphic for whoever is controlling the Dragon Knight. **First pass built
     (2026-10-21), for the user's evaluation:** Volskaya's pilot seat over the knight's bar,
