@@ -13,6 +13,14 @@ graphics that fill those regions, drawn from the same numbers.
 | **The broadcast graphics** | `studio/` | A [Single Studio](https://github.com/FourCourtJester/Single-Studio) app: an operator's board in an OBS dock and a browser source per graphic. Published to GitHub Pages on every push that touches it |
 | **The generator** | `tools/` | Python that writes both from `layout.toml` — the interface's layouts and textures, and the studio's parts and numbers |
 
+**Where each is published - one channel, one job:**
+
+| Channel | Serves | Nothing else |
+|---|---|---|
+| **GitHub Releases** | The `.StormInterface` file, one per version tag `v<version>` (`.github/workflows/release.yml`) | No studio build, no docs |
+| **GitHub Pages** | The OBS studio: the operator's board and its browser sources (`.github/workflows/pages.yml`, on pushes to `main` that touch `studio/`) | No interface file |
+| **An API folder** *(planned)* | Markdown for other developers, read in the repo | - |
+
 They are one repo because they are one set of numbers. `layout.toml` places the hero plates
 *and* the broadcast's name plates; `python tools/gen.py` writes both halves, and `--check`
 fails if either has gone stale. Nothing has to be kept in step by hand.
@@ -39,7 +47,7 @@ After a rebuild, leave the replay and reopen it — no client restart needed.
 
 To move or resize anything, change its pixels in `layout.toml` and rebuild.
 
-`python tools/pack.py --release` builds the shipping file, `dist/v<version>/FCJH.StormInterface`,
+`python tools/pack.py --release` builds the shipping file, `dist/v<version>/FCJ v<version>.StormInterface`,
 from committed sources only.
 
 | Path | What |

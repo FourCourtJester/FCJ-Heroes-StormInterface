@@ -512,6 +512,11 @@ Finished work is out of this file: the map system and the map pass, map by map, 
 Blizzard and what we added is in [docs/blizzard-fixes.md](docs/blizzard-fixes.md); the
 generator itself in [docs/generator.md](docs/generator.md); the OBS plan in [docs/obs.md](docs/obs.md).
 
+**Publishing, one channel per intent (user, 2026-10-23: "As long as we have it all
+seperated out into their intents"):** Pages serves the OBS studio; Releases serve the
+`.StormInterface` files; a markdown API folder for other developers comes later. README.md's
+"Where each is published" table. Three-veins goes to `main` by PR, then the tag `v1.0.2`.
+
 **The three-vein reorganisation (2026-10-22), on its own branch - NOT on `main` and not
 finished.** The repo now holds three veins: the interface (`interface/`, was `src/`), the
 broadcast graphics (`studio/`, a Single Studio app) and the generator that writes both
