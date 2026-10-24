@@ -15,6 +15,7 @@ under it. The interface keeps only the places, so it stays usable with no OBS ru
 """
 import json
 import math
+import re
 import struct
 import zlib
 from pathlib import Path
@@ -208,6 +209,28 @@ def _pip_row(b):
     r2 = lambda v: round(float(v), 2)
     return {"blue": [r2(left), r2(top), r2(pitch * len(b.pips["blue"])), r2(svg_h)],
             "red": [r2(SW - right), r2(top), r2(pitch * len(b.pips["blue"])), r2(svg_h)]}
+
+
+def _corner(b):
+    """The free corner either side of the band: where the broadcaster's and the tournament's
+    wide marks go (user, 2026-10-23).
+
+    DERIVED FROM THE PIPS, not typed. A best of 7 is the longest series, so its outermost pip
+    is the furthest anything on the band ever reaches; the mark starts a gap outside that and
+    runs to the screen's own padding. Type the width instead and it would be a number that
+    silently stops being true the day the pip count changes.
+
+    Centred on the band's height, so the pair read as part of the top bar rather than as two
+    things floating above it.
+    """
+    tb = b.cfg["top_bar"]
+    pad = b.cfg["screen"]["padding"]
+    left_edge = _pip_row(b)["blue"][0]          # blue fills outward, so this is the far pip
+    width = left_edge - tb["corner_gap"] - pad
+    top = (b.h - tb["corner_h"]) / 2
+    r2 = lambda v: round(float(v), 2)
+    return {"left": [r2(pad), r2(top), r2(width), r2(tb["corner_h"])],
+            "right": [r2(SW - pad - width), r2(top), r2(width), r2(tb["corner_h"])]}
 
 
 def _upright(poly):
@@ -506,6 +529,8 @@ def spec(b):
             "tabs": {"division": [r2(v) for v in _box(b.tabs["blue"]["poly"])],
                      "game": [r2(v) for v in _box(b.tabs["red"]["poly"])]},
             "event": [r2(v) for v in _box(b.bp["hexagon"])],
+            # the corners, outside everything a best of 7 draws
+            "corner": _corner(b),
         },
         "clip": {
             "bans": {t: _tile_clip(b, t) for t in ("blue", "red")},
@@ -605,6 +630,166 @@ def webcam_spec(b):
     }
 
 
+# The laurel is measured from its own geometry rather than drawn into a fixed box - see
+# laurel_svg. This is only its arc; the viewBox comes out of the leaves.
+LAUREL_R = 44.0
+
+
+def laurel_svg(b):
+    """One laurel branch - a crescent opening toward the name - for its LEFT side; the right
+    one is this file mirrored in CSS.
+
+    Drawn rather than drafted. The leaves are ellipses set along an arc and turned partway
+    from its tangent toward its outward radius, which is what makes them fan the way a real
+    branch does instead of being eyeballed into place once.
+
+    THE viewBox IS COMPUTED, not chosen. The first cut fixed the box at 64x104 and the outer
+    leaves were simply clipped off by it, which read on screen as a thin upright frond rather
+    than a laurel. So every ellipse's true extent is worked out here - exact, not sampled -
+    and the box is whatever contains them. It also means the ratio in the spec is the real
+    one, so the screen can give the mark its true width at any height.
+
+    Solid white, because the screen uses it as a mask and paints the colour itself: one file
+    serves both teams.
+    """
+    span = (118.0, 242.0)   # degrees: the left half of a circle, so it bulges away from the name
+    count = 9
+    cx = cy = 0.0           # the arc's centre; everything is shifted at the end
+
+    leaves = []             # (centre x, centre y, rx, ry, angle)
+    for i in range(count):
+        t = i / (count - 1)
+        th = math.radians(span[0] + (span[1] - span[0]) * t)
+        ax, ay = cx + LAUREL_R * math.cos(th), cy + LAUREL_R * math.sin(th)
+
+        # fullest in the middle of the branch, tapering to both ends
+        k = math.sin(math.pi * (0.18 + 0.82 * t))
+        rx, ry = 7.5 + 9.5 * k, 2.7 + 2.1 * k
+
+        # partway from the tangent toward straight out: the heraldic fan
+        tangent = math.degrees(th) + 90.0
+        radial = math.degrees(th)
+        ang = tangent + (radial - tangent) * 0.62
+
+        # the ellipse sits with its inner end ON the arc, so it radiates from the stem
+        d = rx * 0.86
+        leaves.append((ax + d * math.cos(math.radians(ang)),
+                       ay + d * math.sin(math.radians(ang)), rx, ry, ang))
+
+    # a bud closing the tip
+    tip = math.radians(span[1])
+    bud = (cx + LAUREL_R * math.cos(tip), cy + LAUREL_R * math.sin(tip), 3.2, 3.2, 0.0)
+
+    stroke = 3.2
+    xs, ys = [], []
+    for ex, ey, rx, ry, ang in leaves + [bud]:
+        a = math.radians(ang)
+        hx = math.hypot(rx * math.cos(a), ry * math.sin(a))
+        hy = math.hypot(rx * math.sin(a), ry * math.cos(a))
+        xs += [ex - hx, ex + hx]
+        ys += [ey - hy, ey + hy]
+    # the arc itself, with its stroke
+    for deg in range(int(span[0]), int(span[1]) + 1):
+        th = math.radians(deg)
+        xs += [cx + LAUREL_R * math.cos(th)]
+        ys += [cy + LAUREL_R * math.sin(th)]
+    pad = stroke / 2 + 1.0
+    x0, x1 = min(xs) - pad, max(xs) + pad
+    y0, y1 = min(ys) - pad, max(ys) + pad
+    w, h = x1 - x0, y1 - y0
+
+    def arc_d():
+        a0, a1 = math.radians(span[0]), math.radians(span[1])
+        return (f"M {cx + LAUREL_R * math.cos(a0) - x0:.2f} {cy + LAUREL_R * math.sin(a0) - y0:.2f} "
+                f"A {LAUREL_R:.2f} {LAUREL_R:.2f} 0 0 1 "
+                f"{cx + LAUREL_R * math.cos(a1) - x0:.2f} {cy + LAUREL_R * math.sin(a1) - y0:.2f}")
+
+    body = [f'<path d="{arc_d()}" fill="none" stroke="#fff" stroke-width="{stroke}" '
+            f'stroke-linecap="round"/>']
+    for ex, ey, rx, ry, ang in leaves:
+        body.append(f'<ellipse cx="0" cy="0" rx="{rx:.2f}" ry="{ry:.2f}" '
+                    f'transform="translate({ex - x0:.2f} {ey - y0:.2f}) rotate({ang:.2f})"/>')
+    body.append(f'<circle cx="{bud[0] - x0:.2f}" cy="{bud[1] - y0:.2f}" r="{bud[2]:.2f}"/>')
+
+    glyph = chr(10).join("    " + line for line in body)
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="{w:.2f}" height="{h:.2f}" viewBox="0 0 {w:.2f} {h:.2f}">
+  <g fill="#fff">
+{glyph}
+  </g>
+</svg>
+'''
+
+
+def laurel_size():
+    """The laurel's computed box, for the spec's ratio. Parsed from the file it just wrote so
+    the two can never disagree."""
+    m = re.search(r'viewBox="0 0 ([\d.]+) ([\d.]+)"', laurel_svg(None))
+    return float(m.group(1)), float(m.group(2))
+
+
+HEX = (84, 96)
+
+
+def hex_svg(b):
+    """A pointed-top hexagon ring with a six-point sparkle in it - the lattice motif the
+    plates and bands already wear, closed into an emblem. Symmetric, so the right-hand copy
+    is the same file and the mirror costs nothing. Solid white: a mask, as the laurel is."""
+    w, h = HEX
+    cx, cy = w / 2, h / 2
+
+    def hexagon(r, squash=1.0):
+        pts = []
+        for i in range(6):
+            a = math.radians(60 * i - 90)
+            pts.append(f"{cx + r * math.cos(a) * squash:.2f},{cy + r * math.sin(a):.2f}")
+        return " ".join(pts)
+
+    # the sparkle: six long points with a tight waist between them
+    spark = []
+    for i in range(12):
+        a = math.radians(30 * i - 90)
+        r = 23 if i % 2 == 0 else 7.4
+        spark.append(f"{cx + r * math.cos(a):.2f},{cy + r * math.sin(a):.2f}")
+
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}">
+  <g fill="none" stroke="#fff" stroke-linejoin="round">
+    <polygon points="{hexagon(cy - 3)}" stroke-width="5"/>
+    <polygon points="{hexagon(cy - 15)}" stroke-width="2.2" opacity=".55"/>
+  </g>
+  <polygon points="{" ".join(spark)}" fill="#fff"/>
+</svg>
+'''
+
+
+def scores_spec(b):
+    """The scores screen: the hole Blizzard's stats panel shows through, and the bands of
+    screen left around it - the winner's name above, the two marks below."""
+    sc = b.cfg["scores"]
+    r2 = lambda v: round(float(v), 2)
+    return {
+        "about": "FCJH scores screen: the hole Blizzard's stats panel shows through, and "
+                 "what stands around it. Generated by tools/obs.py from layout.toml's "
+                 "[scores]; the screen itself is studio/src/sources/Scores.jsx.",
+        "screen": [SW, SH],
+        "panel": {"x": sc["panel_x"], "y": sc["panel_y"],
+                  "w": sc["panel_w"], "h": sc["panel_h"]},
+        # the winning team's name across the top band, and the mark either side of it
+        "winner": {"text": sc["win_text"], "track": sc["win_track"], "glow": sc["win_glow"],
+                   "mark": sc["win_mark"], "mark_h": sc["win_mark_h"],
+                   "mark_gap": sc["win_mark_gap"],
+                   # so the screen can give each mark its true width at any height
+                   "mark_ratio": {"laurel": r2(laurel_size()[0] / laurel_size()[1]),
+                                  "hex": r2(HEX[0] / HEX[1])}},
+        # the two marks, closing on the x between them
+        "marks": {"h": sc["mark_h"], "w": sc["mark_w"], "pad": sc["mark_pad"],
+                  "x_text": sc["x_text"], "x_gap": sc["x_gap"]},
+        # how far above the horizon a comet has finished fading
+        "sky": {"comet_fade": sc["comet_fade"]},
+        "colours": {"blue": b.team["blue"], "red": b.team["red"],
+                    "rim": b.rim, "text": CYAN[0]},
+    }
+
+
 GENERATED = ("<!-- Generated by tools/obs.py from layout.toml. Do not edit by hand:\n"
              "     change layout.toml (or tools/obs.py) and rebuild. -->\n")
 
@@ -626,6 +811,10 @@ def files(cfg):
         Path("standby.json"): enc(json.dumps(standby_spec(b), indent=2, ensure_ascii=False) + "\n"),
         # the webcam frames: a border and an OBS mask per side, and the places for both
         Path("webcam.json"): enc(json.dumps(webcam_spec(b), indent=2, ensure_ascii=False) + "\n"),
+        # the scores screen: the hole, the screen it is cut from, and the victory marks
+        Path("scores.json"): enc(json.dumps(scores_spec(b), indent=2, ensure_ascii=False) + "\n"),
+        Path("win_laurel.svg"): enc(laurel_svg(b)),
+        Path("win_hex.svg"): enc(hex_svg(b)),
     }
     for side in ("left", "right"):
         out[Path(f"cam_frame_{side}.svg")] = enc(cam_frame_svg(b, side))

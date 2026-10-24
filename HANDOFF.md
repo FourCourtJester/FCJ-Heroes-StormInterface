@@ -100,19 +100,28 @@ docs/obs-topbar-handoff.md has the rule.
 
 **The studio builds and runs (2026-10-23).** Node is installed; `npm run dev --prefix studio`
 serves the board and every graphic. It is on **Single Studio 0.13.0** (core and
-provider-supabase), which is additive on the control side - nothing of ours broke. Four
+provider-supabase), which is additive on the control side - nothing of ours broke. Seven
 browser sources now:
 
 | | |
 |---|---|
 | `#/source/game` | the top bar over a live match |
-| `#/source/standby` | between games: a drifting slideshow, the "coming up next" band, a countdown bug |
+| `#/source/standby` | between games: a drifting slideshow and a countdown bug |
+| `#/source/matchup` | the "coming up next" band on its own, transparent |
+| `#/source/draft` | the same band over Blizzard's ban-and-pick screen, with the series on it |
+| `#/source/scores` | over Blizzard's end-of-game Stats screen: a moving sky with the panel showing through, the winner's name above it and the two marks below |
 | `#/source/webcams` | two camera frames, borders only |
 | `#/source/webcam-solo` | the same frame once, centred |
 
-The standby band and the webcam frames are rebuilt from the user's own 2018 NGS broadcast
-(`C:\FourCourtJester\Broadcasts\Heroes`) - its composition, this kit's language. The
-operator's board is five collapsible panels, folded on load.
+The matchup band and the webcam frames are rebuilt from the user's own 2018 NGS broadcast
+(`C:\FourCourtJester\Broadcasts\Heroes`) - its composition, this kit's language. The band is
+its own source rather than part of the standby screen because the two are wanted at different
+times: the backdrop stays up for a whole break, while the band is brought in, lands, and is
+brought in again later in the cast. The operator's board is five collapsible panels, folded
+on load, in the running order of a show: **Standby, Webcams, Teams, Tournament, Help** (user,
+2026-10-23). The Options panel is gone - it held one switch, and the switches now sit under
+the marks they turn on. Help is the directions for whoever is wiring OBS, on the board rather
+than in a file they would have to know to look for.
 
 **`studio/README.md` is the detail** - every scene, every number, how a camera and its OBS
 mask go together, and what is still open. Read it before touching `studio/`. Two rules there

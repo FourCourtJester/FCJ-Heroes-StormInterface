@@ -51,6 +51,99 @@ them. See `docs/obs-topbar-handoff.md` in the repo root.
 | `src/generated/` | Written by `tools/obs.py`. Do not edit |
 | `src/generated/guide.png` | Every place as an orange outline: add it as an Image source while lining a scene up, then hide it |
 
+## The operator's board
+
+Five panels, collapsible, folded on load, in **the running order of a show** rather than by
+how often a thing changes (user, 2026-10-23): you come up on the **Standby** screen, you are
+on **Webcams**, then the **Teams** and the **Tournament** around the match itself, and
+**Help** last.
+
+There is no Options panel. It held a single switch, for the tournament's logo, and a panel of
+one switch is a panel you have to open to discover it has nothing in it. Every switch now
+sits under the thing it turns on, which is where you are already looking.
+
+### Help
+
+Directions for whoever is running this, on the board rather than in a file they would have to
+know to look for (user, 2026-10-23). Three sections: the **image store** and how to reach it,
+**browser sources** and how to add them to OBS, and **using this studio** — the OBS collection
+to start from, the `slides/` grouping (with the recommended slide size and why), and the
+webcam masks, with the collection and the mask files linked.
+
+### The OBS collection
+
+`studio/public/FCJ_Heroes_Esports_v1.0.json`, served at the Pages root and linked from Help
+with `download`, so a click saves it instead of rendering JSON in a tab. Import it in OBS
+with **Scene Collection → Import**.
+
+Seven scenes — `-- Audio`, `Blank`, `Draft`, `Game`, `Scores`, `Static`, `Webcams` — and all
+seven browser sources at 1920 x 1080.
+
+**It started as a dev export**, and everything in it that belonged to one machine has been
+taken out (user, 2026-10-23):
+
+- **The browser sources** pointed at `http://localhost:5173/`, which would have been seven
+  dead sources for anyone who imported it. All seven now point at the published studio.
+- **Three image sources** held screenshots on a personal
+  `Heroes of the Storm/Screenshots/` path — backdrops standing in for the game capture while
+  the scenes were built. Dropped. Each of those scenes also holds the real
+  `Heroes of the Storm` capture, so what is left is correct rather than empty, which the
+  edit asserts rather than assumes.
+- **The collection's name** was "FCJ Heroes [Dev]", which is the label OBS shows in its
+  scene-collection list. Now "FCJ Heroes".
+- **`shutdown` is on for the three sources with an entrance** (Draft, Matchup, Scores) and
+  `restart_when_active` is gone from all of them, which is the house rule below. Standby
+  keeps `shutdown` off: its countdown is driven by the clock, not by loading.
+
+Edited by round-trip rather than by hand. `json.dumps(doc, indent=4, ensure_ascii=False)`
+reproduces the original byte for byte, which was checked before the first change, so the
+diff on a 79KB file is only what actually moved.
+
+Last, and folded. Everything above it is used every show; this is read once while OBS is being
+wired and then never again, so it costs one line of the board to the people who already know.
+
+The browser source list in it is the framework's own `SourceList`, not a list typed out here:
+add a source and it appears, which a hand-written one would not. The framework moved that list
+out of the board and into the gear menu because "wiring OBS is a once-ever job" and it was
+taking up room under the controls — which is an argument against a *permanent* list, not
+against one inside a folded panel.
+
+Where things actually are, since the help text has to be right about it: the gear, top right,
+holds **Collaborate, Image store, Browser sources, Keyboard shortcuts, Plugins, Start over**.
+The magnifier on any image picker opens the same library.
+
+### Two tournament logos
+
+`event.logo` is **square**, `event.logo_wide` is **oblong**, and they are two pictures rather
+than one reused because the holes are different shapes (user, 2026-10-23):
+
+| | |
+|---|---|
+| `event.logo` (square) | Blizzard's hexagon in the game scene. The hole is a hexagon, so an oblong mark is squashed or cropped |
+| `event.logo_wide` (wide) | the game scene's top right corner, 204 x 50 — a square mark would waste it |
+| `event.broadcaster` | the game scene's top left corner, and the standby band's left arm |
+
+Which one a graphic wants is a property of the hole, not of the show, so the board asks for
+both once and each scene takes the one that fits.
+
+### The corner marks
+
+The broadcaster's top left, the tournament's wide logo top right, each on its own switch so
+a show can run any combination of the three marks.
+
+**The box is derived from the pips, not typed.** A best of 7 is the longest series, so its
+outermost pip reaches further along the band than anything else; the mark starts
+`corner_gap` outside that and runs to the screen's own 20px padding. That works out at
+**204 x 50** at the moment. Typing the width instead would be a number that silently stops
+being true the day the pip count changes.
+
+Each mark takes its own width at that height and binds to its own screen edge, so a narrow
+logo sits in the corner rather than drifting in toward the pips — the same rule the scores
+lockup needed.
+
+**Not yet seen together with Blizzard's kill feed**, which also lives top left. The marks sit
+inside the band's height to stay clear of it, but that is reasoning, not a live check.
+
 ## The matchup band
 
 A team container either side of a VS, a message board behind them, a logo arm at each
@@ -71,12 +164,21 @@ in, let land, and bring in again later in the cast. One source cannot do both �
 entrance runs when the source mounts, so a band welded to the backdrop plays once and never
 again.
 
-**To replay the entrance**, tick the source's **Shutdown source when not visible** and
-**Refresh browser when scene becomes active**. Without them the band is simply there, which
-is right for a scene it never leaves and wrong for one you cut back to.
+**To replay the entrance**, tick the source's **Shutdown source when not visible** — that
+one on its own (user, 2026-10-23). The entrance runs on mount, and shutting the source down
+while its scene is hidden is what makes it mount again, so "Refresh browser when scene
+becomes active" has nothing left to do. Without it the band is simply there, which is right
+for a scene it never leaves and wrong for one you cut back to.
 
 The marks on the arms come from **Tournament**: the broadcaster's on the left, the
 tournament's on the right. Either can be left unset, and nothing is drawn for it.
+
+The tournament's is the **wide** logo where there is one — wide, then square, then nothing
+(user, 2026-10-23), the same waterfall the scores screen uses. An arm is 576 x 103, which is
+the shape the wide logo is drawn for; the square one belongs in Blizzard's hexagon and is
+only the fallback here. It lives in `MatchupBand`, so **Matchup and Draft both get it** from
+the one change. Checked on both sources: wide and square set draws the wide, square alone
+draws the square, neither draws nothing.
 
 ## The standby screen
 
@@ -242,10 +344,13 @@ measures x 337–1583, y 207–924 off `design/ref_endgame_stats.jpg`, and the h
 larger so their frame and its glow survive rather than being clipped by ours. A JPEG, so
 ±2px; the real numbers want the extracted UI, as the top bar's did.
 
-It is drawn as four pieces rather than one shape with a hole, because a hole wants
-`evenodd` and that is one more thing to be true in whatever CEF a given OBS ships. Each
-piece paints the whole screen's gradient and is shifted to its own place in it, so the
-seams land where the colour is already identical on both sides.
+It is drawn as **four windows on one sky**, rather than one shape with a hole, because a
+hole wants `evenodd` and that is one more thing to be true in whatever CEF a given OBS
+ships. Each piece is clipped to its own band and holds a full-screen sky pushed back by
+exactly where that band starts, so all four show the same picture in the same screen
+position and a seam has the same pixel on both sides. (Measured: every sky's box reports
+(0, 0).) It is also what lets the motion be written once — every copy mounts together, so
+they animate in step.
 
 ### The backdrop
 
@@ -271,60 +376,183 @@ It lives in `src/` and not `public/` because the **page** uses it: Vite fingerpr
 rewrites the URL against the right base, which a `public/` path would not survive on Pages.
 `public/` is for files a human downloads, like the OBS masks.
 
-### Still to build on it (user, 2026-10-23)
+### What stands around the hole
 
-Agreed before a break, not started. Today there are no names, no series and no marks — just
-the backdrop and the hole. The room available, measured:
+Built 2026-10-23, from the brief agreed before the break. The bands left over are 1920 x 205
+above the panel and 1920 x 153 below it, and `layout.toml`'s `[scores]` measures the
+furniture into them.
+
+**The winner, across the top.** The winning team's name in white, with a three-stage glow in
+that team's colour — tight, bloom, and a wide faint one so the bloom has somewhere to end
+(user: "Winning team name across the top, white glowing in team color").
+
+Who won is the **operator's to say**, from the two **Winner** toggles under *Score Screen
+Winner* on the **Tournament** panel. Nothing else can say it. Blizzard's own screen announces
+a victory, but from the point of view of whoever's client the replay is, and we cover it
+anyway; and `wins` is stepped on *after* the result is called, so reading the series would
+show the wrong team for as long as it took the operator to reach the stepper. Nothing is
+drawn unless a side is lit **and** that side has a name, so the glow never surrounds a blank.
+
+It is **a pair of grouped toggles rather than a dropdown** (user, 2026-10-23). Two things
+that buys, on the one control here that is used live with a result just called: a `Toggle`
+writes **immediately**, where a `Field` or `Select` stages until save — so the name is on air
+the instant it is pressed — and the state is readable at a glance instead of by opening a
+menu. Measured behaviour: lighting one puts the other out, and pressing the lit one puts it
+out too, so "no winner yet" is a state the operator can reach without Reset.
+
+Three things worth knowing about it:
+
+- **It reads `toggles`, not `variables`.** That is where `Toggle` writes, and it is the same
+  reason it reaches air without a save. `Scores.jsx` reads `toggles.winner.blue` and
+  `toggles.winner.red`.
+- **Each lit button wears its own side's colour** (`fcjh-won`, in `src/css/index.css`). The
+  framework lights every toggle in one accent and that accent is blue, so a lit "Red" was
+  exactly the colour of a lit "Blue" and only the word told them apart. The two values are
+  `layout.toml`'s `blue_colour` and `red_colour`, written out in the stylesheet because
+  `tools/obs.py` may write pictures and a numbers JSON and nothing else.
+- **Clear still takes it, through `paths`.** The control moved to Tournament; what it means
+  did not, and a new match must not inherit the last one's result. `names` reaches
+  `variables`, so the two toggles go in `ResetButton`'s `paths` instead. Swap does not take
+  them at all: it cuts its list in half and exchanges the pairs — it *throws* on an odd list
+  (`swap needs an even number of paths to cut in half`) — and which side won is not a
+  property of a side, so there is nothing to exchange it with.
+
+**The victory mark**, one either side of the name. Two are drawn and both ship:
 
 | | |
 |---|---|
-| Top band | 1920 x 205 |
-| Bottom band | 1920 x 153 |
-| Side columns | 335 x 722, each |
+| `laurel` | a crescent branch, nine leaves fanned off an arc — the classic |
+| `hex` | a hexagon ring with a six-point sparkle, the lattice motif the plates and bands wear |
 
-**1. Announce the winner.** The winning team's name **across the top**, in white with a glow
-in that team's colour. The top band is the 205px above the panel.
+`[scores] win_mark` picks one. `?mark=hex` on the source URL overrides it for a side-by-side
+look without a rebuild, the same trick the webcams use for `?fill`.
 
-The open question is how the graphic knows who won. Blizzard's own screen says "HANAMURA
-TEMPLE VICTORY", but that is from the point of view of whoever's client it is, and we cover
-it anyway — so the operator has to say. Simplest is a three-way on the board (blue / red /
-nobody), which also gives a clean "nobody" for the moment before the result is called.
-Deriving it from `blue.wins` / `red.wins` is tempting and wrong: those are the series, and
-they are usually updated after the call rather than before it.
+Both are **masks, not pictures**: the SVG is solid white and carries no colour, so the
+stylesheet paints it and the same file serves both teams — one drawn shape instead of four,
+and nothing to keep in step when a team colour moves. A mask takes no `text-shadow`, so the
+bloom is a `drop-shadow` filter on the shape. The mask URLs are literal in the stylesheet and
+the spec picks a *class*, because Vite only resolves a `url()` it can see at build time: a
+path assembled from the spec at runtime would be left alone and 404 on Pages. Both marks are
+small enough that it inlines them as data URIs rather than emitting files — so there is no
+win_*.svg in `dist/assets`, which is correct, not a missing asset.
 
-**2. The tournament and broadcaster marks**, centred under the scores — the bottom band.
-Both already exist on the board, in **Tournament**: `event.logo` and `event.broadcaster`,
-the same two the matchup band's arms use. Nothing new to set.
+The laurel **computes its own viewBox**. The first cut fixed it at 64x104 and the outer
+leaves were simply clipped off, which read on screen as a thin upright frond rather than a
+laurel. Every ellipse's true extent is worked out in `laurel_svg` — exact, from the rotated
+radii, not sampled — and the box is whatever contains them, which also makes the ratio in the
+spec the real one so the mark is never squashed at a given height.
 
-**3. Motion.** The screen is space, so it should drift. In rough order of effort:
+**The two marks under the panel**, as a collaboration: `<broadcaster> x <tournament>`
+(user, 2026-10-23).
 
-- twinkling stars
-- comets
-- space dust / nebulae floating across
-- harder: electricity arcing off the blue tiles
+The tournament mark is the **wide one where there is one**: `event.logo_wide`, then
+`event.logo`, then nothing (user, 2026-10-23). This band is 320 x 96 a side, which is the
+shape the wide logo is for; the square one is drawn for Blizzard's hexagon and is only the
+fallback here, for a show that has not been given a wide version. All three legs checked:
 
-**We already have the art for most of this.** The 23 layers the game composites over the
-Nexus plate are extracted under `references/` and are exactly these effects:
+| set | drawn |
+|---|---|
+| wide and square | **wide** |
+| square only | **square** |
+| neither | the broadcaster alone, no x, centred on 960 |
 
-```
-storm_ui_home_nexus_fx_star.dds          40 x 40, the twinkle sprite
-storm_ui_home_nexus_fx_starpattern.dds   144 x 200
-storm_ui_home_nexus_starsright.dds       1240 x 828, the scrolling field
-storm_ui_home_nexus_fx_constellation.dds 352 x 316
-storm_ui_home_nexus_fx_bg_cloudbase.dds  724 x 724, and _bg_cloud2 736 x 512 — the dust
-storm_ui_home_nexus_fx_bgbeams.dds       480 x 300
-storm_ui_home_nexus_fx_lightrays.dds     284 x 288
-storm_ui_home_nexus_lightning1-4.dds     648 x 432, four frames — the tile electricity
-storm_ui_home_nexus_fx_tilelighting.dds  1812 x 304, a sweep along the floor
-```
+They **close on the x** rather than sitting apart: the left one right bound, the right one
+left bound, so the three read as one lockup on the panel's centre line. Each box is a fixed
+320 x 96 with 10px of padding a logo may not cross, as on the arms, which keeps the lockup
+symmetric about 960 whatever shape the two logos are. Measured: the x spans 947–973, centre
+**960**, which is the panel's centre.
 
-The game drives them with scrolling UVs and fade loops; in CSS that is `background-position`
-on a repeating layer and `@keyframes` on opacity, which is the same idea with less ceremony.
-The lightning is four frames, so it wants stepping rather than tweening.
+MISMATCHED SHAPES are the case this exists for, so they are the case to test — a matched pair
+proves nothing here. Both checked, with the x on 960 each time:
 
-Motion is safe **here** specifically: nothing is registered to this backdrop. That is not
-true of the webcam frames, which must never move because OBS cannot move the cameras under
-them in step.
+| left | right | gap to the x |
+|---|---|---|
+| oblong 600x120 (drawn 300 wide) | square 160x160 (76 wide) | 44 / 44 |
+| tall 120x320 (29 wide) | wordmark 600x120 (300 wide) | 44 / 44 |
+
+Equal gaps whatever the widths, which is the point: the x holds the centre and each logo
+closes on it. The visual *mass* is then deliberately lopsided when the two shapes differ a
+lot — 29px against 300px in the second row — because what is centred is the join, not the
+group. Centring the group instead would move the x off 960.
+
+Two dials, both in `[scores]`: logos are drawn at `mark_h` minus the padding (96 - 20 = 76px
+tall) and capped at `mark_w` minus the padding (320 - 20 = 300px wide), so anything wider
+than about 4:1 is width-limited rather than height-limited.
+
+Inside the box the picture takes **its own width at the band's height**, and that is what
+makes "right bound" mean anything. Stretched to the full 320 with `object-fit: contain`
+letterboxing it, a square logo sits in the middle of its own box with transparent air either
+side — so it floats away from the x however the box is aligned. A wide placeholder hid this;
+a round one showed it at once.
+
+Each mark is gated on its value before being drawn, which `Image` alone would not need — it
+draws nothing for an unset picture. The reason is the layout: an empty box is still a box. So
+with **one** mark the x goes too (an x is only an x when there are two things to join) and the
+lone mark centres on its own; with **neither**, the whole band goes.
+
+**The two bands animate in** (user, 2026-10-23): the winner rises out of the panel's top
+edge, the marks drop out of its bottom edge, 620ms, the marks 120ms behind so the name leads.
+
+The trick is that **the band clips and an inner element moves**. The middle of this screen is
+a hole with Blizzard's graphic showing through it, so anything that simply slid would travel
+*across* the panel. With `overflow: hidden` on the band and the transform on a child, the
+content comes out of the panel's own edge. Measured a third of the way in: the winner at
++56.6px still rising, the marks at −94.6px still falling.
+
+**The winner also goes out the way it came in** (user, 2026-10-23), because it is a toggle
+and a toggle gets pressed twice — returning `null` on the second press would blink the name
+off air. That one is the framework's `Transition` rather than our own keyframes, since the
+motion has to run backwards too: `--ss-shift` is the whole band, so the name leaves through
+the panel edge instead of fading where it stands. Measured on the second press: `ss-exiting`,
+translateY 205px, the full height of the band.
+
+`Transition`'s `trigger` runs an **out, swap, in** cycle on any new value, so correcting blue
+to red mid-show plays out and back in rather than swapping the word underneath the glow.
+
+**The name itself cuts** (user, 2026-10-23): `transition="cut"` on the `Variable`. A Variable
+fades its own text when the value changes, which is right in a lower third and wrong inside a
+band that is already moving - on a blue-to-red correction you would get a cross-fade running
+inside a slide, two motions on one piece of text. `cut` is the framework's own no-op variant,
+`--ss-duration: 0s` with opacity held, so the band carries the motion and the words just
+change.
+
+That is what `last` in `Winner()` is for. A cleared toggle has to animate out in the colour
+it went on in, and the toggle is already off by the time the outro runs, so the last lit side
+has to outlive it by one transition. Without it the glow would snap to the wrong colour — or
+to none — halfway out.
+
+The glow survives the clip. The name is 72px in a 108px line box inside a 205px band, so the
+glyphs have about 76px of air each side and the widest shadow is 66px.
+
+**The sky moves.** Two star fields at different scales twinkling at different rates, three
+large soft dust clouds, and three comets crossing on a long 23s cycle — mostly absent,
+because a sky with a comet in it every few seconds is a screensaver rather than a backdrop.
+
+It was turned up on 2026-10-23, because the first pass was motion on paper only: the twinkle
+swung .55–1 against a plate that already has stars painted into it, and the dust moved 26px
+over 90s, which is 0.29px a second — below the speed at which anything reads as moving. Now
+.25–1, dust alphas roughly doubled, and ±34px over 48s.
+
+**The comets stop at the horizon.** The lit grid floor starts at the panel's bottom edge, and
+a comet crossing it reads as a streak lying *on the ground* rather than one in the sky. They
+are **masked, not timed out**: ending the keyframes early would fix one comet on one path,
+while a gradient mask on the comet field fades anything approaching the floor whatever its
+path, and stays true if the paths change. Measured: opaque to 747px, fully transparent by
+**927px**, which is the panel's bottom edge read from the same number the hole is cut with.
+
+It is **drawn, not photographed**. The game composites 23 textures over this same plate and
+they are all extracted under `references/`, but gradients cost nothing, scale to any size,
+and keep more Blizzard binaries out of a public Pages build — and the effects wanted are
+stars, dust and streaks, which is what gradients are good at.
+
+Every layer exists in all four copies and **must stay in step**: they mount together, so
+nothing in them may be random or depend on where its piece sits, or the same star would be
+in two states either side of a seam. That is why the comet delays are written out.
+
+**Not done: the electricity off the blue tiles** — the one the user filed as "harder". The
+raw material is there if we want it: `storm_ui_home_nexus_lightning1-4.dds` (648 x 432, four
+frames, so it wants stepping rather than tweening) and `storm_ui_home_nexus_fx_tilelighting.dds`
+(1812 x 304, a sweep along the floor), both under `references/`.
 
 ## If the board comes up unstyled
 
@@ -354,12 +582,16 @@ entry 3 has both in full.
 
 ## Still open
 
-- **NEXT: hide the tournament tabs when they're blank** (user, 2026-10-23: "Hide tournament
-  tabs if they're blank"). The division (blue) and game (red) tabs in `sources/Game.jsx`
-  (`Tabs()`) draw their art whatever the words, so an empty one shows as a bare tab. Hide
-  each on its own; the pair are held to one width, so a lone tab should take its own.
+- **NEXT: the Game scene's logos** — "some slight adjustments to make for Game regarding
+  logos" (user, 2026-10-23), left for last and never spelled out. Needs the user to say what
+  the adjustment is.
 - **Testing**: the user tests in OBS at 1080p, the broadcast's settings; Claude checks
-  in a browser at 1920 x 1080.
+  in a browser at 1920 x 1080. **Claude's image library is empty**, and that is not a
+  neutral fixture: anything whose width comes from library content - every `<select>` of
+  asset keys - measures far narrower here than on a real show. It hid a picker bug on
+  2026-10-23 that the user saw at once; one realistic key (35 characters) was the whole
+  difference. Inject one before trusting a width measurement. See
+  `docs/single-studio-reports.md` entry 2.
 - **Ban portraits**: the pickers offer whatever is in the studio's image library, and
   nothing fills that library with hero portraits — 90-odd of them — yet.
 - **The ban tiles' size and shape** were never settled: slanted as they are, or square.
@@ -372,8 +604,8 @@ entry 3 has both in full.
   on the machine running OBS**: a picture dropped on a producer's laptop has bytes that
   live only there, and the slideshow leaves those out rather than playing a blank.
 
-- **Post-game** is not started. `design/ref_endgame_stats.jpg`; the panel to cut around is
-  roughly x 337–1583, y 203–920.
+- **The scores screen's tile electricity** is the one piece of its brief not built; see
+  "What stands around the hole" above for the frames already extracted for it.
 
   All four references are 1920 x 1080 JPEGs. Their edges carry compression ringing, so
   treat every number above as ±5px — good enough to place a band, not good enough to

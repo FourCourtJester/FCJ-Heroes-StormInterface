@@ -43,7 +43,8 @@
 .fcjh-scene .fcjh-pips,
 .fcjh-ban,
 .fcjh-tab,
-.fcjh-event {
+.fcjh-event,
+.fcjh-corner {
   position: absolute;
 }
 
@@ -549,4 +550,38 @@
   --from: -100%;
   animation: fcjh-enter-y var(--enter) var(--enter-ease) both;
   animation-delay: 1050ms;
+}
+
+/* The two corner marks: the broadcaster's top left, the tournament's wide logo top right.
+
+   The picture takes its own width at the box's height rather than filling the box, and binds
+   to its own screen edge. Stretched to the full box with `object-fit: contain` letterboxing
+   inside it, a narrow mark would sit in the middle of a 204px box and read as floating toward
+   the pips - the same fault the scores screen's lockup had. */
+.fcjh-corner {
+  display: flex;
+  align-items: center;
+}
+
+.fcjh-corner.left {
+  justify-content: flex-start;
+}
+
+.fcjh-corner.right {
+  justify-content: flex-end;
+}
+
+.fcjh-corner .ss-image {
+  position: relative;
+  display: flex;
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+}
+
+.fcjh-corner img {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
 }

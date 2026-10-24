@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "dev:fresh": "node -e \"require('fs').rmSync('node_modules/.vite',{recursive:true,force:true})\" && vite"
   },
   "dependencies": {
     "@single-studio/core": "^0.13.0",

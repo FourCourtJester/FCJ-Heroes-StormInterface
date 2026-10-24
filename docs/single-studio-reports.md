@@ -146,9 +146,49 @@ mode*, so it also caps a row of two pickers that has room to spare — in our To
 that leaves about 338px unused at 700px wide. With the cap on `col-auto` instead, that row
 would scale and only a `col-auto` picker would be held back.
 
+**Update, 2026-10-23.** That predicted cost arrived: the cap was squeezing the Tournament
+panel's two pickers on a line that holds nothing else and has room to spare. So the stand-in
+needed a stand-in of its own — an opt-out class that lifts the cap on that row:
+
+```css
+@media (min-width: 40rem) {
+  .ss-image-picker.fcjh-picker-free {
+    max-width: none;
+  }
+}
+```
+
+Two selectors deep purely to out-specify our own cap above. That is the tell: a studio is now
+writing one rule to undo another rule it only wrote because the framework had no hook. The
+ask in "What we'd ask for" would collapse both into nothing — a capped `col-auto` would let
+the Tournament row simply be `col-auto`, with no cap to escape from.
+
+### The wrong fix first, and what it shows
+
+The first attempt also set `flex: 0 0 auto`, so the pickers would size to their content
+rather than to a column. **That is the one thing a picker must never do**, and it is worth
+recording because it is the same fault as the report above wearing a different face.
+
+A `<select>` is as wide as its longest option, and the options are the operator's image
+library — so a picker's content width is set by data the board has no control over. Measured
+on a 760px board:
+
+| library | picker width | result |
+|---|---|---|
+| empty | 180px | side by side |
+| one key, `northwind-esports-primary-logo-2026` | **350px** | 712px of picker in a 694px row — the Row wrapped and they stacked |
+
+One asset was enough. With `flex: 1 1 var(--ss-basis)` and the framework's `min-width: 0`
+they shrink instead, and stay side by side from 600px to 1400px with the same library.
+
+**It was invisible in testing because the test studio's image library was empty**, which is
+the state no real show is ever in. The user hit it immediately. Worth remembering for
+anything else whose size comes from library content: an empty library is not a neutral
+fixture, it is the one case that hides this class of bug.
+
 ---
 
-## 3. A mistyped custom property is a silent no-op, and dev HMR can manufacture one
+## 3. The dev server's CSS can go stale in ways that look like broken code
 
 **Found** 2026-10-23, on 0.13.0, working in a studio's own `src/css/index.css`. Likely a
 Vite/Tailwind behaviour rather than anything in core — filed here because core's own layer is
@@ -171,7 +211,32 @@ seconds apart, and the hot update applied one of them. `npm run build` was corre
 and the raw file on disk was correct, so everything *looked* right everywhere except the only
 place that mattered. Restarting the dev server cleared it.
 
-Seen once and not isolated further, so this is a report of a state, not a reproduction.
+### And again, worse (2026-10-23, same day)
+
+The operator's board came up unstyled - serif text, no dark theme, buttons as bare words. The
+served stylesheet held core's own `.ss-panel` rules, the studio's overrides and even Tailwind's
+colour *tokens*, but **not one utility class**: no `.flex`, no `.grid`. That is the shape of
+Tailwind emitting its theme with nothing to scan.
+
+`npm run build` was correct throughout - 50KB of utilities in `dist`. So the code was never
+wrong; only the running dev server was. Restarting it fixed it, as before.
+
+The server's log named the moment:
+
+```
+vite.config.js changed, restarting server...
+Re-optimizing dependencies because vite config has changed
+```
+
+`vite.config.js` was **not** modified - `git status` clean against HEAD, and nothing we did
+touched it. A bulk filesystem event (a branch checkout, most likely) updated its mtime, Vite
+auto-restarted on that, and the CSS pipeline came back up without its content scan.
+
+So: two different symptoms, one cause. A dev server that has auto-restarted can serve CSS that
+is neither the old file nor the new one, and nothing warns.
+
+Seen twice now, neither time isolated to a minimal reproduction - this is a report of two
+states, not of a bug anyone can run.
 
 ### Why it is worth knowing
 
@@ -193,7 +258,10 @@ Nothing in the code. Two things in the docs, where the custom properties are int
 - say that a studio reading an `--ss-*` property should use the two-argument form,
   `var(--ss-basis, 0%)`, so a rename or a typo degrades to a default rather than to nothing;
 - note that a half-applied CSS hot update can produce exactly this, and that the check is to
-  read the page's own `<style>` rather than the file — a restart, not a reload, clears it.
+  read the page's own `<style>` rather than the file — a restart, not a reload, clears it;
+- and, for the second case, that an unstyled board with its theme tokens intact means the
+  utility scan, not the studio's own CSS. The fastest way to tell a dev-server problem from a
+  code one is `npm run build`: if the built CSS is right, stop reading your own files.
 
 If core ever renames an `--ss-*` property, that is a breaking change for every studio
 overriding it, and one that breaks quietly. Worth a line in the release notes when it happens.

@@ -374,6 +374,13 @@ outward = 1                  # the whole OBS band sits this far outside its geom
                              # with it: the logo plate, the seam, the pips, the ban tiles and
                              # the tabs' outer sides. The tabs' inner sides stay on the hexagon,
                              # so the two tabs grow by this much instead of moving
+# The two marks in the top corners: the broadcaster's on the left, the tournament's WIDE
+# logo on the right (user, 2026-10-23). The room is whatever a best of 7 leaves - its
+# outermost pip is the furthest anything on the band reaches - so the box is derived from the
+# pip row rather than typed, and a shorter series simply leaves more air.
+corner_h = 50                # a corner mark's height
+corner_gap = 18              # its inner edge, off the outermost pip a best of 7 draws
+
 tab_clear = 5                # the division / game tabs' inner sides, off Blizzard's hexagon.
                              # They hang from the band to the ban tiles' bottom (y 100.3), and
                              # their outer sides are the seam carried down, so the slants line up
@@ -453,6 +460,49 @@ solo_w = 1024                # the one-camera layout: a single window, centred, 
 solo_h = 576                 # it has the screen to itself. 16:9 exactly, like the pair
 name = 30                    # the commentator's name, cap height
 social = 20                  # ...and their handle, under the same bar at the other end
+
+# The scores screen: the browser source over Blizzard's end-of-game Stats screen
+# (studio/src/sources/Scores.jsx). OBS-only.
+#
+# One thing survives on that screen and it is the stats panel; everything else - the title, the
+# caster's own gold, gems and account level top right, the Leave and Rename Replay buttons, the
+# chat and its channel joins - is ours to replace (user, 2026-10-23: "preserve that stats
+# center box; everything else gets replaced"). So this is a backdrop with a hole in it.
+#
+# Measured off design/ref_endgame_stats.jpg: Blizzard's frame runs x 337-1583, y 207-924. The
+# hole is a shade larger, so their frame and its glow survive rather than being clipped by ours.
+# A JPEG, so these are +/-2 px; the real numbers want the extracted UI, as the top bar's did.
+[scores]
+panel_x = 335                # the hole, from the left edge of the screen
+panel_y = 205                # ...and from the top
+panel_w = 1250               # Blizzard's frame is 1246 wide, their glow a little more
+panel_h = 722                # ...and 718 tall
+
+# What stands around the hole. The bands left over are 1920x205 above the panel and 1920x153
+# below it, and these are measured into them (user, 2026-10-23: "Winning team name across the
+# top, white glowing in team color. The logos can be centered under the scores").
+win_text = 72                # the winning team's name, across the top band
+win_track = 6                # letter-spacing: a name this size needs air between the letters
+win_glow = 30                # the glow's radius, in the winning team's colour
+mark_h = 96                  # the two marks under the panel, in the bottom band's 153
+mark_w = 320                 # ...capped, so one wide logo cannot crowd the other out
+mark_pad = 10                # a logo never touches its container, as the band's arms
+
+# The two marks read as a collaboration - <broadcaster> x <tournament> - so they close on a
+# white x at the centre rather than sitting apart (user, 2026-10-23). The left one is right
+# bound and the right one left bound, so both hug it.
+x_text = 54                  # the x itself
+x_gap = 34                   # its air, either side
+
+# The winning team's name wears a mark either side. Two are drawn; win_mark picks one.
+win_mark = "laurel"          # "laurel" or "hex"
+win_mark_h = 88              # taller than the name's 72, so it frames rather than sits in line
+win_mark_gap = 30            # between a mark and the name
+
+# A comet must not cross the lit floor at the bottom of the backdrop - it reads as a streak
+# ON the ground rather than in the sky (user, 2026-10-23). They fade out over this many px
+# ending at the panel's bottom edge, which is where the horizon sits.
+comet_fade = 180
 
 # Bars stacked on each hero row, placed by tools/gen.py from [hero_row] so they follow it.
 # Both are cut to the plates' slant: their ends continue the row's slanted outer edges.
