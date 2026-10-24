@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Panel } from '@single-studio/core/control'
 
 // Directions for whoever is running this, on the board itself rather than in a file they
@@ -25,6 +26,32 @@ const A = ({ href, children }) => (
     {children}
   </a>
 )
+
+// A DOWNLOAD THAT SAYS SO (user, 2026-10-23: the `download` link works in an OBS dock,
+// "there's just no visual about it"). The dock saves the file without a download bar, so a
+// click looked like nothing happened. The link answers for it for a few seconds instead.
+const Download = ({ href, children }) => {
+  const [saved, setSaved] = useState(false)
+  const click = () => {
+    setSaved(true)
+    setTimeout(() => setSaved(false), 4000)
+  }
+  return (
+    <>
+      <a
+        href={href}
+        download
+        target="_blank"
+        rel="noreferrer"
+        onClick={click}
+        className="text-sky-400 underline"
+      >
+        {children}
+      </a>
+      {saved && <span className="text-emerald-400"> (downloaded)</span>}
+    </>
+  )
+}
 
 const PAGES = 'https://fourcourtjester.github.io/FCJ-Heroes-StormInterface'
 const MASKS = `${PAGES}/masks`
@@ -69,17 +96,7 @@ export default function Help() {
       <Rule />
       <H>Using this studio</H>
       <P>
-        Start from the{' '}
-        <a
-          href={COLLECTION}
-          download
-          target="_blank"
-          rel="noreferrer"
-          className="text-sky-400 underline"
-        >
-          OBS collection
-        </a>{' '}
-        and use it as a base: in OBS, <b>Scene Collection → Import</b>, then pick the file you
+        Start from the <Download href={COLLECTION}>OBS collection</Download> and use it as a base: in OBS, <b>Scene Collection → Import</b>, then pick the file you
         just downloaded. It arrives with the scenes laid out and every browser source already
         placed and sized. Mix and match from there as the show needs — nothing here assumes
         you are running all of them, and every graphic is independent of the others.
