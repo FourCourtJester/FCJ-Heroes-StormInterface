@@ -558,6 +558,9 @@ tag `v1.0.2`, the release built by CI (1,269,328 bytes, as the local `--release`
 names the asset `FCJ.v1.0.2.StormInterface`, dots for spaces, as it did 1.0.1's). **Pages
 was still "Deploy from a branch"** - it served the README through Jekyll; the user switched it to
 "GitHub Actions" and re-ran the Pages workflow (18:03 UTC): the site now serves the studio.
+**The broadcast pass merged 2026-10-23** (PR #2, merge commit 1673335): Pages redeployed in
+about 20 s, and the OBS collection is live at the site root. Browser-checked only; the user
+tests it in OBS tonight.
 
 **The three-vein reorganisation (2026-10-22), on `main` since 1.0.2 (2026-10-23); the
 studio's list below is still open.** The repo now holds three veins: the interface (`interface/`, was `src/`), the
