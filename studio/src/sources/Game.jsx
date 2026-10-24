@@ -142,13 +142,34 @@ function Pips({ side }) {
  * held to one width - whichever needs more - so the pair stay uniform either side of the
  * hexagon. The words are measured, not the tabs: a tab's own width is what we are setting,
  * so measuring it would feed back on itself.
+ *
+ * A BLANK TAB IS NOT DRAWN (user, 2026-10-23: "Hide tournament tabs if they're blank"). The
+ * art does not depend on the words, so an empty one is a lit, framed container with nothing
+ * in it - which on air reads as a fault rather than as a field nobody filled. Each goes on
+ * its own, so a tournament that numbers its games but has no divisions gets the one tab.
+ * This is read here and not in game.css because a stylesheet cannot ask whether its own text
+ * is empty - the same reason Band reads the logo.
  */
 function Tabs() {
   const refs = { division: useRef(null), game: useRef(null) }
+  const said = {
+    division: useVelcroValue('variables.division'),
+    game: useVelcroValue('variables.game'),
+  }
+  const shown = [
+    ['division', tabs.division],
+    ['game', tabs.game_count],
+  ].filter(([which]) => said[which])
 
   useLayoutEffect(() => {
     const tabs_ = Object.values(refs).map((r) => r.current).filter(Boolean)
-    if (tabs_.length < 2) return
+    // On its own a tab takes its own width. Clearing the property matters as much as setting
+    // it: the survivor keeps its inline --tab-w when its partner goes blank, so without this
+    // a lone "Game 3 of 5" would sit in the width "Championship Division" asked for.
+    if (tabs_.length < 2) {
+      tabs_.forEach((el) => el.style.removeProperty('--tab-w'))
+      return
+    }
     const measure = () => {
       const widths = tabs_.map((el) => {
         // the span Variable renders, not the box around it: it is flex: none, so its width is
@@ -173,10 +194,7 @@ function Tabs() {
 
   return (
     <div className="fcjh-tab-layer">
-      {[
-        ['division', 'division', tabs.division],
-        ['game', 'game_count', tabs.game_count],
-      ].map(([which, key, spec_]) => (
+      {shown.map(([which, spec_]) => (
         <div
           key={which}
           ref={refs[which]}
@@ -240,10 +258,38 @@ export default function Game() {
         {SIDES.map((side) => (
           <Band key={side} side={side} />
         ))}
-        {/* the tournament's logo is optional too, and off the same kind of toggle */}
+        {/* The SQUARE tournament logo, in Blizzard's hexagon. Square because the hole is a
+            hexagon: an oblong mark in it is either squashed or cropped, which is why the
+            wide one is a separate picture rather than the same one reused (user,
+            2026-10-23). `cover` here, not `contain` - the clip path is the hexagon, so the
+            mark is meant to fill it and be cut by it. */}
         <Toggle name="tournament" className="fcjh-layer">
           <div className="fcjh-event" style={at(boxes.event)}>
             <Image name="event.logo" alt="" fit="cover" />
+          </div>
+        </Toggle>
+
+        {/* THE TWO CORNER MARKS: the broadcaster's top left, the tournament's WIDE logo top
+            right (user, 2026-10-23). Each on its own switch, so a show can run any
+            combination of the three marks without one implying another.
+
+            The room is what a best of 7 leaves - its outermost pip reaches further than
+            anything else on the band - so obs.py derives the box from the pip row instead of
+            carrying a typed width that would quietly stop being true. Each mark binds to its
+            own screen edge, so the pair sit IN the corners rather than drifting toward the
+            middle when a logo is narrow.
+
+            Worth knowing: Blizzard's own kill feed also lives top left. These sit inside the
+            band's height to stay clear of it, but the two have not been seen together in a
+            live game yet. */}
+        <Toggle name="corner.broadcaster" className="fcjh-layer">
+          <div className="fcjh-corner left" style={at(boxes.corner.left)}>
+            <Image name="event.broadcaster" alt="" fit="contain" />
+          </div>
+        </Toggle>
+        <Toggle name="corner.tournament" className="fcjh-layer">
+          <div className="fcjh-corner right" style={at(boxes.corner.right)}>
+            <Image name="event.logo_wide" alt="" fit="contain" />
           </div>
         </Toggle>
       </div>

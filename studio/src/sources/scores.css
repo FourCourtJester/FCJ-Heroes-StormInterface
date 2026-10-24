@@ -1,0 +1,399 @@
+/* The scores screen. Hand-written and owned here; ../generated/scores.json carries the
+   numbers - where Blizzard's stats panel is, and how big the furniture around it is.
+
+   The screen is a backdrop with a rectangle missing. See Scores.jsx for why that is safer
+   than patching the corners, and for who decides the winner. */
+
+.fcjh-scores {
+  position: relative;
+  width: var(--screen-w);
+  height: var(--screen-h);
+  overflow: hidden;
+  font-family: 'Saira Semi Condensed', sans-serif;
+
+  /* Blizzard's own Nexus home-screen plate: the purple nebula and the lit grid floor */
+  --field: url('../backgrounds/nexus.webp');
+
+  /* the entrances, stated here as the matchup band states its own */
+  --enter: 620ms;
+  --enter-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --enter-marks: 120ms;   /* the winner leads; the marks follow it in */
+}
+
+/* ── the sky, through four windows ──────────────────────────────────────────────────── */
+
+/* Each piece is a window: clipped to its own band, and holding a sky that is pushed back by
+   exactly where that band starts. The sky is therefore in the same screen position in all
+   four, which is what makes the seams disappear - at a join, both sides are showing the same
+   pixel of the same picture. The old version shifted a background instead; a real element
+   does the same for the backdrop AND gives the motion somewhere to live. */
+.fcjh-scores-fill {
+  position: absolute;
+  overflow: hidden;
+}
+
+.fcjh-scores-sky {
+  position: absolute;
+  width: var(--screen-w);
+  height: var(--screen-h);
+  background-image: var(--field);
+  background-size: var(--screen-w) var(--screen-h);
+  background-repeat: no-repeat;
+}
+
+.fcjh-scores-fill.top {
+  left: 0;
+  right: 0;
+  top: 0;
+  height: var(--panel-y);
+}
+.fcjh-scores-fill.top .fcjh-scores-sky {
+  left: 0;
+  top: 0;
+}
+
+.fcjh-scores-fill.bottom {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--panel-b);
+}
+.fcjh-scores-fill.bottom .fcjh-scores-sky {
+  left: 0;
+  top: calc(-1 * (var(--screen-h) - var(--panel-b)));
+}
+
+.fcjh-scores-fill.left {
+  left: 0;
+  top: var(--panel-y);
+  bottom: var(--panel-b);
+  width: var(--panel-x);
+}
+.fcjh-scores-fill.left .fcjh-scores-sky {
+  left: 0;
+  top: calc(-1 * var(--panel-y));
+}
+
+.fcjh-scores-fill.right {
+  right: 0;
+  top: var(--panel-y);
+  bottom: var(--panel-b);
+  width: var(--panel-r);
+}
+.fcjh-scores-fill.right .fcjh-scores-sky {
+  left: calc(-1 * (var(--screen-w) - var(--panel-r)));
+  top: calc(-1 * var(--panel-y));
+}
+
+/* ── motion ─────────────────────────────────────────────────────────────────────────────
+
+   The screen is space, so it drifts (user, 2026-10-23: "I would like to add some motion to
+   this... Twinking stars / Comets / 'Space Dust' or nebulae floating around").
+
+   Drawn rather than photographed. The game composites 23 textures over this same plate and
+   they are extracted under references/, but gradients cost nothing, scale to any size, and
+   keep more Blizzard binaries out of a public Pages build - and the effects are stars, dust
+   and streaks, which is what gradients are good at.
+
+   EVERY LAYER IS IN ALL FOUR COPIES AND MUST STAY IN STEP. They mount together, so they
+   start together; nothing here may be random or depend on where its piece sits, or the same
+   star would be in two states either side of a seam. */
+
+/* Stars: two tiles at different scales and different twinkle rates, so the field does not
+   pulse as one. A radial-gradient tile repeats seamlessly, so shifting the sky shifts the
+   stars with it and the four copies still line up. */
+.fcjh-scores-sky::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(2.1px 2.1px at 23px 37px, rgb(var(--star-rgb) / 1), transparent 100%),
+    radial-gradient(1.7px 1.7px at 137px 91px, rgb(var(--star-rgb) / .9), transparent 100%),
+    radial-gradient(2.4px 2.4px at 199px 23px, rgb(var(--star-rgb) / 1), transparent 100%),
+    radial-gradient(1.5px 1.5px at 71px 163px, rgb(var(--star-rgb) / .8), transparent 100%),
+    radial-gradient(1.8px 1.8px at 251px 131px, rgb(var(--star-rgb) / .9), transparent 100%);
+  background-size: 290px 190px;
+  animation: fcjh-twinkle 5.5s ease-in-out infinite;
+}
+
+/* the second field, finer and slower, offset so the two never coincide */
+.fcjh-scores-sky::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    /* the dust: three soft clouds, large and nearly not there */
+    radial-gradient(420px 260px at 14% 22%, rgb(140 110 220 / .34), transparent 70%),
+    radial-gradient(520px 300px at 83% 16%, rgb(90 150 230 / .28), transparent 70%),
+    radial-gradient(380px 240px at 62% 88%, rgb(170 120 200 / .24), transparent 70%),
+    /* and a finer star field over it */
+    radial-gradient(1.5px 1.5px at 47px 29px, rgb(var(--star-rgb) / .9), transparent 100%),
+    radial-gradient(1.4px 1.4px at 111px 117px, rgb(var(--star-rgb) / .75), transparent 100%),
+    radial-gradient(1.9px 1.9px at 163px 67px, rgb(var(--star-rgb) / 1), transparent 100%);
+  background-size:
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    197px 149px,
+    197px 149px,
+    197px 149px;
+  animation:
+    fcjh-twinkle 8.5s ease-in-out infinite reverse,
+    fcjh-drift 48s ease-in-out infinite alternate;
+}
+
+/* A deeper swing than the first pass, which at .55-1 was too shallow to read as motion at
+   all against a plate that already has stars painted into it (user, 2026-10-23). */
+@keyframes fcjh-twinkle {
+  0%, 100% { opacity: .25; }
+  50% { opacity: 1; }
+}
+
+/* The dust floats. 26px over 90s was 0.29px a second, which is below the speed anything
+   reads as moving - it was motion only on paper. This is about four times that and still
+   slow enough not to look like the backdrop sliding. */
+@keyframes fcjh-drift {
+  from { transform: translate3d(-34px, 22px, 0); }
+  to { transform: translate3d(34px, -22px, 0); }
+}
+
+/* THE COMETS STOP AT THE HORIZON. The backdrop's lit grid floor starts at the panel's
+   bottom edge, and a comet crossing it reads as a streak lying ON the ground rather than
+   one in the sky (user, 2026-10-23).
+
+   Masked rather than timed out. Ending the keyframes early would fix one comet on one path;
+   the mask fades anything in the field as it nears the floor, whatever its path, and goes on
+   being true if the paths change. The horizon is the panel's own bottom edge, so it is read
+   from the same number the hole is cut with rather than typed again. */
+.fcjh-comet-field {
+  position: absolute;
+  inset: 0;
+  --horizon: calc(var(--screen-h) - var(--panel-b));
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0,
+    #000 calc(var(--horizon) - var(--comet-fade)),
+    transparent var(--horizon)
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0,
+    #000 calc(var(--horizon) - var(--comet-fade)),
+    transparent var(--horizon)
+  );
+}
+
+/* Comets: a tapered streak with a bright head, crossing on a long cycle. They are mostly
+   absent - a sky with a comet in it every few seconds is a screensaver, not a backdrop. */
+.fcjh-comet {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 240px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgb(var(--star-rgb) / .9));
+  box-shadow: 0 0 6px rgb(var(--star-rgb) / .5);
+  opacity: 0;
+  animation: fcjh-comet 23s linear infinite;
+}
+.fcjh-comet.one   { animation-delay: 0s; }
+.fcjh-comet.two   { animation-delay: 9s; --comet-y: 320px; }
+.fcjh-comet.three { animation-delay: 16s; --comet-y: 660px; }
+
+/* the travel is written into the keyframes rather than left to `left`/`top`, so it is one
+   compositor transform per frame and nothing is laid out again */
+@keyframes fcjh-scores-fall {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(0); }
+}
+
+@keyframes fcjh-comet {
+  0% {
+    opacity: 0;
+    transform: translate3d(-300px, calc(var(--comet-y, 90px) - 140px), 0) rotate(21deg);
+  }
+  3% { opacity: .9; }
+  14% { opacity: .9; }
+  18%, 100% {
+    opacity: 0;
+    transform: translate3d(2160px, calc(var(--comet-y, 90px) + 800px), 0) rotate(21deg);
+  }
+}
+
+/* ── the winner ─────────────────────────────────────────────────────────────────────── */
+
+/* The top band: the name in white, the glow in the team's colour. Three shadows rather than
+   one - a tight one to make the letters read as lit, a wide one for the bloom, and a wider
+   faint one so the bloom has somewhere to end. */
+/* The band CLIPS and the inner element MOVES. That is the whole trick: the winner's band
+   ends exactly where Blizzard's panel begins, so an element sliding up from below it comes
+   out of the panel's top edge rather than travelling across the panel - which is what
+   "comes up from the score tab" has to mean when the middle of the screen is a hole with
+   someone else's graphic showing through it.
+
+   The glow survives the clip. The name is 72px in a 108px line box inside a 205px band, so
+   the glyphs have about 76px of air each side and the widest shadow is 66px. */
+.fcjh-scores-winner {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: var(--panel-y);
+  overflow: hidden;
+}
+
+/* The motion is Transition's, not ours: it has to run backwards as well, and a toggle is
+   pressed twice. --ss-shift is how far it travels, which here is the whole band, so the name
+   leaves through the panel edge rather than fading on the spot. */
+.fcjh-scores-winner-in {
+  --ss-shift: var(--panel-y);
+  --ss-duration: var(--enter);
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 0 calc(var(--mark-pad) * 4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--win-text);
+  font-weight: 700;
+  letter-spacing: var(--win-track);
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #fff;
+  text-shadow:
+    0 0 calc(var(--win-glow) * .3) rgb(var(--win-rgb) / .95),
+    0 0 var(--win-glow) rgb(var(--win-rgb) / .75),
+    0 0 calc(var(--win-glow) * 2.2) rgb(var(--win-rgb) / .45);
+}
+.fcjh-scores-winner.blue { --win-rgb: var(--blue-rgb); }
+.fcjh-scores-winner.red { --win-rgb: var(--red-rgb); }
+
+/* The victory mark, one either side of the name.
+
+   A MASK, not a picture. The SVG is solid white and carries no colour of its own, so the
+   same file serves both teams and the glow is the name's own - one drawn shape instead of
+   four (two marks x two colours), and nothing to keep in step when a team colour moves.
+
+   The URLs are literal because Vite rewrites `url()` it can see at build time; a path
+   pieced together from the spec at runtime would not be fingerprinted and would break on
+   Pages. So the spec picks a CLASS, not a file. */
+.fcjh-win-mark {
+  flex: none;
+  width: var(--win-mark-w);
+  height: var(--win-mark-h);
+  background-color: #fff;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+  /* a mask takes no text-shadow, so the bloom is a filter on the shape itself */
+  filter:
+    drop-shadow(0 0 calc(var(--win-glow) * 0.3) rgb(var(--win-rgb) / 0.95))
+    drop-shadow(0 0 var(--win-glow) rgb(var(--win-rgb) / 0.6));
+}
+
+.fcjh-scores-winner.mark-laurel .fcjh-win-mark {
+  mask-image: url('../generated/win_laurel.svg');
+  -webkit-mask-image: url('../generated/win_laurel.svg');
+}
+
+.fcjh-scores-winner.mark-hex .fcjh-win-mark {
+  mask-image: url('../generated/win_hex.svg');
+  -webkit-mask-image: url('../generated/win_hex.svg');
+}
+
+.fcjh-win-mark.left {
+  margin-right: var(--win-mark-gap);
+}
+
+/* the laurel is drawn as a left-hand branch; the hexagon is symmetric, so the mirror is
+   free either way */
+.fcjh-win-mark.right {
+  margin-left: var(--win-mark-gap);
+  transform: scaleX(-1);
+}
+
+/* ── the marks ──────────────────────────────────────────────────────────────────────── */
+
+/* The same, mirrored: the marks drop out of the panel's BOTTOM edge. */
+.fcjh-scores-marks {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--panel-b);
+  overflow: hidden;
+}
+
+.fcjh-scores-marks-in {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fcjh-scores-fall var(--enter) var(--enter-ease) var(--enter-marks) both;
+}
+
+/* A fixed box either side of the x, so the lockup is symmetric about the panel's centre
+   whatever shape the two logos are. The padding is what a logo may not cross, as on the
+   band's arms. */
+.fcjh-scores-mark {
+  box-sizing: border-box;
+  width: var(--mark-w);
+  height: var(--mark-h);
+  padding: var(--mark-pad);
+  display: flex;
+  align-items: center;
+}
+
+/* each closes on the x: the left one right bound, the right one left bound */
+.fcjh-scores-mark.left {
+  justify-content: flex-end;
+}
+
+.fcjh-scores-mark.right {
+  justify-content: flex-start;
+}
+
+/* alone, it has nothing to close on, so it centres */
+.fcjh-scores-marks.lone .fcjh-scores-mark {
+  justify-content: center;
+}
+
+/* the x that joins them. Vertically centred by the band's own align-items; the margin is
+   its air, and it is the one thing on this screen that sits exactly on 960. */
+.fcjh-scores-x {
+  flex: none;
+  margin: 0 var(--x-gap);
+  font-size: var(--x-text);
+  font-weight: 300;
+  line-height: 1;
+  color: #fff;
+}
+/* The picture takes its own width at the band's height, rather than filling the box.
+
+   This is what makes "right bound" and "left bound" mean anything. With the image stretched
+   to the full 320 and `object-fit: contain` letterboxing it inside, a square logo sits in the
+   middle of its own box with transparent air either side - so it reads as floating away from
+   the x no matter what the box is aligned to. Sized to its content, the box's alignment moves
+   the picture itself, and both logos genuinely close on the x.
+
+   The cap is on the wrapper, so a very wide wordmark stops at the box instead of pushing the
+   lockup off centre. */
+.fcjh-scores-mark .ss-image {
+  position: relative;
+  display: flex;
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+}
+.fcjh-scores-mark img {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}

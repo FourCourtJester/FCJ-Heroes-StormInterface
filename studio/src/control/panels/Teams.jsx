@@ -14,12 +14,23 @@ import { Field, ImagePicker, Panel, ResetButton, Row, Select, Stepper, SwapButto
 // level wing - the no-logo tournament.
 //
 // Swap and Clear live in the header, so they are reachable while the panel is folded and out
-// of the way of the names while it is open (user, 2026-10-23). Clear takes the six values that
-// say who is playing and leaves the series alone: a new match is new teams at 0-0, but it is
-// usually the same best-of, and a format that quietly reset itself between games would be
-// found out on air. Both ask before they fire - one mis-aimed click here is a wrong scoreboard
-// in front of an audience, with no undo.
-const TEAMS = ['blue.name', 'blue.logo', 'blue.wins', 'red.name', 'red.logo', 'red.wins']
+// of the way of the names while it is open (user, 2026-10-23). Both ask before they fire -
+// one mis-aimed click here is a wrong scoreboard in front of an audience, with no undo.
+//
+// Clear leaves the series alone: a new match is new teams at 0-0, but it is usually the same
+// best-of, and a format that quietly reset itself between games would be found out on air.
+//
+// IT DOES CLEAR THE WINNER, which lives on the Tournament panel now (user, 2026-10-23). The
+// control moved; what it means did not. A winner belongs to the match that was just played,
+// so starting a new one while the last one's result is still lit is the fault worth guarding
+// against - and an operator clearing the teams has plainly started a new one. It goes through
+// `paths` rather than `names` because it is a toggle: `names` reaches `variables`, and these
+// two live under `toggles`. Swap does not take them. It works by cutting its list in half and
+// exchanging the pairs, and "won" has no opposite number to exchange with - which side won is
+// not a property of a side. Sides are picked before a game and the winner after it, so the
+// two do not meet; if you ever do swap after a result, re-pick the winner.
+const SIDES = ['blue.name', 'blue.logo', 'blue.wins', 'red.name', 'red.logo', 'red.wins']
+const WINNER = ['toggles.winner.blue', 'toggles.winner.red']
 
 export default function Teams() {
   return (
@@ -28,8 +39,8 @@ export default function Teams() {
       collapsible
       actions={
         <>
-          <SwapButton label="Swap sides" names={TEAMS} size="sm" />
-          <ResetButton label="teams" names={TEAMS} size="sm" />
+          <SwapButton label="Swap sides" names={SIDES} size="sm" />
+          <ResetButton label="teams" names={SIDES} paths={WINNER} size="sm" />
         </>
       }
     >

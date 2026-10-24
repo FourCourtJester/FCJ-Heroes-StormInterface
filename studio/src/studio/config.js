@@ -4,7 +4,7 @@
  * The name people see. It titles the board, and OBS shows it in front of every
  * browser source this studio publishes.
  */
-export const STUDIO_NAME = 'FCJ Heroes'
+export const STUDIO_NAME = 'FCJ Heroes Esports'
 
 /**
  * The name this studio's data is stored under: the databases holding the show and

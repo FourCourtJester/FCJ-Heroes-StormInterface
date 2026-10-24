@@ -16,8 +16,9 @@ import { Countdown, CountdownTo, Field, Panel, Row } from '@single-studio/core/c
 // The art behind it is the image library's `slides/` group: file pictures there and they
 // play, shuffled, nine seconds each, drifting as they go. Nothing to set here.
 //
-// "Message" is the line over the band - "coming up next", "previous match", whatever the
-// segment is - not a sentence across the screen; the band is the furniture now.
+// "Message" is the line over the matchup band - "coming up next", "previous match", whatever
+// the segment is. The band is its own browser source (#/source/matchup) rather than part of
+// this screen, so the field is named for where it started rather than where it is drawn.
 //
 // The two logos are the ones in Tournament: this screen shows the same marks rather than
 // keeping a second copy of them. Who is playing comes from Teams.

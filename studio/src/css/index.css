@@ -95,8 +95,7 @@
    the cause is the sizing MODE, not the width (user, 2026-10-23). A studio cannot write that
    one: `sm:col-auto` puts the class on the element at every width while its flex rule only
    applies above the breakpoint, so matching the class would cap the control on the lines
-   where it has to fill. docs/single-studio-reports.md asks for it upstream. The cost of the
-   stand-in is a row of two pickers, which has room to spare and gets capped anyway. */
+   where it has to fill. docs/single-studio-reports.md asks for it upstream. */
 @media (min-width: 40rem) and (max-width: 47.9375rem) {
   .ss-image-picker {
     max-width: var(--fcjh-picker-max);
@@ -106,4 +105,64 @@
 .ss-control {
   /* the whole control - preview, dropdown and magnifier - at its tightest */
   --fcjh-picker-max: 9.25rem;
+}
+
+/* ...except on a line that is nothing but pickers, which is not tight and does not want it.
+   `fcjh-picker-free`, on the Tournament panel's two logos (user, 2026-10-23).
+
+   This lifts the cap and NOTHING ELSE. They keep the Row's own `flex: 1 1 var(--ss-basis)`,
+   so they share the line evenly and shrink with it.
+
+   The first attempt also set `flex: 0 0 auto`, reading "expand to their natural widths" as
+   shrink-to-content. That is the one thing it must not do. A <select> is as wide as its
+   longest option, so a picker's content width is however long the longest key in the image
+   library happens to be - and the library is the operator's, not ours. Measured on a 760px
+   board: with an empty library each picker sized to 180px and the two sat side by side, and
+   adding ONE realistic key (`northwind-esports-primary-logo-2026`) took each to 350px, which
+   is 712px of picker in a 694px row - so the Row wrapped and they stacked. The user found it
+   on a real library; it was invisible here because this machine's library is empty.
+
+   The lesson is bigger than the rule: a control whose width comes from operator content
+   cannot be sized by that content. It is the same fault as the cap below, which exists
+   because the same `<select>` squeezed a name field to 25px - the sizing mode is the cause
+   both times.
+
+   Two selectors deep (0,2,0) so it beats the cap outright rather than by source order, and
+   from 40rem up only, which is the only range the cap covers. */
+@media (min-width: 40rem) {
+  .ss-image-picker.fcjh-picker-free {
+    max-width: none;
+  }
+}
+
+/* The two winner buttons, each lit in its own side's colour.
+
+   The framework lights every toggle in one accent and that accent is blue, so a lit "Red"
+   was the same colour as a lit "Blue" - fine for "Show lower third", wrong for a pair whose
+   whole job is to say which side. This is the one control on the board read at a glance,
+   live, with a result just called, so it is worth the rule.
+
+   The colours are layout.toml's `blue_colour` and `red_colour` - the same two the graphics
+   paint with, so the board matches what goes out. They are written here rather than
+   generated because tools/obs.py may write pictures and a numbers JSON and nothing else,
+   and an inline style would be a style attribute where a class does. Two values; if the
+   team colours ever move in layout.toml, they move here too.
+
+   Keyed on `aria-pressed`, which is the framework's own switch and is already there - no
+   second source of truth for which one is on. */
+.ss-control {
+  --fcjh-won-blue: #5cbcec;
+  --fcjh-won-red: #e75c79;
+}
+
+.fcjh-won[aria-pressed='true'] {
+  color: #0b1020;
+}
+
+.fcjh-won.blue[aria-pressed='true'] {
+  background-color: var(--fcjh-won-blue);
+}
+
+.fcjh-won.red[aria-pressed='true'] {
+  background-color: var(--fcjh-won-red);
 }
