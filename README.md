@@ -53,15 +53,18 @@ Only one pane is open at a time: opening one closes whichever is open.
 ## The broadcast studio
 
 Graphics for streaming the game in OBS: team names, logos and the series score over the top
-bar, plus a standby screen, webcam frames and a matchup band. It's an
+bar, plus a standby screen, the draft, a matchup band, webcam frames and an end-of-game
+scores screen. It's an
 [operator's board](https://fourcourtjester.github.io/FCJ-Heroes-StormInterface/#/) that
 runs in your browser. No install and no server.
 
 1. In OBS, add the board as a custom browser dock (**Docks → Custom Browser Docks**) with
    this address:
    `https://fourcourtjester.github.io/FCJ-Heroes-StormInterface/#/`
-2. The board's menu lists every graphic's browser-source address, each with a copy button.
-   Add the ones you want as **Browser** sources at 1920 × 1080.
+2. The quickest start is the ready-made OBS collection: the board's **Help** panel links
+   it. Import it with **Scene Collection → Import** and every scene and source is there.
+   Or add graphics one at a time: the board's menu lists every graphic's browser-source
+   address with a copy button. Add them as **Browser** sources at 1920 × 1080.
 3. Fill in the teams and the tournament on the board. The graphics update live.
 
 Run the board in OBS on the machine that streams. Your show's data and images are stored
