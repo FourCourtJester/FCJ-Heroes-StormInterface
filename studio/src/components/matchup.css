@@ -143,35 +143,35 @@
   left: var(--team-inset);
   --team-rgb: var(--blue-rgb);
   --glow-to: left;
-  --lattice: url('../generated/lattice_blue.svg');
-  --lattice-fade: linear-gradient(to left, rgb(0 0 0 / 0.7), rgb(0 0 0 / 0.25) 50%, rgb(0 0 0 / 0.4));
+  --lattice-to: left;
 }
 
 .fcjh-matchup-team.red {
   right: var(--team-inset);
   --team-rgb: var(--red-rgb);
   --glow-to: right;
-  --lattice: url('../generated/lattice_red.svg');
-  --lattice-fade: linear-gradient(to right, rgb(0 0 0 / 0.7), rgb(0 0 0 / 0.25) 50%, rgb(0 0 0 / 0.4));
+  --lattice-to: right;
 }
 
-/* colour-blind mode (colourBlind.js): MatchupBand sets the team colours, this the lattices */
-.fcjh-matchup.cb .fcjh-matchup-team.blue {
-  --lattice: url('../generated/lattice_blue_cb.svg');
-}
-
-.fcjh-matchup.cb .fcjh-matchup-team.red {
-  --lattice: url('../generated/lattice_red_cb.svg');
-}
+/* Colour-blind mode needs nothing here any more. The lattice is a mask the plate paints in
+   `--team-rgb`, and MatchupBand already switches that pair, so the mesh follows the mode on
+   its own - and would follow any other colours just as well (user, 2026-10-25). */
 
 .fcjh-matchup-team::before {
   content: '';
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: var(--lattice);
-  -webkit-mask-image: var(--lattice-fade);
-  mask-image: var(--lattice-fade);
+  background-image: linear-gradient(
+    to var(--lattice-to),
+    rgb(var(--team-rgb) / 0.7),
+    rgb(var(--team-rgb) / 0.25) 50%,
+    rgb(var(--team-rgb) / 0.4)
+  );
+  -webkit-mask-image: url('../generated/lattice.svg');
+  mask-image: url('../generated/lattice.svg');
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
 }
 
 /* the chrome, nine-sliced: the caps hold the two points and the middle stretches, so a long

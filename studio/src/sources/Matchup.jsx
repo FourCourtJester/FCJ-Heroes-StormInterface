@@ -1,6 +1,7 @@
 import { Scene, Variable } from '@single-studio/core/source'
 
 import MatchupBand, { BAND_VARS, SCREEN } from '../components/MatchupBand'
+import MatchupSlab, { SLAB_VARS } from '../components/MatchupSlab'
 
 // The matchup band, on its own, over nothing.
 //
@@ -25,6 +26,17 @@ import MatchupBand, { BAND_VARS, SCREEN } from '../components/MatchupBand'
 
 const [SCREEN_W, SCREEN_H] = SCREEN
 
+// WHICH COMPOSITION. `?band=` on the source URL picks one, so they can be looked at side by
+// side while the shape is being decided (user, 2026-10-25) - the same trick the webcams use
+// for `?fill`. The losers get deleted once it is settled; this switch is scaffolding, not a
+// feature.
+//
+//   (nothing)  the original bottom band
+//   slab       hexagon badge + name plate a side - the best so far
+//   unit       one container a side: score, logo, name
+const BAND = new URLSearchParams(window.location.search).get('band')
+const SLAB = BAND === 'slab' || BAND === 'unit'
+
 const SCENE_VARS = {
   ...BAND_VARS,
   '--screen-w': `${SCREEN_W}px`,
@@ -34,8 +46,12 @@ const SCENE_VARS = {
 export default function Matchup() {
   return (
     <Scene width={SCREEN_W} height={SCREEN_H}>
-      <div className="fcjh-band-scene" style={SCENE_VARS}>
-        <MatchupBand plate={<Variable name="standby.message" fallback="" fit />} />
+      <div className="fcjh-band-scene" style={SLAB ? { ...SLAB_VARS, ...SCENE_VARS } : SCENE_VARS}>
+        {SLAB ? (
+          <MatchupSlab unit={BAND === 'unit'} />
+        ) : (
+          <MatchupBand plate={<Variable name="standby.message" fallback="" fit />} />
+        )}
       </div>
     </Scene>
   )

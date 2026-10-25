@@ -75,6 +75,10 @@ function Band({ side }) {
       style={{ left, width, '--team-rgb': rgbOf(team), '--logo-clip': clip.logo[side] }}
     >
       <div className="fcjh-name">
+        {/* the team line, its own element because the frame's two pseudo-elements are
+            already spent (lattice, chrome) - and because a line that is masked and painted
+            takes any colour, where one baked into the frame needed a frame per scheme */}
+        <i className="fcjh-team-line" />
         <Variable name={`${side}.name`} fallback="" fit />
       </div>
       {logo ? (

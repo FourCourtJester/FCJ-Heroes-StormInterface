@@ -48,6 +48,9 @@ const SCENE_VARS = {
   '--x-gap': `${marks.x_gap}px`,
   '--win-mark-h': `${win.mark_h}px`,
   '--win-mark-gap': `${win.mark_gap}px`,
+  // its true width at the height the band gives it, so it is never squashed
+  '--win-mark-w': `${Math.round(win.mark_h * win.mark_ratio)}px`,
+  '--win-mark-rgb': rgbOf(win.mark_colour),
   '--comet-fade': `${spec.sky.comet_fade}px`,
   '--blue-rgb': rgbOf(colours.blue),
   '--red-rgb': rgbOf(colours.red),
@@ -57,18 +60,6 @@ const SCENE_VARS = {
 
 // The four pieces of screen left around the hole. Each is a window on the same sky.
 const PIECES = ['top', 'bottom', 'left', 'right']
-
-// WHICH VICTORY MARK. Both are drawn and both ship; `[scores] win_mark` picks one, and
-// `?mark=hex` on the source URL overrides it for a side-by-side look without a rebuild -
-// the same trick the webcams use for `?fill`. The two SVGs are masks, so the stylesheet
-// paints them in the winning team's colour rather than the file carrying a colour.
-const MARK = (() => {
-  const asked = new URLSearchParams(window.location.search).get('mark')
-  return asked === 'laurel' || asked === 'hex' ? asked : win.mark
-})()
-
-// its true width at the height the band gives it, so a mark is never squashed
-const MARK_W = `${Math.round(win.mark_h * win.mark_ratio[MARK])}px`
 
 /**
  * The winning team's name, across the top band: white, glowing in that team's colour.
@@ -119,7 +110,7 @@ function Winner() {
   const side = shown || last
 
   return (
-    <div className={`fcjh-scores-winner ${side} mark-${MARK}`} style={{ '--win-mark-w': MARK_W }}>
+    <div className={`fcjh-scores-winner ${side}`}>
       {/* the band clips and the content moves, which is what makes the name rise OUT of the
           panel's top edge rather than slide across the panel */}
       <Transition trigger={shown} transition="slide-up" className="fcjh-scores-winner-in">

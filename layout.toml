@@ -504,6 +504,98 @@ social = 20                  # ...and their handle, under the same bar at the ot
 # Measured off design/ref_endgame_stats.jpg: Blizzard's frame runs x 337-1583, y 207-924. The
 # hole is a shade larger, so their frame and its glow survive rather than being clipped by ours.
 # A JPEG, so these are +/-2 px; the real numbers want the extracted UI, as the top bar's did.
+# The MATCHUP SLAB: a centred composition for the matchup, explored alongside the bottom
+# band (user, 2026-10-25: "something more central, with team logos ... maybe different shapes
+# for the visual containers to accommodate those logos").
+#
+# What is wrong with the band it replaces, in numbers: a team container is 576 x 130 carrying
+# one line of text, where the in-game name plate carries the same thing in 374 x 63 - three
+# times the area for identical content. And the two logo arms spend 1152 px, 60% of the
+# screen's width, on event branding at the extreme edges while the teams get the middle. So
+# the teams come to the centre and take a logo, and the two arms collapse into one lockup.
+#
+# It is free to leave the bottom edge because Draft will get its own version rather than
+# sharing this one (user, 2026-10-25: "We dont have to use Draft in consideration").
+[matchup]
+centre_y = 500               # the team row's centre line. Above the screen's own 540: the eye
+                             # reads centre a little high, and the lockup below balances it
+badge = 220                  # a team's logo badge, a POINTY-TOP HEXAGON this tall. The kit is
+                             # hexagonal already - the pips, the lattice inside every plate,
+                             # Blizzard's own centrepiece - so a hexagon is where a logo
+                             # belongs, and a plate pointed at both ends is not.
+                             #
+                             # Grown from 184 (user, 2026-10-25: "grow the badge so the logo
+                             # has more presence"). A hexagon tapers, so the logo gets the
+                             # largest square that fits inside it rather than the whole box -
+                             # 184 left it at 87px, which read small; 220 gives 110. Taller
+                             # again starts to overpower the name plate, which is 120
+# The logo COVERS the badge and the hexagon clips it (user, 2026-10-25), so there is no
+# padding here any more: a mark bleeds to the rim instead of sitting in a square inside it.
+# Its rim and sheen are the plates' own, generated into badge_hex.svg - no rim width here
+# either, because the kit already has one ([visual] rim_w) and a second would drift.
+name_w = 440                 # the name plate: a FLAT outer edge butted to the badge, and a
+                             # point at the VS end (user, 2026-10-25: "flatten the outer edges
+                             # of the nameplates to match the vertical edge of the team logo
+                             # hexagons"). Its height is not here - it is the hexagon's own
+                             # vertical edge, badge / 2, so the two meet exactly instead of
+                             # one overhanging the other by a few pixels
+name_cap = 44                # its nine-slice caps, wide enough to hold the point
+name_text = 46               # a team name's cap height, the size it starts at
+name_lines = 2               # the most lines it may wrap to
+name_min = 26                # ...and the floor it may shrink to once it has used them. The
+                             # framework's own `fit` cannot do this: it guarantees one line by
+                             # shrinking, measured at 23.8px for a 25-character club name -
+                             # 48% of the 46 it was asked for, which is what made the old
+                             # container look empty (user, 2026-10-25)
+name_pad = 18                # the text, in from the plate's point
+# THE ONE-CONTAINER TEAM (user, 2026-10-25: "the one container idea might be best"). One
+# shape a side, holding everything that side is: the score at its outer end, a parallelogram
+# for the logo next to it - the game scene's logo plate, in this kit's lean - and the name
+# running in to the VS. The container keeps the name plate's own edges, flat outside and
+# pointed in, so nothing bulges out of it and there is no head-and-shaft left to read.
+#
+# It is also where the series score finally lands: the space between the logo and the outer
+# border was going spare, and a score retrofitted later would have meant moving everything.
+unit_h = 140                 # the container, taller than the 110 plate it replaces because it
+                             # now holds a logo rather than standing beside one
+unit_score = 86              # the score panel at the outer end
+unit_score_text = 56         # the number in it
+unit_logo = 220              # the logo parallelogram beside it. The logo FILLS it and the
+                             # slant clips the overflow, the way the game scene's logo plate
+                             # works (user, 2026-10-25), so this is simply how much plate the
+                             # mark gets. Width still has to clear the SHEAR: a parallelogram
+                             # leans by lean * height - 75.6 at this height - and much under
+                             # 200 reads as a diagonal strip rather than a plate
+unit_rule = 2                # the hairline between the container's three parts
+
+vs = 116                     # the VS hexagon between them, this tall
+vs_gap = 22                  # between a name plate's inner point and the VS. Tight on
+                             # purpose (user, 2026-10-25): the plate's point is a triangle,
+                             # so the air it leaves beside the hexagon reads wider than the
+                             # number. Narrowing it pulls the whole slab in with it, since
+                             # everything is placed outward from the middle
+vs_text = 38
+kicker = 34                  # "Coming up next", on a plate above the matchup
+kicker_w = 560               # the plate's TOP edge. One slant a side, not a point at half
+kicker_h = 76                # height: the left edge runs down-left and the right down-right,
+                             # so the plate flares to meet the matchup under it (user,
+                             # 2026-10-25). The flare is the kit's lean over its height, and
+                             # the bottom edge is kicker_w + 2 * that
+
+# The plate's bottom edge sits ON the name plates' top edge, and the same translucent black
+# carries down behind the row, so the kicker, the plates and the VS read as one shape rather
+# than three things stacked near each other (user, 2026-10-25: "add the same translucent
+# black to the mid so that it looks like one unit"). The mid is as wide as the plate's bottom,
+# which is what makes the two read as one column.
+lockup = 72                  # the broadcaster x tournament lockup, below the matchup
+lockup_gap = 12              # up again, and again (user, 2026-10-25: "move the logos up a
+                             # tad more"): close enough to read as the foot of the unit
+                             # rather than something sitting under it
+lockup_pad = 14              # air inside its own box, so the marks do not meet its edges
+lockup_x = 42                # the x joining the two marks
+lockup_mark = 330            # each mark's box, as the scores screen's
+smoke = 0.55                 # how black a plate is over the slideshow
+
 [scores]
 panel_x = 335                # the hole, from the left edge of the screen
 panel_y = 205                # ...and from the top
@@ -526,10 +618,13 @@ mark_pad = 10                # a logo never touches its container, as the band's
 x_text = 54                  # the x itself
 x_gap = 34                   # its air, either side
 
-# The winning team's name wears a mark either side. Two are drawn; win_mark picks one.
-win_mark = "laurel"          # "laurel" or "hex"
+# The winning team's name wears a laurel branch either side (user, 2026-10-25: "Just go
+# laurels"). A hexagon version was drawn alongside it and dropped unused.
 win_mark_h = 88              # taller than the name's 72, so it frames rather than sits in line
 win_mark_gap = 30            # between a mark and the name
+win_mark_colour = "2f8f4e"   # deep laurel green (user, 2026-10-25: "since you know, they're
+                             # laurels"). Light enough to read against the nebula, which a
+                             # true bottle green does not
 
 # A comet must not cross the lit floor at the bottom of the backdrop - it reads as a streak
 # ON the ground rather than in the sky (user, 2026-10-23). They fade out over this many px
