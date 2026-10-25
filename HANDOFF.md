@@ -570,16 +570,27 @@ And **his timer goes back to the plate's centre** when he dies (Misha is dead to
 whole plate is), not his slice's -16; Misha's own timer stays on her slice. Dead Mishas
 otherwise looked right (user: "Yay us!").
 
-**Colour-blind mode (vod, 2026-10-24: Blizzard's on-fire effect went yellow, "the red
-team ... wasn't").** Blizzard switches on `<When type="Option" colorblind="True"/>`: its
-`TextureColor` states (core `ui/gameui.stormlayout:36`) make **red orange and blue cyan**,
-cutscenes like on-fire get `CutsceneColorblindFilterSupportTemplate`, and the values are
-`ColorBlindColors` in `gameuidata.xml:1103`. The minimap followed; our plates, banners and
-red death timers didn't. To do: in game, tint our own art (top plate, nameplates, rings,
-bars, banners) and text colours by that option, checked piece by piece against Blizzard's
-default UI in colour-blind mode; in the studio, an **opt-in colour-blind toggle** on the
-control board (OBS can't read the game's options) swapping to the same orange and cyan.
-Test with Rexxar's and the Vikings' slices in it.
+**Colour-blind mode, in game: done for 1.1, to see in game (vod, 2026-10-24: Blizzard's
+on-fire effect went yellow, "the red team ... wasn't"; user, 2026-10-25: "top plate,
+nameplates, borders (ie - inspect)").** Blizzard switches on `<When type="Option"
+colorblind="True"/>`; its colour-blind Ally is `1487e9` and Hostile `fe8a0e`
+(`ColorBlindColors`, `gameuidata.xml:1103`), now `[colour_blind] blue`/`red`. The rule
+(gen.py `colour_blind()`): each team-coloured piece keeps its own saturation and value and
+takes the colour-blind hue, so red goes a peachy orange and blue barely moves. Every piece is
+a `FCJH_ColourBlind` StateGroup (gen.py `colour_blind_states()`), an Off state putting the
+normal values back, as SetProperty persists:
+- the top backplate and both core fills: `_CB` textures swapped in (`FCJH_TopBar`, hand-written).
+  **A Texture SetProperty on a `UnitStatusShieldedHealthBar` is untested** - if the core
+  fill doesn't turn, that's why;
+- red's plate art (`FCJH_TeamBg`) and red's talent squares (pop-ups and the inspect card):
+  Blizzard's art Colorized to the orange (`[colour_blind] plates`, `plate_light`/`plate_dark`
+  - add "blue" there if blue's should move too);
+- the inspect card's team edge: its AdjustmentColor.
+
+Not done (follow-ups): the stat panes' TEAMS bands and red value styles (`FCJH_StatValue_Red`,
+swapped by the lead animations, so invasive), the row stripes, the red death timers. Glows
+are Blizzard's own. Test with Rexxar's and the Vikings' slices in it. The studio half (an
+opt-in toggle on the control board, as OBS can't read the game's options) is next.
 
 **Quest progress: what the other UIs show (vod, 2026-10-24).** Valla's Creed of the Hunter
 seemed to show no buff and no stack counter on its talent's tooltip - the user then found it

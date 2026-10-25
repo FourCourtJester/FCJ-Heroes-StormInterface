@@ -1206,6 +1206,50 @@ def convex_sdf(pts):
     return lambda x, y: max(nx * x + ny * y - c for nx, ny, c in edges)
 
 
+def colour_blind(cfg, colour, team):
+    """`colour` (hex RGB, one of a team's) in colour-blind mode: layout.toml [colour_blind]'s hue
+    for the team, with the colour's own saturation and brightness, so a piece tuned light or deep
+    stays that way."""
+    import colorsys
+    rgb = lambda hx: [int(hx[i:i + 2], 16) / 255 for i in (0, 2, 4)]
+    hue = colorsys.rgb_to_hsv(*rgb(cfg["colour_blind"][team]))[0]
+    _, sat, val = colorsys.rgb_to_hsv(*rgb(colour))
+    return "".join(f"{round(v * 255):02x}" for v in colorsys.hsv_to_rgb(hue, sat, val))
+
+
+def colour_blind_cfg(cfg):
+    """cfg with every team colour a generated texture bakes in turned colour-blind, for the
+    textures' _CB twins (slant_bars)."""
+    import copy
+    cb = copy.deepcopy(cfg)
+    for section in ("top_backplate", "team_core"):
+        for team in ("blue", "red"):
+            cb[section][f"{team}_colour"] = colour_blind(cfg, cfg[section][f"{team}_colour"], team)
+    return cb
+
+
+def colour_blind_plate(cfg, team):
+    """The Colorize pair (light, dark) for a team's plate art in colour-blind mode ([colour_blind]
+    plate_light / plate_dark), from the team's colour-blind colour."""
+    cb = cfg["colour_blind"]
+    c = [int(cb[team][i:i + 2], 16) for i in (0, 2, 4)]
+    light = "".join(f"{round(v + (255 - v) * cb['plate_light']):02x}" for v in c)
+    dark = "".join(f"{round(v * cb['plate_dark']):02x}" for v in c)
+    return light, dark
+
+
+def colour_blind_states(on, off, indent):
+    """A StateGroup following the game's colour-blind option (Blizzard's <When type="Option"
+    colorblind="True"/>, as the kill log's portrait borders): the `on` actions while it's set,
+    the `off` ones putting things back when it's cleared mid-game. Actions are SetProperty
+    attribute strings, e.g. 'Texture="#FCJH_X_CB"' or 'frame="Edge" AdjustmentColor="ff8800"'."""
+    t = "\t" * indent
+    act = lambda acts: "".join(f'{t}\t\t<Action type="SetProperty" {a}/>\n' for a in acts)
+    return (f'{t}<StateGroup name="FCJH_ColourBlind">\n{t}\t<DefaultState val="Off"/>\n'
+            f'{t}\t<State name="On">\n{t}\t\t<When type="Option" colorblind="True"/>\n' + act(on) +
+            f'{t}\t</State>\n{t}\t<State name="Off">\n' + act(off) + f'{t}\t</State>\n{t}</StateGroup>\n')
+
+
 def top_backplate_texture(cfg):
     """The top bar's backplate (layout.toml [top_backplate]), its TOP_BACKPLATE_SIZE frame drawn
     at ART_HEIGHT's resolution: stock dark, the team colour rising toward each wing's outer
@@ -1561,6 +1605,19 @@ def slant_bars(cfg):
     data = top_backplate_texture(cfg)
     digest = hashlib.sha1(data).hexdigest()[:8]
     out[name("top", "backplate")] = (f"FCJH_TopBackplate_{digest}.dds", data)
+    # ...and the team-coloured ones' colour-blind twins ([colour_blind]), swapped in by the
+    # game's option (colour_blind_states; the top backplate and core fills in FCJH_TopBar)
+    cb = colour_blind_cfg(cfg)
+    data = top_backplate_texture(cb)
+    digest = hashlib.sha1(data).hexdigest()[:8]
+    out[name("top", "backplate", "cb")] = (f"FCJH_TopBackplate_CB_{digest}.dds", data)
+    for team in ("blue", "red"):
+        (_, _, w, h), _ = rects_[f"{team}_core"]
+        fill = cb["team_core"][f"{team}_colour"]
+        data = (bevel_texture(fill, bar_texture_size(cfg, w, h)[1], cfg["bar_bevel"]) if cfg.get("bar_bevel")
+                else slant_texture(team, 0, fill, size=(32, 32)))
+        digest = hashlib.sha1(data).hexdigest()[:8]
+        out[name("core", "fill", team, "cb")] = (f"FCJH_Bar_core_fill_{team}_CB_{digest}.dds", data)
     cell = HeroCell(cfg)
     # the plate's own shape, as the click target's hit-test texture: plates overlap along the
     # slant, and a square click area sent clicks on one plate's corner to its neighbour
@@ -3358,12 +3415,19 @@ def talent_popups(cfg):
     for n in range(10):
         team, cell = popup_cell(n)
         row = TALENT_ROW.format(n=n) + "/HeroSelectedTalentTreeFrame"
+        # colour-blind mode: the square recoloured as the team's plates ([colour_blind] plates)
+        border_cb = ""
+        if team.lower() in cfg["colour_blind"]["plates"]:
+            light, dark = colour_blind_plate(cfg, team.lower())
+            border_cb = NL + colour_blind_states(
+                [f'ColorAdjustMode="Colorize" LightAdjustColor="{light}" DarkAdjustColor="{dark}"'],
+                ['ColorAdjustMode="None"'], 7).rstrip(NL)
         pop = f"FCJH_Talent{n}"
         images = "".join(
             popup_image(f"T{k}", f"{{{row}/TalentTreeIcon{k}/IconImage/@Texture}}", 0, '\n\t\t\t\t\t\t\t<Visible val="false"/>')
             for k in range(1, TALENT_TIERS + 1))
         # the talent pane's own square, just outside the icon
-        border = popup_image("FCJH_Border", f"@UI/obs_talents_highlight_{team.lower()}", -5)
+        border = popup_image("FCJH_Border", f"@UI/obs_talents_highlight_{team.lower()}", -5, border_cb)
         out.append(popup_frame(pop, n, tp, images + border))
         for k in range(1, TALENT_TIERS + 1):
             icon = f"{row}/TalentTreeIcon{k}"
@@ -3410,7 +3474,7 @@ def hero_cell_template(team, c, cfg):
     g = c.team[team]
     suffix = "" if blue else "_Right"
     flip = "" if blue else '\n\t\t\t<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>'
-    art = lambda name, tex, prio: f"""
+    art = lambda name, tex, prio, extra="": f"""
 		<Frame type="Image" name="{name}">
 			<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
 			<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
@@ -3420,8 +3484,16 @@ def hero_cell_template(team, c, cfg):
 			<Height val="0"/>
 			<Texture val="@UI/{tex}"/>{flip}
 			<RenderPriority val="{prio}"/>
-			<AcceptsMouse val="false"/>
+			<AcceptsMouse val="false"/>{extra}
 		</Frame>"""
+    # colour-blind mode: Blizzard's plate art has no orange, so the team's is recoloured
+    # ([colour_blind] plates; colour_blind_plate)
+    team_bg_cb = ""
+    if team in cfg["colour_blind"]["plates"]:
+        light, dark = colour_blind_plate(cfg, team)
+        team_bg_cb = "\n" + colour_blind_states(
+            [f'ColorAdjustMode="Colorize" LightAdjustColor="{light}" DarkAdjustColor="{dark}"'],
+            ['ColorAdjustMode="None"'], 3).rstrip("\n")
     cell = "$parent/$parent"
     backing = lambda name, tex, rect, height: f"""
 			<Frame type="Image" name="{name}">{_anchors(rect, cell, chr(9) * 4)}
@@ -3881,7 +3953,7 @@ def hero_cell_template(team, c, cfg):
 		<Frame type="UnitTargetFrame" name="TargetHeroUnitFrame"><HitTestTexture val="#FCJH_PLATE_HIT_RED"/></Frame>"""
     return (f"\t{header}"
             + art("FCJH_FrameBg", "HUD_TopBar_Team_HeroFrame", 400)
-            + art("FCJH_TeamBg", f"HUD_TopBar_Team_HeroFrame_BG_{'Blue' if blue else 'Red'}", 401)
+            + art("FCJH_TeamBg", f"HUD_TopBar_Team_HeroFrame_BG_{'Blue' if blue else 'Red'}", 401, team_bg_cb)
             + common + death_skull(team, c) + pet_death_labels(team, c) + portrait
             + art("FCJH_Glass", "HUD_TopBar_Team_HeroFrame_Glass", 505)
             + health + "\n\t</Frame>\n")
@@ -4859,7 +4931,9 @@ def committed_files(cfg, source=SOURCE):
             {t: cfg["top_backplate"][f"{t}_colour"] for t in ("blue", "red")}
             | {"neutral": cfg["element"]["inspect"]["neutral_colour"]},   # the card's team edge
             (u(rects(cfg)["inspect"][0][0]), u(rects(cfg)["inspect"][0][1])), 1 / u.scale,   # its place, for pixel-exact lines
-            (*PLATES_AT, anchor_edges(cfg, "inspect")["t"])),   # where it's anchored, and its top from there
+            (*PLATES_AT, anchor_edges(cfg, "inspect")["t"]),   # where it's anchored, and its top from there
+            {t: colour_blind(cfg, cfg["top_backplate"][f"{t}_colour"], t) for t in ("blue", "red")},   # colour-blind mode
+            {t: colour_blind_plate(cfg, t) for t in cfg["colour_blind"]["plates"]}),
         LAYOUT_REL / MAPS_FILE: maps.layout(XML_DECL + "<Desc>\n" + GENERATED, PLATES_AT,
                                             {k: u(v) for k, v in panel_nudges(cfg).items()},
                                             minimap_bottoms(cfg),

@@ -1410,6 +1410,16 @@
 			<TextureCoords top="0.0" left="1.0" bottom="1.0" right="0.0"/>
 			<RenderPriority val="401"/>
 			<AcceptsMouse val="false"/>
+			<StateGroup name="FCJH_ColourBlind">
+				<DefaultState val="Off"/>
+				<State name="On">
+					<When type="Option" colorblind="True"/>
+					<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+				</State>
+				<State name="Off">
+					<Action type="SetProperty" ColorAdjustMode="None"/>
+				</State>
+			</StateGroup>
 		</Frame>
 		<Frame type="UnitTargetFrame" name="TargetHeroUnitFrame"><HitTestTexture val="#FCJH_PLATE_HIT_RED"/></Frame>
 		<Frame type="Frame" name="FCJH_DeathSkull">
@@ -4743,6 +4753,16 @@
 							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
 							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
 							<Texture val="@UI/obs_talents_highlight_red"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
 						</Frame>
@@ -5047,6 +5067,16 @@
 							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
 							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
 							<Texture val="@UI/obs_talents_highlight_red"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
 						</Frame>
@@ -5351,6 +5381,16 @@
 							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
 							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
 							<Texture val="@UI/obs_talents_highlight_red"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
 						</Frame>
@@ -5655,6 +5695,16 @@
 							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
 							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
 							<Texture val="@UI/obs_talents_highlight_red"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
 						</Frame>
@@ -5959,6 +6009,16 @@
 							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
 							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
 							<Texture val="@UI/obs_talents_highlight_red"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
 						</Frame>

@@ -98,6 +98,26 @@ STATS_LABEL_SHORT = BUFFS_SHORT + BUFF_H + PAD
 STATS_SHORT = STATS_LABEL_SHORT + 18
 H_SHORT = STATS_SHORT + 2 * STAT_ROW + STAT_H + PAD + EDGE
 TEAM = {}                          # the border's colours, "a,r,g,b" by team (and "neutral"): set by layout()
+CB_EDGE = {}                       # ...and blue's and red's in colour-blind mode: set by layout()
+CB_BORDER = {}                     # the talent squares' Colorize (light, dark) by team, colour-blind: set by layout()
+
+
+def colour_blind(on, off, i):
+    """A StateGroup on the game's colour-blind option, as gen.py's colour_blind_states (the
+    `on` SetProperty attributes while it's set, `off` putting them back), at this file's indent."""
+    act = lambda acts: "".join(f'{T*(i+2)}<Action type="SetProperty" {a}/>\n' for a in acts)
+    return (f'{T*i}<StateGroup name="FCJH_ColourBlind">\n{T*(i+1)}<DefaultState val="Off"/>\n'
+            f'{T*(i+1)}<State name="On">\n{T*(i+2)}<When type="Option" colorblind="True"/>\n' + act(on)
+            + f'{T*(i+1)}</State>\n{T*(i+1)}<State name="Off">\n' + act(off) + f'{T*(i+1)}</State>\n{T*i}</StateGroup>\n')
+
+
+def talent_border_cb(colour, i):
+    """The talent square's recolour in colour-blind mode, for the teams whose plates get one."""
+    if colour not in CB_BORDER:
+        return ""
+    light, dark = CB_BORDER[colour]
+    return colour_blind([f'ColorAdjustMode="Colorize" LightAdjustColor="{light}" DarkAdjustColor="{dark}"'],
+                        ['ColorAdjustMode="None"'], i)
 
 
 ORIGIN = (0, 0)   # the card's top-left on screen, in layout units: set by layout()
@@ -728,7 +748,7 @@ def player_pack(n):
         f'{T*7}<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>\n'
         f'{T*7}<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>\n'
         f'{T*7}<Texture val="@UI/obs_talents_highlight_{colour}"/>\n'
-        f'{T*7}<Unclipped val="true"/>\n{T*7}<AcceptsMouse val="false"/>\n{T*6}</Frame>\n'
+        f'{T*7}<Unclipped val="true"/>\n{T*7}<AcceptsMouse val="false"/>\n' + talent_border_cb(colour, 7) + f'{T*6}</Frame>\n'
         f'{T*6}<StateGroup name="FCJH_Picked">\n{T*7}<DefaultState val="No"/>\n'
         f'{T*7}<State name="Yes"><When type="AnimationState" frame="{tree}/HeroSelectedTalentTreeFrame/TalentTreeIcon{k}" TalentTierState="TierSelected"/>'
         f'<Action type="SetProperty" frame="$this" Alpha="255"/></State>\n'
@@ -1081,7 +1101,12 @@ def unit_team():
         + fill("FCJH_EdgeLeft", 0, 0, 0, line(0, 0, 1), colour, 690, 6, "Min", "Max")
         + fill("FCJH_EdgeRight", 0, -line(W, 0, -1), 0, 0, colour, 690, 6, "Max", "Max").replace(
             '<Anchor side="Left"   relative="$parent" pos="Min"', '<Anchor side="Left"   relative="$parent" pos="Max"')
+        + edge_cb(side)
         + f'{T*5}</Frame>\n')
+    # colour-blind mode: blue's and red's edges in the game's colour-blind colours (CB_EDGE)
+    edge_cb = lambda side: "" if side.lower() not in CB_EDGE else colour_blind(
+        *([f'frame="FCJH_Edge{e}" AdjustmentColor="{c}"' for e in ("Top", "Bottom", "Left", "Right")]
+          for c in (CB_EDGE[side.lower()], TEAM[side.lower()])), 6)
     band = NAME_BAND - SHIFT
     names = "".join(label(f"FCJH_Team{side}", band + NAME_DROP, M, band + NAME_H + NAME_DROP, -M, "FCJH_InspectSub",
                           words.ref(text), 5, "Max", f'{T*6}<Alpha val="0"/>\n')
@@ -1255,18 +1280,24 @@ FILE_HEADER = """
 """
 
 
-def layout(crop, head, team_colours, origin=(0, 0), px=0.9, holder=("$parent", "Min", "Min", 0)):
+def layout(crop, head, team_colours, origin=(0, 0), px=0.9, holder=("$parent", "Min", "Min", 0),
+           colour_blind_edge=None, colour_blind_border=None):
     """The whole layout file. crop: the plates' portrait crop (HeroCell.crop); head: the XML
     declaration, <Desc> and the generated-file banner; team_colours: {"blue": "rrggbb",
     "red": ..., "neutral": ...}, the border's (the plates' own blue and red; neutral, for
     anything of neither team, from layout.toml element.inspect); holder: what the card is
     anchored to - a frame, and the pos values across and down that its #FCJH_INSPECT_*
-    constants run from - and the card's top from there, in units."""
+    constants run from - and the card's top from there, in units. colour_blind_edge: the
+    edge's blue and red in colour-blind mode ("rrggbb"); colour_blind_border: {team: (light,
+    dark)}, the talent squares' recolour then (gen.py colour_blind_plate)."""
     global CROP, ORIGIN, PX, HOLDER, HOLDER_AT
     # the card's anchors run from the same pos and offsets, on the slot laid over the holder
     CROP, ORIGIN, PX, HOLDER, HOLDER_AT = crop, origin, px, (SLOT, *holder[1:]), holder[0]
     TEAM.update({team: "255," + ",".join(str(int(hex_[i:i + 2], 16)) for i in (0, 2, 4))
                  for team, hex_ in team_colours.items()})
+    CB_EDGE.update({team: "255," + ",".join(str(int(hex_[i:i + 2], 16)) for i in (0, 2, 4))
+                    for team, hex_ in (colour_blind_edge or {}).items()})
+    CB_BORDER.update(colour_blind_border or {})
     HEROES[:] = cached_heroes()
     return (head + FILE_HEADER + card() + unit() + "\t\t\t</Frame>\n\t\t</Frame>\n"
             + talent_tips() + command_panel()

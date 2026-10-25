@@ -580,6 +580,22 @@
 							<RenderPriority val="690"/>
 							<AcceptsMouse val="false"/>
 						</Frame>
+						<StateGroup name="FCJH_ColourBlind">
+							<DefaultState val="Off"/>
+							<State name="On">
+								<When type="Option" colorblind="True"/>
+								<Action type="SetProperty" frame="FCJH_EdgeTop" AdjustmentColor="255,92,170,236"/>
+								<Action type="SetProperty" frame="FCJH_EdgeBottom" AdjustmentColor="255,92,170,236"/>
+								<Action type="SetProperty" frame="FCJH_EdgeLeft" AdjustmentColor="255,92,170,236"/>
+								<Action type="SetProperty" frame="FCJH_EdgeRight" AdjustmentColor="255,92,170,236"/>
+							</State>
+							<State name="Off">
+								<Action type="SetProperty" frame="FCJH_EdgeTop" AdjustmentColor="255,92,188,236"/>
+								<Action type="SetProperty" frame="FCJH_EdgeBottom" AdjustmentColor="255,92,188,236"/>
+								<Action type="SetProperty" frame="FCJH_EdgeLeft" AdjustmentColor="255,92,188,236"/>
+								<Action type="SetProperty" frame="FCJH_EdgeRight" AdjustmentColor="255,92,188,236"/>
+							</State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Frame" name="FCJH_SideRed">
 						<Anchor relative="$parent"/>
@@ -629,6 +645,22 @@
 							<RenderPriority val="690"/>
 							<AcceptsMouse val="false"/>
 						</Frame>
+						<StateGroup name="FCJH_ColourBlind">
+							<DefaultState val="Off"/>
+							<State name="On">
+								<When type="Option" colorblind="True"/>
+								<Action type="SetProperty" frame="FCJH_EdgeTop" AdjustmentColor="255,231,164,92"/>
+								<Action type="SetProperty" frame="FCJH_EdgeBottom" AdjustmentColor="255,231,164,92"/>
+								<Action type="SetProperty" frame="FCJH_EdgeLeft" AdjustmentColor="255,231,164,92"/>
+								<Action type="SetProperty" frame="FCJH_EdgeRight" AdjustmentColor="255,231,164,92"/>
+							</State>
+							<State name="Off">
+								<Action type="SetProperty" frame="FCJH_EdgeTop" AdjustmentColor="255,231,92,121"/>
+								<Action type="SetProperty" frame="FCJH_EdgeBottom" AdjustmentColor="255,231,92,121"/>
+								<Action type="SetProperty" frame="FCJH_EdgeLeft" AdjustmentColor="255,231,92,121"/>
+								<Action type="SetProperty" frame="FCJH_EdgeRight" AdjustmentColor="255,231,92,121"/>
+							</State>
+						</StateGroup>
 					</Frame>
 					<Frame type="Frame" name="FCJH_SideNeutral">
 						<Anchor relative="$parent"/>
@@ -3083,6 +3115,16 @@
 							<Texture val="@UI/obs_talents_highlight_red"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -3107,6 +3149,16 @@
 							<Texture val="@UI/obs_talents_highlight_red"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -3131,6 +3183,16 @@
 							<Texture val="@UI/obs_talents_highlight_red"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -3155,6 +3217,16 @@
 							<Texture val="@UI/obs_talents_highlight_red"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -3179,6 +3251,16 @@
 							<Texture val="@UI/obs_talents_highlight_red"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -3203,6 +3285,16 @@
 							<Texture val="@UI/obs_talents_highlight_red"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -3227,6 +3319,16 @@
 							<Texture val="@UI/obs_talents_highlight_red"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -3462,6 +3564,16 @@
 							<Texture val="@UI/obs_talents_highlight_red"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -3486,6 +3598,16 @@
 							<Texture val="@UI/obs_talents_highlight_red"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -3510,6 +3632,16 @@
 							<Texture val="@UI/obs_talents_highlight_red"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -3534,6 +3666,16 @@
 							<Texture val="@UI/obs_talents_highlight_red"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -3558,6 +3700,16 @@
 							<Texture val="@UI/obs_talents_highlight_red"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -3582,6 +3734,16 @@
 							<Texture val="@UI/obs_talents_highlight_red"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -3606,6 +3768,16 @@
 							<Texture val="@UI/obs_talents_highlight_red"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -3841,6 +4013,16 @@
 							<Texture val="@UI/obs_talents_highlight_red"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -3865,6 +4047,16 @@
 							<Texture val="@UI/obs_talents_highlight_red"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -3889,6 +4081,16 @@
 							<Texture val="@UI/obs_talents_highlight_red"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -3913,6 +4115,16 @@
 							<Texture val="@UI/obs_talents_highlight_red"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -3937,6 +4149,16 @@
 							<Texture val="@UI/obs_talents_highlight_red"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -3961,6 +4183,16 @@
 							<Texture val="@UI/obs_talents_highlight_red"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -3985,6 +4217,16 @@
 							<Texture val="@UI/obs_talents_highlight_red"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -4220,6 +4462,16 @@
 							<Texture val="@UI/obs_talents_highlight_red"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -4244,6 +4496,16 @@
 							<Texture val="@UI/obs_talents_highlight_red"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -4268,6 +4530,16 @@
 							<Texture val="@UI/obs_talents_highlight_red"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -4292,6 +4564,16 @@
 							<Texture val="@UI/obs_talents_highlight_red"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -4316,6 +4598,16 @@
 							<Texture val="@UI/obs_talents_highlight_red"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -4340,6 +4632,16 @@
 							<Texture val="@UI/obs_talents_highlight_red"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -4364,6 +4666,16 @@
 							<Texture val="@UI/obs_talents_highlight_red"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -4599,6 +4911,16 @@
 							<Texture val="@UI/obs_talents_highlight_red"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -4623,6 +4945,16 @@
 							<Texture val="@UI/obs_talents_highlight_red"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -4647,6 +4979,16 @@
 							<Texture val="@UI/obs_talents_highlight_red"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -4671,6 +5013,16 @@
 							<Texture val="@UI/obs_talents_highlight_red"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -4695,6 +5047,16 @@
 							<Texture val="@UI/obs_talents_highlight_red"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -4719,6 +5081,16 @@
 							<Texture val="@UI/obs_talents_highlight_red"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -4743,6 +5115,16 @@
 							<Texture val="@UI/obs_talents_highlight_red"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>

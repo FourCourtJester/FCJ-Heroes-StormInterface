@@ -38,6 +38,10 @@ detail.
   - a pop-up for each talent picked;
   - a heal pop-up when a hero drops to 25%.
 - Blizzard's talent-lead flame, brought over from the player HUD.
+- The HUD keys taking our own pieces with them: Ctrl+E hides everything, Ctrl+Shift+E all
+  but the top plate, nothing left floating (built, not yet seen).
+- Colour-blind mode reaching our art: the top plate, red's plates and talent squares, the
+  inspect card's edge (built, not yet seen).
 - Four info panes, one at a time, on Ctrl+1-4.
 - An inspect card for observers, Blizzard's own command card on it.
 - Abathur's clone marked on the inspect card: the copied hero's face, Abathur's player, a
@@ -571,6 +575,18 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
   - Ctrl+E is also gamehotkeys' `ReplayRestart`, but Blizzard's layout key has always won it
     in the observer (`validate.py` `LAYOUT_OVER_HOTKEY`).
   - **Status:** built, not yet seen in game.
+
+- **Colour-blind mode stopped at Blizzard's own pieces** (user, 2026-10-24, from a vod;
+  built 2026-10-25). Blizzard's colour-blind option (`<When type="Option" colorblind="True"/>`)
+  turns red orange and blue cyan on its own UI (`ColorBlindColors`, `gameuidata.xml:1103`;
+  the minimap followed), but an interface's art keeps its colours, and Blizzard's observer
+  plate art has no orange version. Ours (`[colour_blind]`, gen.py `colour_blind_states()`):
+  - the top backplate and core fills swap to colour-blind textures, each colour keeping its
+    saturation and value and taking the colour-blind hue;
+  - red's plate art and talent squares are Colorized orange, as Blizzard's kill log
+    recolours its portrait borders;
+  - the inspect card's team edge takes the colour-blind colours.
+  - **Status:** built, not yet seen in game. The stat panes and row stripes aren't done.
 
 - **The player's death and respawn animations, on the observer plates** (test build ad48279,
   2026-10-16; approved 2026-10-18). The player's top bar (`partyframe.stormlayout`,

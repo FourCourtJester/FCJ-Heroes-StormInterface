@@ -42,6 +42,16 @@
 							<RenderPriority val="490"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">  <!-- the game's colour-blind option: layout.toml [colour_blind] -->
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" Texture="#FCJH_TOP_BACKPLATE_CB"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" Texture="#FCJH_TOP_BACKPLATE"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<!-- The talent-advantage flame (2026-09-29). The observer bar never
 						     had one; Blizzard's player top bar does (PartyFrame TeamLevelInfo), and the
@@ -229,6 +239,16 @@
 								<AlphaMaskTexture val="#FCJH_CORE_MASK_BLUE"/>
 								<ColorStyle val="AllWhite" index="0"/>
 								<Tiled val="false" index="0"/>
+								<StateGroup name="FCJH_ColourBlind">  <!-- the game's colour-blind option: layout.toml [colour_blind] -->
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" Texture="#FCJH_CORE_FILL_BLUE_CB"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" Texture="#FCJH_CORE_FILL_BLUE"/>
+									</State>
+								</StateGroup>
 							</Frame>
 						</Frame>
 						<Frame type="UnitStatusFrame" name="Team2CoreUnitStatus">
@@ -270,6 +290,16 @@
 								<AlphaMaskTexture val="#FCJH_CORE_MASK_RED"/>
 								<ColorStyle val="AllWhite" index="0"/>
 								<Tiled val="false" index="0"/>
+								<StateGroup name="FCJH_ColourBlind">  <!-- the game's colour-blind option: layout.toml [colour_blind] -->
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" Texture="#FCJH_CORE_FILL_RED_CB"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" Texture="#FCJH_CORE_FILL_RED"/>
+									</State>
+								</StateGroup>
 							</Frame>
 						</Frame>
 					</Frame>
