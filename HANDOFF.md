@@ -533,12 +533,15 @@ Likely an animation or state change that runs while hidden and never gets its "b
 portrait" step, but that is a guess until the video.
 
 **Alterac Pass: core markers on the core bar (user, 2026-10-24).** "We need to add alterac
-valley specific core markers to the core bar; they measure the lightspan of the three keeps
-as additional armor." The three keeps protect the core, so the bar should mark how much of
-it each keep accounts for, the way a shield segment reads. To find out from JamiePhan: what
-exactly the keeps give the core (armour, a shield, a health buffer) and how it is exposed
-to the UI, then mark it on the core bar for that map only (map id from load; see the
-map-specific memory).
+valley specific core markers to the core bar; they measure the lifespan of the three keeps
+as additional armor." The three keeps protect the core, and Blizzard marks each keep's share
+**on the core's own health bar** - the core is a raid boss on that map (user, 2026-10-24:
+"its probably not a UI thing; the keep health markers are on the core itself"; **to
+confirm**). So the markers may be the unit's own boss bar rather than anything in the UI
+layouts. To find out from JamiePhan: what the keeps give the core (armour per keep), where
+the markers are drawn (the unit's data, its boss health bar, or a UI frame we could copy),
+then mirror them on our core bar for that map only (map id from load; see the map-specific
+memory).
 
 **The official release filename (user, 2026-10-21): `FCJ v<version>.StormInterface`**
 (pack.py's `RELEASE_NAME`, from 1.0.1; 1.0.0 shipped as `FCJH.StormInterface`), in Ahli's
