@@ -579,6 +579,12 @@ the anchor or the saved position win?); and with the game closed, back up the fi
 delete the two lines (a "never dragged" player). Whatever they show, the guide gets a
 suggested place to drag it.
 
+**The XP bar as the core bar's companion (a suggestion, relayed by the user, 2026-10-24).**
+The team-long XP bar (`[team_xp]`, 8 px high, the row's ~546 px) is "too long". The idea: make
+it a companion to the core's health bar (213 x 24 px, at the row's inner end) - the remaining
+width, the same height - so shorter but taller, at the cost of a little height off the bottom
+bars. A before-and-after pair of screenshots first, to get more opinions.
+
 **Inspect on both sides:** one request so far (the 1.0.3 note above); screenshots from a dev
 build before deciding.
 
