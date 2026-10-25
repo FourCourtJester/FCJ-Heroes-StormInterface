@@ -518,6 +518,14 @@ anchors - and where a neutral unit's card goes (left, as now, unless told otherw
 mirror against the replay box (top-right) and red's map alerts, which the replay box was
 once narrowed to clear; the `--check`/validate overlap checks should catch a collision.
 
+**Done for 1.0.3, to see in game: the pause box moved (user, 2026-10-24: "if we can move
+the 'paused the game' notification, we should"; custom games are "99% of esports").** Blizzard's
+`SystemAlertPanel` ("X paused the game. (N remaining)", a purple box) sat at the top centre,
+over the logo plate and clock. Now under the centre banners, 10 px below, centred on 958.5:
+`layout.toml` `[element.system_alert]` (the user's pick of three: under the banners, under the
+clock, screen centre), the frame in `FCJH_TopBar`. Look untouched. Needs a custom game with a
+pause to see; docs/blizzard-fixes.md has it.
+
 **Bug from a streamer's cast (relayed by the user, 2026-10-24): an event icon sticks after
 hiding the UI.** Their words: "If I hide the UI and an event occurs in the bottom bar, the
 icon for the event stays and replaces the icon that would have been the hero icon." So a

@@ -319,7 +319,7 @@ ANCHORS = {
     # backplate. The OBS boxes go with it (the OBS package draws them from layout.toml's px).
     **{s: TOP_CENTRE for s in ("top_backplate", "logo_plate", "clock", "blue_pips", "blue_name", "blue_logo",
                                "blue_bans", "division", "event_logo", "red_pips", "red_name", "red_logo", "red_bans",
-                               "game_count", "centre_banners")},
+                               "game_count", "centre_banners", "system_alert")},
     **{s: "top_backplate" for s in ("blue_level", "red_level", "blue_talent_lead", "red_talent_lead")},
     # the rows sit either side of the minimap, bottom-centre, and so does all that's on them:
     # the cells, the XP and core bars (and the map alerts, the heroic tips and the row packer,

@@ -29,6 +29,7 @@ detail.
   off-centre.
 - The replay controls: a hide key that never worked, and the box losing its top when the
   timeline hides.
+- The pause box, drawn over the top bar's middle in every custom game.
 
 **Made: Blizzard never had it**
 - Hero plates built from the player's in-game top bar, with:
@@ -399,6 +400,16 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
   copy of Blizzard's toggle slides it in from the right.
 - **Status:** confirmed in game (user, 2026-10-16): the slide from the right, the box's top
   staying put with the timeline hidden, and the tab flush in the corner.
+
+### The pause box covers the top bar's middle
+- **Blizzard's:** "X paused the game. (N remaining)" (`UI/GamePausedMessage`) comes up in
+  `SystemAlertPanel`, a purple tooltip-style box 40 units from the top, centred
+  (`gameui.stormlayout:1241`) - over the clock and the logo where an observer's top bar keeps
+  them. Players see it only in custom games, but that is nearly every esports match (user,
+  2026-10-24, from a streamer's cast). Ahli moves the same panel.
+- **Ours:** Blizzard's own box, moved to under the centre banners, centred on our 958.5
+  (`layout.toml` `[element.system_alert]`, `FCJH_TopBar`). Its look is untouched.
+- **Status:** not yet seen in game.
 
 ## Made for observers
 

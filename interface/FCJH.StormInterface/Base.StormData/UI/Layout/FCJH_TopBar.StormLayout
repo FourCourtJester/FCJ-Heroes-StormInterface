@@ -309,6 +309,16 @@
 						<Frame type="TeamScoreValueFrame" name="TeamKillsValueFrame" template="FCJH_HeroRow/FCJH_Parked"/>
 					</Frame>
 				</Frame>
+
+				<!-- The pause box: Blizzard's own ("X paused the game. (N remaining)", custom games),
+				     moved off the logo plate and clock to under the centre banners (layout.toml
+				     system_alert; user, 2026-10-24). Ahli moves the same panel. -->
+				<Frame type="SystemAlertPanel" name="SystemAlertPanel">
+					<Anchor side="Top"    relative="$GameUI" pos="Min" offset="#FCJH_SYSTEM_ALERT_T"/>
+					<Anchor side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_SYSTEM_ALERT_L"/>
+					<Anchor side="Bottom" relative="$GameUI" pos="Min" offset="#FCJH_SYSTEM_ALERT_B"/>
+					<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_SYSTEM_ALERT_R"/>
+				</Frame>
 			</Frame>
 		</Frame>
 	</Frame>
