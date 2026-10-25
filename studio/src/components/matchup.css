@@ -155,6 +155,15 @@
   --lattice-fade: linear-gradient(to right, rgb(0 0 0 / 0.7), rgb(0 0 0 / 0.25) 50%, rgb(0 0 0 / 0.4));
 }
 
+/* colour-blind mode (colourBlind.js): MatchupBand sets the team colours, this the lattices */
+.fcjh-matchup.cb .fcjh-matchup-team.blue {
+  --lattice: url('../generated/lattice_blue_cb.svg');
+}
+
+.fcjh-matchup.cb .fcjh-matchup-team.red {
+  --lattice: url('../generated/lattice_red_cb.svg');
+}
+
 .fcjh-matchup-team::before {
   content: '';
   position: absolute;

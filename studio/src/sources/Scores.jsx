@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { Transition, useVelcroValue } from '@single-studio/core'
 import { Image, Scene, Variable } from '@single-studio/core/source'
 
+import { COLOUR_BLIND_VARS, useColourBlind } from '../components/colourBlind'
 import spec from '../generated/scores.json'
 import './scores.css'
 
@@ -179,9 +180,11 @@ function Marks() {
 }
 
 export default function Scores() {
+  // colour-blind mode: the winner's glow in the game's colour-blind pair
+  const cb = useColourBlind()
   return (
     <Scene width={SCREEN_W} height={SCREEN_H}>
-      <div className="fcjh-scores" style={SCENE_VARS}>
+      <div className="fcjh-scores" style={cb ? { ...SCENE_VARS, ...COLOUR_BLIND_VARS } : SCENE_VARS}>
         {/* Four windows on one sky, rather than one shape with a hole in it. A hole wants
             `evenodd`, which is one more thing to be true in whatever CEF a given OBS ships.
             Each piece is clipped to its own band and holds a full-screen sky pushed back to

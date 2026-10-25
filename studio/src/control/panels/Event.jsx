@@ -54,6 +54,7 @@ export default function Event() {
         <Toggle name="corner.broadcaster" label="Broadcaster corner" />
         <Toggle name="tournament" label="Hex logo" />
         <Toggle name="corner.tournament" label="Tournament corner" />
+        <Toggle name="colourblind" label="Colour-blind colours" />
       </Row>
 
       {/* the rule and its heading wear the Panel title's own classes, so the section reads

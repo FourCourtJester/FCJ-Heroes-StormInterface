@@ -589,8 +589,15 @@ normal values back, as SetProperty persists:
 
 Not done (follow-ups): the stat panes' TEAMS bands and red value styles (`FCJH_StatValue_Red`,
 swapped by the lead animations, so invasive), the row stripes, the red death timers. Glows
-are Blizzard's own. Test with Rexxar's and the Vikings' slices in it. The studio half (an
-opt-in toggle on the control board, as OBS can't read the game's options) is next.
+are Blizzard's own. Test with Rexxar's and the Vikings' slices in it.
+
+**The studio half, done for 1.1 (checked in a browser, not yet in OBS):** OBS can't read the
+game's options, so it's the operator's toggle, **Tournament → Colour-blind colours**
+(`toggles.colourblind`). `tools/obs.py` `colour_blind_files()` writes `colourblind.json` from
+the same `gen.colour_blind_cfg`, and `_cb` twins of every SVG with a team colour (frames'
+team line, lattices, pips); `studio/src/components/colourBlind.js` is the one hook. The game
+bar, the matchup band (standby, draft) and the scores glow switch; the matchup slab doesn't
+yet (studio/README "Colour-blind colours").
 
 **Quest progress: what the other UIs show (vod, 2026-10-24).** Valla's Creed of the Hunter
 seemed to show no buff and no stack counter on its talent's tooltip - the user then found it

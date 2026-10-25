@@ -3,11 +3,14 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useVelcroValue } from '@single-studio/core'
 import { Image, Scene, Tally, Toggle, Variable } from '@single-studio/core/source'
 
+import { COLOUR_BLIND, useColourBlind } from '../components/colourBlind'
 import spec from '../generated/topbar.json'
 import './game.css'
 import pipBlue from '../generated/pip_blue.svg'
+import pipBlueCb from '../generated/pip_blue_cb.svg'
 import pipEmpty from '../generated/pip_empty.svg'
 import pipRed from '../generated/pip_red.svg'
+import pipRedCb from '../generated/pip_red_cb.svg'
 
 // The game scene: what the broadcast draws over a live match. Today that is the top bar - the
 // plates over the interface's own, and the data on them - and it is where anything else that
@@ -28,6 +31,7 @@ import pipRed from '../generated/pip_red.svg'
 const { boxes, clip, colours, name_plate: plate, tabs } = spec
 const SIDES = ['blue', 'red']
 const PIP = { blue: pipBlue, red: pipRed }
+const PIP_CB = { blue: pipBlueCb, red: pipRedCb }   // colour-blind mode's
 const [SCREEN_W, SCREEN_H] = spec.screen
 
 // "#5cbcec" -> "92 188 236", so game.css can say rgb(var(--team-rgb) / .58)
@@ -63,11 +67,12 @@ const at = ([x, y, width, height]) => ({ left: x, top: y, width, height })
 /** A team's name plate, with its logo plate when the tournament has logos. */
 function Band({ side }) {
   const logo = useVelcroValue(`variables.${side}.logo`)
+  const team = (useColourBlind() ? COLOUR_BLIND : colours)[side]
   const [left, , width] = boxes.band[side]
   return (
     <div
       className={`fcjh-band ${side}`}
-      style={{ left, width, '--team-rgb': rgbOf(colours[side]), '--logo-clip': clip.logo[side] }}
+      style={{ left, width, '--team-rgb': rgbOf(team), '--logo-clip': clip.logo[side] }}
     >
       <div className="fcjh-name">
         <Variable name={`${side}.name`} fallback="" fit />
@@ -87,11 +92,12 @@ function Band({ side }) {
  * leaves the far end of the row empty.
  */
 function Pips({ side }) {
+  const cb = useColourBlind()
   return (
     <Tally
       name={`${side}.wins`}
       of="series.pips"
-      src={PIP[side]}
+      src={(cb ? PIP_CB : PIP)[side]}
       empty={pipEmpty}
       alt=""
       className={`fcjh-pips ${side}`}
@@ -246,9 +252,10 @@ function useReady(wait = 600) {
 
 export default function Game() {
   const ready = useReady()
+  const cb = useColourBlind()
   return (
     <Scene width={SCREEN_W} height={SCREEN_H}>
-      <div className={`fcjh-scene${ready ? ' ready' : ''}`} style={SCENE_VARS}>
+      <div className={`fcjh-scene${ready ? ' ready' : ''}${cb ? ' cb' : ''}`} style={SCENE_VARS}>
         {/* order is paint order: the tabs and the pips slide out from UNDER the bands, so
             they are drawn first and the bands cover them until they arrive */}
         <Tabs />

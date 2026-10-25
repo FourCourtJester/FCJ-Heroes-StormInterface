@@ -827,6 +827,24 @@ def files(cfg):
         out[Path(f"lattice_{team}.svg")] = enc(lattice_svg(b, team))
         out[Path(f"pip_{team}.svg")] = enc(pip_svg(b, b.team[team], 1, True))
         out[Path(f"ban_{team}.svg")] = enc(ban_tile_svg(b, team))
+    out.update(colour_blind_files(cfg))
+    return out
+
+
+def colour_blind_files(cfg):
+    """The colour-blind toggle's parts: the two team colours as the interface turns them when
+    the game's colour-blind option is set (gen.colour_blind_cfg, from Blizzard's own pair), and
+    every SVG that carries a team colour redrawn in them. OBS can't read the game's options, so
+    the studio switches to these on the operator's toggle (user, 2026-10-25). The logo frame
+    carries no team colour, and the ban tiles only the rim, so neither needs a second copy."""
+    cb = Band(gen.colour_blind_cfg(cfg))
+    enc = lambda s: s.encode("utf-8")
+    out = {Path("colourblind.json"): enc(json.dumps(
+        {"colours": {"blue": cb.team["blue"], "red": cb.team["red"]}}, indent=2) + "\n")}
+    for team in ("blue", "red"):
+        out[Path(f"frame_{team}_cb.svg")] = enc(frame_svg(cb, team))
+        out[Path(f"lattice_{team}_cb.svg")] = enc(lattice_svg(cb, team))
+        out[Path(f"pip_{team}_cb.svg")] = enc(pip_svg(cb, cb.team[team], 1, True))
     return out
 
 

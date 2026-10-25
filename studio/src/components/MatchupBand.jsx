@@ -1,6 +1,7 @@
 import { useVelcroValue } from '@single-studio/core'
 import { Image, Variable } from '@single-studio/core/source'
 
+import { COLOUR_BLIND_VARS, useColourBlind } from './colourBlind'
 import spec from '../generated/standby.json'
 import './matchup.css'
 
@@ -62,9 +63,11 @@ export default function MatchupBand({ plate: plateContent }) {
   const wide = useVelcroValue('variables.event.logo_wide')
   const square = useVelcroValue('variables.event.logo')
   const tournament = wide ? 'event.logo_wide' : square ? 'event.logo' : ''
+  // colour-blind mode: the team colours, and (matchup.css) the lattices, in the game's pair
+  const cb = useColourBlind()
 
   return (
-    <div className="fcjh-matchup">
+    <div className={`fcjh-matchup${cb ? ' cb' : ''}`} style={cb ? COLOUR_BLIND_VARS : undefined}>
       {/* the board first, so the containers sit over it as the old one had them */}
       <div className="fcjh-matchup-plate">{plateContent}</div>
 

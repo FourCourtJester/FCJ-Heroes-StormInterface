@@ -111,6 +111,16 @@
   --lattice-fade: linear-gradient(to right, rgb(0 0 0 / 0.7), rgb(0 0 0 / 0.25) 50%, rgb(0 0 0 / 0.4));
 }
 
+/* colour-blind mode (components/colourBlind.js): the same art in the interface's colour-blind
+   team colours */
+.cb .fcjh-band.blue {
+  --lattice: url('../generated/lattice_blue_cb.svg');
+}
+
+.cb .fcjh-band.red {
+  --lattice: url('../generated/lattice_red_cb.svg');
+}
+
 /* ── the two plates on it ──────────────────────────────────────────────────────────────
    The name takes what the logo leaves. The logo laps back over the name by the slant plus a
    rim so the two rims land on each other and read as one seam. */
@@ -206,6 +216,14 @@
 
 .red .fcjh-name::after {
   border-image-source: url('../generated/frame_red.svg');
+}
+
+.cb .blue .fcjh-name::after {
+  border-image-source: url('../generated/frame_blue_cb.svg');
+}
+
+.cb .red .fcjh-name::after {
+  border-image-source: url('../generated/frame_red_cb.svg');
 }
 
 /* the logo plate takes the same frame without the team line: a bar of team colour under a

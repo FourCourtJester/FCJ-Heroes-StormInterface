@@ -554,6 +554,29 @@ raw material is there if we want it: `storm_ui_home_nexus_lightning1-4.dds` (648
 frames, so it wants stepping rather than tweening) and `storm_ui_home_nexus_fx_tilelighting.dds`
 (1812 x 304, a sweep along the floor), both under `references/`.
 
+## Colour-blind colours
+
+The game's colour-blind option turns the interface's red a peachy orange and its blue a touch
+cyan (HANDOFF, the in-game half). A browser source can't read the game's options, so the
+operator says: **Tournament → Colour-blind colours** (user, 2026-10-25). Off is the resting
+state.
+
+- **The colours are the interface's own.** `tools/obs.py` writes
+  `src/generated/colourblind.json` with the same rule the interface uses
+  (`gen.colour_blind_cfg`: each team colour keeps its saturation and value and takes the hue
+  of Blizzard's colour-blind pair), so OBS and the game can't disagree.
+- **The art that carries a team colour has a `_cb` twin** there too: `frame_{team}_cb.svg`
+  (the team line), `lattice_{team}_cb.svg` and `pip_{team}_cb.svg`. The logo frame and the
+  ban tiles carry no team colour and have none.
+- **One hook**, `src/components/colourBlind.js`: `useColourBlind()` reads
+  `toggles.colourblind` (a `Toggle` writes to `toggles`, so it goes to air without a save).
+  A scene root wears `cb` while it is on, and its stylesheet swaps the URLs; the washes and
+  glows come from `COLOUR_BLIND` / `COLOUR_BLIND_VARS` in place of the spec's colours.
+- **Covered:** the game bar (plates, lattices, team lines, pips), the matchup band on standby
+  and the draft, the scores screen's winner glow. **Not yet:** the matchup slab
+  (`MatchupSlab.jsx`), and the board's own lit Winner buttons (`fcjh-won`), which are the
+  operator's, not the broadcast's.
+
 ## If the board comes up unstyled
 
 Serif text, no dark theme, buttons as bare words — or any rule of yours that measures as
