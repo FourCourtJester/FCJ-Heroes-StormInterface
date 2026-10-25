@@ -23,8 +23,8 @@ detail.
 - Towers of Doom's town captures, invisible to the free observer view.
 - Dragon Shire's Dragon Knight and Garden of Terror's Terrors, which didn't say (or said
   wrongly) whose they were.
-- Alterac Pass: the cage's hexagon lighting one team when both capture, and the camp alerts
-  in a player's words.
+- Alterac Pass: the cage's hexagon lighting one team when both capture, the camp alerts
+  in a player's words, and the keeps' shields missing from the observer's core bars.
 - Tomb of the Spider Queen's minimap and Battlefield of Eternity's Immortals fight, drawn
   off-centre.
 - The replay controls: a hide key that never worked, and the box losing its top when the
@@ -343,6 +343,17 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
   their pulsing glows draw over Blizzard's darkened half: same textures, team colours and pulse.
   Copies, so nothing fights Blizzard's own state for the hexagon (`maps.av_both_lit`; 2bcea1d).
 - **Status:** confirmed in game (user, 2026-10-14: "You even fixed the blizzard logic").
+
+### Alterac Pass: the keeps' shields missing from the observer's core bars
+- **Blizzard's:** each keep standing gives its core armour, and Blizzard marks the count with
+  three shield pips on the core's health bar that empty as keeps fall
+  (alteracmechanics.stormlayout, on the map's `SourceHas{3,2,1,0}WarchiefsAlive` validators).
+  The map adds them to the player HUD's core bars and the in-world core only, so the observer's
+  top-panel core bars never show how many keeps are left.
+- **Ours:** Blizzard's shields, art and validators on both our core bars, centred, the inner one
+  emptying first; hidden on every other map, as the validators only exist on Alterac
+  (`FCJH_AVKeeps`, FCJH_TopBar.StormLayout).
+- **Status:** built, not yet seen in game.
 
 ### Alterac Pass: camp alerts in a player's words on the observer's screen
 - **Blizzard's:** the prisoner-camp alerts are sent to observers too, but in a player's words:

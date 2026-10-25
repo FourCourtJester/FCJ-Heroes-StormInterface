@@ -24,6 +24,40 @@
 	         Blizzard's frame art around both is hidden, and the XP fill art (a thin glowing
 	         line drawn for a 156 x 17 box) replaced. The core bar keeps Blizzard's size and
 	         its show-when-needed logic. -->
+	<!-- Alterac Pass's keep shield on our core bars (Team1/2CoreUnitStatus below): Blizzard's
+	     BossHealthBarShieldTemplate (alteracmechanics.stormlayout), its art and size, centred on
+	     the bar's height; the inside takes the core's team colour as Blizzard's. Hidden until
+	     FCJH_AVKeeps shows it. -->
+	<Frame type="Frame" name="FCJH_AVShieldTemplate">
+		<Anchor side="Top" relative="$parent/HealthBar" pos="Mid" offset="0"/>
+		<Anchor side="Bottom" relative="$parent/HealthBar" pos="Mid" offset="0"/>
+		<Width val="28"/>
+		<Height val="28"/>
+		<Unclipped val="true"/>
+		<RenderPriority val="600"/>  <!-- over the bar's chrome (520) -->
+		<AcceptsMouse val="false"/>
+		<Visible val="false"/>
+		<Frame type="Image" name="ShieldBG">
+			<Anchor relative="$parent"/>
+			<Texture val="@UI/Storm_UI_HUD_WCAV_HealthBarShield"/>
+			<SubpixelRendering val="true"/>
+			<AcceptsMouse val="false"/>
+		</Frame>
+		<Frame type="Image" name="ShieldInside">
+			<Anchor side="Top" relative="$parent/ShieldBG" pos="Mid" offset="0"/>
+			<Anchor side="Bottom" relative="$parent/ShieldBG" pos="Mid" offset="0"/>
+			<Anchor side="Left" relative="$parent/ShieldBG" pos="Mid" offset="0"/>
+			<Anchor side="Right" relative="$parent/ShieldBG" pos="Mid" offset="0"/>
+			<Width val="16"/>
+			<Height val="16"/>
+			<Texture val="@UI/Storm_UI_HUD_WCAV_HealthBarShieldInside"/>
+			<SubpixelRendering val="true"/>
+			<ColorAdjustMode val="Colorize"/>
+			<LightAdjustColor val="{$parent/$parent/FCJH_TeamColourLight/@Color}"/>
+			<DarkAdjustColor val="{$parent/$parent/FCJH_TeamColour/@Color}"/>
+			<AcceptsMouse val="false"/>
+		</Frame>
+	</Frame>
 	<Frame type="GameUI" name="GameUI" file="GameUI">
 		<Frame type="Frame" name="UIContainer">
 			<Frame type="Frame" name="FullscreenUpperContainer">
@@ -250,6 +284,71 @@
 									</State>
 								</StateGroup>
 							</Frame>
+							<!-- Alterac Pass: the keeps' shields (Blizzard's, alteracmechanics.stormlayout
+							     HealthBarShieldContainerTemplate), which Blizzard's map gives only the player
+							     HUD's core bars. Each keep alive is a WarchiefAlive stack on the core (armour);
+							     the map's own validators count them, the insides empty as keeps fall (3 -> 0).
+							     Hidden until a count state fires, which only happens on Alterac (Ahli 0.75's
+							     way: the validators and art exist only there). Centred on the bar. -->
+							<Frame type="UnitStatusColor" name="FCJH_TeamColour"><Anchor relative="$parent"/><ColorStyle val="Primary"/></Frame>
+							<Frame type="UnitStatusColor" name="FCJH_TeamColourLight"><Anchor relative="$parent"/><ColorStyle val="PrimaryLight"/></Frame>
+							<Frame type="Frame" name="FCJH_AVShield2" template="FCJH_TopBar/FCJH_AVShieldTemplate">
+								<Anchor side="Left" relative="$parent/HealthBar" pos="Mid" offset="0"/>
+								<Anchor side="Right" relative="$parent/HealthBar" pos="Mid" offset="0"/>
+							</Frame>
+							<Frame type="Frame" name="FCJH_AVShield1" template="FCJH_TopBar/FCJH_AVShieldTemplate">
+								<Anchor side="Right" relative="$parent/FCJH_AVShield2" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="Frame" name="FCJH_AVShield3" template="FCJH_TopBar/FCJH_AVShieldTemplate">
+								<Anchor side="Left" relative="$parent/FCJH_AVShield2" pos="Max" offset="0"/>
+							</Frame>
+							<Frame type="UnitStatusValidatorAnimElement" name="FCJH_AVKeeps">
+								<Anchor relative="$parent"/>
+								<Validator val="SourceHas3WarchiefsAlive"/>
+								<Validator val="SourceHas2WarchiefsAlive"/>
+								<Validator val="SourceHas1WarchiefsAlive"/>
+								<Validator val="SourceHas0WarchiefsAlive"/>
+								<StateGroup name="FCJH_KeepsAlive">
+									<DefaultState val="Other"/>
+									<State name="3Alive">
+										<When type="AnimationState" UnitStatusValidatorState="SourceHas3WarchiefsAlive"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield1" Visible="True" undo="false"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield2" Visible="True" undo="false"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield3" Visible="True" undo="false"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield1/ShieldInside" Visible="True"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield2/ShieldInside" Visible="True"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield3/ShieldInside" Visible="True"/>
+									</State>
+									<State name="2Alive">
+										<When type="AnimationState" UnitStatusValidatorState="SourceHas2WarchiefsAlive"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield1" Visible="True" undo="false"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield2" Visible="True" undo="false"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield3" Visible="True" undo="false"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield1/ShieldInside" Visible="True"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield2/ShieldInside" Visible="True"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield3/ShieldInside" Visible="False"/>
+									</State>
+									<State name="1Alive">
+										<When type="AnimationState" UnitStatusValidatorState="SourceHas1WarchiefsAlive"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield1" Visible="True" undo="false"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield2" Visible="True" undo="false"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield3" Visible="True" undo="false"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield1/ShieldInside" Visible="True"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield2/ShieldInside" Visible="False"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield3/ShieldInside" Visible="False"/>
+									</State>
+									<State name="0Alive">
+										<When type="AnimationState" UnitStatusValidatorState="SourceHas0WarchiefsAlive"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield1" Visible="True" undo="false"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield2" Visible="True" undo="false"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield3" Visible="True" undo="false"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield1/ShieldInside" Visible="False"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield2/ShieldInside" Visible="False"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield3/ShieldInside" Visible="False"/>
+									</State>
+									<State name="Other"/>
+								</StateGroup>
+							</Frame>
 						</Frame>
 						<Frame type="UnitStatusFrame" name="Team2CoreUnitStatus">
 							<Anchor side="Top"  relative="$GameUI" pos="Max" offset="#FCJH_RED_CORE_FRAME_T"/>
@@ -299,6 +398,71 @@
 									<State name="Off">
 										<Action type="SetProperty" Texture="#FCJH_CORE_FILL_RED"/>
 									</State>
+								</StateGroup>
+							</Frame>
+							<!-- Alterac Pass: the keeps' shields (Blizzard's, alteracmechanics.stormlayout
+							     HealthBarShieldContainerTemplate), which Blizzard's map gives only the player
+							     HUD's core bars. Each keep alive is a WarchiefAlive stack on the core (armour);
+							     the map's own validators count them, the insides empty as keeps fall (3 -> 0).
+							     Hidden until a count state fires, which only happens on Alterac (Ahli 0.75's
+							     way: the validators and art exist only there). Centred on the bar. -->
+							<Frame type="UnitStatusColor" name="FCJH_TeamColour"><Anchor relative="$parent"/><ColorStyle val="Primary"/></Frame>
+							<Frame type="UnitStatusColor" name="FCJH_TeamColourLight"><Anchor relative="$parent"/><ColorStyle val="PrimaryLight"/></Frame>
+							<Frame type="Frame" name="FCJH_AVShield2" template="FCJH_TopBar/FCJH_AVShieldTemplate">
+								<Anchor side="Left" relative="$parent/HealthBar" pos="Mid" offset="0"/>
+								<Anchor side="Right" relative="$parent/HealthBar" pos="Mid" offset="0"/>
+							</Frame>
+							<Frame type="Frame" name="FCJH_AVShield1" template="FCJH_TopBar/FCJH_AVShieldTemplate">
+								<Anchor side="Left" relative="$parent/FCJH_AVShield2" pos="Max" offset="0"/>
+							</Frame>
+							<Frame type="Frame" name="FCJH_AVShield3" template="FCJH_TopBar/FCJH_AVShieldTemplate">
+								<Anchor side="Right" relative="$parent/FCJH_AVShield2" pos="Min" offset="0"/>
+							</Frame>
+							<Frame type="UnitStatusValidatorAnimElement" name="FCJH_AVKeeps">
+								<Anchor relative="$parent"/>
+								<Validator val="SourceHas3WarchiefsAlive"/>
+								<Validator val="SourceHas2WarchiefsAlive"/>
+								<Validator val="SourceHas1WarchiefsAlive"/>
+								<Validator val="SourceHas0WarchiefsAlive"/>
+								<StateGroup name="FCJH_KeepsAlive">
+									<DefaultState val="Other"/>
+									<State name="3Alive">
+										<When type="AnimationState" UnitStatusValidatorState="SourceHas3WarchiefsAlive"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield1" Visible="True" undo="false"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield2" Visible="True" undo="false"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield3" Visible="True" undo="false"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield1/ShieldInside" Visible="True"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield2/ShieldInside" Visible="True"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield3/ShieldInside" Visible="True"/>
+									</State>
+									<State name="2Alive">
+										<When type="AnimationState" UnitStatusValidatorState="SourceHas2WarchiefsAlive"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield1" Visible="True" undo="false"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield2" Visible="True" undo="false"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield3" Visible="True" undo="false"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield1/ShieldInside" Visible="True"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield2/ShieldInside" Visible="True"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield3/ShieldInside" Visible="False"/>
+									</State>
+									<State name="1Alive">
+										<When type="AnimationState" UnitStatusValidatorState="SourceHas1WarchiefsAlive"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield1" Visible="True" undo="false"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield2" Visible="True" undo="false"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield3" Visible="True" undo="false"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield1/ShieldInside" Visible="True"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield2/ShieldInside" Visible="False"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield3/ShieldInside" Visible="False"/>
+									</State>
+									<State name="0Alive">
+										<When type="AnimationState" UnitStatusValidatorState="SourceHas0WarchiefsAlive"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield1" Visible="True" undo="false"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield2" Visible="True" undo="false"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield3" Visible="True" undo="false"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield1/ShieldInside" Visible="False"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield2/ShieldInside" Visible="False"/>
+										<Action type="SetProperty" frame="$parent/FCJH_AVShield3/ShieldInside" Visible="False"/>
+									</State>
+									<State name="Other"/>
 								</StateGroup>
 							</Frame>
 						</Frame>

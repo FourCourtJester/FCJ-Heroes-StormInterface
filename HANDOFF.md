@@ -634,16 +634,23 @@ bars. A before-and-after pair of screenshots first, to get more opinions.
 **Inspect on both sides:** one request so far (the 1.0.3 note above); screenshots from a dev
 build before deciding.
 
-**Alterac Pass: core markers on the core bar (user, 2026-10-24).** "We need to add alterac
-valley specific core markers to the core bar; they measure the lifespan of the three keeps
-as additional armor." The three keeps protect the core, and Blizzard marks each keep's share
-**on the core's own health bar** - the core is a raid boss on that map (user, 2026-10-24:
-"its probably not a UI thing; the keep health markers are on the core itself"; **to
-confirm**). So the markers may be the unit's own boss bar rather than anything in the UI
-layouts. To find out from JamiePhan: what the keeps give the core (armour per keep), where
-the markers are drawn (the unit's data, its boss health bar, or a UI frame we could copy),
-then mirror them on our core bar for that map only (map id from load; see the map-specific
-memory).
+**Alterac Pass: the keeps' shields on the core bars - built, to see in game (user,
+2026-10-24/25).** Each keep alive is one `WarchiefAlive` stack on its team's core (coregeneraldata
+`WarchiefAlive`, armour 20 a stack, max 3; the map's script adds one per keep at the gates and
+takes one off as each keep's town hall falls) - so the count is keeps **alive**, 3 -> 0, not
+reversed. Blizzard draws it as three shield pips on the core's bar (alteracmechanics.stormlayout
+`HealthBarShieldContainerTemplate`, `@UI/Storm_UI_HUD_WCAV_HealthBarShield(Inside)`, the map's
+own `SourceHas{3,2,1,0}WarchiefsAlive` validators), but only on the player HUD's core bars and
+the in-world core, never the observer's top-panel cores. Ours, in FCJH_TopBar.StormLayout
+(hand-written): Blizzard's template copied as `FCJH_AVShieldTemplate`, three on each core frame
+(`FCJH_AVShield1-3`), centred on the bar, shield 3 at the inner end (toward the minimap)
+emptying first, the insides in the core's UnitStatusColor Primary / PrimaryLight as Blizzard's;
+`FCJH_AVKeeps` (a UnitStatusValidatorAnimElement on the four validators) shows them and sets the
+insides. Hidden until a count state fires, which only happens on Alterac - Ahli 0.75's way in an
+every-map interface (its `CoreOverviewTemplate`, `undo="false"` on the show). **Check:** the
+shields on Alterac only and no errors on other maps; they empty one by one as keeps fall, on the
+right team; the colour against our bar (Primary may not be quite our `[team_core]`); sitting
+over the bar's middle; before the gates open the count may read 0 (three empty shields).
 
 **The official release filename (user, 2026-10-21): `FCJ v<version>.StormInterface`**
 (pack.py's `RELEASE_NAME`, from 1.0.1; 1.0.0 shipped as `FCJH.StormInterface`), in Ahli's
