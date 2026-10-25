@@ -518,6 +518,24 @@ anchors - and where a neutral unit's card goes (left, as now, unless told otherw
 mirror against the replay box (top-right) and red's map alerts, which the replay box was
 once narrowed to clear; the `--check`/validate overlap checks should catch a collision.
 
+**Bug from a streamer's cast (relayed by the user, 2026-10-24): an event icon sticks after
+hiding the UI.** Their words: "If I hide the UI and an event occurs in the bottom bar, the
+icon for the event stays and replaces the icon that would have been the hero icon." So a
+plate's portrait is overwritten by an event's icon (a death, a respawn, whatever the plate
+shows) that fired while the UI was hidden, and it never clears. **A video of the cast is
+coming** - wait for it before guessing: it should show which event, which hide (our
+hotkeys or the game's own), and whether showing the UI again or the next event clears it.
+Likely an animation or state change that runs while hidden and never gets its "back to the
+portrait" step, but that is a guess until the video.
+
+**Alterac Pass: core markers on the core bar (user, 2026-10-24).** "We need to add alterac
+valley specific core markers to the core bar; they measure the lightspan of the three keeps
+as additional armor." The three keeps protect the core, so the bar should mark how much of
+it each keep accounts for, the way a shield segment reads. To find out from JamiePhan: what
+exactly the keeps give the core (armour, a shield, a health buffer) and how it is exposed
+to the UI, then mark it on the core bar for that map only (map id from load; see the
+map-specific memory).
+
 **The official release filename (user, 2026-10-21): `FCJ v<version>.StormInterface`**
 (pack.py's `RELEASE_NAME`, from 1.0.1; 1.0.0 shipped as `FCJH.StormInterface`), in Ahli's
 style (`AhliObs 0.75`; spaces load fine, Spazzo's is `SpazzoObsv40`). `--release --deploy`
