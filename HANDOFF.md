@@ -523,8 +523,12 @@ hiding the UI.** Their words: "If I hide the UI and an event occurs in the botto
 icon for the event stays and replaces the icon that would have been the hero icon." So a
 plate's portrait is overwritten by an event's icon (a death, a respawn, whatever the plate
 shows) that fired while the UI was hidden, and it never clears. **A video of the cast is
-coming** - wait for it before guessing: it should show which event, which hide (our
-hotkeys or the game's own), and whether showing the UI again or the next event clears it.
+coming** - wait for it before guessing: it should show which event, and whether showing the
+UI again or the next event clears it. **The hide is Ctrl+E** (user, 2026-10-24: "apparently").
+Not ours - nothing in `interface/` binds it - and not in Blizzard's default hotkeys either
+(JamiePhan: Ctrl+E is `ReplayRestart`; the hides are `ToggleWorldPanel` Ctrl+W and
+`ReplayHide` Ctrl+T), so it is likely the streamer's own binding; the video should say which
+command it is.
 Likely an animation or state change that runs while hidden and never gets its "back to the
 portrait" step, but that is a guess until the video.
 
