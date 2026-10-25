@@ -624,7 +624,7 @@ def constants_layout(cfg):
     lines.append("")
     const(name("replay", "button", "gap"), gap, "between the replay panel's bottom-row buttons")
     const(name("replay", "key"), cfg["toggles"]["replay"], "hides/shows the replay panel")
-    for key in ("chat", "inspect", "names"):
+    for key in ("chat", "inspect", "names", "hud", "hud_lower"):
         const(name(key, "key"), cfg["toggles"][key], f"layout.toml [toggles] {key}")
     # the art shrinks from its top when the timeline hides; the panel goes up as far, so its
     # top stays in the corner (user, 2026-10-16)

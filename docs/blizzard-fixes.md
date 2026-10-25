@@ -553,6 +553,25 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
   - **Status:** replay, chat and names confirmed first, then inspect, rebuilt
     to park off screen. All four confirmed in game (user, 2026-10-16) - DONE.
 
+- **The HUD keys left an interface's own pieces on screen** (user, 2026-10-24, from a
+  caster's vod; built 2026-10-25). Blizzard's observer has two layout keys
+  (`stormobserverpanel.stormlayout`): `ToggleHUD` on Ctrl+E fades `ObserverHeroOverviewPanel`,
+  the minimap and `MapMechanicPanel` and shows the team-name panel; `ToggleFullHUD` on
+  Ctrl+Shift+E does the same without the team names. Each fades a fixed list of Blizzard's
+  panels, so anything an interface adds elsewhere stays: our talent and heal pop-ups (at the
+  GameUI root, so the cells' Unclipped icons) were left floating, stretched, over a hidden HUD.
+  Ahli blanks both keys. Ours (`FCJH_Toggles`, layout.toml `[toggles] hud` / `hud_lower`)
+  take the keys over, Blizzard's lose them (`FCJH_Replay`):
+  - Ctrl+E hides everything, top plate included; Ctrl+Shift+E everything but the top plate
+    (user's choice: the reverse of Blizzard's pair).
+  - Both hide the rows, XP and core bars, minimap and map panels, inspect card, command
+    card, talent tips, info panes and both pop-up layers. The rows share Blizzard's panel with
+    the top plate, so they are faded piece by piece. Either key on hides them
+    (`FCJH_HudWatch`, a state group reading both toggles).
+  - Ctrl+E is also gamehotkeys' `ReplayRestart`, but Blizzard's layout key has always won it
+    in the observer (`validate.py` `LAYOUT_OVER_HOTKEY`).
+  - **Status:** built, not yet seen in game.
+
 - **The player's death and respawn animations, on the observer plates** (test build ad48279,
   2026-10-16; approved 2026-10-18). The player's top bar (`partyframe.stormlayout`,
   `HeroDeathAnimFrameTemplate`) plays a skull when a hero dies. In the last 5 s of the timer it

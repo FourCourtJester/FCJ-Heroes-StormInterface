@@ -227,6 +227,13 @@ chat = "Control+Shift+C"     # Blizzard's chat messages (FCJH_Toggles); Ahli's k
 inspect = "Control+Shift+I"  # the inspect card (inspect_card.py); off, it slides off screen left, as
                              # Ahli's does. Tried on Ctrl+I 2026-10-05 and dropped then.
 names = "Control+Shift+N"    # the player names over the heroes' health bars (FCJH_Toggles)
+# The HUD (FCJH_Toggles; user, 2026-10-25): Blizzard's own observer keys, taken over because
+# theirs left our pop-ups, panes and inspect card on screen. hud hides the lot, top plate
+# too; hud_lower all but the top plate. Blizzard had them the other way round (Ctrl+E kept
+# the team names). Ctrl+E is also gamehotkeys' ReplayRestart, but Blizzard's layout key on it
+# has always won in the observer (validate.py LAYOUT_OVER_HOTKEY).
+hud = "Control+E"
+hud_lower = "Control+Shift+E"
 
 [info_pane]
 title_height = 26            # the title band across the top of the pane

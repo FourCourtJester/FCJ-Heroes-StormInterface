@@ -542,6 +542,25 @@ so the user's idea - Ctrl+E (or our own **Ctrl+Shift+E**) hiding only *some* of 
 is a matter of placing them. Taking over Ctrl+E itself needs a test that an interface can
 rebind it; Ctrl+Shift+E needs validate's free-key check.
 
+**Done for 1.1, to see in game: the HUD keys are ours (user, 2026-10-25: "ctrl-shift-e our
+'hide all but the top plate'", "ctrl-e still hides everything (including the top plate)",
+"ensure that those icons dont bleed thru, or anything else really").** Blizzard's
+`ToggleHUD`/`ToggleFullHUD` lose their keys (FCJH_Replay) and ours take them
+(`[toggles] hud`/`hud_lower`, FCJH_Toggles): `FCJH_HudToggle` (Ctrl+E) fades and hides the
+whole `ObserverHeroOverviewPanel`, top plate included; `FCJH_HudLowerToggle` (Ctrl+Shift+E)
+and Ctrl+E both drive `FCJH_HudWatch`, a StateGroup OR (states All / Lower / Shown) that plays
+one paused animation, `FCJH_HideLower`, forward or back. It hides the rows and the map panels
+(Fade + Visibility) and, Fade only, everything the engine or a gate shows: XP tracks and
+frames, core bars, talents overview, heroic tips, the inspect card, command card, talent tips,
+both pop-up containers at the GameUI root, and the four panes. Left out, as with Blizzard's
+keys: chat, the kill feed, the replay box and its tab, the pause box. Note that OBS plates still
+draw over a hidden top plate. Blizzard had them the other way round (their Ctrl+E kept the
+team names). Validate notes Ctrl+E is gamehotkeys' ReplayRestart, which the layout key has
+always beaten. **Untested in game**, and three things to watch: that the watcher's states
+re-evaluate on a ToggleControl's Visible; that the Shown state's reverse-play at load is a
+no-op; and a zero-hero team's XP bar (RowPacker's Heroes0 sets Alpha 0, which the Fade's
+reverse restores to 255 after a hide and show - rare).
+
 **Rexxar's whole-plate death (vod, 2026-10-24).** A dead Rexxar greys his slice and Misha's
 (gen.py `grey()`, Colorize white / alpha 180) while every other dead portrait sinks into
 Blizzard's dark shadow - beside his dead team he reads "faded", not dead. Give his slices

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <Desc>
-	<!-- The operator's chat and player-name toggles (layout.toml [toggles]; user, 2026-10-16).
+	<!-- The operator's chat, player-name and HUD toggles (layout.toml [toggles]; user, 2026-10-16;
+	     the HUD's 2026-10-25, below).
 	     The replay box's is in FCJH_Replay, the inspect card's in FCJH_Inspect. Blizzard has no
 	     key for either of these: Ahli and Spazzo both add one (docs/blizzard-fixes.md).
 
@@ -42,6 +43,180 @@
 					<CollapseLayout val="true"/>
 					<Handle val="FCJH_NAMES"/>
 					<Shortcut val="#FCJH_NAMES_KEY"/>
+				</Frame>
+				<!-- The HUD (layout.toml [toggles] hud, hud_lower; user, 2026-10-25). Blizzard's own
+				     ToggleHUD / ToggleFullHUD (stormobserverpanel) faded only their own panels, so our
+				     pop-ups, panes and inspect card stayed on screen over a hidden HUD (a caster's Ctrl+E,
+				     2026-10-24). Theirs lose their keys (FCJH_Replay) and these take them:
+				       - hud (Ctrl+E): everything below, plus the top plate - the whole of Blizzard's
+				         ObserverHeroOverviewPanel, as their Ctrl+E did, by this toggle's own animation.
+				       - hud_lower (Ctrl+Shift+E): all but the top plate.
+				     Below the top plate goes when EITHER key is on, so it can't be either toggle's own
+				     animation: FCJH_HudWatch's states read both toggles and send one end="Pause"
+				     animation forward or back (memory rule 38's pattern). The top plate and the rows
+				     share Blizzard's panel, so the rows' pieces are faded one by one: the rows, the XP
+				     and core bars (in ObserverTopPanel), the talent rows (Tracer's meter) and heroic
+				     tips. Fade alone, never Visibility, on frames whose visibility the game or our own
+				     gates own (the core bar, the inspect card, the panes); Fade and Visibility, as
+				     Blizzard's, on the rows (the fountain's backdrop ignores its parent's alpha) and the
+				     map panels. Our containers fade whole, so their watchers keep running. Chat, the kill
+				     feed and the replay box keep their own keys, as with Blizzard's. -->
+				<Frame type="ToggleControl" name="FCJH_HudToggle">
+					<Anchor relative="$parent"/>
+					<AcceptsMouse val="false"/>
+					<CollapseLayout val="true"/>
+					<Shortcut val="#FCJH_HUD_KEY"/>
+					<Visible val="false"/>
+					<Animation name="FCJH_HideTop">
+						<Event event="OnShown" action="DirectionForward,Play"/>
+						<Event event="OnHidden" action="DirectionReverse,Play"/>
+						<Controller type="Fade" end="Pause" frame="$parent/ObserverHeroOverviewPanel">
+							<Key type="Curve" time="0" value="255"/>
+							<Key type="Curve" time="0.2" value="0"/>
+						</Controller>
+						<Controller type="Visibility" end="Pause" frame="$parent/ObserverHeroOverviewPanel">
+							<Key type="Bool" time="0" value="true"/>
+							<Key type="Bool" time="0.19" value="true"/>
+							<Key type="Bool" time="0.2" value="false"/>
+						</Controller>
+					</Animation>
+				</Frame>
+				<Frame type="ToggleControl" name="FCJH_HudLowerToggle">
+					<Anchor relative="$parent"/>
+					<AcceptsMouse val="false"/>
+					<CollapseLayout val="true"/>
+					<Shortcut val="#FCJH_HUD_LOWER_KEY"/>
+					<Visible val="false"/>
+				</Frame>
+				<Frame type="Frame" name="FCJH_HudWatch">
+					<Anchor relative="$parent"/>
+					<AcceptsMouse val="false"/>
+					<Animation name="FCJH_HideLower">
+						<Event event="FCJH_HudHide" action="DirectionForward,Play"/>
+						<Event event="FCJH_HudShow" action="DirectionReverse,Play"/>
+						<Controller type="Fade" end="Pause" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview">
+							<Key type="Curve" time="0" value="255"/>
+							<Key type="Curve" time="0.2" value="0"/>
+						</Controller>
+						<Controller type="Visibility" end="Pause" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview">
+							<Key type="Bool" time="0" value="true"/>
+							<Key type="Bool" time="0.19" value="true"/>
+							<Key type="Bool" time="0.2" value="false"/>
+						</Controller>
+						<Controller type="Fade" end="Pause" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview">
+							<Key type="Curve" time="0" value="255"/>
+							<Key type="Curve" time="0.2" value="0"/>
+						</Controller>
+						<Controller type="Visibility" end="Pause" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview">
+							<Key type="Bool" time="0" value="true"/>
+							<Key type="Bool" time="0.19" value="true"/>
+							<Key type="Bool" time="0.2" value="false"/>
+						</Controller>
+						<Controller type="Fade" end="Pause" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel">
+							<Key type="Curve" time="0" value="255"/>
+							<Key type="Curve" time="0.2" value="0"/>
+						</Controller>
+						<Controller type="Visibility" end="Pause" frame="$GameUI/UIContainer/ConsoleUIContainer/MinimapPanel">
+							<Key type="Bool" time="0" value="true"/>
+							<Key type="Bool" time="0.19" value="true"/>
+							<Key type="Bool" time="0.2" value="false"/>
+						</Controller>
+						<Controller type="Fade" end="Pause" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel">
+							<Key type="Curve" time="0" value="255"/>
+							<Key type="Curve" time="0.2" value="0"/>
+						</Controller>
+						<Controller type="Visibility" end="Pause" frame="$GameUI/UIContainer/ConsoleUIContainer/MapMechanicPanel">
+							<Key type="Bool" time="0" value="true"/>
+							<Key type="Bool" time="0.19" value="true"/>
+							<Key type="Bool" time="0.2" value="false"/>
+						</Controller>
+						<Controller type="Fade" end="Pause" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_BlueXPTrack">
+							<Key type="Curve" time="0" value="255"/>
+							<Key type="Curve" time="0.2" value="0"/>
+						</Controller>
+						<Controller type="Fade" end="Pause" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_RedXPTrack">
+							<Key type="Curve" time="0" value="255"/>
+							<Key type="Curve" time="0.2" value="0"/>
+						</Controller>
+						<Controller type="Fade" end="Pause" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame">
+							<Key type="Curve" time="0" value="255"/>
+							<Key type="Curve" time="0.2" value="0"/>
+						</Controller>
+						<Controller type="Fade" end="Pause" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame">
+							<Key type="Curve" time="0" value="255"/>
+							<Key type="Curve" time="0.2" value="0"/>
+						</Controller>
+						<Controller type="Fade" end="Pause" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1CoreUnitStatus">
+							<Key type="Curve" time="0" value="255"/>
+							<Key type="Curve" time="0.2" value="0"/>
+						</Controller>
+						<Controller type="Fade" end="Pause" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2CoreUnitStatus">
+							<Key type="Curve" time="0" value="255"/>
+							<Key type="Curve" time="0.2" value="0"/>
+						</Controller>
+						<Controller type="Fade" end="Pause" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/TalentsOverview">
+							<Key type="Curve" time="0" value="255"/>
+							<Key type="Curve" time="0.2" value="0"/>
+						</Controller>
+						<Controller type="Fade" end="Pause" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/FCJH_HeroicTips">
+							<Key type="Curve" time="0" value="255"/>
+							<Key type="Curve" time="0.2" value="0"/>
+						</Controller>
+						<Controller type="Fade" end="Pause" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/FCJH_HeroicTips2">
+							<Key type="Curve" time="0" value="255"/>
+							<Key type="Curve" time="0.2" value="0"/>
+						</Controller>
+						<Controller type="Fade" end="Pause" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_Inspect">
+							<Key type="Curve" time="0" value="255"/>
+							<Key type="Curve" time="0.2" value="0"/>
+						</Controller>
+						<Controller type="Fade" end="Pause" frame="$GameUI/UIContainer/ConsoleUIContainer/CommandPanel">
+							<Key type="Curve" time="0" value="255"/>
+							<Key type="Curve" time="0.2" value="0"/>
+						</Controller>
+						<Controller type="Fade" end="Pause" frame="$GameUI/UIContainer/ConsoleUIContainer/FCJH_TalentTips">
+							<Key type="Curve" time="0" value="255"/>
+							<Key type="Curve" time="0.2" value="0"/>
+						</Controller>
+						<Controller type="Fade" end="Pause" frame="$GameUI/FCJH_HealPopups">
+							<Key type="Curve" time="0" value="255"/>
+							<Key type="Curve" time="0.2" value="0"/>
+						</Controller>
+						<Controller type="Fade" end="Pause" frame="$GameUI/FCJH_TalentPopups">
+							<Key type="Curve" time="0" value="255"/>
+							<Key type="Curve" time="0.2" value="0"/>
+						</Controller>
+						<Controller type="Fade" end="Pause" frame="$GameUI/FCJH_Pane_Talents">
+							<Key type="Curve" time="0" value="255"/>
+							<Key type="Curve" time="0.2" value="0"/>
+						</Controller>
+						<Controller type="Fade" end="Pause" frame="$GameUI/FCJH_Pane_Kda">
+							<Key type="Curve" time="0" value="255"/>
+							<Key type="Curve" time="0.2" value="0"/>
+						</Controller>
+						<Controller type="Fade" end="Pause" frame="$GameUI/FCJH_Pane_Healing">
+							<Key type="Curve" time="0" value="255"/>
+							<Key type="Curve" time="0.2" value="0"/>
+						</Controller>
+						<Controller type="Fade" end="Pause" frame="$GameUI/FCJH_Pane_Siege">
+							<Key type="Curve" time="0" value="255"/>
+							<Key type="Curve" time="0.2" value="0"/>
+						</Controller>
+					</Animation>
+					<StateGroup name="FCJH_Hud">
+						<DefaultState val="Shown"/>
+						<State name="All">
+							<When type="Property" frame="$parent/FCJH_HudToggle" Visible="true"/>
+							<Action type="SendEvent" frame="$this" event="FCJH_HudHide"/>
+						</State>
+						<State name="Lower">
+							<When type="Property" frame="$parent/FCJH_HudLowerToggle" Visible="true"/>
+							<Action type="SendEvent" frame="$this" event="FCJH_HudHide"/>
+						</State>
+						<State name="Shown">
+							<Action type="SendEvent" frame="$this" event="FCJH_HudShow"/>
+						</State>
+					</StateGroup>
 				</Frame>
 			</Frame>
 		</Frame>

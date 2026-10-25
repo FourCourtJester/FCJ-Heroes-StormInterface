@@ -32,6 +32,14 @@
 					<Frame type="ToggleControl" name="ToggleControlObserverTools">
 						<Shortcut val=""/>
 					</Frame>
+					<!-- Blizzard's HUD toggles lose their keys too: ours on the same keys hide our
+					     pieces as well (FCJH_Toggles, FCJH_HudToggle) -->
+					<Frame type="ToggleControl" name="ToggleHUD">
+						<Shortcut val=""/>
+					</Frame>
+					<Frame type="ToggleControl" name="ToggleFullHUD">
+						<Shortcut val=""/>
+					</Frame>
 					<Frame type="ToggleControl" name="FCJH_ReplayToggle">
 						<Anchor relative="$parent"/>
 						<AcceptsMouse val="false"/>

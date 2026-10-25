@@ -580,6 +580,10 @@ MODIFIERS = {"control": "Control", "ctrl": "Control", "shift": "Shift", "alt": "
 # talent picks (Ctrl+1-4 take that talent; an observer has none to take). The info panes have
 # used them since Phase 1, confirmed in game; Ahli 0.75 binds Ctrl+1-8 the same way.
 PLAYER_ONLY = re.compile(r"QuickHeroTalentTreeSelection\d$")
+# Keys Blizzard's own observer layout binds over a gamehotkeys entry and wins with, so a
+# toggle of ours that takes over that layout key (and blanks Blizzard's) is free. Ctrl+E is
+# ToggleHUD's (stormobserverpanel), over ReplayRestart: it hid the HUD in game (user, 2026-10-24).
+LAYOUT_OVER_HOTKEY = {"Control+E": "ToggleHUD"}
 
 
 def hotkey_norm(key):
@@ -629,7 +633,11 @@ def check_hotkeys(cat, toml_path=REPO / "layout.toml"):
             cat.report("error", "layout.toml", line_of(key), f"{where} '{key}' is only modifiers")
             continue
         theirs = blizzard.get(norm, [])
-        if theirs and all(PLAYER_ONLY.match(n) for n in theirs):
+        if norm in LAYOUT_OVER_HOTKEY:
+            cat.report("note", "layout.toml", line_of(key),
+                       f"{where} '{key}' is Blizzard's {', '.join(theirs)}, but their observer "
+                       f"layout's {LAYOUT_OVER_HOTKEY[norm]} wins it, and ours takes that over")
+        elif theirs and all(PLAYER_ONLY.match(n) for n in theirs):
             cat.report("note", "layout.toml", line_of(key),
                        f"{where} '{key}' is Blizzard's {', '.join(theirs)} - players only, so free")
         elif theirs:

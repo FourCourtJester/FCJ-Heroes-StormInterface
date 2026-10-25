@@ -45,6 +45,8 @@ It's laid out for **1920 × 1080**. Its labels come in every language Heroes shi
 | `Ctrl+Shift+N` | Show or hide player names over the heroes |
 | `Ctrl+Shift+C` | Show or hide chat |
 | `Ctrl+Shift+R` | Show or hide the replay controls |
+| `Ctrl+E` | Hide or show the whole HUD, top plate included |
+| `Ctrl+Shift+E` | Hide or show everything but the top plate |
 
 Only one pane is open at a time: opening one closes whichever is open.
 
