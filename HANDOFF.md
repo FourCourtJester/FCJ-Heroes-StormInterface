@@ -561,14 +561,18 @@ re-evaluate on a ToggleControl's Visible; that the Shown state's reverse-play at
 no-op; and a zero-hero team's XP bar (RowPacker's Heroes0 sets Alpha 0, which the Fade's
 reverse restores to 255 after a hide and show - rare).
 
-**Rexxar's whole-plate death (vod, 2026-10-24).** A dead Rexxar greys his slice and Misha's
-(gen.py `grey()`, Colorize white / alpha 180) while every other dead portrait sinks into
-Blizzard's dark shadow - beside his dead team he reads "faded", not dead. Give his slices
-the normal dead portrait's darkening (find what draws it; possibly the colour-blind mode, see
-below). A lone dead Misha's grey slice reads right (user: "properly convey'd") - keep it.
-And **his timer goes back to the plate's centre** when he dies (Misha is dead too, so the
-whole plate is), not his slice's -16; Misha's own timer stays on her slice. Dead Mishas
-otherwise looked right (user: "Yay us!").
+**Rexxar's whole-plate death: built for 1.1, to see in game (vod, 2026-10-24).** A dead
+Rexxar greyed his slice and Misha's (Colorize white / alpha 180) while every other dead
+portrait sank into Blizzard's dark shadow, so he read "faded", not dead. That shadow is the
+game's code on the observer portrait (no layout state draws it); measured off the vod, the
+same heroes dead were 0.27-0.36 of their live brightness with the hue kept. So a dead Rexxar's
+slices now multiply by `555555` (gen.py `slice_overlay`, `rexxar_dead`; `Color`, as
+`FCJH_ChargeDim`'s black), his state first so it beats Misha's own. A lone dead Misha keeps
+her grey (user: "properly convey'd"). **His timer goes back to the plate's centre** while he's
+dead (`FCJH_RexxarTimer`, its own StateGroup so the slices' art states don't replay), on his
+slice's -16 otherwise; Misha's own stays on hers. **Check:** that `Color` darkens a
+`ColorAdjustMode None` image in game (if the slices go black or don't change, that's why), and
+the darkness beside a normal dead plate.
 
 **Colour-blind mode, in game: done for 1.1, to see in game (vod, 2026-10-24: Blizzard's
 on-fire effect went yellow, "the red team ... wasn't"; user, 2026-10-25: "top plate,
@@ -587,9 +591,14 @@ normal values back, as SetProperty persists:
   - add "blue" there if blue's should move too);
 - the inspect card's team edge: its AdjustmentColor.
 
-Not done (follow-ups): the stat panes' TEAMS bands and red value styles (`FCJH_StatValue_Red`,
-swapped by the lead animations, so invasive), the row stripes, the red death timers. Glows
-are Blizzard's own. Test with Rexxar's and the Vikings' slices in it.
+The stat panes (Ctrl+2-4), built after: the TEAMS bands and the row stripes and their lines
+take the colour-blind hue (gen.py `colour_blind_fill`, an AdjustmentColor state on each fill);
+the totals swap to `FCJH_StatTotal_*CB` styles (FontStyles.StormStyle, hand-written, colours by
+the same rule). The values can't be restyled by a state - the lead animations set their style
+on every best-value event - so each has a twin label, `FCJH_ValueCB` in the `_CB` style, styled
+by the same animations (gold when leading, either way), and the option picks which shows. Both
+teams, as the top plate. Not done: the death timers (Blizzard's styles). Glows are Blizzard's
+own. Test with Rexxar's and the Vikings' slices in it.
 
 **The studio half, done for 1.1 (checked in a browser, not yet in OBS):** OBS can't read the
 game's options, so it's the operator's toggle, **Tournament → Colour-blind colours**

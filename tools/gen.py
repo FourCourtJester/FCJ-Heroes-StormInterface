@@ -1228,6 +1228,19 @@ def colour_blind_cfg(cfg):
     return cb
 
 
+def colour_blind_argb(cfg, colour, team):
+    """An "alpha,r,g,b" colour (the panes' fills) in colour-blind mode, as colour_blind."""
+    a, *rgb = colour.split(",")
+    cb = colour_blind(cfg, "".join(f"{int(v):02x}" for v in rgb), team)
+    return ",".join([a] + [str(int(cb[i:i + 2], 16)) for i in (0, 2, 4)])
+
+
+def colour_blind_fill(cfg, colour, team, indent):
+    """A fill_image's `extra`: its colour turning colour-blind with the game's option."""
+    return "\n" + colour_blind_states([f'frame="$this" AdjustmentColor="{colour_blind_argb(cfg, colour, team)}"'],
+                                      [f'frame="$this" AdjustmentColor="{colour}"'], indent).rstrip("\n")
+
+
 def colour_blind_plate(cfg, team):
     """The Colorize pair (light, dark) for a team's plate art in colour-blind mode ([colour_blind]
     plate_light / plate_dark), from the team's colour-blind colour."""
@@ -2831,6 +2844,11 @@ def slice_overlay(cfg, team_frame, i):
     # (measured from the art: blue 16..79 of 16..111, red mirrored and shifted 18..81 of 17..112)
     rexxar_timer = -16
     t = "\t" * 8
+    # a dead Rexxar's slices (Misha's goes with him) as every other dead observer portrait: the
+    # game darkens those from code, colour kept - measured off the vod (user, 2026-10-24), the
+    # same heroes dead were 0.27-0.36 of their live brightness, hue unchanged. Our Colorize grey
+    # read "faded", not dead, beside them. `Color` multiplies (as FCJH_ChargeDim's black)
+    rexxar_dead = "555555"
 
     def grey(n, unit):
         """The slice's death look: its own timer, or Rexxar's. Not the Vikings' main timer: it
@@ -2842,20 +2860,25 @@ def slice_overlay(cfg, team_frame, i):
               '<Action type="SetProperty" frame="$this" Alpha="180"/>')
         # the third slice's alpha left to its state's revert: Rexxar hides it (FCJH_Hero)
         off = ('<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>'
+               f'<Action type="SetProperty" frame="$this" Color="ffffff"/>'
                + ('<Action type="SetProperty" frame="$this" Alpha="255"/>' if n < 2 else ""))
+        dark = ('<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>'
+                f'<Action type="SetProperty" frame="$this" Color="{rexxar_dead}"/>'
+                '<Action type="SetProperty" frame="$this" Alpha="255"/>')
         vikings = SLICES[VIKINGS][0]
         bar = f"{cell}/HeroStatus/VikingTrackingElement/TrackedUnitStatusFrame{VIKING_FRAMES.index(vikings[n][0])}/HealthBar"
         hide = lambda a: f'<Action type="SetProperty" frame="{bar}" Alpha="{a}"/>'
         own = "".join(f'\n{t}\t\t\t<State name="{u}Dead"><When type="Property" frame="{party}/{SLICE_DEATH[u]}" Visible="true"/>'
-                      f'{on}{hide(0) if u in VIKING_SLOT else ""}</State>'
+                      f'{on}{hide(0) if u in VIKING_SLOT else ""}<Action type="SetProperty" frame="$this" Color="ffffff"/></State>'
                       for u in sorted({sl[n][0] for sl, _ in SLICES.values() if sl[n]} & SLICE_DEATH.keys()))
-        # Rexxar's death greys his slice and Misha's (Blizzard's MasterDead), not the spare third
+        # Rexxar's death darkens his slice and Misha's (Blizzard's MasterDead), not the spare
+        # third; first, so it wins over Misha's own (her timer may show while his does)
         hero_dead = "" if n == 2 else (
             f'\n{t}\t\t\t<State name="HeroDead"><When type="Property" frame="{cell}/HeroStatus" Unit="HeroRexxar"/>'
-            f'<When type="Property" frame="$parent/$parent/HeroDeathTimeLabel" Visible="true"/>{on}</State>')
+            f'<When type="Property" frame="$parent/$parent/HeroDeathTimeLabel" Visible="true"/>{dark}</State>')
         return f"""
 {t}\t\t<StateGroup name="FCJH_Dead">
-{t}\t\t\t<DefaultState val="Alive"/>{own}{hero_dead}
+{t}\t\t\t<DefaultState val="Alive"/>{hero_dead}{own}
 {t}\t\t\t<State name="Alive">{off}{hide(255)}</State>
 {t}\t\t</StateGroup>"""
 
@@ -2885,6 +2908,11 @@ def slice_overlay(cfg, team_frame, i):
 {t}\t\t<AcceptsMouse val="false"/>
 {t}\t</Frame>""" for d, pos, left in ((2, "Min", 32), (3, "Max", -64)))
 
+    def hold(x):
+        h = f"{cell}/FCJH_DeathTimeHold"
+        return (f'<Action type="SetAnchor" frame="{h}" side="Left" relative="{cell}" pos="Min" offset="{x}"/>'
+                f'<Action type="SetAnchor" frame="{h}" side="Right" relative="{cell}" pos="Max" offset="{x}"/>')
+
     def state(unit):
         parts, (div2, div3) = SLICES[unit]
         acts = f'<Action type="SetProperty" frame="$this" Alpha="255"/><Action type="SetProperty" frame="{cell}/HeroPortraitImage" Alpha="0"/>'
@@ -2903,11 +2931,6 @@ def slice_overlay(cfg, team_frame, i):
         for d, on in ((2, div2), (3, div3)):
             acts += f'<Action type="SetProperty" frame="$this/FCJH_Divider{d}" Alpha="{255 if on else 0}"/>'
         name = "Vikings" if unit == "HeroLostVikingsController" else "Rexxar"
-        if name == "Rexxar":
-            hold = f"{cell}/FCJH_DeathTimeHold"
-            x = c.death_shift + s(rexxar_timer)
-            acts += (f'<Action type="SetAnchor" frame="{hold}" side="Left" relative="{cell}" pos="Min" offset="{x}"/>'
-                     f'<Action type="SetAnchor" frame="{hold}" side="Right" relative="{cell}" pos="Max" offset="{x}"/>')
         return f'\n{t}\t\t<State name="{name}"><When type="Property" frame="{cell}/HeroStatus" Unit="{unit}"/>{acts}</State>'
 
     return f"""
@@ -2921,6 +2944,14 @@ def slice_overlay(cfg, team_frame, i):
 {t}<StateGroup name="FCJH_Hero">
 {t}\t<DefaultState val="None"/>{state("HeroLostVikingsController")}{state("HeroRexxar")}
 {t}\t<State name="None"><Action type="SetProperty" frame="$this" Alpha="0"/><Action type="SetProperty" frame="{cell}/HeroPortraitImage" Alpha="255"/></State>
+{t}</StateGroup>
+{t}<!-- Rexxar's timer on his slice; back on the plate's centre while he's dead, as the whole
+{t}     plate is (Misha with him; user, 2026-10-24). Misha's own stays on hers -->
+{t}<StateGroup name="FCJH_RexxarTimer">
+{t}\t<DefaultState val="Centre"/>
+{t}\t<State name="Dead"><When type="Property" frame="{cell}/HeroStatus" Unit="HeroRexxar"/><When type="Property" frame="{cell}/HeroDeathTimeLabel" Visible="true"/>{hold(c.death_shift)}</State>
+{t}\t<State name="Slice"><When type="Property" frame="{cell}/HeroStatus" Unit="HeroRexxar"/>{hold(c.death_shift + s(rexxar_timer))}</State>
+{t}\t<State name="Centre">{hold(c.death_shift)}</State>
 {t}</StateGroup>
 {t[:-1]}</Frame>"""
 
@@ -4566,14 +4597,18 @@ def pane_toggle(key, container):
 '''
 
 
-def team_header(team_id, colour, value_style, name, top, height, placed, indent):
+def team_header(cfg, team_id, colour, value_style, name, top, height, placed, indent):
     """A team band: the team's totals under each column. No name: the colour says it (user,
-    2026-10-23: "Remove BLUE/RED from the headers")."""
+    2026-10-23: "Remove BLUE/RED from the headers"). In colour-blind mode the band takes the
+    team's colour-blind hue and the totals their _CB style (FontStyles.StormStyle)."""
     t = "\t" * indent
     at = lambda l, r: box(("Min", str(top)), ("Min", str(l)), ("Min", str(top + height)), ("Min", str(r)))(indent + 1)
     band = box(("Min", str(top)), ("Min", "#FCJH_INFO_PANE_BORDER"), ("Min", str(top + height)),
                ("Max", "#FCJH_INFO_PANE_BORDER_NEG"))
-    out = fill_image(f"FCJH_{name.capitalize()}Band", band, colour, 602, indent)
+    out = fill_image(f"FCJH_{name.capitalize()}Band", band, colour, 602, indent,
+                     colour_blind_fill(cfg, colour, name, indent + 1))
+    cb_style = colour_blind_states([f'frame="$this" style="{value_style}CB"'],
+                                   [f'frame="$this" style="{value_style}"'], indent + 2)
     for i, (_, _, _, cx, w, total) in enumerate(placed):
         out += (f'{t}<Frame type="TeamScoreValueFrame" name="FCJH_{name.capitalize()}Total{i}">\n' +
                 at(cx, cx + w) +
@@ -4581,7 +4616,7 @@ def team_header(team_id, colour, value_style, name, top, height, placed, indent)
                 f'{t}\t<RenderPriority val="610"/>\n{t}\t<AcceptsMouse val="false"/>\n'
                 f'{t}\t<Frame type="Label" name="TeamScoreValueLabel">\n{t}\t\t<Anchor relative="$parent"/>\n'
                 f'{t}\t\t<Style val="{value_style}"/>\n{t}\t\t<Options val="NoWrapping | ScaleToPreventTruncation"/>\n'
-                f'{t}\t</Frame>\n{t}</Frame>\n')
+                + cb_style + f'{t}\t</Frame>\n{t}</Frame>\n')
     return out
 
 
@@ -4635,7 +4670,7 @@ def pane_chrome(title, placed, geometry, indent=3):
                 f'{t}\t\t<Options val="NoWrapping | ScaleToPreventTruncation"/>\n'
                 f'{t}\t\t<RenderPriority val="610"/>\n{t}\t\t<AcceptsMouse val="false"/>\n{t}\t</Frame>\n')
     for (name, team_id, colour, value_style), top in zip(TEAMS, geometry["team_tops"]):
-        out += team_header(team_id, colour, value_style, name, top,
+        out += team_header(geometry["cfg"], team_id, colour, value_style, name, top,
                            geometry["team_h"], placed, indent + 1)
     return out + f'{t}</Frame>\n'
 
@@ -4702,26 +4737,34 @@ def stat_value(frame, score, team, indent):
         # yellow/gold color to indicate they're leading"). The same best-value events and Style
         # swap Blizzard's own label uses, so it works on columns that never had an underline (XP)
         normal = f"FCJH_StatValue_{team.capitalize()}"
-        for name, events, style in (("FCJH_ShowLead", ("AllyBestValue", "EnemyBestValue"), "FCJH_StatValue_Lead"),
-                                    ("FCJH_HideLead", ("AllyNotBestValue", "EnemyNotBestValue"), normal)):
+        restyle = lambda frame, style: (
+            f'{t}\t\t<Controller type="Style" end="Pause" frame="{frame}" style1="{style}" style2="{style}">\n'
+            f'{t}\t\t\t<Key type="Curve" time="0.00" value="1.0" inout="Linear,Auto"/>\n{t}\t\t</Controller>\n')
+        for name, events, style, cb in (
+                ("FCJH_ShowLead", ("AllyBestValue", "EnemyBestValue"), "FCJH_StatValue_Lead", "FCJH_StatValue_Lead"),
+                ("FCJH_HideLead", ("AllyNotBestValue", "EnemyNotBestValue"), normal, normal + "CB")):
             underline += (f'{t}\t<Animation name="{name}">\n' +
                           "".join(f'{t}\t\t<Event event="{e}" action="Reset,Play"/>\n' for e in events) +
-                          f'{t}\t\t<Controller type="Style" end="Pause" frame="FCJH_Value" style1="{style}" style2="{style}">\n'
-                          f'{t}\t\t\t<Key type="Curve" time="0.00" value="1.0" inout="Linear,Auto"/>\n'
-                          f'{t}\t\t</Controller>\n{t}\t</Animation>\n')
+                          restyle("FCJH_Value", style) + restyle("FCJH_ValueCB", cb) + f'{t}\t</Animation>\n')
     return (f'{t}<Frame type="ScoreValueLabelFrame" name="ScoreValueFrame0">\n'
             f'{t}\t<Visible val="true"/>\n'
             f'{t}\t<ScoreValueLink val="{score}"/>\n'
             f'{t}\t<UseDashForZero val="false"/>\n'
             f'{t}\t<Frame type="Label" name="Label"><Alpha val="0"/></Frame>\n'
-            f'{t}\t<Frame type="Label" name="FCJH_Value">\n'
-            f'{t}\t\t<Anchor relative="$parent"/>\n'
-            f'{t}\t\t<Text val="{{$parent/Label/@Text}}"/>\n'
-            f'{t}\t\t<Style val="FCJH_StatValue_{team.capitalize()}"/>\n'
-            f'{t}\t\t<IgnoreParentColor val="true"/>  <!-- as Blizzard\'s Label: else the row\'s team colour multiplies into ours (2026-10-23) -->\n'
-            f'{t}\t\t<Options val="NoWrapping | ScaleToPreventTruncation"/>\n'
-            f'{t}\t\t<AcceptsMouse val="false"/>\n'
-            f'{t}\t</Frame>\n' + underline +
+            + "".join(
+                f'{t}\t<Frame type="Label" name="FCJH_Value{cb}">\n'
+                f'{t}\t\t<Anchor relative="$parent"/>\n'
+                f'{t}\t\t<Text val="{{$parent/Label/@Text}}"/>\n'
+                f'{t}\t\t<Style val="FCJH_StatValue_{team.capitalize()}{cb}"/>\n'
+                f'{t}\t\t<IgnoreParentColor val="true"/>  <!-- as Blizzard\'s Label: else the row\'s team colour multiplies into ours (2026-10-23) -->\n'
+                f'{t}\t\t<Options val="NoWrapping | ScaleToPreventTruncation"/>\n'
+                + (f'{t}\t\t<Alpha val="0"/>\n' if cb else "") +
+                f'{t}\t\t<AcceptsMouse val="false"/>\n'
+                f'{t}\t</Frame>\n' for cb in ("", "CB"))
+            # colour-blind mode: the twin in the team's colour-blind hue shows instead
+            + colour_blind_states(['frame="FCJH_Value" Alpha="0"', 'frame="FCJH_ValueCB" Alpha="255"'],
+                                  ['frame="FCJH_Value" Alpha="255"', 'frame="FCJH_ValueCB" Alpha="0"'], indent + 1)
+            + underline +
             f'{t}</Frame>\n')
 
 
@@ -4743,10 +4786,12 @@ def row_stripes(stripes, geometry, indent=3):
         team = "blue" if i < 5 else "red"
         at = lambda y0, y1: box(("Min", str(y0)), ("Min", "#FCJH_INFO_PANE_BORDER"), ("Min", str(y1)),
                                 ("Max", "#FCJH_INFO_PANE_BORDER_NEG"))
-        out += fill_image(f"FCJH_Stripe{i}", at(top, top + pitch), stripes[team][i % 5 % 2], 1, indent + 1)
+        shade, edge = stripes[team][i % 5 % 2], stripes[f"{team}_line"]
+        out += fill_image(f"FCJH_Stripe{i}", at(top, top + pitch), shade, 1, indent + 1,
+                          colour_blind_fill(geometry["cfg"], shade, team, indent + 2))
         if line:
-            out += fill_image(f"FCJH_StripeLine{i}", at(top + pitch - line, top + pitch),
-                              stripes[f"{team}_line"], 2, indent + 1)
+            out += fill_image(f"FCJH_StripeLine{i}", at(top + pitch - line, top + pitch), edge, 2, indent + 1,
+                              colour_blind_fill(geometry["cfg"], edge, team, indent + 2))
     return out + f'{t}</Frame>\n'
 
 
@@ -4838,7 +4883,7 @@ def stat_pane(key, title, columns, geometry, stripes=None):
 
 
 def stat_panes_layout(cfg):
-    geometry = stat_geometry(cfg)
+    geometry = dict(stat_geometry(cfg), cfg=cfg)   # cfg for the colour-blind colours
     return XML_DECL + "<Desc>\n" + GENERATED + '''
 	<!-- Info panes: KDA, healing, siege (layout.toml [info_pane]). One box shared by all
 	     four info panes (talents' is FCJH_InfoPane); one hotkey each; all start hidden, and

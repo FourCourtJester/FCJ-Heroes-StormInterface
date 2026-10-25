@@ -498,6 +498,11 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
     timer, as Blizzard's player bar does per slice.
   - **Status:** seen and approved in game (user, 2026-10-21: portraits and bars e101687, the
     Vikings' rings ed32947). Misha's rings are built, still being checked.
+  - **A dead Rexxar read "faded", not dead** (vod, 2026-10-24): his slices took the player
+    bar's grey while every other dead observer portrait goes dark, the game's code darkening
+    them (about a third of their brightness, hue kept, measured off the vod). His slices now
+    darken the same way, and his timer moves back to the plate's centre while he's dead. A lone
+    dead Misha keeps the grey. Built, not yet seen in game.
 - **Talent pop-ups:** the talent just picked pops up on its hero's plate, for every hero.
 - **A heal pop-up:** a green plus when a hero drops to 25% health (once per dip; gone after
   about 4 s, at death or above 30%). Blizzard's critical-health element doesn't run in observer
@@ -586,7 +591,9 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
   - red's plate art and talent squares are Colorized orange, as Blizzard's kill log
     recolours its portrait borders;
   - the inspect card's team edge takes the colour-blind colours.
-  - **Status:** built, not yet seen in game. The stat panes and row stripes aren't done.
+  - the stat panes' team bands, row stripes and totals, and their numbers (a twin label each,
+    as the lead animations own the label's style).
+  - **Status:** built, not yet seen in game.
 
 - **The player's death and respawn animations, on the observer plates** (test build ad48279,
   2026-10-16; approved 2026-10-18). The player's top bar (`partyframe.stormlayout`,

@@ -14,6 +14,12 @@
 	<Style name="FCJH_StatValue_Lead" template="HeaderExtendedTemplate" height="20" textcolor="fed600" vjustify="Middle" hjustify="Right" styleflags="!Shadow|!Glow|!Uppercase"/>
 	<Style name="FCJH_StatTotal_Blue" template="HeaderExtendedTemplate" height="21" textcolor="d2f1ff" vjustify="Middle" hjustify="Right" styleflags="!Shadow|Glow|!Uppercase" glowcolor="2669e4"/>
 	<Style name="FCJH_StatTotal_Red" template="HeaderExtendedTemplate" height="21" textcolor="ffe2e8" vjustify="Middle" hjustify="Right" styleflags="!Shadow|Glow|!Uppercase" glowcolor="e42626"/>
+	<!-- ...in colour-blind mode (the stat panes' FCJH_ColourBlind states): each colour above with
+	     the team's colour-blind hue, its saturation and brightness kept (gen.py colour_blind) -->
+	<Style name="FCJH_StatValue_BlueCB" template="HeaderExtendedTemplate" height="20" textcolor="9cccf4" vjustify="Middle" hjustify="Right" styleflags="!Shadow|!Glow|!Uppercase"/>
+	<Style name="FCJH_StatValue_RedCB" template="HeaderExtendedTemplate" height="20" textcolor="edcaa4" vjustify="Middle" hjustify="Right" styleflags="!Shadow|!Glow|!Uppercase"/>
+	<Style name="FCJH_StatTotal_BlueCB" template="HeaderExtendedTemplate" height="21" textcolor="d2eaff" vjustify="Middle" hjustify="Right" styleflags="!Shadow|Glow|!Uppercase" glowcolor="268de4"/>
+	<Style name="FCJH_StatTotal_RedCB" template="HeaderExtendedTemplate" height="21" textcolor="fff1e2" vjustify="Middle" hjustify="Right" styleflags="!Shadow|Glow|!Uppercase" glowcolor="e48826"/>
 	<!-- Plate CC text ("STUNNED"): Blizzard's TalentChoiceAlertNameplateLabel, but centred
 	     vertically too, so it sits across the middle of the health bar. 14, not 17: UNSTOPPABLE
 	     overflowed the shorter bar a heroic leaves (2026-09-30) -->
