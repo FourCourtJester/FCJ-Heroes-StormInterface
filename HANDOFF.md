@@ -526,19 +526,61 @@ over the logo plate and clock. Now under the centre banners, 10 px below, centre
 clock, screen centre), the frame in `FCJH_TopBar`. Look untouched. Needs a custom game with a
 pause to see; docs/blizzard-fixes.md has it.
 
-**Bug from a streamer's cast (relayed by the user, 2026-10-24): an event icon sticks after
-hiding the UI.** Their words: "If I hide the UI and an event occurs in the bottom bar, the
-icon for the event stays and replaces the icon that would have been the hero icon." So a
-plate's portrait is overwritten by an event's icon (a death, a respawn, whatever the plate
-shows) that fired while the UI was hidden, and it never clears. **A video of the cast is
-coming** - wait for it before guessing: it should show which event, and whether showing the
-UI again or the next event clears it. **The hide is Ctrl+E** (user, 2026-10-24: "apparently").
-Not ours - nothing in `interface/` binds it - and not in Blizzard's default hotkeys either
-(JamiePhan: Ctrl+E is `ReplayRestart`; the hides are `ToggleWorldPanel` Ctrl+W and
-`ReplayHide` Ctrl+T), so it is likely the streamer's own binding; the video should say which
-command it is.
-Likely an animation or state change that runs while hidden and never gets its "back to the
-portrait" step, but that is a guess until the video.
+**Bug from a streamer's cast, found (user's vod screenshots, 2026-10-24): pop-ups outlive
+Ctrl+E.** The streamer's words were "the icon for the event stays and replaces the icon that
+would have been the hero icon". What happened: Ctrl+E (hide all UI - for everyone, us too,
+whatever gamehotkeys.txt's `ReplayRestart` label says) went while the level-13 **talent
+pop-ups** were up; they stayed over the hidden plates, **stretched to about a plate's width**
+(the "replaces the hero icon"), then faded. A second Ctrl+E later was clean. The user confirmed
+the **heal pop-ups** do the same. Normal pop-ups are their right 40-unit squares (screenshot,
+same game), so the size is part of the bug, not `talent_popup_size`.
+Cause: `FCJH_TalentPopups` and `FCJH_HealPopups` (FCJH_HeroRow) are **direct children of
+`GameUI`**, outside the containers Ctrl+E hides, so a pop-up plays its `Pop` animation out
+(Visibility true until `end`) anchored to plates that are hidden. Fix: hide both containers
+whenever the plates are. The flip side: anything of ours at the `GameUI` root survives Ctrl+E,
+so the user's idea - Ctrl+E (or our own **Ctrl+Shift+E**) hiding only *some* of our pieces -
+is a matter of placing them. Taking over Ctrl+E itself needs a test that an interface can
+rebind it; Ctrl+Shift+E needs validate's free-key check.
+
+**Rexxar's whole-plate death (vod, 2026-10-24).** A dead Rexxar greys his slice and Misha's
+(gen.py `grey()`, Colorize white / alpha 180) while every other dead portrait sinks into
+Blizzard's dark shadow - beside his dead team he reads "faded", not dead. Give his slices
+the normal dead portrait's darkening (find what draws it; possibly the colour-blind mode, see
+below). A lone dead Misha's grey slice reads right (user: "properly convey'd") - keep it.
+And **his timer goes back to the plate's centre** when he dies (Misha is dead too, so the
+whole plate is), not his slice's -16; Misha's own timer stays on her slice. Dead Mishas
+otherwise looked right (user: "Yay us!").
+
+**Colour-blind mode (vod, 2026-10-24: Blizzard's on-fire effect went yellow, "the red
+team ... wasn't").** Blizzard switches on `<When type="Option" colorblind="True"/>`: its
+`TextureColor` states (core `ui/gameui.stormlayout:36`) make **red orange and blue cyan**,
+cutscenes like on-fire get `CutsceneColorblindFilterSupportTemplate`, and the values are
+`ColorBlindColors` in `gameuidata.xml:1103`. The minimap followed; our plates, banners and
+red death timers didn't. To do: in game, tint our own art (top plate, nameplates, rings,
+bars, banners) and text colours by that option, checked piece by piece against Blizzard's
+default UI in colour-blind mode; in the studio, an **opt-in colour-blind toggle** on the
+control board (OBS can't read the game's options) swapping to the same orange and cyan.
+Test with Rexxar's and the Vikings' slices in it.
+
+**Quest progress: what the other UIs show (vod, 2026-10-24).** Valla's Creed of the Hunter
+seemed to show no buff and no stack counter on its talent's tooltip - the user then found it
+("wasn't looking in the right place") but kept the note: compare how Blizzard's default,
+Ahli and Spazzo show quest stacks and buffs, and whether ours reads as clearly.
+
+**Chat sits in the lower middle (both testers, 2026-10-24, had to drag it off the minimap
+and banners).** Blizzard's `ChatDisplay` hangs off `ChatBarAnchorFrame` (core
+`ui/gameui.stormlayout:1091`: 830 down, centre -350) and the draggable `ChatBarDragButton`.
+The drag is saved per account as a **screen position** - `Accounts/<id>/Variables.txt`
+`chatpositionx`/`chatpositiony` - which an interface can't write. The user won't override
+players' preferences: a default move is fine only if a drag still wins and nothing of ours
+carries into a game without us. Tests (bot game): read the x/y, load a game with ours, exit,
+read again; drag it and read again; a build with the anchor moved somewhere obvious (does
+the anchor or the saved position win?); and with the game closed, back up the file and
+delete the two lines (a "never dragged" player). Whatever they show, the guide gets a
+suggested place to drag it.
+
+**Inspect on both sides:** one request so far (the 1.0.3 note above); screenshots from a dev
+build before deciding.
 
 **Alterac Pass: core markers on the core bar (user, 2026-10-24).** "We need to add alterac
 valley specific core markers to the core bar; they measure the lifespan of the three keeps
