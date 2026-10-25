@@ -242,9 +242,10 @@ header_height = 22           # the stats panes' column headings, under the title
 team_height = 24             # each team's band (name + team totals) above its five rows
 # Each pane has its own hotkey and starts hidden; they share the one info_pane box, and
 # opening one closes whichever is open. Ctrl+1-4 (user, 2026-10-05): Blizzard's own panes on
-# Ctrl+1 / Ctrl+2 have their keys taken away (FCJH_Hidden), as Ahli does.
-hotkeys = { talents = "Control+1", kda = "Control+2", healing = "Control+3", siege = "Control+4" }
-# The numbers panes' rows (KDA, healing, siege; user, 2026-10-23: "zebra rows, Heroes
+# Ctrl+1 / Ctrl+2 have their keys taken away (FCJH_Hidden), as Ahli does. Ctrl+4 was siege until it became
+# Blizzard's XP Contribution (user, 2026-10-25).
+hotkeys = { talents = "Control+1", kda = "Control+2", healing = "Control+3", xp = "Control+4" }
+# The numbers panes' rows (KDA, healing, XP contribution; user, 2026-10-23: "zebra rows, Heroes
 # palette"): a stripe behind every row in its team's tint, the two shades alternating, and a
 # thin line in the team colour under each, as Blizzard's score screen. The stripes butt
 # together, each row centred in its own. Colours are "alpha,r,g,b" over the pane's skin; the

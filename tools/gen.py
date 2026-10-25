@@ -4494,10 +4494,10 @@ STAT_PANES = [
         ("DeathsScoreValueFrame", "Deaths", "DEATHS", "count", "Deaths"),
         ("AssistsScoreValueFrame", "Assists", "ASSISTS", "count", "Assists"),
         ("HeroDamageScoreValueFrame", "HeroDamage", "HERO DMG", "big", "HeroDamage")]),
-    ("healing", "SELF HEALING  ·  HEALING", [
+    # siege and XP joined healing when Ctrl+4 became the XP Contribution pane (user, 2026-10-25)
+    ("healing", "HEALING  ·  SIEGE DAMAGE  ·  EXPERIENCE", [
         ("DamageTakenScoreValueFrame", "SelfHealing", "SELF", "big", "SelfHealing"),
-        ("HealingScoreValueFrame", "Healing", "HEALING", "big", "Healing")]),
-    ("siege", "SIEGE DAMAGE  ·  EXPERIENCE", [
+        ("HealingScoreValueFrame", "Healing", "HEALING", "big", "Healing"),
         ("SiegeDamageScoreValueFrame", "SiegeDamage", "SIEGE DMG", "big", "SiegeDamage"),
         ("ExperienceScoreValueFrame", "ExperienceContribution", "XP", "big", "ExperienceContribution")]),
 ]
@@ -4510,7 +4510,8 @@ STAT_WIDTHS = {"count": 60, "big": 84}
 STAT_GAP = 24                # the least room between columns, and after the portrait
 STAT_HEADING_CLEAR = 4       # a heading may run left into the gap before its column, to here
 # Every info pane, in hotkey order: (key, container). Only one shows at a time.
-INFO_PANES = [("talents", "Pane_Talents")] + [(k, f"Pane_{k.capitalize()}") for k, _, _ in STAT_PANES]
+INFO_PANES = ([("talents", "Pane_Talents")] + [(k, f"Pane_{k.capitalize()}") for k, _, _ in STAT_PANES] +
+              [("xp", "Pane_Xp")])
 STAT_ROW_H, STAT_TEAM_GAP = 40, 0        # Blizzard's rows are 40 units tall; red's band follows blue's
                                          # last stripe (user, 2026-10-23: "a row of emptiness ... we can remove that too")
 STAT_ROW_W = 565                         # Blizzard's slot width
@@ -4656,6 +4657,7 @@ def pane_chrome(title, placed, geometry, indent=3):
         f'{t}\t<RenderPriority val="600"/>\n{t}\t<AcceptsMouse val="false"/>\n'
     out += (f'{t}\t<Frame type="Label" name="FCJH_Title">\n' + band(indent + 2) +
             f'{t}\t\t<Style val="ObsBar_MatchTimer"/>\n{t}\t\t<Text val="{words.ref(title)}"/>\n'
+            f'{t}\t\t<Options val="NoWrapping | ScaleToPreventTruncation"/>\n'
             f'{t}\t\t<RenderPriority val="610"/>\n{t}\t\t<AcceptsMouse val="false"/>\n{t}\t</Frame>\n')
     # a heading is right-aligned over its numbers, free to run left into the gap before them
     # ("ASSISTS" is wider than its column's numbers)
@@ -4882,18 +4884,92 @@ def stat_pane(key, title, columns, geometry, stripes=None):
 '''
 
 
+# The XP Contribution pane (Ctrl+4): Blizzard's popup off the top bar's XP numbers
+# (partyframe.stormlayout XPContributionPopup), which observers never get - each team's XP by
+# where it came from. The only info pane by team, not by hero: a band with the team's total,
+# then a row per source. Blizzard's script writes the numbers every few seconds into hidden
+# labels on the top panel (uilib.galaxy UIPartyFrameXPContributionPercentage, to every
+# player, observers included) once a team's hero has 100 XP; ours show those labels' text.
+XP_SOURCES = [("Hero", "HEROES"), ("Mercenary", "MERCENARIES"), ("Minion", "MINIONS"),
+              ("Passive", "PASSIVE"), ("Structure", "STRUCTURES")]
+XP_LABELS = PARTY + "/PartyFrameTopPanel/Team{n}XPInfoFrame/PropertyBindLabels/{source}AmountLabel/@Text"
+
+
+def xp_label(name, top, left, right, style, text, indent, cb_style=None):
+    """One of the XP pane's labels; a number's style turns colour-blind with the game's option."""
+    t = "\t" * indent
+    cb = colour_blind_states([f'frame="$this" style="{cb_style}"'], [f'frame="$this" style="{style}"'],
+                             indent + 1) if cb_style else ""
+    return (f'{t}<Frame type="Label" name="{name}">\n' +
+            box(("Min", str(top[0])), ("Min", str(left)), ("Min", str(top[1])), ("Min", str(right)))(indent + 1) +
+            f'{t}\t<Style val="{style}"/>\n{t}\t<Text val="{text}"/>\n'
+            f'{t}\t<Options val="NoWrapping | ScaleToPreventTruncation"/>\n'
+            f'{t}\t<RenderPriority val="610"/>\n{t}\t<AcceptsMouse val="false"/>\n' + cb + f'{t}</Frame>\n')
+
+
+def xp_pane(geometry, stripes=None):
+    container = "Pane_Xp"
+    right = geometry["width"] - STAT_MARGIN
+    left = right - STAT_WIDTHS["big"]
+    name_left = geometry["border"] + STAT_MARGIN
+    t = "\t" * 3
+    band = box(("Min", "0"), ("Min", "0"), ("Min", "#FCJH_INFO_PANE_TITLE_H"), ("Max", "0"))
+    chrome = (f'{t}<Frame type="Frame" name="FCJH_Chrome">\n' + PANE(4) +
+              f'{t}\t<RenderPriority val="600"/>\n{t}\t<AcceptsMouse val="false"/>\n'
+              f'{t}\t<Frame type="Label" name="FCJH_Title">\n' + band(5) +
+              f'{t}\t\t<Style val="ObsBar_MatchTimer"/>\n{t}\t\t<Text val="{words.ref("XP CONTRIBUTION")}"/>\n'
+              f'{t}\t\t<RenderPriority val="610"/>\n{t}\t\t<AcceptsMouse val="false"/>\n{t}\t</Frame>\n'
+              f'{t}\t<Frame type="Label" name="FCJH_Heading0">\n'
+              f'{t}\t\t<Anchor side="Top"   relative="$parent" pos="Min" offset="#FCJH_INFO_PANE_TITLE_H"/>\n'
+              f'{t}\t\t<Anchor side="Left"  relative="$parent" pos="Min" offset="{left}"/>\n'
+              f'{t}\t\t<Anchor side="Right" relative="$parent" pos="Min" offset="{right}"/>\n'
+              f'{t}\t\t<Height val="#FCJH_INFO_PANE_HEADER_H"/>\n'
+              f'{t}\t\t<Style val="FCJH_StatHeading"/>\n{t}\t\t<Text val="{words.ref("XP")}"/>\n'
+              f'{t}\t\t<Options val="NoWrapping | ScaleToPreventTruncation"/>\n'
+              f'{t}\t\t<RenderPriority val="610"/>\n{t}\t\t<AcceptsMouse val="false"/>\n{t}\t</Frame>\n')
+    for n, ((team, _, colour, total_style), top) in enumerate(zip(TEAMS, geometry["team_tops"]), 1):
+        T = team.capitalize()
+        bottom = top + geometry["team_h"]
+        at = box(("Min", str(top)), ("Min", "#FCJH_INFO_PANE_BORDER"), ("Min", str(bottom)),
+                 ("Max", "#FCJH_INFO_PANE_BORDER_NEG"))
+        chrome += fill_image(f"FCJH_{T}Band", at, colour, 602, 4, colour_blind_fill(geometry["cfg"], colour, team, 5))
+        chrome += xp_label(f"FCJH_{T}TotalName", (top, bottom), name_left, left - STAT_GAP, "FCJH_XpSource",
+                           words.ref("TOTAL"), 4)
+        chrome += xp_label(f"FCJH_{T}Total", (top, bottom), left, right, total_style,
+                           "{" + XP_LABELS.format(n=n, source="Total") + "}", 4, total_style + "CB")
+        for i, (source, heading) in enumerate(XP_SOURCES):
+            y = geometry["row_tops"][(n - 1) * 5 + i]
+            span = (y + 12, y + STAT_ROW_H)   # where the stats panes' numbers sit in a row
+            value = f"FCJH_StatValue_{T}"
+            chrome += xp_label(f"FCJH_{T}{source}Name", span, name_left, left - STAT_GAP, "FCJH_XpSource",
+                               words.ref(heading), 4)
+            chrome += xp_label(f"FCJH_{T}{source}", span, left, right, value,
+                               "{" + XP_LABELS.format(n=n, source=source) + "}", 4, value + "CB")
+    return f'''		<!-- XP CONTRIBUTION: Blizzard's XP Contribution popup's numbers, by team -->
+		<Frame type="Frame" name="FCJH_{container}">
+			<Anchor relative="$parent"/>
+			<Visible val="false"/>
+			<AcceptsMouse val="false"/>
+			<Frame type="Frame" name="FCJH_Skin" template="FCJH_Constants/FCJH_PaneSkin">
+''' + PANE(4) + '''			</Frame>
+''' + row_stripes(stripes, geometry) + chrome + f'{t}</Frame>\n' + close_button(container) + '''		</Frame>
+'''
+
+
 def stat_panes_layout(cfg):
     geometry = dict(stat_geometry(cfg), cfg=cfg)   # cfg for the colour-blind colours
     return XML_DECL + "<Desc>\n" + GENERATED + '''
-	<!-- Info panes: KDA, healing, siege (layout.toml [info_pane]). One box shared by all
+	<!-- Info panes: KDA, healing, XP contribution (layout.toml [info_pane]). One box shared by all
 	     four info panes (talents' is FCJH_InfoPane); one hotkey each; all start hidden, and
 	     opening one closes the others. Each stats pane is our own copy of Blizzard's
 	     observer stats panel - the engine fills it, as it does our talents pane - with its
 	     score columns repointed at the values we want (tools/gen.py STAT_PANES). Layout, top
 	     down: title, column headings, blue band (team totals), blue rows, red band, red rows;
-	     every row portrait-first. Chrome drawn over the rows lets the mouse through. -->
+	     every row portrait-first. The XP pane (xp_pane) is ours alone: Blizzard's XP Contribution
+	     numbers, by team. Chrome drawn over the rows lets the mouse through. -->
 	<Frame type="GameUI" name="GameUI" file="GameUI">
-''' + "".join(stat_pane(*p, geometry, cfg["info_pane"].get("rows")) for p in STAT_PANES) + '''
+''' + "".join(stat_pane(*p, geometry, cfg["info_pane"].get("rows")) for p in STAT_PANES) + \
+        xp_pane(geometry, cfg["info_pane"].get("rows")) + '''
 		<!-- The hotkeys, all four panes (talents included) -->
 ''' + "".join(pane_toggle(k, c) for k, c in INFO_PANES) + '''	</Frame>
 </Desc>

@@ -28,7 +28,7 @@ at bottom-centre; team core HP above the cells; a two-line top bar of series sco
 name, logo and level either side of Blizzard's hexagon, with bans, division and game count
 beneath; Blizzard's own kill feed top-left; replay controls top-right; four operator keys, Ctrl+Shift+R/C/I/N, toggle the replay controls,
 chat, inspect card and player names (layout.toml `[toggles]`); info panes
-(talents, KDA/damage, healing, siege) at middle-left on hotkeys; talent pop-ups on the
+(talents, KDA/damage, healing/siege/XP, XP contribution) at middle-left on hotkeys; talent pop-ups on the
 cells, and a green-plus pop-up on any hero below 25% health (drawn under the talent
 pop-up). **There is no fight mode** (user, 2026-10-16: the spec has moved past it) - the
 default view is the old fight-mode cluster, and the operator's toggles hide what needs hiding.
@@ -220,7 +220,7 @@ interface/FCJH.StormInterface/                     the archive's file tree, one 
     DescIndex.StormLayout                    GENERATED — every layout, constants first
     FCJH_Constants.StormLayout               GENERATED — layout.toml in layout units
     FCJH_HeroRow.StormLayout                 GENERATED — cells, heroic panels, pop-ups, row packer
-    FCJH_StatPanes.StormLayout               GENERATED — the three stat info panes
+    FCJH_StatPanes.StormLayout               GENERATED — the three numbers info panes
     FCJH_Inspect.StormLayout                 GENERATED — the inspect card
     FCJH_Maps.StormLayout                    GENERATED — each map's minimap place, panel, team alerts
     FCJH_*.StormLayout                       hand-written, one per concern (top bar, hidden
@@ -494,20 +494,28 @@ and Ko-fi).
 Observer** ("I think") - README's install step 3 and docs/development.md say so; correct both
 if not.
 
-**For 1.0.3: explore Blizzard's XP Contribution numbers (user, 2026-10-23: "make a note to
-explore it for v1.0.3").** Player view's top-bar hover popup splits each team's XP by source:
-Heroes, Mercenaries, Minions, Passive, Structures, Total. The popup is
-`PartyFrame/XPContributionPopup` (core `partyframe.stormlayout:2869`; an older copy at
-`topbar.stormlayout:300`). Its numbers are hidden labels,
-`PartyFrameTopPanel/Team<1|2>XPInfoFrame/PropertyBindLabels/<Hero|Mercenary|Minion|Passive|Structure|Total>AmountLabel`
-under `UIContainer/ConsoleUIContainer/PartyFramePanel`, which the popup copies with
-`{.../@Text}`. Trigger `libUIUI_gt_UIPartyFrameXPContributionPercentage` (uilib.galaxy:15611)
-writes them every 3 s **to `PlayerGroupAll()`, so observers' clients get them**. Observers
-never see the popup only because `PartyFramePanel` is hidden for all at start and shown per
-player (uilib.galaxy:6234). To find out: whether our own labels can bind to those hidden
-ones in observer mode, and whether the observer UI builds `PartyFramePanel` at all.
-Reuse Blizzard's popup if it can be reparented. The same sources reach score values
-(`ExperienceFromTakedowns` etc.) only at game end.
+**The XP Contribution pane - built, to see in game (user, 2026-10-25: "Let's look at that
+experience breakdown panel, and see if we can re-arrange our info panes to accomodate").**
+Still four panes on the same keys: Ctrl+3 is now HEALING · SIEGE DAMAGE · EXPERIENCE (by hero:
+SELF, HEALING, SIEGE DMG, XP), and Ctrl+4 is XP CONTRIBUTION, the only pane by team, not by
+hero - each team's band with its TOTAL, then a row per source: HEROES, MERCENARIES, MINIONS,
+PASSIVE, STRUCTURES, in Blizzard's words from the popup (`UI/XPContribution/*`). The numbers
+are Blizzard's popup's own: hidden labels on the top panel,
+`PartyFramePanel/PartyFrameTopPanel/Team<1|2>XPInfoFrame/PropertyBindLabels/<Hero|Mercenary|Minion|Passive|Structure|Total>AmountLabel`
+under `UIContainer/ConsoleUIContainer` (core partyframe.stormlayout, popup at :2869, labels at
+:3158), which trigger `libUIUI_gt_UIPartyFrameXPContributionPercentage` (uilib.galaxy:15611)
+writes every ~3 s to `PlayerGroupAll()`. Ours bind their text, as the plates already bind
+`PartyFramePanel`'s pet death timers (gen.py `xp_pane`, `XP_SOURCES`; style
+`FCJH_XpSource`). The stats panes widened 477 -> 549 units (~65 px) for Ctrl+3's four big
+columns; the titles now ScaleToPreventTruncation. The HUD key (FCJH_Toggles) fades the XP
+pane where it faded siege's. **Check:** the numbers fill in an observed replay at all (the
+binding to a hidden, script-written label is unseen for observers); they read empty until a
+team's first hero reaches 100 XP (Blizzard's script waits for it), so blank at 0:00 is
+expected; blue and red the right way round (Team1 = blue); Russian's long rows ("Убийства
+героев") fit; Ctrl+3's 4 columns and the wider box against what's beside it. If the numbers
+never fill, the fallback is per-hero XP only (Ctrl+3 keeps it). If the user would rather keep
+Ctrl+3 as it was, the XP pane can go on Ctrl+5 instead (one hotkey in layout.toml; the box
+already fits).
 
 **For 1.0.3 too: the inspect card on its team's side (a suggestion, user, 2026-10-23: "blue
 where it is now, red for a mirror across the way").** A blue hero's card stays at

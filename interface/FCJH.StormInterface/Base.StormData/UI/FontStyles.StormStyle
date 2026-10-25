@@ -20,6 +20,9 @@
 	<Style name="FCJH_StatValue_RedCB" template="HeaderExtendedTemplate" height="20" textcolor="edcaa4" vjustify="Middle" hjustify="Right" styleflags="!Shadow|!Glow|!Uppercase"/>
 	<Style name="FCJH_StatTotal_BlueCB" template="HeaderExtendedTemplate" height="21" textcolor="d2eaff" vjustify="Middle" hjustify="Right" styleflags="!Shadow|Glow|!Uppercase" glowcolor="268de4"/>
 	<Style name="FCJH_StatTotal_RedCB" template="HeaderExtendedTemplate" height="21" textcolor="fff1e2" vjustify="Middle" hjustify="Right" styleflags="!Shadow|Glow|!Uppercase" glowcolor="e48826"/>
+	<!-- The XP Contribution pane's row names (HEROES, MINIONS...) and its bands' TOTAL: the
+	     headings' face, left-justified, a step brighter -->
+	<Style name="FCJH_XpSource" template="HeaderExtendedTemplate" height="17" textcolor="c4d0e4" vjustify="Middle" hjustify="Left" styleflags="!Shadow|!Glow|!Uppercase"/>
 	<!-- Plate CC text ("STUNNED"): Blizzard's TalentChoiceAlertNameplateLabel, but centred
 	     vertically too, so it sits across the middle of the health bar. 14, not 17: UNSTOPPABLE
 	     overflowed the shorter bar a heroic leaves (2026-09-30) -->

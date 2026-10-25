@@ -30,6 +30,7 @@ detail.
 - The replay controls: a hide key that never worked, and the box losing its top when the
   timeline hides.
 - The pause box, drawn over the top bar's middle in every custom game.
+- The XP Contribution breakdown (each team's XP by source), which observers never see.
 
 **Made: Blizzard never had it**
 - Hero plates built from the player's in-game top bar, with:
@@ -294,6 +295,17 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
     at each hero's quest-counter behaviour by a hand-kept list of ~400 entries
     (SpazzoCustomTopBarQuests.StormLayout), mouse and tooltip off. Icon and count, no text,
     and every new or changed quest needs the list updated: a fallback only.
+
+### XP Contribution: the breakdown observers never see
+- **Blizzard's:** players hover the top bar's XP for a popup splitting each team's experience
+  by source - heroes, mercenaries, minions, passive, structures and the total
+  (partyframe.stormlayout `XPContributionPopup`). Blizzard's script writes the numbers for
+  every player, observers included (uilib.galaxy `UIPartyFrameXPContributionPercentage`, to
+  `PlayerGroupAll()`), but the popup lives on the player's party frame, so an observer never
+  gets to see them.
+- **Ours:** an info pane of its own on Ctrl+4, the only one by team: each team's band with its
+  total, a row per source, Blizzard's words and numbers (`xp_pane`, gen.py).
+- **Status:** built, not yet seen in game.
 
 ### Hogger's rage drawn as mana
 - **Blizzard's:** the target panel's per-hero resource colours (`HeroResourceStates`,

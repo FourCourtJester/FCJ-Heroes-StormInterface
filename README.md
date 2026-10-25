@@ -39,8 +39,8 @@ It's laid out for **1920 × 1080**. Its labels come in every language Heroes shi
 |---|---|
 | `Ctrl+1` | Talents pane |
 | `Ctrl+2` | Kills, deaths and damage |
-| `Ctrl+3` | Healing |
-| `Ctrl+4` | Siege |
+| `Ctrl+3` | Healing, siege and experience |
+| `Ctrl+4` | Each team's experience by where it came from |
 | `Ctrl+Shift+I` | Show or hide the inspect card (the selected hero) |
 | `Ctrl+Shift+N` | Show or hide player names over the heroes |
 | `Ctrl+Shift+C` | Show or hide chat |

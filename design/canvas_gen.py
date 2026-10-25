@@ -414,14 +414,15 @@ DEMO = {   # stand-in numbers
     "kda": (["1", "1", "0", "13,660"], ["0", "0", "2", "13,572"],
             [["0", "0", "0", "1,532"], ["0", "0", "0", "2,252"], ["0", "0", "0", "6,130"], ["0", "1", "0", "2,787"], ["0", "0", "0", "959"],
              ["0", "0", "0", "2,117"], ["0", "0", "0", "3,767"], ["1", "0", "0", "2,789"], ["0", "0", "1", "1,913"], ["0", "0", "1", "2,986"]]),
-    "healing": (["6,402", "18,220"], ["5,871", "16,004"],
-                [["1,210", "0"], ["2,004", "0"], ["640", "18,220"], ["1,988", "0"], ["560", "0"],
-                 ["1,002", "0"], ["2,410", "16,004"], ["980", "0"], ["1,112", "0"], ["367", "0"]]),
-    "siege": (["53,710", "18,904"], ["48,731", "17,322"],
-              [["7,960", "3,410"], ["13,080", "4,002"], ["5,310", "3,115"], ["16,486", "4,870"],
-               ["10,874", "3,507"], ["8,312", "3,221"], ["14,480", "3,788"], ["6,314", "3,366"],
-               ["12,290", "3,519"], ["7,335", "3,428"]]),
+    "healing": (["6,402", "18,220", "53,710", "18,904"], ["5,871", "16,004", "48,731", "17,322"],
+                [["1,210", "0", "7,960", "3,410"], ["2,004", "0", "13,080", "4,002"], ["640", "18,220", "5,310", "3,115"],
+                 ["1,988", "0", "16,486", "4,870"], ["560", "0", "10,874", "3,507"], ["1,002", "0", "8,312", "3,221"],
+                 ["2,410", "16,004", "14,480", "3,788"], ["980", "0", "6,314", "3,366"], ["1,112", "0", "12,290", "3,519"],
+                 ["367", "0", "7,335", "3,428"]]),
 }
+# the XP Contribution pane's stand-ins: each team's total, then by source (gen.XP_SOURCES)
+XP_DEMO = (("18,904", ["4,210", "2,640", "6,118", "4,020", "1,916"]),
+           ("17,322", ["3,380", "1,975", "6,402", "4,020", "1,545"]))
 
 
 def stats_pane(key):
@@ -452,6 +453,38 @@ def stats_pane(key):
         for (_, _, _, x, w, _), v in zip(placed, rows[i]):
             out.append(f'<div style="{lbl} left: {u(x)}px; top: {u(y + 12)}px; width: {u(w)}px; height: {u(gen.STAT_ROW_H - 12)}px; '
                        f'font-size: {vp}px; font-weight: 600; color: {vc};">{v}</div>')
+    out.append('</div>')
+    return "".join(out)
+
+
+def xp_pane():
+    """gen.xp_pane's layout: by team, not by hero - a band with the total, a row per source."""
+    g = gen.stat_geometry(CFG)
+    head_px, head_col = FONTS["FCJH_StatHeading"]
+    name_px, name_col = FONTS["FCJH_XpSource"]
+    sw = u(g["width"])
+    right = g["width"] - gen.STAT_MARGIN
+    left = right - gen.STAT_WIDTHS["big"]
+    name_left = g["border"] + gen.STAT_MARGIN
+    out = [f'<div style="{PANE_CSS.replace(f"width: {PANE_W}px", f"width: {sw}px")}">', title_band("XP CONTRIBUTION", sw)]
+    lbl = f"position: absolute; display: flex; align-items: center; {GAME}"
+    cell = lambda x0, x1, y, h, px, col, weight, text, end=True: (
+        f'<div style="{lbl} justify-content: {"flex-end" if end else "flex-start"}; left: {u(x0)}px; top: {u(y)}px; '
+        f'width: {u(x1 - x0)}px; height: {u(h)}px; font-size: {px}px; font-weight: {weight}; color: {col};">{text}</div>')
+    out.append(cell(left, right, g["title"], g["team_tops"][0] - g["title"], head_px, head_col, 600, "XP"))
+    for t, team in enumerate(("blue", "red")):
+        band_c = gen.TEAMS[t][2].split(",")
+        y = g["team_tops"][t]
+        total, rows = XP_DEMO[t]
+        out.append(f'<div style="{abs_box(0, u(y), sw, u(g["team_h"]))} background: rgba({",".join(band_c[1:])},{int(band_c[0]) / 255:.2f});"></div>')
+        vp, vc = FONTS[f"FCJH_StatTotal_{team.capitalize()}"]
+        out.append(cell(name_left, left - gen.STAT_GAP, y, g["team_h"], name_px, name_col, 600, "TOTAL", False))
+        out.append(cell(left, right, y, g["team_h"], vp, vc, 700, total))
+        vp, vc = FONTS[f"FCJH_StatValue_{team.capitalize()}"]
+        for i, ((_, name), v) in enumerate(zip(gen.XP_SOURCES, rows)):
+            ry = g["row_tops"][t * 5 + i] + 12
+            out.append(cell(name_left, left - gen.STAT_GAP, ry, gen.STAT_ROW_H - 12, name_px, name_col, 600, name, False))
+            out.append(cell(left, right, ry, gen.STAT_ROW_H - 12, vp, vc, 600, v))
     out.append('</div>')
     return "".join(out)
 
@@ -638,7 +671,7 @@ def main_board():
     b.append(f'<div style="position: absolute; left: {PANE_X}px; top: {PANE_Y}px;">' + stats_pane("kda") + '</div>\n')
     ix, iy, iw, ih = R["inspect"]
     b.append(f'<div class="dem" style="left: {ix}px; top: {iy}px; width: {iw}px; height: {ih}px; background: transparent;"></div>\n')
-    b.append(f'<div class="chip s" style="left: {PANE_X + PANE_W + 12}px; top: {PANE_Y + 90}px; width: 270px;">Info pane · {PANE_W} × {PANE_H} · Ctrl+1 talents, 2 KDA, 3 healing, 4 siege (KDA shown)</div>\n')
+    b.append(f'<div class="chip s" style="left: {PANE_X + PANE_W + 12}px; top: {PANE_Y + 90}px; width: 270px;">Info pane · {PANE_W} × {PANE_H} · Ctrl+1 talents, 2 KDA, 3 healing + siege, 4 XP contribution (KDA shown)</div>\n')
     b.append(f'<div class="chip s" style="left: {ix + iw + 12}px; top: {iy + ih - 120}px; width: 300px; border: 1px solid #6FD3D3;">Teal: the inspect card, {iw} × {ih}, while a unit is selected (same left column; bottom at y {iy + ih})</div>\n')
     b.append(at("map_objectives", "dem", '<div class="t" style="font-size: 14px;">Map objectives · per map, at THE GAP (Maps board)</div>', CENTRE))
     mm = CFG["minimap"]
@@ -829,9 +862,10 @@ def panes_board():
                 f"At {PANE_X}, {PANE_Y}. One pane at a time, Ctrl+1-4; the X closes it. Stats panes from tools/gen.py (stat_geometry, place_columns); "
                 f"numbers are stand-ins. Build {STAMP}.", 2100)]
     panes = [("TALENTS · Ctrl+1", talents_pane()), ("KDA · Ctrl+2", stats_pane("kda")),
-             ("HEALING · Ctrl+3", stats_pane("healing")), ("SIEGE · Ctrl+4", stats_pane("siege"))]
+             ("HEALING · SIEGE · XP · Ctrl+3", stats_pane("healing")), ("XP CONTRIBUTION · Ctrl+4", xp_pane())]
+    sw = u(gen.stat_geometry(CFG)["width"])
     for i, (label, html) in enumerate(panes):
-        x = 48 + i * 542
+        x = 48 if i == 0 else 48 + PANE_W + 40 + (i - 1) * (sw + 40)   # the stats panes are narrower than talents'
         b.append(f'<div class="t" style="position: absolute; left: {x}px; top: 150px; font-size: 18px; color: #F2C94C;">{label}</div>\n')
         b.append(f'<div style="position: absolute; left: {x}px; top: 184px;">{html}</div>\n')
     g = gen.stat_geometry(CFG)
@@ -1099,7 +1133,7 @@ def spec_board():
         ("Kill feed", "Blizzard's own, top-left", "game", "Not moved: its rows grow rightward, so multi-kills ran off a right-hand feed"),
         ("Replay controls", f"{R['replay'][0]}, {R['replay'][1]} · {xs('replay')}, top-right", "game", f"{key('replay')} slides them out, leaving a tab flush in the corner. Replays only"),
         ("Operator keys", " · ".join(key(k) for k, _ in TOGGLES), "game", "The replay box, chat, the inspect card, player names. None a Blizzard key (validate.py checks)"),
-        ("Info panes", f"{PANE_X}, {PANE_Y} · {PANE_W} × {PANE_H}", "game", "Ctrl+1-4: talents, KDA + hero dmg, healing, siege + XP. One at a time"),
+        ("Info panes", f"{PANE_X}, {PANE_Y} · {PANE_W} × {PANE_H}", "game", "Ctrl+1-4: talents, KDA + hero dmg, healing + siege + XP, XP contribution by team. One at a time"),
         ("Inspect card", f"{R['inspect'][0]}, {R['inspect'][1]} · {xs('inspect')}", "game", f"Shows when Blizzard's small inspector would. Anything not a hero gets a short card. {key('inspect')} slides it off left"),
         ("Blizzard's small inspector", "Parked off screen", "game", "Never shows; its visibility drives our card"),
         ("Player HUD", "Hidden", "game", "Ctrl+5 is Blizzard's observe-player key"),

@@ -72,8 +72,7 @@ WORDS = {
     # (UI/TeamColor02, 01; Blizzard's team names in Chinese and Korean, where the colour alone
     # isn't a team's name)
     "Stats/KdaTitle": _join({loc: "KDA" for loc in LOCALES}, _upper(HERO_DAMAGE)),
-    "Stats/HealingTitle": _join(_upper(SELF_HEALING), _upper(HEALING)),
-    "Stats/SiegeTitle": _join(_upper(SIEGE), _upper(EXPERIENCE)),
+    "Stats/HealingTitle": _join(_join(_upper(HEALING), _upper(SIEGE)), _upper(EXPERIENCE)),
     "Stats/Kills": _upper(_row("Kills", "Kills", "Asesinatos", "Derribos", "tués", "Uccisioni", "처치", "Zabici",
                                "Abates", "Убийства", "击杀", "擊殺")),
     "Stats/Deaths": _upper(_row("Tode", "Deaths", "Muertes", "Muertes", "morts", "Morti", "죽음", "Zgony", "Mortes",
@@ -86,6 +85,23 @@ WORDS = {
     "Stats/Siege": _upper(SIEGE) | {"enUS": "SIEGE DMG"},
     # UI/PartyPanel/BonusExperience
     "Stats/XP": _row("EP", "XP", "EXP", "PE", "EXP", "PE", "XP", "PD", "EXP", "ОПЫТ", "XP", "經驗值"),
+    # the XP Contribution pane: Blizzard's popup's words (UI/XPContribution/<key>)
+    "Xp/Title": _upper(_row("EP-Beitrag", "XP Contribution", "Contribución a la EXP", "Aporte de PE",
+                            "EXP apportée", "Contributo PE", "경험치 기여", "Udział w PD", "Contribuição de EXP",
+                            "Командный опыт", "贡献经验", "經驗值貢獻")),
+    "Xp/Total": _upper(_row("Insgesamt", "Total", "Total", "Total", "Total", "Totale", "전체", "Suma", "Total",
+                            "Всего", "总计", "總量")),
+    "Xp/Heroes": _upper(_row("Helden", "Heroes", "Héroes", "Héroes", "Héros", "Eroi", "영웅", "Bohaterowie",
+                             "Heróis", "Убийства героев", "英雄", "英雄")),
+    "Xp/Mercenaries": _upper(_row("Söldner", "Mercenaries", "Mercenarios", "Mercenarios", "Mercenaires",
+                                  "Mercenari", "용병", "Najemnicy", "Mercenários", "Захват наемников", "雇佣兵",
+                                  "傭兵")),
+    "Xp/Minions": _upper(_row("Diener", "Minions", "Esbirros", "Esbirros", "Serviteurs", "Servitori", "돌격병",
+                              "Stronnicy", "Tropas", "Убийства воинов", "小兵", "小兵")),
+    "Xp/Passive": _upper(_row("Passiv", "Passive", "Pasiva", "Pasivo", "Passive", "Passivo", "시간 경과",
+                              "Pasywny", "Passiva", "Пассивный опыт", "被动", "被動")),
+    "Xp/Structures": _upper(_row("Gebäude", "Structures", "Estructuras", "Estructuras", "Bâtiments", "Strutture",
+                                 "구조물", "Budowle", "Estruturas", "Снос строений", "建筑", "建築")),
     "Stats/Blue": _row("BLAU", "BLUE", "AZUL", "AZUL", "BLEU", "BLU", "파랑팀", "NIEBIESKI", "AZUL", "СИНИЙ",
                        "蓝队", "藍隊"),
     "Stats/Red": _row("ROT", "RED", "ROJO", "ROJO", "ROUGE", "ROSSO", "빨강팀", "CZERWONY", "VERMELHO", "КРАСНЫЙ",
