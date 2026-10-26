@@ -146,18 +146,64 @@ inside the band's height to stay clear of it, but that is reasoning, not a live 
 
 ## The matchup slab
 
-The matchup, centred, replacing the bottom band — agreed as the direction on 2026-10-25 and
-still behind a switch while it is refined.
+The matchup, replacing the bottom band — agreed as the direction on 2026-10-25, and since
+2026-10-26 **what the source draws with no flag at all**, so a browser source is just
+`#/source/matchup` with nothing to forget.
 
 | URL | what it draws |
 |---|---|
-| `#/source/matchup` | the original bottom band |
-| `?band=slab` | **the best so far** (user, 2026-10-25): hexagon badge + name plate a side |
-| `?band=unit` | the one-container team, being explored |
+| `#/source/matchup` | **the one container a side** — score, logo, name. The default |
+| `?band=slab` | hexagon badge + name plate a side |
+| `?band=original` | the bottom band this replaced |
 
-The switches are scaffolding, not features; the losers get deleted when it is settled.
+The switches are scaffolding, not features; the losers get deleted when it is settled. Note
+that the original band is now the one that needs asking for — `?band=original`, where it used
+to be what you got by leaving the flag off.
 
-**`?band=slab` is the one to come back to.** It is marked as the current best because the
+### Where it sits, and how big
+
+**Bottom-anchored, centred horizontally.** The lowest painted pixel sits `[screen] padding`
+— 20px — above the bottom edge, the same margin the hero rows stop at, so the band and the
+interface keep one edge (user, 2026-10-26). There is no `centre_y` any more: `tools/obs.py`
+derives the row's centre line from that bottom edge, the row's height and the lockup under it,
+so changing a size moves nothing on screen.
+
+Each composition derives its **own** centre line, because they are not the same depth — the
+container is 113 tall against the slab badge's 178. One shared line put the slab's lockup 16px
+off the bottom of the screen; centred, that difference had been split top and bottom where
+nobody saw it. The unit composition carries its own VS box for the same reason.
+
+The anchor is measured on the **fullest** case, with the lockup under the row. Without one the
+band rides higher rather than sliding down to fill the gap — deliberately, because a band that
+repositions itself when somebody adds or clears a tournament logo would move on air.
+
+**It has come down 20%,** in two passes of ten (user, 2026-10-26, the second after comparing it
+with the draft screen's band). The container is **603 x 113** a side, from 746 x 140. The
+**tournament marks are exempt** from the second pass — "tournament logos dont have to adhere
+to this" — so `lockup`, `lockup_mark`, `lockup_pad` and `lockup_x` are the sizes they were and
+the marks hold their presence while the band tightens around them.
+
+**A third pass was made and reverted**, and it is worth knowing why before anyone tries again.
+`name_cap` looks like a size but is a **slice index** into `frame_matchup.svg` — fixed art,
+108 x 130, generated from `[standby] team_h`, whose point reaches 35.1px in from each end.
+Scaling it 44 → 40 → 36 → 32 walked it under that, so the slice cut through the diagonal and
+the leftover slope was stretched down the whole bar: the silhouette stayed right, because the
+`clip-path` is computed honestly from `lean x height`, while the chrome on top of it came
+apart (user, 2026-10-26: "The drawing is completely wrong now"). Nothing caught it because
+`matchup_frame_svg` asserts its cap holds its point using the **standby's** numbers, which
+never moved.
+
+Going smaller again means generating the matchup's frame from `[matchup]`'s own numbers first,
+so the art shrinks with the band and the cap can scale with it.
+
+Both spellings of a query work — `/?band=unit#/source/matchup` or
+`#/source/matchup?band=unit`. The app is hash-routed, so `location.search` is empty in the
+second, and reading only that served the original band without a word (user, 2026-10-26). The
+flags are read once at load: changing one in the address bar needs a reload, which is what a
+browser source does anyway.
+
+**`?band=slab` is the one to come back to** if the container is ever abandoned. It was the
+best of the earlier attempts because the
 hexagon-and-plate silhouette has a problem that four passes of tuning could not fix: a bulge
 (the badge, 190 wide against a 110 plate), a shaft (the plate), and a taper (the inner
 point), mirrored and converging on the middle. It reads as a key, and less charitably than

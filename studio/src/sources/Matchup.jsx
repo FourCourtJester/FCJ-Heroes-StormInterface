@@ -31,10 +31,18 @@ const [SCREEN_W, SCREEN_H] = SCREEN
 // for `?fill`. The losers get deleted once it is settled; this switch is scaffolding, not a
 // feature.
 //
-//   (nothing)  the original bottom band
-//   slab       hexagon badge + name plate a side - the best so far
-//   unit       one container a side: score, logo, name
-const BAND = new URLSearchParams(window.location.search).get('band')
+//   (nothing)  the one container a side: score, logo, name - THE DEFAULT, so a browser
+//              source is just #/source/matchup with no flag to forget (user, 2026-10-26)
+//   slab       hexagon badge + name plate a side
+//   original   the bottom band this replaced
+// Both spellings work, as the webcams' `?fill` does: the query before the hash
+// (`/?band=unit#/source/matchup`) or inside it (`#/source/matchup?band=unit`). A hash router
+// leaves `location.search` empty in the second, which read as "no flag" and quietly served the
+// original band - the one form you would type first, and it looked like the slab was gone.
+const PARAMS = new URLSearchParams(
+  window.location.search + '&' + window.location.hash.split('?')[1],
+)
+const BAND = PARAMS.get('band') || 'unit'
 const SLAB = BAND === 'slab' || BAND === 'unit'
 
 const SCENE_VARS = {

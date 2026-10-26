@@ -416,6 +416,13 @@
    Darker than the container so it reads as a panel set into it rather than a gap. */
 .fcjh-unit-logo {
   flex: none;
+  /* THE IMAGE'S CONTAINING BLOCK. The mark inside is `position: absolute; inset: 0`, so
+     without this it resolved against `.fcjh-unit` and was drawn the width of the WHOLE
+     container - 746px over a 220px panel, offset 86px left of it, and the clip showed a
+     magnified sliver of the logo (user, 2026-10-26: "the team logos are not sized
+     properly"). The game scene's `.fcjh-logo` has always been `relative`; this is the one
+     line that did not come across with it. */
+  position: relative;
   width: var(--unit-logo);
   display: flex;
   background: rgb(0 0 0 / 0.42);

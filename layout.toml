@@ -526,37 +526,64 @@ social = 20                  # ...and their handle, under the same bar at the ot
 # It is free to leave the bottom edge because Draft will get its own version rather than
 # sharing this one (user, 2026-10-25: "We dont have to use Draft in consideration").
 [matchup]
-centre_y = 500               # the team row's centre line. Above the screen's own 540: the eye
-                             # reads centre a little high, and the lockup below balances it
-badge = 220                  # a team's logo badge, a POINTY-TOP HEXAGON this tall. The kit is
+# TWENTY PER CENT SMALLER than it was drawn, in two passes of ten (user, 2026-10-26: "reduce
+# the footprint by 10%", then again against the draft screen's band). The composition is the
+# one that was approved; it just takes up less screen. 746 x 140 a side became 603 x 113.
+#
+# THE LOCKUP IS EXEMPT from the second pass - "tournament logos dont have to adhere to this".
+# `lockup`, `lockup_mark`, `lockup_pad` and `lockup_x` are the sizes they were, so the marks
+# hold their presence while the band around them tightens; `lockup_gap` holds too, because it
+# was set by eye and scaling it would undo that.
+#
+# A THIRD PASS WAS MADE AND REVERTED (user, 2026-10-26: "revert it back up to the previous
+# 10%. The drawing is completely wrong now"). `name_cap` is NOT a size - see its own note
+# below - and taking it to 32 cut the frame art's point in half. Anything further down has to
+# deal with that first. Only
+# `name_lines` counts, `unit_rule` is a hairline that cannot be 1.8, and `smoke` is an
+# opacity, so none of those three scaled either.
+# THE ROW'S CENTRE LINE IS NOT HERE. It used to be `centre_y = 500`, a little above the
+# screen's own 540 because the eye reads centre high. The band now hangs off the BOTTOM
+# instead, [screen] padding up from the edge - the same 20px the hero rows stop at (user,
+# 2026-10-26) - and tools/obs.py derives the centre line from that, the row's height and the
+# lockup under it. Nothing to author, and nothing to re-measure when a size changes.
+badge = 178                  # a team's logo badge, a POINTY-TOP HEXAGON this tall. The kit is
                              # hexagonal already - the pips, the lattice inside every plate,
                              # Blizzard's own centrepiece - so a hexagon is where a logo
                              # belongs, and a plate pointed at both ends is not.
                              #
-                             # Grown from 184 (user, 2026-10-25: "grow the badge so the logo
-                             # has more presence"). A hexagon tapers, so the logo gets the
-                             # largest square that fits inside it rather than the whole box -
-                             # 184 left it at 87px, which read small; 220 gives 110. Taller
-                             # again starts to overpower the name plate, which is 120
+                             # Grown from 184 to 220 (user, 2026-10-25: "grow the badge so
+                             # the logo has more presence"), then taken to 198 with everything
+                             # else in the 10% pass. A hexagon tapers, so the logo gets the
+                             # largest square that fits inside it rather than the whole box,
+                             # which is why the badge has to run ahead of the mark it holds
 # The logo COVERS the badge and the hexagon clips it (user, 2026-10-25), so there is no
 # padding here any more: a mark bleeds to the rim instead of sitting in a square inside it.
 # Its rim and sheen are the plates' own, generated into badge_hex.svg - no rim width here
 # either, because the kit already has one ([visual] rim_w) and a second would drift.
-name_w = 440                 # the name plate: a FLAT outer edge butted to the badge, and a
+name_w = 356                 # the name plate: a FLAT outer edge butted to the badge, and a
                              # point at the VS end (user, 2026-10-25: "flatten the outer edges
                              # of the nameplates to match the vertical edge of the team logo
                              # hexagons"). Its height is not here - it is the hexagon's own
                              # vertical edge, badge / 2, so the two meet exactly instead of
                              # one overhanging the other by a few pixels
-name_cap = 44                # its nine-slice caps, wide enough to hold the point
-name_text = 46               # a team name's cap height, the size it starts at
+name_cap = 36                # NOT A SIZE - a SLICE INDEX into frame_matchup.svg, which is
+                             # fixed art ([standby] team_h, 108 x 130) whose point reaches
+                             # 35.1 px in from each end. Slice inside that and the leftover
+                             # diagonal lands in the stretchable middle and smears down the
+                             # whole bar, which is what 32 did (user, 2026-10-26: "the drawing
+                             # is completely wrong now"). The floor is 35.1 + 2 * rim_width =
+                             # 40.1, so even this 36 is drawing its rim tighter than the art
+                             # intends. It was 44 - [standby] team_cap - when the art was cut,
+                             # and shrinking the band cannot move it: the art would have to be
+                             # generated from [matchup]'s own numbers first.
+name_text = 37               # a team name's cap height, the size it starts at
 name_lines = 2               # the most lines it may wrap to
-name_min = 26                # ...and the floor it may shrink to once it has used them. The
+name_min = 21                # ...and the floor it may shrink to once it has used them. The
                              # framework's own `fit` cannot do this: it guarantees one line by
                              # shrinking, measured at 23.8px for a 25-character club name -
                              # 48% of the 46 it was asked for, which is what made the old
                              # container look empty (user, 2026-10-25)
-name_pad = 18                # the text, in from the plate's point
+name_pad = 14                # the text, in from the plate's point
 # THE ONE-CONTAINER TEAM (user, 2026-10-25: "the one container idea might be best"). One
 # shape a side, holding everything that side is: the score at its outer end, a parallelogram
 # for the logo next to it - the game scene's logo plate, in this kit's lean - and the name
@@ -565,28 +592,29 @@ name_pad = 18                # the text, in from the plate's point
 #
 # It is also where the series score finally lands: the space between the logo and the outer
 # border was going spare, and a score retrofitted later would have meant moving everything.
-unit_h = 140                 # the container, taller than the 110 plate it replaces because it
+unit_h = 113                 # the container, taller than the 110 plate it replaces because it
                              # now holds a logo rather than standing beside one
-unit_score = 86              # the score panel at the outer end
-unit_score_text = 56         # the number in it
-unit_logo = 220              # the logo parallelogram beside it. The logo FILLS it and the
+unit_score = 69              # the score panel at the outer end
+unit_score_text = 45         # the number in it
+unit_logo = 178              # the logo parallelogram beside it. The logo FILLS it and the
                              # slant clips the overflow, the way the game scene's logo plate
                              # works (user, 2026-10-25), so this is simply how much plate the
                              # mark gets. Width still has to clear the SHEAR: a parallelogram
-                             # leans by lean * height - 75.6 at this height - and much under
-                             # 200 reads as a diagonal strip rather than a plate
+                             # leans by lean * height - 68 at this height - and much under 180
+                             # reads as a diagonal strip rather than a plate. Both floors came
+                             # down with the 10% pass; the shape is what matters, not the size
 unit_rule = 2                # the hairline between the container's three parts
 
-vs = 116                     # the VS hexagon between them, this tall
-vs_gap = 22                  # between a name plate's inner point and the VS. Tight on
+vs = 94                     # the VS hexagon between them, this tall
+vs_gap = 18                  # between a name plate's inner point and the VS. Tight on
                              # purpose (user, 2026-10-25): the plate's point is a triangle,
                              # so the air it leaves beside the hexagon reads wider than the
                              # number. Narrowing it pulls the whole slab in with it, since
                              # everything is placed outward from the middle
-vs_text = 38
-kicker = 34                  # "Coming up next", on a plate above the matchup
-kicker_w = 560               # the plate's TOP edge. One slant a side, not a point at half
-kicker_h = 76                # height: the left edge runs down-left and the right down-right,
+vs_text = 31
+kicker = 28                  # "Coming up next", on a plate above the matchup
+kicker_w = 454               # the plate's TOP edge. One slant a side, not a point at half
+kicker_h = 61                # height: the left edge runs down-left and the right down-right,
                              # so the plate flares to meet the matchup under it (user,
                              # 2026-10-25). The flare is the kit's lean over its height, and
                              # the bottom edge is kicker_w + 2 * that
@@ -596,13 +624,20 @@ kicker_h = 76                # height: the left edge runs down-left and the righ
 # than three things stacked near each other (user, 2026-10-25: "add the same translucent
 # black to the mid so that it looks like one unit"). The mid is as wide as the plate's bottom,
 # which is what makes the two read as one column.
-lockup = 72                  # the broadcaster x tournament lockup, below the matchup
-lockup_gap = 12              # up again, and again (user, 2026-10-25: "move the logos up a
+lockup = 65                  # the broadcaster x tournament lockup, below the matchup
+lockup_gap = 17              # up again, and again (user, 2026-10-25: "move the logos up a
                              # tad more"): close enough to read as the foot of the unit
-                             # rather than something sitting under it
-lockup_pad = 14              # air inside its own box, so the marks do not meet its edges
-lockup_x = 42                # the x joining the two marks
-lockup_mark = 330            # each mark's box, as the scores screen's
+                             # rather than something sitting under it.
+                             #
+                             # It now measures from the CONTAINER's bottom edge, not the
+                             # badge's, so it is the margin you actually see. Half of what was
+                             # there (user, 2026-10-26: "lose half the margin"): 60px from the
+                             # container to the top of a mark becomes 30 - this 17 plus the
+                             # lockup_pad below. The number went UP while the gap halved,
+                             # which is the measure moving to an honest datum
+lockup_pad = 13              # air inside its own box, so the marks do not meet its edges
+lockup_x = 38                # the x joining the two marks
+lockup_mark = 297            # each mark's box, as the scores screen's
 smoke = 0.55                 # how black a plate is over the slideshow
 
 [scores]

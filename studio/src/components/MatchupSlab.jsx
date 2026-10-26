@@ -214,7 +214,7 @@ function Team({ side }) {
  * The tournament mark is the WIDE one where there is one: wide, then square, then nothing,
  * the same waterfall the rest of the kit uses.
  */
-function Lockup() {
+function Lockup({ where }) {
   const broadcaster = useVelcroValue('variables.event.broadcaster')
   const wide = useVelcroValue('variables.event.logo_wide')
   const square = useVelcroValue('variables.event.logo')
@@ -223,7 +223,7 @@ function Lockup() {
 
   if (!broadcaster && !logo) return null
   return (
-    <div className={`fcjh-slab-lockup${both ? '' : ' lone'}`} style={at(lockup.box)}>
+    <div className={`fcjh-slab-lockup${both ? '' : ' lone'}`} style={at(where)}>
       {broadcaster ? (
         <div className="fcjh-slab-mark left">
           <Image name="event.broadcaster" alt="" fit="contain" />
@@ -260,11 +260,11 @@ export default function MatchupSlab({ unit: asUnit = false }) {
         asUnit ? <TeamUnit key={side} side={side} /> : <Team key={side} side={side} />,
       )}
 
-      <div className="fcjh-slab-vs" style={at(vs.box)}>
+      <div className="fcjh-slab-vs" style={at(asUnit ? unit.vs : vs.box)}>
         <span>VS</span>
       </div>
 
-      <Lockup />
+      <Lockup where={asUnit ? unit.lockup : lockup.box} />
     </div>
   )
 }
