@@ -354,22 +354,29 @@ sheen = 0.16                 # white across the top half
 hex_px = 14                  # the lattice's hexagons, width on screen
 lattice = 0.6                # the lattice's strength
 
-# Colour-blind mode (the game's Options > Gameplay > Colorblind Mode; user, 2026-10-25). Blizzard's
-# own colours for it (core gameui.stormlayout ColorBlindColors, heroesdata's Ally override):
-# blue stays blue, red turns orange. Each team-coloured piece keeps its own saturation and
-# brightness and takes this hue (tools/gen.py colour_blind), so these two set every piece: the
-# top backplate, the core bars, the red plates, the inspect card's edge and the talent pop-up's
-# square. The studio's toggle (variables.colourblind) uses the same two (tools/obs.py).
+# Colour-blind mode (the game's Options > Gameplay > Colorblind Mode; user, 2026-10-25). Ahli's
+# colours for it, the casting standard for a decade (user, 2026-10-25: "we should accept them
+# over default blizzard UI values"): blue turns cyan, red orange. His textures keep each colour's
+# saturation and brightness and turn its hue, red ~+30 deg to 15-30, blue ~-30 to 176-197
+# (references/AhliObs075/_Assets/Textures *_orange / *_cyan beside *_red / *_blue). Ours keep
+# saturation and brightness and take this hue (tools/gen.py colour_blind), so these two set
+# every piece: the top backplate, the core bars, the plates, the inspect card's edge, the
+# talent squares and the stat panes. The studio's toggle (variables.colourblind) uses the same
+# two (tools/obs.py). Blizzard's own (ColorBlindColors) were 1487e9 / fe8a0e: blue barely moved.
 [colour_blind]
-blue = "1487e9"              # Blizzard's Ally, colour-blind (0.08, 0.53, 0.9141)
-red = "fe8a0e"               # Blizzard's Hostile, colour-blind (0.996, 0.5412, 0.055)
+blue = "23defc"              # Ahli's heroic talent border, cyan (talentHeroicBorderCyan, hue 188)
+red = "ff672b"               # ...and orange (talentHeroicBorderOrange, hue 17)
 # Blizzard's plate art (HUD_TopBar_Team_HeroFrame_BG_*) has no orange or cyan version, so these
 # teams' plates are recoloured in game (Colorize, as the kill log's portrait borders): the
 # picture's light parts to `plate_light` of the team colour toward white, its dark to
-# `plate_dark` of it. Blue's art is near enough Blizzard's colour-blind blue to keep.
-plates = ["red"]
+# `plate_dark` of it. The talent squares (pop-ups, inspect, Ctrl+1) the same by `square_*`,
+# brighter: Blizzard's highlight art is mid-toned, and the plates' pair left them muted beside
+# blue's (user, 2026-10-25); Ahli's orange square is ff9666.
+plates = ["red", "blue"]
 plate_light = 0.25
 plate_dark = 0.30
+square_light = 0.6
+square_dark = 0.9
 
 # The OBS band along the top edge (docs/obs-topbar-handoff.md, agreed 2026-10-18): the team
 # name plates with their logo plates, the series score's pips, the ban tiles and the division

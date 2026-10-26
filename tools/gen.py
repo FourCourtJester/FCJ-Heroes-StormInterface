@@ -1241,13 +1241,14 @@ def colour_blind_fill(cfg, colour, team, indent):
                                       [f'frame="$this" AdjustmentColor="{colour}"'], indent).rstrip("\n")
 
 
-def colour_blind_plate(cfg, team):
+def colour_blind_plate(cfg, team, kind="plate"):
     """The Colorize pair (light, dark) for a team's plate art in colour-blind mode ([colour_blind]
-    plate_light / plate_dark), from the team's colour-blind colour."""
+    plate_light / plate_dark), from the team's colour-blind colour; kind "square" for the talent
+    squares' brighter pair (square_light / square_dark)."""
     cb = cfg["colour_blind"]
     c = [int(cb[team][i:i + 2], 16) for i in (0, 2, 4)]
-    light = "".join(f"{round(v + (255 - v) * cb['plate_light']):02x}" for v in c)
-    dark = "".join(f"{round(v * cb['plate_dark']):02x}" for v in c)
+    light = "".join(f"{round(v + (255 - v) * cb[f'{kind}_light']):02x}" for v in c)
+    dark = "".join(f"{round(v * cb[f'{kind}_dark']):02x}" for v in c)
     return light, dark
 
 
@@ -3457,7 +3458,7 @@ def talent_popups(cfg):
         # colour-blind mode: the square recoloured as the team's plates ([colour_blind] plates)
         border_cb = ""
         if team.lower() in cfg["colour_blind"]["plates"]:
-            light, dark = colour_blind_plate(cfg, team.lower())
+            light, dark = colour_blind_plate(cfg, team.lower(), "square")
             border_cb = NL + colour_blind_states(*colorize_cb(light, dark), 7).rstrip(NL)
         pop = f"FCJH_Talent{n}"
         images = "".join(
@@ -3568,6 +3569,15 @@ def hero_cell_template(team, c, cfg):
 				<AlphaMaskTexture val="{plate_mask(cfg, team, "health")}"/>{tiled_segments(chr(10) + chr(9) * 4)}
 				<Unclipped val="true"/>
 			</Frame>{trackers(team, g["health"], cfg)}{health_backing}{mana_backing}{energy}"""
+    # colour-blind mode: Blizzard's plate health style (ObserverPanelOverviewHealth) points its
+    # Colorblind values at ColorSpecs that don't exist, so the bars never change; the core bars'
+    # style (ObserverPanelCoreHealth) has them: Chaos the core bar's orange, Order a cyan (66def0,
+    # hue 188 - Ahli's)
+    if team in cfg["colour_blind"]["plates"]:
+        bars = (["$this/HealthBar"] + [f"$this/VikingTrackingElement/TrackedUnitStatusFrame{i}/HealthBar" for i in range(3)]
+                + ["$this/RexxarTrackingElement/TrackedUnitStatusFrame0/HealthBar"])
+        style = lambda s: [f'frame="{b}" ColorStyle="{s}"' for b in bars]
+        health += "\n" + colour_blind_states(style("ObserverPanelCoreHealth"), style("ObserverPanelOverviewHealth"), 3).rstrip("\n")
     if blue:  # red inherits these unchanged
         cc_top, cc_bottom = c.cc_band
         health += f"""
@@ -3865,14 +3875,6 @@ def hero_cell_template(team, c, cfg):
 				</State>
 			</StateGroup>"""
     else:
-        # colour-blind mode: Blizzard's plate health style (ObserverPanelOverviewHealth) points
-        # its Colorblind values at ColorSpecs that don't exist, so red's bars never change; the
-        # core bars' style (ObserverPanelCoreHealth) has them, its Chaos the core bar's orange
-        if "red" in cfg["colour_blind"]["plates"]:
-            bars = (["$this/HealthBar"] + [f"$this/VikingTrackingElement/TrackedUnitStatusFrame{i}/HealthBar" for i in range(3)]
-                    + ["$this/RexxarTrackingElement/TrackedUnitStatusFrame0/HealthBar"])
-            style = lambda s: [f'frame="{b}" ColorStyle="{s}"' for b in bars]
-            health += "\n" + colour_blind_states(style("ObserverPanelCoreHealth"), style("ObserverPanelOverviewHealth"), 3).rstrip("\n")
         health += f"""
 			<Frame type="Frame" name="FCJH_Fountain">{fountain_anchors}
 				<Frame type="Frame" name="ImageMaskContainer"><AlphaMaskTexture val="{mask}"/></Frame>
@@ -5066,7 +5068,7 @@ def committed_files(cfg, source=SOURCE):
             (u(rects(cfg)["inspect"][0][0]), u(rects(cfg)["inspect"][0][1])), 1 / u.scale,   # its place, for pixel-exact lines
             (*PLATES_AT, anchor_edges(cfg, "inspect")["t"]),   # where it's anchored, and its top from there
             {t: colour_blind(cfg, cfg["top_backplate"][f"{t}_colour"], t) for t in ("blue", "red")},   # colour-blind mode
-            {t: colour_blind_plate(cfg, t) for t in cfg["colour_blind"]["plates"]}),
+            {t: colour_blind_plate(cfg, t, "square") for t in cfg["colour_blind"]["plates"]}),
         LAYOUT_REL / MAPS_FILE: maps.layout(XML_DECL + "<Desc>\n" + GENERATED, PLATES_AT,
                                             {k: u(v) for k, v in panel_nudges(cfg).items()},
                                             minimap_bottoms(cfg),

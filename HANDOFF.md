@@ -622,8 +622,22 @@ the inspect's talent squares, red's plate health bars. Fixed:
   (`ObserverPanelCoreHealth`, its Chaos the core bar's orange). **A ColorStyle SetProperty on a
   health bar is unproven** (the resource bar's is the precedent).
 For comparison: Blizzard's default UI tints none of its top bar or panes in colour-blind mode
-(only the inspect's health bar); Ahli tints all red to orange and blue to a green-blue. Blue is
-left as is until the user's feedback tester weighs in (`[colour_blind] plates` takes "blue").
+(only the inspect's health bar); Ahli tints all red to orange and blue to a green-blue.
+
+**Seen again (user, 2026-10-25): health bars and inspect squares orange, the toggle on/off
+mid-game clean, Alterac's banners too; the inspect's orange "muted" beside blue, Ctrl+1 still
+red.** So, round 3:
+- **Ahli's colours, not Blizzard's** (user: "If the standard for the last decade was Ahli's
+  values, then we should accept them"). His textures keep saturation and brightness and turn
+  the hue ~30 deg: red to orange (15-30), blue to cyan (176-197). `[colour_blind]` is now his
+  heroic border's `ff672b` / `23defc`, and blue joins `plates`: blue's plate art, squares,
+  grid and health bars turn cyan too (Order's core style is cyan 66def0, hue 188). Every
+  generated piece follows; the hand-written FontStyles `_CB` twins and the Ctrl+1 pane's
+  values were recomputed by the same rule (hand-copied - redo them if `[colour_blind]` changes).
+- **Ctrl+1's red was Blizzard's talent squares** (`CustomTalentTreeIconBorder1-7`,
+  `obs_talents_highlight_<team>`), not our grid: each row's seven now Colorized.
+- **The squares brighter**: their own pair, `square_light` / `square_dark` (0.6 / 0.9; Ahli's
+  orange square is ff9666), for the pop-ups, the inspect and Ctrl+1.
 
 **The studio half, done for 1.1 (checked in a browser, not yet in OBS):** OBS can't read the
 game's options, so it's the operator's toggle, **Tournament → Colour-blind colours**

@@ -43,6 +43,8 @@
 				     58 right. The gap between (124-182) is the default quest's column: no grid cell,
 				     just the pane's background (user, 2026-10-16). The first slice ends 2 short of the
 				     cell (122, 0.1080 / 0.8920), the bridge from there. -->
+				<!-- colour-blind mode: each half recoloured as its team's plates (gen.py
+				     colour_blind_plate, from layout.toml [colour_blind]; hand-copied) -->
 				<Frame type="Image" name="FCJH_GridBlueA">
 					<Anchor side="Top"   relative="$parent/$parent/FCJH_TalentPanel/HeroTalentsPanelContainer/PlayerFrame0" pos="Min" offset="-2"/>
 					<Anchor side="Left"  relative="$parent" pos="Min" offset="0"/>
@@ -53,6 +55,18 @@
 					<WrapUV val="True"/>
 					<RenderPriority val="450"/>
 					<AcceptsMouse val="false"/>
+					<StateGroup name="FCJH_ColourBlind">
+						<DefaultState val="Off"/>
+						<State name="On">
+							<When type="Option" colorblind="True"/>
+							<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+							<Action type="SetProperty" frame="$this" LightAdjustColor="5ae6fd"/>
+							<Action type="SetProperty" frame="$this" DarkAdjustColor="0a434c"/>
+						</State>
+						<State name="Off">
+							<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+						</State>
+					</StateGroup>
 				</Frame>
 				<Frame type="Image" name="FCJH_GridBlueB">
 					<Anchor side="Top"   relative="$parent/FCJH_GridBlueA" pos="Min" offset="0"/>
@@ -64,9 +78,19 @@
 					<WrapUV val="True"/>
 					<RenderPriority val="450"/>
 					<AcceptsMouse val="false"/>
+					<StateGroup name="FCJH_ColourBlind">
+						<DefaultState val="Off"/>
+						<State name="On">
+							<When type="Option" colorblind="True"/>
+							<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+							<Action type="SetProperty" frame="$this" LightAdjustColor="5ae6fd"/>
+							<Action type="SetProperty" frame="$this" DarkAdjustColor="0a434c"/>
+						</State>
+						<State name="Off">
+							<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+						</State>
+					</StateGroup>
 				</Frame>
-				<!-- red's half in colour-blind mode: recoloured as red's plates (gen.py
-				     colour_blind_plate: [colour_blind] red, fea74a / 4c2904) -->
 				<Frame type="Image" name="FCJH_GridRedA">
 					<Anchor side="Top"   relative="$parent/FCJH_GridBlueA" pos="Max" offset="0"/>
 					<Anchor side="Left"  relative="$parent" pos="Min" offset="0"/>
@@ -82,8 +106,8 @@
 						<State name="On">
 							<When type="Option" colorblind="True"/>
 							<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
-							<Action type="SetProperty" frame="$this" LightAdjustColor="fea74a"/>
-							<Action type="SetProperty" frame="$this" DarkAdjustColor="4c2904"/>
+							<Action type="SetProperty" frame="$this" LightAdjustColor="ff8d60"/>
+							<Action type="SetProperty" frame="$this" DarkAdjustColor="4c1f0d"/>
 						</State>
 						<State name="Off">
 							<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
@@ -105,8 +129,8 @@
 						<State name="On">
 							<When type="Option" colorblind="True"/>
 							<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
-							<Action type="SetProperty" frame="$this" LightAdjustColor="fea74a"/>
-							<Action type="SetProperty" frame="$this" DarkAdjustColor="4c2904"/>
+							<Action type="SetProperty" frame="$this" LightAdjustColor="ff8d60"/>
+							<Action type="SetProperty" frame="$this" DarkAdjustColor="4c1f0d"/>
 						</State>
 						<State name="Off">
 							<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
@@ -128,6 +152,18 @@
 					<WrapUV val="True"/>
 					<RenderPriority val="450"/>
 					<AcceptsMouse val="false"/>
+					<StateGroup name="FCJH_ColourBlind">
+						<DefaultState val="Off"/>
+						<State name="On">
+							<When type="Option" colorblind="True"/>
+							<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+							<Action type="SetProperty" frame="$this" LightAdjustColor="5ae6fd"/>
+							<Action type="SetProperty" frame="$this" DarkAdjustColor="0a434c"/>
+						</State>
+						<State name="Off">
+							<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+						</State>
+					</StateGroup>
 				</Frame>
 				<Frame type="Image" name="FCJH_GridRedBridge">
 					<Anchor side="Top"   relative="$parent/FCJH_GridRedA" pos="Min" offset="0"/>
@@ -144,8 +180,8 @@
 						<State name="On">
 							<When type="Option" colorblind="True"/>
 							<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
-							<Action type="SetProperty" frame="$this" LightAdjustColor="fea74a"/>
-							<Action type="SetProperty" frame="$this" DarkAdjustColor="4c2904"/>
+							<Action type="SetProperty" frame="$this" LightAdjustColor="ff8d60"/>
+							<Action type="SetProperty" frame="$this" DarkAdjustColor="4c1f0d"/>
 						</State>
 						<State name="Off">
 							<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
@@ -275,6 +311,105 @@
 								<Width val="46"/>
 								<Height val="46"/>
 							</Frame>
+							<!-- Blizzard's talent squares, recoloured in colour-blind mode as the pop-ups' (gen.py colour_blind_plate "square"; hand-copied) -->
+							<Frame type="Image" name="CustomTalentTreeIconBorder1">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder2">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder3">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder4">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder5">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder6">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder7">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
 						</Frame>
 					</Frame>
 					<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame1">
@@ -355,6 +490,105 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Width val="46"/>
 								<Height val="46"/>
+							</Frame>
+							<!-- Blizzard's talent squares, recoloured in colour-blind mode as the pop-ups' (gen.py colour_blind_plate "square"; hand-copied) -->
+							<Frame type="Image" name="CustomTalentTreeIconBorder1">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder2">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder3">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder4">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder5">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder6">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder7">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
 							</Frame>
 						</Frame>
 					</Frame>
@@ -437,6 +671,105 @@
 								<Width val="46"/>
 								<Height val="46"/>
 							</Frame>
+							<!-- Blizzard's talent squares, recoloured in colour-blind mode as the pop-ups' (gen.py colour_blind_plate "square"; hand-copied) -->
+							<Frame type="Image" name="CustomTalentTreeIconBorder1">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder2">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder3">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder4">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder5">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder6">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder7">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
 						</Frame>
 					</Frame>
 					<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame3">
@@ -517,6 +850,105 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Width val="46"/>
 								<Height val="46"/>
+							</Frame>
+							<!-- Blizzard's talent squares, recoloured in colour-blind mode as the pop-ups' (gen.py colour_blind_plate "square"; hand-copied) -->
+							<Frame type="Image" name="CustomTalentTreeIconBorder1">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder2">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder3">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder4">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder5">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder6">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder7">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
 							</Frame>
 						</Frame>
 					</Frame>
@@ -599,6 +1031,105 @@
 								<Width val="46"/>
 								<Height val="46"/>
 							</Frame>
+							<!-- Blizzard's talent squares, recoloured in colour-blind mode as the pop-ups' (gen.py colour_blind_plate "square"; hand-copied) -->
+							<Frame type="Image" name="CustomTalentTreeIconBorder1">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder2">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder3">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder4">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder5">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder6">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder7">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
 						</Frame>
 					</Frame>
 					<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame5">
@@ -679,6 +1210,105 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Width val="46"/>
 								<Height val="46"/>
+							</Frame>
+							<!-- Blizzard's talent squares, recoloured in colour-blind mode as the pop-ups' (gen.py colour_blind_plate "square"; hand-copied) -->
+							<Frame type="Image" name="CustomTalentTreeIconBorder1">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder2">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder3">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder4">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder5">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder6">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder7">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
 							</Frame>
 						</Frame>
 					</Frame>
@@ -761,6 +1391,105 @@
 								<Width val="46"/>
 								<Height val="46"/>
 							</Frame>
+							<!-- Blizzard's talent squares, recoloured in colour-blind mode as the pop-ups' (gen.py colour_blind_plate "square"; hand-copied) -->
+							<Frame type="Image" name="CustomTalentTreeIconBorder1">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder2">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder3">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder4">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder5">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder6">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder7">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
 						</Frame>
 					</Frame>
 					<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame7">
@@ -841,6 +1570,105 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Width val="46"/>
 								<Height val="46"/>
+							</Frame>
+							<!-- Blizzard's talent squares, recoloured in colour-blind mode as the pop-ups' (gen.py colour_blind_plate "square"; hand-copied) -->
+							<Frame type="Image" name="CustomTalentTreeIconBorder1">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder2">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder3">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder4">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder5">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder6">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder7">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
 							</Frame>
 						</Frame>
 					</Frame>
@@ -923,6 +1751,105 @@
 								<Width val="46"/>
 								<Height val="46"/>
 							</Frame>
+							<!-- Blizzard's talent squares, recoloured in colour-blind mode as the pop-ups' (gen.py colour_blind_plate "square"; hand-copied) -->
+							<Frame type="Image" name="CustomTalentTreeIconBorder1">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder2">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder3">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder4">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder5">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder6">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder7">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
 						</Frame>
 					</Frame>
 					<Frame type="HeroTalentsPanelPlayerFrame" name="PlayerFrame9">
@@ -1003,6 +1930,105 @@
 								<Anchor side="Bottom" relative="$this" pos="Min" offset="0"/>
 								<Width val="46"/>
 								<Height val="46"/>
+							</Frame>
+							<!-- Blizzard's talent squares, recoloured in colour-blind mode as the pop-ups' (gen.py colour_blind_plate "square"; hand-copied) -->
+							<Frame type="Image" name="CustomTalentTreeIconBorder1">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder2">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder3">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder4">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder5">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder6">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
+							</Frame>
+							<Frame type="Image" name="CustomTalentTreeIconBorder7">
+								<StateGroup name="FCJH_ColourBlind">
+									<DefaultState val="Off"/>
+									<State name="On">
+										<When type="Option" colorblind="True"/>
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+										<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+										<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
+									</State>
+									<State name="Off">
+										<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+									</State>
+								</StateGroup>
 							</Frame>
 						</Frame>
 					</Frame>

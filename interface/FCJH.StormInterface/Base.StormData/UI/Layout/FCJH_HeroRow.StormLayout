@@ -49,6 +49,18 @@
 			<Texture val="@UI/HUD_TopBar_Team_HeroFrame_BG_Blue"/>
 			<RenderPriority val="401"/>
 			<AcceptsMouse val="false"/>
+			<StateGroup name="FCJH_ColourBlind">
+				<DefaultState val="Off"/>
+				<State name="On">
+					<When type="Option" colorblind="True"/>
+					<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+					<Action type="SetProperty" frame="$this" LightAdjustColor="5ae6fd"/>
+					<Action type="SetProperty" frame="$this" DarkAdjustColor="0a434c"/>
+				</State>
+				<State name="Off">
+					<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+				</State>
+			</StateGroup>
 		</Frame>
 		<Frame type="Image" name="IconFrame">
 			<Anchor side="Top"    relative="$parent" pos="Min" offset="71"/>
@@ -609,6 +621,24 @@
 				<ColorStyle val="StandardEnergy" index="0"/>
 				<Unclipped val="true"/>
 			</Frame>
+			<StateGroup name="FCJH_ColourBlind">
+				<DefaultState val="Off"/>
+				<State name="On">
+					<When type="Option" colorblind="True"/>
+					<Action type="SetProperty" frame="$this/HealthBar" ColorStyle="ObserverPanelCoreHealth"/>
+					<Action type="SetProperty" frame="$this/VikingTrackingElement/TrackedUnitStatusFrame0/HealthBar" ColorStyle="ObserverPanelCoreHealth"/>
+					<Action type="SetProperty" frame="$this/VikingTrackingElement/TrackedUnitStatusFrame1/HealthBar" ColorStyle="ObserverPanelCoreHealth"/>
+					<Action type="SetProperty" frame="$this/VikingTrackingElement/TrackedUnitStatusFrame2/HealthBar" ColorStyle="ObserverPanelCoreHealth"/>
+					<Action type="SetProperty" frame="$this/RexxarTrackingElement/TrackedUnitStatusFrame0/HealthBar" ColorStyle="ObserverPanelCoreHealth"/>
+				</State>
+				<State name="Off">
+					<Action type="SetProperty" frame="$this/HealthBar" ColorStyle="ObserverPanelOverviewHealth"/>
+					<Action type="SetProperty" frame="$this/VikingTrackingElement/TrackedUnitStatusFrame0/HealthBar" ColorStyle="ObserverPanelOverviewHealth"/>
+					<Action type="SetProperty" frame="$this/VikingTrackingElement/TrackedUnitStatusFrame1/HealthBar" ColorStyle="ObserverPanelOverviewHealth"/>
+					<Action type="SetProperty" frame="$this/VikingTrackingElement/TrackedUnitStatusFrame2/HealthBar" ColorStyle="ObserverPanelOverviewHealth"/>
+					<Action type="SetProperty" frame="$this/RexxarTrackingElement/TrackedUnitStatusFrame0/HealthBar" ColorStyle="ObserverPanelOverviewHealth"/>
+				</State>
+			</StateGroup>
 			<!-- CC: Blizzard's nameplate debuff element as an invisible SENSOR (it ships at
 			     Alpha 0 and only fades in on a world-nameplate event observer cells never get).
 			     Inside HeroStatus, so it reads this cell's own hero. Its text - "STUNNED",
@@ -1415,8 +1445,8 @@
 				<State name="On">
 					<When type="Option" colorblind="True"/>
 					<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
-					<Action type="SetProperty" frame="$this" LightAdjustColor="fea74a"/>
-					<Action type="SetProperty" frame="$this" DarkAdjustColor="4c2904"/>
+					<Action type="SetProperty" frame="$this" LightAdjustColor="ff8d60"/>
+					<Action type="SetProperty" frame="$this" DarkAdjustColor="4c1f0d"/>
 				</State>
 				<State name="Off">
 					<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
@@ -3253,6 +3283,18 @@
 							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
 							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
 							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
 						</Frame>
@@ -3557,6 +3599,18 @@
 							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
 							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
 							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
 						</Frame>
@@ -3861,6 +3915,18 @@
 							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
 							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
 							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
 						</Frame>
@@ -4165,6 +4231,18 @@
 							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
 							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
 							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
 						</Frame>
@@ -4469,6 +4547,18 @@
 							<Anchor side="Bottom" relative="$parent" pos="Max" offset="5"/>
 							<Anchor side="Right"  relative="$parent" pos="Max" offset="5"/>
 							<Texture val="@UI/obs_talents_highlight_blue"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
 						</Frame>
@@ -4778,8 +4868,8 @@
 								<State name="On">
 									<When type="Option" colorblind="True"/>
 									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
-									<Action type="SetProperty" frame="$this" LightAdjustColor="fea74a"/>
-									<Action type="SetProperty" frame="$this" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
 									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
@@ -5094,8 +5184,8 @@
 								<State name="On">
 									<When type="Option" colorblind="True"/>
 									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
-									<Action type="SetProperty" frame="$this" LightAdjustColor="fea74a"/>
-									<Action type="SetProperty" frame="$this" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
 									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
@@ -5410,8 +5500,8 @@
 								<State name="On">
 									<When type="Option" colorblind="True"/>
 									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
-									<Action type="SetProperty" frame="$this" LightAdjustColor="fea74a"/>
-									<Action type="SetProperty" frame="$this" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
 									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
@@ -5726,8 +5816,8 @@
 								<State name="On">
 									<When type="Option" colorblind="True"/>
 									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
-									<Action type="SetProperty" frame="$this" LightAdjustColor="fea74a"/>
-									<Action type="SetProperty" frame="$this" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
 									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
@@ -6042,8 +6132,8 @@
 								<State name="On">
 									<When type="Option" colorblind="True"/>
 									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
-									<Action type="SetProperty" frame="$this" LightAdjustColor="fea74a"/>
-									<Action type="SetProperty" frame="$this" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
 									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>

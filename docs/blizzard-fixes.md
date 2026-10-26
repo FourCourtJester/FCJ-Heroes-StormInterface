@@ -617,7 +617,9 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
   - the inspect card's team edge takes the colour-blind colours.
   - the stat panes' team bands, row stripes and totals, and their numbers (a twin label each,
     as the lead animations own the label's style).
-  - the Ctrl+1 talents grid's red half, Colorized as the plates;
+  - the Ctrl+1 talents pane's grid and Blizzard's talent squares, Colorized as the plates;
+  - Ahli's colours rather than Blizzard's (user, 2026-10-25: the casting standard for a
+    decade): red orange and blue cyan, where Blizzard's blue barely moves;
   - red's plate health bars: Blizzard's `ObserverPanelOverviewHealth` (colorstyledata.xml)
     names `ColorObserverPanelOverviewHealth{Order,Chaos}Colorblind` for colour-blind mode,
     and neither exists in colorspecdata.xml, so the plates' bars never change - a Blizzard
