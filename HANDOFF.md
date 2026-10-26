@@ -481,9 +481,13 @@ land on whole pixels at 1080p (`inspect_card.line`), so at 1440p they may come o
 ## 7. What's next
 
 **1.0 (user, 2026-10-21).** A test build went to volunteers 2026-10-20 (v0.1.0, b28ee86, the
-kill feed back on); their feedback is 1.0.x for a while - `[meta] version` 1.0.0, 1.0.1 (the translations), now 1.0.2 (the art pass: bevelled
+kill feed back on); their feedback is 1.0.x for a while - `[meta] version` 1.0.0, 1.0.1 (the translations), 1.0.2 (the art pass: bevelled
 plates, the numbers panes - user, 2026-10-23: "Let's prepare for a new interface release
-with this"), a patch
+with this"), now **1.1.0** (user, 2026-10-26: "let's merge, tag v1.1.0, and get our Pages
+deployed"): PR #3, `matchup-slab` - the studio's matchup slab, Logos panel, scores laurels and
+colour-blind toggle, with the interface's colour-blind mode (Ahli's colours), our HUD keys,
+the game's end hiding the pop-ups, the pause box, the XP Contribution pane and Alterac's
+shields and cavalry banner, all seen in game; a patch
 number per fix batch, each one a `pack.py --release` from a commit. Work is on `main` (its
 history is python-toolchain's, which stays as it was). GitHub:
 https://github.com/FourCourtJester/FCJ-Heroes-StormInterface (public; pushed in
@@ -494,7 +498,7 @@ and Ko-fi).
 Observer** ("I think") - README's install step 3 and docs/development.md say so; correct both
 if not.
 
-**The XP Contribution pane - built, to see in game (user, 2026-10-25: "Let's look at that
+**The XP Contribution pane - built, seen in game and good (user, 2026-10-25) (user, 2026-10-25: "Let's look at that
 experience breakdown panel, and see if we can re-arrange our info panes to accomodate").**
 Still four panes on the same keys: Ctrl+3 is now HEALING · SIEGE DAMAGE · EXPERIENCE (by hero:
 SELF, HEALING, SIEGE DMG, XP), and Ctrl+4 is XP CONTRIBUTION, the only pane by team, not by
@@ -526,13 +530,14 @@ anchors - and where a neutral unit's card goes (left, as now, unless told otherw
 mirror against the replay box (top-right) and red's map alerts, which the replay box was
 once narrowed to clear; the `--check`/validate overlap checks should catch a collision.
 
-**Done for 1.0.3, to see in game: the pause box moved (user, 2026-10-24: "if we can move
+**Done for 1.0.3, seen in game and good (user, 2026-10-25): the pause box moved (user, 2026-10-24: "if we can move
 the 'paused the game' notification, we should"; custom games are "99% of esports").** Blizzard's
 `SystemAlertPanel` ("X paused the game. (N remaining)", a purple box) sat at the top centre,
-over the logo plate and clock. Now under the centre banners, 10 px below, centred on 958.5:
-`layout.toml` `[element.system_alert]` (the user's pick of three: under the banners, under the
-clock, screen centre), the frame in `FCJH_TopBar`. Look untouched. Needs a custom game with a
-pause to see; docs/blizzard-fixes.md has it.
+over the logo plate and clock. Now 40 px under the clock (box top 200), centred on 958.5:
+`layout.toml` `[element.system_alert]`, the frame in `FCJH_TopBar`. Look untouched. First under
+the centre banners (284); seen in game 2026-10-25 (replays can be paused too) and "waaay too far
+down", so moved up - it now overlaps a centre banner while both show. docs/blizzard-fixes.md
+has it.
 
 **Bug from a streamer's cast, found (user's vod screenshots, 2026-10-24): pop-ups outlive
 Ctrl+E.** The streamer's words were "the icon for the event stays and replaces the icon that
@@ -550,7 +555,7 @@ so the user's idea - Ctrl+E (or our own **Ctrl+Shift+E**) hiding only *some* of 
 is a matter of placing them. Taking over Ctrl+E itself needs a test that an interface can
 rebind it; Ctrl+Shift+E needs validate's free-key check.
 
-**Done for 1.1, to see in game: the HUD keys are ours (user, 2026-10-25: "ctrl-shift-e our
+**Done for 1.1, seen in game and good (user, 2026-10-25: "Ctrl/shift+e is good"): the HUD keys are ours (user, 2026-10-25: "ctrl-shift-e our
 'hide all but the top plate'", "ctrl-e still hides everything (including the top plate)",
 "ensure that those icons dont bleed thru, or anything else really").** Blizzard's
 `ToggleHUD`/`ToggleFullHUD` lose their keys (FCJH_Replay) and ours take them
@@ -568,8 +573,16 @@ always beaten. **Untested in game**, and three things to watch: that the watcher
 re-evaluate on a ToggleControl's Visible; that the Shown state's reverse-play at load is a
 no-op; and a zero-hero team's XP bar (RowPacker's Heroes0 sets Alpha 0, which the Fade's
 reverse restores to 255 after a hide and show - rare).
+**The game's end, the same bug (user, 2026-10-25: "after the game, a health notification
+bleeds thru", Screenshot 21_14_55):** a heal pop-up, stretched to a plate's width, over red's
+side of the "RED TEAM WINS!" splash. Blizzard hides its plates for the splash; the pop-ups at
+the GameUI root don't follow. `FCJH_HudWatch` now has two states ahead of the keys' - Blizzard's
+`GameOverSplash` (`$GameUI/UIContainer`) or `EndOfGameAwardsPanel` showing - that hide all
+`FCJH_HideLower` hides. **Seen in game (user, 2026-10-25): "no stretched green at end game
+either"**, and nothing hidden at load; a rewind from the end brings the HUD back (user,
+2026-10-25). What else a rewind breaks is under "Also open" below.
 
-**Rexxar's whole-plate death: built for 1.1, to see in game (vod, 2026-10-24).** A dead
+**Rexxar's whole-plate death: done for 1.1, seen in game (vod, 2026-10-24; user, 2026-10-25: "looks fine now").** A dead
 Rexxar greyed his slice and Misha's (Colorize white / alpha 180) while every other dead
 portrait sank into Blizzard's dark shadow, so he read "faded", not dead. That shadow is the
 game's code on the observer portrait (no layout state draws it); measured off the vod, the
@@ -608,6 +621,37 @@ by the same animations (gold when leading, either way), and the option picks whi
 teams, as the top plate. Not done: the death timers (Blizzard's styles). Glows are Blizzard's
 own. Test with Rexxar's and the Vikings' slices in it.
 
+**Seen in game (user, 2026-10-25), and the fixes, to see again.** Orange: the top bar, the
+core bars, the inspect card's edge, the stat panes' backgrounds. Still red: the Ctrl+1 grid,
+the inspect's talent squares, red's plate health bars. Fixed:
+- the Colorize (red's plate art, talent pop-ups, inspect squares) set three properties in one
+  SetProperty; now one per action on `$this` (gen.py `colorize_cb`), as the dead slices'
+  Colorize, which works. If the plate art was already orange, that's no harm;
+- the Ctrl+1 grid's red half (`FCJH_GridRed*`, hand-written `FCJH_InfoPane`) gets the same;
+- red's health bars (and the Vikings' and Rexxar's): Blizzard's style for them
+  (`ObserverPanelOverviewHealth`) points its Colorblind values at ColorSpecs that don't
+  exist, so in colour-blind mode they switch to the core bars' style
+  (`ObserverPanelCoreHealth`, its Chaos the core bar's orange). **A ColorStyle SetProperty on a
+  health bar is unproven** (the resource bar's is the precedent).
+For comparison: Blizzard's default UI tints none of its top bar or panes in colour-blind mode
+(only the inspect's health bar); Ahli tints all red to orange and blue to a green-blue.
+
+**Seen again (user, 2026-10-25): health bars and inspect squares orange, the toggle on/off
+mid-game clean, Alterac's banners too; the inspect's orange "muted" beside blue, Ctrl+1 still
+red.** So, round 3:
+- **Ahli's colours, not Blizzard's** (seen in game and good, with Ctrl+1's squares, user
+  2026-10-25; user: "If the standard for the last decade was Ahli's
+  values, then we should accept them"). His textures keep saturation and brightness and turn
+  the hue ~30 deg: red to orange (15-30), blue to cyan (176-197). `[colour_blind]` is now his
+  heroic border's `ff672b` / `23defc`, and blue joins `plates`: blue's plate art, squares,
+  grid and health bars turn cyan too (Order's core style is cyan 66def0, hue 188). Every
+  generated piece follows; the hand-written FontStyles `_CB` twins and the Ctrl+1 pane's
+  values were recomputed by the same rule (hand-copied - redo them if `[colour_blind]` changes).
+- **Ctrl+1's red was Blizzard's talent squares** (`CustomTalentTreeIconBorder1-7`,
+  `obs_talents_highlight_<team>`), not our grid: each row's seven now Colorized.
+- **The squares brighter**: their own pair, `square_light` / `square_dark` (0.6 / 0.9; Ahli's
+  orange square is ff9666), for the pop-ups, the inspect and Ctrl+1.
+
 **The studio half, done for 1.1 (checked in a browser, not yet in OBS):** OBS can't read the
 game's options, so it's the operator's toggle, **Tournament → Colour-blind colours**
 (`toggles.colourblind`). `tools/obs.py` `colour_blind_files()` writes `colourblind.json` from
@@ -642,7 +686,7 @@ bars. A before-and-after pair of screenshots first, to get more opinions.
 **Inspect on both sides:** one request so far (the 1.0.3 note above); screenshots from a dev
 build before deciding.
 
-**Alterac Pass: the keeps' shields on the core bars - built, to see in game (user,
+**Alterac Pass: the keeps' shields on the core bars - built, seen in game and fine (user,
 2026-10-24/25).** Each keep alive is one `WarchiefAlive` stack on its team's core (coregeneraldata
 `WarchiefAlive`, armour 20 a stack, max 3; the map's script adds one per keep at the gates and
 takes one off as each keep's town hall falls) - so the count is keeps **alive**, 3 -> 0, not
@@ -651,14 +695,28 @@ reversed. Blizzard draws it as three shield pips on the core's bar (alteracmecha
 own `SourceHas{3,2,1,0}WarchiefsAlive` validators), but only on the player HUD's core bars and
 the in-world core, never the observer's top-panel cores. Ours, in FCJH_TopBar.StormLayout
 (hand-written): Blizzard's template copied as `FCJH_AVShieldTemplate`, three on each core frame
-(`FCJH_AVShield1-3`), centred on the bar, shield 3 at the inner end (toward the minimap)
-emptying first, the insides in the core's UnitStatusColor Primary / PrimaryLight as Blizzard's;
+(`FCJH_AVShield1-3`), shield 3 at the inner end (toward the minimap) emptying first, the insides in the core's UnitStatusColor Primary / PrimaryLight as Blizzard's;
 `FCJH_AVKeeps` (a UnitStatusValidatorAnimElement on the four validators) shows them and sets the
 insides. Hidden until a count state fires, which only happens on Alterac - Ahli 0.75's way in an
 every-map interface (its `CoreOverviewTemplate`, `undo="false"` on the show). **Check:** the
 shields on Alterac only and no errors on other maps; they empty one by one as keeps fall, on the
-right team; the colour against our bar (Primary may not be quite our `[team_core]`); sitting
-over the bar's middle; before the gates open the count may read 0 (three empty shields).
+right team; the colour against our bar (Primary may not be quite our `[team_core]`); before
+the gates open the count may read 0 (three empty shields).
+**Seen in game (user, 2026-10-25): centred, they covered the core's number** ("27290 / 27290",
+which grows from the bar's inner end). Now a row from the bar's **outer end**, a little smaller
+(20 px boxes), clear of the number: `[team_core] av_shield`, `av_shield_in`,
+`av_shield_overlap`. **Seen (user, 2026-10-25): clear of the number, but tight inside the
+border** ("move them outside the bar borders, or ... more margin"): now a row **past** the bar's
+outer end, outside its chrome line, the one nearest the bar (3) emptying first (`av_shield_out`
+replaces `av_shield_in`). **Seen in game and fine (user, 2026-10-25) - DONE.** **Banners don't move when the core bar shows** - by design
+(user, 2026-10-09, docs/maps.md): every banner's bar sits `[map_alerts] above_core` over where
+the core bar's top is, shown or not; the Alterac screenshot has the 10 px. **But Alterac's
+cavalry is now the exception** (user, 2026-10-25: "much more low hanging artwork than the
+others"): its hexagon and blades hung 20 px under its bracket on red (over the core bar's number),
+its hammers 25 px on blue (21_06_31), so both spots are placed by the deeper, 25 px higher, the
+bars level (`maps.AV_BELOW`). **Seen in game and kept, always higher (user, 2026-10-25): "its
+higher up, but it doesnt go higher than the minimap top edge"** - that was the worry; a lift only
+while the core bar shows (on Alterac, only once a keep falls) was offered and not needed.
 
 **The official release filename (user, 2026-10-21): `FCJ v<version>.StormInterface`**
 (pack.py's `RELEASE_NAME`, from 1.0.1; 1.0.0 shipped as `FCJH.StormInterface`), in Ahli's
@@ -978,6 +1036,10 @@ at load.
 - Also open: rewinding a replay upsets pop-ups and latches (final polish - the product
   is for live games); rows with fewer than five heroes (a 3v3 or 1v1 replay). Both IGNORED
   (user, 2026-10-19).
+  **Seen on a rewind from the victory splash (user, 2026-10-25; a consideration, nothing to
+  do now):** the HUD comes back, but the one-time gates don't reset - the core HP bars and
+  Alterac's keep shields stay as they were - and on Alterac no banners come after it: neither
+  the camp-capture alerts nor the cavalry's mechanic banner when it's done.
 - **To do (user, 2026-10-16):** a pass on the panes and the inspect card to make them
   Heroes-like (Blizzard's menu panel: blur, translucency, chrome border), and ~~a colour, font
   and art pass on the numbers panes~~ (DONE 2026-10-23, 78644dc) (docs/polish-research.md,

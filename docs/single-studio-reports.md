@@ -266,3 +266,39 @@ Nothing in the code. Two things in the docs, where the custom properties are int
 If core ever renames an `--ss-*` property, that is a breaking change for every studio
 overriding it, and one that breaks quietly. Worth a line in the release notes when it happens.
 
+---
+
+## 4. `Tally` can only be given a picture, so its marks cannot be recoloured
+
+### What happens
+
+`Tally` draws its marks from `src` — "a path, a URL, or a library entry, the same as `Image`
+takes" — and takes no children and no render prop. The mark's colour therefore has to be
+*in the file*.
+
+### Why it's a problem
+
+A studio whose marks carry a team colour needs one file per team. Add a colour-blind mode and
+it needs one per team **per mode**. Add a third scheme and it needs a third set. We hit this
+with the series pips: `pip_blue.svg`, `pip_red.svg`, `pip_blue_cb.svg`, `pip_red_cb.svg`.
+
+Everywhere else in our kit we solved it by generating the art **uncoloured** and using it as
+a CSS mask, so the stylesheet paints it and one file serves every colour. On 2026-10-25 we
+did that for the hex lattice (four files to one) and for the name plate's team line (four to
+two, and those two are only per-side geometry, not per-colour). The pips are the one piece we
+could not convert, because `Tally` owns the element and only accepts a URL.
+
+### What we'd ask for
+
+Either:
+
+- a way to style the mark — `itemClassName` already exists, so a `mask` mode where `src`
+  becomes `mask-image` and the mark's own `background` shows through would be enough; or
+- `children` / a render prop, so the studio draws its own mark and `Tally` keeps doing the
+  counting, the filling and the transitions, which are the parts worth having.
+
+### What we carry meanwhile
+
+The `_cb` twins, for the pips only: `pip_{team}_cb.svg`. They work, and two schemes is what
+we have. A third would mean either replacing `Tally` with our own row — losing its fill
+behaviour and its transitions — or generating a third pair of files.

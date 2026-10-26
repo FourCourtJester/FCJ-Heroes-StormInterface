@@ -60,7 +60,12 @@
 				     gates own (the core bar, the inspect card, the panes); Fade and Visibility, as
 				     Blizzard's, on the rows (the fountain's backdrop ignores its parent's alpha) and the
 				     map panels. Our containers fade whole, so their watchers keep running. Chat, the kill
-				     feed and the replay box keep their own keys, as with Blizzard's. -->
+				     feed and the replay box keep their own keys, as with Blizzard's.
+				     The game's end hides the same (user, 2026-10-25: "after the game, a health
+				     notification bleeds thru"): Blizzard hides its plates for the victory splash, and a
+				     heal pop-up that fired as the units went played out stretched over them. So
+				     Blizzard's GameOverSplash, then its awards panel, count as a key held; a rewind
+				     hides them again and the HUD comes back. -->
 				<Frame type="ToggleControl" name="FCJH_HudToggle">
 					<Anchor relative="$parent"/>
 					<AcceptsMouse val="false"/>
@@ -205,6 +210,14 @@
 					</Animation>
 					<StateGroup name="FCJH_Hud">
 						<DefaultState val="Shown"/>
+						<State name="Over">
+							<When type="Property" frame="$GameUI/UIContainer/GameOverSplash" Visible="true"/>
+							<Action type="SendEvent" frame="$this" event="FCJH_HudHide"/>
+						</State>
+						<State name="Awards">
+							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/EndOfGameAwardsPanel" Visible="true"/>
+							<Action type="SendEvent" frame="$this" event="FCJH_HudHide"/>
+						</State>
 						<State name="All">
 							<When type="Property" frame="$parent/FCJH_HudToggle" Visible="true"/>
 							<Action type="SendEvent" frame="$this" event="FCJH_HudHide"/>

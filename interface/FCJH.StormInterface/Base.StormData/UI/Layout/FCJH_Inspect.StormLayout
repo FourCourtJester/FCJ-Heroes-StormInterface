@@ -584,10 +584,10 @@
 							<DefaultState val="Off"/>
 							<State name="On">
 								<When type="Option" colorblind="True"/>
-								<Action type="SetProperty" frame="FCJH_EdgeTop" AdjustmentColor="255,92,170,236"/>
-								<Action type="SetProperty" frame="FCJH_EdgeBottom" AdjustmentColor="255,92,170,236"/>
-								<Action type="SetProperty" frame="FCJH_EdgeLeft" AdjustmentColor="255,92,170,236"/>
-								<Action type="SetProperty" frame="FCJH_EdgeRight" AdjustmentColor="255,92,170,236"/>
+								<Action type="SetProperty" frame="FCJH_EdgeTop" AdjustmentColor="255,92,216,236"/>
+								<Action type="SetProperty" frame="FCJH_EdgeBottom" AdjustmentColor="255,92,216,236"/>
+								<Action type="SetProperty" frame="FCJH_EdgeLeft" AdjustmentColor="255,92,216,236"/>
+								<Action type="SetProperty" frame="FCJH_EdgeRight" AdjustmentColor="255,92,216,236"/>
 							</State>
 							<State name="Off">
 								<Action type="SetProperty" frame="FCJH_EdgeTop" AdjustmentColor="255,92,188,236"/>
@@ -649,10 +649,10 @@
 							<DefaultState val="Off"/>
 							<State name="On">
 								<When type="Option" colorblind="True"/>
-								<Action type="SetProperty" frame="FCJH_EdgeTop" AdjustmentColor="255,231,164,92"/>
-								<Action type="SetProperty" frame="FCJH_EdgeBottom" AdjustmentColor="255,231,164,92"/>
-								<Action type="SetProperty" frame="FCJH_EdgeLeft" AdjustmentColor="255,231,164,92"/>
-								<Action type="SetProperty" frame="FCJH_EdgeRight" AdjustmentColor="255,231,164,92"/>
+								<Action type="SetProperty" frame="FCJH_EdgeTop" AdjustmentColor="255,231,131,92"/>
+								<Action type="SetProperty" frame="FCJH_EdgeBottom" AdjustmentColor="255,231,131,92"/>
+								<Action type="SetProperty" frame="FCJH_EdgeLeft" AdjustmentColor="255,231,131,92"/>
+								<Action type="SetProperty" frame="FCJH_EdgeRight" AdjustmentColor="255,231,131,92"/>
 							</State>
 							<State name="Off">
 								<Action type="SetProperty" frame="FCJH_EdgeTop" AdjustmentColor="255,231,92,121"/>
@@ -1220,6 +1220,18 @@
 							<Texture val="@UI/obs_talents_highlight_blue"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -1244,6 +1256,18 @@
 							<Texture val="@UI/obs_talents_highlight_blue"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -1268,6 +1292,18 @@
 							<Texture val="@UI/obs_talents_highlight_blue"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -1292,6 +1328,18 @@
 							<Texture val="@UI/obs_talents_highlight_blue"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -1316,6 +1364,18 @@
 							<Texture val="@UI/obs_talents_highlight_blue"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -1340,6 +1400,18 @@
 							<Texture val="@UI/obs_talents_highlight_blue"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -1364,6 +1436,18 @@
 							<Texture val="@UI/obs_talents_highlight_blue"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -1599,6 +1683,18 @@
 							<Texture val="@UI/obs_talents_highlight_blue"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -1623,6 +1719,18 @@
 							<Texture val="@UI/obs_talents_highlight_blue"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -1647,6 +1755,18 @@
 							<Texture val="@UI/obs_talents_highlight_blue"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -1671,6 +1791,18 @@
 							<Texture val="@UI/obs_talents_highlight_blue"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -1695,6 +1827,18 @@
 							<Texture val="@UI/obs_talents_highlight_blue"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -1719,6 +1863,18 @@
 							<Texture val="@UI/obs_talents_highlight_blue"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -1743,6 +1899,18 @@
 							<Texture val="@UI/obs_talents_highlight_blue"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -1978,6 +2146,18 @@
 							<Texture val="@UI/obs_talents_highlight_blue"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -2002,6 +2182,18 @@
 							<Texture val="@UI/obs_talents_highlight_blue"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -2026,6 +2218,18 @@
 							<Texture val="@UI/obs_talents_highlight_blue"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -2050,6 +2254,18 @@
 							<Texture val="@UI/obs_talents_highlight_blue"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -2074,6 +2290,18 @@
 							<Texture val="@UI/obs_talents_highlight_blue"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -2098,6 +2326,18 @@
 							<Texture val="@UI/obs_talents_highlight_blue"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -2122,6 +2362,18 @@
 							<Texture val="@UI/obs_talents_highlight_blue"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -2357,6 +2609,18 @@
 							<Texture val="@UI/obs_talents_highlight_blue"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -2381,6 +2645,18 @@
 							<Texture val="@UI/obs_talents_highlight_blue"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -2405,6 +2681,18 @@
 							<Texture val="@UI/obs_talents_highlight_blue"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -2429,6 +2717,18 @@
 							<Texture val="@UI/obs_talents_highlight_blue"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -2453,6 +2753,18 @@
 							<Texture val="@UI/obs_talents_highlight_blue"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -2477,6 +2789,18 @@
 							<Texture val="@UI/obs_talents_highlight_blue"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -2501,6 +2825,18 @@
 							<Texture val="@UI/obs_talents_highlight_blue"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -2736,6 +3072,18 @@
 							<Texture val="@UI/obs_talents_highlight_blue"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -2760,6 +3108,18 @@
 							<Texture val="@UI/obs_talents_highlight_blue"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -2784,6 +3144,18 @@
 							<Texture val="@UI/obs_talents_highlight_blue"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -2808,6 +3180,18 @@
 							<Texture val="@UI/obs_talents_highlight_blue"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -2832,6 +3216,18 @@
 							<Texture val="@UI/obs_talents_highlight_blue"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -2856,6 +3252,18 @@
 							<Texture val="@UI/obs_talents_highlight_blue"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -2880,6 +3288,18 @@
 							<Texture val="@UI/obs_talents_highlight_blue"/>
 							<Unclipped val="true"/>
 							<AcceptsMouse val="false"/>
+							<StateGroup name="FCJH_ColourBlind">
+								<DefaultState val="Off"/>
+								<State name="On">
+									<When type="Option" colorblind="True"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="a7f2fe"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="20c8e3"/>
+								</State>
+								<State name="Off">
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+								</State>
+							</StateGroup>
 						</Frame>
 						<StateGroup name="FCJH_Picked">
 							<DefaultState val="No"/>
@@ -3119,10 +3539,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -3153,10 +3575,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -3187,10 +3611,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -3221,10 +3647,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -3255,10 +3683,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -3289,10 +3719,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -3323,10 +3755,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -3568,10 +4002,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -3602,10 +4038,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -3636,10 +4074,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -3670,10 +4110,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -3704,10 +4146,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -3738,10 +4182,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -3772,10 +4218,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -4017,10 +4465,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -4051,10 +4501,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -4085,10 +4537,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -4119,10 +4573,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -4153,10 +4609,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -4187,10 +4645,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -4221,10 +4681,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -4466,10 +4928,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -4500,10 +4964,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -4534,10 +5000,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -4568,10 +5036,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -4602,10 +5072,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -4636,10 +5108,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -4670,10 +5144,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -4915,10 +5391,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -4949,10 +5427,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -4983,10 +5463,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -5017,10 +5499,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -5051,10 +5535,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -5085,10 +5571,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -5119,10 +5607,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="ffc2aa"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="e65d27"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 						</Frame>

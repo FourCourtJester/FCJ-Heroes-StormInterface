@@ -47,7 +47,7 @@ them. See `docs/obs-topbar-handoff.md` in the repo root.
 | `src/sources/Draft.jsx` | The browser source over Blizzard's ban-and-pick screen (`#/source/draft`): the band with the series on it; its cover is still to come |
 | `src/sources/Scores.jsx` | The browser source over Blizzard's end-of-game screen (`#/source/scores`): a backdrop with a hole where the stats panel is |
 | `src/components/MatchupBand.jsx` | The band itself — worn by Matchup and Draft, and the only place its numbers are read |
-| `src/control/panels/` | The operator's board — teams (with the series and each side's wins), bans, tournament, and options (what the broadcast shows at all) |
+| `src/control/panels/` | The operator's board — standby, webcams, teams (with the series and each side's wins), tournament, logos, and help |
 | `src/generated/` | Written by `tools/obs.py`. Do not edit |
 | `src/generated/guide.png` | Every place as an orange outline: add it as an Image source while lining a scene up, then hide it |
 
@@ -112,24 +112,89 @@ Where things actually are, since the help text has to be right about it: the gea
 holds **Collaborate, Image store, Browser sources, Keyboard shortcuts, Plugins, Start over**.
 The magnifier on any image picker opens the same library.
 
-### Two tournament logos
+### The Logos panel — two pictures each, four in all
 
-`event.logo` is **square**, `event.logo_wide` is **oblong**, and they are two pictures rather
-than one reused because the holes are different shapes (user, 2026-10-23):
+The broadcaster and the tournament each get a **square** and a **wide** picture, on a panel of
+their own (user, 2026-10-26). They were three pickers at the bottom of Tournament; they are
+not tournament settings, they are the show's furniture, and four of them would have pushed the
+tab fields out of their own panel.
 
-| | |
+| slot | drawn into |
 |---|---|
-| `event.logo` (square) | Blizzard's hexagon in the game scene. The hole is a hexagon, so an oblong mark is squashed or cropped |
-| `event.logo_wide` (wide) | the game scene's top right corner, 204 x 50 — a square mark would waste it |
-| `event.broadcaster` | the game scene's top left corner, and the standby band's left arm |
+| `event.broadcaster` (square) | — |
+| `event.broadcaster_wide` | the game scene's top left corner, the standby band's left arm, the lockups |
+| `event.logo` (square) | Blizzard's hexagon in the game scene |
+| `event.logo_wide` | the top right corner (204 x 50), the band's right arm, the lockups |
 
-Which one a graphic wants is a property of the hole, not of the show, so the board asks for
-both once and each scene takes the one that fits.
+**The waterfall runs both ways, and that is the part to read.** "Wide, then square, then
+nothing" is right for a wide hole — a 204 x 50 corner, a 576 x 103 arm, a 297 x 65 lockup mark
+— and exactly wrong for Blizzard's hexagon, where a wide mark is the one thing that cannot be
+made to work. So each hole says which shape it is drawn for and takes the other only as a
+fallback. `components/marks.js` is the whole of it:
+
+```js
+const hexMark = useMark('tournament', 'square')   // the hexagon wants the square one
+const rightMark = useMark('tournament')            // a corner wants the wide one
+```
+
+A fallback is a worse fit, never a broken one. `useMark` hands back the `shape` it found, so
+the hexagon can **fill** with a square mark and merely **contain** a wide one — letterboxed
+and small, rather than a wordmark cropped to its middle third, which is what `cover` did to it
+before.
+
+**Neither picture is required.** An organisation with only one still gets a sensible result
+everywhere; one with both gets the right one everywhere. A mark left unset is drawn as nothing
+at all, not as an empty lit container.
+
+#### Three switches, and they reach every source
+
+| switch | takes off |
+|---|---|
+| `show.broadcaster` | every broadcaster mark — game bar corner, band arm, both lockups |
+| `show.tournament` | every tournament mark, in the same four places |
+| `show.hex` | Blizzard's hexagon, and nothing else |
+
+One switch per mark rather than one per scene (user, 2026-10-26: "the same toggle will edit
+matchup/draft/game/scoreboard"), so a broadcaster taken off is off everywhere rather than in
+the one scene somebody remembered. They replace `corner.broadcaster`, `corner.tournament` and
+the old `tournament`, which were per-corner; **the old toggle state does not carry over**, so
+all three start off.
+
+**The hexagon is not governed by the tournament switch.** It is the game's own furniture
+wearing our mark rather than one of our overlays, so it keeps a switch to itself and is
+unaffected by taking the tournament's marks off the broadcast (user, 2026-10-26: "Hex is
+special since it's its own thing").
+
+**The graphics close up around what is left.** Take the broadcaster off a lockup and the
+tournament's mark centres, taking the x with it; take both off and there is no lockup at all.
+
+That last part is why the switch is read in `marks.js` rather than by wrapping each mark in a
+`Toggle`. The framework's source `Toggle` **keeps its children mounted while it is off**,
+hidden rather than removed — deliberately, so a graphic laid out around it does not move as it
+comes and goes. Exactly right for a fixed box, exactly wrong for a pair of marks meeting at an
+x. So anything whose layout answers to a mark calls `useVisibleMark` and renders nothing,
+while the two corners and the hexagon keep their `Toggle` wrapper, where the box is alone
+against a screen edge and the fade is worth having.
+
+**Why slots rather than detecting the aspect ratio.** Measuring an uploaded image was the
+obvious alternative and it is worse in three ways. The asset store keeps no dimensions — an
+entry is `{key, kind, hash, name, size, type, addedAt}` — so it means loading and measuring,
+which is async, and the scores screen measures and animates on mount. Plenty of logos are
+square files with a wide wordmark in transparent padding, so the file's ratio lies and only
+reading the alpha bounding box would tell the truth — which a canvas cannot do for an image
+added by URL from another host. And detection picks the treatment, never the artwork: it
+cannot make a wide mark work in a hexagon. A slot is the organisation saying which picture is
+which, once, which is the thing detection was trying to guess.
+
+**Tall marks are not a case yet.** A 1:3 crest and a 1:1 badge want different holes, so one
+would want its own slot rather than being squeezed into "square" — but nobody has asked, and a
+slot nobody fills is a slot everybody wonders about.
 
 ### The corner marks
 
-The broadcaster's top left, the tournament's wide logo top right, each on its own switch so
-a show can run any combination of the three marks.
+The broadcaster's top left, the tournament's wide logo top right. They are on the show-wide
+switches above — `show.broadcaster` and `show.tournament` — rather than switches of their own,
+so a mark is not on in one scene and off in another.
 
 **The box is derived from the pips, not typed.** A best of 7 is the longest series, so its
 outermost pip reaches further along the band than anything else; the mark starts
@@ -143,6 +208,331 @@ lockup needed.
 
 **Not yet seen together with Blizzard's kill feed**, which also lives top left. The marks sit
 inside the band's height to stay clear of it, but that is reasoning, not a live check.
+
+## The matchup slab
+
+The matchup, replacing the bottom band — agreed as the direction on 2026-10-25, and since
+2026-10-26 **what the source draws with no flag at all**, so a browser source is just
+`#/source/matchup` with nothing to forget.
+
+| URL | what it draws |
+|---|---|
+| `#/source/matchup` | **the one container a side** — score, logo, name. The default |
+| `?band=slab` | hexagon badge + name plate a side |
+| `?band=original` | the bottom band this replaced |
+
+**SETTLED, 2026-10-26: the container is the matchup band.** "We're done with the matchup
+band, so any unit vs slab convo is resolved" (user). `?band=slab` is a dead end kept only for
+reference and can go whenever someone is tidying; the sections below on what was wrong with
+the earlier shapes are history now rather than open questions.
+
+One thing to know before deleting: **`?band=original` cannot simply go with it.** `Draft.jsx`
+imports `MatchupBand` directly rather than through this switch, so retiring the original band
+is a change to the draft screen as well, not a deletion here.
+
+Note that the original band is now the one that needs asking for — `?band=original`, where it
+used to be what you got by leaving the flag off.
+
+### Where it sits, and how big
+
+**Bottom-anchored, centred horizontally.** The lowest painted pixel sits `[screen] padding`
+— 20px — above the bottom edge, the same margin the hero rows stop at, so the band and the
+interface keep one edge (user, 2026-10-26). There is no `centre_y` any more: `tools/obs.py`
+derives the row's centre line from that bottom edge, the row's height and the lockup under it,
+so changing a size moves nothing on screen.
+
+Each composition derives its **own** centre line, because they are not the same depth — the
+container is 113 tall against the slab badge's 178. One shared line put the slab's lockup 16px
+off the bottom of the screen; centred, that difference had been split top and bottom where
+nobody saw it. The unit composition carries its own VS box for the same reason.
+
+The anchor is measured on the **fullest** case, with the lockup under the row. Without one the
+band rides higher rather than sliding down to fill the gap — deliberately, because a band that
+repositions itself when somebody adds or clears a tournament logo would move on air.
+
+**It has come down to 73% of its drawn size,** in three passes of ten (user, 2026-10-26). The
+container is **542 x 102** a side, from 746 x 140.
+
+The **tournament marks are exempt** from the second pass onward — "tournament logos dont have
+to adhere to this" — so `lockup`, `lockup_mark`, `lockup_pad` and `lockup_x` are the sizes
+they were and the marks hold their presence while the band tightens around them. They now span
+about 673px against a 468px kicker, which is the exemption doing what it was asked to.
+
+The third pass was made once before and reverted, because the nine-slice cap was authored and
+could not follow the band down — see the section below. With the frames generated per plate it
+is an ordinary number change, and the only thing that does not scale with the band now is the
+rim: it is a true `rim_width` at every height, so it reads a little heavier here (2.45% of the
+height) than it did at 140 (1.79%).
+
+### The frames are generated per plate
+
+**A plate's chrome is cut for that plate's height, and its nine-slice cap is derived, never
+authored.** This is what lets the band be sized freely — and be authored on more than one page
+(user, 2026-10-26: "we're trying to create a system here").
+
+Two things draw a plate's point, and they do not scale alike:
+
+- the **silhouette** is a `clip-path`, run `lean x h/2` over rise `h/2`. Both follow the
+  height, so the angle is `atan(lean)` — **28.37°, at every size**;
+- the **chrome** is a `border-image` cap, painted **1:1 horizontally** (the painted width and
+  the slice are the same number) and **squashed vertically** to the element. Its point keeps
+  the art's fixed run while its rise becomes `h/2`, so its angle is `atan(2 x point / h)` —
+  which equals the clip's only at the height the art was cut for.
+
+So one shared file cannot serve plates of different heights. `tools/obs.py` cuts one per
+consumer and `frame_cap` derives each cap as `point + 2 x rim_width`, rounded up:
+
+| file | height | cap |
+|---|---|---|
+| `frame_matchup.svg` | `[standby] team_h` — the original band | 44 |
+| `frame_plate.svg` | the slab composition's name plate | 30 |
+| `frame_unit.svg` | the container composition | 36 |
+
+Add a plate at a new height and it wants its own file and its own derived cap; that is the
+whole of the system. **Nothing about a cap belongs in `layout.toml`.**
+
+**Why this exists.** The cap used to be `name_cap`, authored by hand, and it was the one
+number in `[matchup]` that could not be scaled. Three 10% passes walked it 44 → 40 → 36 → 32,
+under the 35.1px point it was slicing, so the slice cut the diagonal and the leftover slope
+was stretched the length of the bar (user, 2026-10-26: "The drawing is completely wrong now").
+The silhouette stayed right the entire time — which is exactly why it read as the plates
+changing rather than a number being wrong. Nothing caught it because `matchup_frame_svg`
+asserted its cap held its point using the **standby's** numbers, which never moved.
+
+`tools/test_obs.py` now checks every committed frame: cut for the height it serves, cap
+holding its point with room for the rim, and the spec handing out the cap the art was cut
+with. It has been confirmed to fail on the original bug rather than merely passing.
+
+Both spellings of a query work — `/?band=unit#/source/matchup` or
+`#/source/matchup?band=unit`. The app is hash-routed, so `location.search` is empty in the
+second, and reading only that served the original band without a word (user, 2026-10-26). The
+flags are read once at load: changing one in the address bar needs a reload, which is what a
+browser source does anyway.
+
+**`?band=slab` is the one to come back to** if the container is ever abandoned. It was the
+best of the earlier attempts because the
+hexagon-and-plate silhouette has a problem that four passes of tuning could not fix: a bulge
+(the badge, 190 wide against a 110 plate), a shaft (the plate), and a taper (the inner
+point), mirrored and converging on the middle. It reads as a key, and less charitably than
+that (user, 2026-10-25). Flattening the outer edge made it worse, not better, by removing the
+one thing keeping the shape symmetric — which is usually the shape saying the arrangement is
+wrong rather than the details.
+
+Its numbers are `layout.toml`'s `[matchup]`, worked out into boxes by `matchup_spec` and read
+by `src/components/MatchupSlab.jsx`.
+
+### What was wrong with the band
+
+Two things, both measured rather than felt:
+
+- A team container is **576 x 130 carrying one line of text**, where the in-game name plate
+  carries the same thing in 374 x 63 — three times the area for identical content.
+- The two logo arms spend **1152px, 60% of the screen's width**, on event branding at the
+  extreme edges, while the teams get the middle. The eye goes to the edges and finds a
+  tournament logo where it expected to find out who is playing, which is what the pushback
+  was about.
+
+So the teams come to the centre and take a logo, and the two arms collapse into the one
+`<broadcaster> x <tournament>` lockup the scores screen already uses.
+
+### The one-container team (`?band=unit`)
+
+One shape a side holding everything that team is, instead of a hexagon badge standing beside
+a plate (user, 2026-10-25: "the one container idea might be best"). Outward to inward: the
+**series score**, a **parallelogram for the logo**, then the **name** running in to the VS.
+The container is **pointed at both ends**, the outer one mirroring the inner, so nothing
+protrudes from it — which is the entire point.
+
+The score lands here almost by accident, and that is the nice part: the space between the
+logo and the outer border was going spare (user's suggestion), and a score retrofitted after
+the geometry had set would have meant moving everything.
+
+**The logo fills its plate**, `fit="cover"` with the slant clipping the overflow, exactly as
+the game scene's logo plate does it (user, 2026-10-25). Contained inside the parallelogram's
+straight-sided rectangle instead, the mark sat in the middle of a panel with the shear's
+worth of empty slope either side.
+
+**And it only takes room if there is one.** No logo, no panel — not an empty one holding its
+place (user, 2026-10-25). That is why the container has no width of its own: it is anchored
+by its **inner** edge and sized by its contents, so a team without a logo simply gets a
+shorter band. Anchoring at the VS end is what keeps the middle of the graphic still while the
+two sides differ. Measured with blue carrying a logo and red not: blue 142–888 (746 wide),
+red 1032–1558 (526), a difference of **220** — exactly the panel — with both inner edges
+unmoved.
+
+**Two geometry traps, both the same trap.** A sheared or tapered shape's usable area is not
+its bounding box:
+
+| shape | bounding box | actually usable |
+|---|---|---|
+| hexagon badge (slab) | 190 x 220 | an 110px square |
+| logo parallelogram (unit) | 220 x 140 | 116 x 112 if the mark is *contained* |
+
+The parallelogram leans by `lean x height` = 75.6, and that comes off the width *twice over* —
+once deciding how wide the panel has to be before it reads as a plate rather than a diagonal
+strip, and again deciding how much room is left inside it. At 180 wide the logo got 76px.
+
+**The slant runs the game's way.** The first cut had it mirrored (user, 2026-10-25). Checked
+against `frame_svg` rather than by eye: its plate is `0,0  w-d,0  w,h  d,h`, so the top edge
+is the left-shifted one and the left edge runs **down and right**. Blue takes that, red is
+its mirror — as in the game bar.
+
+**Both ends are points, and that is why it needs no special-casing.** The slab's plate was
+flattened on the outside to meet the hexagon's vertical edge; this arrangement has no
+hexagon, so there is nothing for a flat edge to match and the shape goes back to symmetric.
+A band that ends on a straight cut with a point at the other end reads as something gone
+wrong — "looks like a mask issue" (user, 2026-10-25).
+
+Being symmetric pays for itself three times over: **one** clip serves both sides (only the
+wash and the row's direction differ), **both** ends take the frame's own nine-slice cap
+rather than one needing a hand-rolled rim, and the cap art is a point, which is what the
+frame was drawn for in the first place.
+
+The score is inset past the outer point so the clip does not take a bite out of the digit.
+The cap has 44px to hold a 37.8px point plus 2.5px of rim — 42.8 of the 44, so the container
+cannot get much taller before `[standby] team_cap` has to grow with it.
+
+**Known rough edge:** the kicker and the `mid` panel are still positioned against the *name
+plate's* box, which is the slab's geometry. The container is taller (140 against 110), so on
+this variant the kicker overlaps its top by about 15px instead of sitting on it. It wants
+re-hanging off the container before this arrangement is judged finished.
+
+### The shape
+
+A team is **a hexagon badge and a name plate**. The hexagon is not a new shape: the series
+pips are pointy-top hexagons, the lattice inside every plate is a hex weave, and Blizzard's
+own centrepiece in the top bar is a hexagon. A plate pointed at both ends is a poor home for
+a logo, which was the complaint; a hexagon is a good one.
+
+**The plate's outer edge is flat, and it butts the hexagon** (user, 2026-10-25: "flatten the
+outer edges of the nameplates to match the vertical edge of the team logo hexagons"). A
+pointy-top hexagon runs straight down each side between h/4 and 3h/4 — exactly h/2 of it — so
+`matchup_spec` gives the plate that height rather than a typed one, and the two meet edge to
+edge with nothing overhanging. Measured: the badge's right edge and the plate's left edge are
+both 447.77, and both span y 445–555.
+
+Deriving the height matters more than it looks: a typed 120 would have stopped matching the
+moment the badge was resized, and the badge has already been resized once.
+
+Only the inner end, facing the VS, keeps its point. **Only that end gets a frame cap**, too:
+the frame is the band's double-pointed nine-slice, so drawing both caps put a chevron of rim
+across the flat edge where the hexagon is already drawing one. Two rims against each other
+read as one doubled border, so the leading edge gives way — the kit's own rule, carried over
+from the game plates.
+
+The flat edge also bought the name room. The padding is asymmetric now (the flat side needs
+only its own air, the pointed side needs the point as well), which widened the text box from
+339 to 374 and took "Northwind Esports Academy" from 39px to **43**.
+
+**Logos outboard, names meeting across the VS**, so you read "A vs B" straight through the
+middle. The game bar puts its logo plate *inboard* only because Blizzard's hexagon occupies
+its centre; that constraint does not exist here, and copying it would be inheriting someone
+else's problem. The VS gets a hexagon of its own, which gives the middle weight now that the
+lens flare is gone.
+
+Reading order down the screen is **what this is, who is playing, who is bringing it to you**
+— the kicker, the matchup, then the branding. Branding last, not first.
+
+The kicker sits on **a plate of its own**: the old band's message board brought back (user,
+2026-10-25: "the previous iteration of a edge-slant translucent box will work just fine
+here"), in plain smoke rather than team colour so it recedes.
+
+**One slant a side, flaring down.** Not a point at half height like the band's board — the
+left edge runs down-left and the right edge down-right (user, 2026-10-25), so the plate opens
+outward as it descends and lands on the matchup instead of tapering away from it. The flare
+is the kit's lean over the plate's height (41.04 at 76 tall), so the bottom edge is
+`kicker_w + 2 x flare`. Its box is the *wider*, bottom width and the top corners are cut in;
+`kicker_w` in `layout.toml` is the top edge.
+
+**It is attached, not spaced.** The plate's bottom edge *is* the name plates' top edge, both
+at y 440, and `.fcjh-slab-mid` carries the same smoke on down behind the row at the plate's
+bottom width. That fills the gaps the pointed plates and the VS leave between them, so the
+kicker, the plates and the VS read as one shape rather than three things stacked near each
+other. The effect is quiet by design — the plates cover most of it, and what it changes is
+the gaps.
+
+The lockup came up to a **12px** gap with 14px of padding inside its own box, so it reads as
+the foot of the unit. The padding grows the box rather than squeezing the marks, which stay
+at their full 72.
+
+### Wrap, then shrink
+
+`src/components/MatchupSlab.jsx`'s `useWrapThenShrink`, and the reason it exists:
+
+**The framework's `fit` guarantees one line by shrinking.** It renders its own
+`whitespace-nowrap` span with an inline font-size, and on a 25-character club name in this
+plate it measured **23.8px against the 46 it was asked for — 48%**. That is the band's
+complaint upside down: the container was never too big for its content, the content was being
+crushed to half size to stay on one line.
+
+So the name wraps to `name_lines` at full size first, and only shrinks if it still does not
+fit, a pixel at a time down to `name_min`. Measured: "Tempo Storm Esports" sits at the full
+**46px** over two lines, and "Northwind Esports Academy" shrinks only as far as **39px** —
+not to the floor.
+
+**Measure `offsetHeight`, not `scrollHeight`.** On this element `scrollHeight` reads about
+11px over the laid-out height — 107 against an offsetHeight of 96 for two 47.84px lines — so
+comparing it shrank a name that already fitted, and kept going until the text collapsed onto
+one line, which is precisely the behaviour the hook exists to avoid.
+
+### The plate's frame
+
+**The shape is a clip, the frame is an overlay**, which is the band's own arrangement. The
+first cut asked the nine-slice to do both with a 44px border on all four sides: on a 120px
+plate that leaves 32px of content box, so the text was overflowing its own box and only
+looked right because it was centred. Horizontal-only border (`border-image-width: 0 cap`), as
+the band does it, and the plate keeps its full height for two lines.
+
+The team wash is a **background layer, not a `::before`**: on a pseudo-element it was clipped
+to the content box and drew as a hard rectangle inside the frame, ignoring the plate's points.
+It is strongest at the **inner** end, so the two teams meet in their own colours across the
+VS — strongest at the outer end just doubles up on the badge, which already carries the
+colour.
+
+### The badge chrome
+
+Generated, not approximated: `hex_chrome_svg` draws the hexagon with the plates' own sheen
+over its top half and their rim round all six sides, and the fill, wash and glow stay in CSS
+behind it — exactly the arrangement `frame_svg` uses for the plates.
+
+**It is not a nine-slice**, despite that being the obvious instinct. A nine-slice stretches a
+straight middle and a hexagon has none, so slicing one shears its slants. It is drawn at the
+size it is used at, which is also why the VS has a file of its own: scaling the badge's down
+to 116px would thin its rim with it, and a thin rim beside a thick one is hard to unsee.
+
+**No team line.** The plates carry a bar of team colour and the game bar's logo plate
+deliberately does not, because "a bar of team colour under a team's own logo says nothing the
+logo doesn't" (user, 2026-10-22). This is a logo plate, so the same holds — and it means one
+file serves both teams, the colour arriving from the CSS behind it.
+
+**The logo covers the badge and the hexagon clips it** (user, 2026-10-25) — `fit="cover"`
+at the badge's full size, bleeding under the rim, which is why the badge carries no padding.
+
+It went the other way first, and the detour is worth keeping because the geometry behind it
+is still true: **a hexagon's usable area is not its bounding box**. Giving the logo the badge
+minus padding had a square placeholder's top and bottom corners cut off by the taper, so it
+was sized instead to the largest centred square that genuinely fits — inset the hexagon by
+the padding (its apothem is W/2, so an inset of p scales it by (W/2 - p)/(W/2)) and solve
+`s = 2WH / (H + 2W)`. That is correct for a mark that must sit *inside* the shape, and it is
+also why the badge grew from 184 to 220: the square was only 87px, which read small, and 220
+takes it to 110. Covering makes the square moot, but the badge size it argued for is the one
+that stayed.
+
+The badge is **1.83x the name plate's height** as drawn. Taller starts to overpower it.
+
+### Still to do on it — moot
+
+**This list is about the slab, which lost.** Kept for the reasoning, not as work:
+
+
+- **The badge is sized against a placeholder square.** Most team crests are round or
+  near-round, and a circle uses that inscribed square far better than a hard-edged square
+  does, so it wants a look against real artwork before the size is final.
+- **No series pips.** Scores were not a priority (user, 2026-10-23), but the pip art already
+  exists from the game bar and the natural slot is outboard of each badge — which would
+  widen the slab, so it wants deciding before the geometry sets.
+- **Draft gets its own version** rather than sharing this one (user, 2026-10-25), which is
+  what freed the composition from the bottom edge in the first place.
 
 ## The matchup band
 
@@ -284,7 +674,12 @@ band.) Its message board carries
 the **series** — "Best of 5", from `series.pips` — rather than a message: standby says what is
 coming up, and here there is no question of that, the teams are on screen drafting.
 
-### The cover is still to come
+### The cover — scrapped
+
+**Dropped on 2026-10-26: "users can use their own covers."** Two attempts are in the history
+and both were wrong the same way; the reasoning is kept below because it is the useful part,
+not because a third attempt is planned.
+
 
 Blizzard's draft screen puts the lobby chat and the tails of its player columns across the
 bottom, which a broadcast does not want on air. Two attempts at hiding them are in the
@@ -417,24 +812,22 @@ Three things worth knowing about it:
   (`swap needs an even number of paths to cut in half`) — and which side won is not a
   property of a side, so there is nothing to exchange it with.
 
-**The victory mark**, one either side of the name. Two are drawn and both ship:
+**The victory mark**: a laurel branch either side of the name, in **laurel green**
+(`[scores] win_mark_colour`, #2f8f4e). A hexagon version was drawn alongside it, shown, and
+dropped unused (user, 2026-10-25: "Just go laurels"), so there is no longer a choice to
+configure — the branch is the mark.
 
-| | |
-|---|---|
-| `laurel` | a crescent branch, nine leaves fanned off an arc — the classic |
-| `hex` | a hexagon ring with a six-point sparkle, the lattice motif the plates and bands wear |
+The green is light enough to read against the nebula; a true bottle green goes to mud on that
+backdrop. **The glow stays the winning team's colour**, not the leaves': it is what ties the
+branches to the name they frame, and a green glow on green leaves would just be a blur.
 
-`[scores] win_mark` picks one. `?mark=hex` on the source URL overrides it for a side-by-side
-look without a rebuild, the same trick the webcams use for `?fill`.
-
-Both are **masks, not pictures**: the SVG is solid white and carries no colour, so the
-stylesheet paints it and the same file serves both teams — one drawn shape instead of four,
-and nothing to keep in step when a team colour moves. A mask takes no `text-shadow`, so the
-bloom is a `drop-shadow` filter on the shape. The mask URLs are literal in the stylesheet and
-the spec picks a *class*, because Vite only resolves a `url()` it can see at build time: a
-path assembled from the spec at runtime would be left alone and 404 on Pages. Both marks are
-small enough that it inlines them as data URIs rather than emitting files — so there is no
-win_*.svg in `dist/assets`, which is correct, not a missing asset.
+It is a **mask, not a picture**: the SVG is solid white and carries no colour, so one drawn
+shape serves both teams and the colour is a one-line change rather than a redraw. A mask
+takes no `text-shadow`, so the bloom is a `drop-shadow` filter on the shape. The mask URL is
+literal in the stylesheet because Vite only resolves a `url()` it can see at build time — a
+path assembled from the spec at runtime would be left alone and 404 on Pages. It is small
+enough that Vite inlines it as a data URI rather than emitting a file, so there is no
+win_laurel.svg in `dist/assets`, which is correct, not a missing asset.
 
 The laurel **computes its own viewBox**. The first cut fixed it at 64x104 and the outer
 leaves were simply clipped off, which read on screen as a thin upright frond rather than a
@@ -549,33 +942,82 @@ Every layer exists in all four copies and **must stay in step**: they mount toge
 nothing in them may be random or depend on where its piece sits, or the same star would be
 in two states either side of a seam. That is why the comet delays are written out.
 
-**Not done: the electricity off the blue tiles** — the one the user filed as "harder". The
-raw material is there if we want it: `storm_ui_home_nexus_lightning1-4.dds` (648 x 432, four
-frames, so it wants stepping rather than tweening) and `storm_ui_home_nexus_fx_tilelighting.dds`
-(1812 x 304, a sweep along the floor), both under `references/`.
+**Not done: the electricity off the blue tiles** — the one the user filed as "harder".
+
+**It was built on 2026-10-26 and scrapped the same day**, so read this before building it
+again. The attempt drew it the way the rest of this sky is drawn: an SVG sprite of four
+frames, stepped with `steps(4, end)`, bursting for 0.3s every 7.5s. On air it read as
+**"noise on an old video tape"** (user) — which is what sparse white-cored flecks cut at
+0.075s a frame look like, whatever they are shaped like. The fault was the *stepping*, not
+the drawing: hard cuts between scattered small marks is television static, and the eye names
+it that before it sees any lightning.
+
+If it is picked up again, the lead is the other half of the source. `lightning1-4.dds` is the
+flicker that failed; **`storm_ui_home_nexus_fx_tilelighting.dds` (1812 x 304) is a sweep along
+the floor** — one travelling light, continuous rather than cut, which is the opposite motion
+and would not read as static. A slow sweep that lights tile edges as it passes is probably the
+effect that was wanted all along.
+
+The raw material, either way: `storm_ui_home_nexus_lightning1-4.dds` (648 x 432, four frames)
+and `storm_ui_home_nexus_fx_tilelighting.dds`, both under `references/`.
 
 ## Colour-blind colours
 
 The game's colour-blind option turns the interface's red a peachy orange and its blue a touch
 cyan (HANDOFF, the in-game half). A browser source can't read the game's options, so the
-operator says: **Tournament → Colour-blind colours** (user, 2026-10-25). Off is the resting
+operator says: **Tournament → Colour-blind mode** (user, 2026-10-25; renamed from "colours"
+on 2026-10-26, since it switches the art as well). Off is the resting
 state.
 
 - **The colours are the interface's own.** `tools/obs.py` writes
   `src/generated/colourblind.json` with the same rule the interface uses
   (`gen.colour_blind_cfg`: each team colour keeps its saturation and value and takes the hue
   of Blizzard's colour-blind pair), so OBS and the game can't disagree.
-- **The art that carries a team colour has a `_cb` twin** there too: `frame_{team}_cb.svg`
-  (the team line), `lattice_{team}_cb.svg` and `pip_{team}_cb.svg`. The logo frame and the
-  ban tiles carry no team colour and have none.
+- **The hex lattice carries no colour at all.** There is one `lattice.svg`, drawn in white,
+  and every stylesheet uses it as a **mask** and paints it in `--team-rgb` — so it follows
+  whatever colours it is given, not just the two modes (user, 2026-10-25: "ensure all the hex
+  mesh's are colorable by arbitrary colors that we provide").
+
+  It was a coloured SVG per team, then per team *per mode* once colour-blind arrived: four
+  files for two schemes, and a fifth the moment anyone wanted a third. A mask has no such
+  arithmetic. The fade that used to be a black mask over a coloured image is now the colour
+  itself — same alphas in a `linear-gradient` of the team colour — which frees the mask slot
+  for the mesh and gives an identical result.
+
+  Because `--team-rgb` already switches with the mode, the lattice needs **no colour-blind
+  rule whatsoever** now; those were deleted along with the four files.
+
+- **The frames carry no team colour either.** The only coloured thing in one was the team
+  line along the bottom of a name plate, and that is now its own art (`frame_line_{side}.svg`,
+  white) on its own element, masked and painted in `--team-rgb` (user, 2026-10-25).
+
+  It needs `mask-border` — `-webkit-mask-box-image` in Chromium, which is what OBS runs —
+  rather than a plain `mask-image`, for the same reason the frame needs `border-image`: the
+  line is sheared, so stretching it whole would flatten the shear at the ends. Caps hold, the
+  middle stretches.
+
+  It also wanted an element of its own, because the plate's two pseudo-elements were already
+  spent on the lattice and the chrome. That is the one markup change in this.
+
+  With the line gone, `frame_{side}.svg` carries nothing team-specific, so **the logo plate
+  now uses the same file** and `frame_logo_{side}.svg` is retired along with both `_cb`
+  frames: four files down to two, and those two differ only by which way they lean.
+
+- **The pips are the exception, and it is not ours to fix.** `pip_{team}_cb.svg` survives
+  because the framework's `Tally` draws its marks from a `src` URL and takes no children and
+  no render prop — so a pip's colour has to be in the file. Converting them would mean
+  replacing `Tally` and losing its counting, filling and transitions. Filed upstream as
+  entry 4 of `docs/single-studio-reports.md`.
 - **One hook**, `src/components/colourBlind.js`: `useColourBlind()` reads
   `toggles.colourblind` (a `Toggle` writes to `toggles`, so it goes to air without a save).
   A scene root wears `cb` while it is on, and its stylesheet swaps the URLs; the washes and
   glows come from `COLOUR_BLIND` / `COLOUR_BLIND_VARS` in place of the spec's colours.
 - **Covered:** the game bar (plates, lattices, team lines, pips), the matchup band on standby
-  and the draft, the scores screen's winner glow. **Not yet:** the matchup slab
-  (`MatchupSlab.jsx`), and the board's own lit Winner buttons (`fcjh-won`), which are the
-  operator's, not the broadcast's.
+  and the draft, the matchup slab in both its shapes (`?band=slab`, `?band=unit`; its root
+  takes `COLOUR_BLIND_VARS`, 2026-10-25), the scores screen's winner glow. Browser-checked
+  with the toggle on: every one reads the pair from `colourblind.json` (92 216 236 /
+  231 131 92). Webcams and standby carry no team colour. **Left out on purpose:** the board's
+  own lit Winner buttons (`fcjh-won`), which are the operator's, not the broadcast's.
 
 ## If the board comes up unstyled
 
@@ -605,9 +1047,9 @@ entry 3 has both in full.
 
 ## Still open
 
-- **NEXT: the Game scene's logos** — "some slight adjustments to make for Game regarding
-  logos" (user, 2026-10-23), left for last and never spelled out. Needs the user to say what
-  the adjustment is.
+- ~~**The Game scene's logos**~~ — settled 2026-10-26: the adjustment was a dark backing
+  behind a mark in Blizzard's hexagon, for logos with a transparent ground. Built; see "the
+  tournament's logo" in `game.css`.
 - **Testing**: the user tests in OBS at 1080p, the broadcast's settings; Claude checks
   in a browser at 1920 x 1080. **Claude's image library is empty**, and that is not a
   neutral fixture: anything whose width comes from library content - every `<select>` of
@@ -615,17 +1057,18 @@ entry 3 has both in full.
   2026-10-23 that the user saw at once; one realistic key (35 characters) was the whole
   difference. Inject one before trusting a width measurement. See
   `docs/single-studio-reports.md` entry 2.
-- **Ban portraits**: the pickers offer whatever is in the studio's image library, and
-  nothing fills that library with hero portraits — 90-odd of them — yet.
-- **The ban tiles' size and shape** were never settled: slanted as they are, or square.
-- **The font**: Saira Semi Condensed, fetched from Google Fonts at load. Blizzard's own
-  is a cut of Metronic Pro, whose licence would need checking for broadcast use.
-- **The standby screen's slides** come from the image library's `slides/` group, and the
-  library is empty bar two throwaway gradients added while testing (`slides/one`,
-  `slides/two` — delete them from the library when real art arrives). Dropping a folder
-  named `slides` on the library files the lot in one motion. Note that **files are added
-  on the machine running OBS**: a picture dropped on a producer's laptop has bytes that
-  live only there, and the slideshow leaves those out rather than playing a blank.
+- ~~**Ban portraits**~~ and ~~**the ban tiles' shape**~~ — **scrapped until a further design
+  pass** (user, 2026-10-26). The panel was already shelved; it stays shelved, and nobody
+  needs to go looking for 90-odd hero portraits in the meantime.
+- ~~**The font**~~ — settled 2026-10-26: Saira Semi Condensed stays. It is fetched from
+  Google Fonts at load. (Blizzard's own is a cut of Metronic Pro, whose licence would need
+  checking if that ever changes.)
+- ~~**The standby screen's slides**~~ — settled 2026-10-26: the arrangement is right as it
+  is. They come from the image library's `slides/` group; dropping a folder named `slides`
+  on the library files the lot in one motion. Two throwaway test gradients are still in
+  there (`slides/one`, `slides/two`) — delete them when real art arrives. Note that **files
+  are added on the machine running OBS**: a picture dropped on a producer's laptop has bytes
+  that live only there, and the slideshow leaves those out rather than playing a blank.
 
 - **The scores screen's tile electricity** is the one piece of its brief not built; see
   "What stands around the hole" above for the frames already extracted for it.

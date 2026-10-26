@@ -40,9 +40,9 @@ detail.
   - a heal pop-up when a hero drops to 25%.
 - Blizzard's talent-lead flame, brought over from the player HUD.
 - The HUD keys taking our own pieces with them: Ctrl+E hides everything, Ctrl+Shift+E all
-  but the top plate, nothing left floating (built, not yet seen).
-- Colour-blind mode reaching our art: the top plate, red's plates and talent squares, the
-  inspect card's edge (built, not yet seen).
+  but the top plate, nothing left floating, the game's end too (seen).
+- Colour-blind mode reaching our art: the top plate, red's plates, health bars and talent
+  squares, the inspect card's edge, the info panes (partly seen).
 - Four info panes, one at a time, on Ctrl+1-4.
 - An inspect card for observers, Blizzard's own command card on it.
 - Abathur's clone marked on the inspect card: the copied hero's face, Abathur's player, a
@@ -305,7 +305,7 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
   gets to see them.
 - **Ours:** an info pane of its own on Ctrl+4, the only one by team: each team's band with its
   total, a row per source, Blizzard's words and numbers (`xp_pane`, gen.py).
-- **Status:** built, not yet seen in game.
+- **Status:** seen in game and good (user, 2026-10-25) - DONE.
 
 ### Hogger's rage drawn as mana
 - **Blizzard's:** the target panel's per-hero resource colours (`HeroResourceStates`,
@@ -434,9 +434,10 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
   (`gameui.stormlayout:1241`) - over the clock and the logo where an observer's top bar keeps
   them. Players see it only in custom games, but that is nearly every esports match (user,
   2026-10-24, from a streamer's cast). Ahli moves the same panel.
-- **Ours:** Blizzard's own box, moved to under the centre banners, centred on our 958.5
+- **Ours:** Blizzard's own box, moved to 40 px under the clock, centred on our 958.5
   (`layout.toml` `[element.system_alert]`, `FCJH_TopBar`). Its look is untouched.
-- **Status:** not yet seen in game.
+- **Status:** seen in game under the centre banners (2026-10-25, a paused replay), too low;
+  moved up, seen there and good (user, 2026-10-25) - DONE.
 
 ## Made for observers
 
@@ -602,7 +603,11 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
     (`FCJH_HudWatch`, a state group reading both toggles).
   - Ctrl+E is also gamehotkeys' `ReplayRestart`, but Blizzard's layout key has always won it
     in the observer (`validate.py` `LAYOUT_OVER_HOTKEY`).
-  - **Status:** built, not yet seen in game.
+  - The game's end too (user, 2026-10-25): Blizzard hides its own plates for the victory
+    splash and nothing else, so a heal pop-up fired as the units went was left stretched
+    over the splash. `GameOverSplash` or the awards panel showing now hides the same as the
+    keys.
+  - **Status:** both keys and the game's end seen in game and good (user, 2026-10-25) - DONE.
 
 - **Colour-blind mode stopped at Blizzard's own pieces** (user, 2026-10-24, from a vod;
   built 2026-10-25). Blizzard's colour-blind option (`<When type="Option" colorblind="True"/>`)
@@ -616,7 +621,15 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
   - the inspect card's team edge takes the colour-blind colours.
   - the stat panes' team bands, row stripes and totals, and their numbers (a twin label each,
     as the lead animations own the label's style).
-  - **Status:** built, not yet seen in game.
+  - the Ctrl+1 talents pane's grid and Blizzard's talent squares, Colorized as the plates;
+  - Ahli's colours rather than Blizzard's (user, 2026-10-25: the casting standard for a
+    decade): red orange and blue cyan, where Blizzard's blue barely moves;
+  - red's plate health bars: Blizzard's `ObserverPanelOverviewHealth` (colorstyledata.xml)
+    names `ColorObserverPanelOverviewHealth{Order,Chaos}Colorblind` for colour-blind mode,
+    and neither exists in colorspecdata.xml, so the plates' bars never change - a Blizzard
+    bug. Ours switch to `ObserverPanelCoreHealth`, whose colour-blind values exist.
+  - **Status:** seen in game 2026-10-25: the top plate, core bars, inspect edge and stat
+    panes turn; the Colorized art and health bars didn't, fixed and not yet seen again.
 
 - **The player's death and respawn animations, on the observer plates** (test build ad48279,
   2026-10-16; approved 2026-10-18). The player's top bar (`partyframe.stormlayout`,

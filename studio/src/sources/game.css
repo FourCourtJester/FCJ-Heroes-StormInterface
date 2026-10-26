@@ -101,24 +101,19 @@
   clip-path: polygon(var(--slant) 0, 100% 0, calc(100% - var(--slant)) 100%, 0 100%);
 }
 
+/* The lattice is a MASK, not a picture, so the plate paints its own mesh in its own colour
+   and one tile serves every team and every mode - including whatever the colour-blind toggle
+   swaps in, since `--team-rgb` switches with it (user, 2026-10-25). It used to be a coloured
+   SVG per team, then per team per mode; there is no such file to generate now.
+
+   The fade that used to be a black mask over a coloured image is now the colour itself: same
+   alphas, same result, and the mask slot is free for the mesh. */
 .fcjh-band.blue {
-  --lattice: url('../generated/lattice_blue.svg');
-  --lattice-fade: linear-gradient(to left, rgb(0 0 0 / 0.7), rgb(0 0 0 / 0.25) 50%, rgb(0 0 0 / 0.4));
+  --lattice-to: left;
 }
 
 .fcjh-band.red {
-  --lattice: url('../generated/lattice_red.svg');
-  --lattice-fade: linear-gradient(to right, rgb(0 0 0 / 0.7), rgb(0 0 0 / 0.25) 50%, rgb(0 0 0 / 0.4));
-}
-
-/* colour-blind mode (components/colourBlind.js): the same art in the interface's colour-blind
-   team colours */
-.cb .fcjh-band.blue {
-  --lattice: url('../generated/lattice_blue_cb.svg');
-}
-
-.cb .fcjh-band.red {
-  --lattice: url('../generated/lattice_red_cb.svg');
+  --lattice-to: right;
 }
 
 /* ── the two plates on it ──────────────────────────────────────────────────────────────
@@ -138,7 +133,7 @@
       rgb(var(--team-rgb) / 0.58) 80%,
       rgb(var(--team-rgb) / 0.95) 100%
     ),
-    linear-gradient(#3b2d52, #2a1f3c);
+    linear-gradient(var(--base-top), var(--base-bottom));
 }
 
 /* each plate is its own parallelogram, cut the way the band used to cut the pair of them */
@@ -158,9 +153,16 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: var(--lattice);
-  -webkit-mask-image: var(--lattice-fade);
-  mask-image: var(--lattice-fade);
+  background-image: linear-gradient(
+    to var(--lattice-to),
+    rgb(var(--team-rgb) / 0.7),
+    rgb(var(--team-rgb) / 0.25) 50%,
+    rgb(var(--team-rgb) / 0.4)
+  );
+  -webkit-mask-image: url('../generated/lattice.svg');
+  mask-image: url('../generated/lattice.svg');
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
 }
 
 .fcjh-name {
@@ -218,22 +220,18 @@
   border-image-source: url('../generated/frame_red.svg');
 }
 
-.cb .blue .fcjh-name::after {
-  border-image-source: url('../generated/frame_blue_cb.svg');
-}
-
-.cb .red .fcjh-name::after {
-  border-image-source: url('../generated/frame_red_cb.svg');
-}
+/* Colour-blind mode needs no frame of its own now: the frame carries no team colour at all,
+   and the team line below is masked and painted in `--team-rgb`, which already switches with
+   the mode (user, 2026-10-25). */
 
 /* the logo plate takes the same frame without the team line: a bar of team colour under a
    team's own logo says nothing the logo doesn't */
 .blue .fcjh-logo::after {
-  border-image-source: url('../generated/frame_logo_blue.svg');
+  border-image-source: url('../generated/frame_blue.svg');
 }
 
 .red .fcjh-logo::after {
-  border-image-source: url('../generated/frame_logo_red.svg');
+  border-image-source: url('../generated/frame_red.svg');
 }
 
 /* ── the name ──────────────────────────────────────────────────────────────────────────
@@ -446,6 +444,22 @@
   clip-path: var(--event-clip);
 }
 
+/* A DARK BACKING BEHIND THE MARK (user, 2026-10-26: "we need a somewhat dark purple
+   background for logos that go in the hex that have transparencies"). Plenty of logos are
+   PNGs with a transparent ground, and with nothing behind them the hexagon showed whatever
+   the game was doing under the overlay - which moves, and which no mark reads against.
+
+   The kit's own purple, the same pair the plates are filled with, so the hexagon belongs to
+   the bar rather than looking like a patch laid on it. The `clip-path` above cuts it to the
+   hexagon, so this needs no shape of its own.
+
+   ONLY WHEN THERE IS A MARK. `.has-mark` is set by Game.jsx, because the box is still here
+   when the tournament has no logo and an empty purple hexagon is worse than none: it reads
+   as a graphic that failed to load rather than one nobody asked for. */
+.fcjh-event.has-mark {
+  background: linear-gradient(var(--base-top), var(--base-bottom));
+}
+
 .fcjh-event img {
   position: absolute;
   inset: 0;
@@ -602,4 +616,38 @@
   height: 100%;
   max-width: 100%;
   object-fit: contain;
+}
+
+/* ── the team line ───────────────────────────────────────────────────────────────────────
+
+   The bar of team colour along the bottom of a name plate. It used to be baked into the
+   frame, which made the frame the one piece of art needing a file per team AND per colour
+   scheme. Drawn on its own in white and masked, it takes any colour we hand it.
+
+   `mask-border` is the mask's answer to `border-image`, and it is needed for the same
+   reason: the line is sheared, so stretching it whole would flatten the shear at the ends.
+   The caps hold, the middle stretches. Chromium wants the `-webkit-mask-box-image` spelling,
+   which is what OBS runs. */
+.fcjh-team-line {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: rgb(var(--team-rgb));
+  pointer-events: none;
+  -webkit-mask-box-image-slice: 0 var(--cap-n) fill;
+  -webkit-mask-box-image-width: 0 var(--cap);
+  -webkit-mask-box-image-repeat: stretch;
+  mask-border-slice: 0 var(--cap-n) fill;
+  mask-border-width: 0 var(--cap);
+  mask-border-repeat: stretch;
+}
+
+.blue .fcjh-team-line {
+  -webkit-mask-box-image-source: url('../generated/frame_line_blue.svg');
+  mask-border-source: url('../generated/frame_line_blue.svg');
+}
+
+.red .fcjh-team-line {
+  -webkit-mask-box-image-source: url('../generated/frame_line_red.svg');
+  mask-border-source: url('../generated/frame_line_red.svg');
 }

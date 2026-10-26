@@ -1,0 +1,498 @@
+/* The matchup slab. Hand-written and owned here; ../generated/matchup.json carries every
+   place, worked out from layout.toml's [matchup]. See MatchupSlab.jsx for why the
+   composition is what it is. */
+
+.fcjh-slab {
+  position: absolute;
+  inset: 0;
+  font-family: 'Saira Semi Condensed', sans-serif;
+}
+
+/* everything placed from the generated numbers is absolute; the numbers themselves arrive as
+   left/top/width/height on the element, and nothing else does */
+.fcjh-slab-kicker,
+.fcjh-slab-mid,
+.fcjh-slab-name,
+.fcjh-slab-badge,
+.fcjh-slab-vs,
+.fcjh-slab-lockup {
+  position: absolute;
+}
+
+/* Depth, stated rather than left to the order things happen to be written in: the smoke
+   under everything, the badge over the plate it laps, the VS over both. */
+.fcjh-slab-mid {
+  z-index: 0;
+  background: rgb(0 0 0 / var(--smoke));
+}
+.fcjh-slab-name {
+  z-index: 1;
+}
+.fcjh-slab-badge {
+  z-index: 2;
+}
+.fcjh-slab-vs {
+  z-index: 3;
+}
+
+/* ── the kicker ─────────────────────────────────────────────────────────────────────── */
+
+/* "Coming up next", on a plate of its own - the old band's message board brought back
+   (user, 2026-10-25: "the previous iteration of a edge-slant translucent box will work just
+   fine here"). Pointed at both ends at half height, the kit's lean, and plain smoke rather
+   than team colour: it recedes, and the matchup is the furniture.
+
+   ONE SLANT A SIDE, not a point at half height (user, 2026-10-25): the left edge runs
+   down-left and the right edge down-right, so the plate flares outward as it descends and
+   lands on the matchup rather than tapering away from it. Its bottom edge IS the name
+   plates' top edge - attached, not spaced - and `.fcjh-slab-mid` carries the same smoke on
+   down behind the row.
+
+   The box is the WIDER, bottom width; the top corners are cut in by the flare. */
+.fcjh-slab-kicker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  clip-path: polygon(
+    var(--kicker-flare) 0,
+    calc(100% - var(--kicker-flare)) 0,
+    100% 100%,
+    0 100%
+  );
+  background: rgb(0 0 0 / var(--smoke));
+  font-size: var(--kicker-text);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text);
+  text-shadow: 0 2px 10px rgb(0 0 0 / 0.9);
+}
+
+/* ── a team's name plate ────────────────────────────────────────────────────────────── */
+
+/* THE SHAPE IS A CLIP, THE FRAME IS AN OVERLAY - the band's own arrangement, and the right
+   one. The first cut asked the frame's nine-slice to do both, with a 44px border on all four
+   sides: on a 120px plate that left 32px of content box, so the text was overflowing its own
+   box and only looked right because it was centred. Horizontal-only border, as the band
+   does it, and the plate keeps its full height for two lines of name. */
+.fcjh-slab-name {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  isolation: isolate;
+  background:
+    linear-gradient(var(--wash), rgb(var(--team-rgb) / 0.5), rgb(var(--team-rgb) / 0.03)),
+    linear-gradient(180deg, var(--base-top), var(--base-bottom));
+}
+
+/* the chrome, over the wash and inside the same clip.
+
+   ITS OWN ART, cut at this plate's height. A border-image cap is painted 1:1 horizontally
+   and squashed vertically to the element, so art cut for another height draws a blunter
+   point than the clip-path beneath it - and the clip's angle is atan(lean) at every size.
+   One file per height is what keeps the chrome on the silhouette (user, 2026-10-26). */
+.fcjh-slab-name::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 0 solid transparent;
+  border-image-source: url('../generated/frame_plate.svg');
+  border-image-slice: 0 var(--name-cap-n) fill;
+  border-image-repeat: stretch;
+  pointer-events: none;
+}
+
+/* ONLY THE POINTED END GETS A CAP. The frame is the band s double-pointed nine-slice, so
+   drawing both caps put a chevron of rim across the flat outer edge, where the hexagon is
+   already drawing one. Two rims against each other read as one doubled border, so the
+   leading edge gives way - the kit s own rule, from the game plates (2026-10-22). */
+.fcjh-slab-name.blue::after {
+  border-image-width: 0 var(--name-cap) 0 0;
+}
+.fcjh-slab-name.red::after {
+  border-image-width: 0 0 0 var(--name-cap);
+}
+
+/* the team's colour, strongest at the end the eye starts from */
+/* ONE POINT, NOT TWO. The outer edge is FLAT and vertical, because that is the edge the
+   hexagon presents to it (user, 2026-10-25) - a pointy-top hexagon runs straight down each
+   side between h/4 and 3h/4, and obs.py gives the plate exactly that height so the two meet
+   with nothing overhanging. Only the inner end, the one facing the VS, keeps its point.
+
+   The padding follows the shape: the flat side needs only its own air, the pointed side
+   needs the point as well or the text runs into the taper.
+
+   The wash is strongest at the INNER end, so the two teams meet in their own colours across
+   the VS - which is the confrontation the graphic is about. Strongest at the outer end
+   instead just doubles up on the badge, which already carries the team colour. */
+.fcjh-slab-name.blue {
+  --team-rgb: var(--blue-rgb);
+  --wash: 270deg;
+  padding: 0 calc(var(--name-point) + var(--name-pad)) 0 var(--name-pad);
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--name-point)) 0,
+    100% 50%,
+    calc(100% - var(--name-point)) 100%,
+    0 100%
+  );
+}
+.fcjh-slab-name.red {
+  --team-rgb: var(--red-rgb);
+  --wash: 90deg;
+  padding: 0 var(--name-pad) 0 calc(var(--name-point) + var(--name-pad));
+  clip-path: polygon(
+    var(--name-point) 0,
+    100% 0,
+    100% 100%,
+    var(--name-point) 100%,
+    0 50%
+  );
+}
+
+/* The name. It wraps to --name-lines before it shrinks: at 440px a long club name on one
+   line has to shrink a long way, and two lines at this size still read from the back of a
+   room (user, 2026-10-25). `fit` is the backstop under that, not the first resort. */
+/* The size here is only the STARTING size - useWrapThenShrink sets an inline font-size when
+   the name is too long for its lines, and an inline style beats this. No clamp and no
+   ellipsis: the shrink is what makes it fit, so there is nothing left to cut off. */
+.fcjh-slab-name > .ss-variable {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  text-align: center;
+  font-size: var(--name-text);
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 2px 12px rgb(0 0 0 / 0.75);
+  white-space: normal;
+  text-wrap: balance;
+}
+
+/* Centred, full stop. The plate is pointed at both ends, so its own centre IS the optical
+   centre; nudging the text away from the inner point only made a short name look misaligned
+   in a wide plate. */
+
+/* ── a team's logo badge ────────────────────────────────────────────────────────────── */
+
+/* THE SHAPE IS A CLIP, THE CHROME IS AN OVERLAY - the plates' arrangement, applied to a
+   hexagon. The fill, wash and glow are CSS; the rim and sheen come from generated art
+   (badge_hex.svg), so the badge is made of the same material as everything else rather than
+   a flat border approximating it.
+
+   The art is NOT nine-sliced: a hexagon has no straight middle to stretch, so slicing one
+   shears its slants. It is drawn at the size it is used at, which is also why the VS has a
+   file of its own - scaling this one down to 116px would thin its rim with it. */
+.fcjh-slab-badge,
+.fcjh-slab-vs {
+  --hex: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  clip-path: var(--hex);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 4px 14px rgb(0 0 0 / 0.65));
+}
+
+.fcjh-slab-badge {
+  background:
+    linear-gradient(180deg, rgb(var(--team-rgb) / 0.34), rgb(var(--team-rgb) / 0.12)),
+    linear-gradient(180deg, var(--base-top), var(--base-bottom));
+}
+
+.fcjh-slab-badge.blue {
+  --team-rgb: var(--blue-rgb);
+}
+.fcjh-slab-badge.red {
+  --team-rgb: var(--red-rgb);
+}
+
+.fcjh-slab-badge::after,
+.fcjh-slab-vs::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
+.fcjh-slab-badge::after {
+  background-image: url('../generated/badge_hex.svg');
+}
+.fcjh-slab-vs::after {
+  background-image: url('../generated/vs_hex.svg');
+}
+
+/* THE LOGO COVERS THE BADGE and the hexagon clips it (user, 2026-10-25). It fills the whole
+   shape and bleeds under the rim, rather than being contained in the largest square that
+   fits inside the taper - which was correct geometry for a square mark, and left a round one
+   looking lost in the middle of a big hexagon.
+
+   Under the chrome on purpose, unlike the plate's name: the rim is what finishes the cut
+   edge of a mark that now runs all the way to it. */
+.fcjh-slab-badge .ss-image {
+  position: absolute;
+  inset: 0;
+}
+.fcjh-slab-badge img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── the VS ─────────────────────────────────────────────────────────────────────────── */
+
+/* The same hexagon, neutral: it echoes Blizzard's own centrepiece in the game bar, which is
+   what the middle of this composition wants now that the lens flare is gone. Its shape and
+   chrome are set with the badge above; only the fill and the word are its own. */
+.fcjh-slab-vs {
+  background: linear-gradient(180deg, var(--base-top), var(--base-bottom));
+}
+
+.fcjh-slab-vs span {
+  position: relative;
+  z-index: 1;
+  font-size: var(--vs-text);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #fff;
+}
+
+/* ── the lockup ─────────────────────────────────────────────────────────────────────── */
+
+/* The scores screen's lockup, brought here to replace the two arms. Same rules: fixed boxes
+   either side so the pair stay symmetric about the centre whatever shape the logos are, each
+   closing on the x, and the picture sized to its own width so "right bound" means something. */
+.fcjh-slab-lockup {
+  box-sizing: border-box;
+  padding: var(--lockup-pad) 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fcjh-slab-mark {
+  box-sizing: border-box;
+  width: var(--lockup-mark);
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.fcjh-slab-mark.left {
+  justify-content: flex-end;
+}
+.fcjh-slab-mark.right {
+  justify-content: flex-start;
+}
+.fcjh-slab-lockup.lone .fcjh-slab-mark {
+  justify-content: center;
+}
+
+.fcjh-slab-mark .ss-image {
+  position: relative;
+  display: flex;
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+}
+.fcjh-slab-mark img {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.fcjh-slab-x {
+  flex: none;
+  margin: 0 calc(var(--lockup-x) * 0.8);
+  font-size: var(--lockup-x);
+  font-weight: 300;
+  line-height: 1;
+  color: #fff;
+  opacity: 0.85;
+}
+
+/* ── the one-container team ─────────────────────────────────────────────────────────────
+
+   One shape a side holding the score, the logo and the name, instead of a hexagon badge
+   standing beside a plate (user, 2026-10-25). See MatchupSlab.jsx for why.
+
+   It keeps the name plate's edges exactly: flat on the outside, pointed at the VS. Nothing
+   protrudes from it, which is the whole point - the pair it replaces read as a bulge with a
+   shaft and a taper. */
+
+.fcjh-unit {
+  position: absolute;
+  z-index: 1;
+  width: max-content;
+  box-sizing: border-box;
+  display: flex;
+  align-items: stretch;
+  isolation: isolate;
+  background:
+    linear-gradient(var(--wash), rgb(var(--team-rgb) / 0.5), rgb(var(--team-rgb) / 0.03)),
+    linear-gradient(180deg, var(--base-top), var(--base-bottom));
+}
+
+/* POINTED AT BOTH ENDS, the outer one mirroring the inner (user, 2026-10-25). The slab's
+   plate was flattened on the outside to meet the hexagon's vertical edge; this arrangement
+   has no hexagon, so there is nothing for a flat edge to match and the shape goes back to
+   being symmetric. A band that stops on a straight cut with a point at the other end reads
+   as something gone wrong rather than as a shape.
+
+   Symmetric means ONE clip serves both sides - only the wash and the row's direction differ. */
+.fcjh-unit {
+  clip-path: polygon(
+    var(--unit-point) 0,
+    calc(100% - var(--unit-point)) 0,
+    100% 50%,
+    calc(100% - var(--unit-point)) 100%,
+    var(--unit-point) 100%,
+    0 50%
+  );
+}
+
+.fcjh-unit.blue {
+  --team-rgb: var(--blue-rgb);
+  --wash: 270deg;
+}
+
+/* red is blue mirrored, and the row reverses with it - so the score stays at the OUTER end
+   on both sides rather than both teams reading left to right */
+.fcjh-unit.red {
+  --team-rgb: var(--red-rgb);
+  --wash: 90deg;
+  flex-direction: row-reverse;
+}
+
+/* The chrome, over the wash and inside the same clip. BOTH ends take the nine-slice cap now,
+   which is what the frame was drawn for: its cap IS a point, and both ends are points again.
+   The hand-rolled vertical rim that stood in for a flat cap is gone with the flat edge. */
+.fcjh-unit::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 0 solid transparent;
+  /* the container's own art, at the container's height - see .fcjh-slab-name::after */
+  border-image-source: url('../generated/frame_unit.svg');
+  border-image-slice: 0 var(--unit-cap-n) fill;
+  border-image-repeat: stretch;
+  pointer-events: none;
+}
+.fcjh-unit::after {
+  border-image-width: 0 var(--unit-cap);
+}
+
+/* ── the score, at the outer end ─────────────────────────────────────────────────────── */
+
+/* the outer end is a point again, so the number is inset past it - otherwise the clip takes
+   a bite out of the digit */
+.fcjh-unit.blue .fcjh-unit-score {
+  padding-left: var(--unit-point);
+}
+.fcjh-unit.red .fcjh-unit-score {
+  padding-right: var(--unit-point);
+}
+
+.fcjh-unit-score {
+  flex: none;
+  box-sizing: border-box;
+  width: var(--unit-score);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--unit-score-text);
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-shadow: 0 2px 10px rgb(0 0 0 / 0.75);
+}
+
+/* ── the logo's parallelogram ────────────────────────────────────────────────────────── */
+
+/* The game scene's logo plate, in this kit's lean: a parallelogram, not a rectangle, so it
+   belongs to the same family as the plates around it. Its width is set by the SHEAR rather
+   than by the name - the lean runs lean x height, and too narrow a panel against that is a
+   diagonal strip rather than a plate.
+
+   Darker than the container so it reads as a panel set into it rather than a gap. */
+.fcjh-unit-logo {
+  flex: none;
+  /* THE IMAGE'S CONTAINING BLOCK. The mark inside is `position: absolute; inset: 0`, so
+     without this it resolved against `.fcjh-unit` and was drawn the width of the WHOLE
+     container - 746px over a 220px panel, offset 86px left of it, and the clip showed a
+     magnified sliver of the logo (user, 2026-10-26: "the team logos are not sized
+     properly"). The game scene's `.fcjh-logo` has always been `relative`; this is the one
+     line that did not come across with it. */
+  position: relative;
+  width: var(--unit-logo);
+  display: flex;
+  background: rgb(0 0 0 / 0.42);
+  /* THE SLANT RUNS THE GAME'S WAY (user, 2026-10-25: the first cut had it reversed). Checked
+     against frame_svg rather than by eye: its plate is `0,0  w-d,0  w,h  d,h`, so the top
+     edge is the left-shifted one and the left edge runs DOWN AND RIGHT. Blue takes that;
+     red is its mirror, as it is in the game bar. */
+  clip-path: polygon(0 0, calc(100% - var(--unit-lean)) 0, 100% 100%, var(--unit-lean) 100%);
+}
+
+.fcjh-unit.red .fcjh-unit-logo {
+  clip-path: polygon(var(--unit-lean) 0, 100% 0, calc(100% - var(--unit-lean)) 100%, 0 100%);
+}
+
+/* THE MARK FILLS THE PLATE and the slant clips it, exactly as the game scene's logo plate
+   does. Contained inside the parallelogram's straight-sided rectangle instead, it was
+   sitting in the middle of a panel with the shear's worth of empty slope either side of it. */
+.fcjh-unit-logo .ss-image {
+  position: absolute;
+  inset: 0;
+}
+.fcjh-unit-logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── the name, running in to the VS ──────────────────────────────────────────────────── */
+
+/* a fixed width, not a stretch: the container has no width of its own any more, so its
+   parts are what give it one */
+.fcjh-unit-name {
+  flex: 0 0 var(--unit-name);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fcjh-unit.blue .fcjh-unit-name {
+  padding: 0 calc(var(--unit-point) + var(--name-pad)) 0 var(--name-pad);
+}
+.fcjh-unit.red .fcjh-unit-name {
+  padding: 0 var(--name-pad) 0 calc(var(--unit-point) + var(--name-pad));
+}
+
+/* the same wrap-then-shrink as the plate's: the size here is only where it starts */
+.fcjh-unit-name > .ss-variable {
+  width: 100%;
+  text-align: center;
+  font-size: var(--name-text);
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 2px 12px rgb(0 0 0 / 0.75);
+  white-space: normal;
+  text-wrap: balance;
+}
+
+/* the hexagon badges and the pointed plates have no part in this arrangement */
+.fcjh-slab.as-unit .fcjh-slab-badge,
+.fcjh-slab.as-unit .fcjh-slab-name {
+  display: none;
+}

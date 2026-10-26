@@ -4,6 +4,7 @@ import { Transition, useVelcroValue } from '@single-studio/core'
 import { Image, Scene, Variable } from '@single-studio/core/source'
 
 import { COLOUR_BLIND_VARS, useColourBlind } from '../components/colourBlind'
+import { useVisibleMark } from '../components/marks'
 import spec from '../generated/scores.json'
 import './scores.css'
 
@@ -48,6 +49,9 @@ const SCENE_VARS = {
   '--x-gap': `${marks.x_gap}px`,
   '--win-mark-h': `${win.mark_h}px`,
   '--win-mark-gap': `${win.mark_gap}px`,
+  // its true width at the height the band gives it, so it is never squashed
+  '--win-mark-w': `${Math.round(win.mark_h * win.mark_ratio)}px`,
+  '--win-mark-rgb': rgbOf(win.mark_colour),
   '--comet-fade': `${spec.sky.comet_fade}px`,
   '--blue-rgb': rgbOf(colours.blue),
   '--red-rgb': rgbOf(colours.red),
@@ -57,18 +61,6 @@ const SCENE_VARS = {
 
 // The four pieces of screen left around the hole. Each is a window on the same sky.
 const PIECES = ['top', 'bottom', 'left', 'right']
-
-// WHICH VICTORY MARK. Both are drawn and both ship; `[scores] win_mark` picks one, and
-// `?mark=hex` on the source URL overrides it for a side-by-side look without a rebuild -
-// the same trick the webcams use for `?fill`. The two SVGs are masks, so the stylesheet
-// paints them in the winning team's colour rather than the file carrying a colour.
-const MARK = (() => {
-  const asked = new URLSearchParams(window.location.search).get('mark')
-  return asked === 'laurel' || asked === 'hex' ? asked : win.mark
-})()
-
-// its true width at the height the band gives it, so a mark is never squashed
-const MARK_W = `${Math.round(win.mark_h * win.mark_ratio[MARK])}px`
 
 /**
  * The winning team's name, across the top band: white, glowing in that team's colour.
@@ -119,7 +111,7 @@ function Winner() {
   const side = shown || last
 
   return (
-    <div className={`fcjh-scores-winner ${side} mark-${MARK}`} style={{ '--win-mark-w': MARK_W }}>
+    <div className={`fcjh-scores-winner ${side}`}>
       {/* the band clips and the content moves, which is what makes the name rise OUT of the
           panel's top edge rather than slide across the panel */}
       <Transition trigger={shown} transition="slide-up" className="fcjh-scores-winner-in">
@@ -151,10 +143,9 @@ function Winner() {
  * own. With neither, the whole band goes.
  */
 function Marks() {
-  const broadcaster = useVelcroValue('variables.event.broadcaster')
-  const wide = useVelcroValue('variables.event.logo_wide')
-  const square = useVelcroValue('variables.event.logo')
-  const logo = wide ? 'event.logo_wide' : square ? 'event.logo' : ''
+  // both marks are wide holes here: a mark box is 297 x 65 (components/marks.js)
+  const broadcaster = useVisibleMark('broadcaster')
+  const logo = useVisibleMark('tournament')
   const both = Boolean(broadcaster && logo)
 
   if (!broadcaster && !logo) return null
@@ -165,13 +156,13 @@ function Marks() {
       <div className="fcjh-scores-marks-in">
         {broadcaster ? (
           <div className="fcjh-scores-mark left">
-            <Image name="event.broadcaster" alt="" fit="contain" />
+            <Image name={broadcaster.name} alt="" fit="contain" />
           </div>
         ) : null}
         {both ? <span className="fcjh-scores-x">&times;</span> : null}
         {logo ? (
           <div className="fcjh-scores-mark right">
-            <Image name={logo} alt="" fit="contain" />
+            <Image name={logo.name} alt="" fit="contain" />
           </div>
         ) : null}
       </div>

@@ -116,8 +116,9 @@ def talent_border_cb(colour, i):
     if colour not in CB_BORDER:
         return ""
     light, dark = CB_BORDER[colour]
-    return colour_blind([f'ColorAdjustMode="Colorize" LightAdjustColor="{light}" DarkAdjustColor="{dark}"'],
-                        ['ColorAdjustMode="None"'], i)
+    # one property per action, on $this (gen.py colorize_cb: all three in one did nothing)
+    return colour_blind([f'frame="$this" ColorAdjustMode="Colorize"', f'frame="$this" LightAdjustColor="{light}"',
+                         f'frame="$this" DarkAdjustColor="{dark}"'], ['frame="$this" ColorAdjustMode="None"'], i)
 
 
 ORIGIN = (0, 0)   # the card's top-left on screen, in layout units: set by layout()

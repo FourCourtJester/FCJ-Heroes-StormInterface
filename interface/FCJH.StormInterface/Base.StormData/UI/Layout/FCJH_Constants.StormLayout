@@ -5,7 +5,7 @@
 	<!-- Screen -->
 	<Constant name="FCJH_SCREEN_W" val="2133"/>  <!-- 1920 px -->
 	<Constant name="FCJH_SCREEN_H" val="1200"/>  <!-- 1080 px -->
-	<Constant name="FCJH_VERSION" val="1.0.2"/>
+	<Constant name="FCJH_VERSION" val="1.1.0"/>
 
 	<!-- Elements: _L _T _R _B are edges as offsets from the rect's anchor (tools/gen.py ANCHORS):
 	     a point on the screen (anchor them to $GameUI at those pos values), or a piece's top-left
@@ -102,11 +102,11 @@
 	<Constant name="FCJH_CENTRE_BANNERS_B" val="304"/>
 	<Constant name="FCJH_CENTRE_BANNERS_W" val="711"/>
 	<Constant name="FCJH_CENTRE_BANNERS_H" val="87"/>
-	<!-- system_alert: demand, px [634.5, 284, 648, 720], from the screen's Mid / Min -->
+	<!-- system_alert: demand, px [634.5, 197, 648, 720], from the screen's Mid / Min -->
 	<Constant name="FCJH_SYSTEM_ALERT_L" val="-362"/>
-	<Constant name="FCJH_SYSTEM_ALERT_T" val="316"/>
+	<Constant name="FCJH_SYSTEM_ALERT_T" val="219"/>
 	<Constant name="FCJH_SYSTEM_ALERT_R" val="358"/>
-	<Constant name="FCJH_SYSTEM_ALERT_B" val="1116"/>
+	<Constant name="FCJH_SYSTEM_ALERT_B" val="1019"/>
 	<Constant name="FCJH_SYSTEM_ALERT_W" val="720"/>
 	<Constant name="FCJH_SYSTEM_ALERT_H" val="800"/>
 	<!-- map_objectives: demand, px [745, 742, 430, 56], from the screen's Mid / Max -->
@@ -378,6 +378,12 @@
 	<Constant name="FCJH_RED_CORE_FRAME_L" val="258"/>
 	<Constant name="FCJH_CORE_CHROME_TL" val="-2"/>
 	<Constant name="FCJH_CORE_CHROME_BR" val="2"/>
+	<Constant name="FCJH_AV_SHIELD" val="22"/>  <!-- Alterac's keep shields: each one's box -->
+	<Constant name="FCJH_AV_SHIELD_INSIDE" val="13"/>  <!-- its inside, as Blizzard's 16 in 28 -->
+	<Constant name="FCJH_AV_SHIELD_OUT_BLUE" val="-4"/>  <!-- the nearest shield past the bar's outer end -->
+	<Constant name="FCJH_AV_SHIELD_OUT_RED" val="4"/>
+	<Constant name="FCJH_AV_SHIELD_STEP_BLUE" val="3"/>  <!-- each next shield on from the last -->
+	<Constant name="FCJH_AV_SHIELD_STEP_RED" val="-3"/>
 
 	<!-- Map alerts on the plates ([map_alerts]): from the screen's bottom-centre, as the plates -->
 	<Constant name="FCJH_MAP_ALERT_RED_R" val="730"/>
@@ -545,9 +551,9 @@
 	<Constant name="FCJH_MAP_WEAVER_BLUE_TOP_B" val="-128"/>  <!-- 965 px down -->
 	<!-- Alterac Pass's cavalry: its carrier's move from Blizzard's place to each spot (maps.av_carrier) -->
 	<Constant name="FCJH_MAP_AV_RED_DX" val="486"/>
-	<Constant name="FCJH_MAP_AV_RED_DY" val="159"/>
+	<Constant name="FCJH_MAP_AV_RED_DY" val="131"/>
 	<Constant name="FCJH_MAP_AV_BLUE_DX" val="-464"/>
-	<Constant name="FCJH_MAP_AV_BLUE_DY" val="159"/>
+	<Constant name="FCJH_MAP_AV_BLUE_DY" val="131"/>
 
 	<!-- Team XP and core health: tracks and fills cut to the plates' slant (solid colour;
 	     Blizzard's obs_bar_xp_* art is a thin glowing line drawn for a 156 x 17 box) -->
@@ -592,9 +598,9 @@
 	<Constant name="FCJH_ROW_FRAME_RED_N4" val="_Assets\Textures\FCJH_RowFrame_red_n4_480ea8dc.dds"/>
 	<Constant name="FCJH_ROW_FRAME_RED" val="_Assets\Textures\FCJH_RowFrame_red_n5_756ac5f8.dds"/>
 	<Constant name="FCJH_TOP_BACKPLATE" val="_Assets\Textures\FCJH_TopBackplate_34f12891.dds"/>
-	<Constant name="FCJH_TOP_BACKPLATE_CB" val="_Assets\Textures\FCJH_TopBackplate_CB_ad057a34.dds"/>
-	<Constant name="FCJH_CORE_FILL_BLUE_CB" val="_Assets\Textures\FCJH_Bar_core_fill_blue_CB_a7337f97.dds"/>
-	<Constant name="FCJH_CORE_FILL_RED_CB" val="_Assets\Textures\FCJH_Bar_core_fill_red_CB_c9a0eec5.dds"/>
+	<Constant name="FCJH_TOP_BACKPLATE_CB" val="_Assets\Textures\FCJH_TopBackplate_CB_24e2abea.dds"/>
+	<Constant name="FCJH_CORE_FILL_BLUE_CB" val="_Assets\Textures\FCJH_Bar_core_fill_blue_CB_a7122b28.dds"/>
+	<Constant name="FCJH_CORE_FILL_RED_CB" val="_Assets\Textures\FCJH_Bar_core_fill_red_CB_bb62ab0f.dds"/>
 	<Constant name="FCJH_PLATE_HIT_BLUE" val="_Assets\Textures\FCJH_PlateHit_blue_2eeb28b5.dds"/>
 	<Constant name="FCJH_PLATE_HIT_RED" val="_Assets\Textures\FCJH_PlateHit_red_40c22bf6.dds"/>
 

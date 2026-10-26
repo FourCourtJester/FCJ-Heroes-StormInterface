@@ -676,6 +676,16 @@ def constants_layout(cfg):
     # the core bar's chrome line ([team_core] frame_width), anchored to Blizzard's bar this far out
     const(name("core", "chrome", "tl"), -core_chrome_outset(cfg))
     const(name("core", "chrome", "br"), core_chrome_outset(cfg))
+    # Alterac Pass's keep shields ([team_core] av_shield*, FCJH_TopBar): a row past the bar's
+    # outer end, blue's chained leftward from its left end, red's rightward from its right end
+    core = cfg["team_core"]
+    size, out, overlap = u(core["av_shield"]), u(core["av_shield_out"]), u(core["av_shield_overlap"])
+    const(name("av", "shield"), size, "Alterac's keep shields: each one's box")
+    const(name("av", "shield", "inside"), round(size * 16 / 28), "its inside, as Blizzard's 16 in 28")
+    const(name("av", "shield", "out", "blue"), -out, "the nearest shield past the bar's outer end")
+    const(name("av", "shield", "out", "red"), out)
+    const(name("av", "shield", "step", "blue"), overlap, "each next shield on from the last")
+    const(name("av", "shield", "step", "red"), -overlap)
 
     # A team's map alerts (FCJH_Maps, tools/maps.py), stacked either side of the map at the
     # rows' inner ends: on the XP bar where the core bar lives, stepping up onto the core bar
@@ -733,7 +743,8 @@ def constants_layout(cfg):
             const(name("map", "weaver", team, lane, "x"), u(x) - ox, f"{round(x)} px across")
             const(name("map", "weaver", team, lane, "b"), u(b) - oy, f"{round(b)} px down")
     # Alterac Pass's banner sits at Blizzard's place above the minimap, and its cavalry jumps to
-    # the winning team's spot (maps.av_carrier): the jump, from that place to the spot
+    # the winning team's spot (maps.av_carrier): the jump, from that place to the spot. The one
+    # banner placed by its lowest art, not its bar (maps.AV_BELOW): its blades clear the core bar
     lines.append("\t<!-- Alterac Pass's cavalry: its carrier's move from Blizzard's place to each spot (maps.av_carrier) -->")
     across, up = maps.av_neutral(u(panel_nudges(cfg).get("alterac_pass", 0)))
     # (from its own minimap, moved across: maps.on_minimap took that back off `across`)
@@ -744,7 +755,7 @@ def constants_layout(cfg):
         (_, cy, _, _), _ = rects(cfg)[f"{team}_core"]
         art = maps.ALERT_ART["AV"]
         spot = ((u(row["red_left"]) + art.reach if team == "red" else u(row["blue_right"]) + art.tail) - ox,
-                u(cy - above) + art.bar_up - oy)
+                u(cy - above) + art.bar_up - art.below - oy)
         const(name("map", "av", team, "dx"), round(spot[0] - neutral[0]))
         const(name("map", "av", team, "dy"), round(spot[1] - neutral[1]))
     for kind, what in maps.unmeasured().items():
@@ -1241,14 +1252,23 @@ def colour_blind_fill(cfg, colour, team, indent):
                                       [f'frame="$this" AdjustmentColor="{colour}"'], indent).rstrip("\n")
 
 
-def colour_blind_plate(cfg, team):
+def colour_blind_plate(cfg, team, kind="plate"):
     """The Colorize pair (light, dark) for a team's plate art in colour-blind mode ([colour_blind]
-    plate_light / plate_dark), from the team's colour-blind colour."""
+    plate_light / plate_dark), from the team's colour-blind colour; kind "square" for the talent
+    squares' brighter pair (square_light / square_dark)."""
     cb = cfg["colour_blind"]
     c = [int(cb[team][i:i + 2], 16) for i in (0, 2, 4)]
-    light = "".join(f"{round(v + (255 - v) * cb['plate_light']):02x}" for v in c)
-    dark = "".join(f"{round(v * cb['plate_dark']):02x}" for v in c)
+    light = "".join(f"{round(v + (255 - v) * cb[f'{kind}_light']):02x}" for v in c)
+    dark = "".join(f"{round(v * cb[f'{kind}_dark']):02x}" for v in c)
     return light, dark
+
+
+def colorize_cb(light, dark):
+    """colour_blind_states' (on, off) recolouring a frame's art by Colorize: one property per
+    action, on $this, as the dead slices' (seen working in game). One action setting all three
+    did nothing (user, 2026-10-25: the inspect's red talent squares stayed red)."""
+    return ([f'frame="$this" ColorAdjustMode="Colorize"', f'frame="$this" LightAdjustColor="{light}"',
+             f'frame="$this" DarkAdjustColor="{dark}"'], ['frame="$this" ColorAdjustMode="None"'])
 
 
 def colour_blind_states(on, off, indent):
@@ -3449,10 +3469,8 @@ def talent_popups(cfg):
         # colour-blind mode: the square recoloured as the team's plates ([colour_blind] plates)
         border_cb = ""
         if team.lower() in cfg["colour_blind"]["plates"]:
-            light, dark = colour_blind_plate(cfg, team.lower())
-            border_cb = NL + colour_blind_states(
-                [f'ColorAdjustMode="Colorize" LightAdjustColor="{light}" DarkAdjustColor="{dark}"'],
-                ['ColorAdjustMode="None"'], 7).rstrip(NL)
+            light, dark = colour_blind_plate(cfg, team.lower(), "square")
+            border_cb = NL + colour_blind_states(*colorize_cb(light, dark), 7).rstrip(NL)
         pop = f"FCJH_Talent{n}"
         images = "".join(
             popup_image(f"T{k}", f"{{{row}/TalentTreeIcon{k}/IconImage/@Texture}}", 0, '\n\t\t\t\t\t\t\t<Visible val="false"/>')
@@ -3522,9 +3540,7 @@ def hero_cell_template(team, c, cfg):
     team_bg_cb = ""
     if team in cfg["colour_blind"]["plates"]:
         light, dark = colour_blind_plate(cfg, team)
-        team_bg_cb = "\n" + colour_blind_states(
-            [f'ColorAdjustMode="Colorize" LightAdjustColor="{light}" DarkAdjustColor="{dark}"'],
-            ['ColorAdjustMode="None"'], 3).rstrip("\n")
+        team_bg_cb = "\n" + colour_blind_states(*colorize_cb(light, dark), 3).rstrip("\n")
     cell = "$parent/$parent"
     backing = lambda name, tex, rect, height: f"""
 			<Frame type="Image" name="{name}">{_anchors(rect, cell, chr(9) * 4)}
@@ -3564,6 +3580,15 @@ def hero_cell_template(team, c, cfg):
 				<AlphaMaskTexture val="{plate_mask(cfg, team, "health")}"/>{tiled_segments(chr(10) + chr(9) * 4)}
 				<Unclipped val="true"/>
 			</Frame>{trackers(team, g["health"], cfg)}{health_backing}{mana_backing}{energy}"""
+    # colour-blind mode: Blizzard's plate health style (ObserverPanelOverviewHealth) points its
+    # Colorblind values at ColorSpecs that don't exist, so the bars never change; the core bars'
+    # style (ObserverPanelCoreHealth) has them: Chaos the core bar's orange, Order a cyan (66def0,
+    # hue 188 - Ahli's)
+    if team in cfg["colour_blind"]["plates"]:
+        bars = (["$this/HealthBar"] + [f"$this/VikingTrackingElement/TrackedUnitStatusFrame{i}/HealthBar" for i in range(3)]
+                + ["$this/RexxarTrackingElement/TrackedUnitStatusFrame0/HealthBar"])
+        style = lambda s: [f'frame="{b}" ColorStyle="{s}"' for b in bars]
+        health += "\n" + colour_blind_states(style("ObserverPanelCoreHealth"), style("ObserverPanelOverviewHealth"), 3).rstrip("\n")
     if blue:  # red inherits these unchanged
         cc_top, cc_bottom = c.cc_band
         health += f"""
@@ -5054,7 +5079,7 @@ def committed_files(cfg, source=SOURCE):
             (u(rects(cfg)["inspect"][0][0]), u(rects(cfg)["inspect"][0][1])), 1 / u.scale,   # its place, for pixel-exact lines
             (*PLATES_AT, anchor_edges(cfg, "inspect")["t"]),   # where it's anchored, and its top from there
             {t: colour_blind(cfg, cfg["top_backplate"][f"{t}_colour"], t) for t in ("blue", "red")},   # colour-blind mode
-            {t: colour_blind_plate(cfg, t) for t in cfg["colour_blind"]["plates"]}),
+            {t: colour_blind_plate(cfg, t, "square") for t in cfg["colour_blind"]["plates"]}),
         LAYOUT_REL / MAPS_FILE: maps.layout(XML_DECL + "<Desc>\n" + GENERATED, PLATES_AT,
                                             {k: u(v) for k, v in panel_nudges(cfg).items()},
                                             minimap_bottoms(cfg),

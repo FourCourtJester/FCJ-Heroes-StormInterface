@@ -1,4 +1,4 @@
-import { Field, ImagePicker, Panel, Row, Toggle } from '@single-studio/core/control'
+import { Field, Panel, Row, Toggle } from '@single-studio/core/control'
 
 // The tournament: the two tabs' words, the marks the graphics carry, which of them are on
 // air, and who won.
@@ -7,18 +7,13 @@ import { Field, ImagePicker, Panel, Row, Toggle } from '@single-studio/core/cont
 // "Game 3 of 5" are only what they were drawn for. Leave either blank and that tab is not
 // drawn at all, rather than showing as an empty lit container.
 //
-// TWO TOURNAMENT LOGOS, because one shape cannot do both jobs (user, 2026-10-23). The SQUARE
-// one goes over Blizzard's hexagon in the game scene, which is a hexagon - an oblong mark
-// put in it is either squashed or cropped. The WIDE one goes in the top right corner, where
-// the room is 204 x 50 and a square mark would waste it. Both are the same tournament; which
-// is wanted is a property of the hole, not of the show.
+// THE MARKS ARE NOT HERE any more. The broadcaster's and the tournament's logos, and the
+// three switches that put them on air, moved to a Logos panel of their own on 2026-10-26,
+// when each of the two gained a second picture: four pickers is more than this panel could
+// hold without the tab fields losing their place in it. They were never tournament settings
+// anyway - they are the show's furniture.
 //
-// `fcjh-picker-free` takes the pickers off the column cap so they scale with the line.
-// Do NOT give them a content width: a picker is as wide as the longest key in the image
-// library, so sizing by content hands the layout to the operator's filenames.
-//
-// THE SWITCHES live here now, under the marks they turn on, rather than in an Options panel
-// of their own. Each takes its whole graphic off rather than leaving an empty plate on air.
+// The colour-blind switch stayed, because it is about neither the marks nor one graphic.
 //
 // THE WINNER is a pair of grouped toggles rather than a dropdown, so exactly one can be lit.
 // Two reasons it earns the room: it is the one control on this board that goes to air the
@@ -38,23 +33,7 @@ export default function Event() {
         <Field name="game" label="Right tab" placeholder="Game 3 of 5" />
       </Row>
       <Row>
-        <ImagePicker
-          name="event.broadcaster"
-          label="Broadcaster"
-          className="fcjh-picker-free"
-        />
-        <ImagePicker name="event.logo" label="Tournament (square)" className="fcjh-picker-free" />
-        <ImagePicker
-          name="event.logo_wide"
-          label="Tournament (wide)"
-          className="fcjh-picker-free"
-        />
-      </Row>
-      <Row>
-        <Toggle name="corner.broadcaster" label="Broadcaster corner" />
-        <Toggle name="tournament" label="Hex logo" />
-        <Toggle name="corner.tournament" label="Tournament corner" />
-        <Toggle name="colourblind" label="Colour-blind colours" />
+        <Toggle name="colourblind" label="Colour-blind mode" />
       </Row>
 
       {/* the rule and its heading wear the Panel title's own classes, so the section reads

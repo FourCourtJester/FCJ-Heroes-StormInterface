@@ -54,7 +54,9 @@ class Art:
     placed by (0 when placed by the bar's bottom). Every bar's bottom sits in ONE place on every
     map, [map_alerts] above_core px over the core bar's top, never moving (user, 2026-10-09):
     what hangs under a bar (below: the tribute's hexagon and beak) is ignored - the banners
-    draw over the plates' pop-ups. height: from the art's lowest part to its top; the tallest
+    draw over the plates' pop-ups - except Alterac's cavalry, placed by its lowest art (below)
+    instead, its hexagon and blades hanging far under its bar (user, 2026-10-25). height: from
+    the art's lowest part to its top; the tallest
     sets the stack's step (step). measured: off a 1080p screenshot - the build lists any that
     aren't (gen.py)."""
     reach: int
@@ -1352,7 +1354,13 @@ def skulls_extra():
 # and flip the cage's ProgressBars (no Blizzard bar fills right to left): HANDOFF.
 AV_BOX = (-504, -21, -16, 78)   # the art from the frame's top-right: the left tip, the hammers,
                                 # the hexagon's right, the lower bracket
-ALERT_ART["AV"] = Art(AV_BOX[2] - AV_BOX[0], 0, height=AV_BOX[3] - AV_BOX[1])
+# The exception to the banner standard (user, 2026-10-25: "the banners for the map mechanic have
+# much more low hanging artwork than the others"): the cavalry's hexagon and what crosses behind
+# it hang far under its lower bracket - red's blades 20 px (950 against 930, 20_55_12, over the
+# core bar's number), blue's hammer handles 25 (955 against 929, 21_06_31). So both spots are
+# placed by the deeper, AV_BELOW higher (gen.py): the two bars stay level.
+AV_BELOW = 28                   # units (25 px): blue's hammer handles under the lower bracket
+ALERT_ART["AV"] = Art(AV_BOX[2] - AV_BOX[0], 0, below=AV_BELOW, height=AV_BOX[3] - AV_BOX[1])
 AV_HALF_H = 50                  # half Blizzard's frame (Height 100), centred on its Top/Bottom anchor
 AV_MID = 245                    # Blizzard's frame's middle under its panel's (alteracmechanics)
 AV_HANDOFF_S = 0.6              # the cage won ("MechanicDone"), its bars are gone and the cavalry's

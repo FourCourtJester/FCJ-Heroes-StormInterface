@@ -25,14 +25,14 @@
 	         line drawn for a 156 x 17 box) replaced. The core bar keeps Blizzard's size and
 	         its show-when-needed logic. -->
 	<!-- Alterac Pass's keep shield on our core bars (Team1/2CoreUnitStatus below): Blizzard's
-	     BossHealthBarShieldTemplate (alteracmechanics.stormlayout), its art and size, centred on
-	     the bar's height; the inside takes the core's team colour as Blizzard's. Hidden until
+	     BossHealthBarShieldTemplate (alteracmechanics.stormlayout), its art, centred on the
+	     bar's height, a little smaller ([team_core] av_shield); the inside takes the core's team colour as Blizzard's. Hidden until
 	     FCJH_AVKeeps shows it. -->
 	<Frame type="Frame" name="FCJH_AVShieldTemplate">
 		<Anchor side="Top" relative="$parent/HealthBar" pos="Mid" offset="0"/>
 		<Anchor side="Bottom" relative="$parent/HealthBar" pos="Mid" offset="0"/>
-		<Width val="28"/>
-		<Height val="28"/>
+		<Width val="#FCJH_AV_SHIELD"/>
+		<Height val="#FCJH_AV_SHIELD"/>
 		<Unclipped val="true"/>
 		<RenderPriority val="600"/>  <!-- over the bar's chrome (520) -->
 		<AcceptsMouse val="false"/>
@@ -48,8 +48,8 @@
 			<Anchor side="Bottom" relative="$parent/ShieldBG" pos="Mid" offset="0"/>
 			<Anchor side="Left" relative="$parent/ShieldBG" pos="Mid" offset="0"/>
 			<Anchor side="Right" relative="$parent/ShieldBG" pos="Mid" offset="0"/>
-			<Width val="16"/>
-			<Height val="16"/>
+			<Width val="#FCJH_AV_SHIELD_INSIDE"/>
+			<Height val="#FCJH_AV_SHIELD_INSIDE"/>
 			<Texture val="@UI/Storm_UI_HUD_WCAV_HealthBarShieldInside"/>
 			<SubpixelRendering val="true"/>
 			<ColorAdjustMode val="Colorize"/>
@@ -289,18 +289,18 @@
 							     HUD's core bars. Each keep alive is a WarchiefAlive stack on the core (armour);
 							     the map's own validators count them, the insides empty as keeps fall (3 -> 0).
 							     Hidden until a count state fires, which only happens on Alterac (Ahli 0.75's
-							     way: the validators and art exist only there). Centred on the bar. -->
+							     way: the validators and art exist only there). In a row past the bar's outer
+							     end, outside its border ([team_core] av_shield*; centred, they covered the number). -->
 							<Frame type="UnitStatusColor" name="FCJH_TeamColour"><Anchor relative="$parent"/><ColorStyle val="Primary"/></Frame>
 							<Frame type="UnitStatusColor" name="FCJH_TeamColourLight"><Anchor relative="$parent"/><ColorStyle val="PrimaryLight"/></Frame>
+							<Frame type="Frame" name="FCJH_AVShield3" template="FCJH_TopBar/FCJH_AVShieldTemplate">
+								<Anchor side="Right" relative="$parent/HealthBar" pos="Min" offset="#FCJH_AV_SHIELD_OUT_BLUE"/>
+							</Frame>
 							<Frame type="Frame" name="FCJH_AVShield2" template="FCJH_TopBar/FCJH_AVShieldTemplate">
-								<Anchor side="Left" relative="$parent/HealthBar" pos="Mid" offset="0"/>
-								<Anchor side="Right" relative="$parent/HealthBar" pos="Mid" offset="0"/>
+								<Anchor side="Right" relative="$parent/FCJH_AVShield3" pos="Min" offset="#FCJH_AV_SHIELD_STEP_BLUE"/>
 							</Frame>
 							<Frame type="Frame" name="FCJH_AVShield1" template="FCJH_TopBar/FCJH_AVShieldTemplate">
-								<Anchor side="Right" relative="$parent/FCJH_AVShield2" pos="Min" offset="0"/>
-							</Frame>
-							<Frame type="Frame" name="FCJH_AVShield3" template="FCJH_TopBar/FCJH_AVShieldTemplate">
-								<Anchor side="Left" relative="$parent/FCJH_AVShield2" pos="Max" offset="0"/>
+								<Anchor side="Right" relative="$parent/FCJH_AVShield2" pos="Min" offset="#FCJH_AV_SHIELD_STEP_BLUE"/>
 							</Frame>
 							<Frame type="UnitStatusValidatorAnimElement" name="FCJH_AVKeeps">
 								<Anchor relative="$parent"/>
@@ -405,18 +405,18 @@
 							     HUD's core bars. Each keep alive is a WarchiefAlive stack on the core (armour);
 							     the map's own validators count them, the insides empty as keeps fall (3 -> 0).
 							     Hidden until a count state fires, which only happens on Alterac (Ahli 0.75's
-							     way: the validators and art exist only there). Centred on the bar. -->
+							     way: the validators and art exist only there). In a row past the bar's outer
+							     end, outside its border ([team_core] av_shield*; centred, they covered the number). -->
 							<Frame type="UnitStatusColor" name="FCJH_TeamColour"><Anchor relative="$parent"/><ColorStyle val="Primary"/></Frame>
 							<Frame type="UnitStatusColor" name="FCJH_TeamColourLight"><Anchor relative="$parent"/><ColorStyle val="PrimaryLight"/></Frame>
+							<Frame type="Frame" name="FCJH_AVShield3" template="FCJH_TopBar/FCJH_AVShieldTemplate">
+								<Anchor side="Left" relative="$parent/HealthBar" pos="Max" offset="#FCJH_AV_SHIELD_OUT_RED"/>
+							</Frame>
 							<Frame type="Frame" name="FCJH_AVShield2" template="FCJH_TopBar/FCJH_AVShieldTemplate">
-								<Anchor side="Left" relative="$parent/HealthBar" pos="Mid" offset="0"/>
-								<Anchor side="Right" relative="$parent/HealthBar" pos="Mid" offset="0"/>
+								<Anchor side="Left" relative="$parent/FCJH_AVShield3" pos="Max" offset="#FCJH_AV_SHIELD_STEP_RED"/>
 							</Frame>
 							<Frame type="Frame" name="FCJH_AVShield1" template="FCJH_TopBar/FCJH_AVShieldTemplate">
-								<Anchor side="Left" relative="$parent/FCJH_AVShield2" pos="Max" offset="0"/>
-							</Frame>
-							<Frame type="Frame" name="FCJH_AVShield3" template="FCJH_TopBar/FCJH_AVShieldTemplate">
-								<Anchor side="Right" relative="$parent/FCJH_AVShield2" pos="Min" offset="0"/>
+								<Anchor side="Left" relative="$parent/FCJH_AVShield2" pos="Max" offset="#FCJH_AV_SHIELD_STEP_RED"/>
 							</Frame>
 							<Frame type="UnitStatusValidatorAnimElement" name="FCJH_AVKeeps">
 								<Anchor relative="$parent"/>
@@ -505,8 +505,8 @@
 				</Frame>
 
 				<!-- The pause box: Blizzard's own ("X paused the game. (N remaining)", custom games),
-				     moved off the logo plate and clock to under the centre banners (layout.toml
-				     system_alert; user, 2026-10-24). Ahli moves the same panel. -->
+				     moved off the logo plate and clock to 40 px under the clock (layout.toml
+				     system_alert; user, 2026-10-24/25). Ahli moves the same panel. -->
 				<Frame type="SystemAlertPanel" name="SystemAlertPanel">
 					<Anchor side="Top"    relative="$GameUI" pos="Min" offset="#FCJH_SYSTEM_ALERT_T"/>
 					<Anchor side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_SYSTEM_ALERT_L"/>

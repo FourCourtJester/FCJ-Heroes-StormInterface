@@ -32,7 +32,10 @@ in HANDOFF §3 ("Banners") and the memory rules.
    Blizzard bar art. Every bar's bottom sits in ONE place on every map, `[map_alerts]
    above_core` (10 px, user) over the core bar's top - never moving, core bar shown or not (the core
    bar is taller than any pop-up), and ignoring what hangs under the bar: the banners draw over
-   the plates' pop-ups (user). Stacked banners are one step apart: the tallest art that can
+   the plates' pop-ups (user). **The one exception, Alterac's cavalry** (user, 2026-10-25: "much
+   more low hanging artwork than the others"): its hexagon and what crosses behind it hang
+   20 px (red's blades, over the core bar's number) and 25 px (blue's hammers) under its
+   bracket, so both sit by the deeper instead, 25 px higher (`maps.AV_BELOW`). Stacked banners are one step apart: the tallest art that can
    stack (one sharing a column, any map) plus `STACK_GAP` (`step`: Towers' 117 + 8 = 125 units;
    user, twice: Blizzard's 30-unit gap left too much dead space, and sizing for the tribute's
    143, alone in its column, spread Towers' pair further). The

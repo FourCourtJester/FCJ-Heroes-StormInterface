@@ -270,20 +270,26 @@
 .fcjh-scores-winner.blue { --win-rgb: var(--blue-rgb); }
 .fcjh-scores-winner.red { --win-rgb: var(--red-rgb); }
 
-/* The victory mark, one either side of the name.
+/* The victory mark: a laurel branch either side of the name, in laurel green (user,
+   2026-10-25: "colour them a nice deep green, since you know, they're laurels").
 
-   A MASK, not a picture. The SVG is solid white and carries no colour of its own, so the
-   same file serves both teams and the glow is the name's own - one drawn shape instead of
-   four (two marks x two colours), and nothing to keep in step when a team colour moves.
+   A MASK, not a picture. The SVG is solid white and carries no colour of its own, so one
+   drawn shape serves both teams and the colour is set here - which is also what makes the
+   green a one-line change rather than a redraw.
 
-   The URLs are literal because Vite rewrites `url()` it can see at build time; a path
-   pieced together from the spec at runtime would not be fingerprinted and would break on
-   Pages. So the spec picks a CLASS, not a file. */
+   The glow stays the WINNING TEAM'S colour, not the leaves'. It is what ties the branches
+   to the name they are framing; a green glow on green leaves would just be a blur, and the
+   pair would stop belonging to the side that won.
+
+   The URL is literal because Vite only resolves a `url()` it can see at build time; a path
+   assembled from the spec at runtime would be left alone and 404 on Pages. */
 .fcjh-win-mark {
   flex: none;
   width: var(--win-mark-w);
   height: var(--win-mark-h);
-  background-color: #fff;
+  background-color: rgb(var(--win-mark-rgb));
+  mask-image: url('../generated/win_laurel.svg');
+  -webkit-mask-image: url('../generated/win_laurel.svg');
   mask-repeat: no-repeat;
   mask-position: center;
   mask-size: contain;
@@ -296,22 +302,11 @@
     drop-shadow(0 0 var(--win-glow) rgb(var(--win-rgb) / 0.6));
 }
 
-.fcjh-scores-winner.mark-laurel .fcjh-win-mark {
-  mask-image: url('../generated/win_laurel.svg');
-  -webkit-mask-image: url('../generated/win_laurel.svg');
-}
-
-.fcjh-scores-winner.mark-hex .fcjh-win-mark {
-  mask-image: url('../generated/win_hex.svg');
-  -webkit-mask-image: url('../generated/win_hex.svg');
-}
-
 .fcjh-win-mark.left {
   margin-right: var(--win-mark-gap);
 }
 
-/* the laurel is drawn as a left-hand branch; the hexagon is symmetric, so the mirror is
-   free either way */
+/* drawn as a left-hand branch, so the right one is the same file mirrored */
 .fcjh-win-mark.right {
   margin-left: var(--win-mark-gap);
   transform: scaleX(-1);

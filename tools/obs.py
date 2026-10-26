@@ -93,9 +93,11 @@ def frame_svg(b, side, line=True, height=None, cap=None):
     a, c = h - 5, h - 2
     pts = (f"{3 + b.lean * a:.2f},{a} {w - d - 3 + b.lean * a:.2f},{a} "
            f"{w - d - 3 + b.lean * c:.2f},{c} {3 + b.lean * c:.2f},{c}")
-    # the logo plate takes this same frame without the team line: a bar of team colour under
-    # a team's own logo says nothing the logo doesn't (user, 2026-10-22)
-    team_line = f'\n<polygon points="{pts}" fill="{b.team[side]}"/>' if line else ""
+    # The team line is NOT in here any more. It was the only thing in the frame carrying a
+    # team colour, which meant a whole frame per team per colour scheme; drawn on its own
+    # (frame_line_svg) and masked, it takes any colour and the frame carries none (user,
+    # 2026-10-25). `line` is kept so the geometry below still reads as one piece.
+    team_line = ""
     flip = "" if side == "blue" else f' transform="translate({w},0) scale(-1,1)"'
     return f'''<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}">
 <defs><clipPath id="c"><polygon points="{poly}"/></clipPath></defs>
@@ -106,19 +108,63 @@ def frame_svg(b, side, line=True, height=None, cap=None):
 '''
 
 
-def matchup_frame_svg(b):
-    """A team's container on the standby screen's band, to nine-slice: a long bar coming to a
-    point at each end, at HALF its height.
+def frame_line_svg(b, side):
+    """The team line alone - the bar of team colour along the bottom of a name plate - as a
+    white nine-slice for the stylesheet to mask and paint.
+
+    It used to live inside frame_svg, which made the frame the only art in the kit that had
+    to be generated per team AND per colour scheme: four files for two schemes. On its own it
+    is one file a side, any colour (user, 2026-10-25).
+
+    The logo plate has never had one: "a bar of team colour under a team's own logo says
+    nothing the logo doesn't" (user, 2026-10-22).
+    """
+    h, cap = b.h, CAP
+    w, d = 2 * cap + MID, b.lean * h
+    poly = f"0,0 {w - d:.2f},0 {w},{h} {d:.2f},{h}"
+    a, c = h - 5, h - 2
+    pts = (f"{3 + b.lean * a:.2f},{a} {w - d - 3 + b.lean * a:.2f},{a} "
+           f"{w - d - 3 + b.lean * c:.2f},{c} {3 + b.lean * c:.2f},{c}")
+    flip = "" if side == "blue" else f' transform="translate({w},0) scale(-1,1)"'
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}">
+<defs><clipPath id="c"><polygon points="{poly}"/></clipPath></defs>
+<g{flip}><g clip-path="url(#c)">
+<polygon points="{pts}" fill="#fff"/>
+</g></g></svg>
+'''
+
+
+def frame_cap(b, h):
+    """The nine-slice cap a frame of this height needs: the point, and room for the rim inside
+    it. DERIVED, never authored - a cap is not a size you pick, it is a consequence of the
+    height and the lean (user, 2026-10-26).
+
+    Authoring it by hand is what broke the band: `name_cap` was scaled like a size through
+    three 10% passes and walked under the point it was supposed to hold, so the slice cut the
+    diagonal and the leftover slope smeared down the bar."""
+    return math.ceil(b.lean * h / 2 + 2 * b.rim_w)
+
+
+def matchup_frame_svg(b, h, cap):
+    """A team's container, to nine-slice: a long bar coming to a point at each end, at HALF
+    its height.
+
+    ONE FILE PER HEIGHT, because the cap does not scale the way the shape does. A
+    border-image cap is painted 1:1 horizontally (the painted width and the slice are the
+    same number) but squashed vertically to the element's height, so art cut for one height
+    draws a BLUNTER point in anything shorter: the clip-path's angle is atan(lean) at every
+    size, the chrome's is atan(2 * point / h), and the two agree only at the height the art
+    was cut for. Every consumer gets its own file, so they agree everywhere (user, 2026-10-26:
+    "we're trying to create a system here so we can author this matchup band on a number of
+    pages").
 
     One file serves both teams, because the shape is symmetrical and the rim is chrome on
     either side - what makes a container blue or red is the wash and the lattice behind it,
-    which are CSS. The game band's plates carry a team line along their bottom edge; this one
-    doesn't, because at this size the wash says it already.
+    which are CSS. The game band's plates carry a team line along their bottom edge; these
+    don't, because at this size the wash says it already.
 
     The caps hold the two points and the middle is a straight run of rim, top and bottom, so
     the bar stretches to whatever a team's name needs without the points shearing."""
-    sb = b.sb
-    h, cap = sb["team_h"], sb["team_cap"]
     pt = b.lean * h / 2                                   # how far in a point starts
     assert cap >= pt + 2 * b.rim_w, (
         f"a {cap} px cap cannot hold a {pt:.2f} px point and a {b.rim_w} px rim")
@@ -136,14 +182,22 @@ def matchup_frame_svg(b):
 '''
 
 
-def lattice_svg(b, side):
-    """The hex lattice behind the plates, as the backplate's: one tile, repeated. `side` is a
-    team, or "neutral" for a plate that belongs to nobody - the standby screen's, drawn in the
-    chrome colour instead of a team's."""
-    colour = b.rim if side == "neutral" else b.team[side]
+def lattice_svg(b):
+    """The hex lattice behind the plates, as the backplate's: one tile, repeated.
+
+    IT CARRIES NO COLOUR. The stylesheets use it as a MASK and paint it themselves, so one
+    tile serves blue, red, the chrome-coloured neutral plate, and whatever the colour-blind
+    toggle swaps in (user, 2026-10-25: "ensure all the hex mesh's are colorable by arbitrary
+    colours that we provide").
+
+    It used to be generated per team, and then per team PER MODE once colour-blind arrived -
+    four files for two schemes, and a fifth the moment anyone wanted a third. A mask has no
+    such arithmetic: the colour is the stylesheet's, and `--team-rgb` already switches with
+    the mode.
+    """
     return f'''<svg xmlns="http://www.w3.org/2000/svg" width="21" height="24.25" viewBox="0 0 21 24.25">
-<polygon points="{b.hexpts(7, 6.06, 7, fmt="{:.2f},{:.2f}")}" fill="none" stroke="{colour}" stroke-width="1"/>
-<polygon points="{b.hexpts(17.5, 18.19, 7, fmt="{:.2f},{:.2f}")}" fill="none" stroke="{colour}" stroke-width="1"/>
+<polygon points="{b.hexpts(7, 6.06, 7, fmt="{:.2f},{:.2f}")}" fill="none" stroke="#fff" stroke-width="1"/>
+<polygon points="{b.hexpts(17.5, 18.19, 7, fmt="{:.2f},{:.2f}")}" fill="none" stroke="#fff" stroke-width="1"/>
 </svg>
 '''
 
@@ -455,8 +509,13 @@ def spec(b):
                     "base_top": BASE[0], "base_bottom": BASE[1], "dark": DARK,
                     "name_text_gradient": list(CYAN), "tab_text": "#cbe8ff", "banned_foot": BANNED_FOOT},
         "name_plate": {"frame": {"blue": "frame_blue.svg", "red": "frame_red.svg"},
-                       "logo_frame": {"blue": "frame_logo_blue.svg", "red": "frame_logo_red.svg"},
-                       "lattice": {"blue": "lattice_blue.svg", "red": "lattice_red.svg"},
+                       # the same chrome serves both plates; the team line is its own
+                       # art, masked and painted, so no frame carries a team colour
+                       "logo_frame": {"blue": "frame_blue.svg", "red": "frame_red.svg"},
+                       "team_line": {"blue": "frame_line_blue.svg", "red": "frame_line_red.svg"},
+                       # one tile, uncoloured: the stylesheet masks it and paints it, so it
+                       # serves both teams and every mode rather than needing a file each
+                       "lattice": "lattice.svg",
                        "nine_slice": {"width": 2 * CAP + MID, "caps": CAP, "stretch": MID},
                        "blue": {"left": r2(b.name["blue"][0]), "width": r2(b.band_box)},
                        "red": {"left": r2(b.name["red"][0]), "width": r2(b.band_box)},
@@ -727,38 +786,187 @@ def laurel_size():
     return float(m.group(1)), float(m.group(2))
 
 
-HEX = (84, 96)
+def hex_chrome_svg(b, h):
+    """A pointy-top hexagon in the plates' own chrome: the sheen over its top half and the
+    rim round all six sides. The fill, wash and glow stay in CSS behind it, exactly as they
+    do behind frame_svg.
 
+    NOT A NINE-SLICE, and that is the point. A nine-slice stretches a straight middle; a
+    hexagon has no straight middle, so slicing one shears its slants. It is drawn at the size
+    it is used at instead - which is also what makes the rim exactly rim_w on screen rather
+    than rim_w times whatever the stretch happened to be.
 
-def hex_svg(b):
-    """A pointed-top hexagon ring with a six-point sparkle in it - the lattice motif the
-    plates and bands already wear, closed into an emblem. Symmetric, so the right-hand copy
-    is the same file and the mirror costs nothing. Solid white: a mask, as the laurel is."""
-    w, h = HEX
-    cx, cy = w / 2, h / 2
-
-    def hexagon(r, squash=1.0):
-        pts = []
-        for i in range(6):
-            a = math.radians(60 * i - 90)
-            pts.append(f"{cx + r * math.cos(a) * squash:.2f},{cy + r * math.sin(a):.2f}")
-        return " ".join(pts)
-
-    # the sparkle: six long points with a tight waist between them
-    spark = []
-    for i in range(12):
-        a = math.radians(30 * i - 90)
-        r = 23 if i % 2 == 0 else 7.4
-        spark.append(f"{cx + r * math.cos(a):.2f},{cy + r * math.sin(a):.2f}")
-
-    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}">
-  <g fill="none" stroke="#fff" stroke-linejoin="round">
-    <polygon points="{hexagon(cy - 3)}" stroke-width="5"/>
-    <polygon points="{hexagon(cy - 15)}" stroke-width="2.2" opacity=".55"/>
-  </g>
-  <polygon points="{" ".join(spark)}" fill="#fff"/>
-</svg>
+    NO TEAM LINE. The plates carry a bar of team colour, and the game bar's LOGO plate
+    deliberately does not, because "a bar of team colour under a team's own logo says nothing
+    the logo doesn't" (user, 2026-10-22). This is a logo plate, so the same holds - and it
+    means one file serves both teams, the colour arriving from the CSS behind it.
+    """
+    w = h * math.sqrt(3) / 2
+    q = h / 4
+    hexagon = (f"{w / 2:.2f},0 {w:.2f},{q:.2f} {w:.2f},{3 * q:.2f} "
+               f"{w / 2:.2f},{h:.2f} 0,{3 * q:.2f} 0,{q:.2f}")
+    # the top half, as the plates' sheen takes their top half
+    sheen = (f"{w / 2:.2f},0 {w:.2f},{q:.2f} {w:.2f},{h / 2:.2f} 0,{h / 2:.2f} 0,{q:.2f}")
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="{w:.2f}" height="{h:.2f}" viewBox="0 0 {w:.2f} {h:.2f}">
+<defs><clipPath id="c"><polygon points="{hexagon}"/></clipPath></defs>
+<g clip-path="url(#c)">
+<polygon points="{sheen}" fill="#fff" fill-opacity="{b.sheen * .6:.3f}"/>
+<polygon points="{hexagon}" fill="none" stroke="{b.rim}" stroke-width="{2 * b.rim_w}"/>
+</g></svg>
 '''
+
+
+def _plate_h(b):
+    """The slab composition's name plate: the hexagon badge's own vertical edge, so the two
+    meet exactly. A pointy-top hexagon runs straight down each side between h/4 and 3h/4."""
+    return b.cfg["matchup"]["badge"] / 2
+
+
+def _unit_h(b):
+    """The container composition's height."""
+    return b.cfg["matchup"]["unit_h"]
+
+
+def matchup_spec(b):
+    """The matchup slab: the centred composition, worked out from [matchup].
+
+    Everything is placed OUTWARD FROM THE MIDDLE - the VS first, then a name plate, then the
+    badge - so the composition stays symmetric about the screen's centre whatever the pieces
+    are sized to, and red is blue mirrored rather than a second set of numbers to keep in
+    step.
+    """
+    m = b.cfg["matchup"]
+    r2 = lambda v: round(float(v), 2)
+
+    # BOTTOM-ANCHORED, not centred (user, 2026-10-26: "move the band down from center/center
+    # ... to bottom/center with a padding the same amount as our interface from screen
+    # edges"). The composition's lowest painted pixel sits [screen] padding above the bottom
+    # edge - the same 20px nothing else in the interface crosses either - so the band and the
+    # hero rows keep the same margin and the graphic reads as part of the same kit.
+    #
+    # `centre_y` is gone. The row's centre line is DERIVED now, because the thing being held
+    # still is the bottom edge: change any size in [matchup] and the band stays where it is on
+    # screen instead of drifting by half the difference.
+    #
+    # Measured on the FULLEST case - the lockup under the row - so the band does not climb the
+    # screen the moment a show runs without a tournament mark. A show without one simply
+    # leaves more air underneath, which is the quiet failure rather than the loud one.
+    # EACH COMPOSITION GETS ITS OWN CENTRE LINE, because they are not the same depth: the
+    # container is 126 tall and the slab's badge 198, so one shared line would put one of them
+    # right and the other 36px out. Anchoring the bottom is exactly what makes that visible -
+    # centred, the difference was split between top and bottom and nobody noticed.
+    foot = lambda half: SH - b.cfg["screen"]["padding"] - (
+        half + m["lockup_gap"] + m["lockup_pad"] + m["lockup"])
+    cx = SW / 2
+    cy = foot(m["badge"] / 2)                     # the slab: its badge is the deepest thing
+    cy_unit = foot(m["unit_h"] / 2)               # the container composition
+
+    # a pointy-top hexagon is taller than it is wide, in this ratio
+    hex_w = lambda h: h * math.sqrt(3) / 2
+    badge_h, badge_w = m["badge"], hex_w(m["badge"])
+    vs_h, vs_w = m["vs"], hex_w(m["vs"])
+
+    # THE PLATE'S HEIGHT IS THE HEXAGON'S VERTICAL EDGE. A pointy-top hexagon runs vertical
+    # down each side between h/4 and 3h/4 - exactly h/2 of it - so a plate of that height,
+    # centred on the same line, meets it edge to edge with nothing overhanging. Typing a
+    # height instead would be a number that stops matching the moment the badge is resized.
+    name_h = badge_h / 2
+
+    name_r = cx - vs_w / 2 - m["vs_gap"]          # blue's name plate, inner edge
+    name_l = name_r - m["name_w"]
+    badge_l = name_l - badge_w                    # butted: its vertical edge IS the plate's
+
+    def box(x, y, w, h):
+        return [r2(x), r2(y), r2(w), r2(h)]
+
+    def mirror(bx):
+        return [r2(SW - bx[0] - bx[2]), bx[1], bx[2], bx[3]]
+
+    name = box(name_l, cy - name_h / 2, m["name_w"], name_h)
+    badge = box(badge_l, cy - badge_h / 2, badge_w, badge_h)
+
+    # The one-container team is anchored by its INNER edge and grows outward from it,
+    # rather than being a box of a known width. A logo only takes up room if the operator
+    # has given one (user, 2026-10-25), so the container is narrower on a team without one -
+    # and the two sides can differ. Anchoring at the VS end keeps the middle of the graphic
+    # fixed whatever each side happens to carry.
+    unit_inner = name_r
+    unit_top = cy_unit - m["unit_h"] / 2
+
+    # the slab's own width, which the lockup is centred across
+    slab_l, slab_w = badge_l, SW - 2 * badge_l
+    # The kicker's bottom edge IS the name plates' top edge - they are attached, not spaced.
+    # Its box is the WIDER, bottom width; the top corners are cut in by the flare.
+    flare = b.lean * m["kicker_h"]
+    kicker_w = m["kicker_w"] + 2 * flare
+    kicker_y = name[1] - m["kicker_h"]
+    lockup_y = badge[1] + badge_h + m["lockup_gap"]
+
+
+    return {
+        "about": "FCJH matchup slab: the centred composition. Generated by tools/obs.py from "
+                 "layout.toml's [matchup]; the piece itself is "
+                 "studio/src/components/MatchupSlab.jsx.",
+        "screen": [SW, SH],
+        "badge": {"blue": badge, "red": mirror(badge), "chrome": "badge_hex.svg"},
+        "name": {"blue": name, "red": mirror(name),
+                 "point": r2(b.lean * name_h / 2),
+                 "text": m["name_text"], "lines": m["name_lines"],
+                 "min": m["name_min"], "pad": m["name_pad"],
+                 # its own art, cut at this plate's height, with the cap that height needs
+                 "frame": "frame_plate.svg",
+                 "nine_slice": {"width": 2 * frame_cap(b, name_h) + MID,
+                                "caps": frame_cap(b, name_h), "stretch": MID}},
+        # ONE CONTAINER A SIDE, the alternative arrangement being explored. Everything that
+        # team is lives inside one shape: score, logo, name. It keeps the name plate's own
+        # edges - flat outside, pointed in - so nothing protrudes from it, which is the whole
+        # point: the hexagon-and-plate version read as a bulge with a shaft and a taper.
+        #
+        # Its inner point lands where the plate's did, so the VS and the gap either side are
+        # unchanged and the two arrangements can be compared without anything else moving.
+        "unit": {"inner": r2(SW - unit_inner),   # from each side's own screen edge
+                 "top": r2(unit_top),
+                 # the kicker and the mid, hung off the CONTAINER rather than the name plate
+                 # (user, 2026-10-25). The slab's are measured against its plate, which is
+                 # 110 tall; the container is 140, so the slab's numbers left the kicker
+                 # overlapping the band's top by 15px instead of landing on it
+                 "kicker": box(cx - kicker_w / 2, unit_top - m["kicker_h"],
+                               kicker_w, m["kicker_h"]),
+                 "mid": box(cx - kicker_w / 2, unit_top, kicker_w, m["unit_h"]),
+                 # ...and the lockup with them, for the same reason and a session later. It
+                 # was still measured off the BADGE - a shape this composition does not draw -
+                 # which put 47px of air under the container where the number said 11, and the
+                 # marks visibly adrift from the thing they belong to (user, 2026-10-26:
+                 # "bring those tournament logos up a bit more (lose half the margin)")
+                 "lockup": box(slab_l, unit_top + m["unit_h"] + m["lockup_gap"],
+                               slab_w, m["lockup"] + 2 * m["lockup_pad"]),
+                 "h": m["unit_h"], "point": r2(b.lean * m["unit_h"] / 2),
+                 "lean": r2(b.lean * m["unit_h"]),
+                 "score": m["unit_score"], "score_text": m["unit_score_text"],
+                 "logo": m["unit_logo"], "rule": m["unit_rule"],
+                 "name": m["name_w"],
+                 # its own VS, on its own centre line - the only piece the two compositions
+                 # would otherwise have had to share
+                 "vs": box(cx - vs_w / 2, cy_unit - vs_h / 2, vs_w, vs_h),
+                 # ...and its own frame, cut at the container's height
+                 "frame": "frame_unit.svg", "cap": frame_cap(b, m["unit_h"])},
+        "vs": {"box": box(cx - vs_w / 2, cy - vs_h / 2, vs_w, vs_h), "text": m["vs_text"],
+               # its own file, at its own size: scaling the badge's would scale the rim with
+               # it, and a 116px hexagon beside a 184px one would wear a visibly thinner one
+               "chrome": "vs_hex.svg"},
+        # centred and narrower than the slab: a label for the matchup, not a bar across it
+        "kicker": {"box": box(cx - kicker_w / 2, kicker_y, kicker_w, m["kicker_h"]),
+                   "text": m["kicker"], "flare": r2(flare)},
+        # the same smoke, carried down behind the row so the two read as one column
+        "mid": box(cx - kicker_w / 2, name[1], kicker_w, name_h),
+        "lockup": {"box": box(slab_l, lockup_y, slab_w, m["lockup"] + 2 * m["lockup_pad"]),
+                   "x_text": m["lockup_x"], "mark": m["lockup_mark"],
+                   "pad": m["lockup_pad"]},
+        "colours": {"rim": b.rim, "rim_w": b.rim_w,
+                    "base_top": BASE[0], "base_bottom": BASE[1],
+                    "text": CYAN[0], "blue": b.team["blue"], "red": b.team["red"],
+                    "smoke": m["smoke"]},
+    }
 
 
 def scores_spec(b):
@@ -775,11 +983,10 @@ def scores_spec(b):
                   "w": sc["panel_w"], "h": sc["panel_h"]},
         # the winning team's name across the top band, and the mark either side of it
         "winner": {"text": sc["win_text"], "track": sc["win_track"], "glow": sc["win_glow"],
-                   "mark": sc["win_mark"], "mark_h": sc["win_mark_h"],
-                   "mark_gap": sc["win_mark_gap"],
-                   # so the screen can give each mark its true width at any height
-                   "mark_ratio": {"laurel": r2(laurel_size()[0] / laurel_size()[1]),
-                                  "hex": r2(HEX[0] / HEX[1])}},
+                   "mark_h": sc["win_mark_h"], "mark_gap": sc["win_mark_gap"],
+                   # so the screen can give the mark its true width at any height
+                   "mark_ratio": r2(laurel_size()[0] / laurel_size()[1]),
+                   "mark_colour": "#" + sc["win_mark_colour"]},
         # the two marks, closing on the x between them
         "marks": {"h": sc["mark_h"], "w": sc["mark_w"], "pad": sc["mark_pad"],
                   "x_text": sc["x_text"], "x_gap": sc["x_gap"]},
@@ -800,21 +1007,32 @@ def files(cfg):
     enc = lambda s: s.encode("utf-8")
     out = {
         Path("pip_empty.svg"): enc(pip_svg(b, DARK, .6, False)),
+        # one lattice, uncoloured: every stylesheet masks it and paints it itself
+        Path("lattice.svg"): enc(lattice_svg(b)),
         Path("tab_division.svg"): enc(tab_svg(b, "blue")),
         Path("tab_game.svg"): enc(tab_svg(b, "red")),
         Path("event_mask.png"): event_mask_png(b),
         Path("guide.png"): guide_png(b),
         Path("topbar.json"): enc(json.dumps(spec(b), indent=2, ensure_ascii=False) + "\n"),
-        # the standby screen's band: one frame for both containers (see matchup_frame_svg).
-        # Its message board and logo arms are plain smoke and want no art at all
-        Path("frame_matchup.svg"): enc(matchup_frame_svg(b)),
+        # THE BAND'S FRAMES, one per height it is drawn at - see matchup_frame_svg for why a
+        # cap cannot simply be stretched. The standby band's message board and logo arms are
+        # plain smoke and want no art at all.
+        Path("frame_matchup.svg"): enc(matchup_frame_svg(
+            b, b.sb["team_h"], b.sb["team_cap"])),
+        Path("frame_plate.svg"): enc(matchup_frame_svg(
+            b, _plate_h(b), frame_cap(b, _plate_h(b)))),
+        Path("frame_unit.svg"): enc(matchup_frame_svg(
+            b, _unit_h(b), frame_cap(b, _unit_h(b)))),
         Path("standby.json"): enc(json.dumps(standby_spec(b), indent=2, ensure_ascii=False) + "\n"),
         # the webcam frames: a border and an OBS mask per side, and the places for both
         Path("webcam.json"): enc(json.dumps(webcam_spec(b), indent=2, ensure_ascii=False) + "\n"),
         # the scores screen: the hole, the screen it is cut from, and the victory marks
         Path("scores.json"): enc(json.dumps(scores_spec(b), indent=2, ensure_ascii=False) + "\n"),
         Path("win_laurel.svg"): enc(laurel_svg(b)),
-        Path("win_hex.svg"): enc(hex_svg(b)),
+        # the matchup slab, explored alongside the bottom band
+        Path("matchup.json"): enc(json.dumps(matchup_spec(b), indent=2, ensure_ascii=False) + "\n"),
+        Path("badge_hex.svg"): enc(hex_chrome_svg(b, b.cfg["matchup"]["badge"])),
+        Path("vs_hex.svg"): enc(hex_chrome_svg(b, b.cfg["matchup"]["vs"])),
     }
     for side in ("left", "right"):
         out[Path(f"cam_frame_{side}.svg")] = enc(cam_frame_svg(b, side))
@@ -823,8 +1041,8 @@ def files(cfg):
         out[PUBLIC / f"cam_mask_{side}.png"] = cam_mask_png(b, side, size=mask_at)
     for team in ("blue", "red"):
         out[Path(f"frame_{team}.svg")] = enc(frame_svg(b, team))
-        out[Path(f"frame_logo_{team}.svg")] = enc(frame_svg(b, team, line=False))
-        out[Path(f"lattice_{team}.svg")] = enc(lattice_svg(b, team))
+        # one chrome frame a side, carrying no team colour, for both plates
+        out[Path(f"frame_line_{team}.svg")] = enc(frame_line_svg(b, team))
         out[Path(f"pip_{team}.svg")] = enc(pip_svg(b, b.team[team], 1, True))
         out[Path(f"ban_{team}.svg")] = enc(ban_tile_svg(b, team))
     out.update(colour_blind_files(cfg))
@@ -842,8 +1060,6 @@ def colour_blind_files(cfg):
     out = {Path("colourblind.json"): enc(json.dumps(
         {"colours": {"blue": cb.team["blue"], "red": cb.team["red"]}}, indent=2) + "\n")}
     for team in ("blue", "red"):
-        out[Path(f"frame_{team}_cb.svg")] = enc(frame_svg(cb, team))
-        out[Path(f"lattice_{team}_cb.svg")] = enc(lattice_svg(cb, team))
         out[Path(f"pip_{team}_cb.svg")] = enc(pip_svg(cb, cb.team[team], 1, True))
     return out
 
