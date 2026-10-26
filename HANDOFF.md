@@ -481,9 +481,13 @@ land on whole pixels at 1080p (`inspect_card.line`), so at 1440p they may come o
 ## 7. What's next
 
 **1.0 (user, 2026-10-21).** A test build went to volunteers 2026-10-20 (v0.1.0, b28ee86, the
-kill feed back on); their feedback is 1.0.x for a while - `[meta] version` 1.0.0, 1.0.1 (the translations), now 1.0.2 (the art pass: bevelled
+kill feed back on); their feedback is 1.0.x for a while - `[meta] version` 1.0.0, 1.0.1 (the translations), 1.0.2 (the art pass: bevelled
 plates, the numbers panes - user, 2026-10-23: "Let's prepare for a new interface release
-with this"), a patch
+with this"), now **1.1.0** (user, 2026-10-26: "let's merge, tag v1.1.0, and get our Pages
+deployed"): PR #3, `matchup-slab` - the studio's matchup slab, Logos panel, scores laurels and
+colour-blind toggle, with the interface's colour-blind mode (Ahli's colours), our HUD keys,
+the game's end hiding the pop-ups, the pause box, the XP Contribution pane and Alterac's
+shields and cavalry banner, all seen in game; a patch
 number per fix batch, each one a `pack.py --release` from a commit. Work is on `main` (its
 history is python-toolchain's, which stays as it was). GitHub:
 https://github.com/FourCourtJester/FCJ-Heroes-StormInterface (public; pushed in
