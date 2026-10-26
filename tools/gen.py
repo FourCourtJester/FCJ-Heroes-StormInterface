@@ -1251,6 +1251,14 @@ def colour_blind_plate(cfg, team):
     return light, dark
 
 
+def colorize_cb(light, dark):
+    """colour_blind_states' (on, off) recolouring a frame's art by Colorize: one property per
+    action, on $this, as the dead slices' (seen working in game). One action setting all three
+    did nothing (user, 2026-10-25: the inspect's red talent squares stayed red)."""
+    return ([f'frame="$this" ColorAdjustMode="Colorize"', f'frame="$this" LightAdjustColor="{light}"',
+             f'frame="$this" DarkAdjustColor="{dark}"'], ['frame="$this" ColorAdjustMode="None"'])
+
+
 def colour_blind_states(on, off, indent):
     """A StateGroup following the game's colour-blind option (Blizzard's <When type="Option"
     colorblind="True"/>, as the kill log's portrait borders): the `on` actions while it's set,
@@ -3450,9 +3458,7 @@ def talent_popups(cfg):
         border_cb = ""
         if team.lower() in cfg["colour_blind"]["plates"]:
             light, dark = colour_blind_plate(cfg, team.lower())
-            border_cb = NL + colour_blind_states(
-                [f'ColorAdjustMode="Colorize" LightAdjustColor="{light}" DarkAdjustColor="{dark}"'],
-                ['ColorAdjustMode="None"'], 7).rstrip(NL)
+            border_cb = NL + colour_blind_states(*colorize_cb(light, dark), 7).rstrip(NL)
         pop = f"FCJH_Talent{n}"
         images = "".join(
             popup_image(f"T{k}", f"{{{row}/TalentTreeIcon{k}/IconImage/@Texture}}", 0, '\n\t\t\t\t\t\t\t<Visible val="false"/>')
@@ -3522,9 +3528,7 @@ def hero_cell_template(team, c, cfg):
     team_bg_cb = ""
     if team in cfg["colour_blind"]["plates"]:
         light, dark = colour_blind_plate(cfg, team)
-        team_bg_cb = "\n" + colour_blind_states(
-            [f'ColorAdjustMode="Colorize" LightAdjustColor="{light}" DarkAdjustColor="{dark}"'],
-            ['ColorAdjustMode="None"'], 3).rstrip("\n")
+        team_bg_cb = "\n" + colour_blind_states(*colorize_cb(light, dark), 3).rstrip("\n")
     cell = "$parent/$parent"
     backing = lambda name, tex, rect, height: f"""
 			<Frame type="Image" name="{name}">{_anchors(rect, cell, chr(9) * 4)}
@@ -3861,6 +3865,14 @@ def hero_cell_template(team, c, cfg):
 				</State>
 			</StateGroup>"""
     else:
+        # colour-blind mode: Blizzard's plate health style (ObserverPanelOverviewHealth) points
+        # its Colorblind values at ColorSpecs that don't exist, so red's bars never change; the
+        # core bars' style (ObserverPanelCoreHealth) has them, its Chaos the core bar's orange
+        if "red" in cfg["colour_blind"]["plates"]:
+            bars = (["$this/HealthBar"] + [f"$this/VikingTrackingElement/TrackedUnitStatusFrame{i}/HealthBar" for i in range(3)]
+                    + ["$this/RexxarTrackingElement/TrackedUnitStatusFrame0/HealthBar"])
+            style = lambda s: [f'frame="{b}" ColorStyle="{s}"' for b in bars]
+            health += "\n" + colour_blind_states(style("ObserverPanelCoreHealth"), style("ObserverPanelOverviewHealth"), 3).rstrip("\n")
         health += f"""
 			<Frame type="Frame" name="FCJH_Fountain">{fountain_anchors}
 				<Frame type="Frame" name="ImageMaskContainer"><AlphaMaskTexture val="{mask}"/></Frame>

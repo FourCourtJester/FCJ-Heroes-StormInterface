@@ -529,10 +529,11 @@ once narrowed to clear; the `--check`/validate overlap checks should catch a col
 **Done for 1.0.3, to see in game: the pause box moved (user, 2026-10-24: "if we can move
 the 'paused the game' notification, we should"; custom games are "99% of esports").** Blizzard's
 `SystemAlertPanel` ("X paused the game. (N remaining)", a purple box) sat at the top centre,
-over the logo plate and clock. Now under the centre banners, 10 px below, centred on 958.5:
-`layout.toml` `[element.system_alert]` (the user's pick of three: under the banners, under the
-clock, screen centre), the frame in `FCJH_TopBar`. Look untouched. Needs a custom game with a
-pause to see; docs/blizzard-fixes.md has it.
+over the logo plate and clock. Now 40 px under the clock (box top 200), centred on 958.5:
+`layout.toml` `[element.system_alert]`, the frame in `FCJH_TopBar`. Look untouched. First under
+the centre banners (284); seen in game 2026-10-25 (replays can be paused too) and "waaay too far
+down", so moved up - it now overlaps a centre banner while both show. docs/blizzard-fixes.md
+has it.
 
 **Bug from a streamer's cast, found (user's vod screenshots, 2026-10-24): pop-ups outlive
 Ctrl+E.** The streamer's words were "the icon for the event stays and replaces the icon that
@@ -607,6 +608,22 @@ on every best-value event - so each has a twin label, `FCJH_ValueCB` in the `_CB
 by the same animations (gold when leading, either way), and the option picks which shows. Both
 teams, as the top plate. Not done: the death timers (Blizzard's styles). Glows are Blizzard's
 own. Test with Rexxar's and the Vikings' slices in it.
+
+**Seen in game (user, 2026-10-25), and the fixes, to see again.** Orange: the top bar, the
+core bars, the inspect card's edge, the stat panes' backgrounds. Still red: the Ctrl+1 grid,
+the inspect's talent squares, red's plate health bars. Fixed:
+- the Colorize (red's plate art, talent pop-ups, inspect squares) set three properties in one
+  SetProperty; now one per action on `$this` (gen.py `colorize_cb`), as the dead slices'
+  Colorize, which works. If the plate art was already orange, that's no harm;
+- the Ctrl+1 grid's red half (`FCJH_GridRed*`, hand-written `FCJH_InfoPane`) gets the same;
+- red's health bars (and the Vikings' and Rexxar's): Blizzard's style for them
+  (`ObserverPanelOverviewHealth`) points its Colorblind values at ColorSpecs that don't
+  exist, so in colour-blind mode they switch to the core bars' style
+  (`ObserverPanelCoreHealth`, its Chaos the core bar's orange). **A ColorStyle SetProperty on a
+  health bar is unproven** (the resource bar's is the precedent).
+For comparison: Blizzard's default UI tints none of its top bar or panes in colour-blind mode
+(only the inspect's health bar); Ahli tints all red to orange and blue to a green-blue. Blue is
+left as is until the user's feedback tester weighs in (`[colour_blind] plates` takes "blue").
 
 **The studio half, done for 1.1 (checked in a browser, not yet in OBS):** OBS can't read the
 game's options, so it's the operator's toggle, **Tournament → Colour-blind colours**

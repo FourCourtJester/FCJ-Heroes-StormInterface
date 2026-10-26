@@ -1414,10 +1414,12 @@
 				<DefaultState val="Off"/>
 				<State name="On">
 					<When type="Option" colorblind="True"/>
-					<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+					<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+					<Action type="SetProperty" frame="$this" LightAdjustColor="fea74a"/>
+					<Action type="SetProperty" frame="$this" DarkAdjustColor="4c2904"/>
 				</State>
 				<State name="Off">
-					<Action type="SetProperty" ColorAdjustMode="None"/>
+					<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 				</State>
 			</StateGroup>
 		</Frame>
@@ -1753,6 +1755,24 @@
 				<ColorStyle val="StandardEnergy" index="0"/>
 				<Unclipped val="true"/>
 			</Frame>
+			<StateGroup name="FCJH_ColourBlind">
+				<DefaultState val="Off"/>
+				<State name="On">
+					<When type="Option" colorblind="True"/>
+					<Action type="SetProperty" frame="$this/HealthBar" ColorStyle="ObserverPanelCoreHealth"/>
+					<Action type="SetProperty" frame="$this/VikingTrackingElement/TrackedUnitStatusFrame0/HealthBar" ColorStyle="ObserverPanelCoreHealth"/>
+					<Action type="SetProperty" frame="$this/VikingTrackingElement/TrackedUnitStatusFrame1/HealthBar" ColorStyle="ObserverPanelCoreHealth"/>
+					<Action type="SetProperty" frame="$this/VikingTrackingElement/TrackedUnitStatusFrame2/HealthBar" ColorStyle="ObserverPanelCoreHealth"/>
+					<Action type="SetProperty" frame="$this/RexxarTrackingElement/TrackedUnitStatusFrame0/HealthBar" ColorStyle="ObserverPanelCoreHealth"/>
+				</State>
+				<State name="Off">
+					<Action type="SetProperty" frame="$this/HealthBar" ColorStyle="ObserverPanelOverviewHealth"/>
+					<Action type="SetProperty" frame="$this/VikingTrackingElement/TrackedUnitStatusFrame0/HealthBar" ColorStyle="ObserverPanelOverviewHealth"/>
+					<Action type="SetProperty" frame="$this/VikingTrackingElement/TrackedUnitStatusFrame1/HealthBar" ColorStyle="ObserverPanelOverviewHealth"/>
+					<Action type="SetProperty" frame="$this/VikingTrackingElement/TrackedUnitStatusFrame2/HealthBar" ColorStyle="ObserverPanelOverviewHealth"/>
+					<Action type="SetProperty" frame="$this/RexxarTrackingElement/TrackedUnitStatusFrame0/HealthBar" ColorStyle="ObserverPanelOverviewHealth"/>
+				</State>
+			</StateGroup>
 			<Frame type="Frame" name="FCJH_Fountain">
 				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="32"/>
 				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="135"/>
@@ -4757,10 +4777,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="fea74a"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="4c2904"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 							<Unclipped val="true"/>
@@ -5071,10 +5093,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="fea74a"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="4c2904"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 							<Unclipped val="true"/>
@@ -5385,10 +5409,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="fea74a"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="4c2904"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 							<Unclipped val="true"/>
@@ -5699,10 +5725,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="fea74a"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="4c2904"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 							<Unclipped val="true"/>
@@ -6013,10 +6041,12 @@
 								<DefaultState val="Off"/>
 								<State name="On">
 									<When type="Option" colorblind="True"/>
-									<Action type="SetProperty" ColorAdjustMode="Colorize" LightAdjustColor="fea74a" DarkAdjustColor="4c2904"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$this" LightAdjustColor="fea74a"/>
+									<Action type="SetProperty" frame="$this" DarkAdjustColor="4c2904"/>
 								</State>
 								<State name="Off">
-									<Action type="SetProperty" ColorAdjustMode="None"/>
+									<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
 								</State>
 							</StateGroup>
 							<Unclipped val="true"/>

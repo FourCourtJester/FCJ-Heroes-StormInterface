@@ -260,11 +260,13 @@ line = 2                     # units, along each stripe's bottom
 rect = [640, 196, 640, 78]   # Blizzard's; untouched, may shift on y
 kind = "ui"
 [element.system_alert]
-rect = [634.5, 284, 648, 720] # Blizzard's "X paused the game. (N remaining)" box (SystemAlertPanel),
+rect = [634.5, 197, 648, 720] # Blizzard's "X paused the game. (N remaining)" box (SystemAlertPanel),
                              # its size (720 x 800 units); moved off the logo plate and clock (it sat
-                             # at y 40) to under the centre banners, 10 below, centred on our 958.5
-                             # (user, 2026-10-24: custom games, "99% of esports"). The panel is a
-                             # list: the box takes its text's height from the top
+                             # at y 40) to 40 px under the clock (user, 2026-10-25: under the centre
+                             # banners, 284, was "waaay too far down"), centred on our 958.5 (user,
+                             # 2026-10-24: custom games, "99% of esports"). The panel is a list: the
+                             # box takes its text's height from the top, drawn 3 px in (284 drew
+                             # 287-392), so 197 puts the box at 200
 kind = "demand"
 
 # Bottom centre

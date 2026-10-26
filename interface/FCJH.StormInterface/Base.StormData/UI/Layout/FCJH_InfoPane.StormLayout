@@ -65,6 +65,8 @@
 					<RenderPriority val="450"/>
 					<AcceptsMouse val="false"/>
 				</Frame>
+				<!-- red's half in colour-blind mode: recoloured as red's plates (gen.py
+				     colour_blind_plate: [colour_blind] red, fea74a / 4c2904) -->
 				<Frame type="Image" name="FCJH_GridRedA">
 					<Anchor side="Top"   relative="$parent/FCJH_GridBlueA" pos="Max" offset="0"/>
 					<Anchor side="Left"  relative="$parent" pos="Min" offset="0"/>
@@ -75,6 +77,18 @@
 					<WrapUV val="True"/>
 					<RenderPriority val="450"/>
 					<AcceptsMouse val="false"/>
+					<StateGroup name="FCJH_ColourBlind">
+						<DefaultState val="Off"/>
+						<State name="On">
+							<When type="Option" colorblind="True"/>
+							<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+							<Action type="SetProperty" frame="$this" LightAdjustColor="fea74a"/>
+							<Action type="SetProperty" frame="$this" DarkAdjustColor="4c2904"/>
+						</State>
+						<State name="Off">
+							<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+						</State>
+					</StateGroup>
 				</Frame>
 				<Frame type="Image" name="FCJH_GridRedB">
 					<Anchor side="Top"   relative="$parent/FCJH_GridRedA" pos="Min" offset="0"/>
@@ -86,6 +100,18 @@
 					<WrapUV val="True"/>
 					<RenderPriority val="450"/>
 					<AcceptsMouse val="false"/>
+					<StateGroup name="FCJH_ColourBlind">
+						<DefaultState val="Off"/>
+						<State name="On">
+							<When type="Option" colorblind="True"/>
+							<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+							<Action type="SetProperty" frame="$this" LightAdjustColor="fea74a"/>
+							<Action type="SetProperty" frame="$this" DarkAdjustColor="4c2904"/>
+						</State>
+						<State name="Off">
+							<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+						</State>
+					</StateGroup>
 				</Frame>
 				<!-- the line from the portrait to talent 1 across the quest column (user, 2026-10-16):
 				     one texel column of the grid's own line (120, inside its dash) stretched over the
@@ -113,6 +139,18 @@
 					<WrapUV val="True"/>
 					<RenderPriority val="450"/>
 					<AcceptsMouse val="false"/>
+					<StateGroup name="FCJH_ColourBlind">
+						<DefaultState val="Off"/>
+						<State name="On">
+							<When type="Option" colorblind="True"/>
+							<Action type="SetProperty" frame="$this" ColorAdjustMode="Colorize"/>
+							<Action type="SetProperty" frame="$this" LightAdjustColor="fea74a"/>
+							<Action type="SetProperty" frame="$this" DarkAdjustColor="4c2904"/>
+						</State>
+						<State name="Off">
+							<Action type="SetProperty" frame="$this" ColorAdjustMode="None"/>
+						</State>
+					</StateGroup>
 				</Frame>
 			</Frame>
 			<Frame type="HeroTalentsPanel" name="FCJH_TalentPanel" template="TalentsOverviewPanel/CleanTalentsPanelTemplate">
