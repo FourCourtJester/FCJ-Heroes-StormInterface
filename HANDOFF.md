@@ -574,9 +574,9 @@ bleeds thru", Screenshot 21_14_55):** a heal pop-up, stretched to a plate's widt
 side of the "RED TEAM WINS!" splash. Blizzard hides its plates for the splash; the pop-ups at
 the GameUI root don't follow. `FCJH_HudWatch` now has two states ahead of the keys' - Blizzard's
 `GameOverSplash` (`$GameUI/UIContainer`) or `EndOfGameAwardsPanel` showing - that hide all
-`FCJH_HideLower` hides. **Untested in game**; watch that nothing is hidden at load (the
-splash has no `Visible` of its own in the extract, so the engine must hide it until the end),
-and that a rewind from the end brings the HUD back.
+`FCJH_HideLower` hides. **Seen in game (user, 2026-10-25): "no stretched green at end game
+either"**, and nothing hidden at load. Not yet seen: a rewind from the end bringing the HUD
+back.
 
 **Rexxar's whole-plate death: done for 1.1, seen in game (vod, 2026-10-24; user, 2026-10-25: "looks fine now").** A dead
 Rexxar greyed his slice and Misha's (Colorize white / alpha 180) while every other dead

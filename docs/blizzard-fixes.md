@@ -40,7 +40,7 @@ detail.
   - a heal pop-up when a hero drops to 25%.
 - Blizzard's talent-lead flame, brought over from the player HUD.
 - The HUD keys taking our own pieces with them: Ctrl+E hides everything, Ctrl+Shift+E all
-  but the top plate, nothing left floating (seen; the game's end built, not yet seen).
+  but the top plate, nothing left floating, the game's end too (seen).
 - Colour-blind mode reaching our art: the top plate, red's plates, health bars and talent
   squares, the inspect card's edge, the info panes (partly seen).
 - Four info panes, one at a time, on Ctrl+1-4.
@@ -607,8 +607,7 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
     splash and nothing else, so a heal pop-up fired as the units went was left stretched
     over the splash. `GameOverSplash` or the awards panel showing now hides the same as the
     keys.
-  - **Status:** both keys seen in game and good (user, 2026-10-25); the game's end built, not
-    yet seen.
+  - **Status:** both keys and the game's end seen in game and good (user, 2026-10-25) - DONE.
 
 - **Colour-blind mode stopped at Blizzard's own pieces** (user, 2026-10-24, from a vod;
   built 2026-10-25). Blizzard's colour-blind option (`<When type="Option" colorblind="True"/>`)
