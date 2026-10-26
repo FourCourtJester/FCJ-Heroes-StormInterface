@@ -603,6 +603,10 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
     (`FCJH_HudWatch`, a state group reading both toggles).
   - Ctrl+E is also gamehotkeys' `ReplayRestart`, but Blizzard's layout key has always won it
     in the observer (`validate.py` `LAYOUT_OVER_HOTKEY`).
+  - The game's end too (user, 2026-10-25): Blizzard hides its own plates for the victory
+    splash and nothing else, so a heal pop-up fired as the units went was left stretched
+    over the splash. `GameOverSplash` or the awards panel showing now hides the same as the
+    keys.
   - **Status:** built, not yet seen in game.
 
 - **Colour-blind mode stopped at Blizzard's own pieces** (user, 2026-10-24, from a vod;

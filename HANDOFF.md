@@ -569,6 +569,14 @@ always beaten. **Untested in game**, and three things to watch: that the watcher
 re-evaluate on a ToggleControl's Visible; that the Shown state's reverse-play at load is a
 no-op; and a zero-hero team's XP bar (RowPacker's Heroes0 sets Alpha 0, which the Fade's
 reverse restores to 255 after a hide and show - rare).
+**The game's end, the same bug (user, 2026-10-25: "after the game, a health notification
+bleeds thru", Screenshot 21_14_55):** a heal pop-up, stretched to a plate's width, over red's
+side of the "RED TEAM WINS!" splash. Blizzard hides its plates for the splash; the pop-ups at
+the GameUI root don't follow. `FCJH_HudWatch` now has two states ahead of the keys' - Blizzard's
+`GameOverSplash` (`$GameUI/UIContainer`) or `EndOfGameAwardsPanel` showing - that hide all
+`FCJH_HideLower` hides. **Untested in game**; watch that nothing is hidden at load (the
+splash has no `Visible` of its own in the extract, so the engine must hide it until the end),
+and that a rewind from the end brings the HUD back.
 
 **Rexxar's whole-plate death: done for 1.1, seen in game (vod, 2026-10-24; user, 2026-10-25: "looks fine now").** A dead
 Rexxar greyed his slice and Misha's (Colorize white / alpha 180) while every other dead
