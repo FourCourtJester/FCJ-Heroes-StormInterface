@@ -2,7 +2,8 @@
 # builds the interface from that commit, compressed (tools/pack.py --release), and publishes
 # it as the release's one file. Generation and validation need Blizzard's UI extract
 # (references/, not in the repo), so they run locally before tagging; here the committed
-# interface/ is packed as it is.
+# interface/ is packed as it is. Its notes are docs/releases/v<version>.md, committed with
+# the bump: interface changes only, never the studio's (the release ships the interface alone).
 name: Release
 
 on:
@@ -30,6 +31,7 @@ jobs:
             exit 1
           fi
           echo "VERSION=$version" >> "$GITHUB_ENV"
+          test -f "docs/releases/v$version.md" || { echo "no docs/releases/v$version.md"; exit 1; }
 
       - name: Build
         run: python tools/pack.py --release --no-generate --no-validate
@@ -39,4 +41,4 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release create "$GITHUB_REF_NAME" "dist/v$VERSION/FCJ v$VERSION.StormInterface" \
-            --title "FCJ v$VERSION" --generate-notes
+            --title "FCJ v$VERSION" --notes-file "docs/releases/v$VERSION.md"

@@ -20,7 +20,7 @@ fails if either has gone stale. Nothing has to be kept in step by hand.
 
 | Channel | Serves | Nothing else |
 |---|---|---|
-| **GitHub Releases** | The `.StormInterface` file, one per version tag `v<version>` (`.github/workflows/release.yml`) | No studio build, no docs |
+| **GitHub Releases** | The `.StormInterface` file, one per version tag `v<version>` (`.github/workflows/release.yml`) | No studio build, no docs, no studio notes |
 | **GitHub Pages** | The OBS studio: the operator's board and its browser sources (`.github/workflows/pages.yml`, on pushes to `main` that touch `studio/`) | No interface file |
 | **An API folder** *(planned)* | Markdown for other developers, read in the repo | - |
 
@@ -44,8 +44,10 @@ After a rebuild, leave the replay and reopen it — no client restart needed.
 To move or resize anything, change its pixels in `layout.toml` and rebuild.
 
 `python tools/pack.py --release` builds the shipping file, `dist/v<version>/FCJ v<version>.StormInterface`,
-from committed sources only. To release, bump `[meta] version` in `layout.toml`, commit, and
-push the tag `v<version>`; the Release workflow builds and publishes it.
+from committed sources only. To release, bump `[meta] version` in `layout.toml`, write
+`docs/releases/v<version>.md` - the interface's changes only, never the studio's - commit, and
+push the tag `v<version>`; the Release workflow builds and publishes it with those notes, and
+fails if the file is missing.
 
 The generator's own guide is [generator.md](generator.md).
 

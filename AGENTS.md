@@ -46,8 +46,8 @@ so rather than claiming something works on air.
 
 ## Releasing
 
-Bump `[meta] version` in `layout.toml`, regenerate, commit, then push the tag
-`v<version>`. `.github/workflows/release.yml` checks the tag matches the version, packs the
+Bump `[meta] version` in `layout.toml`, write `docs/releases/v<version>.md` (the interface's
+changes only - never the studio's), regenerate, commit, then push the tag `v<version>`. `.github/workflows/release.yml` checks the tag matches the version, packs the
 committed `interface/` and publishes the release.
 
 ## Logs to keep
