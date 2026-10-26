@@ -494,7 +494,7 @@ and Ko-fi).
 Observer** ("I think") - README's install step 3 and docs/development.md say so; correct both
 if not.
 
-**The XP Contribution pane - built, to see in game (user, 2026-10-25: "Let's look at that
+**The XP Contribution pane - built, seen in game and good (user, 2026-10-25) (user, 2026-10-25: "Let's look at that
 experience breakdown panel, and see if we can re-arrange our info panes to accomodate").**
 Still four panes on the same keys: Ctrl+3 is now HEALING · SIEGE DAMAGE · EXPERIENCE (by hero:
 SELF, HEALING, SIEGE DMG, XP), and Ctrl+4 is XP CONTRIBUTION, the only pane by team, not by
@@ -526,7 +526,7 @@ anchors - and where a neutral unit's card goes (left, as now, unless told otherw
 mirror against the replay box (top-right) and red's map alerts, which the replay box was
 once narrowed to clear; the `--check`/validate overlap checks should catch a collision.
 
-**Done for 1.0.3, to see in game: the pause box moved (user, 2026-10-24: "if we can move
+**Done for 1.0.3, seen in game and good (user, 2026-10-25): the pause box moved (user, 2026-10-24: "if we can move
 the 'paused the game' notification, we should"; custom games are "99% of esports").** Blizzard's
 `SystemAlertPanel` ("X paused the game. (N remaining)", a purple box) sat at the top centre,
 over the logo plate and clock. Now 40 px under the clock (box top 200), centred on 958.5:
@@ -551,7 +551,7 @@ so the user's idea - Ctrl+E (or our own **Ctrl+Shift+E**) hiding only *some* of 
 is a matter of placing them. Taking over Ctrl+E itself needs a test that an interface can
 rebind it; Ctrl+Shift+E needs validate's free-key check.
 
-**Done for 1.1, to see in game: the HUD keys are ours (user, 2026-10-25: "ctrl-shift-e our
+**Done for 1.1, seen in game and good (user, 2026-10-25: "Ctrl/shift+e is good"): the HUD keys are ours (user, 2026-10-25: "ctrl-shift-e our
 'hide all but the top plate'", "ctrl-e still hides everything (including the top plate)",
 "ensure that those icons dont bleed thru, or anything else really").** Blizzard's
 `ToggleHUD`/`ToggleFullHUD` lose their keys (FCJH_Replay) and ours take them

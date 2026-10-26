@@ -40,7 +40,7 @@ detail.
   - a heal pop-up when a hero drops to 25%.
 - Blizzard's talent-lead flame, brought over from the player HUD.
 - The HUD keys taking our own pieces with them: Ctrl+E hides everything, Ctrl+Shift+E all
-  but the top plate, nothing left floating (built, not yet seen).
+  but the top plate, nothing left floating (seen; the game's end built, not yet seen).
 - Colour-blind mode reaching our art: the top plate, red's plates, health bars and talent
   squares, the inspect card's edge, the info panes (partly seen).
 - Four info panes, one at a time, on Ctrl+1-4.
@@ -305,7 +305,7 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
   gets to see them.
 - **Ours:** an info pane of its own on Ctrl+4, the only one by team: each team's band with its
   total, a row per source, Blizzard's words and numbers (`xp_pane`, gen.py).
-- **Status:** built, not yet seen in game.
+- **Status:** seen in game and good (user, 2026-10-25) - DONE.
 
 ### Hogger's rage drawn as mana
 - **Blizzard's:** the target panel's per-hero resource colours (`HeroResourceStates`,
@@ -437,7 +437,7 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
 - **Ours:** Blizzard's own box, moved to 40 px under the clock, centred on our 958.5
   (`layout.toml` `[element.system_alert]`, `FCJH_TopBar`). Its look is untouched.
 - **Status:** seen in game under the centre banners (2026-10-25, a paused replay), too low;
-  moved up, not yet seen there.
+  moved up, seen there and good (user, 2026-10-25) - DONE.
 
 ## Made for observers
 
@@ -607,7 +607,8 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
     splash and nothing else, so a heal pop-up fired as the units went was left stretched
     over the splash. `GameOverSplash` or the awards panel showing now hides the same as the
     keys.
-  - **Status:** built, not yet seen in game.
+  - **Status:** both keys seen in game and good (user, 2026-10-25); the game's end built, not
+    yet seen.
 
 - **Colour-blind mode stopped at Blizzard's own pieces** (user, 2026-10-24, from a vod;
   built 2026-10-25). Blizzard's colour-blind option (`<When type="Option" colorblind="True"/>`)
