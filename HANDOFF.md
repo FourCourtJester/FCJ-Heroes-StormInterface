@@ -682,7 +682,7 @@ bars. A before-and-after pair of screenshots first, to get more opinions.
 **Inspect on both sides:** one request so far (the 1.0.3 note above); screenshots from a dev
 build before deciding.
 
-**Alterac Pass: the keeps' shields on the core bars - built, to see in game (user,
+**Alterac Pass: the keeps' shields on the core bars - built, seen in game and fine (user,
 2026-10-24/25).** Each keep alive is one `WarchiefAlive` stack on its team's core (coregeneraldata
 `WarchiefAlive`, armour 20 a stack, max 3; the map's script adds one per keep at the gates and
 takes one off as each keep's town hall falls) - so the count is keeps **alive**, 3 -> 0, not
@@ -704,7 +704,7 @@ which grows from the bar's inner end). Now a row from the bar's **outer end**, a
 `av_shield_overlap`. **Seen (user, 2026-10-25): clear of the number, but tight inside the
 border** ("move them outside the bar borders, or ... more margin"): now a row **past** the bar's
 outer end, outside its chrome line, the one nearest the bar (3) emptying first (`av_shield_out`
-replaces `av_shield_in`). To see again. **Banners don't move when the core bar shows** - by design
+replaces `av_shield_in`). **Seen in game and fine (user, 2026-10-25) - DONE.** **Banners don't move when the core bar shows** - by design
 (user, 2026-10-09, docs/maps.md): every banner's bar sits `[map_alerts] above_core` over where
 the core bar's top is, shown or not; the Alterac screenshot has the 10 px. **But Alterac's
 cavalry is now the exception** (user, 2026-10-25: "much more low hanging artwork than the
