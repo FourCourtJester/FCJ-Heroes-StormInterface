@@ -487,7 +487,8 @@ with this"), now **1.1.0** (user, 2026-10-26: "let's merge, tag v1.1.0, and get 
 deployed"): PR #3, `matchup-slab` - the studio's matchup slab, Logos panel, scores laurels and
 colour-blind toggle, with the interface's colour-blind mode (Ahli's colours), our HUD keys,
 the game's end hiding the pop-ups, the pause box, the XP Contribution pane and Alterac's
-shields and cavalry banner, all seen in game; a patch
+shields and cavalry banner, all seen in game - merged as 1bd3cde, tagged `v1.1.0` (local
+`--release` 1,391,094 bytes), Pages redeployed from the merge; a patch
 number per fix batch, each one a `pack.py --release` from a commit. Work is on `main` (its
 history is python-toolchain's, which stays as it was). GitHub:
 https://github.com/FourCourtJester/FCJ-Heroes-StormInterface (public; pushed in
