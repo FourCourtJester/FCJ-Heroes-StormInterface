@@ -694,7 +694,11 @@ which grows from the bar's inner end). Now a row from the bar's **outer end**, a
 (20 px boxes), clear of the number: `[team_core] av_shield`, `av_shield_in`,
 `av_shield_overlap`. To see again. **Banners don't move when the core bar shows** - by design
 (user, 2026-10-09, docs/maps.md): every banner's bar sits `[map_alerts] above_core` over where
-the core bar's top is, shown or not; the Alterac screenshot has the 10 px.
+the core bar's top is, shown or not; the Alterac screenshot has the 10 px. **But Alterac's
+cavalry is now the exception** (user, 2026-10-25: "much more low hanging artwork than the
+others"): its hexagon and blades hung 20 px under its bracket on red (over the core bar's number),
+its hammers 25 px on blue (21_06_31), so both spots are placed by the deeper, 25 px higher, the
+bars level (`maps.AV_BELOW`). To see on both sides, with and without the core bar.
 
 **The official release filename (user, 2026-10-21): `FCJ v<version>.StormInterface`**
 (pack.py's `RELEASE_NAME`, from 1.0.1; 1.0.0 shipped as `FCJH.StormInterface`), in Ahli's

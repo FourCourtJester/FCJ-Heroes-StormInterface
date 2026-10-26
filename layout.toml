@@ -667,7 +667,8 @@ foot_dark = 0.45             # its brightness
 # A team's map alerts: stacked on its side of the minimap, on its plates' inner end (tools/maps.py).
 [map_alerts]
 above_core = 10              # px from the core bar's top up to every banner's bar's bottom: one place
-                             # on every map, whether the core bar shows or not (user, 2026-10-09:
+                             # on every map, whether the core bar shows or not - Alterac's cavalry
+                             # excepted, up to its lowest art (maps.AV_BELOW; user, 2026-10-25) (user, 2026-10-09:
                              # the core bar is taller than any pop-up; what hangs under a bar is
                              # ignored - the banners draw over the pop-ups). Across, the art starts
                              # (red) or ends (blue) where its team's row does: [hero_row] red_left,

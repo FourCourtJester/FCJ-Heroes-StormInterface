@@ -743,7 +743,8 @@ def constants_layout(cfg):
             const(name("map", "weaver", team, lane, "x"), u(x) - ox, f"{round(x)} px across")
             const(name("map", "weaver", team, lane, "b"), u(b) - oy, f"{round(b)} px down")
     # Alterac Pass's banner sits at Blizzard's place above the minimap, and its cavalry jumps to
-    # the winning team's spot (maps.av_carrier): the jump, from that place to the spot
+    # the winning team's spot (maps.av_carrier): the jump, from that place to the spot. The one
+    # banner placed by its lowest art, not its bar (maps.AV_BELOW): its blades clear the core bar
     lines.append("\t<!-- Alterac Pass's cavalry: its carrier's move from Blizzard's place to each spot (maps.av_carrier) -->")
     across, up = maps.av_neutral(u(panel_nudges(cfg).get("alterac_pass", 0)))
     # (from its own minimap, moved across: maps.on_minimap took that back off `across`)
@@ -754,7 +755,7 @@ def constants_layout(cfg):
         (_, cy, _, _), _ = rects(cfg)[f"{team}_core"]
         art = maps.ALERT_ART["AV"]
         spot = ((u(row["red_left"]) + art.reach if team == "red" else u(row["blue_right"]) + art.tail) - ox,
-                u(cy - above) + art.bar_up - oy)
+                u(cy - above) + art.bar_up - art.below - oy)
         const(name("map", "av", team, "dx"), round(spot[0] - neutral[0]))
         const(name("map", "av", team, "dy"), round(spot[1] - neutral[1]))
     for kind, what in maps.unmeasured().items():
