@@ -935,7 +935,8 @@ frames, so it wants stepping rather than tweening) and `storm_ui_home_nexus_fx_t
 
 The game's colour-blind option turns the interface's red a peachy orange and its blue a touch
 cyan (HANDOFF, the in-game half). A browser source can't read the game's options, so the
-operator says: **Tournament → Colour-blind colours** (user, 2026-10-25). Off is the resting
+operator says: **Tournament → Colour-blind mode** (user, 2026-10-25; renamed from "colours"
+on 2026-10-26, since it switches the art as well). Off is the resting
 state.
 
 - **The colours are the interface's own.** `tools/obs.py` writes
