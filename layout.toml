@@ -688,6 +688,14 @@ track_alpha = 220
 frame_width = 3              # the line, px: 3 like the rest (user, 2026-10-16); its bottom line then
                              # lies exactly on the row frame's top line ([row_frame], 2 out of the XP bar)
 frame_inside = 1             # of which over the bar's edges (the rest outside)
+# Alterac Pass's keep shields on the core bar (Blizzard's three pips, FCJH_TopBar FCJH_AVShield1-3):
+# in a row from the bar's outer end, clear of its number, which grows from the inner end (user,
+# 2026-10-25: centred on the bar they covered it, "put the three shields on the outer edge").
+# The innermost (3) empties first, as Blizzard's.
+av_shield = 20               # each shield's box, px (Blizzard's 28 units = 25 px; the art ~80% of it)
+av_shield_in = 6             # the outer shield's box from the bar's outer end, px: clear of the slant
+                             # at the shield's widest (the slant runs ~13 px in down the bar)
+av_shield_overlap = 3        # the boxes overlap: the art's own margins, ~2 px between the shields
 
 # A chrome frame round each team's row (user, 2026-10-16): one line round the plates and the XP
 # bar together (the XP bar's top down to the plates' bottom, both slanted ends), not the core

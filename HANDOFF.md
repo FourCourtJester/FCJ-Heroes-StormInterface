@@ -682,14 +682,19 @@ reversed. Blizzard draws it as three shield pips on the core's bar (alteracmecha
 own `SourceHas{3,2,1,0}WarchiefsAlive` validators), but only on the player HUD's core bars and
 the in-world core, never the observer's top-panel cores. Ours, in FCJH_TopBar.StormLayout
 (hand-written): Blizzard's template copied as `FCJH_AVShieldTemplate`, three on each core frame
-(`FCJH_AVShield1-3`), centred on the bar, shield 3 at the inner end (toward the minimap)
-emptying first, the insides in the core's UnitStatusColor Primary / PrimaryLight as Blizzard's;
+(`FCJH_AVShield1-3`), shield 3 at the inner end (toward the minimap) emptying first, the insides in the core's UnitStatusColor Primary / PrimaryLight as Blizzard's;
 `FCJH_AVKeeps` (a UnitStatusValidatorAnimElement on the four validators) shows them and sets the
 insides. Hidden until a count state fires, which only happens on Alterac - Ahli 0.75's way in an
 every-map interface (its `CoreOverviewTemplate`, `undo="false"` on the show). **Check:** the
 shields on Alterac only and no errors on other maps; they empty one by one as keeps fall, on the
-right team; the colour against our bar (Primary may not be quite our `[team_core]`); sitting
-over the bar's middle; before the gates open the count may read 0 (three empty shields).
+right team; the colour against our bar (Primary may not be quite our `[team_core]`); before
+the gates open the count may read 0 (three empty shields).
+**Seen in game (user, 2026-10-25): centred, they covered the core's number** ("27290 / 27290",
+which grows from the bar's inner end). Now a row from the bar's **outer end**, a little smaller
+(20 px boxes), clear of the number: `[team_core] av_shield`, `av_shield_in`,
+`av_shield_overlap`. To see again. **Banners don't move when the core bar shows** - by design
+(user, 2026-10-09, docs/maps.md): every banner's bar sits `[map_alerts] above_core` over where
+the core bar's top is, shown or not; the Alterac screenshot has the 10 px.
 
 **The official release filename (user, 2026-10-21): `FCJ v<version>.StormInterface`**
 (pack.py's `RELEASE_NAME`, from 1.0.1; 1.0.0 shipped as `FCJH.StormInterface`), in Ahli's

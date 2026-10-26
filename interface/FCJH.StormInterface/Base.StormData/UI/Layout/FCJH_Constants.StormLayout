@@ -378,6 +378,12 @@
 	<Constant name="FCJH_RED_CORE_FRAME_L" val="258"/>
 	<Constant name="FCJH_CORE_CHROME_TL" val="-2"/>
 	<Constant name="FCJH_CORE_CHROME_BR" val="2"/>
+	<Constant name="FCJH_AV_SHIELD" val="22"/>  <!-- Alterac's keep shields: each one's box -->
+	<Constant name="FCJH_AV_SHIELD_INSIDE" val="13"/>  <!-- its inside, as Blizzard's 16 in 28 -->
+	<Constant name="FCJH_AV_SHIELD_IN_BLUE" val="7"/>  <!-- the outer shield from the bar's outer end -->
+	<Constant name="FCJH_AV_SHIELD_IN_RED" val="-7"/>
+	<Constant name="FCJH_AV_SHIELD_STEP_BLUE" val="-3"/>  <!-- each next shield on from the last -->
+	<Constant name="FCJH_AV_SHIELD_STEP_RED" val="3"/>
 
 	<!-- Map alerts on the plates ([map_alerts]): from the screen's bottom-centre, as the plates -->
 	<Constant name="FCJH_MAP_ALERT_RED_R" val="730"/>
