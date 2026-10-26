@@ -570,7 +570,7 @@ re-evaluate on a ToggleControl's Visible; that the Shown state's reverse-play at
 no-op; and a zero-hero team's XP bar (RowPacker's Heroes0 sets Alpha 0, which the Fade's
 reverse restores to 255 after a hide and show - rare).
 
-**Rexxar's whole-plate death: built for 1.1, to see in game (vod, 2026-10-24).** A dead
+**Rexxar's whole-plate death: done for 1.1, seen in game (vod, 2026-10-24; user, 2026-10-25: "looks fine now").** A dead
 Rexxar greyed his slice and Misha's (Colorize white / alpha 180) while every other dead
 portrait sank into Blizzard's dark shadow, so he read "faded", not dead. That shadow is the
 game's code on the observer portrait (no layout state draws it); measured off the vod, the
