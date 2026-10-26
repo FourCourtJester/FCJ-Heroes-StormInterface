@@ -4,6 +4,7 @@ import { useVelcroValue } from '@single-studio/core'
 import { Image, Scene, Tally, Toggle, Variable } from '@single-studio/core/source'
 
 import { COLOUR_BLIND, useColourBlind } from '../components/colourBlind'
+import { useMark } from '../components/marks'
 import spec from '../generated/topbar.json'
 import './game.css'
 import pipBlue from '../generated/pip_blue.svg'
@@ -255,6 +256,11 @@ function useReady(wait = 600) {
 }
 
 export default function Game() {
+  // Which picture each hole takes. The two corners are wide holes and the hexagon is not, so
+  // the hexagon asks for the square one first - see components/marks.js.
+  const hexMark = useMark('tournament', 'square')
+  const leftMark = useMark('broadcaster')
+  const rightMark = useMark('tournament')
   const ready = useReady()
   const cb = useColourBlind()
   return (
@@ -269,20 +275,35 @@ export default function Game() {
         {SIDES.map((side) => (
           <Band key={side} side={side} />
         ))}
-        {/* The SQUARE tournament logo, in Blizzard's hexagon. Square because the hole is a
-            hexagon: an oblong mark in it is either squashed or cropped, which is why the
-            wide one is a separate picture rather than the same one reused (user,
-            2026-10-23). `cover` here, not `contain` - the clip path is the hexagon, so the
-            mark is meant to fill it and be cut by it. */}
-        <Toggle name="tournament" className="fcjh-layer">
+        {/* The tournament logo in Blizzard's hexagon - THE ONE HOLE THAT WANTS THE SQUARE
+            picture, and so the one place the waterfall runs the other way (user,
+            2026-10-26). An oblong mark here is squashed or cropped, which is why the wide
+            one exists as a separate picture at all.
+
+            `cover` for a square mark: the clip path is the hexagon, so the mark is meant to
+            fill it and be cut by it. `contain` for a wide one, which only gets here when a
+            show has no square mark at all - letterboxed and small is a poor fit, cropping a
+            wordmark to its middle third is a broken one. */}
+        <Toggle name="show.hex" className="fcjh-layer">
           <div className="fcjh-event" style={at(boxes.event)}>
-            <Image name="event.logo" alt="" fit="cover" />
+            {hexMark ? (
+              <Image
+                name={hexMark.name}
+                alt=""
+                fit={hexMark.shape === 'square' ? 'cover' : 'contain'}
+              />
+            ) : null}
           </div>
         </Toggle>
 
         {/* THE TWO CORNER MARKS: the broadcaster's top left, the tournament's WIDE logo top
-            right (user, 2026-10-23). Each on its own switch, so a show can run any
-            combination of the three marks without one implying another.
+            right (user, 2026-10-23). The switches are the show-wide ones - the same paths the
+            matchup, the draft and the scores read - so a mark taken off is off everywhere
+            (user, 2026-10-26).
+
+            These two keep a `Toggle` wrapper where the lockups do not: a corner box is alone
+            against its screen edge, so nothing moves when it empties, and the wrapper is what
+            fades it rather than cutting it.
 
             The room is what a best of 7 leaves - its outermost pip reaches further than
             anything else on the band - so obs.py derives the box from the pip row instead of
@@ -293,14 +314,14 @@ export default function Game() {
             Worth knowing: Blizzard's own kill feed also lives top left. These sit inside the
             band's height to stay clear of it, but the two have not been seen together in a
             live game yet. */}
-        <Toggle name="corner.broadcaster" className="fcjh-layer">
+        <Toggle name="show.broadcaster" className="fcjh-layer">
           <div className="fcjh-corner left" style={at(boxes.corner.left)}>
-            <Image name="event.broadcaster" alt="" fit="contain" />
+            {leftMark ? <Image name={leftMark.name} alt="" fit="contain" /> : null}
           </div>
         </Toggle>
-        <Toggle name="corner.tournament" className="fcjh-layer">
+        <Toggle name="show.tournament" className="fcjh-layer">
           <div className="fcjh-corner right" style={at(boxes.corner.right)}>
-            <Image name="event.logo_wide" alt="" fit="contain" />
+            {rightMark ? <Image name={rightMark.name} alt="" fit="contain" /> : null}
           </div>
         </Toggle>
       </div>

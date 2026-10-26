@@ -4,6 +4,7 @@ import { Transition, useVelcroValue } from '@single-studio/core'
 import { Image, Scene, Variable } from '@single-studio/core/source'
 
 import { COLOUR_BLIND_VARS, useColourBlind } from '../components/colourBlind'
+import { useVisibleMark } from '../components/marks'
 import spec from '../generated/scores.json'
 import './scores.css'
 
@@ -142,10 +143,9 @@ function Winner() {
  * own. With neither, the whole band goes.
  */
 function Marks() {
-  const broadcaster = useVelcroValue('variables.event.broadcaster')
-  const wide = useVelcroValue('variables.event.logo_wide')
-  const square = useVelcroValue('variables.event.logo')
-  const logo = wide ? 'event.logo_wide' : square ? 'event.logo' : ''
+  // both marks are wide holes here: a mark box is 297 x 65 (components/marks.js)
+  const broadcaster = useVisibleMark('broadcaster')
+  const logo = useVisibleMark('tournament')
   const both = Boolean(broadcaster && logo)
 
   if (!broadcaster && !logo) return null
@@ -156,13 +156,13 @@ function Marks() {
       <div className="fcjh-scores-marks-in">
         {broadcaster ? (
           <div className="fcjh-scores-mark left">
-            <Image name="event.broadcaster" alt="" fit="contain" />
+            <Image name={broadcaster.name} alt="" fit="contain" />
           </div>
         ) : null}
         {both ? <span className="fcjh-scores-x">&times;</span> : null}
         {logo ? (
           <div className="fcjh-scores-mark right">
-            <Image name={logo} alt="" fit="contain" />
+            <Image name={logo.name} alt="" fit="contain" />
           </div>
         ) : null}
       </div>

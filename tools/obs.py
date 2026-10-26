@@ -134,19 +134,37 @@ def frame_line_svg(b, side):
 '''
 
 
-def matchup_frame_svg(b):
-    """A team's container on the standby screen's band, to nine-slice: a long bar coming to a
-    point at each end, at HALF its height.
+def frame_cap(b, h):
+    """The nine-slice cap a frame of this height needs: the point, and room for the rim inside
+    it. DERIVED, never authored - a cap is not a size you pick, it is a consequence of the
+    height and the lean (user, 2026-10-26).
+
+    Authoring it by hand is what broke the band: `name_cap` was scaled like a size through
+    three 10% passes and walked under the point it was supposed to hold, so the slice cut the
+    diagonal and the leftover slope smeared down the bar."""
+    return math.ceil(b.lean * h / 2 + 2 * b.rim_w)
+
+
+def matchup_frame_svg(b, h, cap):
+    """A team's container, to nine-slice: a long bar coming to a point at each end, at HALF
+    its height.
+
+    ONE FILE PER HEIGHT, because the cap does not scale the way the shape does. A
+    border-image cap is painted 1:1 horizontally (the painted width and the slice are the
+    same number) but squashed vertically to the element's height, so art cut for one height
+    draws a BLUNTER point in anything shorter: the clip-path's angle is atan(lean) at every
+    size, the chrome's is atan(2 * point / h), and the two agree only at the height the art
+    was cut for. Every consumer gets its own file, so they agree everywhere (user, 2026-10-26:
+    "we're trying to create a system here so we can author this matchup band on a number of
+    pages").
 
     One file serves both teams, because the shape is symmetrical and the rim is chrome on
     either side - what makes a container blue or red is the wash and the lattice behind it,
-    which are CSS. The game band's plates carry a team line along their bottom edge; this one
-    doesn't, because at this size the wash says it already.
+    which are CSS. The game band's plates carry a team line along their bottom edge; these
+    don't, because at this size the wash says it already.
 
     The caps hold the two points and the middle is a straight run of rim, top and bottom, so
     the bar stretches to whatever a team's name needs without the points shearing."""
-    sb = b.sb
-    h, cap = sb["team_h"], sb["team_cap"]
     pt = b.lean * h / 2                                   # how far in a point starts
     assert cap >= pt + 2 * b.rim_w, (
         f"a {cap} px cap cannot hold a {pt:.2f} px point and a {b.rim_w} px rim")
@@ -798,6 +816,17 @@ def hex_chrome_svg(b, h):
 '''
 
 
+def _plate_h(b):
+    """The slab composition's name plate: the hexagon badge's own vertical edge, so the two
+    meet exactly. A pointy-top hexagon runs straight down each side between h/4 and 3h/4."""
+    return b.cfg["matchup"]["badge"] / 2
+
+
+def _unit_h(b):
+    """The container composition's height."""
+    return b.cfg["matchup"]["unit_h"]
+
+
 def matchup_spec(b):
     """The matchup slab: the centred composition, worked out from [matchup].
 
@@ -884,9 +913,10 @@ def matchup_spec(b):
                  "point": r2(b.lean * name_h / 2),
                  "text": m["name_text"], "lines": m["name_lines"],
                  "min": m["name_min"], "pad": m["name_pad"],
-                 "frame": "frame_matchup.svg",
-                 "nine_slice": {"width": 2 * m["name_cap"] + MID, "caps": m["name_cap"],
-                                "stretch": MID}},
+                 # its own art, cut at this plate's height, with the cap that height needs
+                 "frame": "frame_plate.svg",
+                 "nine_slice": {"width": 2 * frame_cap(b, name_h) + MID,
+                                "caps": frame_cap(b, name_h), "stretch": MID}},
         # ONE CONTAINER A SIDE, the alternative arrangement being explored. Everything that
         # team is lives inside one shape: score, logo, name. It keeps the name plate's own
         # edges - flat outside, pointed in - so nothing protrudes from it, which is the whole
@@ -917,7 +947,9 @@ def matchup_spec(b):
                  "name": m["name_w"],
                  # its own VS, on its own centre line - the only piece the two compositions
                  # would otherwise have had to share
-                 "vs": box(cx - vs_w / 2, cy_unit - vs_h / 2, vs_w, vs_h)},
+                 "vs": box(cx - vs_w / 2, cy_unit - vs_h / 2, vs_w, vs_h),
+                 # ...and its own frame, cut at the container's height
+                 "frame": "frame_unit.svg", "cap": frame_cap(b, m["unit_h"])},
         "vs": {"box": box(cx - vs_w / 2, cy - vs_h / 2, vs_w, vs_h), "text": m["vs_text"],
                # its own file, at its own size: scaling the badge's would scale the rim with
                # it, and a 116px hexagon beside a 184px one would wear a visibly thinner one
@@ -982,9 +1014,15 @@ def files(cfg):
         Path("event_mask.png"): event_mask_png(b),
         Path("guide.png"): guide_png(b),
         Path("topbar.json"): enc(json.dumps(spec(b), indent=2, ensure_ascii=False) + "\n"),
-        # the standby screen's band: one frame for both containers (see matchup_frame_svg).
-        # Its message board and logo arms are plain smoke and want no art at all
-        Path("frame_matchup.svg"): enc(matchup_frame_svg(b)),
+        # THE BAND'S FRAMES, one per height it is drawn at - see matchup_frame_svg for why a
+        # cap cannot simply be stretched. The standby band's message board and logo arms are
+        # plain smoke and want no art at all.
+        Path("frame_matchup.svg"): enc(matchup_frame_svg(
+            b, b.sb["team_h"], b.sb["team_cap"])),
+        Path("frame_plate.svg"): enc(matchup_frame_svg(
+            b, _plate_h(b), frame_cap(b, _plate_h(b)))),
+        Path("frame_unit.svg"): enc(matchup_frame_svg(
+            b, _unit_h(b), frame_cap(b, _unit_h(b)))),
         Path("standby.json"): enc(json.dumps(standby_spec(b), indent=2, ensure_ascii=False) + "\n"),
         # the webcam frames: a border and an OBS mask per side, and the places for both
         Path("webcam.json"): enc(json.dumps(webcam_spec(b), indent=2, ensure_ascii=False) + "\n"),

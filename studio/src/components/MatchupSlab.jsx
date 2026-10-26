@@ -4,6 +4,7 @@ import { useVelcroValue } from '@single-studio/core'
 import { Image, Variable } from '@single-studio/core/source'
 
 import { COLOUR_BLIND_VARS, useColourBlind } from './colourBlind'
+import { useVisibleMark } from './marks'
 import spec from '../generated/matchup.json'
 import './matchupslab.css'
 
@@ -58,8 +59,12 @@ export const SLAB_VARS = {
   '--name-text': `${name.text}px`,
   '--name-lines': name.lines,
   '--name-pad': `${name.pad}px`,
+  // both caps are DERIVED from their plate's height (tools/obs.py frame_cap), never
+  // authored - a cap that is picked by hand drifts off the art it slices
   '--name-cap': `${name.nine_slice.caps}px`,
   '--name-cap-n': name.nine_slice.caps,
+  '--unit-cap': `${unit.cap}px`,
+  '--unit-cap-n': unit.cap,
   '--vs-text': `${vs.text}px`,
   '--kicker-text': `${kicker.text}px`,
   '--lockup-x': `${lockup.x_text}px`,
@@ -215,10 +220,9 @@ function Team({ side }) {
  * the same waterfall the rest of the kit uses.
  */
 function Lockup({ where }) {
-  const broadcaster = useVelcroValue('variables.event.broadcaster')
-  const wide = useVelcroValue('variables.event.logo_wide')
-  const square = useVelcroValue('variables.event.logo')
-  const logo = wide ? 'event.logo_wide' : square ? 'event.logo' : ''
+  // wide holes, both of them (components/marks.js)
+  const broadcaster = useVisibleMark('broadcaster')
+  const logo = useVisibleMark('tournament')
   const both = Boolean(broadcaster && logo)
 
   if (!broadcaster && !logo) return null
@@ -226,13 +230,13 @@ function Lockup({ where }) {
     <div className={`fcjh-slab-lockup${both ? '' : ' lone'}`} style={at(where)}>
       {broadcaster ? (
         <div className="fcjh-slab-mark left">
-          <Image name="event.broadcaster" alt="" fit="contain" />
+          <Image name={broadcaster.name} alt="" fit="contain" />
         </div>
       ) : null}
       {both ? <span className="fcjh-slab-x">&times;</span> : null}
       {logo ? (
         <div className="fcjh-slab-mark right">
-          <Image name={logo} alt="" fit="contain" />
+          <Image name={logo.name} alt="" fit="contain" />
         </div>
       ) : null}
     </div>

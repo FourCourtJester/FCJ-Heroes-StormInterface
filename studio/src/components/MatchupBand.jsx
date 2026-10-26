@@ -1,7 +1,7 @@
-import { useVelcroValue } from '@single-studio/core'
 import { Image, Variable } from '@single-studio/core/source'
 
 import { COLOUR_BLIND_VARS, useColourBlind } from './colourBlind'
+import { useVisibleMark } from './marks'
 import spec from '../generated/standby.json'
 import './matchup.css'
 
@@ -59,10 +59,9 @@ export const BAND_VARS = {
 const SIDES = ['blue', 'red']
 
 export default function MatchupBand({ plate: plateContent }) {
-  // wide, then square, then nothing - see the arms below
-  const wide = useVelcroValue('variables.event.logo_wide')
-  const square = useVelcroValue('variables.event.logo')
-  const tournament = wide ? 'event.logo_wide' : square ? 'event.logo' : ''
+  // wide, then square, then nothing - both arms are wide holes (components/marks.js)
+  const broadcaster = useVisibleMark('broadcaster')
+  const tournament = useVisibleMark('tournament')
   // colour-blind mode: the team colours, and (matchup.css) the lattices, in the game's pair
   const cb = useColourBlind()
 
@@ -85,15 +84,15 @@ export default function MatchupBand({ plate: plateContent }) {
           arrangement with the game's logo replaced (user, 2026-10-22). Either can be left
           unset, and Image then draws nothing at all rather than an empty box.
 
-          The tournament's is the WIDE one where there is one: wide, then square, then
-          nothing (user, 2026-10-23), the same waterfall the scores screen uses. An arm is
-          576 x 103, which is the shape the wide logo is drawn for; the square one belongs in
-          Blizzard's hexagon and is only the fallback here. */}
+          Both take the WIDE picture where there is one: wide, then square, then nothing,
+          the same waterfall every wide hole uses. An arm is 576 x 103, which is the shape
+          the wide logo is drawn for; the square one belongs in Blizzard's hexagon and is
+          only the fallback here. */}
       <div className="fcjh-matchup-arm left">
-        <Image name="event.broadcaster" alt="" fit="contain" />
+        {broadcaster ? <Image name={broadcaster.name} alt="" fit="contain" /> : null}
       </div>
       <div className="fcjh-matchup-arm right">
-        {tournament ? <Image name={tournament} alt="" fit="contain" /> : null}
+        {tournament ? <Image name={tournament.name} alt="" fit="contain" /> : null}
       </div>
     </div>
   )

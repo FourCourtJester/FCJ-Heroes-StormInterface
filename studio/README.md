@@ -47,7 +47,7 @@ them. See `docs/obs-topbar-handoff.md` in the repo root.
 | `src/sources/Draft.jsx` | The browser source over Blizzard's ban-and-pick screen (`#/source/draft`): the band with the series on it; its cover is still to come |
 | `src/sources/Scores.jsx` | The browser source over Blizzard's end-of-game screen (`#/source/scores`): a backdrop with a hole where the stats panel is |
 | `src/components/MatchupBand.jsx` | The band itself — worn by Matchup and Draft, and the only place its numbers are read |
-| `src/control/panels/` | The operator's board — teams (with the series and each side's wins), bans, tournament, and options (what the broadcast shows at all) |
+| `src/control/panels/` | The operator's board — standby, webcams, teams (with the series and each side's wins), tournament, logos, and help |
 | `src/generated/` | Written by `tools/obs.py`. Do not edit |
 | `src/generated/guide.png` | Every place as an orange outline: add it as an Image source while lining a scene up, then hide it |
 
@@ -112,24 +112,89 @@ Where things actually are, since the help text has to be right about it: the gea
 holds **Collaborate, Image store, Browser sources, Keyboard shortcuts, Plugins, Start over**.
 The magnifier on any image picker opens the same library.
 
-### Two tournament logos
+### The Logos panel — two pictures each, four in all
 
-`event.logo` is **square**, `event.logo_wide` is **oblong**, and they are two pictures rather
-than one reused because the holes are different shapes (user, 2026-10-23):
+The broadcaster and the tournament each get a **square** and a **wide** picture, on a panel of
+their own (user, 2026-10-26). They were three pickers at the bottom of Tournament; they are
+not tournament settings, they are the show's furniture, and four of them would have pushed the
+tab fields out of their own panel.
 
-| | |
+| slot | drawn into |
 |---|---|
-| `event.logo` (square) | Blizzard's hexagon in the game scene. The hole is a hexagon, so an oblong mark is squashed or cropped |
-| `event.logo_wide` (wide) | the game scene's top right corner, 204 x 50 — a square mark would waste it |
-| `event.broadcaster` | the game scene's top left corner, and the standby band's left arm |
+| `event.broadcaster` (square) | — |
+| `event.broadcaster_wide` | the game scene's top left corner, the standby band's left arm, the lockups |
+| `event.logo` (square) | Blizzard's hexagon in the game scene |
+| `event.logo_wide` | the top right corner (204 x 50), the band's right arm, the lockups |
 
-Which one a graphic wants is a property of the hole, not of the show, so the board asks for
-both once and each scene takes the one that fits.
+**The waterfall runs both ways, and that is the part to read.** "Wide, then square, then
+nothing" is right for a wide hole — a 204 x 50 corner, a 576 x 103 arm, a 297 x 65 lockup mark
+— and exactly wrong for Blizzard's hexagon, where a wide mark is the one thing that cannot be
+made to work. So each hole says which shape it is drawn for and takes the other only as a
+fallback. `components/marks.js` is the whole of it:
+
+```js
+const hexMark = useMark('tournament', 'square')   // the hexagon wants the square one
+const rightMark = useMark('tournament')            // a corner wants the wide one
+```
+
+A fallback is a worse fit, never a broken one. `useMark` hands back the `shape` it found, so
+the hexagon can **fill** with a square mark and merely **contain** a wide one — letterboxed
+and small, rather than a wordmark cropped to its middle third, which is what `cover` did to it
+before.
+
+**Neither picture is required.** An organisation with only one still gets a sensible result
+everywhere; one with both gets the right one everywhere. A mark left unset is drawn as nothing
+at all, not as an empty lit container.
+
+#### Three switches, and they reach every source
+
+| switch | takes off |
+|---|---|
+| `show.broadcaster` | every broadcaster mark — game bar corner, band arm, both lockups |
+| `show.tournament` | every tournament mark, in the same four places |
+| `show.hex` | Blizzard's hexagon, and nothing else |
+
+One switch per mark rather than one per scene (user, 2026-10-26: "the same toggle will edit
+matchup/draft/game/scoreboard"), so a broadcaster taken off is off everywhere rather than in
+the one scene somebody remembered. They replace `corner.broadcaster`, `corner.tournament` and
+the old `tournament`, which were per-corner; **the old toggle state does not carry over**, so
+all three start off.
+
+**The hexagon is not governed by the tournament switch.** It is the game's own furniture
+wearing our mark rather than one of our overlays, so it keeps a switch to itself and is
+unaffected by taking the tournament's marks off the broadcast (user, 2026-10-26: "Hex is
+special since it's its own thing").
+
+**The graphics close up around what is left.** Take the broadcaster off a lockup and the
+tournament's mark centres, taking the x with it; take both off and there is no lockup at all.
+
+That last part is why the switch is read in `marks.js` rather than by wrapping each mark in a
+`Toggle`. The framework's source `Toggle` **keeps its children mounted while it is off**,
+hidden rather than removed — deliberately, so a graphic laid out around it does not move as it
+comes and goes. Exactly right for a fixed box, exactly wrong for a pair of marks meeting at an
+x. So anything whose layout answers to a mark calls `useVisibleMark` and renders nothing,
+while the two corners and the hexagon keep their `Toggle` wrapper, where the box is alone
+against a screen edge and the fade is worth having.
+
+**Why slots rather than detecting the aspect ratio.** Measuring an uploaded image was the
+obvious alternative and it is worse in three ways. The asset store keeps no dimensions — an
+entry is `{key, kind, hash, name, size, type, addedAt}` — so it means loading and measuring,
+which is async, and the scores screen measures and animates on mount. Plenty of logos are
+square files with a wide wordmark in transparent padding, so the file's ratio lies and only
+reading the alpha bounding box would tell the truth — which a canvas cannot do for an image
+added by URL from another host. And detection picks the treatment, never the artwork: it
+cannot make a wide mark work in a hexagon. A slot is the organisation saying which picture is
+which, once, which is the thing detection was trying to guess.
+
+**Tall marks are not a case yet.** A 1:3 crest and a 1:1 badge want different holes, so one
+would want its own slot rather than being squeezed into "square" — but nobody has asked, and a
+slot nobody fills is a slot everybody wonders about.
 
 ### The corner marks
 
-The broadcaster's top left, the tournament's wide logo top right, each on its own switch so
-a show can run any combination of the three marks.
+The broadcaster's top left, the tournament's wide logo top right. They are on the show-wide
+switches above — `show.broadcaster` and `show.tournament` — rather than switches of their own,
+so a mark is not on in one scene and off in another.
 
 **The box is derived from the pips, not typed.** A best of 7 is the longest series, so its
 outermost pip reaches further along the band than anything else; the mark starts
@@ -177,24 +242,58 @@ The anchor is measured on the **fullest** case, with the lockup under the row. W
 band rides higher rather than sliding down to fill the gap — deliberately, because a band that
 repositions itself when somebody adds or clears a tournament logo would move on air.
 
-**It has come down 20%,** in two passes of ten (user, 2026-10-26, the second after comparing it
-with the draft screen's band). The container is **603 x 113** a side, from 746 x 140. The
-**tournament marks are exempt** from the second pass — "tournament logos dont have to adhere
-to this" — so `lockup`, `lockup_mark`, `lockup_pad` and `lockup_x` are the sizes they were and
-the marks hold their presence while the band tightens around them.
+**It has come down to 73% of its drawn size,** in three passes of ten (user, 2026-10-26). The
+container is **542 x 102** a side, from 746 x 140.
 
-**A third pass was made and reverted**, and it is worth knowing why before anyone tries again.
-`name_cap` looks like a size but is a **slice index** into `frame_matchup.svg` — fixed art,
-108 x 130, generated from `[standby] team_h`, whose point reaches 35.1px in from each end.
-Scaling it 44 → 40 → 36 → 32 walked it under that, so the slice cut through the diagonal and
-the leftover slope was stretched down the whole bar: the silhouette stayed right, because the
-`clip-path` is computed honestly from `lean x height`, while the chrome on top of it came
-apart (user, 2026-10-26: "The drawing is completely wrong now"). Nothing caught it because
-`matchup_frame_svg` asserts its cap holds its point using the **standby's** numbers, which
-never moved.
+The **tournament marks are exempt** from the second pass onward — "tournament logos dont have
+to adhere to this" — so `lockup`, `lockup_mark`, `lockup_pad` and `lockup_x` are the sizes
+they were and the marks hold their presence while the band tightens around them. They now span
+about 673px against a 468px kicker, which is the exemption doing what it was asked to.
 
-Going smaller again means generating the matchup's frame from `[matchup]`'s own numbers first,
-so the art shrinks with the band and the cap can scale with it.
+The third pass was made once before and reverted, because the nine-slice cap was authored and
+could not follow the band down — see the section below. With the frames generated per plate it
+is an ordinary number change, and the only thing that does not scale with the band now is the
+rim: it is a true `rim_width` at every height, so it reads a little heavier here (2.45% of the
+height) than it did at 140 (1.79%).
+
+### The frames are generated per plate
+
+**A plate's chrome is cut for that plate's height, and its nine-slice cap is derived, never
+authored.** This is what lets the band be sized freely — and be authored on more than one page
+(user, 2026-10-26: "we're trying to create a system here").
+
+Two things draw a plate's point, and they do not scale alike:
+
+- the **silhouette** is a `clip-path`, run `lean x h/2` over rise `h/2`. Both follow the
+  height, so the angle is `atan(lean)` — **28.37°, at every size**;
+- the **chrome** is a `border-image` cap, painted **1:1 horizontally** (the painted width and
+  the slice are the same number) and **squashed vertically** to the element. Its point keeps
+  the art's fixed run while its rise becomes `h/2`, so its angle is `atan(2 x point / h)` —
+  which equals the clip's only at the height the art was cut for.
+
+So one shared file cannot serve plates of different heights. `tools/obs.py` cuts one per
+consumer and `frame_cap` derives each cap as `point + 2 x rim_width`, rounded up:
+
+| file | height | cap |
+|---|---|---|
+| `frame_matchup.svg` | `[standby] team_h` — the original band | 44 |
+| `frame_plate.svg` | the slab composition's name plate | 30 |
+| `frame_unit.svg` | the container composition | 36 |
+
+Add a plate at a new height and it wants its own file and its own derived cap; that is the
+whole of the system. **Nothing about a cap belongs in `layout.toml`.**
+
+**Why this exists.** The cap used to be `name_cap`, authored by hand, and it was the one
+number in `[matchup]` that could not be scaled. Three 10% passes walked it 44 → 40 → 36 → 32,
+under the 35.1px point it was slicing, so the slice cut the diagonal and the leftover slope
+was stretched the length of the bar (user, 2026-10-26: "The drawing is completely wrong now").
+The silhouette stayed right the entire time — which is exactly why it read as the plates
+changing rather than a number being wrong. Nothing caught it because `matchup_frame_svg`
+asserted its cap held its point using the **standby's** numbers, which never moved.
+
+`tools/test_obs.py` now checks every committed frame: cut for the height it serves, cap
+holding its point with room for the rim, and the spec handing out the cap the art was cut
+with. It has been confirmed to fail on the original bug rather than merely passing.
 
 Both spellings of a query work — `/?band=unit#/source/matchup` or
 `#/source/matchup?band=unit`. The app is hash-routed, so `location.search` is empty in the

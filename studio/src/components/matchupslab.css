@@ -86,13 +86,18 @@
     linear-gradient(180deg, var(--base-top), var(--base-bottom));
 }
 
-/* the chrome, over the wash and inside the same clip */
+/* the chrome, over the wash and inside the same clip.
+
+   ITS OWN ART, cut at this plate's height. A border-image cap is painted 1:1 horizontally
+   and squashed vertically to the element, so art cut for another height draws a blunter
+   point than the clip-path beneath it - and the clip's angle is atan(lean) at every size.
+   One file per height is what keeps the chrome on the silhouette (user, 2026-10-26). */
 .fcjh-slab-name::after {
   content: '';
   position: absolute;
   inset: 0;
   border: 0 solid transparent;
-  border-image-source: url('../generated/frame_matchup.svg');
+  border-image-source: url('../generated/frame_plate.svg');
   border-image-slice: 0 var(--name-cap-n) fill;
   border-image-repeat: stretch;
   pointer-events: none;
@@ -372,13 +377,14 @@
   position: absolute;
   inset: 0;
   border: 0 solid transparent;
-  border-image-source: url('../generated/frame_matchup.svg');
-  border-image-slice: 0 var(--name-cap-n) fill;
+  /* the container's own art, at the container's height - see .fcjh-slab-name::after */
+  border-image-source: url('../generated/frame_unit.svg');
+  border-image-slice: 0 var(--unit-cap-n) fill;
   border-image-repeat: stretch;
   pointer-events: none;
 }
 .fcjh-unit::after {
-  border-image-width: 0 var(--name-cap);
+  border-image-width: 0 var(--unit-cap);
 }
 
 /* ── the score, at the outer end ─────────────────────────────────────────────────────── */
