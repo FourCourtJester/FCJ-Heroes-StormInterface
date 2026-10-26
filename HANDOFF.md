@@ -575,8 +575,8 @@ side of the "RED TEAM WINS!" splash. Blizzard hides its plates for the splash; t
 the GameUI root don't follow. `FCJH_HudWatch` now has two states ahead of the keys' - Blizzard's
 `GameOverSplash` (`$GameUI/UIContainer`) or `EndOfGameAwardsPanel` showing - that hide all
 `FCJH_HideLower` hides. **Seen in game (user, 2026-10-25): "no stretched green at end game
-either"**, and nothing hidden at load. Not yet seen: a rewind from the end bringing the HUD
-back.
+either"**, and nothing hidden at load; a rewind from the end brings the HUD back (user,
+2026-10-25). What else a rewind breaks is under "Also open" below.
 
 **Rexxar's whole-plate death: done for 1.1, seen in game (vod, 2026-10-24; user, 2026-10-25: "looks fine now").** A dead
 Rexxar greyed his slice and Misha's (Colorize white / alpha 180) while every other dead
@@ -1032,6 +1032,10 @@ at load.
 - Also open: rewinding a replay upsets pop-ups and latches (final polish - the product
   is for live games); rows with fewer than five heroes (a 3v3 or 1v1 replay). Both IGNORED
   (user, 2026-10-19).
+  **Seen on a rewind from the victory splash (user, 2026-10-25; a consideration, nothing to
+  do now):** the HUD comes back, but the one-time gates don't reset - the core HP bars and
+  Alterac's keep shields stay as they were - and on Alterac no banners come after it: neither
+  the camp-capture alerts nor the cavalry's mechanic banner when it's done.
 - **To do (user, 2026-10-16):** a pass on the panes and the inspect card to make them
   Heroes-like (Blizzard's menu panel: blur, translucency, chrome border), and ~~a colour, font
   and art pass on the numbers panes~~ (DONE 2026-10-23, 78644dc) (docs/polish-research.md,
