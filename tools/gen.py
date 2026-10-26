@@ -676,16 +676,16 @@ def constants_layout(cfg):
     # the core bar's chrome line ([team_core] frame_width), anchored to Blizzard's bar this far out
     const(name("core", "chrome", "tl"), -core_chrome_outset(cfg))
     const(name("core", "chrome", "br"), core_chrome_outset(cfg))
-    # Alterac Pass's keep shields ([team_core] av_shield*, FCJH_TopBar): a row from the bar's
-    # outer end, blue's chained rightward from its left end, red's leftward from its right end
+    # Alterac Pass's keep shields ([team_core] av_shield*, FCJH_TopBar): a row past the bar's
+    # outer end, blue's chained leftward from its left end, red's rightward from its right end
     core = cfg["team_core"]
-    size, inset, overlap = u(core["av_shield"]), u(core["av_shield_in"]), u(core["av_shield_overlap"])
+    size, out, overlap = u(core["av_shield"]), u(core["av_shield_out"]), u(core["av_shield_overlap"])
     const(name("av", "shield"), size, "Alterac's keep shields: each one's box")
     const(name("av", "shield", "inside"), round(size * 16 / 28), "its inside, as Blizzard's 16 in 28")
-    const(name("av", "shield", "in", "blue"), inset, "the outer shield from the bar's outer end")
-    const(name("av", "shield", "in", "red"), -inset)
-    const(name("av", "shield", "step", "blue"), -overlap, "each next shield on from the last")
-    const(name("av", "shield", "step", "red"), overlap)
+    const(name("av", "shield", "out", "blue"), -out, "the nearest shield past the bar's outer end")
+    const(name("av", "shield", "out", "red"), out)
+    const(name("av", "shield", "step", "blue"), overlap, "each next shield on from the last")
+    const(name("av", "shield", "step", "red"), -overlap)
 
     # A team's map alerts (FCJH_Maps, tools/maps.py), stacked either side of the map at the
     # rows' inner ends: on the XP bar where the core bar lives, stepping up onto the core bar

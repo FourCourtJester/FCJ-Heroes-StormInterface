@@ -627,7 +627,8 @@ For comparison: Blizzard's default UI tints none of its top bar or panes in colo
 **Seen again (user, 2026-10-25): health bars and inspect squares orange, the toggle on/off
 mid-game clean, Alterac's banners too; the inspect's orange "muted" beside blue, Ctrl+1 still
 red.** So, round 3:
-- **Ahli's colours, not Blizzard's** (user: "If the standard for the last decade was Ahli's
+- **Ahli's colours, not Blizzard's** (seen in game and good, with Ctrl+1's squares, user
+  2026-10-25; user: "If the standard for the last decade was Ahli's
   values, then we should accept them"). His textures keep saturation and brightness and turn
   the hue ~30 deg: red to orange (15-30), blue to cyan (176-197). `[colour_blind]` is now his
   heroic border's `ff672b` / `23defc`, and blue joins `plates`: blue's plate art, squares,
@@ -692,7 +693,10 @@ the gates open the count may read 0 (three empty shields).
 **Seen in game (user, 2026-10-25): centred, they covered the core's number** ("27290 / 27290",
 which grows from the bar's inner end). Now a row from the bar's **outer end**, a little smaller
 (20 px boxes), clear of the number: `[team_core] av_shield`, `av_shield_in`,
-`av_shield_overlap`. To see again. **Banners don't move when the core bar shows** - by design
+`av_shield_overlap`. **Seen (user, 2026-10-25): clear of the number, but tight inside the
+border** ("move them outside the bar borders, or ... more margin"): now a row **past** the bar's
+outer end, outside its chrome line, the one nearest the bar (3) emptying first (`av_shield_out`
+replaces `av_shield_in`). To see again. **Banners don't move when the core bar shows** - by design
 (user, 2026-10-09, docs/maps.md): every banner's bar sits `[map_alerts] above_core` over where
 the core bar's top is, shown or not; the Alterac screenshot has the 10 px. **But Alterac's
 cavalry is now the exception** (user, 2026-10-25: "much more low hanging artwork than the

@@ -289,18 +289,18 @@
 							     HUD's core bars. Each keep alive is a WarchiefAlive stack on the core (armour);
 							     the map's own validators count them, the insides empty as keeps fall (3 -> 0).
 							     Hidden until a count state fires, which only happens on Alterac (Ahli 0.75's
-							     way: the validators and art exist only there). In a row from the bar's outer
-							     end, clear of the number ([team_core] av_shield*; centred, they covered it). -->
+							     way: the validators and art exist only there). In a row past the bar's outer
+							     end, outside its border ([team_core] av_shield*; centred, they covered the number). -->
 							<Frame type="UnitStatusColor" name="FCJH_TeamColour"><Anchor relative="$parent"/><ColorStyle val="Primary"/></Frame>
 							<Frame type="UnitStatusColor" name="FCJH_TeamColourLight"><Anchor relative="$parent"/><ColorStyle val="PrimaryLight"/></Frame>
-							<Frame type="Frame" name="FCJH_AVShield1" template="FCJH_TopBar/FCJH_AVShieldTemplate">
-								<Anchor side="Left" relative="$parent/HealthBar" pos="Min" offset="#FCJH_AV_SHIELD_IN_BLUE"/>
+							<Frame type="Frame" name="FCJH_AVShield3" template="FCJH_TopBar/FCJH_AVShieldTemplate">
+								<Anchor side="Right" relative="$parent/HealthBar" pos="Min" offset="#FCJH_AV_SHIELD_OUT_BLUE"/>
 							</Frame>
 							<Frame type="Frame" name="FCJH_AVShield2" template="FCJH_TopBar/FCJH_AVShieldTemplate">
-								<Anchor side="Left" relative="$parent/FCJH_AVShield1" pos="Max" offset="#FCJH_AV_SHIELD_STEP_BLUE"/>
+								<Anchor side="Right" relative="$parent/FCJH_AVShield3" pos="Min" offset="#FCJH_AV_SHIELD_STEP_BLUE"/>
 							</Frame>
-							<Frame type="Frame" name="FCJH_AVShield3" template="FCJH_TopBar/FCJH_AVShieldTemplate">
-								<Anchor side="Left" relative="$parent/FCJH_AVShield2" pos="Max" offset="#FCJH_AV_SHIELD_STEP_BLUE"/>
+							<Frame type="Frame" name="FCJH_AVShield1" template="FCJH_TopBar/FCJH_AVShieldTemplate">
+								<Anchor side="Right" relative="$parent/FCJH_AVShield2" pos="Min" offset="#FCJH_AV_SHIELD_STEP_BLUE"/>
 							</Frame>
 							<Frame type="UnitStatusValidatorAnimElement" name="FCJH_AVKeeps">
 								<Anchor relative="$parent"/>
@@ -405,18 +405,18 @@
 							     HUD's core bars. Each keep alive is a WarchiefAlive stack on the core (armour);
 							     the map's own validators count them, the insides empty as keeps fall (3 -> 0).
 							     Hidden until a count state fires, which only happens on Alterac (Ahli 0.75's
-							     way: the validators and art exist only there). In a row from the bar's outer
-							     end, clear of the number ([team_core] av_shield*; centred, they covered it). -->
+							     way: the validators and art exist only there). In a row past the bar's outer
+							     end, outside its border ([team_core] av_shield*; centred, they covered the number). -->
 							<Frame type="UnitStatusColor" name="FCJH_TeamColour"><Anchor relative="$parent"/><ColorStyle val="Primary"/></Frame>
 							<Frame type="UnitStatusColor" name="FCJH_TeamColourLight"><Anchor relative="$parent"/><ColorStyle val="PrimaryLight"/></Frame>
-							<Frame type="Frame" name="FCJH_AVShield1" template="FCJH_TopBar/FCJH_AVShieldTemplate">
-								<Anchor side="Right" relative="$parent/HealthBar" pos="Max" offset="#FCJH_AV_SHIELD_IN_RED"/>
+							<Frame type="Frame" name="FCJH_AVShield3" template="FCJH_TopBar/FCJH_AVShieldTemplate">
+								<Anchor side="Left" relative="$parent/HealthBar" pos="Max" offset="#FCJH_AV_SHIELD_OUT_RED"/>
 							</Frame>
 							<Frame type="Frame" name="FCJH_AVShield2" template="FCJH_TopBar/FCJH_AVShieldTemplate">
-								<Anchor side="Right" relative="$parent/FCJH_AVShield1" pos="Min" offset="#FCJH_AV_SHIELD_STEP_RED"/>
+								<Anchor side="Left" relative="$parent/FCJH_AVShield3" pos="Max" offset="#FCJH_AV_SHIELD_STEP_RED"/>
 							</Frame>
-							<Frame type="Frame" name="FCJH_AVShield3" template="FCJH_TopBar/FCJH_AVShieldTemplate">
-								<Anchor side="Right" relative="$parent/FCJH_AVShield2" pos="Min" offset="#FCJH_AV_SHIELD_STEP_RED"/>
+							<Frame type="Frame" name="FCJH_AVShield1" template="FCJH_TopBar/FCJH_AVShieldTemplate">
+								<Anchor side="Left" relative="$parent/FCJH_AVShield2" pos="Max" offset="#FCJH_AV_SHIELD_STEP_RED"/>
 							</Frame>
 							<Frame type="UnitStatusValidatorAnimElement" name="FCJH_AVKeeps">
 								<Anchor relative="$parent"/>
