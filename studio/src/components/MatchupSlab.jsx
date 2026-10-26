@@ -3,6 +3,7 @@ import { useLayoutEffect, useRef } from 'react'
 import { useVelcroValue } from '@single-studio/core'
 import { Image, Variable } from '@single-studio/core/source'
 
+import { COLOUR_BLIND_VARS, useColourBlind } from './colourBlind'
 import spec from '../generated/matchup.json'
 import './matchupslab.css'
 
@@ -239,8 +240,11 @@ function Lockup() {
 }
 
 export default function MatchupSlab({ unit: asUnit = false }) {
+  // colour-blind mode: the team washes in the game's pair, as the band's
+  const cb = useColourBlind()
+
   return (
-    <div className={`fcjh-slab${asUnit ? ' as-unit' : ''}`}>
+    <div className={`fcjh-slab${asUnit ? ' as-unit' : ''}`} style={cb ? COLOUR_BLIND_VARS : undefined}>
       {/* The same smoke as the kicker, behind the row: it fills the gaps the plates and
           the VS leave, so the three read as one shape instead of three near each other.
 

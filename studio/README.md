@@ -837,9 +837,11 @@ state.
   A scene root wears `cb` while it is on, and its stylesheet swaps the URLs; the washes and
   glows come from `COLOUR_BLIND` / `COLOUR_BLIND_VARS` in place of the spec's colours.
 - **Covered:** the game bar (plates, lattices, team lines, pips), the matchup band on standby
-  and the draft, the scores screen's winner glow. **Not yet:** the matchup slab
-  (`MatchupSlab.jsx`), and the board's own lit Winner buttons (`fcjh-won`), which are the
-  operator's, not the broadcast's.
+  and the draft, the matchup slab in both its shapes (`?band=slab`, `?band=unit`; its root
+  takes `COLOUR_BLIND_VARS`, 2026-10-25), the scores screen's winner glow. Browser-checked
+  with the toggle on: every one reads the pair from `colourblind.json` (92 216 236 /
+  231 131 92). Webcams and standby carry no team colour. **Left out on purpose:** the board's
+  own lit Winner buttons (`fcjh-won`), which are the operator's, not the broadcast's.
 
 ## If the board comes up unstyled
 
