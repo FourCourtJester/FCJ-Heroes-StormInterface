@@ -221,9 +221,17 @@ The matchup, replacing the bottom band — agreed as the direction on 2026-10-25
 | `?band=slab` | hexagon badge + name plate a side |
 | `?band=original` | the bottom band this replaced |
 
-The switches are scaffolding, not features; the losers get deleted when it is settled. Note
-that the original band is now the one that needs asking for — `?band=original`, where it used
-to be what you got by leaving the flag off.
+**SETTLED, 2026-10-26: the container is the matchup band.** "We're done with the matchup
+band, so any unit vs slab convo is resolved" (user). `?band=slab` is a dead end kept only for
+reference and can go whenever someone is tidying; the sections below on what was wrong with
+the earlier shapes are history now rather than open questions.
+
+One thing to know before deleting: **`?band=original` cannot simply go with it.** `Draft.jsx`
+imports `MatchupBand` directly rather than through this switch, so retiring the original band
+is a change to the draft screen as well, not a deletion here.
+
+Note that the original band is now the one that needs asking for — `?band=original`, where it
+used to be what you got by leaving the flag off.
 
 ### Where it sits, and how big
 
@@ -512,7 +520,10 @@ that stayed.
 
 The badge is **1.83x the name plate's height** as drawn. Taller starts to overpower it.
 
-### Still to do on it
+### Still to do on it — moot
+
+**This list is about the slab, which lost.** Kept for the reasoning, not as work:
+
 
 - **The badge is sized against a placeholder square.** Most team crests are round or
   near-round, and a circle uses that inscribed square far better than a hard-edged square
@@ -663,7 +674,12 @@ band.) Its message board carries
 the **series** — "Best of 5", from `series.pips` — rather than a message: standby says what is
 coming up, and here there is no question of that, the teams are on screen drafting.
 
-### The cover is still to come
+### The cover — scrapped
+
+**Dropped on 2026-10-26: "users can use their own covers."** Two attempts are in the history
+and both were wrong the same way; the reasoning is kept below because it is the useful part,
+not because a third attempt is planned.
+
 
 Blizzard's draft screen puts the lobby chat and the tails of its player columns across the
 bottom, which a broadcast does not want on air. Two attempts at hiding them are in the
@@ -1031,9 +1047,9 @@ entry 3 has both in full.
 
 ## Still open
 
-- **NEXT: the Game scene's logos** — "some slight adjustments to make for Game regarding
-  logos" (user, 2026-10-23), left for last and never spelled out. Needs the user to say what
-  the adjustment is.
+- ~~**The Game scene's logos**~~ — settled 2026-10-26: the adjustment was a dark backing
+  behind a mark in Blizzard's hexagon, for logos with a transparent ground. Built; see "the
+  tournament's logo" in `game.css`.
 - **Testing**: the user tests in OBS at 1080p, the broadcast's settings; Claude checks
   in a browser at 1920 x 1080. **Claude's image library is empty**, and that is not a
   neutral fixture: anything whose width comes from library content - every `<select>` of
@@ -1041,17 +1057,18 @@ entry 3 has both in full.
   2026-10-23 that the user saw at once; one realistic key (35 characters) was the whole
   difference. Inject one before trusting a width measurement. See
   `docs/single-studio-reports.md` entry 2.
-- **Ban portraits**: the pickers offer whatever is in the studio's image library, and
-  nothing fills that library with hero portraits — 90-odd of them — yet.
-- **The ban tiles' size and shape** were never settled: slanted as they are, or square.
-- **The font**: Saira Semi Condensed, fetched from Google Fonts at load. Blizzard's own
-  is a cut of Metronic Pro, whose licence would need checking for broadcast use.
-- **The standby screen's slides** come from the image library's `slides/` group, and the
-  library is empty bar two throwaway gradients added while testing (`slides/one`,
-  `slides/two` — delete them from the library when real art arrives). Dropping a folder
-  named `slides` on the library files the lot in one motion. Note that **files are added
-  on the machine running OBS**: a picture dropped on a producer's laptop has bytes that
-  live only there, and the slideshow leaves those out rather than playing a blank.
+- ~~**Ban portraits**~~ and ~~**the ban tiles' shape**~~ — **scrapped until a further design
+  pass** (user, 2026-10-26). The panel was already shelved; it stays shelved, and nobody
+  needs to go looking for 90-odd hero portraits in the meantime.
+- ~~**The font**~~ — settled 2026-10-26: Saira Semi Condensed stays. It is fetched from
+  Google Fonts at load. (Blizzard's own is a cut of Metronic Pro, whose licence would need
+  checking if that ever changes.)
+- ~~**The standby screen's slides**~~ — settled 2026-10-26: the arrangement is right as it
+  is. They come from the image library's `slides/` group; dropping a folder named `slides`
+  on the library files the lot in one motion. Two throwaway test gradients are still in
+  there (`slides/one`, `slides/two`) — delete them when real art arrives. Note that **files
+  are added on the machine running OBS**: a picture dropped on a producer's laptop has bytes
+  that live only there, and the slideshow leaves those out rather than playing a blank.
 
 - **The scores screen's tile electricity** is the one piece of its brief not built; see
   "What stands around the hole" above for the frames already extracted for it.

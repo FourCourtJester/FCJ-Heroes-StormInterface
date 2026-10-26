@@ -133,7 +133,7 @@
       rgb(var(--team-rgb) / 0.58) 80%,
       rgb(var(--team-rgb) / 0.95) 100%
     ),
-    linear-gradient(#3b2d52, #2a1f3c);
+    linear-gradient(var(--base-top), var(--base-bottom));
 }
 
 /* each plate is its own parallelogram, cut the way the band used to cut the pair of them */
@@ -442,6 +442,22 @@
    showing round the edges. */
 .fcjh-event {
   clip-path: var(--event-clip);
+}
+
+/* A DARK BACKING BEHIND THE MARK (user, 2026-10-26: "we need a somewhat dark purple
+   background for logos that go in the hex that have transparencies"). Plenty of logos are
+   PNGs with a transparent ground, and with nothing behind them the hexagon showed whatever
+   the game was doing under the overlay - which moves, and which no mark reads against.
+
+   The kit's own purple, the same pair the plates are filled with, so the hexagon belongs to
+   the bar rather than looking like a patch laid on it. The `clip-path` above cuts it to the
+   hexagon, so this needs no shape of its own.
+
+   ONLY WHEN THERE IS A MARK. `.has-mark` is set by Game.jsx, because the box is still here
+   when the tournament has no logo and an empty purple hexagon is worse than none: it reads
+   as a graphic that failed to load rather than one nobody asked for. */
+.fcjh-event.has-mark {
+  background: linear-gradient(var(--base-top), var(--base-bottom));
 }
 
 .fcjh-event img {

@@ -55,6 +55,9 @@ const SCENE_VARS = {
   '--ban-clip-red': clip.bans.red,
   '--banned-foot': colours.banned_foot,
   '--event-clip': clip.event,
+  // the kit's own dark purple, the same pair the plates are filled with
+  '--base-top': colours.base_top,
+  '--base-bottom': colours.base_bottom,
   '--tab-font': `${tabs.font_px}px`,
   '--tab-text': colours.tab_text,
   '--tab-h': `${boxes.tabs.division[3]}px`,
@@ -285,7 +288,10 @@ export default function Game() {
             show has no square mark at all - letterboxed and small is a poor fit, cropping a
             wordmark to its middle third is a broken one. */}
         <Toggle name="show.hex" className="fcjh-layer">
-          <div className="fcjh-event" style={at(boxes.event)}>
+          <div
+            className={`fcjh-event${hexMark ? ' has-mark' : ''}`}
+            style={at(boxes.event)}
+          >
             {hexMark ? (
               <Image
                 name={hexMark.name}
