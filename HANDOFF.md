@@ -698,7 +698,9 @@ the core bar's top is, shown or not; the Alterac screenshot has the 10 px. **But
 cavalry is now the exception** (user, 2026-10-25: "much more low hanging artwork than the
 others"): its hexagon and blades hung 20 px under its bracket on red (over the core bar's number),
 its hammers 25 px on blue (21_06_31), so both spots are placed by the deeper, 25 px higher, the
-bars level (`maps.AV_BELOW`). To see on both sides, with and without the core bar.
+bars level (`maps.AV_BELOW`). **Seen in game and kept, always higher (user, 2026-10-25): "its
+higher up, but it doesnt go higher than the minimap top edge"** - that was the worry; a lift only
+while the core bar shows (on Alterac, only once a keep falls) was offered and not needed.
 
 **The official release filename (user, 2026-10-21): `FCJ v<version>.StormInterface`**
 (pack.py's `RELEASE_NAME`, from 1.0.1; 1.0.0 shipped as `FCJH.StormInterface`), in Ahli's
