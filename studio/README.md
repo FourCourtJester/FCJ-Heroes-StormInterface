@@ -926,10 +926,24 @@ Every layer exists in all four copies and **must stay in step**: they mount toge
 nothing in them may be random or depend on where its piece sits, or the same star would be
 in two states either side of a seam. That is why the comet delays are written out.
 
-**Not done: the electricity off the blue tiles** — the one the user filed as "harder". The
-raw material is there if we want it: `storm_ui_home_nexus_lightning1-4.dds` (648 x 432, four
-frames, so it wants stepping rather than tweening) and `storm_ui_home_nexus_fx_tilelighting.dds`
-(1812 x 304, a sweep along the floor), both under `references/`.
+**Not done: the electricity off the blue tiles** — the one the user filed as "harder".
+
+**It was built on 2026-10-26 and scrapped the same day**, so read this before building it
+again. The attempt drew it the way the rest of this sky is drawn: an SVG sprite of four
+frames, stepped with `steps(4, end)`, bursting for 0.3s every 7.5s. On air it read as
+**"noise on an old video tape"** (user) — which is what sparse white-cored flecks cut at
+0.075s a frame look like, whatever they are shaped like. The fault was the *stepping*, not
+the drawing: hard cuts between scattered small marks is television static, and the eye names
+it that before it sees any lightning.
+
+If it is picked up again, the lead is the other half of the source. `lightning1-4.dds` is the
+flicker that failed; **`storm_ui_home_nexus_fx_tilelighting.dds` (1812 x 304) is a sweep along
+the floor** — one travelling light, continuous rather than cut, which is the opposite motion
+and would not read as static. A slow sweep that lights tile edges as it passes is probably the
+effect that was wanted all along.
+
+The raw material, either way: `storm_ui_home_nexus_lightning1-4.dds` (648 x 432, four frames)
+and `storm_ui_home_nexus_fx_tilelighting.dds`, both under `references/`.
 
 ## Colour-blind colours
 
