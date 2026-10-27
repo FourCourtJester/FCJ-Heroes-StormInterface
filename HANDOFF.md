@@ -512,8 +512,13 @@ sequence"; 2026-10-27: "showing by default on game start... we *did* re-order th
   their team's two XP frames, hiding on `Empty` (no hero yet), game over, the awards and
   either HUD key. `row_packer` still places the bars and cuts their textures, and still hides
   the row frame in `Heroes0`, but no longer sets the XP frames' alpha.
+- **Second pass, untested in game (2026-10-27):** "They still showed, but just for a second.
+  They didn't load in hidden" (user). The frames loaded at 255 and the watch faded them
+  OUT once `Empty` caught it. Now they load at Alpha 0 (FCJH_TopBar) and the animation
+  (`FCJH_ShowXp`) fades them IN; `Shown` needs `HeroOverview1` visible rather than being
+  the catch-all, and the default state is `Empty`.
 - **If it is still early in the intro:** the cell shows before the plate draws. Then do the
-  diagnostic squares (the cell, its portrait, the hero's status frame) and gate `Empty` on
+  diagnostic squares (the cell, its portrait, the hero's status frame) and gate `Shown` on
   whichever comes on with the plates.
 
 This ties into the parked intro slide and fade for the plates (item 7).

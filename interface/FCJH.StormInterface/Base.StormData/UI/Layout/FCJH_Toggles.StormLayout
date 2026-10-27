@@ -220,24 +220,29 @@
 				     a paused Fade holds its frame's alpha, so while the XP frames sat in FCJH_HideLower,
 				     its "Shown" state held them at 255 from load and row_packer's Heroes0 Alpha 0 never
 				     showed (the bar up before any plate, user 2026-10-26/27). Their alpha is set here
-				     only; row_packer still places them and cuts their textures. -->
+				     only; row_packer still places them and cuts their textures.
+				     THEY LOAD HIDDEN (Alpha 0 in FCJH_TopBar) and this fades them IN, so hidden is where
+				     the animation starts and nothing has to happen at load. Fading them OUT from 255 left
+				     the bar up for a moment at game start, until Empty caught it (user, 2026-10-27: "They
+				     still showed, but just for a second"). For the same reason Shown needs the first hero
+				     cell up rather than being the catch-all. -->
 				<Frame type="Frame" name="FCJH_BlueXpWatch">
 					<Anchor relative="$parent"/>
 					<AcceptsMouse val="false"/>
-					<Animation name="FCJH_HideXp">
-						<Event event="FCJH_XpHide" action="DirectionForward,Play"/>
-						<Event event="FCJH_XpShow" action="DirectionReverse,Play"/>
+					<Animation name="FCJH_ShowXp">
+						<Event event="FCJH_XpShow" action="DirectionForward,Play"/>
+						<Event event="FCJH_XpHide" action="DirectionReverse,Play"/>
 						<Controller type="Fade" end="Pause" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_BlueXPTrack">
-							<Key type="Curve" time="0" value="255"/>
-							<Key type="Curve" time="0.2" value="0"/>
+							<Key type="Curve" time="0" value="0"/>
+							<Key type="Curve" time="0.2" value="255"/>
 						</Controller>
 						<Controller type="Fade" end="Pause" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrame">
-							<Key type="Curve" time="0" value="255"/>
-							<Key type="Curve" time="0.2" value="0"/>
+							<Key type="Curve" time="0" value="0"/>
+							<Key type="Curve" time="0.2" value="255"/>
 						</Controller>
 					</Animation>
 					<StateGroup name="FCJH_BlueXp">
-						<DefaultState val="Shown"/>
+						<DefaultState val="Empty"/>
 						<State name="Empty">
 							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" Visible="false"/>
 							<Action type="SendEvent" frame="$this" event="FCJH_XpHide"/>
@@ -259,6 +264,7 @@
 							<Action type="SendEvent" frame="$this" event="FCJH_XpHide"/>
 						</State>
 						<State name="Shown">
+							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" Visible="true"/>
 							<Action type="SendEvent" frame="$this" event="FCJH_XpShow"/>
 						</State>
 					</StateGroup>
@@ -266,20 +272,20 @@
 				<Frame type="Frame" name="FCJH_RedXpWatch">
 					<Anchor relative="$parent"/>
 					<AcceptsMouse val="false"/>
-					<Animation name="FCJH_HideXp">
-						<Event event="FCJH_XpHide" action="DirectionForward,Play"/>
-						<Event event="FCJH_XpShow" action="DirectionReverse,Play"/>
+					<Animation name="FCJH_ShowXp">
+						<Event event="FCJH_XpShow" action="DirectionForward,Play"/>
+						<Event event="FCJH_XpHide" action="DirectionReverse,Play"/>
 						<Controller type="Fade" end="Pause" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_RedXPTrack">
-							<Key type="Curve" time="0" value="255"/>
-							<Key type="Curve" time="0.2" value="0"/>
+							<Key type="Curve" time="0" value="0"/>
+							<Key type="Curve" time="0.2" value="255"/>
 						</Controller>
 						<Controller type="Fade" end="Pause" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrame">
-							<Key type="Curve" time="0" value="255"/>
-							<Key type="Curve" time="0.2" value="0"/>
+							<Key type="Curve" time="0" value="0"/>
+							<Key type="Curve" time="0.2" value="255"/>
 						</Controller>
 					</Animation>
 					<StateGroup name="FCJH_RedXp">
-						<DefaultState val="Shown"/>
+						<DefaultState val="Empty"/>
 						<State name="Empty">
 							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" Visible="false"/>
 							<Action type="SendEvent" frame="$this" event="FCJH_XpHide"/>
@@ -301,6 +307,7 @@
 							<Action type="SendEvent" frame="$this" event="FCJH_XpHide"/>
 						</State>
 						<State name="Shown">
+							<When type="Property" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team2HeroOverview/HeroOverview1" Visible="true"/>
 							<Action type="SendEvent" frame="$this" event="FCJH_XpShow"/>
 						</State>
 					</StateGroup>
