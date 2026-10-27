@@ -489,7 +489,9 @@ deployed"): PR #3, `matchup-slab` - the studio's matchup slab, Logos panel, scor
 colour-blind toggle, with the interface's colour-blind mode (Ahli's colours), our HUD keys,
 the game's end hiding the pop-ups, the pause box, the XP Contribution pane and Alterac's
 shields and cavalry banner, all seen in game - merged as 1bd3cde, tagged `v1.1.0` (local
-`--release` 1,391,094 bytes), Pages redeployed from the merge; a patch
+`--release` 1,391,094 bytes), Pages redeployed from the merge; then **1.1.1** (user,
+2026-10-27: "we can call that 1.1.1"): the XP bars waiting for the plates and the fountain
+fading with them, both seen in game; a patch
 number per fix batch, each one a `pack.py --release` from a commit. Work is on `main` (its
 history is python-toolchain's, which stays as it was). GitHub:
 https://github.com/FourCourtJester/FCJ-Heroes-StormInterface (public; pushed in
