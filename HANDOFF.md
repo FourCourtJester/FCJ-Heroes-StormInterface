@@ -517,6 +517,13 @@ sequence"; 2026-10-27: "showing by default on game start... we *did* re-order th
 
 This ties into the parked intro slide and fade for the plates (item 7).
 
+**Done, the studio (2026-10-27): the draft screen wears the matchup container** (user: "we
+redesigned the Matchup band in OBS; we now need to set it up in the `Draft` scene as well").
+`Draft.jsx` renders `MatchupSlab unit`, the same component and places as `#/source/matchup`,
+so the two cannot drift. The kicker is the scene's: Matchup passes the standby message,
+Draft the series ("Best of 5" from `series.pips`; empty with no series). `draft.css` is gone.
+Checked in the browser at 1920 x 1080, both sources, no console errors; untested in OBS.
+
 **To do, the studio: our team names in the scores cutout (user, 2026-10-26: "score screen,
 replace the names of the teams in the Score cutout").** Blizzard's panel footer says "Blue
 Team" / "Red Team", with each team's level under it and the kill count beside it

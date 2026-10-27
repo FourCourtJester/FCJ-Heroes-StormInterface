@@ -243,7 +243,11 @@ function Lockup({ where }) {
   )
 }
 
-export default function MatchupSlab({ unit: asUnit = false }) {
+// THE KICKER IS THE SCENE'S. Matchup gives it the standby message; Draft gives it the series,
+// since the teams are on screen drafting and "what is coming up" has no answer there.
+const MESSAGE = <Variable name="standby.message" fallback="" fit />
+
+export default function MatchupSlab({ unit: asUnit = false, kicker: says = MESSAGE }) {
   // colour-blind mode: the team washes in the game's pair, as the band's
   const cb = useColourBlind()
 
@@ -257,7 +261,7 @@ export default function MatchupSlab({ unit: asUnit = false }) {
       <div className="fcjh-slab-mid" style={at(asUnit ? unit.mid : mid)} />
 
       <div className="fcjh-slab-kicker" style={at(asUnit ? unit.kicker : kicker.box)}>
-        <Variable name="standby.message" fallback="" fit />
+        {says}
       </div>
 
       {SIDES.map((side) =>

@@ -44,9 +44,10 @@ them. See `docs/obs-topbar-handoff.md` in the repo root.
 | `src/sources/Matchup.jsx` | The matchup band on its own (`#/source/matchup`), transparent — laid over whatever it belongs on |
 | `src/sources/Webcams.jsx` | The browser source over the standby screen (`#/source/webcams`): two frames and two names, no video. Cameras go under it in OBS |
 | `src/sources/WebcamSolo.jsx` | The same frame drawn once and centred (`#/source/webcam-solo`), for a scene with one camera |
-| `src/sources/Draft.jsx` | The browser source over Blizzard's ban-and-pick screen (`#/source/draft`): the band with the series on it; its cover is still to come |
+| `src/sources/Draft.jsx` | The browser source over Blizzard's ban-and-pick screen (`#/source/draft`): the matchup container with the series in its kicker. No cover |
 | `src/sources/Scores.jsx` | The browser source over Blizzard's end-of-game screen (`#/source/scores`): a backdrop with a hole where the stats panel is |
-| `src/components/MatchupBand.jsx` | The band itself — worn by Matchup and Draft, and the only place its numbers are read |
+| `src/components/MatchupSlab.jsx` | The matchup container — worn by Matchup and Draft, each giving it its own kicker |
+| `src/components/MatchupBand.jsx` | The original band, `?band=original` only; Draft still borrows its scene variables |
 | `src/control/panels/` | The operator's board — standby, webcams, teams (with the series and each side's wins), tournament, logos, and help |
 | `src/generated/` | Written by `tools/obs.py`. Do not edit |
 | `src/generated/guide.png` | Every place as an orange outline: add it as an Image source while lining a scene up, then hide it |
@@ -226,9 +227,9 @@ band, so any unit vs slab convo is resolved" (user). `?band=slab` is a dead end 
 reference and can go whenever someone is tidying; the sections below on what was wrong with
 the earlier shapes are history now rather than open questions.
 
-One thing to know before deleting: **`?band=original` cannot simply go with it.** `Draft.jsx`
-imports `MatchupBand` directly rather than through this switch, so retiring the original band
-is a change to the draft screen as well, not a deletion here.
+One thing to know before deleting: Draft wears the container too since 2026-10-27, but
+`Draft.jsx` still takes `BAND_VARS` and `SCREEN` from `MatchupBand`, so retiring the original
+band means moving those first.
 
 Note that the original band is now the one that needs asking for — `?band=original`, where it
 used to be what you got by leaving the flag off.
@@ -545,7 +546,8 @@ where it was born.
 
 It lives in `src/components/MatchupBand.jsx` and carries its own numbers, so a scene that
 wears it supplies only what goes on its message board. **`#/source/matchup`** is the band
-by itself, over nothing; **`#/source/draft`** is the same band with the series on it.
+by itself, over nothing. (Since 2026-10-27 the draft screen wears the container instead -
+see [The draft screen](#the-draft-screen).)
 
 It used to be part of the standby screen and is its own source now (user, 2026-10-23),
 because the two are wanted at different times: the standby screen is background material
@@ -566,8 +568,7 @@ tournament's on the right. Either can be left unset, and nothing is drawn for it
 The tournament's is the **wide** logo where there is one — wide, then square, then nothing
 (user, 2026-10-23), the same waterfall the scores screen uses. An arm is 576 x 103, which is
 the shape the wide logo is drawn for; the square one belongs in Blizzard's hexagon and is
-only the fallback here. It lives in `MatchupBand`, so **Matchup and Draft both get it** from
-the one change. Checked on both sources: wide and square set draws the wide, square alone
+only the fallback here. Checked on both sources: wide and square set draws the wide, square alone
 draws the square, neither draws nothing.
 
 ## The standby screen
@@ -667,12 +668,16 @@ started.
 
 ## The draft screen
 
-Today it is the matchup band and nothing else, wearing the same translucencies it wears
-everywhere. `#/source/draft`, 1920 x 1080, over the game capture. (If you want the standby
-message on it rather than the series, use `#/source/matchup` instead — they are the same
-band.) Its message board carries
-the **series** — "Best of 5", from `series.pips` — rather than a message: standby says what is
-coming up, and here there is no question of that, the teams are on screen drafting.
+It is the matchup container and nothing else (user, 2026-10-27: "we redesigned the Matchup
+band in OBS; we now need to set it up in the Draft scene as well") - the same `MatchupSlab`,
+in the same places, so a change to the matchup is a change here too. `#/source/draft`,
+1920 x 1080, over the game capture. Those places clear Blizzard's player columns (x 14-358
+and 1618-1896, down to y 922): the lockup runs x 449-1471.
+
+The one difference is the **kicker**: Matchup's carries the standby message, Draft's the
+**series** — "Best of 5", from `series.pips` — since standby says what is coming up, and here
+there is no question of that, the teams are on screen drafting. No series set, empty kicker.
+(If you want the standby message here instead, use `#/source/matchup`.)
 
 ### The cover — scrapped
 

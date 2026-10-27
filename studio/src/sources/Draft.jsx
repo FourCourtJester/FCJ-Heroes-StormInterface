@@ -1,31 +1,22 @@
 import { useVelcroValue } from '@single-studio/core'
-import { Scene, Variable } from '@single-studio/core/source'
+import { Scene } from '@single-studio/core/source'
 
-import MatchupBand, { BAND_VARS, SCREEN } from '../components/MatchupBand'
-import './draft.css'
+import { BAND_VARS, SCREEN } from '../components/MatchupBand'
+import MatchupSlab, { SLAB_VARS } from '../components/MatchupSlab'
 
 // The draft screen: what the broadcast draws over Blizzard's own ban-and-pick screen.
 //
-// Today it is the standby screen's band and nothing else, wearing the same translucencies it
-// wears there (user, 2026-10-23).
+// It is the matchup source's container - score, logo and name a side, the VS, the lockup -
+// in the same place (user, 2026-10-27: "we redesigned the Matchup band in OBS; we now need to
+// set it up in the Draft scene as well"). One component, so a change to the matchup is a
+// change here too. Its places clear Blizzard's player columns (x 14-358 and 1618-1896, down
+// to y 922): the lockup runs x 449-1471 and the kicker sits over the splash art's black.
 //
-// THE COVER IS NOT HERE YET, and that is deliberate. Blizzard's draft screen puts the lobby
-// chat and the tails of its player columns across the bottom, which a broadcast does not want
-// on air, so something has to hide them. Two attempts are in the history and both were wrong
-// in the same way: a cover that varies only down the screen. First an opaque band, which sawed
-// a straight edge through the hexagon columns and the heroes' legs; then a vertical gradient,
-// which softened that edge and changed nothing, because what is behind the cover varies ACROSS
-// the screen - columns at both edges, splash art in the middle, chat at the bottom left - and
-// no amount of vertical ramp answers a horizontal problem (user, 2026-10-23: "uniform on its
-// horizontal axis. This is 100% of the issue").
+// The kicker carries the series rather than a message: standby says what is coming up, and
+// here there is no question of that - the teams are on screen drafting.
 //
-// So the shape has to come from the artwork rather than from a guess. The user is supplying an
-// updated chat cover; its geometry gets measured the way the top bar's did, and comes back here
-// through layout.toml. studio/README.md keeps what we measured off the reference screenshots in
-// the meantime, as the check for whatever arrives.
-//
-// The band's message board carries the series rather than a message: standby says what is
-// coming up, and here there is no question of that - the teams are on screen drafting.
+// No cover: dropped on 2026-10-26 ("users can use their own covers"); studio/README.md keeps
+// why the two attempts were wrong.
 //
 // Add to OBS as a Browser source pointed at #/source/draft, 1920 x 1080, over the game capture.
 
@@ -50,8 +41,8 @@ function Series() {
 export default function Draft() {
   return (
     <Scene width={SCREEN_W} height={SCREEN_H}>
-      <div className="fcjh-band-scene fcjh-draft" style={SCENE_VARS}>
-        <MatchupBand plate={<Series />} />
+      <div className="fcjh-band-scene" style={{ ...SLAB_VARS, ...SCENE_VARS }}>
+        <MatchupSlab unit kicker={<Series />} />
       </div>
     </Scene>
   )
