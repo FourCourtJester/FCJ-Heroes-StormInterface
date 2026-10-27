@@ -48,7 +48,7 @@ them. See `docs/obs-topbar-handoff.md` in the repo root.
 | `src/sources/Scores.jsx` | The browser source over Blizzard's end-of-game screen (`#/source/scores`): a backdrop with a hole where the stats panel is |
 | `src/components/MatchupSlab.jsx` | The matchup container — worn by Matchup and Draft, each giving it its own kicker |
 | `src/components/MatchupBand.jsx` | The original band, `?band=original` only; Draft still borrows its scene variables |
-| `src/control/panels/` | The operator's board — standby, webcams, teams (with the series and each side's wins), tournament, logos, and help |
+| `src/control/panels/` | The operator's board — standby, webcams, teams (each side's name, logo and wins), tournament (with the series), logos, and help |
 | `src/generated/` | Written by `tools/obs.py`. Do not edit |
 | `src/generated/guide.png` | Every place as an orange outline: add it as an Image source while lining a scene up, then hide it |
 

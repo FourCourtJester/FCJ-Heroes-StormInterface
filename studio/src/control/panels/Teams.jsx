@@ -1,6 +1,7 @@
-import { Field, ImagePicker, Panel, ResetButton, Row, Select, Stepper, SwapButton } from '@single-studio/core/control'
+import { Field, ImagePicker, Panel, ResetButton, Row, Stepper, SwapButton } from '@single-studio/core/control'
 
-// Teams, and the series they are playing: everything about who is on screen, in one panel.
+// Teams: everything about who is on screen, in one panel. The series length is on the
+// Tournament panel (user, 2026-10-27: "its, you know, a tournament setting").
 //
 // A Row shares a line once the board is wide enough and stacks in a slim dock, so each team
 // reads as one line - name, logo, games won - and falls apart in order when there is no room
@@ -9,8 +10,7 @@ import { Field, ImagePicker, Panel, ResetButton, Row, Select, Stepper, SwapButto
 // the line and is capped only where the line is tight, which src/css/index.css does by
 // breakpoint rather than by a class here.
 //
-// "Series" is the number of pips a side, which is what the graphic draws: a best of five is
-// three. Leave a logo unset and that side's logo plate goes, the name plate running on to the
+// Leave a logo unset and that side's logo plate goes, the name plate running on to the
 // level wing - the no-logo tournament.
 //
 // Swap and Clear live in the header, so they are reachable while the panel is folded and out
@@ -44,15 +44,6 @@ export default function Teams() {
         </>
       }
     >
-      <Select
-        name="series.pips"
-        label="Series"
-        options={[
-          { label: 'Best of 3', value: '2' },
-          { label: 'Best of 5', value: '3' },
-          { label: 'Best of 7', value: '4' },
-        ]}
-      />
       <Row>
         <Field name="blue.name" label="Blue" placeholder="Blue team" />
         <ImagePicker name="blue.logo" label="Blue logo" />
