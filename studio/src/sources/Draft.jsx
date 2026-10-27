@@ -3,7 +3,6 @@ import { Scene } from '@single-studio/core/source'
 
 import { BAND_VARS, SCREEN } from '../components/MatchupBand'
 import MatchupSlab, { SLAB_VARS } from '../components/MatchupSlab'
-import './draft.css'
 
 // The draft screen: what the broadcast draws over Blizzard's own ban-and-pick screen.
 //
@@ -16,7 +15,7 @@ import './draft.css'
 // The kicker carries the series rather than a message: standby says what is coming up, and
 // here there is no question of that - the teams are on screen drafting.
 //
-// The entrance is the draft's own (draft.css, under .fcjh-draft): the matchup source holds still.
+// The entrance is the container's (matchupslab.css), so Matchup and Draft come in alike.
 //
 // No cover: dropped on 2026-10-26 ("users can use their own covers"); studio/README.md keeps
 // why the two attempts were wrong.
@@ -44,7 +43,7 @@ function Series() {
 export default function Draft() {
   return (
     <Scene width={SCREEN_W} height={SCREEN_H}>
-      <div className="fcjh-band-scene fcjh-draft" style={{ ...SLAB_VARS, ...SCENE_VARS }}>
+      <div className="fcjh-band-scene" style={{ ...SLAB_VARS, ...SCENE_VARS }}>
         <MatchupSlab unit kicker={<Series />} />
       </div>
     </Scene>

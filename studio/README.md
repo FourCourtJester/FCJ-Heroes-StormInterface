@@ -44,7 +44,7 @@ them. See `docs/obs-topbar-handoff.md` in the repo root.
 | `src/sources/Matchup.jsx` | The matchup band on its own (`#/source/matchup`), transparent — laid over whatever it belongs on |
 | `src/sources/Webcams.jsx` | The browser source over the standby screen (`#/source/webcams`): two frames and two names, no video. Cameras go under it in OBS |
 | `src/sources/WebcamSolo.jsx` | The same frame drawn once and centred (`#/source/webcam-solo`), for a scene with one camera |
-| `src/sources/Draft.jsx` | The browser source over Blizzard's ban-and-pick screen (`#/source/draft`): the matchup container with the series in its kicker, and its own entrance (`draft.css`). No cover |
+| `src/sources/Draft.jsx` | The browser source over Blizzard's ban-and-pick screen (`#/source/draft`): the matchup container with the series in its kicker. No cover |
 | `src/sources/Scores.jsx` | The browser source over Blizzard's end-of-game screen (`#/source/scores`): a backdrop with a hole where the stats panel is |
 | `src/components/MatchupSlab.jsx` | The matchup container — worn by Matchup and Draft, each giving it its own kicker |
 | `src/components/MatchupBand.jsx` | The original band, `?band=original` only; Draft still borrows its scene variables |
@@ -343,6 +343,14 @@ a plate (user, 2026-10-25: "the one container idea might be best"). Outward to i
 **series score**, a **parallelogram for the logo**, then the **name** running in to the VS.
 The container is **pointed at both ends**, the outer one mirroring the inner, so nothing
 protrudes from it — which is the entire point.
+
+**The entrance** builds it out from the middle in about 1.3 s: the VS pops in over the smoke,
+each team slides out from behind it to its side (200 ms), the kicker drops onto the row
+(500 ms) and the lockup rises under it (650 ms), all on the old band's 670 ms ease. It is the
+container's (`matchupslab.css`), so Matchup and Draft share it; it began as the draft's own
+(user, 2026-10-27) and Matchup took it the same day ("Can we add a similar intro animation to
+the Matchup band now?"). It plays on load, so OBS's `shutdown` replays it each time the scene
+comes back. `?band=slab` has no entrance.
 
 The score lands here almost by accident, and that is the nice part: the space between the
 logo and the outer border was going spare (user's suggestion), and a score retrofitted after
@@ -679,12 +687,8 @@ The one difference is the **kicker**: Matchup's carries the standby message, Dra
 there is no question of that, the teams are on screen drafting. No series set, empty kicker.
 (If you want the standby message here instead, use `#/source/matchup`.)
 
-The other is the **entrance**, which is the draft's own (user, 2026-10-27: "we can target the
-Draft Matchup to have animation of its own"): `src/sources/draft.css`, scoped to `.fcjh-draft`,
-so the matchup source holds still. It builds out from the middle in about 1.3 s - the VS pops
-in over the smoke, each team slides out from behind it to its side (200 ms), the series drops
-onto the row (500 ms) and the lockup rises under it (650 ms), all on the old band's 670 ms
-ease. It plays on load, so OBS's `shutdown` plays it again each time the Draft scene comes back.
+The entrance is the container's, so it comes in as Matchup does - see
+[the one-container team](#the-one-container-team-bandunit).
 
 ### The cover — scrapped
 

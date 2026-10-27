@@ -548,6 +548,12 @@ slide out from behind it, the series drops in, the lockup rises, ~1.3 s on the o
 (README, The draft screen). Scrubbed frame by frame in the browser at 1920 x 1080, settles in
 place, no console errors; the lockup's step unseen (none set on the board). Untested in OBS.
 
+**Done, the studio (2026-10-27): Matchup takes the draft's entrance** (user: "Can we add a
+similar intro animation to the Matchup band now?"). It moved from `sources/draft.css` (gone)
+into `matchupslab.css`, scoped to `.fcjh-slab.as-unit`, so the two sources share one entrance
+and cannot drift; a source wanting its own overrides it from its own stylesheet. Scrubbed on
+Matchup and checked attached on Draft, 1920 x 1080, no console errors. Untested in OBS.
+
 **Done, the studio (2026-10-27): the matchup container hides a score that means nothing**
 (user: "No team name? Hide team score. Team name, but both team score is 0? Hide team score").
 `TeamUnit` drops the score panel when its team has no name or the series is 0-0 (absent wins
