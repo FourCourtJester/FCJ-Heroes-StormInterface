@@ -499,6 +499,38 @@ and Ko-fi).
 Observer** ("I think") - README's install step 3 and docs/development.md say so; correct both
 if not.
 
+**Fixed, untested in game (2026-10-27): the XP bar showed before the plates at game start.**
+Seen in game (user, 2026-10-26: "It's showing up *before* any nameplates are in the intro
+sequence"; 2026-10-27: "showing by default on game start... we *did* re-order things for
+`ctrl-e`").
+- **The cause:** the HUD keys (68978d8) put the XP track and fill in `FCJH_HideLower`. From
+  load, `FCJH_HudWatch`'s `Shown` state plays that animation back to 0, and a paused Fade
+  holds its frame's alpha at 255. So `row_packer`'s `Heroes0` (Alpha 0 while `HeroOverview1`
+  is hidden) never showed. Two owners for one alpha.
+- **The fix:** one owner. `FCJH_BlueXpWatch` and `FCJH_RedXpWatch` (FCJH_Toggles) each fade
+  their team's two XP frames, hiding on `Empty` (no hero yet), game over, the awards and
+  either HUD key. `row_packer` still places the bars and cuts their textures, and still hides
+  the row frame in `Heroes0`, but no longer sets the XP frames' alpha.
+- **If it is still early in the intro:** the cell shows before the plate draws. Then do the
+  diagnostic squares (the cell, its portrait, the hero's status frame) and gate `Empty` on
+  whichever comes on with the plates.
+
+This ties into the parked intro slide and fade for the plates (item 7).
+
+**To do, the studio: our team names in the scores cutout (user, 2026-10-26: "score screen,
+replace the names of the teams in the Score cutout").** Blizzard's panel footer says "Blue
+Team" / "Red Team", with each team's level under it and the kill count beside it
+(`design/ref_endgame_stats.jpg`: blue's name is right-aligned, ending at about x 683 before
+the "18"; red's is left-aligned, starting at about x 1197 after the "5"). Draw the Teams
+panel's names over those two words only, and keep Blizzard's level, kills and game time.
+To work out:
+- the cover sits *inside* the hole, which Scores.jsx's header warns about (a patch has an
+  edge). It needs the panel's own dark backing there, sized to Blizzard's words;
+- a long name has to fit or shrink, growing away from the kill count;
+- the colour-blind pair applies;
+- with no name set, Blizzard's words show through.
+Measure the two boxes from the reference into `layout.toml` `[scores]`, never in the CSS.
+
 **The XP Contribution pane - built, seen in game and good (user, 2026-10-25) (user, 2026-10-25: "Let's look at that
 experience breakdown panel, and see if we can re-arrange our info panes to accomodate").**
 Still four panes on the same keys: Ctrl+3 is now HEALING · SIEGE DAMAGE · EXPERIENCE (by hero:
