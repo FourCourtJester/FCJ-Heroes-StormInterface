@@ -157,7 +157,8 @@ One command: **generate → stage → validate → pack → deploy.**
    the build stamp there, and only there (the wireframe overlay was removed 2026-10-05)
 3. **validate** — `tools/validate.py` on the staged tree; an error stops the build
 4. **pack** — an uncompressed MPQ v1 archive, read back and compared file by file
-5. **deploy** — `Documents/Heroes of the Storm/Interfaces/FCJH.StormInterface`
+5. **deploy** — `Documents/Heroes of the Storm/Interfaces/FCJ Dev.StormInterface` (named
+   `FCJH.StormInterface` until 2026-10-27; the source folder keeps that name)
 
 **With the client left open** (all confirmed 2026-09-25):
 
@@ -169,7 +170,7 @@ One command: **generate → stage → validate → pack → deploy.**
    menu; `--wait` retries, so the build lands the moment you exit.
 5. Reopen the replay. **The game re-reads the interface on every replay load.**
 
-**Profiles.** Dev (the default) shows a build stamp — `FCJH DEV <version> <commit>[+] <time>`,
+**Profiles.** Dev (the default) shows a build stamp — `FCJ Dev <version> <commit>[+] <time>`,
 `+` meaning uncommitted changes — and nothing else (the wireframe overlay that tinted
 each box in its legend colour was removed 2026-10-05). `--release` is exactly what `interface/` holds: it refuses
 while `interface/`, `layout.toml` or `tools/` have uncommitted changes, so every release is

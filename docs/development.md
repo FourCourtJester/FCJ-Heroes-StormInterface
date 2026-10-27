@@ -36,7 +36,7 @@ python tools/pack.py --wait
 ```
 
 Generates, validates, packs and deploys a dev build to the Heroes `Interfaces` folder.
-Pick `FCJH.StormInterface` from the interface drop-down under Settings → Observer.
+Pick `FCJ Dev.StormInterface` from the interface drop-down under Settings → Observer.
 
 Launch Heroes from the Battle.net app and open a replay from the in-game Replays tab.
 After a rebuild, leave the replay and reopen it — no client restart needed.
