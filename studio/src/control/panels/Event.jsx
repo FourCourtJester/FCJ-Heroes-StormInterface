@@ -1,8 +1,9 @@
 import { Field, Panel, Row, Select, Toggle } from '@single-studio/core/control'
 
-// The tournament: the series length, the two tabs' words, and who won.
+// The tournament: the two tabs' words, the series length, and who won.
 //
-// THE SERIES came over from Teams (user, 2026-10-27: "its, you know, a tournament setting").
+// THE SERIES came over from Teams (user, 2026-10-27: "its, you know, a tournament setting"),
+// under the tabs ("Let's put it under Left/Right tab").
 // It is the number of pips a side, which is what the graphic draws: a best of five is three.
 // Clearing the teams still leaves it alone.
 //
@@ -31,6 +32,10 @@ import { Field, Panel, Row, Select, Toggle } from '@single-studio/core/control'
 export default function Event() {
   return (
     <Panel title="Tournament" collapsible>
+      <Row>
+        <Field name="division" label="Left tab" placeholder="Division 1" />
+        <Field name="game" label="Right tab" placeholder="Game 3 of 5" />
+      </Row>
       <Select
         name="series.pips"
         label="Series"
@@ -40,10 +45,6 @@ export default function Event() {
           { label: 'Best of 7', value: '4' },
         ]}
       />
-      <Row>
-        <Field name="division" label="Left tab" placeholder="Division 1" />
-        <Field name="game" label="Right tab" placeholder="Game 3 of 5" />
-      </Row>
       <Row>
         <Toggle name="colourblind" label="Colour-blind mode" />
       </Row>

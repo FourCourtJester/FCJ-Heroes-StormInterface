@@ -555,8 +555,8 @@ count as 0); the band shortens as it does for a missing logo, and `.no-score` in
 is outermost past the point. Matchup and Draft both. Seen in the browser with no names (both
 hidden, clean ends); the named states were left to the user's live board. Untested in OBS.
 
-**Done, the studio (2026-10-27): Series is on the Tournament panel**, first in it, moved from
-Teams (user: "its, you know, a tournament setting"). Same `series.pips`, so nothing resets;
+**Done, the studio (2026-10-27): Series is on the Tournament panel**, under the two tabs
+("Let's put it under Left/Right tab"), moved from Teams (user: "its, you know, a tournament setting"). Same `series.pips`, so nothing resets;
 Clear on Teams still leaves it alone. The OBS guide (content/, uncommitted) follows.
 
 **To do, the studio: our team names in the scores cutout (user, 2026-10-26: "score screen,
