@@ -10,7 +10,7 @@ Build the interface: generate, stage, validate, pack, deploy.
   5. deploy    written to the Heroes Interfaces folder
 
 Profiles:
-  dev (default)  the build stamp (and any interface/dev/ layouts), deployed as FCJH.StormInterface
+  dev (default)  the build stamp (and any interface/dev/ layouts), deployed as "FCJ Dev.StormInterface"
   --release      exactly what interface/ holds; refuses if interface/, layout.toml or tools/ have
                  uncommitted changes, so every release is reproducible from its commit;
                  written to dist/v<version>/ as "FCJ v<version>.StormInterface",
@@ -27,7 +27,7 @@ write until the lock releases.
     python tools/pack.py --release --no-generate --no-validate
                                                  # GitHub's release build: no references/
     python tools/pack.py interface/tests/Test.StormInterface --name Test.StormInterface --wait
-                                                 # a test interface, deployed beside FCJH
+                                                 # a test interface, deployed beside FCJ Dev
 """
 
 import argparse
@@ -49,7 +49,9 @@ DEV_LAYOUTS = REPO / "interface" / "dev"
 BUILD = REPO / "build"
 DIST = REPO / "dist"
 INTERFACES = Path.home() / "OneDrive" / "Documents" / "Heroes of the Storm" / "Interfaces"
-NAME = "FCJH.StormInterface"
+# the dev build, named apart from the release (user, 2026-10-27: 'start naming "FCJH"
+# interfaces as "FCJ Dev"'); the source folder in interface/ keeps its name
+NAME = "FCJ Dev.StormInterface"
 # the release under its official name, in Ahli's style ("AhliObs 0.75"; spaces load fine)
 RELEASE_NAME = "FCJ v{version}.StormInterface"
 
@@ -94,15 +96,15 @@ def stage(cfg, source, profile):
         extra = [p.name for p in probes] + [gen.DEV_FILE]
         if source == DEFAULT_SOURCE:
             order = gen.layout_order(source / gen.LAYOUT_REL, extra=extra)
-            name = "FCJH"
+            name = "FCJ Dev"
         else:
             # a test interface (interface/tests/): its own layouts only, none of FCJH's
             order = sorted(p.name for p in (source / gen.LAYOUT_REL).glob("*.StormLayout")
                            if p.name != gen.INDEX_FILE) + extra
-            name = source.name.split(".")[0]
+            name = f"{source.name.split('.')[0]} Dev"
         commit = git("rev-parse", "--short", "HEAD") or "nogit"
         dirty = "+" if git("status", "--porcelain", "--", *RELEASE_PATHS) else ""
-        stamp = f"{name} DEV {cfg['meta']['version']} {commit}{dirty} {datetime.now():%H:%M:%S}"
+        stamp = f"{name} {cfg['meta']['version']} {commit}{dirty} {datetime.now():%H:%M:%S}"
         (layout_dir / gen.DEV_FILE).write_text(gen.dev_layout(cfg, stamp), encoding="utf-8", newline="\n")
         (layout_dir / gen.INDEX_FILE).write_text(gen.desc_index(order), encoding="utf-8", newline="\n")
         print(f"stamp: {stamp}")

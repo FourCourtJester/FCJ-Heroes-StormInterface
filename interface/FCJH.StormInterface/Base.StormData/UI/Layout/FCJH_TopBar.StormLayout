@@ -160,6 +160,7 @@
 						<Frame type="Image" name="Team1XPUnitStatusFrameBgImage"><Alpha val="0"/></Frame>
 						<Frame type="Image" name="Team2XPUnitStatusFrameBgImage"><Alpha val="0"/></Frame>
 						<Frame type="Image" name="FCJH_BlueXPTrack">
+							<Alpha val="0"/>  <!-- loads hidden; FCJH_BlueXpWatch (FCJH_Toggles) fades it in with the plates -->
 							<Anchor side="Top"    relative="$GameUI" pos="Max" offset="#FCJH_BLUE_XP_T"/>
 							<Anchor side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_BLUE_XP_L"/>
 							<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_BLUE_XP_B"/>
@@ -170,6 +171,7 @@
 							<AcceptsMouse val="false"/>
 						</Frame>
 						<Frame type="Image" name="FCJH_RedXPTrack">
+							<Alpha val="0"/>  <!-- loads hidden; FCJH_RedXpWatch (FCJH_Toggles) fades it in with the plates -->
 							<Anchor side="Top"    relative="$GameUI" pos="Max" offset="#FCJH_RED_XP_T"/>
 							<Anchor side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_RED_XP_L"/>
 							<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_RED_XP_B"/>
@@ -181,6 +183,7 @@
 						</Frame>
 						<!-- The row frames live in Team1/Team2HeroOverview (below), over the plates -->
 						<Frame type="TeamVeterancyUnitStatusFrame" name="Team1XPUnitStatusFrame">
+							<Alpha val="0"/>  <!-- loads hidden; FCJH_BlueXpWatch (FCJH_Toggles) fades it in with the plates -->
 							<Anchor side="Top"    relative="$GameUI" pos="Max" offset="#FCJH_BLUE_XP_T"/>
 							<Anchor side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_BLUE_XP_L"/>
 							<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_BLUE_XP_B"/>
@@ -203,6 +206,7 @@
 							</Frame>
 						</Frame>
 						<Frame type="TeamVeterancyUnitStatusFrame" name="Team2XPUnitStatusFrame">
+							<Alpha val="0"/>  <!-- loads hidden; FCJH_RedXpWatch (FCJH_Toggles) fades it in with the plates -->
 							<Anchor side="Top"    relative="$GameUI" pos="Max" offset="#FCJH_RED_XP_T"/>
 							<Anchor side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_RED_XP_L"/>
 							<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_RED_XP_B"/>

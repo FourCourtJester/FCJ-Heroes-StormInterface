@@ -398,6 +398,15 @@
   padding-right: var(--unit-point);
 }
 
+/* no score: whatever is outermost now, logo or name, is inset past the point the same way.
+   In the DOM the outer end is first on both sides - red only reverses the row. */
+.fcjh-unit.blue.no-score > :first-child {
+  margin-left: var(--unit-point);
+}
+.fcjh-unit.red.no-score > :first-child {
+  margin-right: var(--unit-point);
+}
+
 .fcjh-unit-score {
   flex: none;
   box-sizing: border-box;
@@ -495,4 +504,83 @@
 .fcjh-slab.as-unit .fcjh-slab-badge,
 .fcjh-slab.as-unit .fcjh-slab-name {
   display: none;
+}
+
+/* ── the entrance ────────────────────────────────────────────────────────────────────────
+   Matchup's and Draft's, one and the same: it started as the draft's own (user, 2026-10-27:
+   "we can target the Draft Matchup to have animation of its own") and came here when the
+   matchup wanted one like it ("Can we add a similar intro animation to the Matchup band
+   now?"). A source that ever wants a different one overrides it from its own stylesheet.
+
+   It plays when the source mounts: OBS shuts each down while its scene is hidden, so cutting
+   back plays it again, and Scene renders nothing until the show's values have arrived.
+
+   It builds out from the middle, the way the matchup reads: the VS and the smoke behind it,
+   then each team sliding out from behind the VS to its side, then the kicker dropping in
+   above and the lockup rising in below. */
+.fcjh-slab.as-unit {
+  --enter: 670ms;
+  --enter-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+@keyframes fcjh-slab-x {
+  from {
+    opacity: 0;
+    transform: translateX(var(--from));
+  }
+}
+
+@keyframes fcjh-slab-y {
+  from {
+    opacity: 0;
+    transform: translateY(var(--from));
+  }
+}
+
+@keyframes fcjh-slab-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+
+@keyframes fcjh-slab-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+.fcjh-slab.as-unit .fcjh-slab-mid {
+  animation: fcjh-slab-fade var(--enter) var(--enter-ease) both;
+}
+
+.fcjh-slab.as-unit .fcjh-slab-vs {
+  animation: fcjh-slab-pop var(--enter) var(--enter-ease) both;
+}
+
+/* from behind the VS: each starts a third of its own width toward the middle */
+.fcjh-slab.as-unit .fcjh-unit {
+  animation: fcjh-slab-x var(--enter) var(--enter-ease) both;
+  animation-delay: 200ms;
+}
+
+.fcjh-slab.as-unit .fcjh-unit.blue {
+  --from: 33%;
+}
+
+.fcjh-slab.as-unit .fcjh-unit.red {
+  --from: -33%;
+}
+
+/* the kicker down onto the row, the lockup up under it: each from half its own height */
+.fcjh-slab.as-unit .fcjh-slab-kicker {
+  --from: 50%;
+  animation: fcjh-slab-y var(--enter) var(--enter-ease) both;
+  animation-delay: 500ms;
+}
+
+.fcjh-slab.as-unit .fcjh-slab-lockup {
+  --from: -50%;
+  animation: fcjh-slab-y var(--enter) var(--enter-ease) both;
+  animation-delay: 650ms;
 }

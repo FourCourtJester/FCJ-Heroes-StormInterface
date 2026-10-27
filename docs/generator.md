@@ -63,13 +63,13 @@ The other commands:
 | `python design/canvas_gen.py` | Redraws the wireframe canvas boards from the same numbers (below). |
 
 **Profiles.**
-- **Dev** (the default) adds a build stamp on screen, top left: `FCJH DEV <version> <commit>[+] <time>`.
+- **Dev** (the default) adds a build stamp on screen, top left: `FCJ Dev <version> <commit>[+] <time>`.
   The `+` means uncommitted changes. A stale stamp means the game is showing a cached build.
   Any `interface/dev/*.StormLayout` (experiments, probes) is added too. None of this is ever committed
   into `interface/` or shipped.
 - **`--release`** is exactly what `interface/` holds. It refuses while `interface/`, `layout.toml` or
   `tools/` have uncommitted changes, so every release can be rebuilt from its commit. It writes
-  `dist/v<version>/FCJH.StormInterface`, and installs it only with `--deploy`. Releases ship
+  `dist/v<version>/FCJ v<version>.StormInterface`, and installs it only with `--deploy`. Releases ship
   that file.
 
 ## What you edit
@@ -107,7 +107,7 @@ edit by hand"):
   ones.
 
 Then `build/<profile>/` (the staged tree, plus the dev stamp in a dev build) and the archive:
-an uncompressed **MPQ v1** `FCJH.StormInterface`, deployed to
+an uncompressed **MPQ v1** - `FCJ Dev.StormInterface` for a dev build - deployed to
 `Documents/Heroes of the Storm/Interfaces/` or written to `dist/v<version>/`.
 
 Beside the build, from the same numbers: **the wireframe canvas.** `design/canvas_gen.py`

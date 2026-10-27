@@ -145,6 +145,12 @@ function useWrapThenShrink(plateRef, { max, min, lines }) {
  */
 function TeamUnit({ side }) {
   const logo = useVelcroValue(`variables.${side}.logo`)
+  const teamName = useVelcroValue(`variables.${side}.name`)
+  const blueWins = useVelcroValue('variables.blue.wins')
+  const redWins = useVelcroValue('variables.red.wins')
+  // NO NAME, OR NO GAMES PLAYED, NO SCORE (user, 2026-10-27): a nameless team's 0 is a number
+  // about nobody, and 0 - 0 is a series that has not started. Absent wins count as 0.
+  const score = Boolean(teamName) && Number(blueWins || 0) + Number(redWins || 0) > 0
   const plate = useRef(null)
   useWrapThenShrink(plate, { max: name.text, min: name.min, lines: name.lines })
 
@@ -156,10 +162,13 @@ function TeamUnit({ side }) {
   }
 
   return (
-    <div className={`fcjh-unit ${side}`} style={anchor}>
-      <div className="fcjh-unit-score">
-        <Variable name={`${side}.wins`} fallback="0" />
-      </div>
+    <div className={`fcjh-unit ${side}${score ? '' : ' no-score'}`} style={anchor}>
+      {/* no score, no panel - the band shortens, as it does for a missing logo */}
+      {score ? (
+        <div className="fcjh-unit-score">
+          <Variable name={`${side}.wins`} fallback="0" />
+        </div>
+      ) : null}
       {/* The parallelogram. Its own panel even when empty: it is what the score counts
           against, and a gap there would leave the score floating at the container's end.
 
@@ -243,7 +252,11 @@ function Lockup({ where }) {
   )
 }
 
-export default function MatchupSlab({ unit: asUnit = false }) {
+// THE KICKER IS THE SCENE'S. Matchup gives it the standby message; Draft gives it the series,
+// since the teams are on screen drafting and "what is coming up" has no answer there.
+const MESSAGE = <Variable name="standby.message" fallback="" fit />
+
+export default function MatchupSlab({ unit: asUnit = false, kicker: says = MESSAGE }) {
   // colour-blind mode: the team washes in the game's pair, as the band's
   const cb = useColourBlind()
 
@@ -257,7 +270,7 @@ export default function MatchupSlab({ unit: asUnit = false }) {
       <div className="fcjh-slab-mid" style={at(asUnit ? unit.mid : mid)} />
 
       <div className="fcjh-slab-kicker" style={at(asUnit ? unit.kicker : kicker.box)}>
-        <Variable name="standby.message" fallback="" fit />
+        {says}
       </div>
 
       {SIDES.map((side) =>

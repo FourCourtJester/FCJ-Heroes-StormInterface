@@ -157,7 +157,8 @@ One command: **generate → stage → validate → pack → deploy.**
    the build stamp there, and only there (the wireframe overlay was removed 2026-10-05)
 3. **validate** — `tools/validate.py` on the staged tree; an error stops the build
 4. **pack** — an uncompressed MPQ v1 archive, read back and compared file by file
-5. **deploy** — `Documents/Heroes of the Storm/Interfaces/FCJH.StormInterface`
+5. **deploy** — `Documents/Heroes of the Storm/Interfaces/FCJ Dev.StormInterface` (named
+   `FCJH.StormInterface` until 2026-10-27; the source folder keeps that name)
 
 **With the client left open** (all confirmed 2026-09-25):
 
@@ -169,7 +170,7 @@ One command: **generate → stage → validate → pack → deploy.**
    menu; `--wait` retries, so the build lands the moment you exit.
 5. Reopen the replay. **The game re-reads the interface on every replay load.**
 
-**Profiles.** Dev (the default) shows a build stamp — `FCJH DEV <version> <commit>[+] <time>`,
+**Profiles.** Dev (the default) shows a build stamp — `FCJ Dev <version> <commit>[+] <time>`,
 `+` meaning uncommitted changes — and nothing else (the wireframe overlay that tinted
 each box in its legend colour was removed 2026-10-05). `--release` is exactly what `interface/` holds: it refuses
 while `interface/`, `layout.toml` or `tools/` have uncommitted changes, so every release is
@@ -488,7 +489,9 @@ deployed"): PR #3, `matchup-slab` - the studio's matchup slab, Logos panel, scor
 colour-blind toggle, with the interface's colour-blind mode (Ahli's colours), our HUD keys,
 the game's end hiding the pop-ups, the pause box, the XP Contribution pane and Alterac's
 shields and cavalry banner, all seen in game - merged as 1bd3cde, tagged `v1.1.0` (local
-`--release` 1,391,094 bytes), Pages redeployed from the merge; a patch
+`--release` 1,391,094 bytes), Pages redeployed from the merge; then **1.1.1** (user,
+2026-10-27: "we can call that 1.1.1"): the XP bars waiting for the plates and the fountain
+fading with them, both seen in game; a patch
 number per fix batch, each one a `pack.py --release` from a commit. Work is on `main` (its
 history is python-toolchain's, which stays as it was). GitHub:
 https://github.com/FourCourtJester/FCJ-Heroes-StormInterface (public; pushed in
@@ -498,6 +501,83 @@ and Ko-fi).
 **To confirm (user, tonight of 2026-10-23): the interface drop-down is under Settings ->
 Observer** ("I think") - README's install step 3 and docs/development.md say so; correct both
 if not.
+
+**Fixed, seen in game (2026-10-27): the XP bar showed before the plates at game start** (user, on the second pass: "that looks good").
+Seen in game (user, 2026-10-26: "It's showing up *before* any nameplates are in the intro
+sequence"; 2026-10-27: "showing by default on game start... we *did* re-order things for
+`ctrl-e`").
+- **The cause:** the HUD keys (68978d8) put the XP track and fill in `FCJH_HideLower`. From
+  load, `FCJH_HudWatch`'s `Shown` state plays that animation back to 0, and a paused Fade
+  holds its frame's alpha at 255. So `row_packer`'s `Heroes0` (Alpha 0 while `HeroOverview1`
+  is hidden) never showed. Two owners for one alpha.
+- **The fix:** one owner. `FCJH_BlueXpWatch` and `FCJH_RedXpWatch` (FCJH_Toggles) each fade
+  their team's two XP frames, hiding on `Empty` (no hero yet), game over, the awards and
+  either HUD key. `row_packer` still places the bars and cuts their textures, and still hides
+  the row frame in `Heroes0`, but no longer sets the XP frames' alpha.
+- **Second pass (2026-10-27), the one that held:** "They still showed, but just for a second.
+  They didn't load in hidden" (user). The frames loaded at 255 and the watch faded them
+  OUT once `Empty` caught it. Now they load at Alpha 0 (FCJH_TopBar) and the animation
+  (`FCJH_ShowXp`) fades them IN; `Shown` needs `HeroOverview1` visible rather than being
+  the catch-all, and the default state is `Empty`.
+- **If it is still early in the intro:** the cell shows before the plate draws. Then do the
+  diagnostic squares (the cell, its portrait, the hero's status frame) and gate `Shown` on
+  whichever comes on with the plates.
+
+This ties into the parked intro slide and fade for the plates (item 7).
+
+**Settled, seen in game (2026-10-27): the fountain's backdrop fades with the row** (user:
+"seems good... fade in/out and available/unavailable status all seem to check out"; the
+victory splash still to watch). On
+`ctrl-e` the fountain hid last (user: "do the fountain icons hide *last*"): its purple
+`FCJH_Backdrop` had `IgnoreParentAlpha`, so it stayed solid through the rows' 0.2 s fade
+and blinked off with their Visibility key. Dropped (gen.py `fountain` template, both teams).
+Its stated reason, keeping its colour on cooldown, never needed it: cooldown dims only the
+sibling `IconImage`. No `IgnoreParentAlpha` is left in the interface.
+
+**Done, the studio (2026-10-27): the draft screen wears the matchup container** (user: "we
+redesigned the Matchup band in OBS; we now need to set it up in the `Draft` scene as well").
+`Draft.jsx` renders `MatchupSlab unit`, the same component and places as `#/source/matchup`,
+so the two cannot drift. The kicker is the scene's: Matchup passes the standby message,
+Draft the series ("Best of 5" from `series.pips`; empty with no series). `draft.css` is gone.
+Checked in the browser at 1920 x 1080, both sources, no console errors; untested in OBS.
+
+**Done, the studio (2026-10-27): the draft has its own entrance** (user: "we can target the
+Draft Matchup to have animation of its own"). A new `src/sources/draft.css`, scoped to
+`.fcjh-draft` on Draft's wrapper, so Matchup holds still: VS pops in over the smoke, the teams
+slide out from behind it, the series drops in, the lockup rises, ~1.3 s on the old band's ease
+(README, The draft screen). Scrubbed frame by frame in the browser at 1920 x 1080, settles in
+place, no console errors; the lockup's step unseen (none set on the board). Untested in OBS.
+
+**Done, the studio (2026-10-27): Matchup takes the draft's entrance** (user: "Can we add a
+similar intro animation to the Matchup band now?"). It moved from `sources/draft.css` (gone)
+into `matchupslab.css`, scoped to `.fcjh-slab.as-unit`, so the two sources share one entrance
+and cannot drift; a source wanting its own overrides it from its own stylesheet. Scrubbed on
+Matchup and checked attached on Draft, 1920 x 1080, no console errors. Untested in OBS.
+
+**Done, the studio (2026-10-27): the matchup container hides a score that means nothing**
+(user: "No team name? Hide team score. Team name, but both team score is 0? Hide team score").
+`TeamUnit` drops the score panel when its team has no name or the series is 0-0 (absent wins
+count as 0); the band shortens as it does for a missing logo, and `.no-score` insets whatever
+is outermost past the point. Matchup and Draft both. Seen in the browser with no names (both
+hidden, clean ends); the named states were left to the user's live board. Untested in OBS.
+
+**Done, the studio (2026-10-27): Series is on the Tournament panel**, under the two tabs
+("Let's put it under Left/Right tab"), moved from Teams (user: "its, you know, a tournament setting"). Same `series.pips`, so nothing resets;
+Clear on Teams still leaves it alone. The OBS guide (content/, uncommitted) follows.
+
+**To do, the studio: our team names in the scores cutout (user, 2026-10-26: "score screen,
+replace the names of the teams in the Score cutout").** Blizzard's panel footer says "Blue
+Team" / "Red Team", with each team's level under it and the kill count beside it
+(`design/ref_endgame_stats.jpg`: blue's name is right-aligned, ending at about x 683 before
+the "18"; red's is left-aligned, starting at about x 1197 after the "5"). Draw the Teams
+panel's names over those two words only, and keep Blizzard's level, kills and game time.
+To work out:
+- the cover sits *inside* the hole, which Scores.jsx's header warns about (a patch has an
+  edge). It needs the panel's own dark backing there, sized to Blizzard's words;
+- a long name has to fit or shrink, growing away from the kill count;
+- the colour-blind pair applies;
+- with no name set, Blizzard's words show through.
+Measure the two boxes from the reference into `layout.toml` `[scores]`, never in the CSS.
 
 **The XP Contribution pane - built, seen in game and good (user, 2026-10-25) (user, 2026-10-25: "Let's look at that
 experience breakdown panel, and see if we can re-arrange our info panes to accomodate").**

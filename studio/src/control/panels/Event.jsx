@@ -1,7 +1,11 @@
-import { Field, Panel, Row, Toggle } from '@single-studio/core/control'
+import { Field, Panel, Row, Select, Toggle } from '@single-studio/core/control'
 
-// The tournament: the two tabs' words, the marks the graphics carry, which of them are on
-// air, and who won.
+// The tournament: the two tabs' words, the series length, and who won.
+//
+// THE SERIES came over from Teams (user, 2026-10-27: "its, you know, a tournament setting"),
+// under the tabs ("Let's put it under Left/Right tab").
+// It is the number of pips a side, which is what the graphic draws: a best of five is three.
+// Clearing the teams still leaves it alone.
 //
 // The tabs are generic information panels - what goes in them is yours. "Division 1" and
 // "Game 3 of 5" are only what they were drawn for. Leave either blank and that tab is not
@@ -32,6 +36,15 @@ export default function Event() {
         <Field name="division" label="Left tab" placeholder="Division 1" />
         <Field name="game" label="Right tab" placeholder="Game 3 of 5" />
       </Row>
+      <Select
+        name="series.pips"
+        label="Series"
+        options={[
+          { label: 'Best of 3', value: '2' },
+          { label: 'Best of 5', value: '3' },
+          { label: 'Best of 7', value: '4' },
+        ]}
+      />
       <Row>
         <Toggle name="colourblind" label="Colour-blind mode" />
       </Row>

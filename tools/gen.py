@@ -3723,12 +3723,13 @@ def hero_cell_template(team, c, cfg):
 					<Anchor side="Right"  relative="$parent" pos="Min" offset="{u(bx1)}"/>
 					<AlphaMaskTexture val="{mask}"/>
 					<Unclipped val="true"/>
-					<!-- a dark purple backdrop, in the same mask; it keeps its colour on cooldown -->
+					<!-- a dark purple backdrop, in the same mask; it keeps its colour on cooldown (only
+					     IconImage dims). It takes its parent's alpha, so it fades with the row on the
+					     HUD keys rather than holding solid and blinking off last (user, 2026-10-27) -->
 					<Frame type="Image" name="FCJH_Backdrop">
 						<Anchor relative="$parent"/>
 						<Texture val="{WHITE}"/>
 						<Color val="{FOUNTAIN_BACKDROP}"/>
-						<IgnoreParentAlpha val="true"/>
 						<RenderPriority val="525"/>
 						<Unclipped val="true"/>
 						<AcceptsMouse val="false"/>
@@ -4381,11 +4382,13 @@ def row_packer(cfg):
         row_frame = f"{OVERVIEW}/{tn}HeroOverview/FCJH_{Team}RowFrame"   # over the plates (FCJH_TopBar)
         if n == 0:
             # no hero loaded yet (the loading seconds): the bar spanned all five slots over
-            # empty space, then snapped as heroes arrived (user, 2026-09-30) - hidden instead
+            # empty space, then snapped as heroes arrived (user, 2026-09-30) - hidden instead.
+            # The XP frames' alpha is FCJH_Toggles' (FCJH_<Team>XpWatch), not ours: the HUD
+            # keys' paused fade held it at 255 over this state's 0 (user, 2026-10-27)
             return (f'\t\t\t<State name="Heroes0">\n'
                     f'\t\t\t\t<When type="Property" frame="{cell(1)}" Visible="false"/>\n'
-                    + "".join(f'\t\t\t\t<Action type="SetProperty" frame="{f}" Alpha="0"/>\n' for f in xp_frames + (row_frame,))
-                    + '\t\t\t</State>\n')
+                    f'\t\t\t\t<Action type="SetProperty" frame="{row_frame}" Alpha="0"/>\n'
+                    '\t\t\t</State>\n')
         # n visible: cell n shown and cell n+1 hidden (n = 5: all shown)
         when = f'\t\t\t\t<When type="Property" frame="{cell(n)}" Visible="true"/>\n'
         if n < 5:
@@ -4399,7 +4402,6 @@ def row_packer(cfg):
         suffix = "" if n == 5 else f"_N{n}"
         for frame in xp_frames:
             acts += anchor(frame, "Left", x) + anchor(frame, "Right", x + w)
-            acts += f'\t\t\t\t<Action type="SetProperty" frame="{frame}" Alpha="255"/>\n'
         track = tex(name("xp", "track", team) + suffix)
         mask = tex(name("xp", "mask", team) + suffix)
         acts += (f'\t\t\t\t<Action type="SetProperty" frame="{top_panel}/FCJH_{Team}XPTrack" Texture="{track}"/>\n'
