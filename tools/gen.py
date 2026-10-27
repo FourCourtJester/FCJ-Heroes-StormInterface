@@ -3723,12 +3723,13 @@ def hero_cell_template(team, c, cfg):
 					<Anchor side="Right"  relative="$parent" pos="Min" offset="{u(bx1)}"/>
 					<AlphaMaskTexture val="{mask}"/>
 					<Unclipped val="true"/>
-					<!-- a dark purple backdrop, in the same mask; it keeps its colour on cooldown -->
+					<!-- a dark purple backdrop, in the same mask; it keeps its colour on cooldown (only
+					     IconImage dims). It takes its parent's alpha, so it fades with the row on the
+					     HUD keys rather than holding solid and blinking off last (user, 2026-10-27) -->
 					<Frame type="Image" name="FCJH_Backdrop">
 						<Anchor relative="$parent"/>
 						<Texture val="{WHITE}"/>
 						<Color val="{FOUNTAIN_BACKDROP}"/>
-						<IgnoreParentAlpha val="true"/>
 						<RenderPriority val="525"/>
 						<Unclipped val="true"/>
 						<AcceptsMouse val="false"/>
