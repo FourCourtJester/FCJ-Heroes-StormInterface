@@ -1,0 +1,76 @@
+/* ── the draft's entrance ──────────────────────────────────────────────────────────────
+   The draft screen's own (user, 2026-10-27: "we can target the Draft Matchup to have
+   animation of its own"), so it is scoped to .fcjh-draft and the matchup source is
+   untouched. It plays when the source mounts: OBS shuts it down while its scene is hidden,
+   so cutting back to the draft plays it again, and Scene renders nothing until the show's
+   values have arrived.
+
+   It builds out from the middle, the way the matchup reads: the VS and the smoke behind it,
+   then each team sliding out from behind the VS to its side, then the series dropping in
+   above and the lockup rising in below. */
+.fcjh-draft {
+  --enter: 670ms;
+  --enter-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+@keyframes fcjh-draft-x {
+  from {
+    opacity: 0;
+    transform: translateX(var(--from));
+  }
+}
+
+@keyframes fcjh-draft-y {
+  from {
+    opacity: 0;
+    transform: translateY(var(--from));
+  }
+}
+
+@keyframes fcjh-draft-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+
+@keyframes fcjh-draft-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+.fcjh-draft .fcjh-slab-mid {
+  animation: fcjh-draft-fade var(--enter) var(--enter-ease) both;
+}
+
+.fcjh-draft .fcjh-slab-vs {
+  animation: fcjh-draft-pop var(--enter) var(--enter-ease) both;
+}
+
+/* from behind the VS: each starts a third of its own width toward the middle */
+.fcjh-draft .fcjh-unit {
+  animation: fcjh-draft-x var(--enter) var(--enter-ease) both;
+  animation-delay: 200ms;
+}
+
+.fcjh-draft .fcjh-unit.blue {
+  --from: 33%;
+}
+
+.fcjh-draft .fcjh-unit.red {
+  --from: -33%;
+}
+
+/* the series down onto the row, the lockup up under it: each from half its own height */
+.fcjh-draft .fcjh-slab-kicker {
+  --from: 50%;
+  animation: fcjh-draft-y var(--enter) var(--enter-ease) both;
+  animation-delay: 500ms;
+}
+
+.fcjh-draft .fcjh-slab-lockup {
+  --from: -50%;
+  animation: fcjh-draft-y var(--enter) var(--enter-ease) both;
+  animation-delay: 650ms;
+}

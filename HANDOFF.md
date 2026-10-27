@@ -541,6 +541,13 @@ so the two cannot drift. The kicker is the scene's: Matchup passes the standby m
 Draft the series ("Best of 5" from `series.pips`; empty with no series). `draft.css` is gone.
 Checked in the browser at 1920 x 1080, both sources, no console errors; untested in OBS.
 
+**Done, the studio (2026-10-27): the draft has its own entrance** (user: "we can target the
+Draft Matchup to have animation of its own"). A new `src/sources/draft.css`, scoped to
+`.fcjh-draft` on Draft's wrapper, so Matchup holds still: VS pops in over the smoke, the teams
+slide out from behind it, the series drops in, the lockup rises, ~1.3 s on the old band's ease
+(README, The draft screen). Scrubbed frame by frame in the browser at 1920 x 1080, settles in
+place, no console errors; the lockup's step unseen (none set on the board). Untested in OBS.
+
 **To do, the studio: our team names in the scores cutout (user, 2026-10-26: "score screen,
 replace the names of the teams in the Score cutout").** Blizzard's panel footer says "Blue
 Team" / "Red Team", with each team's level under it and the kill count beside it
