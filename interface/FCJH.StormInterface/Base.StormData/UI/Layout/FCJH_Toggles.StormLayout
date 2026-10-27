@@ -58,8 +58,9 @@
 				     bars (in ObserverTopPanel; the XP bars have watchers of their own, below), the talent rows (Tracer's meter) and heroic
 				     tips. Fade alone, never Visibility, on frames whose visibility the game or our own
 				     gates own (the core bar, the inspect card, the panes); Fade and Visibility, as
-				     Blizzard's, on the rows (the fountain's backdrop ignores its parent's alpha) and the
-				     map panels. Our containers fade whole, so their watchers keep running. Chat, the kill
+				     Blizzard's, on the rows and the map panels. Nothing inside them may carry
+				     IgnoreParentAlpha: it skips the fade and blinks off last on the Visibility key, as
+				     the fountain's backdrop did until 2026-10-27. Our containers fade whole, so their watchers keep running. Chat, the kill
 				     feed and the replay box keep their own keys, as with Blizzard's.
 				     The game's end hides the same (user, 2026-10-25: "after the game, a health
 				     notification bleeds thru"): Blizzard hides its plates for the victory splash, and a

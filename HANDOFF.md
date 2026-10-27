@@ -500,7 +500,7 @@ and Ko-fi).
 Observer** ("I think") - README's install step 3 and docs/development.md say so; correct both
 if not.
 
-**Fixed, untested in game (2026-10-27): the XP bar showed before the plates at game start.**
+**Fixed, seen in game (2026-10-27): the XP bar showed before the plates at game start** (user, on the second pass: "that looks good").
 Seen in game (user, 2026-10-26: "It's showing up *before* any nameplates are in the intro
 sequence"; 2026-10-27: "showing by default on game start... we *did* re-order things for
 `ctrl-e`").
@@ -512,7 +512,7 @@ sequence"; 2026-10-27: "showing by default on game start... we *did* re-order th
   their team's two XP frames, hiding on `Empty` (no hero yet), game over, the awards and
   either HUD key. `row_packer` still places the bars and cuts their textures, and still hides
   the row frame in `Heroes0`, but no longer sets the XP frames' alpha.
-- **Second pass, untested in game (2026-10-27):** "They still showed, but just for a second.
+- **Second pass (2026-10-27), the one that held:** "They still showed, but just for a second.
   They didn't load in hidden" (user). The frames loaded at 255 and the watch faded them
   OUT once `Empty` caught it. Now they load at Alpha 0 (FCJH_TopBar) and the animation
   (`FCJH_ShowXp`) fades them IN; `Shown` needs `HeroOverview1` visible rather than being
@@ -523,14 +523,14 @@ sequence"; 2026-10-27: "showing by default on game start... we *did* re-order th
 
 This ties into the parked intro slide and fade for the plates (item 7).
 
-**A test, untested in game (2026-10-27): the fountain's backdrop fades with the row.** On
+**Settled, seen in game (2026-10-27): the fountain's backdrop fades with the row** (user:
+"seems good... fade in/out and available/unavailable status all seem to check out"; the
+victory splash still to watch). On
 `ctrl-e` the fountain hid last (user: "do the fountain icons hide *last*"): its purple
 `FCJH_Backdrop` had `IgnoreParentAlpha`, so it stayed solid through the rows' 0.2 s fade
 and blinked off with their Visibility key. Dropped (gen.py `fountain` template, both teams).
 Its stated reason, keeping its colour on cooldown, never needed it: cooldown dims only the
-sibling `IconImage`. **If it goes badly** (the backdrop dims on cooldown, or vanishes):
-`git revert` the commit. If it sticks, FCJH_Toggles' HUD comment ("the fountain's backdrop
-ignores its parent's alpha") wants rewording.
+sibling `IconImage`. No `IgnoreParentAlpha` is left in the interface.
 
 **Done, the studio (2026-10-27): the draft screen wears the matchup container** (user: "we
 redesigned the Matchup band in OBS; we now need to set it up in the `Draft` scene as well").
