@@ -481,6 +481,11 @@ land on whole pixels at 1080p (`inspect_card.line`), so at 1440p they may come o
 
 ## 7. What's next
 
+**To check next (user, 2026-10-27, on opening the series-screen PR):**
+- [ ] The Game scene's top bar has a graphical issue - look at it in OBS with the user
+- [ ] Update the OBS scene collection (`studio/public/FCJ_Heroes_Esports_v1.0.json`, written
+  by `tools/obs.py`) - it predates the series scenes
+
 **Series results: a Win a map, nothing automatic** (user, 2026-10-27, after showing option 3
 around: "we will scrap any kind of automatic stamping of a winner"). The Score Screen Winner
 is the scores screen's only again (grouped toggles, `series:winner` and `latest()` gone), and
