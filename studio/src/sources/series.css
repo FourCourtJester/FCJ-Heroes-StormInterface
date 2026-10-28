@@ -1,0 +1,399 @@
+/* The series screen: the map draft's cards, and the top half over them. Hand-written and owned
+   here; ../generated/series.json carries the numbers Series.jsx and SeriesTop.jsx feed in.
+
+   Every source of the four is TRANSPARENT: the cards sit over whatever the scene's background
+   is, and the top half is borders over cameras. Nothing here paints across the screen. */
+
+.fcjh-series {
+  position: relative;
+  width: var(--screen-w);
+  height: var(--screen-h);
+  font-family: 'Saira Semi Condensed', sans-serif;
+  color: var(--text);
+}
+
+.fcjh-series .blue {
+  --team: var(--blue);
+}
+
+.fcjh-series .red {
+  --team: var(--red);
+}
+
+/* ── a card ────────────────────────────────────────────────────────────────────────────
+   Cut at the cameras' corners - top-right and bottom-left - so the scene reads as one set.
+   The glow is on the card and the cut on what is inside it, because a clip would cut the
+   glow off with the corners. */
+.fcjh-card {
+  position: absolute;
+  top: var(--cards-top);
+  height: var(--cards-h);
+  /* a card is 107 px wide at fifteen maps and 150 at eleven: what has to fit across it is
+     sized by the card (cqw), up to the size it has at eleven */
+  container-type: inline-size;
+  --cut: var(--card-cut);
+  --clip: polygon(
+    0 0,
+    calc(100% - var(--cut)) 0,
+    100% var(--cut),
+    100% 100%,
+    var(--cut) 100%,
+    0 calc(100% - var(--cut))
+  );
+}
+
+.fcjh-card-rim {
+  position: absolute;
+  inset: 0;
+  clip-path: var(--clip);
+  background: var(--card-line, var(--rim));
+}
+
+.fcjh-card-art {
+  position: absolute;
+  inset: var(--card-rim);
+  overflow: hidden;
+  clip-path: var(--clip);
+  background: #0a0610;
+}
+
+/* the picture sits in Single Studio's own wrapper (.ss-image), which has no size of its own:
+   the wrapper takes the box, so the picture's cover fit has something to cover */
+.fcjh-card-art > .ss-image {
+  position: absolute;
+  inset: 0;
+}
+
+.fcjh-card-art > .ss-image img {
+  width: 100%;
+  height: 100%;
+}
+
+/* THE NAME SITS ON THE BOTTOM EDGE, every card alike; whose it is stacks above it */
+.fcjh-card-foot {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 30px 5px 9px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  background: linear-gradient(to top, rgb(10 6 16 / 0.95) 65%, rgb(10 6 16 / 0));
+  text-align: center;
+}
+
+/* ALWAYS TWO LINES TALL (user, 2026-10-27: "every map taking up 2 lines ... more uniform"),
+   so what stacks above starts at one height across the row; a one-line name sits in the
+   middle of the two. The box is the stylesheet's size, so a name FitLines shrinks keeps it. */
+.fcjh-card-name {
+  width: 100%;
+  height: 2.04em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: min(var(--map-name), 13cqw);
+  font-weight: 700;
+  line-height: 1.02;
+  text-transform: uppercase;
+}
+
+/* FitLines' own box: a block the width of its line, so it wraps there and can be measured */
+.fcjh-fit-lines {
+  display: block;
+  width: 100%;
+}
+
+.fcjh-card-who {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--team);
+}
+
+/* ONE LOGO SIZE, a ban's and a win's alike (user, 2026-10-27: "That's quite a diff in team
+   logo sizes"). The box is sized, not the img: fit="contain" writes width: 100% on the img
+   itself, which beat a size set on it here, so a ban's logo grew to the card's width. */
+.fcjh-card-logo {
+  width: min(54px, 46cqw);
+  aspect-ratio: 1;
+}
+
+.fcjh-card-logo img {
+  width: 100%;
+  height: 100%;
+}
+
+/* ── a pick ────────────────────────────────────────────────────────────────────────────
+   The picker's colour round it and "Game N" across the top; the game being played gets a dot
+   in its tag and a glow, so the screen says which one is on without anyone reading. */
+.fcjh-card.pick {
+  --card-line: var(--team);
+}
+
+.fcjh-card.live {
+  filter: drop-shadow(0 0 14px var(--team));
+}
+
+.fcjh-card-tag {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  background: var(--team);
+  color: #120b1a;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.fcjh-card-tag i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #120b1a;
+}
+
+/* ── a win ─────────────────────────────────────────────────────────────────────────────
+   The art dimmed, and the winner's logo and name at the foot, over the map's name - the logo
+   arrives with the win and not before (user, 2026-10-27). The laurel round the logo went:
+   it did not work on any card, narrow or wide. The picker is still the rim and the
+   tag, because the side that picked a map is not always the side that won it. */
+.fcjh-card.won .fcjh-card-art > .ss-image img {
+  filter: brightness(0.5) saturate(0.8);
+}
+
+.fcjh-card-win {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+/* the winner's name: two lines, then smaller (FitLines) */
+.fcjh-card-win > :last-child {
+  box-sizing: border-box;
+  padding: 0 6px;
+  font-size: min(14px, 12cqw);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--team);
+}
+
+/* ── a ban ─────────────────────────────────────────────────────────────────────────── */
+.fcjh-card.ban {
+  --card-line: #5b5368;
+}
+
+.fcjh-card.ban .fcjh-card-art > .ss-image img {
+  filter: grayscale(1) brightness(0.38);
+}
+
+.fcjh-card-bar {
+  position: absolute;
+  left: -4px;
+  right: -4px;
+  top: 30%;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--team);
+  color: #120b1a;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transform: skewY(-12deg);
+}
+
+.fcjh-card.ban .fcjh-card-name {
+  color: #8f879c;
+}
+
+/* ── the top half: cameras ─────────────────────────────────────────────────────────────
+   The webcams' frames at this screen's size, with the camera under them in OBS. THE NAME RIDES
+   IN THE FRAME (user, 2026-10-27), on a smoked strip along the window's foot, so the camera
+   needs no room under it. The strip is cut to the window's shape, so the chamfer cuts it as
+   the mask cuts the camera, and its words keep clear of the cut on the side away from it. */
+.fcjh-scam {
+  position: absolute;
+  top: var(--cam-top);
+  width: var(--cam-w);
+  height: var(--cam-h);
+  /* the widest the cut gets, plus air: where the strip's words may start */
+  --clear: calc(var(--cam-w) * var(--chamfer-w) / 100 + 16px);
+  --window: polygon(
+    0 0,
+    calc(100% - var(--chamfer-pw)) 0,
+    100% var(--chamfer-ph),
+    100% 100%,
+    var(--chamfer-pw) 100%,
+    0 calc(100% - var(--chamfer-ph))
+  );
+}
+
+.fcjh-scam.flip {
+  --window: polygon(
+    var(--chamfer-pw) 0,
+    100% 0,
+    100% calc(100% - var(--chamfer-ph)),
+    calc(100% - var(--chamfer-pw)) 100%,
+    0 100%,
+    0 var(--chamfer-ph)
+  );
+}
+
+.fcjh-scam-window {
+  position: absolute;
+  inset: 0;
+  clip-path: var(--window);
+}
+
+.fcjh-scam > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.fcjh-scam-plate {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--plate-h);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0 24px 0 var(--clear);
+  /* the Webcams plates' own smoke, from webcam.json, so the two cannot drift */
+  background: rgb(10 6 16 / var(--plate-smoke));
+}
+
+.fcjh-scam.flip .fcjh-scam-plate {
+  align-items: flex-end;
+  padding: 0 var(--clear) 0 24px;
+}
+
+.fcjh-scam-plate > * {
+  max-width: 100%;
+  white-space: nowrap;
+}
+
+.fcjh-scam-plate .who {
+  font-size: var(--name);
+  font-weight: 700;
+  line-height: 1.05;
+  color: #fff;
+}
+
+.fcjh-scam-plate .at {
+  font-size: var(--social);
+  line-height: 1.1;
+  color: #9fb4c8;
+}
+
+/* ── the top half: marks ───────────────────────────────────────────────────────────────
+   The lockup: the scores screen's pair, stood on end with cameras and lying down without
+   (`.row`). Placed by the x: the boxes are
+   the same height, so with both marks the x lands on its middle, and alone a mark's
+   box is what lands there. Each picture fills its box and is pushed against the x, so two
+   marks of any shape still close on it rather than floating in their boxes. */
+.fcjh-series-lockup {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translate(-50%, -50%);
+}
+
+.fcjh-series-lockup-mark {
+  width: var(--lockup-w);
+  height: var(--lockup-h);
+}
+
+/* Single Studio's wrapper has no size of its own; it takes the box, as on the cards */
+.fcjh-series-lockup-mark > .ss-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.fcjh-series-lockup-mark img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.fcjh-series-lockup-mark.first img {
+  object-position: center bottom;
+}
+
+.fcjh-series-lockup-mark.second img {
+  object-position: center top;
+}
+
+.fcjh-series-lockup.row {
+  flex-direction: row;
+}
+
+.fcjh-series-lockup.row .fcjh-series-lockup-mark.first img {
+  object-position: right center;
+}
+
+.fcjh-series-lockup.row .fcjh-series-lockup-mark.second img {
+  object-position: left center;
+}
+
+/* alone, it has nothing to close on */
+.fcjh-series-lockup.lone .fcjh-series-lockup-mark img {
+  object-position: center;
+}
+
+/* the x that joins them, as the scores screen's: its air above and below, or either side */
+.fcjh-series-x {
+  margin: var(--x-gap) 0;
+  font-size: var(--x-text);
+  font-weight: 300;
+  line-height: 1;
+  color: #fff;
+}
+
+.fcjh-series-lockup.row .fcjh-series-x {
+  margin: 0 var(--x-gap);
+}
+
+/* ── the screenshot fill ───────────────────────────────────────────────────────────────
+   Only with `?fill` on the URL, as the webcams' is: a flat colour in the windows for stills.
+   Never on air - it would cover the camera. */
+.fcjh-series.fill .fcjh-scam-window {
+  background: linear-gradient(160deg, #3a3346, #15111c);
+}
+
+/* ── no entrance ───────────────────────────────────────────────────────────────────────
+   None, for the webcams' reason: the frames have to sit on cameras OBS cannot move in step.
+   The cards could have one; they have not been given one yet. */

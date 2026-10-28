@@ -55,8 +55,8 @@ Only one pane is open at a time: opening one closes whichever is open.
 ## The broadcast studio
 
 Graphics for streaming the game in OBS: team names, logos and the series score over the top
-bar, plus a standby screen, the draft, a matchup band, webcam frames and an end-of-game
-scores screen. It's an
+bar, plus a standby screen, the draft, a matchup band, webcam frames, an end-of-game
+scores screen and a series screen for the map draft between games. It's an
 [operator's board](https://fourcourtjester.github.io/FCJ-Heroes-StormInterface/#/) that
 runs in your browser. No install and no server.
 

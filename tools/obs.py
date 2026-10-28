@@ -521,8 +521,9 @@ def spec(b):
                        "red": {"left": r2(b.name["red"][0]), "width": r2(b.band_box)},
                        "name_font_px_max": 24,
                        # how far the logo plate laps back over the name plate, so the two
-                       # rims land on each other and read as one seam
-                       "logo_lap": r2(b.d + b.rim_w),
+                       # rims land on each other and read as one seam - and the name plate's
+                       # drag inward on top, which it spends under the logo
+                       "logo_lap": r2(b.d + b.rim_w + b.g["name_inward"]),
                        "logo_plate": {"width": r2(b.logo["blue"][2]), "left": {"blue": r2(b.logo["blue"][0]),
                                       "red": r2(b.logo["red"][0])},
                                       "at": "the band's inner end; leave it out with no logo", "mark_px": 46}},
@@ -588,6 +589,8 @@ def spec(b):
             "tabs": {"division": [r2(v) for v in _box(b.tabs["blue"]["poly"])],
                      "game": [r2(v) for v in _box(b.tabs["red"]["poly"])]},
             "event": [r2(v) for v in _box(b.bp["hexagon"])],
+            # the straight line along each level wing's foot ([top_bar] level_rim)
+            "level_rim": {t: [r2(v) for v in b.g["level_rim"][t]] for t in ("blue", "red")},
             # the corners, outside everything a best of 7 draws
             "corner": _corner(b),
         },
@@ -990,10 +993,110 @@ def scores_spec(b):
         # the two marks, closing on the x between them
         "marks": {"h": sc["mark_h"], "w": sc["mark_w"], "pad": sc["mark_pad"],
                   "x_text": sc["x_text"], "x_gap": sc["x_gap"]},
-        # how far above the horizon a comet has finished fading
-        "sky": {"comet_fade": sc["comet_fade"]},
+        # the sky, which the series screen wears whole (components/Sky.jsx): the backdrop's
+        # lit floor starts at the panel's foot, so that is the horizon the comets stop at,
+        # and how far above it they have finished fading
+        "sky": {"horizon": sc["panel_y"] + sc["panel_h"], "comet_fade": sc["comet_fade"],
+                # the glints and the meteor, and the glow on the horizon under the panel's
+                # centre, which is the screen's
+                "glints": sc["glints"], "glint_cycle": sc["glint_cycle"],
+                "glow": {"x": sc["panel_x"] + sc["panel_w"] / 2,
+                         "w": sc["glow_w"], "h": sc["glow_h"], "rays": sc["rays_r"],
+                         "twin_y": sc["panel_y"]},
+                "meteor_cycle": sc["meteor_cycle"]},
         "colours": {"blue": b.team["blue"], "red": b.team["red"],
                     "rim": b.rim, "text": CYAN[0]},
+    }
+
+
+def map_slug(name):
+    """A battleground's file name: "Blackheart's Bay" -> blackhearts-bay. The apostrophe goes
+    rather than becoming a hyphen, so the slug reads as the name does."""
+    return re.sub(r"[^a-z0-9]+", "-", name.lower().replace("'", "")).strip("-")
+
+
+def series_band(b):
+    """Where OBS puts the Matchup Draft source on the series scene: its foot cropped, scaled from what
+    is left, and set so what shows - the kicker's top to the row's foot - is CENTRED between the
+    cards and the screen's foot (user, 2026-10-27: "mathematically, this matchup band isnt
+    centered"). Worked out rather than typed, so moving the cards moves the band with them.
+
+    `y` is whole pixels, as OBS's Position is typed; `foot` is where the crop's edge lands."""
+    s, u = b.cfg["series"], matchup_spec(b)["unit"]
+    k = s["band_scale"]
+    top, bottom = u["kicker"][1], u["top"] + u["h"]          # source px: what shows of the band
+    shown = k * (bottom - top)
+    y = round(s["cards_bottom"] + (SH - s["cards_bottom"] - shown) / 2 - k * top)
+    w, h = round(k * SW), round(k * (SH - s["band_crop"]))
+    return {"crop": s["band_crop"], "scale": k, "x": round((SW - w) / 2), "y": y,
+            "w": w, "h": h, "foot": y + h}
+
+
+def series_spec(b):
+    """The series screen: the cards' band, the cameras over it, and the marks by camera count.
+
+    A card's width is not here: it is the band shared by however many maps are in the pool,
+    which only the page knows. What is here is the size the ART is cut at - the card at the
+    usual pool (`art_for`) - so a picture is cropped to its middle as the pool grows and
+    scaled up a little as it shrinks, never stretched out of shape."""
+    s, cam = b.cfg["series"], b.cam
+    r2 = lambda v: round(float(v), 2)
+    span = SW - 2 * s["edge"]
+    n = s["art_for"]
+    card_w = (span - s["card_gap"] * (n - 1)) / n
+    card_h = s["cards_bottom"] - s["cards_top"]
+    slugs = [map_slug(m) for m in s["maps"]]
+    assert len(set(slugs)) == len(slugs), "two maps share a slug"
+    assert s["cam_w"] * 9 == s["cam_h"] * 16, "a series camera must be 16:9 for the masks"
+    assert s["cam_top"] + s["cam_h"] <= s["cards_top"], "the cameras run into the cards"
+    # two cameras: the lockup between the windows, its x on the middle of their inner edges'
+    # STRAIGHT run. Each inner edge is cut at the top (the left window's top right, the right
+    # one's top left), so the run is from the chamfer's foot to the window's; the cut is not
+    # room, and centred on the whole height the lockup read high (user, 2026-10-27)
+    (lw, lh), (xt, xg) = s["two_mark"], s["two_x"]
+    between = SW - 2 * (s["edge"] + s["cam_w"])
+    straight = (s["cam_top"] + cam["chamfer"] * s["cam_h"], s["cam_top"] + s["cam_h"])
+    assert lw <= between, "the series lockup runs into the cameras"
+    assert 2 * lh + xt + 2 * xg <= straight[1] - straight[0],         "the series lockup is taller than the cameras' straight edges"
+    lockup = lambda cx, cy, w=lw, h=lh, t=xt, g=xg: {"cx": round(cx), "cy": round(cy), "w": w,
+                                                     "h": h, "x_text": t, "x_gap": g}
+    # one camera: the same lockup in the left window's place. Nothing cuts that box, so its
+    # middle is the window's own
+    # no cameras: the lockup lying down, above the cards by the matchup band's distance below
+    # them - from the cards' foot to the top of what shows of the band (user, 2026-10-27)
+    (nw, nh), (nt, ng) = s["none_mark"], s["none_x"]
+    band, u = series_band(b), matchup_spec(b)["unit"]
+    band_gap = band["y"] + band["scale"] * u["kicker"][1] - s["cards_bottom"]
+    assert 2 * nw + nt + 2 * ng <= SW - 2 * s["edge"], "the series lockup is wider than the cards"
+    assert nh + band_gap <= s["cards_top"], "the series lockup runs off the top of the screen"
+    return {
+        "about": "FCJH series screen: the map draft's cards, and the cameras and marks over "
+                 "them. Generated by tools/obs.py from layout.toml's [series]; the sources "
+                 "are studio/src/sources/Series*.jsx.",
+        "screen": [SW, SH],
+        "maps": [{"name": m, "slug": sl} for m, sl in zip(s["maps"], slugs)],
+        "cards": {"left": s["edge"], "right": SW - s["edge"], "top": s["cards_top"],
+                  "bottom": s["cards_bottom"], "gap": s["card_gap"], "cut": s["card_cut"],
+                  "rim": s["card_rim"], "name": s["map_name"]},
+        # the art's cut: cut at this, studio/public/maps/<slug>.jpg; 2x is crisper
+        "art": {"for": n, "w": round(card_w - 2 * s["card_rim"]),
+                "h": card_h - 2 * s["card_rim"], "dir": "maps/", "ext": ".jpg"},
+        "cam": {"w": s["cam_w"], "h": s["cam_h"], "top": s["cam_top"],
+                "left": s["edge"], "right": SW - s["edge"] - s["cam_w"],
+                # the webcams' own cut, as a share of the box: the strip's words keep clear of it
+                "chamfer_pct": [r2(100 * b.lean * cam["chamfer"] * 9 / 16),
+                                r2(100 * cam["chamfer"])],
+                "plate_h": s["plate_h"], "name": s["plate_name"], "social": s["plate_social"]},
+        "marks": {
+            "2": {"lockup": lockup(SW / 2, sum(straight) / 2)},
+            "1": {"lockup": lockup(s["edge"] + s["cam_w"] / 2, s["cam_top"] + s["cam_h"] / 2)},
+            "0": {"lockup": lockup(SW / 2, s["cards_top"] - band_gap - nh / 2, nw, nh, nt, ng)},
+        },
+        # OBS settings for the Matchup Draft source on this scene, for the guide and the mock - the page
+        # ignores them
+        "band": series_band(b),
+        "colours": {"blue": b.team["blue"], "red": b.team["red"], "rim": b.rim,
+                    "text": CYAN[0], "plate_smoke": cam["plate_smoke"]},
     }
 
 
@@ -1029,6 +1132,8 @@ def files(cfg):
         # the scores screen: the hole, the screen it is cut from, and the victory marks
         Path("scores.json"): enc(json.dumps(scores_spec(b), indent=2, ensure_ascii=False) + "\n"),
         Path("win_laurel.svg"): enc(laurel_svg(b)),
+        # the series screen: the map draft's cards, and its top half by camera count
+        Path("series.json"): enc(json.dumps(series_spec(b), indent=2, ensure_ascii=False) + "\n"),
         # the matchup slab, explored alongside the bottom band
         Path("matchup.json"): enc(json.dumps(matchup_spec(b), indent=2, ensure_ascii=False) + "\n"),
         Path("badge_hex.svg"): enc(hex_chrome_svg(b, b.cfg["matchup"]["badge"])),

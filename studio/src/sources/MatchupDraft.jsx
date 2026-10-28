@@ -4,7 +4,12 @@ import { Scene } from '@single-studio/core/source'
 import { BAND_VARS, SCREEN } from '../components/MatchupBand'
 import MatchupSlab, { SLAB_VARS } from '../components/MatchupSlab'
 
-// The draft screen: what the broadcast draws over Blizzard's own ban-and-pick screen.
+// The matchup band with the series on its plate: over Blizzard's ban-and-pick screen, and
+// under the series screen's cards.
+//
+// MATCHUP-DRAFT, not Draft (user, 2026-10-27): it is the band on two scenes now, the draft's and
+// the map series', so it is named for what it is. Matchup is the same band with the Standby
+// message on its plate, for the standby screen.
 //
 // It is the matchup source's container - score, logo and name a side, the VS, the lockup -
 // in the same place (user, 2026-10-27: "we redesigned the Matchup band in OBS; we now need to
@@ -20,7 +25,9 @@ import MatchupSlab, { SLAB_VARS } from '../components/MatchupSlab'
 // No cover: dropped on 2026-10-26 ("users can use their own covers"); studio/README.md keeps
 // why the two attempts were wrong.
 //
-// Add to OBS as a Browser source pointed at #/source/draft, 1920 x 1080, over the game capture.
+// Add to OBS as a Browser source pointed at #/source/matchup-draft, 1920 x 1080: over the game
+// capture on the draft scene, and cropped and scaled under the cards on the series scenes
+// (content/guides/obs.md).
 
 const [SCREEN_W, SCREEN_H] = SCREEN
 
@@ -40,7 +47,7 @@ function Series() {
   return text ? <span>{text}</span> : null
 }
 
-export default function Draft() {
+export default function MatchupDraft() {
   return (
     <Scene width={SCREEN_W} height={SCREEN_H}>
       <div className="fcjh-band-scene" style={{ ...SLAB_VARS, ...SCENE_VARS }}>
