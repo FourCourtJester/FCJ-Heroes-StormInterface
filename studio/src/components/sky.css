@@ -144,3 +144,180 @@
     transform: translate3d(2160px, calc(var(--comet-y, 90px) + 800px), 0) rotate(21deg);
   }
 }
+
+/* ── something to notice ───────────────────────────────────────────────────────────────
+
+   The stars, dust and comets are what the sky IS; these are what it does, so a viewer looks
+   up (user, 2026-10-28: "we need something else noticable"). The field twinkles as a whole
+   tile, which against a plate with stars painted in reads as a dimmer, not a twinkle - so a
+   few stand-out stars take turns to glint, a glow breathes on the horizon, and once in a
+   while a big star falls. Their numbers are layout.toml [scores], through scores.json `sky`.
+
+   THE GLOW SITS ON THE HORIZON under the panel's centre, so on the scores screen what shows
+   of it is the floor lighting up under the marks, and its rays reaching out round the panel.
+   Once the Score Screen Winner is called it is the winner's colour (Sky's `won`), and
+   colour-blind mode's, since the scores screen hands its team colours down. */
+
+/* the rays: faint spokes from the glow's centre, turning slowly, gone by the horizon so they
+   rise off the floor rather than run across it */
+.fcjh-ray-field {
+  position: absolute;
+  inset: 0;
+  mask-image: linear-gradient(to bottom, #000 0, #000 calc(var(--horizon) - 60px), transparent var(--horizon));
+  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 calc(var(--horizon) - 60px), transparent var(--horizon));
+}
+
+.fcjh-rays {
+  position: absolute;
+  left: calc(var(--glow-x) - var(--rays-r));
+  top: calc(var(--horizon) - var(--rays-r));
+  width: calc(var(--rays-r) * 2);
+  height: calc(var(--rays-r) * 2);
+  border-radius: 50%;
+  /* two sets of spokes on different spacings, so they fall unevenly - one set alone was a
+     sunburst, a cartoon of a sky rather than light in one */
+  background:
+    repeating-conic-gradient(rgb(var(--star-rgb) / .055) 0deg 1.4deg, transparent 1.4deg 17deg),
+    repeating-conic-gradient(from 7deg, rgb(var(--star-rgb) / .04) 0deg 3deg, transparent 3deg 23deg);
+  mask-image: radial-gradient(closest-side, transparent 4%, #000 16%, transparent 85%);
+  -webkit-mask-image: radial-gradient(closest-side, transparent 4%, #000 16%, transparent 85%);
+  animation: fcjh-turn 160s linear infinite;
+}
+
+@keyframes fcjh-turn {
+  to { transform: rotate(360deg); }
+}
+
+/* the glow: lighter over the floor, always; and a winner's tint over that, which is a hue
+   blend - it keeps the floor's own light and detail and changes only its colour. Lightening
+   alone was tried and did not read: the floor is already bright cyan, and red screened onto
+   it comes out barely pink (2026-10-28).
+
+   The tint fades on the element and the breathing is on its ::before, because the blend has
+   to belong to the thing that fades - the other way round, the fade would wrap the blend and
+   it would blend with nothing. */
+.fcjh-glow {
+  position: absolute;
+  left: calc(var(--glow-x) - var(--glow-w) / 2);
+  top: calc(var(--horizon) - var(--glow-h) / 2);
+  width: var(--glow-w);
+  height: var(--glow-h);
+}
+
+.fcjh-glow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(closest-side, rgb(var(--glow-rgb) / var(--glow-core)),
+    rgb(var(--glow-rgb) / calc(var(--glow-core) * .3)) 55%, transparent);
+  animation: fcjh-breathe 4.5s ease-in-out infinite alternate;
+}
+
+.fcjh-glow.neutral {
+  --glow-rgb: var(--star-rgb);
+  --glow-core: .42;
+  mix-blend-mode: screen;
+}
+
+.fcjh-glow.blue,
+.fcjh-glow.red {
+  --glow-core: 1;
+  mix-blend-mode: color;
+  opacity: 0;
+  transition: opacity 1.6s ease;
+}
+
+.fcjh-glow.blue {
+  --glow-rgb: var(--blue-rgb, var(--sky-blue-rgb));
+}
+
+.fcjh-glow.red {
+  --glow-rgb: var(--red-rgb, var(--sky-red-rgb));
+}
+
+/* The hue layer only recolours, and the sky under it is mostly dark, so a faint screen of the
+   same colour lifts it enough to read as the winner's light. */
+.fcjh-glow.lift {
+  --glow-core: .38;
+  mix-blend-mode: screen;
+}
+
+/* the twin on the panel's top edge, on dark sky, where a screen of the colour is the colour */
+.fcjh-glow.twin {
+  top: calc(var(--glow-twin-y) - var(--glow-h) / 2);
+  --glow-core: .9;
+}
+
+.fcjh-sky.won-blue .fcjh-glow.blue,
+.fcjh-sky.won-red .fcjh-glow.red {
+  opacity: 1;
+}
+
+@keyframes fcjh-breathe {
+  from { opacity: .5; transform: scale(.9); }
+  to { opacity: 1; transform: scale(1.05); }
+}
+
+/* a glint: a small star at rest, which flares to a four-pointed sparkle and turns as it
+   fades. Over the dust (z-index), which would otherwise dim it, as it does the field */
+.fcjh-glint {
+  position: absolute;
+  z-index: 1;
+  width: 44px;
+  height: 44px;
+  margin: -22px 0 0 -22px;
+  background:
+    radial-gradient(circle, rgb(255 255 255 / 1) 0 1.6px, rgb(var(--star-rgb) / .55) 3px, transparent 9px),
+    linear-gradient(90deg, transparent, rgb(var(--star-rgb) / .95), transparent) center / 100% 1.5px no-repeat,
+    linear-gradient(0deg, transparent, rgb(var(--star-rgb) / .95), transparent) center / 1.5px 100% no-repeat;
+  opacity: .45;
+  transform: scale(.3);
+  animation: fcjh-glint var(--glint-cycle) ease-in-out infinite;
+}
+
+@keyframes fcjh-glint {
+  0%, 12%, 100% { opacity: .45; transform: scale(.3) rotate(0deg); }
+  5% { opacity: 1; transform: scale(1.2) rotate(30deg); }
+}
+
+/* the meteor: bigger, brighter and faster than a comet, and the other way across - from the
+   right, nearly flat, through the band between the winner's name and the panel so that on the
+   scores screen it is in a window for almost all of its flight */
+.fcjh-meteor {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 460px;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgb(var(--star-rgb) / .5) 60%, rgb(255 255 255 / 1));
+  box-shadow: 0 0 10px rgb(var(--star-rgb) / .6);
+  opacity: 0;
+  animation: fcjh-meteor var(--meteor-cycle) linear 7s infinite;
+}
+
+/* its head */
+.fcjh-meteor::after {
+  content: '';
+  position: absolute;
+  right: -4px;
+  top: -3.5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 14px 4px rgb(var(--star-rgb) / .9);
+}
+
+@keyframes fcjh-meteor {
+  0% {
+    opacity: 0;
+    transform: translate3d(1970px, 82px, 0) rotate(176deg);
+  }
+  .6% { opacity: 1; }
+  6.5% { opacity: 1; }
+  8%, 100% {
+    opacity: 0;
+    transform: translate3d(-790px, 275px, 0) rotate(176deg);
+  }
+}

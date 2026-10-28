@@ -482,9 +482,31 @@ land on whole pixels at 1080p (`inspect_card.line`), so at 1440p they may come o
 ## 7. What's next
 
 **To check next (user, 2026-10-27, on opening the series-screen PR):**
-- [ ] The Game scene's top bar has a graphical issue - look at it in OBS with the user
-- [ ] Update the OBS scene collection (`studio/public/FCJ_Heroes_Esports_v1.0.json`, written
-  by `tools/obs.py`) - it predates the series scenes
+- [x] The Game scene's top bar has a graphical issue - **fixed, to see in OBS** (user,
+  2026-10-28, a screenshot: "1-2px misalignment on the bottom edge", the tabs' glass over the
+  wing's bottom border). The interface draws the wing's rim centred on its edge, so it runs
+  1.25 px below the band's 63.3, while the band's own rim sits inside its box: the side-edge
+  case `outward` fixed, at the bottom. `[top_bar] downward = 1.25` grows the band, the logo
+  plate and everything hung under it (ban tiles, tabs) that much down; the pips keep their
+  size (sized by `height`). The interface's OBS constants moved too, but no layout reads them.
+  Then 1.25 -> 1.7 (user, 2026-10-28, a 1:1 capture: "the tabs dont quite join"): measured
+  1:1, the game's rim ends ~64.75 (the texture's half-texel edge ramp plus filtering), ours
+  ~64.3. The band now ends on a whole pixel, 65 (user: "the horizontal values look perfect").
+  And `[top_bar] name_inward = 1` drags the name plates (rim, glass, name) 1 px toward the
+  middle (user: "the team name is 1px too far outward"); the logo plate laps 1 px further
+  so it, the seam and the pips stay put. Measured from the capture the rims were already on
+  their geometry; both names' ink sat ~1 px left of centre (letter-spacing's trailing gap
+  and the glyphs' bearings) - outward on blue, inward on red - so watch red.
+  v1.0.1 had the same ~1 px bottom mismatch (a cast's half-size capture); it just didn't show
+  at stream size. To settle it, `[top_bar] level_rim = 1`: a straight 1 px rim-coloured line
+  on the band's bottom row (y 64) along each level wing's foot, from the band's inner end to
+  the padded hexagon's lower side, static (no entrance), and `level_rim_outward = 1` runs it
+  1 px on under the band to plug the corner (user, 2026-10-28). Boxes in topbar.json
+  `boxes.level_rim`; a tested-and-dropped alternative laid a top edge on the tabs.
+- [x] Update the OBS scene collection (`studio/public/FCJ_Heroes_Esports_v1.0.json`, a
+  hand export, not generated): re-exported from "FCJ Heroes [Dev]" with Pages links, no
+  screenshots, the name "FCJ Heroes", Scores' `shutdown` back on (user, 2026-10-28). Eight
+  scenes, twelve browser sources; `Maps` is the series screen
 
 **Series results: a Win a map, nothing automatic** (user, 2026-10-27, after showing option 3
 around: "we will scrap any kind of automatic stamping of a winner"). The Score Screen Winner
@@ -514,10 +536,27 @@ https://github.com/FourCourtJester/FCJ-Heroes-StormInterface (public; pushed in
 batches, when the user says; `.github/FUNDING.yml` for the Sponsor button: GitHub Sponsors
 and Ko-fi).
 
-**To revisit: the sky's motion, on Backdrop and Scores alike** (user, 2026-10-27: "Lets
-make a note to revisit backdrop/scores motion later, but yes, i think it looks good"). It is
-one sky now (`components/Sky.jsx` + `sky.css`), so a pass on its stars, dust and comets
-changes both screens.
+**The sky's motion, revisited: four new things on it** (user, 2026-10-28: "the comets are
+great, the space dust is great, but we need something else noticable"; of six ideas, "Let's
+try 1,2,5,6"). One sky (`components/Sky.jsx` + `sky.css`), so Backdrop and Scores both get
+them; numbers in `[scores]` (`glints`, `glint_cycle`, `glow_w`/`glow_h`, `rays_r`,
+`meteor_cycle`), through `sky` in scores.json.
+- **Glints (1):** eight fixed stars that flare with a cross of spikes, one every 1.5 s in turn
+  on a 12 s cycle - fixed places and a fixed clock, so the four copies agree.
+- **Horizon glow and rays (2):** a breathing glow at the panel's bottom middle (960, 927) and
+  two uneven sets of faint spokes turning slowly (160 s), masked at the horizon. First rays
+  were too strong (a cartoon sunburst); now faint.
+- **The winner's colour (5):** when the Score Screen Winner is up (lit AND named), the glow
+  takes that side's colour (colour-blind aware): a hue layer plus a faint screen of the colour,
+  both faded in over 1.6 s. A hue blend alone barely showed red on the dark sky. Backdrop
+  stays neutral. A **twin** of it up top (user, 2026-10-28: "the blue kinda fades into blue
+  too easily, so having a twin will help accent it"): the team colour only, on the panel's
+  top edge, the floor's glow mirrored ("anchored to the top edge of the score box") - its
+  place is the panel's (`panel_y`), not a number of its own.
+- **Meteor (6):** a big, bright one from the right, nearly flat, 7 s in then every 41 s, through
+  the band under the winner's name - first path was steep and spent its flight behind the panel.
+- Checked in the browser at 1920x1080: glow, rays, a glint flaring, blue and red tints, the
+  meteor under the name and out the left window. **Untested in OBS.**
 
 **To confirm (user, tonight of 2026-10-23): the interface drop-down is under Settings ->
 Observer** ("I think") - README's install step 3 and docs/development.md say so; correct both

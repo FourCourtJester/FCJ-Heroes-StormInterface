@@ -94,7 +94,7 @@ const PIECES = ['top', 'bottom', 'left', 'right']
  * Nothing is shown until a side is lit AND that side has a name, so the band never glows
  * around a blank - and clearing the name plays the outro too, rather than cutting.
  */
-function Winner() {
+function useWinner() {
   const blueWon = useVelcroValue('toggles.winner.blue')
   const redWon = useVelcroValue('toggles.winner.red')
   const blue = useVelcroValue('variables.blue.name')
@@ -102,7 +102,11 @@ function Winner() {
 
   const won = blueWon ? 'blue' : redWon ? 'red' : ''
   const name = won === 'blue' ? blue : won === 'red' ? red : ''
-  const shown = won && name ? won : ''
+  return won && name ? won : ''
+}
+
+function Winner() {
+  const shown = useWinner()
 
   const [last, setLast] = useState('blue')
   useEffect(() => {
@@ -173,6 +177,8 @@ function Marks() {
 export default function Scores() {
   // colour-blind mode: the winner's glow in the game's colour-blind pair
   const cb = useColourBlind()
+  // and the sky's glow takes the winner's colour when the name goes up, not before
+  const won = useWinner()
   return (
     <Scene width={SCREEN_W} height={SCREEN_H}>
       <div className="fcjh-scores" style={cb ? { ...SCENE_VARS, ...COLOUR_BLIND_VARS } : SCENE_VARS}>
@@ -184,7 +190,7 @@ export default function Scores() {
             be written once: every copy mounts together, so they animate in step. */}
         {PIECES.map((where) => (
           <div key={where} className={`fcjh-scores-fill ${where}`}>
-            <Sky />
+            <Sky won={won} />
           </div>
         ))}
         <Winner />

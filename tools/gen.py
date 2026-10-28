@@ -1124,7 +1124,7 @@ def top_bar_geometry(cfg):
     tb, bp = cfg["top_bar"], cfg["top_backplate"]
     geo = top_backplate_geometry(cfg)
     lean = HeroCell(cfg).lean
-    h = tb["height"]
+    h = tb["height"] + tb.get("downward", 0)    # down to the foot of the wing's chrome, as below
     # the band sits [top_bar] `outward` px further out than its geometric place, each side away
     # from the middle, so its inner end meets the level wing's chrome instead of running under
     # it - the interface draws that chrome centred on the wing's edge, so half of it falls on
@@ -1141,14 +1141,18 @@ def top_bar_geometry(cfg):
         run = lean * (y1 - y0)
         return [(x0, y0), (x1, y0), (x1 + run, y1), (x0 + run, y1)]
 
-    out = {"height": h, "lean": lean, "slant": lean * h, "seam": seam, "ends": geo["ends"]}
+    # the name plate is dragged [top_bar] `name_inward` px toward the middle, its inner end
+    # running that much further under the logo plate, so neither the logo nor the pips move
+    inward = tb.get("name_inward", 0)
+    out = {"height": h, "lean": lean, "slant": lean * h, "seam": seam, "ends": geo["ends"],
+           "name_inward": inward}
     # the name plate, and the logo plate lapping its inner end so the two rims make one seam
-    for key, x in (("name", tb["name_left"] - shift), ("logo", seam - bp["rim_width"])):
+    for key, x in (("name", tb["name_left"] - shift + inward), ("logo", seam - bp["rim_width"])):
         w = end - x + lean * h
         out[key] = {"blue": (x, 0.0, w, h), "red": (mirror(x + w), 0.0, w, h)}
     # the score: hexagon pips, no plate, pointy-topped so a row packs side to side, filling
     # from the name outward
-    r = tb["pip_band"] * h / 2
+    r = tb["pip_band"] * tb["height"] / 2     # sized by the wing, not grown by `downward`
     pw = r * 3 ** .5
     cy = h / 2 - 1                              # the band's middle, a px up: the names' line
     edge = down(tb["name_left"] - shift, cy - r / 2)   # the name's outer slant, level with the pip's corner
@@ -1175,6 +1179,18 @@ def top_bar_geometry(cfg):
         outer = (lambda y: down(seam, y)) if team == "blue" else (lambda y: mirror(down(seam, y)))
         poly = [(outer(h), h), (hexx(h), h), (hexx(bot), bot), (outer(bot), bot)]
         out["tabs"][team] = {"poly": poly, "text": (sum(x for x, _ in poly) / 4, (h + bot) / 2)}
+    # a straight line along each level wing's foot, on the band's bottom row: from the band's
+    # inner end to the padded hexagon's lower side, where the backplate's chrome is centred
+    lr = tb.get("level_rim", 0)
+    if lr:
+        y = h - lr / 2
+        padded = geo["padded"]
+        side = lambda p, q: p[0] + (y - p[1]) * (q[0] - p[0]) / (q[1] - p[1])
+        lo = tb.get("level_rim_outward", 0)     # run on under the band, to plug its corner
+        blue = (out["name"]["blue"][0] + out["name"]["blue"][2] - lo, side(padded[5], padded[4]))
+        red = (side(padded[2], padded[3]), out["name"]["red"][0] + lo)
+        out["level_rim"] = {t: (x0, h - lr, x1 - x0, lr) for t, (x0, x1) in
+                            (("blue", blue), ("red", red))}
     return out
 
 

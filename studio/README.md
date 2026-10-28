@@ -88,14 +88,20 @@ webcam masks, with the collection and the mask files linked.
 with `download`, so a click saves it instead of rendering JSON in a tab. Import it in OBS
 with **Scene Collection → Import**.
 
-Seven scenes — `-- Audio`, `Blank`, `Draft`, `Game`, `Scores`, `Static`, `Webcams` — and all
-seven browser sources at 1920 x 1080.
+Eight scenes — `-- Audio`, `Blank`, `Draft`, `Game`, `Maps`, `Scores`, `Static`, `Webcams` —
+and all twelve browser sources at 1920 x 1080. `Maps` holds the series screen: the Backdrop,
+the four Series sources and Matchup Draft.
+
+Re-exported from "FCJ Heroes [Dev]" for the series screen (user, 2026-10-28), the same way
+as below: its links moved from localhost to Pages, its three screenshots dropped, its name
+back to "FCJ Heroes", and the `shutdown` rule put back where the dev copy had drifted
+(Scores had it off).
 
 **It started as a dev export**, and everything in it that belonged to one machine has been
 taken out (user, 2026-10-23):
 
-- **The browser sources** pointed at `http://localhost:5173/`, which would have been seven
-  dead sources for anyone who imported it. All seven now point at the published studio.
+- **The browser sources** pointed at `http://localhost:5173/`, which would have been dead
+  sources for anyone who imported it. All of them now point at the published studio.
 - **Three image sources** held screenshots on a personal
   `Heroes of the Storm/Screenshots/` path — backdrops standing in for the game capture while
   the scenes were built. Dropped. Each of those scenes also holds the real
@@ -103,7 +109,7 @@ taken out (user, 2026-10-23):
   edit asserts rather than assumes.
 - **The collection's name** was "FCJ Heroes [Dev]", which is the label OBS shows in its
   scene-collection list. Now "FCJ Heroes".
-- **`shutdown` is on for the three sources with an entrance** (Draft, Matchup, Scores) and
+- **`shutdown` is on for the sources with an entrance** (Game, Draft, Matchup, Scores) and
   `restart_when_active` is gone from all of them, which is the house rule below. Standby
   keeps `shutdown` off: its countdown is driven by the clock, not by loading.
 

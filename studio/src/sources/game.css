@@ -43,6 +43,7 @@
 .fcjh-scene .fcjh-pips,
 .fcjh-ban,
 .fcjh-tab,
+.fcjh-level-rim,
 .fcjh-event,
 .fcjh-corner {
   position: absolute;
@@ -65,7 +66,8 @@
   z-index: 1;
 }
 
-.fcjh-band {
+.fcjh-band,
+.fcjh-level-rim {
   z-index: 2;
 }
 
@@ -350,6 +352,12 @@
   bottom: 0;
   height: 4px;
   background: var(--banned-foot);
+}
+
+/* the line along each level wing's foot ([top_bar] level_rim): the band's chrome, carried on
+   under the game's levels to the hexagon */
+.fcjh-level-rim {
+  background: var(--rim);
 }
 
 /* ── the tabs ──────────────────────────────────────────────────────────────────────────

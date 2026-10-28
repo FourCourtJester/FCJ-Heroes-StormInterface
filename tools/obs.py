@@ -521,8 +521,9 @@ def spec(b):
                        "red": {"left": r2(b.name["red"][0]), "width": r2(b.band_box)},
                        "name_font_px_max": 24,
                        # how far the logo plate laps back over the name plate, so the two
-                       # rims land on each other and read as one seam
-                       "logo_lap": r2(b.d + b.rim_w),
+                       # rims land on each other and read as one seam - and the name plate's
+                       # drag inward on top, which it spends under the logo
+                       "logo_lap": r2(b.d + b.rim_w + b.g["name_inward"]),
                        "logo_plate": {"width": r2(b.logo["blue"][2]), "left": {"blue": r2(b.logo["blue"][0]),
                                       "red": r2(b.logo["red"][0])},
                                       "at": "the band's inner end; leave it out with no logo", "mark_px": 46}},
@@ -588,6 +589,8 @@ def spec(b):
             "tabs": {"division": [r2(v) for v in _box(b.tabs["blue"]["poly"])],
                      "game": [r2(v) for v in _box(b.tabs["red"]["poly"])]},
             "event": [r2(v) for v in _box(b.bp["hexagon"])],
+            # the straight line along each level wing's foot ([top_bar] level_rim)
+            "level_rim": {t: [r2(v) for v in b.g["level_rim"][t]] for t in ("blue", "red")},
             # the corners, outside everything a best of 7 draws
             "corner": _corner(b),
         },
@@ -993,7 +996,14 @@ def scores_spec(b):
         # the sky, which the series screen wears whole (components/Sky.jsx): the backdrop's
         # lit floor starts at the panel's foot, so that is the horizon the comets stop at,
         # and how far above it they have finished fading
-        "sky": {"horizon": sc["panel_y"] + sc["panel_h"], "comet_fade": sc["comet_fade"]},
+        "sky": {"horizon": sc["panel_y"] + sc["panel_h"], "comet_fade": sc["comet_fade"],
+                # the glints and the meteor, and the glow on the horizon under the panel's
+                # centre, which is the screen's
+                "glints": sc["glints"], "glint_cycle": sc["glint_cycle"],
+                "glow": {"x": sc["panel_x"] + sc["panel_w"] / 2,
+                         "w": sc["glow_w"], "h": sc["glow_h"], "rays": sc["rays_r"],
+                         "twin_y": sc["panel_y"]},
+                "meteor_cycle": sc["meteor_cycle"]},
         "colours": {"blue": b.team["blue"], "red": b.team["red"],
                     "rim": b.rim, "text": CYAN[0]},
     }

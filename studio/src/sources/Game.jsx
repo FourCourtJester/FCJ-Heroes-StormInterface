@@ -63,6 +63,7 @@ const SCENE_VARS = {
   '--tab-h': `${boxes.tabs.division[3]}px`,
   '--tab-cap': `${tabs.cap}px`,
   '--tab-cap-n': tabs.cap,
+  '--rim': colours.rim,
 }
 
 // a generated box, [x, y, width, height] on the page - the only geometry a style carries
@@ -277,6 +278,11 @@ export default function Game() {
         ))}
         {SIDES.map((side) => (
           <Band key={side} side={side} />
+        ))}
+        {/* a straight line along each level wing's foot, from the band to the hexagon: it is
+            the game's wing, always there, so it does not wait for the show or come in */}
+        {SIDES.map((side) => (
+          <i key={side} className="fcjh-level-rim" style={at(boxes.level_rim[side])} />
         ))}
         {/* The tournament logo in Blizzard's hexagon - THE ONE HOLE THAT WANTS THE SQUARE
             picture, and so the one place the waterfall runs the other way (user,

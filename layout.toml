@@ -415,6 +415,29 @@ outward = 1                  # the whole OBS band sits this far outside its geom
                              # with it: the logo plate, the seam, the pips, the ban tiles and
                              # the tabs' outer sides. The tabs' inner sides stay on the hexagon,
                              # so the two tabs grow by this much instead of moving
+downward = 1.7               # ...and the same at the bottom: the wing's bottom rim is centred on
+                             # its edge too, so it runs below `height` - half rim_width (1.25 px)
+                             # in theory, but the texture's half-texel edge ramp and the game's
+                             # filtering carry it further - where the band's own rim, inside its
+                             # box, stopped short: the bottom edges missed and the tabs' glass lay
+                             # over the wing's rim (user, 2026-10-28, from OBS: "1-2px
+                             # misalignment on the bottom edge"). Measured, not derived: 1.25 left
+                             # ours short ("the tabs dont quite join"); 1.7 ends the band on a
+                             # whole pixel, 65 ("the horizontal values look perfect"). The band
+                             # and all it hangs grow this much down
+name_inward = 1              # the name plate - rim, glass and name - dragged this far toward the
+                             # middle (user, 2026-10-28, zoomed in on OBS: "the team name is 1px
+                             # too far outward ... drag the team name plates inward 1px"). Its
+                             # inner end runs that much further under the logo plate, so the
+                             # logo, the seam and the pips (hung off `name_left`) stay put
+level_rim = 1                # a straight white line this tall along the foot of each level wing,
+                             # from the band's inner end to the hexagon's chrome, on the band's
+                             # bottom row, so the band's foot and the wing's read as one edge
+                             # (user, 2026-10-28: "a 1px tall, white element that stretches
+                             # across the bottom of the level container; no animations needed")
+level_rim_outward = 1        # ...its outer end run this far on under the band, to plug the gap
+                             # at the band's inner corner (user, 2026-10-28: "extend them outward
+                             # 1px more")
 # The two marks in the top corners: the broadcaster's on the left, the tournament's WIDE
 # logo on the right (user, 2026-10-23). The room is whatever a best of 7 leaves - its
 # outermost pip is the furthest anything on the band reaches - so the box is derived from the
@@ -777,6 +800,26 @@ win_mark_colour = "2f8f4e"   # deep laurel green (user, 2026-10-25: "since you k
 # ON the ground rather than in the sky (user, 2026-10-23). They fade out over this many px
 # ending at the panel's bottom edge, which is where the horizon sits.
 comet_fade = 180
+
+# Something on the sky you notice (user, 2026-10-28: "the comets are great, the space dust is
+# great, but we need something else noticable"). Three things, all on the same fixed clock in
+# every copy of the sky, because the scores screen shows four copies through four windows.
+#
+# Stand-out stars that glint one at a time, [x, y] on the screen. Every one sits where the
+# panel leaves open - above 205, left of 335, right of 1585 - so the scores screen and the
+# series backdrop both show all of them.
+glints = [[136, 88], [618, 54], [1342, 148], [1796, 66], [214, 516], [1716, 392], [98, 806], [1838, 748]]
+glint_cycle = 12             # s: one glint every cycle / count, so here every 1.5 s
+# A glow breathing on the horizon under the panel's centre, in the winner's colour once the
+# Score Screen Winner is called, with faint rays turning slowly above it
+glow_w = 1200
+glow_h = 340
+# The winner's glow has a twin on the panel's top edge, the floor's glow mirrored (user,
+# 2026-10-28: blue "fades into blue too easily" on the floor alone; "anchored to the top edge
+# of the score box, basically a vertical mirror"), so its place is the panel's, not a number.
+rays_r = 1100                # how far the rays reach before they have faded out
+# And a rare big shooting star, against the grain of the comets
+meteor_cycle = 41            # s
 
 # Bars stacked on each hero row, placed by tools/gen.py from [hero_row] so they follow it.
 # Both are cut to the plates' slant: their ends continue the row's slanted outer edges.
