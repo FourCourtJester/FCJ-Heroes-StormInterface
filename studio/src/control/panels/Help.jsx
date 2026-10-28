@@ -87,10 +87,11 @@ export default function Help() {
         <b>Add → Browser</b>, paste the URL, and set the size to <b>1920 x 1080</b>.
       </P>
       <P>
-        On anything with an entrance — the matchup band, the scores screen — tick{' '}
+        On anything with an entrance — the matchup band, the draft — tick{' '}
         <b>Shutdown source when not visible</b>. The animation runs when the source loads, so
         shutting it down while its scene is hidden is what makes it play again each time you
-        cut back, instead of once a session.
+        cut back, instead of once a session. Leave it off on the scores screen: reloading, it
+        shows the game's interface for a moment before its sky arrives.
       </P>
 
       <Rule />
