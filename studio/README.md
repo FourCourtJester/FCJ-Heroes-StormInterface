@@ -94,8 +94,9 @@ the four Series sources and Matchup Draft.
 
 Re-exported from "FCJ Heroes [Dev]" for the series screen (user, 2026-10-28), the same way
 as below: its links moved from localhost to Pages, its three screenshots dropped, its name
-back to "FCJ Heroes", and the `shutdown` rule put back where the dev copy had drifted
-(Scores had it off).
+back to "FCJ Heroes". Scores keeps the dev copy's `shutdown` off: shut down, it reloads on
+every cut to its scene, and the game's own UI shows through for a moment before the moving
+sky loads (user, 2026-10-28).
 
 **It started as a dev export**, and everything in it that belonged to one machine has been
 taken out (user, 2026-10-23):
@@ -109,9 +110,10 @@ taken out (user, 2026-10-23):
   edit asserts rather than assumes.
 - **The collection's name** was "FCJ Heroes [Dev]", which is the label OBS shows in its
   scene-collection list. Now "FCJ Heroes".
-- **`shutdown` is on for the sources with an entrance** (Game, Draft, Matchup, Scores) and
+- **`shutdown` is on for the sources with an entrance** (Game, Draft, Matchup) and
   `restart_when_active` is gone from all of them, which is the house rule below. Standby
-  keeps `shutdown` off: its countdown is driven by the clock, not by loading.
+  keeps `shutdown` off: its countdown is driven by the clock, not by loading. So does Scores:
+  reloading it on every cut flashes the game's UI before its sky loads (user, 2026-10-28).
 
 Edited by round-trip rather than by hand. `json.dumps(doc, indent=4, ensure_ascii=False)`
 reproduces the original byte for byte, which was checked before the first change, so the

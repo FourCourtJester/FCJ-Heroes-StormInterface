@@ -505,7 +505,8 @@ land on whole pixels at 1080p (`inspect_card.line`), so at 1440p they may come o
   `boxes.level_rim`; a tested-and-dropped alternative laid a top edge on the tabs.
 - [x] Update the OBS scene collection (`studio/public/FCJ_Heroes_Esports_v1.0.json`, a
   hand export, not generated): re-exported from "FCJ Heroes [Dev]" with Pages links, no
-  screenshots, the name "FCJ Heroes", Scores' `shutdown` back on (user, 2026-10-28). Eight
+  screenshots, the name "FCJ Heroes", Scores' `shutdown` left off - shut down, it flashes the
+  game's UI before its sky loads (user, 2026-10-28). Eight
   scenes, twelve browser sources; `Maps` is the series screen
 
 **Series results: a Win a map, nothing automatic** (user, 2026-10-27, after showing option 3
