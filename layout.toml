@@ -502,6 +502,106 @@ solo_h = 576                 # it has the screen to itself. 16:9 exactly, like t
 name = 30                    # the commentator's name, cap height
 social = 20                  # ...and their handle, under the same bar at the other end
 
+# The series screen: the map draft (user, 2026-10-27). OBS-only. Four browser sources make it:
+# the cards (studio/src/sources/Series.jsx), one top half per camera count (SeriesTwoCams,
+# SeriesOneCam, SeriesNoCams), and the Matchup Draft source under them, cropped and scaled in
+# OBS.
+#
+# THE TOP HALF IS A SOURCE PER CAMERA COUNT rather than a switch, for the reason the solo
+# webcam is (user, 2026-10-27): the choice belongs to an OBS scene, whose camera captures sit
+# under the frames, and two scenes may both be loaded. The cards are the same in each, so
+# cutting between them moves nothing below the cameras.
+#
+# Placed from design/obs/series/mock_series.py, the mock the reviewers passed on 2026-10-27.
+[series]
+maps = [                     # every battleground the draft can hold, in the board's order.
+  "Alterac Pass",            # The pool is chosen from these on the Series panel; the
+  "Battlefield of Eternity", # art is studio/public/maps/<slug>.jpg, the slug the name in
+  "Blackheart's Bay",        # lower case with anything not a letter or digit a hyphen
+  "Braxis Holdout",
+  "Cursed Hollow",
+  "Dragon Shire",
+  "Garden of Terror",
+  "Hanamura Temple",
+  "Haunted Mines",
+  "Infernal Shrines",
+  "Sky Temple",
+  "Tomb of the Spider Queen",
+  "Towers of Doom",
+  "Volskaya Foundry",
+  "Warhead Junction",
+]
+edge = 72                    # the cameras' and the cards' margin from each side, the webcams'
+cards_top = 455              # the cards' band: clear of the cameras' foot (48 + 378) and
+cards_bottom = 900           # above the matchup band's badges once OBS has lowered it
+card_gap = 12
+card_cut = 14                # the cards' chamfer, the cameras' corners at their size
+card_rim = 3
+art_for = 9                  # the pool the art is cut for: leagues run anything from 9 maps
+                             # to all 15 (user, 2026-10-27: "as long as the images can cover
+                             # 9 maps, but potentially scale down to 15"). More maps crop it
+                             # to the middle - at 15 the middle 56% shows
+map_name = 16                # the map's name on its card
+cam_w = 672                  # a camera: 16:9, so the webcams' masks scale onto it whole
+cam_h = 378
+cam_top = 48
+plate_h = 58                 # the name strip INSIDE the frame, along the feed's foot - the
+                             # camera needs no room under it, which is what let it grow
+plate_name = 24
+plate_social = 16
+# the marks by camera count. With two, they are one lockup between the windows, the
+# tournament's over the broadcaster's with an x between, as every other collaboration (user,
+# 2026-10-27): the two close on the x, which sits on the middle of the windows' inner STRAIGHT
+# edges, below the chamfer - the corner's cut is not room, however the numbers fall (user,
+# 2026-10-27: "only consider the vertical straight edges as the 'usable' space"). obs.py works
+# it out, and holds the lockup inside that run. A mark alone takes the middle itself, its x going
+# with its partner. With one camera, the camera takes the right and the same lockup the left
+# window's place (user, 2026-10-27: "same vertical stack, but we can put it where the left webcam
+# used to be"), centred on that window: nothing cuts it there, so the whole box is room. With
+# none, and only then, it lies down as the scores screen's (user, 2026-10-27: "the *only* scene
+# where we'll go back to horizontal with the X"), centred across the screen and above the cards
+# by the matchup band's distance below them, which obs.py takes from series_band
+two_mark = [400, 100]        # each mark's box, w x h: 16 px clear of either window, and the
+                             # pair with the x 264 of the straight run's 283.5
+two_x = [40, 12]             # the x's size, and its air above and below
+none_mark = [560, 200]       # each mark's box with no cameras, w x h
+none_x = [64, 40]            # the x's size, and its air either side
+# what OBS does to the Matchup Draft source on this scene: crop its foot (the logo lockup, which the
+# marks above replace) and scale it from the cut. Where it goes is worked out (obs.py
+# series_band): what shows of it centred between the cards and the screen's foot. Settings,
+# not numbers the page reads - they are here so the guide and the mock say the same thing
+band_crop = 105
+band_scale = 0.8
+
+# The map art: studio/public/maps/<slug>.jpg, cut by tools/series_art.py from Blizzard's own
+# art in the CASCView extract (references/CASCView, not in the repo). Each map is [file,
+# across]: the texture, and the share of its width the card's cut centres on (0.5 the
+# middle). The load screens are the game's own for each map; Alterac Pass, Volskaya Foundry
+# and Warhead Junction have none, so they take the home screen's. The acrosses were picked by
+# eye off contact sheets (2026-10-27), to land each card on the map's mascot - and a second
+# pass at 15 maps, where only the middle shows (user, 2026-10-27: "a few of these maps, at
+# full availability, have missed the mark on their mascot targetting"): Battlefield's
+# Immortal, Blackheart, D.Va for Hanamura, the Raven Lord, Warhead's monster. A map can add
+# [zoom, down] to lift a mascot whose head sits lower than the rest: a slice 1/zoom of the
+# picture's height, `down` placing it in what's left (0 the top, 1 the bottom) - Raynor and
+# Sky Temple's dragon (user, 2026-10-27: Raynor is "way farther down" than other maps)
+[series.art]
+alterac-pass = ["storm_ui_homescreenbackground_wcav.dds", 0.62]
+battlefield-of-eternity = ["ui_ingame_mapmechanic_loadscreen_battlefieldofeternity.dds", 0.36]
+blackhearts-bay = ["ui_ingame_mapmechanic_loadscreen_blackheartsbay.dds", 0.58]
+braxis-holdout = ["ui_ingame_mapmechanic_loadscreen_braxisoutpost.dds", 0.5]
+cursed-hollow = ["ui_ingame_mapmechanic_loadscreen_cursedhollow.dds", 0.5]
+dragon-shire = ["ui_ingame_mapmechanic_loadscreen_dragonshire.dds", 0.5]
+garden-of-terror = ["ui_ingame_mapmechanic_loadscreen_gardenofterror.dds", 0.5]
+hanamura-temple = ["ui_ingame_mapmechanic_loadscreen_hanamura_rework.dds", 0.82]
+haunted-mines = ["ui_ingame_mapmechanic_loadscreen_hauntedmines.dds", 0.58]
+infernal-shrines = ["ui_ingame_mapmechanic_loadscreen_shrines.dds", 0.5]
+sky-temple = ["ui_ingame_mapmechanic_loadscreen_skytemple.dds", 0.5, 1.35, 1.0]
+tomb-of-the-spider-queen = ["ui_ingame_mapmechanic_loadscreen_tombofthespiderqueen.dds", 0.5]
+towers-of-doom = ["ui_ingame_mapmechanic_loadscreen_towersofdoom.dds", 0.6]
+volskaya-foundry = ["storm_ui_homescreenbackground_volskaya.dds", 0.5, 1.5, 1.0]
+warhead-junction = ["storm_ui_homescreenbackground_warhead.dds", 0.6]
+
 # The scores screen: the browser source over Blizzard's end-of-game Stats screen
 # (studio/src/sources/Scores.jsx). OBS-only.
 #

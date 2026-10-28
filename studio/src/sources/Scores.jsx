@@ -5,6 +5,7 @@ import { Image, Scene, Variable } from '@single-studio/core/source'
 
 import { COLOUR_BLIND_VARS, useColourBlind } from '../components/colourBlind'
 import { useVisibleMark } from '../components/marks'
+import Sky from '../components/Sky'
 import spec from '../generated/scores.json'
 import './scores.css'
 
@@ -21,7 +22,8 @@ import './scores.css'
 // notice anywhere.
 //
 // Standing around the hole: the winning team's name across the top, the tournament's and the
-// broadcaster's marks under the panel, and a sky that moves (user, 2026-10-23).
+// broadcaster's marks under the panel, and a sky that moves (user, 2026-10-23) - the same sky
+// the series screen wears whole (components/Sky.jsx).
 //
 // Add to OBS as a Browser source pointed at #/source/scores, 1920 x 1080, over the game
 // capture. Nothing goes under it except the game.
@@ -52,10 +54,8 @@ const SCENE_VARS = {
   // its true width at the height the band gives it, so it is never squashed
   '--win-mark-w': `${Math.round(win.mark_h * win.mark_ratio)}px`,
   '--win-mark-rgb': rgbOf(win.mark_colour),
-  '--comet-fade': `${spec.sky.comet_fade}px`,
   '--blue-rgb': rgbOf(colours.blue),
   '--red-rgb': rgbOf(colours.red),
-  '--star-rgb': rgbOf(colours.text),
   '--rim': colours.rim,
 }
 
@@ -184,19 +184,7 @@ export default function Scores() {
             be written once: every copy mounts together, so they animate in step. */}
         {PIECES.map((where) => (
           <div key={where} className={`fcjh-scores-fill ${where}`}>
-            <div className="fcjh-scores-sky">
-              {/* The comets are in a field of their own because the field carries the mask
-                  that stops them at the horizon - a comet crossing the lit floor reads as a
-                  streak ON the ground (user, 2026-10-23).
-
-                  Their delays are deliberate, not random: a comet must be at the same point
-                  in its journey in all four copies, or it would tear at a seam. */}
-              <div className="fcjh-comet-field">
-                <i className="fcjh-comet one" />
-                <i className="fcjh-comet two" />
-                <i className="fcjh-comet three" />
-              </div>
-            </div>
+            <Sky />
           </div>
         ))}
         <Winner />

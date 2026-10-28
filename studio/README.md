@@ -44,20 +44,31 @@ them. See `docs/obs-topbar-handoff.md` in the repo root.
 | `src/sources/Matchup.jsx` | The matchup band on its own (`#/source/matchup`), transparent — laid over whatever it belongs on |
 | `src/sources/Webcams.jsx` | The browser source over the standby screen (`#/source/webcams`): two frames and two names, no video. Cameras go under it in OBS |
 | `src/sources/WebcamSolo.jsx` | The same frame drawn once and centred (`#/source/webcam-solo`), for a scene with one camera |
-| `src/sources/Draft.jsx` | The browser source over Blizzard's ban-and-pick screen (`#/source/draft`): the matchup container with the series in its kicker. No cover |
+| `src/sources/MatchupDraft.jsx` | The matchup container with the series in its kicker (`#/source/matchup-draft`): over Blizzard's ban-and-pick screen, and under the series screen's cards. No cover. Was `Draft.jsx` (`#/source/draft`) until 2026-10-27 |
+| `src/sources/Series.jsx` | The series screen's map draft (`#/source/series`): a card a map not hidden, across the middle. Transparent |
+| `src/sources/SeriesTwoCams.jsx` | The series screen's top half with two cameras (`#/source/series-two-cams`): frames, names and the two marks. `SeriesOneCam` and `SeriesNoCams` are the same for one camera and none |
+| `src/components/SeriesTop.jsx`, `series.js` | The top half the three draw, and the draft's paths and order |
+| `src/sources/Backdrop.jsx` | The scores screen's moving sky, whole (`#/source/backdrop`): under the series scenes. The sky itself is `components/Sky.jsx`, which Scores shows through its four windows |
 | `src/sources/Scores.jsx` | The browser source over Blizzard's end-of-game screen (`#/source/scores`): a backdrop with a hole where the stats panel is |
 | `src/components/MatchupSlab.jsx` | The matchup container — worn by Matchup and Draft, each giving it its own kicker |
 | `src/components/MatchupBand.jsx` | The original band, `?band=original` only; Draft still borrows its scene variables |
-| `src/control/panels/` | The operator's board — standby, webcams, teams (each side's name, logo and wins), tournament (with the series), logos, and help |
+| `src/control/panels/` | The operator's board — standby, webcams, teams (each side's name, logo and wins), series (the best-of and the map draft), tournament, logos, and help |
 | `src/generated/` | Written by `tools/obs.py`. Do not edit |
 | `src/generated/guide.png` | Every place as an orange outline: add it as an Image source while lining a scene up, then hide it |
 
 ## The operator's board
 
-Five panels, collapsible, folded on load, in **the running order of a show** rather than by
+Seven panels, collapsible, folded on load, in **the running order of a show** rather than by
 how often a thing changes (user, 2026-10-23): you come up on the **Standby** screen, you are
-on **Webcams**, then the **Teams** and the **Tournament** around the match itself, and
-**Help** last.
+on **Webcams**, then the **Series**, the **Teams** and the **Tournament** around the match
+itself - together, because they work together - the **Logos** you set once, and **Help** last.
+
+**Series** holds the best-of, which moved there from Tournament (user, 2026-10-27), and is
+the map draft: each map's ban or pick, and a Hide that folds a map
+and takes its card off the screen until it is pressed again. Under each map's Ban and Pick
+is a **Win** a side, live once the map is picked; who won a map is pressed there and nowhere
+else. The Score Screen Winner is only the scores screen's, and the score is the Teams
+panel's steppers - nothing stamps itself (user, 2026-10-27).
 
 There is no Options panel. It held a single switch, for the tournament's logo, and a panel of
 one switch is a panel you have to open to discover it has nothing in it. Every switch now
@@ -228,7 +239,7 @@ reference and can go whenever someone is tidying; the sections below on what was
 the earlier shapes are history now rather than open questions.
 
 One thing to know before deleting: Draft wears the container too since 2026-10-27, but
-`Draft.jsx` still takes `BAND_VARS` and `SCREEN` from `MatchupBand`, so retiring the original
+`MatchupDraft.jsx` still takes `BAND_VARS` and `SCREEN` from `MatchupBand`, so retiring the original
 band means moving those first.
 
 Note that the original band is now the one that needs asking for — `?band=original`, where it
@@ -678,11 +689,17 @@ started.
 
 It is the matchup container and nothing else (user, 2026-10-27: "we redesigned the Matchup
 band in OBS; we now need to set it up in the Draft scene as well") - the same `MatchupSlab`,
-in the same places, so a change to the matchup is a change here too. `#/source/draft`,
+in the same places, so a change to the matchup is a change here too. `#/source/matchup-draft`,
 1920 x 1080, over the game capture. Those places clear Blizzard's player columns (x 14-358
 and 1618-1896, down to y 922): the lockup runs x 449-1471.
 
-The one difference is the **kicker**: Matchup's carries the standby message, Draft's the
+**Renamed Matchup Draft** (user, 2026-10-27: "Let's rename is to `matchup-draft`"): the
+series screen uses it too, under its cards, so it is named for the band rather than for one
+scene. The collection's source points at the new address and is called "SS - FCJ Heroes -
+Matchup Draft"; the scene is still `Draft`. An OBS set up before then still points at
+`#/source/draft`, which no longer exists, and needs its URL changed.
+
+The one difference is the **kicker**: Matchup's carries the standby message, Matchup Draft's the
 **series** — "Best of 5", from `series.pips` — since standby says what is coming up, and here
 there is no question of that, the teams are on screen drafting. No series set, empty kicker.
 (If you want the standby message here instead, use `#/source/matchup`.)

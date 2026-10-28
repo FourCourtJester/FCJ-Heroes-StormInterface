@@ -1,11 +1,9 @@
-import { Field, Panel, Row, Select, Toggle } from '@single-studio/core/control'
+import { Field, Panel, ResetButton, Row, Toggle } from '@single-studio/core/control'
 
-// The tournament: the two tabs' words, the series length, and who won.
+// The tournament: the two tabs' words, and who won.
 //
-// THE SERIES came over from Teams (user, 2026-10-27: "its, you know, a tournament setting"),
-// under the tabs ("Let's put it under Left/Right tab").
-// It is the number of pips a side, which is what the graphic draws: a best of five is three.
-// Clearing the teams still leaves it alone.
+// THE SERIES LENGTH is not here. It came over from Teams and moved on again the same day, to a
+// Series panel of its own with the map draft (user, 2026-10-27).
 //
 // The tabs are generic information panels - what goes in them is yours. "Division 1" and
 // "Game 3 of 5" are only what they were drawn for. Leave either blank and that tab is not
@@ -29,6 +27,17 @@ import { Field, Panel, Row, Select, Toggle } from '@single-studio/core/control'
 // `fcjh-won` paints each lit button its own side's colour. The framework lights every toggle
 // in one accent, which happens to be blue, so a lit "Red" looked exactly like a lit "Blue"
 // and only the word told them apart.
+//
+// THE WINNER IS THE SCORES SCREEN'S ONLY. For one afternoon it also marked the latest game's
+// map won and added the point; that was scrapped (user, 2026-10-27: "we will scrap any kind of
+// automatic stamping of a winner"). A map's result is the Series panel's Blue Win / Red Win,
+// and the score is the Teams panel's steppers.
+//
+// RESET WINNER sits on the section's heading (user, 2026-10-27), so the scores screen can be
+// emptied without hunting for the lit button. It asks first, as every reset on this board
+// does: it takes the winner off air.
+const WINNER = ['toggles.winner.blue', 'toggles.winner.red']
+
 export default function Event() {
   return (
     <Panel title="Tournament" collapsible>
@@ -36,15 +45,6 @@ export default function Event() {
         <Field name="division" label="Left tab" placeholder="Division 1" />
         <Field name="game" label="Right tab" placeholder="Game 3 of 5" />
       </Row>
-      <Select
-        name="series.pips"
-        label="Series"
-        options={[
-          { label: 'Best of 3', value: '2' },
-          { label: 'Best of 5', value: '3' },
-          { label: 'Best of 7', value: '4' },
-        ]}
-      />
       <Row>
         <Toggle name="colourblind" label="Colour-blind mode" />
       </Row>
@@ -52,9 +52,12 @@ export default function Event() {
       {/* the rule and its heading wear the Panel title's own classes, so the section reads
           as part of the board rather than as something bolted on */}
       <hr className="border-0 border-t border-slate-700/60" />
-      <span className="text-sm font-semibold tracking-wide text-slate-400 uppercase">
-        Score Screen Winner
-      </span>
+      <div className="flex items-center justify-between gap-2">
+        <span className="text-sm font-semibold tracking-wide text-slate-400 uppercase">
+          Score Screen Winner
+        </span>
+        <ResetButton label="winner" paths={WINNER} size="sm" />
+      </div>
       <Row>
         <Toggle name="winner.blue" group="winner" className="fcjh-won blue">
           Blue

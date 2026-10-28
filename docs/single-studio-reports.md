@@ -302,3 +302,97 @@ Either:
 The `_cb` twins, for the pips only: `pip_{team}_cb.svg`. They work, and two schemes is what
 we have. A third would mean either replacing `Tally` with our own row — losing its fill
 behaviour and its transitions — or generating a third pair of files.
+
+## 5. `ctx.write` given an object changes nothing, and the board does not say so
+
+### What happens
+
+The mutations guide in `src/mutations/index.js` lists `ctx.write(pairs)`, "set values; an
+empty value deletes the path". It means an array of `[path, value]` pairs, which is what
+`examples.js` passes. We passed an object of `{ path: value }`, the shape the word "pairs"
+also fits. The worker iterates it with `for...of`, which throws on an object, and the
+mutation changes nothing.
+
+### Why it's a problem
+
+The worker answers a throw with `mutate:error`, and the client logs it only when nothing is
+listening. The board listens, so the console was clean. We found nothing on the board either.
+The operator presses a button and nothing happens. Our map draft's buttons were dead until we
+read `ctx.write` in the dist.
+
+### What we'd ask for
+
+- Accept an object as well as an iterable, since both name the same writes; or
+- throw a clear `TypeError` ("ctx.write takes [path, value] pairs"), and make sure a board
+  that listens shows it.
+- Say "an array of `[path, value]` pairs" in the guide comment.
+
+### What we carry meanwhile
+
+`ctx.write(Object.entries(pairs))` in `src/mutations/series.js`.
+
+## 6. A `Toggle` that runs a mutation has to override its own click
+
+### What happens
+
+A Toggle that should do more than flip its path (our map draft's ban, pick and won buttons
+each clear what they replace) is given an `onClick`. It works only because the Toggle spreads
+`...rest` after its own `onClick`, so ours wins while `name` still drives the lit state.
+
+### Why it's a problem
+
+It's an accident of prop order, not an API. If the spread moves, the buttons go back to
+flipping one path, with no error.
+
+### What we'd ask for
+
+A `mutation` prop (`<Toggle name="..." mutation="series:mark" payload={...} />`), or a
+documented guarantee that `onClick` replaces the default.
+
+### What we carry meanwhile
+
+The override, in `src/control/panels/Series.jsx` (Ban and Pick). `Event.jsx` carried one too until the Winner went back to a plain grouped pair (2026-10-27).
+
+## 7. An `Image` in a page that isn't painting shows nothing, not even its fallback
+
+### What happens
+
+`Image` preloads with `new Image()`, then waits for `decode()` before it shows anything. In a
+page that isn't painting (here, the desktop app's browser pane while it's hidden), `decode()`
+neither resolves nor rejects. Every card's art stays empty, and so does the `fallback`, since
+that only runs on a rejection. The same file loads at once with `onload` alone (2026-10-27,
+the series cards).
+
+### Why it's a problem
+
+Nothing is logged and nothing is drawn, so it looks like missing files. Whether an OBS
+browser source can hit it is untested: a source OBS isn't rendering may not paint either.
+
+### What we'd ask for
+
+A timeout on `decode()`, say 500 ms, after which the loaded image is shown anyway. `onload`
+already means it can be painted.
+
+### What we carry meanwhile
+
+Nothing. We check the studio with the browser pane showing.
+
+## 8. A disabled `Toggle` looks exactly like a live one
+
+### What happens
+
+`Toggle` passes `disabled` through to its button, and the press does nothing, but nothing
+about the button changes: same border, same colour, same pointer on hover. Found on the
+Series panel's Win buttons, which wait for their map to be picked (2026-10-27).
+
+### Why it's a problem
+
+An operator presses a button that looks ready, nothing goes to air, and nothing says why.
+
+### What we'd ask for
+
+A disabled look in the framework's own toggle styles: dimmed, with the default cursor.
+
+### What we carry meanwhile
+
+`.fcjh-won:disabled { opacity: 0.35 }` in `studio/src/css/index.css`.

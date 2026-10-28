@@ -6,6 +6,7 @@ import Cams from './panels/Cams'
 import Event from './panels/Event'
 import Help from './panels/Help'
 import Logos from './panels/Logos'
+import Series from './panels/Series'
 import Standby from './panels/Standby'
 import Teams from './panels/Teams'
 
@@ -15,8 +16,12 @@ import Teams from './panels/Teams'
 // until you save, so a half-typed name never reaches air.
 //
 // Order is the running order of a show, not how often a thing changes (user, 2026-10-23):
-// you come up on the standby screen, you are on camera, then the teams and the tournament
-// around the match itself.
+// you come up on the standby screen, you are on camera, then the series, the teams and the
+// tournament around the match itself. THOSE THREE SIT TOGETHER (user, 2026-10-27: "the
+// panels need to be together and easier to visually look at together") because they work
+// together: the Score Screen Winner on Tournament calls the Series panel's latest map, and
+// the teams are whose colour every ban and pick is. Series leads, as the draft is first on
+// air between games.
 //
 // There is no Options panel any more. It held one switch, for the tournament's logo, and a
 // panel of one switch is a panel you have to open to find out it has nothing in it. The
@@ -39,6 +44,7 @@ export default function Control() {
     <>
       <Standby />
       <Cams />
+      <Series />
       <Teams />
       {/* <Bans /> shelved until after the first user pass (user, 2026-10-22) */}
       <Event />

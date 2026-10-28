@@ -42,7 +42,11 @@
 //
 // See docs/data.md for the whole surface and worked examples.
 
+import { series } from './series'
+
 export const mutations = {
+  ...series,
+
   /**
    * A no-op you can wire to a button to check the round trip works, then replace.
    *

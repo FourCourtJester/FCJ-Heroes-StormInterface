@@ -1,7 +1,9 @@
 import { Field, ImagePicker, Panel, ResetButton, Row, Stepper, SwapButton } from '@single-studio/core/control'
 
+import { SWAP_PATHS } from '../../components/series'
+
 // Teams: everything about who is on screen, in one panel. The series length is on the
-// Tournament panel (user, 2026-10-27: "its, you know, a tournament setting").
+// Series panel (user, 2026-10-27).
 //
 // A Row shares a line once the board is wide enough and stacks in a slim dock, so each team
 // reads as one line - name, logo, games won - and falls apart in order when there is no room
@@ -29,8 +31,22 @@ import { Field, ImagePicker, Panel, ResetButton, Row, Stepper, SwapButton } from
 // exchanging the pairs, and "won" has no opposite number to exchange with - which side won is
 // not a property of a side. Sides are picked before a game and the winner after it, so the
 // two do not meet; if you ever do swap after a result, re-pick the winner.
+//
+// SWAP TAKES THE MAP DRAFT WITH IT (user, 2026-10-27): every ban, pick and result there is
+// kept under its side's path (src/components/series.js), so blue's bans become red's as the
+// names do. It goes through `paths` and is appended to each half in the same order. Clear
+// leaves the draft alone; the Series panel has its own.
 const SIDES = ['blue.name', 'blue.logo', 'blue.wins', 'red.name', 'red.logo', 'red.wins']
 const WINNER = ['toggles.winner.blue', 'toggles.winner.red']
+
+// one side, then the other: the teams' own values and then the draft's, each half in order
+const half = (n) => SWAP_PATHS.slice(n * (SWAP_PATHS.length / 2), (n + 1) * (SWAP_PATHS.length / 2))
+const SWAP = [
+  ...SIDES.slice(0, 3).map((name) => `variables.${name}`),
+  ...half(0),
+  ...SIDES.slice(3).map((name) => `variables.${name}`),
+  ...half(1),
+]
 
 export default function Teams() {
   return (
@@ -39,7 +55,7 @@ export default function Teams() {
       collapsible
       actions={
         <>
-          <SwapButton label="Swap sides" names={SIDES} size="sm" />
+          <SwapButton label="Swap sides" paths={SWAP} size="sm" />
           <ResetButton label="teams" names={SIDES} paths={WINNER} size="sm" />
         </>
       }

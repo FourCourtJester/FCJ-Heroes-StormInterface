@@ -162,13 +162,12 @@ function TeamUnit({ side }) {
   }
 
   return (
-    <div className={`fcjh-unit ${side}${score ? '' : ' no-score'}`} style={anchor}>
-      {/* no score, no panel - the band shortens, as it does for a missing logo */}
-      {score ? (
-        <div className="fcjh-unit-score">
-          <Variable name={`${side}.wins`} fallback="0" />
-        </div>
-      ) : null}
+    <div className={`fcjh-unit ${side}`} style={anchor}>
+      {/* no score, no number - but THE PANEL STAYS (user, 2026-10-27: "The size changes
+          again when we have non zero scores"), so the band is one length whatever it holds */}
+      <div className="fcjh-unit-score">
+        {score ? <Variable name={`${side}.wins`} fallback="0" /> : null}
+      </div>
       {/* The parallelogram. Its own panel even when empty: it is what the score counts
           against, and a gap there would leave the score floating at the container's end.
 
@@ -176,9 +175,11 @@ function TeamUnit({ side }) {
           the plate and the slant clips what hangs over, rather than being contained in the
           straight-sided rectangle inside it.
 
-          NO LOGO, NO PANEL - it does not hold its space (user, 2026-10-25). The container is
-          anchored at the VS end and sized by what is in it, so a team without a logo simply
-          gets a shorter band rather than one with a dark gap where a mark should be. */}
+          NO LOGO, NO PANEL - it does not hold its space (user, 2026-10-25, and again
+          2026-10-27: "we can shrink based upon the fact we have no team logo"). The container
+          is anchored at the VS end and sized by what is in it, so a team without a logo simply
+          gets a shorter band rather than one with a dark gap where a mark should be. The
+          score's panel is the one that holds its space. */}
       {logo ? (
         <div className="fcjh-unit-logo">
           <Image name={`${side}.logo`} alt="" fit="cover" />
@@ -252,7 +253,7 @@ function Lockup({ where }) {
   )
 }
 
-// THE KICKER IS THE SCENE'S. Matchup gives it the standby message; Draft gives it the series,
+// THE KICKER IS THE SCENE'S. Matchup gives it the standby message; Matchup Draft gives it the series,
 // since the teams are on screen drafting and "what is coming up" has no answer there.
 const MESSAGE = <Variable name="standby.message" fallback="" fit />
 

@@ -398,15 +398,6 @@
   padding-right: var(--unit-point);
 }
 
-/* no score: whatever is outermost now, logo or name, is inset past the point the same way.
-   In the DOM the outer end is first on both sides - red only reverses the row. */
-.fcjh-unit.blue.no-score > :first-child {
-  margin-left: var(--unit-point);
-}
-.fcjh-unit.red.no-score > :first-child {
-  margin-right: var(--unit-point);
-}
-
 .fcjh-unit-score {
   flex: none;
   box-sizing: border-box;

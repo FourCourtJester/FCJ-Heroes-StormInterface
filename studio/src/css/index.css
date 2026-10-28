@@ -149,7 +149,13 @@
    team colours ever move in layout.toml, they move here too.
 
    Keyed on `aria-pressed`, which is the framework's own switch and is already there - no
-   second source of truth for which one is on. */
+   second source of truth for which one is on.
+
+   `.tint` carries the side when the button is OFF too: the Series panel's buttons say only
+   Ban, Pick and Win, and their colour is which side (user, 2026-10-27: "color them up and
+   remove the team associations"). The side's colour is the outline and the word; lit, it is
+   the fill, as above. A map holds one thing, so a row has one lit button at most (green was
+   tried and dropped, 2026-10-27). */
 .ss-control {
   --fcjh-won-blue: #5cbcec;
   --fcjh-won-red: #e75c79;
@@ -165,4 +171,28 @@
 
 .fcjh-won.red[aria-pressed='true'] {
   background-color: var(--fcjh-won-red);
+}
+
+.fcjh-won.tint.blue:not([aria-pressed='true']) {
+  border-color: color-mix(in srgb, var(--fcjh-won-blue) 55%, transparent);
+  color: var(--fcjh-won-blue);
+}
+
+.fcjh-won.tint.red:not([aria-pressed='true']) {
+  border-color: color-mix(in srgb, var(--fcjh-won-red) 55%, transparent);
+  color: var(--fcjh-won-red);
+}
+
+.fcjh-won.tint.blue:not([aria-pressed='true']):hover {
+  border-color: var(--fcjh-won-blue);
+}
+
+.fcjh-won.tint.red:not([aria-pressed='true']):hover {
+  border-color: var(--fcjh-won-red);
+}
+
+/* a Win on a map nobody has picked is switched off, and looks it: the framework gives a
+   disabled toggle no look of its own, so it read as live and pressed as dead */
+.fcjh-won:disabled {
+  opacity: 0.35;
 }

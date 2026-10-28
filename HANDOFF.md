@@ -108,7 +108,7 @@ browser sources now:
 | `#/source/game` | the top bar over a live match |
 | `#/source/standby` | between games: a drifting slideshow and a countdown bug |
 | `#/source/matchup` | the "coming up next" band on its own, transparent |
-| `#/source/draft` | the same band over Blizzard's ban-and-pick screen, with the series on it |
+| `#/source/matchup-draft` | the same band with the series on it: over Blizzard's ban-and-pick screen, and under the series cards (was `#/source/draft` until 2026-10-27) |
 | `#/source/scores` | over Blizzard's end-of-game Stats screen: a moving sky with the panel showing through, the winner's name above it and the two marks below |
 | `#/source/webcams` | two camera frames, borders only |
 | `#/source/webcam-solo` | the same frame once, centred |
@@ -481,6 +481,17 @@ land on whole pixels at 1080p (`inspect_card.line`), so at 1440p they may come o
 
 ## 7. What's next
 
+**Series results: a Win a map, nothing automatic** (user, 2026-10-27, after showing option 3
+around: "we will scrap any kind of automatic stamping of a winner"). The Score Screen Winner
+is the scores screen's only again (grouped toggles, `series:winner` and `latest()` gone), and
+the score is the Teams steppers'. Each map has a second row, **Win** (blue) and **Win** (red),
+the framework's grouped toggles, one group a map (`group="won.<map>"`, no mutation), disabled
+and dimmed until that map is picked. Two rows a map on a wide board, three narrow. Also asked
+the same day: **Reset winner** on the Score Screen Winner's heading, and **Swap sides** on
+the Webcams panel (names and handles). Checked in the browser: blue Win then red leaves red
+lit, the lit one pressed again clears it, an unpicked map's Win does nothing, the Winner
+stamps no map, Reset winner asks then clears, the webcam swap trades Lefty and Righty.
+
 **1.0 (user, 2026-10-21).** A test build went to volunteers 2026-10-20 (v0.1.0, b28ee86, the
 kill feed back on); their feedback is 1.0.x for a while - `[meta] version` 1.0.0, 1.0.1 (the translations), 1.0.2 (the art pass: bevelled
 plates, the numbers panes - user, 2026-10-23: "Let's prepare for a new interface release
@@ -497,6 +508,11 @@ history is python-toolchain's, which stays as it was). GitHub:
 https://github.com/FourCourtJester/FCJ-Heroes-StormInterface (public; pushed in
 batches, when the user says; `.github/FUNDING.yml` for the Sponsor button: GitHub Sponsors
 and Ko-fi).
+
+**To revisit: the sky's motion, on Backdrop and Scores alike** (user, 2026-10-27: "Lets
+make a note to revisit backdrop/scores motion later, but yes, i think it looks good"). It is
+one sky now (`components/Sky.jsx` + `sky.css`), so a pass on its stars, dust and comets
+changes both screens.
 
 **To confirm (user, tonight of 2026-10-23): the interface drop-down is under Settings ->
 Observer** ("I think") - README's install step 3 and docs/development.md say so; correct both
@@ -554,6 +570,22 @@ into `matchupslab.css`, scoped to `.fcjh-slab.as-unit`, so the two sources share
 and cannot drift; a source wanting its own overrides it from its own stylesheet. Scrubbed on
 Matchup and checked attached on Draft, 1920 x 1080, no console errors. Untested in OBS.
 
+**Done, the studio (2026-10-27): Draft is renamed Matchup Draft** (user: "Let's rename is to
+`matchup-draft`"). It's the band with "Best of X" on its plate, on the draft scene and under
+the series cards, so it's named for the band; Matchup is the one with the Standby message.
+`sources/MatchupDraft.jsx`, so `#/source/matchup-draft`. The collection's source is
+"SS - FCJ Heroes - Matchup Draft" at the new address; its scene is still `Draft`. The README,
+the guide, obs.py, layout.toml and the series mock follow. **`#/source/draft` is gone:** an
+OBS set up before this needs its URL changed, and the guide says so.
+
+**Done, the studio (2026-10-27): a hidden score no longer shortens the matchup band** (user,
+tracking it in OBS: "The size changes again when we have non zero scores"). `TeamUnit` keeps
+the score panel, empty, on a nameless team or a 0-0 series, so a score arriving mid-series
+doesn't resize the band. A missing logo still drops its panel: tried keeping it too, and the
+user took that back ("we can shrink based upon the fact we have no team logo; but leave the
+'score' area as a calculable area"). A side is score 62 + name 320, plus 160 with a logo.
+`.no-score` and its inset are gone. Matchup and Draft both.
+
 **Done, the studio (2026-10-27): the matchup container hides a score that means nothing**
 (user: "No team name? Hide team score. Team name, but both team score is 0? Hide team score").
 `TeamUnit` drops the score panel when its team has no name or the series is 0-0 (absent wins
@@ -564,6 +596,171 @@ hidden, clean ends); the named states were left to the user's live board. Untest
 **Done, the studio (2026-10-27): Series is on the Tournament panel**, under the two tabs
 ("Let's put it under Left/Right tab"), moved from Teams (user: "its, you know, a tournament setting"). Same `series.pips`, so nothing resets;
 Clear on Teams still leaves it alone. The OBS guide (content/, uncommitted) follows.
+
+**Done, the studio (2026-10-27): Series is a panel of its own**, after Teams, and the best-of
+moved into it from Tournament (user: the map draft is "Series"; "Let's do the rename for
+Series, and move the dropdown"). Same `series.pips`. It is one control for now; the map
+draft goes in next. README and the OBS guide follow.
+
+**Designed, the studio: the Series scene - the map draft** (user, 2026-10-27; built below). Per map: not in
+the pool (not drawn), available, banned, picked, won - the choices carry the team's name,
+not a colour. Picks number the games; each map's Win on the board says who won it. Swap sides takes its paths. Map art: the user extracts Blizzard's concept art.
+Mock: design/obs/series/ (layout A, all 15 maps, the real Draft under it). The matchup is
+cropped in OBS, not given a switch: its logos are cut off the foot (105 px), and it's set
+lower at 80%, with the tournament's wide logo up top. The cameras take that room (624×351).
+There are 0-, 1- and 2-camera versions, and the cards stay put across them. Won maps show
+the winner in the laurel only (the laurel since dropped, 2026-10-27). Banned maps drop the team name and keep only the logo, since
+the bar's colour already says whose ban it was. The scene's two top logos must follow the
+Logos panel's switches (`toggles.show.broadcaster`, `toggles.show.tournament`, via
+useVisibleMark), like every other mark. Nothing fills the space they leave. If the scene
+looks bare with them off, that's the operator's choice (user, 2026-10-27). One camera goes on the right, and the tournament logo takes
+the empty camera's box at the same width. The broadcaster logo replaces the SERIES title.
+The cameras stay 16:9 so they fit the masks. The name and social sit inside the frame,
+on a strip along the feed's foot. The strip uses the Webcams plates' own smoke, read from
+webcam.json's plate_smoke, and clear of the chamfer. That frees the
+plate's room, so the cameras are 672×378.
+
+**Done, the studio (2026-10-27): the Series scene is built** (user: "Lets start building the
+sources"). Seen in the browser at 1920×1080; untested in OBS.
+- **Four sources.** `#/source/series` draws the cards. The top half is its own source per
+  camera count: `series-two-cams`, `series-one-cam` and `series-no-cams` (user: "Probably
+  seperate out the top half into its own sources?"). The cards are the same in all three
+  scenes. The matchup under them is the Draft source, set up in OBS (`[series] band_*`).
+  Its Position is worked out, not typed (`obs.py series_band`): the part that shows, from the
+  kicker's top to the row's foot (source y 808-965, 125.6 px at 80%), is centred between the
+  cards' foot and the screen's, at y 281. The hand-set foot of 1056 had it 5 px high, with a
+  22/32 gap (user, 2026-10-27: "mathematically, this matchup band isnt centered"). The mock
+  reads the same numbers. In OBS, Draft sits under Series: its middle plate dims the cards.
+  The 80% goes in as **Bounds, Fit, 1536 × 780**, not Size: typed as Size,
+  OBS kept a scale taken before the crop and the band came out 72% tall, its kicker over the
+  cards (user, 2026-10-27, in OBS: "Removing crop does not change Height"). Bounds keep the
+  aspect, and 1536 × 780 is exactly 0.8 of the cropped 1920 × 975.
+  Confirmed in OBS (user, 2026-10-27: "looks better").
+- **Mascots at 15 maps (2026-10-27):** at full pool only the middle 56% of each cut shows,
+  and five missed (user: "have missed the mark on their mascot targetting"). Re-aimed in
+  `[series.art]` and recut with `tools/series_art.py`: Battlefield 0.26 -> 0.36, Blackheart's
+  0.5 -> 0.58, Hanamura 0.4 -> 0.82 (D.Va rather than the payload; user unsure, "We can leave it as is for
+  now"), Towers 0.5 -> 0.6, Warhead
+  0.5 -> 0.6.
+- **Head height (2026-10-27):** Raynor sat "way farther down ... than almost every other
+  map", Sky Temple's dragon a little (user). A `[series.art]` entry can now add `[zoom,
+  down]`: a slice 1/zoom of the picture's height, `down` placing it (0 top, 1 bottom).
+  Volskaya 1.5 at 1.0 (the hat brim clips at the sides), Sky Temple 1.35 at 1.0; picked off
+  contact sheets, the rest untouched. Raynor's is a close-up, so his hat reaches the others'
+  tops but his eyes stay lower - more zoom only blows the face up. Untested in OBS.
+- **The sky:** `#/source/backdrop`, at the bottom of each series scene, is the scores
+  screen's moving sky whole (user, 2026-10-27: "the Score animated background, but you
+  know, minus the giant hole in the middle"). The sky moved out of Scores into
+  `components/Sky.jsx` + `sky.css`, so the two wear one sky; Scores still shows it through
+  its four windows. Its numbers stay in scores.json `sky`, which now carries the `horizon`
+  (927, the stats panel's foot, where the plate's floor starts) rather than Scores working
+  it out. Checked in the browser only; the mock doesn't draw it.
+- **Two cameras: one lockup between them (2026-10-27).** The tournament's mark over the
+  broadcaster's with the x between, the scores pair stood on end (user: "vertically center
+  the logos between the cams", "add the 'X' between them, but vertically", "the same
+  waterfall logic as all the other logo collaborations"). `[series] two_mark` (400 × 140 a
+  box) and `two_x`; obs.py puts the x on the middle of the windows' inner STRAIGHT edges,
+  below the chamfer (142.5-426, so 960, 284), and asserts the lockup fits between them and
+  inside that run. Centred on the whole height (237) it read high, the cut corners counting
+  as room (user, 2026-10-27: "only consider the vertical straight edges as the 'usable'
+  space"); the boxes went 140 -> 100 tall to fit. Each picture closes on the x; one alone
+  centres on 284 and the x goes; neither draws nothing. Driven through all four cases in the browser
+  with test marks; untested in OBS. User: "I think we can call that square for 2cam".
+- **One camera: the same lockup in the left window's place (2026-10-27).** User: "same vertical
+  stack, but we can put it where the left webcam used to be". Centred on that window's box
+  (408, 237): no camera there, so no cut to discount. The `one_*` marks are gone; marks["1"]
+  is a lockup as marks["2"] is, and SeriesTop draws one wherever the spec has it. Checked in
+  the browser at 1920×1080; untested in OBS.
+- **No cameras: the lockup lies down (2026-10-27).** User: "the *only* scene where we'll go
+  back to horizontal with the X, and place it above the maps about the same distance as the
+  matchup band is". Broadcaster left, tournament right, as the scores screen and the band's
+  arms. `[series] none_mark` (560 × 200) and `none_x` (64, 40 either side); obs.py takes the
+  gap from `series_band` (the cards' foot to the top of what shows of the band, 27.4 px) and
+  sets the lockup's foot that far above the cards: 228-428, x on 960. The `none_*` and `one_*`
+  per-mark places and SeriesTop's `Mark` are gone: every count is one `Lockup`, `row` with no
+  cameras. Both and lone checked in the browser at 1920×1080; untested in OBS.
+- **Numbers:** `layout.toml [series]` → `tools/obs.py series_spec` → `generated/series.json`.
+  The map list is there too, in the panel's order, with the slugs the art is named by.
+- **Map art:** `studio/public/maps/<slug>.jpg` (e.g. `cursed-hollow.jpg`). The pool is 15
+  maps, and leagues run anything from 9 to all of them (user, 2026-10-27: "as long as the
+  images can cover 9 maps, but potentially scale down to 15"), so the art is cut for 9: a
+  card there is about 187×445 and the art 181×439 inside the rim (`art_for = 9`), cut at 2x,
+  **362×878**. More maps crop it to the middle (at 15, its middle 56%); fewer than 9 scale
+  it up and crop its top and foot. Never stretched. A missing file shows the card's dark.
+- **Cutting it:** `python tools/series_art.py`, by hand when the art changes; what it writes
+  is committed (888 KB for the fifteen). It reads `layout.toml [series.art]`: each map's
+  texture in the user's CASCView extract (`references/CASCView/mods/heroes.stormmod/
+  base.stormassets/assets/textures`, and its `loadscreen/`) and where across it the card
+  centres. The load screens are the game's own per map (`ui_ingame_mapmechanic_loadscreen_*`,
+  Hanamura's `_rework`); Alterac, Volskaya and Warhead have none, so they take the home
+  screen's (`storm_ui_homescreenbackground_wcav/volskaya/warhead`). The acrosses were picked
+  off contact sheets to land on each map's mascot: Alterac 0.62, Battlefield 0.26, Hanamura
+  0.4, the Mines 0.58, the rest 0.5. Not in `gen.py --check`: the extract may be missing and
+  a JPEG's bytes follow the encoder.
+- **Checking it in Claude's browser:** the pane must be showing. Hidden, the page doesn't
+  paint, `img.decode()` never settles, and Single Studio's Image waits on it, so every card
+  stays dark, even its fallback (single-studio-reports §7). OBS paints, so not an on-air
+  problem.
+- **The art fills its card** through `.fcjh-card-art > .ss-image`: the picture sits in Single
+  Studio's own wrapper, which has no size, so a rule on `> img` matched nothing. The art sat
+  at its own shape in the top half and the ban and won dimming never applied (user's first
+  look, 2026-10-27).
+- **Fifteen maps:** a card is 107 px wide. Its name and the winner's logo are sized by the card
+  (`cqw`, capped at their size at 11), and every name wraps to two lines before it shrinks.
+- **Names: two lines, then smaller** (user, 2026-10-27: "can grow to 2 lines before Fit";
+  "every map taking up 2 lines ... more uniform"). The framework's `fit` is one line only,
+  so `src/components/FitLines.jsx` wraps first, then halves its way to the largest size two
+  lines hold, refitting on resize, text change and font load. Map names sit in a box always
+  two lines tall, so the stacks above them start at one height across the row. Team names
+  (winner's and picker's) use it too. **Trap:** at line-height 1.02 the font's glyphs
+  overhang their lines, and `scrollHeight` counts that as overflow - two lines read as more
+  and every name shrank to one; it counts by `clientHeight`.
+- **No logo on a pick, the logo with the win** (user, 2026-10-27: "The colored border is
+  good enough"; "When we select a winner, THEN add the team logo, anchored on the bottom").
+  A pick shows the picker's name only; a won map, the logo at the foot over the map's
+  name, with the winner's name under it. **No laurel** (user, 2026-10-27: "the laurels dont
+  work on sufficiently skinny maps. Or, any of them, actually") - the Scores banner keeps
+  its own, so `win_laurel.svg` is still generated. A ban keeps its logo and no name. Checked in
+  the browser with a 25-character team name.
+- **One logo size, ban and win alike** (user, 2026-10-27: "That's quite a diff in team logo
+  sizes"): `.fcjh-card-logo`, `min(54px, 46cqw)` square, which is 49 px at fifteen cards.
+  **Trap:** `Image fit="contain"` writes `width: 100%` inline on the `<img>`, which beats a
+  size set on the img in CSS, so the ban's logo had filled the card. Size the wrapper box,
+  not the img. Measured in the browser: all four logos 49×49.
+- **Paths:** `toggles.series.hidden.<map>`, `toggles.series.{ban,pick,won}.<side>.<map>`,
+  `variables.series.game.<map>`. Keyed by side, so the framework's Swap sides trades the
+  draft with the teams (Teams.jsx takes `SWAP_PATHS`) with no mutation of its own.
+- **Mutations** (`src/mutations/series.js`): `series:mark` only (one thing per map; a new pick
+  takes the next game number, a changed picker keeps it). The Win row needs none - grouped
+  toggles. (`series:winner`, the Winner stamping the latest map and moving the point, lived
+  an afternoon and was scrapped.) **`ctx.write` takes `[path, value]` pairs, not an object** - given an
+  object, nothing happened and no error showed on the board.
+- **Panel:** Series = Best of, then a block per map: its name with a **Hide** at the right,
+  Blue/Red ban, Blue/Red pick, then Blue/Red Win. Every map is
+  in until Hide. **Hide is a plain toggle** (it reads Show while lit): it folds the block to
+  its name and takes the card off the screen, and clears nothing, so pressing it again puts
+  the map back as it was (user, 2026-10-27: "We can always re-toggle it, and nothing
+  disappears"). Reset draft empties the draft and shows every map, and keeps the best-of;
+  Reset teams leaves the draft alone. This replaced a separate 15-map pool ("hilarious"), so
+  a fresh board shows all 15 cards. A hidden map's pick still counts toward the next game
+  number. Checked in the browser: pick, hide (card gone),
+  show (card back, Game 1 kept).
+- **Buttons say what, colour says whose** (user, 2026-10-27): each map's row is Ban, Pick
+  (blue) then Ban, Pick (red), Unlit, the side's colour is the
+  outline and the word; lit, it fills with the side's colour (green was tried and dropped -
+  a row has one lit button at most, so the fill needs no second signal). `.fcjh-won.tint` in src/css/index.css; the lit fill is the Score Screen Winner's
+  own. One thing per map, as before (`series:mark`): checked, Ban then Pick on one map
+  leaves only the Pick lit.
+- **Results are the Win row** (user, 2026-10-27). They were the Score Screen Winner's for an
+  afternoon (it stamped the latest pick); scrapped. A Win waits for its map's pick
+  (`.fcjh-won:disabled` dims it - the framework gives a disabled toggle no look), and a new
+  pick or a ban clears a result (`series:mark`).
+- **Board order** (user, 2026-10-27): Standby, Webcams, **Series, Teams, Tournament**,
+  Logos, Help - the three that work together side by side, so the draft, the teams and the
+  Score Screen Winner can be read at once.
+- **Card order** is the mock's: picks by game, then open maps, then bans, so cards re-sort
+  as the draft moves.
+- The cards have no entrance yet.
 
 **To do, the studio: our team names in the scores cutout (user, 2026-10-26: "score screen,
 replace the names of the teams in the Score cutout").** Blizzard's panel footer says "Blue
