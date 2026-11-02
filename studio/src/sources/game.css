@@ -252,7 +252,9 @@
 }
 
 .fcjh-name span {
-  font: 700 24px/1 'Saira Semi Condensed', sans-serif;
+  font:
+    700 24px/1 'Saira Semi Condensed',
+    sans-serif;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: #e4f3ff;
@@ -278,6 +280,24 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* ── an NGS logo ───────────────────────────────────────────────────────────────────────
+   NGS's own rule (user, 2026-11-02). The league pads every logo onto a 500 x 350 clear
+   canvas with the art fitted inside, so a square logo is the middle 350 with 75 px of
+   nothing either side, and on the rule above it filled 70% of the plate. Zoomed by 500/350,
+   that middle square is the plate's width - the square rule every other logo gets. The
+   plate's clip-path cuts what the zoom pushes out.
+
+   Measured on season 22's 49 logos: 25 have their art within the middle square and now fill
+   the plate. The rest are wider: 14 lose under a fifth of their width off the sides, and the
+   ten that run edge to edge lose 30%. One number, to tune. */
+.fcjh-logo.ngs {
+  --ngs-zoom: calc(500 / 350);
+}
+
+.fcjh-logo.ngs .mark {
+  transform: scale(var(--ngs-zoom));
 }
 
 /* ── the score pips ────────────────────────────────────────────────────────────────────

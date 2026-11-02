@@ -100,8 +100,8 @@ docs/obs-topbar-handoff.md has the rule.
 
 **The studio builds and runs (2026-10-23).** Node is installed; `npm run dev --prefix studio`
 serves the board and every graphic. It is on **Single Studio 0.13.0** (core and
-provider-supabase), which is additive on the control side - nothing of ours broke. Seven
-browser sources now:
+provider-supabase), which is additive on the control side - nothing of ours broke. Twelve
+browser sources now (2026-10-28), all in the OBS collection:
 
 | | |
 |---|---|
@@ -110,6 +110,9 @@ browser sources now:
 | `#/source/matchup` | the "coming up next" band on its own, transparent |
 | `#/source/matchup-draft` | the same band with the series on it: over Blizzard's ban-and-pick screen, and under the series cards (was `#/source/draft` until 2026-10-27) |
 | `#/source/scores` | over Blizzard's end-of-game Stats screen: a moving sky with the panel showing through, the winner's name above it and the two marks below |
+| `#/source/backdrop` | the scores screen's sky, whole: under the series screen |
+| `#/source/series` | the series screen's map draft, a card a map |
+| `#/source/series-two-cams` | the series screen's top half: two cameras' frames, names and the marks (`-one-cam`, `-no-cams` for one and none) |
 | `#/source/webcams` | two camera frames, borders only |
 | `#/source/webcam-solo` | the same frame once, centred |
 
@@ -117,9 +120,9 @@ The matchup band and the webcam frames are rebuilt from the user's own 2018 NGS 
 (`C:\FourCourtJester\Broadcasts\Heroes`) - its composition, this kit's language. The band is
 its own source rather than part of the standby screen because the two are wanted at different
 times: the backdrop stays up for a whole break, while the band is brought in, lands, and is
-brought in again later in the cast. The operator's board is five collapsible panels, folded
-on load, in the running order of a show: **Standby, Webcams, Teams, Tournament, Help** (user,
-2026-10-23). The Options panel is gone - it held one switch, and the switches now sit under
+brought in again later in the cast. The operator's board is seven collapsible panels, folded
+on load, in the running order of a show (user, 2026-10-23; Series and Logos added since -
+studio/README's "The operator's board" has the order). The Options panel is gone - it held one switch, and the switches now sit under
 the marks they turn on. Help is the directions for whoever is wiring OBS, on the board rather
 than in a file they would have to know to look for.
 
@@ -508,6 +511,28 @@ land on whole pixels at 1080p (`inspect_card.line`), so at 1440p they may come o
   screenshots, the name "FCJ Heroes", Scores' `shutdown` left off - shut down, it flashes the
   game's UI before its sky loads (user, 2026-10-28). Eight
   scenes, twelve browser sources; `Maps` is the series screen
+
+**Done, the studio (2026-10-29): NGS, on Single Studio 0.16** (2026-11-02: the season fetches itself whenever the plugin starts - at load and on a settings Save - and the plugin's settings are now only a Season number, which refuses a season the league isn't on; the board's Fetch season button went. The plugin runs in a SharedWorker that outlives reloads, so restart OBS to see a plugin change (docs/single-studio-reports.md 9). Both shipped in @single-studio/plugin-ngs 0.2.0, which studio/package.json now asks for; the temporary node_modules edit is gone. Also 2026-11-02: NGS pads every logo onto a 500x350 clear canvas, so on the Game source's plate a square logo filled 70% of it; a logo from NGS's S3 address now gets `.fcjh-logo.ngs`, zooming it by 500/350 (`--ngs-zoom` in game.css) so its middle square fills the plate. Told by the logo's address, not a Load flag, so an operator's own logo drops the rule. Wide logos lose their sides, the ten widest 30%. Checked in a browser; untested in OBS. Matchup, Scores and Series are unchanged.. Also 2026-11-02: a team logo template, studio/public/masks/logo_template.png (680x400, from tools/obs.py's logo_template_png), and docs/team-logos.md saying how to draw to it; and Load now writes the tabs as "Nexus Gaming Season 22" and "Division Heroic: Semifinals", the round named by the plugin's `roundName` from 0.2.0 (Round N in the season, the playoffs counted back from the last round as Quarterfinals, Semifinals, Finals; the worker's own copy went), which the match picker shows too. Load no longer writes "Game 1 of Y". Checked in a browser; untested in OBS (restart it: the worker changed).) (user: the NGS plugin, and the
+handoff from the conversation that built it). `@single-studio/core` 0.16,
+`@single-studio/plugin-ngs` 0.1 and `provider-supabase` 0.16. An NGS panel leads the board:
+Fetch season, a Division picker (which fetches its matches), a Match picker (unplayed only),
+and Load match. The worker's `Heroes` handler writes `variables.ngs.*` and puts every logo in
+the image library as `ngs/<team>`. `ngs:load` (`src/mutations/ngs.js`) writes home as blue and away as red
+(names and logos), the left tab = division, the right tab = `Game 1 of Y`, `series.pips` from the best-of,
+and hides the maps outside the season's pool (Blackheart's, Haunted Mines, Warhead) and shows
+the rest. It never touches the wins or the draft. Checked in a browser against the live
+league (season 22, Heroic, Stormblessed v Is Shoopufff Still Inting: every field, the three
+maps hidden, both logos drawn on Matchup); untested in OBS. Open: home = blue, and whether Load
+should zero the wins; one match at a time or a queue.
+
+**Done, the studio (2026-10-29): a map can be minimised** (user: "'Minimize' to go along with
+'Hide' ... Minimize would not hide it on a source"). Each map's name on the Series panel is
+a fold button with the Panel's own chevron: it folds the block as Hide does, but the card
+stays on the screen. **A Win minimises its map** - Win is now `series:win` (the old grouped
+toggle's one-winner-a-map behaviour, plus `toggles.series.folded.<map>`); taking a win back
+leaves the block as it is. The fold is kept in the show, unlike a Panel's, so a reloaded dock
+keeps played maps folded; a hidden map is folded whatever, its chevron disabled. Reset draft
+opens them all (FOLDED is in `DRAFT_PATHS`, not the swap). Checked in a browser; untested in OBS.
 
 **Series results: a Win a map, nothing automatic** (user, 2026-10-27, after showing option 3
 around: "we will scrap any kind of automatic stamping of a winner"). The Score Screen Winner

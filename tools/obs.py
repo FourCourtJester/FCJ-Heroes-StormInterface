@@ -32,6 +32,7 @@ TAB_RIM = 2                          # the tab's line, down the sides and along 
 TAB_CAP = 24                         # px at each end of the tab's art that hold its slants;
 TAB_MID = 20                         # ...and the flat middle between them, which stretches
 GUIDE_LINE = 3                       # the alignment guide's outline
+LOGO_TEMPLATE_H = 400                # the team logo template's height; its width follows the plate
 CYAN = ("#cbe8ff", "#ffffff")        # Blizzard's ColorLightCyanGradient (the level numbers)
 BASE = ("#3b2d52", "#2a1f3c")        # the band's own fill, top to bottom
 DARK = "#0d0a14"
@@ -363,13 +364,14 @@ def _png_rgba(w, h, data):
             + chunk(b"IEND", b""))
 
 
-def _paint(data, poly, colour, line=None, sheet=None):
+def _paint(data, poly, colour, line=None, sheet=None, alpha=1.0):
     """Composite one convex polygon into an RGBA buffer, anti-aliased from its signed distance
     (gen.convex_sdf): filled when `line` is None, else an outline that many px wide. Only the
     shape's own box is walked, so a sheet of small shapes costs almost nothing.
 
     `sheet` is the buffer's size, for the masks that are not screen-sized - a cam mask is the
-    window's own 800 x 450, because OBS stretches a mask over the source it filters."""
+    window's own 800 x 450, because OBS stretches a mask over the source it filters. `alpha`
+    is the shape's opacity, for a sheet whose zones show through one another."""
     sw, sh = sheet or (SW, SH)
     sd = gen.convex_sdf([tuple(p) for p in poly])
     x0, y0, w, h = _box(poly)
@@ -379,7 +381,7 @@ def _paint(data, poly, colour, line=None, sheet=None):
         for x in range(max(0, int(x0 - pad)), min(sw, int(x0 + w + pad) + 1)):
             d = sd(x + 0.5, y + 0.5)
             a = (0.5 - d) if line is None else (line / 2 - abs(d) + 0.5)
-            a = 0.0 if a < 0 else 1.0 if a > 1 else a
+            a = (0.0 if a < 0 else 1.0 if a > 1 else a) * alpha
             if a <= 0:
                 continue
             i = (y * sw + x) * 4
@@ -465,6 +467,39 @@ def event_mask_png(b):
     data = bytearray(SW * SH * 4)
     _paint(data, b.bp["hexagon"], "#ffffff")
     return _png_rgba(SW, SH, data)
+
+
+def logo_template_png(b):
+    """The Game source's team logo plate, for a designer to draw a logo to (user, 2026-11-02):
+    the plate's own shape at LOGO_TEMPLATE_H tall, which at 1080p is about six times the size
+    it is shown. Lay it over the logo in Photoshop and keep the art in the clear middle.
+
+    One sheet for both sides. A team plays blue or red, and the two plates lean opposite
+    ways, so only the hexagon both parallelograms keep is safe. Each team colour marks the
+    corners only that side shows, and dark marks the notches neither does. The frame's rim,
+    drawn over the logo along the top, the bottom and each side's outer slant, is the rim's
+    colour. docs/team-logos.md says it in words."""
+    k = LOGO_TEMPLATE_H / b.h
+    w, h, d = round(b.logo["blue"][2] * k), LOGO_TEMPLATE_H, b.d * k
+    r = b.rim_w * k
+    rs = r * math.hypot(h, d) / h                         # the rim's width along a slant, level
+    data = bytearray(w * h * 4)
+    at = (w, h)
+    for team, corners in (("blue", ([(0, 0), (d, 0), (d / 2, h / 2)],
+                                    [(w, h), (w - d, h), (w - d / 2, h / 2)])),
+                          ("red", ([(w - d, 0), (w, 0), (w - d / 2, h / 2)],
+                                   [(0, h), (d, h), (d / 2, h / 2)]))):
+        for poly in corners:
+            _paint(data, poly, b.team[team], sheet=at, alpha=.6)
+    for poly in ([(0, 0), (d / 2, h / 2), (0, h)], [(w, 0), (w, h), (w - d / 2, h / 2)]):
+        _paint(data, poly, DARK, sheet=at, alpha=.85)
+    for poly in ([(0, 0), (w, 0), (w, r), (0, r)], [(0, h - r), (w, h - r), (w, h), (0, h)],
+                 [(0, 0), (rs, 0), (d + rs, h), (d, h)],            # blue's outer slant
+                 [(w - rs, 0), (w, 0), (w - d, h), (w - d - rs, h)]):  # red's
+        _paint(data, poly, b.rim, sheet=at, alpha=.6)
+    hexagon = [(d, 0), (w - d, 0), (w - d / 2, h / 2), (w - d, h), (d, h), (d / 2, h / 2)]
+    _paint(data, hexagon, "#ffffff", 2, sheet=at)
+    return _png_rgba(w, h, data)
 
 
 def guide_png(b):
@@ -1144,6 +1179,7 @@ def files(cfg):
     mask_at = (b.cam["solo_w"], b.cam["solo_h"])      # the largest window; scale it down
     for side in ("left", "right"):
         out[PUBLIC / f"cam_mask_{side}.png"] = cam_mask_png(b, side, size=mask_at)
+    out[PUBLIC / "logo_template.png"] = logo_template_png(b)
     for team in ("blue", "red"):
         out[Path(f"frame_{team}.svg")] = enc(frame_svg(b, team))
         # one chrome frame a side, carrying no team colour, for both plates

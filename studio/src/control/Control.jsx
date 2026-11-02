@@ -6,6 +6,7 @@ import Cams from './panels/Cams'
 import Event from './panels/Event'
 import Help from './panels/Help'
 import Logos from './panels/Logos'
+import Ngs from './panels/Ngs'
 import Series from './panels/Series'
 import Standby from './panels/Standby'
 import Teams from './panels/Teams'
@@ -42,6 +43,8 @@ export default function Control() {
 
   return (
     <>
+      {/* first: pressed once before the show, it fills the panels below (user, 2026-10-29) */}
+      <Ngs />
       <Standby />
       <Cams />
       <Series />

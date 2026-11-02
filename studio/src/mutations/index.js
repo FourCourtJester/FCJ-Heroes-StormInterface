@@ -42,10 +42,16 @@
 //
 // See docs/data.md for the whole surface and worked examples.
 
+import { ngsMutations } from '@single-studio/plugin-ngs'
+
+import { ngs } from './ngs'
 import { series } from './series'
 
 export const mutations = {
   ...series,
+  // the plugin's asks - the season, a division's matches - and our own Load
+  ...ngsMutations,
+  ...ngs,
 
   /**
    * A no-op you can wire to a button to check the round trip works, then replace.
