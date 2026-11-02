@@ -10,6 +10,8 @@ import spec from '../generated/series.json'
  *
  *   toggles.series.hidden.<map>        the map is out of this series: every map is in until
  *                                      the board hides it (user, 2026-10-27)
+ *   toggles.series.folded.<map>        the board's block for it is minimised; the screen
+ *                                      never reads it (user, 2026-10-29)
  *   toggles.series.ban.<side>.<map>    that side banned it
  *   toggles.series.pick.<side>.<map>   that side picked it
  *   toggles.series.won.<side>.<map>    that side won it
@@ -22,6 +24,7 @@ export const MAPS = spec.maps
 export const SIDES = ['blue', 'red']
 
 export const HIDDEN = (map) => `toggles.series.hidden.${map}`
+export const FOLDED = (map) => `toggles.series.folded.${map}`
 export const BAN = (side, map) => `toggles.series.ban.${side}.${map}`
 export const PICK = (side, map) => `toggles.series.pick.${side}.${map}`
 export const WON = (side, map) => `toggles.series.won.${side}.${map}`
@@ -33,10 +36,13 @@ export const SWAP_PATHS = SIDES.flatMap((side) =>
 )
 
 /**
- * Everything the draft holds, the hidden maps with it: Reset draft brings every map back
- * (user, 2026-10-27). The best-of is not here; it outlives a draft.
+ * Everything the draft holds, the hidden and minimised maps with it: Reset draft brings every
+ * map back, open (user, 2026-10-27). The best-of is not here; it outlives a draft.
  */
-export const DRAFT_PATHS = [...SWAP_PATHS, ...MAPS.flatMap(({ slug }) => [GAME(slug), HIDDEN(slug)])]
+export const DRAFT_PATHS = [
+  ...SWAP_PATHS,
+  ...MAPS.flatMap(({ slug }) => [GAME(slug), HIDDEN(slug), FOLDED(slug)]),
+]
 
 /**
  * One map's state, read out of the two collections (`toggles.series.*` and
