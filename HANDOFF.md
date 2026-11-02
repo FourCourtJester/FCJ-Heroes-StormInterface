@@ -533,6 +533,9 @@ toggle's one-winner-a-map behaviour, plus `toggles.series.folded.<map>`); taking
 leaves the block as it is. The fold is kept in the show, unlike a Panel's, so a reloaded dock
 keeps played maps folded; a hidden map is folded whatever, its chevron disabled. Reset draft
 opens them all (FOLDED is in `DRAFT_PATHS`, not the swap). Checked in a browser; untested in OBS.
+2026-11-02: the whole header row folds a map, up to Hide, as core 0.16's Panel header does
+(the heading grows and the button fills it); before, only the chevron and name did. Checked
+in a browser.
 
 **Series results: a Win a map, nothing automatic** (user, 2026-10-27, after showing option 3
 around: "we will scrap any kind of automatic stamping of a winner"). The Score Screen Winner

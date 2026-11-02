@@ -66,8 +66,10 @@ function MapDraft({ slug, name }) {
   return (
     <>
       <div className="flex items-center justify-between gap-2">
-        {/* the Panel's fold button, its classes and all, so the two read as one */}
-        <h3 className={HEADING}>
+        {/* the Panel's fold button, its classes and all, so the two read as one. The heading
+            grows to Hide and the button fills it, so the whole row folds the map, as core
+            0.16's Panel header does (user, 2026-11-02) */}
+        <h3 className={`min-w-0 grow ${HEADING}`}>
           <button
             type="button"
             onClick={() => mutate('toggle', FOLDED(slug))}
@@ -75,7 +77,7 @@ function MapDraft({ slug, name }) {
             aria-expanded={!folded}
             aria-controls={body}
             title={folded ? 'Open' : 'Minimize'}
-            className="-m-1 flex items-center gap-2 rounded p-1 text-left uppercase tracking-wide transition-colors hover:text-slate-200 disabled:hover:text-slate-400"
+            className="-m-1 flex w-full items-center gap-2 rounded p-1 text-left uppercase tracking-wide transition-colors hover:text-slate-200 disabled:hover:text-slate-400"
           >
             <Chevron collapsed={folded} />
             {name}
