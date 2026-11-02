@@ -32,8 +32,13 @@ import pipRedCb from '../generated/pip_red_cb.svg'
 const { boxes, clip, colours, name_plate: plate, tabs } = spec
 const SIDES = ['blue', 'red']
 const PIP = { blue: pipBlue, red: pipRed }
-const PIP_CB = { blue: pipBlueCb, red: pipRedCb }   // colour-blind mode's
+const PIP_CB = { blue: pipBlueCb, red: pipRedCb } // colour-blind mode's
 const [SCREEN_W, SCREEN_H] = spec.screen
+
+// Where the Nexus Gaming Series keeps its teams' logos. A logo from there gets NGS's own rule
+// in game.css (user, 2026-11-02), so it is told by its address: an NGS Load puts it there, and
+// a logo the operator picks afterwards drops the rule with it.
+const NGS_LOGOS = 'https://s3.amazonaws.com/ngs-image-storage/'
 
 // "#5cbcec" -> "92 188 236", so game.css can say rgb(var(--team-rgb) / .58)
 const rgbOf = (hex) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16)).join(' ')
@@ -74,6 +79,7 @@ function Band({ side }) {
   const logo = useVelcroValue(`variables.${side}.logo`)
   const team = (useColourBlind() ? COLOUR_BLIND : colours)[side]
   const [left, , width] = boxes.band[side]
+  const ngs = typeof logo === 'string' && logo.startsWith(NGS_LOGOS)
   return (
     <div
       className={`fcjh-band ${side}`}
@@ -87,7 +93,7 @@ function Band({ side }) {
         <Variable name={`${side}.name`} fallback="" fit />
       </div>
       {logo ? (
-        <div className="fcjh-logo">
+        <div className={`fcjh-logo${ngs ? ' ngs' : ''}`}>
           <Image name={`${side}.logo`} className="mark" alt="" fit="cover" />
         </div>
       ) : null}
@@ -177,7 +183,9 @@ function Tabs() {
   ].filter(([which]) => said[which])
 
   useLayoutEffect(() => {
-    const tabs_ = Object.values(refs).map((r) => r.current).filter(Boolean)
+    const tabs_ = Object.values(refs)
+      .map((r) => r.current)
+      .filter(Boolean)
     // On its own a tab takes its own width. Clearing the property matters as much as setting
     // it: the survivor keeps its inline --tab-w when its partner goes blank, so without this
     // a lone "Game 3 of 5" would sit in the width "Championship Division" asked for.
@@ -201,9 +209,7 @@ function Tabs() {
     measure()
     // the words turn up after the room connects, and change between games: watch for both
     const mo = new MutationObserver(measure)
-    tabs_.forEach((el) =>
-      mo.observe(el, { childList: true, subtree: true, characterData: true }),
-    )
+    tabs_.forEach((el) => mo.observe(el, { childList: true, subtree: true, characterData: true }))
     return () => mo.disconnect()
   })
 
@@ -294,16 +300,9 @@ export default function Game() {
             show has no square mark at all - letterboxed and small is a poor fit, cropping a
             wordmark to its middle third is a broken one. */}
         <Toggle name="show.hex" className="fcjh-layer">
-          <div
-            className={`fcjh-event${hexMark ? ' has-mark' : ''}`}
-            style={at(boxes.event)}
-          >
+          <div className={`fcjh-event${hexMark ? ' has-mark' : ''}`} style={at(boxes.event)}>
             {hexMark ? (
-              <Image
-                name={hexMark.name}
-                alt=""
-                fit={hexMark.shape === 'square' ? 'cover' : 'contain'}
-              />
+              <Image name={hexMark.name} alt="" fit={hexMark.shape === 'square' ? 'cover' : 'contain'} />
             ) : null}
           </div>
         </Toggle>

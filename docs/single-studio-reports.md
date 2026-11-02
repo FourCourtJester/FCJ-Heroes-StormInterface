@@ -396,3 +396,50 @@ A disabled look in the framework's own toggle styles: dimmed, with the default c
 ### What we carry meanwhile
 
 `.fcjh-won:disabled { opacity: 0.35 }` in `studio/src/css/index.css`.
+
+## 9. A plugin's code never updates while any page of the studio is open
+
+### What happens
+
+The store and its plugins run in a `SharedWorker` (`velcro-<STUDIO_ID>`), which lives as
+long as any page using it does. Reloading the board, or restarting the dev server, keeps the
+old worker and so the old plugin code. In OBS the dock and every browser source share it, so
+nothing short of closing them all (or OBS) picks up a new plugin. Vite also serves the
+optimized dependency under an unchanged `?v=` hash, so the server looks fresh while the
+worker is not. Found 2026-11-02 editing `@single-studio/plugin-ngs`: the board showed the
+old settings across two server restarts and an OBS dock reload.
+
+### Why it's a problem
+
+A plugin update looks like it didn't ship, and nothing on the board says the worker is
+older than the page.
+
+### What we'd ask for
+
+The worker reporting its build to the page, and the board saying when the two differ, with
+a way to restart the worker.
+
+### What we carry meanwhile
+
+Close every page of the studio (in OBS, restart OBS) after a plugin or worker change.
+
+## 10. Clearing a plugin's number field stores `NaN`, and Save stays lit
+
+### What happens
+
+`Plugins.jsx`'s `Field` reads a number with `event.target.valueAsNumber`, which is `NaN`
+for an empty box. `NaN` is saved, and as `NaN !== NaN` the row counts itself changed from
+then on: Save and reconnect stays amber. Found 2026-11-02 on the NGS plugin's Season.
+
+### Why it's a problem
+
+A blank number is the usual "use the default", and the board then says there's an unsaved
+change forever.
+
+### What we'd ask for
+
+An empty number box saved as absent (`null`), not `NaN`.
+
+### What we carry meanwhile
+
+Nothing: the NGS plugin reads `Number(season) || null`, so `NaN` means blank.

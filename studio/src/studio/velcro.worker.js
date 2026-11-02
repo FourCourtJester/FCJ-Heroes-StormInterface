@@ -1,4 +1,5 @@
-import { createVelcroHost } from '@single-studio/core/worker'
+import { createVelcroHost, urlAssets } from '@single-studio/core/worker'
+import { logos, ngs, NgsHandler } from '@single-studio/plugin-ngs'
 import { connectSupabase } from '@single-studio/provider-supabase'
 
 import { STUDIO_ID } from './config'
@@ -24,9 +25,45 @@ const connect = (context) => {
   return connectSupabase(context)
 }
 
+/**
+ * What the NGS plugin fetched, written under variables.ngs for the board's NGS panel. The
+ * paths are listed in ../mutations/ngs.js, beside the Load that reads them (user, 2026-10-29).
+ */
+class Heroes extends NgsHandler {
+  onSeason({ season, divisions, teams, maps }) {
+    // every logo into the image library, as ngs/<team name>, on every machine
+    this.mutate('set', urlAssets(logos(teams)))
+    this.mutate('set', {
+      'variables.ngs.season': season,
+      'variables.ngs.divisions': divisions.map(({ key, name }) => ({ key, name })),
+      'variables.ngs.maps': maps,
+      'variables.ngs.problem': null,
+    })
+  }
+
+  onMatches({ matches }) {
+    // the match picker's choices, each whole so Load needs nothing else; a played match is
+    // left out, as nobody casts one twice. The plugin names the rounds ("Round 2",
+    // "Semifinals") over the whole division before this, from 0.2.0 (user, 2026-11-02).
+    const label = (match) =>
+      `${match.roundName || 'Round ?'}: ${match.home?.name ?? 'TBD'} vs ${match.away?.name ?? 'TBD'}`
+    this.mutate('set', {
+      'variables.ngs.matches': matches
+        .filter((match) => !match.reported)
+        .map((match) => ({ ...match, label: label(match) })),
+      'variables.ngs.problem': null,
+    })
+  }
+
+  onProblem({ message }) {
+    this.mutate('set', { 'variables.ngs.problem': message || 'The league did not answer.' })
+  }
+}
+
 createVelcroHost({
   name: STUDIO_ID,
   mutations,
+  plugins: [ngs(Heroes)],
   sync: { connect },
 
   /**

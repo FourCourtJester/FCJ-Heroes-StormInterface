@@ -1,7 +1,9 @@
-import { useVelcroMutate, useVelcroValue } from '@single-studio/core'
-import { Panel, ResetButton, Row, Select, Toggle } from '@single-studio/core/control'
+import { useId } from 'react'
 
-import { BAN, DRAFT_PATHS, HIDDEN, MAPS, PICK, SIDES, WON } from '../../components/series'
+import { useVelcroMutate, useVelcroValue } from '@single-studio/core'
+import { Chevron, Panel, ResetButton, Row, Select, Toggle } from '@single-studio/core/control'
+
+import { BAN, DRAFT_PATHS, FOLDED, HIDDEN, MAPS, PICK, SIDES, WON } from '../../components/series'
 
 // The series: how long it is, and the map draft that runs through it (user, 2026-10-27: the
 // map draft is "Series", and the best-of moves into it with it).
@@ -17,6 +19,12 @@ import { BAN, DRAFT_PATHS, HIDDEN, MAPS, PICK, SIDES, WON } from '../../componen
 // map is back as it was ("We can always re-toggle it, and nothing disappears"). Reset draft
 // shows them all again.
 //
+// MINIMISE FOLDS A MAP AND LEAVES IT ON THE SCREEN (user, 2026-10-29): the chevron by its
+// name, a Panel's own, folds the block as Hide does, for room on the board during a show.
+// A Win minimises its map too. Unlike a Panel's fold it is kept in the show, under
+// toggles.series.folded, because a mutation sets it and a reloaded dock should not open every
+// played map again. A hidden map is folded whatever its chevron says, and its chevron waits.
+//
 // Every button writes immediately, as a toggle does - this is a running record, and nothing
 // here is half-typed. They are the framework's Toggle with its click handed to a mutation
 // (src/mutations/series.js), because a ban or a pick clears what it replaces: a map is one
@@ -25,14 +33,14 @@ import { BAN, DRAFT_PATHS, HIDDEN, MAPS, PICK, SIDES, WON } from '../../componen
 // WHO WON A MAP IS PRESSED HERE, and only here: a Win a side under each map's Ban and Pick
 // (user, 2026-10-27: "we will scrap any kind of automatic stamping of a winner"). For an
 // afternoon the Score Screen Winner marked the latest game's map; people were asked and it
-// went. The two are the framework's grouped toggles, a group a map, so a map has one winner
-// and pressing the lit one takes it back. They wait for a pick: a map nobody picked has no
-// game to win, and a new pick clears a result anyway (series:mark).
+// went. The two are one group a map (series:win), so a map has one winner and pressing the
+// lit one takes it back. They wait for a pick: a map nobody picked has no game to win, and a
+// new pick clears a result anyway (series:mark).
 //
 // Two rows a map on a wide board - Ban Pick Ban Pick, then Win Win under their sides - and
 // three on a narrow one, blue's pair, red's, then the wins (user, 2026-10-27).
 //
-// Reset draft empties the draft and un-hides every map, and keeps the best-of, which is the
+// Reset draft empties the draft and un-hides and opens every map, and keeps the best-of, which is the
 // series' format rather than its progress. Swap sides on the Teams panel trades the draft with the teams.
 
 const strip = (path) => path.replace(/^toggles\./, '')
@@ -48,20 +56,39 @@ const HEADING = 'text-sm font-semibold tracking-wide text-slate-400 uppercase'
 function MapDraft({ slug, name }) {
   const mutate = useVelcroMutate()
   const hidden = useVelcroValue(HIDDEN(slug))
+  const folded = Boolean(useVelcroValue(FOLDED(slug))) || Boolean(hidden)
+  const body = useId()
   const picked = [useVelcroValue(PICK('blue', slug)), useVelcroValue(PICK('red', slug))].some(Boolean)
 
   const mark = (side, as) => () => mutate('series:mark', { map: slug, side, as })
+  const win = (side) => () => mutate('series:win', { map: slug, side })
 
   return (
     <>
       <div className="flex items-center justify-between gap-2">
-        <span className={HEADING}>{name}</span>
+        {/* the Panel's fold button, its classes and all, so the two read as one. The heading
+            grows to Hide and the button fills it, so the whole row folds the map, as core
+            0.16's Panel header does (user, 2026-11-02) */}
+        <h3 className={`min-w-0 grow ${HEADING}`}>
+          <button
+            type="button"
+            onClick={() => mutate('toggle', FOLDED(slug))}
+            disabled={Boolean(hidden)}
+            aria-expanded={!folded}
+            aria-controls={body}
+            title={folded ? 'Open' : 'Minimize'}
+            className="-m-1 flex w-full items-center gap-2 rounded p-1 text-left uppercase tracking-wide transition-colors hover:text-slate-200 disabled:hover:text-slate-400"
+          >
+            <Chevron collapsed={folded} />
+            {name}
+          </button>
+        </h3>
         {/* a plain toggle at the board's small size: lit while the map is hidden */}
         <Toggle name={strip(HIDDEN(slug))} size="sm">
           {hidden ? 'Show' : 'Hide'}
         </Toggle>
       </div>
-      {hidden ? null : (
+      <div id={body} hidden={folded} className="space-y-3">
         <Row className="row-cols-2 sm:row-cols-4">
           {/* side by side, as the screen is: blue's ban and pick, then red's */}
           {SIDES.flatMap((side) =>
@@ -77,14 +104,12 @@ function MapDraft({ slug, name }) {
             )),
           )}
         </Row>
-      )}
-      {hidden ? null : (
         <Row className="row-cols-2">
           {SIDES.map((side) => (
             <Toggle
               key={`won.${side}`}
               name={strip(WON(side, slug))}
-              group={`won.${slug}`}
+              onClick={win(side)}
               disabled={!picked}
               className={`fcjh-won tint ${side}`}
             >
@@ -92,7 +117,7 @@ function MapDraft({ slug, name }) {
             </Toggle>
           ))}
         </Row>
-      )}
+      </div>
     </>
   )
 }
