@@ -536,6 +536,19 @@ opens them all (FOLDED is in `DRAFT_PATHS`, not the swap). Checked in a browser;
 2026-11-02: the whole header row folds a map, up to Hide, as core 0.16's Panel header does
 (the heading grows and the button fills it); before, only the chevron and name did. Checked
 in a browser.
+2026-11-06: **every map starts minimised**, on a new show and after Reset draft (user: "It
+makes the panel less tall initially"). The kept flag is inverted, `toggles.series.open.<map>`
+(OPEN in series.js), so absent is folded; Reset draft deletes it, and a Win deletes it
+rather than setting `folded`. Stored `toggles.series.folded.*` from older shows are stale and
+harmless. Checked in a browser (15 folded at load; two opened, Reset folded both); untested in OBS.
+
+**Done, the studio (2026-11-06): Standby is clear without slides** (user: "If there are no
+slides, it should default to transparent"). The stock gradient and the vignette moved from
+`.fcjh-standby` to `.fcjh-slides`, which Slideshow doesn't render for an empty group, so no
+slides leaves every layer transparent and the bug hangs over whatever OBS has under it. With
+slides, the field still sits under them for a slide still decoding. Checked in a browser
+(empty library: html, body and screen transparent; the slides' rules computed on a stand-in
+element); untested in OBS.
 
 **Series results: a Win a map, nothing automatic** (user, 2026-10-27, after showing option 3
 around: "we will scrap any kind of automatic stamping of a winner"). The Score Screen Winner

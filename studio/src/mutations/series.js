@@ -1,4 +1,4 @@
-import { BAN, FOLDED, GAME, PICK, SIDES, WON } from '../components/series'
+import { BAN, GAME, OPEN, PICK, SIDES, WON } from '../components/series'
 
 // The map draft (user, 2026-10-27). The paths are in ../components/series.js, which says why
 // they are keyed by side.
@@ -73,7 +73,7 @@ export const series = {
     for (const s of SIDES) pairs[WON(s, map)] = null
     if (on) {
       pairs[at] = true
-      pairs[FOLDED(map)] = true
+      pairs[OPEN(map)] = null
     }
 
     ctx.write(Object.entries(pairs))

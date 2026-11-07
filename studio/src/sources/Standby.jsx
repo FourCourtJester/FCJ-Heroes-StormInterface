@@ -65,7 +65,6 @@ export default function Standby() {
           <Variable className="label" name="standby.label" fallback="" />
           <Timer className="time" name="standby.resume" fallback="" />
         </Transition>
-
       </div>
     </Scene>
   )

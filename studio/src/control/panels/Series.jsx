@@ -3,7 +3,7 @@ import { useId } from 'react'
 import { useVelcroMutate, useVelcroValue } from '@single-studio/core'
 import { Chevron, Panel, ResetButton, Row, Select, Toggle } from '@single-studio/core/control'
 
-import { BAN, DRAFT_PATHS, FOLDED, HIDDEN, MAPS, PICK, SIDES, WON } from '../../components/series'
+import { BAN, DRAFT_PATHS, HIDDEN, MAPS, OPEN, PICK, SIDES, WON } from '../../components/series'
 
 // The series: how long it is, and the map draft that runs through it (user, 2026-10-27: the
 // map draft is "Series", and the best-of moves into it with it).
@@ -21,9 +21,12 @@ import { BAN, DRAFT_PATHS, FOLDED, HIDDEN, MAPS, PICK, SIDES, WON } from '../../
 //
 // MINIMISE FOLDS A MAP AND LEAVES IT ON THE SCREEN (user, 2026-10-29): the chevron by its
 // name, a Panel's own, folds the block as Hide does, for room on the board during a show.
-// A Win minimises its map too. Unlike a Panel's fold it is kept in the show, under
-// toggles.series.folded, because a mutation sets it and a reloaded dock should not open every
-// played map again. A hidden map is folded whatever its chevron says, and its chevron waits.
+// A Win minimises its map too. Unlike a Panel's fold it is kept in the show, because a
+// mutation sets it and a reloaded dock should not open every played map again. A hidden map is folded whatever its chevron says, and its chevron waits.
+//
+// EVERY MAP STARTS MINIMISED (user, 2026-11-06): on a new show and after Reset draft, so the
+// panel starts short. What is kept is the open flag, toggles.series.open, so absent - the
+// state a reset leaves - is folded.
 //
 // Every button writes immediately, as a toggle does - this is a running record, and nothing
 // here is half-typed. They are the framework's Toggle with its click handed to a mutation
@@ -56,7 +59,7 @@ const HEADING = 'text-sm font-semibold tracking-wide text-slate-400 uppercase'
 function MapDraft({ slug, name }) {
   const mutate = useVelcroMutate()
   const hidden = useVelcroValue(HIDDEN(slug))
-  const folded = Boolean(useVelcroValue(FOLDED(slug))) || Boolean(hidden)
+  const folded = !useVelcroValue(OPEN(slug)) || Boolean(hidden)
   const body = useId()
   const picked = [useVelcroValue(PICK('blue', slug)), useVelcroValue(PICK('red', slug))].some(Boolean)
 
@@ -72,7 +75,7 @@ function MapDraft({ slug, name }) {
         <h3 className={`min-w-0 grow ${HEADING}`}>
           <button
             type="button"
-            onClick={() => mutate('toggle', FOLDED(slug))}
+            onClick={() => mutate('toggle', OPEN(slug))}
             disabled={Boolean(hidden)}
             aria-expanded={!folded}
             aria-controls={body}

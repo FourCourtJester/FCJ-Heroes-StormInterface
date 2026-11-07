@@ -20,12 +20,8 @@
   height: var(--screen-h);
   overflow: hidden;
   font-family: 'Saira Semi Condensed', sans-serif;
-  /* In this mode the page owns the whole screen, so it brings its own field - the stock dark
-     the interface's backplate is built on. It is also the holding card Slideshow deliberately
-     doesn't draw: an empty library renders no element at all, and a slide still decoding
-     leaves a gap, and both of those should be the tournament's dark rather than whatever
-     happens to be behind the browser source. The clear mode, when it comes, turns this off. */
-  background: linear-gradient(160deg, var(--stock-top), var(--stock-bottom));
+  /* No background of its own: with no slides the screen is clear, so the bug can hang over
+     whatever OBS has under it (user, 2026-11-06). The field is the slideshow's, below. */
 }
 
 /* ── the backdrop ──────────────────────────────────────────────────────────────────────
@@ -42,6 +38,12 @@
    cross-fade, which is the one moment both are visible. `alternate infinite` also means a
    slide is never parked at the end of its travel, however long the break runs. */
 .fcjh-slides {
+  /* The stock dark the interface's backplate is built on, under the pictures: a slide still
+     decoding leaves a gap, and that should be the tournament's dark rather than whatever is
+     behind the browser source. It lives on the slideshow, not the screen, because an empty
+     library renders no slideshow element at all - so no slides, no field, and the screen is
+     transparent (user, 2026-11-06). */
+  background: linear-gradient(160deg, var(--stock-top), var(--stock-bottom));
   --ss-fade: 1400ms;
   /* 1.3 is the old one's framing: a 1920-wide picture carrying 580 px of slack. Which is also
      the sharpness floor - file slides at 2560 x 1440 or better, or the drift is panning across
@@ -89,8 +91,10 @@
   to { transform: scale(var(--drift-scale)) translate(8%, -8%); }
 }
 
-/* the vignette: what keeps a bright piece of concept art from fighting the words on it */
-.fcjh-standby::after {
+/* the vignette: what keeps a bright piece of concept art from fighting the words on it. The
+   slideshow's, so it goes when the slides do: over a clear screen it would only darken the
+   edges of whatever OBS has under it. */
+.fcjh-slides::after {
   content: '';
   position: absolute;
   inset: 0;
