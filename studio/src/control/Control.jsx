@@ -43,7 +43,9 @@ export default function Control() {
 
   return (
     <>
-      {/* first: pressed once before the show, it fills the panels below (user, 2026-10-29) */}
+      {/* first: where a new operator starts, folded for everyone else (user, 2026-11-12) */}
+      <Help />
+      {/* pressed once before the show, it fills the panels below (user, 2026-10-29) */}
       <Ngs />
       <Standby />
       <Cams />
@@ -52,7 +54,6 @@ export default function Control() {
       {/* <Bans /> shelved until after the first user pass (user, 2026-10-22) */}
       <Event />
       <Logos />
-      <Help />
     </>
   )
 }
