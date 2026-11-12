@@ -148,7 +148,12 @@ their XP strip and the scale held at 1.5459 (item 17 step 2), the on-fire flames
 multi-unit slices (untested in game), Ctrl+Shift+H for the heal pop-ups (item 19), Blizzard's
 own flame (item 18; the gold digits went, "too jarring"), the inspect card opening unseen for
 a beat (item 20). Every diagnostic is out. Notes: `docs/releases/v1.2.0.md`. Next: studio
-updates (user, 2026-11-12).
+updates (user, 2026-11-12): Help as questions at the top of the board; three fixes from an
+OBS 32.2.2 check (its Chromium is older than 33's) - the matchup band's team units take a
+fixed name width (32 sized them from the name's text, so every team's unit was a different
+width), the no-cams series lockup centres a lone mark (a selector-order bug, every browser),
+and a lone mark beside one camera takes a 520 x 240 box (`[series] one_lone`). Seen in OBS 32
+by the user except the last.
 
 §7 has the interface's open list; the broadcast half's is at the end of `studio/README.md`.
 
