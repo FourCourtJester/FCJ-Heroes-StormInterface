@@ -1096,7 +1096,10 @@ def series_spec(b):
     lockup = lambda cx, cy, w=lw, h=lh, t=xt, g=xg: {"cx": round(cx), "cy": round(cy), "w": w,
                                                      "h": h, "x_text": t, "x_gap": g}
     # one camera: the same lockup in the left window's place. Nothing cuts that box, so its
-    # middle is the window's own
+    # middle is the window's own. A mark alone there takes a larger box (`lone`), a good chunk
+    # of the window rather than one of the pair's (user, 2026-11-12)
+    ow, oh = s["one_lone"]
+    assert ow <= s["cam_w"] and oh <= s["cam_h"], "the one-camera lone mark is bigger than the window"
     # no cameras: the lockup lying down, above the cards by the matchup band's distance below
     # them - from the cards' foot to the top of what shows of the band (user, 2026-10-27)
     (nw, nh), (nt, ng) = s["none_mark"], s["none_x"]
@@ -1124,7 +1127,8 @@ def series_spec(b):
                 "plate_h": s["plate_h"], "name": s["plate_name"], "social": s["plate_social"]},
         "marks": {
             "2": {"lockup": lockup(SW / 2, sum(straight) / 2)},
-            "1": {"lockup": lockup(s["edge"] + s["cam_w"] / 2, s["cam_top"] + s["cam_h"] / 2)},
+            "1": {"lockup": {**lockup(s["edge"] + s["cam_w"] / 2, s["cam_top"] + s["cam_h"] / 2),
+                             "lone": [ow, oh]}},
             "0": {"lockup": lockup(SW / 2, s["cards_top"] - band_gap - nh / 2, nw, nh, nt, ng)},
         },
         # OBS settings for the Matchup Draft source on this scene, for the guide and the mock - the page

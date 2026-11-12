@@ -460,9 +460,19 @@
 /* ── the name, running in to the VS ──────────────────────────────────────────────────── */
 
 /* a fixed width, not a stretch: the container has no width of its own any more, so its
-   parts are what give it one */
+   parts are what give it one.
+
+   `width` AS WELL AS the flex-basis (user, 2026-11-12: OBS 32's browser source). The
+   container is `max-content`, and an older Chromium sizes that from each item's own width,
+   ignoring flex-basis: with only the basis, the name counted as its text on one line at full
+   size, so every team's container was a different width - a short name squeezed, a long one
+   stretched - and the clip and chrome went with it. OBS 33's Chromium follows the spec and
+   counts the basis. The score and logo always had a `width`; this was the one part without. */
 .fcjh-unit-name {
   flex: 0 0 var(--unit-name);
+  width: var(--unit-name);
+  min-width: var(--unit-name);
+  max-width: var(--unit-name);
   box-sizing: border-box;
   display: flex;
   align-items: center;

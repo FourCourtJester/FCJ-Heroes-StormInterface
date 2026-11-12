@@ -98,14 +98,17 @@ function Lockup({ at, row }) {
   const both = Boolean(first && second)
 
   if (!first && !second) return null
+  // alone beside one camera, a larger box of its own: a good chunk of the empty window's
+  // place rather than one of the pair's (user, 2026-11-12)
+  const [w, h] = !both && at.lone ? at.lone : [at.w, at.h]
   return (
     <div
       className={`fcjh-series-lockup${row ? ' row' : ''}${both ? '' : ' lone'}`}
       style={{
         left: `${at.cx}px`,
         top: `${at.cy}px`,
-        '--lockup-w': `${at.w}px`,
-        '--lockup-h': `${at.h}px`,
+        '--lockup-w': `${w}px`,
+        '--lockup-h': `${h}px`,
         '--x-text': `${at.x_text}px`,
         '--x-gap': `${at.x_gap}px`,
       }}

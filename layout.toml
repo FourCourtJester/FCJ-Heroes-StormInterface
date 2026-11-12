@@ -608,6 +608,9 @@ plate_social = 16
 two_mark = [400, 100]        # each mark's box, w x h: 16 px clear of either window, and the
                              # pair with the x 264 of the straight run's 283.5
 two_x = [40, 12]             # the x's size, and its air above and below
+one_lone = [520, 240]        # one camera and ONE mark: its box, w x h, larger in the empty
+                             # window's place (user, 2026-11-12: "a good chunk" of it, not all):
+                             # 76 px clear either side of the window, 69 above and below
 none_mark = [560, 200]       # each mark's box with no cameras, w x h
 none_x = [64, 40]            # the x's size, and its air either side
 # what OBS does to the Matchup Draft source on this scene: crop its foot (the logo lockup, which the

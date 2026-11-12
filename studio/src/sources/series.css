@@ -369,8 +369,11 @@
   object-position: left center;
 }
 
-/* alone, it has nothing to close on */
-.fcjh-series-lockup.lone .fcjh-series-lockup-mark img {
+/* alone, it has nothing to close on. Named by `.first` and `.second` as the row's rules are
+   (user, 2026-11-12: the no-cams lockup "not centered numerically"): without them those
+   outranked this, and a lone tournament mark lying down kept its left-hand push. */
+.fcjh-series-lockup.lone .fcjh-series-lockup-mark.first img,
+.fcjh-series-lockup.lone .fcjh-series-lockup-mark.second img {
   object-position: center;
 }
 
