@@ -11,7 +11,7 @@
 
 [meta]
 name = "FCJH"
-version = "1.1.2"
+version = "1.2.0"
 
 [screen]
 width = 1920
@@ -144,12 +144,25 @@ warhead_junction = 0
 # places are in the constants as "obs" like the rest. Everything under the band's data that
 # the interface draws - the tabs, the empty ban tiles - comes with the art pass.
 [element.blue_level]
-rect = [820, 8, 64, 50]      # 64 wide, was 80 (user, 2026-10-19: the OBS top bar, docs/obs-topbar-handoff.md):
-                             # the wings 20 px shorter each, their outer ends at 779.8 / 1140.2
+rect = [820, 3, 64, 50]      # 64 wide, was 80 (user, 2026-10-19: the OBS top bar, docs/obs-topbar-handoff.md):
+                             # the wings 20 px shorter each, their outer ends at 779.8 / 1140.2. Up 5 from 8
+                             # with the XP bar in the wing's bottom: centred in the wing above the bar's core
+                             # (0 to 52.8), 1.35 low as before, for the digits' empty descender (user, 2026-11-12)
 kind = "ui"
 [element.blue_talent_lead]
 rect = [814, 0, 76, 64]      # Blizzard's flame, behind the level plate of the team ahead (6 past it each side)
 kind = "demand"
+[element.blue_wing_xp]
+rect = [809.1, 42.8, 85.3, 31] # Blizzard's observer XP bar (Team1XPUnitStatusFrame) as the wing's bottom
+                             # element (user, 2026-11-11/12): the art's bright core (rows 6-9 of 17) snug on
+                             # the bottom chrome: the core from 53.8 on down under the rim, which is drawn
+                             # over it (FCJH_TopRim) and hides every edge of it ([wing_xp] tuck; user,
+                             # 2026-11-12: "moving the rim up to its own strata"). The ends are where the
+                             # mask meets the core's top, [wing_xp] tuck under the rim's inner edge. Its ends are where the mask meets the core's
+                             # top, so a full bar shows whole and the core's ends follow both slants. 31 px
+                             # tall: Blizzard's 17 units (15.3 px) looked thin, 2x (30.6) "wasn't bad", 27
+                             # wanted "a bit more" (user, 2026-11-12). Fills inward out.
+kind = "ui"
 
 # Top bar, centre
 [element.logo_plate]
@@ -167,11 +180,15 @@ kind = "obs"
 
 # Top bar, red side (inside out: level, logo, name, score)
 [element.red_level]
-rect = [1036, 8, 64, 50]
+rect = [1036, 3, 64, 50]
 kind = "ui"
 [element.red_talent_lead]
 rect = [1030, 0, 76, 64]
 kind = "demand"
+[element.red_wing_xp]
+rect = [1019.6, 42.8, 91.3, 31] # blue_wing_xp's, for the red wing: 6 px wider, as Blizzard's hexagon isn't
+                             # symmetric (its right side leans further than its left)
+kind = "ui"
 
 # Around the edges
 [element.replay]
@@ -207,7 +224,7 @@ kind = "demand"
 [element.inspect]
 rect = [20, 0, 300, 525]     # the inspect card (selected hero): tall and skinny, left column;
                              # cut to what it holds (tools/inspect_card.py H: 583 units)
-above = "blue_xp"            # its bottom sits [screen] padding above blue's row (its y is worked out)
+above = "blue_row"           # its bottom sits [screen] padding above blue's row's top edge (its y is worked out)
 kind = "demand"
 neutral_colour = "b4a5e6"    # the card's edge for a unit of neither team (a mercenary camp, a
                              # boss): a lighter purple (user, 2026-10-05); blue and red are the plates'.
@@ -290,9 +307,11 @@ kind = "ui"
 # The rows are placed by their INNER ends (beside the minimap) and their bottom edge, so a new
 # scale grows them outward and upward; tools/gen.py works out their top and blue's left edge.
 # 1.375 = the mock's +10% (user, 2026-09-29); 1.5125 = another +10% (user, 2026-09-30).
-# "fit" (2026-10-05): as large as [screen] padding allows - the rows' outer ends (their XP
-# bars) that far from the screen's sides, and their bottom edge that far from its bottom.
-scale = "fit"
+# "fit" (2026-10-05): as large as [screen] padding allows - the rows' outer ends (their top
+# corners, with the row frame) that far from the screen's sides, and their bottom edge that far
+# from its bottom.
+scale = 1.5459              # "fit"'s value while the rows had their XP strip; held when it went (user,
+                             # 2026-11-12: "do *not* grow them" - fit measured from the plates' corners gave 1.5561)
 blue_right = 752             # where blue's row ends (cell 5's right)
 red_left = 1168              # cell 6; cells 7-0 follow to the right (blue_right's mirror about 960; 1167 until 2026-10-19)
 talent_popup_size = 40       # the pop-ups' square (talent icon, heal plus), straddling the cell's top edge; shows ~42 px with its border, as the talents pane's squares (user, 2026-10-02; was 44)
@@ -823,18 +842,46 @@ rays_r = 1100                # how far the rays reach before they have faded out
 # And a rare big shooting star, against the grain of the comets
 meteor_cycle = 41            # s
 
-# Bars stacked on each hero row, placed by tools/gen.py from [hero_row] so they follow it.
-# Both are cut to the plates' slant: their ends continue the row's slanted outer edges.
+# Team XP: Blizzard's bars in the top bar's wings. The rows' own XP strip along the plates'
+# top edge ([team_xp]) went 2026-11-12 (user: "remove that empty bar"); the core bar and the
+# row frame sit on the plates now.
+# The XP bars in the wings (blue_wing_xp, red_wing_xp; user, 2026-11-11): Blizzard's art, tinted
+# gold while the team is a talent tier ahead (Colorize, as Blizzard tints its own bars). Both
+# golds are Blizzard's, the two ends of its division gold (ColorGoldDivisionGradient). Its
+# GlowColorGold c86800 as the dark end was too orange (user, 2026-11-12: "some shades paler").
+[wing_xp]
+lead_light = "fffdf0"         # the team-ahead gold (Colorize: the core's bright rows to light, the rest to
+lead_dark = "ffc21e"          # dark). Pale f6e9c4 / eab963 was "a good first direction", wanted brighter, to
+                             # "glint" (user, 2026-11-12): near-white highlight on Blizzard's gold (ffc21e)
+tuck = 1                     # px the bar runs on under the rim's inner edge, all round: the rim is drawn
+                             # over it (FCJH_TopRim), so its edges never show, the game's rounding or not.
+                             # Before the rim had its own layer the bar had to stop short of it, and a soft
+                             # stop left a dim strip, a hard one went over (user, 2026-11-12)
+# The gold's glint (user, 2026-11-12, "try 1"): a soft streak that sweeps the fill from the hexagon
+# out while a team is ahead, then rests. It is drawn into the fill itself (gen.py wing_xp_shimmer),
+# so it never crosses the empty backing. The timing is FCJH_TopBar's (FCJH_Shimmer).
+shimmer_colour = "ffffff"     # the streak's centre; Colorize takes it to lead_light
+shimmer_strength = 1.0        # 0-1: how far the centre goes to shimmer_colour
+shimmer_width = 0.25          # the streak's width, as a share of the fill's length (it stretches with it)
+shimmer_lean = 0.3            # how far the top leads the bottom across the bar's 17 rows, same share
+# The fill, top to bottom, RGBA hex: one column of Blizzard's obs_bar_xp_blue (red's is the same),
+# its 17 rows exactly. Its 156-texel art fades out over ~6 texels at each end, and stretched to
+# the XP that made an upright purple fuzz ahead of the fill (user, 2026-11-12); this column has
+# no ends, so the fill stops crisp. Glow 8518ff, core e7c7ff / d8a5ff. The glow is ours: Blizzard's
+# ran 6 rows each side up to 96 and was "tooo noticeable" without soft ends (user, 2026-11-12), so
+# 3 rows, about half as strong (Blizzard's 1c 2e 46 62 7e 96 / 96 7e 62 46 2e 1c 0e). The core is
+# 5 rows, not Blizzard's 4: one more d8a5ff, so it reaches the rim (the mask cuts it there).
+fill = ["8518ff00", "8518ff00", "8518ff00", "8518ff12", "8518ff2a", "8518ff4c",
+        "e7c7ffff", "d8a5ffff", "d8a5ffff", "d8a5ffff", "e7c7ffff",
+        "8518ff4c", "8518ff2a", "8518ff12", "8518ff00", "8518ff00", "8518ff00"]
+# ...and the backing under it, the same way: one column of Blizzard's obs_bar_xp_bg, its 17 rows.
+# Its own ends are slanted (/ - Blizzard flips blue's), which read the wrong way against our
+# wings while empty (user, 2026-11-12); the column has none, so the mask slants it.
+backing = ["00000000", "00000000", "00000000", "00000000", "00000000", "00000000",
+           "46264dff", "331c38ff", "331c38ff", "331c38ff", "46264dff",   # 5 rows, as the fill's core
+           "00000000", "00000000", "00000000", "00000000", "00000000", "00000000"]
 
-# Team XP: on the plates' top edge, the full width of that edge.
-[team_xp]
-height = 8                   # the bar
-gap = 1                      # between the bar and the plates' top edge (tight: one unit with the plates)
-colour = "9a6cff"            # the fill, both teams (hex RGB)
-track_colour = "0b0c14"      # the empty part
-track_alpha = 220
-
-# The XP and core bars' fills, bevelled as Blizzard's core bar (design/ref_default_core_hp.png;
+# The core bars' fills, bevelled as Blizzard's core bar (design/ref_default_core_hp.png;
 # gen.py bevel_texture): lit from above, a soft step at mid-height. Brightness is x the bar's
 # colour; lip and foot are texels at 1440p (1 texel ~ 0.75 px at 1080p). Take the table out
 # for flat fills.
@@ -849,7 +896,9 @@ foot_dark = 0.45             # its brightness
 
 # A team's map alerts: stacked on its side of the minimap, on its plates' inner end (tools/maps.py).
 [map_alerts]
-above_core = 10              # px from the core bar's top up to every banner's bar's bottom: one place
+above_core = 18              # px from the core bar's top up to every banner's bar's bottom: one place
+                             # (10 until the rows' XP strip went, 2026-11-12: the core came down 8, so
+                             # 18 keeps every banner where it was - user: the alerts stay put)
                              # on every map, whether the core bar shows or not - Alterac's cavalry
                              # excepted, up to its lowest art (maps.AV_BELOW; user, 2026-10-25) (user, 2026-10-09:
                              # the core bar is taller than any pop-up; what hangs under a bar is
@@ -857,11 +906,11 @@ above_core = 10              # px from the core bar's top up to every banner's b
                              # (red) or ends (blue) where its team's row does: [hero_row] red_left,
                              # blue_right
 
-# Core health: on top of the XP bar, at the row's inner end (toward the minimap). Its size
-# is Blizzard's (237 x 27 units = 213 x 24 px, 39% of the XP bar), fixed; Blizzard shows it
-# only when a core is taking damage.
+# Core health: on the plates' top edge, at the row's inner end (toward the minimap), cut to
+# the plates' slant. Its size is Blizzard's (237 x 27 units = 213 x 24 px), fixed; Blizzard
+# shows it only when a core is taking damage.
 [team_core]
-gap = 1                      # between core and XP
+gap = 1                      # between core and the plates' top edge
 blue_colour = "3f8cff"
 red_colour = "ff4a5e"
 track_colour = "0b0c14"
@@ -870,7 +919,7 @@ track_alpha = 220
 # rounded outside corners), round the core bar alone, so it shows only with the core bar.
 # frame_width = 0 takes it away.
 frame_width = 3              # the line, px: 3 like the rest (user, 2026-10-16); its bottom line then
-                             # lies exactly on the row frame's top line ([row_frame], 2 out of the XP bar)
+                             # lies exactly on the row frame's top line ([row_frame], 2 out of the plates)
 frame_inside = 1             # of which over the bar's edges (the rest outside)
 # Alterac Pass's keep shields on the core bar (Blizzard's three pips, FCJH_TopBar FCJH_AVShield1-3):
 # in a row just past the bar's outer end, outside its chrome line (user, 2026-10-25: centred on
@@ -881,15 +930,15 @@ av_shield_out = 4            # the nearest shield's box from the bar's outer (to
                              # chrome's 2 px outside, the art's own ~2 px margin, ~4 px clear
 av_shield_overlap = 3        # the boxes overlap: the art's own margins, ~2 px between the shields
 
-# A chrome frame round each team's row (user, 2026-10-16): one line round the plates and the XP
-# bar together (the XP bar's top down to the plates' bottom, both slanted ends), not the core
-# bar, no lines between heroes. In the top backplate's rim colours ([top_backplate] rim, one
+# A chrome frame round each team's row (user, 2026-10-16): one line round the plates (their
+# top to their bottom, both slanted ends; round the rows' XP strip too until 2026-11-12), not
+# the core bar. In the top backplate's rim colours ([top_backplate] rim, one
 # flat silver), anti-aliased the same way; its outside corners rounded. Rows of 1-4 heroes get their own
 # (FCJH_RowPacker). The part outside the plates counts against [screen] padding, so the rows sit
 # that much higher and narrower; width = 0 takes the frame away and puts them back.
 [row_frame]
 width = 3                    # the line, px
-inside = 1                   # of which over the plates' and the XP bar's edges (the rest outside)
+inside = 1                   # of which over the plates' edges (the rest outside)
 end_inside = 1.5             # ...but along the row's two slanted ends: as the seam's half, so the
                              # outer plates' fountains sit as far from the ends as the others from
                              # their seams (at 1, ~1-1.5 px more black there: user, 23_25_09). The
@@ -900,8 +949,7 @@ fountain_gap = 1.5           # the black between each slanted line and its plate
                              # outer two plates had ~1 px more than the other three: 23_42_43)
 seam = 3                     # a line along each slant between two plates, centred on it (1 px of each
                              # plate and 1 between: it hides the slants' rough edges), px; 0 = none.
-                             # The same line runs under the XP bar, centred on its gap to the plates,
-                             # so the bar is fully enclosed (user, 2026-10-16)
+                             # (It ran under the rows' XP strip too, 2026-10-16 to 2026-11-12.)
 # its colours: [top_backplate] rim's, so top and bottom can't drift apart (a `rim` here would
 # be this frame's own). Flat since 2026-10-17: the backplate's old ramp put its dark band - read
 # as a shadow - part way down every seam; the top followed 2026-10-18.

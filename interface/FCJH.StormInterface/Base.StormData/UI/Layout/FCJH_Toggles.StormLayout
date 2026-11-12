@@ -239,7 +239,7 @@
 				     a paused Fade holds its frame's alpha, so while the XP frames sat in FCJH_HideLower,
 				     its "Shown" state held them at 255 from load and row_packer's Heroes0 Alpha 0 never
 				     showed (the bar up before any plate, user 2026-10-26/27). Their alpha is set here
-				     only; row_packer still places them and cuts their textures.
+				     only. Since 2026-11-11 they are Blizzard's bars and backings in the wings (FCJH_TopBar).
 				     THEY LOAD HIDDEN (Alpha 0 in FCJH_TopBar) and this fades them IN, so hidden is where
 				     the animation starts and nothing has to happen at load. Fading them OUT from 255 left
 				     the bar up for a moment at game start, until Empty caught it (user, 2026-10-27: "They
@@ -251,7 +251,7 @@
 					<Animation name="FCJH_ShowXp">
 						<Event event="FCJH_XpShow" action="DirectionForward,Play"/>
 						<Event event="FCJH_XpHide" action="DirectionReverse,Play"/>
-						<Controller type="Fade" end="Pause" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_BlueXPTrack">
+						<Controller type="Fade" end="Pause" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team1XPUnitStatusFrameBgImage">
 							<Key type="Curve" time="0" value="0"/>
 							<Key type="Curve" time="0.2" value="255"/>
 						</Controller>
@@ -294,7 +294,7 @@
 					<Animation name="FCJH_ShowXp">
 						<Event event="FCJH_XpShow" action="DirectionForward,Play"/>
 						<Event event="FCJH_XpHide" action="DirectionReverse,Play"/>
-						<Controller type="Fade" end="Pause" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/FCJH_RedXPTrack">
+						<Controller type="Fade" end="Pause" frame="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/ObserverTopPanel/Team2XPUnitStatusFrameBgImage">
 							<Key type="Curve" time="0" value="0"/>
 							<Key type="Curve" time="0.2" value="255"/>
 						</Controller>

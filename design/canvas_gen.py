@@ -49,8 +49,7 @@ REF_OBS_LEVELS = "ref_obs_levels.png"                   # already on the canvas,
 hexc = lambda h: "#" + h.lower()
 BP = CFG["top_backplate"]
 HP = {"blue": hexc(BP["blue_colour"]), "red": hexc(BP["red_colour"])}   # Blizzard's health fill, sampled
-XP_FILL = hexc(CFG["team_xp"]["colour"])
-TRACK = "rgba(11,12,20,%.2f)" % (CFG["team_xp"]["track_alpha"] / 255)
+TRACK = "rgba(11,12,20,%.2f)" % (CFG["team_core"]["track_alpha"] / 255)
 CORE = {"blue": hexc(CFG["team_core"]["blue_colour"]), "red": hexc(CFG["team_core"]["red_colour"])}
 HEAL = hexc(CFG["heal_popup"]["colour"])
 COL = {"blue": {"line": "#6FA2FF", "portrait": "#1d3a6e", "txt": "#E4EDFF", "pop": "#4C8DFF"},
@@ -349,8 +348,7 @@ def cell_x(team, i):
 
 def hero_rows_svg():
     top = ROW["top"]
-    parts = [slab("blue", R["blue_xp"], 1.0, XP_FILL, True), slab("red", R["red_xp"], 0.62, XP_FILL, True),
-             slab("blue", R["blue_core"], 0.78, CORE["blue"], True), slab("red", R["red_core"], 0.64, CORE["red"], True)]   # drains from the outer end
+    parts = [slab("blue", R["blue_core"], 0.78, CORE["blue"], True), slab("red", R["red_core"], 0.64, CORE["red"], True)]   # drains from the outer end
     for team, pct in (("blue", "78%"), ("red", "64%")):
         x, y, w, h = R[f"{team}_core"]
         inner = x + w - 16 if team == "blue" else x + 16
@@ -687,8 +685,6 @@ def main_board():
              + " · ".join(f"{key(k)} {what}" for k, what in TOGGLES) + '</div>\n')
     x, y, w, h = R["blue_core"]
     b.append(f'<div class="chip s" style="left: {f1(x)}px; top: {f1(y - 40)}px; width: {f1(w)}px; padding: 3px 8px;">Core HP {f1(w)} × {f1(h)} · shown when a core takes damage</div>\n')
-    b.append(f'<div class="chip s" style="left: {f1(R["red_core"][0] + R["red_core"][2] + 10)}px; top: {f1(R["red_xp"][1] - 44)}px; width: 250px; padding: 3px 8px;">'
-             f'XP {f1(R["red_xp"][2])} × {f1(R["red_xp"][3])}, {CFG["team_xp"]["gap"]} px above the plates · red at 62%</div>\n')
     return page("Default view, as built", 1920, 1080, "".join(b), MAIN_CSS)
 
 
@@ -1021,7 +1017,6 @@ def visual_board():
                swatch(rgba(band(0)), "Blue band", f"{','.join(band(0)[1:])} at {round(int(band(0)[0]) / 2.55)}%"),
                swatch(rgba(band(1)), "Red band", f"{','.join(band(1)[1:])} at {round(int(band(1)[0]) / 2.55)}%"),
                swatch(CORE["blue"], "Core HP", f"{CORE['blue']} · {CORE['red']}"),
-               swatch(XP_FILL, "XP fill", f"{XP_FILL}, both teams · track {TRACK}"),
                swatch(HEAL, "Heal pop-up", f"{HEAL}, plus and border"),
                swatch(f"linear-gradient(#{BP['rim'][0]}, #{BP['rim'][1]} 35%, #{BP['rim'][2]} 60%, #{BP['rim'][3]})", "Chrome rim", " · ".join("#" + c for c in BP["rim"])),
                swatch(f"linear-gradient(#{BP['stock'][0]}, #{BP['stock'][1]})", "Stock dark", f"#{BP['stock'][0]} → #{BP['stock'][1]}", True),
@@ -1040,7 +1035,7 @@ def visual_board():
     g = gen.stat_geometry(CFG)
     spacing = [f"Plate · <b>{px_(CELL.w)} × {px_(CELL.h)}</b>, <b>{px_(CELL.pitch)}</b> apart, overlap <b>{px_(CELL.overlap)}</b> (scale {ROW['scale']:g})",
                f"Rows · blue <b>{f1(ROW['blue_left'])}–{ROW['blue_right']}</b>, red <b>{ROW['red_left']}–{f1(R['hero_0'][0] + R['hero_0'][2])}</b>, top <b>{f1(ROW['top'])}</b>, bottom <b>{ROW['bottom']}</b>",
-               f"XP · <b>{CFG['team_xp']['height']} px</b>, <b>{CFG['team_xp']['gap']} px</b> above the plates · core <b>{f1(R['blue_core'][3])} px</b>, <b>{CFG['team_core']['gap']} px</b> above XP",
+               f"Core · <b>{f1(R['blue_core'][3])} px</b>, <b>{CFG['team_core']['gap']} px</b> above the plates",
                f"Pop-ups · <b>{ROW['talent_popup_size']} px</b> square",
                f"Pane side margin · <b>{u(gen.STAT_MARGIN)} px</b> · inspect <b>{u(ic.M)} px</b>",
                f"Title band <b>{CFG['info_pane']['title_height']}</b> · headings <b>{CFG['info_pane']['header_height']}</b> · team band <b>{CFG['info_pane']['team_height']}</b> px",
@@ -1111,8 +1106,8 @@ def spec_board():
         ("Fountain", "On the health bar at the plate's outer end", "game", "Bright when ready, dimmed with its count on cooldown"),
         ("Talent pop-ups", f"{ROW['talent_popup_size']} px, straddling the top edge", "game", f"Hold {tp['hold']} s, fade {tp['fade']} s; always play out; drawn over heal"),
         ("Heal pop-up", f"Same spot and motion; at {hp['threshold']}% or less", "game", f"Hold {hp['hold']} s; clears above {hp['clear_above']}%; fades at once on death; {hp['lock']:g} s lock per plate"),
-        ("Team XP", f"{xs('blue_xp')}, y {f1(R['blue_xp'][1])}, on the plates' top edge", "game", "Cut to the slant; hidden until a team's first hero loads. Moves with the plates"),
-        ("Core HP", f"{xs('blue_core')}, y {f1(R['blue_core'][1])}, on XP at the inner end", "game", "Blizzard's bar and size, our slanted track and mask; shows while a core takes damage"),
+        ("Team XP", f"{xs('blue_wing_xp')}, y {f1(R['blue_wing_xp'][1])}, in the top bar's wings", "game", "Blizzard's bars and art, cut to the wings; gold while a team is a talent tier ahead, with a streak glinting out from the hexagon every 6 s"),
+        ("Core HP", f"{xs('blue_core')}, y {f1(R['blue_core'][1])}, on the plates at the inner end", "game", "Blizzard's bar and size, our slanted track and mask; shows while a core takes damage"),
         ("Map banners", f"Beside the minimap: bars {CFG['map_alerts']['above_core']} px over the core bar, blue's ending at x {ROW['blue_right']}, red's starting at {ROW['red_left']}", "game",
          f"Every map's, in one place on every map; neutral ones on red's side; stacked {f1(round(maps.step() * PX, 1))} px apart (Maps board)"),
         ("Map objectives", "Round the minimap, per map", "game", f"Neutral objectives above the minimap at THE GAP ({CFG['minimap']['alert_gap']} px over the map's top tip). Every map passed 2026-10-15/16 (Maps board)"),
@@ -1249,13 +1244,13 @@ def map_scene(key, scale, standard=False, crop=MAP_CROP):
     sw = fs(1.5)
     p = [f'<svg width="{round(cw * scale)}" height="{round(ch * scale)}" viewBox="{cx0} {cy0} {cw} {ch}" style="display: block; background: #0b0c14; border-radius: 6px;" aria-label="{maps.MAPS[key].title}: minimap and banners">',
          f'<rect x="{cx0}" y="{cy0}" width="{cw}" height="{ch}" fill="#0f111b"></rect>']
-    # the plates, their XP and core bars
+    # the plates and their core bars
     for s in gen.BLUE_SLOTS + gen.RED_SLOTS:
         team = "blue" if s in gen.BLUE_SLOTS else "red"
         x, y, w, h = R[f"hero_{s}"]
         p.append(f'<polygon points="{pts(slanted(team, x, y, x + w, y + h))}" fill="{COL[team]["portrait"]}" fill-opacity=".6" stroke="{COL[team]["line"]}" stroke-opacity=".45" stroke-width="{f1(sw)}"></polygon>')
     for team in ("blue", "red"):
-        for bar, fill in (("xp", XP_FILL), ("core", CORE[team])):
+        for bar, fill in (("core", CORE[team]),):
             x, y, w, h = R[f"{team}_{bar}"]
             p.append(f'<polygon points="{pts(slanted(team, x, y, x + w, y + h))}" fill="{fill}" fill-opacity=".55"></polygon>')
     # the minimap's square and the drawn map

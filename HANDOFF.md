@@ -141,13 +141,14 @@ spent, and the next broadcast work starts from `main`.
 **Testing (2026-10-23):** the user tests in OBS, at 1080p, the broadcast's settings;
 Claude checks in a browser at 1920x1080.
 
-**v1.1.2, committed (2026-11-11), not yet a release:** Ctrl+Shift+H for the heal
-pop-ups (§7 item 19, confirmed), Blizzard's own flame with the leading team's level digits in
-gold (item 18, untested in game), the inspect card opening unseen for a beat (item 20,
-off screen for that beat too, and only after a real close, not the game's blink between
-heroes; "looks perfect", user). Before the release: talk the gold digits over (user, later). Every diagnostic is out: the inspect squares,
-the click tints and the Viking click attempts (item 15, closed as an engine limit). `[meta]
-version` is 1.1.2; `docs/releases/v1.1.2.md` and the tag follow the user's OK.
+**v1.2.0, released (user, 2026-11-12: "mark this all as a v1.2 release"; 1.1.2 was never
+tagged, so it's in here):** Blizzard's XP bars in the top bar's wings, gold while a team is a
+talent tier ahead with a glint every 6 s (§7 item 17, seen in game), the hero rows without
+their XP strip and the scale held at 1.5459 (item 17 step 2), the on-fire flames over the
+multi-unit slices (untested in game), Ctrl+Shift+H for the heal pop-ups (item 19), Blizzard's
+own flame (item 18; the gold digits went, "too jarring"), the inspect card opening unseen for
+a beat (item 20). Every diagnostic is out. Notes: `docs/releases/v1.2.0.md`. Next: studio
+updates (user, 2026-11-12).
 
 §7 has the interface's open list; the broadcast half's is at the end of `studio/README.md`.
 
@@ -1882,6 +1883,193 @@ from their plates (docs/blizzard-fixes.md).
     To settle first: does the bottom rows' `[team_xp]` stay (see the 2026-10-24 companion
     idea above), and read the actual Reddit requests before building. Dev build and
     screenshots before deciding.
+    **Settled (user, 2026-11-11): the wings, Blizzard's bar, and the rows lose theirs.** The
+    plan: Blizzard's default XP bars into our wings, scrunched to fit, Blizzard's purple and
+    glow; gold while a team is a talent tier ahead (item 18's signal, the digits plain again);
+    the bars off the hero rows, the core bars re-placed, the alerts staying put. One thing at
+    a time (user). **Step 1, dev build, untested in game:** `Team1/2XPUnitStatusFrame` and
+    their `BgImage`s are Blizzard's again (its art, `Expansion` Left/Right so they fill inward
+    out), anchored to the backplate at `[element.blue_wing_xp]` / `red_wing_xp` - square, in the
+    wing's bottom under the level plate, inside the chrome, `[816 / 1032, 46.7, 72, 15.3]`:
+    Blizzard's 17-unit height (Ahli's too), 80 units wide (Blizzard 156, Ahli 100). Render
+    order: backplate 490, flame 495, backing 496, bar 497, level digits 500. `FCJH_Ahead` Yes
+    tints the bar (`ColorAdjustMode` Colorize, as Blizzard's `mapmechanicpanel` does) with
+    `[wing_xp]` lead_light `eab963` (Blizzard's division gold) / lead_dark `c86800`
+    (`GlowColorGold`); No sets `ColorAdjustMode` None. FCJH_Toggles' XP watches fade the
+    backing now, not the rows' tracks; the row packer moves only the tracks. The rows' tracks
+    stay hidden (Alpha 0), so **the row frames have an empty strip on top until step 2**.
+    Watch for: the digits' feet over the bar (bar 15.3 px tall from 46.7, the plate's 50 px
+    box ends at 58), the backing's native height poking out of the wing (Ahli sets only its
+    width), Blizzard's red-team art not being purple, `ColorAdjustMode` None not clearing the
+    gold (then Colorize white/white instead), Colorize flattening the glow.
+    **Seen 2026-11-12 (user, a screenshot):** purple, fills outward, and goes gold on the lead,
+    but the placement and size are off. Measured 1:1 off the capture: a thin line runs exactly
+    in our frames (821..887, 1036..1104, y ~45) - "a border above it?" - while a bright 6 px
+    band (y 50-56, glow 44-62) runs far wider: blue from 822 inward under the hexagon, red
+    1014..1134, at red ~100% XP. Feels taller than Ahli's/Blizzard's too (user, unsure). Gold
+    too orange: now both ends of Blizzard's division gold, `f6e9c4` / `eab963` - "good enough
+    for now", tints later (user). After the bar's border, colour, glow and mask settle: a
+    taller wing and hexagon to rebalance (user).
+    **The textures, extracted by the user (CASCView `.../textures/storm_ui_ingame_obs_bar_xp_*`):**
+    all three 156 x 17. The fills are a 4-texel core (rows 6-9, `e7c7ff`/`d8a5ff`) in a purple
+    glow (`8518ff`) that fades to the edges; red's art is the same purple, its slanted end
+    mirrored. The backing is only a dark 4-texel track (`46264d`/`331c38`), rows 6-9, no glow.
+    The band matches the fill's core, but ~1.5x thick and ~140 px long: Blizzard's 156-wide art
+    at its own size, not squeezed into our 80 units. Best guess: the veterancy bar *tiles* its
+    texture by default (Blizzard's `UnitStatusVeterancyBarTemplate` sets `Tiled` true; our old
+    row bars needed `Tiled` false to stretch). The thin line at y ~45 is still unexplained (the
+    backing's track should sit at 52-56).
+    **Fourth dev build (2026-11-12), untested in game:** `<Tiled val="false" index="0"/>` on both
+    `XPBar`s, the backings given the frame's height (17), and a **DIAGNOSTIC**: green 2-unit lines
+    just outside each XP frame's box (`FCJH_DiagXp1/2Top/Bottom/Left/Right`, FCJH_TopBar), to show
+    the bar and backing against the box. Out once the bar sits right.
+    **Seen 2026-11-12 (user, the green box): the frame itself was 2x** - ~144 x 31 px, 160 x 34
+    units, centred right. Our own rule (anchored on two different points, a Width/Height is
+    added half each side): the frames had all four anchors AND Width 80 / Height 17. That's
+    the spill, the "taller" bar, and the thin line (the backing's track, 17 high from the
+    doubled frame's top, landed at y ~45). **Fifth dev build, untested in game:** the frames'
+    Width/Height 0 (the backings keep 80 x 17: one Top anchor and both sides on the frame's
+    Mid, Blizzard's centring). Tiling off kept. Diagnostic still in.
+    **Seen 2026-11-12 (user): "the previous height of the bar wasn't an issue; only the
+    width... meet in the middle... the major problem now is to see if we can make it work
+    with the slants."** **Sixth dev build, untested in game:** the boxes span the wing - blue
+    `[801, 39, 100, 23]`, red `[1011, 39, 108, 23]` (8 px wider: Blizzard's hexagon isn't
+    symmetric) - from the outer slant to the padded hexagon at the box's top, down to the
+    chrome; 23 px tall, between 15.3 and the 2x 30.6. A generated mask (gen.py
+    `wing_xp_mask`, `FCJH_WING_XP_MASK_BLUE/RED`) cuts them to the wing: inside the band, half
+    rim_width plus `[wing_xp] clear` (0.5 px) off the chrome and the hexagon's plate. It is
+    the XPBar's `AlphaMaskTexture` and the backing's `ImageMaskTexture` (backing height = the
+    frame's, so both map the same box); blue's backing unflipped (`TextureCoords` 0..1) so
+    the mask isn't mirrored. Watch for: the mask not applying to the fill (then the sibling
+    mask frame as well), the core (5.4 px, centred ~y 50, 4 px higher than before) under the
+    level digits, low XP hidden for its first ~5 px (the fill starts at the box's inner edge,
+    the hexagon's slant cuts it back). Diagnostic still in.
+    **Seen 2026-11-12 (user): "pretty good!"** The inner end sat on the hexagon, the outer end
+    ~1% under the slant; "a bit taller" welcome. And a vertical leading edge of purple fuzz
+    ahead of the slanted fill: Blizzard's fill art has soft end caps (~6 of its 156 texels
+    fade at each end), and the fill's moving end is always upright - the mask is fixed to the
+    frame, so it slants only a full bar's ends. Not fixed yet; options put to the user.
+    **Seventh dev build, untested in game:** `[wing_xp] clear` 2 (was 0.5); the boxes 27 px
+    tall from y 37 (the core stays ~y 50) and their ends where the mask crosses the core
+    (blue `[810.4, 37, 83.9, 27]`, red `[1019.5, 37, 90.1, 27]`), so a full bar shows whole.
+    Diagnostic still in.
+    **User, 2026-11-12: "Try 2 first" (our fill, Blizzard's art without the end caps), "bump
+    up the height a bit more", and "the inner slants don't seem to match our hexagon, they're
+    going the opposite way".** Zoomed, the sixth build's screenshot has both bars' inner ends
+    along the hexagon's chrome line (blue's /, red's \), the outer ends along the wing's;
+    asked for a closer look. **Eighth dev build, untested in game:** the XPBars' `Texture` is
+    `FCJH_WING_XP_FILL` (gen.py `wing_xp_fill`: `[wing_xp] fill`, one column of Blizzard's
+    `obs_bar_xp_blue` - its 17 rows exactly - 8 texels wide), so the fill's moving end is crisp;
+    still upright (a mask can't slant a moving end). Boxes 31 px tall from y 35, the core still
+    ~y 49.6: blue `[810.3, 35, 84, 31]`, red `[1019.4, 35, 90.3, 31]`. Diagnostic still in.
+    **User, 2026-11-12: "I think this is good."** The wrong-way slant was the backing, seen
+    while empty: Blizzard's `obs_bar_xp_bg` has slanted ends of its own (/, blue's flipped by
+    Blizzard; ours unflipped). Next: "farther down... snug against the bottom rim (not over
+    it). And probably snug on the sides too. The idea is that it's the bottom element of the
+    wing. We can then re-center the digits." **Ninth dev build, untested in game:** the
+    backing is one column of Blizzard's too (`[wing_xp] backing`, `FCJH_WING_XP_BACKING`;
+    gen.py `wing_xp_column` makes both), so the mask slants it. The mask now clears the
+    hexagon's chrome as it does the wing's (that rim is centred on the padded edge too: 2 px
+    clear had left 0.75), `[wing_xp] clear` 1. The core (rows 6-9) sits on the bottom chrome,
+    1 px above its inner edge (53.8 to 61.05), the glow below cut; box ends where the mask
+    meets the core's top: blue `[811.4, 42.8, 80.8, 31]`, red `[1021.9, 42.8, 86.7, 31]`.
+    Then: re-centre the level digits above it. Diagnostic still in.
+    **User, 2026-11-12: "That looks pretty good... remove the green, recenter the digits."**
+    **Tenth dev build, untested in game:** the diagnostic outlines are out. The level plates
+    (`[element.blue_level]` / `red_level`) are up 5 px, y 8 to 3: centred in the wing above
+    the bar's core (0 to 52.8) and 1.35 px low, as they sat in the whole wing before (the
+    digits' line box carries an empty descender). Blizzard's flame is anchored to the plate,
+    so it rises with it.
+    **Confirmed (user, 2026-11-12): "I think that's it."** Step 1 done; tints later.
+    **Then (user, 2026-11-12):** the glow "tooo noticeable" without soft ends; the bar "1px shy
+    of the rim on the outer edge"; the gold wants to be brighter, to "glint". **Eleventh dev
+    build, untested in game:** `[wing_xp] fill`'s glow is 3 rows each side at about half
+    Blizzard's alpha (was 6, to 96); the mask's outer slants sit `[wing_xp] outward` 1 px
+    further out, the boxes' outer ends with them (blue `[810.4, 42.8, 81.8, 31]`, red width
+    87.7); the lead gold is lead_light `fffdf0` / lead_dark `ffc21e` (Blizzard's gold), was
+    `f6e9c4` / `eab963`.
+    **User, 2026-11-12: the shift "very flush and smooth", the gold "great"; "+1px downward
+    (not height, just move)".** **Twelfth dev build, untested in game:** the boxes 1 px down
+    (y 43.8), their ends re-set to where the mask meets the core's top (blue `[810.9, 43.8,
+    80.8, 31]`, red `[1022.4, 43.8, 86.7, 31]`), and the mask's foot `[wing_xp] downward` 1 px
+    lower along the slants, so the core (54.7 to 62.05) rests on the bottom rim's inner edge
+    rather than losing its last px.
+    **Reverted (user, 2026-11-12):** 1 px down drew the bar over the rim - the rim is baked
+    into the backplate texture (490), under the bar (497) - so the "gap" was the bevel's own
+    bottom edge. Back to the eleventh build's boxes and mask; `downward` gone, `outward` kept.
+    **Seen 2026-11-12 (user's screenshot, ~1:1):** under the core (rows 54-60) a dim row 61,
+    then the rim (62-64). Not the bevel, not the fill short: the mask's soft cut `clear` 1 px
+    above the rim, showing faded glow. "Can we make it flush?" **Thirteenth dev build,
+    untested in game:** the bar stays put; the fill's core and the backing are 5 rows (one
+    more of the middle colour), so the core runs to 62.9; the mask cuts the foot on its own,
+    hard (whole texels, no ramp: a ramp left the last one 58%) at the rim's inner edge (62.05, `[wing_xp] foot` 0), the
+    slants and hexagon as before.
+    **Seen (user, 2026-11-12): "flush, but its also 1px over the rim"... "time to ask about
+    moving the rim up to its own strata".** **Fourteenth dev build, untested in game:** the
+    rim is its own layer. gen.py `top_backplate_texture(cfg, part)` draws the body
+    (`FCJH_TOP_BACKPLATE`, its colour-blind twin as before) and the rim alone (`FCJH_TOP_RIM`,
+    neutral, no twin) in one pass; over each other they're the old art exactly. FCJH_TopBar
+    `FCJH_TopRim` is anchored to the backplate's four sides, RenderPriority 498: over the
+    bars (497), under the digits (500) and Blizzard's hexagon (600). The bars run
+    `[wing_xp] tuck` 1 px under the rim's inner edge all round (the mask's one inset; `clear`,
+    `foot`, `outward` gone), box ends where that meets the core's top: blue
+    `[809.1, 42.8, 85.3, 31]`, red `[1019.6, 42.8, 91.3, 31]`. The 5-row core stays (it runs
+    on under the bottom rim). The canvas's backplate blob is the composite, unchanged.
+    **Seen (user, 2026-11-12): "The rim doenst seem to be above the experience bars, or at
+    least, the fill".** A unit-status bar draws over its frame's siblings whatever their
+    RenderPriority; the core's chrome (520) covers its fill only because it's an Image inside
+    the same UnitStatusFrame. **Fifteenth dev build, untested in game:** each XP frame holds
+    `FCJH_WingRim`, the rim texture (`FCJH_TOP_RIM`) anchored to `$parent/$parent/FCJH_TopBackplate`,
+    RenderPriority 498 over XPBar (497), not Unclipped (meant to clip to the bar's box).
+    FCJH_TopRim stays for the rest. If it isn't clipped, the rim draws twice: only its
+    anti-aliased edges darken a touch.
+    **Step 2 (user, 2026-11-12: "re-do the art on the team nameplates to remove that empty
+    bar"). Sixteenth dev build, untested in game:** the rows' XP strip is gone everywhere -
+    `[team_xp]`, its track/fill/mask textures (n1-n4 too), FCJH_TopBar's hidden
+    FCJH_Blue/RedXPTrack, the row packer's XP actions. The row frame now runs round the
+    plates alone (no line under a strip); the core bar sits `gap` 1 on the plates' top, so
+    its chrome still lies on the frame's top line. `row_reach` measures the plates' top
+    corners, so "fit" grew the rows ~0.7% (scale 1.5459 to 1.5561, top 973.4 to 972.5, blue's
+    left 30.2 to 25.7). `[map_alerts] above_core` 10 to 18: the core came down 8.1 px, and no
+    banner constant changed. The inspect card's `above` is `blue_row` (the row's top edge,
+    gen.py derive), so it follows the row down ~8 px. Anchors that ran from `<team>_xp` run
+    from `<team>_core`, the same bottom-centre point. Canvas regenerated; the studio uses
+    no row geometry. Watch: the core bar's place over the plates, the frame's top line,
+    3v3 row packing, the inspect card's foot.
+    **Scale held (user, 2026-11-12: "do *not* grow them 0.7% this time... I need to check
+    something"; they'd seen blue's plates "mangled"):** `[hero_row] scale = 1.5459`, fit's value
+    with the strip, so the cells, plates and their textures are exactly the committed build's;
+    only the row frame (no strip), the core bar (9 px down onto the plates) and the inspect card
+    (~9 px down, following the row's top) differ.
+    **On fire on multi-unit plates (user, 2026-11-12: Rexxar on fire, "the on-fire animation
+    isnt ringing around the nameplate"; the Vikings likely too). Seventeenth dev build,
+    untested:** Blizzard's OnFireCutsceneFrameTemplate sets RenderPriority 497, under the
+    portrait (500); on a normal plate the rim shows round the masked portrait, but the
+    FCJH_Slices overlay (502-504, Blizzard's own mask) covered it. `ONFIRE_PRIORITY` 505 on
+    FCJH_OnFire and its CutsceneFrame (Blizzard's party frame draws them at 528, over its
+    portrait). Watch: the rim on Rexxar/the Vikings, and on every other plate whether the
+    flames now glow over the face.
+    **The gold's glint (user, 2026-11-12: "Try 1, and if it doesnt work, we'll go with 3").
+    Eighteenth dev build, untested:** the options were (1) a streak inside the XP bar, cut to
+    the fill; (2) a streak over the whole wing, faint over the backing; (3) no streak, the
+    gold pulsing. Built as 1: gen.py `wing_xp_shimmer` writes 10 frames per team of the fill
+    column (64 texels wide) with a soft cos² streak stepping from the hexagon out to the
+    leading edge, its top leading (layout.toml [wing_xp] shimmer_colour / _strength / _width
+    0.25 / _lean 0.3). FCJH_TopBar's XPBar plays them as a `Texture` flip-book (Blizzard's
+    pattern: the rank badge's shine, the pending icon) - 0.06 s a frame, then the plain fill
+    to 5 s, looping - started by FCJH_Ahead's Yes (SendEvent FCJH_ShimmerOn) and stopped by
+    its No (FCJH_ShimmerOff, plus FCJH_ShimmerRest putting the plain fill back). The open
+    question is whether a `Texture` controller drives a UnitStatusVeterancyBar's fill at all;
+    no Blizzard bar does it. If no streak shows while a team is ahead, go to 3 (a Fade or
+    AdjustmentColor pulse on the XPBar). Also watch: the sweep's direction (it assumes the
+    fill texture isn't flipped for blue's Expansion), its brightness after Colorize, and that
+    the fill is plain again once the lead ends.
+    **It works (user, 2026-11-12: "That works out great. Should slow it down a bit"): a
+    `Texture` controller does drive the bar's fill. Nineteenth dev build, untested:** the
+    sweep 0.6 s to 1 s, with 16 frames instead of 10 (`SHIMMER_FRAMES`) so it doesn't step;
+    still every 5 s.
+    **Twentieth dev build, untested (user, 2026-11-12: "every 6 seconds (10 a minute), and a
+    duration of 1.5s"):** 24 frames (16 a second, as before) over 1.5 s, looping at 6 s.
 18. **The talent-lead flame can't be seen - with item 17** (user, 2026-11-10). Blizzard's flame
     behind the leading team's level plate (`element.*_talent_lead`) is "basically
     undetectable at a glance": a red flame on red's hexagons, a blue one on blue's. Ideas: one
@@ -1911,6 +2099,8 @@ from their plates (docs/blizzard-fixes.md).
     **Seen 2026-11-11 (user): the gold outline is "too much" - gold digits, Blizzard's black
     outline.** Third dev build: `FCJH_TeamLevelLead` is now `ObsBar_TeamLevel` with
     `textcolor="ffc21e"` and nothing else, untested in game.
+    **Dropped 2026-11-11 (user): "I wouldn't color the digits anymore. It's too jarring."**
+    `FCJH_TeamLevelLead` is gone; the lead now turns the wing's XP bar gold (item 17, step 1).
 19. **A hotkey to hide the heal pop-ups** (user, 2026-11-10: "they disturb more people than I
     anticipated"). The green-plus low-health pop-ups on the plates (`[heal_popup]`,
     FCJH_HealPopups in FCJH_HeroRow), not the talent pop-ups, which stay. One more

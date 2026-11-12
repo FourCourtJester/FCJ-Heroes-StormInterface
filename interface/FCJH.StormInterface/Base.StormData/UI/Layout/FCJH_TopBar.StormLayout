@@ -15,14 +15,14 @@
 	         [top_backplate]); the division and game tabs' places are under them, drawn by OBS
 	         and nothing without it (layout.toml [top_bar])
 	       - towers / kills counters parked (the icons beside them were backplate art)
-	       - team XP: on each hero row's top edge, the full width of that edge; core health on
-	         top of it at the row's inner end (blue_xp, red_xp, blue_core, red_core: placed by
-	         tools/gen.py from [team_xp] / [team_core]). Both are cut to the plates' slant: our
-	         parallelogram textures for the tracks; the fills are plain colour cut by a
-	         mask (FCJH_XPMask / FCJH_CoreMask), because the engine stretches a fill to its
-	         value and a slanted fill texture squashes as the bar drains (FCJH_XP_* / FCJH_CORE_*).
-	         Blizzard's frame art around both is hidden, and the XP fill art (a thin glowing
-	         line drawn for a 156 x 17 box) replaced. The core bar keeps Blizzard's size and
+	       - team XP: Blizzard's own bars and art, in the bottom of the wings under the levels
+	         (blue_wing_xp, red_wing_xp; 2026-11-11), gold while a team is a talent tier ahead
+	       - core health on each hero row's top edge at its inner end (blue_core, red_core:
+	         placed by tools/gen.py from [team_core]; the rows' XP strip went 2026-11-12). Cut to
+	         the plates' slant: our parallelogram texture for the track; the fill is plain
+	         colour cut by a mask (FCJH_CoreMask), because the engine stretches a fill to its
+	         value and a slanted fill texture squashes as the bar drains (FCJH_CORE_*).
+	         Blizzard's frame art around it is hidden. The core bar keeps Blizzard's size and
 	         its show-when-needed logic. -->
 	<!-- Alterac Pass's keep shield on our core bars (Team1/2CoreUnitStatus below): Blizzard's
 	     BossHealthBarShieldTemplate (alteracmechanics.stormlayout), its art, centred on the
@@ -87,6 +87,19 @@
 								</State>
 							</StateGroup>
 						</Frame>
+						<!-- ...and its chrome rim, a layer of its own over what sits in the wings (the XP
+						     bars run on under it, so it hides their edges; user, 2026-11-12). Under the
+						     level digits (500) and Blizzard's hexagon (600). Neutral, so no colour-blind swap. -->
+						<Frame type="Image" name="FCJH_TopRim">
+							<Anchor side="Top" relative="$parent/FCJH_TopBackplate" pos="Min" offset="0"/>
+							<Anchor side="Left" relative="$parent/FCJH_TopBackplate" pos="Min" offset="0"/>
+							<Anchor side="Bottom" relative="$parent/FCJH_TopBackplate" pos="Max" offset="0"/>
+							<Anchor side="Right" relative="$parent/FCJH_TopBackplate" pos="Max" offset="0"/>
+							<Texture val="#FCJH_TOP_RIM"/>
+							<RenderPriority val="498"/>
+							<Unclipped val="true"/>
+							<AcceptsMouse val="false"/>
+						</Frame>
 						<!-- The talent-advantage flame (2026-09-29). The observer bar never
 						     had one; Blizzard's player top bar does (PartyFrame TeamLevelInfo), and the
 						     engine shows it there while a team is a talent tier ahead. That party frame
@@ -106,11 +119,16 @@
 									<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1LevelInfo/TeamTalentAdvantageFrame" Visible="true"/>
 									<Action type="SetProperty" frame="$this" Alpha="255"/>
 									<Action type="SendEvent" frame="$this" event="SetBlue"/>
-									<Action type="SetProperty" frame="$parent/Team1LevelLabel" style="FCJH_TeamLevelLead"/>
+									<!-- and the wing's XP bar goes gold (Blizzard's golds, layout.toml [wing_xp]) -->
+									<Action type="SetProperty" frame="$parent/Team1XPUnitStatusFrame/XPBar" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$parent/Team1XPUnitStatusFrame/XPBar" LightAdjustColor="#FCJH_WING_XP_LEAD_LIGHT"/>
+									<Action type="SetProperty" frame="$parent/Team1XPUnitStatusFrame/XPBar" DarkAdjustColor="#FCJH_WING_XP_LEAD_DARK"/>
+									<Action type="SendEvent" frame="$parent/Team1XPUnitStatusFrame/XPBar" event="FCJH_ShimmerOn"/>  <!-- and it glints (FCJH_Shimmer) -->
 								</State>
 								<State name="No">
 									<Action type="SetProperty" frame="$this" Alpha="0"/>
-									<Action type="SetProperty" frame="$parent/Team1LevelLabel" style="ObsBar_TeamLevel"/>
+									<Action type="SetProperty" frame="$parent/Team1XPUnitStatusFrame/XPBar" ColorAdjustMode="None"/>
+									<Action type="SendEvent" frame="$parent/Team1XPUnitStatusFrame/XPBar" event="FCJH_ShimmerOff"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -142,11 +160,16 @@
 									<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2LevelInfo/TeamTalentAdvantageFrame" Visible="true"/>
 									<Action type="SetProperty" frame="$this" Alpha="255"/>
 									<Action type="SendEvent" frame="$this" event="SetRed"/>
-									<Action type="SetProperty" frame="$parent/Team2LevelLabel" style="FCJH_TeamLevelLead"/>
+									<!-- and the wing's XP bar goes gold (Blizzard's golds, layout.toml [wing_xp]) -->
+									<Action type="SetProperty" frame="$parent/Team2XPUnitStatusFrame/XPBar" ColorAdjustMode="Colorize"/>
+									<Action type="SetProperty" frame="$parent/Team2XPUnitStatusFrame/XPBar" LightAdjustColor="#FCJH_WING_XP_LEAD_LIGHT"/>
+									<Action type="SetProperty" frame="$parent/Team2XPUnitStatusFrame/XPBar" DarkAdjustColor="#FCJH_WING_XP_LEAD_DARK"/>
+									<Action type="SendEvent" frame="$parent/Team2XPUnitStatusFrame/XPBar" event="FCJH_ShimmerOn"/>  <!-- and it glints (FCJH_Shimmer) -->
 								</State>
 								<State name="No">
 									<Action type="SetProperty" frame="$this" Alpha="0"/>
-									<Action type="SetProperty" frame="$parent/Team2LevelLabel" style="ObsBar_TeamLevel"/>
+									<Action type="SetProperty" frame="$parent/Team2XPUnitStatusFrame/XPBar" ColorAdjustMode="None"/>
+									<Action type="SendEvent" frame="$parent/Team2XPUnitStatusFrame/XPBar" event="FCJH_ShimmerOff"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -160,76 +183,173 @@
 							<Unclipped val="true"/>
 						</Frame>
 
-						<!-- Team XP -->
-						<Frame type="Image" name="Team1XPUnitStatusFrameBgImage"><Alpha val="0"/></Frame>
-						<Frame type="Image" name="Team2XPUnitStatusFrameBgImage"><Alpha val="0"/></Frame>
-						<Frame type="Image" name="FCJH_BlueXPTrack">
+						<!-- Team XP: Blizzard's observer XP bars, its art and its height, squared into the
+						     bottom of the wings under the level plates (blue_wing_xp, red_wing_xp; user,
+						     2026-11-11). They fill inward out as Blizzard's do (Expansion Left / Right), and
+						     go gold while their team is a talent tier ahead (FCJH_Ahead above). Blizzard's
+						     backing art under each, our width (as Ahli 0.75 does). -->
+						<Frame type="Image" name="Team1XPUnitStatusFrameBgImage">
 							<Alpha val="0"/>  <!-- loads hidden; FCJH_BlueXpWatch (FCJH_Toggles) fades it in with the plates -->
-							<Anchor side="Top"    relative="$GameUI" pos="Max" offset="#FCJH_BLUE_XP_T"/>
-							<Anchor side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_BLUE_XP_L"/>
-							<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_BLUE_XP_B"/>
-							<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_BLUE_XP_R"/>
-							<Texture val="#FCJH_XP_TRACK_BLUE"/>
-							<RenderPriority val="100"/>
-							<Unclipped val="true"/>
-							<AcceptsMouse val="false"/>
+							<Width val="#FCJH_BLUE_WING_XP_W"/>
+							<Height val="#FCJH_BLUE_WING_XP_H"/>  <!-- the frame's, set (Blizzard leaves it to the art) -->
+							<Texture val="#FCJH_WING_XP_BACKING"/>  <!-- Blizzard's backing without its slanted ends (layout.toml [wing_xp] backing) -->
+							<ImageMaskTexture val="#FCJH_WING_XP_MASK_BLUE"/>  <!-- cut to the wing's slants, as the bar -->
+							<TextureCoords top="0.0" left="0.0" bottom="1.0" right="1.0"/>  <!-- Blizzard flips blue's; unflipped so the mask can't be mirrored -->
+							<RenderPriority val="496"/>
 						</Frame>
-						<Frame type="Image" name="FCJH_RedXPTrack">
+						<Frame type="Image" name="Team2XPUnitStatusFrameBgImage">
 							<Alpha val="0"/>  <!-- loads hidden; FCJH_RedXpWatch (FCJH_Toggles) fades it in with the plates -->
-							<Anchor side="Top"    relative="$GameUI" pos="Max" offset="#FCJH_RED_XP_T"/>
-							<Anchor side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_RED_XP_L"/>
-							<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_RED_XP_B"/>
-							<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_RED_XP_R"/>
-							<Texture val="#FCJH_XP_TRACK_RED"/>
-							<RenderPriority val="100"/>
-							<Unclipped val="true"/>
-							<AcceptsMouse val="false"/>
+							<Width val="#FCJH_RED_WING_XP_W"/>
+							<Height val="#FCJH_RED_WING_XP_H"/>  <!-- the frame's, set (Blizzard leaves it to the art) -->
+							<Texture val="#FCJH_WING_XP_BACKING"/>  <!-- Blizzard's backing without its slanted ends (layout.toml [wing_xp] backing) -->
+							<ImageMaskTexture val="#FCJH_WING_XP_MASK_RED"/>  <!-- cut to the wing's slants, as the bar -->
+							<RenderPriority val="496"/>
 						</Frame>
 						<!-- The row frames live in Team1/Team2HeroOverview (below), over the plates -->
 						<Frame type="TeamVeterancyUnitStatusFrame" name="Team1XPUnitStatusFrame">
 							<Alpha val="0"/>  <!-- loads hidden; FCJH_BlueXpWatch (FCJH_Toggles) fades it in with the plates -->
-							<Anchor side="Top"    relative="$GameUI" pos="Max" offset="#FCJH_BLUE_XP_T"/>
-							<Anchor side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_BLUE_XP_L"/>
-							<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_BLUE_XP_B"/>
-							<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_BLUE_XP_R"/>
-							<Width val="0"/>
+							<Anchor side="Top"    relative="$parent/FCJH_TopBackplate" pos="Min" offset="#FCJH_BLUE_WING_XP_T"/>
+							<Anchor side="Left"   relative="$parent/FCJH_TopBackplate" pos="Min" offset="#FCJH_BLUE_WING_XP_L"/>
+							<Anchor side="Bottom" relative="$parent/FCJH_TopBackplate" pos="Min" offset="#FCJH_BLUE_WING_XP_B"/>
+							<Anchor side="Right"  relative="$parent/FCJH_TopBackplate" pos="Min" offset="#FCJH_BLUE_WING_XP_R"/>
+							<Width val="0"/>   <!-- 0: anchored on all four sides, a size ADDS to the span (it drew 2x, 2026-11-12) -->
 							<Height val="0"/>
+							<RenderPriority val="497"/>  <!-- over the backplate (490) and the flame (495), under the level (500) -->
 							<Unclipped val="true"/>
-							<!-- the slant: a mask over the bar (the fill stretches, so it's plain colour) -->
-							<Frame type="Frame" name="FCJH_XPMask">
-								<Anchor relative="$parent"/>
-								<AlphaMaskTexture val="#FCJH_XP_MASK_BLUE"/>
-								<AlphaMaskSiblings val="true"/>
-								<RenderPriority val="1"/>  <!-- as Blizzard's own bar mask (HeroStatus ImageMaskFrame) -->
-								<AcceptsMouse val="false"/>
-							</Frame>
 							<Frame type="UnitStatusVeterancyBar" name="XPBar">
-								<Texture val="#FCJH_XP_FILL_BLUE"/>
-								<AlphaMaskTexture val="#FCJH_XP_MASK_BLUE"/>  <!-- and on the bar itself (the sibling mask alone didn't cut it in game) -->
-								<Tiled val="false" index="0"/>  <!-- stretched, so the fill's bevel keeps the bar's height -->
+								<RenderPriority val="497"/>
+								<Texture val="#FCJH_WING_XP_FILL"/>  <!-- Blizzard's fill without its soft ends (they stretched into a fuzz ahead of the fill; layout.toml [wing_xp] fill) -->
+								<AlphaMaskTexture val="#FCJH_WING_XP_MASK_BLUE"/>  <!-- the box is square; this cuts it to the wing's outer slant and the hexagon's side (gen.py wing_xp_mask) -->
+								<Tiled val="false" index="0"/>  <!-- stretched to the frame: tiled, Blizzard's 156-wide art spilled past it (2026-11-12) -->
+								<!-- The gold's glint (user, 2026-11-12): a flip-book of this bar's own fill with a bright
+								     streak stepping out from the hexagon (gen.py wing_xp_shimmer, layout.toml [wing_xp]
+								     shimmer_*). It is the fill texture itself, so the engine cuts it to the XP as it does
+								     the plain one. One sweep in 1.5 s, then the plain fill to 6 s - ten a minute (user, 2026-11-12), looping while FCJH_Ahead
+								     holds; the sweep plays at once when the lead starts. -->
+								<Animation name="FCJH_Shimmer">
+									<Event event="FCJH_ShimmerOn" action="Restart,Play"/>
+									<Event event="FCJH_ShimmerOff" action="Stop"/>
+									<Controller type="Texture" end="Loop">
+										<Key type="Image" time="0.0000" image="#FCJH_WING_XP_SHIMMER_BLUE_1"/>
+										<Key type="Image" time="0.0625" image="#FCJH_WING_XP_SHIMMER_BLUE_2"/>
+										<Key type="Image" time="0.1250" image="#FCJH_WING_XP_SHIMMER_BLUE_3"/>
+										<Key type="Image" time="0.1875" image="#FCJH_WING_XP_SHIMMER_BLUE_4"/>
+										<Key type="Image" time="0.2500" image="#FCJH_WING_XP_SHIMMER_BLUE_5"/>
+										<Key type="Image" time="0.3125" image="#FCJH_WING_XP_SHIMMER_BLUE_6"/>
+										<Key type="Image" time="0.3750" image="#FCJH_WING_XP_SHIMMER_BLUE_7"/>
+										<Key type="Image" time="0.4375" image="#FCJH_WING_XP_SHIMMER_BLUE_8"/>
+										<Key type="Image" time="0.5000" image="#FCJH_WING_XP_SHIMMER_BLUE_9"/>
+										<Key type="Image" time="0.5625" image="#FCJH_WING_XP_SHIMMER_BLUE_10"/>
+										<Key type="Image" time="0.6250" image="#FCJH_WING_XP_SHIMMER_BLUE_11"/>
+										<Key type="Image" time="0.6875" image="#FCJH_WING_XP_SHIMMER_BLUE_12"/>
+										<Key type="Image" time="0.7500" image="#FCJH_WING_XP_SHIMMER_BLUE_13"/>
+										<Key type="Image" time="0.8125" image="#FCJH_WING_XP_SHIMMER_BLUE_14"/>
+										<Key type="Image" time="0.8750" image="#FCJH_WING_XP_SHIMMER_BLUE_15"/>
+										<Key type="Image" time="0.9375" image="#FCJH_WING_XP_SHIMMER_BLUE_16"/>
+										<Key type="Image" time="1.0000" image="#FCJH_WING_XP_SHIMMER_BLUE_17"/>
+										<Key type="Image" time="1.0625" image="#FCJH_WING_XP_SHIMMER_BLUE_18"/>
+										<Key type="Image" time="1.1250" image="#FCJH_WING_XP_SHIMMER_BLUE_19"/>
+										<Key type="Image" time="1.1875" image="#FCJH_WING_XP_SHIMMER_BLUE_20"/>
+										<Key type="Image" time="1.2500" image="#FCJH_WING_XP_SHIMMER_BLUE_21"/>
+										<Key type="Image" time="1.3125" image="#FCJH_WING_XP_SHIMMER_BLUE_22"/>
+										<Key type="Image" time="1.3750" image="#FCJH_WING_XP_SHIMMER_BLUE_23"/>
+										<Key type="Image" time="1.4375" image="#FCJH_WING_XP_SHIMMER_BLUE_24"/>
+										<Key type="Image" time="1.50" image="#FCJH_WING_XP_FILL"/>
+										<Key type="Image" time="6.00" image="#FCJH_WING_XP_FILL"/>
+									</Controller>
+								</Animation>
+								<Animation name="FCJH_ShimmerRest">  <!-- the plain fill back, wherever the sweep stopped -->
+									<Event event="FCJH_ShimmerOff" action="Restart,Play"/>
+									<Controller type="Texture" end="Pause">
+										<Key type="Image" time="0" image="#FCJH_WING_XP_FILL"/>
+									</Controller>
+								</Animation>
+							</Frame>
+							<!-- The rim again, over the bar: FCJH_TopRim (498) beside this frame didn't cover
+							     the fill (user, 2026-11-12) - a unit-status bar draws over its frame's
+							     siblings whatever their priority - so it's a sibling of the bar's, as the
+							     core's chrome is of its HealthBar. Clipped to this box (no Unclipped). -->
+							<Frame type="Image" name="FCJH_WingRim">
+								<Anchor side="Top" relative="$parent/$parent/FCJH_TopBackplate" pos="Min" offset="0"/>
+								<Anchor side="Left" relative="$parent/$parent/FCJH_TopBackplate" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$parent/$parent/FCJH_TopBackplate" pos="Max" offset="0"/>
+								<Anchor side="Right" relative="$parent/$parent/FCJH_TopBackplate" pos="Max" offset="0"/>
+								<Texture val="#FCJH_TOP_RIM"/>
+								<RenderPriority val="498"/>  <!-- over XPBar (497) -->
+								<AcceptsMouse val="false"/>
 							</Frame>
 						</Frame>
 						<Frame type="TeamVeterancyUnitStatusFrame" name="Team2XPUnitStatusFrame">
 							<Alpha val="0"/>  <!-- loads hidden; FCJH_RedXpWatch (FCJH_Toggles) fades it in with the plates -->
-							<Anchor side="Top"    relative="$GameUI" pos="Max" offset="#FCJH_RED_XP_T"/>
-							<Anchor side="Left"   relative="$GameUI" pos="Mid" offset="#FCJH_RED_XP_L"/>
-							<Anchor side="Bottom" relative="$GameUI" pos="Max" offset="#FCJH_RED_XP_B"/>
-							<Anchor side="Right"  relative="$GameUI" pos="Mid" offset="#FCJH_RED_XP_R"/>
-							<Width val="0"/>
+							<Anchor side="Top"    relative="$parent/FCJH_TopBackplate" pos="Min" offset="#FCJH_RED_WING_XP_T"/>
+							<Anchor side="Left"   relative="$parent/FCJH_TopBackplate" pos="Min" offset="#FCJH_RED_WING_XP_L"/>
+							<Anchor side="Bottom" relative="$parent/FCJH_TopBackplate" pos="Min" offset="#FCJH_RED_WING_XP_B"/>
+							<Anchor side="Right"  relative="$parent/FCJH_TopBackplate" pos="Min" offset="#FCJH_RED_WING_XP_R"/>
+							<Width val="0"/>   <!-- 0: anchored on all four sides, a size ADDS to the span (it drew 2x, 2026-11-12) -->
 							<Height val="0"/>
+							<RenderPriority val="497"/>  <!-- over the backplate (490) and the flame (495), under the level (500) -->
 							<Unclipped val="true"/>
-							<!-- the slant: a mask over the bar (the fill stretches, so it's plain colour) -->
-							<Frame type="Frame" name="FCJH_XPMask">
-								<Anchor relative="$parent"/>
-								<AlphaMaskTexture val="#FCJH_XP_MASK_RED"/>
-								<AlphaMaskSiblings val="true"/>
-								<RenderPriority val="1"/>  <!-- as Blizzard's own bar mask (HeroStatus ImageMaskFrame) -->
-								<AcceptsMouse val="false"/>
-							</Frame>
 							<Frame type="UnitStatusVeterancyBar" name="XPBar">
-								<Texture val="#FCJH_XP_FILL_RED"/>
-								<AlphaMaskTexture val="#FCJH_XP_MASK_RED"/>  <!-- and on the bar itself (the sibling mask alone didn't cut it in game) -->
-								<Tiled val="false" index="0"/>  <!-- stretched, so the fill's bevel keeps the bar's height -->
+								<RenderPriority val="497"/>
+								<Texture val="#FCJH_WING_XP_FILL"/>  <!-- Blizzard's fill without its soft ends (they stretched into a fuzz ahead of the fill; layout.toml [wing_xp] fill) -->
+								<AlphaMaskTexture val="#FCJH_WING_XP_MASK_RED"/>  <!-- the box is square; this cuts it to the wing's outer slant and the hexagon's side (gen.py wing_xp_mask) -->
+								<Tiled val="false" index="0"/>  <!-- stretched to the frame: tiled, Blizzard's 156-wide art spilled past it (2026-11-12) -->
+								<!-- The gold's glint (user, 2026-11-12): a flip-book of this bar's own fill with a bright
+								     streak stepping out from the hexagon (gen.py wing_xp_shimmer, layout.toml [wing_xp]
+								     shimmer_*). It is the fill texture itself, so the engine cuts it to the XP as it does
+								     the plain one. One sweep in 1.5 s, then the plain fill to 6 s - ten a minute (user, 2026-11-12), looping while FCJH_Ahead
+								     holds; the sweep plays at once when the lead starts. -->
+								<Animation name="FCJH_Shimmer">
+									<Event event="FCJH_ShimmerOn" action="Restart,Play"/>
+									<Event event="FCJH_ShimmerOff" action="Stop"/>
+									<Controller type="Texture" end="Loop">
+										<Key type="Image" time="0.0000" image="#FCJH_WING_XP_SHIMMER_RED_1"/>
+										<Key type="Image" time="0.0625" image="#FCJH_WING_XP_SHIMMER_RED_2"/>
+										<Key type="Image" time="0.1250" image="#FCJH_WING_XP_SHIMMER_RED_3"/>
+										<Key type="Image" time="0.1875" image="#FCJH_WING_XP_SHIMMER_RED_4"/>
+										<Key type="Image" time="0.2500" image="#FCJH_WING_XP_SHIMMER_RED_5"/>
+										<Key type="Image" time="0.3125" image="#FCJH_WING_XP_SHIMMER_RED_6"/>
+										<Key type="Image" time="0.3750" image="#FCJH_WING_XP_SHIMMER_RED_7"/>
+										<Key type="Image" time="0.4375" image="#FCJH_WING_XP_SHIMMER_RED_8"/>
+										<Key type="Image" time="0.5000" image="#FCJH_WING_XP_SHIMMER_RED_9"/>
+										<Key type="Image" time="0.5625" image="#FCJH_WING_XP_SHIMMER_RED_10"/>
+										<Key type="Image" time="0.6250" image="#FCJH_WING_XP_SHIMMER_RED_11"/>
+										<Key type="Image" time="0.6875" image="#FCJH_WING_XP_SHIMMER_RED_12"/>
+										<Key type="Image" time="0.7500" image="#FCJH_WING_XP_SHIMMER_RED_13"/>
+										<Key type="Image" time="0.8125" image="#FCJH_WING_XP_SHIMMER_RED_14"/>
+										<Key type="Image" time="0.8750" image="#FCJH_WING_XP_SHIMMER_RED_15"/>
+										<Key type="Image" time="0.9375" image="#FCJH_WING_XP_SHIMMER_RED_16"/>
+										<Key type="Image" time="1.0000" image="#FCJH_WING_XP_SHIMMER_RED_17"/>
+										<Key type="Image" time="1.0625" image="#FCJH_WING_XP_SHIMMER_RED_18"/>
+										<Key type="Image" time="1.1250" image="#FCJH_WING_XP_SHIMMER_RED_19"/>
+										<Key type="Image" time="1.1875" image="#FCJH_WING_XP_SHIMMER_RED_20"/>
+										<Key type="Image" time="1.2500" image="#FCJH_WING_XP_SHIMMER_RED_21"/>
+										<Key type="Image" time="1.3125" image="#FCJH_WING_XP_SHIMMER_RED_22"/>
+										<Key type="Image" time="1.3750" image="#FCJH_WING_XP_SHIMMER_RED_23"/>
+										<Key type="Image" time="1.4375" image="#FCJH_WING_XP_SHIMMER_RED_24"/>
+										<Key type="Image" time="1.50" image="#FCJH_WING_XP_FILL"/>
+										<Key type="Image" time="6.00" image="#FCJH_WING_XP_FILL"/>
+									</Controller>
+								</Animation>
+								<Animation name="FCJH_ShimmerRest">  <!-- the plain fill back, wherever the sweep stopped -->
+									<Event event="FCJH_ShimmerOff" action="Restart,Play"/>
+									<Controller type="Texture" end="Pause">
+										<Key type="Image" time="0" image="#FCJH_WING_XP_FILL"/>
+									</Controller>
+								</Animation>
+							</Frame>
+							<!-- The rim again, over the bar: FCJH_TopRim (498) beside this frame didn't cover
+							     the fill (user, 2026-11-12) - a unit-status bar draws over its frame's
+							     siblings whatever their priority - so it's a sibling of the bar's, as the
+							     core's chrome is of its HealthBar. Clipped to this box (no Unclipped). -->
+							<Frame type="Image" name="FCJH_WingRim">
+								<Anchor side="Top" relative="$parent/$parent/FCJH_TopBackplate" pos="Min" offset="0"/>
+								<Anchor side="Left" relative="$parent/$parent/FCJH_TopBackplate" pos="Min" offset="0"/>
+								<Anchor side="Bottom" relative="$parent/$parent/FCJH_TopBackplate" pos="Max" offset="0"/>
+								<Anchor side="Right" relative="$parent/$parent/FCJH_TopBackplate" pos="Max" offset="0"/>
+								<Texture val="#FCJH_TOP_RIM"/>
+								<RenderPriority val="498"/>  <!-- over XPBar (497) -->
+								<AcceptsMouse val="false"/>
 							</Frame>
 						</Frame>
 

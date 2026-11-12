@@ -5,17 +5,17 @@
 	<!-- Screen -->
 	<Constant name="FCJH_SCREEN_W" val="2133"/>  <!-- 1920 px -->
 	<Constant name="FCJH_SCREEN_H" val="1200"/>  <!-- 1080 px -->
-	<Constant name="FCJH_VERSION" val="1.1.2"/>
+	<Constant name="FCJH_VERSION" val="1.2.0"/>
 
 	<!-- Elements: _L _T _R _B are edges as offsets from the rect's anchor (tools/gen.py ANCHORS):
 	     a point on the screen (anchor them to $GameUI at those pos values), or a piece's top-left
 	     (anchor them to its frame, pos=Min); _W _H are sizes. All in
 	     layout units. -->
-	<!-- blue_level: ui, px [820, 8, 64, 50], from top_backplate's top-left -->
+	<!-- blue_level: ui, px [820, 3, 64, 50], from top_backplate's top-left -->
 	<Constant name="FCJH_BLUE_LEVEL_L" val="132"/>
-	<Constant name="FCJH_BLUE_LEVEL_T" val="9"/>
+	<Constant name="FCJH_BLUE_LEVEL_T" val="3"/>
 	<Constant name="FCJH_BLUE_LEVEL_R" val="203"/>
-	<Constant name="FCJH_BLUE_LEVEL_B" val="64"/>
+	<Constant name="FCJH_BLUE_LEVEL_B" val="59"/>
 	<Constant name="FCJH_BLUE_LEVEL_W" val="71"/>
 	<Constant name="FCJH_BLUE_LEVEL_H" val="56"/>
 	<!-- blue_talent_lead: demand, px [814, 0, 76, 64], from top_backplate's top-left -->
@@ -25,6 +25,13 @@
 	<Constant name="FCJH_BLUE_TALENT_LEAD_B" val="71"/>
 	<Constant name="FCJH_BLUE_TALENT_LEAD_W" val="84"/>
 	<Constant name="FCJH_BLUE_TALENT_LEAD_H" val="71"/>
+	<!-- blue_wing_xp: ui, px [809.1, 42.8, 85.3, 31], from top_backplate's top-left -->
+	<Constant name="FCJH_BLUE_WING_XP_L" val="120"/>
+	<Constant name="FCJH_BLUE_WING_XP_T" val="48"/>
+	<Constant name="FCJH_BLUE_WING_XP_R" val="215"/>
+	<Constant name="FCJH_BLUE_WING_XP_B" val="82"/>
+	<Constant name="FCJH_BLUE_WING_XP_W" val="95"/>
+	<Constant name="FCJH_BLUE_WING_XP_H" val="34"/>
 	<!-- logo_plate: ui, px [892, 0, 136, 125], from the screen's Mid / Min -->
 	<Constant name="FCJH_LOGO_PLATE_L" val="-76"/>
 	<Constant name="FCJH_LOGO_PLATE_T" val="0"/>
@@ -46,11 +53,11 @@
 	<Constant name="FCJH_EVENT_LOGO_B" val="104"/>
 	<Constant name="FCJH_EVENT_LOGO_W" val="76"/>
 	<Constant name="FCJH_EVENT_LOGO_H" val="69"/>
-	<!-- red_level: ui, px [1036, 8, 64, 50], from top_backplate's top-left -->
+	<!-- red_level: ui, px [1036, 3, 64, 50], from top_backplate's top-left -->
 	<Constant name="FCJH_RED_LEVEL_L" val="372"/>
-	<Constant name="FCJH_RED_LEVEL_T" val="9"/>
+	<Constant name="FCJH_RED_LEVEL_T" val="3"/>
 	<Constant name="FCJH_RED_LEVEL_R" val="443"/>
-	<Constant name="FCJH_RED_LEVEL_B" val="64"/>
+	<Constant name="FCJH_RED_LEVEL_B" val="59"/>
 	<Constant name="FCJH_RED_LEVEL_W" val="71"/>
 	<Constant name="FCJH_RED_LEVEL_H" val="56"/>
 	<!-- red_talent_lead: demand, px [1030, 0, 76, 64], from top_backplate's top-left -->
@@ -60,6 +67,13 @@
 	<Constant name="FCJH_RED_TALENT_LEAD_B" val="71"/>
 	<Constant name="FCJH_RED_TALENT_LEAD_W" val="84"/>
 	<Constant name="FCJH_RED_TALENT_LEAD_H" val="71"/>
+	<!-- red_wing_xp: ui, px [1019.6, 42.8, 91.3, 31], from top_backplate's top-left -->
+	<Constant name="FCJH_RED_WING_XP_L" val="354"/>
+	<Constant name="FCJH_RED_WING_XP_T" val="48"/>
+	<Constant name="FCJH_RED_WING_XP_R" val="455"/>
+	<Constant name="FCJH_RED_WING_XP_B" val="82"/>
+	<Constant name="FCJH_RED_WING_XP_W" val="101"/>
+	<Constant name="FCJH_RED_WING_XP_H" val="34"/>
 	<!-- replay: ui, px [1675, 14, 231, 153], from the screen's Max / Min -->
 	<Constant name="FCJH_REPLAY_L" val="-272"/>
 	<Constant name="FCJH_REPLAY_T" val="16"/>
@@ -88,11 +102,11 @@
 	<Constant name="FCJH_INFO_PANE_B" val="858"/>
 	<Constant name="FCJH_INFO_PANE_W" val="607"/>
 	<Constant name="FCJH_INFO_PANE_H" val="640"/>
-	<!-- inspect: demand, px [20, 419.4, 300, 525], from the screen's Mid / Max -->
+	<!-- inspect: demand, px [20, 428.4, 300, 525], from the screen's Mid / Max -->
 	<Constant name="FCJH_INSPECT_L" val="-1045"/>
-	<Constant name="FCJH_INSPECT_T" val="-734"/>
+	<Constant name="FCJH_INSPECT_T" val="-724"/>
 	<Constant name="FCJH_INSPECT_R" val="-711"/>
-	<Constant name="FCJH_INSPECT_B" val="-151"/>
+	<Constant name="FCJH_INSPECT_B" val="-141"/>
 	<Constant name="FCJH_INSPECT_W" val="333"/>
 	<Constant name="FCJH_INSPECT_H" val="583"/>
 	<!-- centre_banners: ui, px [640, 196, 640, 78], from the screen's Mid / Min -->
@@ -193,32 +207,18 @@
 	<Constant name="FCJH_HERO_0_B" val="-24"/>
 	<Constant name="FCJH_HERO_0_W" val="198"/>
 	<Constant name="FCJH_HERO_0_H" val="94"/>
-	<!-- blue_xp: ui, px [23.0, 964.4, 683.8, 8], from the screen's Mid / Max -->
-	<Constant name="FCJH_BLUE_XP_L" val="-1041"/>
-	<Constant name="FCJH_BLUE_XP_T" val="-128"/>
-	<Constant name="FCJH_BLUE_XP_R" val="-282"/>
-	<Constant name="FCJH_BLUE_XP_B" val="-120"/>
-	<Constant name="FCJH_BLUE_XP_W" val="760"/>
-	<Constant name="FCJH_BLUE_XP_H" val="9"/>
-	<!-- red_xp: ui, px [1213.2, 964.4, 683.8, 8], from the screen's Mid / Max -->
-	<Constant name="FCJH_RED_XP_L" val="281"/>
-	<Constant name="FCJH_RED_XP_T" val="-128"/>
-	<Constant name="FCJH_RED_XP_R" val="1041"/>
-	<Constant name="FCJH_RED_XP_B" val="-120"/>
-	<Constant name="FCJH_RED_XP_W" val="760"/>
-	<Constant name="FCJH_RED_XP_H" val="9"/>
-	<!-- blue_core: ui, px [488.7, 939.1, 213.3, 24.3], from the screen's Mid / Max -->
-	<Constant name="FCJH_BLUE_CORE_L" val="-524"/>
-	<Constant name="FCJH_BLUE_CORE_T" val="-157"/>
-	<Constant name="FCJH_BLUE_CORE_R" val="-287"/>
-	<Constant name="FCJH_BLUE_CORE_B" val="-130"/>
+	<!-- blue_core: ui, px [493.5, 948.1, 213.3, 24.3], from the screen's Mid / Max -->
+	<Constant name="FCJH_BLUE_CORE_L" val="-519"/>
+	<Constant name="FCJH_BLUE_CORE_T" val="-147"/>
+	<Constant name="FCJH_BLUE_CORE_R" val="-282"/>
+	<Constant name="FCJH_BLUE_CORE_B" val="-120"/>
 	<Constant name="FCJH_BLUE_CORE_W" val="237"/>
 	<Constant name="FCJH_BLUE_CORE_H" val="27"/>
-	<!-- red_core: ui, px [1218.0, 939.1, 213.3, 24.3], from the screen's Mid / Max -->
-	<Constant name="FCJH_RED_CORE_L" val="286"/>
-	<Constant name="FCJH_RED_CORE_T" val="-157"/>
-	<Constant name="FCJH_RED_CORE_R" val="523"/>
-	<Constant name="FCJH_RED_CORE_B" val="-130"/>
+	<!-- red_core: ui, px [1213.2, 948.1, 213.3, 24.3], from the screen's Mid / Max -->
+	<Constant name="FCJH_RED_CORE_L" val="281"/>
+	<Constant name="FCJH_RED_CORE_T" val="-147"/>
+	<Constant name="FCJH_RED_CORE_R" val="518"/>
+	<Constant name="FCJH_RED_CORE_B" val="-120"/>
 	<Constant name="FCJH_RED_CORE_W" val="237"/>
 	<Constant name="FCJH_RED_CORE_H" val="27"/>
 	<!-- blue_name: obs, px [440.0, 0.0, 373.9, 65.0], from the screen's Mid / Min -->
@@ -291,20 +291,20 @@
 	<Constant name="FCJH_GAME_COUNT_B" val="113"/>
 	<Constant name="FCJH_GAME_COUNT_W" val="195"/>
 	<Constant name="FCJH_GAME_COUNT_H" val="41"/>
-	<!-- blue_row_frame: ui, px [21.0, 962.4, 734.0, 97.6], from the screen's Mid / Max -->
-	<Constant name="FCJH_BLUE_ROW_FRAME_L" val="-1044"/>
-	<Constant name="FCJH_BLUE_ROW_FRAME_T" val="-131"/>
+	<!-- blue_row_frame: ui, px [25.9, 971.4, 729.2, 88.6], from the screen's Mid / Max -->
+	<Constant name="FCJH_BLUE_ROW_FRAME_L" val="-1038"/>
+	<Constant name="FCJH_BLUE_ROW_FRAME_T" val="-121"/>
 	<Constant name="FCJH_BLUE_ROW_FRAME_R" val="-228"/>
 	<Constant name="FCJH_BLUE_ROW_FRAME_B" val="-22"/>
-	<Constant name="FCJH_BLUE_ROW_FRAME_W" val="816"/>
-	<Constant name="FCJH_BLUE_ROW_FRAME_H" val="108"/>
-	<!-- red_row_frame: ui, px [1165.0, 962.4, 734.0, 97.6], from the screen's Mid / Max -->
+	<Constant name="FCJH_BLUE_ROW_FRAME_W" val="810"/>
+	<Constant name="FCJH_BLUE_ROW_FRAME_H" val="98"/>
+	<!-- red_row_frame: ui, px [1165.0, 971.4, 729.2, 88.6], from the screen's Mid / Max -->
 	<Constant name="FCJH_RED_ROW_FRAME_L" val="227"/>
-	<Constant name="FCJH_RED_ROW_FRAME_T" val="-131"/>
-	<Constant name="FCJH_RED_ROW_FRAME_R" val="1043"/>
+	<Constant name="FCJH_RED_ROW_FRAME_T" val="-121"/>
+	<Constant name="FCJH_RED_ROW_FRAME_R" val="1038"/>
 	<Constant name="FCJH_RED_ROW_FRAME_B" val="-22"/>
-	<Constant name="FCJH_RED_ROW_FRAME_W" val="816"/>
-	<Constant name="FCJH_RED_ROW_FRAME_H" val="108"/>
+	<Constant name="FCJH_RED_ROW_FRAME_W" val="810"/>
+	<Constant name="FCJH_RED_ROW_FRAME_H" val="98"/>
 	<!-- top_backplate: ui, px [701, 0, 512, 256], from the screen's Mid / Min -->
 	<Constant name="FCJH_TOP_BACKPLATE_L" val="-288"/>
 	<Constant name="FCJH_TOP_BACKPLATE_T" val="0"/>
@@ -314,6 +314,8 @@
 	<Constant name="FCJH_TOP_BACKPLATE_H" val="284"/>
 
 	<Constant name="FCJH_REPLAY_BUTTON_GAP" val="1"/>  <!-- between the replay panel's bottom-row buttons -->
+	<Constant name="FCJH_WING_XP_LEAD_LIGHT" val="fffdf0"/>  <!-- layout.toml [wing_xp] lead_light -->
+	<Constant name="FCJH_WING_XP_LEAD_DARK" val="ffc21e"/>  <!-- layout.toml [wing_xp] lead_dark -->
 	<Constant name="FCJH_REPLAY_KEY" val="Control+Shift+R"/>  <!-- hides/shows the replay panel -->
 	<Constant name="FCJH_CHAT_KEY" val="Control+Shift+C"/>  <!-- layout.toml [toggles] chat -->
 	<Constant name="FCJH_INSPECT_KEY" val="Control+Shift+I"/>  <!-- layout.toml [toggles] inspect -->
@@ -373,10 +375,10 @@
 	<Constant name="FCJH_MAP_BEACON_H" val="117"/>
 
 	<!-- Core frames, placed so their health bars land on blue_core / red_core: from the screen's bottom-centre -->
-	<Constant name="FCJH_BLUE_CORE_FRAME_T" val="-175"/>
-	<Constant name="FCJH_BLUE_CORE_FRAME_R" val="-253"/>
-	<Constant name="FCJH_RED_CORE_FRAME_T" val="-175"/>
-	<Constant name="FCJH_RED_CORE_FRAME_L" val="258"/>
+	<Constant name="FCJH_BLUE_CORE_FRAME_T" val="-165"/>
+	<Constant name="FCJH_BLUE_CORE_FRAME_R" val="-248"/>
+	<Constant name="FCJH_RED_CORE_FRAME_T" val="-165"/>
+	<Constant name="FCJH_RED_CORE_FRAME_L" val="253"/>
 	<Constant name="FCJH_CORE_CHROME_TL" val="-2"/>
 	<Constant name="FCJH_CORE_CHROME_BR" val="2"/>
 	<Constant name="FCJH_AV_SHIELD" val="22"/>  <!-- Alterac's keep shields: each one's box -->
@@ -388,155 +390,155 @@
 
 	<!-- Map alerts on the plates ([map_alerts]): from the screen's bottom-centre, as the plates -->
 	<Constant name="FCJH_MAP_ALERT_RED_R" val="730"/>
-	<Constant name="FCJH_MAP_ALERT_RED_B" val="-148"/>  <!-- the bottom slot -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_2" val="-273"/>  <!-- alert 2 in the stack, 1 up -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_3" val="-398"/>  <!-- alert 3 in the stack, 2 up -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_4" val="-523"/>  <!-- alert 4 in the stack, 3 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B" val="-147"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_2" val="-272"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_3" val="-397"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_4" val="-522"/>  <!-- alert 4 in the stack, 3 up -->
 	<Constant name="FCJH_MAP_ALERT_RED_R_HOLDOUT" val="713"/>
-	<Constant name="FCJH_MAP_ALERT_RED_B_HOLDOUT" val="-168"/>  <!-- the bottom slot -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_HOLDOUT_2" val="-293"/>  <!-- alert 2 in the stack, 1 up -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_HOLDOUT_3" val="-418"/>  <!-- alert 3 in the stack, 2 up -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_HOLDOUT_4" val="-543"/>  <!-- alert 4 in the stack, 3 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_HOLDOUT" val="-167"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_HOLDOUT_2" val="-292"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_HOLDOUT_3" val="-417"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_HOLDOUT_4" val="-542"/>  <!-- alert 4 in the stack, 3 up -->
 	<Constant name="FCJH_MAP_ALERT_RED_R_BANNER" val="715"/>
-	<Constant name="FCJH_MAP_ALERT_RED_B_BANNER" val="-144"/>  <!-- the bottom slot -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_BANNER_2" val="-269"/>  <!-- alert 2 in the stack, 1 up -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_BANNER_3" val="-394"/>  <!-- alert 3 in the stack, 2 up -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_BANNER_4" val="-519"/>  <!-- alert 4 in the stack, 3 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_BANNER" val="-143"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_BANNER_2" val="-268"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_BANNER_3" val="-393"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_BANNER_4" val="-518"/>  <!-- alert 4 in the stack, 3 up -->
 	<Constant name="FCJH_MAP_ALERT_RED_R_MINES" val="659"/>
-	<Constant name="FCJH_MAP_ALERT_RED_B_MINES" val="-168"/>  <!-- the bottom slot -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_MINES_2" val="-293"/>  <!-- alert 2 in the stack, 1 up -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_MINES_3" val="-418"/>  <!-- alert 3 in the stack, 2 up -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_MINES_4" val="-543"/>  <!-- alert 4 in the stack, 3 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_MINES" val="-167"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_MINES_2" val="-292"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_MINES_3" val="-417"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_MINES_4" val="-542"/>  <!-- alert 4 in the stack, 3 up -->
 	<Constant name="FCJH_MAP_ALERT_RED_R_SEED" val="604"/>
-	<Constant name="FCJH_MAP_ALERT_RED_B_SEED" val="-168"/>  <!-- the bottom slot -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_SEED_2" val="-293"/>  <!-- alert 2 in the stack, 1 up -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_SEED_3" val="-418"/>  <!-- alert 3 in the stack, 2 up -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_SEED_4" val="-543"/>  <!-- alert 4 in the stack, 3 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_SEED" val="-167"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_SEED_2" val="-292"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_SEED_3" val="-417"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_SEED_4" val="-542"/>  <!-- alert 4 in the stack, 3 up -->
 	<Constant name="FCJH_MAP_ALERT_RED_R_TERROR" val="733"/>
-	<Constant name="FCJH_MAP_ALERT_RED_B_TERROR" val="-168"/>  <!-- the bottom slot -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_TERROR_2" val="-293"/>  <!-- alert 2 in the stack, 1 up -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_TERROR_3" val="-418"/>  <!-- alert 3 in the stack, 2 up -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_TERROR_4" val="-543"/>  <!-- alert 4 in the stack, 3 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_TERROR" val="-167"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_TERROR_2" val="-292"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_TERROR_3" val="-417"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_TERROR_4" val="-542"/>  <!-- alert 4 in the stack, 3 up -->
 	<Constant name="FCJH_MAP_ALERT_RED_R_SHRINE" val="663"/>
-	<Constant name="FCJH_MAP_ALERT_RED_B_SHRINE" val="-168"/>  <!-- the bottom slot -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_SHRINE_2" val="-293"/>  <!-- alert 2 in the stack, 1 up -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_SHRINE_3" val="-418"/>  <!-- alert 3 in the stack, 2 up -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_SHRINE_4" val="-543"/>  <!-- alert 4 in the stack, 3 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_SHRINE" val="-167"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_SHRINE_2" val="-292"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_SHRINE_3" val="-417"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_SHRINE_4" val="-542"/>  <!-- alert 4 in the stack, 3 up -->
 	<Constant name="FCJH_MAP_ALERT_RED_R_WARHEAD" val="691"/>
-	<Constant name="FCJH_MAP_ALERT_RED_B_WARHEAD" val="-143"/>  <!-- the bottom slot -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_WARHEAD_2" val="-268"/>  <!-- alert 2 in the stack, 1 up -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_WARHEAD_3" val="-393"/>  <!-- alert 3 in the stack, 2 up -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_WARHEAD_4" val="-518"/>  <!-- alert 4 in the stack, 3 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_WARHEAD" val="-142"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_WARHEAD_2" val="-267"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_WARHEAD_3" val="-392"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_WARHEAD_4" val="-517"/>  <!-- alert 4 in the stack, 3 up -->
 	<Constant name="FCJH_MAP_ALERT_RED_R_CHEST" val="715"/>
-	<Constant name="FCJH_MAP_ALERT_RED_B_CHEST" val="-168"/>  <!-- the bottom slot -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_CHEST_2" val="-293"/>  <!-- alert 2 in the stack, 1 up -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_CHEST_3" val="-418"/>  <!-- alert 3 in the stack, 2 up -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_CHEST_4" val="-543"/>  <!-- alert 4 in the stack, 3 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_CHEST" val="-167"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_CHEST_2" val="-292"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_CHEST_3" val="-417"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_CHEST_4" val="-542"/>  <!-- alert 4 in the stack, 3 up -->
 	<Constant name="FCJH_MAP_ALERT_RED_R_AV" val="719"/>
-	<Constant name="FCJH_MAP_ALERT_RED_B_AV" val="-168"/>  <!-- the bottom slot -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_AV_2" val="-293"/>  <!-- alert 2 in the stack, 1 up -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_AV_3" val="-418"/>  <!-- alert 3 in the stack, 2 up -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_AV_4" val="-543"/>  <!-- alert 4 in the stack, 3 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_AV" val="-167"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_AV_2" val="-292"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_AV_3" val="-417"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_AV_4" val="-542"/>  <!-- alert 4 in the stack, 3 up -->
 	<Constant name="FCJH_MAP_ALERT_RED_R_CAMP" val="740"/>
-	<Constant name="FCJH_MAP_ALERT_RED_B_CAMP" val="-147"/>  <!-- the bottom slot -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_CAMP_2" val="-272"/>  <!-- alert 2 in the stack, 1 up -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_CAMP_3" val="-397"/>  <!-- alert 3 in the stack, 2 up -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_CAMP_4" val="-522"/>  <!-- alert 4 in the stack, 3 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_CAMP" val="-146"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_CAMP_2" val="-271"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_CAMP_3" val="-396"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_CAMP_4" val="-521"/>  <!-- alert 4 in the stack, 3 up -->
 	<Constant name="FCJH_MAP_ALERT_RED_R_ROBOT" val="678"/>
-	<Constant name="FCJH_MAP_ALERT_RED_B_ROBOT" val="-168"/>  <!-- the bottom slot -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_ROBOT_2" val="-293"/>  <!-- alert 2 in the stack, 1 up -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_ROBOT_3" val="-418"/>  <!-- alert 3 in the stack, 2 up -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_ROBOT_4" val="-543"/>  <!-- alert 4 in the stack, 3 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_ROBOT" val="-167"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_ROBOT_2" val="-292"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_ROBOT_3" val="-417"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_ROBOT_4" val="-542"/>  <!-- alert 4 in the stack, 3 up -->
 	<Constant name="FCJH_MAP_ALERT_RED_R_SPAWN" val="723"/>
-	<Constant name="FCJH_MAP_ALERT_RED_B_SPAWN" val="-168"/>  <!-- the bottom slot -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_SPAWN_2" val="-293"/>  <!-- alert 2 in the stack, 1 up -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_SPAWN_3" val="-418"/>  <!-- alert 3 in the stack, 2 up -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_SPAWN_4" val="-543"/>  <!-- alert 4 in the stack, 3 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_SPAWN" val="-167"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_SPAWN_2" val="-292"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_SPAWN_3" val="-417"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_SPAWN_4" val="-542"/>  <!-- alert 4 in the stack, 3 up -->
 	<Constant name="FCJH_MAP_ALERT_RED_R_INFERNAL" val="709"/>
-	<Constant name="FCJH_MAP_ALERT_RED_B_INFERNAL" val="-168"/>  <!-- the bottom slot -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_INFERNAL_2" val="-293"/>  <!-- alert 2 in the stack, 1 up -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_INFERNAL_3" val="-418"/>  <!-- alert 3 in the stack, 2 up -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_INFERNAL_4" val="-543"/>  <!-- alert 4 in the stack, 3 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_INFERNAL" val="-167"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_INFERNAL_2" val="-292"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_INFERNAL_3" val="-417"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_INFERNAL_4" val="-542"/>  <!-- alert 4 in the stack, 3 up -->
 	<Constant name="FCJH_MAP_ALERT_RED_R_TEMPLE" val="670"/>
-	<Constant name="FCJH_MAP_ALERT_RED_B_TEMPLE" val="-168"/>  <!-- the bottom slot -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_TEMPLE_2" val="-293"/>  <!-- alert 2 in the stack, 1 up -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_TEMPLE_3" val="-418"/>  <!-- alert 3 in the stack, 2 up -->
-	<Constant name="FCJH_MAP_ALERT_RED_B_TEMPLE_4" val="-543"/>  <!-- alert 4 in the stack, 3 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_TEMPLE" val="-167"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_TEMPLE_2" val="-292"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_TEMPLE_3" val="-417"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_RED_B_TEMPLE_4" val="-542"/>  <!-- alert 4 in the stack, 3 up -->
 	<Constant name="FCJH_MAP_ALERT_BLUE_R" val="-219"/>
-	<Constant name="FCJH_MAP_ALERT_BLUE_B" val="-148"/>  <!-- the bottom slot -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_2" val="-273"/>  <!-- alert 2 in the stack, 1 up -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_3" val="-398"/>  <!-- alert 3 in the stack, 2 up -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_4" val="-523"/>  <!-- alert 4 in the stack, 3 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B" val="-147"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_2" val="-272"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_3" val="-397"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_4" val="-522"/>  <!-- alert 4 in the stack, 3 up -->
 	<Constant name="FCJH_MAP_ALERT_BLUE_R_HOLDOUT" val="-231"/>
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_HOLDOUT" val="-168"/>  <!-- the bottom slot -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_HOLDOUT_2" val="-293"/>  <!-- alert 2 in the stack, 1 up -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_HOLDOUT_3" val="-418"/>  <!-- alert 3 in the stack, 2 up -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_HOLDOUT_4" val="-543"/>  <!-- alert 4 in the stack, 3 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_HOLDOUT" val="-167"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_HOLDOUT_2" val="-292"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_HOLDOUT_3" val="-417"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_HOLDOUT_4" val="-542"/>  <!-- alert 4 in the stack, 3 up -->
 	<Constant name="FCJH_MAP_ALERT_BLUE_R_BANNER" val="-231"/>
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_BANNER" val="-144"/>  <!-- the bottom slot -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_BANNER_2" val="-269"/>  <!-- alert 2 in the stack, 1 up -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_BANNER_3" val="-394"/>  <!-- alert 3 in the stack, 2 up -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_BANNER_4" val="-519"/>  <!-- alert 4 in the stack, 3 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_BANNER" val="-143"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_BANNER_2" val="-268"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_BANNER_3" val="-393"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_BANNER_4" val="-518"/>  <!-- alert 4 in the stack, 3 up -->
 	<Constant name="FCJH_MAP_ALERT_BLUE_R_MINES" val="-231"/>
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_MINES" val="-168"/>  <!-- the bottom slot -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_MINES_2" val="-293"/>  <!-- alert 2 in the stack, 1 up -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_MINES_3" val="-418"/>  <!-- alert 3 in the stack, 2 up -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_MINES_4" val="-543"/>  <!-- alert 4 in the stack, 3 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_MINES" val="-167"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_MINES_2" val="-292"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_MINES_3" val="-417"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_MINES_4" val="-542"/>  <!-- alert 4 in the stack, 3 up -->
 	<Constant name="FCJH_MAP_ALERT_BLUE_R_SEED" val="-231"/>
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_SEED" val="-168"/>  <!-- the bottom slot -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_SEED_2" val="-293"/>  <!-- alert 2 in the stack, 1 up -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_SEED_3" val="-418"/>  <!-- alert 3 in the stack, 2 up -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_SEED_4" val="-543"/>  <!-- alert 4 in the stack, 3 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_SEED" val="-167"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_SEED_2" val="-292"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_SEED_3" val="-417"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_SEED_4" val="-542"/>  <!-- alert 4 in the stack, 3 up -->
 	<Constant name="FCJH_MAP_ALERT_BLUE_R_TERROR" val="-231"/>
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_TERROR" val="-168"/>  <!-- the bottom slot -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_TERROR_2" val="-293"/>  <!-- alert 2 in the stack, 1 up -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_TERROR_3" val="-418"/>  <!-- alert 3 in the stack, 2 up -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_TERROR_4" val="-543"/>  <!-- alert 4 in the stack, 3 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_TERROR" val="-167"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_TERROR_2" val="-292"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_TERROR_3" val="-417"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_TERROR_4" val="-542"/>  <!-- alert 4 in the stack, 3 up -->
 	<Constant name="FCJH_MAP_ALERT_BLUE_R_SHRINE" val="-231"/>
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_SHRINE" val="-168"/>  <!-- the bottom slot -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_SHRINE_2" val="-293"/>  <!-- alert 2 in the stack, 1 up -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_SHRINE_3" val="-418"/>  <!-- alert 3 in the stack, 2 up -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_SHRINE_4" val="-543"/>  <!-- alert 4 in the stack, 3 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_SHRINE" val="-167"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_SHRINE_2" val="-292"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_SHRINE_3" val="-417"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_SHRINE_4" val="-542"/>  <!-- alert 4 in the stack, 3 up -->
 	<Constant name="FCJH_MAP_ALERT_BLUE_R_WARHEAD" val="-231"/>
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_WARHEAD" val="-143"/>  <!-- the bottom slot -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_WARHEAD_2" val="-268"/>  <!-- alert 2 in the stack, 1 up -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_WARHEAD_3" val="-393"/>  <!-- alert 3 in the stack, 2 up -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_WARHEAD_4" val="-518"/>  <!-- alert 4 in the stack, 3 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_WARHEAD" val="-142"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_WARHEAD_2" val="-267"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_WARHEAD_3" val="-392"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_WARHEAD_4" val="-517"/>  <!-- alert 4 in the stack, 3 up -->
 	<Constant name="FCJH_MAP_ALERT_BLUE_R_CHEST" val="-231"/>
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_CHEST" val="-168"/>  <!-- the bottom slot -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_CHEST_2" val="-293"/>  <!-- alert 2 in the stack, 1 up -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_CHEST_3" val="-418"/>  <!-- alert 3 in the stack, 2 up -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_CHEST_4" val="-543"/>  <!-- alert 4 in the stack, 3 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_CHEST" val="-167"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_CHEST_2" val="-292"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_CHEST_3" val="-417"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_CHEST_4" val="-542"/>  <!-- alert 4 in the stack, 3 up -->
 	<Constant name="FCJH_MAP_ALERT_BLUE_R_AV" val="-231"/>
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_AV" val="-168"/>  <!-- the bottom slot -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_AV_2" val="-293"/>  <!-- alert 2 in the stack, 1 up -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_AV_3" val="-418"/>  <!-- alert 3 in the stack, 2 up -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_AV_4" val="-543"/>  <!-- alert 4 in the stack, 3 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_AV" val="-167"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_AV_2" val="-292"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_AV_3" val="-417"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_AV_4" val="-542"/>  <!-- alert 4 in the stack, 3 up -->
 	<Constant name="FCJH_MAP_ALERT_BLUE_R_CAMP" val="-213"/>
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_CAMP" val="-147"/>  <!-- the bottom slot -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_CAMP_2" val="-272"/>  <!-- alert 2 in the stack, 1 up -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_CAMP_3" val="-397"/>  <!-- alert 3 in the stack, 2 up -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_CAMP_4" val="-522"/>  <!-- alert 4 in the stack, 3 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_CAMP" val="-146"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_CAMP_2" val="-271"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_CAMP_3" val="-396"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_CAMP_4" val="-521"/>  <!-- alert 4 in the stack, 3 up -->
 	<Constant name="FCJH_MAP_ALERT_BLUE_R_ROBOT" val="-231"/>
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_ROBOT" val="-168"/>  <!-- the bottom slot -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_ROBOT_2" val="-293"/>  <!-- alert 2 in the stack, 1 up -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_ROBOT_3" val="-418"/>  <!-- alert 3 in the stack, 2 up -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_ROBOT_4" val="-543"/>  <!-- alert 4 in the stack, 3 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_ROBOT" val="-167"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_ROBOT_2" val="-292"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_ROBOT_3" val="-417"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_ROBOT_4" val="-542"/>  <!-- alert 4 in the stack, 3 up -->
 	<Constant name="FCJH_MAP_ALERT_BLUE_R_SPAWN" val="-231"/>
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_SPAWN" val="-168"/>  <!-- the bottom slot -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_SPAWN_2" val="-293"/>  <!-- alert 2 in the stack, 1 up -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_SPAWN_3" val="-418"/>  <!-- alert 3 in the stack, 2 up -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_SPAWN_4" val="-543"/>  <!-- alert 4 in the stack, 3 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_SPAWN" val="-167"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_SPAWN_2" val="-292"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_SPAWN_3" val="-417"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_SPAWN_4" val="-542"/>  <!-- alert 4 in the stack, 3 up -->
 	<Constant name="FCJH_MAP_ALERT_BLUE_R_INFERNAL" val="-231"/>
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_INFERNAL" val="-168"/>  <!-- the bottom slot -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_INFERNAL_2" val="-293"/>  <!-- alert 2 in the stack, 1 up -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_INFERNAL_3" val="-418"/>  <!-- alert 3 in the stack, 2 up -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_INFERNAL_4" val="-543"/>  <!-- alert 4 in the stack, 3 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_INFERNAL" val="-167"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_INFERNAL_2" val="-292"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_INFERNAL_3" val="-417"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_INFERNAL_4" val="-542"/>  <!-- alert 4 in the stack, 3 up -->
 	<Constant name="FCJH_MAP_ALERT_BLUE_R_TEMPLE" val="-231"/>
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_TEMPLE" val="-168"/>  <!-- the bottom slot -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_TEMPLE_2" val="-293"/>  <!-- alert 2 in the stack, 1 up -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_TEMPLE_3" val="-418"/>  <!-- alert 3 in the stack, 2 up -->
-	<Constant name="FCJH_MAP_ALERT_BLUE_B_TEMPLE_4" val="-543"/>  <!-- alert 4 in the stack, 3 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_TEMPLE" val="-167"/>  <!-- the bottom slot -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_TEMPLE_2" val="-292"/>  <!-- alert 2 in the stack, 1 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_TEMPLE_3" val="-417"/>  <!-- alert 3 in the stack, 2 up -->
+	<Constant name="FCJH_MAP_ALERT_BLUE_B_TEMPLE_4" val="-542"/>  <!-- alert 4 in the stack, 3 up -->
 	<!-- Tomb of the Spider Queen's Webweavers: each hexagon's centre and bottom (maps.weaver_parts) -->
 	<Constant name="FCJH_MAP_WEAVER_RED_BOTTOM_X" val="177"/>  <!-- 1120 px across -->
 	<Constant name="FCJH_MAP_WEAVER_RED_BOTTOM_B" val="-4"/>  <!-- 1076 px down -->
@@ -552,54 +554,84 @@
 	<Constant name="FCJH_MAP_WEAVER_BLUE_TOP_B" val="-128"/>  <!-- 965 px down -->
 	<!-- Alterac Pass's cavalry: its carrier's move from Blizzard's place to each spot (maps.av_carrier) -->
 	<Constant name="FCJH_MAP_AV_RED_DX" val="486"/>
-	<Constant name="FCJH_MAP_AV_RED_DY" val="131"/>
+	<Constant name="FCJH_MAP_AV_RED_DY" val="132"/>
 	<Constant name="FCJH_MAP_AV_BLUE_DX" val="-464"/>
-	<Constant name="FCJH_MAP_AV_BLUE_DY" val="131"/>
+	<Constant name="FCJH_MAP_AV_BLUE_DY" val="132"/>
 
-	<!-- Team XP and core health: tracks and fills cut to the plates' slant (solid colour;
-	     Blizzard's obs_bar_xp_* art is a thin glowing line drawn for a 156 x 17 box) -->
-	<Constant name="FCJH_XP_FILL_BLUE" val="_Assets\Textures\FCJH_Bar_xp_fill_blue_143dd7b0.dds"/>
-	<Constant name="FCJH_XP_TRACK_BLUE" val="_Assets\Textures\FCJH_Bar_xp_track_blue_58cd4b55.dds"/>
-	<Constant name="FCJH_XP_MASK_BLUE" val="_Assets\Textures\FCJH_Bar_xp_mask_blue_a4086e89.dds"/>
+	<!-- Core health: track and fill cut to the plates' slant, and the generated textures -->
 	<Constant name="FCJH_CORE_FILL_BLUE" val="_Assets\Textures\FCJH_Bar_core_fill_blue_015453f0.dds"/>
 	<Constant name="FCJH_CORE_TRACK_BLUE" val="_Assets\Textures\FCJH_Bar_core_track_blue_d4a465a9.dds"/>
 	<Constant name="FCJH_CORE_MASK_BLUE" val="_Assets\Textures\FCJH_Bar_core_mask_blue_3b845c87.dds"/>
 	<Constant name="FCJH_CORE_CHROME_BLUE" val="_Assets\Textures\FCJH_CoreChrome_blue_317a430f.dds"/>
-	<Constant name="FCJH_XP_MASK_BLUE_N1" val="_Assets\Textures\FCJH_Bar_xp_mask_blue_n1_6882e2d6.dds"/>
-	<Constant name="FCJH_XP_TRACK_BLUE_N1" val="_Assets\Textures\FCJH_Bar_xp_track_blue_n1_0b333008.dds"/>
-	<Constant name="FCJH_XP_MASK_BLUE_N2" val="_Assets\Textures\FCJH_Bar_xp_mask_blue_n2_0cc187fd.dds"/>
-	<Constant name="FCJH_XP_TRACK_BLUE_N2" val="_Assets\Textures\FCJH_Bar_xp_track_blue_n2_27462209.dds"/>
-	<Constant name="FCJH_XP_MASK_BLUE_N3" val="_Assets\Textures\FCJH_Bar_xp_mask_blue_n3_b5a9c123.dds"/>
-	<Constant name="FCJH_XP_TRACK_BLUE_N3" val="_Assets\Textures\FCJH_Bar_xp_track_blue_n3_3fc77066.dds"/>
-	<Constant name="FCJH_XP_MASK_BLUE_N4" val="_Assets\Textures\FCJH_Bar_xp_mask_blue_n4_6f42a999.dds"/>
-	<Constant name="FCJH_XP_TRACK_BLUE_N4" val="_Assets\Textures\FCJH_Bar_xp_track_blue_n4_ef69bba1.dds"/>
-	<Constant name="FCJH_ROW_FRAME_BLUE_N1" val="_Assets\Textures\FCJH_RowFrame_blue_n1_d0c64e39.dds"/>
-	<Constant name="FCJH_ROW_FRAME_BLUE_N2" val="_Assets\Textures\FCJH_RowFrame_blue_n2_4bdb29cb.dds"/>
-	<Constant name="FCJH_ROW_FRAME_BLUE_N3" val="_Assets\Textures\FCJH_RowFrame_blue_n3_5d8ec4f1.dds"/>
-	<Constant name="FCJH_ROW_FRAME_BLUE_N4" val="_Assets\Textures\FCJH_RowFrame_blue_n4_43485a93.dds"/>
-	<Constant name="FCJH_ROW_FRAME_BLUE" val="_Assets\Textures\FCJH_RowFrame_blue_n5_aa3d792b.dds"/>
-	<Constant name="FCJH_XP_FILL_RED" val="_Assets\Textures\FCJH_Bar_xp_fill_red_143dd7b0.dds"/>
-	<Constant name="FCJH_XP_TRACK_RED" val="_Assets\Textures\FCJH_Bar_xp_track_red_64153918.dds"/>
-	<Constant name="FCJH_XP_MASK_RED" val="_Assets\Textures\FCJH_Bar_xp_mask_red_eb0ef2ad.dds"/>
+	<Constant name="FCJH_ROW_FRAME_BLUE_N1" val="_Assets\Textures\FCJH_RowFrame_blue_n1_fcbf5098.dds"/>
+	<Constant name="FCJH_ROW_FRAME_BLUE_N2" val="_Assets\Textures\FCJH_RowFrame_blue_n2_91d08bea.dds"/>
+	<Constant name="FCJH_ROW_FRAME_BLUE_N3" val="_Assets\Textures\FCJH_RowFrame_blue_n3_64740dcc.dds"/>
+	<Constant name="FCJH_ROW_FRAME_BLUE_N4" val="_Assets\Textures\FCJH_RowFrame_blue_n4_84ba2e9a.dds"/>
+	<Constant name="FCJH_ROW_FRAME_BLUE" val="_Assets\Textures\FCJH_RowFrame_blue_n5_cc959591.dds"/>
 	<Constant name="FCJH_CORE_FILL_RED" val="_Assets\Textures\FCJH_Bar_core_fill_red_b042de24.dds"/>
 	<Constant name="FCJH_CORE_TRACK_RED" val="_Assets\Textures\FCJH_Bar_core_track_red_2dfa5d06.dds"/>
 	<Constant name="FCJH_CORE_MASK_RED" val="_Assets\Textures\FCJH_Bar_core_mask_red_713fbf37.dds"/>
 	<Constant name="FCJH_CORE_CHROME_RED" val="_Assets\Textures\FCJH_CoreChrome_red_407007ed.dds"/>
-	<Constant name="FCJH_XP_MASK_RED_N1" val="_Assets\Textures\FCJH_Bar_xp_mask_red_n1_3ddf1821.dds"/>
-	<Constant name="FCJH_XP_TRACK_RED_N1" val="_Assets\Textures\FCJH_Bar_xp_track_red_n1_ab1e1133.dds"/>
-	<Constant name="FCJH_XP_MASK_RED_N2" val="_Assets\Textures\FCJH_Bar_xp_mask_red_n2_57a64ef8.dds"/>
-	<Constant name="FCJH_XP_TRACK_RED_N2" val="_Assets\Textures\FCJH_Bar_xp_track_red_n2_55f12ff3.dds"/>
-	<Constant name="FCJH_XP_MASK_RED_N3" val="_Assets\Textures\FCJH_Bar_xp_mask_red_n3_d480ba6d.dds"/>
-	<Constant name="FCJH_XP_TRACK_RED_N3" val="_Assets\Textures\FCJH_Bar_xp_track_red_n3_7a85b618.dds"/>
-	<Constant name="FCJH_XP_MASK_RED_N4" val="_Assets\Textures\FCJH_Bar_xp_mask_red_n4_c544a268.dds"/>
-	<Constant name="FCJH_XP_TRACK_RED_N4" val="_Assets\Textures\FCJH_Bar_xp_track_red_n4_65d84334.dds"/>
-	<Constant name="FCJH_ROW_FRAME_RED_N1" val="_Assets\Textures\FCJH_RowFrame_red_n1_28b54612.dds"/>
-	<Constant name="FCJH_ROW_FRAME_RED_N2" val="_Assets\Textures\FCJH_RowFrame_red_n2_28b77084.dds"/>
-	<Constant name="FCJH_ROW_FRAME_RED_N3" val="_Assets\Textures\FCJH_RowFrame_red_n3_e36e9cb2.dds"/>
-	<Constant name="FCJH_ROW_FRAME_RED_N4" val="_Assets\Textures\FCJH_RowFrame_red_n4_480ea8dc.dds"/>
-	<Constant name="FCJH_ROW_FRAME_RED" val="_Assets\Textures\FCJH_RowFrame_red_n5_756ac5f8.dds"/>
-	<Constant name="FCJH_TOP_BACKPLATE" val="_Assets\Textures\FCJH_TopBackplate_34f12891.dds"/>
-	<Constant name="FCJH_TOP_BACKPLATE_CB" val="_Assets\Textures\FCJH_TopBackplate_CB_24e2abea.dds"/>
+	<Constant name="FCJH_ROW_FRAME_RED_N1" val="_Assets\Textures\FCJH_RowFrame_red_n1_9539c4b9.dds"/>
+	<Constant name="FCJH_ROW_FRAME_RED_N2" val="_Assets\Textures\FCJH_RowFrame_red_n2_ad9419a3.dds"/>
+	<Constant name="FCJH_ROW_FRAME_RED_N3" val="_Assets\Textures\FCJH_RowFrame_red_n3_2d1410c2.dds"/>
+	<Constant name="FCJH_ROW_FRAME_RED_N4" val="_Assets\Textures\FCJH_RowFrame_red_n4_cf3e3a7a.dds"/>
+	<Constant name="FCJH_ROW_FRAME_RED" val="_Assets\Textures\FCJH_RowFrame_red_n5_44e7287e.dds"/>
+	<Constant name="FCJH_TOP_BACKPLATE" val="_Assets\Textures\FCJH_TopBackplate_eda5a75e.dds"/>
+	<Constant name="FCJH_TOP_RIM" val="_Assets\Textures\FCJH_TopRim_777bb401.dds"/>
+	<Constant name="FCJH_WING_XP_MASK_BLUE" val="_Assets\Textures\FCJH_WingXpMask_blue_952f41eb.dds"/>
+	<Constant name="FCJH_WING_XP_MASK_RED" val="_Assets\Textures\FCJH_WingXpMask_red_ca73904e.dds"/>
+	<Constant name="FCJH_WING_XP_FILL" val="_Assets\Textures\FCJH_WingXpFill_cc23fc16.dds"/>
+	<Constant name="FCJH_WING_XP_BACKING" val="_Assets\Textures\FCJH_WingXpBacking_19a4c37b.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_BLUE_1" val="_Assets\Textures\FCJH_WingXpShimmer_blue_1_1d544e9e.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_BLUE_2" val="_Assets\Textures\FCJH_WingXpShimmer_blue_2_2ecfcea7.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_BLUE_3" val="_Assets\Textures\FCJH_WingXpShimmer_blue_3_ae111c97.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_BLUE_4" val="_Assets\Textures\FCJH_WingXpShimmer_blue_4_07f6308d.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_BLUE_5" val="_Assets\Textures\FCJH_WingXpShimmer_blue_5_40be2303.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_BLUE_6" val="_Assets\Textures\FCJH_WingXpShimmer_blue_6_d47a5940.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_BLUE_7" val="_Assets\Textures\FCJH_WingXpShimmer_blue_7_5c8b7442.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_BLUE_8" val="_Assets\Textures\FCJH_WingXpShimmer_blue_8_094fd9e7.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_BLUE_9" val="_Assets\Textures\FCJH_WingXpShimmer_blue_9_adde5ca0.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_BLUE_10" val="_Assets\Textures\FCJH_WingXpShimmer_blue_10_c61c208a.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_BLUE_11" val="_Assets\Textures\FCJH_WingXpShimmer_blue_11_81bef92e.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_BLUE_12" val="_Assets\Textures\FCJH_WingXpShimmer_blue_12_ab1e93b9.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_BLUE_13" val="_Assets\Textures\FCJH_WingXpShimmer_blue_13_965e6e21.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_BLUE_14" val="_Assets\Textures\FCJH_WingXpShimmer_blue_14_99b3ca93.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_BLUE_15" val="_Assets\Textures\FCJH_WingXpShimmer_blue_15_5a1c6f49.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_BLUE_16" val="_Assets\Textures\FCJH_WingXpShimmer_blue_16_ac04db78.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_BLUE_17" val="_Assets\Textures\FCJH_WingXpShimmer_blue_17_881d509e.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_BLUE_18" val="_Assets\Textures\FCJH_WingXpShimmer_blue_18_b1183937.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_BLUE_19" val="_Assets\Textures\FCJH_WingXpShimmer_blue_19_d687f527.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_BLUE_20" val="_Assets\Textures\FCJH_WingXpShimmer_blue_20_3e79a02d.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_BLUE_21" val="_Assets\Textures\FCJH_WingXpShimmer_blue_21_6e2fe5ec.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_BLUE_22" val="_Assets\Textures\FCJH_WingXpShimmer_blue_22_95853804.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_BLUE_23" val="_Assets\Textures\FCJH_WingXpShimmer_blue_23_7c095fd4.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_BLUE_24" val="_Assets\Textures\FCJH_WingXpShimmer_blue_24_68ddbaaf.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_RED_1" val="_Assets\Textures\FCJH_WingXpShimmer_red_1_c7b61139.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_RED_2" val="_Assets\Textures\FCJH_WingXpShimmer_red_2_81de58ec.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_RED_3" val="_Assets\Textures\FCJH_WingXpShimmer_red_3_dfbfa029.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_RED_4" val="_Assets\Textures\FCJH_WingXpShimmer_red_4_fa043ab9.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_RED_5" val="_Assets\Textures\FCJH_WingXpShimmer_red_5_9452b73c.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_RED_6" val="_Assets\Textures\FCJH_WingXpShimmer_red_6_f4a767fd.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_RED_7" val="_Assets\Textures\FCJH_WingXpShimmer_red_7_485c2257.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_RED_8" val="_Assets\Textures\FCJH_WingXpShimmer_red_8_c724bd37.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_RED_9" val="_Assets\Textures\FCJH_WingXpShimmer_red_9_ba813189.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_RED_10" val="_Assets\Textures\FCJH_WingXpShimmer_red_10_2bb85d35.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_RED_11" val="_Assets\Textures\FCJH_WingXpShimmer_red_11_09b3c927.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_RED_12" val="_Assets\Textures\FCJH_WingXpShimmer_red_12_8c75b16a.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_RED_13" val="_Assets\Textures\FCJH_WingXpShimmer_red_13_435f6fb8.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_RED_14" val="_Assets\Textures\FCJH_WingXpShimmer_red_14_4e4444a5.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_RED_15" val="_Assets\Textures\FCJH_WingXpShimmer_red_15_c7a56a4f.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_RED_16" val="_Assets\Textures\FCJH_WingXpShimmer_red_16_0556e552.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_RED_17" val="_Assets\Textures\FCJH_WingXpShimmer_red_17_4f220f13.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_RED_18" val="_Assets\Textures\FCJH_WingXpShimmer_red_18_e6b0052d.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_RED_19" val="_Assets\Textures\FCJH_WingXpShimmer_red_19_081bf6f6.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_RED_20" val="_Assets\Textures\FCJH_WingXpShimmer_red_20_065c72bb.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_RED_21" val="_Assets\Textures\FCJH_WingXpShimmer_red_21_eb8e82b9.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_RED_22" val="_Assets\Textures\FCJH_WingXpShimmer_red_22_f87436d1.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_RED_23" val="_Assets\Textures\FCJH_WingXpShimmer_red_23_e01215a1.dds"/>
+	<Constant name="FCJH_WING_XP_SHIMMER_RED_24" val="_Assets\Textures\FCJH_WingXpShimmer_red_24_2a76de27.dds"/>
+	<Constant name="FCJH_TOP_BACKPLATE_CB" val="_Assets\Textures\FCJH_TopBackplate_CB_43c78305.dds"/>
 	<Constant name="FCJH_CORE_FILL_BLUE_CB" val="_Assets\Textures\FCJH_Bar_core_fill_blue_CB_a7122b28.dds"/>
 	<Constant name="FCJH_CORE_FILL_RED_CB" val="_Assets\Textures\FCJH_Bar_core_fill_red_CB_bb62ab0f.dds"/>
 	<Constant name="FCJH_PLATE_HIT_BLUE" val="_Assets\Textures\FCJH_PlateHit_blue_2eeb28b5.dds"/>

@@ -76,7 +76,7 @@ The other commands:
 
 | File | Holds |
 |---|---|
-| `layout.toml` | Every number that places something on screen, in **1080p pixels**, plus look settings (colours, sizes, hotkeys). Sections: `[screen]` (size, the padding everything respects), `[minimap]` and its per-map nudges, `[element.*]` rects (`kind = "ui" / "obs" / "demand"`: drawn by us, left empty for OBS, or on demand), `[hero_row]`, `[talent_popup]`, `[heal_popup]`, `[top_backplate]`, `[team_xp]`, `[team_core]`, `[map_alerts]`, `[toggles]`, `[info_pane]`, `[dev]`. |
+| `layout.toml` | Every number that places something on screen, in **1080p pixels**, plus look settings (colours, sizes, hotkeys). Sections: `[screen]` (size, the padding everything respects), `[minimap]` and its per-map nudges, `[element.*]` rects (`kind = "ui" / "obs" / "demand"`: drawn by us, left empty for OBS, or on demand), `[hero_row]`, `[talent_popup]`, `[heal_popup]`, `[top_backplate]`, `[wing_xp]`, `[team_core]`, `[map_alerts]`, `[toggles]`, `[info_pane]`, `[dev]`. |
 | `tools/gen.py` | The design: how the plates, bars, panes and top bar are built from those numbers. Also the shared machinery (units, constants, textures, the generated-files bookkeeping). |
 | `tools/maps.py` | Each battleground: its minimap's place, its objective panel's parts, its banners. Measured art sizes are kept here, beside their reasons. |
 | `tools/inspect_card.py` | The inspect card, including what it reads from the game data (hero units, forms, command-card slots, resource names). |

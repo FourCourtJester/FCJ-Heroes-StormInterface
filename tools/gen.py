@@ -93,8 +93,11 @@ def derive(cfg):
     for el in cfg.get("element", {}).values():
         if "above" in el:
             x, _, w, h = el["rect"]
-            (tx, top, tw, _), _ = team_bar_rects(cfg)[el["above"]] if el["above"] in ("blue_xp", "red_xp") \
-                else rects(cfg)[el["above"]]
+            if el["above"] in ("blue_row", "red_row"):   # the row's top edge, end to end
+                pts, _ = row_frame_shape(cfg, el["above"][:-4])
+                (tx, top), tw = pts[0], pts[1][0] - pts[0][0]
+            else:
+                (tx, top, tw, _), _ = rects(cfg)[el["above"]]
             inset = el.get("art_inset", 0)
             if el.get("flush") == "right":
                 x = round(tx + tw - w + inset, 1)
@@ -110,13 +113,12 @@ def place_hero_rows(cfg):
 
 
 def row_reach(cfg):
-    """How close the hero rows come to the screen's sides, px: the XP bars along their top
-    edges reach furthest out (the plates lean outward going up), and the row frame round them
-    its outset further."""
-    bars = team_bar_rects(cfg)
-    (bx, _, _, _), _ = bars["blue_xp"]
-    (rx, _, rw, _), _ = bars["red_xp"]
-    return min(bx, cfg["screen"]["width"] - (rx + rw)) - row_frame_outset(cfg)
+    """How close the hero rows come to the screen's sides, px: their top edges' outer ends
+    reach furthest out (the plates lean outward going up), and the row frame round them its
+    outset further."""
+    bx = row_frame_shape(cfg, "blue")[0][0][0]
+    rx = row_frame_shape(cfg, "red")[0][1][0]
+    return min(bx, cfg["screen"]["width"] - rx) - row_frame_outset(cfg)
 
 
 def fit_hero_scale(cfg, pad):
@@ -172,23 +174,21 @@ CORE_BAR_W, CORE_BAR_H = 237, 27
 
 
 def team_bar_rects(cfg, n=5):
-    """The bars stacked on each hero row: team XP on the plates' top edge, core health on
-    top of that. Both are parallelograms continuing the row's slanted outer edges, so each
-    bar's rect here is its bounding box and its slant is `lean` px per px of height.
-    XP runs the full top edge; core sits at the row's inner end (toward the minimap).
+    """The bar on each hero row: core health on the plates' top edge, at the row's inner end
+    (toward the minimap). A parallelogram continuing the row's slanted edge, so its rect here
+    is its bounding box and its slant is `lean` px per px of height. (Team XP was a strip
+    along the whole top edge under it until 2026-11-12; it's Blizzard's, in the wings now.)
     n: heroes per team. With fewer than 5 the rows pack toward the minimap (blue's plates
-    shift inward - FCJH_RowPacker), so XP spans only those n plates."""
+    shift inward - FCJH_RowPacker); the core's inner end doesn't move."""
     row, px = cfg["hero_row"], 1 / Units(cfg).scale
     cell = HeroCell(cfg)
     lean = cell.lean                                   # the plates' slant, px across per px up
     edge = ((n - 1) * cell.pitch + cell.w - cell.overlap) * px   # the row's top edge
     shift = (5 - n) * cell.pitch * px                  # blue's plates move this far inward
     top = row["top"]
-    xp, core = cfg["team_xp"], cfg["team_core"]
-    xp_bottom = top - xp["gap"]
-    xp_top = xp_bottom - xp["height"]
+    core = cfg["team_core"]
     core_w, core_h = CORE_BAR_W * px, CORE_BAR_H * px
-    core_bottom = xp_top - core["gap"]
+    core_bottom = top - core["gap"]
     core_top = core_bottom - core_h
     out = {}
     # the row's outer edges, as x at height y: blue leans \ (its top edge starts at the
@@ -196,8 +196,6 @@ def team_bar_rects(cfg, n=5):
     blue_l = lambda y: row["blue_left"] + shift + cell.lean_x0 * px - lean * (top - y)
     red_l = lambda y: row["red_left"] + (cell.overlap - cell.lean_x0) * px + lean * (top - y)
     r1 = lambda v: round(v, 1)
-    out["blue_xp"] = ((r1(blue_l(xp_top)), r1(xp_top), r1(edge + lean * xp["height"]), xp["height"]), "ui")
-    out["red_xp"] = ((r1(red_l(xp_bottom)), r1(xp_top), r1(edge + lean * xp["height"]), xp["height"]), "ui")
     out["blue_core"] = ((r1(blue_l(core_bottom) + edge - core_w), r1(core_top), r1(core_w), r1(core_h)), "ui")
     out["red_core"] = ((r1(red_l(core_bottom)), r1(core_top), r1(core_w), r1(core_h)), "ui")
     return out
@@ -270,9 +268,9 @@ def row_frame_outset(cfg):
 
 
 def row_frame_shape(cfg, team, n=5):
-    """The row frame's outline ([row_frame]), screen px: the parallelogram the plates and the
-    XP bar make together, from the XP bar's top to the plates' bottom, its ends the row's
-    slanted edges (as team_bar_rects) - and the frame's rect, that grown by the outset.
+    """The row frame's outline ([row_frame]), screen px: the parallelogram the plates make,
+    their top to their bottom, its ends the row's slanted edges (as team_bar_rects) - and the
+    frame's rect, that grown by the outset.
     n: heroes per team, as team_bar_rects. Returns (corners clockwise from top-left, rect)."""
     row, px = cfg["hero_row"], 1 / Units(cfg).scale
     cell = HeroCell(cfg)
@@ -280,7 +278,7 @@ def row_frame_shape(cfg, team, n=5):
     edge = ((n - 1) * cell.pitch + cell.w - cell.overlap) * px
     shift = (5 - n) * cell.pitch * px
     top = row["top"]
-    y0 = top - cfg["team_xp"]["gap"] - cfg["team_xp"]["height"]
+    y0 = top
     y1 = top + cell.h * px
     if team == "blue":
         left = lambda y: row["blue_left"] + shift + cell.lean_x0 * px - lean * (top - y)
@@ -320,13 +318,14 @@ ANCHORS = {
     **{s: TOP_CENTRE for s in ("top_backplate", "logo_plate", "clock", "blue_pips", "blue_name", "blue_logo",
                                "blue_bans", "division", "event_logo", "red_pips", "red_name", "red_logo", "red_bans",
                                "game_count", "centre_banners", "system_alert")},
-    **{s: "top_backplate" for s in ("blue_level", "red_level", "blue_talent_lead", "red_talent_lead")},
+    **{s: "top_backplate" for s in ("blue_level", "red_level", "blue_talent_lead", "red_talent_lead",
+                                     "blue_wing_xp", "red_wing_xp")},
     # the rows sit either side of the minimap, bottom-centre, and so does all that's on them:
-    # the cells, the XP and core bars (and the map alerts, the heroic tips and the row packer,
-    # from these constants' point)
+    # the cells, the core bars and the row frames (and the map alerts, the heroic tips and the
+    # row packer, from these constants' point)
     "minimap": BOTTOM_CENTRE, "map_objectives": BOTTOM_CENTRE,
     **{f"hero_{s}": BOTTOM_CENTRE for s in BLUE_SLOTS + RED_SLOTS},
-    **{s: BOTTOM_CENTRE for s in ("blue_xp", "blue_core", "red_xp", "red_core", "blue_row_frame", "red_row_frame")},
+    **{s: BOTTOM_CENTRE for s in ("blue_core", "red_core", "blue_row_frame", "red_row_frame")},
     # the inspect card stands on blue's row, its left edge in line with the row's (user, 2026-10-06)
     "inspect": BOTTOM_CENTRE,
     # the left column keeps to the left edge, [screen] padding in (user, 2026-10-06); at 16:9
@@ -623,6 +622,8 @@ def constants_layout(cfg):
         sys.exit(f"replay: {w} units is too narrow for its four buttons")
     lines.append("")
     const(name("replay", "button", "gap"), gap, "between the replay panel's bottom-row buttons")
+    for key in ("lead_light", "lead_dark"):
+        const(name("wing", "xp", key), cfg["wing_xp"][key], f"layout.toml [wing_xp] {key}")
     const(name("replay", "key"), cfg["toggles"]["replay"], "hides/shows the replay panel")
     for key in ("chat", "inspect", "names", "heal", "hud", "hud_lower"):
         const(name(key, "key"), cfg["toggles"][key], f"layout.toml [toggles] {key}")
@@ -703,7 +704,7 @@ def constants_layout(cfg):
     row = cfg["hero_row"]
     for team in ("red", "blue"):
         (_, cy, _, _), _ = rects(cfg)[f"{team}_core"]
-        ox, oy = anchor_origin(cfg, f"{team}_xp")   # the plates' point
+        ox, oy = anchor_origin(cfg, f"{team}_core")   # the plates' point
         bar = u(cy - above)                          # every banner's bar's bottom
         for kind, art in maps.ALERT_ART.items():
             k = [kind] if kind else []
@@ -730,7 +731,7 @@ def constants_layout(cfg):
     mid, reach, corner, slope = maps.WEAVER_MINIMAP_PX
     step = lean * (ys[0] - ys[1])
     for team in ("red", "blue"):
-        ox, oy = anchor_origin(cfg, f"{team}_xp")
+        ox, oy = anchor_origin(cfg, f"{team}_core")
         # outward from the screen's middle: + is right for red, left for blue
         sign, edge = (1, row["red_left"]) if team == "red" else (-1, row["blue_right"])
         gaps = [(sign * (mid - edge) + reach - slope * max(0, y - corner)            # minimap side
@@ -751,7 +752,7 @@ def constants_layout(cfg):
     neutral = (left + MINIMAP_PANEL_W + u(maps.MAPS["alterac_pass"].across) + across,
                minimap_bottoms(cfg)["alterac_pass"] + up)
     for team in ("red", "blue"):
-        ox, oy = anchor_origin(cfg, f"{team}_xp")
+        ox, oy = anchor_origin(cfg, f"{team}_core")
         (_, cy, _, _), _ = rects(cfg)[f"{team}_core"]
         art = maps.ALERT_ART["AV"]
         spot = ((u(row["red_left"]) + art.reach if team == "red" else u(row["blue_right"]) + art.tail) - ox,
@@ -762,8 +763,7 @@ def constants_layout(cfg):
         print(f"gen: banner art not measured yet - {kind}: {what} (tools/maps.py ALERT_ART)", file=sys.stderr)
 
     lines.append("")
-    lines.append("\t<!-- Team XP and core health: tracks and fills cut to the plates' slant (solid colour;")
-    lines.append("\t     Blizzard's obs_bar_xp_* art is a thin glowing line drawn for a 156 x 17 box) -->")
+    lines.append("\t<!-- Core health: track and fill cut to the plates' slant, and the generated textures -->")
     for const_name, (file, _) in slant_bars(cfg).items():
         const(const_name, f"{TEXTURE_DIR}\\{file}")
 
@@ -1297,13 +1297,15 @@ def colour_blind_states(on, off, indent):
             f'{t}\t</State>\n{t}\t<State name="Off">\n' + act(off) + f'{t}\t</State>\n{t}</StateGroup>\n')
 
 
-def top_backplate_texture(cfg):
+def top_backplate_texture(cfg, part="body"):
     """The top bar's backplate (layout.toml [top_backplate]), its TOP_BACKPLATE_SIZE frame drawn
     at ART_HEIGHT's resolution: stock dark, the team colour rising toward each wing's outer
     end, a hexagon lattice fading the same way, a sheen, the neutral plate round Blizzard's
     hexagon (only its padding shows; the hexagon is Blizzard's art on top), and a chrome rim
     round the whole outline. Anti-aliased from signed distances (in 1080p px, so `k` turns
-    them into texels for the edges' half-texel ramps)."""
+    them into texels for the edges' half-texel ramps). `part` "body" is all but the rim, "rim"
+    the rim alone: FCJH_TopRim draws it over what sits in the wings (the XP bars), so it hides
+    their edges (user, 2026-11-12). The rim over the body is exactly the old one-piece art."""
     import math
     bp = cfg["top_backplate"]
     geo = top_backplate_geometry(cfg)
@@ -1385,9 +1387,8 @@ def top_backplate_texture(cfg):
             # the bright lower half (user, 2026-10-19: "unify the width of the chrome all the way
             # around the hexagon")
             rim = max(rim, clamp((rim_half - abs(dh)) * k + 0.5))
-            # the chrome rim, over everything, half outside the shape
-            a = cover + rim * (1 - cover)
-            c = mix(c, rim_c, rim / a if a else 0)
+            # the chrome rim, over everything, half outside the shape: its own texture
+            c, a = (rim_c, rim) if part == "rim" else (c, cover)
             row += bytes(round(v * 255) for v in (c[2], c[1], c[0], a))
         rows.append(bytes(row))
     return dds_bgra(w, h, b"".join(rows))
@@ -1409,20 +1410,18 @@ def row_frame_seams(cfg, team, n=5):
 def row_frame_texture(cfg, team, n):
     """The row frame ([row_frame]) for n heroes, its rect drawn at ART_HEIGHT's resolution: a
     chrome line round row_frame_shape's outline, `width` px with `inside` of it over the plates'
-    and the XP bar's edges, and a `seam` px line along each slant between two plates, in the
-    top backplate's rim colours ramped top to bottom."""
+    edges, and a `seam` px line along each slant between two plates, in the top backplate's
+    rim colours."""
     pts, box = row_frame_shape(cfg, team, n)
     spec = cfg["row_frame"]
     seam = float(spec.get("seam", 0)) if spec.get("width", 0) else 0.0
-    # under the XP bar: the middle of its gap to the plates
-    base = (cfg["hero_row"]["top"] - cfg["team_xp"]["gap"] / 2,) if seam else ()
     inside = float(spec.get("inside", 0))
     # each slanted line beside a fountain laid where the game draws that fountain (fountain_lines)
     seams = row_frame_seams(cfg, team, n) if seam else ()
     if seam and spec.get("fountain_gap") is not None:
         pts, seams = fountain_lines(cfg, team, n, pts, box, seams, seam / 2, float(spec.get("end_inside", inside)))
     return _row_frame_dds(tuple(pts), box, float(row_frame_outset(cfg)), inside,
-                          art_scale(cfg), chrome_rim(cfg), seams, seam, base,
+                          art_scale(cfg), chrome_rim(cfg), seams, seam, (),
                           float(spec.get("end_inside", inside)))
 
 
@@ -1608,20 +1607,91 @@ def bar_texture_size(cfg, w, h):
     return math.ceil(w * k), math.ceil(h * k)
 
 
+def wing_xp_mask(cfg, team):
+    """The mask cutting a wing's XP bar (layout.toml [element.<team>_wing_xp], a square box) to
+    the wing: inside the backplate's wing band and outside the padded hexagon, [wing_xp] tuck
+    px on under the chrome round both (rim_width, centred on each edge): the rim is its own
+    layer over the bar (FCJH_TopRim), so it hides the cut. White; anti-aliased from signed
+    distances.
+    The bar's fill stretches to its value, so the slant can't be in the fill: it's this mask,
+    fixed to the frame (as the rows' XP bars were cut, 2026-09-29)."""
+    geo = top_backplate_geometry(cfg)
+    sd_wing, sd_hex = convex_sdf(geo["wings"]), convex_sdf(geo["padded"])
+    inset = cfg["top_backplate"]["rim_width"] / 2 - cfg["wing_xp"]["tuck"]
+    x0, y0, w, h = cfg["element"][f"{team}_wing_xp"]["rect"]
+    tw, th = bar_texture_size(cfg, w, h)
+    k = tw / w                                       # texels per px, for the edge's ramp
+    clamp = lambda v: 0.0 if v < 0 else 1.0 if v > 1 else v
+    rows = []
+    for ty in range(th):
+        y = y0 + (ty + 0.5) * h / th
+        row = bytearray()
+        for tx in range(tw):
+            x = x0 + (tx + 0.5) * w / tw
+            d = max(sd_wing(x, y) + inset, inset - sd_hex(x, y))
+            row += bytes((255, 255, 255, round(255 * clamp(0.5 - d * k))))
+        rows.append(bytes(row))
+    return dds_bgra(tw, th, b"".join(rows))
+
+
+def wing_xp_column(cfg, part, width=8):
+    """The wing XP bars' fill or backing: layout.toml [wing_xp] `part` (one column of Blizzard's
+    own art, top to bottom) repeated across, so it has no ends of its own - the fill's soft caps
+    stretched into a fuzz, the backing's slant leaned the wrong way - and the mask shapes both."""
+    rows = []
+    for px in cfg["wing_xp"][part]:
+        r, g, b, a = bytes.fromhex(px)
+        rows.append(bytes((b, g, r, a)) * width)
+    return dds_bgra(width, len(rows), b"".join(rows))
+
+
+SHIMMER_FRAMES = 24   # FCJH_TopBar's FCJH_Shimmer flip-book has a key per frame: change both together
+SHIMMER_TEXELS = 64   # the frames' width; the engine stretches them to the fill, as the plain column
+
+
+def wing_xp_shimmer(cfg, team, i):
+    """Frame `i` of the gold's glint (layout.toml [wing_xp] shimmer_*; user, 2026-11-12): the
+    fill column with a soft bright streak across it, stepping from the fill's inner end (the
+    hexagon) out to its leading edge over SHIMMER_FRAMES frames. It is the bar's own fill
+    texture, swapped in by FCJH_TopBar's flip-book, so the engine cuts it to the fill as it
+    cuts the plain one. Blue's fill grows leftward, so its streak runs right to left; the top
+    leads, so it leans with its travel. Colorize (FCJH_Ahead) turns the bright to the lead's
+    near-white."""
+    xp = cfg["wing_xp"]
+    sr, sg, sb = bytes.fromhex(xp["shimmer_colour"])
+    hw, lean, strength = xp["shimmer_width"] / 2, xp["shimmer_lean"], xp["shimmer_strength"]
+    centre = -hw + (1 + 2 * hw) * (i + 0.5) / SHIMMER_FRAMES   # 0 the inner end, 1 the leading edge
+    n = len(xp["fill"])
+    rows = []
+    for ty, px in enumerate(xp["fill"]):
+        r, g, b, a = bytes.fromhex(px)
+        lift = 0.5 - (ty + 0.5) / n                  # +0.5 the top row, -0.5 the bottom
+        row = bytearray()
+        for tx in range(SHIMMER_TEXELS):
+            u = (tx + 0.5) / SHIMMER_TEXELS
+            out = 1 - u if team == "blue" else u
+            d = abs(out - centre - lean * lift)
+            k = strength * math.cos(math.pi / 2 * d / hw) ** 2 if d < hw else 0.0
+            mix = lambda c, s: round(c + (s - c) * k)
+            row += bytes((mix(b, sb), mix(g, sg), mix(r, sr), a))
+        rows.append(bytes(row))
+    return dds_bgra(SHIMMER_TEXELS, n, b"".join(rows))
+
+
 def slant_bars(cfg):
     """Every generated texture but the portrait masks (bars, plate hit areas, the top
     backplate), by constant name: {name: (file name, dds bytes)}. Names
     carry a content hash (textures are cached by path across replay reloads)."""
     rects_ = team_bar_rects(cfg)
     lean = HeroCell(cfg).lean
-    xp, core = cfg["team_xp"], cfg["team_core"]
+    core = cfg["team_core"]
     out = {}
     # The bars' fills are STRETCHED to the value (seen in game, 2026-09-29: a draining core's
     # slanted ends squashed toward vertical), so a fill is upright (bevelled top to bottom) and the
     # slant comes from a mask over the bar (mask frames, AlphaMaskSiblings). Tracks don't
     # move, so they keep the slant in their own texture.
     for team in ("blue", "red"):
-        for bar, spec, fill in (("xp", xp, xp["colour"]), ("core", core, core[f"{team}_colour"])):
+        for bar, spec, fill in (("core", core, core[f"{team}_colour"]),):
             (_, _, w, h), _ = rects_[f"{team}_{bar}"]
             cut = lean * h / w
             size = bar_texture_size(cfg, w, h)
@@ -1636,14 +1706,7 @@ def slant_bars(cfg):
         data = core_chrome_texture(cfg, team)
         digest = hashlib.sha1(data).hexdigest()[:8]
         out[name("core", "chrome", team)] = (f"FCJH_CoreChrome_{team}_{digest}.dds", data)
-        # XP for rows of 1-4 heroes: a shorter bar keeps the same slant only with its own cut
-        for n in range(1, 5):
-            (_, _, w, h), _ = team_bar_rects(cfg, n)[f"{team}_xp"]
-            for part, colour, alpha in (("mask", "ffffff", 255), ("track", xp["track_colour"], xp["track_alpha"])):
-                data = slant_texture(team, lean * h / w, colour, alpha, size=bar_texture_size(cfg, w, h))
-                digest = hashlib.sha1(data).hexdigest()[:8]
-                out[name("xp", part, team, f"n{n}")] = (f"FCJH_Bar_xp_{part}_{team}_n{n}_{digest}.dds", data)
-        # the row frame round the plates and the XP bar ([row_frame]), for rows of 1-5
+        # the row frame round the plates ([row_frame]), for rows of 1-5
         for n in range(1, 6):
             data = row_frame_texture(cfg, team, n)
             digest = hashlib.sha1(data).hexdigest()[:8]
@@ -1652,6 +1715,24 @@ def slant_bars(cfg):
     data = top_backplate_texture(cfg)
     digest = hashlib.sha1(data).hexdigest()[:8]
     out[name("top", "backplate")] = (f"FCJH_TopBackplate_{digest}.dds", data)
+    data = top_backplate_texture(cfg, "rim")         # neutral chrome: no colour-blind twin
+    digest = hashlib.sha1(data).hexdigest()[:8]
+    out[name("top", "rim")] = (f"FCJH_TopRim_{digest}.dds", data)
+    # the wing XP bars' masks (FCJH_TopBar's Team1/2XPUnitStatusFrame; user, 2026-11-12)
+    for team in ("blue", "red"):
+        data = wing_xp_mask(cfg, team)
+        digest = hashlib.sha1(data).hexdigest()[:8]
+        out[name("wing", "xp", "mask", team)] = (f"FCJH_WingXpMask_{team}_{digest}.dds", data)
+    for part in ("fill", "backing"):
+        data = wing_xp_column(cfg, part)
+        digest = hashlib.sha1(data).hexdigest()[:8]
+        out[name("wing", "xp", part)] = (f"FCJH_WingXp{part.title()}_{digest}.dds", data)
+    # ...and the gold's glint, a flip-book of fills per team (FCJH_TopBar FCJH_Shimmer)
+    for team in ("blue", "red"):
+        for i in range(SHIMMER_FRAMES):
+            data = wing_xp_shimmer(cfg, team, i)
+            digest = hashlib.sha1(data).hexdigest()[:8]
+            out[name("wing", "xp", "shimmer", team, i + 1)] = (f"FCJH_WingXpShimmer_{team}_{i + 1}_{digest}.dds", data)
     # ...and the team-coloured ones' colour-blind twins ([colour_blind]), swapped in by the
     # game's option (colour_blind_states; the top backplate and core fills in FCJH_TopBar)
     cb = colour_blind_cfg(cfg)
@@ -3199,6 +3280,10 @@ ONFIRE_LEVELS = {"OnFireEmbers": "Embers Start", "OnFireInferno": "Inferno Start
 ONFIRE_PLACE = {"Left": -28.8, "Right": -32.5}  # the flames' left, by side
 ONFIRE_TOP, ONFIRE_W, ONFIRE_H = -8.6, 182.4, 101.6
 ONFIRE_CLIP = 52.5                              # the clipping parent's bottom
+# Above the multi-unit slices (FCJH_Slices 502-504): the template's 497 put the flames under
+# them, and Rexxar's / the Vikings' slices covered the rim (user, 2026-11-12). Blizzard's own
+# party frame draws them at 528, over its portrait.
+ONFIRE_PRIORITY = 505
 
 
 def onfire_flames(cfg, blue, cell):
@@ -3234,6 +3319,7 @@ def onfire_flames(cfg, blue, cell):
 {t}\t<Anchor side="Left"   relative="$parent" pos="Min" offset="0"/>
 {t}\t<Anchor side="Bottom" relative="$parent" pos="Min" offset="{s(ONFIRE_CLIP)}"/>
 {t}\t<Anchor side="Right"  relative="$parent" pos="Min" offset="{s(c.W)}"/>
+{t}\t<RenderPriority val="{ONFIRE_PRIORITY}"/>
 {t}\t<AcceptsMouse val="false"/>
 {t}\t<Frame type="CutsceneFrame" name="FCJH_OnFireFlames" template="SharedOnFireVFX/OnFireCutsceneFrameTemplate">
 {t}\t\t<Anchor side="Top"    relative="$parent" pos="Min" offset="{s(ONFIRE_TOP)}"/>
@@ -3241,6 +3327,7 @@ def onfire_flames(cfg, blue, cell):
 {t}\t\t<Anchor side="Bottom" relative="$parent" pos="Min" offset="{s(ONFIRE_TOP + ONFIRE_H)}"/>
 {t}\t\t<Anchor side="Right"  relative="$parent" pos="Min" offset="{s(left + ONFIRE_W)}"/>
 {t}\t\t<File val="Cutscenes/GameUI_OnFirePartyFrame.StormCutscene"/>
+{t}\t\t<RenderPriority val="{ONFIRE_PRIORITY}"/>
 {t}\t\t<AcceptsMouse val="false"/>{anims}
 {t}\t</Frame>
 {t}</Frame>"""
@@ -4361,31 +4448,27 @@ def row_packer(cfg):
     hides the rest, and every cell is pinned in place, so a short blue team would sit out at
     the screen edge with a hole by the minimap (red already fills from the minimap out).
     This counts each team's visible cells and, for n heroes: moves blue's cells 1..n onto
-    the n slots nearest the minimap, and cuts both XP bars (the track's texture and the fill's
-    mask, each cut for that length) and the row frames to span only n plates. Core bars already
-    sit at the inner ends.
+    the n slots nearest the minimap, and cuts the row frames to span only n plates. Core bars
+    already sit at the inner ends.
     Every state sets everything it touches, so no state depends on another's undo."""
     u = Units(cfg)
     bars = slant_bars(cfg)
     all_rects = rects(cfg)
     tex = lambda key: f"{TEXTURE_DIR}\\{bars[key][0]}"
-    top_panel = f"{OVERVIEW}/ObserverTopPanel"
 
     def state(team, n):
         # from the cells' and bars' point, as they're anchored
-        left = anchor_origin(cfg, f"{team}_xp")[0]
+        left = anchor_origin(cfg, f"{team}_core")[0]
         anchor = lambda frame, side, px: (f'\t\t\t\t<Action type="SetAnchor" frame="{frame}" side="{side}" '
-                                          f'relative="$GameUI" pos="{ANCHORS[f"{team}_xp"][0]}" offset="{u(px) - left}"/>\n')
+                                          f'relative="$GameUI" pos="{ANCHORS[f"{team}_core"][0]}" offset="{u(px) - left}"/>\n')
         tn = "Team1" if team == "blue" else "Team2"
         cell = lambda i: f"{OVERVIEW}/{tn}HeroOverview/HeroOverview{i}"
         Team = team.capitalize()
-        xp_frames = (f"{top_panel}/FCJH_{Team}XPTrack", f"{top_panel}/{tn}XPUnitStatusFrame")
         row_frame = f"{OVERVIEW}/{tn}HeroOverview/FCJH_{Team}RowFrame"   # over the plates (FCJH_TopBar)
         if n == 0:
             # no hero loaded yet (the loading seconds): the bar spanned all five slots over
             # empty space, then snapped as heroes arrived (user, 2026-09-30) - hidden instead.
-            # The XP frames' alpha is FCJH_Toggles' (FCJH_<Team>XpWatch), not ours: the HUD
-            # keys' paused fade held it at 255 over this state's 0 (user, 2026-10-27)
+            # (Team XP is Blizzard's, in the wings: FCJH_Toggles' FCJH_<Team>XpWatch fades it)
             return (f'\t\t\t<State name="Heroes0">\n'
                     f'\t\t\t\t<When type="Property" frame="{cell(1)}" Visible="false"/>\n'
                     f'\t\t\t\t<Action type="SetProperty" frame="{row_frame}" Alpha="0"/>\n'
@@ -4399,15 +4482,7 @@ def row_packer(cfg):
             for i in range(1, n + 1):
                 (x, _, w, _), _ = all_rects[f"hero_{BLUE_SLOTS[i + 5 - n - 1]}"]
                 acts += anchor(cell(i), "Left", x) + anchor(cell(i), "Right", x + w)
-        (x, _, w, _), _ = team_bar_rects(cfg, n)[f"{team}_xp"]
         suffix = "" if n == 5 else f"_N{n}"
-        for frame in xp_frames:
-            acts += anchor(frame, "Left", x) + anchor(frame, "Right", x + w)
-        track = tex(name("xp", "track", team) + suffix)
-        mask = tex(name("xp", "mask", team) + suffix)
-        acts += (f'\t\t\t\t<Action type="SetProperty" frame="{top_panel}/FCJH_{Team}XPTrack" Texture="{track}"/>\n'
-                 f'\t\t\t\t<Action type="SetProperty" frame="{top_panel}/{tn}XPUnitStatusFrame/FCJH_XPMask" AlphaMaskTexture="{mask}"/>\n'
-                 f'\t\t\t\t<Action type="SetProperty" frame="{top_panel}/{tn}XPUnitStatusFrame/XPBar" AlphaMaskTexture="{mask}"/>\n')
         x, _, w, _ = row_frame_shape(cfg, team, n)[1]
         acts += (anchor(row_frame, "Left", x) + anchor(row_frame, "Right", x + w)
                  + f'\t\t\t\t<Action type="SetProperty" frame="{row_frame}" Alpha="255"/>\n'

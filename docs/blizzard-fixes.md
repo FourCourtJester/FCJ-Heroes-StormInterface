@@ -32,7 +32,7 @@ detail.
 - The pause box, drawn over the top bar's middle in every custom game.
 - The XP Contribution breakdown (each team's XP by source), which observers never see.
 - The talent-lead flame, drawn in its own team's colour on its own team's plate: the leading
-  team's level digits in gold beside it (v1.1.2 dev, not seen yet).
+  team's XP bar in gold beside it, with a glint (v1.2.0).
 
 **Made: Blizzard never had it**
 - Hero plates built from the player's in-game top bar, with:
@@ -49,8 +49,8 @@ detail.
 - An inspect card for observers, Blizzard's own command card on it.
 - Abathur's clone marked on the inspect card: the copied hero's face, Abathur's player, a
   CLONE note for the talents it hasn't got. **A show-off shot** (see the card's entry).
-- The operator's toggles: replay controls, chat, inspect card, player names, and (v1.1.2 dev,
-  not seen yet) heal pop-ups.
+- The operator's toggles: replay controls, chat, inspect card, player names, and (v1.2.0) heal
+  pop-ups.
 - Every battleground fitted round one minimap place:
   - each map's minimap set by its own drawn size;
   - its objectives above it;
@@ -446,12 +446,12 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
 - **Blizzard's:** the flame behind the leading team's level (`TeamTalentAdvantageFrame`,
   partyframe.stormlayout:3268/3965) is drawn in the leading team's colour - a red flame on
   red's hexagons, a blue one on blue's, "basically undetectable at a glance" (user, 2026-11-10).
-- **Ours:** Blizzard's flame as it is, and the leading team's level digits in gold
-  (`FCJH_TeamLevelLead`, FontStyles.StormStyle), set by the same state that shows the flame
-  (FCJH_TopBar `FCJH_Ahead`). A gold flame for both sides was tried first (Blizzard's cutscene
-  written again with its actors in gold): it loaded, but looked bad (user, 2026-11-11).
-  Then a gold outline round Blizzard's white digits: too much (user, 2026-11-11).
-- **Status:** v1.1.2 dev build, not seen yet.
+- **Ours:** Blizzard's flame as it is, and the leading team's XP bar (Blizzard's, now in our
+  wings) tinted gold with Blizzard's golds, set by the same state that shows the flame
+  (FCJH_TopBar `FCJH_Ahead`). Tried first, all on 2026-11-11 (user): a gold flame for both
+  sides (Blizzard's cutscene written again with its actors in gold) loaded but looked bad; a
+  gold outline round Blizzard's white digits was too much; gold digits were too jarring.
+- **Status:** v1.2.0; the gold and its glint seen in game (user, 2026-11-12).
 
 ## Made for observers
 
