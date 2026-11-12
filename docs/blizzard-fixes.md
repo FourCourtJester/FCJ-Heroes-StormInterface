@@ -31,6 +31,8 @@ detail.
   timeline hides.
 - The pause box, drawn over the top bar's middle in every custom game.
 - The XP Contribution breakdown (each team's XP by source), which observers never see.
+- The talent-lead flame, drawn in its own team's colour on its own team's plate: the leading
+  team's level digits in gold beside it (v1.1.2 dev, not seen yet).
 
 **Made: Blizzard never had it**
 - Hero plates built from the player's in-game top bar, with:
@@ -47,7 +49,8 @@ detail.
 - An inspect card for observers, Blizzard's own command card on it.
 - Abathur's clone marked on the inspect card: the copied hero's face, Abathur's player, a
   CLONE note for the talents it hasn't got. **A show-off shot** (see the card's entry).
-- The operator's four toggles: replay controls, chat, inspect card, player names.
+- The operator's toggles: replay controls, chat, inspect card, player names, and (v1.1.2 dev,
+  not seen yet) heal pop-ups.
 - Every battleground fitted round one minimap place:
   - each map's minimap set by its own drawn size;
   - its objectives above it;
@@ -86,8 +89,8 @@ detail.
   2026-10-19 and is out; the rows' own icons are back, picture only).
 
 **Can't be fixed from a layout** - the last section: Towers' cannon alerts, the death recap,
-the talent picker under Ctrl, the command card for a hero's other unit, plate clicks for
-D.Va's mech, Misha and the Vikings, a replay opening with its timeline hidden, inspecting
+the talent picker under Ctrl, the command card for a hero's other unit, clicking D.Va's
+mech, Misha or a single Viking, a replay opening with its timeline hidden, inspecting
 while paused, two Alterac script bugs, and script styles beating layout styles.
 
 ## Fixed
@@ -439,6 +442,17 @@ while paused, two Alterac script bugs, and script styles beating layout styles.
 - **Status:** seen in game under the centre banners (2026-10-25, a paused replay), too low;
   moved up, seen there and good (user, 2026-10-25) - DONE.
 
+### The talent-lead flame can't be seen on its own team's plate
+- **Blizzard's:** the flame behind the leading team's level (`TeamTalentAdvantageFrame`,
+  partyframe.stormlayout:3268/3965) is drawn in the leading team's colour - a red flame on
+  red's hexagons, a blue one on blue's, "basically undetectable at a glance" (user, 2026-11-10).
+- **Ours:** Blizzard's flame as it is, and the leading team's level digits in gold
+  (`FCJH_TeamLevelLead`, FontStyles.StormStyle), set by the same state that shows the flame
+  (FCJH_TopBar `FCJH_Ahead`). A gold flame for both sides was tried first (Blizzard's cutscene
+  written again with its actors in gold): it loaded, but looked bad (user, 2026-11-11).
+  Then a gold outline round Blizzard's white digits: too much (user, 2026-11-11).
+- **Status:** v1.1.2 dev build, not seen yet.
+
 ## Made for observers
 
 Not bugs - things Blizzard's observer UI never offered, which the write-up may want.
@@ -692,6 +706,20 @@ Not bugs - things Blizzard's observer UI never offered, which the write-up may w
 - Rexxar's Misha is the same: she can't be selected from the plate either (user, 2026-09-30,
   when her bar was dropped; 2026-10-16). A diagnostic then showed no click squares on her or
   on D.Va's mech - the game gives them no target.
+
+### The Vikings can't be clicked one by one
+- The observer's Viking plate shows Olaf, Baleog and Erik, but no click selects a single
+  Viking: every third of the plate pans to Erik, on ours, Ahli's and the default (user,
+  2026-11-08). Only the hotkey selects Erik; no click ever did (user, 2026-11-11).
+- Tried in the v1.1.2 dev builds, all out again:
+  - a UnitTargetFrame over each Viking's third, inside its tracker;
+  - `AllowUnitClicks` on them (Blizzard's only use is the party frame's alert buttons);
+  - see-through tints, which proved each third was there and on top, so the clicks reached
+    them and the engine still picked Erik;
+  - the same targets in the hero cell under Blizzard's party-frame names,
+    `PartyAlertButtonA/B/C`, in case the panel binds them by name.
+- A UnitTargetFrame in the observer hero cell acts on the player's hero, not the tracked unit.
+  With D.Va's mech and Misha above, nothing but the player's hero can be clicked from a plate.
 
 ### A replay can't open with its timeline hidden
 - The replay panel's timeline (the slider) hides only by its own Hide button or the "Toggle

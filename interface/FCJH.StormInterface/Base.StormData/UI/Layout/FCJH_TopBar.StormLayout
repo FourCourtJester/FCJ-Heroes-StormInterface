@@ -106,9 +106,11 @@
 									<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team1LevelInfo/TeamTalentAdvantageFrame" Visible="true"/>
 									<Action type="SetProperty" frame="$this" Alpha="255"/>
 									<Action type="SendEvent" frame="$this" event="SetBlue"/>
+									<Action type="SetProperty" frame="$parent/Team1LevelLabel" style="FCJH_TeamLevelLead"/>
 								</State>
 								<State name="No">
 									<Action type="SetProperty" frame="$this" Alpha="0"/>
+									<Action type="SetProperty" frame="$parent/Team1LevelLabel" style="ObsBar_TeamLevel"/>
 								</State>
 							</StateGroup>
 						</Frame>
@@ -140,9 +142,11 @@
 									<When type="Property" frame="$GameUI/UIContainer/ConsoleUIContainer/PartyFramePanel/Team2LevelInfo/TeamTalentAdvantageFrame" Visible="true"/>
 									<Action type="SetProperty" frame="$this" Alpha="255"/>
 									<Action type="SendEvent" frame="$this" event="SetRed"/>
+									<Action type="SetProperty" frame="$parent/Team2LevelLabel" style="FCJH_TeamLevelLead"/>
 								</State>
 								<State name="No">
 									<Action type="SetProperty" frame="$this" Alpha="0"/>
+									<Action type="SetProperty" frame="$parent/Team2LevelLabel" style="ObsBar_TeamLevel"/>
 								</State>
 							</StateGroup>
 						</Frame>

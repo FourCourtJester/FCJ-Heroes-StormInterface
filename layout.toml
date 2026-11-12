@@ -11,7 +11,7 @@
 
 [meta]
 name = "FCJH"
-version = "1.1.1"
+version = "1.1.2"
 
 [screen]
 width = 1920
@@ -213,7 +213,7 @@ neutral_colour = "b4a5e6"    # the card's edge for a unit of neither team (a mer
                              # boss): a lighter purple (user, 2026-10-05); blue and red are the plates'.
                              # Anything not a hero gets a short card (tools/inspect_card.py H_SHORT)
 
-# The operator's toggles (user, 2026-10-16): just the four we care about, each Ctrl+Shift and
+# The operator's toggles (user, 2026-10-16): the few we care about, each Ctrl+Shift and
 # the thing's initial, none of them a Blizzard key (validate.py checks every key here and the
 # info panes' against Blizzard's game hotkeys, and against each other). Each starts on.
 # Ahli and Spazzo have dozens; Blizzard has none of these four that works for an observer.
@@ -227,6 +227,8 @@ chat = "Control+Shift+C"     # Blizzard's chat messages (FCJH_Toggles); Ahli's k
 inspect = "Control+Shift+I"  # the inspect card (inspect_card.py); off, it slides off screen left, as
                              # Ahli's does. Tried on Ctrl+I 2026-10-05 and dropped then.
 names = "Control+Shift+N"    # the player names over the heroes' health bars (FCJH_Toggles)
+heal = "Control+Shift+H"     # the heal pop-ups on the plates (FCJH_Toggles; user, 2026-11-10: they
+                             # bothered more viewers than expected). Off, one already showing goes too.
 # The HUD (FCJH_Toggles; user, 2026-10-25): Blizzard's own observer keys, taken over because
 # theirs left our pop-ups, panes and inspect card on screen. hud hides the lot, top plate
 # too; hud_lower all but the top plate. Blizzard had them the other way round (Ctrl+E kept

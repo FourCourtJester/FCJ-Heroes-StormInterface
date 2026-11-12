@@ -406,7 +406,7 @@
 				<Unclipped val="true"/>
 			</Frame>
 			<Frame type="UnitStatusUnitTrackingBehavior" name="VikingTrackingElement">
-				<!-- the whole plate, not the bar strip (see the click targets) -->
+				<!-- the whole plate, not the bar strip (see trackers) -->
 				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="0"/>
 				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="0"/>
 				<Anchor side="Bottom" relative="$parent/$parent" pos="Max" offset="0"/>
@@ -442,15 +442,6 @@
 								</Controller>
 							</Animation>
 						</Frame>
-						<Frame type="UnitTargetFrame" name="FCJH_Target">
-							<Anchor relative="$parent"/>
-							<AllowTargeting val="false"/>
-							<AllowSelection val="true"/>
-							<AllowCameraCentering val="true"/>
-							<AllowSmartCommand val="false"/>
-							<Unclipped val="true"/>
-							<RenderPriority val="610"/>
-						</Frame>
 					</Frame>
 					<Frame type="UnitStatusFrame" name="TrackedUnitStatusFrame1">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
@@ -482,15 +473,6 @@
 								</Controller>
 							</Animation>
 						</Frame>
-						<Frame type="UnitTargetFrame" name="FCJH_Target">
-							<Anchor relative="$parent"/>
-							<AllowTargeting val="false"/>
-							<AllowSelection val="true"/>
-							<AllowCameraCentering val="true"/>
-							<AllowSmartCommand val="false"/>
-							<Unclipped val="true"/>
-							<RenderPriority val="610"/>
-						</Frame>
 					</Frame>
 					<Frame type="UnitStatusFrame" name="TrackedUnitStatusFrame2">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
@@ -521,15 +503,6 @@
 									<Key type="Bool" time="0" value="True"/>
 								</Controller>
 							</Animation>
-						</Frame>
-						<Frame type="UnitTargetFrame" name="FCJH_Target">
-							<Anchor relative="$parent"/>
-							<AllowTargeting val="false"/>
-							<AllowSelection val="true"/>
-							<AllowCameraCentering val="true"/>
-							<AllowSmartCommand val="false"/>
-							<Unclipped val="true"/>
-							<RenderPriority val="610"/>
 						</Frame>
 					</Frame>
 				<Frame type="Image" name="FCJH_BarSeparator1">
@@ -1038,8 +1011,6 @@
 					<Action type="SetProperty" frame="$parent/FCJH_ClonePortrait" Alpha="0"/>
 				</State>
 			</StateGroup>
-			<!-- Vikings: the plate's own click target steps aside so each Viking's (inside this
-			     frame, which sits under the plate's target in the cell) gets the click -->
 			<!-- Blizzard's own, with "Present" (Misha up) no longer halving Rexxar's bar. All three
 			     states restated, so it's right whether the engine merges or replaces the group. -->
 			<StateGroup name="HeightOverride">
@@ -1059,16 +1030,6 @@
 					<Action type="SetProperty" frame="$this/HealthBar" Visible="False"/>
 					<Action type="SetProperty" frame="$this/HealthBar" RenderType="Offscreen"/>
 					<Action type="SetProperty" frame="$this/HealthBar" Alpha="0"/>
-				</State>
-			</StateGroup>
-			<StateGroup name="FCJH_VikingClicks">
-				<DefaultState val="Plate"/>
-				<State name="Vikings">
-					<When type="Property" frame="$this/VikingTrackingElement" Visible="true"/>
-					<Action type="SetProperty" frame="$parent/TargetHeroUnitFrame" Visible="false"/>
-				</State>
-				<State name="Plate">
-					<Action type="SetProperty" frame="$parent/TargetHeroUnitFrame" Visible="true"/>
 				</State>
 			</StateGroup>
 			<!-- What the hero carries (user, 2026-10-12): Blizzard's map stack - doubloons, the
@@ -1569,7 +1530,7 @@
 				<Unclipped val="true"/>
 			</Frame>
 			<Frame type="UnitStatusUnitTrackingBehavior" name="VikingTrackingElement">
-				<!-- the whole plate, not the bar strip (see the click targets) -->
+				<!-- the whole plate, not the bar strip (see trackers) -->
 				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="0"/>
 				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="0"/>
 				<Anchor side="Bottom" relative="$parent/$parent" pos="Max" offset="0"/>
@@ -1605,15 +1566,6 @@
 								</Controller>
 							</Animation>
 						</Frame>
-						<Frame type="UnitTargetFrame" name="FCJH_Target">
-							<Anchor relative="$parent"/>
-							<AllowTargeting val="false"/>
-							<AllowSelection val="true"/>
-							<AllowCameraCentering val="true"/>
-							<AllowSmartCommand val="false"/>
-							<Unclipped val="true"/>
-							<RenderPriority val="610"/>
-						</Frame>
 					</Frame>
 					<Frame type="UnitStatusFrame" name="TrackedUnitStatusFrame1">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
@@ -1645,15 +1597,6 @@
 								</Controller>
 							</Animation>
 						</Frame>
-						<Frame type="UnitTargetFrame" name="FCJH_Target">
-							<Anchor relative="$parent"/>
-							<AllowTargeting val="false"/>
-							<AllowSelection val="true"/>
-							<AllowCameraCentering val="true"/>
-							<AllowSmartCommand val="false"/>
-							<Unclipped val="true"/>
-							<RenderPriority val="610"/>
-						</Frame>
 					</Frame>
 					<Frame type="UnitStatusFrame" name="TrackedUnitStatusFrame2">
 						<Anchor side="Top"    relative="$parent" pos="Min" offset="0"/>
@@ -1684,15 +1627,6 @@
 									<Key type="Bool" time="0" value="True"/>
 								</Controller>
 							</Animation>
-						</Frame>
-						<Frame type="UnitTargetFrame" name="FCJH_Target">
-							<Anchor relative="$parent"/>
-							<AllowTargeting val="false"/>
-							<AllowSelection val="true"/>
-							<AllowCameraCentering val="true"/>
-							<AllowSmartCommand val="false"/>
-							<Unclipped val="true"/>
-							<RenderPriority val="610"/>
 						</Frame>
 					</Frame>
 				<Frame type="Image" name="FCJH_BarSeparator1">
@@ -2046,6 +1980,13 @@
 			<Anchor relative="$parent"/>
 			<AcceptsMouse val="false"/>
 			<RenderPriority val="520"/>
+			<!-- the operator's heal key (layout.toml [toggles] heal) fades this, the HUD keys the
+			     container above: one owner per frame, as a paused Fade holds its frame's alpha
+			     (FCJH_Toggles). Fade only, so the watchers inside keep running and a pop-up
+			     already showing goes too. -->
+			<Frame type="Frame" name="FCJH_HealShown">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>
 				<Frame type="Frame" name="FCJH_Heal0">
 					<Anchor side="Top"   relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Min" offset="#FCJH_HERO_POPUP_T"/>
 					<Anchor side="Left"  relative="$GameUI/UIContainer/FullscreenUpperContainer/ObserverHeroOverviewPanel/Team1HeroOverview/HeroOverview1" pos="Mid" offset="#FCJH_HERO_BLUE_POPUP_L"/>
@@ -3166,6 +3107,7 @@
 						<State name="Hold"/>
 					</StateGroup>
 				</Frame>
+			</Frame>
 		</Frame>
 		<!-- Talent pop-ups (tools/gen.py talent_popups; layout.toml [talent_popup]): the talent
 		     a player just picked pops up on their plate and always plays out (6.1 s), even

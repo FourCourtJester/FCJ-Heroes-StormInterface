@@ -503,6 +503,54 @@ def tab_border(t):
 
 TARGET_INFO = "$GameUI/UIContainer/FullscreenUpperContainer/TargetInfoFrame"
 UNIT = CARD + "/TargetInfoPanel/FCJH_InspectUnit/UnitStatusFrame0"
+# The hero check and the clone sensor, OUTSIDE the card (user, 2026-11-11): inside it they
+# slept while the card was hidden, so on the next open the gate shaped the card from the
+# last unit's answer for a few frames (Johanna, Fort, hide, Johanna: Fort's short card
+# first). Here they follow the selection all the time (inspect_sense).
+SENSE = "$GameUI/UIContainer/ConsoleUIContainer/FCJH_InspectSense/UnitStatusFrame0"
+# That didn't do it (Tracer, Fort, hide, Tracer: Fort's card still flashed; user, 2026-11-11):
+# with nothing selected the sensors' own panel goes dark too. So the card opens unseen - held
+# at Alpha 0 for OPEN_HOLD seconds while the sensors catch up, then OPEN_FADE to full
+# (FCJH_OpenHold, on the card's OnShown). Changing selection with the card open is untouched.
+# Blizzard's command card fades in with it (it follows the card's visibility, so it came up a
+# beat early; user, 2026-11-11). The bars' own built-in bits - the health bar's 1 px spark,
+# Tracer's ammo separators, other heroes' segment lines - ignored the fade: they showed before
+# the card, at the last card's place, then jumped (Fort, hide, hero; user, 2026-11-11). So the
+# hold also puts the card off screen (its Left and Right, Step keys, as FCJH_ParkCard moves the
+# slot), and everything anchored to it goes too: the command card, the talent tips.
+# Only after a real close (user, 2026-11-11): the game blinks its inspector off and on when the
+# selection moves hero to hero (it follows the last hero clicked; neutral to neutral doesn't), so
+# the beat replayed on every hero. Now a hide arms the beat only once it has lasted CLOSE_GRACE
+# seconds (close_timer); a blink comes back first and the card snaps straight in.
+OPEN_HOLD = 0.1
+OPEN_FADE = 0.08
+CLOSE_GRACE = 0.15
+CLOSED = "FCJH_CardClosed"
+
+
+def close_timer():
+    """FCJH_CloseTimer: beside the card, never hidden. The card hiding starts a timer that
+    shows CLOSED after CLOSE_GRACE; the card showing first stops it (CLOSED stays off). CLOSED
+    shown = a real close: FCJH_Arm resets the card's FCJH_OpenHold to its start, which the next
+    OnShown then plays. A blink never arms it, so OnShown's Play finds it already at its end."""
+    return (f'{T*2}<!-- the open beat only after a real close, not the game\'s blink between heroes (inspect_card.close_timer) -->\n'
+            f'{T*2}<Frame type="Frame" name="FCJH_CloseTimer">\n'
+            f'{T*3}<Anchor relative="$parent"/>\n{T*3}<AcceptsMouse val="false"/>\n'
+            f'{T*3}<Frame type="Frame" name="{CLOSED}"><Anchor relative="$parent"/><Visible val="false"/>'
+            f'<AcceptsMouse val="false"/></Frame>\n'
+            f'{T*3}<Animation name="FCJH_CloseGrace">\n'
+            f'{T*4}<Event event="OnHidden" action="Reset,Play" frame="{CARD}"/>\n'
+            f'{T*4}<Event event="OnShown" action="Stop" frame="{CARD}"/>\n'
+            f'{T*4}<Controller type="Visibility" end="Pause" frame="{CLOSED}">\n'
+            f'{T*5}<Key type="Bool" time="0" value="false"/>\n'
+            f'{T*5}<Key type="Bool" time="{CLOSE_GRACE}" value="true"/>\n'
+            f'{T*4}</Controller>\n{T*3}</Animation>\n'
+            f'{T*3}<StateGroup name="FCJH_Closed">\n{T*4}<DefaultState val="Open"/>\n'
+            f'{T*4}<State name="Closed">\n'
+            f'{T*5}<When type="Property" frame="$this/{CLOSED}" Visible="true"/>\n'
+            f'{T*5}<Action type="SendEvent" frame="{CARD}" event="FCJH_Arm"/>\n'
+            f'{T*4}</State>\n{T*4}<State name="Open"/>\n'
+            f'{T*3}</StateGroup>\n{T*2}</Frame>\n')
 
 
 def shape(hero, clone=False):
@@ -583,15 +631,16 @@ def card():
                      f'{T*5}<Key type="Curve" time="{PARK_TIME}" value="{park}" inout="Slow,Linear"/>\n'
                      f'{T*4}</Controller>\n' for side in ("Left", "Right"))
            + f'{T*3}</Animation>\n{T*2}</Frame>\n'
+           + inspect_sense() + close_timer() +
            f'{T*2}<Frame type="Frame" name="FCJH_InspectGate">\n'
-           f'{T*3}<Anchor relative="$parent"/>\n{T*3}<AcceptsMouse val="false"/>\n'
+           f'{T*3}<Anchor relative="$parent"/>\n{T*3}<AcceptsMouse val="false"/>\n' +
            f'{T*3}<StateGroup name="FCJH_Gate">\n{T*4}<DefaultState val="Hide"/>\n'
            + f'{T*4}<State name="Clone">\n{T*5}<When type="Property" frame="{TARGET_INFO}" Visible="true"/>\n'
-           f'{T*5}<When type="Property" frame="{UNIT}/{IS_HERO}" Visible="true"/>\n'
-           f'{T*5}<When type="Property" frame="{UNIT}/{CLONE_SENSOR}" Visible="true"/>\n'
+           f'{T*5}<When type="Property" frame="{SENSE}/{IS_HERO}" Visible="true"/>\n'
+           f'{T*5}<When type="Property" frame="{SENSE}/{CLONE_SENSOR}" Visible="true"/>\n'
            + shown + shape(True, True) + f'{T*4}</State>\n'
            + f'{T*4}<State name="Hero">\n{T*5}<When type="Property" frame="{TARGET_INFO}" Visible="true"/>\n'
-           f'{T*5}<When type="Property" frame="{UNIT}/{IS_HERO}" Visible="true"/>\n'
+           f'{T*5}<When type="Property" frame="{SENSE}/{IS_HERO}" Visible="true"/>\n'
            + shown + shape(True) + f'{T*4}</State>\n'
            + f'{T*4}<State name="Unit">\n{T*5}<When type="Property" frame="{TARGET_INFO}" Visible="true"/>\n'
            + shown + shape(False) + f'{T*4}</State>\n'
@@ -610,7 +659,23 @@ def card():
            f'{T*3}<Anchor side="Right"  relative="{HOLDER[0]}" pos="{HOLDER[1]}" offset="#FCJH_INSPECT_R"/>\n'
            # in the console container, just under its command card (610), whose buttons draw
            # on the card's ability rows (command_panel)
-           f'{T*3}<AcceptsMouse val="false"/>\n{T*3}<RenderPriority val="600"/>\n']
+           f'{T*3}<AcceptsMouse val="false"/>\n{T*3}<RenderPriority val="600"/>\n'
+           f'{T*3}<!-- opens unseen for a beat (OPEN_HOLD), faded and off screen: the sensors\' last answer\n'
+           f'{T*3}     is the last unit\'s, and the bars\' spark and separators ignore the fade -->\n'
+           f'{T*3}<Animation name="FCJH_OpenHold">\n'
+           f'{T*4}<!-- armed (reset to its start) only by a real close (close_timer); first open plays it too -->\n'
+           f'{T*4}<Event event="FCJH_Arm" action="Reset"/>\n'
+           f'{T*4}<Event event="OnShown" action="Play" frame="$this"/>\n'
+           + "".join(f'{T*4}<Controller type="Fade" end="Pause"{at}>\n'
+                     f'{T*5}<Key type="Curve" time="0" value="0" inout="Linear"/>\n'
+                     f'{T*5}<Key type="Curve" time="{OPEN_HOLD}" value="0" inout="Linear"/>\n'
+                     f'{T*5}<Key type="Curve" time="{OPEN_HOLD + OPEN_FADE}" value="255" inout="Linear"/>\n'
+                     f'{T*4}</Controller>\n' for at in ("", f' frame="{COMMAND_PANEL}"'))
+           + "".join(f'{T*4}<Controller type="Anchor" end="Pause" side="{side}" relative="true">\n'
+                     f'{T*5}<Key type="Curve" time="0" value="{park}" inout="Step"/>\n'
+                     f'{T*5}<Key type="Curve" time="{OPEN_HOLD}" value="0" inout="Step"/>\n'
+                     f'{T*4}</Controller>\n' for side in ("Left", "Right"))
+           + f'{T*3}</Animation>\n']
     chrome = []
     # Round 9: the back takes the mouse, so a click inside the card no longer falls through to
     # the map (which deselects the unit and closes the card, 2026-09-30)
@@ -840,7 +905,7 @@ def matcher(n):
     # FCJH_CloneSensor), and the two show in part: Abathur's player's name, the ally's portrait
     # (the clone wears the ally's skin: Ultimate Evolution's script; user, 2026-10-16). Neither
     # pack's talents (the gate) nor the talent tips (card_watch).
-    sensor = f'<When type="Property" frame="$this/{CLONE_SENSOR}" Visible="true"/>'
+    sensor = f'<When type="Property" frame="{SENSE}/{CLONE_SENSOR}" Visible="true"/>'
     abathur = f'<When type="Property" frame="{plate(n)}/HeroStatus" Unit="HeroAbathur"/>'
     clone = (f'{T*5}<State name="CloneAbathur">{sensor}{abathur}'
              f'<Action type="SetProperty" frame="$this/FCJH_Player{n}" Alpha="255"/>{flag("false")}</State>\n')
@@ -1031,14 +1096,15 @@ def card_watch():
     open_ = f'{T*5}<When type="Property" frame="{CARD}" Visible="true"/>\n'
     return (f'{T*2}<Frame type="Frame" name="FCJH_CardWatch">\n'
             f'{T*3}<Anchor relative="$parent"/>\n{T*3}<AcceptsMouse val="false"/>\n'
+            +
             f'{T*3}<StateGroup name="FCJH_CardShown">\n{T*4}<DefaultState val="Closed"/>\n'
             # Abathur's clone has no talents: no tips (matcher)
             f'{T*4}<State name="Clone">\n' + open_
-            + f'{T*5}<When type="Property" frame="{UNIT}/{IS_HERO}" Visible="true"/>\n'
-            + f'{T*5}<When type="Property" frame="{UNIT}/{CLONE_SENSOR}" Visible="true"/>\n'
+            + f'{T*5}<When type="Property" frame="{SENSE}/{IS_HERO}" Visible="true"/>\n'
+            + f'{T*5}<When type="Property" frame="{SENSE}/{CLONE_SENSOR}" Visible="true"/>\n'
             + tips("false") + command_anchors(True, 5) + f'{T*4}</State>\n'
             + f'{T*4}<State name="Hero">\n' + open_
-            + f'{T*5}<When type="Property" frame="{UNIT}/{IS_HERO}" Visible="true"/>\n'
+            + f'{T*5}<When type="Property" frame="{SENSE}/{IS_HERO}" Visible="true"/>\n'
             + tips("true") + command_anchors(True, 5) + f'{T*4}</State>\n'
             f'{T*4}<State name="Unit">\n' + open_
             + tips("true") + command_anchors(False, 5) + f'{T*4}</State>\n'
@@ -1080,6 +1146,20 @@ def hero_check():
                       f'<Action type="SetProperty" frame="$this/{IS_HERO}" Visible="true"/></State>\n' for u in units)
             + f'{T*5}<State name="No"><Action type="SetProperty" frame="$this/{IS_HERO}" Visible="false"/></State>\n'
             f'{T*4}</StateGroup>\n')
+
+
+def inspect_sense():
+    """FCJH_InspectSense: a selection panel of its own, never hidden, holding the hero check
+    and the clone sensor (SENSE). It draws nothing of its own (the clone sensor is at Alpha 0;
+    the hero check is a bare frame), so it needs no fading."""
+    return (f'{T*2}<!-- The selected unit\'s kind, for the gate, the watcher and the matchers (inspect_card.inspect_sense):\n'
+            f'{T*2}     outside the card so it never sleeps while the card is hidden (user, 2026-11-11) -->\n'
+            f'{T*2}<Frame type="SelectionUnitStatusPanel" name="FCJH_InspectSense">\n'
+            f'{T*3}<Anchor relative="$parent"/>\n{T*3}<AcceptsMouse val="false"/>\n{T*3}<AcceptsMouseTooltip val="false"/>\n'
+            f'{T*3}<Frame type="UnitStatusFrame" name="UnitStatusFrame0">\n'
+            f'{T*4}<Anchor relative="$parent"/>\n{T*4}<AcceptsMouse val="false"/>\n{T*4}<AcceptsMouseTooltip val="false"/>\n'
+            + hero_check() + clone_sensor() +
+            f'{T*3}</Frame>\n{T*2}</Frame>\n')
 
 
 SIDES = (("Blue", "blue", "TeamOrder", "BLUE TEAM"), ("Red", "red", "TeamChaos", "RED TEAM"),
@@ -1151,7 +1231,7 @@ def unit():
 {T*4}<!-- 1. animated model: DROPPED (round 6). The hero cutscene kept the first hero clicked
 {T*4}     (Chromie) over every later selection; the static portrait underneath updates. -->
 
-{team_sense()}{unit_team()}{hero_check()}{clone_sensor()}
+{team_sense()}{unit_team()}
 {T*4}<!-- 2. name (in the title band, user 2026-10-05), player, level -->
 {T*4}<Frame type="UnitStatusName" name="FCJH_HeroName" template="UnitStatus/UnitStatusUnitNameTemplate">
 {T*5}<!-- centred on the card: the template's own size (220 x 30) beat the

@@ -141,6 +141,14 @@ spent, and the next broadcast work starts from `main`.
 **Testing (2026-10-23):** the user tests in OBS, at 1080p, the broadcast's settings;
 Claude checks in a browser at 1920x1080.
 
+**v1.1.2, committed (2026-11-11), not yet a release:** Ctrl+Shift+H for the heal
+pop-ups (§7 item 19, confirmed), Blizzard's own flame with the leading team's level digits in
+gold (item 18, untested in game), the inspect card opening unseen for a beat (item 20,
+off screen for that beat too, and only after a real close, not the game's blink between
+heroes; "looks perfect", user). Before the release: talk the gold digits over (user, later). Every diagnostic is out: the inspect squares,
+the click tints and the Viking click attempts (item 15, closed as an engine limit). `[meta]
+version` is 1.1.2; `docs/releases/v1.1.2.md` and the tag follow the user's OK.
+
 §7 has the interface's open list; the broadcast half's is at the end of `studio/README.md`.
 
 ---
@@ -1796,10 +1804,52 @@ from their plates (docs/blizzard-fixes.md).
       2026-10-06; `windowstate=1` is maximised - on 2026-10-09 a maximised window on a bigger
       monitor ran the game at 2558 x 1401 unnoticed: check screenshots' size) -
       Claude puts it back to 1080p afterwards, with the game closed.
-15. **The Lost Vikings' nameplate in player view - look at it later** (user, 2026-10-09). In a
+15. **The Lost Vikings' nameplate in player view - CLOSED (user, 2026-11-11): an engine limit.**
+    The Vikings, Misha and D.Va's mech can't be clicked one by one in the observer UI; only the
+    hotkey selects Erik, no click ever did. All of it ripped out (docs/blizzard-fixes.md, "Known,
+    not fixed"). The history (user, 2026-10-09): in a
     player's view TLV's nameplate seems to be a three-slice, one per Viking, each with its own
     click handler. Worth studying for ours: how Blizzard splits one plate into three clickable
     parts (find it in JamiePhan's layouts), and whether our plates could use it.
+    **To try (user, 2026-11-08: "we'll try it out tomorrow"): `AllowUnitClicks`.** Every
+    Viking's click target pans to Erik, on ours, Ahli's and the default (user, 2026-11-08).
+    The player view's three Viking frames have no click target (PartyFrame's code does it),
+    so the one untried lead is `<AllowUnitClicks val="true"/>` on each Viking's
+    UnitTargetFrame - Blizzard uses it once, on partyframe's HeroAlertFrameTemplate, with
+    selection and centring off. A long shot; a dev build, then close this item either way.
+    **In the v1.1.2 dev build (2026-11-10), untested in game:** `AllowUnitClicks` on each
+    `FCJH_Target` in TrackedUnitStatusFrame0-2 (gen.py). If a third still pans to Erik, it
+    comes out again and this item closes.
+    **Seen 2026-11-11 (user): no change, every third still pans to Erik.** The user suspects the
+    targets have no area at all; next, a tint inside each `FCJH_Target` to show its hit area.
+    **DIAGNOSTIC in the second v1.1.2 dev build (2026-11-11), untested in game:** a see-through
+    fill (`FCJH_HitTint`, gen.py `hit_tint`, Alpha 110, priority 700) inside every click
+    target: each Viking's `FCJH_Target` a colour per third (magenta, yellow, cyan:
+    `VIKING_TINTS`, in the tracker's order 0-2), and every plate's own `TargetHeroUnitFrame`
+    white, to compare. What to read: no coloured third at all = the Viking targets have no
+    area (clicks fall through to the white plate target, hence Erik); thirds in place and
+    still Erik = they have area but the engine ignores them. `AllowUnitClicks` is still on
+    them; it and the tints come out in one clean rewrite once this is settled.
+    **Seen 2026-11-11 (user's screenshot):** the three thirds are there, full plate height,
+    each in its colour (the middle one overlaps its neighbours by a few px), and the Viking
+    plate shows no white - its own target is off as `FCJH_VikingClicks` intends. So the clicks
+    land on the Viking targets and the engine still picks Erik: a UnitTargetFrame in the
+    observer hero overview acts on the player's hero, not the tracked unit. Blizzard's
+    per-Viking areas (partyframe `PartyAlertButtonA/B/C`, `HeroAlertFrameTemplate`) are alert
+    buttons with selection OFF, bound by the party frame's code - nothing to copy.
+    **Try 3, third v1.1.2 dev build (2026-11-11; user: "try it once"), untested in game:** the
+    long shot. Blizzard's party frame puts those buttons IN the hero cell (siblings of the
+    portrait's target) and binds them by name, so ours are `PartyAlertButtonA/B/C` in the
+    observer cell (gen.py `viking_buttons`): UnitTargetFrames with selection and centring ON,
+    each anchored to its Viking's `TrackedUnitStatusFrame` (A Olaf, B Baleog, C Erik), shown
+    only with the Vikings (`FCJH_VikingClicks`, which hides the plate's target), tinted as
+    before. The tracker's `FCJH_Target`s are gone. validate.py lets those three names through
+    (`BORROWED`). If clicks still pick Erik: close this as an engine limit (blizzard-fixes
+    "couldn't"), and the buttons, the tints and `BORROWED` go in one clean rewrite.
+    **Closed 2026-11-11 (user): none of the clicks ever selected Erik - the hotkey does.** The
+    clean rewrite: `viking_buttons`, `hit_tint`, `VIKING_TINTS`, `FCJH_VikingClicks` and
+    `BORROWED` are gone; the plate's own target stays on for every hero. The tracker and the
+    Viking frames still span the whole plate (harmless).
 16. **Static banners hidden - CLOSED (user, 2026-10-19): they stay gone.** "Word-only map
     banners that don't actually have any function other than to say that the mechanic has
     spawned, they all need to disappear." Tomb's "Red/Blue Webweavers summoned"
@@ -1820,6 +1870,119 @@ from their plates (docs/blizzard-fixes.md).
     towers-upgrading notices (in the alert stack: hiding them by alpha would leave a gap).
     Approved as kept (user, 2026-10-19: "they actually serve purposes"; Volskaya's and
     Hanamura's are one shared alert).
+17. **The XP bar back in the top bar - come back to it** (user, 2026-11-10, relayed from the
+    Reddit post's replies, unread by the user as yet). Two places: along the wings, or inside
+    the team level tabs (`element.blue_level` / `red_level`, 64 x 50). The user leans to the
+    tabs, and so does Claude: the level and its progress read as one thing there; the tab is
+    the interface's own art, while the wings meet the OBS band at 779.8 / 1140.2, so a bar run
+    along them would end against (or under) OBS's name plates and look different with and
+    without OBS; and the tabs mirror cleanly. The cost is length - 64 px is coarse, but the
+    top bar's job is "who is closer to the next level", not exact XP. Shapes to try: a fill
+    rising in the level plate, or a bar along its foot where `[top_bar] level_rim` runs now.
+    To settle first: does the bottom rows' `[team_xp]` stay (see the 2026-10-24 companion
+    idea above), and read the actual Reddit requests before building. Dev build and
+    screenshots before deciding.
+18. **The talent-lead flame can't be seen - with item 17** (user, 2026-11-10). Blizzard's flame
+    behind the leading team's level plate (`element.*_talent_lead`) is "basically
+    undetectable at a glance": a red flame on red's hexagons, a blue one on blue's. Ideas: one
+    gold tint for both sides (Blizzard's flame, recoloured - "ahead" then means one colour,
+    not the team's), or colour / outline the leading level's number. Claude's view: gold on
+    the flame first, since it keeps Blizzard's sign and only fixes its contrast; the number's
+    outline as a second step if that's still weak, not both at once. Design it together with
+    item 17 - an XP fill in the same tab competes with the flame for the same few pixels.
+    **In the v1.1.2 dev build (2026-11-10), untested in game: gold for both sides**
+    (`[talent_lead] colour`). The flame model takes its colour from its cutscene actor's
+    `teamColorDiffuse`/`Emissive` (filters Blue and Red only), so gen.py writes Blizzard's
+    `GameUI_Talent_Advantage.StormCutscene` again with those set to gold, as
+    `Base.StormData/Cutscenes/FCJH_TalentLead.StormCutscene` (generated; Ahli ships its own
+    cutscenes too), and FCJH_TopBar points both `AdvantageCutscene`s at it; `AdvantageBg`'s
+    LightAdjustColor and the 20 sparkles' DarkAdjustColor take `#FCJH_TALENT_LEAD_COLOUR`.
+    Two unknowns: whether an interface's own cutscene path loads (no flame at all = it
+    didn't), and whether a `#` constant works in the AdjustColor fields (team-coloured
+    sparkles and glow round a gold flame = it doesn't; write the number in instead).
+    **Seen 2026-11-11 (user): it loads, but "gold flame just looks bad" - go another way.**
+    **In the second v1.1.2 dev build (2026-11-11), untested in game:** the gold flame is gone
+    (the generated cutscene, `[talent_lead]`, the TopBar overrides), Blizzard's team-coloured
+    flame is back, and the leading team's level NUMBER turns gold: `FCJH_Ahead`'s Yes state
+    sets `Team1LevelLabel` / `Team2LevelLabel` to style `FCJH_TeamLevelLead` (Blizzard's
+    `ObsBar_TeamLevel` with a 3-wide `ffc21e` outline, FontStyles.StormStyle), No sets
+    `ObsBar_TeamLevel` back - as Blizzard swaps its rank labels' styles by state. If the
+    outline reads weak, gold digits are a one-line change to that style (`textcolor`).
+    **Seen 2026-11-11 (user): the gold outline is "too much" - gold digits, Blizzard's black
+    outline.** Third dev build: `FCJH_TeamLevelLead` is now `ObsBar_TeamLevel` with
+    `textcolor="ffc21e"` and nothing else, untested in game.
+19. **A hotkey to hide the heal pop-ups** (user, 2026-11-10: "they disturb more people than I
+    anticipated"). The green-plus low-health pop-ups on the plates (`[heal_popup]`,
+    FCJH_HealPopups in FCJH_HeroRow), not the talent pop-ups, which stay. One more
+    `[toggles]` entry in the house pattern: Ctrl+Shift and the initial, so
+    `heal = "Control+Shift+H"` if validate.py finds it free of Blizzard's keys. To settle:
+    whether it starts on like the other toggles or off, given the complaints - and an off
+    toggle must also stop a pop-up already showing, not just the next one.
+    **In the v1.1.2 dev build (2026-11-10), untested in game:** `heal = "Control+Shift+H"`
+    (validate.py: free), starting on like the others. FCJH_HudWatch already fades
+    `FCJH_HealPopups`, and a paused Fade holds its frame's alpha (one owner per frame), so the
+    pop-ups now sit in an inner `FCJH_HealShown` and FCJH_HealToggle fades that - Fade only,
+    so the watchers keep running and a pop-up already up goes with it.
+    **Confirmed in game 2026-11-11 (user): works as described.**
+20. **Inspect card stays open from a hero to a minion - FIXED (user, 2026-11-11)** by the open
+    fade below; the command card fading with it is untested in game. Inspect a hero,
+    click straight to a minion with the card open, and the inspector never closes.
+    **Diagnostic squares in the v1.1.2 dev build** (inspect_card.py, `FCJH_Diag*`, on the
+    screen's left edge; they come out in one clean rewrite once the cause is found):
+    - y 560, the gate (`FCJH_Gate`): cyan Clone, green Hero, yellow Unit, red Hide;
+    - y 590, the watcher (`FCJH_CardShown`): cyan Clone, green Hero, yellow Unit, red Closed;
+    - y 620, magenta while the raw `FCJH_IsHero` flag is up (inside the card, so only while
+      the card shows).
+    What to read: which row's colour is wrong once the minion is selected.
+    **Narrowed 2026-11-11 (user):** not a stuck card. Hero <-> minion back and forth is fine,
+    and so is reopening on the same kind. Close the card (deselect), then select the OTHER
+    kind, and the last kind's card shape flashes for a few frames before the right one (Johanna,
+    Fort, deselect, Johanna: the Fort card first). Cause, from the code: `FCJH_IsHero` and the
+    clone sensor live inside the card's own selection panel (`UNIT`), which is hidden with
+    the card, so they still hold the last unit's answer when the gate reopens it, and only
+    catch up once the card shows. The team sensor and the player matchers sit there too.
+    **Fix in the second v1.1.2 dev build (2026-11-11), untested in game:** `FCJH_IsHero` and
+    `FCJH_CloneSensor` now live in a selection panel of their own beside the card,
+    `FCJH_InspectSense` (inspect_card.py `inspect_sense`, `SENSE`), which is never hidden, so
+    they always hold the current unit; the gate, the watcher and the player matchers' clone
+    states read them there. The team sensor, the team edge and the matchers stay in the card
+    (they are its contents, not its shape). The squares stay in; the magenta flag now shows
+    whenever the selection is a hero, card open or not. If the flash is gone, the squares
+    come out in one clean rewrite and this closes; if the CONTENTS (name, edge colour) still
+    flash the last unit's for a frame, the next step is holding the card's alpha at 0 for a
+    beat on opening.
+    **Seen 2026-11-11 (user): no change** - Tracer, Fort, hide, Tracer still shows Fort's card
+    for a split second. With nothing selected the sensors' own selection panel goes dark too,
+    so they wake with the last unit's answer all the same. **Third dev build, untested in
+    game:** the fallback - the card opens unseen, `FCJH_OpenHold` on its OnShown holds it at
+    Alpha 0 for `OPEN_HOLD` (0.1 s), then fades in over `OPEN_FADE` (0.08 s), inspect_card.py.
+    Changing selection with the card already open doesn't replay it. The sensors stay outside
+    the card (harmless). Watch for: the command card showing a beat before the card (it
+    follows the card's visibility, not its alpha); a flash still there = lengthen the hold.
+    **Seen 2026-11-11 (user): it works, but the ability card came up out of sync.** Clean
+    rewrite: every `FCJH_Diag*` square is out, and `FCJH_OpenHold` has a second Fade
+    controller on Blizzard's command panel (`COMMAND_PANEL`), same keys, so it holds and fades
+    with the card. Untested in game.
+    **Seen 2026-11-11 (user): "better", but bits still flicker** - Fort, then a hero: the health
+    bar's white 1 px spark shows before the card and seems to move from the last card's place
+    to the new one; Tracer's ammo separators the same (other heroes' segment lines likely too).
+    Those are the bars' own built-in drawing, which ignores the card's fade. **Next dev build,
+    untested in game:** the hold also puts the card off screen - two Anchor controllers in
+    `FCJH_OpenHold` (Left and Right, relative, Step keys: the park offset until `OPEN_HOLD`,
+    then 0), and the command card and talent tips, anchored to the card, go with it. Watch for:
+    the spark or separators still showing early = they lag the card's place by a frame too.
+    **Seen 2026-11-11 (user): hero to hero, card open, the beat replays every time; neutral to
+    neutral doesn't.** The game blinks its inspector off and on when the selection moves hero to
+    hero (it follows the last hero clicked), so the card's OnShown fired each time. **Same dev
+    build, untested in game:** the beat only after a real close. `FCJH_CloseTimer`
+    (inspect_card.py `close_timer`) starts on the card's OnHidden and shows `FCJH_CardClosed`
+    after `CLOSE_GRACE` (0.15 s); the card's OnShown stops it first on a blink. Shown = a real
+    close: its state sends `FCJH_Arm`, which Resets `FCJH_OpenHold` to its start, and the
+    card's OnShown now only Plays it (a blink finds it at its end, so the card snaps in). The
+    first open of a session plays it too. Watch for: the beat still on hero to hero (the blink
+    outlasts the grace: raise `CLOSE_GRACE`), or no beat after a real close with the Tracer,
+    Fort, hide, Tracer flash back (`Play` restarting or `Reset` not taking: rethink).
+    **Seen 2026-11-11 (user): "looks perfect".** Committed, not yet released.
 
 ## 8. Original brief
 

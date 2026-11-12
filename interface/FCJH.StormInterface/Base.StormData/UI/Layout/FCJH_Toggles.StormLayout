@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <Desc>
-	<!-- The operator's chat, player-name and HUD toggles (layout.toml [toggles]; user, 2026-10-16;
+	<!-- The operator's chat, player-name, heal pop-up and HUD toggles (layout.toml [toggles]; user, 2026-10-16;
 	     the HUD's 2026-10-25, below).
 	     The replay box's is in FCJH_Replay, the inspect card's in FCJH_Inspect. Blizzard has no
 	     key for either of these: Ahli and Spazzo both add one (docs/blizzard-fixes.md).
@@ -43,6 +43,24 @@
 					<CollapseLayout val="true"/>
 					<Handle val="FCJH_NAMES"/>
 					<Shortcut val="#FCJH_NAMES_KEY"/>
+				</Frame>
+				<!-- Heal pop-ups (layout.toml [toggles] heal; user, 2026-11-10: they bothered more
+				     viewers than expected). Fades FCJH_HealShown, inside the container the HUD keys
+				     fade, so a pop-up already up goes with it and the watchers keep counting: one
+				     that fires while off stays unseen. Starts on, as the others. -->
+				<Frame type="ToggleControl" name="FCJH_HealToggle">
+					<Anchor relative="$parent"/>
+					<AcceptsMouse val="false"/>
+					<CollapseLayout val="true"/>
+					<Shortcut val="#FCJH_HEAL_KEY"/>
+					<Animation name="FCJH_HealShow">
+						<Event event="OnShown" action="DirectionForward,Play"/>
+						<Event event="OnHidden" action="DirectionReverse,Play"/>
+						<Controller type="Fade" end="Pause" frame="$GameUI/FCJH_HealPopups/FCJH_HealShown">
+							<Key type="Curve" time="0.0" value="0"/>
+							<Key type="Curve" time="0.2" value="255"/>
+						</Controller>
+					</Animation>
 				</Frame>
 				<!-- The HUD (layout.toml [toggles] hud, hud_lower; user, 2026-10-25). Blizzard's own
 				     ToggleHUD / ToggleFullHUD (stormobserverpanel) faded only their own panels, so our

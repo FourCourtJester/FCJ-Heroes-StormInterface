@@ -5,7 +5,7 @@
 	<!-- Screen -->
 	<Constant name="FCJH_SCREEN_W" val="2133"/>  <!-- 1920 px -->
 	<Constant name="FCJH_SCREEN_H" val="1200"/>  <!-- 1080 px -->
-	<Constant name="FCJH_VERSION" val="1.1.1"/>
+	<Constant name="FCJH_VERSION" val="1.1.2"/>
 
 	<!-- Elements: _L _T _R _B are edges as offsets from the rect's anchor (tools/gen.py ANCHORS):
 	     a point on the screen (anchor them to $GameUI at those pos values), or a piece's top-left
@@ -318,6 +318,7 @@
 	<Constant name="FCJH_CHAT_KEY" val="Control+Shift+C"/>  <!-- layout.toml [toggles] chat -->
 	<Constant name="FCJH_INSPECT_KEY" val="Control+Shift+I"/>  <!-- layout.toml [toggles] inspect -->
 	<Constant name="FCJH_NAMES_KEY" val="Control+Shift+N"/>  <!-- layout.toml [toggles] names -->
+	<Constant name="FCJH_HEAL_KEY" val="Control+Shift+H"/>  <!-- layout.toml [toggles] heal -->
 	<Constant name="FCJH_HUD_KEY" val="Control+E"/>  <!-- layout.toml [toggles] hud -->
 	<Constant name="FCJH_HUD_LOWER_KEY" val="Control+Shift+E"/>  <!-- layout.toml [toggles] hud_lower -->
 	<Constant name="FCJH_REPLAY_LIFTED_T" val="-24"/>  <!-- the replay panel's top while its timeline is hidden -->

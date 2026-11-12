@@ -624,7 +624,7 @@ def constants_layout(cfg):
     lines.append("")
     const(name("replay", "button", "gap"), gap, "between the replay panel's bottom-row buttons")
     const(name("replay", "key"), cfg["toggles"]["replay"], "hides/shows the replay panel")
-    for key in ("chat", "inspect", "names", "hud", "hud_lower"):
+    for key in ("chat", "inspect", "names", "heal", "hud", "hud_lower"):
         const(name(key, "key"), cfg["toggles"][key], f"layout.toml [toggles] {key}")
     # the art shrinks from its top when the timeline hides; the panel goes up as far, so its
     # top stays in the corner (user, 2026-10-16)
@@ -882,8 +882,6 @@ HERO_ROW_FILE = "FCJH_HeroRow.StormLayout"
 TEXTURE_REL = Path("_Assets") / "Textures"
 TEXTURE_DIR = "_Assets\\Textures"
 WHITE = TEXTURE_DIR + "\\FCJH_White.dds"
-
-
 def plate_art_sizes(cfg):
     """The plate's textures at their size on a 1440p screen (ART_HEIGHT), texels: the
     portrait's frame and the whole cell."""
@@ -2000,10 +1998,10 @@ def trackers(team, health, cfg):
     bar =(f'<Frame type="UnitStatusShieldedHealthBar" name="HealthBar">'
            f'<Texture val="{PLATE_FILL}"/><AlphaMaskTexture val="{plate_mask(cfg, team, "health")}"/>'
            f'{tiled_segments()}</Frame>')
-    # Each Viking also gets its own click target (select that Viking, centre the camera), over
-    # its third of the plate at full height, above the plate's own (600). Round 1 hung it off
-    # the bar-high strip and clicks landed only now and then (clipped to the strip, likely), so
-    # the tracker and each Viking's frame now span the whole plate; only the bar sits in the strip.
+    # The tracker and each Viking's frame span the whole plate (only the bar sits in the strip):
+    # left from the per-Viking click targets, which never worked - the Vikings, Misha and D.Va
+    # can't be clicked one by one in the observer UI (HANDOFF §7 item 15, docs/blizzard-fixes.md;
+    # user, 2026-11-11). Harmless, so it stays.
     hl, ht, hr, hb = health
     strip = "$parent/$parent/$parent"          # bar -> Viking -> tracker -> HeroStatus (the strip)
     vikings = "".join(
@@ -2022,15 +2020,6 @@ def trackers(team, health, cfg):
 							<Texture val="{PLATE_FILL}"/>{tiled_segments(chr(10) + chr(9) * 7)}
 							<Unclipped val="true"/>
 						</Frame>{vehicle_sensor(chr(9) * 6)}
-						<Frame type="UnitTargetFrame" name="FCJH_Target">
-							<Anchor relative="$parent"/>
-							<AllowTargeting val="false"/>
-							<AllowSelection val="true"/>
-							<AllowCameraCentering val="true"/>
-							<AllowSmartCommand val="false"/>
-							<Unclipped val="true"/>
-							<RenderPriority val="610"/>
-						</Frame>
 					</Frame>""" for i in range(3))
     # the separators over the seams and Erik's far end, the bar's height (placed by heroic_panel's lefts, which
     # also shows them for the Vikings only: hidden, the tracker may not be)
@@ -2052,7 +2041,7 @@ def trackers(team, health, cfg):
 				</Frame>""" for n in (1, 2, 3))
     return f"""
 			<Frame type="UnitStatusUnitTrackingBehavior" name="VikingTrackingElement">
-				<!-- the whole plate, not the bar strip (see the click targets) -->
+				<!-- the whole plate, not the bar strip (see trackers) -->
 				<Anchor side="Top"    relative="$parent/$parent" pos="Min" offset="0"/>
 				<Anchor side="Left"   relative="$parent/$parent" pos="Min" offset="0"/>
 				<Anchor side="Bottom" relative="$parent/$parent" pos="Max" offset="0"/>
@@ -3458,7 +3447,15 @@ def heal_popups(cfg):
 		<Frame type="Frame" name="FCJH_HealPopups">
 			<Anchor relative="$parent"/>
 			<AcceptsMouse val="false"/>
-			<RenderPriority val="520"/>""" + "".join(out) + """
+			<RenderPriority val="520"/>
+			<!-- the operator's heal key (layout.toml [toggles] heal) fades this, the HUD keys the
+			     container above: one owner per frame, as a paused Fade holds its frame's alpha
+			     (FCJH_Toggles). Fade only, so the watchers inside keep running and a pop-up
+			     already showing goes too. -->
+			<Frame type="Frame" name="FCJH_HealShown">
+				<Anchor relative="$parent"/>
+				<AcceptsMouse val="false"/>""" + "".join(out) + """
+			</Frame>
 		</Frame>"""
 
 
@@ -3869,8 +3866,6 @@ def hero_cell_template(team, c, cfg):
 					<Action type="SetProperty" frame="$parent/FCJH_ClonePortrait" Alpha="0"/>
 				</State>
 			</StateGroup>
-			<!-- Vikings: the plate's own click target steps aside so each Viking's (inside this
-			     frame, which sits under the plate's target in the cell) gets the click -->
 			<!-- Blizzard's own, with "Present" (Misha up) no longer halving Rexxar's bar. All three
 			     states restated, so it's right whether the engine merges or replaces the group. -->
 			<StateGroup name="HeightOverride">
@@ -3890,16 +3885,6 @@ def hero_cell_template(team, c, cfg):
 					<Action type="SetProperty" frame="$this/HealthBar" Visible="False"/>
 					<Action type="SetProperty" frame="$this/HealthBar" RenderType="Offscreen"/>
 					<Action type="SetProperty" frame="$this/HealthBar" Alpha="0"/>
-				</State>
-			</StateGroup>
-			<StateGroup name="FCJH_VikingClicks">
-				<DefaultState val="Plate"/>
-				<State name="Vikings">
-					<When type="Property" frame="$this/VikingTrackingElement" Visible="true"/>
-					<Action type="SetProperty" frame="$parent/TargetHeroUnitFrame" Visible="false"/>
-				</State>
-				<State name="Plate">
-					<Action type="SetProperty" frame="$parent/TargetHeroUnitFrame" Visible="true"/>
 				</State>
 			</StateGroup>"""
     else:
