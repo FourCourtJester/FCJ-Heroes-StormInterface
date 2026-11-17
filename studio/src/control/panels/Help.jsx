@@ -89,6 +89,22 @@ const Download = ({ href, children }) => {
   )
 }
 
+// The interface's keys, as the README's table (user, 2026-11-13). Written out rather than read
+// from layout.toml: the keys are the interface's, and the words are for the operator.
+const HOTKEYS = [
+  ['Ctrl+1', 'Talents'],
+  ['Ctrl+2', 'Kills, deaths and damage'],
+  ['Ctrl+3', 'Healing, siege and experience'],
+  ['Ctrl+4', "Each team's experience by where it came from"],
+  ['Ctrl+Shift+I', 'The inspect card (the selected hero)'],
+  ['Ctrl+Shift+N', 'Player names over the heroes'],
+  ['Ctrl+Shift+H', 'Heal pop-ups'],
+  ['Ctrl+Shift+C', 'Chat'],
+  ['Ctrl+Shift+R', 'The replay controls'],
+  ['Ctrl+E', 'The whole HUD, top bar included'],
+  ['Ctrl+Shift+E', 'Everything but the top bar'],
+]
+
 const PAGES = 'https://fourcourtjester.github.io/FCJ-Heroes-StormInterface'
 const MASKS = `${PAGES}/masks`
 const COLLECTION = `${PAGES}/FCJ_Heroes_Esports_v1.0.json`
@@ -201,6 +217,25 @@ export default function Help() {
           </P>
           <P>
             The source, release notes and issues are on <A href={REPO}>GitHub</A>.
+          </P>
+        </Q>
+
+        <Q q="What are the interface's hotkeys?">
+          <table className="text-sm text-slate-300">
+            <tbody>
+              {HOTKEYS.map(([key, does]) => (
+                <tr key={key}>
+                  <td className="py-0.5 pr-4 align-top whitespace-nowrap">
+                    <Code>{key}</Code>
+                  </td>
+                  <td className="py-0.5">{does}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <P>
+            Ctrl+1 to Ctrl+4 open a pane, and only one is open at a time: opening one closes
+            whichever is open. The rest each show or hide what they name.
           </P>
         </Q>
       </div>

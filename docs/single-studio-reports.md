@@ -443,3 +443,28 @@ An empty number box saved as absent (`null`), not `NaN`.
 ### What we carry meanwhile
 
 Nothing: the NGS plugin reads `Number(season) || null`, so `NaN` means blank.
+
+## 11. `Stepper` has no compact size for a `BoardBar`
+
+### What happens
+
+`Stepper` is sized for a panel's row: a 2.5rem line (`--ss-input-h`), a field that starts at
+`w-16` and grows into its cell, and an `text-xl` figure. In a `BoardBar` that is 160 x 40
+px a side. Buttons take `size="sm"`; `Stepper` takes nothing but `className`. Found
+2026-11-13 on 0.17.1, putting the series score in the board's bar.
+
+### Why it's a problem
+
+The bar is a strip under the top bar, and the framework's own docs offer it for a studio's
+controls. A score there is the obvious first one, and it arrives at panel size.
+
+### What we'd ask for
+
+`size="sm"` on `Stepper`, as the buttons have: a shorter line, a fixed narrow field, a
+smaller figure. Also a `Stepper` with no `label` names its buttons "Decrease blue.wins"
+from the path; an `aria-label` (or a hidden label) for the bar's case would read better.
+
+### What we carry meanwhile
+
+`.fcjh-score-stepper` in `studio/src/css/index.css`: `--ss-input-h: 1.75rem`, the field
+2.5rem and not growing, the figure and buttons at 1rem. 112 x 28 px a side.

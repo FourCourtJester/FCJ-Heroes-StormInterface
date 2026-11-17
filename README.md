@@ -43,6 +43,7 @@ It's laid out for **1920 × 1080**. Its labels come in every language Heroes shi
 | `Ctrl+4` | Each team's experience by where it came from |
 | `Ctrl+Shift+I` | Show or hide the inspect card (the selected hero) |
 | `Ctrl+Shift+N` | Show or hide player names over the heroes |
+| `Ctrl+Shift+H` | Show or hide the heal pop-ups |
 | `Ctrl+Shift+C` | Show or hide chat |
 | `Ctrl+Shift+R` | Show or hide the replay controls |
 | `Ctrl+E` | Hide or show the whole HUD, top plate included |

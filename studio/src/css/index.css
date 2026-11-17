@@ -196,3 +196,20 @@
 .fcjh-won:disabled {
   opacity: 0.35;
 }
+
+/* the score bar's steppers, a size down (user, 2026-11-13): the framework's Stepper, on the
+   framework's own line-height variable, with a narrower field and a smaller figure. A bar
+   under the top bar is a strip, not a panel's row. */
+.fcjh-score-stepper {
+  --ss-input-h: 1.75rem;
+}
+
+.fcjh-score-stepper .ss-stepper-value {
+  width: 2.5rem;
+  flex-grow: 0;
+  font-size: 1rem;
+}
+
+.fcjh-score-stepper button {
+  font-size: 1rem;
+}

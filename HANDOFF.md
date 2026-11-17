@@ -153,7 +153,10 @@ OBS 32.2.2 check (its Chromium is older than 33's) - the matchup band's team uni
 fixed name width (32 sized them from the name's text, so every team's unit was a different
 width), the no-cams series lockup centres a lone mark (a selector-order bug, every browser),
 and a lone mark beside one camera takes a 520 x 240 box (`[series] one_lone`). Seen in OBS 32
-by the user except the last.
+by the user except the last. Single Studio 0.17.1 (2026-11-12). The board's bar
+(2026-11-13): the framework's `PanelJump`, and the series score as two `Stepper`s on
+`blue.wins`/`red.wins`, BLUE vs RED, a size down by `.fcjh-score-stepper`; Help gained the
+interface's hotkeys.
 
 §7 has the interface's open list; the broadcast half's is at the end of `studio/README.md`.
 

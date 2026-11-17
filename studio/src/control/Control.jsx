@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { BoardBar, PanelJump } from '@single-studio/core/control'
 
 // import Bans from './panels/Bans'   // shelved until after the first user pass
 import { checkDevCss } from '../studio/devCssGuard'
@@ -10,6 +11,7 @@ import Ngs from './panels/Ngs'
 import Series from './panels/Series'
 import Standby from './panels/Standby'
 import Teams from './panels/Teams'
+import ScoreBar from './ScoreBar'
 
 // The operator's board for the FCJ Heroes broadcast graphics.
 //
@@ -43,6 +45,13 @@ export default function Control() {
 
   return (
     <>
+      {/* under the top bar and staying there: choose a panel and the board opens it, folds the
+          rest and scrolls to it (user, 2026-11-13) */}
+      <BoardBar>
+        <PanelJump />
+      </BoardBar>
+      {/* the series score beside it, pushed right: what commentators ask for most (user, 2026-11-13) */}
+      <ScoreBar />
       {/* first: where a new operator starts, folded for everyone else (user, 2026-11-12) */}
       <Help />
       {/* pressed once before the show, it fills the panels below (user, 2026-10-29) */}
