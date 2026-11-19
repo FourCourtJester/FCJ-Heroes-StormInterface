@@ -213,3 +213,79 @@
 .fcjh-score-stepper button {
   font-size: 1rem;
 }
+
+/* The bar as the board narrows (user, 2026-11-19): one line, then two, then three.
+
+     bar content > 503.4px  one line: the jump at the left, the score pushed right
+     <= 503.4px             two: the jump fills the first line, the score centred on the next
+     <= 346.6px             three: the jump, then Blue, then Red, each centred, "vs" gone
+
+   Both are container queries on the bar, not media queries, because a window's width counts
+   its scrollbar: on Windows a long board has a 17px one, and a 371px media query fired at
+   388px. The bar's own width doesn't. The proposal had the second step as a 511px media query;
+   our jump is wider than the board it was measured on (its longest option is "NGS season 22"),
+   so between ~511 and ~527px the score wrapped on its own and sat at the right, uncentred.
+   Measured 2026-11-19.
+
+   503.4px is the jump (144.8), the bar's gap (12) and the score (346.6) on one line - about a
+   527px window, 544px with a Windows scrollbar. 346.6px is the score's own width on one line:
+   two steppers, BLUE, vs, RED and the gaps - about 371 / 388px. Re-measure if the labels, the
+   steppers, the board's font or the longest panel title change: the children's widths plus
+   the gaps, the threshold at that sum, and check it fires at the same bar width with and
+   without a scrollbar. */
+.ss-board-bar {
+  container: fcjh-bar / inline-size;
+}
+
+@container fcjh-bar (max-width: 503.4px) {
+  .fcjh-jump-group {
+    flex-basis: 100%;
+  }
+
+  .fcjh-jump {
+    width: 100%;
+  }
+
+  .fcjh-score-group {
+    flex-basis: 100%;
+    justify-content: center;
+  }
+}
+
+/* one side of the score, kept together */
+.fcjh-score-side {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@container fcjh-bar (max-width: 346.6px) {
+  .fcjh-score-vs {
+    display: none;
+  }
+
+  .fcjh-score-side {
+    flex-basis: 100%;
+    justify-content: center;
+  }
+
+  /* both lines read name then stepper, and the names share a width so the steppers line up */
+  .fcjh-score-side.blue .fcjh-score-label {
+    order: -1;
+  }
+
+  .fcjh-score-label {
+    min-width: 2.75rem;
+    text-align: right;
+  }
+}
+
+/* The Score Screen Winner's two buttons stay side by side down to a 388px window, a line each
+   under it (user, 2026-11-19): the board's 640px Row breakpoint above, moved down for this one
+   Row. 389px rather than 388.01: on a 2x screen a 388px window measured a hair over 388 and
+   matched the fraction. */
+@media (min-width: 389px) {
+  .fcjh-winner-row {
+    --ss-basis: 0%;
+  }
+}

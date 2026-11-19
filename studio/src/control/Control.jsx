@@ -47,8 +47,8 @@ export default function Control() {
     <>
       {/* under the top bar and staying there: choose a panel and the board opens it, folds the
           rest and scrolls to it (user, 2026-11-13) */}
-      <BoardBar>
-        <PanelJump />
+      <BoardBar className="fcjh-jump-group">
+        <PanelJump className="fcjh-jump" />
       </BoardBar>
       {/* the series score beside it, pushed right: what commentators ask for most (user, 2026-11-13) */}
       <ScoreBar />

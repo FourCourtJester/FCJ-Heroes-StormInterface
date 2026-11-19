@@ -156,7 +156,10 @@ and a lone mark beside one camera takes a 520 x 240 box (`[series] one_lone`). S
 by the user except the last. Single Studio 0.17.1 (2026-11-12). The board's bar
 (2026-11-13): the framework's `PanelJump`, and the series score as two `Stepper`s on
 `blue.wins`/`red.wins`, BLUE vs RED, a size down by `.fcjh-score-stepper`; Help gained the
-interface's hotkeys.
+interface's hotkeys. Single Studio 0.18.0 (2026-11-19), and the bar goes responsive: one line,
+then the jump over a centred score at 503.4 px of bar, then a line per side at 346.6 px
+(container queries on the bar, so a Windows scrollbar doesn't move them); the Score Screen
+Winner's buttons stack at 388 px. Checked in the browser, not in OBS.
 
 §7 has the interface's open list; the broadcast half's is at the end of `studio/README.md`.
 
