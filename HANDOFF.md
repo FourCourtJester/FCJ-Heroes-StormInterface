@@ -159,7 +159,10 @@ by the user except the last. Single Studio 0.17.1 (2026-11-12). The board's bar
 interface's hotkeys. Single Studio 0.18.0 (2026-11-19), and the bar goes responsive: one line,
 then the jump over a centred score at 503.4 px of bar, then a line per side at 346.6 px
 (container queries on the bar, so a Windows scrollbar doesn't move them); the Score Screen
-Winner's buttons stack at 388 px. Checked in the browser, not in OBS.
+Winner's buttons stack at 388 px. Checked in the browser, not in OBS. Single Studio 0.18.1
+(2026-11-19): the board's scrollbar goes thin (~13 px), so the winner's buttons now stack
+under a 384 px window, the bar's three-line point with that scrollbar (user-measured).
+`docs/single-studio-board-bar.md` is the write-up for other studios.
 
 §7 has the interface's open list; the broadcast half's is at the end of `studio/README.md`.
 

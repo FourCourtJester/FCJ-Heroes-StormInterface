@@ -58,7 +58,7 @@ export default function Event() {
         </span>
         <ResetButton label="winner" paths={WINNER} size="sm" />
       </div>
-      {/* side by side down to a 388px window, a line each under it (user, 2026-11-19) -
+      {/* side by side down to a 384px window, a line each under it (user, 2026-11-19) -
           `.fcjh-winner-row` in src/css/index.css */}
       <Row className="fcjh-winner-row">
         <Toggle name="winner.blue" group="winner" className="fcjh-won blue">
